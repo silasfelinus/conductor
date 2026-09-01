@@ -862,6 +862,55 @@ tasks:
     merge, or set `status: ready` with revised instructions if you want it reworked further.
     Nothing downstream depends on this task, but PR #2285 stays unmerged on kind_robots
     until it's resolved one way or another.
+
+    UPDATE (conductor scheduled Agent run, 2026-09-01 ~08:30 UTC): kind_robots#2285 has since
+    merged (08:20:15Z) WITH the `requireHumanApiUser` fix in place — `auth.kind ===
+    'first-party-delegation'` is blocked alongside `'agent-credential'` on main now, so the
+    self-escalation path described above is closed as shipped. Points (1)-(3) are still your
+    call and still open.
+
+    NEW: a separate PR, kind_robots#2289 ("Allow Rainbow BFF delegation through human-owned
+    API guard", branch `worker/rainbow-bff-human-boundary-20260901`), appeared ~7 minutes
+    after #2285 merged and tries to remove `first-party-delegation` from that same block-list
+    again — framed as fixing a legitimate integration bug (Rainbow's delegation token 403s on
+    AgentProfile management). The framing is real but the fix as written reopens the gap:
+    `requireHumanApiUser` is the *shared* guard for both `agent-profiles/**` and
+    `agent-credentials/**` (confirmed via code search — 8 route files use it, 3 of them
+    `agent-credentials/*`), so unblocking the auth *kind* unblocks every route behind the
+    guard, `agent-credentials/index.post.ts` (create) included — the identical
+    self-escalation path, not a narrower one. Declined to merge #2289; posted the same
+    analysis directly on it as a PR comment and proposed the real fix instead: split the
+    guard so only `agent-profiles/**` accepts a delegation token, while `agent-credentials/**`
+    keeps the strict human-only check #2285 shipped. #2289 is unmerged and awaiting either
+    your call or a rescoped follow-up.
+
+    URGENT CORRECTION (same run, ~08:36 UTC): #2289 actually MERGED at 08:32:54Z — this
+    session's comment (08:32:58Z) landed 4 seconds too late to prevent it, and an
+    independent concurrent session's comment (08:32:35Z) was also just after the merge.
+    The `first-party-delegation`-through-`requireHumanApiUser` gap described above is
+    LIVE ON kind_robots main right now, not merely proposed. A second independent
+    session opened kind_robots#2291 ("Revert: keep first-party-delegation out of
+    requireHumanApiUser (security)") — a clean, byte-for-byte revert to the pre-#2289
+    guard body, verified via diff, CI in progress at time of writing — but deliberately
+    did NOT merge it, reasoning that reverting is also a design call on the same open
+    question #2289 tried to answer the other way, not obviously this task's call either
+    direction. This session agrees with that restraint and is also not merging #2291:
+    both directions of this specific guard question belong to you. FOR SILAS: the fastest
+    path to close the live gap is merging kind_robots#2291 (one click, diff already
+    verified clean); the fastest path to keep #2289's Rainbow integration working is
+    telling an agent session to rescope it (narrower guard for `agent-profiles/**` only)
+    instead. Either way this needs your input now, not just at your next review pass —
+    the guard is live-exploitable in its current state.
+
+    ALSO NEW: kind_robots#2290 ("Add scoped agent check-ins and human notes") bundles the
+    identical `authGuard.ts` regression as a stated dependency ("This branch includes the
+    narrow auth-boundary correction from Kind Robots PR #2289") on top of otherwise
+    solid, well-tested new functionality (agent heartbeat check-ins + a human-note inbox,
+    additive schema, transactional note-claiming). Same guard, same reopened path. Flagged
+    on the PR rather than merging or rejecting; suggested it rebase onto a
+    `requireHumanApiUser` that still blocks `first-party-delegation` and use a narrower
+    guard for its two new human-facing routes (`agent-profiles/[id]/notes.post.ts`,
+    `agent-profiles/[id]/activity.get.ts`) instead. Also unmerged, also awaiting your call.
   claimed_by: null
   claimed_at: null
-  updated: '2026-09-01T06:44:00Z'
+  updated: '2026-09-01T08:39:00Z'
