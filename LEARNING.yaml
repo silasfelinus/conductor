@@ -11971,3 +11971,21 @@ records:
   lesson: Deployment roadmaps should reconcile against observed production state before retaining a launch
     gate; once the approved domain is already live, continuing to present activation as future work creates
     misleading project state.
+- date: '2026-09-01'
+  project: rainbow-butterflies
+  task: t-036
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: transient
+  lesson: >-
+    Reviewed kind_robots#2297's rate-limit slice; its one CI failure was a real but narrow
+    type error, not a scope/quality problem: h3 1.15.11 types the Retry-After response header
+    as number, and the new helper passed String(...). Fixing and pushing a 2-line diff directly
+    to the Worker's PR branch (rather than bouncing it back to the Worker with retry_context)
+    got it green in one cycle. Also worth flagging: the PR auto-merged on its own once the
+    known-flaky 'Contract verifiers'/ESLint-ratchet check (conductor/t-132) finally completed,
+    without this session calling merge_pull_request -- consistent with the PR's opener having
+    enabled auto-merge, and a reminder to re-check PR state (not just CI) before assuming a
+    merge still needs to be triggered manually.
