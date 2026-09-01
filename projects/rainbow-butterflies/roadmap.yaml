@@ -826,7 +826,7 @@ tasks:
   owner: null
   passes: 0
   stakes: outward-facing
-  implementation_pr: 'silasfelinus/kind_robots#2285, silasfelinus/kind_robots#2289 (pending)'
+  implementation_pr: 'silasfelinus/kind_robots#2285 (merged, safe); #2289 (merged, reopened gap); #2291 (revert, pending)'
   note: >-
     FOR SILAS: kind_robots PR #2285 ("Add first-party BFF delegation for Rainbow") adds a
     new server-to-server auth mechanism — a 7-day, non-admin JWT ("first-party delegation
@@ -881,8 +881,22 @@ tasks:
     a blocking comment on kind_robots#2289 explaining this and proposing narrower
     alternatives (scope the allowance away from agent-credentials/agent-profiles
     specifically, or wait for this task's resolution); did not merge or reject it myself
-    since it's the same open security decision. kind_robots#2289 must not merge as-is
-    without addressing this.
+    since it's the same open security decision.
+
+    ESCALATION: kind_robots#2289 merged anyway at 08:32:54Z -- before this session's hold
+    comment (08:32:35Z) could prevent it, and a second independent session's own blocking
+    comment landed only 4 seconds after the merge, confirming this was a genuine rotation
+    collision (two sessions racing to catch the same PR), not one session's mistake. The
+    self-escalation path (first-party-delegation -> requireHumanApiUser -> POST
+    /api/agent-credentials) is now live on kind_robots main. Prepared and opened
+    kind_robots#2291, a byte-for-byte revert of the guard change (restores rejecting both
+    'agent-credential' and 'first-party-delegation'), verified against the pre-#2289 source.
+    Deliberately did NOT merge #2291 myself -- merged_by on #2289 reads 'silasfelinus',
+    which under this sandbox's shared-identity setup could mean Silas clicked merge
+    knowingly (in which case a revert would fight his decision) or an autonomous session
+    merged via the API; this session cannot tell which, so #2291 is left ready-to-merge
+    for Silas's call rather than assumed safe to apply unilaterally. Pushed a proactive
+    notification about this escalation.
   claimed_by: null
   claimed_at: null
-  updated: '2026-09-01T08:35:00Z'
+  updated: '2026-09-01T08:38:00Z'
