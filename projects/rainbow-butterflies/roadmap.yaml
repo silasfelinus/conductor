@@ -884,6 +884,24 @@ tasks:
     keeps the strict human-only check #2285 shipped. #2289 is unmerged and awaiting either
     your call or a rescoped follow-up.
 
+    URGENT CORRECTION (same run, ~08:36 UTC): #2289 actually MERGED at 08:32:54Z — this
+    session's comment (08:32:58Z) landed 4 seconds too late to prevent it, and an
+    independent concurrent session's comment (08:32:35Z) was also just after the merge.
+    The `first-party-delegation`-through-`requireHumanApiUser` gap described above is
+    LIVE ON kind_robots main right now, not merely proposed. A second independent
+    session opened kind_robots#2291 ("Revert: keep first-party-delegation out of
+    requireHumanApiUser (security)") — a clean, byte-for-byte revert to the pre-#2289
+    guard body, verified via diff, CI in progress at time of writing — but deliberately
+    did NOT merge it, reasoning that reverting is also a design call on the same open
+    question #2289 tried to answer the other way, not obviously this task's call either
+    direction. This session agrees with that restraint and is also not merging #2291:
+    both directions of this specific guard question belong to you. FOR SILAS: the fastest
+    path to close the live gap is merging kind_robots#2291 (one click, diff already
+    verified clean); the fastest path to keep #2289's Rainbow integration working is
+    telling an agent session to rescope it (narrower guard for `agent-profiles/**` only)
+    instead. Either way this needs your input now, not just at your next review pass —
+    the guard is live-exploitable in its current state.
+
     ALSO NEW: kind_robots#2290 ("Add scoped agent check-ins and human notes") bundles the
     identical `authGuard.ts` regression as a stated dependency ("This branch includes the
     narrow auth-boundary correction from Kind Robots PR #2289") on top of otherwise
@@ -895,4 +913,4 @@ tasks:
     `agent-profiles/[id]/activity.get.ts`) instead. Also unmerged, also awaiting your call.
   claimed_by: null
   claimed_at: null
-  updated: '2026-09-01T08:38:00Z'
+  updated: '2026-09-01T08:39:00Z'
