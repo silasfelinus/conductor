@@ -5202,5 +5202,44 @@ tasks:
   claimed_by: openai-scheduled-20260830T021407Z-conductor-t138-a91c
   claimed_at: '2026-08-30T02:14:07Z'
   updated: '2026-08-30T02:27:00Z'
+
+- id: t-139
+  milestone: m2
+  title: "check_pr_merged_drift.py re-verifies only the first candidate PR it flags, so a task reclaimed and re-progressed
+    after an earlier reconciliation can hide a second, later drift"
+  status: ready
+  gate_human: false
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Kaizen suggestion first recorded 2026-09-01 on a prior interface-vision/t-104 TALKBACK entry
+    ("worth flagging for whoever next touches check_pr_merged_drift.py: it currently treats a
+    task as 'verified clean' once its flagged candidate resolves, but doesn't re-scan the note
+    for a *later* PR reference that might itself be unreconciled"), now confirmed as a real
+    incident rather than a hypothetical: the same day, a state-reconciliation session used the
+    script's own flagged candidate (interface-vision/t-104 -> kind_robots#2301) to close the
+    task back to `status: ready` and record `implementation_pr: kind_robots#2301` -- but by the
+    time that session ran, a different, later OpenAI-scheduled cycle had already reclaimed
+    t-104, done a *second* bounded slice, and merged kind_robots#2303 for it. The script's
+    single-candidate check had nothing left to flag (its one candidate, #2301, was genuinely
+    already merged), so `check_pr_merged_drift.py` reported clean while the roadmap recorded
+    the wrong PR entirely. Caught only because the reconciling session happened to re-read the
+    task's full note tail by hand and cross-checked kind_robots' recently-merged PR list via
+    GitHub MCP -- not because any automated check surfaced it. Fixed by hand this cycle
+    (a follow-up commit on the same close-out PR corrected `implementation_pr` from #2301 to
+    #2303 before merge), but the detection gap in the script itself is unaddressed.
+
+    Fix: instead of validating only the note's first/flagged PR reference, have
+    check_pr_merged_drift.py extract every `owner/repo#N` reference from a claimed/review
+    task's note (or at minimum the single most-recent one by position/date) and confirm the
+    roadmap's current `implementation_pr` field actually matches the latest merged reference,
+    not just that *some* referenced PR merged. Add regression coverage modeling this exact
+    shape: a task closed once via one PR, reclaimed, progressed via a second PR, with the
+    roadmap's implementation_pr left stale -- see tests/test_check_pr_merged_drift.py for the
+    existing single-PR-reference test shape to extend.
+  claimed_by: null
+  claimed_at: null
+  updated: '2026-09-01T19:28:00Z'
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
