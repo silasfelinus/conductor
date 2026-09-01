@@ -975,3 +975,19 @@ tasks:
   claimed_at: '2026-09-01T13:15:24Z'
   updated: '2026-09-01T13:47:24Z'
   implementation_pr: 'silasfelinus/kind_robots#2297'
+
+- id: t-037
+  milestone: m2
+  title: "Reuse t-036's authAttemptLimit helper to rate-limit the ordinary /api/auth/login endpoint"
+  status: ready
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from t-036 (kind_robots#2297): that PR's own body flagged that the ordinary
+    /api/auth/login endpoint has no rate limiter either, and built server/utils/authAttemptLimit.ts
+    (per-IP+username and per-IP failure windows, 429 + Retry-After, cleared on success)
+    specifically so it could be reused there. Wire assertAuthAttemptAllowed/recordAuthFailure/
+    clearAuthFailures into login.post.ts the same way password.post.ts uses them, and extend
+    that endpoint's own contract test to assert the throttling call sites, mirroring
+    tests/contracts/verifyFirstPartyDelegation.ts's pattern.
