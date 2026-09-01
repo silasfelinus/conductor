@@ -1,0 +1,419 @@
+{
+  "scope": "all-built",
+  "reason": "Editorial read of all 68 built reward situations side by side, not a pattern scan. Silas, 2026-09-01: 'no awkward phrases or just bad text that doesn't communicate the objects intent? That's mostly what I care about... Are we being effective with what is being said?' Three defects the previous contract could not see. (1) best_used_when spends its sentence claiming the reward is useful, which the label already says -- 20 of 68. The prior check policed only the opening with a two-word window, so 'It proves most valuable when' walked through it, and telling the repair model to drop the opening frame simply moved it to the tail ('...is exactly the moment this ladle earns its keep'). The check now matches the claim wherever it sits. (2) Reward and location copy hard-codes the bundle's character ('It lets Bramble draft, stamp, and cross-reference...'), which welds an asset meant to be liftable into another story to one person; scenarios stay exempt by design. (3) Scenario setups open by naming our own schema: 'Under the dream vibe Sincerely, Wrongly Remembered, ...'. extra_fields carries two hand-picked editorial targets on 2026-08-07 that no honest regex generalizes: a local_rule whose second clause restates its first, and a best_scene that opens on 'The ghost-friend', a definite reference to someone never introduced. Re-filed after run 33463517245 aborted: the repair prompt's new no-schema rule read as \"do not mention the vibe\", so the model dropped the vibe title from the 2026-07-31 setup and failed validate_proposal's structural requirement that the setup name the vibe, location and character verbatim. Nothing was written -- the batch is all-or-nothing and the live phase never ran -- so this is a prompt fix, not a recovery. Both prompts and the complaint text itself now say to keep the title and drop only the schema noun, using the catalog's own \"In <Vibe Title>, ...\" opening that 30 of 34 built scenarios already use.",
+  "send_digest": false,
+  "extra_fields": {
+    "2026-08-07": [
+      "locations[0].local_rule",
+      "locations[0].best_scene"
+    ]
+  },
+  "status": "source-written",
+  "applied_at": "2026-09-01T02:58:25.324299+00:00",
+  "repaired_bundles": 17,
+  "results": [
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-18-kite-string-exchange.md",
+      "day": "2026-07-18",
+      "title": "The Reactor Dragon",
+      "fields": [
+        "rewards[item].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "Standing somewhere you should not have gone is precisely the situation this was made for."
+      },
+      "after": {
+        "item_best_used_when": "Something is standing in a place that was never cleared for it."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-30-stitch-echo.md",
+      "day": "2026-07-30",
+      "title": "The Bridge From Next Century",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "The moment calls for it when a bad fast fix would hold just long enough to kill someone.",
+        "skill_best_used_when": "The situation demands it when the whole structure is going and only a minute more is needed."
+      },
+      "after": {
+        "item_best_used_when": "A bad fast fix would hold just long enough to kill someone.",
+        "skill_best_used_when": "The whole structure is going and only a minute more is needed."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-31-silverfish-concierge.md",
+      "day": "2026-07-31",
+      "title": "Sincerely, Wrongly Remembered",
+      "fields": [
+        "scenarios[0].setup",
+        "locations[0].best_scene"
+      ],
+      "before": {
+        "scenario_setup": "Under the dream vibe Sincerely, Wrongly Remembered, Theodora Kade receives a new arrival in The Card Catalog Annex whose card has been eaten nearly blank. The desk-mind greets the guest with a dead resident's fears, favorite room, and missing spouse, and the guest begins accepting the borrowed life because it feels kinder than their own. Theodora must use Impression Recall and decide whether to repair the original card with The Spare Stylus before dawn, while an exterminator waits outside to fumigate the silverfish that may be the only reason the desk-mind can imagine at all.",
+        "best_scene": "At 2 a.m., Theodora cranks up a guest card chewed into lace while the desk-mind cheerfully supplies three incompatible names for the missing person."
+      },
+      "after": {
+        "scenario_setup": "In Sincerely, Wrongly Remembered, Theodora Kade receives a new arrival in The Card Catalog Annex whose card has been eaten nearly blank. The desk-mind greets the guest with a dead resident's fears, favorite room, and missing spouse, and the guest begins accepting the borrowed life because it feels kinder than their own. Theodora must use Impression Recall and decide whether to repair the original card with The Spare Stylus before dawn, while an exterminator waits outside to fumigate the silverfish that may be the only reason the desk-mind can imagine at all.",
+        "best_scene": "At 2 a.m., a lone archivist cranks up a guest card chewed into lace while the desk-mind cheerfully supplies three incompatible names for the missing person."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-01-the-filing-echidna.md",
+      "day": "2026-08-01",
+      "title": "The Filing Echidna",
+      "fields": [
+        "scenarios[0].setup",
+        "rewards[skill].grants",
+        "rewards[skill].catch",
+        "locations[0].best_scene"
+      ],
+      "before": {
+        "scenario_setup": "Under the vibe Paperwork for a God, Bramble Osei is mid-stamp in The Reef Cathedral of Her Spine when the Wildlife Spirit Bureau's real inspector wades ashore on the same tide the kaiju always chooses to surface, holding a decade of Bramble Osei's forged authorizations. Bramble Osei must use Wilderness Filing to draft the reef's first legitimate charter before the queue of waiting spirits spills past the transept arch, while The Starlight Stamp is the only thing standing between an unlicensed decade of kindness and a bureau that has just discovered the kaiju was filing right under its nose the entire time.",
+        "skill_grants": "It lets Bramble draft, stamp, and cross-reference an entirely invented but internally consistent bureaucratic form for any creature, species, or spirit, no matter how undocumented.",
+        "skill_catch": "The more elaborate the invented paperwork, the more the reef's spirits start behaving as though the invented rules were real, whether or not Bramble intended them to.",
+        "best_scene": "At slack tide, Bramble balances on a swaying quill-buttress stamping starlight-powder seals onto translucent kelp-paper while a procession of hermit crabs, each towing a tiny soul-light, waits patiently in line."
+      },
+      "after": {
+        "scenario_setup": "In Paperwork for a God, Bramble Osei is mid-stamp in The Reef Cathedral of Her Spine when the Wildlife Spirit Bureau's real inspector wades ashore on the same tide the kaiju always chooses to surface, holding a decade of Bramble Osei's forged authorizations. Bramble Osei must use Wilderness Filing to draft the reef's first legitimate charter before the queue of waiting spirits spills past the transept arch, while The Starlight Stamp is the only thing standing between an unlicensed decade of kindness and a bureau that has just discovered the kaiju was filing right under its nose the entire time.",
+        "skill_grants": "It lets its holder draft, stamp, and cross-reference an entirely invented but internally consistent bureaucratic form for any creature, species, or spirit, no matter how undocumented.",
+        "skill_catch": "The more elaborate the invented paperwork, the more the reef's spirits start behaving as though the invented rules were real, whether or not its user intended them to.",
+        "best_scene": "At slack tide, a lone exorcist balances on a swaying quill-buttress stamping starlight-powder seals onto translucent kelp-paper while a procession of hermit crabs, each towing a tiny soul-light, waits patiently in line."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-03-undermoon-bloom.md",
+      "day": "2026-08-03",
+      "title": "Undermoon Bloom",
+      "fields": [
+        "rewards[item].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "Study the bloom up close without ever stepping into the spores yourself."
+      },
+      "after": {
+        "item_best_used_when": "The bloom is close enough to study, but stepping into the spores themselves would be fatal."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-04-lucky-ladle.md",
+      "day": "2026-08-04",
+      "title": "The Lucky Ladle",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "A mystery thick with an unspoken truth, one that only needs a little steam to rise to the surface, calls for it most.",
+        "skill_best_used_when": "A fate teetering on the edge, needing only the gentlest nudge rather than a forceful rewrite, is when this skill proves its worth."
+      },
+      "after": {
+        "item_best_used_when": "A mystery sits thick with an unspoken truth, needing only a little steam to rise to the surface.",
+        "skill_best_used_when": "A fate teeters on the edge, needing only the gentlest nudge rather than a forceful rewrite."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-06-salt-memory.md",
+      "day": "2026-08-06",
+      "title": "Salt Memory",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when",
+        "rewards[skill].grants"
+      ],
+      "before": {
+        "item_best_used_when": "It proves most valuable when something vital has been cut away that never should have been severed in the first place.",
+        "skill_best_used_when": "Navigating a structure that no living engineer ever designed, where instinct alone cannot be trusted, is exactly the moment Tide Telemetry proves most valuable.",
+        "skill_grants": "Tide Telemetry lets Coral read a hull's stress lines the way sailors once read starcharts, revealing the ship's hidden intentions."
+      },
+      "after": {
+        "item_best_used_when": "Something vital has been cut away that never should have been severed in the first place.",
+        "skill_best_used_when": "A structure looms that no living engineer ever designed, and instinct alone cannot be trusted to navigate it.",
+        "skill_grants": "Tide Telemetry lets its holder read a hull's stress lines the way sailors once read starcharts, revealing the ship's hidden intentions."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-07-corsairs-aria.md",
+      "day": "2026-08-07",
+      "title": "Corsairs' Aria",
+      "fields": [
+        "rewards[item].best_used_when",
+        "locations[0].local_rule",
+        "locations[0].best_scene"
+      ],
+      "before": {
+        "item_best_used_when": "It proves most valuable when a vital clue was spoken aloud only once and can never be asked for again.",
+        "local_rule": "No performance is allowed to finish the final aria, for the drowned house forbids the last note from ever landing.",
+        "best_scene": "The ghost-friend hums the missing note back into the hall, and the chandeliers shiver with chrono-dust as the sea of stars leans in to listen."
+      },
+      "after": {
+        "item_best_used_when": "A vital clue was spoken aloud only once and can never be asked for again.",
+        "local_rule": "No performance is allowed to finish the final aria, for the drowned house forbids the last note from ever landing.",
+        "best_scene": "The ghost-friend hums the missing note back into the hall, and the chandeliers shiver with chrono-dust as the sea of stars leans in to listen."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-12-the-chittering-archive.md",
+      "day": "2026-08-12",
+      "title": "Monsoon Static",
+      "fields": [
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "skill_best_used_when": "The wire calls for it the moment the cable goes dark between verses and the lamps demand current now."
+      },
+      "after": {
+        "skill_best_used_when": "The cable has gone dark between verses, and the lamps have not yet failed."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-13-the-quota-of-bones.md",
+      "day": "2026-08-13",
+      "title": "The Salt Rebellion",
+      "fields": [
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "skill_best_used_when": "When there isn't enough to go around and everyone in line can count, this keeps the peace."
+      },
+      "after": {
+        "skill_best_used_when": "There isn't enough to go around, and everyone in line can count."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-14-the-frill-crested-bracket.md",
+      "day": "2026-08-14",
+      "title": "The Frill-Crested Bracket",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "A flooded ruin or coastal tunnel beneath the coliseum roots, searched for a smuggled escape route, is where this compass earns its keep.",
+        "skill_best_used_when": "It proves most valuable when facing a rigged match or a false champion whose advantage is not what it appears to be."
+      },
+      "after": {
+        "item_best_used_when": "A flooded ruin or coastal tunnel beneath the coliseum roots is being searched for a smuggled escape route.",
+        "skill_best_used_when": "A rigged match or a false champion's advantage is not what it appears to be."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-15-the-slow-bell-of-ninth-ledger.md",
+      "day": "2026-08-15",
+      "title": "Salvage Rights",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "It earns its keep when the way out is underwater and what you are carrying is not.",
+        "skill_best_used_when": "The situation calls for it when a debt is too heavy to carry out by hand and the shortest route to it runs straight through danger."
+      },
+      "after": {
+        "item_best_used_when": "The only route out runs underwater, and whatever is being carried cannot get wet.",
+        "skill_best_used_when": "A debt is too heavy to haul out by hand, and the shortest route to it runs straight through danger."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-17-ever-after-files.md",
+      "day": "2026-08-17",
+      "title": "Third-Act Money",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "The shawl earns its keep in a room where the wearer's own face would get them thrown out before they said a word.",
+        "skill_best_used_when": "The moment to invoke it is right after a scene has locked into an ending everyone in the room already believes."
+      },
+      "after": {
+        "item_best_used_when": "The wearer's own face would get them thrown out of the room before they said a word.",
+        "skill_best_used_when": "A scene has just locked into an ending everyone in the room already believes."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-18-tideglass-reliquary.md",
+      "day": "2026-08-18",
+      "title": "Spawning Tide",
+      "fields": [
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "skill_best_used_when": "It is most useful the moment someone flatly insists they are fine, because that is exactly when the number matters."
+      },
+      "after": {
+        "skill_best_used_when": "Someone standing right in front of you flatly insists they are fine."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-23-the-orchids-dare.md",
+      "day": "2026-08-23",
+      "title": "The Orchid's Dare",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "A bargain, a courtship, or a truce that both parties genuinely intend to keep is the moment this locket's promise takes hold.",
+        "skill_best_used_when": "A situation gone too dangerous to take seriously, one that only sheer nerve can defuse, is exactly where this draw belongs."
+      },
+      "after": {
+        "item_best_used_when": "Two people are making a bargain, a courtship, or a truce that they both genuinely intend to keep.",
+        "skill_best_used_when": "A situation has turned so dangerous that only sheer nerve, not force, can defuse it."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-26-tide-ledger-miracles.md",
+      "day": "2026-08-26",
+      "title": "Six Minutes of Dry Ocean",
+      "fields": [
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "skill_best_used_when": "It proves most useful when crossing exposed or flooded terrain with no visible trail."
+      },
+      "after": {
+        "skill_best_used_when": "The trail has vanished under a flooded, featureless stretch of exposed ground."
+      }
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-28-tasting-menu-eats-back.md",
+      "day": "2026-08-28",
+      "title": "The Tasting Menu Eats Back",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ],
+      "before": {
+        "item_best_used_when": "An ingredient balking at being eaten and pleading its case mid-course is exactly the moment this ladle earns its keep.",
+        "skill_best_used_when": "A totally unknown ingredient with no precedent in the house promises is when this treaty proves most valuable."
+      },
+      "after": {
+        "item_best_used_when": "An ingredient is balking at being eaten and pleading its case mid-course.",
+        "skill_best_used_when": "A totally unknown ingredient arrives with no precedent in the house promises."
+      }
+    }
+  ],
+  "remaining_complaints": [],
+  "pending_live": [
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-18-kite-string-exchange.md",
+      "fields": [
+        "rewards[item].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-30-stitch-echo.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-07-31-silverfish-concierge.md",
+      "fields": [
+        "scenarios[0].setup",
+        "locations[0].best_scene"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-01-the-filing-echidna.md",
+      "fields": [
+        "scenarios[0].setup",
+        "rewards[skill].grants",
+        "rewards[skill].catch",
+        "locations[0].best_scene"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-03-undermoon-bloom.md",
+      "fields": [
+        "rewards[item].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-04-lucky-ladle.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-06-salt-memory.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when",
+        "rewards[skill].grants"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-07-corsairs-aria.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "locations[0].local_rule",
+        "locations[0].best_scene"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-12-the-chittering-archive.md",
+      "fields": [
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-13-the-quota-of-bones.md",
+      "fields": [
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-14-the-frill-crested-bracket.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-15-the-slow-bell-of-ninth-ledger.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-17-ever-after-files.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-18-tideglass-reliquary.md",
+      "fields": [
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-23-the-orchids-dare.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-26-tide-ledger-miracles.md",
+      "fields": [
+        "rewards[skill].best_used_when"
+      ]
+    },
+    {
+      "path": "projects/dream-cycle/backlog/2026-08-28-tasting-menu-eats-back.md",
+      "fields": [
+        "rewards[item].best_used_when",
+        "rewards[skill].best_used_when"
+      ]
+    }
+  ]
+}
