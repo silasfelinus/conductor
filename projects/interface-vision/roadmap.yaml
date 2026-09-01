@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -3305,8 +3305,13 @@ tasks:
 
     Reconciled by conductor sweep: kind_robots PR #2268 confirmed merged
     (2026-08-31T16:26:04Z). Recurring task re-armed to ready per AGENTS.md convention.
-  updated: '2026-09-01T00:33:23Z'
-  implementation_pr: 'silasfelinus/kind_robots#2268'
+
+    Bounded consistency slice: migrate the Dream gallery view-picker toolbar (dream-
+    gallery.vue) from a hand-rolled rounded-2xl border border-base-300 bg-base-100/95
+    surface to kr-panel-flat, preserving the translucent background override, padding,
+    shadow, and backdrop blur. kind_robots PR #2277 open, watching CI.
+  updated: '2026-09-01T00:36:59Z'
+  implementation_pr: 'silasfelinus/kind_robots#2277'
   owner: reviewer
   claimed_by: claude-conductor-sweep-20260901T002802Z-iv104-slice
   claimed_at: '2026-09-01T00:33:23Z'
