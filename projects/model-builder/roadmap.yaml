@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 48
     stakes: reversible
@@ -606,7 +606,34 @@ tasks:
       prettier --check clean. kind_robots PR #2278 open, watching CI.
 
       kind_robots PR #2278 merged (be9f03a). Cycle 71 complete.
-    updated: '2026-09-01T03:27:59Z'
+
+      Cycle 72 (no bug found; operational finding instead): dispatched a worktree-isolated
+      subagent to continue the file sweep. Its worktree's origin/main remote-tracking ref was
+      stale (pinned 50 commits behind real origin/main -- a git-worktree-setup gap, not
+      something the subagent did wrong), so it read model-builder-source-picker.vue believing
+      the LIST-row rounded-lg/border/bg-base-100 -> kr-panel-flat consolidation was still
+      open. It was not: that exact fix already landed on real main via an earlier cycle's PR
+      chain (#2265/#2267/#2269/#2270/#2273/#2278). The subagent verified its (redundant)
+      change fully -- eslint, vue-tsc, test:layout-contract (0 new violations), both model-
+      builder guard scripts -- opened kind_robots PR #2280, got CI green (had to manually
+      workflow_dispatch typecheck.yml/layout-contract.yml since the pull_request webhook never
+      queued any of the ~187 registered workflows for this PR -- a separate, real-looking
+      webhook-delivery gap worth someone's attention if it recurs), then hit a genuine merge
+      conflict against main's already-more-advanced version of the same file. Correctly stood
+      down: closed PR #2280 unmerged, deleted its branch, re-synced onto real origin/main, and
+      re-examined model-builder-run-history.vue, model-builder-progress-matrix.vue,
+      server/api/model-builder/items/[id]/commit.post.ts, server/api/model-
+      builder/runs/index.post.ts, and the full ~3270-line modelBuilderStore.ts against the
+      current tree -- no new bug found in any of them (progress-matrix's selectedItemId
+      staleness concern re-confirmed as a non-issue per cycle 48/51's same finding: History
+      panel always unmounts/remounts the component on run-switch). One minor, out-of-scope
+      observation not treated as this cycle's finding: runs/index.post.ts's body.items array
+      has no explicit server-side length cap (client caps at MAX_BATCH=12) -- low-severity,
+      not a front-end-polish bug. No PR opened for this cycle; re-arming to ready. Next
+      session: verify origin/main is current (git fetch origin main, compare to a fresh git
+      log -1 on GitHub) before trusting a worktree's remote-tracking ref, especially right
+      after a burst of concurrent same-task cycles.
+    updated: '2026-09-01T03:48:54Z'
     owner: worker
     claimed_by: claude-scheduled-20260901T032758-mb-t029
     claimed_at: '2026-09-01T03:27:59Z'
