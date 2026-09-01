@@ -883,6 +883,16 @@ tasks:
     guard so only `agent-profiles/**` accepts a delegation token, while `agent-credentials/**`
     keeps the strict human-only check #2285 shipped. #2289 is unmerged and awaiting either
     your call or a rescoped follow-up.
+
+    ALSO NEW: kind_robots#2290 ("Add scoped agent check-ins and human notes") bundles the
+    identical `authGuard.ts` regression as a stated dependency ("This branch includes the
+    narrow auth-boundary correction from Kind Robots PR #2289") on top of otherwise
+    solid, well-tested new functionality (agent heartbeat check-ins + a human-note inbox,
+    additive schema, transactional note-claiming). Same guard, same reopened path. Flagged
+    on the PR rather than merging or rejecting; suggested it rebase onto a
+    `requireHumanApiUser` that still blocks `first-party-delegation` and use a narrower
+    guard for its two new human-facing routes (`agent-profiles/[id]/notes.post.ts`,
+    `agent-profiles/[id]/activity.get.ts`) instead. Also unmerged, also awaiting your call.
   claimed_by: null
   claimed_at: null
-  updated: '2026-09-01T08:32:00Z'
+  updated: '2026-09-01T08:38:00Z'
