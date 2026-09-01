@@ -181,8 +181,11 @@ clerk" instead. The Scenario is exempt: it is the synthesis piece and names the
 vibe, location, character, and rewards on purpose.
 
 Never name the schema in copy a reader sees. No "the vibe", "this facet", "the
-proposal", "the bundle". A Scenario opens inside the story, never with "Under the
-vibe Paperwork for a God, ...".
+proposal", "the bundle". This bans the schema NOUN, not the titles: the Scenario
+`setup` must still contain the vibe title, location title and character name
+verbatim, which is a structural requirement. Open it "In <Vibe Title>, ..." with no
+schema noun in front — "Under the vibe Paperwork for a God, ..." becomes "In
+Paperwork for a God, ...".
 
 They must explain enough to make sense when a card shows the field by itself.
 Keep the sharpness of a good tagline, but do not confuse brevity with
