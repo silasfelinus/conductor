@@ -547,3 +547,41 @@ def test_resume_pending_is_a_no_op_when_nothing_is_stranded(tmp_path, monkeypatc
 
     assert repair.main(["--resume-pending"]) == 0
     assert "waiting on a live publish" in capsys.readouterr().out
+
+
+def test_an_empty_completion_retries_without_spending_a_correction_attempt(monkeypatch):
+    # Run 33485900585 lost a 16-bundle batch to this: five bundles authored
+    # cleanly, the sixth came back empty twice, and the all-or-nothing batch
+    # discarded all of them. An empty completion carries nothing to correct, so
+    # it is a transport failure, not a bad answer.
+    monkeypatch.setattr(repair.time, "sleep", lambda *_: None)
+    calls = []
+
+    def _flaky(prompt, system, key):
+        calls.append(1)
+        if len(calls) < 3:
+            raise RuntimeError("Claude returned an empty completion.")
+        return "recovered"
+
+    monkeypatch.setattr(repair.author, "call_claude", _flaky)
+
+    assert repair._call_with_transport_retries("p", "k") == "recovered"
+    assert len(calls) == 3
+
+
+def test_a_wrong_answer_is_not_treated_as_a_transport_failure(monkeypatch):
+    # A response that arrived and was wrong belongs to the correction loop, which
+    # can feed the complaint back into the prompt. Retrying it blindly here would
+    # just repeat the same mistake with no new information.
+    monkeypatch.setattr(repair.time, "sleep", lambda *_: None)
+    calls = []
+
+    def _wrong(prompt, system, key):
+        calls.append(1)
+        raise RuntimeError("model refused the request")
+
+    monkeypatch.setattr(repair.author, "call_claude", _wrong)
+
+    with pytest.raises(RuntimeError, match="refused"):
+        repair._call_with_transport_retries("p", "k")
+    assert len(calls) == 1, "a wrong answer must not consume the transport budget"
