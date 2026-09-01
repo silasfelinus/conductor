@@ -3802,7 +3802,7 @@ tasks:
 - id: t-087
   milestone: m6
   title: "Checked-in prisma/generated/ output is stale relative to prisma/schema.prisma (missing AgentProfile models)"
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -3829,9 +3829,16 @@ tasks:
     can't land without their generated client, or (c) both. Whichever is
     chosen, this task's implementer should regenerate now as the first
     concrete step regardless.
+
+    CLOSED 2026-09-01: kind_robots#2294 merged (squash 40884a3), all 40 checks green
+    including the new self-check (Generated Client Parity ran and passed on its own PR).
+    Regenerated the client (vue-tsc: ~16 errors -> 0) and shipped generated-client-parity-
+    contract.yml so this class of drift fails CI going forward instead of being silently
+    rediscovered each session.
   claimed_by: claude-scheduled-20260901T101500Z-kr-t087
   claimed_at: '2026-09-01T10:31:25Z'
-  updated: '2026-09-01T10:31:25Z'
+  updated: '2026-09-01T10:51:56Z'
+  implementation_pr: 'silasfelinus/kind_robots#2294'
 
 - id: t-088
   milestone: m6
