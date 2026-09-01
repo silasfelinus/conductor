@@ -259,6 +259,28 @@ def test_bureaucracy_can_be_intentional_when_a_facet_requests_it(brief):
 
 
 def test_story_rut_gets_a_corrective_retry(monkeypatch, brief):
+    # The bureaucracy rut check is deliberately suppressed when the day's Facets
+    # ask for that motif, and `brief` comes from the LIVE Facet draw -- random
+    # per call, so on some days it hands this test Facets like "Archive Horror"
+    # or "Bureaucratic Fantasy" and suppresses the very complaint the test
+    # asserts. Correct product behaviour, flaky test: it passed in CI at 05:43
+    # and failed forty minutes later with no code change between.
+    #
+    # Scrub the markers out of every string in the seed Facets, not just the
+    # titles -- a first pass that only rewrote title and slug still failed,
+    # because the draw had put the marker somewhere else in the Facet.
+    def _scrub(node):
+        if isinstance(node, dict):
+            return {key: _scrub(value) for key, value in node.items()}
+        if isinstance(node, list):
+            return [_scrub(value) for value in node]
+        if isinstance(node, str) and any(
+            marker in node.casefold() for marker in authoring.BUREAUCRACY_FACET_MARKERS
+        ):
+            return "storm chase"
+        return node
+
+    brief["seed_facets"] = _scrub(brief["seed_facets"])
     bad = _valid_bundle(brief)
     bad["title"] = "Tide Ledger Miracles"
     bad["idea"] = "A filing office tallies miracles in a ledger and issues tide permits."

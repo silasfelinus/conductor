@@ -336,6 +336,56 @@ def _circular_grant(name: str, grants: str) -> str:
     return ""
 
 
+# Card copy states the situation; it does not editorialize about it.
+# "Unfortunately, the same whistle that calls the drones home also calls the
+# spores" -- the sentence is already the bad news, so the adverb adds nothing.
+EDITORIALIZING_OPENER = re.compile(
+    r"^(?:unfortunately|sadly|tragically|ironically|predictably|naturally"
+    r"|obviously|of\s+course|needless\s+to\s+say)\b",
+    re.IGNORECASE,
+)
+
+
+def _character_self_reference(proposal: dict) -> list[str]:
+    """Flag a role_drive that opens by naming the character it belongs to.
+
+    The card prints the name directly above, exactly as it does for a location's
+    `known_for` and a reward's `grants`, so "Dolan must find who re-aimed the
+    mirrors" spends its subject on what the reader just read. The catalog's own
+    convention is the pronoun -- 27 of 34 already open "She ..." or "He ...".
+    """
+    problems: list[str] = []
+    characters = proposal.get("characters") if isinstance(proposal.get("characters"), list) else []
+    for index, row in enumerate(characters):
+        if not isinstance(row, dict):
+            continue
+        name = str(row.get("name") or "")
+        drive = str(row.get("role_drive") or "")
+        words = _name_words(re.sub(r"\b(?:Dr|Mr|Ms|Mrs)\.?\s*", "", name))
+        if not words or not drive.strip():
+            continue
+        given = words[0]
+        if re.match(rf"^(?:the\s+)?{re.escape(given)}\b", drive, re.IGNORECASE):
+            problems.append(
+                f"characters[{index}].role_drive opens by naming the character "
+                f"({given!r}); the card prints the name directly above, so open with "
+                "the pronoun as the rest of the catalog does"
+            )
+    return problems
+
+
+def _editorializing(label: str, value: Any) -> list[str]:
+    if not isinstance(value, str):
+        return []
+    match = EDITORIALIZING_OPENER.match(value.strip())
+    if not match:
+        return []
+    return [
+        f"{label} opens by editorializing ({match.group(0)!r}); the sentence already "
+        "carries the judgement, so state it and cut the adverb"
+    ]
+
+
 def _reward_self_reference(proposal: dict) -> list[str]:
     problems: list[str] = []
     rewards = proposal.get("rewards") if isinstance(proposal.get("rewards"), list) else []
@@ -451,9 +501,11 @@ def complaints(proposal: Any) -> list[str]:
         problems.extend(_check(label, value, minimum_words))
         problems.extend(_label_echo(label, value))
         problems.extend(_schema_leak(label, value))
+        problems.extend(_editorializing(label, value))
         if label.endswith(".grants"):
             problems.extend(_padding(label, value))
     problems.extend(_vibe_echo(proposal))
     problems.extend(_borrowed_names(proposal))
     problems.extend(_reward_self_reference(proposal))
+    problems.extend(_character_self_reference(proposal))
     return problems

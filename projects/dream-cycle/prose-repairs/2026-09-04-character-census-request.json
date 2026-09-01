@@ -1,0 +1,20 @@
+{
+  "scope": "all-built",
+  "reason": "Census of the three character fields: all 34 role_drive, carries and complication values read side by side. The writing is strong -- 'She picks fights with the one person she wants to keep, mistaking every soft moment for a dare she has to win', 'She is keeping one promise she has told absolutely no one about', 'He is entirely confident he can hand this off to somebody senior, and there is nobody senior.' Two defect classes. (1) Seven of 34 role_drive values open by naming the character: 'Dolan must find who re-aimed the mirrors', 'Grudge Fenrik keeps the reclamation yard's drone fleet flying'. The card prints the name directly above, so the subject is spent on what the reader just read -- the third field this same rule applies to, after known_for and grants. The catalog's own convention is already the pronoun: 27 of 34 open 'She ...' or 'He ...'. (2) One complication opens by editorializing ('Unfortunately, ...') when the sentence already carries the judgement. Five more go in as extra_fields notes, all shapes no regex generalizes honestly. Two candidate checks were investigated and DROPPED rather than added: a carries/complication word-overlap score separated the two real redundancies at 0.38 but the next value down sits at 0.22 and is good writing that builds on its object rather than restating it, so the distinction is semantic and a threshold would eventually churn good prose; and a noun-phrase-fragment detector produced 41 hits of which only a handful were real, because 'A tremor spooks the herd right before showtime' is a perfectly good sentence.",
+  "send_digest": false,
+  "extra_fields": {
+    "2026-08-11": {
+      "characters[0].role_drive": "Not a sentence. 'A tournament physician who treats the fallen between rounds, keeping every fighter alive long enough to fight again, unable to stop even as the arena's watching things start to recognize her by name' is a noun phrase with no main verb. It punctuates like a sentence and passes every automated check without parsing as one. Rewrite with a subject and a finite verb, keeping the between-rounds treatment, the compulsion she cannot stop, and the watching things learning her name.",
+      "characters[0].carries": "Not a sentence. 'A cracked leather medical satchel stitched shut with silver wire, worn slung low against her hip like a marsupial pouch, its buckles replaced with small bones' is a noun phrase with no main verb. Rewrite as a proper sentence, keeping the satchel, the silver wire, the marsupial-pouch carry, and the bone buckles."
+    },
+    "2026-08-03": {
+      "characters[0].complication": "The first clause repeats `carries` almost word for word -- carries is 'a cracked heavensteel whistle that calls the drones home' and this opens 'the same whistle that calls the drones home'. On the character card both are shown, so the reader is told twice. Keep only the new information: that the whistle also calls the spores, so every rescue invites the bloom."
+    },
+    "2026-08-10": {
+      "characters[0].complication": "Restates `carries` rather than complicating it. carries already says she reads the townsfolk's letters aloud over the open radio on every run; this says she narrates every worry out loud and the radio carries it down to the town. Same fact twice. Give the complication something carries does not already establish -- what it costs her, or what the town does with what it hears."
+    },
+    "2026-08-07": {
+      "characters[0].complication": "Two problems. It is a non-sequitur against role_drive, which is about recovering her mother's stolen voice in the opera's haunted acoustics, while this is about a childhood imaginary friend turning out to be real. And 'the ship's navigator' is a definite reference to a ship the card never establishes. Tie the complication to the voice she is chasing, and either introduce the ship or drop it."
+    }
+  }
+}
