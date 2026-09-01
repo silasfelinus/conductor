@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     recurring: true
     passes: 48
     stakes: reversible
@@ -645,7 +645,11 @@ tasks:
       since cycle 59); prettier clean; git status scoped to exactly 6 files; eslint/vue-tsc
       left to CI (no node_modules/.nuxt in this sandbox). kind_robots PR #2282 open, watching
       CI.
-    updated: '2026-09-01T05:32:54Z'
+
+      kind_robots PR #2282 merged squash 7888b17. Cycle 73 complete: server-side items-array
+      cap landed, all required CI checks green before merge. Re-arming to ready for the next
+      bounded slice.
+    updated: '2026-09-01T05:43:00Z'
     owner: reviewer
     claimed_by: claude-scheduled-20260901T052746Z-mb-t029
     claimed_at: '2026-09-01T05:27:47Z'
