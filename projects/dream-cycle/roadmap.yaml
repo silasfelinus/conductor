@@ -643,3 +643,29 @@ tasks:
     `--verify-live --strict` check to t-006's recurring pass (or a dedicated CI job)
     so the next builder-fix-that-doesn't-back-propagate is caught the same cycle,
     not the next time it happens to appear on a card.
+- id: t-025
+  milestone: m5
+  title: >-
+    Flag a prose-repair bundle that fails authoring N runs in a row instead of
+    retrying it forever
+  status: ready
+  owner:
+  passes: 0
+  stakes: reversible
+  updated: '2026-09-01T00:00:00Z'
+  note: >
+    Kaizen from PR #3390 (conductor sweep, 2026-09-01): daily-dream-prose-repair.yml
+    was discarding an entire batch (13+ good repairs) whenever a single bundle came
+    back as an empty Claude completion, which #3390 fixed by making atomicity
+    per-bundle instead of per-batch -- a failed bundle is now left untouched,
+    recorded in `failed_bundles`, and simply retried next run. That's the right fix
+    for a transient flake, but nothing yet distinguishes "flaky, will succeed
+    eventually" from "this specific bundle's content reliably triggers an empty
+    completion" (e.g. a content-policy edge case in its own proposal text) -- such a
+    bundle would now retry silently forever, once per scheduled run, with nobody
+    ever told. Track consecutive failure counts per bundle (day/title) across runs
+    -- e.g. a small state file alongside the backlog, or a count embedded in the
+    audit -- and once a bundle hits some small threshold (3-5 consecutive failed
+    runs), stop auto-retrying and surface it explicitly (a needs-human note, or at
+    minimum a distinct stderr/receipt marker a human sweep would notice) rather than
+    let it recur unnoticed indefinitely.
