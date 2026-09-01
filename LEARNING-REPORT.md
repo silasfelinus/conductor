@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-01T15:39:39Z
+Generated: 2026-09-01T15:54:53Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **849**
-- Outcomes: blocked: 16, cancelled: 1, done: 832
+- Closed tasks recorded: **851**
+- Outcomes: blocked: 16, cancelled: 1, done: 834
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
-| interface-vision | 95 | 100% |
+| interface-vision | 96 | 100% |
 | kapowarr | 48 | 100% |
 | kind-economy | 6 | 100% |
 | kind-robots | 54 | 98% |
@@ -46,7 +46,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | mandarin-tutor | 9 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 80 | 100% |
+| model-builder | 81 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 833 | 99% |
+| software | 835 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-01 `model-builder/t-029` — Cycle 77: a new doc-comment's own prose can trip a regex-based static guard that scans for keywords without distinguishing code from comments -- verifyModelBuilder CompletionGate.ts's `\bawait\b`-based "find the function's first await" heuristic matched the bare word inside this cycle's own explanatory comment ("per-item-await loops"), shifting its notion of where real async work starts and flagging an unrelated pre-existing comment 20+ lines later as an ungated write. A regex-based guard against source text is exactly as blind to comments/strings as the pattern it's matching, so a new comment near guarded code should be checked against every such guard's actual matching logic, not just eyeballed for correctness.
+- 2026-09-01 `interface-vision/t-104` — A recurring task's note: field narrated a merge and a "re-arming to ready" no-op cycle that its status: field never actually recorded -- the narrative outran the machine-readable state by at least one cycle before check_pr_merged_drift.py's merged-implementation_pr-vs-claimed-status check caught it. A cycle that intends to re-arm a recurring task should verify the status: field actually changed, not just that the note says it did.
 - 2026-09-01 `model-builder/t-029` — Cycle 76: a prior cycle's own regression fix (cycle 75's runId-based release guard) had a same-run-revisit gap -- a captured run id is not a one-shot token when the store caches and reuses run objects (openRun's cached-adopt branch, resumeRun's revisit branch), so re-checking a fix's *invariant* against the actual data model (can this id compare equal again after the abandon event?) rather than trusting the fix's own stated shape is what surfaced this. Fixed with a monotonic epoch counter instead of strengthening the id check further. Also had to broaden two existing guards' regexes (not just add a new one) since the fixed condition's shape legitimately changed -- worth checking whether a new guard should tighten or loosen a prior one when a fix's shape evolves, rather than always adding purely-additive checks.
 - 2026-09-01 `rainbow-butterflies/t-037` — Straightforward kaizen-slice implementation (own PR, own review/merge under the standing merge-when-green authorization): reusing t-036's authAttemptLimit helper in login.post.ts surfaced a real, separate bug worth fixing in the same PR rather than filing separately -- the handler's catch block flattened every thrown error, including the helper's own 429, into a generic 500 via `sendError(event, new Error(message))`. A quick grep confirmed this exact "no isError() check before sendError" pattern doesn't recur elsewhere in server/api, so no follow-up kaizen task was warranted for it.
 - 2026-09-01 `rainbow-butterflies/t-036` — Reviewed kind_robots#2297's rate-limit slice; its one CI failure was a real but narrow type error, not a scope/quality problem: h3 1.15.11 types the Retry-After response header as number, and the new helper passed String(...). Fixing and pushing a 2-line diff directly to the Worker's PR branch (rather than bouncing it back to the Worker with retry_context) got it green in one cycle. Also worth flagging: the PR auto-merged on its own once the known-flaky 'Contract verifiers'/ESLint-ratchet check (conductor/t-132) finally completed, without this session calling merge_pull_request -- consistent with the PR's opener having enabled auto-merge, and a reminder to re-check PR state (not just CI) before assuming a merge still needs to be triggered manually.
@@ -99,8 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-08-31 `interface-vision/t-104` — Slice 32 of the recurring kr-panel-flat consistency sweep -- pages/music-mentor.vue's feature-row div swapped hand-rolled "border border-base-300 bg-base-100" for the shared primitive, no geometry/behavior change; kind_robots#2256, 38/38 checks green. Also caught that check_pr_merged_drift.py's API-403 output was masking a genuine unreconciled gap, not just its usual unverifiable-transport false alarm: a separate, earlier slice (kind_robots#2253, Academy Timeline) had merged with zero note entry ever recorded for it. Cross-checked via the MCP connector rather than trusting the exit code alone, and backfilled the missing note before closing this cycle -- worth distinguishing "already reconciled, just can't verify from this sandbox" from "genuinely never reconciled" rather than assuming the former by default.
 - 2026-08-31 `rainbow-butterflies/t-011` — A useful mission funnel can stay decision-grade without a visitor graph: bucket attribution into a fixed vocabulary, store event time only at the precision the decision needs, derive product activity from canonical records, and keep return-visit state browser-local instead of transmitting an identifier.
 - 2026-08-31 `kind-robots/t-085` — A CI check flagging stale foreign-key-shaped ids (CHARACTER/BOT references in authored content batches) is worth checking against the live roster by name, not just id, before assuming a mechanical remap exists -- none of the 17 stale character names in this corpus existed anywhere in production's 240-row roster, meaning they were deleted/replaced outright rather than renumbered. When no remap exists and the content is voice-authored dialogue this session has no context for, pruning the specific violating items (rather than inventing new dialogue under time pressure) is the safer fix -- it gets CI green without risking a second round of creative-contract-shaped violations, and the dropped targets are recorded as a follow-up kaizen task (t-086) for a session that can invest in matching voice properly.
-- 2026-08-31 `interface-vision/t-104` — Slice 80 of the recurring kr-panel-flat consistency sweep -- academy-timeline.vue's header and card-toggle surfaces swapped hand-rolled "border border-base-300 bg-base-100" for the shared primitive, no geometry/behavior change. Found via a fresh select_role.py run that flagged the sandbox's direct GitHub API calls all 403'ing (expected, MCP-only transport) but the underlying worker/reviewer signal was still readable once cross-checked against the MCP connector directly -- one open PR (kind_robots#2253), 37/37 checks green, posted a review-claim marker before merging per the rotation-collision protocol.
-- 2026-08-31 `rainbow-butterflies/t-031` — A kaizen task that says "no new schema needed" is worth taking literally and verifying, not just trusting -- confirmed escalateHealthClaimFlagsIfNeeded() is the only code path that ever flips isPublic:false on a ToForum Chat row before building the admin queue query around that invariant, rather than adding a dedicated flag/reason column. Following an existing sibling admin review-queue (social-drafts) for the fetch/approve-reject store and page shape kept the new surface consistent with house style with no new conventions invented.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-01T15:39:39Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-01T15:54:53Z_
