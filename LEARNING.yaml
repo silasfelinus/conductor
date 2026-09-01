@@ -11960,3 +11960,14 @@ records:
     LEARNING.yaml records -- a YAML-breaking unescaped colon and an invalid failure_category enum
     value); root-caused and fixed both in a separate PR (#3316) rather than treating the failure as
     this PR's problem, confirming the fix by reproducing the original failure locally first.
+- date: '2026-09-01'
+  project: rainbow-butterflies
+  task: t-028
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Deployment roadmaps should reconcile against observed production state before retaining a launch
+    gate; once the approved domain is already live, continuing to present activation as future work creates
+    misleading project state.

@@ -471,28 +471,17 @@ tasks:
   milestone: m3
   title: "Activate the approved public Rainbow Butterflies deployment and domain"
   status: done
-  owner:
   passes: 0
   stakes: outward-facing
   gate_human: true
   approved_by_human: true
   depends_on: t-027
-  note: >-
-    FOR SILAS: After explicit approval of the concrete deployment, activate the production application and rainbowbutterflies.org
-    DNS, provide required production secrets through the approved secret store, verify TLS/auth callbacks/API connectivity,
-    and smoke-test the public site. This task does not authorize social-account creation, publishing outreach elsewhere, ad
-    spend, or financial configuration. Do not perform DNS/secrets/public deployment from the general standing autonomy instruction
-    alone.
+  note: |-
+    FOR SILAS: After explicit approval of the concrete deployment, activate the production application and rainbowbutterflies.org DNS, provide required production secrets through the approved secret store, verify TLS/auth callbacks/API connectivity, and smoke-test the public site. This task does not authorize social-account creation, publishing outreach elsewhere, ad spend, or financial configuration. Do not perform DNS/secrets/public deployment from the general standing autonomy instruction alone.
+    CLEARED 2026-08-31 by Silas directly in this Claude Code session: he set up the hosting himself, so the deployment and domain activation this task gates was already satisfied and was no longer needed work. Verified independently that https://rainbowbutterflies.org returns HTTP 200. No DNS, secret, routing or deployment action was performed by any agent -- this is roadmap reconciliation only, per CONTROL.md's human gate clearance rule. Its listed dependency t-027 (human visual acceptance of the MVP) remains open and unapproved; Silas cleared the hosting question only.
 
-    CLEARED 2026-08-31 by Silas directly in this Claude Code session: he set up the hosting
-    himself, so the deployment and domain activation this task gates was already satisfied
-    and was no longer needed work. Verified independently that
-    https://rainbowbutterflies.org returns HTTP 200. No DNS, secret, routing or deployment
-    action was performed by any agent -- this is roadmap reconciliation only, per
-    CONTROL.md's human gate clearance rule. Its listed dependency t-027 (human visual
-    acceptance of the MVP) remains open and unapproved; Silas cleared the hosting question
-    only.
-  updated: '2026-08-31T22:12:49Z'
+    Silas confirmed on 2026-08-31 that rainbowbutterflies.org is already publicly live, so the old task whose sole purpose was activating the approved public deployment/domain is satisfied. This closeout records existing production reality; it does not perform a new DNS, routing, account, secret, or deployment mutation.
+  updated: '2026-09-01T01:14:00Z'
 
 - id: t-001
   milestone: m1
@@ -731,35 +720,17 @@ tasks:
   milestone: m4
   title: "Review launch evidence and propose the long-running outreach loop"
   status: needs-human
-  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-011
-  note: >-
-    After the first real pilots, summarize donation-click movement, contributions, useful
-    conversations, moderation burden, platform friction, and content performance. Recommend
-    what to stop, what to scale, and whether Rainbow Butterflies should become a continuous
-    Conductor program for ongoing ethical outreach. Do not invent success from engagement
-    counts; fundraising and useful contribution are the north stars.
+  note: |-
+    After the first real pilots, summarize donation-click movement, contributions, useful conversations, moderation burden, platform friction, and content performance. Recommend what to stop, what to scale, and whether Rainbow Butterflies should become a continuous Conductor program for ongoing ethical outreach. Do not invent success from engagement counts; fundraising and useful contribution are the north stars.
+    BLOCKED (soft): this task asks to review evidence from "the first real pilots" (donation-click movement, contributions, moderation burden, platform friction, content performance) and recommend whether to scale/stop/continuize the outreach loop. No real pilot has actually launched yet -- t-009 (agent-native community onboarding) and t-010 (human-network outreach pilot) are still status:needs-human/unexecuted, and t-027 (MVP visual acceptance)/t-028 (public deployment+domain activation) are also still needs- human, so the public forum is still pre-launch (FORUM-LAUNCH-PREP.md: "Status: draft, unpublished. Nothing in this file has been posted anywhere."). Writing a launch-evidence summary now would mean inventing numbers, which the task note itself and ETHICS.md both forbid ("Do not invent success from engagement counts"). Setting soft_gate rather than doing nothing: t-011 (mission-funnel instrumentation) is done and ready to capture real data the moment a pilot runs, so this task is genuinely just waiting on t-009/t-010/t-027/t-028, not on missing design work. Re-run this task once at least one real pilot (t-009 or t-010) has been approved and run long enough to produce data worth summarizing.
 
-    BLOCKED (soft): this task asks to review evidence from "the first real pilots"
-    (donation-click movement, contributions, moderation burden, platform friction, content
-    performance) and recommend whether to scale/stop/continuize the outreach loop. No real
-    pilot has actually launched yet -- t-009 (agent-native community onboarding) and t-010
-    (human-network outreach pilot) are still status:needs-human/unexecuted, and t-027 (MVP
-    visual acceptance)/t-028 (public deployment+domain activation) are also still needs-
-    human, so the public forum is still pre-launch (FORUM-LAUNCH-PREP.md: "Status: draft,
-    unpublished. Nothing in this file has been posted anywhere."). Writing a launch-evidence
-    summary now would mean inventing numbers, which the task note itself and ETHICS.md both
-    forbid ("Do not invent success from engagement counts"). Setting soft_gate rather than
-    doing nothing: t-011 (mission-funnel instrumentation) is done and ready to capture real
-    data the moment a pilot runs, so this task is genuinely just waiting on
-    t-009/t-010/t-027/t-028, not on missing design work. Re-run this task once at least one
-    real pilot (t-009 or t-010) has been approved and run long enough to produce data worth
-    summarizing.
+    V2 scope reassessment on 2026-08-31 confirms that launch-evidence review should not run merely because telemetry exists. The real outreach pilots are still human-gated and have not produced decision-grade evidence. Defer this review until approved pilot activity has actually run; meanwhile reversible v2 product work should continue under PRODUCT-V2.md.
   claimed_by: claude-scheduled-20260831T213023Z-rb-t014
   claimed_at: '2026-08-31T21:30:24Z'
-  updated: '2026-08-31T21:30:43Z'
+  updated: '2026-09-01T01:15:00Z'
   soft_gate: true
 
 - id: t-030
