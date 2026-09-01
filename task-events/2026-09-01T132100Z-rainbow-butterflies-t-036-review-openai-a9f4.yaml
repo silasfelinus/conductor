@@ -1,9 +1,0 @@
-version: 1
-project: rainbow-butterflies
-task: t-036
-operation: review
-owner: worker
-session: openai-scheduled-20260901T131524Z-rainbow-t036-a9f4
-updated: '2026-09-01T13:21:00Z'
-note: >-
-  Implemented the unambiguous rate-limit slice in Kind Robots: first-party password exchange now applies conservative in-memory failure windows per IP+username and per IP, returns 429 with Retry-After when exhausted, and clears the pair budget after successful authentication. Added contract coverage. Client-secret and delegation-revocation choices remain explicit human security/product gates and are not silently decided by this implementation.
