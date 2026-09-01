@@ -12005,3 +12005,22 @@ records:
     the helper's own 429, into a generic 500 via `sendError(event, new Error(message))`.
     A quick grep confirmed this exact "no isError() check before sendError" pattern doesn't
     recur elsewhere in server/api, so no follow-up kaizen task was warranted for it.
+- date: '2026-09-01'
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Cycle 76: a prior cycle's own regression fix (cycle 75's runId-based release guard)
+    had a same-run-revisit gap -- a captured run id is not a one-shot token when the
+    store caches and reuses run objects (openRun's cached-adopt branch, resumeRun's
+    revisit branch), so re-checking a fix's *invariant* against the actual data model
+    (can this id compare equal again after the abandon event?) rather than trusting the
+    fix's own stated shape is what surfaced this. Fixed with a monotonic epoch counter
+    instead of strengthening the id check further. Also had to broaden two existing
+    guards' regexes (not just add a new one) since the fixed condition's shape legitimately
+    changed -- worth checking whether a new guard should tighten or loosen a prior one
+    when a fix's shape evolves, rather than always adding purely-additive checks.
