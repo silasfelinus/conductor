@@ -668,6 +668,28 @@ def publish_live(receipt_path: Path) -> int:
     return 0
 
 
+def stranded_receipt(directory: Path | None = None) -> Path | None:
+    """Return a receipt whose live publish never finished, if one exists.
+
+    The two-phase split guarantees source is durable before production is
+    touched, but it left the second phase unreachable once the request file was
+    consumed: run 33477217234 wrote all 17 bundles to main, then died partway
+    through publishing on a Kind Robots timeout, and no later run could pick the
+    receipt up. Source-ahead-of-live is the safe direction, but only if
+    something can still close the gap. Publishing is idempotent by content, so
+    resuming re-patches already-patched rows harmlessly.
+    """
+    folder = (ROOT / "projects" / "dream-cycle" / "prose-repairs") if directory is None else directory
+    for path in sorted(folder.glob("*-applied.json")):
+        try:
+            receipt = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if receipt.get("pending_live"):
+            return path
+    return None
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("request", nargs="?", type=Path)
@@ -675,7 +697,21 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--strict", action="store_true", help="return nonzero when audit finds complaints")
     parser.add_argument("--publish", type=Path, metavar="RECEIPT",
                         help="phase two: patch live rows from an already-committed receipt")
+    parser.add_argument("--resume-pending", action="store_true",
+                        help="publish any receipt whose live phase never finished")
     args = parser.parse_args(argv)
+
+    if args.resume_pending:
+        receipt_path = stranded_receipt()
+        if receipt_path is None:
+            print("No prose-repair receipt is waiting on a live publish.")
+            return 0
+        print(f"Resuming live publish for {receipt_path.name}")
+        try:
+            return publish_live(receipt_path)
+        except (OSError, KeyError, TypeError, ValueError, RuntimeError, json.JSONDecodeError) as error:
+            print(f"Daily Dream live publish failed: {error}", file=sys.stderr)
+            return 1
 
     if args.publish:
         try:

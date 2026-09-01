@@ -514,3 +514,36 @@ def test_a_noted_editorial_field_must_actually_change(tmp_path, monkeypatch):
         repair._apply_batch(request_path, request)
 
     assert "the second clause restates the first" in prompts[0], "the note must reach the model"
+
+
+def test_a_stranded_receipt_is_found_so_the_publish_can_be_resumed(tmp_path, monkeypatch):
+    # Run 33477217234 wrote 17 bundles to main and then died partway through
+    # publishing on a Kind Robots timeout. Source-ahead-of-live is the safe
+    # failure direction, but the request file had already been consumed, so no
+    # later run could reach the receipt and finish the job. Every run now looks
+    # for a receipt still carrying pending_live.
+    monkeypatch.setattr(repair, "ROOT", tmp_path)
+    folder = tmp_path / "projects" / "dream-cycle" / "prose-repairs"
+    folder.mkdir(parents=True)
+    (folder / "2026-09-01-done-applied.json").write_text(
+        json.dumps({"status": "applied", "pending_live": []}), encoding="utf-8"
+    )
+    assert repair.stranded_receipt() is None, "a finished receipt is not stranded"
+
+    stranded = folder / "2026-09-03-reward-census-applied.json"
+    stranded.write_text(
+        json.dumps({
+            "status": "source-written",
+            "pending_live": [{"path": "projects/dream-cycle/backlog/x.md", "fields": ["idea"]}],
+        }),
+        encoding="utf-8",
+    )
+    assert repair.stranded_receipt() == stranded
+
+
+def test_resume_pending_is_a_no_op_when_nothing_is_stranded(tmp_path, monkeypatch, capsys):
+    monkeypatch.setattr(repair, "ROOT", tmp_path)
+    (tmp_path / "projects" / "dream-cycle" / "prose-repairs").mkdir(parents=True)
+
+    assert repair.main(["--resume-pending"]) == 0
+    assert "waiting on a live publish" in capsys.readouterr().out
