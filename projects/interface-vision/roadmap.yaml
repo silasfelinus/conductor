@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3382,11 +3382,20 @@ tasks:
     kind_robots PR #2296 merged squash 6bcedc3fa12c953bb70684f5d9e69cc98a4527f2, all 39
     checks green, mergeable_state clean before merge. Re-arming this recurring consistency
     task for the next bounded slice.
-  updated: '2026-09-01T13:51:33Z'
+
+    No-op cycle: re-swept the two established narrow migration pools (translucent
+    rounded-2xl/3xl border/bg-base-100/<opacity> panels; raw min-h-0 flex-1 overflow-y-auto
+    overscroll-contain outside .kr-scroll) plus the .kr-toolbar exact-match pool -- all
+    still empty, same as the immediately preceding cycle (PR #2296 merged minutes earlier in
+    this same session run). No new candidates surfaced. Re-arming to ready without opening a
+    PR; the flagged rounded-3xl border border-base-300 bg-base-100 p-5 shadow-sm page-
+    section shape remains the most promising next pool but still needs a design decision
+    before any migration, per the prior cycle's note.
+  updated: '2026-09-01T13:52:19Z'
   implementation_pr: 'silasfelinus/kind_robots#2296'
   owner: worker
-  claimed_by: claude-scheduled-20260901T135130Z-ifv-t104
-  claimed_at: '2026-09-01T13:51:33Z'
+  claimed_by: null
+  claimed_at: null
 
 - id: t-105
   milestone: m6
