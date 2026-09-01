@@ -979,7 +979,7 @@ tasks:
 - id: t-037
   milestone: m2
   title: "Reuse t-036's authAttemptLimit helper to rate-limit the ordinary /api/auth/login endpoint"
-  status: ready
+  status: claimed
   owner: worker
   passes: 0
   stakes: reversible
@@ -991,3 +991,6 @@ tasks:
     clearAuthFailures into login.post.ts the same way password.post.ts uses them, and extend
     that endpoint's own contract test to assert the throttling call sites, mirroring
     tests/contracts/verifyFirstPartyDelegation.ts's pattern.
+  claimed_by: claude-scheduled-20260901T135130Z-rbf-t037
+  claimed_at: '2026-09-01T13:52:31Z'
+  updated: '2026-09-01T13:52:31Z'
