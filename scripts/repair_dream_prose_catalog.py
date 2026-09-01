@@ -183,8 +183,25 @@ sentence per field. Preserve the voice and concrete imagery already present.
 Do NOT write a field as a grammatical continuation of its own name. The card already
 prints a label, so `known_for` must not be phrased to follow "known for", `carries` must
 not be phrased to follow "carries", and `best_used_when` must not be phrased to follow
-"best used when" (nor restate it as "Use it when ..."). Each value has to stand on its
-own as a sentence. Referring to other objects in this same bundle by name is fine.
+"best used when". Each value has to stand on its own as a sentence.
+
+`best_used_when` names a CIRCUMSTANCE and nothing else. Never claim the reward is useful
+anywhere in it -- not at the front ("It proves most valuable when ...", "The shawl earns
+its keep in ...") and not at the end ("... is exactly the moment this ladle earns its
+keep", "... is when this treaty proves most valuable"). Moving the claim to the end is
+not a fix; delete it. Do not open with "When" and do not write an instruction to the
+reader ("Study the bloom ..."). Write the situation as a plain declarative sentence:
+"The loudest person in the room is not the injured one." "Everyone agrees on what
+happened but not on when it happened." "There is nowhere flat for a hundred kilometres."
+
+Reward and location copy must never name this bundle's character. Every asset is meant
+to be liftable into a different story on its own, and a reward that reads "It lets
+Bramble draft and stamp ..." is welded to one person. Describe the bearer generically
+("its holder", "a clerk", "whoever carries it"). Scenario copy is exempt -- a scenario is
+a synthesis piece and may name the vibe, location, character, and rewards freely.
+
+Never name our own schema in copy a reader sees: no "the vibe", "this facet", "the
+proposal", "the bundle". A scenario opens in the story, not with "Under the vibe X, ...".
 
 Fields that failed the current quality contract:
 {json.dumps(complaints, ensure_ascii=False, indent=2)}
@@ -467,10 +484,25 @@ def _apply_batch(request_path: Path, request: dict[str, Any]) -> list[dict[str, 
         raise RuntimeError("ANTHROPIC_API_KEY is required to author prose repairs")
 
     bundles = _load_built_catalog()
+    # Hand-picked editorial targets, keyed by proposal date. The contract catches
+    # defect *classes*; this is the lane for the one-off sentence an editor can
+    # see is weak but that no honest regex generalizes -- a local_rule whose
+    # second clause restates its first, a definite reference to something never
+    # introduced. Without it the only way to repair a sentence you can read is
+    # wrong is to invent a detector for its entire class.
+    extra_fields = request.get("extra_fields") or {}
+    unknown = [label for labels in extra_fields.values() for label in labels
+               if label not in FIELD_PATHS]
+    if unknown:
+        raise ValueError(f"extra_fields names unknown field(s): {sorted(set(unknown))}")
+
     authored: list[dict[str, Any]] = []
     for bundle in bundles:
         proposal = bundle["proposal"]
         fields = _complaint_fields(proposal)
+        for label in extra_fields.get(str(bundle["day"]), []):
+            if label not in fields:
+                fields.append(label)
         if not fields:
             continue
         patch, candidate = _author_patch(proposal, fields, api_key)

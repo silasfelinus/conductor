@@ -67,27 +67,84 @@ LABEL_ECHOES = {
 ECHO_WINDOW_WORDS = 8
 
 # `best_used_when` names a SITUATION; the card prints "Best used when:" in front
-# of it. Any "<verb> it when ..." opening therefore stutters, not just the
-# literal "use it when" this list originally spelled out -- the catalog was full
-# of "Reach for it when", "Call on it when" and "Rely on it when", which the
-# phrase list sailed past. Matching the construction instead of the phrasing is
-# the difference between fixing an instance and fixing the class.
-ECHO_PATTERNS = {
-    "best_used_when": re.compile(
-        # "Reach for it when", "Call on it when", "Rely on it when", "Use it when"
-        r"^(?!it\b|this\b)\w+(?:\s+(?:on|for|to|upon))?\s+it\s+(?:when|once|if|the moment)\b"
-        # "It works best when", "It serves best when", "It shines when",
-        # "This helps when" -- the third pass at this same defect. Round one
-        # banned the literal phrase "use it when"; round two banned "<verb> it
-        # when" but excluded openings starting with "It" to protect "It gives
-        # ...", and 27 rewards promptly sat in that exclusion. The subject is
-        # the reward either way; the situation the label asks for starts after
-        # the "when". Anchored on a following when/once/if so a plain "It is
-        # the only moment ..." is untouched.
-        r"|^(?:it|this)\s+(?:\w+\s+){0,2}(?:when|once|if)\b",
+# of it. The field therefore has exactly one job: describe the circumstance. Any
+# clause asserting that the reward is useful spends the sentence restating the
+# label instead, and the catalog shows the difference plainly -- "The loudest
+# person in the room is not the injured one." against "A flooded ruin or coastal
+# tunnel beneath the coliseum roots, searched for a smuggled escape route, is
+# where this compass earns its keep."
+#
+# This is the fourth pass at the same defect, and the first that targets the
+# defect rather than a phrasing. Round one banned the literal "use it when";
+# round two banned "<verb> it when" but excluded openings starting with "It";
+# round three caught "It works best when" with a two-word window, and the next
+# authoring wrote "It proves most valuable when" -- three words -- straight
+# through it. Worse, telling the repair model to avoid the opening frame just
+# moved it to the end ("... is exactly the moment this ladle earns its keep"),
+# so a leading-only check now has a documented way of being evaded by its own
+# repair lane. Matching the self-referential usefulness CLAIM wherever it sits
+# closes both ends at once.
+_SELF_REFERENCE = (
+    r"(?:it|this|these|that|the\s+[a-z][\w'-]*"
+    r"|[A-Z][\w'-]*(?:\s+[A-Z][\w'-]*)?)"
+)
+_USEFULNESS_CLAIM = (
+    r"(?:proves?\s+(?:most\s+)?(?:valuable|useful)|proves?\s+its\s+worth"
+    r"|earns?\s+its\s+keep|works?\s+best|serves?\s+best|shines?"
+    r"|is\s+most\s+(?:useful|valuable)|calls?\s+for\s+it|demands?\s+it"
+    r"|belongs?|takes?\s+hold|was\s+made\s+for)"
+)
+SELF_PROMOTION_PATTERNS = (
+    # Leading frame: "It proves most valuable when ...", "The shawl earns its
+    # keep in ...", "The situation calls for it when ...".
+    re.compile(rf"^{_SELF_REFERENCE}\s+(?:\w+\s+){{0,3}}?{_USEFULNESS_CLAIM}\b", re.IGNORECASE),
+    # "The moment to invoke it is ..." -- the same frame with the claim implied.
+    re.compile(r"^the\s+(?:moment|time|situation)\s+to\s+\w+\s+it\b", re.IGNORECASE),
+    # The generic leading stutter this check has caught since round two: the
+    # reward is the subject and the situation is deferred behind a
+    # when/once/if. Kept alongside the claim list because it catches openings no
+    # verb list anticipates ("This helps when ...", "It is best when ...").
+    re.compile(r"^(?:it|this)\s+(?:\w+\s+){0,3}?(?:when|once|if|the\s+moment)\b", re.IGNORECASE),
+    # Trailing frame: "... is exactly the moment this ladle earns its keep.",
+    # "... is precisely the situation this was made for.", "... calls for it most."
+    re.compile(
+        rf"\bis\s+(?:exactly\s+|precisely\s+)?(?:the\s+moment|the\s+situation|when|where)\s+{_SELF_REFERENCE}"
+        rf"|\b{_USEFULNESS_CLAIM}(?:\s+(?:most|best|especially))?\.?$",
         re.IGNORECASE,
     ),
-}
+)
+
+# "Best used when: When there isn't enough to go around ..." -- the label
+# already supplied the "when".
+BEST_USED_WHEN_OPENERS = re.compile(r"^(?:when|whenever)\b", re.IGNORECASE)
+
+# The field names a circumstance, not an action for the reader to take, so an
+# opening imperative does not fit its own label: "Best used when: Study the
+# bloom up close ...". Deliberately a closed list of verbs that are unambiguous
+# in this position, with a guard against the same words used as subject nouns
+# ("Watch is ...", "Study has ...").
+IMPERATIVE_OPENERS = (
+    re.compile(
+        r"^(?:use|study|reach|call|rely|apply|deploy|invoke|bring|take|keep|check|look|watch|try|save)\s+"
+        r"(?!is\b|are\b|was\b|were\b|has\b|have\b)",
+        re.IGNORECASE,
+    ),
+    # "Reach for it when ...", "Turn to it once ...", "Rely on it when ...".
+    # Generalizes over the verb rather than enumerating it, which is what the
+    # closed list above cannot do.
+    re.compile(
+        r"^(?!it\b|this\b)\w+(?:\s+(?:on|for|to|upon))?\s+it\s+(?:when|once|if|the\s+moment)\b",
+        re.IGNORECASE,
+    ),
+)
+
+# Schema words leaking into copy a reader sees. "Under the vibe Paperwork for a
+# God, Bramble Osei is mid-stamp ..." opens a scenario by naming our own field.
+SCHEMA_VOCABULARY = re.compile(
+    r"\b(?:(?:the|this)\s+(?:dream\s+)?vibe|(?:the|this)\s+facet"
+    r"|the\s+proposal|the\s+bundle|reward\s+type)\b",
+    re.IGNORECASE,
+)
 
 # "It grants the ability to infer ..." is three words of scaffolding in front of
 # the verb that matters. "It infers ..." says the same thing and reads better.
@@ -115,13 +172,24 @@ def _label_echo(label: str, value: Any) -> list[str]:
     if not isinstance(value, str) or not value.strip():
         return []
     field = label.rsplit(".", 1)[-1]
-    pattern = ECHO_PATTERNS.get(field)
-    if pattern is not None and pattern.match(value.strip()):
-        return [
-            f"{label} is written as an instruction to the reader rather than the "
-            "situation the label names; drop the '<verb> it when' opening and state "
-            "the circumstance on its own"
-        ]
+    text = value.strip()
+    if field == "best_used_when":
+        if any(pattern.search(text) for pattern in SELF_PROMOTION_PATTERNS):
+            return [
+                f"{label} spends the sentence claiming the reward is useful, which "
+                "the 'Best used when' label already says; delete the claim and let "
+                "the circumstance be the whole sentence"
+            ]
+        if BEST_USED_WHEN_OPENERS.match(text):
+            return [
+                f"{label} opens with 'when', which the label already supplied; start "
+                "at the circumstance itself"
+            ]
+        if any(pattern.match(text) for pattern in IMPERATIVE_OPENERS):
+            return [
+                f"{label} is an instruction to the reader, not the circumstance the "
+                "label names; describe the situation instead of telling someone what to do"
+            ]
     opening = " ".join(re.findall(r"[\w’'-]+", value.casefold())[:ECHO_WINDOW_WORDS])
     for phrase in LABEL_ECHOES.get(field, ()):
         if phrase in opening:
@@ -130,6 +198,64 @@ def _label_echo(label: str, value: Any) -> list[str]:
                 "it, so write the value as a sentence that stands without the label"
             ]
     return []
+
+
+def _schema_leak(label: str, value: Any) -> list[str]:
+    """Flag our own field vocabulary appearing in copy a reader sees."""
+    if not isinstance(value, str):
+        return []
+    match = SCHEMA_VOCABULARY.search(value)
+    if not match:
+        return []
+    return [
+        f"{label} names the schema out loud ({match.group(0)!r}); a reader sees the "
+        "card, not our field names, so write it as ordinary prose"
+    ]
+
+
+def _borrowed_names(proposal: dict) -> list[str]:
+    """Flag reward and location copy that hard-codes this bundle's character.
+
+    Every asset is meant to be liftable into another story on its own. A reward
+    whose text reads "It lets Bramble draft, stamp, and cross-reference ..." is
+    welded to one character and cannot be. Scenarios are exempt by design --
+    Silas, 2026-08-31: "scenarios are synthesis pieces that can name other
+    objects" -- and so is the character's own copy.
+    """
+    names: set[str] = set()
+    for row in proposal.get("characters") or []:
+        if isinstance(row, dict):
+            names.update(re.findall(r"[A-Z][a-z]{3,}", str(row.get("name") or "")))
+    if not names:
+        return []
+    problems: list[str] = []
+    # Only the card-copy fields, because a complaint is also the repair lane's
+    # work order: a label it cannot resolve to a field path would be dropped on
+    # the way in and still be there on the way out, deadlocking the batch.
+    scoped = {
+        "rewards": ("grants", "best_used_when", "catch"),
+        "locations": ("known_for", "local_rule", "best_scene"),
+    }
+    for scope, rows in (("rewards", proposal.get("rewards")), ("locations", proposal.get("locations"))):
+        for row in rows if isinstance(rows, list) else []:
+            if not isinstance(row, dict):
+                continue
+            if scope == "rewards":
+                kind = str(row.get("reward_type") or "").lower() or "reward"
+            else:
+                kind = "0"
+            for field in scoped[scope]:
+                text = row.get(field)
+                if not isinstance(text, str):
+                    continue
+                hit = sorted(n for n in names if re.search(rf"\b{re.escape(n)}\b", text))
+                if hit:
+                    problems.append(
+                        f"{scope}[{kind}].{field} hard-codes the character name "
+                        f"({', '.join(hit)}); this asset has to read on its own in another "
+                        "story, so describe the bearer generically"
+                    )
+    return problems
 
 
 def _padding(label: str, value: Any) -> list[str]:
@@ -213,7 +339,9 @@ def complaints(proposal: Any) -> list[str]:
     for label, value, minimum_words in checks:
         problems.extend(_check(label, value, minimum_words))
         problems.extend(_label_echo(label, value))
+        problems.extend(_schema_leak(label, value))
         if label.endswith(".grants"):
             problems.extend(_padding(label, value))
     problems.extend(_vibe_echo(proposal))
+    problems.extend(_borrowed_names(proposal))
     return problems
