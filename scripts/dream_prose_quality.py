@@ -74,7 +74,17 @@ ECHO_WINDOW_WORDS = 8
 # the difference between fixing an instance and fixing the class.
 ECHO_PATTERNS = {
     "best_used_when": re.compile(
-        r"^(?!it\b)\w+(?:\s+(?:on|for|to|upon))?\s+it\s+(?:when|once|if|the moment)\b",
+        # "Reach for it when", "Call on it when", "Rely on it when", "Use it when"
+        r"^(?!it\b|this\b)\w+(?:\s+(?:on|for|to|upon))?\s+it\s+(?:when|once|if|the moment)\b"
+        # "It works best when", "It serves best when", "It shines when",
+        # "This helps when" -- the third pass at this same defect. Round one
+        # banned the literal phrase "use it when"; round two banned "<verb> it
+        # when" but excluded openings starting with "It" to protect "It gives
+        # ...", and 27 rewards promptly sat in that exclusion. The subject is
+        # the reward either way; the situation the label asks for starts after
+        # the "when". Anchored on a following when/once/if so a plain "It is
+        # the only moment ..." is untouched.
+        r"|^(?:it|this)\s+(?:\w+\s+){0,2}(?:when|once|if)\b",
         re.IGNORECASE,
     ),
 }
