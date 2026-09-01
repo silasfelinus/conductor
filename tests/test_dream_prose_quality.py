@@ -417,3 +417,40 @@ def test_the_reward_type_noun_is_schema_vocabulary_too():
     skill = next(r for r in proposal["rewards"] if r["reward_type"] == "SKILL")
     skill["grants"] = "This skill lets you reprogram a hue on the fly, seasoning testimony toward any verdict."
     assert any("names the schema out loud" in p for p in prose.complaints(proposal))
+
+
+def test_role_drive_may_not_open_by_naming_its_own_character():
+    # Third field with a name printed directly above it, third time the same
+    # rule applies. The catalog's own convention is the pronoun: 27 of 34
+    # role_drive values already open "She ..." or "He ...".
+    proposal = _quality_sample()
+    character = proposal["characters"][0]
+    character["name"] = "Dolan Ferreira"
+    for opening in ("Dolan must find", "Dolan Ferreira must find", "The Dolan must find"):
+        character["role_drive"] = f"{opening} who re-aimed the mirrors before the next dawn burn."
+        assert any("role_drive opens by naming the character" in p
+                   for p in prose.complaints(proposal)), opening
+
+
+def test_a_pronoun_opening_role_drive_is_the_correct_form():
+    proposal = _quality_sample()
+    character = proposal["characters"][0]
+    character["name"] = "Dolan Ferreira"
+    character["role_drive"] = "He must find who re-aimed the mirrors before the next dawn burn."
+    assert not any("role_drive opens by naming" in p for p in prose.complaints(proposal))
+
+
+def test_an_honorific_does_not_hide_the_self_naming():
+    proposal = _quality_sample()
+    character = proposal["characters"][0]
+    character["name"] = "Dr. Perpetua Vell"
+    character["role_drive"] = "Perpetua treats the fallen between rounds and keeps every fighter standing."
+    assert any("role_drive opens by naming the character" in p for p in prose.complaints(proposal))
+
+
+def test_card_copy_may_not_open_by_editorializing():
+    proposal = _quality_sample()
+    proposal["characters"][0]["complication"] = (
+        "Unfortunately, the same lens that clears a hue also fixes it in place for good."
+    )
+    assert any("opens by editorializing" in p for p in prose.complaints(proposal))

@@ -31,6 +31,41 @@ jobs:
 
       - run: pip install pyyaml Pillow
 
+      # Self-healing. Publishing is a separate phase from authoring, which made
+      # source-ahead-of-live the safe failure -- but only if something can still
+      # close the gap. Run 33477217234 wrote 17 bundles to main and then died
+      # partway through publishing on a Kind Robots timeout, and because the
+      # request file had already been consumed, no later run could reach the
+      # receipt. Every run now finishes an unfinished publish first, request or
+      # no request. Idempotent by content, so re-patching a row already patched
+      # in the failed run is a no-op.
+      - name: Resume any unfinished live publish
+        id: resume
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: python scripts/repair_dream_prose_catalog.py --resume-pending
+
+      - name: Persist resumed publish confirmation
+        shell: bash
+        run: |
+          git config user.name "kind-robots-bot"
+          git config user.email "noreply@kindrobots.app"
+          git add projects/dream-cycle/backlog/ projects/dream-cycle/prose-repairs/
+          if git diff --staged --quiet; then
+            echo "Nothing resumed."
+            exit 0
+          fi
+          git commit -m "daily dream: finish stranded prose-repair publish [skip ci]"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if git rebase origin/main && git push origin HEAD:main; then
+              exit 0
+            fi
+            sleep $((attempt * 5))
+          done
+          echo "::error::Resumed publish landed live but its evidence could not be pushed."
+          exit 1
+
       - name: Locate prose-repair request
         id: pending
         shell: bash
@@ -42,6 +77,8 @@ jobs:
             echo "No pending Daily Dream prose repair."
             exit 0
           fi
+          # A stranded receipt is handled by the resume step below, which runs
+          # whether or not a request is present.
           if (( ${#files[@]} != 1 )); then
             echo "::error::Expected exactly one prose-repair request, found ${#files[@]}."
             exit 1

@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 49
   stakes: reversible
   note: >-
@@ -297,10 +297,19 @@ tasks:
     persisted), so check whether a page reload's first scan-and-seed pass (which silently
     seeds all existing beats as "seen" without ever generating art for them) can skip a beat
     that legitimately still needed a milestone-art request from before the reload.
-  updated: '2026-09-01T04:11:20Z'
-  owner: worker
-  claimed_by: openai-scheduled-20260901T041120Z-storybook-t010-q4m7
-  claimed_at: '2026-09-01T04:11:20Z'
+
+    State reconciliation (conductor scheduled Agent run 2026-09-01T08:23Z): task was stuck
+    at status:claimed with a stale claim (claimed_by openai-
+    scheduled-20260901T041120Z-storybook-t010-q4m7, claimed_at 2026-09-01T04:11:20Z, past
+    the 90-minute claim TTL). That session's own cycle 50 was a genuine no-op investigation
+    (storybookLibraryHelper.ts full read, four guards re-verified against real
+    implementation, no bug found) and left an explicit cycle 51 lead in the note, but never
+    re-armed status back to ready. No code change; cleared the stale claim and re-armed to
+    ready so cycle 51 can be picked up.
+  updated: '2026-09-01T08:23:56Z'
+  owner: null
+  claimed_by: null
+  claimed_at: null
   implementation_pr: 'silasfelinus/kind_robots#2276'
 - id: t-011
   milestone: m4

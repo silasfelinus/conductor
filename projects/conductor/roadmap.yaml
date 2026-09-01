@@ -4393,7 +4393,24 @@ tasks:
     What unblocks when he does: the Kind Robots app's Conductor-projection surface starts
     reflecting live roadmap/project state again instead of the 2026-08-20T21:27Z snapshot it's
     currently stuck on. No other roadmap work is blocked by this in the meantime.
-  updated: '2026-08-21T04:56:00Z'
+
+    ADDENDUM 2026-09-01: the same shape recurred with wider blast radius -- this time inside
+    kind_robots' own required CI, not just this repo's Project Sync workflow. A model-builder/
+    t-029 cycle 74 subagent hit 8 consecutive failures of kind_robots' required "Contract
+    verifiers" check on PR #2286 over ~50 minutes, always at the same two external-network
+    calls: verifyAcademyStarterManifest.ts (fetch failed reaching the media origin) and
+    verifyPopulationDraftQuality.ts (ConnectTimeoutError to kindrobots.org:443). Confirmed
+    unrelated to that PR's diff -- an independent PR (#2285) failed the identical
+    comment-contract check on 3 separate fresh pushes before #2286 even existed, and main's
+    own last run of the same workflow was green at 06:15 UTC. This session's own sandbox also
+    got a hard connection reset (not a clean 200) hitting kindrobots.org directly just now,
+    where t-121's original note recorded a clean, fast response from this same sandbox network
+    path on 2026-08-21 -- so whatever's blocking GitHub Actions may no longer be limited to
+    Actions-runner ASNs specifically; worth re-checking from a few different vantage points
+    when you look at this. kind_robots PR #2286 is left open, unmerged, blocked on this same
+    recovery. Still soft -- no other roadmap work is blocked -- but now touching a required
+    check on kind_robots PRs generally, not just this repo's sync projection.
+  updated: '2026-09-01T06:52:00Z'
 - id: t-122
   milestone: m2
   title: Fix all 4 conductor milestones' stale status fields (all read not-started despite near-total task completion)
