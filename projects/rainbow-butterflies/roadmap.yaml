@@ -820,13 +820,14 @@ tasks:
 - id: t-035
   milestone: m2
   title: "Security gate: first-party BFF delegation auth (kind_robots#2285) — privilege-escalation gap + revocation/rate-limit decisions"
-  status: needs-human
+  status: done
   gate_human: true
   security_flag: true
+  approved_by_human: true
   owner: null
   passes: 0
   stakes: outward-facing
-  implementation_pr: 'silasfelinus/kind_robots#2285'
+  implementation_pr: 'silasfelinus/kind_robots#2293'
   note: >-
     FOR SILAS: kind_robots PR #2285 ("Add first-party BFF delegation for Rainbow") adds a
     new server-to-server auth mechanism — a 7-day, non-admin JWT ("first-party delegation
@@ -911,6 +912,71 @@ tasks:
     `requireHumanApiUser` that still blocks `first-party-delegation` and use a narrower
     guard for its two new human-facing routes (`agent-profiles/[id]/notes.post.ts`,
     `agent-profiles/[id]/activity.get.ts`) instead. Also unmerged, also awaiting your call.
+
+    RESOLVED (same run, ~08:50 UTC): Silas, live in this session: "not sure what the call
+    is, just fix it." Treated as explicit authorization to close the acute gap and let the
+    legitimate feature work land safely, rather than leaving both blocked pending further
+    design discussion.
+    - Merged kind_robots#2291 (the prepared revert) — `requireHumanApiUser` is back to
+      rejecting both `agent-credential` and `first-party-delegation`. The self-escalation
+      path is closed on `main` as of squash `b7162d0`.
+    - Rebuilt #2290's check-in/notes feature as kind_robots#2293 on top of the reverted
+      guard: all 10 of #2290's feature commits carried over unchanged (schema, migration,
+      `agent:checkin` scope, `check-in.post.ts`, concurrency-safe note-claiming, its
+      dedicated contract + workflow), but its two new human-facing routes
+      (`agent-profiles/[id]/notes.post.ts`, `agent-profiles/[id]/activity.get.ts`) now use
+      a new, narrow `requireHumanOrDelegatedApiUser` guard (rejects only `agent-credential`)
+      instead of loosening the shared `requireHumanApiUser`. `agent-credentials/**` and
+      the rest of `agent-profiles/**` (create/patch/delete) stay behind the strict guard
+      unchanged. Verified: contract test updated and passing, `eslint`/`prettier` clean,
+      `vue-tsc` adds zero new errors over `origin/main`'s pre-existing t-087 baseline
+      (confirmed via `git stash` diff). Closed #2290 as superseded.
+    - This closes the hard part of this task (the escalation gap + the AgentProfile
+      integration need, both resolved without reopening the vuln). The three softer design
+      points from the original note — (1) rate limiting on `password.post.ts`, (2) whether
+      `client_id` needs a real secret, (3) a revocation mechanism for delegation tokens —
+      are unchanged and still open; spun off to `rainbow-butterflies/t-036` (soft, reversible,
+      non-blocking) rather than holding this task open for them.
   claimed_by: null
   claimed_at: null
-  updated: '2026-09-01T08:39:00Z'
+  updated: '2026-09-01T08:50:00Z'
+
+- id: t-036
+  milestone: m2
+  title: "Harden first-party BFF delegation: rate limit password exchange, decide client secret and revocation"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-035
+  note: >-
+    Follow-up from t-035's resolution (kind_robots#2289/#2291/#2293). The acute
+    privilege-escalation gap is closed; these are the three softer design points the
+    original review flagged that never got a decision:
+
+    (1) `server/api/auth/first-party/password.post.ts` has no rate limiting or lockout —
+    a second unthrottled credential-testing surface alongside the existing gap on
+    `login.post.ts`. Add the same protection `login.post.ts` uses (or a shared helper if
+    one doesn't exist yet).
+
+    (2) `client_id` carries no secret anywhere in the password/exchange flows
+    (`FirstPartyClient` has no secret field; `'rainbow-butterflies'` is a predictable
+    public string), so the endpoint's only real authentication boundary is the user's own
+    password. Decide whether first-party clients need a real client secret, or whether
+    the user-password boundary is judged sufficient given delegation tokens are already
+    non-admin and scope-limited.
+
+    (3) Delegation tokens are stateless JWTs with no DB row, scopes, or revocation, unlike
+    the existing `AgentCredential` pattern (hashed secret, scopes, `expiresAt`,
+    `revokedAt`) — a leaked or compromised token stays valid for its full 7-day life with
+    no kill switch. Decide whether that's an acceptable tradeoff for the short window, or
+    whether delegation tokens need a lightweight revocation list.
+
+    Soft/reversible — no known active exploit, unlike t-035's now-closed gap. A Worker
+    session may pick this up and propose a design directly; only the client-secret and
+    revocation decisions ((2) and (3)) need Silas's sign-off before merging, since they're
+    genuine product/security tradeoffs rather than bugs. (1) is an uncontroversial fix and
+    can just be implemented.
+  claimed_by: null
+  claimed_at: null
+  updated: '2026-09-01T08:50:00Z'
