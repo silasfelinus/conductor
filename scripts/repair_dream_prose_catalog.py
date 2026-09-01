@@ -504,6 +504,11 @@ def _composed_live_fields(proposal: dict[str, Any]) -> dict[str, str]:
     character = (proposal.get("characters") or [{}])[0]
     location = (proposal.get("locations") or [{}])[0]
     return {
+        # drive and quirks are straight copies, so they reconcile the same way a
+        # joined field does -- and they are how a hand-authored repair, or any
+        # source edit the model could not make, reaches production.
+        "drive": str(character.get("role_drive") or "").strip(),
+        "quirks": str(character.get("complication") or "").strip(),
         "backstory": " ".join(
             str(part).strip()
             for part in (character.get("carries", ""), character.get("complication", ""))
@@ -535,8 +540,9 @@ def recomposition_findings(backlog: Path | None = None) -> list[dict[str, Any]]:
     for bundle in _load_built_catalog(backlog):
         want = _composed_live_fields(bundle["proposal"])
         built_records = (bundle["built"].get("records") or {})
-        for kind, endpoint, field in (("characters", "/api/characters", "backstory"),
-                                      ("locations", "/api/locations", "desc")):
+        for kind, endpoint, fields in (("characters", "/api/characters",
+                                        ("drive", "quirks", "backstory")),
+                                       ("locations", "/api/locations", ("desc",))):
             for row in built_records.get(kind, []) or []:
                 record_id = _record_id(row)
                 status, data = records.http_json(
@@ -545,13 +551,14 @@ def recomposition_findings(backlog: Path | None = None) -> list[dict[str, Any]]:
                 live = data.get(kind[:-1]) or data.get("data") or data
                 if not isinstance(live, dict):
                     continue
-                got = str(live.get(field) or "")
-                if got and got != want[field]:
-                    rows.append({
-                        "day": bundle["day"], "kind": kind, "endpoint": endpoint,
-                        "record_id": record_id, "field": field,
-                        "live": got, "expected": want[field],
-                    })
+                for field in fields:
+                    got = str(live.get(field) or "")
+                    if got and got != want[field]:
+                        rows.append({
+                            "day": bundle["day"], "kind": kind, "endpoint": endpoint,
+                            "record_id": record_id, "field": field,
+                            "live": got, "expected": want[field],
+                        })
     return rows
 
 
