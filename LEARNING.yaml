@@ -11989,3 +11989,19 @@ records:
     without this session calling merge_pull_request -- consistent with the PR's opener having
     enabled auto-merge, and a reminder to re-check PR state (not just CI) before assuming a
     merge still needs to be triggered manually.
+- date: '2026-09-01'
+  project: rainbow-butterflies
+  task: t-037
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Straightforward kaizen-slice implementation (own PR, own review/merge under the
+    standing merge-when-green authorization): reusing t-036's authAttemptLimit helper in
+    login.post.ts surfaced a real, separate bug worth fixing in the same PR rather than
+    filing separately -- the handler's catch block flattened every thrown error, including
+    the helper's own 429, into a generic 500 via `sendError(event, new Error(message))`.
+    A quick grep confirmed this exact "no isError() check before sendError" pattern doesn't
+    recur elsewhere in server/api, so no follow-up kaizen task was warranted for it.

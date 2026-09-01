@@ -979,7 +979,7 @@ tasks:
 - id: t-037
   milestone: m2
   title: "Reuse t-036's authAttemptLimit helper to rate-limit the ordinary /api/auth/login endpoint"
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -991,6 +991,19 @@ tasks:
     clearAuthFailures into login.post.ts the same way password.post.ts uses them, and extend
     that endpoint's own contract test to assert the throttling call sites, mirroring
     tests/contracts/verifyFirstPartyDelegation.ts's pattern.
+
+    Implemented and merged as kind_robots#2298: wired
+    assertAuthAttemptAllowed/recordAuthFailure/clearAuthFailures from the t-036 helper into
+    login.post.ts (per-IP+username and per-IP failure windows, 429+Retry-After, cleared on
+    success), and fixed that handler's catch block (previously flattened every thrown error
+    into a generic 500 via 'new Error(message)'; now checks isError() and forwards an
+    H3Error's real status through sendError). Added tests/contracts/verifyLoginThrottle.ts
+    (mirrors verifyFirstPartyDelegation.ts's static source-assertion pattern) plus a
+    dedicated path-triggered workflow. Verified locally before pushing: vue-tsc clean,
+    eslint clean, prettier clean, the new contract script passing. All 40 PR-head checks
+    green including Contract verifiers/ESLint-ratchet (conductor/t-132's known flaky job),
+    mergeable_state clean; merged squash.
   claimed_by: claude-scheduled-20260901T135130Z-rbf-t037
   claimed_at: '2026-09-01T13:52:31Z'
-  updated: '2026-09-01T13:52:31Z'
+  updated: '2026-09-01T14:04:50Z'
+  implementation_pr: 'silasfelinus/kind_robots#2298'
