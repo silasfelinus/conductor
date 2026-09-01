@@ -944,8 +944,8 @@ tasks:
 - id: t-036
   milestone: m2
   title: "Harden first-party BFF delegation: rate limit password exchange, decide client secret and revocation"
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-035
@@ -977,6 +977,6 @@ tasks:
     revocation decisions ((2) and (3)) need Silas's sign-off before merging, since they're
     genuine product/security tradeoffs rather than bugs. (1) is an uncontroversial fix and
     can just be implemented.
-  claimed_by: null
-  claimed_at: null
-  updated: '2026-09-01T08:50:00Z'
+  claimed_by: openai-scheduled-20260901T111158Z-rainbow-t036-a7f3
+  claimed_at: '2026-09-01T11:11:58Z'
+  updated: '2026-09-01T11:11:58Z'
