@@ -28,6 +28,7 @@ import json
 import os
 import re
 import sys
+import time
 from pathlib import Path
 from typing import Any
 
@@ -249,6 +250,31 @@ def _editorial_notes(notes: dict[str, str] | None) -> str:
     )
 
 
+# An empty completion is not a bad answer, it is no answer -- there is nothing
+# in it to correct, so spending a correction attempt on it is wasted. Run
+# 33485900585 lost a whole 16-bundle batch that way: five bundles authored
+# cleanly, the sixth came back empty twice, and the all-or-nothing batch
+# discarded every one of them. Transport failures get their own budget.
+TRANSPORT_RETRIES = 3
+
+
+def _call_with_transport_retries(prompt: str, api_key: str) -> str:
+    system = "You are a precise fiction editor. Return JSON only."
+    last: Exception | None = None
+    for attempt in range(1, TRANSPORT_RETRIES + 1):
+        try:
+            return author.call_claude(prompt, system, api_key)
+        except RuntimeError as error:
+            # Only no-answer conditions retry here. A response that arrived and
+            # was wrong is a correction problem, and belongs to the caller's loop.
+            if "empty completion" not in str(error).casefold():
+                raise
+            last = error
+            if attempt < TRANSPORT_RETRIES:
+                time.sleep(2 ** attempt)
+    raise last if last else RuntimeError("call_claude failed without an error")
+
+
 def _author_patch(
     proposal: dict[str, Any],
     fields: list[str],
@@ -260,9 +286,8 @@ def _author_patch(
     last_error = ""
     for attempt in range(1, 3):
         try:
-            raw = author.call_claude(
+            raw = _call_with_transport_retries(
                 _prompt(proposal, fields, complaints, notes),
-                "You are a precise fiction editor. Return JSON only.",
                 api_key,
             )
             patch = author.parse_json_object(raw)
