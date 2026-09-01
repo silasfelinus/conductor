@@ -1,6 +1,6 @@
 # Conductor Portfolio Oversight
 
-Generated: `2026-09-01T05:18:32.573502+00:00`
+Generated: `2026-09-01T11:46:35.142628+00:00`
 
 Overall status: **semantic-review-due**
 
@@ -8,7 +8,7 @@ This is a deterministic sensor. For semantic roadmap/progress intent review, fol
 
 ## OpenAI scheduled-agent heartbeat
 
-- Latest visible OpenAI scheduled-Agent activity: `2026-09-01T05:12:23+00:00` (0.1h ago; overdue at 6.0h).
+- Latest visible OpenAI scheduled-Agent activity: `2026-09-01T11:12:58+00:00` (0.56h ago; overdue at 6.0h).
 - Overdue: **false**
 - Note: OpenAI commit activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit.
 
@@ -20,7 +20,8 @@ This is a deterministic sensor. For semantic roadmap/progress intent review, fol
 ## Roadmap/CONTROL structural audit
 
 - Errors: **0**
-- Warnings: **0**
+- Warnings: **1**
+- Warning details remain in `ROADMAP-AUDIT.md`; errors above take precedence for this sensor.
 
 ## Semantic intent review
 

@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-09-01T05:18:32.573502+00:00",
+  "generated_at": "2026-09-01T11:46:35.142628+00:00",
   "summary": {
     "status": "semantic-review-due",
     "roadmap_errors": 0,
-    "roadmap_warnings": 0,
+    "roadmap_warnings": 1,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -12,8 +12,8 @@
   },
   "openai_scheduled_agent": {
     "overdue": false,
-    "last_activity": "2026-09-01T05:12:23+00:00",
-    "hours_since": 0.1,
+    "last_activity": "2026-09-01T11:12:58+00:00",
+    "hours_since": 0.56,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "OpenAI commit activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit."
@@ -30,22 +30,30 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-09-01T05:18:32.573508+00:00",
+    "generated_at": "2026-09-01T11:46:35.142633+00:00",
     "summary": {
       "roadmaps": 52,
       "active_projects": 29,
       "continuous_projects": 2,
-      "tasks": 1339,
-      "ready": 6,
+      "tasks": 1345,
+      "ready": 8,
       "waiting": 56,
       "needs_human": 81,
-      "in_progress": 3,
-      "done": 1176,
+      "in_progress": 4,
+      "done": 1179,
       "errors": 0,
-      "warnings": 0,
-      "info": 1
+      "warnings": 1,
+      "info": 2
     },
     "errors": [],
-    "warnings": []
+    "warnings": [
+      {
+        "severity": "warning",
+        "code": "SOFT_NEEDS_HUMAN",
+        "project": "kind-robots",
+        "task": "t-078",
+        "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
+      }
+    ]
   }
 }
