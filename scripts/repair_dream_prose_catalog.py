@@ -479,6 +479,15 @@ def _apply_batch(request_path: Path, request: dict[str, Any]) -> list[dict[str, 
 
     # All model work and validation happens above.  No production mutation occurs before
     # the complete batch has a valid candidate.
+    #
+    # Source is written here but production is NOT touched: the live PATCH is a
+    # second phase (`--publish`), run only after the workflow has pushed this
+    # source to main. Run 33450722225 did it the other way round -- patched 16
+    # bundles' live rows, then had its evidence push rejected by GitHub three
+    # times -- and left live ahead of source with the repaired `best_used_when`
+    # values existing nowhere but a discarded runner working tree. Ordering the
+    # durable write first makes that outcome impossible: a failed push now costs
+    # a re-run, not a divergence.
     results: list[dict[str, Any]] = []
     reason = str(request.get("reason") or "catalog prose quality repair")
     now = datetime.datetime.now(datetime.timezone.utc).isoformat()
@@ -486,13 +495,13 @@ def _apply_batch(request_path: Path, request: dict[str, Any]) -> list[dict[str, 
         old = bundle["proposal"]
         new = bundle["candidate"]
         built = bundle["built"]
-        _patch_live(old, new, built, bundle["fields"])
         built.setdefault("prose_repairs", []).append(
             {
                 "repaired_at": now,
                 "reason": reason,
                 "fields": list(bundle["fields"]),
                 "art_unchanged": True,
+                "live_pending": True,
             }
         )
         bundle["path"].write_text(_render_source(new, bundle["day"], built), encoding="utf-8")
@@ -511,11 +520,17 @@ def _apply_batch(request_path: Path, request: dict[str, Any]) -> list[dict[str, 
     receipt = dict(request)
     receipt.update(
         {
-            "status": "applied",
+            "status": "source-written",
             "applied_at": now,
             "repaired_bundles": len(results),
             "results": results,
             "remaining_complaints": audit(),
+            # Consumed by `--publish` after this source is pushed. Each entry is
+            # re-resolved from the committed file, so publishing never depends on
+            # runner state that a failed push would discard.
+            "pending_live": [
+                {"path": r["path"], "fields": r["fields"]} for r in results
+            ],
         }
     )
     receipt_path = request_path.with_name(request_path.name.replace("-request.json", "-applied.json"))
@@ -526,13 +541,63 @@ def _apply_batch(request_path: Path, request: dict[str, Any]) -> list[dict[str, 
     return results
 
 
+def publish_live(receipt_path: Path) -> int:
+    """Phase two: patch live rows from source that is already committed.
+
+    Split out from the authoring phase so production is only ever touched after
+    the repaired source is durable. Re-runnable: a bundle whose `live_pending`
+    marker is already cleared is skipped, so a partial run finishes cleanly.
+    """
+    receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+    pending = receipt.get("pending_live") or []
+    if not pending:
+        print("No pending live patches in this receipt.")
+        return 0
+    published: list[str] = []
+    for entry in pending:
+        path = ROOT / entry["path"]
+        text = path.read_text(encoding="utf-8")
+        proposal = revision._data_block(text, "proposal-data")
+        built = revision._data_block(text, "built-data")
+        if not proposal or not built:
+            raise RuntimeError(f"{path.name}: cannot publish without proposal and built data")
+        repairs = [r for r in (built.get("prose_repairs") or []) if r.get("live_pending")]
+        if not repairs:
+            print(f"already published: {proposal.get('title')}")
+            continue
+        # Titles are never repaired, so the committed proposal serves as both
+        # sides of the patch; only the repaired fields differ from live.
+        _patch_live(proposal, proposal, built, entry["fields"])
+        for record in repairs:
+            record.pop("live_pending", None)
+        day = (revision._frontmatter_value(text, "proposal_date")
+               or revision._frontmatter_value(text, "created"))
+        path.write_text(_render_source(proposal, day, built), encoding="utf-8")
+        published.append(str(proposal.get("title")))
+        print(f"published to live: {proposal.get('title')}")
+    receipt["status"] = "applied"
+    receipt["published_at"] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    receipt["pending_live"] = []
+    receipt_path.write_text(json.dumps(receipt, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    print(f"published {len(published)} bundle(s) to live")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("request", nargs="?", type=Path)
     parser.add_argument("--audit", action="store_true", help="print current built-catalog prose complaints")
     parser.add_argument("--strict", action="store_true", help="return nonzero when audit finds complaints")
+    parser.add_argument("--publish", type=Path, metavar="RECEIPT",
+                        help="phase two: patch live rows from an already-committed receipt")
     args = parser.parse_args(argv)
 
+    if args.publish:
+        try:
+            return publish_live(args.publish)
+        except (OSError, KeyError, TypeError, ValueError, RuntimeError, json.JSONDecodeError) as error:
+            print(f"Daily Dream live publish failed: {error}", file=sys.stderr)
+            return 1
     if args.audit:
         rows = audit()
         print(json.dumps({"flagged": len(rows), "bundles": rows}, indent=2, ensure_ascii=False))

@@ -331,3 +331,94 @@ def test_typography_apply_patches_live_and_rewrites_source(tmp_path: Path, monke
     assert not request_path.exists()
     assert (tmp_path / "2026-08-30-typography-applied.json").exists()
     assert repair.typography_findings(backlog) == []
+
+
+def _built_bundle(backlog, name="2026-08-30-monsoon-static.md", *, broken=True):
+    proposal = _proposal()
+    proposal["locations"][0].update(
+        known_for="Its rooftop stages turn every live chorus into emergency power for the barriers.",
+        local_rule="During a surge the strongest live chorus receives the circuit's power first.",
+        best_scene="Floodwater reaches the stairwell as the mast crew hauls a glowing silk cable up.",
+    )
+    if broken == "grants":
+        for reward in proposal["rewards"]:
+            reward["grants"] = "It grants the ability to steady a failing barrier."
+    elif broken:
+        for reward in proposal["rewards"]:
+            reward["best_used_when"] = "It works best when the barrier lamps are already dimming."
+    built = {
+        "records": {"world": {"id": 10}, "locations": [{"id": 11}], "scenarios": [{"id": 12}],
+                    "characters": [{"id": 13}],
+                    "rewards": [{"id": 14, "reward_type": "ITEM"}, {"id": 15, "reward_type": "SKILL"}]},
+        "sheets": {}, "art": [{"request_id": "keep-this-art", "attached": True}],
+        "built_at": "2026-08-30T10:00:00+00:00",
+    }
+    text = proposals.render_markdown(proposal, "2026-08-30").replace("status: outline", "status: built")
+    text += "\n<!-- built-data\n" + json.dumps(built) + "\n-->\n"
+    (backlog / name).write_text(text, encoding="utf-8")
+    return backlog / name
+
+
+def test_authoring_phase_writes_source_and_touches_nothing_live(tmp_path, monkeypatch):
+    # The ordering guarantee. Run 33450722225 patched 16 bundles' live rows and
+    # then failed to push, stranding the repaired copy in a discarded runner tree.
+    monkeypatch.setattr(repair, "ROOT", tmp_path)
+    backlog = tmp_path / "projects" / "dream-cycle" / "backlog"
+    backlog.mkdir(parents=True)
+    monkeypatch.setattr(repair, "BACKLOG", backlog)
+    path = _built_bundle(backlog)
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+    monkeypatch.setattr(repair.records, "KR_API_TOKEN", "test-token")
+    calls = []
+    monkeypatch.setattr(repair.revision, "_patch",
+                        lambda *a, **k: calls.append(a))
+    fixed = "The barrier lamps are already dimming and the crowd has gone quiet."
+    monkeypatch.setattr(repair.author, "call_claude",
+                        lambda *a, **k: json.dumps({"item_best_used_when": fixed,
+                                                    "skill_best_used_when": fixed}))
+    request_path = tmp_path / "2026-09-01-editorial-pass-request.json"
+    request_path.write_text(json.dumps({"scope": "all-built"}), encoding="utf-8")
+
+    repair._apply_batch(request_path, json.loads(request_path.read_text()))
+
+    assert calls == [], "authoring phase must not PATCH production"
+    assert fixed in path.read_text(encoding="utf-8"), "source must be repaired on disk"
+    receipt = json.loads((tmp_path / "2026-09-01-editorial-pass-applied.json").read_text())
+    assert receipt["status"] == "source-written"
+    assert len(receipt["pending_live"]) == 1
+
+
+def test_publish_phase_patches_live_and_is_idempotent(tmp_path, monkeypatch):
+    monkeypatch.setattr(repair, "ROOT", tmp_path)
+    backlog = tmp_path / "projects" / "dream-cycle" / "backlog"
+    backlog.mkdir(parents=True)
+    monkeypatch.setattr(repair, "BACKLOG", backlog)
+    path = _built_bundle(backlog, broken="grants")
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+    monkeypatch.setattr(repair.records, "KR_API_TOKEN", "test-token")
+    calls = []
+    monkeypatch.setattr(repair.revision, "_patch",
+                        lambda endpoint, entity_id, body: calls.append((endpoint, entity_id)))
+    # `grants` is used rather than `best_used_when`: build_dream_records never
+    # writes best_used_when to a Reward row, so repairing it alone produces no
+    # live PATCH at all -- which is exactly why the 16 values stranded by run
+    # 33450722225 could not be recovered from production.
+    fixed_grants = "It reveals the single hidden variable everyone else misreads."
+    monkeypatch.setattr(repair.author, "call_claude",
+                        lambda *a, **k: json.dumps({"item_grants": fixed_grants,
+                                                    "skill_grants": fixed_grants}))
+    request_path = tmp_path / "2026-09-01-editorial-pass-request.json"
+    request_path.write_text(json.dumps({"scope": "all-built"}), encoding="utf-8")
+    repair._apply_batch(request_path, json.loads(request_path.read_text()))
+    receipt_path = tmp_path / "2026-09-01-editorial-pass-applied.json"
+
+    assert repair.publish_live(receipt_path) == 0
+    assert calls, "publish phase must PATCH production"
+    assert "live_pending" not in path.read_text(encoding="utf-8")
+    receipt = json.loads(receipt_path.read_text())
+    assert receipt["status"] == "applied" and receipt["pending_live"] == []
+
+    # Re-running after a partial failure must not double-patch.
+    before = len(calls)
+    assert repair.publish_live(receipt_path) == 0
+    assert len(calls) == before

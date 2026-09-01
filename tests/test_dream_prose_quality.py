@@ -252,3 +252,26 @@ def test_a_line_echoed_late_in_a_long_idea_is_not_flagged():
     )
 
     assert not any("restating vibe.line" in p for p in prose.complaints(proposal))
+
+
+def test_best_used_when_rejects_the_it_verb_when_form_too():
+    # Round three at the same defect. Round one banned the literal "use it when";
+    # round two banned "<verb> it when" but excluded openings starting with "It"
+    # to protect "It gives ...", and 27 rewards promptly sat in that exclusion.
+    proposal = _quality_sample()
+    for opening in ("It works best when", "It serves best when", "It shines when",
+                    "It works when", "It is best when", "This helps when"):
+        for reward in proposal["rewards"]:
+            reward["best_used_when"] = f"{opening} the courtroom has already gone dark."
+        problems = prose.complaints(proposal)
+        assert any("is written as an instruction to the reader" in p for p in problems), opening
+
+
+def test_a_situation_that_merely_begins_with_it_is_left_alone():
+    proposal = _quality_sample()
+    for reward in proposal["rewards"]:
+        reward["best_used_when"] = (
+            "It is the only moment the tide runs low enough to cross the reach."
+        )
+
+    assert not any("best_used_when" in p for p in prose.complaints(proposal))

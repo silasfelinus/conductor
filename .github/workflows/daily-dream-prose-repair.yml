@@ -53,12 +53,20 @@ jobs:
         if: steps.pending.outputs.found == 'true'
         run: python scripts/repair_dream_prose_catalog.py --audit
 
-      - name: Author, validate, and apply prose repairs
+      # Phase one writes repaired SOURCE only. Production is not touched until
+      # that source is pushed, below. Run 33450722225 patched live first and then
+      # had its evidence push rejected, leaving live ahead of main with the
+      # repaired best_used_when values existing nowhere else.
+      - name: Author and validate prose repairs (source only)
         if: steps.pending.outputs.found == 'true'
+        id: author
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
-        run: python scripts/repair_dream_prose_catalog.py "${{ steps.pending.outputs.request }}"
+        run: |
+          set -euo pipefail
+          python scripts/repair_dream_prose_catalog.py "${{ steps.pending.outputs.request }}"
+          receipt="${{ steps.pending.outputs.request }}"
+          echo "receipt=${receipt/-request.json/-applied.json}" >> "$GITHUB_OUTPUT"
 
       - name: Verify catalog prose contract
         if: steps.pending.outputs.found == 'true'
@@ -86,4 +94,33 @@ jobs:
             sleep $((attempt * 2))
           done
           echo "::error::Unable to persist Daily Dream prose-repair evidence after 3 attempts."
+          echo "::error::No live rows were patched -- source is written first by design, so this is safely re-runnable."
+          exit 1
+
+      # Phase two. Only reached when the repaired source is durable on main.
+      - name: Publish repaired copy to live records
+        if: steps.pending.outputs.found == 'true'
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: python scripts/repair_dream_prose_catalog.py --publish "${{ steps.author.outputs.receipt }}"
+
+      - name: Persist publish confirmation
+        if: steps.pending.outputs.found == 'true'
+        shell: bash
+        run: |
+          git add projects/dream-cycle/backlog/ projects/dream-cycle/prose-repairs/
+          if git diff --staged --quiet; then
+            echo "No publish confirmation to persist."
+            exit 0
+          fi
+          git commit -m "daily dream: confirm prose repair published to live [skip ci]"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if git rebase origin/main && git push origin HEAD:main; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          echo "::error::Live rows are patched but the confirmation commit did not land; re-run --publish to reconcile."
           exit 1
