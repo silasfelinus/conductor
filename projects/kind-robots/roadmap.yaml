@@ -3797,5 +3797,36 @@ tasks:
   claimed_at: '2026-08-31T11:33:41Z'
   updated: '2026-08-31T11:50:44Z'
   implementation_pr: 'silasfelinus/kind_robots#2259'
+
+- id: t-087
+  milestone: m6
+  title: "Checked-in prisma/generated/ output is stale relative to prisma/schema.prisma (missing AgentProfile models)"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from interface-vision/t-104 slice (kind_robots#2287, 2026-09-01): on
+    unmodified `main`, `npx vue-tsc --noEmit` emits ~16 errors --
+    `TS2551: Property 'agentProfile' does not exist ... Did you mean
+    'facetProfile'?` plus knock-on TS7006/TS7031/TS2345 -- in
+    `server/api/agent-profiles/*.ts`, `server/api/agent-credentials/index.post.ts`,
+    and `server/utils/agentCredentials.ts`. Root cause: the checked-in
+    `prisma/generated/prisma/` output is missing `models/AgentProfile.ts` and
+    `models/AgentProfileCredential.ts`, presumably because PR #2284 ("Add
+    first-class AgentProfile identity", merged 2026-09-01T06:15Z) added those
+    models to `prisma/schema.prisma` but the committed generated client was
+    never regenerated/committed alongside it. Running
+    `DATABASE_URL=<dummy> npx prisma generate` locally regenerates them and
+    `vue-tsc` goes fully clean, confirming the schema and generated output have
+    simply drifted apart rather than there being a real type error.
+    This is currently silent noise every session has to independently
+    rediscover and route around (confirmed via git stash) rather than a
+    tracked issue -- decide whether to (a) regenerate and commit the client
+    now to clear the drift, or (b) add a CI check that fails when
+    `prisma generate` output differs from what's checked in, so schema changes
+    can't land without their generated client, or (c) both. Whichever is
+    chosen, this task's implementer should regenerate now as the first
+    concrete step regardless.
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
