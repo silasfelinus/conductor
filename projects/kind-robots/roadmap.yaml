@@ -3910,5 +3910,83 @@ tasks:
     clean; 37/37 CI checks green. Merged as squash
     b13573ebe30e980a215b88b0f4ba6226b0f5d5d5.
 
+- id: t-089
+  milestone: m6
+  title: "Home page seventh pass: two-column desktop layout that fills the screen"
+  status: done
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-09-01T21:40:00Z'
+  implementation_pr: 'silasfelinus/kind_robots#2307'
+  depends_on: [t-088]
+  note: >-
+    Silas, 2026-09-01: "We still have some dead space at the bottom of the
+    screen. it would be better to specifically choose percentages, at least on
+    desktop, so we are using maximum space ... Needs you, project progress, and
+    newsfeed should be in one column on the right side ... the dream hero gets
+    the extra room, allowing for larger text on the description. we should see
+    description text on the character, item, skill, etc for the daily dream
+    (facets is just the title). Then in the lower left corner that remains we
+    should have the six galleries ... in 3 columns and two rows."
+    MEASURED AT 1920x1080: dead space at the page bottom went from present to
+    0px and the page no longer scrolls at all -- it exactly fills the viewport.
+    Left column 1466px (76.4%), holding a 446px dream band over 516px of
+    galleries; right column 414px (21.5%), stacking gates 360 / projects 227 /
+    feed 368. The dream card went 384px (20%) to 499px (26%). Galleries are six
+    cells in 3x2 at 483x254 each. Also clean at 1280x800 (75.6/21.3) and
+    900x700, with no horizontal overflow at any of the three.
+    FILLING THE SCREEN uses `xl:h-full` on the root plus percentage bands, not
+    viewport units -- the layout contract's no-viewport rule bans
+    h-screen/100vh/100dvh inside the h-dvh shell. Below xl the page stays the
+    ordinary stacking column: a fixed-height layout on a phone crushes content
+    rather than filling space, and the galleries fall back to one
+    swipe-scrollable row, which is the tablet behaviour he described wanting.
+    TWO KINDS LEFT THE FRONT PAGE. He named exactly six galleries and a 3x2 grid
+    holds exactly six, so bots and animations are no longer shown. Flagged in the
+    PR rather than left to be noticed: that is a content decision, not a layout
+    one, and restoring bots means one of the six gives up its cell. "Rewards
+    (items and skills combined)" needed no work -- Reward is one model with a
+    rewardType of ITEM or SKILL and the rail always showed both.
+    THE BUG THIS SHOOK OUT is the one worth keeping. The newsfeed's three
+    controls revealed their text labels from `2xl` up -- a VIEWPORT question
+    about a CONTAINER problem. It was invisible while the feed was full-width;
+    the moment it moved into a 22% side column, a 1920px screen was rendering
+    three full labels inside a 414px panel and overflowing it. Same class of
+    hazard the layout contract's viewport-grid rule exists for, in a utility that
+    rule does not cover: a breakpoint answers "how big is the window", which is
+    only the same question as "how big is this box" while the box is the window.
+    Worth checking every `sm:`/`lg:`/`2xl:` on a component that might be embedded
+    somewhere narrow.
+    CAST CARDS CARRY PROSE. A character's title/role is a job label, not a
+    description, so the hero query now selects backstory (falling back to
+    personality). Facets send `subtitle: null` from the server so the template
+    needs no per-kind branch -- pushing the "(facets is just the title)" rule to
+    the layer that knows what a facet is.
+    FOLLOW-UPS, same day, in silasfelinus/kind_robots#2309: the feed heading
+    became "News" (which also returned the ~150px the topic chips were short of
+    in a 22% column -- the thing flagged for him on the previous PR), and the
+    header now shows "Welcome <username>" in large type after the room and its
+    blurb. The greeting lives in the header rather than the page because that is
+    where the room lines are AND because the page is now fixed-height on desktop,
+    so a greeting band there would come out of the dream's height rather than out
+    of space that was already empty. It obeys the header's one rule -- nothing in
+    that row grows -- via min-w-0 + truncate, verified with a 46-character
+    username at 1920x1080: zero horizontal overflow, the name shortens instead of
+    pushing.
+    A PROCESS NOTE WORTH HAVING. Mid-session I ran `git stash -u` to compare
+    against clean main; the pop then silently failed because a build artifact
+    (.data/content/contents.sqlite) was dirty in the working tree, so the change
+    under test was sitting in the stash while a "clean" typecheck reported
+    success. The same stash also left a stale .nuxt type cache that produced
+    about five phantom errors in a file neither commit touched. Both were caught
+    by re-reading `git status` rather than trusting the run. If you stash to get
+    a baseline, check that the pop actually restored before believing the
+    comparison.
+    Verified: Playwright measurement at three viewports; vue-tsc, eslint,
+    prettier, layout contract and MDC scroll ownership clean; 40/40 CI checks
+    green. Merged as squash a037a66bdff0b0aad180e1c3cd4c149089104462.
+
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
