@@ -648,7 +648,15 @@ def call_claude(prompt: str, system: str, api_key: str, timeout: float = 120.0) 
     blocks = payload.get("content") or []
     text = "".join(block.get("text", "") for block in blocks if isinstance(block, dict))
     if not text.strip():
-        raise RuntimeError("Claude returned an empty completion.")
+        # Say what actually came back. Six consecutive "empty completion"
+        # failures on one bundle in run 33498871459 could not be diagnosed at
+        # all, because this message threw away the only evidence there was.
+        detail = {
+            "stop_reason": payload.get("stop_reason"),
+            "block_types": [b.get("type") for b in blocks if isinstance(b, dict)],
+            "usage": payload.get("usage"),
+        }
+        raise RuntimeError(f"Claude returned an empty completion ({detail}).")
     return text
 
 

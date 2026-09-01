@@ -585,3 +585,62 @@ def test_a_wrong_answer_is_not_treated_as_a_transport_failure(monkeypatch):
     with pytest.raises(RuntimeError, match="refused"):
         repair._call_with_transport_retries("p", "k")
     assert len(calls) == 1, "a wrong answer must not consume the transport budget"
+
+
+def test_one_failing_bundle_does_not_discard_the_others(tmp_path, monkeypatch):
+    # Three batches in a row were thrown away because a single bundle came back
+    # empty, taking 13 good repairs with them each time. Atomicity that matters
+    # is per bundle: repaired-and-validated, or untouched and still flagged.
+    monkeypatch.setattr(repair, "ROOT", tmp_path)
+    backlog = tmp_path / "projects" / "dream-cycle" / "backlog"
+    backlog.mkdir(parents=True)
+    monkeypatch.setattr(repair, "BACKLOG", backlog)
+    good = _built_bundle(backlog, name="2026-08-30-good.md")
+    _built_bundle(backlog, name="2026-08-31-bad.md")
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+    monkeypatch.setattr(repair.records, "KR_API_TOKEN", "test-token")
+    monkeypatch.setattr(repair.revision, "_patch", lambda *a, **k: None)
+    monkeypatch.setattr(repair.time, "sleep", lambda *_: None)
+    fixed = "The barrier lamps are already dimming and the crowd has gone quiet."
+
+    calls = []
+
+    def _call(prompt, system, key):
+        calls.append(1)
+        # First bundle authors cleanly; the second is the one that comes back
+        # empty, exhausting both its transport retries and its correction
+        # attempts. The two fixtures render identical prompts, so order is the
+        # only thing that can tell them apart here.
+        if len(calls) > 1:
+            raise RuntimeError("Claude returned an empty completion.")
+        return json.dumps({"item_best_used_when": fixed, "skill_best_used_when": fixed})
+
+    monkeypatch.setattr(repair.author, "call_claude", _call)
+    request_path = tmp_path / "2026-09-05-partial-request.json"
+    request_path.write_text(json.dumps({"scope": "all-built"}), encoding="utf-8")
+
+    results = repair._apply_batch(request_path, json.loads(request_path.read_text()))
+
+    assert len(results) == 1, "the healthy bundle must still be repaired"
+    assert fixed in good.read_text(encoding="utf-8")
+    receipt = json.loads((tmp_path / "2026-09-05-partial-applied.json").read_text())
+    assert len(receipt["failed_bundles"]) == 1
+    assert "empty completion" in receipt["failed_bundles"][0]["error"]
+
+
+def test_a_batch_where_nothing_succeeds_still_fails_loudly(tmp_path, monkeypatch):
+    monkeypatch.setattr(repair, "ROOT", tmp_path)
+    backlog = tmp_path / "projects" / "dream-cycle" / "backlog"
+    backlog.mkdir(parents=True)
+    monkeypatch.setattr(repair, "BACKLOG", backlog)
+    _built_bundle(backlog)
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+    monkeypatch.setattr(repair.records, "KR_API_TOKEN", "test-token")
+    monkeypatch.setattr(repair.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(repair.author, "call_claude",
+                        lambda *a, **k: (_ for _ in ()).throw(RuntimeError("Claude returned an empty completion.")))
+    request_path = tmp_path / "2026-09-05-none-request.json"
+    request_path.write_text(json.dumps({"scope": "all-built"}), encoding="utf-8")
+
+    with pytest.raises(RuntimeError, match="no bundle could be repaired"):
+        repair._apply_batch(request_path, json.loads(request_path.read_text()))
