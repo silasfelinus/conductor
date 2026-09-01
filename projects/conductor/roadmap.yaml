@@ -4521,6 +4521,33 @@ tasks:
     time cost -- previously unverified whether merging past this stall was even safe, now confirmed it is, at least for a
     diff this session already validated locally (`validate_roadmaps.py`, direct `yaml.safe_load` parse, `ruff check`, manual
     script execution) before pushing.
+
+    EVIDENCE FOR (b), 2026-09-01, from an unrelated PR (conductor#3414, a
+    roadmap-note-only diff). The `Python test suite` job failed with 17 tests
+    erroring identically: `RuntimeError: cannot read the Resource registry at
+    https://kindrobots.org/api/resources (HTTP 502)`. Production was verified
+    healthy from that session a minute or two later (`/`, `/api/resources` and
+    `/api/showcase/home` all 200) and a re-run of the same commit passed, so it
+    was a momentary upstream blip rather than the PR.
+    So (b) is CONFIRMED in one direction: the suite does make unstubbed live HTTP
+    calls to kindrobots.org. `scripts/consume_art_queue_core.py`
+    `_load_resource_index()` calls `http_json("GET", KR_BASE_URL + "/api/resources")`
+    with no fixture, and ten test files reference KR_BASE_URL/kindrobots.org.
+    AND IT SUGGESTS A MECHANISM FOR THE STALL ITSELF, which is the part worth
+    testing. `_load_resource_index` memoizes into a module global but only ON
+    SUCCESS -- the raise happens before `_RESOURCE_INDEX = index`. So a failing
+    or slow registry is retried by every test that reaches `resolve_model`, not
+    once per process; those 17 failures were 17 separate HTTP requests.
+    `http_json` defaults to `timeout=60`, so an endpoint that HANGS rather than
+    502s costs up to 60s per test, and 17 x 60s is about 17 minutes against the
+    20+ minute stall this task was filed for. Hypothesis, not proof -- nobody has
+    caught the stall in the act with timings -- but it is consistent with the
+    stall hitting a docs-only PR, since these tests run regardless of the diff.
+    Cheapest fix if it holds: stub the registry in the suite (a conftest fixture
+    setting `_RESOURCE_INDEX`, or monkeypatching `http_json`), which removes both
+    the outright-failure and the stall modes and takes CI off a dependency on
+    production being up. Caching the failure, or lowering the timeout, would only
+    shrink the blast radius rather than remove it.
   updated: '2026-08-24T18:55:43Z'
 
 - id: t-125
