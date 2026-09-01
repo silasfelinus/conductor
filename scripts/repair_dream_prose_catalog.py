@@ -161,7 +161,12 @@ def audit(backlog: Path | None = None) -> list[dict[str, Any]]:
     return rows
 
 
-def _prompt(proposal: dict[str, Any], fields: list[str], complaints: list[str]) -> str:
+def _prompt(
+    proposal: dict[str, Any],
+    fields: list[str],
+    complaints: list[str],
+    notes: dict[str, str] | None = None,
+) -> str:
     requested = {RESPONSE_KEYS[label]: _get(proposal, FIELD_PATHS[label]) for label in fields}
     context = {
         "title": proposal.get("title"),
@@ -211,7 +216,7 @@ Theodora Kade receives ...".
 
 Fields that failed the current quality contract:
 {json.dumps(complaints, ensure_ascii=False, indent=2)}
-
+{_editorial_notes(notes)}
 Full local context:
 {json.dumps(context, ensure_ascii=False, indent=2)}
 
@@ -222,14 +227,41 @@ Return one JSON object containing exactly these keys: {', '.join(requested)}.
 """
 
 
-def _author_patch(proposal: dict[str, Any], fields: list[str], api_key: str) -> tuple[dict[str, str], dict[str, Any]]:
+def _editorial_notes(notes: dict[str, str] | None) -> str:
+    """Render hand-picked editorial targets as instructions the model can act on.
+
+    An `extra_fields` entry with no note delivers the field but not the reason,
+    and the model -- told to preserve approved meaning -- returns it verbatim.
+    That is exactly what run 33464442851 did with both 2026-08-07 targets: the
+    values came back byte-identical, and nothing caught it because a hand-picked
+    field has no complaint to re-check. A note is what makes the field
+    actionable, and _author_patch now requires a noted field to actually change.
+    """
+    if not notes:
+        return ""
+    lines = "\n".join(
+        f"  - {RESPONSE_KEYS.get(label, label)}: {note}" for label, note in sorted(notes.items())
+    )
+    return (
+        "\nAn editor also flagged these by hand. They pass the automated contract, so "
+        "the defect is the one described here and you must actually change the text:\n"
+        f"{lines}\n"
+    )
+
+
+def _author_patch(
+    proposal: dict[str, Any],
+    fields: list[str],
+    api_key: str,
+    notes: dict[str, str] | None = None,
+) -> tuple[dict[str, str], dict[str, Any]]:
     expected = {RESPONSE_KEYS[label] for label in fields}
     complaints = prose.complaints(proposal)
     last_error = ""
     for attempt in range(1, 3):
         try:
             raw = author.call_claude(
-                _prompt(proposal, fields, complaints),
+                _prompt(proposal, fields, complaints, notes),
                 "You are a precise fiction editor. Return JSON only.",
                 api_key,
             )
@@ -238,6 +270,14 @@ def _author_patch(proposal: dict[str, Any], fields: list[str], api_key: str) -> 
                 raise ValueError(f"expected keys {sorted(expected)}, got {sorted(patch)}")
             if not all(isinstance(value, str) and value.strip() for value in patch.values()):
                 raise ValueError("every repaired field must be a non-empty string")
+            unchanged = [
+                label for label in (notes or {})
+                if patch[RESPONSE_KEYS[label]].strip() == str(_get(proposal, FIELD_PATHS[label])).strip()
+            ]
+            if unchanged:
+                raise ValueError(
+                    "hand-picked editorial field(s) returned unchanged: " + ", ".join(sorted(unchanged))
+                )
             candidate = copy.deepcopy(proposal)
             for label in fields:
                 _set(candidate, FIELD_PATHS[label], patch[RESPONSE_KEYS[label]].strip())
@@ -496,8 +536,14 @@ def _apply_batch(request_path: Path, request: dict[str, Any]) -> list[dict[str, 
     # second clause restates its first, a definite reference to something never
     # introduced. Without it the only way to repair a sentence you can read is
     # wrong is to invent a detector for its entire class.
-    extra_fields = request.get("extra_fields") or {}
-    unknown = [label for labels in extra_fields.values() for label in labels
+    # Two shapes per day: a bare list of field labels, or a mapping of label ->
+    # why it is weak. Prefer the mapping. A field handed over without a reason is
+    # a field the model has no basis to change, and it will return it verbatim.
+    extra_fields = {
+        str(day): (dict.fromkeys(entry, "") if isinstance(entry, list) else dict(entry))
+        for day, entry in (request.get("extra_fields") or {}).items()
+    }
+    unknown = [label for entry in extra_fields.values() for label in entry
                if label not in FIELD_PATHS]
     if unknown:
         raise ValueError(f"extra_fields names unknown field(s): {sorted(set(unknown))}")
@@ -506,12 +552,13 @@ def _apply_batch(request_path: Path, request: dict[str, Any]) -> list[dict[str, 
     for bundle in bundles:
         proposal = bundle["proposal"]
         fields = _complaint_fields(proposal)
-        for label in extra_fields.get(str(bundle["day"]), []):
+        notes = {k: v for k, v in extra_fields.get(str(bundle["day"]), {}).items() if v}
+        for label in extra_fields.get(str(bundle["day"]), {}):
             if label not in fields:
                 fields.append(label)
         if not fields:
             continue
-        patch, candidate = _author_patch(proposal, fields, api_key)
+        patch, candidate = _author_patch(proposal, fields, api_key, notes)
         authored.append({**bundle, "fields": fields, "patch": patch, "candidate": candidate})
         print(f"authored prose repair: {proposal.get('title')} ({', '.join(fields)})")
 

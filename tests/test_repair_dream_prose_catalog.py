@@ -477,3 +477,40 @@ def test_extra_fields_rejects_a_field_the_repair_lane_cannot_resolve(tmp_path, m
 
     with pytest.raises(ValueError, match="unknown field"):
         repair._apply_batch(request_path, request)
+
+
+def test_a_noted_editorial_field_must_actually_change(tmp_path, monkeypatch):
+    # Run 33464442851 handed the model two hand-picked fields with no reason
+    # attached and got both back byte-identical -- a silent no-op, because a
+    # field with no complaint has nothing to re-check afterwards. The note is
+    # what makes it actionable, so a noted field returned verbatim is an error.
+    monkeypatch.setattr(repair, "ROOT", tmp_path)
+    backlog = tmp_path / "projects" / "dream-cycle" / "backlog"
+    backlog.mkdir(parents=True)
+    monkeypatch.setattr(repair, "BACKLOG", backlog)
+    path = _built_bundle(backlog)
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+    monkeypatch.setattr(repair.records, "KR_API_TOKEN", "test-token")
+    monkeypatch.setattr(repair.revision, "_patch", lambda *a, **k: None)
+    original = repair._get(
+        repair.revision._data_block(path.read_text(encoding="utf-8"), "proposal-data"),
+        repair.FIELD_PATHS["locations[0].local_rule"],
+    )
+    fixed = "The barrier lamps are already dimming and the crowd has gone quiet."
+    prompts = []
+
+    def _call(prompt, system, key):
+        prompts.append(prompt)
+        return json.dumps({"item_best_used_when": fixed, "skill_best_used_when": fixed,
+                           "local_rule": original})
+
+    monkeypatch.setattr(repair.author, "call_claude", _call)
+    request_path = tmp_path / "2026-09-01-noted-request.json"
+    request = {"scope": "all-built", "extra_fields": {
+        "2026-08-30": {"locations[0].local_rule": "the second clause restates the first"}}}
+    request_path.write_text(json.dumps(request), encoding="utf-8")
+
+    with pytest.raises(RuntimeError, match="returned unchanged"):
+        repair._apply_batch(request_path, request)
+
+    assert "the second clause restates the first" in prompts[0], "the note must reach the model"
