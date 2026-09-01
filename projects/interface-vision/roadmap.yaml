@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3391,7 +3391,13 @@ tasks:
     PR; the flagged rounded-3xl border border-base-300 bg-base-100 p-5 shadow-sm page-
     section shape remains the most promising next pool but still needs a design decision
     before any migration, per the prior cycle's note.
-  updated: '2026-09-01T14:15:35Z'
+
+    State reconciliation (conductor sweep): status field was stuck at claimed while the task
+    note already documented kind_robots#2296 merging (all 39 checks green) and a subsequent
+    no-op re-sweep cycle re-arming for the next slice. Flagged by check_pr_merged_drift.py.
+    Flipping status to ready per the recurring-task convention; claimed_by/owner left as-is
+    per established pattern in other recurring tasks (e.g. animation-manager).
+  updated: '2026-09-01T15:27:47Z'
   implementation_pr: 'silasfelinus/kind_robots#2296'
   owner: worker
   claimed_by: openai-scheduled-20260901T141535Z-interface-vision-t104-q8v3
