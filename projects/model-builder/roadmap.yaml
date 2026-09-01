@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 48
     stakes: reversible
@@ -649,10 +649,47 @@ tasks:
       kind_robots PR #2282 merged squash 7888b17. Cycle 73 complete: server-side items-array
       cap landed, all required CI checks green before merge. Re-arming to ready for the next
       bounded slice.
-    updated: '2026-09-01T06:31:34Z'
+
+      Cycle 74 (real fix, unmerged -- blocked by an external infra outage, not this diff):
+      the batch item-update route t-030 added (server/api/model-builder/items/batch.patch.ts)
+      had the identical gap cycle 73 just fixed on its sibling run-CREATE route -- no
+      server-side cap on the items array length (the client's batchPushItems never exceeds
+      one run's item count, but a direct API call bypasses that, forcing an unbounded
+      sequential findUnique + assertArtImageAttachable pass inside one all-or-nothing
+      transaction). Capped it against the same MAX_BATCH_ITEMS (12) constant runs/index.ts
+      now exports, mirroring runs/index.post.ts's guard exactly. Added
+      verifyModelBuilderBatchItemsCapGuard.ts + .test.ts, wired into
+      package.json/contract-tests.yml, matching this task's established convention. Verified:
+      new guard fails pre-fix/passes post-fix (git-stash round-trip); all 153
+      test:model-builder-* scripts pass; eslint/prettier --check clean on all 5 changed files;
+      vue-tsc --noEmit repo-wide clean; git status scoped to exactly 5 files.
+
+      kind_robots PR #2286 opened, branch worker/model-builder-t029-cycle74-20260901, rebased
+      on origin/main immediately before push. 39/41 checks went green (TypeScript,
+      layout-contract, Build production image, all 3 verify jobs, facet-catalog,
+      facet-alias-smoke included). The 2 remaining -- Contract verifiers (required) and
+      comment-contract -- failed identically across 8 consecutive reruns over ~50 minutes,
+      always at the same external network call: verifyAcademyStarterManifest.ts (fetch failed
+      reaching the external media origin) and verifyPopulationDraftQuality.ts
+      (ConnectTimeoutError to kindrobots.org:443). Confirmed not caused by this diff: PR #2285
+      (an unrelated Rainbow Butterflies auth PR) failed the identical comment-contract check on
+      3 separate fresh pushes before this PR even existed, and main's own last run of the same
+      workflow was green at 06:15 UTC. A direct merge attempt confirmed the block precisely
+      (405, "Required status check 'Contract verifiers' is failing"). This is very likely the
+      same GitHub-Actions-runners-can't-reach-kindrobots.org network path conductor/t-121
+      already tracks (different endpoint/error signature -- SSL EOF there vs. connect-timeout/
+      fetch-failed here -- but the same host, the same "healthy from this sandbox, unreachable
+      from GH Actions runners" shape) -- see that task's addendum for today's occurrence.
+      Classifying this as a transient failure per AGENTS.md's failure-triage table (external
+      network outage, not this diff): no pass consumed, task re-armed to ready rather than left
+      claimed. PR #2286 is left open with a diagnostic comment on it; merge it once
+      kindrobots.org connectivity from GitHub Actions recovers (t-121's fix, or the outage
+      clearing on its own) -- no further code changes should be needed, just a clean rerun of
+      those 2 checks.
+    updated: '2026-09-01T06:52:00Z'
     owner: reviewer
-    claimed_by: 2026-09-01T063131Z-model-builder-t029-fields
-    claimed_at: '2026-09-01T06:31:34Z'
+    claimed_by: null
+    claimed_at: null
 
   - id: t-030
     milestone: m6

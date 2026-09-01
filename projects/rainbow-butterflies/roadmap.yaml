@@ -816,3 +816,52 @@ tasks:
   claimed_at: '2026-08-31T07:47:29Z'
   updated: '2026-08-31T07:56:30Z'
   implementation_pr: 'silasfelinus/kind_robots#2252'
+
+- id: t-035
+  milestone: m2
+  title: "Security gate: first-party BFF delegation auth (kind_robots#2285) — privilege-escalation gap + revocation/rate-limit decisions"
+  status: needs-human
+  gate_human: true
+  security_flag: true
+  owner: null
+  passes: 0
+  stakes: outward-facing
+  implementation_pr: 'silasfelinus/kind_robots#2285'
+  note: >-
+    FOR SILAS: kind_robots PR #2285 ("Add first-party BFF delegation for Rainbow") adds a
+    new server-to-server auth mechanism — a 7-day, non-admin JWT ("first-party delegation
+    token") that Rainbow can exchange for on a user's behalf via authorization-code, direct
+    Google, or a new password-based endpoint, then use to call Kind Robots APIs as that
+    user without holding a normal JWT/API key.
+
+    A scheduled Reviewer session found a concrete privilege-escalation bug during review
+    and posted it on the PR (kind_robots#2285, issue comment) rather than merging:
+    `requireHumanApiUser` in `server/utils/authGuard.ts` only blocks `kind ===
+    'agent-credential'`, not `kind === 'first-party-delegation'` — so a delegation token
+    can reach every credential-management endpoint (`server/api/agent-credentials/**`,
+    `server/api/agent-profiles/**`) and mint itself new, independently-scoped, longer-lived
+    AgentCredentials, a self-escalation path past its own 7-day window. The PR's own diff
+    touches that exact function (reformats it, deletes a doc-comment stating the invariant
+    this breaks) without updating the block-list, and the PR's new contract test never
+    checks `requireHumanApiUser` at all, so CI didn't catch it.
+
+    Three more design points worth your call before this ships, not necessarily blockers:
+    (1) the new `password.post.ts` endpoint has no rate limiting/lockout — same gap as the
+    existing `login.post.ts`, but now a second unthrottled credential-testing surface; (2)
+    `client_id` carries no secret anywhere in the password/exchange flows (FirstPartyClient
+    has no secret field, `'rainbow-butterflies'` is a predictable public string), so the
+    endpoint's only real boundary is the user's own password; (3) delegation tokens are
+    stateless JWTs with no DB row, scopes, or revocation, unlike the existing
+    `agentCredentials.ts` pattern (hashed secret, scopes, expiresAt, revokedAt) — a leaked
+    or compromised token stays valid for its full 7 days with no kill switch.
+
+    TO APPROVE: have the `requireHumanApiUser` gap fixed on kind_robots#2285 (or a follow-up
+    PR) first — that part isn't a judgment call, it's a bug. Then decide points (1)-(3) above
+    and tell the implementing session (or Silas directly) how to proceed; set
+    `approved_by_human: true` and `status: done` once you're satisfied the PR is safe to
+    merge, or set `status: ready` with revised instructions if you want it reworked further.
+    Nothing downstream depends on this task, but PR #2285 stays unmerged on kind_robots
+    until it's resolved one way or another.
+  claimed_by: null
+  claimed_at: null
+  updated: '2026-09-01T06:44:00Z'
