@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3330,11 +3330,34 @@ tasks:
     match at line 79 is a btn-ghost button, not a panel surface, and shouldn't take kr-
     panel-flat. Return the non-recurring consistency umbrella to ready for the next bounded
     slice.
-  updated: '2026-09-01T07:40:27Z'
-  implementation_pr: 'silasfelinus/kind_robots#2281'
+
+    Bounded consistency slice: migrated the hero stat-strip pill in
+    components/conductor/project-front-page.vue:97 (bg-base-100/70, px-3 py-1.5,
+    backdrop-blur) onto kr-panel-flat, preserving the translucent background override,
+    padding, and backdrop-blur. A repo-wide grep for the same non-button surface shape
+    found no other un-migrated candidate, so this closes out the pool documented by the
+    prior slice. Verified: eslint clean on the changed file; vue-tsc --noEmit clean
+    repo-wide (confirmed a pre-existing ~16-error stale-Prisma-generated-output issue on
+    main is unrelated via git stash -- filed separately as kind-robots/t-087); layout-
+    contract holds at the 207 baseline. kind_robots PR #2287 opened
+    (worker/interface-vision-t104-stat-pill), one file/+1-1.
+
+    Blocked, unmerged: PR #2287's required "Contract verifiers" check failed twice
+    (verifyAcademyStarterManifest.ts "fetch failed" reaching the external media origin) --
+    confirmed unrelated to this PR's diff and matching the same GitHub-Actions-runners-
+    can't-reach-kindrobots.org outage already tracked in conductor/t-121 and reconfirmed
+    today on kind_robots#2286 (model-builder/t-029 cycle 74, identical signature, 8+
+    reruns there). Posted a standing-down comment on the PR and used this slice's one
+    re-run; failed identically the second time too. Classifying as transient per AGENTS.md
+    failure-triage: no pass consumed, task re-armed to ready. PR #2287 stays open,
+    watched, unmerged until kindrobots.org connectivity from GitHub Actions recovers --
+    merge once the Contract verifiers check clears on its own rerun, no further code
+    changes expected.
+  updated: '2026-09-01T07:44:00Z'
+  implementation_pr: 'silasfelinus/kind_robots#2287'
   owner: worker
-  claimed_by: claude-scheduled-20260901T072948Z-ivt104
-  claimed_at: '2026-09-01T07:29:49Z'
+  claimed_by: null
+  claimed_at: null
 
 - id: t-105
   milestone: m6
