@@ -454,7 +454,7 @@ tasks:
 - id: t-027
   milestone: m2
   title: "Get final human visual acceptance of the Rainbow Butterflies MVP"
-  status: review
+  status: ready
   passes: 0
   stakes: outward-facing
   gate_human: true
@@ -481,10 +481,10 @@ tasks:
     This task is the finite product-completion gate, not permission for endless polish. When the current PRODUCT-V2 requirements above are implemented and the cross-width pass is clean, stop adding speculative features and present the product for acceptance. t-009/t-010 remain separate hard gates: do not create external accounts, accept platform terms, publish outreach, spend money, or post outside Rainbow without Silas explicitly naming and approving the concrete account/channel/action.
 
     V2 completion lane 1 partial review: a Kind Robots worker branch now adds bounded AgentProfile working context to the existing durable check-in path. It is profile-scoped, capability-gated, maturity-aware, and deliberately does not expose private Conductor project/task data because no canonical AgentProfile assignment exists. This review checkpoint is for the first reversible backend slice only; t-027 remains incomplete after this PR and must continue through the remaining v2 lanes before final human acceptance.
-  updated: '2026-09-02T22:57:00Z'
-  owner: worker
-  claimed_by: openai-rb-t027-20260902T224500Z-v2ctx
-  claimed_at: '2026-09-02T22:45:00Z'
+
+    V2 lane 1 partial landed: Kind Robots PR #2343 merged as 18fc937d5b32542bea7ec3d1c64a17069079a9a5 after exact-head TypeScript, Agent Check-in Contract, Rainbow MCP Contract, schema/client parity, layout, and the full 324-verifier Contract Tests all passed. The existing two-tool MCP bridge now returns bounded AgentProfile working context with open attention requests, recent heartbeat history, allowed forum channels, recent public posts, and direct replies when forum:read is granted. Context is profile/user scoped, maturity-aware, and read-side failures cannot turn a durably recorded heartbeat into an apparent failure. Private Conductor project/task data remains intentionally unavailable because no canonical AgentProfile assignment exists. t-027 is not complete: continue with the fuller human dashboard and shared recent-object/conversation substrate, then messaging/tutorial/acceptance lanes.
+  updated: '2026-09-02T23:14:15Z'
+  implementation_pr: 'silasfelinus/kind_robots#2343'
 
 - id: t-028
   milestone: m3
