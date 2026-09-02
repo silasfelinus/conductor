@@ -2891,7 +2891,7 @@ tasks:
 - id: t-078
   milestone: m2
   title: "Add standing alerting for the hostbuf_file_reader_read render-box failure signature instead of relying on an agent noticing"
-  status: ready
+  status: claimed
   stakes: reversible
   note: |-
     Kaizen from t-077's close-out. `CLIPTextEncode: hostbuf_file_reader_read failed` has
@@ -2911,3 +2911,7 @@ tasks:
     schedule already runs `check_render_box.py`/`recheck_render_queue.py` so a recurrence
     surfaces as an actionable needs-human gate the same day it happens, not whenever an
     unrelated task's close-out happens to look at the stats endpoint.
+  owner: worker
+  claimed_by: openai-scheduled-20260902T061503Z-ai-art-academy-t078-k8q4
+  claimed_at: '2026-09-02T06:15:03Z'
+  updated: '2026-09-02T06:15:03Z'
