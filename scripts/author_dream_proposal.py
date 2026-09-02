@@ -16,6 +16,7 @@ different.
 from __future__ import annotations
 
 import argparse
+import copy
 import datetime
 import json
 import os
@@ -630,6 +631,50 @@ def _brief_prompt(
     )
 
 
+def merge_invented_facets(plan: dict, authored: object) -> dict:
+    """Keep the drawn Facets ours; take only the invented ones from the model.
+
+    seed_facets used to be overwritten with the brief wholesale, so the model
+    could not quietly swap the genres it was given for ones it preferred. That
+    is still the rule for everything the plan DREW -- but the two brand-new
+    Facets are the model's actual creative contribution (Silas, 2026-09-02:
+    "draft 2 new facets to fill in gaps"), and a blanket overwrite would throw
+    them away every night while the digest cheerfully reported success.
+
+    So the model supplies the definitions and nothing else. WE place them into
+    the elements the plan assigned, rather than trusting the model's own edits
+    to seed_facets.elements -- placement is a mechanical step with a right
+    answer, and doing it here means a model that forgets, or that scatters them
+    somewhere convenient, still produces a correctly linked bundle.
+    """
+    merged = copy.deepcopy(plan)
+    slots = merged.get("invent") if isinstance(merged.get("invent"), list) else []
+    if not slots:
+        return merged
+
+    supplied = []
+    if isinstance(authored, dict) and isinstance(authored.get("invented"), list):
+        supplied = [row for row in authored["invented"] if isinstance(row, dict)]
+
+    invented = []
+    for entry, facet in zip(slots, supplied):
+        # The taxonomy is the plan's call, not the model's: it is what makes the
+        # new Facet fill the gap that was measured rather than one it liked.
+        row = {
+            "title": facet.get("title"),
+            "slug": facet.get("slug"),
+            "taxonomy": str(entry.get("taxonomy") or "").upper(),
+            "description": facet.get("description"),
+            "art_prompt": facet.get("art_prompt") or facet.get("artPrompt"),
+        }
+        invented.append(row)
+        for target in entry.get("assign_to") or []:
+            merged.setdefault("elements", {}).setdefault(target, []).append(copy.deepcopy(row))
+
+    merged["invented"] = invented
+    return merged
+
+
 def call_claude(prompt: str, system: str, api_key: str, timeout: float = 120.0) -> str:
     body = json.dumps(
         {
@@ -698,7 +743,9 @@ def author(day: str, api_key: str, verbose: bool = True) -> dict:
                 print("  rejected: " + complaints[0], file=sys.stderr)
             continue
 
-        proposal["seed_facets"] = brief["seed_facets"]
+        proposal["seed_facets"] = merge_invented_facets(
+            brief["seed_facets"], proposal.get("seed_facets")
+        )
         proposal.pop("narrator", None)
 
         normalized = dreams.normalize(proposal, dreams.existing_slugs())

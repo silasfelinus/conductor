@@ -203,10 +203,30 @@ def proposal_section(
         if errors:
             detail += f"; {len(errors)} error(s)"
 
+        # What the CATALOG gained today, called out separately from what the
+        # records were tagged with. Silas, 2026-09-02: "I would like each dream
+        # to include 1-2 new facets ... it would be nice if we could use that to
+        # improve the creativity of the pitches". A new Facet that lands with no
+        # announcement is indistinguishable from one that was already there.
+        invented = assignment.get("invented") if isinstance(assignment.get("invented"), list) else []
+        created = [row for row in invented if isinstance(row, dict) and row.get("created")]
+        new_line = ""
+        if created:
+            chips = _facet_chips([
+                f"{row.get('taxonomy') or 'FACET'}: {row.get('slug')}" for row in created
+            ])
+            new_line = (
+                f'<p style="color:#5b21b6;background:#faf5ff;border-left:4px solid #7e22ce;'
+                f'padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px;margin-bottom:2px">'
+                f'✨ New to the catalog: {len(created)} Facet(s) invented for this dream</p>'
+                f'<div style="margin:0 0 8px">{chips}</div>'
+            )
+
         facet_line = (
             f'<p style="color:{ink};background:{paper};border-left:4px solid {rule};'
             f'padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px">'
             f'🧩 Record Facets: {esc(status)} — {esc(detail)}</p>'
+            + new_line
             + _facet_target_rows(targets)
         )
 

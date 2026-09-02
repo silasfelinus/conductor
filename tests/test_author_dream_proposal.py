@@ -90,7 +90,25 @@ def _valid_bundle(brief):
                 "apart and the last safe branch falls toward the lightning predators."
             ),
         }],
-        "seed_facets": brief["seed_facets"],
+        "seed_facets": {
+            **brief["seed_facets"],
+            # The model's half of the three-phase order: it drafts the new
+            # Facets, the plan decides which taxonomies they fill, and the
+            # author places them into elements. See merge_invented_facets.
+            "invented": [
+                {
+                    "title": f"Invented {index}",
+                    "slug": f"invented-{index}",
+                    "taxonomy": entry["taxonomy"],
+                    "description": (
+                        "A concept the catalog has no word for yet. "
+                        "It costs something to hold and cannot be shared."
+                    ),
+                    "art_prompt": "A brass token worn smooth on one face only.",
+                }
+                for index, entry in enumerate(brief["seed_facets"].get("invent") or [])
+            ],
+        },
     }
 
 
@@ -122,12 +140,51 @@ def test_authored_bundle_passes_the_same_validator_a_human_bundle_does(monkeypat
     assert dreams.validate_proposal(dreams.normalize(proposal, dreams.existing_slugs())) == []
 
 
-def test_seed_facets_are_ours_not_the_models(monkeypatch, brief, no_history):
+def test_drawn_seed_facets_are_ours_even_when_the_model_rewrites_them(
+    monkeypatch, brief, no_history
+):
+    """The model may invent, but it may not re-draw.
+
+    seed_facets used to be replaced with the brief wholesale, which made this
+    trivially true. It cannot be any more -- the two invented Facets have to
+    survive -- so the guarantee is now narrower and worth testing directly:
+    everything the plan DREW is still ours.
+    """
     tampered = _valid_bundle(brief)
-    tampered["seed_facets"] = {"version": 2, "umbrella": {"genres": []}}
+    tampered["seed_facets"] = {
+        "version": 2,
+        "umbrella": {"genres": [{"slug": "model-picked", "title": "Model Picked",
+                                 "taxonomy": "GENRE"}]},
+        "invented": _valid_bundle(brief)["seed_facets"]["invented"],
+    }
     monkeypatch.setattr(authoring, "call_claude", lambda *a, **k: json.dumps(tampered))
     proposal = authoring.author(DAY, "key", verbose=False)
-    assert proposal["seed_facets"] == brief["seed_facets"]
+
+    seeds = proposal["seed_facets"]
+    for key in ("umbrella", "shared", "extra_genres", "deterministic_seed", "invent"):
+        assert seeds[key] == brief["seed_facets"][key], key
+    assert "model-picked" not in json.dumps(seeds["umbrella"])
+
+
+def test_the_models_inventions_survive_and_are_placed_by_us(
+    monkeypatch, brief, no_history
+):
+    """The inventions are the model's contribution; the placement is not."""
+    bundle = _valid_bundle(brief)
+    # A model that drafts the Facets but forgets to file them anywhere.
+    bundle["seed_facets"]["elements"] = brief["seed_facets"]["elements"]
+    monkeypatch.setattr(authoring, "call_claude", lambda *a, **k: json.dumps(bundle))
+    proposal = authoring.author(DAY, "key", verbose=False)
+
+    seeds = proposal["seed_facets"]
+    plan = brief["seed_facets"]["invent"]
+    assert len(seeds["invented"]) == len(plan)
+    for entry, facet in zip(plan, seeds["invented"]):
+        # The taxonomy is the plan's call, so the gap actually gets filled.
+        assert facet["taxonomy"] == entry["taxonomy"]
+        for target in entry["assign_to"]:
+            slugs = [f.get("slug") for f in seeds["elements"][target]]
+            assert facet["slug"] in slugs, f"{facet['slug']} missing from {target}"
 
 
 def test_a_narrator_is_stripped(monkeypatch, brief, no_history):

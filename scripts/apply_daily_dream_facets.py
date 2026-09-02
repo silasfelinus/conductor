@@ -15,6 +15,7 @@ import os
 import re
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
@@ -97,6 +98,117 @@ def _put(path: str, payload: dict[str, Any], token: str, *, dry_run: bool = Fals
     return result
 
 
+def _post(path: str, payload: dict[str, Any], token: str, *, dry_run: bool = False) -> dict[str, Any]:
+    if dry_run:
+        return {"success": True, "data": {"slug": payload.get("slug"), "dry_run": True}}
+    request = urllib.request.Request(
+        f"{BASE_URL}{path}",
+        method="POST",
+        data=json.dumps(payload).encode("utf-8"),
+        headers={
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {token}",
+            "User-Agent": "conductor-daily-dream-facets/1",
+        },
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=30) as response:
+            result = json.loads(response.read().decode("utf-8"))
+    except urllib.error.HTTPError as error:
+        body = error.read().decode("utf-8", errors="replace")
+        raise RuntimeError(f"POST {path} failed ({error.code}): {body[:500]}") from error
+    except (OSError, ValueError) as error:
+        raise RuntimeError(f"POST {path} failed: {error}") from error
+    if not isinstance(result, dict) or result.get("success") is False:
+        raise RuntimeError(f"POST {path} returned failure: {result}")
+    return result
+
+
+def _facet_exists(slug: str, timeout: int = 20) -> bool:
+    """Whether the catalog already holds this slug. Public read, no token."""
+    url = f"{BASE_URL}/api/facets?" + urllib.parse.urlencode({"take": 1, "slug": slug})
+    request = urllib.request.Request(
+        url, headers={"Accept": "application/json", "User-Agent": "conductor-daily-dream-facets/1"}
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=timeout) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+    except (OSError, ValueError, urllib.error.HTTPError):
+        # Unknown is not "absent". Reporting absent here would POST a duplicate.
+        raise RuntimeError(f"could not check whether Facet {slug} already exists")
+    rows = payload.get("data") if isinstance(payload, dict) else None
+    if not isinstance(rows, list):
+        raise RuntimeError(f"unexpected /api/facets response while checking {slug}")
+    return any(
+        isinstance(row, dict) and str(row.get("slug") or "").casefold() == slug.casefold()
+        for row in rows
+    )
+
+
+def ensure_invented_facets(
+    proposal: dict[str, Any], token: str, *, dry_run: bool = False
+) -> tuple[list[dict[str, Any]], list[str]]:
+    """Create the brand-new Facets this bundle invented, if they are not there yet.
+
+    Silas, 2026-09-02: "I would like each dream to include 1-2 new facets ...
+    they should be different and fill a gap that we don't have."
+
+    Runs before the linking pass below, because a PUT that names a slug the
+    catalog does not hold resolves to nothing -- the same failure mode that ate
+    every Character's Facets for six weeks, arriving from the other direction.
+
+    Idempotent by slug, so a re-run (or --force) adopts the existing row instead
+    of minting a second one. The existence check FAILS LOUDLY rather than
+    assuming absence: treating an unreachable API as "not there" is how you get
+    a duplicate catalog entry every night.
+    """
+    seeds = proposal.get("seed_facets")
+    invented = seeds.get("invented") if isinstance(seeds, dict) else None
+    if not isinstance(invented, list) or not invented:
+        return [], []
+
+    records: list[dict[str, Any]] = []
+    errors: list[str] = []
+    for facet in invented:
+        if not isinstance(facet, dict):
+            errors.append("seed_facets.invented contains a non-object entry")
+            continue
+        slug = str(facet.get("slug") or "").strip().casefold()
+        if not slug:
+            errors.append("an invented Facet has no slug")
+            continue
+        try:
+            if _facet_exists(slug):
+                records.append({"slug": slug, "created": False, "reason": "already in catalog"})
+                continue
+            payload = {
+                "title": facet.get("title"),
+                "slug": slug,
+                "taxonomy": str(facet.get("taxonomy") or "").upper(),
+                "description": facet.get("description"),
+                "artPrompt": facet.get("art_prompt"),
+                # Seedable from the day it lands, which is the whole point --
+                # a new Facet that cannot be drawn is a dead row.
+                "isRandomizable": True,
+                "randomWeight": 1,
+                "isPublic": True,
+                "creationSource": "AI",
+                "designer": "dream-cycle",
+            }
+            result = _post("/api/facets", payload, token, dry_run=dry_run)
+            data = result.get("data") if isinstance(result.get("data"), dict) else {}
+            records.append({
+                "slug": slug,
+                "created": True,
+                "id": data.get("id"),
+                "taxonomy": payload["taxonomy"],
+            })
+        except RuntimeError as error:
+            errors.append(str(error))
+    return records, errors
+
+
 def _record_targets(proposal: dict[str, Any], built: dict[str, Any]) -> list[dict[str, Any]]:
     seed = proposal.get("seed_facets") if isinstance(proposal.get("seed_facets"), dict) else {}
     elements = seed.get("elements") if isinstance(seed.get("elements"), dict) else {}
@@ -162,6 +274,11 @@ def apply_file(path: Path, token: str, *, dry_run: bool = False, force: bool = F
 
     applied: list[dict[str, Any]] = []
     errors: list[str] = []
+
+    # Create before linking: a PUT naming a slug the catalog does not hold
+    # resolves to nothing.
+    invented, invented_errors = ensure_invented_facets(proposal, token, dry_run=dry_run)
+    errors.extend(invented_errors)
     for target in targets:
         selection = _facet_selection(target["facets"])
         if not selection["facetIds"] and not selection["facetKeys"]:
@@ -208,6 +325,7 @@ def apply_file(path: Path, token: str, *, dry_run: bool = False, force: bool = F
         "seed_version": seed_version,
         "applied_at": datetime.now(timezone.utc).isoformat(),
         "targets": applied,
+        "invented": invented,
         "errors": errors,
     }
     replacement = "<!-- built-data\n" + json.dumps(built, ensure_ascii=False, sort_keys=True) + "\n-->"
