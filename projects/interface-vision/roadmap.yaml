@@ -3643,3 +3643,34 @@ tasks:
   claimed_at: '2026-08-28T21:28:28Z'
   updated: '2026-08-28T21:40:34Z'
   implementation_pr: 'silasfelinus/kind_robots#2185'
+
+- id: t-124
+  milestone: m5
+  title: "Decide: name the p-5/p-4 no-shadow rounded-3xl surface as a kr-* primitive, or leave it hand-rolled"
+  status: needs-human
+  soft_gate: true
+  passes: 0
+  stakes: reversible
+  note: |-
+    FOR SILAS: t-104 slice 34 (kind_robots#2328) migrated the shadow-sm variant of the
+    rounded-3xl page-section shape to the new kr-panel-section primitive (t-123). While
+    doing that it found a second, distinct repeated shape: `rounded-3xl border
+    border-base-300 bg-base-100 p-4` and `rounded-3xl border border-base-300 bg-base-100
+    p-5` -- same corners/border/fill, no shadow. It repeats verbatim across at least 13
+    occurrences: components/watchlist/watchlist-browse.vue (4), coloring-book-package-
+    readiness.vue (2), coloring-book-cover-studio.vue (1), coloring-book-studio.vue (6
+    remaining after slice 34's one shadow-sm migration), coloring-book-readiness.vue (1,
+    plus hover-transition extras), and a few aquarium/challenge pages that add their own
+    shadow-lg/shadow-xl variant on top (not an exact match).
+    What it contains: it does NOT match any existing kr-* primitive verbatim -- kr-panel
+    and kr-panel-flat are both rounded-2xl, kr-panel-section is p-5 with shadow-sm. This
+    is the same corners/border/fill as kr-panel-section minus the shadow.
+    TO APPROVE: pick one -- (a) approve a new primitive, e.g. `.kr-panel-section-flat {
+    @apply rounded-3xl border border-base-300 bg-base-100; }` (padding varies p-4/p-5
+    per instance, left as a utility) in assets/css/tailwind.css, and set status: done
+    with a note naming the class -- the Worker will then migrate the flagged files across
+    bounded slices same as every other kr-* migration; (b) say this shape should stay
+    hand-rolled (not worth a shared primitive) and set status: done with that note; or
+    (c) propose a different name/shape. Either way, set approved_by_human: true and
+    status: done with your choice recorded in this note.
+    Kaizen suggestion filed from t-104 slice 34 (kind_robots#2328).
