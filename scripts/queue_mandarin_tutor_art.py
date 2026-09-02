@@ -19,8 +19,9 @@ import re
 import sys
 import urllib.error
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 import yaml
 
@@ -28,10 +29,15 @@ ROOT = Path(__file__).resolve().parent.parent
 ART_PROMPTS = ROOT / "projects" / "art-prompts.yaml"
 SNAPSHOT = ROOT / "projects" / "mandarin-tutor" / "art-manifest.json"
 KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kindrobots.org").rstrip("/")
+MEDIA_ORIGIN = os.environ.get(
+    "KR_MEDIA_ORIGIN", "https://media.acrocatranch.com"
+).rstrip("/")
 MANIFEST_URL = f"{KR_BASE_URL}/api/mandarin/art-manifest"
 EXPECTED_RECIPE_VERSION = "v2"
 EXPECTED_ART_DIRECTION_ID = "modern-chinese-picturebook-v2"
 DEFAULT_BATCH_SIZE = 1000
+DEFAULT_PROBE_WORKERS = 12
+MEDIA_PROBE_TIMEOUT_SECONDS = 8
 MANDARIN_PRIORITY = 80
 TOP_LEVEL_KEY = re.compile(r"^[A-Za-z0-9_-]+:\s*(?:#.*)?$")
 
@@ -158,6 +164,69 @@ def load_existing_requests() -> tuple[set[str], set[str]]:
     return ids, paths
 
 
+def media_url(entry: dict[str, Any]) -> str:
+    image_url = str(entry.get("imageUrl") or "").strip()
+    if image_url.startswith(("http://", "https://")):
+        return image_url
+    if image_url.startswith("/"):
+        return f"{MEDIA_ORIGIN}{image_url}"
+    return ""
+
+
+def probe_media_state(
+    entry: dict[str, Any], timeout: int = MEDIA_PROBE_TIMEOUT_SECONDS
+) -> str:
+    """Return present, absent, or unknown for a manifest entry's final media URL.
+
+    Only an authoritative 404/410 means the illustration is safe to stage. A
+    network failure or ambiguous HTTP response must stay unknown so a temporary
+    origin problem cannot recreate the complete corpus as duplicate ArtJobs.
+    """
+    url = media_url(entry)
+    if not url:
+        return "unknown"
+    request = urllib.request.Request(url, method="HEAD")
+    try:
+        with urllib.request.urlopen(request, timeout=timeout) as response:
+            return "present" if 200 <= response.status < 300 else "unknown"
+    except urllib.error.HTTPError as error:
+        return "absent" if error.code in (404, 410) else "unknown"
+    except (urllib.error.URLError, TimeoutError, OSError):
+        return "unknown"
+
+
+def classify_unstaged_entries(
+    entries: list[dict[str, Any]],
+    *,
+    probe: Callable[[dict[str, Any]], str] = probe_media_state,
+    workers: int = DEFAULT_PROBE_WORKERS,
+) -> tuple[list[dict[str, Any]], int, int]:
+    """Return truly absent entries plus rendered and unknown probe counts."""
+    states = ["unknown"] * len(entries)
+    rendered = 0
+    unknown = 0
+    with ThreadPoolExecutor(max_workers=max(1, workers)) as pool:
+        futures = {
+            pool.submit(probe, entry): index for index, entry in enumerate(entries)
+        }
+        for future in as_completed(futures):
+            index = futures[future]
+            try:
+                states[index] = future.result()
+            except Exception:  # noqa: BLE001 - an uncertain probe must fail closed
+                states[index] = "unknown"
+
+    missing: list[dict[str, Any]] = []
+    for entry, state in zip(entries, states, strict=True):
+        if state == "absent":
+            missing.append(entry)
+        elif state == "present":
+            rendered += 1
+        else:
+            unknown += 1
+    return missing, rendered, unknown
+
+
 def request_entry(raw: dict[str, Any]) -> dict[str, Any]:
     simplified = str(raw.get("simplified") or "").strip()
     pinyin = str(raw.get("pinyin") or "").strip()
@@ -237,17 +306,26 @@ def append_request_blocks(blocks: list[str]) -> None:
     ART_PROMPTS.write_text("".join(lines), encoding="utf-8")
 
 
-def queue_batch(manifest: dict[str, Any], batch_size: int) -> dict[str, int]:
+def queue_batch(
+    manifest: dict[str, Any],
+    batch_size: int,
+    *,
+    probe: Callable[[dict[str, Any]], str] = probe_media_state,
+    workers: int = DEFAULT_PROBE_WORKERS,
+) -> dict[str, int]:
     entries = validate_manifest(manifest)
     existing_ids, existing_paths = load_existing_requests()
     illustrated = [entry for entry in entries if entry.get("strategy") == "illustrate"]
     glyph_only = [entry for entry in entries if entry.get("strategy") == "glyph-only"]
-    missing = [
+    unstaged = [
         entry
         for entry in illustrated
         if str(entry.get("requestId") or "") not in existing_ids
         and str(entry.get("imagePath") or "") not in existing_paths
     ]
+    missing, already_rendered, probe_unknown = classify_unstaged_entries(
+        unstaged, probe=probe, workers=workers
+    )
     selected = missing[: max(0, batch_size)]
     staged = [request_entry(entry) for entry in selected]
     append_request_blocks([render_request(entry) for entry in staged])
@@ -255,7 +333,9 @@ def queue_batch(manifest: dict[str, Any], batch_size: int) -> dict[str, int]:
         "total": len(entries),
         "illustrated": len(illustrated),
         "glyph_only": len(glyph_only),
-        "already_staged": len(illustrated) - len(missing),
+        "already_staged": len(illustrated) - len(unstaged),
+        "already_rendered": already_rendered,
+        "probe_unknown": probe_unknown,
         "missing": len(missing),
         "queued": len(selected),
         "unvaried": sum(1 for entry in staged if not entry["style_variant"]),
@@ -277,6 +357,12 @@ def main(argv: list[str] | None = None) -> int:
         help="fail when the public v2 manifest cannot be fetched instead of preserving the existing queue",
     )
     parser.add_argument(
+        "--probe-workers",
+        type=int,
+        default=DEFAULT_PROBE_WORKERS,
+        help=f"concurrent live-media HEAD probes (default {DEFAULT_PROBE_WORKERS})",
+    )
+    parser.add_argument(
         "--manifest-file",
         type=Path,
         default=None,
@@ -289,6 +375,8 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     if args.batch_size < 0:
         parser.error("--batch-size must be >= 0")
+    if args.probe_workers < 1:
+        parser.error("--probe-workers must be >= 1")
 
     try:
         manifest = (
@@ -306,7 +394,7 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     snapshot_changed = write_snapshot(manifest)
-    summary = queue_batch(manifest, args.batch_size)
+    summary = queue_batch(manifest, args.batch_size, workers=args.probe_workers)
     print(
         "Mandarin v2 art manifest: "
         f"{summary['total']} core cards, {summary['illustrated']} illustrated, "
@@ -314,7 +402,9 @@ def main(argv: list[str] | None = None) -> int:
     )
     print(
         "v2 queue state: "
-        f"{summary['already_staged']} already staged, {summary['missing']} still missing, "
+        f"{summary['already_staged']} already staged, "
+        f"{summary['already_rendered']} already rendered, "
+        f"{summary['probe_unknown']} probe-unknown, {summary['missing']} still missing, "
         f"{summary['queued']} appended this run."
     )
     if summary["queued"]:
