@@ -28,19 +28,20 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-import urllib.error
-import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parent.parent
 SNAPSHOT = ROOT / "projects" / "mandarin-tutor" / "art-manifest.json"
-MEDIA_ORIGIN = "https://media.acrocatranch.com"
 TIMEOUT_SECONDS = 8
 
 sys.path.insert(0, str(ROOT / "scripts"))
-from queue_mandarin_tutor_art import fetch_manifest, validate_manifest  # noqa: E402
+from queue_mandarin_tutor_art import (  # noqa: E402
+    fetch_manifest,
+    probe_media_state,
+    validate_manifest,
+)
 
 
 def load_entries(manifest_file: str | None, do_fetch: bool) -> list[dict[str, Any]]:
@@ -55,15 +56,7 @@ def load_entries(manifest_file: str | None, do_fetch: bool) -> list[dict[str, An
 
 
 def probe(entry: dict[str, Any]) -> tuple[dict[str, Any], str]:
-    url = MEDIA_ORIGIN + entry["imageUrl"]
-    request = urllib.request.Request(url, method="HEAD")
-    try:
-        with urllib.request.urlopen(request, timeout=TIMEOUT_SECONDS) as response:
-            return entry, ("present" if 200 <= response.status < 300 else "absent")
-    except urllib.error.HTTPError as exc:
-        return entry, ("absent" if exc.code in (404, 410) else "unknown")
-    except (urllib.error.URLError, TimeoutError, OSError):
-        return entry, "unknown"
+    return entry, probe_media_state(entry, timeout=TIMEOUT_SECONDS)
 
 
 def main() -> int:
