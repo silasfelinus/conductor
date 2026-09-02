@@ -5392,12 +5392,12 @@ tasks:
 - id: t-143
   milestone: m2
   title: "kind_robots reads a >1MB art-prompts.yaml as an empty file and commits over it, deleting the whole art queue"
-  status: review
+  status: done
   gate_human: false
   owner: reviewer
   stakes: reversible
   passes: 0
-  note: |-
+  note: >-
     Found 2026-09-02 while auditing the live ArtJob queue after t-142's Mandarin re-staging fix
     merged. The queue held 1917 PENDING jobs, 1909 of them mandarin-tutor across only 577 distinct
     requestIds -- for a corpus a HEAD probe confirms is 577/577 already rendered on media.
@@ -5447,9 +5447,13 @@ tasks:
     utils/scripts/verifyGithubFileContents.ts wired into contract-tests.yml covers the oversized
     read, the unreadable-body refusal, the genuinely-empty file, the 404 path, the cheap existence
     probe, and the append-only check.
+
+    RESOLVED 2026-09-02: kind_robots#2320 merged (readGithubFile Blobs-API fallback + throw-
+    on-unreadable-body + append-only invariant). Verified merged state via GitHub MCP before
+    closing.
   claimed_by: claude-scheduled-20260902T0730Z-conductor-t143
   claimed_at: '2026-09-02T07:30:00Z'
-  updated: '2026-09-02T07:30:00Z'
+  updated: '2026-09-02T08:27:36Z'
   implementation_pr: 'silasfelinus/kind_robots#2320'
 - id: t-144
   milestone: m2
