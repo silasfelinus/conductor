@@ -5265,9 +5265,9 @@ tasks:
   milestone: m2
   title: "check_pr_merged_drift.py re-verifies only the first candidate PR it flags, so a task reclaimed and re-progressed
     after an earlier reconciliation can hide a second, later drift"
-  status: ready
+  status: claimed
   gate_human: false
-  owner: null
+  owner: reviewer
   stakes: reversible
   passes: 0
   note: >-
@@ -5296,9 +5296,9 @@ tasks:
     shape: a task closed once via one PR, reclaimed, progressed via a second PR, with the
     roadmap's implementation_pr left stale -- see tests/test_check_pr_merged_drift.py for the
     existing single-PR-reference test shape to extend.
-  claimed_by: null
-  claimed_at: null
-  updated: '2026-09-01T19:28:00Z'
+  claimed_by: claude-20260902T134524Z-cond-t139
+  claimed_at: '2026-09-02T13:45:25Z'
+  updated: '2026-09-02T13:45:25Z'
 
 - id: t-140
   milestone: m2
