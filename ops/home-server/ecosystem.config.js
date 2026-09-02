@@ -63,7 +63,38 @@ module.exports = {
       interpreter: 'none',
       windowsHide: true,
       env: {
-        __PYVENV_LAUNCHER__: `${COMFY_DIR}/venv/Scripts/python.exe`
+        __PYVENV_LAUNCHER__: `${COMFY_DIR}/venv/Scripts/python.exe`,
+        // NOT optional, and not cosmetic -- this one keeps ComfyUI alive.
+        //
+        // Windows picks stdout's encoding from the locale codepage (cp1252)
+        // whenever stdout is a pipe, which under pm2 it always is. kr-relay
+        // and kr-download below have carried this line since 2026-08-13 for
+        // their own log output; ComfyUI was left without it, and ComfyUI is
+        // the process that loads ~60 third-party custom nodes whose banners
+        // we do not control.
+        //
+        // 2026-09-02: comfyui-mnemic-nodes printed a "\u26a1" from its
+        // __init__ and the UnicodeEncodeError took the whole interpreter
+        // down -- not just that node. load_custom_node() does catch a failing
+        // import, but it reports it with logging.warning(format_exc()), and
+        // the traceback it formats still contains the same un-encodable
+        // character, so the handler raised too. That escaped
+        // init_extra_nodes() and killed main.py at line 571, BEFORE the
+        // Prompt Server ever bound 8188. pm2 restarted it, it died ~26s
+        // later, forever: the console that kept reappearing on the desktop.
+        // Because it never bound the port, kr-relay's claims had nowhere to
+        // go and the art queue drained into FAILED.
+        //
+        // Note the 26s: it is under this app's min_uptime (30s), so pm2
+        // counted every restart as unstable and would have given up at
+        // max_restarts (50) and parked the app in `errored` -- silently, with
+        // no console left to notice.
+        //
+        // If a custom node ever raises on a FILE read rather than a print,
+        // add PYTHONUTF8: '1' as well (that also switches open()'s default
+        // encoding, so it is the bigger hammer -- this line alone fixes
+        // stdout/stderr).
+        PYTHONIOENCODING: 'utf-8'
       },
       autorestart: true,
       restart_delay: 5000,

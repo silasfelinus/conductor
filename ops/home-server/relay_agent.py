@@ -80,6 +80,36 @@ KR_SHARE_REQUIRED_FILES = [
     if entry.strip()
 ]
 
+# The render engine itself, as the other half of "do not claim what this box
+# cannot render". The share gate above covers a dead model mount, which fails a
+# job at model load. A dead ENGINE fails it at POST /prompt, and the queue
+# counts that as an attempt exactly the same way.
+#
+# 2026-09-02: ComfyUI crash-looped under pm2 for hours. A custom node printed a
+# "\N{HIGH VOLTAGE SIGN}" at import, stdout was cp1252 (pm2 gives it a pipe),
+# and the UnicodeEncodeError escaped init_extra_nodes and killed main.py before
+# the Prompt Server ever bound 8188 -- so ComfyUI was not slow or wedged, it was
+# absent. The share stayed perfectly readable throughout, so the share gate
+# stayed open and the relay kept claiming into nothing: each job waited out
+# COMFY_RECOVERY_SECONDS at POST /prompt and then burned an attempt.
+#
+# The galling part is that the relay already KNEW. send_heartbeats() had been
+# posting COMFY ok:false to Kind Robots on every cycle the whole time; it just
+# never used its own signal to decide whether to claim. Now it does.
+#
+# Set KR_ENGINE_GATE=0 to restore the previous always-claim behaviour.
+KR_ENGINE_GATE = os.environ.get("KR_ENGINE_GATE", "1").strip().lower() not in (
+    "0",
+    "off",
+    "false",
+    "no",
+    "",
+)
+ENGINE_PROBE_SECONDS = float(os.environ.get("KR_ENGINE_PROBE_SECONDS", "15") or 15)
+ENGINE_PROBE_TIMEOUT = float(os.environ.get("KR_ENGINE_PROBE_TIMEOUT", "10") or 10)
+ENGINE_PROBE_PATH = "/system_stats"
+
+
 def detect_relay_build():
     """Identify the code actually running, without needing anyone to set an env var.
 
@@ -1046,6 +1076,75 @@ def share_available(now=None):
     return ok
 
 
+_engine_state = {"checked_at": 0.0, "ok": True, "detail": "", "reported": None}
+
+
+def probe_engine(base_url=None):
+    """GET the engine's health endpoint. Return (ok, detail).
+
+    check_engine() already answers the same question for the heartbeat, but it
+    throws the reason away -- and the reason is most of the diagnosis here.
+    "ConnectionRefusedError" (not listening: crash-looping, or never started)
+    reads very differently from a timeout (listening, but wedged), and the
+    operator does something different about each.
+    """
+    url = (base_url or COMFY_URL).rstrip("/")
+    try:
+        request = urllib.request.Request(
+            f"{url}{ENGINE_PROBE_PATH}", method="GET"
+        )
+        with urllib.request.urlopen(request, timeout=ENGINE_PROBE_TIMEOUT) as response:
+            if not 200 <= response.status < 300:
+                return False, f"HTTP {response.status}"
+            response.read(1)
+    except Exception as error:  # noqa: BLE001 - any failure means down
+        return False, f"{type(error).__name__}: {error}"
+    return True, ""
+
+
+def engine_available(now=None):
+    """False while ComfyUI is not answering. The sibling of share_available().
+
+    Same contract as the share gate, deliberately: opt-out rather than
+    always-on-and-unkillable, cached so a 2s poll loop is not hammering the
+    engine, and logging the edges rather than a line per poll. See the
+    KR_ENGINE_GATE comment at the top of this file for the 2026-09-02 outage
+    this exists to stop repeating.
+    """
+    if not KR_ENGINE_GATE:
+        return True
+
+    moment = time.time() if now is None else now
+    if moment - _engine_state["checked_at"] < ENGINE_PROBE_SECONDS:
+        return _engine_state["ok"]
+
+    ok, detail = probe_engine()
+    _engine_state["checked_at"] = moment
+    _engine_state["ok"] = ok
+    _engine_state["detail"] = detail
+
+    # Edges only, and a healthy first probe stays silent -- the share gate
+    # shipped announcing a recovery from an outage that had never happened
+    # (2026-08-27), because the initial reported state is None and
+    # `None is not True`. A first probe that FAILS still warns immediately.
+    first_probe = _engine_state["reported"] is None
+    if _engine_state["reported"] is not ok:
+        if ok and not first_probe:
+            log(f"ComfyUI at {COMFY_URL} is answering again - resuming claims.")
+        elif not ok:
+            log(
+                f"{WARN} ComfyUI at {COMFY_URL}{ENGINE_PROBE_PATH} is not "
+                f"answering ({detail}) - NOT claiming jobs until it returns. "
+                "Every claim would fail at POST /prompt and burn its retry "
+                "budget. Check the engine on this box, not the queue: "
+                "`pm2 status comfyui` (a climbing restart count means it is "
+                "crash-looping, and a crash-loop under min_uptime ends in "
+                "`errored`), then `pm2 logs comfyui --err --lines 200`."
+            )
+        _engine_state["reported"] = ok
+    return ok
+
+
 def warm_object_info_async():
     """Warm the object_info cache WITHOUT blocking startup.
 
@@ -1343,6 +1442,16 @@ def main():
             "share gate disabled (KR_SHARE_PROBE_PATH unset) - jobs will be "
             "claimed even if the model mount is down"
         )
+    if KR_ENGINE_GATE:
+        log(
+            f"engine gate armed on {COMFY_URL}{ENGINE_PROBE_PATH} "
+            f"(re-probed every {ENGINE_PROBE_SECONDS:g}s)"
+        )
+    else:
+        log(
+            "engine gate disabled (KR_ENGINE_GATE=0) - jobs will be claimed "
+            "even if ComfyUI is down"
+        )
     last_heartbeat = 0.0
     while True:
         job = None
@@ -1358,6 +1467,13 @@ def main():
             # mount fails every job at the first model load, and the queue
             # counts that as an attempt -- see share_available().
             if not share_available():
+                time.sleep(POLL_SECONDS)
+                continue
+
+            # Nor claim what has no engine to render it. A crash-looping
+            # ComfyUI fails every claim at POST /prompt, after sitting out
+            # COMFY_RECOVERY_SECONDS first -- see engine_available().
+            if not engine_available():
                 time.sleep(POLL_SECONDS)
                 continue
 
