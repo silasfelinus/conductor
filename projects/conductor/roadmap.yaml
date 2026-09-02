@@ -5389,5 +5389,106 @@ tasks:
   claimed_by: 2026-09-02T055041Z-codex-t142
   claimed_at: '2026-09-02T05:50:41Z'
   updated: '2026-09-02 06:15:30+00:00'
+- id: t-143
+  milestone: m2
+  title: "kind_robots reads a >1MB art-prompts.yaml as an empty file and commits over it, deleting the whole art queue"
+  status: review
+  gate_human: false
+  owner: reviewer
+  stakes: reversible
+  passes: 0
+  note: |-
+    Found 2026-09-02 while auditing the live ArtJob queue after t-142's Mandarin re-staging fix
+    merged. The queue held 1917 PENDING jobs, 1909 of them mandarin-tutor across only 577 distinct
+    requestIds -- for a corpus a HEAD probe confirms is 577/577 already rendered on media.
+
+    Two independent producers were involved and only one of them was t-142.
+
+    1. The scheduled auto-art-generate lane re-staged and re-submitted the whole 577-card corpus
+       repeatedly: conductor f650b07 (2026-09-02T04:55Z, "chore: auto-generate project art") added
+       10,973 lines of exactly the rows t-142 describes, and ArtJob id runs 16335-16690, 16913-17268,
+       17270-17846 and 17848-18424 are four full-corpus submissions across 22h/23h on 09-01 and 04h
+       on 09-02. t-142's note says the re-stage was "caught before commit, reverted, never pushed" --
+       that is true of the manual audit session, but the scheduled workflow committed and submitted
+       the same re-stage on its own. t-142's fix (conductor#3443) does close this: re-running
+       queue_batch() against the live manifest now classifies all 577 as already_rendered and stages
+       0. Verified this session.
+
+    2. The far more damaging one, and the actual subject of this task. The GitHub Contents API only
+       inlines a file body up to 1MB. From 1MB to 100MB it still answers 200 with the real sha and
+       size, but `content` is "" and `encoding` is "none". kind_robots' server/api/conductor/
+       art-request.post.ts decoded `content` unconditionally.
+
+       When f650b07 pushed projects/art-prompts.yaml to 1,424,189 bytes, the next missing-image
+       request read it as an EMPTY file. requestAlreadyQueued() therefore found no duplicate to skip,
+       appendRequest() built a one-entry file from "", and the handler PUT it with the sha GitHub had
+       just handed back -- which GitHub accepted, because the read was current, just bodiless. Result:
+       conductor 0e671cd, -11,014 lines, 577 Mandarin request rows and three in-flight missing-image
+       requests (mandarin-tutor-hero, rainbow-butterflies-hero, rainbow-butterflies-card) deleted in
+       one write, and the wiped rainbow-butterflies-icon request re-enqueued as a fourth duplicate
+       ArtJob for a target that already had three pending.
+
+       Proof it was an empty read rather than a stale one: the PUT carried a sha GitHub accepted, and
+       appendRequest() cannot drop content in any of its branches -- the only input that yields a
+       one-entry file is `current === ""`.
+
+    Blast radius is wider than art-prompts.yaml: server/utils/conductor-github.ts's conductorGet()
+    had the identical blind decode, and it backs task-action, overrides, pitch-vote, project-state,
+    inbox and the coloring-book writers -- all read-modify-write against conductor files that can
+    cross 1MB. TALKBACK.md is already 2.9MB; LEARNING.yaml is 630KB and climbing.
+
+    Fixed in silasfelinus/kind_robots#2320: new server/utils/githubFileContents.ts whose
+    readGithubFile() falls back to the Git Blobs API (base64 to 100MB) when the Contents API
+    withholds a body and THROWS rather than returning "" for a file GitHub reports as non-empty;
+    githubPathExists() keeps existence probes body-free; both art-request.post.ts and conductorGet()
+    route through it; and art-request.post.ts now asserts an append-only invariant (via a new
+    exported requestBlockIds) before committing, so a write that would drop an existing request id
+    fails loudly instead of deleting another producer's queued work. New contract test
+    utils/scripts/verifyGithubFileContents.ts wired into contract-tests.yml covers the oversized
+    read, the unreadable-body refusal, the genuinely-empty file, the 404 path, the cheap existence
+    probe, and the append-only check.
+  claimed_by: claude-scheduled-20260902T0730Z-conductor-t143
+  claimed_at: '2026-09-02T07:30:00Z'
+  updated: '2026-09-02T07:30:00Z'
+  implementation_pr: 'silasfelinus/kind_robots#2320'
+- id: t-144
+  milestone: m2
+  title: "Clear the redundant ArtJob backlog left by t-142/t-143 and restore the request rows the wipe deleted"
+  status: done
+  gate_human: false
+  owner: reviewer
+  stakes: reversible
+  passes: 0
+  depends_on: t-143
+  note: |-
+    Operational cleanup for t-143, done 2026-09-02.
+
+    Live queue before: PENDING 1917 (1909 mandarin-tutor across 577 distinct requestIds, at 2-4
+    copies each; 8 conductor missing-image jobs across 4 targets). staleRunningCount 0.
+
+    Verified redundancy before cancelling anything, rather than inferring it from the duplicate
+    counts: HEAD-probed all 577 distinct mandarin v2 imagePaths against https://media.acrocatranch.com
+    and got 577/577 present, 0 absent, 0 unknown. Only an authoritative 2xx counted as present, so an
+    origin hiccup could not have widened the cancel set.
+
+    Cancelled 1913 PENDING ArtJobs via POST /api/art/queue/{id}/cancel with an explicit reason
+    (1909 mandarin + jobs 16691, 17269, 17847, 18425, the four older duplicates for
+    projects/images/rainbow-butterflies-icon.webp). 1913/1913 succeeded, no 409s or 404s. CANCELLED is
+    reversible via the reenqueue route if any of this needs undoing.
+
+    Queue after: PENDING 4 -- exactly one job per genuinely-missing conductor project image
+    (18426 mandarin-tutor-hero, 18427 rainbow-butterflies-hero, 18428 rainbow-butterflies-card,
+    18429 rainbow-butterflies-icon). All four confirmed absent from projects/images/.
+
+    Also restored the three request rows 0e671cd deleted while they still had live ArtJobs, recovered
+    from blob 38e70ea, and recorded last_art_job_id: 18429 on the surviving icon row. All four rows
+    now map 1:1 onto the four surviving PENDING jobs. Restoring them does NOT risk a re-submission:
+    a dry run of scripts/consume_art_requests.py reports "No pending requests ... nothing to do"
+    because t-133/t-136's has_unresolved_submission() guard fires on each row's live last_art_job_id.
+
+    Full conductor suite green after the restore: 1553 passed, 1 skipped, 35 subtests.
+  claimed_by: claude-scheduled-20260902T0730Z-conductor-t143
+  claimed_at: '2026-09-02T07:30:00Z'
+  updated: '2026-09-02T07:30:00Z'
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
