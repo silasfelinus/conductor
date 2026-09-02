@@ -2891,7 +2891,7 @@ tasks:
 - id: t-078
   milestone: m2
   title: "Add standing alerting for the hostbuf_file_reader_read render-box failure signature instead of relying on an agent noticing"
-  status: review
+  status: done
   stakes: reversible
   retry_context: >
     pass 1 failed (quality): PR silasfelinus/conductor#3444 sets KR_BASE_URL to the
@@ -2924,8 +2924,9 @@ tasks:
     Silas explicitly corrected the production API base: Kind Robots has not used Vercel in over a month and kindrobots.org is the canonical domain. Reopen t-078 to revert the incorrect Vercel URL introduced in PR #3502 and add a regression guard that forbids it.
 
     PR #3503 restores KR_BASE_URL to https://kindrobots.org, preserves the valid PyYAML dependency fix, and changes the regression test to require kindrobots.org while explicitly forbidding kind-robots.vercel.app.
-  updated: '2026-09-02T20:19:00Z'
+
+    Merged PR #3503 as cfa99b027d7869a4bf0b1f96d711219e67978190. Restored the hostbuf sentinel to https://kindrobots.org, retained the required PyYAML install, and added a regression assertion that forbids kind-robots.vercel.app in the workflow. Worker PR CI and Security Audit both completed successfully before merge.
+  updated: '2026-09-02T20:25:00Z'
   passes: 1
-  owner: worker
   claimed_by: 2026-09-02T201800Z-ai-art-academy-t078-domain-revert-k9n4
   claimed_at: '2026-09-02T20:18:00Z'
