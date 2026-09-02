@@ -12251,3 +12251,18 @@ records:
     then retroactively filed the roadmap task so the shipped feature is visible to future audits.
     Not every merge-worthy PR in a watched repo arrives through claim_task.py -- worth checking
     open PRs directly across all in-scope repos, not just ones with a matching worker/* branch."
+- date: 2026-09-02
+  project: dream-cycle
+  task: t-024
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Wired repair_dream_prose_catalog.py --verify-live --strict into daily-digest.yml's
+    existing recurring cycle (same continue-on-error + folded-into-final-gate pattern as the
+    build/Facet/ArtJob/commit steps) rather than depending on an agent remembering to run it
+    during a t-006 maintenance pass. A scheduled workflow step that already runs daily is a more
+    reliable detection point for silent drift than an agent-recalled manual check -- prefer
+    wiring a new verification into an existing recurring CI/workflow run over adding it to an
+    agent's task checklist when both are available."
