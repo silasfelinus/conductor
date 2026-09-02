@@ -12284,3 +12284,25 @@ records:
     scheduled retry. Worth remembering for any other 'runs on a schedule forever' loop
     in this pipeline: distinguish transient-retry-in-place from persistent-content-issue
     before assuming every failure is worth retrying indefinitely."
+- date: 2026-09-02
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A non-nested-brace entry-split regex is fragile against free-text
+    comments that themselves contain a literal open/close brace pair (a code
+    path like server/api/(dreams,scenarios)/... quoted in a comment, using
+    curly braces in the real source) -- it can silently swallow the real entry
+    that follows, while the guard still prints a plausible-looking pass/total.
+    verifyModelBuilderIconCoverageGuard.ts (cycle 82) shipped with exactly
+    this gap for a full cycle before cycle 84 caught it while building an
+    unrelated sibling guard. verifyModelBuilderSourceFieldGuard.ts already
+    used a safer key-boundary split (index-based chunking between consecutive
+    `key: '...'` matches, never touching brace characters at all) -- worth
+    defaulting new SOURCE_TYPES/BUILD_STAGES/RECIPES-array guards to that
+    pattern from the start rather than brace matching, and worth a future
+    cycle double-checking any other guard in this family that still uses
+    brace matching."
