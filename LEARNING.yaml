@@ -12147,3 +12147,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "GitHub's Contents API silently returns encoding:none/content:'' for files over 1MB, so any read-modify-write into a growing conductor file (art-prompts.yaml, TALKBACK.md, LEARNING.yaml) must fall back to the Git Blobs API and throw rather than treat a bodiless-but-nonempty read as an empty file -- kind_robots#2320 fixed both the queue write path and conductorGet() with this pattern plus an append-only invariant check."
+- date: 2026-09-02
+  project: conductor
+  task: t-140
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "close_task.py now warns (not fails) when a review/ready close omits --implementation-pr while the roadmap already holds a different owner/repo#N value -- the write-time half of the drift class t-139 targets from the read side. Companion note: this session's own sandbox pytest tool was missing PyYAML (AGENTS.md's documented gap) and needed `uv tool install pytest --with pyyaml --force` before the new regression tests could run."
