@@ -12156,3 +12156,16 @@ records:
   outcome: done
   failure_category: null
   lesson: "close_task.py now warns (not fails) when a review/ready close omits --implementation-pr while the roadmap already holds a different owner/repo#N value -- the write-time half of the drift class t-139 targets from the read side. Companion note: this session's own sandbox pytest tool was missing PyYAML (AGENTS.md's documented gap) and needed `uv tool install pytest --with pyyaml --force` before the new regression tests could run."
+- date: 2026-09-02
+  project: conductor
+  task: t-145
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A soft/advisory CI check belongs on its own continue-on-error step inside an existing job (GitHub
+    Actions ::warning:: annotations), not a new blocking job -- git diff --numstat plus git show <ref>:<path>
+    is enough to diff base vs head line counts for any watched file without a second full-file-read diffing
+    path. This session''s sandbox pytest tool was again missing PyYAML (the same documented gap as t-140''s
+    session) and needed uv tool install pytest --with pyyaml --force before the 13 new tests could run.'
