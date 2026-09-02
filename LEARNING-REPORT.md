@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-02T15:38:32Z
+Generated: 2026-09-02T15:42:10Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **863**
-- Outcomes: blocked: 16, cancelled: 1, done: 846
+- Closed tasks recorded: **864**
+- Outcomes: blocked: 16, cancelled: 1, done: 847
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -38,7 +38,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
 | interface-vision | 97 | 100% |
-| kapowarr | 48 | 100% |
+| kapowarr | 49 | 100% |
 | kind-economy | 6 | 100% |
 | kind-robots | 54 | 98% |
 | kindrobots-unraid | 5 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 847 | 99% |
+| software | 848 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-02 `kapowarr/t-070` — Found an open, fully green, well-tested Kapowarr PR (branch claude/missing-comics-j8osws, not claimed through conductor's task loop) during a routine open-PR check. Reviewed the diff directly before merging (release_feed.py's stateless feed-poll design, the settings/interval wiring, and the Newznab/Torznab query-omission change) rather than merging on green CI alone, then retroactively filed the roadmap task so the shipped feature is visible to future audits. Not every merge-worthy PR in a watched repo arrives through claim_task.py -- worth checking open PRs directly across all in-scope repos, not just ones with a matching worker/* branch.
 - 2026-09-02 `rainbow-butterflies/t-051` — next_ready_task.py surfaced this as a reclaimable stale claim (claimed_at 09:04:00Z, past the 90-minute TTL). Before implementing, checked kind_robots for existing work under the original claiming session's name and found kind_robots#2329 already merged 46 minutes after the claim -- the full two-tool MCP bridge (rainbow_agent_identity, rainbow_check_in) the task specified. The implementation was real and complete; only the roadmap claimed -> done transition was missing. Checking for already-merged work under a stale claim's session id before starting a fresh implementation avoided duplicating an already-shipped feature.
 - 2026-09-02 `interface-vision/t-104` — State reconciliation found the task's own note already said 're-arming to ready for the next slice' after slice 36 (kind_robots#2331) merged, but the status field was left at review -- fixed by re-arming to ready directly rather than re-deriving from scratch. Then worked slice 37: the kr-panel-section codemod's dry-run flagged 4 files, but only one (academy-style-detail.vue's Gallery wall section, exact p-4 sm:p-5 override match to slice 36's precedent) was byte-equivalent. The other three all lacked their own padding class (padding lived entirely in child elements), so migrating them would add kr-panel-section's baked-in p-5 on top of existing child padding with nothing to oppose it -- a real geometry change the codemod's BASE_TOKENS-subset check can't detect on its own. Worth teaching the codemod itself to skip a candidate whose own class list carries no padding token at all, rather than relying on a human/reviewer catching it by reading the file.
 - 2026-09-02 `conductor/t-141` — Reviewed and merged conductor#3477 (soft PR-time warning comparing changed roadmap task ids against the PR base, flagging simultaneous title+milestone rewrites -- the t-091 id-reuse shape). CI was fully green before merge; no changes requested.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-02 `conductor/t-143` — GitHub's Contents API silently returns encoding:none/content:'' for files over 1MB, so any read-modify-write into a growing conductor file (art-prompts.yaml, TALKBACK.md, LEARNING.yaml) must fall back to the Git Blobs API and throw rather than treat a bodiless-but-nonempty read as an empty file -- kind_robots#2320 fixed both the queue write path and conductorGet() with this pattern plus an append-only invariant check.
 - 2026-09-02 `ai-art-academy/t-078` — A workflow's KR_BASE_URL must be verified against the current self-hosted host (kindrobots.org), not copied from an older *.vercel.app pattern -- a wrong default would have made the new sentinel look deployed while silently never reaching its signature check. Caught in review before merge, fixed in one retry.
 - 2026-09-02 `conductor/t-142` — Ephemeral request rows cannot be the only deduplication source; producers must consult final artifact truth, and ambiguous origin probes should fail closed rather than create costly duplicate work.
-- 2026-09-02 `ai-art-academy/t-077` — A gate-release answer from Silas via the Kind Robots "For You" mechanism unblocks the next agent to go verify -- it is not itself the verification. This task's note text ("temp outage, should be fixed") could have been closed on directly, but live GET /api/art/queue/stats and the character/bot API showed something the note didn't: the retry it asked for had already succeeded days earlier (portraits rendered 2026-08-28), and the failure signature it was filed over was itself a third recurrence of the same disk13-adjacent hardware fault (t-067/t-068 original, this task's own filing was recurrence #2, a third burst on 2026-09-01 caught only by this session's verification read). Filed ai-art-academy/t-078 as the standing fix: no check currently flags this specific recurring signature, so each occurrence has only ever been caught by an agent happening to read the stats endpoint while doing something else.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-02T15:38:32Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-02T15:42:10Z_
