@@ -52,6 +52,7 @@ KR_BASE_URL/KR_API_TOKEN for the throughput check (skipped without a token).
 import sys
 import urllib.error
 import urllib.request
+from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -142,11 +143,59 @@ def fetch_queue_stats():
         return None
 
 
+def engine_heartbeat_verdict():
+    """(healthy, reason) from the relay's own heartbeat. None = no opinion.
+
+    Checked BEFORE the throughput heuristics below, for the same reason the
+    stale-claim check runs before the "any completion is healthy" shortcut: it
+    is the most CURRENT signal available, and the ones underneath it are all
+    backward-looking.
+
+    Two holes this closes, both seen on 2026-09-02:
+
+    * `return None, "queue idle"` — a drained queue produced no opinion and
+      main() printed "render box UP". ops/home-server/RENDER-BOX-STATUS read
+      `up` through the entire 24-hour outage, so the state-change email in
+      auto-art-generate.yml never had a change to fire on.
+    * `if done: return True` — any completion in the six-hour window counts as
+      health. A box that died two hours ago still looks healthy on the strength
+      of what it finished five hours ago.
+
+    The heartbeat has neither problem: kr-relay posts it every 60 seconds and
+    it says nothing about the queue, so it answers "is the engine alive NOW"
+    regardless of whether there is any work to do. Absent a token it returns no
+    opinion, leaving the old behaviour exactly as it was.
+    """
+    try:
+        import check_engine_heartbeat as engine
+
+        data = engine.fetch_uptime()
+        state, reason = engine.assess(data, datetime.now(timezone.utc))
+    except Exception:  # noqa: BLE001 - a probe must never raise
+        return None, "engine heartbeat unavailable"
+
+    if state in (engine.SILENT, engine.DOWN):
+        return False, reason
+    if state == engine.OK:
+        return True, reason
+    return None, reason
+
+
 def main():
     up, detail = render_box_reachable()
     if not up:
         print(
             f"render box DOWN: {MEDIA_ORIGIN} unreachable ({detail}).",
+            file=sys.stderr,
+        )
+        return 1
+
+    beat_healthy, beat_reason = engine_heartbeat_verdict()
+    if beat_healthy is False:
+        print(
+            f"render box DOWN: {MEDIA_ORIGIN} answers (HTTP {detail}), but the "
+            f"render engine is not reporting healthy — {beat_reason}. An idle "
+            "queue is not proof of a working box; skipping the drain.",
             file=sys.stderr,
         )
         return 1
@@ -162,7 +211,8 @@ def main():
         )
         return 1
 
-    print(f"render box UP: {MEDIA_ORIGIN} answered (HTTP {detail}); {reason}.")
+    beat_note = f" Engine heartbeat: {beat_reason}." if beat_reason else ""
+    print(f"render box UP: {MEDIA_ORIGIN} answered (HTTP {detail}); {reason}.{beat_note}")
     return 0
 
 

@@ -1,0 +1,156 @@
+name: Render Box Watchdog
+
+# The off-box dead-man's switch for the art pipeline.
+#
+# On 2026-09-02 ComfyUI crash-looped under pm2 for ~24 hours and nothing said a
+# word. The decisive line is in ops/home-server/logs/healthcheck.log:
+#
+#     2026-08-31   288 ticks
+#     2026-09-01    30 ticks, last at 02:26:07
+#     2026-09-02    (nothing)
+#
+# The on-box watchdog stopped running ~37 hours before Silas noticed, while the
+# box was still healthy — so it was already gone when the outage started. Its
+# Brevo path was fine (23 alerts sent, 0 skipped); it simply was not running,
+# and a watchdog cannot report its own absence. Everything else was
+# edge-triggered or needed queued work to have an opinion, so a drained queue
+# read as "idle" and therefore fine.
+#
+# This job is the answer to that specific failure: it runs in GitHub Actions,
+# NOT on the render box, so it survives the box being off, wedged, rebooted, or
+# having its scheduled task quietly disabled. It reads the heartbeat kr-relay
+# has been posting all along (~1 per minute) and alarms on silence as well as
+# on failure — see scripts/check_engine_heartbeat.py.
+#
+# It deliberately does NOT look at queue depth. An idle queue and a dead box
+# are the same observation to every check that does.
+
+on:
+  schedule:
+    # Every 30 minutes. The relay heartbeats every 60s, so a 15-minute silence
+    # window is ~15 missed beats and this catches it within half an hour --
+    # against the 24 hours it took a human to notice last time.
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/render-box-watchdog.yml"
+      - "scripts/check_engine_heartbeat.py"
+
+concurrency:
+  group: render-box-watchdog
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    env:
+      KR_BASE_URL: https://kindrobots.org
+      KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+      STATE_FILE: ops/home-server/ENGINE-HEARTBEAT-STATE.json
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check the engine heartbeat
+        id: check
+        run: |
+          set +e
+          python scripts/check_engine_heartbeat.py \
+            --json --state-file "$STATE_FILE" > /tmp/verdict.json
+          CODE=$?
+          set -e
+          cat /tmp/verdict.json
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          with open("/tmp/verdict.json") as handle:
+              verdict = json.load(handle)
+          for key in ("state", "alert"):
+              print(f"{key}={verdict.get(key, '')}")
+          # Multi-line safe: the reason contains ':' and '|'.
+          print("reason<<EOF")
+          print(verdict.get("reason", ""))
+          print("EOF")
+          PY
+          if [ "$CODE" = "2" ]; then
+            echo "::warning::Engine heartbeat UNRESOLVED — could not read it (token or API). This is not a render-box verdict."
+          elif [ "$CODE" = "1" ]; then
+            echo "::error::Engine heartbeat problem — see the alert."
+          fi
+
+      - name: Email the alert
+        if: ${{ steps.check.outputs.alert != '' && steps.check.outputs.alert != 'none' }}
+        continue-on-error: true
+        env:
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+          DIGEST_TO: ${{ secrets.DIGEST_TO || vars.DIGEST_TO }}
+          DIGEST_TO_NAME: ${{ secrets.DIGEST_TO_NAME || vars.DIGEST_TO_NAME }}
+          DIGEST_FROM: ${{ secrets.DIGEST_FROM || vars.DIGEST_FROM }}
+          DIGEST_FROM_NAME: ${{ secrets.DIGEST_FROM_NAME || vars.DIGEST_FROM_NAME }}
+          ALERT: ${{ steps.check.outputs.alert }}
+          STATE: ${{ steps.check.outputs.state }}
+          REASON: ${{ steps.check.outputs.reason }}
+        run: |
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          case "$ALERT" in
+            recovered)
+              SUBJECT="✅ Render engine recovered — heartbeat healthy again"
+              INTRO="The ComfyUI heartbeat is healthy again. Renders should resume on the next claim."
+              ;;
+            reminder)
+              SUBJECT="⚠️ Render engine STILL $STATE — no renders happening"
+              INTRO="This is a reminder: the render engine has not recovered since the first alert."
+              ;;
+            *)
+              SUBJECT="⚠️ Render engine $STATE — no renders happening"
+              INTRO="The render engine stopped reporting healthy. The art queue will not drain until this is fixed."
+              ;;
+          esac
+          BODY="$(cat <<EOF
+          $INTRO
+
+          Detail: $REASON
+
+          This check runs in GitHub Actions, not on the render box, so it still
+          reports when the box itself is off, wedged, or its on-box watchdog has
+          stopped. That last one is not hypothetical: on 2026-09-02 healthcheck.ps1
+          had not ticked since 2026-09-01 02:26, which is why a 24-hour outage
+          produced no notices at all.
+
+          On the box:
+            pm2 status
+            pm2 logs comfyui --err --lines 200
+            Get-Content D:\\code\\Conductor\\ops\\home-server\\logs\\healthcheck.log -Tail 20
+
+          Run: $RUN_URL
+          EOF
+          )"
+          python scripts/send_alert_brevo.py --subject "$SUBJECT" --body "$BODY"
+
+      - name: Persist the alert state
+        if: ${{ always() }}
+        run: |
+          if [ -z "$(git status --porcelain "$STATE_FILE")" ]; then
+            echo "No state change to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$STATE_FILE"
+          git commit -m "chore: render-box watchdog state [skip ci]"
+          # Another scheduled job may have pushed while we ran; rebase and retry
+          # rather than failing the watchdog over a bookkeeping commit.
+          for attempt in 1 2 3; do
+            if git push; then exit 0; fi
+            git pull --rebase --autostash || true
+            sleep $((attempt * 3))
+          done
+          echo "::warning::Could not push watchdog state; the alert itself already went out."

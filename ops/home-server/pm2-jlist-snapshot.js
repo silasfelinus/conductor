@@ -12,6 +12,14 @@ process.stdin.on('end', () => {
       throw new Error('pm2 jlist did not return a JSON array');
     }
 
+    // restart_time / unstable_restarts are the only reliable crash-loop
+    // signature available to the watchdog. Status alone cannot express it: a
+    // process restarting every ~30s reads 'online' most of the time and
+    // 'waiting restart' the rest, and both are indistinguishable from a
+    // healthy app or a deliberate stop at any single 5-minute tick.
+    // See healthcheck.ps1's crash-loop block (2026-09-02).
+    const asNumber = (value) => (typeof value === 'number' && isFinite(value) ? value : null);
+
     const snapshot = processes.map((process) => ({
       name: process && typeof process.name === 'string' ? process.name : null,
       pm2_env: {
@@ -19,6 +27,9 @@ process.stdin.on('end', () => {
           process && process.pm2_env && typeof process.pm2_env.status === 'string'
             ? process.pm2_env.status
             : null,
+        restart_time: process && process.pm2_env ? asNumber(process.pm2_env.restart_time) : null,
+        unstable_restarts:
+          process && process.pm2_env ? asNumber(process.pm2_env.unstable_restarts) : null,
       },
     }));
 

@@ -42,8 +42,19 @@ def test_projects_only_safe_pm2_fields_when_environment_keys_differ_only_by_case
     result = run_helper(payload)
 
     assert result.returncode == 0, result.stderr
+    # restart_time/unstable_restarts were added 2026-09-02 so the watchdog can
+    # detect a crash loop, which status alone cannot express. The projection is
+    # still an explicit allowlist -- that is the point of this test -- so the
+    # env (and its username/USERNAME collision) must stay out of it.
     assert json.loads(result.stdout) == [
-        {"name": "comfyui", "pm2_env": {"status": "online"}}
+        {
+            "name": "comfyui",
+            "pm2_env": {
+                "status": "online",
+                "restart_time": None,
+                "unstable_restarts": None,
+            },
+        }
     ]
     assert "username" not in result.stdout.lower()
 
