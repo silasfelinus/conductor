@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 50
   stakes: reversible
   retry_context: >
@@ -176,7 +176,13 @@ tasks:
     previously-deleted comment lines untouched. Verified eslint clean, vue-tsc --noEmit
     repo-wide clean before pushing. All 37 kind_robots CI checks passed; merged (e64d923).
     Re-armed to ready per this recurring tasks convention.
-  updated: '2026-09-02T20:14:32Z'
+
+    PR-merged drift repair (conductor sweep 2026-09-02): status was still 'claimed' though
+    this task's own note already said 'Re-armed to ready per this recurring tasks
+    convention' after kind_robots#2338 (cycle 53) merged. Flagged by
+    check_pr_merged_drift.py; PR confirmed merged via GitHub MCP. Correcting status only, no
+    new work.
+  updated: '2026-09-02T23:35:31Z'
   owner: worker
   claimed_by: openai-scheduled-20260902T201432Z-storybook-t010-k7q4
   claimed_at: '2026-09-02T20:14:32Z'
