@@ -2859,37 +2859,13 @@ tasks:
 - id: t-077
   milestone: m2
   title: "Render-box CLIPTextEncode 'hostbuf_file_reader_read failed' recurred within 24h of t-068's disk13 cable fix"
-  status: needs-human
+  status: ready
   gate_human: true
-  owner:
   passes: 0
   stakes: reversible
-  note: >
-    FOR SILAS: t-068 (closed 2026-08-26T02:50Z) diagnosed the ComfyUI
-    `CLIPTextEncode: hostbuf_file_reader_read failed` burst as a failing SATA
-    cable on alexandria's disk13, swapped it, and confirmed the disk's error
-    count dropped from 1,092,997 to 0. Less than 24 hours later
-    (cthulhuquarium/t-023, this session, 2026-08-27T17:36 UTC) four freshly
-    queued ArtJobs (10205-10208, engine krea2, unrelated project/prompts)
-    all failed with the byte-identical error string on node 4. A live
-    `GET /api/art/queue/stats` pull at the same time showed 25/25
-    `recentFailed` entries sharing that exact signature (including job
-    10204 from ruler-hooked at 13:53 UTC the same day, so this has been
-    ongoing since at least midday, not a one-off blip), and the 24h window
-    shows 135 FAILED vs 155 DONE (~47% failure rate) -- both numbers far
-    worse than the "essentially zero throughput" framing that originally
-    triggered t-068.
-    TO APPROVE: this needs a physical check of the swapped disk13 cable/
-    drive (same as t-068's original fix) -- either the swap didn't fully
-    resolve the underlying fault, the replacement is itself already
-    failing, or a different drive/cable in the same array is now exhibiting
-    the identical symptom. Once checked and fixed, re-run
-    `node scripts/queue_cthulhuquarium_voice_art.mjs --commit` from
-    kind_robots to retry the 4 stalled cthulhuquarium/t-023 portraits (idempotent,
-    safe to re-run), then set this task's `status: done` with what was
-    found/fixed. What unblocks: cthulhuquarium/t-023's Charlotte
-    Fishmonger + Wilbur Stint portraits (Character #3305/#3306, Bot
-    #1836/#1837 in kind_robots) currently have no art; likely other
-    in-flight ArtJobs across the whole render queue are affected too, not
-    just this task's four.
-  updated: '2026-08-27T17:45:00Z'
+  note: |-
+    FOR SILAS: t-068 (closed 2026-08-26T02:50Z) diagnosed the ComfyUI `CLIPTextEncode: hostbuf_file_reader_read failed` burst as a failing SATA cable on alexandria's disk13, swapped it, and confirmed the disk's error count dropped from 1,092,997 to 0. Less than 24 hours later (cthulhuquarium/t-023, this session, 2026-08-27T17:36 UTC) four freshly queued ArtJobs (10205-10208, engine krea2, unrelated project/prompts) all failed with the byte-identical error string on node 4. A live `GET /api/art/queue/stats` pull at the same time showed 25/25 `recentFailed` entries sharing that exact signature (including job 10204 from ruler-hooked at 13:53 UTC the same day, so this has been ongoing since at least midday, not a one-off blip), and the 24h window shows 135 FAILED vs 155 DONE (~47% failure rate) -- both numbers far worse than the "essentially zero throughput" framing that originally triggered t-068. TO APPROVE: this needs a physical check of the swapped disk13 cable/ drive (same as t-068's original fix) -- either the swap didn't fully resolve the underlying fault, the replacement is itself already failing, or a different drive/cable in the same array is now exhibiting the identical symptom. Once checked and fixed, re-run `node scripts/queue_cthulhuquarium_voice_art.mjs --commit` from kind_robots to retry the 4 stalled cthulhuquarium/t-023 portraits (idempotent, safe to re-run), then set this task's `status: done` with what was found/fixed. What unblocks: cthulhuquarium/t-023's Charlotte Fishmonger + Wilbur Stint portraits (Character #3305/#3306, Bot #1836/#1837 in kind_robots) currently have no art; likely other in-flight ArtJobs across the whole render queue are affected too, not just this task's four.
+
+
+    HUMAN ANSWER from silasfelinus via Kind Robots. Gate released for the next agent. temp outage, should be fixed
+  updated: '2026-09-02 04:20:02.179000+00:00'

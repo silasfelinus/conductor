@@ -560,8 +560,7 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#2175'
   - id: t-020
     title: "PRODUCTION: the render host cannot see its models, so no art renders at all"
-    status: needs-human
-    owner: null
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -635,5 +634,7 @@ tasks:
       nothing is lost and nothing needs repair -- but firing them at a host that still
       cannot see its VAE would burn 8664 render attempts and flush the error text this
       diagnosis rests on. Requeue is a post-fix step, unchanged from above.
-    updated: '2026-08-28T14:20:00Z'
+
+      HUMAN ANSWER from silasfelinus via Kind Robots. Gate released for the next agent. this was a temporary outage, should be fixed
+    updated: '2026-09-02 04:19:48.341000+00:00'
     gate_human: true
