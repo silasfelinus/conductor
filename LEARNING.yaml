@@ -12094,3 +12094,24 @@ records:
     tools that already existed (check_render_box.py, drain_failed_art_backlog.py's
     dry-run classification) -- no new code needed, just actually running them against
     current live state instead of trusting the multi-day-old note.
+- date: '2026-09-02'
+  project: ai-art-academy
+  task: t-077
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A gate-release answer from Silas via the Kind Robots "For You" mechanism unblocks
+    the next agent to go verify -- it is not itself the verification. This task's note
+    text ("temp outage, should be fixed") could have been closed on directly, but live
+    GET /api/art/queue/stats and the character/bot API showed something the note
+    didn't: the retry it asked for had already succeeded days earlier (portraits
+    rendered 2026-08-28), and the failure signature it was filed over was itself a
+    third recurrence of the same disk13-adjacent hardware fault (t-067/t-068 original,
+    this task's own filing was recurrence #2, a third burst on 2026-09-01 caught only
+    by this session's verification read). Filed ai-art-academy/t-078 as the standing
+    fix: no check currently flags this specific recurring signature, so each occurrence
+    has only ever been caught by an agent happening to read the stats endpoint while
+    doing something else.
