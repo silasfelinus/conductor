@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-02T11:46:08Z
+Generated: 2026-09-02T11:46:56Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **858**
-- Outcomes: blocked: 16, cancelled: 1, done: 841
+- Closed tasks recorded: **859**
+- Outcomes: blocked: 16, cancelled: 1, done: 842
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -26,7 +26,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 25 | 100% |
-| conductor | 90 | 100% |
+| conductor | 91 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 41 | 98% |
 | davinci | 8 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 842 | 99% |
+| software | 843 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-02 `conductor/t-145` — A soft/advisory CI check belongs on its own continue-on-error step inside an existing job (GitHub Actions ::warning:: annotations), not a new blocking job -- git diff --numstat plus git show <ref>:<path> is enough to diff base vs head line counts for any watched file without a second full-file-read diffing path. This session's sandbox pytest tool was again missing PyYAML (the same documented gap as t-140's session) and needed uv tool install pytest --with pyyaml --force before the 13 new tests could run.
 - 2026-09-02 `conductor/t-140` — close_task.py now warns (not fails) when a review/ready close omits --implementation-pr while the roadmap already holds a different owner/repo#N value -- the write-time half of the drift class t-139 targets from the read side. Companion note: this session's own sandbox pytest tool was missing PyYAML (AGENTS.md's documented gap) and needed `uv tool install pytest --with pyyaml --force` before the new regression tests could run.
 - 2026-09-02 `conductor/t-143` — GitHub's Contents API silently returns encoding:none/content:'' for files over 1MB, so any read-modify-write into a growing conductor file (art-prompts.yaml, TALKBACK.md, LEARNING.yaml) must fall back to the Git Blobs API and throw rather than treat a bodiless-but-nonempty read as an empty file -- kind_robots#2320 fixed both the queue write path and conductorGet() with this pattern plus an append-only invariant check.
 - 2026-09-02 `ai-art-academy/t-078` — A workflow's KR_BASE_URL must be verified against the current self-hosted host (kindrobots.org), not copied from an older *.vercel.app pattern -- a wrong default would have made the new sentinel look deployed while silently never reaching its signature check. Caught in review before merge, fixed in one retry.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-02 `mandarin-tutor/t-010` — A dedicated read-only, media-origin HEAD-probe audit is worth writing even when a project already has "reach" tooling (queue_mandarin_tutor_art.py) that reports its own missing/staged counts -- that tooling's notion of "missing" is scoped to its own staging file (art-prompts.yaml), not to what actually rendered. Trusting it instead of probing the media origin directly would have hidden that "already staged: 0" no longer meant "nothing done" once the corpus's original request rows left the file. Re-running that same "reach" tool as a naive double-check (rather than the read-only audit) came within one command of re-staging an already-100%-rendered 577-card corpus as missing, which would have duplicate-submitted it against a host that just recovered from an outage -- filed as conductor/t-142. General lesson: a tool whose job is "make sure X is requested" is not a safe stand-in for auditing "is X actually done," even when it reports a count that looks like an audit.
 - 2026-09-01 `model-builder/t-029` — Cycle 77: a new doc-comment's own prose can trip a regex-based static guard that scans for keywords without distinguishing code from comments -- verifyModelBuilder CompletionGate.ts's `\bawait\b`-based "find the function's first await" heuristic matched the bare word inside this cycle's own explanatory comment ("per-item-await loops"), shifting its notion of where real async work starts and flagging an unrelated pre-existing comment 20+ lines later as an ungated write. A regex-based guard against source text is exactly as blind to comments/strings as the pattern it's matching, so a new comment near guarded code should be checked against every such guard's actual matching logic, not just eyeballed for correctness.
 - 2026-09-01 `interface-vision/t-104` — A recurring task's note: field narrated a merge and a "re-arming to ready" no-op cycle that its status: field never actually recorded -- the narrative outran the machine-readable state by at least one cycle before check_pr_merged_drift.py's merged-implementation_pr-vs-claimed-status check caught it. A cycle that intends to re-arm a recurring task should verify the status: field actually changed, not just that the note says it did.
-- 2026-09-01 `model-builder/t-029` — Cycle 76: a prior cycle's own regression fix (cycle 75's runId-based release guard) had a same-run-revisit gap -- a captured run id is not a one-shot token when the store caches and reuses run objects (openRun's cached-adopt branch, resumeRun's revisit branch), so re-checking a fix's *invariant* against the actual data model (can this id compare equal again after the abandon event?) rather than trusting the fix's own stated shape is what surfaced this. Fixed with a monotonic epoch counter instead of strengthening the id check further. Also had to broaden two existing guards' regexes (not just add a new one) since the fixed condition's shape legitimately changed -- worth checking whether a new guard should tighten or loosen a prior one when a fix's shape evolves, rather than always adding purely-additive checks.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-02T11:46:08Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-02T11:46:56Z_
