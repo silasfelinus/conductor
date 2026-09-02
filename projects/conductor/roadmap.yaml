@@ -4871,7 +4871,28 @@ tasks:
     open investigation items in the first note (timeout-minutes on the job/step, ESLint
     --cache) remain unactioned -- worth prioritizing now that a rerun has been shown to NOT
     reliably self-heal (this session's rerun stalled again, unlike the mixed record above).
-  updated: '2026-08-30T17:38:44Z'
+
+    Fresh recurrence, 2026-09-02, kind_robots PR #2336 (model-builder/t-029 cycle 82, a
+    trivial 2-file+2-wiring-file change). Contract verifiers stalled 3 times in a row on the
+    exact same commit (fdeca382), zero forward progress each time (10-25+ min waits before
+    cancelling): attempt 1 hung at 'ESLint ratchet', attempt 2 also hung at 'ESLint ratchet'
+    (this time confirmed via job-level steps API after the run-level status lagged behind --
+    the run showed in_progress well after the job itself had already been cancelled),
+    attempt 3 hung at 'Install dependencies' (a step that completed in ~20-30s on both prior
+    attempts). Confirms this note's existing pattern: a different step nearly every time,
+    ESLint ratchet still the single most common one. All other required checks (TypeScript,
+    layout-contract, every other contract job in the same run) passed cleanly on this commit
+    each time they got the chance to run. Stopped after 3 cancel+rerun cycles per this
+    session's own retry budget; left kind_robots PR #2336 open with a standing-down comment
+    and subscribed to its PR activity rather than merging past an unverified required check.
+    Also newly confirmed this session: the check_runs GitHub API can report a run/job as
+    'in_progress' for several minutes after it has actually completed (confirmed via cross-
+    checking actions_get get_workflow_run/get_workflow_job directly) -- a session relying on
+    check_runs alone without this cross-check could wait indefinitely on a check that
+    already finished, or conversely could think a stalled run is still 'normal' when
+    actions_get would show it's genuinely stuck. Worth folding into whichever future fix
+    investigates this task's item (b).
+  updated: '2026-09-02T16:52:35Z'
 
 - id: t-133
   milestone: m2
