@@ -287,11 +287,11 @@ tasks:
   - id: t-010
     milestone: m2
     title: "Reach and audit Krea 2 illustration coverage across the core catalog"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-005
-    note: |-
+    note: >-
       FOR SILAS: nothing to decide here yet -- this gate is waiting on the production render
       host in t-020. Reopen the coverage audit once the box renders again.
 
@@ -321,7 +321,23 @@ tasks:
       scripts/drain_failed_art_backlog.py, which canaries before draining.
 
       HUMAN ANSWER from silasfelinus via Kind Robots. Gate released for the next agent. love the work, this looks very passable. approved
-    updated: '2026-09-02T04:34:24Z'
+
+      RESOLVED 2026-09-02: Alexandria render host confirmed back UP
+      (scripts/check_render_box.py: 221 renders completed in the last 6h). Ran a direct HEAD-
+      probe coverage audit against the live media origin (https://media.acrocatranch.com) for
+      all 577 strategy:illustrate v2 manifest entries (44 glyph-only excluded, correctly
+      image-less) -- wrote scripts/audit_mandarin_illustration_coverage.py for this, reusable
+      for future re-checks. Result: 577/577 rendered, 0 absent, 0 unknown -- 100% coverage.
+      The 2888-row FAILED backlog documented in t-020's note has already fully
+      drained/rendered (drain_failed_art_backlog.py's dry-run now reports only 16 stragglers,
+      all already rendered, nothing retryable left). Reach is confirmed complete -- do NOT re-
+      run scripts/queue_mandarin_tutor_art.py to double-check this: doing so during this
+      session's audit incorrectly re-staged the entire already-rendered 577-card corpus as
+      'missing' and would have duplicate-submitted it, because the original request rows are
+      no longer present in art-prompts.yaml (removed by some later step) and the script has no
+      live-media dedup check. Caught before commit, reverted, never pushed. Filed
+      conductor/t-142 to fix that script's dedup logic properly.
+    updated: '2026-09-02T04:40:23Z'
     gate_human: true
     owner: worker
     claimed_by: claude-scheduled-20260902T042738Z-mandarin-t010
