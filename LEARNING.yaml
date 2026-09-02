@@ -12192,3 +12192,32 @@ records:
     invariant. 17 new tests added; full repo suite still green (1585 passed, 1 skipped). Companion
     write-time fix already landed separately (close_task.py now warns on a stale
     --implementation-pr omission) -- t-139 was the read-side detection half."
+- date: 2026-09-02
+  project: conductor
+  task: t-141
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Reviewed and merged conductor#3477 (soft PR-time warning comparing changed roadmap task
+    ids against the PR base, flagging simultaneous title+milestone rewrites -- the t-091 id-reuse
+    shape). CI was fully green before merge; no changes requested.'
+- date: 2026-09-02
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "State reconciliation found the task's own note already said 're-arming to ready for the
+    next slice' after slice 36 (kind_robots#2331) merged, but the status field was left at review --
+    fixed by re-arming to ready directly rather than re-deriving from scratch. Then worked slice 37:
+    the kr-panel-section codemod's dry-run flagged 4 files, but only one (academy-style-detail.vue's
+    Gallery wall section, exact p-4 sm:p-5 override match to slice 36's precedent) was byte-equivalent.
+    The other three all lacked their own padding class (padding lived entirely in child elements),
+    so migrating them would add kr-panel-section's baked-in p-5 on top of existing child padding with
+    nothing to oppose it -- a real geometry change the codemod's BASE_TOKENS-subset check can't detect
+    on its own. Worth teaching the codemod itself to skip a candidate whose own class list carries no
+    padding token at all, rather than relying on a human/reviewer catching it by reading the file."
