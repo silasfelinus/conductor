@@ -43,6 +43,16 @@ import apply_dream_revision as revision  # noqa: E402
 ROOT = Path(__file__).resolve().parents[1]
 BACKLOG = ROOT / "projects" / "dream-cycle" / "backlog"
 
+# A bundle that fails per-bundle atomicity (see _apply_batch) is left untouched
+# and simply retried next run -- the right behavior for a transient flake. But
+# nothing distinguished that from a bundle whose own content reliably triggers
+# an empty/invalid completion (e.g. a content-policy edge case in its own
+# proposal text): such a bundle would retry silently forever, once per
+# scheduled run, with nobody ever told (dream-cycle/t-025). CHRONIC_FAILURE_THRESHOLD
+# consecutive failed runs for the same bundle stops the automatic retry and
+# surfaces it explicitly instead.
+CHRONIC_FAILURE_THRESHOLD = 3
+
 # A reward's index is not fixed by the schema (only "exactly one ITEM and one
 # SKILL" is), so reward paths address the row by type and resolve to an index at
 # access time. Keys must match the labels dream_prose_quality.complaints() emits,
@@ -109,6 +119,41 @@ def _set(value: Any, path: tuple[Any, ...], new_value: Any) -> None:
     for key in path[:-1]:
         current = current[_resolve_key(current, key)]
     current[_resolve_key(current, path[-1])] = new_value
+
+
+def _failure_state_path() -> Path:
+    # Resolved at call time against the current ROOT (never frozen as a default
+    # argument or a module-level constant computed at import), same reasoning as
+    # _load_built_catalog's own comment: a test redirecting ROOT must actually
+    # redirect this path too, not silently write through it.
+    return ROOT / "projects" / "dream-cycle" / "prose-repairs" / "chronic-failures.json"
+
+
+def _bundle_key(day: Any, title: Any) -> str:
+    return f"{day}::{title}"
+
+
+def _load_failure_state() -> dict[str, int]:
+    path = _failure_state_path()
+    if not path.exists():
+        return {}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    if not isinstance(data, dict):
+        return {}
+    return {str(key): int(value) for key, value in data.items() if isinstance(value, int)}
+
+
+def _save_failure_state(state: dict[str, int]) -> None:
+    path = _failure_state_path()
+    if not state:
+        if path.exists():
+            path.unlink()
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(state, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
 def _complaint_fields(proposal: dict[str, Any]) -> list[str]:
@@ -667,8 +712,10 @@ def _apply_batch(request_path: Path, request: dict[str, Any]) -> list[dict[str, 
     if unknown:
         raise ValueError(f"extra_fields names unknown field(s): {sorted(set(unknown))}")
 
+    failure_state = _load_failure_state()
     authored: list[dict[str, Any]] = []
     failed: list[dict[str, Any]] = []
+    chronic: list[dict[str, Any]] = []
     for bundle in bundles:
         proposal = bundle["proposal"]
         fields = _complaint_fields(proposal)
@@ -677,6 +724,23 @@ def _apply_batch(request_path: Path, request: dict[str, Any]) -> list[dict[str, 
             if label not in fields:
                 fields.append(label)
         if not fields:
+            continue
+        key = _bundle_key(bundle["day"], proposal.get("title"))
+        streak = failure_state.get(key, 0)
+        # A bundle whose content reliably triggers a failure (not a passing
+        # flake) would otherwise retry silently forever, once per scheduled
+        # run, with nobody told. Stop once it crosses the threshold -- unless
+        # this run carries an explicit editorial note for it (extra_fields),
+        # which is a deliberate human-directed retry, not the automatic kind
+        # this guard exists to cut off.
+        if streak >= CHRONIC_FAILURE_THRESHOLD and not notes:
+            chronic.append({"day": bundle["day"], "title": proposal.get("title"),
+                            "fields": fields, "consecutive_failures": streak})
+            print(
+                f"CHRONIC FAILURE, not retrying: {proposal.get('title')} "
+                f"({streak} consecutive failed runs) -- needs human review",
+                file=sys.stderr,
+            )
             continue
         try:
             patch, candidate = _author_patch(proposal, fields, api_key, notes)
@@ -688,12 +752,17 @@ def _apply_batch(request_path: Path, request: dict[str, Any]) -> list[dict[str, 
             # taking 13 good repairs with them each time. A bundle that fails
             # stays exactly as it was and stays flagged in the audit, so nothing
             # is lost or silently hidden; it is simply retried next run.
+            failure_state[key] = streak + 1
             failed.append({"day": bundle["day"], "title": proposal.get("title"),
-                           "fields": fields, "error": str(error)})
-            print(f"FAILED, left untouched: {proposal.get('title')} -- {error}", file=sys.stderr)
+                           "fields": fields, "error": str(error),
+                           "consecutive_failures": failure_state[key]})
+            print(f"FAILED, left untouched: {proposal.get('title')} -- {error} "
+                  f"({failure_state[key]} consecutive failed run(s))", file=sys.stderr)
             continue
+        failure_state.pop(key, None)
         authored.append({**bundle, "fields": fields, "patch": patch, "candidate": candidate})
         print(f"authored prose repair: {proposal.get('title')} ({', '.join(fields)})")
+    _save_failure_state(failure_state)
 
     # All model work and validation happens above.  No production mutation occurs before
     # the complete batch has a valid candidate.
@@ -744,6 +813,10 @@ def _apply_batch(request_path: Path, request: dict[str, Any]) -> list[dict[str, 
             "results": results,
             "remaining_complaints": audit(),
             "failed_bundles": failed,
+            # Bundles whose own content has failed CHRONIC_FAILURE_THRESHOLD
+            # consecutive runs in a row -- not attempted this run, so they carry
+            # no "error" from this pass, just the streak that stopped it.
+            "chronic_failures": chronic,
             # Consumed by `--publish` after this source is pushed. Each entry is
             # re-resolved from the committed file, so publishing never depends on
             # runner state that a failed push would discard.
@@ -755,7 +828,7 @@ def _apply_batch(request_path: Path, request: dict[str, Any]) -> list[dict[str, 
     receipt_path = request_path.with_name(request_path.name.replace("-request.json", "-applied.json"))
     receipt_path.write_text(json.dumps(receipt, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     request_path.unlink()
-    if not results:
+    if not results and failed:
         raise RuntimeError(
             "no bundle could be repaired: "
             + "; ".join(f"{row['title']}: {row['error']}" for row in failed[:3])
@@ -763,6 +836,12 @@ def _apply_batch(request_path: Path, request: dict[str, Any]) -> list[dict[str, 
     if failed:
         print(
             f"{len(failed)} bundle(s) left untouched and still flagged; they retry next run",
+            file=sys.stderr,
+        )
+    if chronic:
+        print(
+            f"{len(chronic)} bundle(s) skipped as chronic failures "
+            f"(>= {CHRONIC_FAILURE_THRESHOLD} consecutive) -- needs human review",
             file=sys.stderr,
         )
     return results
