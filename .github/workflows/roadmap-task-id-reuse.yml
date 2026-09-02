@@ -1,0 +1,28 @@
+name: Roadmap task id reuse guard
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "projects/*/roadmap.yaml"
+      - "scripts/check_roadmap_task_id_reuse.py"
+      - "tests/test_check_roadmap_task_id_reuse.py"
+
+jobs:
+  detect-task-id-reuse:
+    name: Detect suspicious roadmap task id reuse
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install PyYAML
+        run: pip install pyyaml
+      - name: Compare roadmap task identity against PR base
+        run: |
+          python scripts/check_roadmap_task_id_reuse.py \
+            --base "origin/${{ github.base_ref }}" --head HEAD --github-annotations
