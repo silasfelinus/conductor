@@ -2891,7 +2891,7 @@ tasks:
 - id: t-078
   milestone: m2
   title: "Add standing alerting for the hostbuf_file_reader_read render-box failure signature instead of relying on an agent noticing"
-  status: claimed
+  status: review
   stakes: reversible
   retry_context: >
     pass 1 failed (quality): PR silasfelinus/conductor#3444 sets KR_BASE_URL to the
@@ -2922,7 +2922,9 @@ tasks:
     Merged conductor PR #3502 as de43b7e802dbb8c3cb824496c8396e3490ab6369. Root cause of Actions run 33675631433 was the sentinel itself: it crashed on ModuleNotFoundError for yaml before reading queue stats, so that run was not evidence of a new render-host failure. The workflow now installs PyYAML, uses the current production API base https://kind-robots.vercel.app, and has regression assertions for both invariants. Verified PR head 3307b17e7d8200f331ec6711abe8143da3db5a5f with completed-success Worker PR CI run 33677320200 (all 8 jobs), Security Audit run 33677320164 (all 6 jobs), and Process task events run 33677320186. Diff was limited to the sentinel workflow and its focused test file; no reviews or unresolved threads remained.
 
     Silas explicitly corrected the production API base: Kind Robots has not used Vercel in over a month and kindrobots.org is the canonical domain. Reopen t-078 to revert the incorrect Vercel URL introduced in PR #3502 and add a regression guard that forbids it.
-  updated: '2026-09-02T20:18:00Z'
+
+    PR #3503 restores KR_BASE_URL to https://kindrobots.org, preserves the valid PyYAML dependency fix, and changes the regression test to require kindrobots.org while explicitly forbidding kind-robots.vercel.app.
+  updated: '2026-09-02T20:19:00Z'
   passes: 1
   owner: worker
   claimed_by: 2026-09-02T201800Z-ai-art-academy-t078-domain-revert-k9n4
