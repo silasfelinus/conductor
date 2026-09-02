@@ -156,6 +156,11 @@ jobs:
           fi
 
       - name: Build digest JSON
+        env:
+          # Needed for the render-engine health line. Without it that section
+          # degrades to "unresolved" and the digest silently stops reporting
+          # whether the art pipeline can render at all.
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
         run: |
           python scripts/build_digest.py --since "24 hours ago" > digest-base.json
           python scripts/enrich_daily_dream_digest.py digest-base.json --output digest.json

@@ -36,6 +36,15 @@ if ($env:ALERT_COOLDOWN_MINUTES) {
     [int]::TryParse($env:ALERT_COOLDOWN_MINUTES, [ref]$cooldownMinutes) | Out-Null
 }
 
+# How many pm2 restarts within one 5-minute tick count as a crash loop rather
+# than an ordinary restart. A healthy deploy or a watchdog-driven restart moves
+# this by 1; the 2026-09-02 ComfyUI loop moved it by roughly 9 per tick (a
+# ~31-second cycle). 3 sits well clear of both.
+$crashLoopRestarts = 3
+if ($env:CRASH_LOOP_RESTARTS) {
+    [int]::TryParse($env:CRASH_LOOP_RESTARTS, [ref]$crashLoopRestarts) | Out-Null
+}
+
 function Write-Log($msg) {
     $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
     Add-Content -Path $logFile -Value "$stamp  $msg"
@@ -333,8 +342,83 @@ foreach ($t in $targets) {
         Write-Log "$($t.Name): not in pm2's list - not started on this box?"
         continue
     }
+
+    # --- Crash-loop detection ------------------------------------------------
+    # A crash loop is neither a hang nor a stop, and until 2026-09-02 this
+    # watchdog had no way to say so. ComfyUI died ~26s into every start (a
+    # custom node's emoji hit a cp1252 stdout; see ecosystem.config.js), so
+    # pm2 cycled it forever. At any single 5-minute tick its status reads
+    # 'online' most of the time and 'waiting restart' the rest, and the old
+    # blanket 'not online -> leave it alone' treated the second case as a
+    # deliberate 'pm2 stop'.
+    #
+    # The restart COUNTER is the honest signature: it climbs whatever the
+    # status says at the instant we look. Compare it against the previous
+    # tick.
+    #
+    # This also catches the end state, which is worse than the loop. With
+    # min_uptime 30s and max_restarts 50, pm2 gives up after ~26 minutes and
+    # parks the app in 'errored' - at which point the recycling console you
+    # were using to notice the problem disappears and the box goes quiet
+    # rather than green.
+    $restartCount = -1
+    if ($status.PSObject.Properties['restart_time'] -and $null -ne $status.restart_time) {
+        $restartCount = [int]$status.restart_time
+    }
+    $restartKey = "restarts_$($t.Name)"
+    $prevRestarts = -1
+    if ($alertState.ContainsKey($restartKey)) {
+        [int]::TryParse([string]$alertState[$restartKey], [ref]$prevRestarts) | Out-Null
+    }
+    if ($restartCount -ge 0) {
+        $alertState[$restartKey] = $restartCount
+        Save-AlertState $alertState
+    }
+
+    $restartDelta = 0
+    if ($restartCount -ge 0 -and $prevRestarts -ge 0 -and $restartCount -ge $prevRestarts) {
+        $restartDelta = $restartCount - $prevRestarts
+    }
+
+    if ($restartDelta -ge $crashLoopRestarts) {
+        Write-Log "$($t.Name): CRASH LOOPING - pm2 restart count climbed $prevRestarts->$restartCount since the last tick"
+        if (Test-AlertDue $alertState "crashloop-$($t.Name)") {
+            $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+            Send-Alert "CRASH LOOP: $($t.Name) on $hostName is restarting repeatedly" `
+                "pm2's restart count for $($t.Name) went from $prevRestarts to $restartCount in one 5-minute tick as of $stamp on $hostName - it is dying and being restarted continuously, not hung. Restarting it again will not help; read the startup error. Run 'pm2 logs $($t.Name) --err --lines 200' and look for the FIRST exception, not the last. If pm2 gives up (max_restarts) the app parks in 'errored' and this alert stops, so do not read silence as recovery."
+            $alertState["crashloop-$($t.Name)"] = $stamp
+            Save-AlertState $alertState
+        }
+        continue
+    }
+
+    if ($status.status -eq 'errored') {
+        # pm2 has given up on it. Nothing will restart it, and no further
+        # symptom will appear on its own - the single most silent failure
+        # state a backend can be in.
+        Write-Log "$($t.Name): pm2 status is 'errored' - pm2 has GIVEN UP restarting it"
+        if (Test-AlertDue $alertState "errored-$($t.Name)") {
+            $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+            Send-Alert "ERRORED: $($t.Name) on $hostName - pm2 stopped trying" `
+                "pm2 has marked $($t.Name) 'errored' as of $stamp on $hostName, which means it exceeded max_restarts and pm2 will NOT restart it again. Nothing further will happen without a human. Read 'pm2 logs $($t.Name) --err --lines 200' for the startup failure, fix it, then 'pm2 restart <ecosystem file> --only $($t.Name) --update-env'."
+            $alertState["errored-$($t.Name)"] = $stamp
+            Save-AlertState $alertState
+        }
+        continue
+    }
+
+    if ($status.status -eq 'stopped') {
+        # The one genuinely deliberate state: someone ran 'pm2 stop', e.g. to
+        # free the GPU. Never fight that.
+        Write-Log "$($t.Name): pm2 status is 'stopped' - deliberate, leaving it alone"
+        continue
+    }
+
     if ($status.status -ne 'online') {
-        Write-Log "$($t.Name): pm2 status is '$($status.status)' - leaving it alone"
+        # launching / waiting restart / one-launch-status: in transition. Not
+        # an alarm on its own (the counter above owns that), but do not probe
+        # a process that is not up yet.
+        Write-Log "$($t.Name): pm2 status is '$($status.status)' - in transition, probing next tick"
         continue
     }
 

@@ -255,6 +255,49 @@ def proposal_section(
     )
 
 
+ENGINE_BANNER_THEME = {
+    "ok": ("#065f46", "#ecfdf5", "#10b981", "✅"),
+    "down": ("#7f1d1d", "#fef2f2", "#ef4444", "⚠️"),
+    "silent": ("#7f1d1d", "#fef2f2", "#ef4444", "🔇"),
+    "unresolved": ("#78350f", "#fffbeb", "#f59e0b", "❔"),
+}
+
+ENGINE_HEADLINE = {
+    "ok": "Render engine healthy",
+    "down": "Render engine DOWN — the art queue is not draining",
+    "silent": "Render engine SILENT — no heartbeat from the box",
+    "unresolved": "Render engine status unknown",
+}
+
+
+def engine_banner(digest: dict[str, Any]) -> str:
+    """One line at the top of the digest saying whether the box can render.
+
+    The digest carried nothing about render health until 2026-09-02, when
+    ComfyUI was down for 24 hours and at least one digest went out during it
+    without a hint. A green line every day is the point as much as a red one:
+    it makes the absence of a red line mean something, instead of leaving
+    silence to mean both "fine" and "nobody checked".
+    """
+    health = digest.get("render_engine")
+    if not isinstance(health, dict):
+        return ""
+    state = str(health.get("state") or "unresolved").lower()
+    colour, paper, rule, icon = ENGINE_BANNER_THEME.get(
+        state, ENGINE_BANNER_THEME["unresolved"]
+    )
+    headline = ENGINE_HEADLINE.get(state, ENGINE_HEADLINE["unresolved"])
+    reason = esc(health.get("reason") or "")
+    detail = (
+        f'<br><span style="font-size:12px;opacity:.85">{reason}</span>' if reason else ""
+    )
+    return (
+        f'<p style="color:{colour};background:{paper};border-left:4px solid {rule};'
+        f'padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px;margin:0 0 12px">'
+        f'{icon} <strong>{esc(headline)}</strong>{detail}</p>'
+    )
+
+
 def build_payload(digest: dict[str, Any]) -> dict[str, Any]:
     # Reuse the legacy project/activity shell, but feed its two Daily Dream slots
     # the new roles in the order Silas expects: older art-rich output first, then
@@ -277,6 +320,12 @@ def build_payload(digest: dict[str, Any]) -> dict[str, Any]:
         )
         if marker in payload["htmlContent"]:
             payload["htmlContent"] = payload["htmlContent"].replace(marker, note + marker, 1)
+
+    # Render health leads the email. It is the one fact that invalidates every
+    # other section: a beautiful dream bundle whose art never rendered is not
+    # good news, and reading three screens before finding that out is how a
+    # 24-hour outage goes unnoticed.
+    payload["htmlContent"] = engine_banner(digest) + payload["htmlContent"]
     return payload
 
 

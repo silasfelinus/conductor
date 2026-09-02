@@ -639,9 +639,16 @@ Pull the checkout and reload:
 ```powershell
 cd D:\code\Conductor
 git pull
+cd ops\home-server
 pm2 restart ecosystem.config.js --only comfyui --update-env
 pm2 save
 ```
+
+Note the second `cd`: `ecosystem.config.js` lives in `ops\home-server`, not at
+the repo root, and pm2 resolves that argument relative to the current directory.
+Running it from the repo root fails to find the file (and a bare `pm2 restart
+comfyui` "works" while silently keeping the old environment, which looks like
+the fix not taking).
 
 `pm2 restart comfyui` alone does **not** pick up a changed `env` block — a
 bare app name reuses the environment the process was started with. Pass the
@@ -680,6 +687,76 @@ claiming. Set `KR_ENGINE_GATE=0` to restore the old always-claim behaviour.
 ```
 python scripts/drain_failed_art_backlog.py --live
 ```
+
+## Why a 24-hour outage produced no alerts (2026-09-02), and what watches now
+
+The ComfyUI crash loop above ran for about a day before a human noticed. Four
+things could have caught it. Each was quiet for a different reason, and the
+first one is the one that matters:
+
+**1. The on-box watchdog was not running.** From `logs/healthcheck.log`:
+
+```
+2026-08-31   288 ticks
+2026-09-01    30 ticks, last at 02:26:07
+2026-09-02    (nothing)
+```
+
+It stopped ~37 hours before the outage was noticed, while the box was still
+healthy — so it was already gone when ComfyUI started failing. Its email path
+was fine (23 alerts delivered, 0 skipped for missing Brevo config); it simply
+was not running. **A watchdog cannot report its own absence**, and this one was
+the only thing watching. If the watchdog log's newest line is not within the
+last ~10 minutes, nothing on this box is being monitored, whatever else looks
+green. Check the Task Scheduler entry first (`Get-ScheduledTask`,
+`Get-ScheduledTaskInfo`) — its run-as account and "run only when user is logged
+on" setting are the usual casualties of a reboot or a profile change.
+
+**2. The render-failure watchdog needs work to fail.** It alerts on per-tick
+deltas of new FAILED jobs. Once the PENDING backlog drained there was nothing
+left to claim, the delta went to zero, and it went quiet. A dead box with an
+empty queue is indistinguishable from a healthy box with an empty queue.
+
+**3. `check_render_box.py` actively reported UP.** With a drained queue its
+throughput verdict was `None, "queue idle"`, which `main()` treated as fine.
+`RENDER-BOX-STATUS` read `up` throughout, so the state-change email in
+`auto-art-generate.yml` never had a change to fire on.
+
+**4. The heartbeat was arriving the whole time and nothing alarmed on it.**
+kr-relay posted `COMFY ok:false` to `/api/server/heartbeat` every 60 seconds —
+roughly 1,440 explicit "the engine is down" messages — into a
+`ServerHealthCheck` table whose stated purpose is charting uptime. The daily
+digest, the one message guaranteed to reach Silas, said nothing about render
+health at all.
+
+The shape they share: every check was **edge-triggered** (a delta, a state
+transition) or **work-conditional** (it needed queued jobs to have an opinion).
+None asked *"when did a render last succeed?"*, so silence meant health
+everywhere.
+
+### What watches now
+
+| Layer | Where it runs | Catches |
+| --- | --- | --- |
+| `check_engine_heartbeat.py` via the **Render Box Watchdog** workflow (every 30 min) | GitHub Actions | Engine down OR silent, on an idle queue, **even if this box is off or its watchdog is dead** |
+| Render-engine banner at the top of the daily digest | GitHub Actions | A daily positive assertion of health, so absence of an alert means something |
+| `check_render_box.py` engine-heartbeat gate | GitHub Actions | "Queue idle" no longer reads as UP |
+| `healthcheck.ps1` crash-loop + `errored` detection | this box | A climbing pm2 restart counter, and pm2 giving up entirely |
+
+The first row is the important one: it runs **off the box**, so it survives the
+exact failure that made this outage invisible. It alerts on transition and then
+re-alerts every 6 hours while the problem persists, rather than emailing once
+and going quiet. State lives in `ENGINE-HEARTBEAT-STATE.json` beside this file.
+
+Run it by hand any time:
+
+```
+KR_API_TOKEN=... python scripts/check_engine_heartbeat.py
+```
+
+Exit 0 healthy, 1 a real problem, 2 unresolved (no token / API unreachable).
+2 is deliberately not 1: a broken credential must never look like a broken
+render box.
 
 ## Reboot-readiness check (`preflight.ps1`)
 

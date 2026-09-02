@@ -299,6 +299,33 @@ def scan_branches():
         out.append(f"{name} — last commit {age} by {author}")
     return out
 
+def render_engine_health():
+    """{"state","reason"} for the render engine, for the daily email.
+
+    The digest is the one message that reaches Silas every single day, and
+    until now it said nothing whatsoever about whether the art pipeline could
+    render. During the 2026-09-02 outage a digest went out mid-outage and
+    carried no hint of it -- because every render check in the repo was
+    edge-triggered or needed queued work to have an opinion, and a drained
+    queue reads as "idle" to all of them.
+
+    A daily email that states health explicitly converts silence-means-fine
+    into an assertion someone can notice being wrong.
+
+    Never raises and never blocks the digest: the digest going out matters more
+    than this section being populated, so any failure degrades to "unresolved"
+    with the reason attached.
+    """
+    try:
+        import check_engine_heartbeat as engine
+
+        data = engine.fetch_uptime()
+        state, reason = engine.assess(data, datetime.datetime.now(datetime.timezone.utc))
+    except Exception as error:  # noqa: BLE001 - a digest section must never fail the digest
+        return {"state": "unresolved", "reason": f"could not read the engine heartbeat: {error}"}
+    return {"state": state, "reason": reason}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--since", default="24 hours ago")
@@ -375,6 +402,7 @@ def main():
         "all_needs_attention": [x for p in projects for x in p["needs_attention"]],
         "pitches_awaiting_vote": scan_pitches(),
         "open_branches": scan_branches(),
+        "render_engine": render_engine_health(),
     }
     print(json.dumps(payload, indent=2))
 

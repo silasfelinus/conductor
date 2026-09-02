@@ -155,3 +155,97 @@ def test_unreachable_origin_still_fails_first(monkeypatch):
         check, "fetch_queue_stats", lambda: (_ for _ in ()).throw(AssertionError)
     )
     assert check.main() == 1
+
+
+# --- 2026-09-02: an idle queue is not proof of a working box -----------------
+#
+# ComfyUI crash-looped for ~24 hours. Once the PENDING backlog drained, the
+# stats payload showed done=0, failed=0, pending=0, stale=0, so
+# render_throughput_verdict returned `None, "queue idle"` and main() printed
+# "render box UP". ops/home-server/RENDER-BOX-STATUS read `up` throughout, so
+# the state-change email in auto-art-generate.yml never had a change to fire on.
+#
+# The relay's heartbeat had been saying ok:false every 60 seconds the whole
+# time. It is now consulted first, because it is the only signal here that
+# describes the engine NOW rather than what the queue did earlier.
+
+
+class _FakeEngine:
+    """Stand-in for the check_engine_heartbeat module."""
+
+    SILENT, DOWN, OK, UNRESOLVED = "silent", "down", "ok", "unresolved"
+
+    def __init__(self, state, reason="fake"):
+        self._verdict = (state, reason)
+
+    def fetch_uptime(self, *args, **kwargs):
+        return {}
+
+    def assess(self, *args, **kwargs):
+        return self._verdict
+
+
+def _with_engine(monkeypatch_target, engine):
+    import sys
+
+    sys.modules["check_engine_heartbeat"] = engine
+    return engine
+
+
+def _clear_engine():
+    import sys
+
+    sys.modules.pop("check_engine_heartbeat", None)
+
+
+def test_idle_queue_with_a_silent_engine_is_not_healthy():
+    _with_engine(check, _FakeEngine("silent", "no heartbeat for 90 minutes"))
+    try:
+        healthy, reason = check.engine_heartbeat_verdict()
+    finally:
+        _clear_engine()
+    assert healthy is False
+    assert "90 minutes" in reason
+
+
+def test_idle_queue_with_a_failing_engine_is_not_healthy():
+    _with_engine(check, _FakeEngine("down", "ok:false for 1440 minutes"))
+    try:
+        healthy, _ = check.engine_heartbeat_verdict()
+    finally:
+        _clear_engine()
+    assert healthy is False
+
+
+def test_a_healthy_heartbeat_is_a_positive_signal():
+    _with_engine(check, _FakeEngine("ok", "healthy 0.4 minutes ago"))
+    try:
+        healthy, _ = check.engine_heartbeat_verdict()
+    finally:
+        _clear_engine()
+    assert healthy is True
+
+
+def test_no_token_leaves_the_old_behaviour_untouched():
+    """Without credentials the gate must behave exactly as it did before."""
+    _with_engine(check, _FakeEngine("unresolved", "KR_API_TOKEN is required"))
+    try:
+        healthy, _ = check.engine_heartbeat_verdict()
+    finally:
+        _clear_engine()
+    assert healthy is None
+
+
+def test_a_raising_heartbeat_module_is_no_opinion_not_a_crash():
+    """This runs inside a gate that must never raise."""
+    class Exploding:
+        def fetch_uptime(self, *a, **k):
+            raise RuntimeError("boom")
+
+    _with_engine(check, Exploding())
+    try:
+        healthy, reason = check.engine_heartbeat_verdict()
+    finally:
+        _clear_engine()
+    assert healthy is None
+    assert reason
