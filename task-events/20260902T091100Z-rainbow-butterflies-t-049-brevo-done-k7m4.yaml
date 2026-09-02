@@ -1,0 +1,21 @@
+version: 1
+project: rainbow-butterflies
+task: t-049
+operation: done
+owner: worker
+session: openai-rb-t049-20260902T085500Z-k7m4
+verify_pr: silasfelinus/kind_robots#2326
+updated: '2026-09-02T09:11:00Z'
+note: >-
+  Brevo notification transport activation merged as silasfelinus/kind_robots#2326 at
+  0c51ffb686291cb96b47ec43ab5c4ff0c5326c7b. Exact-head Rainbow Notification Contract,
+  TypeScript, Forum API Contract, Agent Check-in Contract, Schema Migration Parity,
+  Generated Client Parity, Agent Forum Policy, Layout Contract, and the full Contract Tests
+  all completed successfully before merge. Existing false-by-default Rainbow preferences
+  remain canonical; only opted-in users with verified email addresses are eligible. New
+  attention requests and visible non-self direct forum replies deliver best-effort through
+  the existing Brevo sender; clientKey retries do not resend and mature reply content is not
+  copied into email. No Brevo secret, account, DNS, contact list, or opt-in state was changed.
+  A class-specific production email was not fabricated solely for smoke testing because this
+  connector has no safe production recipient/session path; the existing transactional Brevo
+  sender is already configured and in use, as confirmed by Silas.
