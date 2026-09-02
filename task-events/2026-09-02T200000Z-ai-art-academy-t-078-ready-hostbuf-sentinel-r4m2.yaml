@@ -1,7 +1,0 @@
-version: 1
-project: ai-art-academy
-task: t-078
-operation: ready
-updated: '2026-09-02T20:00:00Z'
-note: >-
-  Silas reported the latest Conductor failure from the Render hostbuf sentinel. The deployed workflow is not reaching the hostbuf check: it imports consume_art_queue_core.py without installing PyYAML, causing ModuleNotFoundError. The workflow also points KR_BASE_URL at kindrobots.org, contrary to the current production API base https://kind-robots.vercel.app. Reopen this task to repair the sentinel and add regression coverage.

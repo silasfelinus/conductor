@@ -2891,7 +2891,7 @@ tasks:
 - id: t-078
   milestone: m2
   title: "Add standing alerting for the hostbuf_file_reader_read render-box failure signature instead of relying on an agent noticing"
-  status: done
+  status: ready
   stakes: reversible
   retry_context: >
     pass 1 failed (quality): PR silasfelinus/conductor#3444 sets KR_BASE_URL to the
@@ -2909,37 +2909,12 @@ tasks:
     override line (let the default apply) or set it explicitly to
     https://kindrobots.org. Script logic, signature classification, and tests are
     otherwise correct -- no other changes needed. See review comment on PR #3444.
-  note: >-
-    Kaizen from t-077's close-out. `CLIPTextEncode: hostbuf_file_reader_read failed` has
-    now hit the render box three times (t-067/t-068's original diagnosis and disk13 cable
-    fix, t-077's recurrence ~24h later, and a third burst on 2026-09-01T07:5x UTC --
-    11 jobs, ids 15390-15399 -- caught only because this session happened to read
-    `GET /api/art/queue/stats` while closing t-077, not by any standing check). Each time
-    the pattern is identical: a burst of consecutive `recentFailed` entries sharing the
-    exact hostbuf error string, then silence once the underlying hardware issue is
-    physically addressed. `check_render_box.py` and `recheck_render_queue.py` already
-    know how to read `queue/stats` and classify failures by signature
-    (`group_failures_by_signature`) but neither currently raises anything specific to
-    this recurring signature -- a generic elevated-failure-rate read doesn't distinguish
-    "this exact known hardware fault came back" from ordinary noise. Add a check (either
-    a new small script or an extension to `recheck_render_queue.py`) that flags when the
-    hostbuf signature appears in `recentFailed` at all, and wire it into whichever
-    schedule already runs `check_render_box.py`/`recheck_render_queue.py` so a recurrence
-    surfaces as an actionable needs-human gate the same day it happens, not whenever an
-    unrelated task's close-out happens to look at the stats endpoint.
-
+  note: |-
+    Kaizen from t-077's close-out. `CLIPTextEncode: hostbuf_file_reader_read failed` has now hit the render box three times (t-067/t-068's original diagnosis and disk13 cable fix, t-077's recurrence ~24h later, and a third burst on 2026-09-01T07:5x UTC -- 11 jobs, ids 15390-15399 -- caught only because this session happened to read `GET /api/art/queue/stats` while closing t-077, not by any standing check). Each time the pattern is identical: a burst of consecutive `recentFailed` entries sharing the exact hostbuf error string, then silence once the underlying hardware issue is physically addressed. `check_render_box.py` and `recheck_render_queue.py` already know how to read `queue/stats` and classify failures by signature (`group_failures_by_signature`) but neither currently raises anything specific to this recurring signature -- a generic elevated-failure-rate read doesn't distinguish "this exact known hardware fault came back" from ordinary noise. Add a check (either a new small script or an extension to `recheck_render_queue.py`) that flags when the hostbuf signature appears in `recentFailed` at all, and wire it into whichever schedule already runs `check_render_box.py`/`recheck_render_queue.py` so a recurrence surfaces as an actionable needs-human gate the same day it happens, not whenever an unrelated task's close-out happens to look at the stats endpoint.
     Added a dedicated hostbuf failure sentinel reusing the existing queue signature classifier, an hourly GitHub Actions schedule using the existing KR_API_TOKEN secret, and focused regression tests. Preparing the implementation PR for CI review.
+    Reviewer rejection (quality, pass 1): PR #3444's script/tests are sound, but the workflow hardcodes KR_BASE_URL to the decommissioned https://kind-robots.vercel.app, which will make the sentinel fail to fetch queue stats on every hourly run and never actually check for the hostbuf signature. See retry_context for the exact fix.
+    RESOLVED 2026-09-02: pass 2 fixed KR_BASE_URL to https://kindrobots.org per retry_context. CI green (22/22), merged as #3444 (715c087).
 
-    Reviewer rejection (quality, pass 1): PR #3444's script/tests are sound, but the
-    workflow hardcodes KR_BASE_URL to the decommissioned https://kind-robots.vercel.app,
-    which will make the sentinel fail to fetch queue stats on every hourly run and never
-    actually check for the hostbuf signature. See retry_context for the exact fix.
-
-    RESOLVED 2026-09-02: pass 2 fixed KR_BASE_URL to https://kindrobots.org per
-    retry_context. CI green (22/22), merged as #3444 (715c087).
-  owner: worker
-  claimed_by: openai-scheduled-20260902T061503Z-ai-art-academy-t078-k8q4
-  claimed_at: '2026-09-02T06:15:03Z'
-  updated: '2026-09-02T07:34:35Z'
+    Silas reported the latest Conductor failure from the Render hostbuf sentinel. The deployed workflow is not reaching the hostbuf check: it imports consume_art_queue_core.py without installing PyYAML, causing ModuleNotFoundError. The workflow also points KR_BASE_URL at kindrobots.org, contrary to the current production API base https://kind-robots.vercel.app. Reopen this task to repair the sentinel and add regression coverage.
+  updated: '2026-09-02T20:00:00Z'
   passes: 1
-  implementation_pr: 'silasfelinus/conductor#3444'
