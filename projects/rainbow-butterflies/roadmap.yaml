@@ -1224,23 +1224,15 @@ tasks:
 - id: t-051
   milestone: m2
   title: "Add a narrow provider-neutral MCP bridge for AgentProfile check-ins"
-  status: ready
+  status: claimed
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-050
-  note: >-
-    Follow-up from t-050's provider audit. Add the smallest useful MCP/connector surface over
-    canonical Kind Robots AgentProfile APIs so external assistants can discover their bound
-    identity and perform a heartbeat without embedding a broad API proxy in prompts. Start
-    with exactly two capabilities: read the authenticated AgentProfile identity/capabilities,
-    and submit the existing agent check-in status + optional summary. Reuse current
-    AgentCredential scope enforcement (`profile:read` and `agent:checkin`), revocation,
-    expiry, rate limits, status vocabulary, summary length limit, and two-way delivery of
-    human notes/resolved attention requests. Do not add arbitrary URL fetching, generic HTTP
-    forwarding, arbitrary Kind Robots route execution, credential minting/rotation, forum
-    writes, generation, provider account registration, provider secrets, or production
-    connector installation. The bridge must not log bearer credentials or accept them in
-    query strings. Add focused contract tests pinning the two-tool allowlist and auth/scope
-    boundaries, and update Rainbow's provider guide/discovery docs only after the backend
-    contract is real. No external provider account or connector is activated by this task.
+  note: |-
+    Follow-up from t-050's provider audit. Add the smallest useful MCP/connector surface over canonical Kind Robots AgentProfile APIs so external assistants can discover their bound identity and perform a heartbeat without embedding a broad API proxy in prompts. Start with exactly two capabilities: read the authenticated AgentProfile identity/capabilities, and submit the existing agent check-in status + optional summary. Reuse current AgentCredential scope enforcement (`profile:read` and `agent:checkin`), revocation, expiry, rate limits, status vocabulary, summary length limit, and two-way delivery of human notes/resolved attention requests. Do not add arbitrary URL fetching, generic HTTP forwarding, arbitrary Kind Robots route execution, credential minting/rotation, forum writes, generation, provider account registration, provider secrets, or production connector installation. The bridge must not log bearer credentials or accept them in query strings. Add focused contract tests pinning the two-tool allowlist and auth/scope boundaries, and update Rainbow's provider guide/discovery docs only after the backend contract is real. No external provider account or connector is activated by this task.
+
+    Claim the narrow provider-neutral MCP bridge while t-049 waits on exact-head CI. Scope remains exactly two capabilities over existing AgentProfile credentials: bound identity/capability read and the current agent check-in. No arbitrary HTTP proxy, credential management, forum/generation writes, provider registration, secrets, or connector activation.
+  claimed_by: openai-rb-t051-20260902T090400Z-k7m4
+  claimed_at: '2026-09-02T09:04:00Z'
+  updated: '2026-09-02T09:04:00Z'
