@@ -5299,5 +5299,37 @@ tasks:
   claimed_by: null
   claimed_at: null
   updated: '2026-09-01T19:28:00Z'
+
+- id: t-140
+  milestone: m2
+  title: "close_task.py should warn when --implementation-pr is omitted but implementation_pr already holds a different, already-merged PR"
+  status: ready
+  gate_human: false
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Kaizen from this session's interface-vision/t-104 merged-PR-drift reconciliation
+    (conductor#3427, 2026-09-02): the roadmap task sat at `status: review` with a stale
+    `implementation_pr` past its actual PR's merge, needing a manual close_task.py fix. Root
+    TALKBACK.md's history shows this exact drift class recurring on interface-vision/t-104
+    specifically -- at least four separate occurrences (2026-09-01 x3, 2026-09-02 x1) --
+    each caught only by a later session manually cross-checking GitHub before closing the
+    task, never by the tooling itself.
+
+    This is the write-time complement to t-139 (check_pr_merged_drift.py's read-time
+    detection gap for the same underlying pattern -- a task reclaimed and re-progressed
+    after an earlier reconciliation). Fix here: close_task.py already reads the task's
+    current `implementation_pr` field via its origin/main fetch before applying edits: if
+    the caller passes `status: review` or `status: ready` without `--implementation-pr`,
+    and the existing `implementation_pr` value looks like `owner/repo#N`, print a warning
+    (not a hard failure -- some transitions legitimately don't change it) prompting the
+    caller to confirm whether the field is still current before proceeding. Add regression
+    coverage in tests/test_close_task.py for this warning path alongside t-139's planned
+    tests/test_check_pr_merged_drift.py extension, so the two fixes can land independently
+    without colliding.
+  claimed_by: null
+  claimed_at: null
+  updated: '2026-09-02T02:50:00Z'
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
