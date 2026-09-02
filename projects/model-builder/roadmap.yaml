@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     recurring: true
     passes: 48
     stakes: reversible
@@ -694,7 +694,32 @@ tasks:
       test:layout-contract holds at 207 baseline; prettier --check clean; git status scoped to
       exactly 5 files. kind_robots PR #2308 opened, all 41 checks green, mergeable_state clean,
       merged squash ace0995. Re-arming for the next bounded slice.
-    updated: '2026-09-02T12:47:49Z'
+
+      Cycle 81 (real fix): SOURCE_TYPES blurb prose (stores/helpers/modelBuilderRecipes.ts)
+      had silently drifted from OUTPUT_CATALOG relationship-expansion eligibility -- Scenario
+      falsely promised "rewards" expansion (expand-rewards sourceTypes never included
+      Scenario), Character omitted that expand-scenarios also lists it eligible, Reward
+      omitted relationship-expansion entirely despite expand-characters listing it eligible.
+      Fixed all three blurbs and added verifyModelBuilderSourceBlurbCoverageGuard.ts
+      (+.test.ts), which derives eligibility from OUTPUT_CATALOG and asserts blurb text agrees
+      with it both ways (present when eligible, absent when not, self-name excluded). Wired
+      into package.json/contract-tests.yml. Hit a real capture-group-guard contract failure on
+      first push (this repos own verifyCaptureGroupGuards.ts heuristic does not recognize a
+      combined `if (!a || !b) continue` as guarding each variable individually -- needs a
+      standalone `if (!varName)` or an inline `varName![n]` assertion); fixed by switching to
+      `varName![n]!` on all 6 flagged sites and re-verified. Verified: eslint clean on all
+      changed files, vue-tsc --noEmit repo-wide clean, all 163 test:model-builder-* scripts
+      pass (161 prior + 2 new), test:layout-contract holds at 207 baseline, capture-group-
+      guards passes 8/8, git diff scoped to exactly 5 files (deliberately reverted a blanket
+      prettier --write across modelBuilderRecipes.ts that would have produced a ~600-line
+      unrelated diff -- this repo does not enforce prettier in CI -- and hand-edited just the
+      3 blurb lines instead). kind_robots PR #2333: 39/40 checks green before merge (only the
+      standard non-required Build production image deploy job still in flight, matching every
+      prior cycles own merge-when-unstable precedent), squash-merged cb0c1e1. REMAINING:
+      SOURCE_TYPES label/plural/icon fields have no analogous drift guard (lower risk, no
+      cross-file eligibility logic); server/api/model-builder/** access-control paths were
+      last fully swept in cycle 52. Re-armed to ready for a follow-up slice.
+    updated: '2026-09-02T13:05:15Z'
     owner: worker
     claimed_by: claude-scheduled-20260902T123308Z-mb-t029
     claimed_at: '2026-09-02T12:33:09Z'
