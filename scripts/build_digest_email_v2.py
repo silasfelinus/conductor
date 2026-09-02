@@ -40,6 +40,38 @@ def _facet_chips(values: list[str]) -> str:
     )
 
 
+def _facet_target_rows(targets: list[dict[str, Any]]) -> str:
+    """The Facets actually attached, per record, as one compact line each.
+
+    The per-asset chips further down are the proposal's SEED Facets -- what the
+    bundle was authored to be. These are what the live records ended up carrying.
+    They agree on a healthy build, and when they do not, that gap is the thing
+    worth seeing.
+    """
+    if not targets:
+        return ""
+
+    rows: list[str] = []
+    for target in targets:
+        if not isinstance(target, dict):
+            continue
+        keys = [str(key) for key in (target.get("facet_keys") or [])]
+        count = len(target.get("facet_ids") or [])
+        element = str(target.get("element") or "record").replace("_", " ")
+        body = ", ".join(keys) if keys else "none requested"
+        tone = "#3f3f55" if count else "#b45309"
+        mark = f"{count}" if count else "0"
+        rows.append(
+            f'<div style="font-size:11px;line-height:1.4;color:{tone};margin:2px 0">'
+            f'<strong>{esc(element)}</strong> · {esc(mark)} attached · {esc(body)}</div>'
+        )
+
+    return (
+        '<div style="background:#fbfbfe;border:1px solid #e6e6f0;border-radius:8px;'
+        'padding:8px 12px;margin:0 0 8px;max-width:660px">' + "".join(rows) + "</div>"
+    )
+
+
 def asset_card(asset: dict[str, Any], *, show_art: bool) -> str:
     key = str(asset.get("key") or "vibe")
     accent, paper, icon = TYPE_THEME.get(key, TYPE_THEME["vibe"])
@@ -140,10 +172,42 @@ def proposal_section(
     assignment = proposal.get("facet_assignments")
     facet_line = ""
     if isinstance(assignment, dict):
+        # WHAT LANDED, NOT JUST THAT SOMETHING DID. This printed the bare word
+        # "complete" and nothing else, so a bundle that attached no Facets at all
+        # to its Character read exactly like one that attached six -- for 36
+        # bundles running. Silas, 2026-09-02: "I just don't get the facets added
+        # as part of my daily digest, so there is a discrepancy ... mostly I want
+        # parity between what is being made and what is being reported."
+        #
+        # The counts come from `targets`, which the applier has always written;
+        # nothing new is collected, it was simply never shown. The applier now
+        # also refuses to call a target applied when the API attached nothing, so
+        # a zero here is a real zero rather than an unverified success.
+        status = str(assignment.get("status", "unknown"))
+        targets = assignment.get("targets") if isinstance(assignment.get("targets"), list) else []
+        attached = sum(len(t.get("facet_ids") or []) for t in targets if isinstance(t, dict))
+        blank = [
+            str(t.get("element"))
+            for t in targets
+            if isinstance(t, dict) and not t.get("facet_ids")
+        ]
+        errors = assignment.get("errors") if isinstance(assignment.get("errors"), list) else []
+
+        healthy = status == "complete" and not blank and not errors
+        ink, paper, rule = (
+            ("#166534", "#f0fdf4", "#16a34a") if healthy else ("#92400e", "#fffbeb", "#f59e0b")
+        )
+        detail = f"{attached} Facet link(s) across {len(targets)} record(s)"
+        if blank:
+            detail += f"; nothing attached to {', '.join(blank)}"
+        if errors:
+            detail += f"; {len(errors)} error(s)"
+
         facet_line = (
-            f'<p style="color:#166534;background:#f0fdf4;border-left:4px solid #16a34a;'
+            f'<p style="color:{ink};background:{paper};border-left:4px solid {rule};'
             f'padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px">'
-            f'🧩 Record Facets: {esc(assignment.get("status", "unknown"))}</p>'
+            f'🧩 Record Facets: {esc(status)} — {esc(detail)}</p>'
+            + _facet_target_rows(targets)
         )
 
     if show_art:

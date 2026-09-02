@@ -170,11 +170,34 @@ def apply_file(path: Path, token: str, *, dry_run: bool = False, force: bool = F
         try:
             result = _put(target["path"], selection, token, dry_run=dry_run)
             returned = result.get("data") if isinstance(result.get("data"), list) else []
+            facet_ids = [
+                row.get("id") for row in returned
+                if isinstance(row, dict) and isinstance(row.get("id"), int)
+            ]
+            # A 200 is not proof the Facets landed. PUT /api/characters/:id/facets
+            # ignored facetKeys entirely until 2026-09-02: it normalized a
+            # slug-only body to zero assignments, ran its unconditional
+            # deleteMany anyway, and answered success with an empty catalog. This
+            # loop read that as applied, so every one of the 36 built bundles
+            # recorded status "complete" with errors [] while its Character
+            # carried no Facets at all -- which is what Silas eventually noticed
+            # from the other end: "I just don't get the facets added as part of
+            # my daily digest, so there is a discrepancy."
+            #
+            # `dry_run` legitimately returns nothing, so it keeps the old
+            # behaviour of trusting the request it did not send.
+            if not facet_ids and not dry_run:
+                errors.append(
+                    f"{target['element']}: requested "
+                    f"{len(selection['facetKeys']) or len(selection['facetIds'])} "
+                    f"Facet(s) but {target['path']} attached none"
+                )
+                continue
             applied.append({
                 "element": target["element"],
                 "model": target["model"],
                 "record_id": target["record_id"],
-                "facet_ids": [row.get("id") for row in returned if isinstance(row, dict) and isinstance(row.get("id"), int)] or selection["facetIds"],
+                "facet_ids": facet_ids or selection["facetIds"],
                 "facet_keys": selection["facetKeys"],
             })
         except RuntimeError as error:

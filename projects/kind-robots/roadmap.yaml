@@ -4043,6 +4043,37 @@ tasks:
     under test could not be measured until the mock matched the real shape. A
     mock that drifts from its endpoint quietly measures nothing.
 
+- id: t-091
+  milestone: m6
+  title: Backfill Facets onto the 36 daily-dream Characters that never received them
+  status: needs-human
+  owner: null
+  passes: 0
+  stakes: reversible
+  gate_human: true
+  soft_gate: true
+  updated: '2026-09-02T01:30:00Z'
+  depends_on: [t-090]
+  note: >
+    silasfelinus/kind_robots#2314 fixes the endpoint that was discarding slug-addressed
+    Facet selections (see dream-cycle/t-026 for the full account). It does NOT repair the
+    36 Characters already built with none: every daily-dream Character from 2026-07-16
+    through 2026-08-31 has zero Facets where its bundle requested four to seven.
+    THE REPAIR IS ONE COMMAND once #2314 is deployed:
+    `python scripts/apply_daily_dream_facets.py --force` in conductor, with KR_API_TOKEN
+    set. It re-PUTs every bundle's stored seed selection, which is exactly the data the
+    Characters should have carried all along, and the sidecar's new verification means a
+    target that still attaches nothing comes back `partial` with a named error rather than
+    a false "complete".
+    WHY THIS IS GATED rather than just run. It writes to 36 live records on production,
+    and it is a data mutation rather than the bug fix -- Silas's call, not a side effect.
+    It is a SOFT gate: the change is additive (each Character gains the Facets its own
+    bundle already named), reversible, and the alternative is leaving the catalog
+    permanently wrong for six weeks of dreams.
+    VERIFY AFTER: `GET /api/characters/3320/facets` should return six Facets rather than
+    the empty array it returns today, and the next digest's Record Facets line should read
+    complete with no "nothing attached to" clause.
+
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
