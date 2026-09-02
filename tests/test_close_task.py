@@ -275,6 +275,63 @@ def test_extra_set_fields_are_applied_alongside_status(demo_repo):
     assert task["soft_gate"] is True
 
 
+STALE_PR_ROADMAP = """\
+project: demo
+kind: software
+tasks:
+- id: t-001
+  title: Demo task
+  status: claimed
+  owner: worker
+  implementation_pr: 'silasfelinus/kind_robots#1111'
+"""
+
+
+@pytest.fixture
+def stale_pr_repo(tmp_path, monkeypatch):
+    clone = make_remote_and_clone(tmp_path, STALE_PR_ROADMAP)
+    monkeypatch.setattr(ct, "ROOT", clone)
+    monkeypatch.setattr(ct, "PROJECTS_DIR", clone / "projects")
+    return clone
+
+
+def test_close_warns_when_implementation_pr_omitted_but_stale(stale_pr_repo, capsys):
+    """conductor/t-140: closing to review/ready without --implementation-pr while the
+    roadmap already carries a *different* PR reference is exactly the shape that let
+    interface-vision/t-104 sit with a stale implementation_pr past its actual PR's
+    merge multiple times (root TALKBACK.md, 2026-09-01/02) -- warn, don't silently
+    carry the old value forward unexamined."""
+    ct.close("demo", "t-001", "review", "session-b", "close/demo-t-001-session-b", {}, dry_run=False)
+
+    err = capsys.readouterr().err
+    assert "already carries implementation_pr='silasfelinus/kind_robots#1111'" in err
+    assert "t-139, t-140" in err
+
+
+def test_close_does_not_warn_when_implementation_pr_is_passed(stale_pr_repo, capsys):
+    ct.close(
+        "demo",
+        "t-001",
+        "review",
+        "session-b",
+        "close/demo-t-001-session-b",
+        {"implementation_pr": "silasfelinus/kind_robots#2222"},
+        dry_run=False,
+    )
+
+    err = capsys.readouterr().err
+    assert "already carries implementation_pr" not in err
+
+
+def test_close_does_not_warn_when_status_is_done(stale_pr_repo, capsys):
+    """The warning is about a task still in flight (review/ready) carrying a
+    possibly-stale reference -- a `done` close is terminal and not this pattern."""
+    ct.close("demo", "t-001", "done", "session-b", "close/demo-t-001-session-b", {}, dry_run=False)
+
+    err = capsys.readouterr().err
+    assert "already carries implementation_pr" not in err
+
+
 NOTED_ROADMAP = """\
 project: demo
 kind: software
