@@ -12221,3 +12221,18 @@ records:
     nothing to oppose it -- a real geometry change the codemod's BASE_TOKENS-subset check can't detect
     on its own. Worth teaching the codemod itself to skip a candidate whose own class list carries no
     padding token at all, rather than relying on a human/reviewer catching it by reading the file."
+- date: 2026-09-02
+  project: kapowarr
+  task: t-070
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Found an open, fully green, well-tested Kapowarr PR (branch claude/missing-comics-j8osws,
+    not claimed through conductor's task loop) during a routine open-PR check. Reviewed the diff
+    directly before merging (release_feed.py's stateless feed-poll design, the settings/interval
+    wiring, and the Newznab/Torznab query-omission change) rather than merging on green CI alone,
+    then retroactively filed the roadmap task so the shipped feature is visible to future audits.
+    Not every merge-worthy PR in a watched repo arrives through claim_task.py -- worth checking
+    open PRs directly across all in-scope repos, not just ones with a matching worker/* branch."
