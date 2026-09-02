@@ -16,8 +16,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Install sentinel dependencies
+        run: python -m pip install PyYAML
       - name: Check recurring host-buffer read failure
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
-          KR_BASE_URL: https://kindrobots.org
+          KR_BASE_URL: https://kind-robots.vercel.app
         run: python scripts/check_hostbuf_failure.py
