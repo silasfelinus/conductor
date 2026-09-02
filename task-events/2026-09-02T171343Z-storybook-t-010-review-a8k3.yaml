@@ -1,0 +1,9 @@
+version: 1
+project: storybook
+task: t-010
+operation: review
+owner: worker
+session: openai-scheduled-20260902T171343Z-storybook-t010-a8k3
+updated: '2026-09-02T17:20:00Z'
+note: >-
+  Cycle 52 found Storybook library initialization could throw while handling an existing localStorage failure because its catch block called removeItem without a guard. Prepared a scoped recovery guard so privacy/security-policy storage failures leave an empty in-memory library instead of breaking Storybook initialization.
