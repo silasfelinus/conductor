@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     recurring: true
     passes: 48
     stakes: reversible
@@ -745,7 +745,13 @@ tasks:
       automatically when CI recovers. Status left at 'review' (not 'ready'/'done') since the
       code is complete and the PR is open -- only CI infrastructure recovery is needed, no
       further implementation work.
-    updated: '2026-09-02T16:52:14Z'
+
+      kind_robots#2336 merged (be06c49) after the Contract verifiers CI stall recovered on its
+      own -- the check_suite.completed webhook fired and all 40 checks (including Contract
+      verifiers itself) came back green on the same commit (fdeca382) that had stalled 3x
+      earlier this session. Merged and re-armed to ready per this recurring task's convention.
+      Unsubscribed from the PR's activity.
+    updated: '2026-09-02T16:59:02Z'
     owner: worker
     claimed_by: claude-scheduled-20260902T-conductor-modelbuilder-t029
     claimed_at: '2026-09-02T16:34:10Z'
