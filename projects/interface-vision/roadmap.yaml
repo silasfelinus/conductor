@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3325,7 +3325,23 @@ tasks:
     with no live PR open -- slice 37 (kind_robots#2334) confirmed merged via direct GitHub
     MCP lookup, and slice 38 was already recorded above as a completed no-op search. Re-
     arming to ready for the next slice.
-  updated: '2026-09-02T18:36:22Z'
+
+    Slice 39 search (scheduled sweep): re-ran both codemods dry-run against current
+    kind_robots main (post-#2336). kr_panel_section_codemod.py: 1 candidate, challenge-
+    center-page.vue card-grid item -- same known deliberate exclusion as slices 34/38
+    (hover:-translate-y-1/hover:shadow-xl/transition variants, not byte-exact).
+    kr_panel_codemod.py: 0 candidates (only the 2 already-excluded btn-ghost buttons in
+    chat-gallery.vue, unchanged). Also manually grepped for mx-auto+max-w- patterns the
+    codemods might miss (16 hits) -- all are non-root elements (centered <p>/<Icon>/inner
+    <div> text blocks in checkout-success.vue, checkout-cancel.vue, email-confirmation.vue,
+    etc.), not root-element container candidates, so correctly out of scope for kr-
+    container/kr-panel-section substitution. Third consecutive no-op search (slices 38, 39)
+    -- re-arming to ready for the next slice; a future cycle should consider whether the
+    umbrella has reached practical saturation for these two primitives and pivot its search
+    to a different kr-* consistency dimension (e.g. spacing/gap tokens, button variants
+    beyond the flagged btn-ghost pair, or duplicate loading/empty-state patterns) rather
+    than repeating the same two codemods a fourth time.
+  updated: '2026-09-02T18:37:22Z'
   implementation_pr: 'silasfelinus/kind_robots#2334'
   owner: worker
   claimed_by: claude-scheduled-20260902T1828Z-conductor-iv-t104-slice39
