@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-02T20:39:07Z
+Generated: 2026-09-02T20:43:12Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **864**
-- Outcomes: blocked: 16, cancelled: 1, done: 847
+- Closed tasks recorded: **865**
+- Outcomes: blocked: 16, cancelled: 1, done: 848
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -31,7 +31,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | cthulhuquarium | 41 | 98% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
-| dream-cycle | 20 | 100% |
+| dream-cycle | 21 | 100% |
 | ecosystem-map | 5 | 100% |
 | global-ui | 13 | 100% |
 | humboldt-impropriety-calendar | 1 | 0% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 848 | 99% |
+| software | 849 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-02 `dream-cycle/t-024` — Wired repair_dream_prose_catalog.py --verify-live --strict into daily-digest.yml's existing recurring cycle (same continue-on-error + folded-into-final-gate pattern as the build/Facet/ArtJob/commit steps) rather than depending on an agent remembering to run it during a t-006 maintenance pass. A scheduled workflow step that already runs daily is a more reliable detection point for silent drift than an agent-recalled manual check -- prefer wiring a new verification into an existing recurring CI/workflow run over adding it to an agent's task checklist when both are available.
 - 2026-09-02 `kapowarr/t-070` — Found an open, fully green, well-tested Kapowarr PR (branch claude/missing-comics-j8osws, not claimed through conductor's task loop) during a routine open-PR check. Reviewed the diff directly before merging (release_feed.py's stateless feed-poll design, the settings/interval wiring, and the Newznab/Torznab query-omission change) rather than merging on green CI alone, then retroactively filed the roadmap task so the shipped feature is visible to future audits. Not every merge-worthy PR in a watched repo arrives through claim_task.py -- worth checking open PRs directly across all in-scope repos, not just ones with a matching worker/* branch.
 - 2026-09-02 `rainbow-butterflies/t-051` — next_ready_task.py surfaced this as a reclaimable stale claim (claimed_at 09:04:00Z, past the 90-minute TTL). Before implementing, checked kind_robots for existing work under the original claiming session's name and found kind_robots#2329 already merged 46 minutes after the claim -- the full two-tool MCP bridge (rainbow_agent_identity, rainbow_check_in) the task specified. The implementation was real and complete; only the roadmap claimed -> done transition was missing. Checking for already-merged work under a stale claim's session id before starting a fresh implementation avoided duplicating an already-shipped feature.
 - 2026-09-02 `interface-vision/t-104` — State reconciliation found the task's own note already said 're-arming to ready for the next slice' after slice 36 (kind_robots#2331) merged, but the status field was left at review -- fixed by re-arming to ready directly rather than re-deriving from scratch. Then worked slice 37: the kr-panel-section codemod's dry-run flagged 4 files, but only one (academy-style-detail.vue's Gallery wall section, exact p-4 sm:p-5 override match to slice 36's precedent) was byte-equivalent. The other three all lacked their own padding class (padding lived entirely in child elements), so migrating them would add kr-panel-section's baked-in p-5 on top of existing child padding with nothing to oppose it -- a real geometry change the codemod's BASE_TOKENS-subset check can't detect on its own. Worth teaching the codemod itself to skip a candidate whose own class list carries no padding token at all, rather than relying on a human/reviewer catching it by reading the file.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-02 `conductor/t-140` — close_task.py now warns (not fails) when a review/ready close omits --implementation-pr while the roadmap already holds a different owner/repo#N value -- the write-time half of the drift class t-139 targets from the read side. Companion note: this session's own sandbox pytest tool was missing PyYAML (AGENTS.md's documented gap) and needed `uv tool install pytest --with pyyaml --force` before the new regression tests could run.
 - 2026-09-02 `conductor/t-143` — GitHub's Contents API silently returns encoding:none/content:'' for files over 1MB, so any read-modify-write into a growing conductor file (art-prompts.yaml, TALKBACK.md, LEARNING.yaml) must fall back to the Git Blobs API and throw rather than treat a bodiless-but-nonempty read as an empty file -- kind_robots#2320 fixed both the queue write path and conductorGet() with this pattern plus an append-only invariant check.
 - 2026-09-02 `ai-art-academy/t-078` — A workflow's KR_BASE_URL must be verified against the current self-hosted host (kindrobots.org), not copied from an older *.vercel.app pattern -- a wrong default would have made the new sentinel look deployed while silently never reaching its signature check. Caught in review before merge, fixed in one retry.
-- 2026-09-02 `conductor/t-142` — Ephemeral request rows cannot be the only deduplication source; producers must consult final artifact truth, and ambiguous origin probes should fail closed rather than create costly duplicate work.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-02T20:39:07Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-02T20:43:12Z_
