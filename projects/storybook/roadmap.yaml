@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 49
   stakes: reversible
   note: >-
@@ -306,7 +306,34 @@ tasks:
     implementation, no bug found) and left an explicit cycle 51 lead in the note, but never
     re-armed status back to ready. No code change; cleared the stale claim and re-armed to
     ready so cycle 51 can be picked up.
-  updated: '2026-09-02T16:29:16Z'
+
+    Cycle 51 (conductor scheduled sweep, kind_robots checkout at d894d24): traced the
+    reload-seeding question the cycle 50 lead raised end-to-end. narrative-milestone-
+    art.client.ts's seenStoryBeats/seenTaskBeats seed-on-first-observation branch only ever
+    fires in two shapes: (a)
+    storybookStore.restoreFromLocalStorage()/taskmasterStore.restoreFromLocalStorage()
+    setting session.value from a null baseline on page load, which correctly matches the CI-
+    enforced 'must not retroactively generate art on restore' contract
+    (verifyNarrativeArtMilestones.ts's coordinator-boundary check) -- and any beat that DOES
+    already carry a persisted art state (queued/rendering) is independently resumed via
+    resumeNarrativeArtJobs() -> persistedNarrativeArtJobsHelper.ts's resumeEntries(), which
+    explicitly 'continue's past any beat with no art state (art===undefined), so a beat that
+    was never given a job is never silently recovered there either -- same policy, same
+    place, no gap. (b) beginStory() (storybookStore.ts) / its taskmasterStore.ts equivalent
+    setting session.value with beats:[] BEFORE the first weaveBeat() beat lands, which
+    trivially seeds an empty Set and is a no-op -- the real opening beat's later push to
+    session.beats is the SECOND watch fire, by which point seenStoryBeats already has an
+    entry for this session id, so the loop branch runs and correctly calls
+    requestStoryArt/requestTaskArt for it. Checked both stores' session-creation functions
+    (storybookStore.ts:815 beginStory, taskmasterStore.ts:961) to confirm the beats:[] shape
+    is symmetric across both products. The only remaining gap is the same narrow beat-
+    pushed-but-not-yet-flushed race already named and accepted elsewhere in this file's
+    comments (remapDuplicate()'s queueing-window gap) -- not a new finding. No reachable,
+    unmitigated bug found; no code changes made. Verified: verifyNarrativeArtMilestones.ts
+    and the plugin's coordinator-boundary check both pass directly; working tree left clean,
+    nothing to commit. No further cycle-52 lead to hand off -- this closes out the reload-
+    seeding question cycle 50 opened.
+  updated: '2026-09-02T16:32:10Z'
   owner: worker
   claimed_by: claude-scheduled-20260902T-conductor-storybook-t010
   claimed_at: '2026-09-02T16:29:16Z'
