@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 48
     stakes: reversible
@@ -751,7 +751,29 @@ tasks:
       verifiers itself) came back green on the same commit (fdeca382) that had stalled 3x
       earlier this session. Merged and re-armed to ready per this recurring task's convention.
       Unsubscribed from the PR's activity.
-    updated: '2026-09-02T18:39:18Z'
+
+      Cycle 83: fresh access-control sweep of server/api/model-builder/** (last full sweep was
+      cycle 52, per cycle 81s REMAINING note). Read all 11 endpoint/helper files in full:
+      items/[id].patch.ts, items/[id]/artifacts.post.ts, items/[id]/commit.post.ts,
+      items/batch.patch.ts, items/patch-policy.ts, relations.ts, runs/index.ts
+      (assertRunAccess/assertRunWritable), runs/index.get.ts, runs/index.post.ts
+      (assertSourceOwnership), runs/[id].get.ts, runs/[id].patch.ts, runs/[id].delete.ts.
+      Every write-capable route consistently calls assertRunAccess (403 unless owner/admin) +
+      assertRunWritable (409 once CANCELLED) before touching Run-scoped state;
+      runs/index.post.ts additionally verifies sourceOwnership once at run creation (P6
+      CRITICAL, already fixed) so a run cannot be pointed at another users source record;
+      ArtImage attachability (relations.ts) is checked both at attach time AND re-checked
+      immediately before the privileged promoteAsset write inside the commit transaction
+      (closing the P6 MEDIUM TOCTOU window a prior cycle already flagged); item PATCH routes
+      block client writes to server-managed targetType/targetId via patch-policy.ts, verified
+      actually wired into both items/[id].patch.ts and items/batch.patch.ts. No new gap found
+      -- this surface has already absorbed multiple rounds of careful hardening (cycles 28,
+      45, 46, 52 all left dated comments documenting exactly what they fixed and why, which
+      made this sweep straightforward to verify against). No code change this cycle. Re-arming
+      to ready; the other REMAINING item from cycle 81 (SOURCE_TYPES label/plural/icon fields
+      lacking a drift guard beyond the icon-only guard cycle 82 shipped) is still open for a
+      future slice.
+    updated: '2026-09-02T18:40:26Z'
     owner: worker
     claimed_by: claude-scheduled-20260902T1828Z-conductor-mb-t029-cycle83
     claimed_at: '2026-09-02T18:39:18Z'
