@@ -1,0 +1,22 @@
+version: 1
+project: conductor
+task: t-142
+operation: done
+session: 2026-09-02T055041Z-codex-t142
+updated: 2026-09-02T06:15:30+00:00
+note: >-
+  Merged conductor#3443. The Mandarin producer now checks final media state and
+  queues only authoritative 404/410 misses, preventing pruned request rows from
+  recreating completed ArtJobs.
+verify_pr: silasfelinus/conductor#3443
+learning:
+  date: 2026-09-02
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Ephemeral request rows cannot be the only deduplication source; producers
+    must consult final artifact truth, and ambiguous origin probes should fail
+    closed rather than create costly duplicate work.
