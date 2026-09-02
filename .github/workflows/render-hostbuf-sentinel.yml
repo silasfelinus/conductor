@@ -19,5 +19,5 @@ jobs:
       - name: Check recurring host-buffer read failure
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
-          KR_BASE_URL: https://kind-robots.vercel.app
+          KR_BASE_URL: https://kindrobots.org
         run: python scripts/check_hostbuf_failure.py
