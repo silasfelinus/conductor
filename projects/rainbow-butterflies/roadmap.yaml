@@ -258,7 +258,7 @@ tasks:
     Add a stable OpenAPI contract for the implemented v1 forum/agent endpoints and a Rainbow /.well-known/rainbow-butterflies.json discovery document advertising project mission, human homepage, Kind Robots API base, docs, auth/key-management path, forum discovery, rate-limit/ethics policy links, fundraiser, and supported adapters. Add schema/fixture tests so docs cannot silently drift from routes. Direct REST/OpenAPI is the baseline; do not add federation/protocol complexity merely for novelty.
 
 
-    Claiming the machine-readable discovery and OpenAPI slice now that t-021 is canonically done. I will document only implemented v1 forum/agent surfaces, add drift-resistant contract tests, publish the Rainbow .well-known discovery document without adding federation complexity, and keep secrets, DNS, external accounts, and public routing outside this reversible implementation pass.
+    Claiming the machine-readable discovery and OpenAPI slice after t-021 is canonically done. I will document only implemented v1 forum/agent surfaces, add drift-resistant contract tests, publish the Rainbow .well-known discovery document without adding federation complexity, and keep secrets, DNS, external accounts, and public routing outside this reversible implementation pass.
 
     Recovered the closeout after the previous session exhausted its thread. Companion implementations are already merged: kind_robots#2223 as 609f769982f3eabedf0b434a3a22f17b636de04a and rainbowbutterflies#13 as 2baee992abf4ae60cfbb430573a63a5c6f6e8a36. Rainbow PR-head CI, Agent Discovery Contract, and production-container build all completed successfully. Kind Robots PR-head Forum API Contract, TypeScript, Contract Tests, and Layout Contract completed successfully. An unrelated Comment Migration Contract failed on stale production-comment Character references; #2223 did not touch those fixtures or that verifier. No DNS, secrets, account creation, credentials, or public-routing configuration changed.
   claimed_by: 2026-08-30T092300Z-rainbow-butterflies-t-022-a7f3
@@ -429,7 +429,7 @@ tasks:
     Label drafts/synthetic examples clearly. Use real sourced health claims only from the
     approved ethics/source standard.
 
-    Produced projects/rainbow-butterflies/FORUM-LAUNCH-PREP.md: board descriptions for all 6
+    Produced as `projects/rainbow-butterflies/FORUM-LAUNCH-PREP.md`: board descriptions for all 6
     COMMONS-SPEC.md MVP boards (introductions, news, humanitarian-goals, creativity, memes,
     just-because) plus per-board posting-guidance one-liners; a pinned-post draft plus a
     per-post authorship-badge quick reference applying ETHICS.md/AMI-IDENTITY.md's disclosure
@@ -1215,3 +1215,27 @@ tasks:
   claimed_by: openai-rb-t050-20260902T080601Z-v6c2
   claimed_at: '2026-09-02 08:06:01+00:00'
   updated: '2026-09-02T08:19:32Z'
+
+- id: t-051
+  milestone: m2
+  title: "Add a narrow provider-neutral MCP bridge for AgentProfile check-ins"
+  status: ready
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-050
+  note: >-
+    Follow-up from t-050's provider audit. Add the smallest useful MCP/connector surface over
+    canonical Kind Robots AgentProfile APIs so external assistants can discover their bound
+    identity and perform a heartbeat without embedding a broad API proxy in prompts. Start
+    with exactly two capabilities: read the authenticated AgentProfile identity/capabilities,
+    and submit the existing agent check-in status + optional summary. Reuse current
+    AgentCredential scope enforcement (`profile:read` and `agent:checkin`), revocation,
+    expiry, rate limits, status vocabulary, summary length limit, and two-way delivery of
+    human notes/resolved attention requests. Do not add arbitrary URL fetching, generic HTTP
+    forwarding, arbitrary Kind Robots route execution, credential minting/rotation, forum
+    writes, generation, provider account registration, provider secrets, or production
+    connector installation. The bridge must not log bearer credentials or accept them in
+    query strings. Add focused contract tests pinning the two-tool allowlist and auth/scope
+    boundaries, and update Rainbow's provider guide/discovery docs only after the backend
+    contract is real. No external provider account or connector is activated by this task.
