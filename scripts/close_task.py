@@ -188,6 +188,24 @@ def close(
     ref = f"refs/heads/{branch}"
 
     _, task = load_task_at_ref("origin/main", project, task_id)
+
+    existing_pr = task.get("implementation_pr")
+    if (
+        status in ("review", "ready")
+        and "implementation_pr" not in extra_fields
+        and isinstance(existing_pr, str)
+        and IMPLEMENTATION_PR_RE.match(existing_pr)
+    ):
+        print(
+            f"WARNING: {project}/{task_id} already carries implementation_pr={existing_pr!r} "
+            f"and this close (status={status!r}) does not pass --implementation-pr. If the "
+            "task was reclaimed and progressed via a different PR since that field was set, "
+            "it is now stale (see conductor/t-139, t-140) -- pass --implementation-pr to "
+            "update it, or --set implementation_pr=<same value> to confirm it is still "
+            "current and silence this warning.",
+            file=sys.stderr,
+        )
+
     if not force and task.get("recurring") and status == "done":
         raise CloseError(
             f"ERROR: {project}/{task_id} has recurring: true -- recurring tasks never reach "
