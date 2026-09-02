@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     recurring: true
     passes: 48
     stakes: reversible
@@ -773,7 +773,23 @@ tasks:
       to ready; the other REMAINING item from cycle 81 (SOURCE_TYPES label/plural/icon fields
       lacking a drift guard beyond the icon-only guard cycle 82 shipped) is still open for a
       future slice.
-    updated: '2026-09-02T21:42:17Z'
+
+      Cycle 84: investigated the cycle-83 REMAINING note (SOURCE_TYPES label/plural/icon drift
+      guard follow-up). label/plural are plain UI strings with no external source of truth to
+      drift against, but endpoint is fetched directly with no CI-time check it resolves to a
+      real route -- added verifyModelBuilderSourceEndpointCoverageGuard.ts to cover it. While
+      building it, found a real bug in the cycle-82 icon coverage guard: its brace-matching
+      entry-split silently broke on SOURCE_TYPES' Facet entry (a leading comment mentions
+      server/api/{dreams,scenarios}/..., a literal brace pair in prose), so it had only ever
+      checked 6 of 7 SOURCE_TYPES icons -- Facet's kind-icon:gem was never actually verified,
+      despite the guard reporting a plausible-looking total. Rewrote both guards' extraction
+      to split on key: '...' boundaries instead of brace matching (matching
+      verifyModelBuilderSourceFieldGuard.ts's existing, safer convention), added regression
+      tests for the exact failure shape to both self-tests. Verified: eslint clean, vue-tsc
+      --noEmit clean repo-wide, all 167 test:model-builder-* scripts pass (165 prior + 2 new),
+      contract-tests-coverage-guard confirms wiring, prettier clean, git diff --stat scoped to
+      exactly 6 files. Merged as kind_robots#2340.
+    updated: '2026-09-02T21:52:45Z'
     owner: reviewer
     claimed_by: claude-scheduled-20260902T212945Z-conductor-mb-t029-cycle84
     claimed_at: '2026-09-02T21:29:45Z'
