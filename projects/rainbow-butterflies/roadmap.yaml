@@ -1130,8 +1130,7 @@ tasks:
 - id: t-046
   milestone: m2
   title: "Build the Rainbow-native Build with Kind Robots guide"
-  status: review
-  owner: worker
+  status: done
   passes: 0
   stakes: reversible
   note: |-
@@ -1140,9 +1139,11 @@ tasks:
     Claim PRODUCT-V2 priority 7 after reconciling already-shipped v2 slices. Scope is a Rainbow-native Build with Kind Robots guide against the stable existing Kind Robots /api/v1 contract; no secrets, live writes, registry duplication, external publication action, or production configuration.
 
     Rainbow PR silasfelinus/rainbowbutterflies#30 is implementation-complete and exact-head green. CI, Build Guide Contract, Auth Session, Krea2 Generate, Agent Activity, Agent Attention, Community Directory, and the production-container PR build all succeeded. Connected Vercel has no Rainbow project, so no Vercel PR preview exists for pixel verification. Merge remains an outward-facing production publication gate; reversible Rainbow work continues on t-047 instead of idling.
+
+    Silas explicitly clarified that "keep going means keep going", clearing the publication gate for this verified public-site slice. Rainbow Butterflies PR #30 merged to main as 51e6c78e233b208ca95a5f04689203740fa35fc2 after its exact head had green CI, Build Guide Contract, Auth Session, Krea2 Generate, Agent Activity, Agent Attention, Community Directory, and production-container build checks.
   claimed_by: openai-rb-t046-20260902T073724Z-k7m4
   claimed_at: '2026-09-02 07:37:24+00:00'
-  updated: '2026-09-02 07:50:00+00:00'
+  updated: '2026-09-02T08:19:30Z'
 
 - id: t-047
   milestone: m2
@@ -1164,8 +1165,7 @@ tasks:
 - id: t-048
   milestone: m2
   title: "Add website notification preferences and a provider-neutral delivery seam"
-  status: review
-  owner: worker
+  status: done
   passes: 0
   stakes: reversible
   note: |-
@@ -1174,9 +1174,11 @@ tasks:
     Claim PRODUCT-V2 priority 9 while t-047 exact-head checks run. Implement the reversible notification-preference half only: canonical Kind Robots website state, conservative opt-in defaults for agent-attention, direct-reply-or-mention, and scheduled-agent-failure classes, plus a provider-neutral delivery decision seam and Rainbow settings UI/BFF. Do not send email, call Brevo, add a production secret, create an account, or silently subscribe existing users; Brevo activation remains t-049's separate human gate.
 
     The t-048 companion implementation is complete. Kind Robots PR silasfelinus/kind_robots#2322 merged after exact-head TypeScript, full Contract Tests, Schema Migration Parity, Rainbow Notification Contract, and production-image build all completed successfully. Rainbow PR silasfelinus/rainbowbutterflies#32 is exact-head green for CI, Auth Session, Notification Settings Contract, and the production-container PR build. Canonical preferences are false-by-default; delivery planning requires a verified account email and returns only a provider-neutral EMAIL target. No Brevo call, secret, contact sync, or email send exists in this task. Rainbow #32 remains unmerged only because main publication is the outward-facing human gate; t-049 remains the separate Brevo gate.
+
+    The notification-preference slice is now fully merged. Kind Robots PR #2322 landed as bc93a82832cb4846aee83ea5ba447f86d3370960 with canonical false-by-default preferences and the provider-neutral verified-email delivery planner. After Silas explicitly cleared continued publication, Rainbow Butterflies PR #32 landed as 92a1fc46c1589d49a22b8807074de993d5d980f6 with the opt-in settings UI and BFF. Both exact heads were green before merge. No Brevo call, provider secret, contact sync, or email send was introduced; real transport activation remains t-049.
   claimed_by: openai-rb-t048-20260902T075700Z-r4n6
   claimed_at: '2026-09-02 07:57:00+00:00'
-  updated: '2026-09-02 08:15:00+00:00'
+  updated: '2026-09-02T08:19:31Z'
 
 - id: t-049
   milestone: m2
@@ -1198,8 +1200,7 @@ tasks:
 - id: t-050
   milestone: m2
   title: "Publish provider-specific setup tutorials for recurring Rainbow agents"
-  status: review
-  owner: worker
+  status: done
   passes: 0
   stakes: reversible
   note: |-
@@ -1208,6 +1209,8 @@ tasks:
     Claim PRODUCT-V2 priority 10 while t-048 companion PR checks run. Build Rainbow-native setup tutorials for ChatGPT, Claude, Gemini, and Grok using current authoritative provider documentation. Each tutorial must end in the scoped AgentProfile recurring check-in path, distinguish real provider scheduling/automation features from manual fallbacks, and use placeholders only for agent credentials. No provider account creation, secret installation, or outward posting is authorized by this task.
 
     Rainbow PR silasfelinus/rainbowbutterflies#33 is implementation-complete and exact-head green. CI, Provider Guides Contract, Connect Agent, Auth Session, AgentProfile, Agent Activity, Agent Attention, and production-container PR build all completed successfully. The guide was verified against current official OpenAI, Anthropic, Google, and xAI docs on 2026-09-02 and distinguishes verified scheduling from secret-safe unattended delivery. All examples use only $KIND_ROBOTS_AGENT_KEY. No provider account, credential, integration, or outward action was created. Rainbow #33 remains unmerged only at the public main gate.
+
+    Silas explicitly cleared continued publication, and Rainbow Butterflies PR #33 merged to main as c4029a91416ec530129cfeb4394c81926ab18e69. The exact head was green for CI, Provider Guides Contract, Connect Agent, Auth Session, AgentProfile, Agent Activity, Agent Attention, and production-container build. The guide remains explicit about which provider schedulers can safely perform unattended authenticated check-ins and which require a narrow helper or bridge; no provider account, credential, integration, or external post was created.
   claimed_by: openai-rb-t050-20260902T080601Z-v6c2
   claimed_at: '2026-09-02 08:06:01+00:00'
-  updated: '2026-09-02 08:18:00+00:00'
+  updated: '2026-09-02T08:19:32Z'
