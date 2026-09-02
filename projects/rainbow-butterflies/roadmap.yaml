@@ -183,6 +183,7 @@ tasks:
     Merged silasfelinus/rainbowbutterflies#10 as 9db47a10df9fa30605d8429cfe5656164ca36f2a after fixing Nuxt 4 server/root alias resolution with explicit relative imports. Final PR-head checks were green: CI run 33298921865, Rainbow Auth Session Contract run 33298921868, and Publish Production Container PR build run 33298921906. Post-merge main verification was also green: CI run 33299012344, Rainbow Auth Session Contract run 33299012325, and production container publish run 33299012338, including successful GHCR login and Build and publish. The implementation branch was automatically deleted. Silas explicitly authorized this production-image publication in the 2026-08-30 ChatGPT session.
   claimed_by: 2026-08-30T055000Z-rainbow-butterflies-t-018-bff1
   claimed_at: '2026-08-30T05:50:00Z'
+  updated: '2026-08-30 07:24:00+00:00'
 
 - id: t-019
   milestone: m2
@@ -257,7 +258,7 @@ tasks:
     Add a stable OpenAPI contract for the implemented v1 forum/agent endpoints and a Rainbow /.well-known/rainbow-butterflies.json discovery document advertising project mission, human homepage, Kind Robots API base, docs, auth/key-management path, forum discovery, rate-limit/ethics policy links, fundraiser, and supported adapters. Add schema/fixture tests so docs cannot silently drift from routes. Direct REST/OpenAPI is the baseline; do not add federation/protocol complexity merely for novelty.
 
 
-    Claiming the machine-readable discovery and OpenAPI slice now that t-021 is canonically done. I will document only implemented v1 forum/agent surfaces, add drift-resistant contract tests, publish the Rainbow .well-known discovery document without adding federation complexity, and keep secrets, DNS, external accounts, and public routing outside this reversible implementation pass.
+    Claiming the machine-readable discovery and OpenAPI slice after t-021 is canonically done. I will document only implemented v1 forum/agent surfaces, add drift-resistant contract tests, publish the Rainbow .well-known discovery document without adding federation complexity, and keep secrets, DNS, external accounts, and public routing outside this reversible implementation pass.
 
     Recovered the closeout after the previous session exhausted its thread. Companion implementations are already merged: kind_robots#2223 as 609f769982f3eabedf0b434a3a22f17b636de04a and rainbowbutterflies#13 as 2baee992abf4ae60cfbb430573a63a5c6f6e8a36. Rainbow PR-head CI, Agent Discovery Contract, and production-container build all completed successfully. Kind Robots PR-head Forum API Contract, TypeScript, Contract Tests, and Layout Contract completed successfully. An unrelated Comment Migration Contract failed on stale production-comment Character references; #2223 did not touch those fixtures or that verifier. No DNS, secrets, account creation, credentials, or public-routing configuration changed.
   claimed_by: 2026-08-30T092300Z-rainbow-butterflies-t-022-a7f3
@@ -428,7 +429,7 @@ tasks:
     Label drafts/synthetic examples clearly. Use real sourced health claims only from the
     approved ethics/source standard.
 
-    Produced projects/rainbow-butterflies/FORUM-LAUNCH-PREP.md: board descriptions for all 6
+    Produced as `projects/rainbow-butterflies/FORUM-LAUNCH-PREP.md`: board descriptions for all 6
     COMMONS-SPEC.md MVP boards (introductions, news, humanitarian-goals, creativity, memes,
     just-because) plus per-board posting-guidance one-liners; a pinned-post draft plus a
     per-post authorship-badge quick reference applying ETHICS.md/AMI-IDENTITY.md's disclosure
