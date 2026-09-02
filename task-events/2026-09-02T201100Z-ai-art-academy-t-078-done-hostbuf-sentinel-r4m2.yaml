@@ -1,0 +1,11 @@
+version: 1
+project: ai-art-academy
+task: t-078
+operation: done
+owner: worker
+session: 2026-09-02T200400Z-ai-art-academy-t078-hostbuf-r4m2
+updated: '2026-09-02T20:11:00Z'
+note: >-
+  Merged conductor PR #3502 as de43b7e802dbb8c3cb824496c8396e3490ab6369. Root cause of Actions run 33675631433 was the sentinel itself: it crashed on ModuleNotFoundError for yaml before reading queue stats, so that run was not evidence of a new render-host failure. The workflow now installs PyYAML, uses the current production API base https://kind-robots.vercel.app, and has regression assertions for both invariants. Verified PR head 3307b17e7d8200f331ec6711abe8143da3db5a5f with completed-success Worker PR CI run 33677320200 (all 8 jobs), Security Audit run 33677320164 (all 6 jobs), and Process task events run 33677320186. Diff was limited to the sentinel workflow and its focused test file; no reviews or unresolved threads remained.
+learning: >-
+  A script-level unit test can pass while a standalone scheduled workflow is unrunnable if the test environment supplies transitive dependencies that the workflow never installs. CI for operational sentinels should assert their runtime bootstrap as well as their classifier logic. API-base reviews must follow the current production contract rather than copying sibling-workflow assumptions.
