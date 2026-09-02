@@ -5494,5 +5494,39 @@ tasks:
   claimed_by: claude-scheduled-20260902T0730Z-conductor-t143
   claimed_at: '2026-09-02T07:30:00Z'
   updated: '2026-09-02T07:30:00Z'
+
+- id: t-145
+  milestone: m2
+  title: "Guard against a single commit deleting a large fraction of a growing conductor file (art-prompts.yaml, a roadmap.yaml)"
+  status: ready
+  gate_human: false
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Kaizen from t-143's TALKBACK entry (root TALKBACK.md, 2026-09-02, "art-job requeue audit"):
+    conductor 0e671cd deleted 11,014 lines of projects/art-prompts.yaml (577 Mandarin request
+    rows + three in-flight missing-image requests) in one automated write, and nothing in this
+    repo caught it -- no check, alert, or digest line flagged an 11,000-line deletion of a queue
+    file. It was found only by chance while reading git log for something else. t-143's own fix
+    (kind_robots#2320) addresses the write-side root cause (the >1MB Contents-API blind-decode
+    bug) with an append-only invariant on that one call site, but there is no standing guard on
+    the conductor side for the general shape: any large deletion in a file that only ever grows
+    (art-prompts.yaml, or a project roadmap.yaml).
+
+    Fix: add a CI check (a new script, or a step in an existing workflow like "Validate roadmap
+    YAML") that runs on every PR touching projects/art-prompts.yaml or any projects/*/roadmap.yaml,
+    diffs the PR's base and head versions of each such file, and flags (soft warning, not a hard
+    failure -- a deliberate large prune is possible, e.g. an archival pass) when a single commit
+    or PR removes more than some threshold (e.g. 20%, or an absolute line count like 500 lines)
+    of a file that is expected to be append-mostly. Cross-reference validate_roadmaps.py's
+    existing task-by-task parsing (already used by t-141's planned id-reuse check -- these two
+    could plausibly share a "diff base vs head roadmap.yaml" helper) rather than writing a second
+    independent diffing path. Add regression coverage modeling the exact t-143 shape: a base
+    version with N request/task entries, a head version with N minus a large fraction, no
+    corresponding archival/cleanup marker.
+  claimed_by: null
+  claimed_at: null
+  updated: '2026-09-02T09:00:00Z'
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
