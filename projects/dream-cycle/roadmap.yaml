@@ -656,11 +656,11 @@ tasks:
   title: >-
     Flag a prose-repair bundle that fails authoring N runs in a row instead of
     retrying it forever
-  status: ready
-  owner:
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-09-01T00:00:00Z'
+  updated: '2026-09-02T20:48:54Z'
   note: >
     Kaizen from PR #3390 (conductor sweep, 2026-09-01): daily-dream-prose-repair.yml
     was discarding an entire batch (13+ good repairs) whenever a single bundle came
@@ -677,6 +677,8 @@ tasks:
     runs), stop auto-retrying and surface it explicitly (a needs-human note, or at
     minimum a distinct stderr/receipt marker a human sweep would notice) rather than
     let it recur unnoticed indefinitely.
+  claimed_by: claude-scheduled-20260902T204853Z-dream-cycle-t025
+  claimed_at: '2026-09-02T20:48:54Z'
 - id: t-026
   milestone: m5
   title: Character Facets were never applied - digest reported complete over an empty record
