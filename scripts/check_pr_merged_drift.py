@@ -228,6 +228,39 @@ def find_pr_refs(text: str) -> list[tuple[str, int]]:
     return seen
 
 
+# Matches a bare "owner/repo#123" mention anywhere in free text — the shape
+# close_task.py's implementation_pr field itself uses, and how a task's note
+# often cites a follow-up PR once it's been reclaimed and progressed a second
+# time (conductor/t-139). Deliberately not restricted to REPO_ALIASES, same
+# reasoning as IMPLEMENTATION_PR_RE above, but unanchored so it can match a
+# reference embedded anywhere inside a longer note sentence.
+BARE_PR_REF_RE = re.compile(r"\b([A-Za-z0-9][\w.-]*/[A-Za-z0-9][\w.-]*)#(\d+)\b")
+
+
+def find_all_pr_refs(text: str) -> list[tuple[str, int]]:
+    """Return every distinct PR reference in text, combining the alias-based
+    "<alias> PR #<n>" phrasing (find_pr_refs) with a bare "<owner>/<repo>#<n>"
+    mention (BARE_PR_REF_RE). Order is first-seen in the text.
+
+    conductor/t-139: an already-confirmed `implementation_pr` field is
+    currently treated as the final word on a task — but the task can be
+    reclaimed and progressed via a SECOND PR after that field was recorded,
+    leaving the field silently stale with no further check ever looking past
+    it. This combined extraction is what lets check_drift's field-staleness
+    pass (below) notice a later, title-confirmed merged PR the note mentions
+    that the recorded field does not match — see resolve_field_staleness.
+    """
+    seen: list[tuple[str, int]] = []
+    for pair in find_pr_refs(text):
+        if pair not in seen:
+            seen.append(pair)
+    for repo, number in BARE_PR_REF_RE.findall(text or ""):
+        pair = (repo, int(number))
+        if pair not in seen:
+            seen.append(pair)
+    return seen
+
+
 def _iter_in_progress_tasks(
     projects_dir: Path,
     overrides_path: Path | None,
@@ -303,6 +336,7 @@ def scan_in_progress_tasks(
             "status": task.get("status"),
             "implementation_pr": task.get("implementation_pr"),
             "remaining_scope_task": task.get("remaining_scope_task"),
+            "note": task.get("note") or "",
         })
     return tasks
 
@@ -411,6 +445,45 @@ def check(
     return findings, unresolved
 
 
+def find_field_stale_findings(
+    field_findings: list[dict[str, Any]], token: str | None
+) -> list[dict[str, Any]]:
+    """For each task already confirmed merged via its `implementation_pr`
+    field (an entry of `field_findings`), look for a DIFFERENT PR referenced
+    in the task's own title/note that is both merged and title-confirmed as
+    implementing this same "<project>/<task-id>" — evidence the recorded
+    field is stale (conductor/t-139; see check_drift's Pass 0b comment for
+    the full incident this models). Returns one finding per confirmed
+    supersession, each carrying `recorded_implementation_pr` alongside the
+    usual repo/pr_number/pr_title/pr_merged_at of the newer PR.
+    """
+    stale: list[dict[str, Any]] = []
+    for finding in field_findings:
+        field_ref = (finding["repo"], finding["pr_number"])
+        phrase = f"{finding.get('project', '')}/{finding.get('task_id', '')}".lower()
+        text = f"{finding.get('title', '')}\n{finding.get('note', '')}"
+        for repo, number in find_all_pr_refs(text):
+            if (repo, number) == field_ref:
+                continue
+            pr = gh_pr(repo, number, token)
+            if not pr or not (pr.get("merged") or pr.get("merged_at")):
+                continue
+            title = str(pr.get("title") or "")
+            if phrase not in title.lower():
+                continue
+            stale.append({
+                **finding,
+                "recorded_implementation_pr": f"{finding['repo']}#{finding['pr_number']}",
+                "repo": repo,
+                "pr_number": number,
+                "pr_merged_at": pr.get("merged_at"),
+                "pr_title": title,
+                "confidence": "high",
+                "source": "note-reference-supersedes-field",
+            })
+    return stale
+
+
 def check_drift(
     projects_dir: Path = PROJECTS,
     overrides_path: Path | None = None,
@@ -436,6 +509,13 @@ def check_drift(
       pass above, so it stays reliable even when those 403 in a sandbox.
       Reported alongside whatever the network passes found for the same
       task, not instead of it.
+    `field_possibly_stale` — a task whose `implementation_pr` field pass 0
+      already confirmed merged, but whose own title/note also names a
+      DIFFERENT, title-confirmed, merged PR (conductor/t-139) — the field was
+      likely left stale by a later reclaim-and-reprogress cycle. Reported
+      alongside `high` (its findings are NOT included in `high` itself, to
+      keep that list's one-finding-per-task shape from pass 0/1 unchanged)
+      but treated the same for the exit-code contract below.
     """
     all_tasks = scan_in_progress_tasks(projects_dir, overrides_path, include_inactive)
     note_candidates = scan(projects_dir, overrides_path, include_inactive)
@@ -494,6 +574,25 @@ def check_drift(
 
     confirmed_keys = {(f["project"], f["task_id"]) for f in field_findings}
 
+    # Pass 0b (conductor/t-139): a field confirmed merged by pass 0 above is
+    # currently the end of the story for that task -- but the task can be
+    # reclaimed and progressed via a SECOND PR after the field was recorded,
+    # leaving it silently stale (the real incident: interface-vision/t-104
+    # was closed with implementation_pr=kind_robots#2301, but a later cycle
+    # had already merged kind_robots#2303 for the same task first). Scan each
+    # field-confirmed task's own title+note for any OTHER PR reference whose
+    # title also names this exact "<project>/<task-id>" (same title-match bar
+    # as the authoritative search pass, so a note that merely quotes the PR
+    # whose kaizen suggestion FILED the task doesn't false-positive here) and
+    # which is itself merged. Deliberately scoped to field_findings only --
+    # never field_unresolved or malformed_field_tasks -- so this can never add
+    # an extra API call for the cases pinned as "must not call the API
+    # further" by tests/test_check_pr_merged_drift.py; and best-effort: a
+    # failed lookup on an extra reference is silently skipped rather than
+    # added to `unresolved`, since the field pass has already fully resolved
+    # the task's own status either way.
+    field_possibly_stale = find_field_stale_findings(field_findings, token)
+
     # Pass 1 (authoritative title search): only for tasks with no usable
     # implementation_pr field.
     search_candidates = []
@@ -549,6 +648,7 @@ def check_drift(
         "weak": weak_findings,
         "unresolved": unresolved,
         "remaining_scope_resolved": remaining_scope_resolved,
+        "field_possibly_stale": field_possibly_stale,
     }
 
 
@@ -558,10 +658,27 @@ def render(
     total: int,
     weak: list[dict[str, Any]] | None = None,
     remaining_scope_resolved: list[dict[str, Any]] | None = None,
+    field_possibly_stale: list[dict[str, Any]] | None = None,
 ) -> str:
     weak = weak or []
     remaining_scope_resolved = remaining_scope_resolved or []
+    field_possibly_stale = field_possibly_stale or []
     lines = []
+    if field_possibly_stale:
+        lines.append(
+            f"{len(field_possibly_stale)} task(s)' implementation_pr field looks STALE "
+            "(conductor/t-139): the recorded field is confirmed merged, but the task's own "
+            "title/note also names a different, later, title-confirmed merged PR the field "
+            "doesn't reflect -- likely reclaimed and reprogressed after the field was set:\n"
+        )
+        for finding in field_possibly_stale:
+            lines.append(
+                f"  {finding['project']}/{finding['task_id']} (status: {finding['status']}) — "
+                f"implementation_pr says {finding['recorded_implementation_pr']}, but "
+                f"{finding['repo']}#{finding['pr_number']} \"{finding['pr_title']}\" "
+                f"merged {finding['pr_merged_at']} and also names this task"
+            )
+        lines.append("")
     if remaining_scope_resolved:
         lines.append(
             f"{len(remaining_scope_resolved)} task(s) at claimed/review point to a "
@@ -623,12 +740,25 @@ def render(
                 f"merged {finding['pr_merged_at']}"
             )
         lines.append("")
-    if not findings and not weak and not unresolved and not remaining_scope_resolved:
+    if (
+        not findings
+        and not weak
+        and not unresolved
+        and not remaining_scope_resolved
+        and not field_possibly_stale
+    ):
         lines.append(
             f"No drift found — all {total} active-project claimed/review task(s) "
             "verified clean (no task-id-named or note-quoted merged PR found)."
         )
-    elif not findings and not weak and not remaining_scope_resolved and unresolved and len(unresolved) < total:
+    elif (
+        not findings
+        and not weak
+        and not remaining_scope_resolved
+        and not field_possibly_stale
+        and unresolved
+        and len(unresolved) < total
+    ):
         lines.append(
             f"No drift found among the {total - len(unresolved)} task(s) successfully verified."
         )
@@ -654,21 +784,35 @@ def main() -> None:
     result = check_drift(include_inactive=args.include_inactive, token=token)
     high, weak, unresolved = result["high"], result["weak"], result["unresolved"]
     remaining_scope_resolved = result["remaining_scope_resolved"]
+    field_possibly_stale = result["field_possibly_stale"]
     total = len(scan_in_progress_tasks(include_inactive=args.include_inactive))
 
     if args.json:
         print(json.dumps(result, indent=2))
     else:
-        print(render(high, unresolved, total, weak=weak, remaining_scope_resolved=remaining_scope_resolved))
+        print(
+            render(
+                high,
+                unresolved,
+                total,
+                weak=weak,
+                remaining_scope_resolved=remaining_scope_resolved,
+                field_possibly_stale=field_possibly_stale,
+            )
+        )
 
     # Exit codes: 0 = verified clean, 1 = high-confidence drift found,
     # 2 = could not fully verify, 3 = only weak/unconfirmed signals found.
     # remaining_scope_resolved (conductor/t-108) is roadmap-file evidence a
     # task is likely ready to close, actionable the same as a high-confidence
     # network finding, so it shares exit code 1 rather than a new tier.
-    # Distinguishing these prevents an unverified or merely-weak run from
-    # reading as either "clean" or "confirmed drift".
-    if high or remaining_scope_resolved:
+    # field_possibly_stale (conductor/t-139) is the same tier again: a
+    # confirmed-merged implementation_pr field whose own task text also names
+    # a different, later, title-confirmed merged PR is drift worth acting on,
+    # not a bare weak signal. Distinguishing all of these prevents an
+    # unverified or merely-weak run from reading as either "clean" or
+    # "confirmed drift".
+    if high or remaining_scope_resolved or field_possibly_stale:
         sys.exit(1)
     if unresolved:
         sys.exit(2)
