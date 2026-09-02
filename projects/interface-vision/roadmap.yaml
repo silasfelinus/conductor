@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3319,7 +3319,13 @@ tasks:
     files landed on kind_robots main since the last full sweep (git log --diff-filter=A
     since 2026-09-01: none). No genuine new candidate found -- re-arming to ready for the
     next slice.
-  updated: '2026-09-02T16:14:22Z'
+
+    RECONCILED (scheduled conductor sweep, 2026-09-02T18:28Z): claim by openai-
+    scheduled-20260902T161422Z-interface-vision-t104-x7p4 was past CLAIM_TTL_MINUTES (90m)
+    with no live PR open -- slice 37 (kind_robots#2334) confirmed merged via direct GitHub
+    MCP lookup, and slice 38 was already recorded above as a completed no-op search. Re-
+    arming to ready for the next slice.
+  updated: '2026-09-02T18:29:28Z'
   implementation_pr: 'silasfelinus/kind_robots#2334'
   owner: worker
   claimed_by: openai-scheduled-20260902T161422Z-interface-vision-t104-x7p4
