@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-02T08:32:48Z
+Generated: 2026-09-02T08:38:26Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **856**
-- Outcomes: blocked: 16, cancelled: 1, done: 839
+- Closed tasks recorded: **857**
+- Outcomes: blocked: 16, cancelled: 1, done: 840
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -26,7 +26,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 25 | 100% |
-| conductor | 88 | 100% |
+| conductor | 89 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 41 | 98% |
 | davinci | 8 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 840 | 99% |
+| software | 841 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-02 `conductor/t-143` — GitHub's Contents API silently returns encoding:none/content:'' for files over 1MB, so any read-modify-write into a growing conductor file (art-prompts.yaml, TALKBACK.md, LEARNING.yaml) must fall back to the Git Blobs API and throw rather than treat a bodiless-but-nonempty read as an empty file -- kind_robots#2320 fixed both the queue write path and conductorGet() with this pattern plus an append-only invariant check.
 - 2026-09-02 `ai-art-academy/t-078` — A workflow's KR_BASE_URL must be verified against the current self-hosted host (kindrobots.org), not copied from an older *.vercel.app pattern -- a wrong default would have made the new sentinel look deployed while silently never reaching its signature check. Caught in review before merge, fixed in one retry.
 - 2026-09-02 `conductor/t-142` — Ephemeral request rows cannot be the only deduplication source; producers must consult final artifact truth, and ambiguous origin probes should fail closed rather than create costly duplicate work.
 - 2026-09-02 `ai-art-academy/t-077` — A gate-release answer from Silas via the Kind Robots "For You" mechanism unblocks the next agent to go verify -- it is not itself the verification. This task's note text ("temp outage, should be fixed") could have been closed on directly, but live GET /api/art/queue/stats and the character/bot API showed something the note didn't: the retry it asked for had already succeeded days earlier (portraits rendered 2026-08-28), and the failure signature it was filed over was itself a third recurrence of the same disk13-adjacent hardware fault (t-067/t-068 original, this task's own filing was recurrence #2, a third burst on 2026-09-01 caught only by this session's verification read). Filed ai-art-academy/t-078 as the standing fix: no check currently flags this specific recurring signature, so each occurrence has only ever been caught by an agent happening to read the stats endpoint while doing something else.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-01 `interface-vision/t-104` — A recurring task's note: field narrated a merge and a "re-arming to ready" no-op cycle that its status: field never actually recorded -- the narrative outran the machine-readable state by at least one cycle before check_pr_merged_drift.py's merged-implementation_pr-vs-claimed-status check caught it. A cycle that intends to re-arm a recurring task should verify the status: field actually changed, not just that the note says it did.
 - 2026-09-01 `model-builder/t-029` — Cycle 76: a prior cycle's own regression fix (cycle 75's runId-based release guard) had a same-run-revisit gap -- a captured run id is not a one-shot token when the store caches and reuses run objects (openRun's cached-adopt branch, resumeRun's revisit branch), so re-checking a fix's *invariant* against the actual data model (can this id compare equal again after the abandon event?) rather than trusting the fix's own stated shape is what surfaced this. Fixed with a monotonic epoch counter instead of strengthening the id check further. Also had to broaden two existing guards' regexes (not just add a new one) since the fixed condition's shape legitimately changed -- worth checking whether a new guard should tighten or loosen a prior one when a fix's shape evolves, rather than always adding purely-additive checks.
 - 2026-09-01 `rainbow-butterflies/t-037` — Straightforward kaizen-slice implementation (own PR, own review/merge under the standing merge-when-green authorization): reusing t-036's authAttemptLimit helper in login.post.ts surfaced a real, separate bug worth fixing in the same PR rather than filing separately -- the handler's catch block flattened every thrown error, including the helper's own 429, into a generic 500 via `sendError(event, new Error(message))`. A quick grep confirmed this exact "no isError() check before sendError" pattern doesn't recur elsewhere in server/api, so no follow-up kaizen task was warranted for it.
-- 2026-09-01 `rainbow-butterflies/t-036` — Reviewed kind_robots#2297's rate-limit slice; its one CI failure was a real but narrow type error, not a scope/quality problem: h3 1.15.11 types the Retry-After response header as number, and the new helper passed String(...). Fixing and pushing a 2-line diff directly to the Worker's PR branch (rather than bouncing it back to the Worker with retry_context) got it green in one cycle. Also worth flagging: the PR auto-merged on its own once the known-flaky 'Contract verifiers'/ESLint-ratchet check (conductor/t-132) finally completed, without this session calling merge_pull_request -- consistent with the PR's opener having enabled auto-merge, and a reminder to re-check PR state (not just CI) before assuming a merge still needs to be triggered manually.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-02T08:32:48Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-02T08:38:26Z_
