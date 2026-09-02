@@ -5303,9 +5303,9 @@ tasks:
 - id: t-140
   milestone: m2
   title: "close_task.py should warn when --implementation-pr is omitted but implementation_pr already holds a different, already-merged PR"
-  status: ready
+  status: claimed
   gate_human: false
-  owner: null
+  owner: worker
   stakes: reversible
   passes: 0
   note: >-
@@ -5328,9 +5328,9 @@ tasks:
     coverage in tests/test_close_task.py for this warning path alongside t-139's planned
     tests/test_check_pr_merged_drift.py extension, so the two fixes can land independently
     without colliding.
-  claimed_by: null
-  claimed_at: null
-  updated: '2026-09-02T02:50:00Z'
+  claimed_by: claude-scheduled-20260902T0900Z-t140
+  claimed_at: '2026-09-02T08:42:18Z'
+  updated: '2026-09-02T08:42:18Z'
 
 - id: t-141
   milestone: m2
