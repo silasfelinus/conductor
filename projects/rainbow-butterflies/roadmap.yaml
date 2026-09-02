@@ -1164,7 +1164,7 @@ tasks:
 - id: t-048
   milestone: m2
   title: "Add website notification preferences and a provider-neutral delivery seam"
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -1172,9 +1172,11 @@ tasks:
     PRODUCT-V2 priority 9, reversible half. Add explicit opt-in website preferences for the small notification classes Rainbow actually needs (agent asks for help/approval, direct replies/mentions, and scheduled-agent failures), with conservative defaults and canonical ownership. Build the server-side delivery seam so Brevo can be one transport later, but do not require or install a production Brevo secret, send real email, create an account, or silently subscribe existing users in this task.
 
     Claim PRODUCT-V2 priority 9 while t-047 exact-head checks run. Implement the reversible notification-preference half only: canonical Kind Robots website state, conservative opt-in defaults for agent-attention, direct-reply-or-mention, and scheduled-agent-failure classes, plus a provider-neutral delivery decision seam and Rainbow settings UI/BFF. Do not send email, call Brevo, add a production secret, create an account, or silently subscribe existing users; Brevo activation remains t-049's separate human gate.
+
+    The t-048 companion implementation is complete. Kind Robots PR silasfelinus/kind_robots#2322 merged after exact-head TypeScript, full Contract Tests, Schema Migration Parity, Rainbow Notification Contract, and production-image build all completed successfully. Rainbow PR silasfelinus/rainbowbutterflies#32 is exact-head green for CI, Auth Session, Notification Settings Contract, and the production-container PR build. Canonical preferences are false-by-default; delivery planning requires a verified account email and returns only a provider-neutral EMAIL target. No Brevo call, secret, contact sync, or email send exists in this task. Rainbow #32 remains unmerged only because main publication is the outward-facing human gate; t-049 remains the separate Brevo gate.
   claimed_by: openai-rb-t048-20260902T075700Z-r4n6
   claimed_at: '2026-09-02 07:57:00+00:00'
-  updated: '2026-09-02 07:57:00+00:00'
+  updated: '2026-09-02 08:15:00+00:00'
 
 - id: t-049
   milestone: m2
@@ -1196,7 +1198,7 @@ tasks:
 - id: t-050
   milestone: m2
   title: "Publish provider-specific setup tutorials for recurring Rainbow agents"
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -1204,6 +1206,8 @@ tasks:
     PRODUCT-V2 priority 10. Write Rainbow-native setup tutorials for ChatGPT, Claude, Gemini, and Grok that end with a recurring check-in workflow against the scoped AgentProfile credential. Re-verify each provider's current public interface and scheduling/automation capabilities from authoritative docs at implementation time; clearly distinguish a provider feature that exists from a suggested manual fallback. Never put a real agent key into screenshots, prompts committed to git, analytics, or example URLs.
 
     Claim PRODUCT-V2 priority 10 while t-048 companion PR checks run. Build Rainbow-native setup tutorials for ChatGPT, Claude, Gemini, and Grok using current authoritative provider documentation. Each tutorial must end in the scoped AgentProfile recurring check-in path, distinguish real provider scheduling/automation features from manual fallbacks, and use placeholders only for agent credentials. No provider account creation, secret installation, or outward posting is authorized by this task.
+
+    Rainbow PR silasfelinus/rainbowbutterflies#33 is implementation-complete and exact-head green. CI, Provider Guides Contract, Connect Agent, Auth Session, AgentProfile, Agent Activity, Agent Attention, and production-container PR build all completed successfully. The guide was verified against current official OpenAI, Anthropic, Google, and xAI docs on 2026-09-02 and distinguishes verified scheduling from secret-safe unattended delivery. All examples use only $KIND_ROBOTS_AGENT_KEY. No provider account, credential, integration, or outward action was created. Rainbow #33 remains unmerged only at the public main gate.
   claimed_by: openai-rb-t050-20260902T080601Z-v6c2
   claimed_at: '2026-09-02 08:06:01+00:00'
-  updated: '2026-09-02 08:06:01+00:00'
+  updated: '2026-09-02 08:18:00+00:00'
