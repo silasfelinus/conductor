@@ -1,0 +1,9 @@
+version: 1
+project: ai-art-academy
+task: t-078
+operation: review
+owner: worker
+session: 2026-09-02T200400Z-ai-art-academy-t078-hostbuf-r4m2
+updated: '2026-09-02T20:06:00Z'
+note: >-
+  Repaired the hostbuf sentinel workflow on worker/ai-art-academy-t078-hostbuf-sentinel-r4m2: install PyYAML before importing consume_art_queue_core.py, point the authenticated queue-stats read at https://kind-robots.vercel.app, and add regression assertions for both workflow invariants.
