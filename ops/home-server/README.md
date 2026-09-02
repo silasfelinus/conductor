@@ -593,6 +593,94 @@ python scripts/drain_failed_art_backlog.py --live
 It renders a canary batch first and refuses to drain if the host is still
 broken, so it is safe to run before you are sure the mount is fixed.
 
+### Triage: the ComfyUI console keeps reappearing, and art jobs fail (2026-09-02 incident)
+
+**Symptom.** A `comfy-fast` console window recycles on the desktop every ~30
+seconds, and the art queue drains into FAILED while the model share is
+perfectly healthy. `pm2 logs comfyui` shows a full, normal-looking startup —
+GPU detected, custom nodes loading, model paths added — that simply *ends*, and
+then begins again.
+
+**Cause.** A Python `UnicodeEncodeError` on a log line, taking the whole
+interpreter with it:
+
+```
+UnicodeEncodeError: 'charmap' codec can't encode character '\u26a1'
+  File "D:\comfy\comfy-fast\custom_nodes\comfyui-mnemic-nodes\__init__.py", line 102
+  File "D:\comfy\comfy-fast\main.py", line 571, in <module>
+```
+
+Windows takes stdout's encoding from the locale codepage (cp1252) whenever
+stdout is a pipe, and under pm2 it always is. A custom node printed a `⚡` from
+its `__init__` and that raised. `load_custom_node()` *does* catch a failing
+import — but it reports it with `logging.warning(traceback.format_exc())`, and
+the traceback it formats contains the same un-encodable character, so the
+handler raised too. That second raise escaped `init_extra_nodes()` and killed
+`main.py` **before the Prompt Server ever bound 8188**. pm2 restarted it, and
+around it went.
+
+Two things make this nastier than it looks:
+
+- The engine never binds its port, so the relay's claims have nowhere to land.
+  Each one waits out `COMFY_RECOVERY_SECONDS` at `POST /prompt` and burns an
+  attempt. Nothing is wrong with the queue or the share.
+- Each crash comes ~26s in, which is under the comfyui app's `min_uptime`
+  (30s), so pm2 scores every restart as unstable. At `max_restarts` (50) it
+  stops trying and parks the app in `errored` — the recycling console you were
+  using to notice the problem disappears, and the box goes quiet rather than
+  green.
+
+**Fix (already in `ecosystem.config.js`).** The comfyui app now sets
+`PYTHONIOENCODING: 'utf-8'`, which kr-relay and kr-download have carried since
+2026-08-13. ComfyUI needed it most and had it least: it is the process that
+loads ~60 third-party custom nodes whose banner text nobody here controls.
+Pull the checkout and reload:
+
+```powershell
+cd D:\code\Conductor
+git pull
+pm2 restart ecosystem.config.js --only comfyui --update-env
+pm2 save
+```
+
+`pm2 restart comfyui` alone does **not** pick up a changed `env` block — a
+bare app name reuses the environment the process was started with. Pass the
+ecosystem file *and* `--update-env`. If you want to be certain (and a few
+seconds of downtime is fine, which it is here):
+
+```powershell
+pm2 delete comfyui
+pm2 start ecosystem.config.js --only comfyui
+pm2 save
+```
+
+Confirm it took:
+
+```powershell
+pm2 status comfyui                 # restart count should stop climbing
+curl http://127.0.0.1:8188/system_stats
+```
+
+If a custom node later dies on a *file* read rather than a print, add
+`PYTHONUTF8: '1'` to the same block — that also switches `open()`'s default
+encoding, so it is the bigger hammer; `PYTHONIOENCODING` alone only covers
+stdout/stderr.
+
+**Guard.** kr-relay now runs an **engine gate** alongside the share gate: it
+probes `/system_stats` (cached `KR_ENGINE_PROBE_SECONDS`, default 15s) and will
+not claim a job while ComfyUI is not answering. Jobs stay PENDING through an
+engine outage instead of burning their attempts against a port nothing is
+listening on, and the block is logged once per transition rather than once per
+poll. The relay had in fact been posting `COMFY ok:false` on every heartbeat
+throughout this outage — it simply never consulted its own signal before
+claiming. Set `KR_ENGINE_GATE=0` to restore the old always-claim behaviour.
+
+**Then requeue the backlog**, exactly as for a share outage:
+
+```
+python scripts/drain_failed_art_backlog.py --live
+```
+
 ## Reboot-readiness check (`preflight.ps1`)
 
 ```powershell
