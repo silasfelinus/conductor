@@ -5331,5 +5331,43 @@ tasks:
   claimed_by: null
   claimed_at: null
   updated: '2026-09-02T02:50:00Z'
+
+- id: t-141
+  milestone: m2
+  title: "Detect a PR that silently deletes a roadmap task's body and reuses its id for an unrelated task"
+  status: ready
+  gate_human: false
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Kaizen from this session's conductor#3431 review (2026-09-02). A PR ("Repair every
+    daily-dream record missing Facets") deleted the entire completed kind-robots/t-091
+    task record (the Component-model investigation: full note, claimed_by, claimed_at)
+    and re-parented an unrelated task (the Facets backfill, correctly t-092) onto the
+    freed id t-091 -- milestone m1 -> m6, title and note both replaced wholesale. This is
+    the exact same id-collision class conductor#3426 had already fixed earlier the same
+    day (see root TALKBACK.md, "conductor #3426/#3427/#3428" entry): the PR's branch was
+    evidently cut from a pre-#3426 checkout, so its author's local roadmap still had the
+    Facets task at t-091 and the diff carried that stale id straight through. Caught only
+    by a human-attention-level review reading the actual diff line-by-line, not by CI --
+    `validate_roadmaps.py` doesn't catch it because the resulting file has no duplicate
+    ids, just a task whose content silently changed ownership.
+
+    validate_roadmaps.py already parses every roadmap.yaml task-by-task; it's positioned
+    to add a companion PR-time check (or a step in the "Validate roadmap YAML" workflow)
+    that, for any task id present in both a PR's base and head versions of a roadmap.yaml,
+    flags it when BOTH `milestone` and `title` differ from the base version -- a strong
+    signal the id was reused for a different task rather than legitimately edited (a real
+    edit rarely changes both at once, and when it does, that's still worth a human
+    glance). Exit 1 (soft warning in the check's own PR comment or job output), not a hard
+    CI failure, since a deliberate milestone-plus-title rewrite of the same task is
+    possible even if rare -- the point is surfacing it for reviewer attention before
+    merge, the way this session had to do by hand. Add regression coverage under
+    tests/test_validate_roadmaps.py (or a new tests/test_roadmap_id_reuse.py) covering
+    the exact shape here: an id whose title+milestone both change between base and head.
+  claimed_by: null
+  claimed_at: null
+  updated: '2026-09-02T03:45:00Z'
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
