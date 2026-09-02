@@ -1826,5 +1826,46 @@ tasks:
   claimed_at: '2026-08-23T01:45:46Z'
   updated: '2026-08-23T01:45:46Z'
 
+- id: t-070
+  milestone: m5
+  title: Add a release-feed poll so new indexer releases are found without a per-volume sweep
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >
+    Retroactive roadmap entry: work was implemented and merged directly (branch
+    claude/missing-comics-j8osws, not claimed through claim_task.py) before this session found
+    it as an unreconciled live PR during a scheduled conductor sweep. Recorded here so the
+    shipped feature isn't invisible to future audits/roadmap reconciliation.
+
+    Newznab/Torznab both answer `t=search` with no `q` by returning their most recent releases,
+    so one request per indexer covers the entire library instead of one targeted search per
+    volume plus one per missing issue (a sweep on 2026-09-02 reached 8 volumes out of thousands
+    in an hour and spent every indexer's daily quota doing it). Added `backend/features/release_feed.py`:
+    a stateless quarter-hourly (900s) poll task (`ReleaseFeedSync`) that asks every enabled
+    Newznab/Torznab indexer for its recent-releases feed (comic category applied when no query
+    narrows the request), matches each release against the library via the same matcher the
+    watched-folder importer uses, and queues anything for a monitored volume with a matching
+    missing issue via the ordinary search matcher -- deciding nothing of its own. Keeps no
+    state (an already-downloaded/queued/blocklisted release naturally stops matching). One
+    indexer being down/out of quota costs only that indexer's answers. Also added
+    `SearchAll._come_back_when_the_quota_does()`: when a per-volume sweep stops early on a
+    rate limit, the next sweep is brought forward to when the shortest cooldown clears (plus a
+    60s margin) instead of waiting a full day, addressing a real case where a sweep stopped at
+    volume 156 and Silas expected it to resume automatically.
+
+    Merged silasfelinus/Kapowarr#181 ("Listen to the indexers instead of only asking them") at
+    13cb65f. All 7 checks green (Python 3.8-3.12 tests, docs build, container build) before this
+    session merged it; 18 new backend tests plus coverage for the new query-omission/category
+    behavior, dedup-by-link across indexers, one indexer's failure not costing the others, and
+    exactly one request per indexer regardless of library size. Reviewed the diff directly
+    (release_feed.py, the settings/task-interval wiring, and the Newznab/Torznab query-omission
+    change) before merging: additive-only, no destructive DB operations (one bounded
+    `UPDATE ... SET next_run = MIN(next_run, ?)`), no secrets touched.
+  claimed_by: claude-scheduled-20260902T1529Z-kapowarr-t070-reconcile
+  claimed_at: '2026-09-02T15:35:00Z'
+  updated: '2026-09-02T15:35:00Z'
+
 goal: Make Kapowarr a polished comic manager with reliable discovery, metadata, imports, downloads, and automation while
   preserving its clean image-first interface.
