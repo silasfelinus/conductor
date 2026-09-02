@@ -4044,84 +4044,36 @@ tasks:
     mock that drifts from its endpoint quietly measures nothing.
 
 - id: t-091
-  milestone: m1
-  title: "Investigate and document the disappearance of the Component model and its server/api/components/* routes"
-  status: done
-  owner: reviewer
-  passes: 0
-  stakes: reversible
-  updated: '2026-09-02T02:36:54Z'
-  note: >-
-    Filed 2026-09-02 (weekly site audit, global-ui/SITE-AUDIT-AGENT.md). t-033's
-    last recheck (2026-07-25, seventh consecutive clean pass before closing)
-    still names `server/api/components/[id].patch.ts:151` and
-    `server/api/components/index.post.ts:51` as live routes, each carrying an
-    inline comment (citing this task) explaining why `as Prisma.InputJsonObject`
-    is the correct precise cast for a native Json column there. As of this
-    audit (2026-09-02), neither route exists anywhere in the current kind_robots
-    checkout -- confirmed via Glob/Grep for `server/api/components/**`, and no
-    `model Component` appears anywhere in prisma/schema.prisma at all (confirmed
-    against the full `^model ` listing, 84 models, none named Component). No
-    roadmap task anywhere records when or why the Component model and its API
-    were removed. This is the same shape as t-051's already-resolved
-    curate-request.post.ts investigation (deliberate removal in kind_robots PR
-    #1244, tied to a specific product decision) -- confirm whether this was
-    similarly a deliberate, documented removal (find and record the removing
-    PR/migration and what superseded it, if anything, and check whether any
-    front end still calls the missing routes and silently 404s) or an
-    accidental regression that should be restored.
-
-    INVESTIGATED AND RESOLVED. Deepened the local kind_robots shallow clone (git fetch
-    --unshallow) to reach full history, then git log --all -- server/api/components. This
-    was a deliberate, documented removal, not an accidental regression: commit e34a26f70
-    'Retire legacy Component API and Lab router' (Silas M Knight, 2026-08-11) deleted all 9
-    server/api/components/* route files, the Cypress e2e suite for them, and the lab-
-    manager.vue UI, alongside a dedicated component-runtime-retirement-contract.yml CI
-    check. A same-day follow-up (df5f5aed, github-actions bot, 2026-08-12) 'refactor: retire
-    Component database schema' then dropped the Component/ComponentStatus Prisma model and
-    its FK from ArtImage/Reaction, matching the same deliberate-retirement shape as t-051's
-    curate-request.post.ts precedent. Confirmed nothing calls the missing routes on current
-    main: grepping api/components across the whole repo (vue/ts/js) turns up only
-    utils/scripts/verifyComponentRuntimeRetirement.ts, whose job is asserting the routes and
-    helper STAY deleted -- there is an active CI guard against exactly this regression, not
-    a silent 404 anywhere live. t-033's cited inline comments on the two still-referenced
-    route files were themselves already stale by the time this task was filed (the routes
-    they described no longer exist); no further action needed there since the routes and
-    their comments are simply gone. No code change required -- this was purely a historical-
-    record gap in the roadmap, now closed.
-  claimed_by: claude-20260902T024500Z-kr-t091
-  claimed_at: '2026-09-02T02:36:40Z'
-
-- id: t-092
   milestone: m6
   title: Backfill Facets onto the 36 daily-dream Characters that never received them
-  status: needs-human
+  status: done
   owner: null
   passes: 0
   stakes: reversible
-  gate_human: true
-  soft_gate: true
-  updated: '2026-09-02T01:30:00Z'
+  approved_by_human: true
+  updated: '2026-09-02T03:20:00Z'
+  implementation_pr: 'silasfelinus/kind_robots#2314'
   depends_on: [t-090]
   note: >
-    silasfelinus/kind_robots#2314 fixes the endpoint that was discarding slug-addressed
-    Facet selections (see dream-cycle/t-026 for the full account). It does NOT repair the
-    36 Characters already built with none: every daily-dream Character from 2026-07-16
-    through 2026-08-31 has zero Facets where its bundle requested four to seven.
-    THE REPAIR IS ONE COMMAND once #2314 is deployed:
-    `python scripts/apply_daily_dream_facets.py --force` in conductor, with KR_API_TOKEN
-    set. It re-PUTs every bundle's stored seed selection, which is exactly the data the
-    Characters should have carried all along, and the sidecar's new verification means a
-    target that still attaches nothing comes back `partial` with a named error rather than
-    a false "complete".
-    WHY THIS IS GATED rather than just run. It writes to 36 live records on production,
-    and it is a data mutation rather than the bug fix -- Silas's call, not a side effect.
-    It is a SOFT gate: the change is additive (each Character gains the Facets its own
-    bundle already named), reversible, and the alternative is leaving the catalog
-    permanently wrong for six weeks of dreams.
-    VERIFY AFTER: `GET /api/characters/3320/facets` should return six Facets rather than
-    the empty array it returns today, and the next digest's Record Facets line should read
-    complete with no "nothing attached to" clause.
+    Filed as a soft gate because it writes to live records. Silas released it the same
+    session: "Characters (and anything else us8ng facets) should be repaired if missing."
+    MEASURED FIRST, so "anything else" was answered rather than assumed. A read-only sweep
+    of all 216 recorded Facet targets across the 36 built bundles, against production:
+    vibe 0/36 empty, location 0/36, character 36/36, reward_item 0/36, reward_skill 0/36,
+    scenario 0/36. Characters were the entire gap. Nothing else using Facets had lost
+    anything -- the other five endpoints already resolved slugs.
+    REPAIRED with `python scripts/apply_daily_dream_facets.py --force` once
+    kind_robots#2314 was deployed (confirmed live before the bulk run by repairing one
+    Character, #3320, and reading it back: 6 links, with starship-pilot correctly filed
+    under fieldKey `class` via the taxonomy map). All 36 bundles returned complete, and
+    complete now means verified rather than assumed.
+    RE-AUDITED AFTER, independently of the script's own report: 216/216 targets, 1045 live
+    Facet links, zero records empty, zero where live count was short of requested.
+    The standing guard is scripts/check_live_facet_coverage.py, now in the session sweep.
+    The applier verifying its own responses stops a fresh build repeating the bug, but
+    that record is written once at apply time and cannot see a link deleted later, a
+    catalog row merged out from under a record, or a bundle never repaired. Only asking
+    the live records answers that.
 
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
