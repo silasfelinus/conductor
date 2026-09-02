@@ -728,12 +728,21 @@ healthy `NextRunTime` is the trap**: the task is firing on schedule and failing
 every time, which from the outside looks identical to a task that works.
 
 `1073807364` (`0x40010004`) means the run was **terminated** rather than
-finishing. That is what 2026-09-01 looked like: fired every 5 minutes, killed
-every time, log silent for 37 hours. The usual cause is a run that hangs past
-the next fire while `MultipleInstances` is set to stop the existing instance,
-so every run is killed by its successor, forever. `pm2 jlist` against an
-unresponsive per-user pm2 daemon is the likeliest place to hang, which is why
-that call is now bounded by `$pm2TimeoutSeconds` (60s).
+finishing.
+
+The settings on this box (verified 2026-09-02) are `ExecutionTimeLimit PT72H`
+and `MultipleInstances IgnoreNew`, and that pair is what turned one bad minute
+into 37 hours of silence. Under `IgnoreNew`, a run that hangs is **not** killed
+by the next trigger — the next trigger is simply *skipped*, and so is every one
+after it, for up to the full 72 hours before the stuck run is force-ended. So a
+single hang stops the watchdog completely, for days, while Task Scheduler goes
+on reporting a healthy `NextRunTime` and the log stays empty because the tick
+line is never reached.
+
+`pm2 jlist` against an unresponsive per-user pm2 daemon is the likeliest place
+to hang, which is why that call is now bounded by `$pm2TimeoutSeconds` (60s).
+Restarting pm2 clears the wedge and the watchdog resumes on the next trigger,
+as it did at 16:46 on 2026-09-02.
 
 Two log lines tell these apart. `run starting` is written before anything that
 can block; `tick` is written after the pm2 block. **`run starting` with no
