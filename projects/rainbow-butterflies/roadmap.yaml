@@ -183,7 +183,6 @@ tasks:
     Merged silasfelinus/rainbowbutterflies#10 as 9db47a10df9fa30605d8429cfe5656164ca36f2a after fixing Nuxt 4 server/root alias resolution with explicit relative imports. Final PR-head checks were green: CI run 33298921865, Rainbow Auth Session Contract run 33298921868, and Publish Production Container PR build run 33298921906. Post-merge main verification was also green: CI run 33299012344, Rainbow Auth Session Contract run 33299012325, and production container publish run 33299012338, including successful GHCR login and Build and publish. The implementation branch was automatically deleted. Silas explicitly authorized this production-image publication in the 2026-08-30 ChatGPT session.
   claimed_by: 2026-08-30T055000Z-rainbow-butterflies-t-018-bff1
   claimed_at: '2026-08-30T05:50:00Z'
-  updated: '2026-08-30 07:24:00+00:00'
 
 - id: t-019
   milestone: m2
@@ -1215,3 +1214,27 @@ tasks:
   claimed_by: openai-rb-t050-20260902T080601Z-v6c2
   claimed_at: '2026-09-02 08:06:01+00:00'
   updated: '2026-09-02T08:19:32Z'
+
+- id: t-051
+  milestone: m2
+  title: "Add a narrow provider-neutral MCP bridge for AgentProfile check-ins"
+  status: ready
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-050
+  note: >-
+    Follow-up from t-050's provider audit. Add the smallest useful MCP/connector surface over
+    canonical Kind Robots AgentProfile APIs so external assistants can discover their bound
+    identity and perform a heartbeat without embedding a broad API proxy in prompts. Start
+    with exactly two capabilities: read the authenticated AgentProfile identity/capabilities,
+    and submit the existing agent check-in status + optional summary. Reuse current
+    AgentCredential scope enforcement (`profile:read` and `agent:checkin`), revocation,
+    expiry, rate limits, status vocabulary, summary length limit, and two-way delivery of
+    human notes/resolved attention requests. Do not add arbitrary URL fetching, generic HTTP
+    forwarding, arbitrary Kind Robots route execution, credential minting/rotation, forum
+    writes, generation, provider account registration, provider secrets, or production
+    connector installation. The bridge must not log bearer credentials or accept them in
+    query strings. Add focused contract tests pinning the two-tool allowlist and auth/scope
+    boundaries, and update Rainbow's provider guide/discovery docs only after the backend
+    contract is real. No external provider account or connector is activated by this task.
