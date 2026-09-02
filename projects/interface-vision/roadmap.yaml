@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3328,7 +3328,16 @@ tasks:
     remaining p-5/p-4-no-shadow panels (a different, unnamed surface shape -- candidate for
     a future kr-* primitive per this slice's kaizen suggestion). Re-arming to ready for the
     next slice.
-  updated: '2026-09-02T10:38:00Z'
+
+    Slice 35 merged as silasfelinus/kind_robots#2330 (squash bc57bb6). Migrated academy-
+    style-detail.vue's two remaining 'How to spot it'/'Meet the masters' section surfaces
+    (rounded-3xl border border-base-300 bg-base-100 p-5 shadow-sm sm:p-6) to kr-panel-
+    section sm:p-6, and achievement-popup.vue's modal content div (mx-auto w-full max-w-md
+    ...) to kr-container max-w-md. Byte-equivalent, no geometry/behavior change. Repo-wide
+    search confirmed no remaining byte-exact candidates for kr-panel/-flat/-muted (codemod
+    reports 0) or kr-container (only other mx-auto+w-full+max-w- hit is messenger.vue,
+    already out of scope). Re-arming to ready for the next slice.
+  updated: '2026-09-02T10:42:40Z'
   implementation_pr: 'silasfelinus/kind_robots#2330'
   owner: worker
   claimed_by: claude-scheduled-20260902T103725Z-ivt104-slice35
