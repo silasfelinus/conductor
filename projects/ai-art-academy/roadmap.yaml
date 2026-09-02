@@ -2891,7 +2891,7 @@ tasks:
 - id: t-078
   milestone: m2
   title: "Add standing alerting for the hostbuf_file_reader_read render-box failure signature instead of relying on an agent noticing"
-  status: claimed
+  status: review
   stakes: reversible
   retry_context: >
     pass 1 failed (quality): PR silasfelinus/conductor#3444 sets KR_BASE_URL to the
@@ -2916,7 +2916,9 @@ tasks:
     RESOLVED 2026-09-02: pass 2 fixed KR_BASE_URL to https://kindrobots.org per retry_context. CI green (22/22), merged as #3444 (715c087).
 
     Silas reported the latest Conductor failure from the Render hostbuf sentinel. The deployed workflow is not reaching the hostbuf check: it imports consume_art_queue_core.py without installing PyYAML, causing ModuleNotFoundError. The workflow also points KR_BASE_URL at kindrobots.org, contrary to the current production API base https://kind-robots.vercel.app. Reopen this task to repair the sentinel and add regression coverage.
-  updated: '2026-09-02T20:04:00Z'
+
+    Repaired the hostbuf sentinel workflow on worker/ai-art-academy-t078-hostbuf-sentinel-r4m2: install PyYAML before importing consume_art_queue_core.py, point the authenticated queue-stats read at https://kind-robots.vercel.app, and add regression assertions for both workflow invariants.
+  updated: '2026-09-02T20:06:00Z'
   passes: 1
   owner: worker
   claimed_by: 2026-09-02T200400Z-ai-art-academy-t078-hostbuf-r4m2
