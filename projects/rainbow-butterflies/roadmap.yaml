@@ -1130,7 +1130,7 @@ tasks:
 - id: t-046
   milestone: m2
   title: "Build the Rainbow-native Build with Kind Robots guide"
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -1138,23 +1138,26 @@ tasks:
     PRODUCT-V2 priority 7. Add a friendly Rainbow page that teaches humans and agents how to build with canonical Kind Robots objects and APIs without duplicating the backend. Cover the useful public object families actually available now (for example ArtImage, Dream, Character, Scenario, Reward and forum references), explain stable ids/provenance/public- maturity boundaries, show copyable request/response examples against real implemented routes, and point advanced readers to the machine-readable OpenAPI/discovery contracts. Link it naturally from the gateway/navigation/dashboard. Examples must use placeholders, never real credentials, and tests must not perform live writes.
 
     Claim PRODUCT-V2 priority 7 after reconciling already-shipped v2 slices. Scope is a Rainbow-native Build with Kind Robots guide against the stable existing Kind Robots /api/v1 contract; no secrets, live writes, registry duplication, external publication action, or production configuration.
+
+    Rainbow PR silasfelinus/rainbowbutterflies#30 is implementation-complete and exact-head green. CI, Build Guide Contract, Auth Session, Krea2 Generate, Agent Activity, Agent Attention, Community Directory, and the production-container PR build all succeeded. Connected Vercel has no Rainbow project, so no Vercel PR preview exists for pixel verification. Merge remains an outward-facing production publication gate; reversible Rainbow work continues on t-047 instead of idling.
   claimed_by: openai-rb-t046-20260902T073724Z-k7m4
   claimed_at: '2026-09-02 07:37:24+00:00'
-  updated: '2026-09-02 07:37:24+00:00'
+  updated: '2026-09-02 07:50:00+00:00'
 
 - id: t-047
   milestone: m2
   title: "Add mission, values, and honest Kind Economy pages"
-  status: ready
+  status: claimed
   owner: worker
   passes: 0
   stakes: reversible
-  note: >-
-    PRODUCT-V2 priority 8. Give Rainbow concise dedicated mission/values and Kind Economy
-    explainer pages. Preserve AMI's declared-AI identity, direct Against Malaria donation
-    path, and the project's give-before-asking posture. Separate what exists today from what
-    is planned: do not claim that token spending currently funds malaria or that creator
-    revenue sharing is live until Kind Economy has implemented and verified those flows.
+  note: |-
+    PRODUCT-V2 priority 8. Give Rainbow concise dedicated mission/values and Kind Economy explainer pages. Preserve AMI's declared-AI identity, direct Against Malaria donation path, and the project's give-before-asking posture. Separate what exists today from what is planned: do not claim that token spending currently funds malaria or that creator revenue sharing is live until Kind Economy has implemented and verified those flows.
+
+    Claim PRODUCT-V2 priority 8 while t-046 waits only on its outward-facing merge gate. Scope is reversible Rainbow mission/values and honest Kind Economy explainer pages, preserving declared-AI identity and the direct Against Malaria path while clearly separating live behavior from planned creator/mission economics.
+  claimed_by: openai-rb-t047-20260902T075001Z-p8v2
+  claimed_at: '2026-09-02 07:50:01+00:00'
+  updated: '2026-09-02 07:50:01+00:00'
 
 - id: t-048
   milestone: m2
