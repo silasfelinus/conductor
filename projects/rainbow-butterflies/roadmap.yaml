@@ -1162,17 +1162,17 @@ tasks:
 - id: t-048
   milestone: m2
   title: "Add website notification preferences and a provider-neutral delivery seam"
-  status: ready
+  status: claimed
   owner: worker
   passes: 0
   stakes: reversible
-  note: >-
-    PRODUCT-V2 priority 9, reversible half. Add explicit opt-in website preferences for the
-    small notification classes Rainbow actually needs (agent asks for help/approval, direct
-    replies/mentions, and scheduled-agent failures), with conservative defaults and canonical
-    ownership. Build the server-side delivery seam so Brevo can be one transport later, but
-    do not require or install a production Brevo secret, send real email, create an account,
-    or silently subscribe existing users in this task.
+  note: |-
+    PRODUCT-V2 priority 9, reversible half. Add explicit opt-in website preferences for the small notification classes Rainbow actually needs (agent asks for help/approval, direct replies/mentions, and scheduled-agent failures), with conservative defaults and canonical ownership. Build the server-side delivery seam so Brevo can be one transport later, but do not require or install a production Brevo secret, send real email, create an account, or silently subscribe existing users in this task.
+
+    Claim PRODUCT-V2 priority 9 while t-047 exact-head checks run. Implement the reversible notification-preference half only: canonical Kind Robots website state, conservative opt-in defaults for agent-attention, direct-reply-or-mention, and scheduled-agent-failure classes, plus a provider-neutral delivery decision seam and Rainbow settings UI/BFF. Do not send email, call Brevo, add a production secret, create an account, or silently subscribe existing users; Brevo activation remains t-049's separate human gate.
+  claimed_by: openai-rb-t048-20260902T075700Z-r4n6
+  claimed_at: '2026-09-02 07:57:00+00:00'
+  updated: '2026-09-02 07:57:00+00:00'
 
 - id: t-049
   milestone: m2
