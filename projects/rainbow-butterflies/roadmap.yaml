@@ -454,18 +454,32 @@ tasks:
 - id: t-027
   milestone: m2
   title: "Get final human visual acceptance of the Rainbow Butterflies MVP"
-  status: needs-human
-  owner:
+  status: ready
   passes: 0
   stakes: outward-facing
   gate_human: true
   approved_by_human: false
   depends_on: t-029
-  note: >
-    FOR SILAS: Present the verified private/preview MVP at phone, tablet, and desktop widths with the forum, mission home,
-    AMI identity, fundraiser treatment, and Connect an Agent flow. This is the one subjective product gate required before
-    public launch. Ask for concrete visual acceptance or requested changes, not generic permission to keep developing. Other
-    reversible mission/research tasks remain free to continue while this waits.
+  note: |-
+    FOR SILAS: Present the verified private/preview MVP at phone, tablet, and desktop widths with the forum, mission home, AMI identity, fundraiser treatment, and Connect an Agent flow. This is the one subjective product gate required before public launch. Ask for concrete visual acceptance or requested changes, not generic permission to keep developing. Other reversible mission/research tasks remain free to continue while this waits.
+
+
+    CURRENT V2 RECONCILIATION, 2026-09-02: the original title/note for this task described a pre-launch visual-acceptance gate, but rainbowbutterflies.org is already public and PRODUCT-V2.md now defines a broader completion target. Treat this task as the remaining Rainbow v2 product-completion and final-acceptance umbrella before outreach pilots.
+
+    Complete these reversible product lanes before returning this task to needs-human for Silas's visual/product acceptance:
+
+    1. Richer AgentProfile heartbeat/context: extend the canonical check-in surface beyond status + queued notes so an agent can safely learn the bounded working context PRODUCT-V2 calls for: permitted channels/capabilities, unresolved attention/approval state, relevant replies or mentions/conversations, active proposals/tasks where a canonical source exists, recent work/progress, and useful reusable Kind Robots objects. Keep Kind Robots canonical; do not turn MCP into a generic proxy or widen credentials implicitly. Preserve bounded payloads, maturity/privacy checks, rate limits, and revocation/scope enforcement.
+
+    2. Fuller human dashboard: evolve the signed-in Rainbow dashboard from heartbeat cards into the useful workspace PRODUCT-V2 specifies. Surface conversations/mentions needing attention, canonical objects created by the human or their agents, proposals/approval work, and coarse mission/contribution activity where those sources already exist. Keep clear state and useful actions ahead of engagement-feed mechanics; do not duplicate Kind Robots records into a Rainbow store.
+
+    3. Optional messaging: add a deliberately small human/agent messaging path only if it can reuse a canonical Kind Robots communication substrate cleanly. Respect profile opt-in/preferences, liaison ownership, agent permissions, moderation/rate limits, and privacy. Website state stays canonical; Brevo/email is notification transport only. If the existing substrate cannot support this without inventing a parallel inbox, document that concrete architectural gap and split the necessary backend work rather than faking a Rainbow-only store.
+
+    4. Provider tutorial visual polish: keep the existing current ChatGPT/Claude/Gemini/Grok capability guidance and add current screenshots/visual walkthroughs where reasonably obtainable and legally/safely reusable. Never expose real credentials, account secrets, private user data, or imply unsupported scheduler/MCP combinations. Date capability claims and keep the text fallback complete when a provider UI cannot be safely captured.
+
+    5. Current-v2 acceptance pass: after the lanes above land, verify the live/current product at phone, tablet, and desktop widths. Cover the gateway/home, sign-in, AgentProfile onboarding/profile, provider setup, dashboard, community humans/agents directory and profiles, forums/commons, Build with Kind Robots, Generate, Servers, Mission/Values, Economy, notifications/preferences, fundraiser treatment, and key empty/loading/error states. Fix reversible defects found. Then return this task to needs-human with concise evidence/screenshots and ask Silas for acceptance of the CURRENT v2 product, not the obsolete pre-launch MVP.
+
+    This task is the finite product-completion gate, not permission for endless polish. When the current PRODUCT-V2 requirements above are implemented and the cross-width pass is clean, stop adding speculative features and present the product for acceptance. t-009/t-010 remain separate hard gates: do not create external accounts, accept platform terms, publish outreach, spend money, or post outside Rainbow without Silas explicitly naming and approving the concrete account/channel/action.
+  updated: '2026-09-02T22:01:00Z'
 
 - id: t-028
   milestone: m3
