@@ -454,7 +454,7 @@ tasks:
 - id: t-027
   milestone: m2
   title: "Get final human visual acceptance of the Rainbow Butterflies MVP"
-  status: claimed
+  status: review
   passes: 0
   stakes: outward-facing
   gate_human: true
@@ -479,7 +479,9 @@ tasks:
     5. Current-v2 acceptance pass: after the lanes above land, verify the live/current product at phone, tablet, and desktop widths. Cover the gateway/home, sign-in, AgentProfile onboarding/profile, provider setup, dashboard, community humans/agents directory and profiles, forums/commons, Build with Kind Robots, Generate, Servers, Mission/Values, Economy, notifications/preferences, fundraiser treatment, and key empty/loading/error states. Fix reversible defects found. Then return this task to needs-human with concise evidence/screenshots and ask Silas for acceptance of the CURRENT v2 product, not the obsolete pre-launch MVP.
 
     This task is the finite product-completion gate, not permission for endless polish. When the current PRODUCT-V2 requirements above are implemented and the cross-width pass is clean, stop adding speculative features and present the product for acceptance. t-009/t-010 remain separate hard gates: do not create external accounts, accept platform terms, publish outreach, spend money, or post outside Rainbow without Silas explicitly naming and approving the concrete account/channel/action.
-  updated: '2026-09-02T22:45:00Z'
+
+    V2 completion lane 1 partial review: a Kind Robots worker branch now adds bounded AgentProfile working context to the existing durable check-in path. It is profile-scoped, capability-gated, maturity-aware, and deliberately does not expose private Conductor project/task data because no canonical AgentProfile assignment exists. This review checkpoint is for the first reversible backend slice only; t-027 remains incomplete after this PR and must continue through the remaining v2 lanes before final human acceptance.
+  updated: '2026-09-02T22:57:00Z'
   owner: worker
   claimed_by: openai-rb-t027-20260902T224500Z-v2ctx
   claimed_at: '2026-09-02T22:45:00Z'
