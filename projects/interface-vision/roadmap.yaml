@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -3306,8 +3306,15 @@ tasks:
     Re-armed to ready: implementation_pr silasfelinus/kind_robots#2304 (Stylist Clients kr-
     panel-muted migration) confirmed merged. Recurring task cycles back to ready per
     convention.
-  updated: '2026-09-02T08:32:18Z'
-  implementation_pr: 'silasfelinus/kind_robots#2304'
+
+    Slice 33: added .kr-panel-section primitive (approved via t-123) and migrated 5
+    coloring-book files (production-history, production-toolbar, package-readiness, cover-
+    studio, readiness) to it. Byte-equivalent, no geometry/behavior change. Remaining 11
+    files (conductor-app pages + academy-style-detail.vue) left for next slice -- several
+    mix in extra responsive/hover classes worth a separate careful pass. PR:
+    silasfelinus/kind_robots#2324.
+  updated: '2026-09-02T08:37:30Z'
+  implementation_pr: 'silasfelinus/kind_robots#2324'
   owner: worker
   claimed_by: claude-scheduled-20260902T0900Z-ivt104
   claimed_at: '2026-09-02T08:32:18Z'
