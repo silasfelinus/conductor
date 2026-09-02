@@ -5372,47 +5372,21 @@ tasks:
 - id: t-142
   milestone: m2
   title: "queue_mandarin_tutor_art.py's dedup check re-stages an already-fully-rendered corpus once its original request rows leave art-prompts.yaml"
-  status: claimed
+  status: review
   gate_human: false
   owner: worker
   stakes: reversible
   passes: 0
-  note: >
-    Found 2026-09-02 while auditing mandarin-tutor/t-010 (Krea 2 v2 illustration coverage)
-    after the Alexandria render host recovered from its outage. A fresh HEAD-probe audit
-    against the live media origin confirmed all 577 v2 illustrated cards are actually
-    rendered (100% coverage, zero absent) -- so the corpus is fully done.
+  note: |-
+    Found 2026-09-02 while auditing mandarin-tutor/t-010 (Krea 2 v2 illustration coverage) after the Alexandria render host recovered from its outage. A fresh HEAD-probe audit against the live media origin confirmed all 577 v2 illustrated cards are actually rendered (100% coverage, zero absent) -- so the corpus is fully done.
+    Re-running scripts/queue_mandarin_tutor_art.py anyway (to confirm "reach" was complete, expecting `0 missing`) instead reported `577 still missing, 577 appended` and re-wrote the ENTIRE already-satisfied v2 corpus back into projects/art-prompts.yaml as fresh pending requests. Caught before commit (reverted, never pushed) -- but had it landed and a later run called submit_mandarin_tutor_artjobs.py, this reproduces the exact t-133/t-136 duplicate-enqueue outage shape (2882 FAILED rows, 75% duplicates) against a corpus that needed zero further work.
+    Root cause: `load_existing_requests()` in queue_mandarin_tutor_art.py treats "this requestId/imagePath is not currently a row in art-prompts.yaml" as "never requested", with no memory of a corpus that was fully submitted, rendered, and later had its rows removed from that file (the original 577 `mandarin-tutor-v2-*` rows from t-020's 2026-08-28 submission are gone from the file entirely -- grep confirms zero matches -- most likely pruned by whatever workflow step consumes/archives `status: done` rows over time; the exact remover wasn't identified this session). Unlike has_unresolved_submission()'s `check_live` path (t-136), this script's own dedup has no equivalent live-media or live-ArtJob check -- it is purely "is a row for this id still sitting in the file right now."
+    Fix should give queue_mandarin_tutor_art.py the same live-truth guard has_unresolved_submission()/already_satisfied() give the submit lane: before staging an entry as "missing", HEAD-probe its imageUrl against the media origin (see the new scripts/audit_mandarin_illustration_coverage.py written this session, which does exactly this probe read-only) or otherwise check for a live ArtJob/rendered asset, not just presence in art-prompts.yaml. Add regression coverage: a manifest entry whose row was removed from art-prompts.yaml after being fully rendered must NOT be re-staged.
 
-    Re-running scripts/queue_mandarin_tutor_art.py anyway (to confirm "reach" was
-    complete, expecting `0 missing`) instead reported `577 still missing, 577 appended`
-    and re-wrote the ENTIRE already-satisfied v2 corpus back into
-    projects/art-prompts.yaml as fresh pending requests. Caught before commit (reverted,
-    never pushed) -- but had it landed and a later run called
-    submit_mandarin_tutor_artjobs.py, this reproduces the exact t-133/t-136
-    duplicate-enqueue outage shape (2882 FAILED rows, 75% duplicates) against a corpus
-    that needed zero further work.
 
-    Root cause: `load_existing_requests()` in queue_mandarin_tutor_art.py treats "this
-    requestId/imagePath is not currently a row in art-prompts.yaml" as "never requested",
-    with no memory of a corpus that was fully submitted, rendered, and later had its rows
-    removed from that file (the original 577 `mandarin-tutor-v2-*` rows from t-020's
-    2026-08-28 submission are gone from the file entirely -- grep confirms zero matches
-    -- most likely pruned by whatever workflow step consumes/archives `status: done`
-    rows over time; the exact remover wasn't identified this session). Unlike
-    has_unresolved_submission()'s `check_live` path (t-136), this script's own dedup has
-    no equivalent live-media or live-ArtJob check -- it is purely "is a row for this id
-    still sitting in the file right now."
-
-    Fix should give queue_mandarin_tutor_art.py the same live-truth guard
-    has_unresolved_submission()/already_satisfied() give the submit lane: before staging
-    an entry as "missing", HEAD-probe its imageUrl against the media origin (see the new
-    scripts/audit_mandarin_illustration_coverage.py written this session, which does
-    exactly this probe read-only) or otherwise check for a live ArtJob/rendered asset,
-    not just presence in art-prompts.yaml. Add regression coverage: a manifest entry
-    whose row was removed from art-prompts.yaml after being fully rendered must NOT be
-    re-staged.
+    Added live-media HEAD deduplication and regression coverage so completed Mandarin illustrations cannot be restaged after their request rows leave art-prompts.yaml.
   claimed_by: 2026-09-02T055041Z-codex-t142
   claimed_at: '2026-09-02T05:50:41Z'
-  updated: '2026-09-02T05:50:41Z'
+  updated: '2026-09-02T06:06:44Z'
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
