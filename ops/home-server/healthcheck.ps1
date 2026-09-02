@@ -45,6 +45,14 @@ if ($env:CRASH_LOOP_RESTARTS) {
     [int]::TryParse($env:CRASH_LOOP_RESTARTS, [ref]$crashLoopRestarts) | Out-Null
 }
 
+# How long to wait for 'pm2 jlist' before giving up on it. Must stay well under
+# the scheduled task's 5-minute interval, or a slow pm2 lets each run overlap
+# the next and Task Scheduler starts killing them.
+$pm2TimeoutSeconds = 60
+if ($env:PM2_JLIST_TIMEOUT_SECONDS) {
+    [int]::TryParse($env:PM2_JLIST_TIMEOUT_SECONDS, [ref]$pm2TimeoutSeconds) | Out-Null
+}
+
 function Write-Log($msg) {
     $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
     Add-Content -Path $logFile -Value "$stamp  $msg"
@@ -129,6 +137,21 @@ $alertState = Get-AlertState
 $hostName = $env:COMPUTERNAME
 $watchdogExitCode = 0
 
+# The FIRST thing this script writes, before anything that can block.
+#
+# The 'tick' heartbeat further down was added 2026-08-27 to answer "did the
+# watchdog run?", but it sits AFTER the pm2 block - so it only proves a run got
+# PAST pm2. A run that starts and then hangs writes nothing at all, and in the
+# log that is indistinguishable from a run that never happened.
+#
+# Not hypothetical. On 2026-09-01 the log stopped dead at 02:26:07 and stayed
+# empty for 37+ hours while Task Scheduler reported the task running every 5
+# minutes with LastTaskResult 1073807364 (0x40010004, "terminated") - every run
+# was being started and then killed before it finished. Two lines instead of
+# one turns that from a mystery into a fact: 'run starting' with no 'tick'
+# after it means the pm2 block hung.
+Write-Log "run starting as $($env:USERNAME)"
+
 # --- pm2 visibility ----------------------------------------------------------
 # Read pm2's process list ONCE, and distinguish "pm2 says this app is stopped"
 # from "pm2 told us nothing at all". They are not the same, and conflating them
@@ -152,8 +175,35 @@ if (-not $pm2Command) {
 if (-not $pm2Command) {
     $pm2Error = 'pm2 executable is not visible to the scheduled task'
 } else {
-    $pm2Raw = (& $pm2Command.Source jlist 2>&1 | Out-String)
-    $pm2ExitCode = $LASTEXITCODE
+    # Bounded, because an unbounded call here can wedge the whole watchdog.
+    # 'pm2 jlist' talks to the per-user pm2 daemon over a local socket and will
+    # sit there indefinitely if that daemon is unresponsive, or has to be
+    # spawned for an account that has none. With Task Scheduler set to stop the
+    # existing instance when the next fires, a hang here means every run is
+    # killed by its successor, forever: the task looks scheduled and healthy
+    # from the outside while nothing is actually being checked, and the log
+    # stays completely silent because the tick line is never reached.
+    $pm2Raw = ''
+    $pm2ExitCode = 0
+    $pm2Job = Start-Job -ScriptBlock {
+        param($exe)
+        $text = (& $exe jlist 2>&1 | Out-String)
+        [pscustomobject]@{ Output = $text; ExitCode = $LASTEXITCODE }
+    } -ArgumentList $pm2Command.Source
+
+    if (Wait-Job $pm2Job -Timeout $pm2TimeoutSeconds) {
+        $pm2Result = Receive-Job $pm2Job | Select-Object -Last 1
+        if ($pm2Result) {
+            $pm2Raw = [string]$pm2Result.Output
+            if ($null -ne $pm2Result.ExitCode) { $pm2ExitCode = [int]$pm2Result.ExitCode }
+        }
+    } else {
+        Stop-Job $pm2Job -ErrorAction SilentlyContinue
+        $pm2ExitCode = -1
+        $pm2Raw = "pm2 jlist did not respond within $pm2TimeoutSeconds seconds"
+    }
+    Remove-Job $pm2Job -Force -ErrorAction SilentlyContinue
+
     if ($pm2ExitCode -ne 0) {
         $pm2Error = "pm2 jlist exited $pm2ExitCode`: $($pm2Raw.Trim())"
     } elseif ([string]::IsNullOrWhiteSpace($pm2Raw)) {

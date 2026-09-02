@@ -131,6 +131,38 @@ class HealthcheckScriptTests(unittest.TestCase):
         """A deploy or a watchdog restart moves the counter by 1."""
         self.assertIn("$crashLoopRestarts = 3", self.source)
 
+    def test_it_logs_before_anything_that_can_block(self):
+        """A run that hangs must leave a trace.
+
+        2026-09-01: the log stopped at 02:26:07 and stayed empty for 37+ hours
+        while Task Scheduler reported the task running every 5 minutes with
+        LastTaskResult 0x40010004 ("terminated"). The 'tick' heartbeat could not
+        show that, because it sits after the pm2 block -- a run that hung in
+        pm2 wrote nothing, which reads exactly like a run that never happened.
+        """
+        start = self.source.index('Write-Log "run starting')
+        pm2 = self.source.index("--- pm2 visibility")
+        tick = self.source.index('Write-Log "tick as')
+        self.assertLess(start, pm2, "the first log line must precede the pm2 block")
+        self.assertLess(pm2, tick, "the tick line still reports the app list")
+
+    def test_pm2_jlist_cannot_hang_forever(self):
+        """An unbounded jlist wedges the whole watchdog for every future run."""
+        self.assertIn("$pm2TimeoutSeconds", self.source)
+        self.assertIn("Wait-Job $pm2Job -Timeout $pm2TimeoutSeconds", self.source)
+        self.assertIn("did not respond within", self.source)
+        self.assertNotIn("(& $pm2Command.Source jlist 2>&1 | Out-String)", self.source)
+
+    def test_the_jlist_timeout_stays_under_the_task_interval(self):
+        """A timeout longer than the 5-minute schedule reintroduces the overlap
+        that had Task Scheduler killing each run with the next."""
+        self.assertIn("$pm2TimeoutSeconds = 60", self.source)
+
+    def test_a_timed_out_job_is_stopped_and_reaped(self):
+        """Otherwise every 5-minute run leaks a PowerShell job."""
+        self.assertIn("Stop-Job $pm2Job", self.source)
+        self.assertIn("Remove-Job $pm2Job -Force", self.source)
+
     def test_transitional_states_still_skip_the_probe(self):
         """Probing a process mid-launch produces a false hang and a pointless
         restart -- the double-restart observed 2026-08-28."""

@@ -664,9 +664,15 @@ pm2 save
 Confirm it took:
 
 ```powershell
-pm2 status comfyui                 # restart count should stop climbing
+pm2 env 3                          # the app id from `pm2 status`; dumps its real environment
+pm2 status                         # comfyui's restart count should stop climbing
 curl http://127.0.0.1:8188/system_stats
 ```
+
+Use `pm2 env <id>`, **not** `pm2 describe`. `describe` prints a summary table
+and does not include environment variables at all, so grepping it for
+`PYTHONIOENCODING` returns nothing whether the variable is set or not — an
+answer that looks like a diagnosis and is really just silence.
 
 If a custom node later dies on a *file* read rather than a print, add
 `PYTHONUTF8: '1'` to the same block — that also switches `open()`'s default
@@ -708,9 +714,32 @@ was fine (23 alerts delivered, 0 skipped for missing Brevo config); it simply
 was not running. **A watchdog cannot report its own absence**, and this one was
 the only thing watching. If the watchdog log's newest line is not within the
 last ~10 minutes, nothing on this box is being monitored, whatever else looks
-green. Check the Task Scheduler entry first (`Get-ScheduledTask`,
-`Get-ScheduledTaskInfo`) — its run-as account and "run only when user is logged
-on" setting are the usual casualties of a reboot or a profile change.
+green. Check the Task Scheduler entry first:
+
+```powershell
+Get-ScheduledTask -TaskName *health* | Get-ScheduledTaskInfo
+Get-ScheduledTask -TaskName *health* | Select-Object -ExpandProperty Actions
+(Get-ScheduledTask -TaskName *health*).Settings |
+    Select-Object ExecutionTimeLimit, MultipleInstances
+```
+
+`LastTaskResult` is the field that matters, and **a non-zero one alongside a
+healthy `NextRunTime` is the trap**: the task is firing on schedule and failing
+every time, which from the outside looks identical to a task that works.
+
+`1073807364` (`0x40010004`) means the run was **terminated** rather than
+finishing. That is what 2026-09-01 looked like: fired every 5 minutes, killed
+every time, log silent for 37 hours. The usual cause is a run that hangs past
+the next fire while `MultipleInstances` is set to stop the existing instance,
+so every run is killed by its successor, forever. `pm2 jlist` against an
+unresponsive per-user pm2 daemon is the likeliest place to hang, which is why
+that call is now bounded by `$pm2TimeoutSeconds` (60s).
+
+Two log lines tell these apart. `run starting` is written before anything that
+can block; `tick` is written after the pm2 block. **`run starting` with no
+`tick` after it means the pm2 block hung.** Neither line at all means the task
+never really ran — check its run-as account and the "run only when user is
+logged on" setting, the usual casualties of a reboot or a profile change.
 
 **2. The render-failure watchdog needs work to fail.** It alerts on per-tick
 deltas of new FAILED jobs. Once the PENDING backlog drained there was nothing
