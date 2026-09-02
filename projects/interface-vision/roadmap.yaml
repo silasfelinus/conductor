@@ -3311,39 +3311,25 @@ tasks:
 - id: t-123
   milestone: m5
   title: "Decide: introduce a new kr-* page-section primitive for the repeated rounded-3xl/p-5/shadow-sm shape, or leave it hand-rolled"
-  status: needs-human
-  soft_gate: true
+  status: done
   passes: 0
   stakes: reversible
-  note: >-
-    FOR SILAS: t-104's recurring front-end-consistency sweep found the same hand-rolled
-    surface -- `rounded-3xl border border-base-300 bg-base-100 p-5 shadow-sm` -- repeated
-    verbatim across 16 page-section components: the 6 coloring-book production/studio panels,
-    9 conductor-app project pages (coat-dance, project-gallery-strip, project-deliverables-
-    panel, voice-lab, davinci, challenge-center, sketchy, conductor-app, newsfeed), and
-    academy-style-detail.vue.
-
-    What it contains: it does NOT match any existing kr-* primitive verbatim. `.kr-panel`
-    and `.kr-panel-flat` are both `rounded-2xl` with different padding (`p-6` / none), not
-    `rounded-3xl p-5`. Migrating it as-is would mean either overriding a kr-panel's own
-    corner radius per-instance (a pattern prior slices only accepted for background opacity,
-    never for radius) or defining a brand-new named primitive and re-pointing 16 files at it.
-
-    TO APPROVE: pick one --
-    (a) approve a new primitive, e.g. `.kr-panel-section { rounded-3xl border border-base-300
+  note: |-
+    FOR SILAS: t-104's recurring front-end-consistency sweep found the same hand-rolled surface -- `rounded-3xl border border-base-300 bg-base-100 p-5 shadow-sm` -- repeated verbatim across 16 page-section components: the 6 coloring-book production/studio panels, 9 conductor-app project pages (coat-dance, project-gallery-strip, project-deliverables- panel, voice-lab, davinci, challenge-center, sketchy, conductor-app, newsfeed), and academy-style-detail.vue.
+    What it contains: it does NOT match any existing kr-* primitive verbatim. `.kr-panel` and `.kr-panel-flat` are both `rounded-2xl` with different padding (`p-6` / none), not `rounded-3xl p-5`. Migrating it as-is would mean either overriding a kr-panel's own corner radius per-instance (a pattern prior slices only accepted for background opacity, never for radius) or defining a brand-new named primitive and re-pointing 16 files at it.
+    TO APPROVE: pick one -- (a) approve a new primitive, e.g. `.kr-panel-section { rounded-3xl border border-base-300
         bg-base-100 p-5 shadow-sm }` in assets/css/tailwind.css, and set status: done with a
         note naming the class -- the Worker will then migrate the 16 files across bounded
         slices same as every other kr-* migration;
     (b) say this shape should stay hand-rolled (not worth a shared primitive) and set status:
         done with that note -- t-104 will stop flagging it; or
-    (c) propose a different name/shape.
-    Either way, set approved_by_human: true and status: done with your choice recorded in
-    this note.
+    (c) propose a different name/shape. Either way, set approved_by_human: true and status: done with your choice recorded in this note.
+    What unblocks when he does: t-104's next cycle picks up the decision from this note and either starts migrating (option a) or drops the pool permanently (option b/c).
 
-    What unblocks when he does: t-104's next cycle picks up the decision from this note and
-    either starts migrating (option a) or drops the pool permanently (option b/c).
-  owner: null
+    APPROVED by silasfelinus via Kind Robots For You. makes sense. approved
   claimed_by: null
+  approved_by_human: true
+  updated: '2026-09-02 04:22:14.196000+00:00'
 
 - id: t-105
   milestone: m6
