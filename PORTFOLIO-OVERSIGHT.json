@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-09-02T11:27:44.031152+00:00",
+  "generated_at": "2026-09-02T16:40:39.023051+00:00",
   "summary": {
     "status": "action-needed",
     "roadmap_errors": 3,
-    "roadmap_warnings": 1,
+    "roadmap_warnings": 2,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -12,8 +12,8 @@
   },
   "openai_scheduled_agent": {
     "overdue": false,
-    "last_activity": "2026-09-02T06:17:44+00:00",
-    "hours_since": 5.17,
+    "last_activity": "2026-09-02T14:17:57+00:00",
+    "hours_since": 2.38,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "OpenAI commit activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit."
@@ -30,19 +30,19 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-09-02T11:27:44.031159+00:00",
+    "generated_at": "2026-09-02T16:40:39.023057+00:00",
     "summary": {
       "roadmaps": 52,
       "active_projects": 29,
       "continuous_projects": 2,
-      "tasks": 1375,
-      "ready": 12,
+      "tasks": 1376,
+      "ready": 8,
       "waiting": 56,
       "needs_human": 79,
       "in_progress": 3,
-      "done": 1208,
+      "done": 1213,
       "errors": 3,
-      "warnings": 1,
+      "warnings": 2,
       "info": 4
     },
     "errors": [
@@ -69,6 +69,13 @@
       }
     ],
     "warnings": [
+      {
+        "severity": "warning",
+        "code": "STALE_IN_PROGRESS",
+        "project": "animation-manager",
+        "task": "t-006",
+        "message": "Task has remained review for 3 days."
+      },
       {
         "severity": "warning",
         "code": "SOFT_NEEDS_HUMAN",
