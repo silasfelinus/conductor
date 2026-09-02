@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-02T21:50:02Z
+Generated: 2026-09-02T22:01:30Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **866**
-- Outcomes: blocked: 16, cancelled: 1, done: 849
+- Closed tasks recorded: **867**
+- Outcomes: blocked: 16, cancelled: 1, done: 850
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -46,7 +46,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | mandarin-tutor | 11 | 100% |
 | media-watchlist | 10 | 100% |
 | mermaids-of-venice | 3 | 100% |
-| model-builder | 81 | 100% |
+| model-builder | 82 | 100% |
 | mona-salai | 1 | 100% |
 | mural-design | 1 | 100% |
 | music-mentor | 1 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 850 | 99% |
+| software | 851 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-02 `model-builder/t-029` — A non-nested-brace entry-split regex is fragile against free-text comments that themselves contain a literal open/close brace pair (a code path like server/api/(dreams,scenarios)/... quoted in a comment, using curly braces in the real source) -- it can silently swallow the real entry that follows, while the guard still prints a plausible-looking pass/total. verifyModelBuilderIconCoverageGuard.ts (cycle 82) shipped with exactly this gap for a full cycle before cycle 84 caught it while building an unrelated sibling guard. verifyModelBuilderSourceFieldGuard.ts already used a safer key-boundary split (index-based chunking between consecutive `key: '...'` matches, never touching brace characters at all) -- worth defaulting new SOURCE_TYPES/BUILD_STAGES/RECIPES-array guards to that pattern from the start rather than brace matching, and worth a future cycle double-checking any other guard in this family that still uses brace matching.
 - 2026-09-02 `dream-cycle/t-025` — Added a per-bundle consecutive-failure counter (persisted state file already covered by the existing workflow's git-add step, so no CI/workflow change needed) to stop repair_dream_prose_catalog.py from retrying a chronically-failing bundle forever. Kept the existing per-bundle atomicity (failed bundles stay untouched, retried next run) as the default, only adding a circuit breaker on top after N consecutive failures -- and explicitly exempted an editor's own extra_fields retry from the breaker, since a human-directed re-ask is a different thing from an unattended scheduled retry. Worth remembering for any other 'runs on a schedule forever' loop in this pipeline: distinguish transient-retry-in-place from persistent-content-issue before assuming every failure is worth retrying indefinitely.
 - 2026-09-02 `dream-cycle/t-024` — Wired repair_dream_prose_catalog.py --verify-live --strict into daily-digest.yml's existing recurring cycle (same continue-on-error + folded-into-final-gate pattern as the build/Facet/ArtJob/commit steps) rather than depending on an agent remembering to run it during a t-006 maintenance pass. A scheduled workflow step that already runs daily is a more reliable detection point for silent drift than an agent-recalled manual check -- prefer wiring a new verification into an existing recurring CI/workflow run over adding it to an agent's task checklist when both are available.
 - 2026-09-02 `kapowarr/t-070` — Found an open, fully green, well-tested Kapowarr PR (branch claude/missing-comics-j8osws, not claimed through conductor's task loop) during a routine open-PR check. Reviewed the diff directly before merging (release_feed.py's stateless feed-poll design, the settings/interval wiring, and the Newznab/Torznab query-omission change) rather than merging on green CI alone, then retroactively filed the roadmap task so the shipped feature is visible to future audits. Not every merge-worthy PR in a watched repo arrives through claim_task.py -- worth checking open PRs directly across all in-scope repos, not just ones with a matching worker/* branch.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-02 `conductor/t-139` — check_pr_merged_drift.py's implementation_pr-field pass (0) treated a confirmed-merged field as the final word and never looked further, so a task reclaimed and reprogressed via a SECOND PR after the field was recorded left it silently stale with nothing left to catch it (real incident: interface-vision/t-104 closed with implementation_pr=kind_robots#2301 while a later cycle had already merged kind_robots#2303 first). Fixed with a new pass 0b (find_field_stale_findings): scan a field-confirmed task's own title+note for any OTHER PR reference that is both merged and title-confirmed as implementing this exact <project>/<task-id> -- same title-match bar the authoritative search pass already uses, so a note that merely quotes the PR whose kaizen suggestion filed the task doesn't false-positive. Deliberately scoped to field_findings only (never field_unresolved/malformed-field tasks) and best-effort (a failed lookup on the extra reference is silently skipped, not added to unresolved) so it adds zero API calls to every existing 'must not call the API further' test invariant. 17 new tests added; full repo suite still green (1585 passed, 1 skipped). Companion write-time fix already landed separately (close_task.py now warns on a stale --implementation-pr omission) -- t-139 was the read-side detection half.
 - 2026-09-02 `conductor/t-145` — A soft/advisory CI check belongs on its own continue-on-error step inside an existing job (GitHub Actions ::warning:: annotations), not a new blocking job -- git diff --numstat plus git show <ref>:<path> is enough to diff base vs head line counts for any watched file without a second full-file-read diffing path. This session's sandbox pytest tool was again missing PyYAML (the same documented gap as t-140's session) and needed uv tool install pytest --with pyyaml --force before the 13 new tests could run.
 - 2026-09-02 `conductor/t-140` — close_task.py now warns (not fails) when a review/ready close omits --implementation-pr while the roadmap already holds a different owner/repo#N value -- the write-time half of the drift class t-139 targets from the read side. Companion note: this session's own sandbox pytest tool was missing PyYAML (AGENTS.md's documented gap) and needed `uv tool install pytest --with pyyaml --force` before the new regression tests could run.
-- 2026-09-02 `conductor/t-143` — GitHub's Contents API silently returns encoding:none/content:'' for files over 1MB, so any read-modify-write into a growing conductor file (art-prompts.yaml, TALKBACK.md, LEARNING.yaml) must fall back to the Git Blobs API and throw rather than treat a bodiless-but-nonempty read as an empty file -- kind_robots#2320 fixed both the queue write path and conductorGet() with this pattern plus an append-only invariant check.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-02T21:50:02Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-02T22:01:30Z_
