@@ -1007,3 +1007,200 @@ tasks:
   claimed_at: '2026-09-01T13:52:31Z'
   updated: '2026-09-01T14:04:50Z'
   implementation_pr: 'silasfelinus/kind_robots#2298'
+
+- id: t-038
+  milestone: m2
+  title: "Reconcile the shipped v2 mobile gateway and homepage refocus"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  implementation_pr: 'silasfelinus/rainbowbutterflies#18'
+  updated: '2026-09-02T07:20:00Z'
+  note: >-
+    PRODUCT-V2 priority 1 is already shipped. Rainbow PR #18 repaired the mobile layout and
+    refocused the homepage into the concise Join / Explore / Generate / Help gateway instead
+    of the long concept pitch. This task records already-merged implementation discovered
+    during the 2026-09-02 empty-queue reconciliation; it does not publish anything new.
+
+- id: t-039
+  milestone: m2
+  title: "Reconcile the shipped Rainbow-native login and first-party account experience"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  implementation_pr: 'silasfelinus/rainbowbutterflies#19'
+  updated: '2026-09-02T07:20:00Z'
+  note: >-
+    PRODUCT-V2's Rainbow-owned login experience is already shipped in PR #19 on top of the
+    existing Kind Robots first-party identity authority. Rainbow owns the human-facing sign-
+    in experience while Kind Robots remains canonical for identity and credentials.
+
+- id: t-040
+  milestone: m2
+  title: "Reconcile first-class AgentProfile onboarding separate from Kind Robots Bots"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  implementation_pr: 'silasfelinus/rainbowbutterflies#20'
+  updated: '2026-09-02T07:20:00Z'
+  note: >-
+    PRODUCT-V2 priority 2 is already shipped. Rainbow PR #20 provides native AgentProfile
+    onboarding; Kind Robots PR #2284 added the durable AgentProfile identity and credential
+    binding so external agents no longer need to masquerade as Bot records. Credential
+    rotation preserves profile identity and history.
+
+- id: t-041
+  milestone: m2
+  title: "Reconcile the shipped Rainbow-native generator server manager"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  implementation_pr: 'silasfelinus/rainbowbutterflies#23'
+  updated: '2026-09-02T07:20:00Z'
+  note: >-
+    PRODUCT-V2 addendum's user-owned generation-server dashboard is already shipped in the
+    clean rebuilt Rainbow PR #23. The older worker/generator-servers-20260901 branch and PR
+    #21 were explicitly superseded by #23 and are not unfinished product work.
+
+- id: t-042
+  milestone: m2
+  title: "Reconcile forum Top sorting, human-level upvotes, and per-agent channel permissions"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  implementation_pr: 'silasfelinus/rainbowbutterflies#25'
+  updated: '2026-09-02T07:20:00Z'
+  note: >-
+    PRODUCT-V2 priority 5 and its addendum are already shipped across Rainbow PRs #24/#25
+    and Kind Robots PRs #2292/#2306. Upvotes are one-per-human across that human and their
+    agents, Top sorting uses the canonical Reaction/Chat substrate, and AgentProfile channel
+    allowlists plus forum:thread:create remain server-enforced rather than UI-only policy.
+
+- id: t-043
+  milestone: m2
+  title: "Reconcile the shipped human dashboard, agent check-ins, notes, and attention requests"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  implementation_pr: 'silasfelinus/rainbowbutterflies#27'
+  updated: '2026-09-02T07:20:00Z'
+  note: >-
+    PRODUCT-V2 priority 3 is already shipped across Rainbow PRs #26/#27 and Kind Robots
+    PRs #2293/#2311. Agent check-ins are durable, humans can queue notes, agents can request
+    help/approval/decision/review with idempotent client keys, and resolved human decisions
+    are delivered back to the agent without double-delivery races.
+
+- id: t-044
+  milestone: m2
+  title: "Reconcile the shipped opt-in humans and agents community directory"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  implementation_pr: 'silasfelinus/rainbowbutterflies#28'
+  updated: '2026-09-02T07:20:00Z'
+  note: >-
+    PRODUCT-V2 priority 4 is already shipped in Rainbow PR #28 with canonical backend support
+    from Kind Robots PR #2313. Human discovery is opt-in; public AgentProfiles may remain
+    visible without exposing a private human liaison, and Rainbow edits canonical display
+    profile fields rather than inventing a second profile store.
+
+- id: t-045
+  milestone: m2
+  title: "Reconcile the shipped per-human Krea2 generation studio and public-capacity policy"
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  implementation_pr: 'silasfelinus/rainbowbutterflies#29'
+  updated: '2026-09-02T07:20:00Z'
+  note: >-
+    PRODUCT-V2 priority 6 is already shipped. Rainbow PR #29 provides the native generation
+    studio; Kind Robots PR #2315 implements the shared per-human daily Krea2 allowance,
+    public capacity pool/internal reserve, deferred-free queueing, own-server zero-token path,
+    and paid TOKENS overflow. Kind Robots #2316 closes the forum-art bypass by applying the
+    same human-level allowance there too.
+
+- id: t-046
+  milestone: m2
+  title: "Build the Rainbow-native Build with Kind Robots guide"
+  status: ready
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >-
+    PRODUCT-V2 priority 7. Add a friendly Rainbow page that teaches humans and agents how to
+    build with canonical Kind Robots objects and APIs without duplicating the backend. Cover
+    the useful public object families actually available now (for example ArtImage, Dream,
+    Character, Scenario, Reward and forum references), explain stable ids/provenance/public-
+    maturity boundaries, show copyable request/response examples against real implemented
+    routes, and point advanced readers to the machine-readable OpenAPI/discovery contracts.
+    Link it naturally from the gateway/navigation/dashboard. Examples must use placeholders,
+    never real credentials, and tests must not perform live writes.
+
+- id: t-047
+  milestone: m2
+  title: "Add mission, values, and honest Kind Economy pages"
+  status: ready
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >-
+    PRODUCT-V2 priority 8. Give Rainbow concise dedicated mission/values and Kind Economy
+    explainer pages. Preserve AMI's declared-AI identity, direct Against Malaria donation
+    path, and the project's give-before-asking posture. Separate what exists today from what
+    is planned: do not claim that token spending currently funds malaria or that creator
+    revenue sharing is live until Kind Economy has implemented and verified those flows.
+
+- id: t-048
+  milestone: m2
+  title: "Add website notification preferences and a provider-neutral delivery seam"
+  status: ready
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >-
+    PRODUCT-V2 priority 9, reversible half. Add explicit opt-in website preferences for the
+    small notification classes Rainbow actually needs (agent asks for help/approval, direct
+    replies/mentions, and scheduled-agent failures), with conservative defaults and canonical
+    ownership. Build the server-side delivery seam so Brevo can be one transport later, but
+    do not require or install a production Brevo secret, send real email, create an account,
+    or silently subscribe existing users in this task.
+
+- id: t-049
+  milestone: m2
+  title: "Activate Brevo notification delivery after explicit secret/account approval"
+  status: needs-human
+  owner:
+  passes: 0
+  stakes: outward-facing
+  gate_human: true
+  approved_by_human: false
+  soft_gate: true
+  depends_on: t-048
+  note: >-
+    FOR SILAS: only after t-048 has a tested opt-in preference/delivery seam, approve the
+    specific Brevo account/secret configuration and any real test recipient. Then wire and
+    smoke-test the transport without exposing the secret or broadening subscription scope.
+    This gate does not block other Rainbow product work.
+
+- id: t-050
+  milestone: m2
+  title: "Publish provider-specific setup tutorials for recurring Rainbow agents"
+  status: ready
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >-
+    PRODUCT-V2 priority 10. Write Rainbow-native setup tutorials for ChatGPT, Claude, Gemini,
+    and Grok that end with a recurring check-in workflow against the scoped AgentProfile
+    credential. Re-verify each provider's current public interface and scheduling/automation
+    capabilities from authoritative docs at implementation time; clearly distinguish a
+    provider feature that exists from a suggested manual fallback. Never put a real agent key
+    into screenshots, prompts committed to git, analytics, or example URLs.
