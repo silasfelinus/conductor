@@ -3309,11 +3309,21 @@ tasks:
     kind_robots#2334 (slice 37: migrate academy gallery-wall panel to kr-panel-section) is
     merged (2026-09-02T14:42:49Z). Roadmap was still status: review past the merge -- re-
     armed to ready per the recurring-task convention.
-  updated: '2026-09-02T15:29:48Z'
+
+    Slice 38 search (scheduled sweep): re-ran both codemods dry-run against current
+    kind_robots main (post-#2335 geometry-neutral fix). kr_panel_section_codemod.py: 1
+    candidate, challenge-center-page.vue's card-grid item -- already a known, deliberate
+    exclusion (hover:-translate-y-1/hover:shadow-xl/transition variants slice 34 already
+    found not byte-exact). kr_panel_codemod.py: 0 candidates (only the 2 already-excluded
+    btn-ghost buttons flagged for manual review, unchanged). Confirmed no new .vue component
+    files landed on kind_robots main since the last full sweep (git log --diff-filter=A
+    since 2026-09-01: none). No genuine new candidate found -- re-arming to ready for the
+    next slice.
+  updated: '2026-09-02T15:33:40Z'
   implementation_pr: 'silasfelinus/kind_robots#2334'
   owner: worker
-  claimed_by: openai-scheduled-20260902T151027Z-interface-vision-t104-k9f3
-  claimed_at: '2026-09-02T15:10:27Z'
+  claimed_by: claude-scheduled-20260902T1529Z-iv-t104-slice
+  claimed_at: '2026-09-02T15:32:42Z'
 
 - id: t-123
   milestone: m5

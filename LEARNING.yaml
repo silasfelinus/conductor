@@ -12222,6 +12222,21 @@ records:
     on its own. Worth teaching the codemod itself to skip a candidate whose own class list carries no
     padding token at all, rather than relying on a human/reviewer catching it by reading the file."
 - date: 2026-09-02
+  project: rainbow-butterflies
+  task: t-051
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "next_ready_task.py surfaced this as a reclaimable stale claim (claimed_at 09:04:00Z,
+    past the 90-minute TTL). Before implementing, checked kind_robots for existing work under the
+    original claiming session's name and found kind_robots#2329 already merged 46 minutes after the
+    claim -- the full two-tool MCP bridge (rainbow_agent_identity, rainbow_check_in) the task
+    specified. The implementation was real and complete; only the roadmap claimed -> done transition
+    was missing. Checking for already-merged work under a stale claim's session id before starting
+    a fresh implementation avoided duplicating an already-shipped feature."
+- date: 2026-09-02
   project: kapowarr
   task: t-070
   kind: software
