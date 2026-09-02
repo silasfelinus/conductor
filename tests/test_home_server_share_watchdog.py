@@ -80,8 +80,17 @@ class HealthcheckScriptTests(unittest.TestCase):
             line for line in self.text.splitlines()
             if not line.lstrip().startswith("#")
         )
-        calls = code.count("$pm2Command.Source jlist")
+        # The invocation moved inside a Start-Job scriptblock on 2026-09-02 so
+        # it can be bounded by a timeout (an unresponsive pm2 daemon used to
+        # hang the whole run). Still exactly one read per tick, which is what
+        # this test is actually about -- the exe is now passed in as $exe.
+        calls = code.count("$exe jlist")
         self.assertEqual(calls, 1, "pm2 must be read once per tick")
+        self.assertEqual(
+            code.count("-ArgumentList $pm2Command.Source"),
+            1,
+            "pm2 must be handed to exactly one job, not invoked per target",
+        )
         self.assertNotIn(
             "pm2 jlist 2>&1 | Out-String) | ConvertFrom-Json",
             code,
