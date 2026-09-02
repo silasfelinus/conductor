@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3317,7 +3317,18 @@ tasks:
     Re-armed to ready: implementation_pr silasfelinus/kind_robots#2324 (slice 33, kr-panel-
     section primitive + 5-file coloring-book migration) confirmed merged. Recurring task
     cycles back to ready per convention.
-  updated: '2026-09-02T09:35:52Z'
+
+    Slice 34 merged as silasfelinus/kind_robots#2328 (squash 7d9827b). Migrated the
+    remaining exact-match rounded-3xl/border-base-300/bg-base-100/p-5/shadow-sm occurrences
+    to kr-panel-section flagged after slice 33: coat-dance-page, project-gallery-strip,
+    project-deliverables-panel, voice-lab-page (x2), davinci-page (x2), sketchy-page,
+    conductor-app-page, newsfeed-page, academy-style-detail (x2), and one panel in coloring-
+    book-studio. Byte-equivalent, no geometry/behavior change. Skipped (not byte-exact):
+    challenge-center-page.vue (shadow-xl/hover variants) and coloring-book-studio.vue's
+    remaining p-5/p-4-no-shadow panels (a different, unnamed surface shape -- candidate for
+    a future kr-* primitive per this slice's kaizen suggestion). Re-arming to ready for the
+    next slice.
+  updated: '2026-09-02T09:41:51Z'
   implementation_pr: 'silasfelinus/kind_robots#2328'
   owner: worker
   claimed_by: claude-scheduled-20260902T0900Z-ivt104
