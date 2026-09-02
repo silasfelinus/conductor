@@ -627,11 +627,11 @@ tasks:
   title: >-
     Wire repair_dream_prose_catalog.py --verify-live into the recurring t-006 maintenance
     pass so composed-field drift surfaces automatically
-  status: ready
-  owner:
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-09-01T00:00:00Z'
+  updated: '2026-09-02T20:32:55Z'
   note: >
     Kaizen from PR #3386 (conductor sweep, 2026-09-01): two live character rows
     (3295, 3314) sat with a garbled `backstory` for two days after the 2026-08-31
@@ -643,6 +643,8 @@ tasks:
     `--verify-live --strict` check to t-006's recurring pass (or a dedicated CI job)
     so the next builder-fix-that-doesn't-back-propagate is caught the same cycle,
     not the next time it happens to appear on a card.
+  claimed_by: claude-scheduled-20260902T203255Z-dream-cycle-t024
+  claimed_at: '2026-09-02T20:32:55Z'
 - id: t-025
   milestone: m5
   title: >-
