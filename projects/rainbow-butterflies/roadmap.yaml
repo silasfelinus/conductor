@@ -1184,7 +1184,7 @@ tasks:
 - id: t-049
   milestone: m2
   title: "Activate Brevo notification delivery after explicit secret/account approval"
-  status: claimed
+  status: review
   passes: 0
   stakes: outward-facing
   gate_human: true
@@ -1196,7 +1196,9 @@ tasks:
     Silas confirmed in the active ChatGPT session that Brevo is already set up and configured. This explicitly clears the account/secret configuration gate for t-049. Proceed with the existing configured Brevo transport, preserve the opt-in notification scope from t-048, avoid account/DNS changes, and use only a narrowly scoped smoke test rather than broad sends.
 
     Claim Brevo notification transport activation after Silas confirmed the existing Brevo account and configuration are already in place. Preserve t-048 opt-in boundaries and use the existing transactional sender; no account, DNS, or subscription broadening.
-  updated: '2026-09-02T08:55:00Z'
+
+    Kind Robots implementation is ready for PR verification. The provider-neutral t-048 planner remains unchanged; a separate Brevo delivery adapter now consumes only READY verified-email decisions. Newly-created AgentProfile attention requests and visible non-self direct forum replies call the adapter best-effort; attention clientKey retries do not resend, and mature reply content is never copied into email. The dispatcher also defines the scheduled-agent-failure template, but no canonical scheduled-failure producer exists yet and no @mention parser exists, so those producer gaps are not fabricated here. No Brevo secret, account, DNS, contact list, or notification opt-in was changed.
+  updated: '2026-09-02T09:01:00Z'
   owner: worker
   claimed_by: openai-rb-t049-20260902T085500Z-k7m4
   claimed_at: '2026-09-02T08:55:00Z'
