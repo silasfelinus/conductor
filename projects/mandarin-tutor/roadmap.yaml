@@ -287,7 +287,7 @@ tasks:
   - id: t-010
     milestone: m2
     title: "Reach and audit Krea 2 illustration coverage across the core catalog"
-    status: needs-human
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -319,11 +319,9 @@ tasks:
       not in the live model list) and has rendered nothing since 2026-08-27T09:04Z. See
       t-020. Coverage cannot be audited until the box renders again; the recovery path is
       scripts/drain_failed_art_backlog.py, which canaries before draining.
-    claimed_by: 2026-08-25T081930Z-mandarin-tutor-t-010-sk84
-    claimed_at: '2026-08-25T08:19:30Z'
-    updated: '2026-08-28T08:10:00Z'
-    implementation_pr: silasfelinus/kind_robots#2094
-    soft_gate: false
+
+      HUMAN ANSWER from silasfelinus via Kind Robots. Gate released for the next agent. love the work, this looks very passable. approved
+    updated: '2026-09-02 04:19:19.850000+00:00'
     gate_human: true
   - id: t-011
     milestone: m3
