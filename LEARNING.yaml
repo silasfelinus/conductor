@@ -12057,3 +12057,40 @@ records:
     guard against source text is exactly as blind to comments/strings as the pattern
     it's matching, so a new comment near guarded code should be checked against every
     such guard's actual matching logic, not just eyeballed for correctness.
+- date: '2026-09-02'
+  project: mandarin-tutor
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A dedicated read-only, media-origin HEAD-probe audit is worth writing even when a
+    project already has "reach" tooling (queue_mandarin_tutor_art.py) that reports its
+    own missing/staged counts -- that tooling's notion of "missing" is scoped to its own
+    staging file (art-prompts.yaml), not to what actually rendered. Trusting it instead
+    of probing the media origin directly would have hidden that "already staged: 0" no
+    longer meant "nothing done" once the corpus's original request rows left the file.
+    Re-running that same "reach" tool as a naive double-check (rather than the read-only
+    audit) came within one command of re-staging an already-100%-rendered 577-card
+    corpus as missing, which would have duplicate-submitted it against a host that just
+    recovered from an outage -- filed as conductor/t-142. General lesson: a tool whose
+    job is "make sure X is requested" is not a safe stand-in for auditing "is X actually
+    done," even when it reports a count that looks like an audit.
+- date: '2026-09-02'
+  project: mandarin-tutor
+  task: t-020
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A production incident recovery task can sit at status: ready for days after the
+    actual outage clears, if nothing re-checks it once Silas's "temporary outage, should
+    be fixed" answer releases the gate -- the gate answer only unblocks the next agent
+    to go verify, it doesn't verify anything itself. Recovery was confirmed here with
+    tools that already existed (check_render_box.py, drain_failed_art_backlog.py's
+    dry-run classification) -- no new code needed, just actually running them against
+    current live state instead of trusting the multi-day-old note.
