@@ -248,7 +248,7 @@ def find_all_pr_refs(text: str) -> list[tuple[str, int]]:
     leaving the field silently stale with no further check ever looking past
     it. This combined extraction is what lets check_drift's field-staleness
     pass (below) notice a later, title-confirmed merged PR the note mentions
-    that the recorded field does not match — see resolve_field_staleness.
+    that the recorded field does not match — see find_field_stale_findings.
     """
     seen: list[tuple[str, int]] = []
     for pair in find_pr_refs(text):
