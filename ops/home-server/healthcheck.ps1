@@ -178,11 +178,17 @@ if (-not $pm2Command) {
     # Bounded, because an unbounded call here can wedge the whole watchdog.
     # 'pm2 jlist' talks to the per-user pm2 daemon over a local socket and will
     # sit there indefinitely if that daemon is unresponsive, or has to be
-    # spawned for an account that has none. With Task Scheduler set to stop the
-    # existing instance when the next fires, a hang here means every run is
-    # killed by its successor, forever: the task looks scheduled and healthy
-    # from the outside while nothing is actually being checked, and the log
-    # stays completely silent because the tick line is never reached.
+    # spawned for an account that has none.
+    #
+    # This task runs with MultipleInstances=IgnoreNew and a 72-hour
+    # ExecutionTimeLimit (verified on Silas-PC 2026-09-02), which is the worst
+    # possible combination for a hang here: the stuck run is not killed for
+    # three days, and every 5-minute trigger in the meantime is silently
+    # SKIPPED rather than started. One hang therefore stops the watchdog
+    # completely - not for one tick, for days - while Task Scheduler keeps
+    # reporting a healthy NextRunTime and the log says nothing at all, because
+    # the tick line below is never reached. A bounded call is what keeps a bad
+    # minute from becoming a bad weekend.
     $pm2Raw = ''
     $pm2ExitCode = 0
     $pm2Job = Start-Job -ScriptBlock {
