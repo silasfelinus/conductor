@@ -36,7 +36,7 @@ def test_hostbuf_workflow_installs_runtime_dependency():
     assert "python -m pip install PyYAML" in workflow
 
 
-def test_hostbuf_workflow_uses_current_production_api_base():
+def test_hostbuf_workflow_uses_kindrobots_domain_not_vercel():
     workflow = WORKFLOW.read_text(encoding="utf-8")
-    assert "KR_BASE_URL: https://kind-robots.vercel.app" in workflow
-    assert "KR_BASE_URL: https://kindrobots.org" not in workflow
+    assert "KR_BASE_URL: https://kindrobots.org" in workflow
+    assert "kind-robots.vercel.app" not in workflow
