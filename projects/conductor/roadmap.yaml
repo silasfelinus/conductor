@@ -5372,9 +5372,8 @@ tasks:
 - id: t-142
   milestone: m2
   title: "queue_mandarin_tutor_art.py's dedup check re-stages an already-fully-rendered corpus once its original request rows leave art-prompts.yaml"
-  status: review
+  status: done
   gate_human: false
-  owner: worker
   stakes: reversible
   passes: 0
   note: |-
@@ -5385,8 +5384,10 @@ tasks:
 
 
     Added live-media HEAD deduplication and regression coverage so completed Mandarin illustrations cannot be restaged after their request rows leave art-prompts.yaml.
+
+    Merged conductor#3443. The Mandarin producer now checks final media state and queues only authoritative 404/410 misses, preventing pruned request rows from recreating completed ArtJobs.
   claimed_by: 2026-09-02T055041Z-codex-t142
   claimed_at: '2026-09-02T05:50:41Z'
-  updated: '2026-09-02T06:06:44Z'
+  updated: '2026-09-02 06:15:30+00:00'
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'

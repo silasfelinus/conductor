@@ -12115,3 +12115,14 @@ records:
     fix: no check currently flags this specific recurring signature, so each occurrence
     has only ever been caught by an agent happening to read the stats endpoint while
     doing something else.
+- date: 2026-09-02
+  project: conductor
+  task: t-142
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: null
+  lesson: Ephemeral request rows cannot be the only deduplication source; producers must consult final
+    artifact truth, and ambiguous origin probes should fail closed rather than create costly duplicate
+    work.
