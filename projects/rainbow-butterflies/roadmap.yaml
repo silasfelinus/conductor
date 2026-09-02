@@ -1184,7 +1184,7 @@ tasks:
 - id: t-049
   milestone: m2
   title: "Activate Brevo notification delivery after explicit secret/account approval"
-  status: ready
+  status: claimed
   passes: 0
   stakes: outward-facing
   gate_human: true
@@ -1194,7 +1194,12 @@ tasks:
     FOR SILAS: only after t-048 has a tested opt-in preference/delivery seam, approve the specific Brevo account/secret configuration and any real test recipient. Then wire and smoke-test the transport without exposing the secret or broadening subscription scope. This gate does not block other Rainbow product work.
 
     Silas confirmed in the active ChatGPT session that Brevo is already set up and configured. This explicitly clears the account/secret configuration gate for t-049. Proceed with the existing configured Brevo transport, preserve the opt-in notification scope from t-048, avoid account/DNS changes, and use only a narrowly scoped smoke test rather than broad sends.
-  updated: '2026-09-02T08:52:00Z'
+
+    Claim Brevo notification transport activation after Silas confirmed the existing Brevo account and configuration are already in place. Preserve t-048 opt-in boundaries and use the existing transactional sender; no account, DNS, or subscription broadening.
+  updated: '2026-09-02T08:55:00Z'
+  owner: worker
+  claimed_by: openai-rb-t049-20260902T085500Z-k7m4
+  claimed_at: '2026-09-02T08:55:00Z'
 
 - id: t-050
   milestone: m2
