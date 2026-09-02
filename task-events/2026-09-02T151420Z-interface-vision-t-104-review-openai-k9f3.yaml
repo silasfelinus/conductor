@@ -1,9 +1,0 @@
-version: 1
-project: interface-vision
-task: t-104
-operation: review
-owner: worker
-session: openai-scheduled-20260902T151027Z-interface-vision-t104-k9f3
-updated: '2026-09-02T15:14:20Z'
-note: >-
-  Found a safety defect in the new kr-panel-section codemod: it matched no-padding wrappers that the immediately preceding slice explicitly excluded because applying kr-panel-section would add p-5 and change geometry. Tightened the codemod to require an existing unprefixed full-padding utility before migration, preserving p-4/p-6 overrides while excluding child-owned/axis-only padding surfaces. Implementation branch worker/interface-vision-t-104-openai-k9f3.
