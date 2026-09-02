@@ -5341,9 +5341,9 @@ tasks:
 - id: t-141
   milestone: m2
   title: "Detect a PR that silently deletes a roadmap task's body and reuses its id for an unrelated task"
-  status: ready
+  status: claimed
   gate_human: false
-  owner: null
+  owner: worker
   stakes: reversible
   passes: 0
   note: >-
@@ -5372,9 +5372,9 @@ tasks:
     merge, the way this session had to do by hand. Add regression coverage under
     tests/test_validate_roadmaps.py (or a new tests/test_roadmap_id_reuse.py) covering
     the exact shape here: an id whose title+milestone both change between base and head.
-  claimed_by: null
-  claimed_at: null
-  updated: '2026-09-02T03:45:00Z'
+  claimed_by: openai-scheduled-20260902T141521Z-conductor-t141-k4m8
+  claimed_at: '2026-09-02T14:15:21Z'
+  updated: '2026-09-02T14:15:21Z'
 - id: t-142
   milestone: m2
   title: "queue_mandarin_tutor_art.py's dedup check re-stages an already-fully-rendered corpus once its original request rows leave art-prompts.yaml"
