@@ -5372,9 +5372,9 @@ tasks:
 - id: t-142
   milestone: m2
   title: "queue_mandarin_tutor_art.py's dedup check re-stages an already-fully-rendered corpus once its original request rows leave art-prompts.yaml"
-  status: ready
+  status: claimed
   gate_human: false
-  owner: null
+  owner: worker
   stakes: reversible
   passes: 0
   note: >
@@ -5411,8 +5411,8 @@ tasks:
     not just presence in art-prompts.yaml. Add regression coverage: a manifest entry
     whose row was removed from art-prompts.yaml after being fully rendered must NOT be
     re-staged.
-  claimed_by: null
-  claimed_at: null
-  updated: '2026-09-02T04:45:00Z'
+  claimed_by: 2026-09-02T055041Z-codex-t142
+  claimed_at: '2026-09-02T05:50:41Z'
+  updated: '2026-09-02T05:50:41Z'
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
