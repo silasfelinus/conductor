@@ -4046,12 +4046,12 @@ tasks:
 - id: t-091
   milestone: m1
   title: "Investigate and document the disappearance of the Component model and its server/api/components/* routes"
-  status: claimed
+  status: done
   owner: reviewer
   passes: 0
   stakes: reversible
-  updated: '2026-09-02T02:36:40Z'
-  note: >
+  updated: '2026-09-02T02:36:54Z'
+  note: >-
     Filed 2026-09-02 (weekly site audit, global-ui/SITE-AUDIT-AGENT.md). t-033's
     last recheck (2026-07-25, seventh consecutive clean pass before closing)
     still names `server/api/components/[id].patch.ts:151` and
@@ -4070,6 +4070,25 @@ tasks:
     PR/migration and what superseded it, if anything, and check whether any
     front end still calls the missing routes and silently 404s) or an
     accidental regression that should be restored.
+
+    INVESTIGATED AND RESOLVED. Deepened the local kind_robots shallow clone (git fetch
+    --unshallow) to reach full history, then git log --all -- server/api/components. This
+    was a deliberate, documented removal, not an accidental regression: commit e34a26f70
+    'Retire legacy Component API and Lab router' (Silas M Knight, 2026-08-11) deleted all 9
+    server/api/components/* route files, the Cypress e2e suite for them, and the lab-
+    manager.vue UI, alongside a dedicated component-runtime-retirement-contract.yml CI
+    check. A same-day follow-up (df5f5aed, github-actions bot, 2026-08-12) 'refactor: retire
+    Component database schema' then dropped the Component/ComponentStatus Prisma model and
+    its FK from ArtImage/Reaction, matching the same deliberate-retirement shape as t-051's
+    curate-request.post.ts precedent. Confirmed nothing calls the missing routes on current
+    main: grepping api/components across the whole repo (vue/ts/js) turns up only
+    utils/scripts/verifyComponentRuntimeRetirement.ts, whose job is asserting the routes and
+    helper STAY deleted -- there is an active CI guard against exactly this regression, not
+    a silent 404 anywhere live. t-033's cited inline comments on the two still-referenced
+    route files were themselves already stale by the time this task was filed (the routes
+    they described no longer exist); no further action needed there since the routes and
+    their comments are simply gone. No code change required -- this was purely a historical-
+    record gap in the roadmap, now closed.
   claimed_by: claude-20260902T024500Z-kr-t091
   claimed_at: '2026-09-02T02:36:40Z'
 
