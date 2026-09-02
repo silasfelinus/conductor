@@ -12169,3 +12169,26 @@ records:
     is enough to diff base vs head line counts for any watched file without a second full-file-read diffing
     path. This session''s sandbox pytest tool was again missing PyYAML (the same documented gap as t-140''s
     session) and needed uv tool install pytest --with pyyaml --force before the 13 new tests could run.'
+- date: 2026-09-02
+  project: conductor
+  task: t-139
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "check_pr_merged_drift.py's implementation_pr-field pass (0) treated a confirmed-merged
+    field as the final word and never looked further, so a task reclaimed and reprogressed via a
+    SECOND PR after the field was recorded left it silently stale with nothing left to catch it
+    (real incident: interface-vision/t-104 closed with implementation_pr=kind_robots#2301 while a
+    later cycle had already merged kind_robots#2303 first). Fixed with a new pass 0b
+    (find_field_stale_findings): scan a field-confirmed task's own title+note for any OTHER PR
+    reference that is both merged and title-confirmed as implementing this exact
+    <project>/<task-id> -- same title-match bar the authoritative search pass already uses, so a
+    note that merely quotes the PR whose kaizen suggestion filed the task doesn't false-positive.
+    Deliberately scoped to field_findings only (never field_unresolved/malformed-field tasks) and
+    best-effort (a failed lookup on the extra reference is silently skipped, not added to
+    unresolved) so it adds zero API calls to every existing 'must not call the API further' test
+    invariant. 17 new tests added; full repo suite still green (1585 passed, 1 skipped). Companion
+    write-time fix already landed separately (close_task.py now warns on a stale
+    --implementation-pr omission) -- t-139 was the read-side detection half."
