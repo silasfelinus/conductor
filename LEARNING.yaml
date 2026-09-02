@@ -12126,3 +12126,15 @@ records:
   lesson: Ephemeral request rows cannot be the only deduplication source; producers must consult final
     artifact truth, and ambiguous origin probes should fail closed rather than create costly duplicate
     work.
+- date: 2026-09-02
+  project: ai-art-academy
+  task: t-078
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: quality
+  lesson: A workflow's KR_BASE_URL must be verified against the current self-hosted host
+    (kindrobots.org), not copied from an older *.vercel.app pattern -- a wrong default
+    would have made the new sentinel look deployed while silently never reaching its
+    signature check. Caught in review before merge, fixed in one retry.
