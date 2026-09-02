@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3341,7 +3341,24 @@ tasks:
     to a different kr-* consistency dimension (e.g. spacing/gap tokens, button variants
     beyond the flagged btn-ghost pair, or duplicate loading/empty-state patterns) rather
     than repeating the same two codemods a fourth time.
-  updated: '2026-09-02T19:32:42Z'
+
+    Slice 40 search (scheduled sweep): re-ran kr_panel_codemod.py and
+    kr_panel_section_codemod.py dry-run against current kind_robots main (post-#2338,
+    e64d923). Both returned identical results to slice 39: kr_panel_section_codemod.py's
+    only candidate remains the already-excluded challenge-center-page.vue card-grid item
+    (hover/transition variants, not byte-exact); kr_panel_codemod.py found 0 candidates
+    besides the 2 already-excluded chat-gallery.vue btn-ghost buttons (DaisyUI .btn
+    component-root conflict, correctly left for manual review). Confirmed no new .vue files
+    landed on kind_robots main since the last full sweep (git log --diff-filter=A since
+    2026-09-01: none). Fourth consecutive no-op search (slices 38, 39, 40) across the two
+    established codemod pools -- consistent with the exhaustive multi-primitive history
+    already recorded in this note (kr-container, kr-panel*, kr-scroll, kr-toolbar, kr-note
+    all independently swept to exhaustion by prior slices). Declined to invent a new shared
+    kr-* primitive (e.g. for loading-state spinners or gallery empty/error placeholders)
+    unilaterally -- that is a design-system scope decision, not a mechanical substitution,
+    and an earlier slice already raised it as a FOR SILAS open question in this same note.
+    No code change this cycle. Re-arming to ready for the next slice.
+  updated: '2026-09-02T19:36:25Z'
   implementation_pr: 'silasfelinus/kind_robots#2334'
   owner: reviewer
   claimed_by: claude-scheduled-20260902T193241Z-iv-t104-slice40
