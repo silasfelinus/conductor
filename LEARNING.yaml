@@ -12266,3 +12266,21 @@ records:
     reliable detection point for silent drift than an agent-recalled manual check -- prefer
     wiring a new verification into an existing recurring CI/workflow run over adding it to an
     agent's task checklist when both are available."
+- date: 2026-09-02
+  project: dream-cycle
+  task: t-025
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Added a per-bundle consecutive-failure counter (persisted state file already
+    covered by the existing workflow's git-add step, so no CI/workflow change needed) to
+    stop repair_dream_prose_catalog.py from retrying a chronically-failing bundle forever.
+    Kept the existing per-bundle atomicity (failed bundles stay untouched, retried next
+    run) as the default, only adding a circuit breaker on top after N consecutive
+    failures -- and explicitly exempted an editor's own extra_fields retry from the
+    breaker, since a human-directed re-ask is a different thing from an unattended
+    scheduled retry. Worth remembering for any other 'runs on a schedule forever' loop
+    in this pipeline: distinguish transient-retry-in-place from persistent-content-issue
+    before assuming every failure is worth retrying indefinitely."
