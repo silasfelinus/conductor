@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-02T05:47:57Z
+Generated: 2026-09-02T06:40:11Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **854**
-- Outcomes: blocked: 16, cancelled: 1, done: 837
+- Closed tasks recorded: **855**
+- Outcomes: blocked: 16, cancelled: 1, done: 838
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -26,7 +26,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 25 | 100% |
-| conductor | 87 | 100% |
+| conductor | 88 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 41 | 98% |
 | davinci | 8 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 838 | 99% |
+| software | 839 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-02 `conductor/t-142` — Ephemeral request rows cannot be the only deduplication source; producers must consult final artifact truth, and ambiguous origin probes should fail closed rather than create costly duplicate work.
 - 2026-09-02 `ai-art-academy/t-077` — A gate-release answer from Silas via the Kind Robots "For You" mechanism unblocks the next agent to go verify -- it is not itself the verification. This task's note text ("temp outage, should be fixed") could have been closed on directly, but live GET /api/art/queue/stats and the character/bot API showed something the note didn't: the retry it asked for had already succeeded days earlier (portraits rendered 2026-08-28), and the failure signature it was filed over was itself a third recurrence of the same disk13-adjacent hardware fault (t-067/t-068 original, this task's own filing was recurrence #2, a third burst on 2026-09-01 caught only by this session's verification read). Filed ai-art-academy/t-078 as the standing fix: no check currently flags this specific recurring signature, so each occurrence has only ever been caught by an agent happening to read the stats endpoint while doing something else.
 - 2026-09-02 `mandarin-tutor/t-020` — A production incident recovery task can sit at status: ready for days after the actual outage clears, if nothing re-checks it once Silas's "temporary outage, should be fixed" answer releases the gate -- the gate answer only unblocks the next agent to go verify, it doesn't verify anything itself. Recovery was confirmed here with tools that already existed (check_render_box.py, drain_failed_art_backlog.py's dry-run classification) -- no new code needed, just actually running them against current live state instead of trusting the multi-day-old note.
 - 2026-09-02 `mandarin-tutor/t-010` — A dedicated read-only, media-origin HEAD-probe audit is worth writing even when a project already has "reach" tooling (queue_mandarin_tutor_art.py) that reports its own missing/staged counts -- that tooling's notion of "missing" is scoped to its own staging file (art-prompts.yaml), not to what actually rendered. Trusting it instead of probing the media origin directly would have hidden that "already staged: 0" no longer meant "nothing done" once the corpus's original request rows left the file. Re-running that same "reach" tool as a naive double-check (rather than the read-only audit) came within one command of re-staging an already-100%-rendered 577-card corpus as missing, which would have duplicate-submitted it against a host that just recovered from an outage -- filed as conductor/t-142. General lesson: a tool whose job is "make sure X is requested" is not a safe stand-in for auditing "is X actually done," even when it reports a count that looks like an audit.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-01 `rainbow-butterflies/t-037` — Straightforward kaizen-slice implementation (own PR, own review/merge under the standing merge-when-green authorization): reusing t-036's authAttemptLimit helper in login.post.ts surfaced a real, separate bug worth fixing in the same PR rather than filing separately -- the handler's catch block flattened every thrown error, including the helper's own 429, into a generic 500 via `sendError(event, new Error(message))`. A quick grep confirmed this exact "no isError() check before sendError" pattern doesn't recur elsewhere in server/api, so no follow-up kaizen task was warranted for it.
 - 2026-09-01 `rainbow-butterflies/t-036` — Reviewed kind_robots#2297's rate-limit slice; its one CI failure was a real but narrow type error, not a scope/quality problem: h3 1.15.11 types the Retry-After response header as number, and the new helper passed String(...). Fixing and pushing a 2-line diff directly to the Worker's PR branch (rather than bouncing it back to the Worker with retry_context) got it green in one cycle. Also worth flagging: the PR auto-merged on its own once the known-flaky 'Contract verifiers'/ESLint-ratchet check (conductor/t-132) finally completed, without this session calling merge_pull_request -- consistent with the PR's opener having enabled auto-merge, and a reminder to re-check PR state (not just CI) before assuming a merge still needs to be triggered manually.
 - 2026-09-01 `rainbow-butterflies/t-028` — Deployment roadmaps should reconcile against observed production state before retaining a launch gate; once the approved domain is already live, continuing to present activation as future work creates misleading project state.
-- 2026-08-31 `rainbow-butterflies/t-013` — A prior session's claim on this task went stale (CLAIM_TTL_MINUTES expired) after 7 real implementation commits with no PR ever opened -- next_ready_task.py correctly surfaced it as reclaimable. Rather than re-implementing from scratch, fetched the actual worker/* branch, verified the existing diff was substantive real feature work (not scratch/placeholder), rebased it cleanly onto current main, fixed the lint/type issues it had never gotten past (eslint no-explicit-any and the resulting vue-tsc noUncheckedIndexedAccess fallout), and shipped it as kind_robots#2261. Preserving a stranded-but-real branch instead of discarding and redoing the work saved real effort and avoided a duplicate implementation. Also found the same session's CI run surfaced a genuinely broken base branch (Python test suite red on main from two malformed LEARNING.yaml records -- a YAML-breaking unescaped colon and an invalid failure_category enum value); root-caused and fixed both in a separate PR (#3316) rather than treating the failure as this PR's problem, confirming the fix by reproducing the original failure locally first.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-02T05:47:57Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-02T06:40:11Z_
