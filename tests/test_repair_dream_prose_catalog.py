@@ -644,3 +644,114 @@ def test_a_batch_where_nothing_succeeds_still_fails_loudly(tmp_path, monkeypatch
 
     with pytest.raises(RuntimeError, match="no bundle could be repaired"):
         repair._apply_batch(request_path, json.loads(request_path.read_text()))
+
+
+def test_a_bundle_that_fails_repeatedly_stops_being_auto_retried(tmp_path, monkeypatch):
+    # dream-cycle/t-025: the per-bundle-atomicity fix (see the test above) is
+    # right for a transient flake, but nothing yet distinguished that from a
+    # bundle whose own content reliably fails -- such a bundle would retry
+    # silently forever, once per scheduled run, with nobody ever told.
+    monkeypatch.setattr(repair, "ROOT", tmp_path)
+    backlog = tmp_path / "projects" / "dream-cycle" / "backlog"
+    backlog.mkdir(parents=True)
+    monkeypatch.setattr(repair, "BACKLOG", backlog)
+    _built_bundle(backlog)
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+    monkeypatch.setattr(repair.records, "KR_API_TOKEN", "test-token")
+    monkeypatch.setattr(repair.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(
+        repair.author, "call_claude",
+        lambda *a, **k: (_ for _ in ()).throw(RuntimeError("model refused the request")),
+    )
+
+    for n in range(1, repair.CHRONIC_FAILURE_THRESHOLD + 1):
+        request_path = tmp_path / f"2026-09-{n:02d}-run-request.json"
+        request_path.write_text(json.dumps({"scope": "all-built"}), encoding="utf-8")
+        with pytest.raises(RuntimeError, match="no bundle could be repaired"):
+            repair._apply_batch(request_path, json.loads(request_path.read_text()))
+
+    state = repair._load_failure_state()
+    assert len(state) == 1
+    assert list(state.values())[0] == repair.CHRONIC_FAILURE_THRESHOLD
+
+    calls: list[int] = []
+    monkeypatch.setattr(repair.author, "call_claude", lambda *a, **k: calls.append(1))
+    request_path = tmp_path / "2026-09-99-chronic-request.json"
+    request_path.write_text(json.dumps({"scope": "all-built"}), encoding="utf-8")
+
+    results = repair._apply_batch(request_path, json.loads(request_path.read_text()))
+
+    assert results == []
+    assert calls == [], "a chronic bundle must not be retried automatically"
+    receipt = json.loads((tmp_path / "2026-09-99-chronic-applied.json").read_text())
+    assert len(receipt["chronic_failures"]) == 1
+    assert receipt["chronic_failures"][0]["consecutive_failures"] == repair.CHRONIC_FAILURE_THRESHOLD
+
+
+def test_an_explicit_editorial_note_overrides_a_chronic_skip(tmp_path, monkeypatch):
+    # A human specifically re-asking for this exact bundle via extra_fields is a
+    # deliberate, directed retry -- not the unattended automatic kind the chronic
+    # guard exists to cut off, so it must still go through.
+    monkeypatch.setattr(repair, "ROOT", tmp_path)
+    backlog = tmp_path / "projects" / "dream-cycle" / "backlog"
+    backlog.mkdir(parents=True)
+    monkeypatch.setattr(repair, "BACKLOG", backlog)
+    _built_bundle(backlog)
+    state_path = repair._failure_state_path()
+    state_path.parent.mkdir(parents=True, exist_ok=True)
+    state_path.write_text(
+        json.dumps({"2026-08-30::Monsoon Static": repair.CHRONIC_FAILURE_THRESHOLD}),
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+    monkeypatch.setattr(repair.records, "KR_API_TOKEN", "test-token")
+    calls: list[int] = []
+    fixed = "The barrier lamps are already dimming and the crowd has gone quiet."
+
+    def _call(prompt, system, key):
+        calls.append(1)
+        return json.dumps({"item_best_used_when": fixed, "skill_best_used_when": fixed})
+
+    monkeypatch.setattr(repair.author, "call_claude", _call)
+    request_path = tmp_path / "2026-09-10-override-request.json"
+    request_path.write_text(
+        json.dumps({
+            "scope": "all-built",
+            "extra_fields": {"2026-08-30": {"rewards[item].best_used_when": "still stale"}},
+        }),
+        encoding="utf-8",
+    )
+
+    results = repair._apply_batch(request_path, json.loads(request_path.read_text()))
+
+    assert calls, "an explicitly-noted retry must still call the model"
+    assert len(results) == 1
+    assert repair._load_failure_state() == {}, "a successful repair clears the failure streak"
+
+
+def test_a_successful_repair_resets_the_failure_streak(tmp_path, monkeypatch):
+    monkeypatch.setattr(repair, "ROOT", tmp_path)
+    backlog = tmp_path / "projects" / "dream-cycle" / "backlog"
+    backlog.mkdir(parents=True)
+    monkeypatch.setattr(repair, "BACKLOG", backlog)
+    _built_bundle(backlog)
+    state_path = repair._failure_state_path()
+    state_path.parent.mkdir(parents=True, exist_ok=True)
+    state_path.write_text(
+        json.dumps({"2026-08-30::Monsoon Static": 2}),
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+    monkeypatch.setattr(repair.records, "KR_API_TOKEN", "test-token")
+    fixed = "The barrier lamps are already dimming and the crowd has gone quiet."
+    monkeypatch.setattr(
+        repair.author, "call_claude",
+        lambda *a, **k: json.dumps({"item_best_used_when": fixed, "skill_best_used_when": fixed}),
+    )
+    request_path = tmp_path / "2026-09-11-recovers-request.json"
+    request_path.write_text(json.dumps({"scope": "all-built"}), encoding="utf-8")
+
+    results = repair._apply_batch(request_path, json.loads(request_path.read_text()))
+
+    assert len(results) == 1
+    assert not state_path.exists(), "a cleared failure state should not leave an empty file behind"
