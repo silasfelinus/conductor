@@ -2872,3 +2872,27 @@ tasks:
   owner: reviewer
   claimed_by: claude-scheduled-20260902T053015Z-aiaa-t077
   claimed_at: '2026-09-02T05:30:16Z'
+
+- id: t-078
+  milestone: m2
+  title: "Add standing alerting for the hostbuf_file_reader_read render-box failure signature instead of relying on an agent noticing"
+  status: ready
+  stakes: reversible
+  note: |-
+    Kaizen from t-077's close-out. `CLIPTextEncode: hostbuf_file_reader_read failed` has
+    now hit the render box three times (t-067/t-068's original diagnosis and disk13 cable
+    fix, t-077's recurrence ~24h later, and a third burst on 2026-09-01T07:5x UTC --
+    11 jobs, ids 15390-15399 -- caught only because this session happened to read
+    `GET /api/art/queue/stats` while closing t-077, not by any standing check). Each time
+    the pattern is identical: a burst of consecutive `recentFailed` entries sharing the
+    exact hostbuf error string, then silence once the underlying hardware issue is
+    physically addressed. `check_render_box.py` and `recheck_render_queue.py` already
+    know how to read `queue/stats` and classify failures by signature
+    (`group_failures_by_signature`) but neither currently raises anything specific to
+    this recurring signature -- a generic elevated-failure-rate read doesn't distinguish
+    "this exact known hardware fault came back" from ordinary noise. Add a check (either
+    a new small script or an extension to `recheck_render_queue.py`) that flags when the
+    hostbuf signature appears in `recentFailed` at all, and wire it into whichever
+    schedule already runs `check_render_box.py`/`recheck_render_queue.py` so a recurrence
+    surfaces as an actionable needs-human gate the same day it happens, not whenever an
+    unrelated task's close-out happens to look at the stats endpoint.
