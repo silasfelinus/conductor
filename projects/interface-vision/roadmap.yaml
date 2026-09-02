@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -3307,9 +3307,15 @@ tasks:
     merged; note already said "re-arming to ready" but the status field was left at review.
     Flipping status back to ready per the recurring-task convention so the next slice can be
     picked up.
-  updated: '2026-09-02T14:31:51Z'
-  implementation_pr: 'silasfelinus/kind_robots#2331'
-  owner: reviewer
+
+    Slice 37: migrated academy-style-detail.vue Gallery wall section to kr-panel-section
+    (p-4 sm:p-5 override preserved, matching slice 36 precedent). Also swept for kr-
+    container candidates tree-wide (mx-auto+w-full+max-w-* exact match) -- only
+    messenger.vue matched, already excluded (kr-panes + arbitrary h-[70vh]). Verified
+    eslint/vue-tsc/test:layout-contract clean before opening kind_robots#2334.
+  updated: '2026-09-02T14:36:54Z'
+  implementation_pr: 'silasfelinus/kind_robots#2334'
+  owner: worker
   claimed_by: claude-web-20260902T142700Z-iv-t104
   claimed_at: '2026-09-02T14:31:51Z'
 
