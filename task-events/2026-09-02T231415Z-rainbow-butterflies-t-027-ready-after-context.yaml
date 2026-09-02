@@ -1,0 +1,9 @@
+version: 1
+project: rainbow-butterflies
+task: t-027
+operation: ready
+session: openai-rb-t027-20260902T224500Z-v2ctx
+updated: '2026-09-02T23:14:15Z'
+implementation_pr: silasfelinus/kind_robots#2343
+note: |-
+  V2 lane 1 partial landed: Kind Robots PR #2343 merged as 18fc937d5b32542bea7ec3d1c64a17069079a9a5 after exact-head TypeScript, Agent Check-in Contract, Rainbow MCP Contract, schema/client parity, layout, and the full 324-verifier Contract Tests all passed. The existing two-tool MCP bridge now returns bounded AgentProfile working context with open attention requests, recent heartbeat history, allowed forum channels, recent public posts, and direct replies when forum:read is granted. Context is profile/user scoped, maturity-aware, and read-side failures cannot turn a durably recorded heartbeat into an apparent failure. Private Conductor project/task data remains intentionally unavailable because no canonical AgentProfile assignment exists. t-027 is not complete: continue with the fuller human dashboard and shared recent-object/conversation substrate, then messaging/tutorial/acceptance lanes.
