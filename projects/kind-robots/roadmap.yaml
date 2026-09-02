@@ -39,7 +39,7 @@ milestones:
 - id: m1
   title: "App scope + boundary defined (what's app-owned vs shared backend)"
   weight: 100
-  status: done
+  status: in-progress
 
 - id: m2
   title: "Workspace UI — project card images"
@@ -4044,6 +4044,34 @@ tasks:
     mock that drifts from its endpoint quietly measures nothing.
 
 - id: t-091
+  milestone: m1
+  title: "Investigate and document the disappearance of the Component model and its server/api/components/* routes"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-09-02T00:00:00Z'
+  note: >
+    Filed 2026-09-02 (weekly site audit, global-ui/SITE-AUDIT-AGENT.md). t-033's
+    last recheck (2026-07-25, seventh consecutive clean pass before closing)
+    still names `server/api/components/[id].patch.ts:151` and
+    `server/api/components/index.post.ts:51` as live routes, each carrying an
+    inline comment (citing this task) explaining why `as Prisma.InputJsonObject`
+    is the correct precise cast for a native Json column there. As of this
+    audit (2026-09-02), neither route exists anywhere in the current kind_robots
+    checkout -- confirmed via Glob/Grep for `server/api/components/**`, and no
+    `model Component` appears anywhere in prisma/schema.prisma at all (confirmed
+    against the full `^model ` listing, 84 models, none named Component). No
+    roadmap task anywhere records when or why the Component model and its API
+    were removed. This is the same shape as t-051's already-resolved
+    curate-request.post.ts investigation (deliberate removal in kind_robots PR
+    #1244, tied to a specific product decision) -- confirm whether this was
+    similarly a deliberate, documented removal (find and record the removing
+    PR/migration and what superseded it, if anything, and check whether any
+    front end still calls the missing routes and silently 404s) or an
+    accidental regression that should be restored.
+
+- id: t-092
   milestone: m6
   title: Backfill Facets onto the 36 daily-dream Characters that never received them
   status: needs-human
