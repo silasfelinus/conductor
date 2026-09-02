@@ -5341,7 +5341,7 @@ tasks:
 - id: t-141
   milestone: m2
   title: "Detect a PR that silently deletes a roadmap task's body and reuses its id for an unrelated task"
-  status: review
+  status: done
   gate_human: false
   owner: worker
   stakes: reversible
@@ -5353,7 +5353,8 @@ tasks:
     Implemented a PR-time soft-warning guard that compares changed roadmap task ids against the PR base and flags simultaneous title+milestone rewrites, with regression coverage for the t-091 collision shape.
   claimed_by: openai-scheduled-20260902T141521Z-conductor-t141-k4m8
   claimed_at: '2026-09-02T14:15:21Z'
-  updated: '2026-09-02T14:20:00Z'
+  updated: '2026-09-02T14:27:40Z'
+  implementation_pr: 'silasfelinus/conductor#3477'
 - id: t-142
   milestone: m2
   title: "queue_mandarin_tutor_art.py's dedup check re-stages an already-fully-rendered corpus once its original request rows leave art-prompts.yaml"
