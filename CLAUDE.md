@@ -27,6 +27,16 @@ At the start of every session, before responding to any task, run a conductor sw
      directions — a Kind Robots `conductorSlug` with no matching `projects/<slug>/roadmap.yaml`
      (the reported bug, exit 1), and a Conductor project with no matching Kind Robots row at all
      (weaker/informational, exit 3). Needs `KR_API_TOKEN`; exits 2 (unresolved, not clean) without it.
+   - `python scripts/check_live_facet_coverage.py` — asks Kind Robots what Facets each
+     built daily-dream record ACTUALLY carries, rather than trusting what the pipeline
+     recorded at apply time (dream-cycle/t-026, 2026-09-02: PUT /api/characters/:id/facets
+     ignored `facetKeys`, so all 36 built bundles logged `status: "complete"` with
+     `errors: []` over a Character holding no Facets — for six weeks, until Silas noticed
+     from the digest end). The applier now verifies its own responses, so a fresh build
+     cannot repeat that silently; this catches what a one-time record cannot — a link
+     deleted later, a catalog row merged out from under a record, or a bundle never
+     repaired. `--repair` re-applies each bundle's stored seed selection. Needs
+     `KR_API_TOKEN`; exits 2 (unresolved, not clean) without it.
    - `python scripts/check_milestone_status_drift.py` — a milestone's `status:` field (not-started/
      in-progress/done) is only ever read, never cross-checked against its own project's task list, so
      it can sit stale for weeks (conductor/t-135, filed 2026-08-28 from cthulhuquarium/t-063: m3 stuck
@@ -35,9 +45,10 @@ At the start of every session, before responding to any task, run a conductor sw
      that isn't done. Advisory only — wrong milestone status doesn't block task selection or gate
      anything, it only skews the digest's portfolio-percentage math; exit 1 means "worth a look and an
      edit," not a genuine gate. No network/token needed.
-   Treat exit 1 (or 3) from any of these as a reconciliation prompt, not permission to bypass a genuine gate. All
-   four commands intentionally exclude paused, retired, and finished projects unless `--include-inactive` is
-   supplied.
+   Treat exit 1 (or 3) from any of these as a reconciliation prompt, not permission to bypass a genuine gate. The
+   four roadmap-reading commands intentionally exclude paused, retired, and finished projects unless
+   `--include-inactive` is supplied; `check_live_facet_coverage.py` reads live records rather than roadmaps and
+   takes no such flag.
 6. Check `TALKBACK.md` tail for any unresolved escalations or security flags
 7. Run `python scripts/build_dream_proposal.py --check --fetch`. **This is now a
    backstop, not the primary path.** `daily-digest.yml` authors proposals

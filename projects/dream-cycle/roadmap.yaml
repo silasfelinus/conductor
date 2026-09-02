@@ -720,3 +720,11 @@ tasks:
     bundle the new line names the empty Character on sight.
     The count question is settled and needs no work: 4 seed facets on the vibe, ~11 across
     the bundle, and Silas has said explicitly that is fine.
+    REPAIRED 2026-09-02, on Silas's word: "Characters (and anything else us8ng facets)
+    should be repaired if missing." A read-only live sweep first, so "anything else" was
+    measured rather than assumed -- of 216 recorded targets, Characters were 36/36 empty
+    and every other element was 0/36. Then apply_daily_dream_facets.py --force, then an
+    independent re-audit: 216/216 targets present, 1045 live Facet links, zero empty, zero
+    short of what was requested. scripts/check_live_facet_coverage.py keeps it that way
+    and is in the session sweep; its tests cover the failing shapes, not just the passing
+    one, because the guard this replaces had only ever passed.
