@@ -93,6 +93,127 @@ def test_find_pr_refs_multiple_repos():
 
 
 # --------------------------------------------------------------------------- #
+# find_all_pr_refs (conductor/t-139)
+# --------------------------------------------------------------------------- #
+
+
+def test_find_all_pr_refs_matches_bare_owner_repo_form():
+    text = "Merged silasfelinus/kind_robots#2303 for the second slice."
+    assert dr.find_all_pr_refs(text) == [("silasfelinus/kind_robots", 2303)]
+
+
+def test_find_all_pr_refs_ignores_repo_without_owner_prefix():
+    # A bare "kind_robots#2303" (no owner/ prefix) isn't the implementation_pr
+    # field's own "owner/repo#number" shape, so it's deliberately not matched
+    # here -- avoids over-matching arbitrary "word#number" text in prose.
+    text = "Merged kind_robots#2303 for the second slice."
+    assert dr.find_all_pr_refs(text) == []
+
+
+def test_find_all_pr_refs_combines_alias_and_bare_forms_in_order():
+    text = "kind_robots PR #2301 landed first; silasfelinus/kind_robots#2303 landed later."
+    assert dr.find_all_pr_refs(text) == [
+        ("silasfelinus/kind_robots", 2301),
+        ("silasfelinus/kind_robots", 2303),
+    ]
+
+
+def test_find_all_pr_refs_dedupes_repeated_bare_reference():
+    text = "silasfelinus/kind_robots#2303 fixed it. See silasfelinus/kind_robots#2303 for detail."
+    assert dr.find_all_pr_refs(text) == [("silasfelinus/kind_robots", 2303)]
+
+
+def test_find_all_pr_refs_empty_text_returns_empty_list():
+    assert dr.find_all_pr_refs("") == []
+    assert dr.find_all_pr_refs(None) == []
+
+
+# --------------------------------------------------------------------------- #
+# find_field_stale_findings (conductor/t-139)
+# --------------------------------------------------------------------------- #
+
+
+def test_find_field_stale_findings_flags_later_title_confirmed_pr():
+    field_findings = [
+        {
+            "project": "interface-vision",
+            "task_id": "t-104",
+            "title": "kr-container sweep",
+            "note": "kind_robots PR #2301 landed. silasfelinus/kind_robots#2303 landed later "
+            "for interface-vision/t-104.",
+            "status": "review",
+            "repo": "silasfelinus/kind_robots",
+            "pr_number": 2301,
+            "confidence": "high",
+            "source": "implementation-pr-field",
+        }
+    ]
+    pr_2303_body = json.dumps({
+        "merged": True,
+        "merged_at": "2026-08-29T20:00:00Z",
+        "title": "interface-vision/t-104: slice 32",
+    }).encode()
+
+    with patch("urllib.request.urlopen", return_value=FakeResponse(pr_2303_body)):
+        stale = dr.find_field_stale_findings(field_findings, token=None)
+
+    assert len(stale) == 1
+    assert stale[0]["recorded_implementation_pr"] == "silasfelinus/kind_robots#2301"
+    assert stale[0]["pr_number"] == 2303
+    assert stale[0]["source"] == "note-reference-supersedes-field"
+
+
+def test_find_field_stale_findings_ignores_open_note_reference():
+    field_findings = [
+        {
+            "project": "newsfeed",
+            "task_id": "t-020",
+            "title": "x",
+            "note": "silasfelinus/kind_robots#9000 is still in review.",
+            "status": "claimed",
+            "repo": "silasfelinus/kind_robots",
+            "pr_number": 1464,
+            "confidence": "high",
+            "source": "implementation-pr-field",
+        }
+    ]
+    open_pr_body = json.dumps({
+        "merged": False,
+        "merged_at": None,
+        "title": "newsfeed/t-020: in progress",
+    }).encode()
+
+    with patch("urllib.request.urlopen", return_value=FakeResponse(open_pr_body)):
+        stale = dr.find_field_stale_findings(field_findings, token=None)
+
+    assert stale == []
+
+
+def test_find_field_stale_findings_no_note_returns_empty():
+    field_findings = [
+        {
+            "project": "newsfeed",
+            "task_id": "t-020",
+            "title": "x",
+            "note": "",
+            "status": "claimed",
+            "repo": "silasfelinus/kind_robots",
+            "pr_number": 1464,
+            "confidence": "high",
+            "source": "implementation-pr-field",
+        }
+    ]
+
+    def fail_urlopen(*args, **kwargs):
+        raise AssertionError("no note references should mean no lookup at all")
+
+    with patch("urllib.request.urlopen", side_effect=fail_urlopen):
+        stale = dr.find_field_stale_findings(field_findings, token=None)
+
+    assert stale == []
+
+
+# --------------------------------------------------------------------------- #
 # parse_implementation_pr (conductor/t-099)
 # --------------------------------------------------------------------------- #
 
@@ -549,6 +670,7 @@ def test_check_drift_clean_when_no_evidence_either_way(tmp_path):
         "weak": [],
         "unresolved": [],
         "remaining_scope_resolved": [],
+        "field_possibly_stale": [],
     }
 
 
@@ -595,6 +717,154 @@ def test_check_drift_field_present_confirms_without_search_call(tmp_path):
     assert result["high"][0]["source"] == "implementation-pr-field"
     assert result["weak"] == []
     assert result["unresolved"] == []
+
+
+def test_check_drift_field_present_flags_note_reference_that_supersedes_field(tmp_path):
+    # conductor/t-139's real incident, reproduced: implementation_pr is set
+    # to kind_robots#2301 (still genuinely merged), but the task's own note
+    # ALSO names a later, title-confirmed, merged kind_robots#2303 -- the
+    # task was reclaimed and reprogressed after the field was recorded. The
+    # field's own pass-0 finding must still stand (its PR really did merge),
+    # but field_possibly_stale must surface the discrepancy.
+    write_roadmap(
+        tmp_path,
+        "interface-vision",
+        [
+            {
+                "id": "t-104",
+                "status": "review",
+                "title": "kr-container sweep",
+                "implementation_pr": "silasfelinus/kind_robots#2301",
+                "note": "Closed via kind_robots PR #2301. Reclaimed same day, merged "
+                "silasfelinus/kind_robots#2303 for a second slice of interface-vision/t-104.",
+            }
+        ],
+    )
+
+    pr_2301_body = json.dumps({
+        "merged": True,
+        "merged_at": "2026-08-29T10:00:00Z",
+        "title": "interface-vision/t-104: slice 31 (error.vue)",
+    }).encode()
+    pr_2303_body = json.dumps({
+        "merged": True,
+        "merged_at": "2026-08-29T20:00:00Z",
+        "title": "interface-vision/t-104: slice 32 (project-front-page.vue)",
+    }).encode()
+
+    def fake_urlopen(req, timeout=10):
+        url = req.full_url if hasattr(req, "full_url") else req
+        assert "search/issues" not in url, "field-present task must not fall back to search"
+        if url.endswith("/2301"):
+            return FakeResponse(pr_2301_body)
+        if url.endswith("/2303"):
+            return FakeResponse(pr_2303_body)
+        raise AssertionError(f"unexpected URL: {url}")
+
+    with patch("urllib.request.urlopen", side_effect=fake_urlopen):
+        result = dr.check_drift(tmp_path / "projects", token=None)
+
+    assert len(result["high"]) == 1
+    assert result["high"][0]["pr_number"] == 2301
+    assert result["high"][0]["source"] == "implementation-pr-field"
+    assert result["unresolved"] == []
+    assert result["weak"] == []
+
+    assert len(result["field_possibly_stale"]) == 1
+    stale = result["field_possibly_stale"][0]
+    assert stale["project"] == "interface-vision"
+    assert stale["task_id"] == "t-104"
+    assert stale["recorded_implementation_pr"] == "silasfelinus/kind_robots#2301"
+    assert stale["repo"] == "silasfelinus/kind_robots"
+    assert stale["pr_number"] == 2303
+    assert stale["confidence"] == "high"
+    assert stale["source"] == "note-reference-supersedes-field"
+
+
+def test_check_drift_field_present_ignores_note_reference_with_unmatched_title(tmp_path):
+    # The note also quotes a merged PR that does NOT name this task in its
+    # title (e.g. the PR whose kaizen suggestion FILED this task, the same
+    # ambiguity conductor/t-098 already handles for the weak/note pass) --
+    # must not be reported as a stale-field finding.
+    write_roadmap(
+        tmp_path,
+        "newsfeed",
+        [
+            {
+                "id": "t-020",
+                "status": "claimed",
+                "title": "x",
+                "implementation_pr": "silasfelinus/kind_robots#1464",
+                "note": "Kaizen filed from silasfelinus/kind_robots#1391.",
+            }
+        ],
+    )
+
+    pr_1464_body = json.dumps({
+        "merged": True,
+        "merged_at": "2026-08-01T00:00:00Z",
+        "title": "newsfeed/t-020: fix",
+    }).encode()
+    pr_1391_body = json.dumps({
+        "merged": True,
+        "merged_at": "2026-07-01T00:00:00Z",
+        "title": "some unrelated kaizen-filing PR",
+    }).encode()
+
+    def fake_urlopen(req, timeout=10):
+        url = req.full_url if hasattr(req, "full_url") else req
+        if url.endswith("/1464"):
+            return FakeResponse(pr_1464_body)
+        if url.endswith("/1391"):
+            return FakeResponse(pr_1391_body)
+        raise AssertionError(f"unexpected URL: {url}")
+
+    with patch("urllib.request.urlopen", side_effect=fake_urlopen):
+        result = dr.check_drift(tmp_path / "projects", token=None)
+
+    assert len(result["high"]) == 1
+    assert result["field_possibly_stale"] == []
+
+
+def test_check_drift_field_present_note_reference_lookup_failure_silently_skipped(tmp_path):
+    # A failed lookup on the EXTRA note reference must not land in
+    # `unresolved` -- the field pass already fully resolved this task, so a
+    # best-effort secondary check that itself fails should not downgrade an
+    # otherwise-clean result.
+    write_roadmap(
+        tmp_path,
+        "newsfeed",
+        [
+            {
+                "id": "t-020",
+                "status": "claimed",
+                "title": "x",
+                "implementation_pr": "silasfelinus/kind_robots#1464",
+                "note": "Also see silasfelinus/kind_robots#9999.",
+            }
+        ],
+    )
+
+    pr_1464_body = json.dumps({
+        "merged": True,
+        "merged_at": "2026-08-01T00:00:00Z",
+        "title": "newsfeed/t-020: fix",
+    }).encode()
+
+    def fake_urlopen(req, timeout=10):
+        url = req.full_url if hasattr(req, "full_url") else req
+        if url.endswith("/1464"):
+            return FakeResponse(pr_1464_body)
+        if url.endswith("/9999"):
+            raise http_error(404)
+        raise AssertionError(f"unexpected URL: {url}")
+
+    with patch("urllib.request.urlopen", side_effect=fake_urlopen):
+        result = dr.check_drift(tmp_path / "projects", token=None)
+
+    assert len(result["high"]) == 1
+    assert result["unresolved"] == []
+    assert result["field_possibly_stale"] == []
 
 
 def test_check_drift_field_absent_still_uses_title_search(tmp_path):
@@ -958,4 +1228,47 @@ def test_render_clean_requires_no_remaining_scope_resolved():
         }
     ]
     output = dr.render([], [], total=1, weak=[], remaining_scope_resolved=resolved)
+    assert "No drift found" not in output
+
+
+# --------------------------------------------------------------------------- #
+# render — field_possibly_stale (conductor/t-139)
+# --------------------------------------------------------------------------- #
+
+
+def test_render_flags_field_possibly_stale():
+    stale = [
+        {
+            "project": "interface-vision",
+            "task_id": "t-104",
+            "status": "review",
+            "recorded_implementation_pr": "silasfelinus/kind_robots#2301",
+            "repo": "silasfelinus/kind_robots",
+            "pr_number": 2303,
+            "pr_title": "interface-vision/t-104: slice 32",
+            "pr_merged_at": "2026-08-29T20:00:00Z",
+        }
+    ]
+    output = dr.render([], [], total=1, field_possibly_stale=stale)
+    assert "No drift found" not in output
+    assert "STALE" in output
+    assert "interface-vision/t-104" in output
+    assert "silasfelinus/kind_robots#2301" in output
+    assert "silasfelinus/kind_robots#2303" in output
+
+
+def test_render_clean_requires_no_field_possibly_stale():
+    stale = [
+        {
+            "project": "interface-vision",
+            "task_id": "t-104",
+            "status": "review",
+            "recorded_implementation_pr": "silasfelinus/kind_robots#2301",
+            "repo": "silasfelinus/kind_robots",
+            "pr_number": 2303,
+            "pr_title": "interface-vision/t-104: slice 32",
+            "pr_merged_at": "2026-08-29T20:00:00Z",
+        }
+    ]
+    output = dr.render([], [], total=1, weak=[], field_possibly_stale=stale)
     assert "No drift found" not in output
