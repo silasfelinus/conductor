@@ -5503,9 +5503,9 @@ tasks:
 - id: t-145
   milestone: m2
   title: "Guard against a single commit deleting a large fraction of a growing conductor file (art-prompts.yaml, a roadmap.yaml)"
-  status: ready
+  status: claimed
   gate_human: false
-  owner: null
+  owner: worker
   stakes: reversible
   passes: 0
   note: >-
@@ -5530,8 +5530,8 @@ tasks:
     independent diffing path. Add regression coverage modeling the exact t-143 shape: a base
     version with N request/task entries, a head version with N minus a large fraction, no
     corresponding archival/cleanup marker.
-  claimed_by: null
-  claimed_at: null
-  updated: '2026-09-02T09:00:00Z'
+  claimed_by: claude-20260902T113127Z-cond-t145
+  claimed_at: '2026-09-02T11:31:28Z'
+  updated: '2026-09-02T11:31:28Z'
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
