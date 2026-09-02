@@ -19,6 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -62,6 +64,16 @@ jobs:
               sys.exit(1)
           print(f"OK: {f} valid")
           EOF
+
+      - name: Guard against large deletions in art-prompts.yaml / roadmap.yaml
+        # Soft warning only (conductor/t-145, kaizen from the t-143 art-queue-wipe
+        # incident) -- a deliberate large prune is legitimate, this just surfaces an
+        # unusually large deletion in an append-mostly file for reviewer attention
+        # before merge, instead of it going unnoticed the way 0e671cd did.
+        continue-on-error: true
+        run: |
+          python scripts/check_large_deletion_guard.py \
+            --base "origin/${{ github.base_ref }}" --head HEAD --github-annotations
 
   validate-task-events:
     name: Validate queued task-events YAML
