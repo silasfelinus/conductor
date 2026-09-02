@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-09-01T21:07:49.723539+00:00",
+  "generated_at": "2026-09-02T11:27:44.031152+00:00",
   "summary": {
-    "status": "clean",
-    "roadmap_errors": 0,
+    "status": "action-needed",
+    "roadmap_errors": 3,
     "roadmap_warnings": 1,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
@@ -12,8 +12,8 @@
   },
   "openai_scheduled_agent": {
     "overdue": false,
-    "last_activity": "2026-09-01T19:37:03+00:00",
-    "hours_since": 1.51,
+    "last_activity": "2026-09-02T06:17:44+00:00",
+    "hours_since": 5.17,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "OpenAI commit activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit."
@@ -21,7 +21,7 @@
   "intent_review": {
     "due": false,
     "last_report": "INTENT-AUDIT-2026-09-01.md",
-    "days_since": 0,
+    "days_since": 1,
     "stale_days": 3.0
   },
   "project_parity": {
@@ -30,22 +30,44 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-09-01T21:07:49.723544+00:00",
+    "generated_at": "2026-09-02T11:27:44.031159+00:00",
     "summary": {
       "roadmaps": 52,
       "active_projects": 29,
       "continuous_projects": 2,
-      "tasks": 1348,
-      "ready": 10,
+      "tasks": 1375,
+      "ready": 12,
       "waiting": 56,
-      "needs_human": 82,
-      "in_progress": 2,
-      "done": 1181,
-      "errors": 0,
+      "needs_human": 79,
+      "in_progress": 3,
+      "done": 1208,
+      "errors": 3,
       "warnings": 1,
-      "info": 2
+      "info": 4
     },
-    "errors": [],
+    "errors": [
+      {
+        "severity": "error",
+        "code": "GATED_DONE_WITHOUT_APPROVAL",
+        "project": "ai-art-academy",
+        "task": "t-077",
+        "message": "Human-gated task is done without approved_by_human: true."
+      },
+      {
+        "severity": "error",
+        "code": "GATED_DONE_WITHOUT_APPROVAL",
+        "project": "mandarin-tutor",
+        "task": "t-010",
+        "message": "Human-gated task is done without approved_by_human: true."
+      },
+      {
+        "severity": "error",
+        "code": "GATED_DONE_WITHOUT_APPROVAL",
+        "project": "mandarin-tutor",
+        "task": "t-020",
+        "message": "Human-gated task is done without approved_by_human: true."
+      }
+    ],
     "warnings": [
       {
         "severity": "warning",
