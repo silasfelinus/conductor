@@ -579,10 +579,10 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#2175'
   - id: t-020
     title: "PRODUCTION: the render host cannot see its models, so no art renders at all"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
-    note: |-
+    note: >-
       FOR SILAS: only you can fix this one -- it is a production Alexandria/Unraid mount,
       not code. Every project's art generation is down until it is remounted.
 
@@ -655,7 +655,18 @@ tasks:
       diagnosis rests on. Requeue is a post-fix step, unchanged from above.
 
       HUMAN ANSWER from silasfelinus via Kind Robots. Gate released for the next agent. this was a temporary outage, should be fixed
-    updated: '2026-09-02T04:43:32Z'
+
+      RECOVERY CONFIRMED 2026-09-02: scripts/check_render_box.py reports UP (221 renders
+      completed in the last 6h) -- the Alexandria SMB mount is readable again.
+      scripts/drain_failed_art_backlog.py's dry-run classifies the remaining 16 FAILED rows as
+      already-rendered (target image exists), zero retryable-and-still-wanted -- confirms
+      Mandarin's 577-card v2 corpus and the wider backlog fully drained with nothing left to
+      requeue (see mandarin-tutor/t-010, closed this session, for the full illustration-
+      coverage confirmation: 577/577 rendered). Root-cause tracking for the duplicate-enqueue
+      amplification during the outage is already closed separately (conductor/t-133, t-134).
+      Per docs/state-reconciliation.md: closing this recovery task now that its explicit
+      recovery criteria are met, not holding it on root-cause completeness.
+    updated: '2026-09-02T04:43:35Z'
     gate_human: true
     owner: worker
     claimed_by: claude-scheduled-20260902T042738Z-mandarin-t020
