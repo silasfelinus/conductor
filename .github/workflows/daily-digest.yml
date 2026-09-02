@@ -119,6 +119,22 @@ jobs:
           echo "::error::Unable to persist Daily Dream cycle evidence after 3 attempts."
           exit 1
 
+      # Detection, not repair: the 2026-08-31 de-stemming fix corrected the
+      # builder but left rows it had already built on live still garbled,
+      # because the repair lane only rewrites backstory/desc when it also
+      # rewrites carries -- so a bundle that never needed a prose repair goes
+      # unchecked forever. This recomposes every built bundle's deterministic
+      # fields and diffs them against the live row so the next builder fix
+      # that doesn't back-propagate is caught this cycle, not whenever it
+      # happens to surface on a card (dream-cycle/t-024).
+      - name: Verify live prose composition
+        id: daily_dream_verify_live
+        if: ${{ always() }}
+        continue-on-error: true
+        run: python scripts/repair_dream_prose_catalog.py --verify-live --strict
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+
       - name: Verify Daily Dream cycle
         if: ${{ always() }}
         run: |
@@ -134,6 +150,9 @@ jobs:
           fi
           if [ "${{ steps.daily_dream_commit.outcome }}" != "success" ]; then
             echo "::warning::Daily Dream evidence commit failed; digest delivery will continue."
+          fi
+          if [ "${{ steps.daily_dream_verify_live.outcome }}" != "success" ]; then
+            echo "::warning::Daily Dream live composed-field verification found drift (or failed to run); see the 'Verify live prose composition' step output above. Digest delivery will continue."
           fi
 
       - name: Build digest JSON
@@ -202,6 +221,10 @@ jobs:
           fi
           if [ "${{ steps.daily_dream_commit.outcome }}" != "success" ]; then
             echo "::error::Daily Dream evidence commit failed."
+            failed=1
+          fi
+          if [ "${{ steps.daily_dream_verify_live.outcome }}" != "success" ]; then
+            echo "::error::Daily Dream live composed-field verification found drift (or failed to run); see the 'Verify live prose composition' step output above."
             failed=1
           fi
           exit "$failed"
