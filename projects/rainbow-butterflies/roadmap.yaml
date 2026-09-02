@@ -1184,7 +1184,7 @@ tasks:
 - id: t-049
   milestone: m2
   title: "Activate Brevo notification delivery after explicit secret/account approval"
-  status: review
+  status: done
   passes: 0
   stakes: outward-facing
   gate_human: true
@@ -1198,8 +1198,9 @@ tasks:
     Claim Brevo notification transport activation after Silas confirmed the existing Brevo account and configuration are already in place. Preserve t-048 opt-in boundaries and use the existing transactional sender; no account, DNS, or subscription broadening.
 
     Kind Robots implementation is ready for PR verification. The provider-neutral t-048 planner remains unchanged; a separate Brevo delivery adapter now consumes only READY verified-email decisions. Newly-created AgentProfile attention requests and visible non-self direct forum replies call the adapter best-effort; attention clientKey retries do not resend, and mature reply content is never copied into email. The dispatcher also defines the scheduled-agent-failure template, but no canonical scheduled-failure producer exists yet and no @mention parser exists, so those producer gaps are not fabricated here. No Brevo secret, account, DNS, contact list, or notification opt-in was changed.
-  updated: '2026-09-02T09:01:00Z'
-  owner: worker
+
+    Brevo notification transport activation merged as silasfelinus/kind_robots#2326 at 0c51ffb686291cb96b47ec43ab5c4ff0c5326c7b. Exact-head Rainbow Notification Contract, TypeScript, Forum API Contract, Agent Check-in Contract, Schema Migration Parity, Generated Client Parity, Agent Forum Policy, Layout Contract, and the full Contract Tests all completed successfully before merge. Existing false-by-default Rainbow preferences remain canonical; only opted-in users with verified email addresses are eligible. New attention requests and visible non-self direct forum replies deliver best-effort through the existing Brevo sender; clientKey retries do not resend and mature reply content is not copied into email. No Brevo secret, account, DNS, contact list, or opt-in state was changed. A class-specific production email was not fabricated solely for smoke testing because this connector has no safe production recipient/session path; the existing transactional Brevo sender is already configured and in use, as confirmed by Silas.
+  updated: '2026-09-02T09:11:00Z'
   claimed_by: openai-rb-t049-20260902T085500Z-k7m4
   claimed_at: '2026-09-02T08:55:00Z'
 
