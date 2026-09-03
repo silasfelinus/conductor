@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: ready
+  status: claimed
   passes: 50
   stakes: reversible
   retry_context: >
@@ -161,7 +161,10 @@ tasks:
     PR-merged drift repair (conductor sweep 2026-09-02): status was still 'claimed' though this task's own note already said 'Re-armed to ready per this recurring tasks convention' after kind_robots#2338 (cycle 53) merged. Flagged by check_pr_merged_drift.py; PR confirmed merged via GitHub MCP. Correcting status only, no new work.
 
     Cycle 54 found a sibling recurrence of cycle 53's storage-recovery bug. stores/storybookStore.ts restoreFromLocalStorage() catches getItem/JSON failures but then calls removeItem(DRAFT_STORAGE_KEY) and removeItem(STORAGE_KEY) unguarded; a browser policy that denies all storage access can therefore throw again from the recovery handler and break Storybook initialization. Filed kind_robots#2346 with the exact scoped fix. The connected GitHub write surface replaces whole files rather than applying a line patch, and this 1000+ line store cannot be safely reconstructed from truncated connector reads, so no risky whole-file rewrite was attempted. Return the polish task to ready; next writer with patch-capable git should fix #2346 on a focused branch and extend the Storybook storage recovery contract.
-  updated: '2026-09-03T00:18:00Z'
+  updated: '2026-09-03T03:12:06Z'
+  owner: worker
+  claimed_by: openai-scheduled-20260903T031206Z-storybook-t010-oai11p4
+  claimed_at: '2026-09-03T03:12:06Z'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
