@@ -454,7 +454,7 @@ tasks:
 - id: t-027
   milestone: m2
   title: "Get final human visual acceptance of the Rainbow Butterflies MVP"
-  status: ready
+  status: claimed
   passes: 0
   stakes: outward-facing
   gate_human: true
@@ -479,7 +479,10 @@ tasks:
     RECONCILED (state-reconciliation sweep, scheduled conductor run 2026-09-03): PR silasfelinus/kind_robots#2344 merged 2026-09-03T00:05:21Z but roadmap was left at status=review. Flipping to done; implementation_pr already recorded.
 
     Correcting the premature scheduled closeout: t-027's own current-v2 note still requires lane 3 optional messaging and lane 5 final cross-width acceptance before the task can return to the human acceptance gate. Lane 2 backend is merged and lanes 2 UI / 4 provider visuals are verified in unmerged Rainbow PRs #35/#36. Kind Robots optional-messaging substrate is under exact-head verification in #2354. Reopen the umbrella so the remaining reversible work is represented honestly; no publication or human acceptance is implied by this transition.
-  updated: '2026-09-03T08:15:00Z'
+  updated: '2026-09-03T08:18:00Z'
+  owner: worker
+  claimed_by: openai-rb-t027-20260903T081800Z-messages-b91d
+  claimed_at: '2026-09-03T08:18:00Z'
 
 - id: t-028
   milestone: m3
