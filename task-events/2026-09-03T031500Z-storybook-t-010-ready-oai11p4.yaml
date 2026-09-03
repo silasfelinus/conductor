@@ -1,0 +1,8 @@
+version: 1
+project: storybook
+task: t-010
+operation: ready
+session: openai-scheduled-20260903T031206Z-storybook-t010-oai11p4
+updated: '2026-09-03T03:15:00Z'
+note: >-
+  Connector-only cycle confirmed the sibling storage-recovery defect in stores/storybookStore.ts: restoreFromLocalStorage catches getItem/JSON failures but its catch performs two unguarded localStorage.removeItem calls, so denied storage access can throw again from recovery. This is already tracked as kind_robots#2346. Implementation requires a targeted patch to a 1000+ line existing file; the available connector write primitive replaces the entire file, so this session did not risk reconstructing it from paginated reads. Separately, branch-medic inspection confirmed worker/rainbow-generation-quota-20260901 is 43 commits behind main and its seven-commit quota implementation is superseded by the shipped Krea2 public quota lineage on main (server/utils/krea2Quota.ts plus public quota API/contracts). No branch-delete primitive is available in the connector. Releasing the recurring polish task cleanly for a shell-capable cycle.
