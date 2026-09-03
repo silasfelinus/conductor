@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -3471,8 +3471,19 @@ tasks:
     checks green including the sometimes-slow Contract verifiers job (~3.5 min this run, not
     a stall). Next slice should sweep the near-miss btn-ghost sites (extra appended classes)
     each prior slice left out of scope, per slice 46's kaizen note.
-  updated: '2026-09-03T09:45:12Z'
-  implementation_pr: 'silasfelinus/kind_robots#2356'
+
+    interface-vision/t-104 slice 48: extracted .kr-btn-ghost-md (btn btn-ghost rounded-xl,
+    DaisyUI default size), codemodded 15 occurrences across 12 files. Verified via real
+    @tailwindcss/postcss compile against .kr-btn-ghost (structurally identical minus the sm-
+    size override block). vue-tsc clean, lint-ratchet holds (332/-60), layout-contract holds
+    (207 baseline). prettier pre-existing drift on all 7 touched files, not introduced.
+    Opened kind_robots#2357. Next slice should tackle the near-miss btn-ghost sites with
+    extra appended classes (gap-1 border border-base-300, text-error, focus-visible: outline
+    utilities, etc.) that exact-string matching has left out of scope through slices 42-48,
+    or the class-order duplicate of kr-btn-ghost-xs (btn btn-xs btn-ghost rounded-xl, 14
+    occurrences, same computed shape but different literal string order).
+  updated: '2026-09-03T09:50:58Z'
+  implementation_pr: 'silasfelinus/kind_robots#2357'
   owner: worker
   claimed_by: claude-scheduled-20260903T-interface-vision-t104-slice48
   claimed_at: '2026-09-03T09:45:12Z'
