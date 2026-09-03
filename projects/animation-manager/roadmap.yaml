@@ -286,12 +286,54 @@ tasks:
       though verifyAnimationComponentAttempts.ts actively guards against its return (flagged
       once before on the strandbeest-migration PR, still unfixed) -- worth a doc-accuracy fix
       in a future cycle. Re-armed to ready per recurring-task convention.
-    status: claimed
-    updated: '2026-09-03T13:31:29Z'
+
+      Cycle (conductor scheduled Agent run, session claude-
+      scheduled-20260903T-am-t007-tapestry): built the next highest-priority unbuilt pitch
+      (tapestry-loom, priority 18, top of the pitched queue) since all eight candidate-tier
+      pitches (koi-memory-pond, impossible-terrarium, ink-oracle, celestial-mobile, tiny-
+      weather-front, ant-farm-excavation, strandbeest-migration, shadow-puppet-theater) and
+      kintsugi-weather remain awaiting Reaction-evidence promotion, not further build work,
+      and this sandbox still has no live DB to read Reaction data (SPEC.md standing sandbox-
+      access-gap). Picked this over another model-builder/t-029 due-diligence pass,
+      storybook/t-010, or coat-dance/t-010, since all three had already each had one or more
+      fresh cycles earlier this same day with no actionable finding (model-builder cycles
+      52/88, storybook cycles 55/56, coat-dance) -- mirroring the 2026-08-29 cycle's own
+      precedent for falling through to this continuous-lifecycle task when the finite queue is
+      genuinely exhausted for the day. Implemented components/screenfx/tapestry-loom.vue: a
+      shuttle glides row by row across a fixed-count warp (28 columns, 16 rows/motif, both
+      capped regardless of viewport per the pitch's performance_risk note), weaving weft rows
+      into a deterministic motif sequence (stripes -> chevron -> diamond) with a rotating
+      four-hue palette -- state progression is a cycle counter modulo fixed arrays with zero
+      Math.random() calls anywhere, satisfying the pitch's own determinism acceptance
+      criterion more strictly than most prior builds. Once a motif's row count completes the
+      tapestry holds, then unravels top-down back to bare warp before the next motif/palette
+      begins; settled rows are only re-baked into an offscreen buffer when the row set
+      structurally changes (a row completes or fully retracts), not redrawn from scratch every
+      frame. Pointer hover slows the current weaving row and highlights whichever row sits
+      under the cursor; a click plucks the nearest row with a decaying sine-wave ripple. All
+      pointer handling runs on window listeners (passive: true, no preventDefault) with the
+      canvas itself pointer-events: none, matching every sibling screenfx component's
+      convention -- never blocks underlying page input. Reduced motion renders one static
+      completed tapestry (stripes motif, first palette) with only a slow hue drift, no
+      shuttle, no unraveling, no pointer response. Worst-case full cycle (weave+hold+unravel,
+      with continuous hover slow-down) is ~35s, within the pitch's 45s bound. Verified: eslint
+      clean, prettier clean on the new file (animationCatalog.ts's pre-existing unrelated
+      drift confirmed via git stash, left untouched per the davinci/t-025 lesson), full-
+      project vue-tsc --noEmit exit 0, test:animation-catalog and test:animation-component-
+      attempts both pass, test:layout-contract holds at the 207-violation baseline with zero
+      new violations, check_animation_novelty.py --strict reports no collision. Manual browser
+      smoke matrix deferred per the standing sandbox-access-gap tag, same as every prior build
+      in this project. kind_robots PR #2360 merged (squash e47fc49), all 40 checks green
+      including the sometimes-slow Contract verifiers/ESLint-ratchet step (conductor/t-132)
+      which completed normally this run (~4 min, not stalled). PITCHES.yaml's tapestry-loom
+      promoted pitched -> candidate with its build entry, committed alongside this roadmap
+      update on the same branch. Re-armed to ready per this task's recurring-task convention.
+    status: ready
+    updated: '2026-09-03T13:53:24Z'
     claimed_by: claude-scheduled-20260903T-am-t007-tapestry
     claimed_at: '2026-09-03T13:31:29Z'
     owner: worker
-    implementation_pr: 'silasfelinus/kind_robots#2352'
+    implementation_pr: 'silasfelinus/kind_robots#2360'
 
   - id: t-008
     milestone: m3
