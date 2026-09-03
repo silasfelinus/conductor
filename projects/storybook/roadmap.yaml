@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 50
   stakes: reversible
   retry_context: >
@@ -188,7 +188,35 @@ tasks:
     kind_robots#2358 merged (2026-09-03T~10:44Z, all 40 checks green including Contract
     verifiers). Re-arming to ready per this task's established recurring-polish convention
     (cycles 30-55).
-  updated: '2026-09-03T12:51:36Z'
+
+    Cycle 56 (no bug found): followed up on cycle 55's just-shipped fix (kind_robots#2358,
+    storybookStore.ts's restoreFromLocalStorage guarding its removeItem calls) by checking
+    whether the same unguarded-removeItem-in-catch-block bug shape has a 4th living instance
+    anywhere else in the Storybook/narrator-adjacent persistence family, rather than
+    assuming cycle 55 closed the family for good. Audited every localStorage call site
+    directly: stores/storybookStore.ts (persist()/restoreFromLocalStorage(), both fully
+    try/catch-wrapped including all setItem/getItem/removeItem calls),
+    stores/helpers/storybookLibraryHelper.ts (persistLibrary()/initialize(), same -- this is
+    the sibling cycle 53 already fixed, kind_robots#2338), stores/narratorStore.ts
+    (loadSettings()/saveSettings(), both guarded, no removeItem calls at all), and
+    stores/helpers/persistedNarrativeArtJobsHelper.ts
+    (readLocalStorage()/writeLocalStorage() helpers, both guarded, no removeItem calls at
+    all). Confirmed: no 4th instance exists -- the localStorage-guard sibling-bug family (3
+    real fixes across cycles 53/54/55: kind_robots#2338, #2349, #2358) is genuinely
+    exhausted, not just unlucky-not-yet-found. Also read
+    server/api/narrators/[type]/[slug].get.ts end to end -- never previously read in this
+    task's history (grepped the full cumulative note for 'server/api', found zero prior
+    server-side hits; Storybook itself has no server/api routes at all, it's client-
+    only/localStorage-backed, which is presumably why cycle 34's flagged 'server/api routes
+    ... have not had a dedicated pass' angle never got picked up). Both branches
+    (bot/character) correctly scope to isActive+isPublic records only, no auth-bypass or
+    data-leak concern; clean, unremarkable, well-formed route. No actionable bug this cycle.
+    Next slice: the localStorage-guard angle is closed out for good; return to the
+    established 'fresh top-level page/component never individually audited' convention
+    (cycles 30-49's pattern) for the next genuinely new angle, since the shared-
+    primitive/narrator-race investigation (cycles 43-49) and the storage-recovery family
+    (cycles 51-55) both now read as exhausted.
+  updated: '2026-09-03T12:53:25Z'
   owner: worker
   claimed_by: claude-scheduled-20260903T125135Z-storybook-t010-conductor
   claimed_at: '2026-09-03T12:51:36Z'
