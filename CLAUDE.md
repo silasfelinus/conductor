@@ -45,6 +45,18 @@ At the start of every session, before responding to any task, run a conductor sw
      that isn't done. Advisory only — wrong milestone status doesn't block task selection or gate
      anything, it only skews the digest's portfolio-percentage math; exit 1 means "worth a look and an
      edit," not a genuine gate. No network/token needed.
+   - `python scripts/check_container_log_drift.py` — reads the daily container-log triage digest
+     that `ops/home-server/container_log_triage.py` writes on Alexandria (Silas, 2026-09-03: *"I'm
+     not searching around the logs of 50-ish containers regularly to find suboptimal problems. If
+     something is erroring in the logs but not actually breaking the container, I'm not aware of
+     it."*). Reports only signatures that are NEW, SPIKING against their own history, or newly
+     QUIET — a stored baseline suppresses the steady-state noise, without which the report becomes
+     wallpaper in a week. **A digest older than 48h is itself a finding**, because from the reading
+     end "nothing to report" and "the User Script stopped running" are indistinguishable — the
+     `check_engine_heartbeat.py` lesson (healthcheck.ps1 stopped at 2026-09-01 02:26:07 and never
+     said so; its log just ends, ~37 hours before Silas noticed). A MISSING digest is exit 0 with a
+     "not configured yet" note, so this stays quiet until the User Script is scheduled and the
+     digest is published off the host. No network/token needed for a local digest path.
    Treat exit 1 (or 3) from any of these as a reconciliation prompt, not permission to bypass a genuine gate. The
    four roadmap-reading commands intentionally exclude paused, retired, and finished projects unless
    `--include-inactive` is supplied; `check_live_facet_coverage.py` reads live records rather than roadmaps and
@@ -93,6 +105,8 @@ Then report:
 - **Ready tasks** (what the Worker should pick up next, in priority order)
 - **Needs-human gates** from active projects only (what only Silas can unblock, grouped by project)
 - **State reconciliation** findings (merged-PR drift, stale-gate signals, or milestone/task mismatches)
+- **Container log triage** (Alexandria): new/spiking/newly-quiet log signatures, or a stale
+  digest meaning the daily User Script stopped running — omit entirely when not configured yet
 - **Any unresolved escalations** from TALKBACK
 - **Creation fallback**: any delegated non-dream scheduler card currently
   `building`, its authoritative home-project stage, and any new Notes from Silas
