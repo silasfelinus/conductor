@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 49
     stakes: reversible
@@ -868,7 +868,30 @@ tasks:
       server/utils/facetCatalog.ts and utils/facetAliases.ts (normalizeFacetLookupKey,
       FACET_TAXONOMIES) which back every facet-sync lookup used above but were not themselves
       read this cycle.
-    updated: '2026-09-03T05:32:07Z'
+
+      Cycle 87 (server-side, GET /api/model-builder/runs + facet-lookup helpers): read
+      server/api/model-builder/runs/index.get.ts, server/api/model-builder/runs/index.ts
+      (runInclude/modelBuildStatuses/getRunId/getItemId/assertRunAccess),
+      server/utils/facetCatalog.ts (loadFacetCatalogEntries, loadCharacterFacetCatalog,
+      loadBotFacetCatalog), and both facetAliases.ts files (utils/ normalization,
+      server/utils/ resolveFacetAlias). Checked: the list endpoint scopes every query to
+      auth.user.id before any other filter, clamps take to [1,100], and defaults to excluding
+      CANCELLED runs unless includeCancelled=true or an explicit status filter is given -- no
+      cross-user leak possible. assertRunAccess correctly treats a null userId (owner deleted)
+      as admin-only, not silently open. loadFacetCatalogEntries' visibility gate (isPublic OR
+      own OR viewablePackIds) is applied consistently whether reached by direct facetIds,
+      taxonomy filter, or search; loadOwnerFacetCatalog's isAdmin:true bypass is intentionally
+      scoped to links already owned by the Character/Bot being read, not attacker-controlled.
+      resolveFacetAlias short-circuits correctly on an inactive alias or an inactive facet
+      (findFacetById itself filters isActive). No skip/cursor param on the runs list endpoint,
+      but confirmed via stores/modelBuilderStore.ts that the only two call sites use fixed
+      take=1 / take=50 with no pagination UI -- not a real gap, just unused capacity. No
+      actionable bug or gap found this cycle. Re-arming to ready; unexplored leads for a
+      future slice: server/api/model-builder/items/*.ts's per-field validation against
+      stores/helpers/modelBuilderFields.ts's spec catalog, and
+      utils/scripts/verifyModelBuilder*.ts's guard scripts themselves (whether the guards' own
+      assertions still match current route behavior, not just whether they pass).
+    updated: '2026-09-03T05:32:58Z'
     owner: worker
     claimed_by: claude-scheduled-20260903T052751Z-mb-t029
     claimed_at: '2026-09-03T05:32:07Z'
