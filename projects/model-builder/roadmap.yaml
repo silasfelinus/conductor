@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 49
     stakes: reversible
@@ -891,7 +891,26 @@ tasks:
       stores/helpers/modelBuilderFields.ts's spec catalog, and
       utils/scripts/verifyModelBuilder*.ts's guard scripts themselves (whether the guards' own
       assertions still match current route behavior, not just whether they pass).
-    updated: '2026-09-03T10:31:39Z'
+
+      Cycle 52 (no bug found): the top-priority ready task this run per priority.yaml.
+      Verified the specific next-slice pointer from cycle 51 (item field validation against
+      MODEL_FIELDS choices) end-to-end -- server/api/model-builder/items/[id]/commit.post.ts's
+      pickChoice() helper validates every enum-shaped fields.* value against choicesFor()
+      (sourced from MODEL_FIELDS) before assignment, uppercasing and falling through to the
+      Prisma column default on a miss rather than passing a raw string to Prisma; confirmed
+      this covers all 6 Character Rarity fields (charm/empathy/grace/luck/might/wits),
+      Reward.rewardType/rarity, and Bot.botType consistently with modelBuilderFields.ts's own
+      spec -- no drift between the two. Also confirmed server/api/model-
+      builder/runs/index.post.ts enforces MAX_BATCH_ITEMS (12) against body.items.length
+      before creating a run, matching the client store's own MAX_BATCH cap. Did not find an
+      actionable bug this cycle. Next slice: spot-check a sample of the 80+
+      utils/scripts/verifyModelBuilder*.ts guard scripts' assertions against current
+      route/store behavior (the recurring 'guard exists and passes' check does not itself
+      prove the guard's claimed invariant still matches the code, only that its own fixture
+      still satisfies its own assertion) -- start with the ones with no comment cross-
+      referencing a specific cycle/PR, since those are least likely to have been re-verified
+      against real drift since being written.
+    updated: '2026-09-03T10:33:19Z'
     owner: worker
     claimed_by: claude-scheduled-20260903T1029Z-model-builder-t029
     claimed_at: '2026-09-03T10:31:39Z'
