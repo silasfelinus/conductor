@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-03T07:30:59Z
+Generated: 2026-09-03T07:37:29Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **868**
-- Outcomes: blocked: 16, cancelled: 1, done: 851
+- Closed tasks recorded: **870**
+- Outcomes: blocked: 16, cancelled: 1, done: 853
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -44,7 +44,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kindrobots-unraid | 5 | 100% |
 | lora-ingestion | 1 | 100% |
 | mandarin-tutor | 11 | 100% |
-| media-watchlist | 10 | 100% |
+| media-watchlist | 11 | 100% |
 | mermaids-of-venice | 3 | 100% |
 | model-builder | 83 | 100% |
 | mona-salai | 1 | 100% |
@@ -52,7 +52,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | music-mentor | 1 | 100% |
 | newsfeed | 20 | 100% |
 | packmaker | 10 | 100% |
-| rainbow-butterflies | 19 | 100% |
+| rainbow-butterflies | 20 | 100% |
 | ruler-hooked | 11 | 100% |
 | scene-animator | 2 | 100% |
 | serendipity | 3 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 852 | 99% |
+| software | 854 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-03 `rainbow-butterflies/t-027` — State-reconciliation drift: PR kind_robots#2344 merged 2026-09-03T00:05Z but the roadmap task was left at status=review rather than done. Same pattern as media-watchlist/t-006 this cycle -- reconciled via GitHub MCP after the raw API probe 403'd.
+- 2026-09-03 `media-watchlist/t-006` — State-reconciliation drift: PR kind_robots#2275 merged 2026-08-31 but the roadmap task sat at status=claimed for ~3 days with no queued task-event to auto-correct it. check_pr_merged_drift.py's raw urllib GitHub API probe 403'd in this sandbox (documented, connector-only limitation) and reported it unverifiable rather than confirming the merge -- reconciled via GitHub MCP pull_request_read directly. A session running the drift check should not stop at 'could not verify' when a working MCP transport is available in the same session; cross-check before treating the finding as inconclusive.
 - 2026-09-02 `model-builder/t-029` — This task's own icon-coverage guard (cycle 82/84) only ever scanned the three shared data-structure arrays in modelBuilderRecipes.ts, leaving every per-component kind-icon: literal (view-mode toggles, inline button icons) completely unchecked -- a real, live, user-facing blank-icon bug (model-builder-source-picker.vue's List button, kind-icon:document, assets/icons/document.svg never existed) sat unnoticed through 84 prior cycles of otherwise-thorough code reading because none of them grepped literal icon-name strings against the actual assets/icons/ directory. When a project defines a 'coverage guard' for a hand-typed-name class of bug, scope it to every place that name shape can appear (grep the whole component family, not just the canonical data source), not just the one file where the bug was first found -- a guard that only covers its own origin story leaves the same failure mode live everywhere else. Also: a guard's own explanatory code comment can trip its own widened regex if it quotes the broken value literally (kind-icon:document appearing in prose) -- run a newly widened guard against your own diff before pushing, not just against the target file, to catch this class of self-inflicted false positive before CI does.
 - 2026-09-02 `model-builder/t-029` — A non-nested-brace entry-split regex is fragile against free-text comments that themselves contain a literal open/close brace pair (a code path like server/api/(dreams,scenarios)/... quoted in a comment, using curly braces in the real source) -- it can silently swallow the real entry that follows, while the guard still prints a plausible-looking pass/total. verifyModelBuilderIconCoverageGuard.ts (cycle 82) shipped with exactly this gap for a full cycle before cycle 84 caught it while building an unrelated sibling guard. verifyModelBuilderSourceFieldGuard.ts already used a safer key-boundary split (index-based chunking between consecutive `key: '...'` matches, never touching brace characters at all) -- worth defaulting new SOURCE_TYPES/BUILD_STAGES/RECIPES-array guards to that pattern from the start rather than brace matching, and worth a future cycle double-checking any other guard in this family that still uses brace matching.
 - 2026-09-02 `dream-cycle/t-025` — Added a per-bundle consecutive-failure counter (persisted state file already covered by the existing workflow's git-add step, so no CI/workflow change needed) to stop repair_dream_prose_catalog.py from retrying a chronically-failing bundle forever. Kept the existing per-bundle atomicity (failed bundles stay untouched, retried next run) as the default, only adding a circuit breaker on top after N consecutive failures -- and explicitly exempted an editor's own extra_fields retry from the breaker, since a human-directed re-ask is a different thing from an unattended scheduled retry. Worth remembering for any other 'runs on a schedule forever' loop in this pipeline: distinguish transient-retry-in-place from persistent-content-issue before assuming every failure is worth retrying indefinitely.
@@ -99,8 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-02 `rainbow-butterflies/t-051` — next_ready_task.py surfaced this as a reclaimable stale claim (claimed_at 09:04:00Z, past the 90-minute TTL). Before implementing, checked kind_robots for existing work under the original claiming session's name and found kind_robots#2329 already merged 46 minutes after the claim -- the full two-tool MCP bridge (rainbow_agent_identity, rainbow_check_in) the task specified. The implementation was real and complete; only the roadmap claimed -> done transition was missing. Checking for already-merged work under a stale claim's session id before starting a fresh implementation avoided duplicating an already-shipped feature.
 - 2026-09-02 `interface-vision/t-104` — State reconciliation found the task's own note already said 're-arming to ready for the next slice' after slice 36 (kind_robots#2331) merged, but the status field was left at review -- fixed by re-arming to ready directly rather than re-deriving from scratch. Then worked slice 37: the kr-panel-section codemod's dry-run flagged 4 files, but only one (academy-style-detail.vue's Gallery wall section, exact p-4 sm:p-5 override match to slice 36's precedent) was byte-equivalent. The other three all lacked their own padding class (padding lived entirely in child elements), so migrating them would add kr-panel-section's baked-in p-5 on top of existing child padding with nothing to oppose it -- a real geometry change the codemod's BASE_TOKENS-subset check can't detect on its own. Worth teaching the codemod itself to skip a candidate whose own class list carries no padding token at all, rather than relying on a human/reviewer catching it by reading the file.
 - 2026-09-02 `conductor/t-141` — Reviewed and merged conductor#3477 (soft PR-time warning comparing changed roadmap task ids against the PR base, flagging simultaneous title+milestone rewrites -- the t-091 id-reuse shape). CI was fully green before merge; no changes requested.
-- 2026-09-02 `conductor/t-139` — check_pr_merged_drift.py's implementation_pr-field pass (0) treated a confirmed-merged field as the final word and never looked further, so a task reclaimed and reprogressed via a SECOND PR after the field was recorded left it silently stale with nothing left to catch it (real incident: interface-vision/t-104 closed with implementation_pr=kind_robots#2301 while a later cycle had already merged kind_robots#2303 first). Fixed with a new pass 0b (find_field_stale_findings): scan a field-confirmed task's own title+note for any OTHER PR reference that is both merged and title-confirmed as implementing this exact <project>/<task-id> -- same title-match bar the authoritative search pass already uses, so a note that merely quotes the PR whose kaizen suggestion filed the task doesn't false-positive. Deliberately scoped to field_findings only (never field_unresolved/malformed-field tasks) and best-effort (a failed lookup on the extra reference is silently skipped, not added to unresolved) so it adds zero API calls to every existing 'must not call the API further' test invariant. 17 new tests added; full repo suite still green (1585 passed, 1 skipped). Companion write-time fix already landed separately (close_task.py now warns on a stale --implementation-pr omission) -- t-139 was the read-side detection half.
-- 2026-09-02 `conductor/t-145` — A soft/advisory CI check belongs on its own continue-on-error step inside an existing job (GitHub Actions ::warning:: annotations), not a new blocking job -- git diff --numstat plus git show <ref>:<path> is enough to diff base vs head line counts for any watched file without a second full-file-read diffing path. This session's sandbox pytest tool was again missing PyYAML (the same documented gap as t-140's session) and needed uv tool install pytest --with pyyaml --force before the 13 new tests could run.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-03T07:30:59Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-03T07:37:29Z_
