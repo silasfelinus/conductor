@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3434,8 +3434,18 @@ tasks:
     verified via GitHub MCP, all checks green, and the task's own note already reads as a
     complete finished cycle. Flagged by check_pr_merged_drift.py. Re-armed to ready per this
     recurring umbrella task's convention; no new code change, bookkeeping only.
-  updated: '2026-09-03T07:37:13Z'
-  implementation_pr: 'silasfelinus/kind_robots#2350'
+
+    Slice 45 merged as silasfelinus/kind_robots#2353 (all 39 checks green): extracted .kr-
+    btn-ghost-2xl (btn btn-ghost btn-sm rounded-2xl, 23 occurrences across 10 files).
+    Verified compiled ruleset via the real @tailwindcss/postcss plugin before codemodding.
+    npm run test (vue-tsc) clean, test:lint-ratchet holds (332 problems, -60, no rule
+    regressed), test:layout-contract holds (207 baseline unchanged). prettier --check flags
+    8 touched files but confirmed byte-identical against unmodified origin/main copies --
+    pre-existing drift, not gated by CI. Remaining btn-ghost shapes for the next slice: btn-
+    ghost btn-xs rounded-lg (21), btn-ghost btn-sm (21). Re-arming to ready for the next
+    slice per recurring-task convention.
+  updated: '2026-09-03T07:40:33Z'
+  implementation_pr: 'silasfelinus/kind_robots#2353'
   owner: worker
   claimed_by: claude-scheduled-20260903T073013Z-iv-t104
   claimed_at: '2026-09-03T07:30:13Z'
