@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -3457,8 +3457,17 @@ tasks:
     identically on unmodified origin/main -- pre-existing drift, not introduced here.
     Remaining btn-ghost shape for the next slice: btn-ghost btn-sm (21). Re-arming to ready
     for the next slice per recurring-task convention.
-  updated: '2026-09-03T09:30:05Z'
-  implementation_pr: 'silasfelinus/kind_robots#2355'
+
+    interface-vision/t-104 slice 47: extracted .kr-btn-ghost-plain (btn btn-ghost btn-sm, no
+    rounded-* override), codemodded 21 occurrences across 12 files. Verified via real
+    @tailwindcss/postcss compile against .kr-btn-ghost-xs-plain (identical structure, sm-vs-
+    xs size tokens only). vue-tsc clean, lint-ratchet holds (332/-60), layout-contract holds
+    (207 baseline). prettier pre-existing drift on all 11 touched files, not introduced.
+    Opened kind_robots#2356. This was the last of the exact-match repeated btn-ghost shapes
+    from slice 42's original survey -- next slice should sweep the near-miss sites with
+    extra appended classes each prior slice left out of scope.
+  updated: '2026-09-03T09:37:52Z'
+  implementation_pr: 'silasfelinus/kind_robots#2356'
   owner: worker
   claimed_by: claude-scheduled-20260903T-interface-vision-t104-slice47
   claimed_at: '2026-09-03T09:30:05Z'
