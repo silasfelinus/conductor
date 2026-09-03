@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -3312,8 +3312,15 @@ tasks:
     green, mergeable_state clean. Reviewed and merged by Claude (Reviewer role, session
     claude-20260903T212816Z-iv-t104-review). Return the recurring consistency umbrella to
     ready for the next bounded slice.
-  updated: '2026-09-03T21:38:39Z'
-  implementation_pr: 'silasfelinus/kind_robots#2370'
+
+    Slice 56 ready for review on worker/interface-vision-t104-outline-slice56
+    (silasfelinus/kind_robots#2371). Migrated all 19 remaining exact-match btn btn-outline
+    btn-sm rounded-xl sites (15 files) to kr-btn btn-outline, exhausting the outline-button
+    family survey slice 51 flagged. Verified vue-tsc clean, eslint 0 new issues, prettier
+    warnings pre-existing (git stash confirmed), test:layout-contract holds (207 baseline),
+    test:lint-ratchet holds (332/-60).
+  updated: '2026-09-03T21:39:09Z'
+  implementation_pr: 'silasfelinus/kind_robots#2371'
   owner: worker
   claimed_by: claude-20260903T213838Z-iv-t104-slice56
   claimed_at: '2026-09-03T21:38:39Z'
