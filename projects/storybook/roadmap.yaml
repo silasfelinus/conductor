@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: review
+  status: ready
   passes: 50
   stakes: reversible
   retry_context: >
@@ -164,11 +164,9 @@ tasks:
     Cycle 56 (no bug found): followed up on cycle 55's just-shipped fix (kind_robots#2358, storybookStore.ts's restoreFromLocalStorage guarding its removeItem calls) by checking whether the same unguarded-removeItem-in-catch-block bug shape has a 4th living instance anywhere else in the Storybook/narrator-adjacent persistence family, rather than assuming cycle 55 closed the family for good. Audited every localStorage call site directly: stores/storybookStore.ts (persist()/restoreFromLocalStorage(), both fully try/catch-wrapped including all setItem/getItem/removeItem calls), stores/helpers/storybookLibraryHelper.ts (persistLibrary()/initialize(), same -- this is the sibling cycle 53 already fixed, kind_robots#2338), stores/narratorStore.ts (loadSettings()/saveSettings(), both guarded, no removeItem calls at all), and stores/helpers/persistedNarrativeArtJobsHelper.ts (readLocalStorage()/writeLocalStorage() helpers, both guarded, no removeItem calls at all). Confirmed: no 4th instance exists -- the localStorage-guard sibling-bug family (3 real fixes across cycles 53/54/55: kind_robots#2338, #2349, #2358) is genuinely exhausted, not just unlucky-not-yet-found. Also read server/api/narrators/[type]/[slug].get.ts end to end -- never previously read in this task's history (grepped the full cumulative note for 'server/api', found zero prior server-side hits; Storybook itself has no server/api routes at all, it's client- only/localStorage-backed, which is presumably why cycle 34's flagged 'server/api routes ... have not had a dedicated pass' angle never got picked up). Both branches (bot/character) correctly scope to isActive+isPublic records only, no auth-bypass or data-leak concern; clean, unremarkable, well-formed route. No actionable bug this cycle. Next slice: the localStorage-guard angle is closed out for good; return to the established 'fresh top-level page/component never individually audited' convention (cycles 30-49's pattern) for the next genuinely new angle, since the shared- primitive/narrator-race investigation (cycles 43-49) and the storage-recovery family (cycles 51-55) both now read as exhausted.
 
     Production container run 33798861864 failed because storybook-library-page.vue used two newline-separated statements in each Export @click expression. The worker branch changes only those two handlers to valid semicolon-separated expressions.
-  updated: '2026-09-03T20:05:00Z'
-  owner: worker
-  claimed_by: 2026-09-03T195800Z-storybook-t-010-prod-build-fix-s6k9
-  claimed_at: '2026-09-03T19:58:00Z'
-  implementation_pr: 'silasfelinus/kind_robots#2358'
+
+    Fixed the Storybook production Vue parser failure in kind_robots PR #2368. All 40 PR checks completed without failure, cancellation, or skip; merged as 4d26cb6e5be77397107ddbed4374627d292f7d10; Publish Production Container run 33800660201 completed successfully. Returned the rolling Storybook polish task to ready.
+  updated: '2026-09-03T20:20:21Z'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
