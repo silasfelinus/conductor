@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 50
   stakes: reversible
   retry_context: >
@@ -163,10 +163,11 @@ tasks:
     Cycle 54 found a sibling recurrence of cycle 53's storage-recovery bug. stores/storybookStore.ts restoreFromLocalStorage() catches getItem/JSON failures but then calls removeItem(DRAFT_STORAGE_KEY) and removeItem(STORAGE_KEY) unguarded; a browser policy that denies all storage access can therefore throw again from the recovery handler and break Storybook initialization. Filed kind_robots#2346 with the exact scoped fix. The connected GitHub write surface replaces whole files rather than applying a line patch, and this 1000+ line store cannot be safely reconstructed from truncated connector reads, so no risky whole-file rewrite was attempted. Return the polish task to ready; next writer with patch-capable git should fix #2346 on a focused branch and extend the Storybook storage recovery contract.
 
     Connector-only cycle confirmed the sibling storage-recovery defect in stores/storybookStore.ts: restoreFromLocalStorage catches getItem/JSON failures but its catch performs two unguarded localStorage.removeItem calls, so denied storage access can throw again from recovery. This is already tracked as kind_robots#2346. Implementation requires a targeted patch to a 1000+ line existing file; the available connector write primitive replaces the entire file, so this session did not risk reconstructing it from paginated reads. Separately, branch-medic inspection confirmed worker/rainbow-generation-quota-20260901 is 43 commits behind main and its seven-commit quota implementation is superseded by the shipped Krea2 public quota lineage on main (server/utils/krea2Quota.ts plus public quota API/contracts). No branch-delete primitive is available in the connector. Releasing the recurring polish task cleanly for a shell-capable cycle.
-  updated: '2026-09-03T04:12:20Z'
-  owner: worker
-  claimed_by: openai-scheduled-20260903T041220Z-storybook-t010-q7n3
-  claimed_at: '2026-09-03T04:12:20Z'
+
+    The previously requested library removeItem recovery fix is already present on current Kind Robots main. Added a focused source-level regression contract and dedicated CI workflow so initialize() cannot silently regress to throwing cleanup after a failed storage read. Branch worker/storybook-t010-storage-recovery-q7n3.
+
+    Reconciliation: the queued review event for this cycle (cycle 54, session openai-scheduled-20260903T041220Z-storybook-t010-q7n3) targeted silasfelinus/kind_robots#2349, which is a source-level regression contract the cycle wrote to lock in the already-landed storage-recovery fix -- not a fix awaiting review/merge. #2349 is confirmed merged (merged_at 2026-09-03T04:19:25Z). This task's own history (cycles 30-53) establishes a re-arm-to-ready convention for every close-out, real fix or no-op alike, since it is a recurring bug-hunt/polish task in practice despite not carrying `recurring: true`. Superseding the queued `review` operation with `ready` and clearing ownership to match that convention, per this session's conductor sweep (state reconciliation, CLAUDE.md).
+  updated: '2026-09-03T04:29:50+00:00'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
