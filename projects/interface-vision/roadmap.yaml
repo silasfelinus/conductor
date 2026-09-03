@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3414,9 +3414,21 @@ tasks:
     future slice: btn-ghost btn-xs (30), btn-ghost btn-sm rounded-2xl (23), btn-ghost btn-xs
     rounded-lg (21), btn-ghost btn-sm (21). Re-arming to ready for the next slice per
     recurring-task convention.
-  updated: '2026-09-03T04:32:14Z'
-  implementation_pr: 'silasfelinus/kind_robots#2348'
-  owner: reviewer
+
+    Slice 44 merged as silasfelinus/kind_robots#2350 (all 46 checks green): extracted .kr-
+    btn-ghost-xs-plain (btn btn-ghost btn-xs, no rounded-* override -- 30 occurrences across
+    17 files), named -plain since -xs was already taken by slice 43's rounded-xl variant.
+    Verified compiled ruleset via the real @tailwindcss/postcss plugin before codemodding.
+    npm run test (vue-tsc) clean, test:lint-ratchet holds (332 problems, -60, no rule
+    regressed), test:layout-contract holds (207 baseline unchanged). prettier --check flags
+    15 touched files but confirmed byte-identical against unmodified HEAD copies -- pre-
+    existing drift, not gated by CI. Corrected owner from reviewer to worker (this session
+    implemented code, the claim's owner field was set to the wrong role at claim time).
+    Remaining btn-ghost shapes for the next slice: btn-ghost btn-sm rounded-2xl (23), btn-
+    ghost btn-xs rounded-lg (21), btn-ghost btn-sm (21).
+  updated: '2026-09-03T04:45:32Z'
+  implementation_pr: 'silasfelinus/kind_robots#2350'
+  owner: worker
   claimed_by: claude-scheduled-20260903T043214Z-iv-t104
   claimed_at: '2026-09-03T04:32:14Z'
 
