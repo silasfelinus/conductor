@@ -1,15 +1,15 @@
 # Conductor Portfolio Oversight
 
-Generated: `2026-09-02T21:07:45.191843+00:00`
+Generated: `2026-09-03T04:39:49.285075+00:00`
 
-Overall status: **action-needed**
+Overall status: **clean**
 
 This is a deterministic sensor. For semantic roadmap/progress intent review, follow `projects/conductor/OVERSIGHT-AGENT.md`.
 
 ## OpenAI scheduled-agent heartbeat
 
-- Latest visible OpenAI scheduled-Agent activity: `2026-09-02T14:17:57+00:00` (6.83h ago; overdue at 6.0h).
-- Overdue: **true**
+- Latest visible OpenAI scheduled-Agent activity: `2026-09-03T03:13:10+00:00` (1.44h ago; overdue at 6.0h).
+- Overdue: **false**
 - Note: OpenAI commit activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit.
 
 ## Kind Robots ↔ Conductor project parity
@@ -19,16 +19,13 @@ This is a deterministic sensor. For semantic roadmap/progress intent review, fol
 
 ## Roadmap/CONTROL structural audit
 
-- Errors: **3**
+- Errors: **0**
 - Warnings: **2**
-  - **GATED_DONE_WITHOUT_APPROVAL** — `ai-art-academy` / `t-077`: Human-gated task is done without approved_by_human: true.
-  - **GATED_DONE_WITHOUT_APPROVAL** — `mandarin-tutor` / `t-010`: Human-gated task is done without approved_by_human: true.
-  - **GATED_DONE_WITHOUT_APPROVAL** — `mandarin-tutor` / `t-020`: Human-gated task is done without approved_by_human: true.
 - Warning details remain in `ROADMAP-AUDIT.md`; errors above take precedence for this sensor.
 
 ## Semantic intent review
 
-- Latest: `INTENT-AUDIT-2026-09-01.md` (1 day(s) ago; due at 3.0 days).
+- Latest: `INTENT-AUDIT-2026-09-01.md` (2 day(s) ago; due at 3.0 days).
 - Due: **false**
 
 ## Agent routing
