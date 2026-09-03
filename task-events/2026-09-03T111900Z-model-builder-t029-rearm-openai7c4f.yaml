@@ -1,9 +1,0 @@
-version: 1
-project: model-builder
-task: t-029
-operation: rearm
-owner: worker
-session: openai-scheduled-20260903T111416Z-model-builder-t029-7c4f
-updated: '2026-09-03T11:19:00Z'
-note: >-
-  OpenAI scheduled cycle 87 audited the next lead from cycle 86: regression-guard integrity rather than another pass over already-exhausted Model Builder UI/store behavior. Spot-checked verifyModelBuilderResetRunGuard.ts against the live resetRun() implementation and verified its six singleton-clear assertions still match current behavior; also inspected verifyModelBuilderCompletionGate.ts and its self-test against the current store. Found one concrete verifier-hardening gap worth the next bounded slice: extractFunctionBodies()/findGuardIntervals() brace-match raw source characters and therefore count braces inside comments/string literals as structural braces. The current self-test covers function/guard shapes but not that parser failure class. This can make the guard throw or mis-extract after a harmless explanatory comment/string edit, the same family of textual-parser blind spot previously found in Model Builder's icon/source guards. No product bug or safe tiny code change was established from this audit, so no speculative implementation was opened. Next slice should add a synthetic comment/string-brace regression fixture first, then harden the shared scanner only if the fixture reproduces the failure, rather than changing parser machinery on inference alone.
