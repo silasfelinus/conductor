@@ -253,15 +253,30 @@ tasks:
 - id: t-010
   milestone: m1
   title: "Polish and upgrade Coat Dance front-end surface"
-  status: claimed
+  status: ready
   owner: worker
   passes: 0
   stakes: reversible
-  note: 'Re-checked before doing any work (per convention). Step (4) (evolve the interactive slot) remains blocked on t-003
-    (source-video beat map), still status: needs-human, unresolved -- no source video has landed since the 2026-08-20 cycle.
-    Steps (1)-(3) remain confirmed done. No agent-actionable scope exists on this task until Silas supplies the source video
-    via t-003. Re-armed to ready; will stay a genuine no-op until t-003 clears.'
-  updated: '2026-09-03T13:07:38Z'
+  note: >-
+    Re-checked before doing any work (per convention). Step (4) (evolve the interactive slot) remains blocked on t-003 (source-video beat map), still status: needs-human, unresolved -- no source video has landed since the 2026-08-20 cycle. Steps (1)-(3) remain confirmed done. No agent-actionable scope exists on this task until Silas supplies the source video via t-003. Re-armed to ready; will stay a genuine no-op until t-003 clears.
+
+    Re-checked before doing any work (per convention). Corrected an inaccurate claim this
+    task's own note had been carrying forward: step (4)'s blocker is NOT 'no source video
+    has landed' -- projects/coat-dance/coat dance_x264.mp4 has been checked in since
+    2026-07-17 (confirmed present, 35.5MB, per BRIEF.md's own technical read table). The
+    real, still-unresolved blocker is twofold: (a) t-003 (source-video beat map) produced a
+    template scaffold but is still status: needs-human awaiting Silas's read/approval of its
+    column shape and BRIEF.md's open Q1-Q3 (target music track, whether the muxed audio is
+    usable, and the render-environment tool inventory), and (b) filling the template with
+    REAL timestamps needs ffmpeg/librosa/mediapipe, none of which exist in this sandbox (re-
+    confirmed this cycle: 'which ffmpeg' fails, both Python imports fail) -- and per t-003's
+    own note, this is deliberately deferred to whatever real render environment Silas
+    answers BRIEF.md Q3 with, not something to route around by installing these in the
+    conductor sandbox, since that sandbox isn't the actual production/GPU environment this
+    pipeline will run in anyway. Steps (1)-(3) remain confirmed done. No agent-actionable
+    scope exists on this task until Silas answers BRIEF.md's open questions and t-003
+    clears. Re-armed to ready; will stay a genuine no-op until then.
+  updated: '2026-09-03T13:08:32Z'
   claimed_by: claude-scheduled-20260903T130737Z-coatdance-t010-conductor
   claimed_at: '2026-09-03T13:07:38Z'
 goal: Develop Coat Dance into its intended polished creative work, with the roadmap’s authored concept, assets, and 
