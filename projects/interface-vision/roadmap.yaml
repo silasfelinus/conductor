@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3491,8 +3491,25 @@ tasks:
     through slices 42-48, or the class-order duplicate of kr-btn-ghost-xs (btn btn-xs btn-
     ghost rounded-xl, 14 occurrences, same computed shape as kr-btn-ghost-xs but different
     literal string order).
-  updated: '2026-09-03T15:31:57Z'
-  implementation_pr: 'silasfelinus/kind_robots#2357'
+
+    interface-vision/t-104 slice 49: codemod'd the class-order duplicate of .kr-btn-ghost-xs
+    (`btn btn-xs btn-ghost rounded-xl` -- same computed shape as the canonical `btn btn-
+    ghost btn-xs rounded-xl`, btn-xs/btn-ghost swapped), 14 occurrences across 6 files (bot-
+    chat.vue, reward-encounter.vue, server-card.vue, theme-gallery.vue, reactable-card.vue,
+    reaction-card.vue). No new CSS primitive needed. prettier --write applied (several
+    button tags now fit on one line); 2 remaining warnings confirmed pre-existing drift on
+    origin/main. vue-tsc clean, lint-ratchet holds (332/-60), layout-contract holds (207
+    baseline). Opened kind_robots#2361. Next slice should sweep the near-miss btn-ghost-xs
+    sites with extra appended classes (text-base-content/60, text-error, sm:btn-sm) left out
+    of scope here.
+
+    Merged: kind_robots#2361 (squash 5b614f21fdef6655876e871944cd92c658e84397), all 41 CI
+    checks green including Contract verifiers. Next slice should sweep the near-miss btn-
+    ghost-xs sites with extra appended classes (text-base-content/60, text-error, sm:btn-sm)
+    left out of scope this slice. Re-arming to ready for the next slice per recurring-task
+    convention.
+  updated: '2026-09-03T15:46:44Z'
+  implementation_pr: 'silasfelinus/kind_robots#2361'
   owner: worker
   claimed_by: claude-scheduled-20260903T153156Z-interface-vision-t104
   claimed_at: '2026-09-03T15:31:57Z'
