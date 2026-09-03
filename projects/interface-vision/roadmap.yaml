@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3386,8 +3386,21 @@ tasks:
     plus a wider repo-wide btn-ghost audit -- 183 files use btn-ghost, not yet surveyed for
     a genuine shared-shape duplicate) rather than the loading-state/grid-gap dimensions,
     which this cycle ruled out.
-  updated: '2026-09-03T01:29:04Z'
-  implementation_pr: 'silasfelinus/kind_robots#2334'
+
+    Slice 42 (this close): extracted .kr-btn-ghost to assets/css/tailwind.css (@apply btn
+    btn-ghost btn-sm rounded-xl, the most-repeated exact ghost-button shape, 54 occurrences
+    repo-wide) and codemodded the 42 files matching that exact static class string. Verified
+    CSS-equivalent via a standalone @tailwindcss/node compile (daisyUI/Tailwind v4 fully
+    expand @apply of component classes -- confirmed byte-for-byte before committing). vue-
+    tsc, ESLint ratchet (-60, no rule regressed), and layout-contract all clean. Opened
+    silasfelinus/kind_robots#2347. Remaining btn-ghost shapes for a future slice: btn-ghost
+    btn-xs rounded-xl (32), btn-ghost btn-xs (30), btn-ghost btn-sm rounded-2xl (23), btn-
+    ghost btn-xs rounded-lg (21), btn-ghost btn-sm (21).
+
+    kind_robots#2347 merged (squash 23ef4ea057a9d6f4f00af2c6df496bf79f6923ad). Re-arming to
+    ready for the next slice per recurring-task convention.
+  updated: '2026-09-03T01:47:50Z'
+  implementation_pr: 'silasfelinus/kind_robots#2347'
   owner: worker
   claimed_by: claude-20260903T012904Z-ivt104-slice42
   claimed_at: '2026-09-03T01:29:04Z'
