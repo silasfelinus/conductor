@@ -1,4 +1,4 @@
-updated: "2026-09-03T06:47:00+00:00"
+updated: "2026-09-03T13:52:28+00:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -639,7 +639,7 @@ pitches:
 
   - id: tapestry-loom
     title: Tapestry Loom
-    status: pitched
+    status: candidate
     priority: 18
     surprise: >
       A hand loom's shuttle glides steadily back and forth across taut warp threads, and with
@@ -691,6 +691,22 @@ pitches:
       - reduced-motion mode shows one static completed tapestry with no shuttle or unraveling motion
       - pointer hover slow-down, row highlight, and click-pluck ripple never block underlying page input
       - thread palette remains readable on both light and dark themes
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/tapestry-loom.vue
+        pull_request: silasfelinus/kind_robots#2360
+        commit: e47fc49d7a6a457b318e3f5141bc8e7ab0b7d9e2
+        verification:
+          - TypeScript Type Check
+          - eslint
+          - prettier
+          - test:animation-catalog
+          - test:animation-component-attempts
+          - test:layout-contract
+          - check_animation_novelty.py --strict
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
 
   - id: hourglass-cascade
     title: Hourglass Cascade
