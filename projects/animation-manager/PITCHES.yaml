@@ -1,4 +1,4 @@
-updated: "2026-08-29T14:30:00+00:00"
+updated: "2026-09-03T06:47:00+00:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -585,7 +585,7 @@ pitches:
 
   - id: kintsugi-weather
     title: Kintsugi Weather
-    status: pitched
+    status: candidate
     priority: 17
     surprise: >
       Hairline fractures quietly travel through a transparent porcelain-like surface, then
@@ -620,6 +620,22 @@ pitches:
       - gold seams remain readable on light and dark themes without obscuring page content
       - reduced-motion mode creates no new fractures
       - pointer and click interactions never block underlying page input
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/kintsugi-weather.vue
+        pull_request: silasfelinus/kind_robots#2352
+        commit: d9137c96db363446e51116dba7d83228d292e2e0
+        verification:
+          - TypeScript Type Check
+          - eslint
+          - prettier
+          - test:animation-catalog
+          - test:animation-component-attempts
+          - test:layout-contract
+          - check_animation_novelty.py --strict
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
 
   - id: tapestry-loom
     title: Tapestry Loom
