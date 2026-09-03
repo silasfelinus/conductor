@@ -1,0 +1,39 @@
+{
+  "mode": "recompose",
+  "scope": "all-built",
+  "reason": "Scheduled conductor sweep, 2026-09-03: repair_dream_prose_catalog.py --verify-live --strict (run inside daily-digest.yml run #87) found Character #3294 (2026-08-10 bundle) carrying stale drive/quirks/backstory text that no longer matches what build_dream_records would compose today from the same committed source fields. Deterministic and model-free, same lane as the 2026-09-01 de-stemming recompose: backstory is joined from carries+complication rather than authored directly, so the correct value is recomputed from committed source and patched live, nothing is rewritten by a model.",
+  "send_digest": false,
+  "status": "applied",
+  "applied_at": "2026-09-03T18:33:34.963628+00:00",
+  "repaired_bundles": 3,
+  "results": [
+    {
+      "day": "2026-08-10",
+      "kind": "characters",
+      "endpoint": "/api/characters",
+      "record_id": 3294,
+      "field": "drive",
+      "live": "Maret flies the dusk spore run each evening, threading the ribs without ever waking what she is dusting.",
+      "expected": "She flies the dusk spore run each evening, threading the ribs without ever waking what she is dusting."
+    },
+    {
+      "day": "2026-08-10",
+      "kind": "characters",
+      "endpoint": "/api/characters",
+      "record_id": 3294,
+      "field": "quirks",
+      "live": "She narrates every worry out loud as she flies, and the radio carries all of it straight down to the listening town.",
+      "expected": "The town has started listening for her voice more than for the all-clear, and she has no idea how to stop being the thing they tune in for."
+    },
+    {
+      "day": "2026-08-10",
+      "kind": "characters",
+      "endpoint": "/api/characters",
+      "record_id": 3294,
+      "field": "backstory",
+      "live": "She carries a canvas satchel stuffed with townsfolk's letters, reading them aloud over the open radio on every run. She narrates every worry out loud as she flies, and the radio carries all of it straight down to the listening town.",
+      "expected": "A canvas satchel of townsfolk's letters rides against her hip, and she reads them aloud over the open radio on every run. The town has started listening for her voice more than for the all-clear, and she has no idea how to stop being the thing they tune in for."
+    }
+  ],
+  "remaining": []
+}
