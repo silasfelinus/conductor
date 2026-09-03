@@ -460,7 +460,7 @@ tasks:
   gate_human: true
   approved_by_human: false
   depends_on: t-029
-  note: |-
+  note: >-
     FOR SILAS: Present the verified private/preview MVP at phone, tablet, and desktop widths with the forum, mission home, AMI identity, fundraiser treatment, and Connect an Agent flow. This is the one subjective product gate required before public launch. Ask for concrete visual acceptance or requested changes, not generic permission to keep developing. Other reversible mission/research tasks remain free to continue while this waits.
 
     CURRENT V2 RECONCILIATION, 2026-09-02: the original title/note for this task described a pre-launch visual-acceptance gate, but rainbowbutterflies.org is already public and PRODUCT-V2.md now defines a broader completion target. Treat this task as the remaining Rainbow v2 product-completion and final-acceptance umbrella before outreach pilots.
@@ -479,7 +479,21 @@ tasks:
     RECONCILED (state-reconciliation sweep, scheduled conductor run 2026-09-03): PR silasfelinus/kind_robots#2344 merged 2026-09-03T00:05:21Z but roadmap was left at status=review. Flipping to done; implementation_pr already recorded.
 
     Correcting the premature scheduled closeout: t-027's own current-v2 note still requires lane 3 optional messaging and lane 5 final cross-width acceptance before the task can return to the human acceptance gate. Lane 2 backend is merged and lanes 2 UI / 4 provider visuals are verified in unmerged Rainbow PRs #35/#36. Kind Robots optional-messaging substrate is under exact-head verification in #2354. Reopen the umbrella so the remaining reversible work is represented honestly; no publication or human acceptance is implied by this transition.
-  updated: '2026-09-03T08:18:00Z'
+
+    RECONCILED (scheduled conductor sweep, 2026-09-03T10:29Z): kind_robots#2354 (lane 3
+    optional-messaging backend substrate -- AgentMessageThread/AgentMessage, agent:message
+    credential scope, both-side opt-in, rate limits, participant-scoped access) merged at
+    2026-09-03T09:16:37Z. Lane 3's Kind Robots-side backend is complete and live. Not
+    resolving or reclaiming this task in this session: the remaining work on lanes 3 (any
+    Rainbow-side messaging UI still needed), 4 (provider tutorial visual polish), and 5
+    (current-v2 cross-width acceptance pass) lives in the silasfelinus/rainbowbutterflies
+    repository, which is outside this session's GitHub access scope
+    (conductor/kind_robots/Kapowarr/humboldtscoopsolutions only). The existing claim
+    (claimed_by openai-rb-t027-20260903T081800Z-messages-b91d, claimed_at 08:18:00Z) is now
+    well past CLAIM_TTL_MINUTES (90) with no corresponding open PR anywhere in scope -- left
+    as-is rather than force-reclaimed, since a session with actual rainbowbutterflies access
+    should pick this up next, not one that can only tell PROD is out of reach.
+  updated: '2026-09-03T10:34:03Z'
   owner: worker
   claimed_by: openai-rb-t027-20260903T081800Z-messages-b91d
   claimed_at: '2026-09-03T08:18:00Z'
