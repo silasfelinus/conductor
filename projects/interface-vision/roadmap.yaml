@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3466,7 +3466,12 @@ tasks:
     Opened kind_robots#2356. This was the last of the exact-match repeated btn-ghost shapes
     from slice 42's original survey -- next slice should sweep the near-miss sites with
     extra appended classes each prior slice left out of scope.
-  updated: '2026-09-03T09:37:52Z'
+
+    Merged: kind_robots#2356 (squash 6c2fbdd6e933b163582b88d2a3768f24c1f678b9), all 45 CI
+    checks green including the sometimes-slow Contract verifiers job (~3.5 min this run, not
+    a stall). Next slice should sweep the near-miss btn-ghost sites (extra appended classes)
+    each prior slice left out of scope, per slice 46's kaizen note.
+  updated: '2026-09-03T09:42:27Z'
   implementation_pr: 'silasfelinus/kind_robots#2356'
   owner: worker
   claimed_by: claude-scheduled-20260903T-interface-vision-t104-slice47
