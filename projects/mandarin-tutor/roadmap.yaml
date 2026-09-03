@@ -291,20 +291,10 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: t-005
-    note: >-
-      FOR SILAS: nothing to decide here yet -- this gate is waiting on the production render
-      host in t-020. Reopen the coverage audit once the box renders again.
-
-      2026-08-28: the corpus IS submitted. All 577 illustrate cards are durable ArtJobs
-      (ids 10291-10867, one per request, recorded as last_art_job_id in
-      projects/art-prompts.yaml). Measured coverage immediately before submission was
-      0/577 -- every sampled v2 media path answers 200 text/html, which is Nuxt's
-      catch-all page, not an image.
-
-      Two blockers were found and cleared, neither of which was the container update this
-      task had been waiting on since 2026-08-25 (production has served the v2 manifest
-      since before this session):
-
+    note: |-
+      FOR SILAS: nothing to decide here yet -- this gate is waiting on the production render host in t-020. Reopen the coverage audit once the box renders again.
+      2026-08-28: the corpus IS submitted. All 577 illustrate cards are durable ArtJobs (ids 10291-10867, one per request, recorded as last_art_job_id in projects/art-prompts.yaml). Measured coverage immediately before submission was 0/577 -- every sampled v2 media path answers 200 text/html, which is Nuxt's catch-all page, not an image.
+      Two blockers were found and cleared, neither of which was the container update this task had been waiting on since 2026-08-25 (production has served the v2 manifest since before this session):
       1. The v2 prompts could never be enqueued. All 577 came back HTTP 422 from the art
          prompt contract's conditional-instruction rule -- "ground it in Chinese detail
          only when it naturally belongs to the concept". The corpus was unsubmittable by
@@ -314,34 +304,16 @@ tasks:
          unrendered card reported V2 READY, painted a broken img, and hid the request
          button. Also fixed in kind_robots#2174.
 
-      Remaining gate is the render host, not this task's design: Alexandria's ComfyUI has
-      lost sight of its model directory (VAELoader.vae_name='qwen_image_vae.safetensors'
-      not in the live model list) and has rendered nothing since 2026-08-27T09:04Z. See
-      t-020. Coverage cannot be audited until the box renders again; the recovery path is
-      scripts/drain_failed_art_backlog.py, which canaries before draining.
-
+      Remaining gate is the render host, not this task's design: Alexandria's ComfyUI has lost sight of its model directory (VAELoader.vae_name='qwen_image_vae.safetensors' not in the live model list) and has rendered nothing since 2026-08-27T09:04Z. See t-020. Coverage cannot be audited until the box renders again; the recovery path is scripts/drain_failed_art_backlog.py, which canaries before draining.
       HUMAN ANSWER from silasfelinus via Kind Robots. Gate released for the next agent. love the work, this looks very passable. approved
+      RESOLVED 2026-09-02: Alexandria render host confirmed back UP (scripts/check_render_box.py: 221 renders completed in the last 6h). Ran a direct HEAD- probe coverage audit against the live media origin (https://media.acrocatranch.com) for all 577 strategy:illustrate v2 manifest entries (44 glyph-only excluded, correctly image-less) -- wrote scripts/audit_mandarin_illustration_coverage.py for this, reusable for future re-checks. Result: 577/577 rendered, 0 absent, 0 unknown -- 100% coverage. The 2888-row FAILED backlog documented in t-020's note has already fully drained/rendered (drain_failed_art_backlog.py's dry-run now reports only 16 stragglers, all already rendered, nothing retryable left). Reach is confirmed complete -- do NOT re- run scripts/queue_mandarin_tutor_art.py to double-check this: doing so during this session's audit incorrectly re-staged the entire already-rendered 577-card corpus as 'missing' and would have duplicate-submitted it, because the original request rows are no longer present in art-prompts.yaml (removed by some later step) and the script has no live-media dedup check. Caught before commit, reverted, never pushed. Filed conductor/t-142 to fix that script's dedup logic properly.
 
-      RESOLVED 2026-09-02: Alexandria render host confirmed back UP
-      (scripts/check_render_box.py: 221 renders completed in the last 6h). Ran a direct HEAD-
-      probe coverage audit against the live media origin (https://media.acrocatranch.com) for
-      all 577 strategy:illustrate v2 manifest entries (44 glyph-only excluded, correctly
-      image-less) -- wrote scripts/audit_mandarin_illustration_coverage.py for this, reusable
-      for future re-checks. Result: 577/577 rendered, 0 absent, 0 unknown -- 100% coverage.
-      The 2888-row FAILED backlog documented in t-020's note has already fully
-      drained/rendered (drain_failed_art_backlog.py's dry-run now reports only 16 stragglers,
-      all already rendered, nothing retryable left). Reach is confirmed complete -- do NOT re-
-      run scripts/queue_mandarin_tutor_art.py to double-check this: doing so during this
-      session's audit incorrectly re-staged the entire already-rendered 577-card corpus as
-      'missing' and would have duplicate-submitted it, because the original request rows are
-      no longer present in art-prompts.yaml (removed by some later step) and the script has no
-      live-media dedup check. Caught before commit, reverted, never pushed. Filed
-      conductor/t-142 to fix that script's dedup logic properly.
-    updated: '2026-09-02T04:40:23Z'
+      Oversight bookkeeping repair by openai-scheduled-20260903T011608Z-roadmap-audit-k4m8. Records the explicit existing human approval already preserved in this task note ("love the work, this looks very passable. approved"); no new product or production permission is inferred.
+    updated: '2026-09-03T01:16:08Z'
     gate_human: true
-    owner: worker
     claimed_by: claude-scheduled-20260902T042738Z-mandarin-t010
     claimed_at: '2026-09-02T04:34:24Z'
+    approved_by_human: true
   - id: t-011
     milestone: m3
     title: "Add linguistic provenance and content-quality audits"
@@ -582,92 +554,29 @@ tasks:
     status: done
     passes: 0
     stakes: reversible
-    note: >-
-      FOR SILAS: only you can fix this one -- it is a production Alexandria/Unraid mount,
-      not code. Every project's art generation is down until it is remounted.
-
+    note: |-
+      FOR SILAS: only you can fix this one -- it is a production Alexandria/Unraid mount, not code. Every project's art generation is down until it is remounted.
       Every COMFY ArtJob fails immediately with:
         ComfyUI has no matching file for: VAELoader.vae_name='qwen_image_vae.safetensors'
         (ComfyUI listed 1 file(s) for that input). Not in the live model list at
         http://127.0.0.1:8188.
 
-      The same VAE name rendered successfully as recently as job 10069 at
-      2026-08-27T09:04Z, so the file is not misnamed -- the render host lost sight of its
-      model directory. ComfyUI reporting exactly one file for that input is the tell: the
-      directory is unmounted or unreadable, not empty.
-
-      Nothing has rendered since. This is not specific to Mandarin: it burns every job the
-      queue hands the box, and it was already eating the queue before the Mandarin corpus
-      was submitted into it (the 2026-08-27 backlog fails earlier, at CLIPTextEncode with
-      hostbuf_file_reader_read, which is the same story one node upstream).
-
-      As of 2026-08-28T09:20Z the queue has fully drained and all 577 Mandarin jobs are
-      FAILED at attempts=3 with this error (sampled 15 across the range, all identical).
-      The requests and their job ids survive in projects/art-prompts.yaml, so nothing is
-      lost -- but requeueing is now a REQUIRED step after the mount is fixed, not an
-      optional one. The corpus will not render on its own.
-
-      Once the mount is back, requeue with `python scripts/drain_failed_art_backlog.py`
-      rather than the bare reenqueue endpoint -- it renders a canary first and refuses to
-      drain into a host that is still down, which is what keeps 500+ jobs from burning
-      three attempts each and flushing the original error text.
-
-      UPDATE 2026-08-28T14:10Z (Silas asked whether the network was back and whether the
-      failures could be requeued): still down, and the backlog is now much bigger than
-      the 577 recorded above.
-
-      The ComfyUI *link* is healthy -- the Silas-PC relay is heartbeating every few
-      seconds (agent version conductor-relay-completion-proof-v1, supportsInputImages
-      true, both engines) and ComfyUI answers on 127.0.0.1:8188 well enough to return a
-      model list. What is still broken is the model share behind it. Both of this
-      incident's error signatures are documented in ops/home-server/README.md as the
-      Alexandria SMB mount dropping: the 2026-08-27 rows fail at CLIPTextEncode with
-      hostbuf_file_reader_read (a read against a dead session), the 2026-08-28 rows fail
-      at VAELoader with a shrunken model list (folder_paths re-enumerated a half-readable
-      share). Same outage, two faces. This is the third recurrence of the same mount.
-
-      Current state at 14:10Z: FAILED 2888, PENDING 0, RUNNING 0, DONE 5495. Zero
-      ArtImages created in 24h. scripts/check_render_box.py now correctly returns DOWN
-      ("2095 render(s) failed and none completed in the last 6h"), so auto-art-generate
-      will gate itself off on its next run -- it was returning UP throughout the burn,
-      which is why enqueueing continued.
-
-      The 2888 are NOT 2888 distinct requests. They are 709 distinct targets; 2173 rows
-      (75%) are duplicate enqueues of the same work, most targets appearing 4-5 times.
-      Cause filed as conductor/t-133 -- auto-art-generate drains art-prompts.yaml twice
-      per run through two lanes that do not mark rows in-flight, so a run against a dead
-      box re-submits the whole corpus. conductor/t-134 covers why the relay's own
-      model-share gate did not stop it (its probe passes on a share that can list one
-      file).
-
-      Note that duplicate rows are NOT duplicate renders: the relay claims one job at a
-      time throughout, and RUNNING never exceeded 1 in any sample. ArtJob 12921 did hold
-      RUNNING for 15m01s (13:50:33Z-14:05:34Z, exactly STALE_CLAIM_MINUTES) while 36
-      other jobs claimed and failed past it at ~10s each -- a stale claim overlapping the
-      normal serial queue, which is what makes a dashboard look like two jobs are running
-      at once. staleRunningCount distinguishes the two.
-
-      NOT requeued this session, deliberately: drain_failed_art_backlog.py's dry run
-      classifies all 2888 as retryable render-host faults (2716
-      render-host-model-vanished, 172 render-host-io) with zero payload faults, so
-      nothing is lost and nothing needs repair -- but firing them at a host that still
-      cannot see its VAE would burn 8664 render attempts and flush the error text this
-      diagnosis rests on. Requeue is a post-fix step, unchanged from above.
-
+      The same VAE name rendered successfully as recently as job 10069 at 2026-08-27T09:04Z, so the file is not misnamed -- the render host lost sight of its model directory. ComfyUI reporting exactly one file for that input is the tell: the directory is unmounted or unreadable, not empty.
+      Nothing has rendered since. This is not specific to Mandarin: it burns every job the queue hands the box, and it was already eating the queue before the Mandarin corpus was submitted into it (the 2026-08-27 backlog fails earlier, at CLIPTextEncode with hostbuf_file_reader_read, which is the same story one node upstream).
+      As of 2026-08-28T09:20Z the queue has fully drained and all 577 Mandarin jobs are FAILED at attempts=3 with this error (sampled 15 across the range, all identical). The requests and their job ids survive in projects/art-prompts.yaml, so nothing is lost -- but requeueing is now a REQUIRED step after the mount is fixed, not an optional one. The corpus will not render on its own.
+      Once the mount is back, requeue with `python scripts/drain_failed_art_backlog.py` rather than the bare reenqueue endpoint -- it renders a canary first and refuses to drain into a host that is still down, which is what keeps 500+ jobs from burning three attempts each and flushing the original error text.
+      UPDATE 2026-08-28T14:10Z (Silas asked whether the network was back and whether the failures could be requeued): still down, and the backlog is now much bigger than the 577 recorded above.
+      The ComfyUI *link* is healthy -- the Silas-PC relay is heartbeating every few seconds (agent version conductor-relay-completion-proof-v1, supportsInputImages true, both engines) and ComfyUI answers on 127.0.0.1:8188 well enough to return a model list. What is still broken is the model share behind it. Both of this incident's error signatures are documented in ops/home-server/README.md as the Alexandria SMB mount dropping: the 2026-08-27 rows fail at CLIPTextEncode with hostbuf_file_reader_read (a read against a dead session), the 2026-08-28 rows fail at VAELoader with a shrunken model list (folder_paths re-enumerated a half-readable share). Same outage, two faces. This is the third recurrence of the same mount.
+      Current state at 14:10Z: FAILED 2888, PENDING 0, RUNNING 0, DONE 5495. Zero ArtImages created in 24h. scripts/check_render_box.py now correctly returns DOWN ("2095 render(s) failed and none completed in the last 6h"), so auto-art-generate will gate itself off on its next run -- it was returning UP throughout the burn, which is why enqueueing continued.
+      The 2888 are NOT 2888 distinct requests. They are 709 distinct targets; 2173 rows (75%) are duplicate enqueues of the same work, most targets appearing 4-5 times. Cause filed as conductor/t-133 -- auto-art-generate drains art-prompts.yaml twice per run through two lanes that do not mark rows in-flight, so a run against a dead box re-submits the whole corpus. conductor/t-134 covers why the relay's own model-share gate did not stop it (its probe passes on a share that can list one file).
+      Note that duplicate rows are NOT duplicate renders: the relay claims one job at a time throughout, and RUNNING never exceeded 1 in any sample. ArtJob 12921 did hold RUNNING for 15m01s (13:50:33Z-14:05:34Z, exactly STALE_CLAIM_MINUTES) while 36 other jobs claimed and failed past it at ~10s each -- a stale claim overlapping the normal serial queue, which is what makes a dashboard look like two jobs are running at once. staleRunningCount distinguishes the two.
+      NOT requeued this session, deliberately: drain_failed_art_backlog.py's dry run classifies all 2888 as retryable render-host faults (2716 render-host-model-vanished, 172 render-host-io) with zero payload faults, so nothing is lost and nothing needs repair -- but firing them at a host that still cannot see its VAE would burn 8664 render attempts and flush the error text this diagnosis rests on. Requeue is a post-fix step, unchanged from above.
       HUMAN ANSWER from silasfelinus via Kind Robots. Gate released for the next agent. this was a temporary outage, should be fixed
+      RECOVERY CONFIRMED 2026-09-02: scripts/check_render_box.py reports UP (221 renders completed in the last 6h) -- the Alexandria SMB mount is readable again. scripts/drain_failed_art_backlog.py's dry-run classifies the remaining 16 FAILED rows as already-rendered (target image exists), zero retryable-and-still-wanted -- confirms Mandarin's 577-card v2 corpus and the wider backlog fully drained with nothing left to requeue (see mandarin-tutor/t-010, closed this session, for the full illustration- coverage confirmation: 577/577 rendered). Root-cause tracking for the duplicate-enqueue amplification during the outage is already closed separately (conductor/t-133, t-134). Per docs/state-reconciliation.md: closing this recovery task now that its explicit recovery criteria are met, not holding it on root-cause completeness.
 
-      RECOVERY CONFIRMED 2026-09-02: scripts/check_render_box.py reports UP (221 renders
-      completed in the last 6h) -- the Alexandria SMB mount is readable again.
-      scripts/drain_failed_art_backlog.py's dry-run classifies the remaining 16 FAILED rows as
-      already-rendered (target image exists), zero retryable-and-still-wanted -- confirms
-      Mandarin's 577-card v2 corpus and the wider backlog fully drained with nothing left to
-      requeue (see mandarin-tutor/t-010, closed this session, for the full illustration-
-      coverage confirmation: 577/577 rendered). Root-cause tracking for the duplicate-enqueue
-      amplification during the outage is already closed separately (conductor/t-133, t-134).
-      Per docs/state-reconciliation.md: closing this recovery task now that its explicit
-      recovery criteria are met, not holding it on root-cause completeness.
-    updated: '2026-09-02T04:43:35Z'
+      Oversight bookkeeping repair by openai-scheduled-20260903T011608Z-roadmap-audit-k4m8. Records the explicit existing human gate release already preserved in this task note ("this was a temporary outage, should be fixed") after the documented recovery confirmation; no new production permission is inferred.
+    updated: '2026-09-03T01:16:09Z'
     gate_human: true
-    owner: worker
     claimed_by: claude-scheduled-20260902T042738Z-mandarin-t020
     claimed_at: '2026-09-02T04:43:32Z'
+    approved_by_human: true
