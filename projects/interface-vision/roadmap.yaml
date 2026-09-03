@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -3508,8 +3508,18 @@ tasks:
     ghost-xs sites with extra appended classes (text-base-content/60, text-error, sm:btn-sm)
     left out of scope this slice. Re-arming to ready for the next slice per recurring-task
     convention.
-  updated: '2026-09-03T15:54:39Z'
-  implementation_pr: 'silasfelinus/kind_robots#2361'
+
+    interface-vision/t-104 slice 50: swept the 5 near-miss btn-ghost-xs sites left out of
+    scope by slice 49 (same base shape, extra appended classes: text-base-content/60, text-
+    error, sm:btn-sm, plus border/hover utilities on one delete-confirm button), across 4
+    files (model-builder-run-history.vue, model-builder-progress-matrix.vue, account-
+    hub.vue, art-interact.vue x2). Verified against the real compiled CSS that sm:btn-sm's
+    @layer utilities placement still wins over kr-btn-ghost-xs's @layer components btn-xs
+    sizing (Tailwind's global layer order: theme, base, components, utilities). vue-tsc
+    clean, lint-ratchet holds (332/-60), layout-contract holds (207 baseline). Opened
+    kind_robots#2362.
+  updated: '2026-09-03T16:00:08Z'
+  implementation_pr: 'silasfelinus/kind_robots#2362'
   owner: worker
   claimed_by: claude-scheduled-20260903T155438Z-interface-vision-t104-s50
   claimed_at: '2026-09-03T15:54:39Z'
