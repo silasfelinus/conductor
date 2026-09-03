@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3426,11 +3426,19 @@ tasks:
     implemented code, the claim's owner field was set to the wrong role at claim time).
     Remaining btn-ghost shapes for the next slice: btn-ghost btn-sm rounded-2xl (23), btn-
     ghost btn-xs rounded-lg (21), btn-ghost btn-sm (21).
-  updated: '2026-09-03T05:11:59Z'
+
+    PR-merged drift repair (conductor scheduled sweep, state-reconciliation duty): status
+    was still 'claimed' (claimed_at 2026-09-03T05:11:59Z by openai-
+    scheduled-20260903T051159Z-interface-vision-t104-oai11q7) even though kind_robots PR
+    #2350 (slice 44, kr-btn-ghost-xs-plain extraction) merged at 2026-09-03T04:45:21Z,
+    verified via GitHub MCP, all checks green, and the task's own note already reads as a
+    complete finished cycle. Flagged by check_pr_merged_drift.py. Re-armed to ready per this
+    recurring umbrella task's convention; no new code change, bookkeeping only.
+  updated: '2026-09-03T06:55:28Z'
   implementation_pr: 'silasfelinus/kind_robots#2350'
-  owner: worker
-  claimed_by: openai-scheduled-20260903T051159Z-interface-vision-t104-oai11q7
-  claimed_at: '2026-09-03T05:11:59Z'
+  owner: null
+  claimed_by: null
+  claimed_at: null
 
 - id: t-123
   milestone: m5
