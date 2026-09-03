@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -3327,7 +3327,9 @@ tasks:
     Reconcile completed slice 52: kind_robots#2364 merged after its rerun completed green. Re-arm the recurring consistency sweep so the next worker can claim the next bounded shape migration.
 
     Surveyed the next repeated button family on current kind_robots main. Exact outline small rounded buttons remain across multiple live surfaces, with equivalent class-order variants. This is the next bounded shared-primitive migration candidate. No partial conversion was made in this connector-only pass; re-arm the recurring task cleanly.
-  updated: '2026-09-03T19:14:17Z'
+
+    Bounded outline-button consistency slice: reuse the existing kr-btn base with btn-outline on bot-card's Select action, proving the surveyed outline family can compose without a new CSS primitive. Implementation branch worker/interface-vision-t104-outline-k7q3.
+  updated: '2026-09-03T19:19:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2364'
   owner: worker
   claimed_by: openai-scheduled-20260903T191417Z-interface-vision-t104-k7q3
