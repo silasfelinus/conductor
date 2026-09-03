@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 48
     stakes: reversible
@@ -817,7 +817,26 @@ tasks:
       (and equally broken) in components/pages/conductor-project-gallery-page.vue -- out of
       scope for this model-builder-only task, left as a note rather than a fix. Re-arming to
       ready for the next bounded slice.
-    updated: '2026-09-03T02:30:39Z'
+
+      NO-OP (scheduled conductor sweep, 2026-09-03): checked icon coverage guard (npx tsx
+      verifyModelBuilderIconCoverageGuard.ts) -- all 46 kind-icon: literals across 7
+      components/model-builder/*.vue resolve cleanly, no regression since cycle 85. Re-
+      verified the cycle-79 rejectionNoteFor() fix: PITCH/FIELDS_AND_PROMPTS/GENERATE_ASSETS
+      all render rejection notes near their badges; confirmed COMMIT correctly has no reject
+      button/note display (terminal stage, no reject() caller -- not a gap). Checked model-
+      builder-batch-editor.vue for the same pattern: it's a coarse per-item summary view with
+      no per-stage UI at all (Edit routes to item-panel, which already shows notes), so
+      nothing to add there either. Audited every <button> across all 7 components/model-
+      builder/*.vue files for icon-only buttons missing aria-label/title: zero findings, all
+      already labeled. Read model-builder-manager.vue's focus-management code (history-panel
+      close, step-change refocus) and resetAll() (clears only client-side wizard state;
+      committed items stay durable per COMMIT's own UI text, so no confirm-dialog gap either).
+      No TODO/FIXME/XXX in any model-builder file. Found no actionable bug or gap this cycle
+      -- the surface is at a mature, heavily-guarded state (167 guard scripts) after 48+ prior
+      cycles. Re-arming to ready; a future slice should look at server/api/model-builder/*.ts
+      for polish opportunities, since the last several dozen cycles concentrated almost
+      entirely on the 7 Vue components and the store.
+    updated: '2026-09-03T02:33:45Z'
     owner: worker
     claimed_by: claude-scheduled-20260903T0230Z-mb-t029
     claimed_at: '2026-09-03T02:30:39Z'
