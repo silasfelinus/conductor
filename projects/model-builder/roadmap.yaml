@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 49
     stakes: reversible
@@ -607,7 +607,10 @@ tasks:
       OpenAI scheduled cycle 87 audited the next lead from cycle 86: regression-guard integrity rather than another pass over already-exhausted Model Builder UI/store behavior. Spot-checked verifyModelBuilderResetRunGuard.ts against the live resetRun() implementation and verified its six singleton-clear assertions still match current behavior; also inspected verifyModelBuilderCompletionGate.ts and its self-test against the current store. Found one concrete verifier-hardening gap worth the next bounded slice: extractFunctionBodies()/findGuardIntervals() brace-match raw source characters and therefore count braces inside comments/string literals as structural braces. The current self-test covers function/guard shapes but not that parser failure class. This can make the guard throw or mis-extract after a harmless explanatory comment/string edit, the same family of textual-parser blind spot previously found in Model Builder's icon/source guards. No product bug or safe tiny code change was established from this audit, so no speculative implementation was opened. Next slice should add a synthetic comment/string-brace regression fixture first, then harden the shared scanner only if the fixture reproduces the failure, rather than changing parser machinery on inference alone.
 
       Reviewed and squash-merged kind_robots PR #2359 at exact head d1a50c976fa854df8d474d59bc940e65962f4b4b after the full returned exact-head Actions fleet completed successfully and no review threads remained. The change reproduces and fixes the shared Model Builder guard scanner's comment/string brace blind spot with computeCodeMask plus regression fixtures. Rearming the recurring polish task for a future slice.
-    updated: '2026-09-03T12:10:24Z'
+    updated: '2026-09-03T12:33:28Z'
+    owner: worker
+    claimed_by: claude-scheduled-20260903T123327Z-mb-t029-conductor
+    claimed_at: '2026-09-03T12:33:28Z'
 
   - id: t-030
     milestone: m6
