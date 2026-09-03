@@ -1,0 +1,8 @@
+version: 1
+project: model-builder
+task: t-029
+operation: rearm
+session: openai-scheduled-20260903T141230Z-model-builder-t029-k7m4
+updated: '2026-09-03T14:16:40Z'
+note: >-
+  OpenAI scheduled cycle 89 continued cycle 88's guard-integrity audit against current kind_robots main. Re-verified verifyModelBuilderAutoBuildApprovalRaceGuard.ts, verifyModelBuilderAutoBuildDraftGate.ts, and verifyModelBuilderAutoBuildQueuedGuard.ts against the live autoBuildItem() implementation and item-panel behavior rather than merely trusting their self-tests. The approval-race guard's premise still holds: Edit remains available while auto-build is active, and autoBuildItem still immediately gates FIELDS_AND_PROMPTS and GENERATE_ASSETS approval on each stage remaining ready after its awaited work, with an explicit failed bail when a concurrent edit stales it. The draft guard still requires successful draftText results before approval and checks both same-item auto-build reentrancy and isItemManualActionInFlight before claiming the auto-build singleton. The queued-art companion still correctly covers item.queueState through that shared helper, so queued/rendering background art is recognized as busy before synchronous auto-build can duplicate it. No contract drift or actionable product bug found in this bounded slice. Next guard-integrity slice should continue with AutoBuildOutcomePersistenceGuard, BatchAnyInFlightGuard, and BatchApproveStageConfirmedSuccessGuard from cycle 88's remaining list.
