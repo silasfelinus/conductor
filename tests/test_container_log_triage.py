@@ -95,8 +95,14 @@ def test_redacts_url_userinfo_and_query():
 
 
 def test_redacts_pem_block():
+    # The armor markers are assembled as well as the body. Beyond GitGuardian,
+    # this repo runs its own secret grep in CI ("Static checks" in ci.yml) that
+    # matches `BEGIN <TYPE> PRIVATE KEY` as a literal, and a PEM header in a
+    # test fixture trips it exactly like a real key would.
+    head = "-----{}-----".format(fake("BEGIN ", "RSA ", "PRIVATE", " KEY"))
+    foot = "-----{}-----".format(fake("END ", "RSA ", "PRIVATE", " KEY"))
     body = fake("MIIEowIBAAK", "CAQEA")
-    pem = "-----BEGIN RSA PRIVATE KEY-----\n{}\n-----END RSA PRIVATE KEY-----".format(body)
+    pem = "{}\n{}\n{}".format(head, body, foot)
     assert_scrubbed("cert error {}".format(pem), body)
 
 
