@@ -270,6 +270,63 @@ ENGINE_HEADLINE = {
 }
 
 
+CONTAINER_LOG_THEME = {
+    "clean": ("#065f46", "#ecfdf5", "#10b981", "\u2705"),
+    "findings": ("#78350f", "#fffbeb", "#f59e0b", "\U0001f50e"),
+    "stale": ("#7f1d1d", "#fef2f2", "#ef4444", "\u26a0\ufe0f"),
+    "unresolved": ("#78350f", "#fffbeb", "#f59e0b", "\u2754"),
+}
+
+
+def container_log_banner(digest: dict[str, Any]) -> str:
+    """One line on what changed in ~50 containers' logs overnight.
+
+    Renders nothing at all when the pipeline is not set up yet: an empty line
+    is better than nagging about a User Script that was never scheduled. Once
+    it IS publishing, the clean state still prints -- same argument as the
+    engine banner, that a green line every day is what makes the absence of a
+    red one mean something.
+    """
+    health = digest.get("container_logs")
+    if not isinstance(health, dict):
+        return ""
+    state = str(health.get("state") or "unresolved").lower()
+    if state == "not-configured":
+        return ""
+
+    colour, paper, rule, icon = CONTAINER_LOG_THEME.get(
+        state, CONTAINER_LOG_THEME["unresolved"]
+    )
+    if state == "clean":
+        headline = "Container logs quiet"
+    elif state == "stale":
+        headline = "Container log triage STALE — the daily User Script may have stopped"
+    elif state == "findings":
+        bits = []
+        for label, key in (("new", "new"), ("spiking", "spiking"), ("newly quiet", "quiet")):
+            count = health.get(key) or 0
+            if count:
+                bits.append(f"{count} {label}")
+        headline = "Container logs: " + (", ".join(bits) or "something changed")
+    else:
+        headline = "Container log triage status unknown"
+
+    lines = [f'<span style="font-size:12px;opacity:.85">{esc(health.get("reason") or "")}</span>']
+    for item in (health.get("findings") or [])[:5]:
+        sample = esc(str(item.get("sample") or "")[:140])
+        lines.append(
+            f'<span style="font-size:12px;opacity:.8">'
+            f'<code>{esc(str(item.get("container") or "?"))}</code> — {sample}</span>'
+        )
+    detail = "<br>".join(line for line in lines if line)
+
+    return (
+        f'<p style="color:{colour};background:{paper};border-left:4px solid {rule};'
+        f'padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px;margin:0 0 12px">'
+        f'{icon} <strong>{esc(headline)}</strong><br>{detail}</p>'
+    )
+
+
 def engine_banner(digest: dict[str, Any]) -> str:
     """One line at the top of the digest saying whether the box can render.
 
@@ -325,7 +382,9 @@ def build_payload(digest: dict[str, Any]) -> dict[str, Any]:
     # other section: a beautiful dream bundle whose art never rendered is not
     # good news, and reading three screens before finding that out is how a
     # 24-hour outage goes unnoticed.
-    payload["htmlContent"] = engine_banner(digest) + payload["htmlContent"]
+    payload["htmlContent"] = (
+        engine_banner(digest) + container_log_banner(digest) + payload["htmlContent"]
+    )
     return payload
 
 
