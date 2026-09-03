@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3502,7 +3502,13 @@ tasks:
     baseline). Opened kind_robots#2361. Next slice should sweep the near-miss btn-ghost-xs
     sites with extra appended classes (text-base-content/60, text-error, sm:btn-sm) left out
     of scope here.
-  updated: '2026-09-03T15:39:27Z'
+
+    Merged: kind_robots#2361 (squash 5b614f21fdef6655876e871944cd92c658e84397), all 41 CI
+    checks green including Contract verifiers. Next slice should sweep the near-miss btn-
+    ghost-xs sites with extra appended classes (text-base-content/60, text-error, sm:btn-sm)
+    left out of scope this slice. Re-arming to ready for the next slice per recurring-task
+    convention.
+  updated: '2026-09-03T15:46:44Z'
   implementation_pr: 'silasfelinus/kind_robots#2361'
   owner: worker
   claimed_by: claude-scheduled-20260903T153156Z-interface-vision-t104
