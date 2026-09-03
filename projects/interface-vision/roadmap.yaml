@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3518,7 +3518,13 @@ tasks:
     sizing (Tailwind's global layer order: theme, base, components, utilities). vue-tsc
     clean, lint-ratchet holds (332/-60), layout-contract holds (207 baseline). Opened
     kind_robots#2362.
-  updated: '2026-09-03T16:00:08Z'
+
+    Merged: kind_robots#2362 (squash f5b01110a96400b3539ba979512b81569ddd17c5), all 41 CI
+    checks green including Contract verifiers. Both today's near-miss and exact-match btn-
+    ghost-xs sites are now clear. Next slice should survey a new repeated ghost-
+    button/other-component shape (the btn-ghost-xs sweep is now exhausted). Re-arming to
+    ready for the next slice per recurring-task convention.
+  updated: '2026-09-03T16:07:21Z'
   implementation_pr: 'silasfelinus/kind_robots#2362'
   owner: worker
   claimed_by: claude-scheduled-20260903T155438Z-interface-vision-t104-s50
