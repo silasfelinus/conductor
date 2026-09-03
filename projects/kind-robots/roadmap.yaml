@@ -4124,6 +4124,60 @@ tasks:
     catalog row merged out from under a record, or a bundle never repaired. Only asking
     the live records answers that.
 
+- id: t-093
+  milestone: m6
+  title: "Character PATCH silently wiped pipeline-attached Facets on any unrelated field edit"
+  status: review
+  owner: null
+  passes: 0
+  stakes: reversible
+  approved_by_human: false
+  updated: '2026-09-03T18:55:00Z'
+  implementation_pr: 'silasfelinus/kind_robots#2365'
+  note: >
+    This is exactly the failure mode t-092's own note named as un-catchable by a one-time
+    write record -- "a link deleted later" -- and now the mechanism is known. Found live
+    during a scheduled conductor sweep: `check_live_facet_coverage.py` reported clean
+    (0 empty) right after t-092's own --repair run. A separate, routine prose-repair PATCH
+    (repair_dream_prose_catalog.py's recompose-live lane, PATCHing only Character #3294's
+    `backstory` field back to what the builder composes today) then ran, and the very next
+    `check_live_facet_coverage.py` reported #3294 freshly empty -- 6 requested, 0 live.
+    Root-caused by reading `server/api/characters/[id].patch.ts` and its
+    `syncCharacterFacetsInTransaction` (server/utils/characterFacetSync.ts) on GitHub:
+    every Character PATCH unconditionally calls this sync inside its transaction, and the
+    sync's own logic re-derives CharacterFacet rows purely by matching literal Facet
+    vocabulary inside genre/species/class/alignment/gender/personality/backstory/quirks/
+    role text -- then does `characterFacet.deleteMany({ where: { characterId } })` with NO
+    scoping, before recreating only what it found. Ordinary prose (a rewritten backstory
+    sentence) matches nothing, so `pending` comes back empty and the delete wipes every
+    Facet regardless of source -- including CURATED/MANUAL rows written by the dedicated,
+    already-correct `PUT /api/characters/:id/facets` (the Daily Dream pipeline's own path,
+    itself the fix for the earlier t-026-class bug). Any future PATCH to a Character that
+    doesn't happen to rewrite facet-bearing fields with alias-matching text -- an editorial
+    pass, an art-attach step, a name fix -- would silently repeat this.
+    FIXED in kind_robots#2365: scoped both `characterFacet.deleteMany` calls in
+    characterFacetSync.ts to `source: 'CHARACTER_MUTATION'`, the tag this function's own
+    writes already carry, so it only ever manages rows it created. fieldKey scoping (the
+    pattern syncBotFacetsInTransaction already uses safely) was considered and rejected:
+    `characterFacetFieldKey()` assigns the same fieldKey names to pipeline-sourced Facets,
+    so a fieldKey-scoped delete would still catch them. `source` is the one column that
+    actually distinguishes the two.
+    Repaired the live damage via `apply_daily_dream_facets.py --force` (confirmed clean by
+    `check_live_facet_coverage.py` again immediately after, before the code fix even
+    landed, so the fix is prevention, not remediation of standing data).
+    Verified in kind_robots#2365: vue-tsc clean, eslint clean, prettier clean,
+    `test:facet-catalog` (cutover/canonical-merge/daily-dream-facet/curation/selection-
+    route) and `test:model-builder-link-coverage` (this file is also read by the Model
+    Builder commit path) both pass.
+    FOLLOW-UP not done here, scope kept to the confirmed regression: audit whether an
+    analogous per-entity FacetSync helper exists for Location/Dream/Scenario/Reward
+    mutation routes with the same unscoped-delete shape. No live evidence today that any
+    of those are affected (check_live_facet_coverage.py showed 0/38 empty across all five
+    of those kinds both before and after this session's Character-only PATCH), so this
+    is a said-not-verified risk, not a claimed one.
+  claimed_by: claude-20260903T185500Z-kr-t093
+  claimed_at: '2026-09-03T18:55:00Z'
+
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
