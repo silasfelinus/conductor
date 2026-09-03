@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3319,7 +3319,20 @@ tasks:
     existing confirmed via git stash), prettier 8 pre-existing warnings confirmed via git
     stash (add-scenario.vue collateral reflow applied and reverified clean), test:layout-
     contract holds (207 baseline), test:lint-ratchet holds (332/-60).
-  updated: '2026-09-03T22:40:12Z'
+
+    Slice 58 merged as silasfelinus/kind_robots#2373 (squash 4e22edb, exact head d04d108).
+    Added .kr-btn-primary-md (btn btn-primary rounded-xl) mirroring the kr-btn-ghost-md
+    size-ladder convention; migrated all 17 exact-match btn btn-primary rounded-xl sites (15
+    files). Near-miss sites with extra utility classes (btn btn-primary rounded-xl text-
+    white, 7 occurrences) left out of scope for a future slice. Verified vue-tsc clean,
+    eslint 0 new issues (2 pre-existing confirmed via git stash), prettier 8 pre-existing
+    warnings confirmed via git stash (add-scenario.vue collateral reflow applied and
+    reverified clean), test:layout-contract holds (207 baseline), test:lint-ratchet holds
+    (332/-60). CI flake: two duplicate "verify" job runs and one "Progressive rendering" run
+    landed cancelled (not failed) on first pass -- re-ran each via
+    actions_run_trigger.rerun_workflow_run, all went green, then merged. Re-armed to ready
+    for the next slice.
+  updated: '2026-09-03T22:58:26Z'
   implementation_pr: 'silasfelinus/kind_robots#2373'
   owner: worker
   claimed_by: claude-scheduled-20260903T223800Z-iv-t104-slice58
