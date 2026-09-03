@@ -1,8 +1,0 @@
-version: 1
-project: storybook
-task: t-010
-operation: review
-session: 2026-09-03T195800Z-storybook-t-010-prod-build-fix-s6k9
-updated: '2026-09-03T20:05:00Z'
-note: >-
-  Production container run 33798861864 failed because storybook-library-page.vue used two newline-separated statements in each Export @click expression. The worker branch changes only those two handlers to valid semicolon-separated expressions.
