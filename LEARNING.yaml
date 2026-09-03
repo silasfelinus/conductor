@@ -12332,3 +12332,31 @@ records:
     -- run a newly widened guard against your own diff before pushing, not
     just against the target file, to catch this class of self-inflicted false
     positive before CI does."
+- date: 2026-09-03
+  project: media-watchlist
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "State-reconciliation drift: PR kind_robots#2275 merged 2026-08-31 but
+    the roadmap task sat at status=claimed for ~3 days with no queued task-event
+    to auto-correct it. check_pr_merged_drift.py's raw urllib GitHub API probe
+    403'd in this sandbox (documented, connector-only limitation) and reported
+    it unverifiable rather than confirming the merge -- reconciled via GitHub MCP
+    pull_request_read directly. A session running the drift check should not stop
+    at 'could not verify' when a working MCP transport is available in the same
+    session; cross-check before treating the finding as inconclusive."
+- date: 2026-09-03
+  project: rainbow-butterflies
+  task: t-027
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "State-reconciliation drift: PR kind_robots#2344 merged 2026-09-03T00:05Z
+    but the roadmap task was left at status=review rather than done. Same pattern
+    as media-watchlist/t-006 this cycle -- reconciled via GitHub MCP after the raw
+    API probe 403'd."

@@ -454,7 +454,7 @@ tasks:
 - id: t-027
   milestone: m2
   title: "Get final human visual acceptance of the Rainbow Butterflies MVP"
-  status: review
+  status: done
   passes: 0
   stakes: outward-facing
   gate_human: true
@@ -499,7 +499,11 @@ tasks:
     (provider tutorial visual polish), and 5 (current-v2 acceptance pass) are still open
     before this returns to needs-human for Silas's final acceptance. No new code change this
     cycle; note-accuracy correction only.
-  updated: '2026-09-03T00:33:14Z'
+
+    RECONCILED (state-reconciliation sweep, scheduled conductor run 2026-09-03): PR
+    silasfelinus/kind_robots#2344 merged 2026-09-03T00:05:21Z but roadmap was left at
+    status=review. Flipping to done; implementation_pr already recorded.
+  updated: '2026-09-03T07:29:10Z'
   implementation_pr: 'silasfelinus/kind_robots#2344'
   owner: worker
   claimed_by: openai-rb-t027-20260902T231500Z-dashboard
