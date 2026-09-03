@@ -1,0 +1,9 @@
+version: 1
+project: storybook
+task: t-010
+operation: ready
+owner: worker
+session: openai-scheduled-20260903T001417Z-storybook-t010-oai11k8
+updated: '2026-09-03T00:18:00Z'
+note: >-
+  Cycle 54 found a sibling recurrence of cycle 53's storage-recovery bug. stores/storybookStore.ts restoreFromLocalStorage() catches getItem/JSON failures but then calls removeItem(DRAFT_STORAGE_KEY) and removeItem(STORAGE_KEY) unguarded; a browser policy that denies all storage access can therefore throw again from the recovery handler and break Storybook initialization. Filed kind_robots#2346 with the exact scoped fix. The connected GitHub write surface replaces whole files rather than applying a line patch, and this 1000+ line store cannot be safely reconstructed from truncated connector reads, so no risky whole-file rewrite was attempted. Return the polish task to ready; next writer with patch-capable git should fix #2346 on a focused branch and extend the Storybook storage recovery contract.
