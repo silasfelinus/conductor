@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -3524,8 +3524,16 @@ tasks:
     ghost-xs sites are now clear. Next slice should survey a new repeated ghost-
     button/other-component shape (the btn-ghost-xs sweep is now exhausted). Re-arming to
     ready for the next slice per recurring-task convention.
-  updated: '2026-09-03T16:30:19Z'
-  implementation_pr: 'silasfelinus/kind_robots#2362'
+
+    interface-vision/t-104 slice 51: introduced .kr-btn-primary (btn btn-primary btn-sm
+    rounded-xl) mirroring the .kr-btn-ghost* family -- most-repeated filled non-ghost button
+    shape, previously hand-rolled in 31 files (39 occurrences). Codemodded every exact-match
+    site. vue-tsc clean, lint-ratchet holds (332/-60), layout-contract holds (207 baseline).
+    Opened kind_robots#2363. Next slice should survey a new repeated shape: btn btn-sm
+    rounded-xl (32 files, no color modifier) or btn btn-outline btn-sm rounded-xl (21
+    files).
+  updated: '2026-09-03T16:38:33Z'
+  implementation_pr: 'silasfelinus/kind_robots#2363'
   owner: worker
   claimed_by: claude-scheduled-20260903T163018Z-interface-vision-t104-s51-f980
   claimed_at: '2026-09-03T16:30:19Z'
