@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 49
     stakes: reversible
@@ -605,7 +605,10 @@ tasks:
       Cycle 52 (no bug found): the top-priority ready task this run per priority.yaml. Verified the specific next-slice pointer from cycle 51 (item field validation against MODEL_FIELDS choices) end-to-end -- server/api/model-builder/items/[id]/commit.post.ts's pickChoice() helper validates every enum-shaped fields.* value against choicesFor() (sourced from MODEL_FIELDS) before assignment, uppercasing and falling through to the Prisma column default on a miss rather than passing a raw string to Prisma; confirmed this covers all 6 Character Rarity fields (charm/empathy/grace/luck/might/wits), Reward.rewardType/rarity, and Bot.botType consistently with modelBuilderFields.ts's own spec -- no drift between the two. Also confirmed server/api/model- builder/runs/index.post.ts enforces MAX_BATCH_ITEMS (12) against body.items.length before creating a run, matching the client store's own MAX_BATCH cap. Did not find an actionable bug this cycle. Next slice: spot-check a sample of the 80+ utils/scripts/verifyModelBuilder*.ts guard scripts' assertions against current route/store behavior (the recurring 'guard exists and passes' check does not itself prove the guard's claimed invariant still matches the code, only that its own fixture still satisfies its own assertion) -- start with the ones with no comment cross- referencing a specific cycle/PR, since those are least likely to have been re-verified against real drift since being written.
 
       OpenAI scheduled cycle 87 audited the next lead from cycle 86: regression-guard integrity rather than another pass over already-exhausted Model Builder UI/store behavior. Spot-checked verifyModelBuilderResetRunGuard.ts against the live resetRun() implementation and verified its six singleton-clear assertions still match current behavior; also inspected verifyModelBuilderCompletionGate.ts and its self-test against the current store. Found one concrete verifier-hardening gap worth the next bounded slice: extractFunctionBodies()/findGuardIntervals() brace-match raw source characters and therefore count braces inside comments/string literals as structural braces. The current self-test covers function/guard shapes but not that parser failure class. This can make the guard throw or mis-extract after a harmless explanatory comment/string edit, the same family of textual-parser blind spot previously found in Model Builder's icon/source guards. No product bug or safe tiny code change was established from this audit, so no speculative implementation was opened. Next slice should add a synthetic comment/string-brace regression fixture first, then harden the shared scanner only if the fixture reproduces the failure, rather than changing parser machinery on inference alone.
-    updated: '2026-09-03T11:19:00Z'
+    updated: '2026-09-03T11:30:49Z'
+    owner: worker
+    claimed_by: claude-scheduled-20260903T113048Z-mb-t029-conductor
+    claimed_at: '2026-09-03T11:30:49Z'
 
   - id: t-030
     milestone: m6
