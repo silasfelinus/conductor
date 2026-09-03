@@ -1,8 +1,0 @@
-version: 1
-project: model-builder
-task: t-029
-operation: rearm
-session: openai-scheduled-20260903T151128Z-model-builder-t029-7k3m
-updated: '2026-09-03T15:20:00Z'
-note: >-
-  OpenAI guard-integrity slice 92: independently re-checked three remaining cycle-90 candidates against current kind_robots main rather than trusting their self-tests. BatchEditorKeyGuard still matches the live progress-matrix mount: the batch editor is keyed by selectedItem.outputKey, so local batchValues/onlyEmpty state cannot leak across quantity groups. BatchSetFieldConfirmedSuccessGuard still matches the live store contract: batchSetField is async and the current store path tracks/reverts failed optimistic entries rather than treating fire-and-forget persistence as success. CancelRunPollGuard remains structurally aligned with the current cancellation/poll design; current async generation additionally checks cancelledRunIds after enqueue returns before arming artJobId/polling, closing the complementary cancel-during-enqueue race. No contract drift or product defect found, so no speculative code PR. Continue with the remaining cycle-90 list starting at CancelledRunGuard / CommitCancelledRunGuard / CommitNameFieldGuard rather than re-reading these three.
