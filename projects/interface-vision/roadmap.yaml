@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3304,11 +3304,10 @@ tasks:
     Slice 58 merged as silasfelinus/kind_robots#2373 (squash 4e22edb, exact head d04d108). Added .kr-btn-primary-md (btn btn-primary rounded-xl) mirroring the kr-btn-ghost-md size-ladder convention; migrated all 17 exact-match btn btn-primary rounded-xl sites (15 files). Near-miss sites with extra utility classes (btn btn-primary rounded-xl text- white, 7 occurrences) left out of scope for a future slice. Verified vue-tsc clean, eslint 0 new issues (2 pre-existing confirmed via git stash), prettier 8 pre-existing warnings confirmed via git stash (add-scenario.vue collateral reflow applied and reverified clean), test:layout-contract holds (207 baseline), test:lint-ratchet holds (332/-60). CI flake: two duplicate "verify" job runs and one "Progressive rendering" run landed cancelled (not failed) on first pass -- re-ran each via actions_run_trigger.rerun_workflow_run, all went green, then merged. Re-armed to ready for the next slice.
 
     Slice 59 migrates components/servers/server-card.vue's Use for Art action from the exact hand-rolled btn btn-sm btn-primary rounded-xl shape to the established kr-btn-primary primitive. The adjacent secondary action remains unchanged because it is not the same primitive.
-  updated: '2026-09-03T23:17:00Z'
+
+    Slice 59 merged as silasfelinus/kind_robots#2374 (squash 7f93231e819a3fede7760c5b4b79e5a37c91b9bc) from exact head b7dad9fe42f49311fd59a004c802e324b1e5dab1. components/servers/server-card.vue now uses kr-btn-primary for the exact hand-rolled btn btn-sm btn-primary rounded-xl Use for Art action; the adjacent secondary action remains unchanged. Exact-head CI completed successfully after rerunning one cancelled Schema Migration Parity job: TypeScript, Contract Tests, Layout Contract, Generated Client Parity, Facet Catalog, Project Architecture, MDC Scroll Ownership, Storybook/Narrative contracts, API Client Follow-ups, Schema Migration Parity, and all other returned workflows were green. Return the recurring consistency umbrella to ready for the next bounded slice.
+  updated: '2026-09-03T23:27:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2373'
-  owner: worker
-  claimed_by: openai-scheduled-20260903T231424Z-interface-vision-t104-k6p9
-  claimed_at: '2026-09-03T23:14:24Z'
 
 - id: t-123
   milestone: m5
