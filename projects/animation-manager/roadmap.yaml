@@ -328,12 +328,37 @@ tasks:
       which completed normally this run (~4 min, not stalled). PITCHES.yaml's tapestry-loom
       promoted pitched -> candidate with its build entry, committed alongside this roadmap
       update on the same branch. Re-armed to ready per this task's recurring-task convention.
-    status: claimed
-    updated: '2026-09-03T19:32:26Z'
+
+      Built the next pitched candidate, hourglass-cascade (PITCHES.yaml priority 19).
+      Implemented components/screenfx/hourglass-cascade.vue: grains stream from the top bulb
+      through the neck into a bin-height-map pile (18 fixed bins) in the bottom bulb,
+      occasionally slumping past a fixed angle-of-repose threshold (bounded, max 5
+      redistribution steps per landing); once the source bulb's reservoir empties and the last
+      in-flight grain lands, the whole glass eases through a half-turn flip (canvas rotation
+      transform) and the two bulbs swap roles. In-flight grain pool is bounded (max 12)
+      regardless of viewport or elapsed session time, per the pitch's own performance-risk
+      note. Hovering the neck narrows the falling stream (jitter range only, no lasting state
+      change); a click triggers an early flip, rate-limited to once per pour. Reduced motion
+      renders one static mid-pour frame (fixed parabolic cone pile, no grain
+      motion/avalanches/flip) with only a slow glass-tint drift. Registered in
+      stores/animationCatalog.ts (generationSafe, fullscreen-preferred, no blocking input).
+      Verified: vue-tsc --noEmit clean, eslint clean on both files, prettier clean on the new
+      component (animationCatalog.ts's pre-existing unrelated drift confirmed via git stash
+      against origin/main, left untouched), test:animation-catalog and test:animation-
+      component-attempts pass, test:layout-contract holds at the 207-violation baseline,
+      check_animation_novelty.py --strict reports no collision against all 27 pitches. Manual
+      browser smoke matrix deferred per the standing sandbox-access-gap tag, same as every
+      prior build. kind_robots PR #2367 merged (squash 5091654), all 40 checks green.
+      PITCHES.yaml not yet updated with a promotion entry for hourglass-cascade -- leaving
+      that for whoever next reviews reaction evidence, matching this project's existing
+      pitched -> candidate promotion convention. Re-armed to ready per this task's recurring-
+      task convention.
+    status: ready
+    updated: '2026-09-03T19:51:53Z'
     claimed_by: claude-scheduled-20260903T193225Z-am-t007-hourglass
     claimed_at: '2026-09-03T19:32:26Z'
     owner: worker
-    implementation_pr: 'silasfelinus/kind_robots#2360'
+    implementation_pr: 'silasfelinus/kind_robots#2367'
 
   - id: t-008
     milestone: m3
