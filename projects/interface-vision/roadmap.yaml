@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3482,7 +3482,16 @@ tasks:
     utilities, etc.) that exact-string matching has left out of scope through slices 42-48,
     or the class-order duplicate of kr-btn-ghost-xs (btn btn-xs btn-ghost rounded-xl, 14
     occurrences, same computed shape but different literal string order).
-  updated: '2026-09-03T09:50:58Z'
+
+    interface-vision/t-104 slice 48: merged kind_robots#2357 (squash
+    6e8f436abe3ee6ae798910f52abd70505d1e2404), all 43 CI checks green including Contract
+    verifiers (~3.5 min, not a stall). Next slice should tackle the near-miss btn-ghost
+    sites with extra appended classes (gap-1 border border-base-300, text-error, focus-
+    visible: outline utilities, etc.) that exact-string matching has left out of scope
+    through slices 42-48, or the class-order duplicate of kr-btn-ghost-xs (btn btn-xs btn-
+    ghost rounded-xl, 14 occurrences, same computed shape as kr-btn-ghost-xs but different
+    literal string order).
+  updated: '2026-09-03T09:55:08Z'
   implementation_pr: 'silasfelinus/kind_robots#2357'
   owner: worker
   claimed_by: claude-scheduled-20260903T-interface-vision-t104-slice48
