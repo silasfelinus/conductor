@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: review
+  status: ready
   passes: 50
   stakes: reversible
   retry_context: >
@@ -184,7 +184,11 @@ tasks:
     resolved and cycle 54's regression contract (kind_robots#2349) hardened further --
     close_task.py does not allow clearing this field directly; stale, should be cleared or
     overwritten on the next rejection/done transition.
-  updated: '2026-09-03T10:39:57Z'
+
+    kind_robots#2358 merged (2026-09-03T~10:44Z, all 40 checks green including Contract
+    verifiers). Re-arming to ready per this task's established recurring-polish convention
+    (cycles 30-55).
+  updated: '2026-09-03T10:48:04Z'
   owner: worker
   claimed_by: claude-scheduled-20260903T1029Z-storybook-t010
   claimed_at: '2026-09-03T10:34:21Z'
