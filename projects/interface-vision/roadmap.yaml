@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3444,7 +3444,20 @@ tasks:
     pre-existing drift, not gated by CI. Remaining btn-ghost shapes for the next slice: btn-
     ghost btn-xs rounded-lg (21), btn-ghost btn-sm (21). Re-arming to ready for the next
     slice per recurring-task convention.
-  updated: '2026-09-03T08:37:23Z'
+
+    Slice 46 merged as silasfelinus/kind_robots#2355 (squash
+    a7e7768a708168712d787f4cad54f34ea35cf44f, all 44 checks green) from exact head
+    65df4b48978a0d5f26fe3dafefb5841096f6be11. Added .kr-btn-ghost-xs-lg (btn btn-ghost btn-
+    xs rounded-lg) to assets/css/tailwind.css, the fifth-most-repeated ghost-button shape
+    after slices 42-45. Codemodded the 21 occurrences across 9 files whose class attribute
+    matched the exact static string. Verified the compiled ruleset is byte-identical to the
+    hand-rolled combo via the real @tailwindcss/postcss plugin before committing. vue-tsc,
+    ESLint ratchet (332 problems, -60, no rule regressed), and layout-contract (207 baseline
+    unchanged) all clean. prettier --check flags 8 touched files but each already fails
+    identically on unmodified origin/main -- pre-existing drift, not introduced here.
+    Remaining btn-ghost shape for the next slice: btn-ghost btn-sm (21). Re-arming to ready
+    for the next slice per recurring-task convention.
+  updated: '2026-09-03T08:45:14Z'
   implementation_pr: 'silasfelinus/kind_robots#2355'
   owner: worker
   claimed_by: claude-scheduled-20260903T082806Z-interface-vision-t104
