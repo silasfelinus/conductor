@@ -4127,12 +4127,12 @@ tasks:
 - id: t-093
   milestone: m6
   title: "Character PATCH silently wiped pipeline-attached Facets on any unrelated field edit"
-  status: review
+  status: done
   owner: null
   passes: 0
   stakes: reversible
   approved_by_human: false
-  updated: '2026-09-03T18:55:00Z'
+  updated: '2026-09-03T19:05:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2365'
   note: >
     This is exactly the failure mode t-092's own note named as un-catchable by a one-time
@@ -4175,6 +4175,18 @@ tasks:
     of those are affected (check_live_facet_coverage.py showed 0/38 empty across all five
     of those kinds both before and after this session's Character-only PATCH), so this
     is a said-not-verified risk, not a claimed one.
+    SECOND LIVE INCIDENT, independent of this session's own prose-repair action, while
+    kind_robots#2365 was still open and unmerged: merging origin/main into this session's
+    own conductor branch pulled in a `daily dream: build and submit 2026-09-03 cycle`
+    commit (kind-robots-bot, 18:49Z) -- the ordinary automated art-attach step of the
+    production Daily Dream pipeline, PATCHing `imagePath` onto records including Character
+    #3324 (2026-09-02-structural-mourning.md). The very next `check_live_facet_coverage.py`
+    showed #3324 freshly empty -- 7 requested, 0 live -- confirming the bug fires on the
+    routine pipeline's own PATCH, not only on the prose-repair lane that first surfaced it.
+    Repaired live via `apply_daily_dream_facets.py --force`, reconfirmed clean.
+    MERGED: kind_robots#2365 -> main squash `aa71998`, all 40 checks green. This closes the
+    hole for every future PATCH once deployed; the two live incidents above were both
+    against the pre-fix code path.
   claimed_by: claude-20260903T185500Z-kr-t093
   claimed_at: '2026-09-03T18:55:00Z'
 
