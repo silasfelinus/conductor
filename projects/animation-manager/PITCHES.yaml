@@ -710,7 +710,7 @@ pitches:
 
   - id: hourglass-cascade
     title: Hourglass Cascade
-    status: pitched
+    status: candidate
     priority: 19
     surprise: >
       A glass hourglass sits center-stage, individual grains streaming from the top bulb
@@ -770,6 +770,22 @@ pitches:
       - reduced-motion mode shows one static mid-pour hourglass with no grain motion, avalanches, or flip
       - pointer hover-narrow and click-triggered early flip never block underlying page input, and click-flip is rate-limited to once per completed pour
       - in-flight grain count and height-map bin count stay fixed regardless of viewport size or elapsed session time
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/hourglass-cascade.vue
+        pull_request: silasfelinus/kind_robots#2367
+        commit: 5091654ff54bab804be8dcb0d0e23aa483567a27
+        verification:
+          - vue-tsc --noEmit
+          - eslint
+          - prettier
+          - test:animation-catalog
+          - test:animation-component-attempts
+          - test:layout-contract
+          - check_animation_novelty.py --strict
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
 
   - id: geode-bloom
     title: Geode Bloom
