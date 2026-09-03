@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: ready
+  status: claimed
   passes: 50
   stakes: reversible
   retry_context: >
@@ -167,7 +167,10 @@ tasks:
     The previously requested library removeItem recovery fix is already present on current Kind Robots main. Added a focused source-level regression contract and dedicated CI workflow so initialize() cannot silently regress to throwing cleanup after a failed storage read. Branch worker/storybook-t010-storage-recovery-q7n3.
 
     Reconciliation: the queued review event for this cycle (cycle 54, session openai-scheduled-20260903T041220Z-storybook-t010-q7n3) targeted silasfelinus/kind_robots#2349, which is a source-level regression contract the cycle wrote to lock in the already-landed storage-recovery fix -- not a fix awaiting review/merge. #2349 is confirmed merged (merged_at 2026-09-03T04:19:25Z). This task's own history (cycles 30-53) establishes a re-arm-to-ready convention for every close-out, real fix or no-op alike, since it is a recurring bug-hunt/polish task in practice despite not carrying `recurring: true`. Superseding the queued `review` operation with `ready` and clearing ownership to match that convention, per this session's conductor sweep (state reconciliation, CLAUDE.md).
-  updated: '2026-09-03T04:29:50+00:00'
+  updated: '2026-09-03T10:34:21Z'
+  owner: worker
+  claimed_by: claude-scheduled-20260903T1029Z-storybook-t010
+  claimed_at: '2026-09-03T10:34:21Z'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
