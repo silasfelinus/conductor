@@ -575,9 +575,9 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
-    passes: 48
+    passes: 49
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#2342'
     note: >-
@@ -836,7 +836,39 @@ tasks:
       cycles. Re-arming to ready; a future slice should look at server/api/model-builder/*.ts
       for polish opportunities, since the last several dozen cycles concentrated almost
       entirely on the 7 Vue components and the store.
-    updated: '2026-09-03T03:28:43Z'
+
+      Cycle 86 (server-side due diligence, no bug found): per cycle 85's note, read the full
+      server/api/model-builder/*.ts surface end to end (2692 lines across relations.ts,
+      items/patch-policy.ts, items/[id].patch.ts, items/batch.patch.ts,
+      items/[id]/artifacts.post.ts, items/[id]/commit.post.ts, runs/index.ts + its 4 route
+      files) plus the load-bearing shared helpers commit.post.ts calls into but that live
+      outside this directory: server/utils/characterFacetSync.ts,
+      server/utils/botFacetSync.ts, server/utils/facetProfileInput.ts, and
+      stores/helpers/modelBuilderFields.ts + modelBuilderRecipes.ts (the field-
+      spec/recipe/CREATE_TARGETS catalog and BUILD_STAGES gate). Specifically checked: the
+      idempotency claim in commit.post.ts (atomic updateMany-then-check pattern, correct
+      rollback on write failure, durable targetType/targetId write separated from the slower
+      stageStatuses merge); every content-stage-editable re-check happens twice (eager + a
+      second read inside the write transaction) in items/[id].patch.ts, items/batch.patch.ts,
+      and artifacts.post.ts; assertArtImageAttachable is re-checked immediately before
+      promoteAsset in the ASSET_ONLY commit branch, not just at the original attach;
+      MAX_BATCH_ITEMS/MAX_DRAFT_TEXT_LENGTH/SHORT_TEXT_MAX/NAME_MAX per-column caps are
+      applied consistently across all three write paths (single PATCH, batch PATCH, run
+      CREATE); syncCharacterFacetsInTransaction/syncBotFacetsInTransaction both correctly
+      restrict facet visibility (isPublic OR own, admin bypass) before building the lookup
+      maps used to write CharacterFacet/BotFacet rows, so an invisible facet can't be attached
+      via a text-field match; the relationship-expansion output catalog's sourceTypes arrays
+      (OUTPUT_CATALOG in modelBuilderRecipes.ts) verified pair-for-pair against
+      linkSourceToTarget's actual (sourceType, targetType) cases in commit.post.ts -- all
+      consistent, no drift found (matches what verifyModelBuilderLinkCoverage.ts already
+      enforces in CI). Found no actionable bug or gap this cycle -- both the front-end (48+
+      cycles) and now the server-side commit/write path read end to end with nothing
+      outstanding. Re-arming to ready; a future slice's remaining unexplored lead is the read
+      side (runs/index.get.ts's query shape, list pagination) plus
+      server/utils/facetCatalog.ts and utils/facetAliases.ts (normalizeFacetLookupKey,
+      FACET_TAXONOMIES) which back every facet-sync lookup used above but were not themselves
+      read this cycle.
+    updated: '2026-09-03T03:30:38Z'
     owner: worker
     claimed_by: claude-scheduled-20260903T032843Z-mb-t029-server
     claimed_at: '2026-09-03T03:28:43Z'
