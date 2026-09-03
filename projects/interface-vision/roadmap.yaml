@@ -3532,7 +3532,26 @@ tasks:
     Opened kind_robots#2363. Next slice should survey a new repeated shape: btn btn-sm
     rounded-xl (32 files, no color modifier) or btn btn-outline btn-sm rounded-xl (21
     files).
-  updated: '2026-09-03T17:52:41Z'
+
+    interface-vision/t-104 slice 52 (scheduled conductor run): introduced .kr-btn (btn
+    btn-sm rounded-xl, no color/ghost modifier -- the bare base of the kr-btn* family) and
+    codemodded all 32 exact-match occurrences across 20 files. Deliberately did NOT run a
+    blanket prettier --write across all touched files: several (art-test.vue,
+    scene-animator.vue, brainstorm-manager.vue, server-status.vue,
+    daily-dream-object-art-workbench.vue, challenge-center-page.vue) carry large
+    pre-existing formatting drift unrelated to this change (hundreds to ~2700 lines each,
+    confirmed via git stash against origin/main); pulling that in as "collateral" would
+    have blown a 32-line codemod into a 2000+ line diff. Only the one line whose own
+    reformat was directly caused by the shorter class string (cthulhuquarium-curation.vue)
+    was applied. vue-tsc clean, lint-ratchet holds (332/-60), layout-contract holds (207
+    baseline), one pre-existing unrelated eslint error confirmed present on unmodified
+    origin/main via git stash. Opened kind_robots#2364, merged after kind_robots' Contract
+    Tests workflow genuinely stalled on its first run (cancelled+rerun cleared it; the
+    rerun then completed all 325 verifiers green in ~3 minutes with zero failures --
+    likely the same class of transient runner issue as the conductor/t-106 CodeQL stall,
+    just manifesting on a different kind_robots workflow this time). Next slice candidate:
+    btn btn-outline btn-sm rounded-xl (21 files per slice 51's survey).
+  updated: '2026-09-03T18:01:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2364'
   owner: worker
   claimed_by: claude-scheduled-20260903T-ivt104-s52
