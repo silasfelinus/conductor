@@ -696,3 +696,34 @@ def test_publish_refuses_an_invalid_target_without_calling_github(monkeypatch):
     ok, detail = publish_digest({"host": "a"}, "tok", "silasfelinus/conductor",
                                 "../../../etc/passwd", "main", NOW)
     assert not ok and called["n"] == 0
+
+
+def test_an_english_contraction_does_not_open_a_quoted_string():
+    """From the 2026-09-04 tuned run: sonarr showed 104 signatures where about
+    ten were real, 75 of them one per episode of the same show. The apostrophe
+    in `Couldn't` matched before the real opening quote, consuming
+    `'t add release '` and leaving every release NAME bare and distinct."""
+    def line(ep):
+        return ("[Warn] ProcessDownloadDecisions: Couldn't add release "
+                "'[nekotan] Hajime no Ippo S01E%02d v2 (BD Remux 1080p) [Dual Audio]' "
+                "from Indexer NzbPlanet (Prowlarr) to download queue." % ep)
+    assert len({skeletonize(line(i)) for i in range(1, 76)}) == 1
+
+
+def test_contraction_fix_keeps_distinct_warnings_apart():
+    distinct = {
+        skeletonize("[Warn] ProcessDownloadDecisions: Couldn't add release 'X' from Indexer"),
+        skeletonize("[Warn] Newznab: Indexer Nzb.su rss sync didn't cover the period"),
+        skeletonize("[Error] Sabnzbd: Downloading nzb for episode 'X' failed"),
+    }
+    assert len(distinct) == 3
+
+
+def test_bracketed_timestamp_then_level_is_detected():
+    """ownfoil: `[2026-09-03 19:50:08.917] WARNING (verification) ...`. Its 3,999
+    retries scored `error` off the word "failed" while the line says WARNING."""
+    line = ("[2026-09-03 19:50:08.917] WARNING (verification) worker-2 "
+            "Verification of a title failed: read returned empty 0x1762c000")
+    assert detect_level(line) == "warning"
+    entry = kept(line)
+    assert entry is not None and entry["severity"] == "warn"
