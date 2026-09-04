@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 52
     stakes: reversible
@@ -595,7 +595,10 @@ tasks:
       Cycle 97 (real fix): read model-builder-run-history.vue end-to-end, the least-recently- fully-read Model Builder surface per this note's own tracking (last touched at cycle 72, 25 cycles ago). Found a genuine bug in this task's most common class (stale async response landing after the user has moved on): openRun(runId)'s openRunRequestId ticket only guards a second openRun() call against a slower earlier one -- it does nothing to stop a still-in-flight openRun() fetch from landing after the user abandons that run a different way. Concrete repro: Run History's New run button sits right next to Open with no guard between them (only cancellingRunId disables either). Click Open on a run not yet cached in state.runs (falls through to the network fetch), then click New run before that fetch resolves -- resetRun() correctly nulls state.run and flips state.step back to source, but when Open's fetch then resolves its success branch still passes the unchanged ticket check and unconditionally reassigns state.run, silently resurrecting the abandoned run. The identical gap applies to resetAll() (the top-level Reset control in model-builder-manager.vue). Fix: bump openRunRequestId inside resetRun() and resetAll(), alongside their existing runEpoch++ (a different, sibling guard protecting long-running per-item auto-build/batch loops, not this single-fetch race). Added verifyModelBuilderResetOpenRunGuard.ts + self-test (mirrors verifyModelBuilderOpenRunRequestGuard.ts's pattern), wired into package.json and contract-tests.yml. No local node_modules/tsx available this session -- verified by hand-simulating the guard's real extractFunctionBodies/computeCodeMask logic against the patched store and all four test fixtures, running the same parser against the entire patched file (all 50 top-level functions) to confirm no structural damage, and a byte- for-byte git blob SHA check of the pushed store file before/after upload. kind_robots#2391: all 42 checks green, merged squash 83b21f8. Next slice: model-builder- source-picker.vue and model-builder-manager.vue are now the least-recently-fully-read surfaces (model-builder-run-history.vue just covered here); continue the end-to-end read rotation, or resume the guard-comment grep sweep if a new regression-guard convention shows up in a future cycle.
 
       Reconciled the completed cycle 56 implementation: kind_robots PR #2391 merged green as squash 83b21f8, but the recurring t-029 roadmap entry remained claimed by the implementing OpenAI session. Re-arm the recurring polish task so the merged work is not left with a stale claim.
-    updated: '2026-09-04T15:12:15Z'
+    updated: '2026-09-04T16:14:00Z'
+    owner: worker
+    claimed_by: openai-scheduled-20260904T161400Z-model-builder-t029-oai8d3
+    claimed_at: '2026-09-04T16:14:00Z'
 
   - id: t-030
     milestone: m6
