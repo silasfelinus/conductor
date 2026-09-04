@@ -238,39 +238,42 @@ tasks:
 - id: t-014
   milestone: m1
   title: "INCIDENT: kindrobots.org has returned 502 since 13:25 UTC on 2026-09-04, right after the first auto-deploy of the day's Storybook image"
-  status: needs-human
+  status: done
   owner: null
   passes: 0
   stakes: irreversible
   gate_human: true
   approved_by_human: false
   note: >-
-    FOR SILAS: production kindrobots.org is down. Traefik answers every request with
-    HTTP 502 (security headers present, so the proxy is up and the KindRobots container
-    is not answering). rainbowbutterflies.org and media.acrocatranch.com on the same host
-    respond normally. Timeline (UTC, 2026-09-04): 13:19 API calls from this session
-    succeeded; kind_robots#2393 merged 13:11 and its Publish Production Container run
-    33876543505 finished 13:20:28; the five-minute Alexandria auto-deploy would have run
-    at about 13:25; first 502 observed 13:25:47; still 502 at 13:36, 13:41 and 16:25.
-    kind_robots#2394 published a second image at about 13:36 and did not restore service.
-    The 14:00 UTC container-log digest (ops/home-server/CONTAINER-LOG-DIGEST.json, commit
-    cea50da) scanned 42 containers against 43 in the 11:44 digest, so one container was
-    absent at 14:00, which fits a DockerMan recreate that removed the old KindRobots
-    container and never started the new one (deploy-unraid.sh stops at the health check).
-    Neither #2393 nor #2394 touches server code, migrations, Dockerfile or the deploy
-    scripts (Vue components, one store helper, package.json test scripts, guard scripts,
-    workflows), and both images built green. TO CHECK on Alexandria:
-    `docker ps -a --filter name=KindRobots` and `docker inspect KindRobots --format
-    '{{.Image}} {{.State.Status}} {{.State.Health.Status}}'`, then the last User Script
-    run output and `/mnt/user/appdata/kind_robots/.deploy-state/`. If the container is
-    missing or unhealthy, `bash scripts/deploy-unraid.sh` from the appdata checkout is the
-    documented recovery path (docs/runbooks/unraid-auto-deploy.md). TO CLOSE: once
-    /api/health/database is 200 again, set status: done and append the root cause. What
-    unblocks: the 20 creation-burst ledger rows in projects/art-prompts.yaml can then be
-    marked done (their renders finished before the outage; see scratchpad note in the
-    root TALKBACK entry of 2026-09-04), and the daily digest run can be checked for a
-    failed Kind Robots step.
-  updated: '2026-09-04T16:30:00Z'
+    RESOLVED (recovery only -- approved_by_human intentionally left false; Silas has not
+    reviewed this in a live session, see docs/state-reconciliation.md's incident-recovery
+    closure pathway, which closes on met recovery criteria without requiring a policy
+    decision). `https://kindrobots.org/` and `/api/health/database` both answered 200 as of
+    this session's sweep (2026-09-04T18:2x UTC), and creation-burst art jobs queued against
+    the live API completed successfully as late as 18:08:16Z (ArtImage 22381, entity
+    ferrywake-cliffhanger-mooring) -- recovery happened sometime before 17:40 UTC based on
+    the earliest post-outage ArtImage timestamp (22376, 17:40:49Z), narrowing the outage
+    window to roughly 13:25:47-17:40 UTC (~4h15m), not self-clearing within an hour as an
+    earlier, unrelated 502 had. Closing per this task's own TO CLOSE criteria
+    (`/api/health/database` 200 again) rather than leaving a recovered incident open on
+    unknown root cause. Root cause remains UNCONFIRMED -- this session has no Alexandria/
+    Unraid access to inspect `docker ps`/User Script output directly, so the
+    container-recreate-without-restart theory in the original note is plausible but not
+    verified. All 20 creation-burst ledger rows in projects/art-prompts.yaml confirmed
+    art-attached via live API spot-check (artImageId/imagePath set on every entity, ids
+    22362-22381) and marked done in this same PR. FOR SILAS: if you want the outage
+    mechanism actually confirmed (not just the symptom cleared), say so and a follow-up
+    root-cause/prevention task can be filed -- see kindrobots-unraid roadmap notes_from_silas
+    or the suggested external-health-probe idea in root TALKBACK.md 2026-09-04.
+  updated: '2026-09-04T18:30:00Z'
+  completion_note: >-
+    Recovered on its own (or via an unobserved manual fix) sometime before 17:40 UTC on
+    2026-09-04. Root cause not directly confirmed from this sandbox (no Alexandria access);
+    the original note's DockerMan-recreate-without-restart theory is the leading hypothesis
+    given the 42-vs-43 container count drop in the 14:00 digest, but that is circumstantial.
+    Recommend a follow-up task (root-cause/prevention, e.g. an external health probe on a
+    schedule per the prior session's suggested action) if Silas wants the mechanism
+    confirmed rather than just the symptom cleared.
 
 goal: Run Kind Robots reliably on the Unraid/home infrastructure, with deployment, storage, networking, GPU services, 
   and recovery procedures kept reproducible.
