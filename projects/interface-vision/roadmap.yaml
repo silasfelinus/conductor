@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   recurring: true
@@ -3306,8 +3306,11 @@ tasks:
     Slice 59 migrates components/servers/server-card.vue's Use for Art action from the exact hand-rolled btn btn-sm btn-primary rounded-xl shape to the established kr-btn-primary primitive. The adjacent secondary action remains unchanged because it is not the same primitive.
 
     Slice 59 merged as silasfelinus/kind_robots#2374 (squash 7f93231e819a3fede7760c5b4b79e5a37c91b9bc) from exact head b7dad9fe42f49311fd59a004c802e324b1e5dab1. components/servers/server-card.vue now uses kr-btn-primary for the exact hand-rolled btn btn-sm btn-primary rounded-xl Use for Art action; the adjacent secondary action remains unchanged. Exact-head CI completed successfully after rerunning one cancelled Schema Migration Parity job: TypeScript, Contract Tests, Layout Contract, Generated Client Parity, Facet Catalog, Project Architecture, MDC Scroll Ownership, Storybook/Narrative contracts, API Client Follow-ups, Schema Migration Parity, and all other returned workflows were green. Return the recurring consistency umbrella to ready for the next bounded slice.
-  updated: '2026-09-03T23:30:42Z'
+  updated: '2026-09-04T00:29:53Z'
   implementation_pr: 'silasfelinus/kind_robots#2374'
+  owner: worker
+  claimed_by: claude-conductor-20260904T002952Z-t104-slice60
+  claimed_at: '2026-09-04T00:29:53Z'
 
 - id: t-123
   milestone: m5
