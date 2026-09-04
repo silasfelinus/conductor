@@ -47,6 +47,39 @@ ship skeletons only.
 **State goes in appdata, never `/mnt/user/pc`.** AGENTS.md hard rule 14. Default
 state dir is `/mnt/user/appdata/container-log-triage/`.
 
+## How a line is judged
+
+**A line's own stated level wins.** Most of these containers say what they mean
+— `[Info]`, `level=error`, `::INFO::`, `[php:warn]`, `"level":"error"`, `[WRN]`
+— and the tool believes them in both directions: a stated warn/error/fatal is
+kept, a stated info/debug/notice is dropped. Keyword matching is only the
+fallback for lines that state nothing.
+
+This is not a stylistic preference. From the first real inventory (2026-09-03),
+scored by keywords alone:
+
+| line | scored |
+|---|---|
+| `[Info] ... for Term: [Critical Role Vox Machina Origins]` | **fatal** |
+| `[Info] DiskScanService: Scanning Panic (2021)` | **fatal** |
+| `[Info] ... Skipping refresh of series: Trial & Error` | **error** |
+| `[Info] DiskScanService: Scanning disk for Fail Safe` | kept |
+
+Every one is an INFO line promoted by a word inside a *media title*. A library
+containing Fail Safe, Panic, Trial & Error and Komi Can't Communicate is
+adversarial input to a keyword classifier, and no keyword list survives it.
+
+The trade: something logged at INFO that you did want — sabnzbd reports CRC
+errors at INFO — is now dropped. `--include-info` turns the filter off.
+
+**Paths may contain spaces.** The library is `/pc/movies/comedy/hot property
+(2016)/...`, so a path rule that stops at the first space gives every filename
+its own signature: bazarr showed 51 for about six real problems, radarr 43,
+sonarr 33. Path matching now absorbs the spacey remainder, and any trailing
+clause with it — `cannot update series <PATH> because of (IntegrityError)`
+collapses to one row per root cause rather than one per title. The full reason
+is still on the stored sample line.
+
 ## Setup on Alexandria
 
 ### 1. Confirm python3
@@ -128,7 +161,8 @@ Update does not reset them).
 | `--all` | include stopped containers |
 | `--no-samples` | skeletons only, no sample lines |
 | `--json` | digest JSON on stdout |
-| `--timeout 120` | per-container read budget |\n| `--publish` | commit the digest into Conductor in the same run |\n| `--secrets-dir` | where the publish token lives (default `/mnt/user/appdata/kind_robots/.secrets`) |
+| `--timeout 120` | per-container read budget |\n| `--include-info` | keep lines whose own level is info/debug/notice (default: drop) |
+| `--publish` | commit the digest into Conductor in the same run |\n| `--secrets-dir` | where the publish token lives (default `/mnt/user/appdata/kind_robots/.secrets`) |
 
 ## The Conductor side
 

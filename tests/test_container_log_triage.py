@@ -552,3 +552,147 @@ def test_analyze_truncates_before_fingerprinting():
     assert matched == 1
     entry = list(signatures.values())[0]
     assert len(entry["sample"]) <= triage.SAMPLE_MAX_CHARS
+
+
+# --------------------------------------------------------------------------
+# Stated log level beats keyword guessing
+# --------------------------------------------------------------------------
+
+detect_level = triage.detect_level
+
+
+def kept(line, container="x", include_info=False):
+    signatures, _, _ = analyze([(container, NOW, line)], NOW, include_info=include_info)
+    return list(signatures.values())[0] if signatures else None
+
+
+def test_media_titles_no_longer_read_as_errors():
+    """From Silas's 2026-09-03 inventory. A library full of films called Fail
+    Safe, Panic and Trial & Error is adversarial input to a keyword classifier:
+    these are all INFO lines that scored fatal/error on a word in a TITLE."""
+    for line in (
+        "[Info] ReleaseSearchService: Searching indexer(s): [NZBgeek] for Term: [Critical Role]",
+        "[Info] DiskScanService: Scanning Panic (2021)",
+        "[Info] RefreshSeriesService: Skipping refresh of series: Trial & Error",
+        "[Info] DiskScanService: Scanning disk for Fail Safe",
+        "[Info] RefreshSeriesService: Skipping refresh of series: Komi Can't Communicate",
+    ):
+        assert kept(line) is None, line
+
+
+def test_debug_and_info_chatter_is_dropped():
+    assert kept("2026-09-03T12:10:00Z [debug][Watchlist Sync]: Failed to create media request") is None
+    assert kept("2026-09-03 16:52:08,215::INFO::[newsunpack:1714] Cannot Quick-check missing file") is None
+
+
+def test_include_info_restores_them():
+    line = "2026-09-03 16:52:08,215::INFO::[decoder:184] CRC Error in abc"
+    assert kept(line) is None
+    assert kept(line, include_info=True) is not None
+
+
+def test_stated_level_sets_severity():
+    cases = (
+        ("[Error] DownloadMonitoringService: Couldn't process tracked download", "error"),
+        ("[Warn] HttpClient: HTTP Error - Res: 510.NotExtended", "warn"),
+        ('level=error msg="check failed: error on pinging the mysql database"', "error"),
+        ("2026-09-03 04:17:47 - ERROR :: CP Server Thread-7 : PlexTV called, but no token", "error"),
+        ("[Thu Sep 03 2026] [php:error] [pid 1063] PHP Fatal error: undefined function", "error"),
+        ("WARN  2026-09-03T00:56:48 StaticFileController: detected forbidden characters", "warn"),
+        ('{"level":"error","ts":1788400943,"msg":"Error getting response"}', "error"),
+        ("[05:37:16] [WRN] [63] WebSocketConnection: error receiving data", "warn"),
+    )
+    for line, expected in cases:
+        entry = kept(line)
+        assert entry is not None, line
+        assert entry["severity"] == expected, (line, entry["severity"])
+
+
+def test_lines_without_a_stated_level_still_use_keywords():
+    assert kept("Thu Sep  3 00:03:39 2026 RESOLVE: Cannot resolve host address") is not None
+    assert kept("upstream connection refused") is not None
+    assert kept("everything is completely fine") is None
+
+
+def test_detect_level_returns_none_when_unstated():
+    assert detect_level("RESOLVE: Cannot resolve host address") is None
+
+
+# --------------------------------------------------------------------------
+# Paths with spaces
+# --------------------------------------------------------------------------
+
+def bazarr(path):
+    return ("subtitles", NOW,
+            "2026-09-03 04:45:58 - root (149f) :  ERROR (video_analyzer:325) - "
+            "BAZARR ffprobe cannot analyze this video file " + path)
+
+
+def test_media_paths_with_spaces_collapse_to_one_signature():
+    """The whole library uses spaces, so the tight path rule stopped at the
+    first one and every filename became its own signature -- 51 for bazarr
+    where there were about six real problems."""
+    records = [bazarr(p) for p in (
+        "/pc/tv/anime/vampire knight/s02/vampire knight (2008) - s02e06 [bluray-1080p remux].mkv",
+        "/pc/movies/comedy/hot property (2016)/hot property (2016) {imdb-tt3515318}-rarbg.mp4",
+        "/pc/movies/horror/alone in the dark (1982)/alone in the dark.mkv",
+        "/pc/movies/fantasy/beowulf (1999)/beowulf (1999).mkv",
+    )]
+    signatures, _, _ = analyze(records, NOW)
+    assert len(signatures) == 1
+    assert list(signatures.values())[0]["count"] == 4
+
+
+def test_a_trailing_clause_after_the_path_collapses_too():
+    records = [
+        ("subtitles", NOW,
+         "2026-09-02 17:00:47 - root (149f) :  ERROR (series:203) - BAZARR cannot update "
+         "series /pc/tv/unsorted/" + title + " because of (sqlite3.IntegrityError) UNIQUE constraint")
+        for title in ("blade runner 2099 (2026)", "earth abides (2024)",
+                      "song of the samurai (2026)", "the secret lives of animals (2024)")
+    ]
+    signatures, _, _ = analyze(records, NOW)
+    assert len(signatures) == 1
+
+
+def test_distinct_errors_still_stay_distinct():
+    records = [
+        ("radarr", NOW, "[Error] VideoFileInfoReader: Unable to parse media info from: /pc/a b/c.mkv"),
+        ("radarr", NOW, "[Error] Sabnzbd: Downloading nzb for movie 'X' failed"),
+        ("radarr", NOW, "[Warn] Torznab: API Request Limit reached for LimeTorrents"),
+    ]
+    signatures, _, _ = analyze(records, NOW)
+    assert len(signatures) == 3
+
+
+# --------------------------------------------------------------------------
+# Publish target validation
+# --------------------------------------------------------------------------
+
+def test_publish_target_accepts_the_real_one():
+    assert triage.validate_publish_target(
+        "silasfelinus/conductor", "ops/home-server/CONTAINER-LOG-DIGEST.json") is None
+
+
+def test_publish_target_rejects_traversal_and_odd_repos():
+    for repo, path in (
+        ("silasfelinus/conductor", "../../etc/passwd"),
+        ("silasfelinus/conductor", "/absolute/path.json"),
+        ("not-a-repo", "ops/x.json"),
+        ("evil.com/a/b", "ops/x.json"),
+        ("silasfelinus/conductor", ""),
+    ):
+        assert triage.validate_publish_target(repo, path) is not None, (repo, path)
+
+
+def test_publish_refuses_an_invalid_target_without_calling_github(monkeypatch):
+    called = {"n": 0}
+
+    def fake(*args, **kwargs):
+        called["n"] += 1
+        return {}
+
+    monkeypatch.setattr(triage, "_github_request", fake)
+    ok, detail = publish_digest({"host": "a"}, "tok", "silasfelinus/conductor",
+                                "../../../etc/passwd", "main", NOW)
+    assert not ok and called["n"] == 0
