@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 51
     stakes: reversible
@@ -634,7 +634,23 @@ tasks:
       FetchRunsStalenessGuard, OpenRunIdentityGuard, OpenRunRequestGuard,
       RecordArtifactSuccessGuard, ResumeCancelledRunGuard, ResumeRunIdentityGuard,
       StaleAssetApprovalGuard -- next slice should continue down this list.
-    updated: '2026-09-04T07:04:34Z'
+
+      Guard-integrity slice 95 (Claude, scheduled conductor run) continued cycle 94's
+      remaining list against current kind_robots main (post kind_robots#2384/#2383 merges):
+      re-verified DraftTextareaGuard, FetchRunsStalenessGuard, OpenRunRequestGuard,
+      OpenRunIdentityGuard, ResumeCancelledRunGuard, and ResumeRunIdentityGuard directly
+      against live source via GitHub code search (no local tsx/node_modules available this
+      session). model-builder-item-panel.vue's three draft textareas still all disable on
+      isAnyDraftInFlight; modelBuilderStore.ts's fetchRuns()/openRun()/resumeRun() all still
+      carry their documented request-ticket and identity-check guards exactly as asserted
+      (fetchRunsRequestId/openRunRequestId checked in both success and catch branches;
+      state.run?.id identity checks precede their respective replace-assignments; resumeRun's
+      remembered-id branch still checks status !== 'CANCELLED' and calls
+      safeRemove(runIdKey)). No contract drift or actionable product bug found; no code PR
+      opened. Remaining candidates from cycle 88's original no-cross-reference list, not yet
+      re-checked this way: FacetSync, RecordArtifactSuccessGuard, StaleAssetApprovalGuard --
+      next slice should continue down this list.
+    updated: '2026-09-04T07:06:04Z'
     owner: reviewer
     claimed_by: claude-scheduled-20260904T0615Z-mb-t029-cycle95
     claimed_at: '2026-09-04T07:04:34Z'
