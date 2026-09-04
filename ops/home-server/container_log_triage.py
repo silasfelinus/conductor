@@ -209,6 +209,8 @@ LEVEL_PATTERNS = (
     re.compile(r"\b(TRACE|DEBUG|INFO|NOTICE|WARNING|WARN|ERROR|CRITICAL|FATAL):[a-z_]+:", re.I),
     # leading bare level: "WARN  2026-.." (yac), "ERROR    Error:" (flaresolverr)
     re.compile(r"^\s*(TRACE|DEBUG|INFO|NOTICE|WARNING|WARN|ERROR|CRITICAL|FATAL)\b", re.I),
+    # "[2026-09-03 19:50:08.917] WARNING (verification) ..." -- ownfoil
+    re.compile(r"\]\s+(TRACE|DEBUG|INFO|NOTICE|WARNING|WARN|ERROR|CRITICAL|FATAL)\s", re.I),
 )
 
 # Levels whose own author considered them unremarkable. Dropped outright unless
@@ -373,7 +375,13 @@ SKELETON_STEPS = (
     (re.compile(r"\b0x[0-9a-fA-F]+\b"), "<HEX>"),
     (re.compile(r"\b[0-9a-fA-F]{8,}\b"), "<HEX>"),
     (re.compile(r"\"[^\"]{0,512}\""), "<STR>"),
-    (re.compile(r"'[^']{0,512}'"), "<STR>"),
+    # The lookbehind stops an English contraction from opening a string.
+    # Sonarr logs `Couldn't add release '<name>' from Indexer ...`; without it
+    # the apostrophe in "Couldn't" matched first, consuming `'t add release '`
+    # and leaving every release NAME bare and distinct. That alone gave sonarr
+    # 104 signatures on 2026-09-04 where about ten were real -- 75 of them one
+    # per episode of the same show.
+    (re.compile(r"(?<![A-Za-z])'[^']{0,512}'"), "<STR>"),
     (re.compile(r"\b\d+(?:\.\d+)?(?:ns|us|ms|s|m|h|d|b|kb|mb|gb|tb|kib|mib|gib|%)\b", re.I), "<NUM>"),
     (re.compile(r"\b\d+(?:\.\d+)?\b"), "<NUM>"),
     (re.compile(r"\s+"), " "),
