@@ -23,6 +23,8 @@ linked to each other, all `designer: creation-burst`, all public.
         -> POST /api/art/queue    (one ArtJob per row, payload.entityArt set so
                                    Kind Robots attaches the ArtImage atomically
                                    when the job completes)
+        -> PUT /api/<entity>/:id/facets  (optional `facets:` slugs, verified the
+                                   same way apply_daily_dream_facets.py does)
         -> `built:` block written back into the bundle file with every id
 
 Idempotent: a bundle whose `built:` block already names an id for a record skips
@@ -107,6 +109,29 @@ def kr_create(endpoint: str, body: dict[str, Any], label: str, dry_run: bool,
     created.append((endpoint, int(rid)))
     print(f"  created {endpoint}/{rid}: {label}")
     return int(rid)
+
+
+def apply_facets(entity_type: str, entity_id: int, slugs: list[str], label: str,
+                 dry_run: bool) -> list[int]:
+    """Attach catalog Facets by slug and return the ids Kind Robots reports.
+
+    A 200 is not proof the Facets landed (dream-cycle/t-026: PUT .../facets once
+    ignored facetKeys and answered success over an empty list), so an empty
+    response is an error, not a success.
+    """
+    plural = {"character": "characters", "reward": "rewards", "scenario": "scenarios"}[entity_type]
+    path = f"/api/{plural}/{int(entity_id)}/facets"
+    if dry_run:
+        print(f"  [dry-run] PUT {path}: {label} <- {', '.join(slugs)}")
+        return []
+    status, resp = http_json("PUT", f"{KR_BASE_URL}{path}", {"facetKeys": list(dict.fromkeys(slugs))})
+    rows = (resp or {}).get("data") if isinstance(resp, dict) else None
+    ids = [row.get("id") for row in rows if isinstance(row, dict) and isinstance(row.get("id"), int)] if isinstance(rows, list) else []
+    if status != 200 or not isinstance(resp, dict) or not resp.get("success") or not ids:
+        message = resp.get("message") if isinstance(resp, dict) else resp
+        raise RuntimeError(f"PUT {path} ({label}) attached no Facets -> HTTP {status}: {message}")
+    print(f"  facets {path}: {len(ids)} attached ({', '.join(slugs)})")
+    return ids
 
 
 def rollback(created: list[tuple[str, int]]) -> None:
@@ -375,16 +400,46 @@ def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
         if art_state:
             built["art"] = art_state
 
+    # 4b. Facets: bundle-level slugs apply to every row; a row may add its own.
+    facet_state = dict(built.get("facets") or {})
+    facet_failures: list[str] = []
+    bundle_facets = [str(x) for x in (bundle.get("facets") or [])]
+    facet_targets = [
+        ("character", built.get("character"), _text(ch["name"]), bundle_facets + [str(x) for x in (ch.get("facets") or [])]),
+        ("scenario", built.get("scenario"), _text(sc["title"]), bundle_facets + [str(x) for x in (sc.get("facets") or [])]),
+    ]
+    for rw in bundle["rewards"]:
+        el = slugify(rw["name"])
+        facet_targets.append(("reward", built.get(f"reward:{el}"), _text(rw["name"]), bundle_facets + [str(x) for x in (rw.get("facets") or [])]))
+    for entity_type, entity_id, label, slugs in facet_targets:
+        key = f"{entity_type}:{entity_id}"
+        if not slugs or not entity_id:
+            continue
+        if facet_state.get(key) and set(facet_state[key].get("slugs", [])) == set(slugs):
+            continue
+        try:
+            ids = apply_facets(entity_type, int(entity_id), slugs, label, dry_run)
+        except RuntimeError as exc:
+            facet_failures.append(str(exc))
+            print(f"  facets NOT applied for {label}: {exc}", file=sys.stderr)
+            continue
+        if not dry_run:
+            facet_state[key] = {"slugs": list(dict.fromkeys(slugs)), "facet_ids": ids}
+    if facet_state:
+        built["facets"] = facet_state
+
     # 5. Write the built block back so a re-run is a no-op.
     if not dry_run and built:
         stripped = re.sub(r"(?ms)^built:\s*\n(?:[ \t]+.*\n?)*", "", raw).rstrip("\n") + "\n"
         block = yaml.safe_dump({"built": built}, sort_keys=True, default_flow_style=False)
         path.write_text(stripped + "\n" + block, encoding="utf-8")
         print(f"  recorded built ids in {path}")
-    if art_failures:
+    if art_failures or facet_failures:
         raise RuntimeError(
-            f"{len(art_failures)} card(s) not queued; fix the prompt and re-run: "
-            + "; ".join(art_failures)
+            "; ".join(
+                ([f"{len(art_failures)} card(s) not queued; fix the prompt and re-run: " + "; ".join(art_failures)] if art_failures else [])
+                + ([f"{len(facet_failures)} Facet link(s) failed: " + "; ".join(facet_failures)] if facet_failures else [])
+            )
         )
     return built
 
