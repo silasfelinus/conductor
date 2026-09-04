@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 50
   stakes: reversible
   retry_context: >
@@ -191,11 +191,25 @@ tasks:
 
     RAN 2026-09-04: kind_robots#2393 merged as 0062e84 with all 46 checks green (one
     acceptance job skipped by design). Re-armed to ready per the recurring-task convention.
-  updated: '2026-09-04T13:14:11Z'
+
+    Slice 2 (overnight session 2026-09-04): took the kaizen from kind_robots#2393.
+    narrativeArtJobsHelper's retry()/enqueue()/resume() could not cancel an already-awaiting
+    getArtJobStatus/getArtImageById/enqueueArtGeneration, so a replaced chain's response
+    could overwrite the new chain's state and re-schedule polling for the old job. A per-
+    dedupeKey epoch now identifies the live chain and every awaited step drops a stale
+    result. Guard verifyNarrativeArtPollEpochGuard.mjs + its own contract workflow, wired
+    into test:storybook. vue-tsc clean, eslint 0. Also read narrative-ingredient-card.vue,
+    utils/narrativeArtProfiles.ts, utils/narrativeArtMilestones.ts and
+    server/api/art/queue/narrative.get.ts end-to-end this session with no actionable
+    finding; next never-audited surface is narrative-role-assigner.vue's keyboard flow.
+
+    RAN 2026-09-04 (slice 2): kind_robots#2394 merged as 2d09679 with every check green. Re-
+    armed to ready.
+  updated: '2026-09-04T13:26:35Z'
   owner: worker
   claimed_by: claude-overnight-20260904T1314Z-sb-t010-epoch
   claimed_at: '2026-09-04T13:14:11Z'
-  implementation_pr: 'silasfelinus/kind_robots#2393'
+  implementation_pr: 'silasfelinus/kind_robots#2394'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
