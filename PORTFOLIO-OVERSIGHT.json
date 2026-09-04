@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-09-04T16:27:56.316929+00:00",
+  "generated_at": "2026-09-04T20:50:09.955732+00:00",
   "summary": {
     "status": "action-needed",
-    "roadmap_errors": 0,
+    "roadmap_errors": 1,
     "roadmap_warnings": 2,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
-    "project_unresolved": "Kind Robots project parity check failed: HTTPError: HTTP Error 502: Bad Gateway",
-    "openai_scheduled_agent_overdue": true,
+    "project_unresolved": null,
+    "openai_scheduled_agent_overdue": false,
     "intent_review_due": true
   },
   "openai_scheduled_agent": {
-    "overdue": true,
-    "last_activity": "2026-09-04T10:15:39+00:00",
-    "hours_since": 6.2,
+    "overdue": false,
+    "last_activity": "2026-09-04T20:11:54+00:00",
+    "hours_since": 0.64,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "OpenAI commit activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit."
@@ -27,25 +27,33 @@
   "project_parity": {
     "forward": [],
     "reverse": [],
-    "unresolved": "Kind Robots project parity check failed: HTTPError: HTTP Error 502: Bad Gateway"
+    "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-09-04T16:27:56.316934+00:00",
+    "generated_at": "2026-09-04T20:50:09.955740+00:00",
     "summary": {
       "roadmaps": 52,
       "active_projects": 29,
       "continuous_projects": 2,
-      "tasks": 1379,
-      "ready": 5,
+      "tasks": 1380,
+      "ready": 4,
       "waiting": 56,
       "needs_human": 78,
-      "in_progress": 3,
-      "done": 1220,
-      "errors": 0,
+      "in_progress": 4,
+      "done": 1221,
+      "errors": 1,
       "warnings": 2,
       "info": 4
     },
-    "errors": [],
+    "errors": [
+      {
+        "severity": "error",
+        "code": "GATED_DONE_WITHOUT_APPROVAL",
+        "project": "kindrobots-unraid",
+        "task": "t-014",
+        "message": "Human-gated task is done without approved_by_human: true."
+      }
+    ],
     "warnings": [
       {
         "severity": "warning",
