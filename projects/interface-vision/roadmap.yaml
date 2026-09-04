@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3327,7 +3327,14 @@ tasks:
     eslint 0 new issues (2 pre-existing, git-stash-confirmed), prettier warnings identical
     to unmodified origin/main (git-stash-confirmed), test:layout-contract holds (207
     baseline), test:lint-ratchet holds (332/-60).
-  updated: '2026-09-04T01:49:37Z'
+
+    Slice 63 merged as silasfelinus/kind_robots#2378 (squash d8489b7). Added .kr-btn-
+    secondary-md (btn btn-secondary rounded-xl) mirroring .kr-btn-primary-md naming;
+    migrated all 11 exact-match sites (6 files) to it. Both CI hiccups on this PR's checks
+    resolved on their own (Contract verifiers slow-but-normal install; Generated Client
+    Parity's install step cleared naturally after clearing on retry, ~4m11s, within
+    baseline). Re-arming the recurring consistency task for the next bounded slice.
+  updated: '2026-09-04T02:04:07Z'
   implementation_pr: 'silasfelinus/kind_robots#2378'
   owner: reviewer
   claimed_by: claude-scheduled-20260904T014508Z-t104-slice63
