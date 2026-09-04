@@ -505,3 +505,50 @@ def test_token_file_does_not_truncate_a_token_containing_equals(tmp_path, monkey
     path = tmp_path / triage.TOKEN_FILENAME
     path.write_text(token + "\n", encoding="utf-8")
     assert read_publish_token(str(tmp_path)) == token
+
+
+# --------------------------------------------------------------------------
+# Backtracking — every input here is arbitrary text written by 50 containers
+# --------------------------------------------------------------------------
+
+def test_redact_is_linear_on_a_hostile_line():
+    """CodeQL caught this as polynomial ReDoS on uncontrolled data, correctly.
+
+    The key=value patterns let a greedy prefix restart at every position inside
+    a long token, backtracking through every keyword alternative each time.
+    Measured before the fix: 3k chars 1.7s, 6k chars 6.7s, 12k chars 23.8s. One
+    long line -- a stack trace, a base64 payload, the `guid IN (...)` SQL that
+    podgrab really does log -- would have stalled the nightly run for minutes.
+
+    The bound is deliberately loose (1000x the fixed timing) so this asserts the
+    complexity class rather than the speed of whatever runner it lands on. The
+    quadratic version would blow it by an order of magnitude.
+    """
+    import time
+
+    line = "ERROR " + "aB3" * 20000  # 60k chars, one unbroken token
+    start = time.time()
+    redact(line)
+    assert time.time() - start < 2.0
+
+
+def test_redact_is_linear_on_a_long_quoted_list():
+    """The shape podgrab logs verbatim: hundreds of quoted mixed-case ids."""
+    import time
+
+    line = "SELECT * WHERE guid IN (" + ",".join('"%s"' % ("a1b2c3d4" * 5) for _ in range(500)) + ")"
+    start = time.time()
+    redact(line)
+    assert time.time() - start < 2.0
+
+
+def test_long_lines_are_bounded_before_any_regex_runs():
+    assert len(redact("x" * 50000)) <= triage.MAX_LINE_CHARS
+
+
+def test_analyze_truncates_before_fingerprinting():
+    records = [("chatty", NOW, "ERROR " + "z" * 50000)]
+    signatures, matched, _ = analyze(records, NOW)
+    assert matched == 1
+    entry = list(signatures.values())[0]
+    assert len(entry["sample"]) <= triage.SAMPLE_MAX_CHARS

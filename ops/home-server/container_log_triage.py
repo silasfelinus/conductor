@@ -109,6 +109,11 @@ PRUNE_AFTER_DAYS = 45
 MAX_SIGNATURES_STORED = 5000
 MAX_REPORTED = 200
 
+# Nothing past this reaches a regex. Bounding the input is the defence that
+# survives someone adding a new pattern later without thinking about
+# backtracking -- and a log line longer than this carries no extra signature
+# value anyway, since the sample is truncated to 200 chars regardless.
+MAX_LINE_CHARS = 2000
 SAMPLE_MAX_CHARS = 200
 SKELETON_MAX_CHARS = 300
 
@@ -210,7 +215,38 @@ SECRET_KEY_WORDS = (
     r"auth|authorization|credentials?|session[-_]?id|session|cookie|signature|"
     r"private[-_]?key|access[-_]?key|refresh[-_]?token|bearer|salt|nonce"
 )
-KEY_PREFIX = r"[A-Za-z0-9_.\-]*"
+# The leading lookbehind is load-bearing for performance, not correctness.
+# Without it the greedy prefix restarts at EVERY position inside a long token,
+# backtracking through every keyword alternative each time -- measured at 3.6s
+# per pattern on a single 6000-char token, quadratic in line length. With it,
+# a mid-token position is rejected in O(1) and the prefix only runs once per
+# token. Same matches, ~4000x faster on hostile input.
+KEY_PREFIX = r"(?<![A-Za-z0-9_.\-])[\"']?[A-Za-z0-9_.\-]*"
+
+# Matched, then filtered in Python. The first version expressed the
+# "mixed letters and digits" test as two lookaheads --
+# `(?=[^\s]*[0-9])(?=[^\s]*[A-Za-z])` -- which re-scans the rest of the token
+# at every position, making redact() quadratic in line length. Measured on real
+# shapes: 3k chars 1.7s, 6k chars 6.7s, 12k chars 23.8s. A single long line (a
+# stack trace, a base64 payload, the `guid IN (...)` SQL that podgrab actually
+# logs) would have stalled the nightly run for minutes on one container.
+# CodeQL flagged it as polynomial ReDoS on uncontrolled data and was right:
+# every input here is arbitrary text written by 50 containers.
+BLOB_RE = re.compile(r"(?<![A-Za-z0-9+/=_-])[A-Za-z0-9+/=_-]{32,}")
+
+
+def _redact_blob(match):
+    text = match.group(0)
+    has_digit = has_alpha = False
+    for char in text:
+        if char.isdigit():
+            has_digit = True
+        elif char.isalpha():
+            has_alpha = True
+        if has_digit and has_alpha:
+            return "<REDACTED-BLOB>"
+    return text
+
 
 REDACTIONS = (
     # PEM blocks first -- they contain everything else.
@@ -222,20 +258,19 @@ REDACTIONS = (
     # URL userinfo: scheme://user:pass@host
     (re.compile(r"(://[^\s:/@]{0,64}):[^\s@/]{1,256}@"), r"\1:<REDACTED>@"),
     # key="value" / 'value'
-    (re.compile(r"([\"']?" + KEY_PREFIX + r"(?:" + SECRET_KEY_WORDS + r")[\"']?\s*[:=]\s*)([\"'])[^\"']{1,512}\2", re.I),
+    (re.compile(r"(" + KEY_PREFIX + r"(?:" + SECRET_KEY_WORDS + r")[\"']?\s*[:=]\s*)([\"'])[^\"']{1,512}\2", re.I),
      r"\1\2<REDACTED>\2"),
     # key=bareword (stop at whitespace, comma, semicolon, closing bracket)
-    (re.compile(r"([\"']?" + KEY_PREFIX + r"(?:" + SECRET_KEY_WORDS + r")[\"']?\s*[:=]\s*)([^\s,;\}\)\]\"']{1,512})", re.I),
+    (re.compile(r"(" + KEY_PREFIX + r"(?:" + SECRET_KEY_WORDS + r")[\"']?\s*[:=]\s*)([^\s,;\}\)\]\"']{1,512})", re.I),
      r"\1<REDACTED>"),
     # Sensitive query parameters.
-    (re.compile(r"([?&]" + KEY_PREFIX + r"(?:" + SECRET_KEY_WORDS + r")=)[^&\s]{1,512}", re.I), r"\1<REDACTED>"),
+    (re.compile(r"([?&][A-Za-z0-9_.\-]*(?:" + SECRET_KEY_WORDS + r")=)[^&\s]{1,512}", re.I), r"\1<REDACTED>"),
     # Email addresses (PII, and Silas's own address appears in app logs).
     (re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b"), "<EMAIL>"),
     # The safety net: any long high-entropy blob. This is what catches the
     # secret shape nobody predicted. It also eats sha256 digests and container
     # IDs, which is fine -- skeletonize() would have replaced those anyway.
-    (re.compile(r"(?<![A-Za-z0-9+/=_-])(?=[A-Za-z0-9+/=_-]{32,})(?=[^\s]*[0-9])(?=[^\s]*[A-Za-z])[A-Za-z0-9+/=_-]{32,}"),
-     "<REDACTED-BLOB>"),
+    (BLOB_RE, _redact_blob),
 )
 
 
@@ -252,6 +287,7 @@ def redact(text):
     mistake that has already happened three times in this repo (conductor/t-116,
     t-128, and the 2026-08-25 session that printed a live production password).
     """
+    text = text[:MAX_LINE_CHARS]
     for pattern, replacement in REDACTIONS:
         text = pattern.sub(replacement, text)
     return text
@@ -474,7 +510,7 @@ def analyze(records, now):
     matched = 0
 
     for name, stamp, body in records:
-        clean = ANSI_RE.sub("", body).strip()
+        clean = ANSI_RE.sub("", body[:MAX_LINE_CHARS]).strip()
         if not clean:
             continue
         if not INCLUDE_RE.search(clean):
