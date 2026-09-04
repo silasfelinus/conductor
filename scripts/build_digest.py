@@ -74,30 +74,6 @@ def time_greeting():
     date_str = datetime.datetime.now(_TZ).strftime("%A, %B %-d")
     return f"Good {tod}, Silas. It's {date_str} on the Humboldt coast, and Conductor has the queue lights on."
 
-def daily_spark(context=""):
-    """Return a deterministic daily spark without contacting a model provider."""
-    date = datetime.datetime.now(_TZ).date()
-    context_hint = ""
-    if context:
-        first_project = context.split(", ")[0].strip()
-        context_hint = f" Bonus nudge: give {first_project} one tiny clean win before chasing side quests."
-
-    sparks = [
-        {
-            "label": "🤖 Today's robot",
-            "text": "A tiny teal bookkeeper-bot named Ledgerbell patrols the roadmap, ringing once for ready tasks and twice for anything pretending not to need a human." + context_hint,
-        },
-        {
-            "label": "🌊 Dream scenario",
-            "text": "A moonlit control room floats above Humboldt Bay, each project card glowing like a buoy while patient robots sort the tide of todos." + context_hint,
-        },
-        {
-            "label": "💡 Wild idea",
-            "text": "Turn one recurring annoyance into a named micro-tool today: small, specific, testable, and impossible for Future Silas to misplace." + context_hint,
-        },
-    ]
-    return sparks[date.toordinal() % len(sparks)]
-
 _SEP = "|||CDSEP|||"
 
 def _iter_commits(since):
@@ -326,6 +302,33 @@ def render_engine_health():
     return {"state": state, "reason": reason}
 
 
+def container_log_review(digest):
+    """The written review of today's digest, when one was authored for it.
+
+    author_container_log_review.py runs earlier in the same workflow and writes
+    CONTAINER-LOG-REVIEW.json. It is matched to the digest by generated_at: a
+    review left over from an earlier digest would render yesterday's advice
+    under today's counts, which is worse than the mechanical banner it replaces.
+
+    Returns None for anything unexpected, which degrades the email to that
+    banner rather than dropping the section.
+    """
+    try:
+        import author_container_log_review as reviewer
+
+        payload = reviewer.load_review(reviewer.DEFAULT_REVIEW)
+        review = payload.get("review")
+        if not isinstance(review, dict):
+            return None
+        if review.get("digest_generated_at") != digest.get("generated_at"):
+            return None
+        if not review.get("items") and not review.get("headline"):
+            return None
+        return review
+    except Exception:  # noqa: BLE001 - a digest section must never fail the digest
+        return None
+
+
 def container_log_health():
     """{"state","reason",counts} for Alexandria's container log triage.
 
@@ -353,7 +356,7 @@ def container_log_health():
             datetime.datetime.now(datetime.timezone.utc),
             logs.DEFAULT_STALE_HOURS,
         )
-        return {
+        health = {
             "state": state,
             "reason": reason,
             "host": digest.get("host", ""),
@@ -362,6 +365,10 @@ def container_log_health():
             "quiet": len(digest.get("quiet") or []),
             "findings": findings[:5],
         }
+        review = container_log_review(digest)
+        if review:
+            health["review"] = review
+        return health
     except Exception as error:  # noqa: BLE001 - a digest section must never fail the digest
         return {"state": "unresolved",
                 "reason": f"could not read the container log digest: {error}"}
@@ -427,9 +434,6 @@ def main():
     payload = {
         "date": datetime.datetime.now(_TZ).date().isoformat(),
         "greeting": time_greeting(),
-        "daily_spark": daily_spark(
-            context=", ".join(p["name"] for p in projects) if projects else ""
-        ),
         "tomorrow_proposal": tomorrow_proposal,
         "yesterday_output": yesterday_output,
         "daily_dream_page": DAILY_DREAM_PAGE,

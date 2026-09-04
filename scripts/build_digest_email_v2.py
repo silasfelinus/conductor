@@ -312,7 +312,11 @@ def container_log_banner(digest: dict[str, Any]) -> str:
         headline = "Container log triage status unknown"
 
     lines = [f'<span style="font-size:12px;opacity:.85">{esc(health.get("reason") or "")}</span>']
-    for item in (health.get("findings") or [])[:5]:
+    # When a written review follows, it covers these same signatures with a
+    # diagnosis and a fix. Printing the raw samples above it as well says the
+    # same thing twice and buries the part worth reading.
+    findings = [] if isinstance(health.get("review"), dict) else (health.get("findings") or [])
+    for item in findings[:5]:
         sample = esc(str(item.get("sample") or "")[:140])
         lines.append(
             f'<span style="font-size:12px;opacity:.8">'
