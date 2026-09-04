@@ -1,21 +1,20 @@
 # Conductor Portfolio Oversight
 
-Generated: `2026-09-04T11:27:19.545001+00:00`
+Generated: `2026-09-04T16:27:56.316929+00:00`
 
-Overall status: **semantic-review-due**
+Overall status: **action-needed**
 
 This is a deterministic sensor. For semantic roadmap/progress intent review, follow `projects/conductor/OVERSIGHT-AGENT.md`.
 
 ## OpenAI scheduled-agent heartbeat
 
-- Latest visible OpenAI scheduled-Agent activity: `2026-09-04T10:15:39+00:00` (1.19h ago; overdue at 6.0h).
-- Overdue: **false**
+- Latest visible OpenAI scheduled-Agent activity: `2026-09-04T10:15:39+00:00` (6.2h ago; overdue at 6.0h).
+- Overdue: **true**
 - Note: OpenAI commit activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit.
 
 ## Kind Robots ↔ Conductor project parity
 
-- Forward drift (KR row claims missing roadmap): **0**
-- Reverse orphans (active Conductor roadmap missing KR row): **0**
+- **UNRESOLVED:** Kind Robots project parity check failed: HTTPError: HTTP Error 502: Bad Gateway
 
 ## Roadmap/CONTROL structural audit
 
