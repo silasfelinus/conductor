@@ -253,7 +253,7 @@ tasks:
 - id: t-010
   milestone: m1
   title: "Polish and upgrade Coat Dance front-end surface"
-  status: claimed
+  status: ready
   owner: worker
   passes: 0
   stakes: reversible
@@ -276,7 +276,15 @@ tasks:
     pipeline will run in anyway. Steps (1)-(3) remain confirmed done. No agent-actionable
     scope exists on this task until Silas answers BRIEF.md's open questions and t-003
     clears. Re-armed to ready; will stay a genuine no-op until then.
-  updated: '2026-09-04T20:36:01Z'
+
+    Re-checked before doing any work (per convention), session-start conductor sweep
+    2026-09-04 ~20:35 UTC. Nothing has changed since the 2026-09-03 re-check: t-003 (source-
+    video beat map) is still status: needs-human (updated 2026-08-12, no approved_by_human),
+    BRIEF.md's Q1/Q2 (target music track, whether the muxed audio is usable) remain
+    unanswered, and the sandbox still has no ffmpeg/librosa/mediapipe ('which ffmpeg' fails,
+    both Python imports fail). No agent-actionable scope exists on this task until Silas
+    answers BRIEF.md and t-003 clears. Re-armed to ready.
+  updated: '2026-09-04T20:36:21Z'
   claimed_by: claude-scheduled-20260904T2035Z-coatdance-t010-conductor
   claimed_at: '2026-09-04T20:36:01Z'
 goal: Develop Coat Dance into its intended polished creative work, with the roadmap’s authored concept, assets, and 
