@@ -1291,3 +1291,27 @@ tasks:
   claimed_at: '2026-09-02T15:30:40Z'
   updated: '2026-09-02T15:31:22Z'
   implementation_pr: 'silasfelinus/kind_robots#2329'
+
+- id: t-052
+  milestone: m2
+  title: "Boot the built Nitro output in CI and assert every route serves its own page"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from the t-027 lane 5 acceptance pass (Rainbow PR #38, 2026-09-04). Every
+    Rainbow contract test reads source files, so a routing regression that ships the
+    wrong page is invisible to CI: app/pages/agents.vue and community.vue nested their
+    child routes without a NuxtPage, and /agents/providers, /agents/messaging,
+    /agents/:id and both community profile routes served the parent page from the day
+    they merged until the acceptance pass caught it. Add one CI job that runs
+    `nuxt build`, starts `.output/server/index.mjs` on a local port, and curls each
+    expected route asserting a route-specific marker string (its h1 or a data
+    attribute) plus a 200. Keep it to the shipped route list and the public
+    signed-out states; no Kind Robots credential or network is needed because every
+    page renders a signed-out fallback. Optional second assertion in the same job:
+    load each route in headless Chromium at 390px and fail on
+    document.documentElement.scrollWidth > innerWidth, which is the same check the
+    acceptance pass used. Also worth folding in: nav links on most pages measure
+    about 14px tall as tap targets; a shared padding rule would bring them over 24px.
