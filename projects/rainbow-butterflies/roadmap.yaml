@@ -1295,8 +1295,8 @@ tasks:
 - id: t-052
   milestone: m2
   title: "Boot the built Nitro output in CI and assert every route serves its own page"
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >-
@@ -1315,3 +1315,6 @@ tasks:
     document.documentElement.scrollWidth > innerWidth, which is the same check the
     acceptance pass used. Also worth folding in: nav links on most pages measure
     about 14px tall as tap targets; a shared padding rule would bring them over 24px.
+  claimed_by: claude-overnight-20260904T1255Z-rb-t052
+  claimed_at: '2026-09-04T12:37:32Z'
+  updated: '2026-09-04T12:37:32Z'
