@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: review
+  status: ready
   passes: 50
   stakes: reversible
   retry_context: >
@@ -188,10 +188,14 @@ tasks:
     narrative family; also worth a look is a per-dedupeKey epoch in narrativeArtJobsHelper
     so a retry() cannot be overwritten by an in-flight getArtJobStatus from the replaced
     job.
-  updated: '2026-09-04T12:56:07Z'
+
+    RAN 2026-09-04: kind_robots#2393 merged as 0062e84 with all 46 checks green (one
+    acceptance job skipped by design). Re-armed to ready per the recurring-task convention.
+  updated: '2026-09-04T13:10:07Z'
   owner: worker
   claimed_by: claude-overnight-20260904T1315Z-sb-t010
   claimed_at: '2026-09-04T12:51:16Z'
+  implementation_pr: 'silasfelinus/kind_robots#2393'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
