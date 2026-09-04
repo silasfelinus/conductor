@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 1
   stakes: reversible
   recurring: true
@@ -3310,8 +3310,22 @@ tasks:
     Contract verifiers/Candidate-first workbench. t-104 re-armed to ready for the next slice
     (outline-family remainder: btn btn-outline rounded-xl (6), btn btn-outline btn-sm
     rounded-2xl (6), btn btn-outline rounded-2xl (5), btn btn-outline btn-xs (5)).
-  updated: '2026-09-04T09:31:31Z'
-  implementation_pr: 'silasfelinus/kind_robots#2386'
+
+    Slice 70 (outline-family remainder) implemented: added .kr-btn-outline-md (btn btn-
+    outline rounded-xl) and .kr-btn-outline-xs (btn btn-outline btn-xs) alongside the
+    existing .kr-btn-outline-plain, then migrated all 22 remaining outline-family
+    occurrences across 18 files -- btn btn-outline rounded-xl -> kr-btn-outline-md (4
+    files); btn btn-outline btn-sm rounded-2xl -> kr-btn-outline-plain rounded-2xl (6
+    files); btn btn-outline rounded-2xl -> kr-btn-outline-md rounded-2xl (5 files); btn btn-
+    outline btn-xs -> kr-btn-outline-xs (3 files). Grepped utils/scripts/*.mjs and *.ts for
+    the literal replaced class strings first (slice 69 lesson) -- no other contract script
+    references them. components/stages/stage-manager.vue is CRLF; migrated in binary mode to
+    preserve line endings (2026-09-04 TALKBACK lesson). vue-tsc clean, eslint 0 new issues
+    (4 pre-existing, git-stash-confirmed), prettier identical 13 pre-existing warnings (git-
+    stash-confirmed), test:layout-contract holds (207 baseline), test:lint-ratchet holds
+    (332/-60), verifyBrainstormWorkbench.mjs passes. PR: silasfelinus/kind_robots#2387.
+  updated: '2026-09-04T09:39:48Z'
+  implementation_pr: 'silasfelinus/kind_robots#2387'
   owner: worker
   claimed_by: claude-scheduled-20260904T093131Z-ivt104-s70outline
   claimed_at: '2026-09-04T09:31:31Z'
