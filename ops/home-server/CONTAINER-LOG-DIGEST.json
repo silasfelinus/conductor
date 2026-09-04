@@ -1,412 +1,15 @@
 {
-  "generated_at": "2026-09-04T11:39:48.587461+00:00",
+  "generated_at": "2026-09-04T11:44:40.401163+00:00",
   "host": "alexandria",
-  "new": [
-    {
-      "baseline": null,
-      "container": "ownfoil",
-      "count": 1544,
-      "fingerprint": "44cd6e05b14e",
-      "sample": "[2026-09-04 03:51:28.123] WARNING (verification) worker-1 Verification of Pok\u00e9mon Let's Go, Pikachu! [010003F003A34000][v0].nsp failed: index out of range",
-      "severity": "warn",
-      "skeleton": "[<ts>] warning (verification) worker-<num> verification of pok\u00e9mon let's go, pikachu! [<hex>][v0].nsp failed: index out of range"
-    },
-    {
-      "baseline": null,
-      "container": "ownfoil",
-      "count": 1544,
-      "fingerprint": "f81ae7cb574c",
-      "sample": "[2026-09-04 03:51:28.125] WARNING (tasks) worker-1 Verification failed for Pok\u00e9mon Let's Go, Pikachu! [010003F003A34000][v0].nsp: index out of range",
-      "severity": "warn",
-      "skeleton": "[<ts>] warning (tasks) worker-<num> verification failed for pok\u00e9mon let's go, pikachu! [<hex>][v0].nsp: index out of range"
-    },
-    {
-      "baseline": null,
-      "container": "radarr",
-      "count": 282,
-      "fingerprint": "89aec2eeb322",
-      "sample": "[Error] DetectSample: Failed to get runtime from the file, make sure ffprobe is available",
-      "severity": "error",
-      "skeleton": "[error] detectsample: failed to get runtime from the file, make sure ffprobe is available"
-    },
-    {
-      "baseline": null,
-      "container": "requests",
-      "count": 230,
-      "fingerprint": "b0b22d3dd961",
-      "sample": "2026-09-04T11:31:21.462Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 274290\",\"title\"",
-      "severity": "error",
-      "skeleton": "<ts> [error][sonarr scan]: failed to process sonarr media {<str>:<str>,<str>:<str>}"
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 28,
-      "fingerprint": "52feaf1413eb",
-      "sample": "[Error] DetectSample: Failed to get runtime from the file, make sure ffprobe is available",
-      "severity": "error",
-      "skeleton": "[error] detectsample: failed to get runtime from the file, make sure ffprobe is available"
-    },
-    {
-      "baseline": null,
-      "container": "radarr",
-      "count": 22,
-      "fingerprint": "9bbcac50d002",
-      "sample": "[Error] EventAggregator: ExistingExtraFileService failed while processing [MovieScannedEvent]",
-      "severity": "error",
-      "skeleton": "[error] eventaggregator: existingextrafileservice failed while processing [moviescannedevent]"
-    },
-    {
-      "baseline": null,
-      "container": "scoopspress",
-      "count": 21,
-      "fingerprint": "af8d354e129b",
-      "sample": "[Fri Sep 04 02:20:15.941655 2026] [php:warn] [pid 103:tid 103] [client 162.214.79.109:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
-      "severity": "warn",
-      "skeleton": "[fri sep <num> <ts> <num>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>"
-    },
-    {
-      "baseline": null,
-      "container": "yac",
-      "count": 12,
-      "fingerprint": "7b74a63d705f",
-      "sample": "WARN  2026-09-04T02:57:16.539 StaticFileController: detected forbidden characters in path /assets../../../etc/passwd",
-      "severity": "warn",
-      "skeleton": "warn <ts> staticfilecontroller: detected forbidden characters in path <path>"
-    },
-    {
-      "baseline": null,
-      "container": "prowlarr",
-      "count": 7,
-      "fingerprint": "50644f7835da",
-      "sample": "[Warn] Cardigann: [torrentdownload] Invalid category for value: 'MoviesDrama'",
-      "severity": "warn",
-      "skeleton": "[warn] cardigann: [torrentdownload] invalid category for value: <str>"
-    },
-    {
-      "baseline": null,
-      "container": "prowlarr",
-      "count": 7,
-      "fingerprint": "fbff6d0bedfc",
-      "sample": "[Warn] Cardigann: Invalid Release: 'White.Oleander.2002.DVDRip.XviD.AC3 C00LdUdE' from indexer: TorrentDownload. No categories provided.",
-      "severity": "warn",
-      "skeleton": "[warn] cardigann: invalid release: <str> from indexer: torrentdownload. no categories provided."
-    },
-    {
-      "baseline": null,
-      "container": "radarr",
-      "count": 6,
-      "fingerprint": "d0f391f412df",
-      "sample": "[Warn] MediaFileAttributeService: Unable to apply permissions to: /pc/miss_kitty/radarr/My.Hot.Property.2016.PROPER.1080p.WEBRip.x264-xpost/My.Hot.Property.2016.PROPER.1080p.WEBRip.x264-RARBG.2_Englis",
-      "severity": "warn",
-      "skeleton": "[warn] mediafileattributeservice: unable to apply permissions to: <path>"
-    },
-    {
-      "baseline": null,
-      "container": "radarr",
-      "count": 6,
-      "fingerprint": "d0c9c30d4459",
-      "sample": "[v6.3.0.10514] NzbDrone.Mono.Disk.LinuxPermissionsException: Error getting current permissions: ENOENT",
-      "severity": "error",
-      "skeleton": "[v6.<num>.<num>] nzbdrone.mono.disk.linuxpermissionsexception: error getting current permissions: enoent"
-    },
-    {
-      "baseline": null,
-      "container": "scoopspress",
-      "count": 5,
-      "fingerprint": "b51686f6148e",
-      "sample": "[Fri Sep 04 01:45:35.237756 2026] [php:warn] [pid 266:tid 266] [client 44.195.30.193:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90, refer",
-      "severity": "warn",
-      "skeleton": "[fri sep <num> <ts> <num>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>, referer: <url>"
-    },
-    {
-      "baseline": null,
-      "container": "radarr",
-      "count": 5,
-      "fingerprint": "1bc5da6bde0d",
-      "sample": "[Warn] HttpClient: HTTP Error - Res: HTTP/2.0 [GET] https://prowlarr.acrocatranch.com/39/api?t=search&cat=2000,8000,2070,2030,2010,2040&extended=1&apikey=<REDACTED>&offset=0&limit=100&q=The%20Intruder",
-      "severity": "warn",
-      "skeleton": "[warn] httpclient: http error - res: http/<num> [get] <url> <num>.toomanyrequests (<num> bytes)"
-    },
-    {
-      "baseline": null,
-      "container": "radarr",
-      "count": 5,
-      "fingerprint": "76b9f29e1fad",
-      "sample": "<error code=\"429\" description=\"User configurable Indexer Query Limit of 25 in last 24 hour(s) reached.\" />",
-      "severity": "error",
-      "skeleton": "<error code=<str> description=<str> />"
-    },
-    {
-      "baseline": null,
-      "container": "tautulli",
-      "count": 4,
-      "fingerprint": "8a6fa94d633f",
-      "sample": "2026-09-04 03:57:19 - ERROR :: CP Server Thread-9 : Tautulli WebAuth :<REDACTED> CSRF token <REDACTED> failed for /save_pms_token",
-      "severity": "error",
-      "skeleton": "<ts> - error :: cp server thread-<num> : tautulli webauth :<redacted> csrf token <redacted> failed for /save_pms_token"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 4,
-      "fingerprint": "9f8480a922a5",
-      "sample": "2026-09-04 01:49:24 mysql_data_stream.cpp:720:read_from_net(): [ERROR] Oversized first packet from client: pkt_length=66326 exceeds queue capacity (32764). Closing fd=87",
-      "severity": "error",
-      "skeleton": "<ts> mysql_data_stream.cpp<ip>read_from_net(): [error] oversized first packet from client: pkt_length=<num> exceeds queue capacity (<num>). closing fd=<num>"
-    },
-    {
-      "baseline": null,
-      "container": "radarr",
-      "count": 4,
-      "fingerprint": "9a61ae25b8cc",
-      "sample": "[Fatal] RadarrErrorPipeline: Request Failed. GET /api/v3/manualimport",
-      "severity": "fatal",
-      "skeleton": "[fatal] radarrerrorpipeline: request failed. get <path>"
-    },
-    {
-      "baseline": null,
-      "container": "radarr",
-      "count": 3,
-      "fingerprint": "3dcd018f8cdd",
-      "sample": "[Warn] Torznab: API Request Limit reached for TorrentDownload (Prowlarr). Disabled for 06:42:14",
-      "severity": "warn",
-      "skeleton": "[warn] torznab: api request limit reached for torrentdownload (prowlarr). disabled for <ts>"
-    },
-    {
-      "baseline": null,
-      "container": "radarr",
-      "count": 3,
-      "fingerprint": "83d95d9043e3",
-      "sample": "[Warn] HttpClient: HTTP Error - Res: HTTP/2.0 [GET] https://api.nzbplanet.<REDACTED-BLOB>.nzb&i=425756&r=(removed) 510.NotExtended (1807 bytes)",
-      "severity": "warn",
-      "skeleton": "[warn] httpclient: http error - res: http/<num> [get] <url> <num>.notextended (<num> bytes)"
-    },
-    {
-      "baseline": null,
-      "container": "radarr",
-      "count": 3,
-      "fingerprint": "faca9d640225",
-      "sample": "[v6.3.0.10514] NzbDrone.Common.Http.HttpException: HTTP request failed: [510:NotExtended] [GET] at [https://api.nzbplanet.<REDACTED-BLOB>.nzb&i=425756&r=(removed)   at NzbDrone.Common.Http.HttpClient.",
-      "severity": "error",
-      "skeleton": "[v6.<num>.<num>] nzbdrone.common.http.httpexception: http request failed: [<num>:notextended] [get] at [<url> at nzbdrone.common.http.httpclient.executeasync(httprequest request) in .<path>"
-    },
-    {
-      "baseline": null,
-      "container": "subtitles",
-      "count": 2,
-      "fingerprint": "80e18ed4d690",
-      "sample": "2026-09-04 02:53:08,125 - root                             (149f21d45b30) :  ERROR (rootfolder:27) - BAZARR Error trying to get rootfolder from Radarr. Timeout Error.",
-      "severity": "error",
-      "skeleton": "<ts> - root (<hex>) : error (rootfolder:<num>) - bazarr error trying to get rootfolder from radarr. timeout error."
-    },
-    {
-      "baseline": null,
-      "container": "radarr",
-      "count": 2,
-      "fingerprint": "7cf6a16b691b",
-      "sample": "[Warn] Torznab: API Request Limit reached for 1337x (Prowlarr). Disabled for 22:59:07",
-      "severity": "warn",
-      "skeleton": "[warn] torznab: api request limit reached for 1337x (prowlarr). disabled for <ts>"
-    },
-    {
-      "baseline": null,
-      "container": "qbit",
-      "count": 1,
-      "fingerprint": "6f8c0b431d2e",
-      "sample": "Fri Sep  4 02:54:42 2026 WARNING: file 'credentials.conf' is group or others accessible",
-      "severity": "warn",
-      "skeleton": "fri sep <num> <ts> <num> warning: file <str> is group or others accessible"
-    },
-    {
-      "baseline": null,
-      "container": "qbit",
-      "count": 1,
-      "fingerprint": "d0adb8185806",
-      "sample": "Fri Sep  4 02:54:42 2026 WARNING: this configuration may cache passwords in memory -- use the auth-nocache option to prevent this",
-      "severity": "warn",
-      "skeleton": "fri sep <num> <ts> <num> warning: this configuration may cache passwords in memory -- use the auth-nocache option to prevent this"
-    },
-    {
-      "baseline": null,
-      "container": "qbit",
-      "count": 1,
-      "fingerprint": "e3d2364d8405",
-      "sample": "Fri Sep  4 02:54:44 2026 OpenVPN ROUTE: failed to parse/resolve route for host/network: 2000::/3",
-      "severity": "error",
-      "skeleton": "fri sep <num> <ts> <num> openvpn route: failed to parse/resolve route for host/network: <num>::/<num>"
-    },
-    {
-      "baseline": null,
-      "container": "qbit",
-      "count": 1,
-      "fingerprint": "9803b976e90f",
-      "sample": "Fri Sep  4 02:54:44 2026 WARNING: OpenVPN was configured to add an IPv6 route over tun0. However, no IPv6 has been configured for this interface, therefore the route installation may fail or may not w",
-      "severity": "warn",
-      "skeleton": "fri sep <num> <ts> <num> warning: openvpn was configured to add an ipv6 route over tun0. however, no ipv6 has been configured for this interface, therefore the route installation may fail or may not work as expected."
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 1,
-      "fingerprint": "d057526f1c7e",
-      "sample": "time=2026-09-04T02:49:57.470-07:00 level=error msg=\"check failed: error on pinging the mysql database [netdata:xxxxxxxxxxx@tcp(172.21.0.20:3306)/]: Error 1045 (28000): Access denied for user 'netdata'",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d collector=mysql job=kindrobots2 config_source=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 1,
-      "fingerprint": "1c79a85810eb",
-      "sample": "time=2026-09-04T02:49:57.499-07:00 level=error msg=\"check failed: error on pinging the proxysql instance [stats:stats@tcp(172.21.0.30:6032)/]: Error 1040 (42000): User 'stats' can only connect locally",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d collector=proxysql job=proxysql config_source=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 1,
-      "fingerprint": "7ea61018f162",
-      "sample": "time=2026-09-04T02:49:58.042-07:00 level=error msg=\"check failed: dial tcp: lookup 172.21.0.XX on 127.0.0.11:53: no such host\" plugin=go.d collector=redis job=redis config_source=\"user/file reader\"",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str> plugin=go.d collector=redis job=redis config_source=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 1,
-      "fingerprint": "bacfa044aae5",
-      "sample": "time=2026-09-04T02:50:06.762-07:00 comm=cgroup-network source=collector level=error tid=2844740  msg=\"Cannot find a cgroup PID from cgroup '/host/sys/fs/cgroup/3'\"",
-      "severity": "error",
-      "skeleton": "time=<ts> comm=cgroup-network source=collector level=error tid=<num> msg=\"cannot find a cgroup pid from cgroup '<path>"
-    },
-    {
-      "baseline": null,
-      "container": "yac",
-      "count": 1,
-      "fingerprint": "5016575f62a0",
-      "sample": "WARN  2026-09-04T01:53:12.623 HttpRequest: received broken HTTP request, invalid first line",
-      "severity": "warn",
-      "skeleton": "warn <ts> httprequest: received broken http request, invalid first line"
-    },
-    {
-      "baseline": null,
-      "container": "yac",
-      "count": 1,
-      "fingerprint": "0ef01dfddfe8",
-      "sample": "WARN  2026-09-04T02:57:20.181 StaticFileController: detected forbidden characters in path ////../.env",
-      "severity": "warn",
-      "skeleton": "warn <ts> staticfilecontroller: detected forbidden characters in path ////../.env"
-    },
-    {
-      "baseline": null,
-      "container": "subtitles",
-      "count": 1,
-      "fingerprint": "4f19c5a81c97",
-      "sample": "2026-09-04 04:06:50,106 - engineio.server                  (1462d4557b30) :  ERROR (base_server:354) - Invalid session oyjqPmzUKiIPsOznAAAA (further occurrences of this error will be logged with level",
-      "severity": "error",
-      "skeleton": "<ts> - engineio.server (<hex>) : error (base_server:<num>) - invalid session oyjqpmzukiipsoznaaaa (further occurrences of this error will be logged with level info)"
-    },
-    {
-      "baseline": null,
-      "container": "mariadb-photoprism",
-      "count": 1,
-      "fingerprint": "6f13b53fd747",
-      "sample": "#                  log_error = /config/log/mysql/mariadb-error.log                  #",
-      "severity": "error",
-      "skeleton": "# log_error = <path> #"
-    },
-    {
-      "baseline": null,
-      "container": "mariadb-scoopspress",
-      "count": 1,
-      "fingerprint": "02476f1864a4",
-      "sample": "2026-09-04  2:49:59 7 [Warning] Access denied for user 'netdata'@'172.21.0.24' (using password: <REDACTED>)",
-      "severity": "warn",
-      "skeleton": "<date> <ip> <num> [warning] access denied for user <str>@<str> (using password: <redacted>)"
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "e678335c619d",
-      "sample": "[Error] RefreshSeriesService: Couldn't refresh info for [80996][History Channel Documentaries]",
-      "severity": "error",
-      "skeleton": "[error] refreshseriesservice: couldn't refresh info for [<num>][history channel documentaries]"
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "d01035278c7b",
-      "sample": "[Warn] DiskProviderBase: Failed to remove empty directory /pc/tv/europe/murder in successville (2015)/s02",
-      "severity": "warn",
-      "skeleton": "[warn] diskproviderbase: failed to remove empty directory <path>"
-    },
-    {
-      "baseline": null,
-      "container": "radarr",
-      "count": 1,
-      "fingerprint": "2ca162e0fcda",
-      "sample": "[Warn] AggregationService: Unable to augment information for file: '/pc/movies/action/stroker ace (1983)/stroker ace (1983) {imdb-tt0086379} [webdl-1080p]][]-am.en.hi.srt'. Movie: [Stroker Ace (1983)]",
-      "severity": "warn",
-      "skeleton": "[warn] aggregationservice: unable to augment information for file: '<path>"
-    },
-    {
-      "baseline": null,
-      "container": "radarr",
-      "count": 1,
-      "fingerprint": "72d524785b08",
-      "sample": "[Error] Sabnzbd: Downloading nzb for movie 'Lady.Sings.the.Blues.1972.720p.BluRay.x264-x0r' failed (https://prowlarr.acrocatranch.com/27/download?apikey=<REDACTED>&<REDACTED-BLOB>&file=Lady.Sings.the.",
-      "severity": "error",
-      "skeleton": "[error] sabnzbd: downloading nzb for movie <str> failed (<url>"
-    },
-    {
-      "baseline": null,
-      "container": "radarr",
-      "count": 1,
-      "fingerprint": "c8a004075d68",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release 'Lady.Sings.the.Blues.1972.720p.BluRay.x264-x0r' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn't add release <str> from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "radarr",
-      "count": 1,
-      "fingerprint": "8b68b0baa485",
-      "sample": "[v6.3.0.10514] NzbDrone.Core.Exceptions.ReleaseDownloadException: Downloading nzb failed",
-      "severity": "error",
-      "skeleton": "[v6.<num>.<num>] nzbdrone.core.exceptions.releasedownloadexception: downloading nzb failed"
-    },
-    {
-      "baseline": null,
-      "container": "radarr",
-      "count": 1,
-      "fingerprint": "c61531b10466",
-      "sample": "---> NzbDrone.Common.Http.HttpException: HTTP request failed: [510:NotExtended] [GET] at [https://api.nzbplanet.<REDACTED-BLOB>.nzb&i=425756&r=(removed)   at NzbDrone.Common.Http.HttpClient.ExecuteAsy",
-      "severity": "error",
-      "skeleton": "---> nzbdrone.common.http.httpexception: http request failed: [<num>:notextended] [get] at [<url> at nzbdrone.common.http.httpclient.executeasync(httprequest request) in .<path>"
-    },
-    {
-      "baseline": null,
-      "container": "radarr",
-      "count": 1,
-      "fingerprint": "aa426eb83d56",
-      "sample": "--- End of inner exception stack trace ---",
-      "severity": "error",
-      "skeleton": "--- end of inner exception stack trace ---"
-    }
-  ],
+  "new": [],
   "quiet": [],
   "scan": {
     "containers_failed": [],
     "containers_scanned": 43,
     "containers_total": 43,
     "high_cardinality": [],
-    "lines_matched": 11385,
-    "lines_read": 152883,
+    "lines_matched": 11384,
+    "lines_read": 152925,
     "signatures_total": 135,
     "truncated": []
   },
@@ -541,7 +144,7 @@
     {
       "baseline": null,
       "container": "netdata",
-      "count": 55,
+      "count": 56,
       "fingerprint": "24756dae8afd",
       "sample": "time=2026-09-04T02:50:06.762-07:00 comm=spawn-unnamed source=collector level=warning tid=2844741  msg=\"SPAWN SERVER: child with pid 2844742 (request 1) exited with exit code 1: /usr/libexec/netdata/pl",
       "severity": "warn",
@@ -550,7 +153,7 @@
     {
       "baseline": null,
       "container": "netdata",
-      "count": 55,
+      "count": 56,
       "fingerprint": "82278af27950",
       "sample": "time=2026-09-04T02:50:07.124-07:00 comm=spawn-unnamed source=collector level=warning tid=2844765  msg=\"SPAWN SERVER: child with pid 2844853 (request 2) killed by signal 15: callback() function\"",
       "severity": "warn",
@@ -559,16 +162,16 @@
     {
       "baseline": null,
       "container": "subtitles",
-      "count": 55,
+      "count": 54,
       "fingerprint": "fea5d2636fe3",
-      "sample": "2026-09-03 04:40:27,537 - root                             (149f21d85b30) :  ERROR (video_analyzer:325) - BAZARR ffprobe cannot analyze this video file /pc/movies/documentary/life on bitcoin (2014)/li",
+      "sample": "2026-09-03 04:45:58,737 - root                             (149f2007fb30) :  ERROR (video_analyzer:325) - BAZARR ffprobe cannot analyze this video file /pc/tv/anime/vampire knight/s02/vampire knight (",
       "severity": "error",
       "skeleton": "<ts> - root (<hex>) : error (video_analyzer:<num>) - bazarr ffprobe cannot analyze this video file <path>"
     },
     {
       "baseline": null,
       "container": "subtitles",
-      "count": 55,
+      "count": 54,
       "fingerprint": "1c4cbb898323",
       "sample": "Traceback (most recent call last):",
       "severity": "error",
@@ -577,7 +180,7 @@
     {
       "baseline": null,
       "container": "subtitles",
-      "count": 55,
+      "count": 54,
       "fingerprint": "e23b69dcc901",
       "sample": "return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,",
       "severity": "other",
