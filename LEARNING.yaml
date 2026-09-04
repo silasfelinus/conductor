@@ -12360,3 +12360,21 @@ records:
     but the roadmap task was left at status=review rather than done. Same pattern
     as media-watchlist/t-006 this cycle -- reconciled via GitHub MCP after the raw
     API probe 403'd."
+- date: 2026-09-04
+  project: storybook
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A v-for split across several sibling lists by a computed classifier
+    (narrative-role-assigner.vue's four casting tiers) is a real keyboard-focus
+    hazard: an item that changes classification moves to a different <ul>
+    entirely, which Vue cannot patch in place -- it unmounts the old node and
+    mounts a fresh one, silently dropping focus to <body>. Any interactive
+    element inside a re-classified v-for item needs an explicit post-nextTick
+    refocus keyed on a stable identity (member+action), not just correctness
+    of the classification logic itself. Worth checking other multi-tier/
+    multi-bucket v-for surfaces (stage role assignment, batch/queue boards)
+    for the same pattern."
