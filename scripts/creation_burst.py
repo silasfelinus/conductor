@@ -330,6 +330,7 @@ def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
         raise
 
     # 4. Card art: one staged request per row, enqueued with an entity attach.
+    art_failures: list[str] = []
     if with_art:
         already = staged_ids()
         rows: list[str] = []
@@ -359,7 +360,15 @@ def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
             if art_state.get(entry["id"]):
                 print(f"  ArtJob {art_state[entry['id']]} already recorded for {entry['id']}")
                 continue
-            job_id = enqueue_card(entry, dry_run)
+            try:
+                job_id = enqueue_card(entry, dry_run)
+            except RuntimeError as exc:
+                # A rejected prompt (Kind Robots' prompt contract returns 422) must
+                # not orphan the rows already created: record what did land, keep
+                # the staged row pending for a repaired re-run, and report it.
+                art_failures.append(f"{entry['id']}: {exc}")
+                print(f"  art NOT queued for {entry['id']}: {exc}", file=sys.stderr)
+                continue
             if job_id:
                 set_request_job_id(entry["id"], job_id)
                 art_state[entry["id"]] = job_id
@@ -372,6 +381,11 @@ def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
         block = yaml.safe_dump({"built": built}, sort_keys=True, default_flow_style=False)
         path.write_text(stripped + "\n" + block, encoding="utf-8")
         print(f"  recorded built ids in {path}")
+    if art_failures:
+        raise RuntimeError(
+            f"{len(art_failures)} card(s) not queued; fix the prompt and re-run: "
+            + "; ".join(art_failures)
+        )
     return built
 
 
