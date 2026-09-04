@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -3302,7 +3302,7 @@ tasks:
     Slice 68 (Academy Style Gallery continue/review button -> kr-btn-primary) merged as kind_robots#2383. Its Generated Client Parity check hit the same install-step timeout cancellation as slice 63's kind_robots#2378 (cancelled twice on this exact PR, ~5m16s and ~5m04s). Root-caused and fixed this cycle rather than just retrying: filed conductor/t-146, opened kind_robots#2384 raising that workflow's job timeout 5->10min, ported the same fix onto this PR's branch, and along the way caught + fixed the same too-tight timeout on the sibling Schema Migration Parity workflow after it reproduced live on #2384 itself. Both fix PRs and slice 68's implementation PR are merged; t-104 re-armed to ready. Next slice: continue the outline-family/remaining-size button-shape survey per slice 64-67 notes.
 
     Connector safety recovery: a partial-file write while attempting the next button-consistency slice was immediately restored byte-for-byte. Closed empty recovery PR kind_robots#2385; no implementation change landed. Return t-104 to ready with no production impact.
-  updated: '2026-09-04T07:29:27Z'
+  updated: '2026-09-04T07:34:48Z'
   implementation_pr: 'silasfelinus/kind_robots#2383'
   owner: worker
   claimed_by: claude-scheduled-20260904T072926Z-ivt104
