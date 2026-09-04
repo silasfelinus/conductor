@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   recurring: true
@@ -3305,8 +3305,11 @@ tasks:
     Slice 61 ready for review on claude/interface-vision-t104-slice61 (silasfelinus/kind_robots#2376). Added .kr-btn-secondary (btn btn-secondary btn-sm rounded-xl) mirroring .kr-btn-primary's naming; migrated all 12 exact-match sites (11 files) to it. Verified vue-tsc clean, eslint 0 new issues (5 pre-existing, git-stash- confirmed), prettier 5 pre-existing warnings (git-stash-confirmed; bot-chat.vue/facet- interact.vue collateral reflow applied and reverified clean), test:layout-contract holds (207 baseline), test:lint-ratchet holds (332/-60). Note: the prior slice-60 branch claude/eager-bohr-nbg0qy was auto-deleted on merge, so this slice used a fresh branch name (claude/interface-vision-t104-slice61) instead of reusing it.
 
     Reviewed and merged Kind Robots #2376 as 459bd2e875b10d269724b8c198191fae2e4c1668 after all exact-head workflows completed successfully and review threads were clear. Slice 61 added kr-btn-secondary and migrated all 12 exact-match secondary-button sites. Rearming the recurring consistency task for the next bounded slice.
-  updated: '2026-09-04T01:19:20Z'
+  updated: '2026-09-04T01:29:10Z'
   implementation_pr: 'silasfelinus/kind_robots#2376'
+  owner: reviewer
+  claimed_by: claude-scheduled-20260904T012909Z-t104-slice62
+  claimed_at: '2026-09-04T01:29:10Z'
 
 - id: t-123
   milestone: m5
