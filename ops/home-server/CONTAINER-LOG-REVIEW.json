@@ -1,0 +1,70 @@
+{
+  "history": {
+    "43579730ff01": {
+      "container": "sonarr",
+      "first_reported": "2026-09-04",
+      "last_reported": "2026-09-04"
+    },
+    "995ccb0d51b4": {
+      "container": "radarr",
+      "first_reported": "2026-09-04",
+      "last_reported": "2026-09-04"
+    },
+    "c6ebc2b71f32": {
+      "container": "ownfoil",
+      "first_reported": "2026-09-04",
+      "last_reported": "2026-09-04"
+    }
+  },
+  "review": {
+    "digest_generated_at": "2026-09-04T14:00:01.647296+00:00",
+    "generated_at": "2026-09-04T17:26:03.516724+00:00",
+    "headline": "One stuck ownfoil verification loop ate two-thirds of today's log volume; everything else is minor.",
+    "host": "alexandria",
+    "items": [
+      {
+        "action": "fix",
+        "bucket": "new",
+        "container": "ownfoil",
+        "count": 4000,
+        "days_standing": 0,
+        "diagnosis": "ownfoil's worker-2 has been retrying verification of The_Sinking_City_v0_ROMSLAB.nsp 4000 times overnight, failing the same PFS0 partition check every time. Combined with its paired log line, this is 64% of all matched lines today \u2014 a retry loop, not intermittent noise.",
+        "fingerprint": "c6ebc2b71f32",
+        "fix": "Delete The_Sinking_City_v0_ROMSLAB.nsp from ownfoil's library so the worker stops requeuing it, then re-add from a clean source if needed.",
+        "severity": "warn"
+      },
+      {
+        "action": "watch",
+        "bucket": "new",
+        "container": "sonarr",
+        "count": 3,
+        "days_standing": 0,
+        "diagnosis": "Prowlarr hit the LimeTorrents rate limit, which disabled the indexer for Sonarr until 05:27 and separately backed off kapowarr's query for 14087s. Low volume tonight, but it's the same indexer tripping limits across two stacks.",
+        "fingerprint": "43579730ff01",
+        "fix": "In Prowlarr, lower the query interval or set an explicit per-indexer rate limit for LimeTorrents so Sonarr/Kapowarr stop racing it.",
+        "severity": "error"
+      },
+      {
+        "action": "watch",
+        "bucket": "standing",
+        "container": "radarr",
+        "count": 658,
+        "days_standing": 0,
+        "diagnosis": "Radarr's VideoFileInfoReader/DetectSample failures (this plus 843bd0cd437d and 89aec2eeb322) still account for roughly 14% of matched lines from files ffprobe can't read or whose EBML header is corrupt. Still unfixed, still filling the error log daily.",
+        "fingerprint": "995ccb0d51b4",
+        "fix": "Run `docker exec radarr ffprobe -version` to confirm the binary is intact, then spot-check the offending files (e.g. rasputin (1996)) for corruption and reprocess or redownload them.",
+        "severity": "error"
+      }
+    ],
+    "model": "claude-sonnet-5",
+    "mute": [
+      {
+        "container": "netdata",
+        "count": 75,
+        "fingerprint": "24756dae8afd",
+        "why": "netdata's spawn-server plugin restarts (paired with 82278af27950 and b4a4f3c0319b) are internal collector churn, not service impact, and too low-volume to ever indicate a real spike."
+      }
+    ]
+  },
+  "version": 1
+}
