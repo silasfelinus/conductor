@@ -168,3 +168,79 @@ def test_render_does_not_crash_on_missing_fields():
     digest = make_digest(new=[{"bucket": "new"}])
     text = check.render("findings", "1 new", [{"bucket": "new"}], digest)
     assert "container log triage FINDINGS" in text
+
+
+# --------------------------------------------------------------------------
+# Daily digest integration
+# --------------------------------------------------------------------------
+
+# Loaded the same way tests/test_digest_render_engine_banner.py does: scripts/
+# on sys.path and the real module. The stubbing helper in
+# tests/test_build_digest_email_v2 installs a minimal `build_digest_email` into
+# sys.modules, and importing it here at module scope leaked that stub into the
+# render-engine banner suite, which loads the real one -- two tests that pass
+# alone and fail in the full run. Don't reintroduce it.
+import importlib.util  # noqa: E402
+import sys  # noqa: E402
+from pathlib import Path  # noqa: E402
+
+_REPO = Path(__file__).resolve().parents[1]
+if str(_REPO / "scripts") not in sys.path:
+    sys.path.insert(0, str(_REPO / "scripts"))
+
+_SPEC = importlib.util.spec_from_file_location(
+    "build_digest_email_v2", _REPO / "scripts" / "build_digest_email_v2.py"
+)
+email_v2 = importlib.util.module_from_spec(_SPEC)
+sys.modules["build_digest_email_v2"] = email_v2
+_SPEC.loader.exec_module(email_v2)
+
+
+def test_banner_is_silent_when_not_configured():
+    # Nagging every morning about a User Script that was never scheduled is how
+    # a digest section teaches you to skim past it.
+    assert email_v2.container_log_banner({"container_logs": {"state": "not-configured"}}) == ""
+    assert email_v2.container_log_banner({}) == ""
+
+
+def test_banner_shows_counts_on_findings():
+    html = email_v2.container_log_banner({
+        "container_logs": {
+            "state": "findings", "reason": "2 new, 1 spiking, 0 went quiet",
+            "new": 2, "spiking": 1, "quiet": 0,
+            "findings": [{"container": "plex", "sample": "ERROR database is locked"}],
+        }
+    })
+    assert "2 new" in html and "1 spiking" in html
+    assert "newly quiet" not in html          # zero counts are omitted
+    assert "plex" in html and "database is locked" in html
+
+
+def test_banner_flags_a_stale_digest_loudly():
+    html = email_v2.container_log_banner({
+        "container_logs": {"state": "stale", "reason": "digest is 99h old", "findings": []}
+    })
+    assert "STALE" in html
+    assert "#ef4444" in html                  # the red rule, same as engine down
+
+
+def test_banner_still_prints_when_clean():
+    # Same argument as the engine banner: a green line every day is what makes
+    # the absence of a red one mean something.
+    html = email_v2.container_log_banner({
+        "container_logs": {"state": "clean", "reason": "51 containers scanned", "findings": []}
+    })
+    assert "Container logs quiet" in html
+    assert "51 containers scanned" in html
+
+
+def test_banner_escapes_untrusted_log_text():
+    # Sample lines come from container logs, which are not trusted input.
+    html = email_v2.container_log_banner({
+        "container_logs": {
+            "state": "findings", "reason": "1 new", "new": 1, "spiking": 0, "quiet": 0,
+            "findings": [{"container": "evil", "sample": "<script>alert(1)</script>"}],
+        }
+    })
+    assert "<script>" not in html
+    assert "&lt;script&gt;" in html

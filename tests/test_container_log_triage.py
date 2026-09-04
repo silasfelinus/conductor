@@ -360,3 +360,195 @@ def test_parses_offset_timestamp():
 
 def test_bad_timestamp_returns_none():
     assert parse_docker_timestamp("not-a-timestamp") is None
+
+
+# --------------------------------------------------------------------------
+# Publishing
+# --------------------------------------------------------------------------
+
+read_publish_token = triage.read_publish_token
+publish_digest = triage.publish_digest
+
+
+def test_token_comes_from_env_first(tmp_path, monkeypatch):
+    monkeypatch.setenv("CONDUCTOR_PUBLISH_TOKEN", "from-env")
+    assert read_publish_token(str(tmp_path)) == "from-env"
+
+
+def test_token_read_from_secrets_file(tmp_path, monkeypatch):
+    for name in triage.TOKEN_ENV_VARS:
+        monkeypatch.delenv(name, raising=False)
+    path = tmp_path / triage.TOKEN_FILENAME
+    path.write_text("plain-token-value\n", encoding="utf-8")
+    assert read_publish_token(str(tmp_path)) == "plain-token-value"
+
+
+def test_token_file_accepts_key_equals_value_and_strips_quotes(tmp_path, monkeypatch):
+    """AGENTS.md rule 14: a credential that fell through from a .env with its
+    quotes still attached broke a production migration on 2026-08-25 and
+    surfaced four steps later as what looked like a TLS error."""
+    for name in triage.TOKEN_ENV_VARS:
+        monkeypatch.delenv(name, raising=False)
+    path = tmp_path / triage.TOKEN_FILENAME
+    path.write_text('# comment\nCONDUCTOR_PUBLISH_TOKEN="quoted-token"\n', encoding="utf-8")
+    assert read_publish_token(str(tmp_path)) == "quoted-token"
+
+
+def test_missing_token_returns_none(tmp_path, monkeypatch):
+    for name in triage.TOKEN_ENV_VARS:
+        monkeypatch.delenv(name, raising=False)
+    assert read_publish_token(str(tmp_path)) is None
+
+
+def http_error(code):
+    import urllib.error
+    return urllib.error.HTTPError("https://api.github.com", code, "err", {}, None)
+
+
+def test_publish_creates_the_file_when_absent(monkeypatch):
+    calls = []
+
+    def fake(url, token, method="GET", payload=None, timeout=30.0):
+        calls.append((method, payload))
+        if method == "GET":
+            raise http_error(404)
+        return {"commit": {"sha": "abc123def456"}}
+
+    monkeypatch.setattr(triage, "_github_request", fake)
+    ok, detail = publish_digest({"host": "alexandria"}, "tok", "o/r", "p.json", "main", NOW)
+    assert ok
+    assert "abc123def" in detail
+    # No sha on a create, and the commit must not spend a CI run.
+    put = [payload for method, payload in calls if method == "PUT"][0]
+    assert "sha" not in put
+    assert "[skip ci]" in put["message"]
+
+
+def test_publish_updates_with_existing_sha(monkeypatch):
+    seen = {}
+
+    def fake(url, token, method="GET", payload=None, timeout=30.0):
+        if method == "GET":
+            return {"sha": "oldsha123"}
+        seen["payload"] = payload
+        return {"commit": {"sha": "newsha456"}}
+
+    monkeypatch.setattr(triage, "_github_request", fake)
+    ok, _ = publish_digest({"host": "alexandria"}, "tok", "o/r", "p.json", "main", NOW)
+    assert ok
+    assert seen["payload"]["sha"] == "oldsha123"
+
+
+def test_publish_retries_a_write_conflict(monkeypatch):
+    attempts = {"put": 0}
+
+    def fake(url, token, method="GET", payload=None, timeout=30.0):
+        if method == "GET":
+            return {"sha": "sha-{}".format(attempts["put"])}
+        attempts["put"] += 1
+        if attempts["put"] == 1:
+            raise http_error(409)
+        return {"commit": {"sha": "settled99"}}
+
+    monkeypatch.setattr(triage, "_github_request", fake)
+    ok, detail = publish_digest({"host": "a"}, "tok", "o/r", "p.json", "main", NOW)
+    assert ok and attempts["put"] == 2
+
+
+def test_publish_does_not_retry_a_rejected_token(monkeypatch):
+    attempts = {"n": 0}
+
+    def fake(url, token, method="GET", payload=None, timeout=30.0):
+        attempts["n"] += 1
+        raise http_error(403)
+
+    monkeypatch.setattr(triage, "_github_request", fake)
+    ok, detail = publish_digest({"host": "a"}, "tok", "o/r", "p.json", "main", NOW)
+    assert not ok
+    # Terminal: hammering a bad token is how tokens get blocked.
+    assert attempts["n"] == 1
+    assert "Contents: write" in detail
+
+
+def test_publish_failure_message_never_contains_the_token(monkeypatch):
+    secret = fake("super", "secret-token-value")
+
+    def boom(url, token, method="GET", payload=None, timeout=30.0):
+        raise http_error(500)
+
+    monkeypatch.setattr(triage, "_github_request", boom)
+    ok, detail = publish_digest({"host": "a"}, secret, "o/r", "p.json", "main", NOW)
+    assert not ok
+    assert secret not in detail
+
+
+def test_publish_gives_up_after_the_attempt_budget(monkeypatch):
+    attempts = {"n": 0}
+
+    def flaky(url, token, method="GET", payload=None, timeout=30.0):
+        attempts["n"] += 1
+        raise http_error(500)
+
+    monkeypatch.setattr(triage, "_github_request", flaky)
+    ok, _ = publish_digest({"host": "a"}, "tok", "o/r", "p.json", "main", NOW)
+    assert not ok
+    assert attempts["n"] == triage.PUBLISH_ATTEMPTS
+
+
+def test_token_file_does_not_truncate_a_token_containing_equals(tmp_path, monkeypatch):
+    """A looser "contains =" test would cut this token down to its own tail.
+    GitHub tokens are lower case and may contain '=', so only an env-var-shaped
+    upper-snake-case key counts as a KEY=value prefix."""
+    for name in triage.TOKEN_ENV_VARS:
+        monkeypatch.delenv(name, raising=False)
+    token = fake("github_pat_11ABCDE", "=xyz==")
+    path = tmp_path / triage.TOKEN_FILENAME
+    path.write_text(token + "\n", encoding="utf-8")
+    assert read_publish_token(str(tmp_path)) == token
+
+
+# --------------------------------------------------------------------------
+# Backtracking — every input here is arbitrary text written by 50 containers
+# --------------------------------------------------------------------------
+
+def test_redact_is_linear_on_a_hostile_line():
+    """CodeQL caught this as polynomial ReDoS on uncontrolled data, correctly.
+
+    The key=value patterns let a greedy prefix restart at every position inside
+    a long token, backtracking through every keyword alternative each time.
+    Measured before the fix: 3k chars 1.7s, 6k chars 6.7s, 12k chars 23.8s. One
+    long line -- a stack trace, a base64 payload, the `guid IN (...)` SQL that
+    podgrab really does log -- would have stalled the nightly run for minutes.
+
+    The bound is deliberately loose (1000x the fixed timing) so this asserts the
+    complexity class rather than the speed of whatever runner it lands on. The
+    quadratic version would blow it by an order of magnitude.
+    """
+    import time
+
+    line = "ERROR " + "aB3" * 20000  # 60k chars, one unbroken token
+    start = time.time()
+    redact(line)
+    assert time.time() - start < 2.0
+
+
+def test_redact_is_linear_on_a_long_quoted_list():
+    """The shape podgrab logs verbatim: hundreds of quoted mixed-case ids."""
+    import time
+
+    line = "SELECT * WHERE guid IN (" + ",".join('"%s"' % ("a1b2c3d4" * 5) for _ in range(500)) + ")"
+    start = time.time()
+    redact(line)
+    assert time.time() - start < 2.0
+
+
+def test_long_lines_are_bounded_before_any_regex_runs():
+    assert len(redact("x" * 50000)) <= triage.MAX_LINE_CHARS
+
+
+def test_analyze_truncates_before_fingerprinting():
+    records = [("chatty", NOW, "ERROR " + "z" * 50000)]
+    signatures, matched, _ = analyze(records, NOW)
+    assert matched == 1
+    entry = list(signatures.values())[0]
+    assert len(entry["sample"]) <= triage.SAMPLE_MAX_CHARS

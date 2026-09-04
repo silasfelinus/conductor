@@ -326,6 +326,47 @@ def render_engine_health():
     return {"state": state, "reason": reason}
 
 
+def container_log_health():
+    """{"state","reason",counts} for Alexandria's container log triage.
+
+    Sibling of render_engine_health(), for the same reason and against the same
+    failure. The engine probe exists because a digest went out mid-outage on
+    2026-09-02 carrying no hint of it. This one exists because ~50 containers
+    log errors that nobody reads (Silas, 2026-09-03), and a daily line stating
+    what changed converts that silence into something you can notice.
+
+    Reports the published digest that Alexandria's User Script commits. A stale
+    digest is itself the finding -- see check_container_log_drift.
+
+    Never raises and never blocks the digest: the digest going out matters more
+    than this section, so any failure degrades to "unresolved" with the reason.
+    """
+    try:
+        import check_container_log_drift as logs
+
+        digest = logs.load_digest(logs.DEFAULT_DIGEST)
+        if digest is None:
+            return {"state": "not-configured",
+                    "reason": "no container log digest published yet"}
+        state, reason, findings = logs.assess(
+            digest,
+            datetime.datetime.now(datetime.timezone.utc),
+            logs.DEFAULT_STALE_HOURS,
+        )
+        return {
+            "state": state,
+            "reason": reason,
+            "host": digest.get("host", ""),
+            "new": len(digest.get("new") or []),
+            "spiking": len(digest.get("spiking") or []),
+            "quiet": len(digest.get("quiet") or []),
+            "findings": findings[:5],
+        }
+    except Exception as error:  # noqa: BLE001 - a digest section must never fail the digest
+        return {"state": "unresolved",
+                "reason": f"could not read the container log digest: {error}"}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--since", default="24 hours ago")
@@ -403,6 +444,7 @@ def main():
         "pitches_awaiting_vote": scan_pitches(),
         "open_branches": scan_branches(),
         "render_engine": render_engine_health(),
+        "container_logs": container_log_health(),
     }
     print(json.dumps(payload, indent=2))
 

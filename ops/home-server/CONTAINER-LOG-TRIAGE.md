@@ -93,11 +93,14 @@ Create a script named `container-log-triage`, set to **Scheduled Daily**, with:
 ```bash
 #!/bin/bash
 /mnt/user/appdata/container-log-triage/container_log_triage.py \
-  --state-dir /mnt/user/appdata/container-log-triage
+  --state-dir /mnt/user/appdata/container-log-triage \
+  --publish
 ```
 
-Exit codes: `0` clean, `1` findings, `2` could not run. It writes
-`digest.json` and `digest.txt` beside the baseline on every run.
+Exit codes: `0` clean, `1` findings, `2` could not run or could not publish. It
+writes `digest.json` and `digest.txt` beside the baseline on every run, and
+commits the digest into Conductor — see **Publishing** below for the one-time
+token setup. Drop `--publish` if you want to try it locally first.
 
 The first scheduled run reports everything as `new` — that is the baseline being
 built. Skim it, then acknowledge or mute the noise.
@@ -125,7 +128,7 @@ Update does not reset them).
 | `--all` | include stopped containers |
 | `--no-samples` | skeletons only, no sample lines |
 | `--json` | digest JSON on stdout |
-| `--timeout 120` | per-container read budget |
+| `--timeout 120` | per-container read budget |\n| `--publish` | commit the digest into Conductor in the same run |\n| `--secrets-dir` | where the publish token lives (default `/mnt/user/appdata/kind_robots/.secrets`) |
 
 ## The Conductor side
 
@@ -147,20 +150,83 @@ identical, so the age check is the only thing separating them.
 A *missing* digest is exit 0 with a "not configured yet" note, so the sweep stays
 quiet until the User Script is actually scheduled.
 
-## Not yet wired: getting the digest off Alexandria
+## Publishing: the digest commits itself into Conductor
 
-The digest currently lands on Alexandria's disk. Conductor sessions run in an
-ephemeral cloud container that cannot reach the home LAN — no raw TCP, and
-`192.168.x` / tailnet `100.x` addresses resolve to the cloud VPC, not the house
-— so the digest has to be **pushed** out over HTTPS on 443.
+The digest is committed to `ops/home-server/CONTAINER-LOG-DIGEST.json` on `main`,
+beside the other home-server state files (`RENDER-BOX-STATUS`,
+`ENGINE-HEARTBEAT-STATE.json`). Diffs are half the value — `git log -p` on that
+one file is the history of what your containers have been complaining about.
 
-At a few KB a day, any of these works:
+**This happens inside the same daily run.** There is no second script, no
+separate upload step, and nothing to add to pm2 — pm2 runs on ferngrotto and
+supervises ComfyUI; it has no part in this. One User Script entry, one schedule.
 
-1. **POST to Kind Robots** — reuses `relay_agent.py`'s existing outbound pattern
-   and its bearer token; needs a small endpoint.
-2. **Commit to a repo** — simplest, and gives free history and diffs.
-3. **Cloudflare Tunnel** — worth it only if on-demand access to arbitrary logs
-   is wanted later, not for shipping one small file.
+It commits over the GitHub Contents API rather than cloning the repo onto the
+array: nothing to keep in sync on Unraid, no git credential helper, no merge
+race against the workflows that also commit to `main`, and no pack transfer for
+a few KB of JSON. It still lands as an ordinary commit. Commits carry
+`[skip ci]`, so a daily state file does not spend a full CI run.
 
-Until one is chosen, run the checker against a local path and the sweep reports
-"not configured yet".
+### One-time: the publish token
+
+Use a **fine-grained** personal access token, scoped to `silasfelinus/conductor`
+only, with **Contents: write** and nothing else. That is the entire permission
+this needs — it writes one file on one branch.
+
+Create the file first, then paste into it, so the token never reaches your shell
+history:
+
+```bash
+install -m 600 -D /dev/null /mnt/user/appdata/kind_robots/.secrets/conductor-publish-token
+nano /mnt/user/appdata/kind_robots/.secrets/conductor-publish-token
+```
+
+The file may hold the bare token or a `CONDUCTOR_PUBLISH_TOKEN=...` line; quotes
+are stripped either way. Hard rule 14 puts it under `.secrets/` and never on
+`/mnt/user/pc`.
+
+Verify presence without printing the value:
+
+```bash
+[ -s /mnt/user/appdata/kind_robots/.secrets/conductor-publish-token ] \
+  && echo "token present" || echo "token MISSING"
+stat -c '%a %n' /mnt/user/appdata/kind_robots/.secrets/conductor-publish-token
+```
+
+That should print `600`. If it prints anything else, fix it with `chmod 600`.
+
+### The User Script
+
+One entry, **Scheduled Daily**:
+
+```bash
+#!/bin/bash
+/mnt/user/appdata/container-log-triage/container_log_triage.py \
+  --state-dir /mnt/user/appdata/container-log-triage \
+  --publish
+```
+
+Exit codes: `0` clean and published, `1` findings, `2` could not run **or could
+not publish**. A digest nobody can read is not a clean run — without that, the
+User Script would go green while the sweep quietly aged into a staleness warning
+days later, which is the exact failure this whole pipeline exists to prevent,
+reproduced one layer up.
+
+To test publishing without waiting for the schedule, run it by hand once. It
+prints the commit it made, and never the token.
+
+### Where it shows up
+
+Once it is publishing, three things read that file with no further setup:
+
+| reader | what you see |
+|---|---|
+| `scripts/check_container_log_drift.py` | the session-start sweep reports new/spiking/quiet signatures |
+| the daily digest email | one line: quiet, or what changed, or that the script stopped running |
+| `git log -p ops/home-server/CONTAINER-LOG-DIGEST.json` | the whole history |
+
+### Rotating or revoking
+
+Replace the file's contents and the next run picks it up — nothing caches it.
+Revoking the token in GitHub makes the next run exit 2 with an explicit
+"GitHub rejected the token" message rather than failing silently.

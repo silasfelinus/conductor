@@ -72,6 +72,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import base64
 import hashlib
 import json
 import os
@@ -79,6 +80,8 @@ import re
 import socket
 import subprocess
 import sys
+import urllib.error
+import urllib.request
 from collections import defaultdict, deque
 from datetime import datetime, timedelta, timezone
 
@@ -106,6 +109,11 @@ PRUNE_AFTER_DAYS = 45
 MAX_SIGNATURES_STORED = 5000
 MAX_REPORTED = 200
 
+# Nothing past this reaches a regex. Bounding the input is the defence that
+# survives someone adding a new pattern later without thinking about
+# backtracking -- and a log line longer than this carries no extra signature
+# value anyway, since the sample is truncated to 200 chars regardless.
+MAX_LINE_CHARS = 2000
 SAMPLE_MAX_CHARS = 200
 SKELETON_MAX_CHARS = 300
 
@@ -118,6 +126,22 @@ QUIET_MIN_BASELINE = 10
 STATUS_NEW = "new"
 STATUS_ACK = "acknowledged"
 STATUS_MUTED = "muted"
+
+# Publishing. The digest is committed into Conductor beside the other
+# home-server state files (RENDER-BOX-STATUS, ENGINE-HEARTBEAT-STATE.json),
+# which is the established pattern for "host state an agent needs to read".
+# The default path is exactly what scripts/check_container_log_drift.py already
+# looks for, so publishing closes the loop with no configuration on either end.
+PUBLISH_REPO = "silasfelinus/conductor"
+PUBLISH_PATH = "ops/home-server/CONTAINER-LOG-DIGEST.json"
+PUBLISH_BRANCH = "main"
+PUBLISH_ATTEMPTS = 3
+
+# Hard safety rule 14: credentials live under the checkout's .secrets/, never
+# on /mnt/user/pc.
+DEFAULT_SECRETS_DIR = "/mnt/user/appdata/kind_robots/.secrets"
+TOKEN_FILENAME = "conductor-publish-token"
+TOKEN_ENV_VARS = ("CONDUCTOR_PUBLISH_TOKEN", "GITHUB_TOKEN", "GH_TOKEN")
 
 
 # --------------------------------------------------------------------------
@@ -191,7 +215,38 @@ SECRET_KEY_WORDS = (
     r"auth|authorization|credentials?|session[-_]?id|session|cookie|signature|"
     r"private[-_]?key|access[-_]?key|refresh[-_]?token|bearer|salt|nonce"
 )
-KEY_PREFIX = r"[A-Za-z0-9_.\-]*"
+# The leading lookbehind is load-bearing for performance, not correctness.
+# Without it the greedy prefix restarts at EVERY position inside a long token,
+# backtracking through every keyword alternative each time -- measured at 3.6s
+# per pattern on a single 6000-char token, quadratic in line length. With it,
+# a mid-token position is rejected in O(1) and the prefix only runs once per
+# token. Same matches, ~4000x faster on hostile input.
+KEY_PREFIX = r"(?<![A-Za-z0-9_.\-])[\"']?[A-Za-z0-9_.\-]*"
+
+# Matched, then filtered in Python. The first version expressed the
+# "mixed letters and digits" test as two lookaheads --
+# `(?=[^\s]*[0-9])(?=[^\s]*[A-Za-z])` -- which re-scans the rest of the token
+# at every position, making redact() quadratic in line length. Measured on real
+# shapes: 3k chars 1.7s, 6k chars 6.7s, 12k chars 23.8s. A single long line (a
+# stack trace, a base64 payload, the `guid IN (...)` SQL that podgrab actually
+# logs) would have stalled the nightly run for minutes on one container.
+# CodeQL flagged it as polynomial ReDoS on uncontrolled data and was right:
+# every input here is arbitrary text written by 50 containers.
+BLOB_RE = re.compile(r"(?<![A-Za-z0-9+/=_-])[A-Za-z0-9+/=_-]{32,}")
+
+
+def _redact_blob(match):
+    text = match.group(0)
+    has_digit = has_alpha = False
+    for char in text:
+        if char.isdigit():
+            has_digit = True
+        elif char.isalpha():
+            has_alpha = True
+        if has_digit and has_alpha:
+            return "<REDACTED-BLOB>"
+    return text
+
 
 REDACTIONS = (
     # PEM blocks first -- they contain everything else.
@@ -203,20 +258,19 @@ REDACTIONS = (
     # URL userinfo: scheme://user:pass@host
     (re.compile(r"(://[^\s:/@]{0,64}):[^\s@/]{1,256}@"), r"\1:<REDACTED>@"),
     # key="value" / 'value'
-    (re.compile(r"([\"']?" + KEY_PREFIX + r"(?:" + SECRET_KEY_WORDS + r")[\"']?\s*[:=]\s*)([\"'])[^\"']{1,512}\2", re.I),
+    (re.compile(r"(" + KEY_PREFIX + r"(?:" + SECRET_KEY_WORDS + r")[\"']?\s*[:=]\s*)([\"'])[^\"']{1,512}\2", re.I),
      r"\1\2<REDACTED>\2"),
     # key=bareword (stop at whitespace, comma, semicolon, closing bracket)
-    (re.compile(r"([\"']?" + KEY_PREFIX + r"(?:" + SECRET_KEY_WORDS + r")[\"']?\s*[:=]\s*)([^\s,;\}\)\]\"']{1,512})", re.I),
+    (re.compile(r"(" + KEY_PREFIX + r"(?:" + SECRET_KEY_WORDS + r")[\"']?\s*[:=]\s*)([^\s,;\}\)\]\"']{1,512})", re.I),
      r"\1<REDACTED>"),
     # Sensitive query parameters.
-    (re.compile(r"([?&]" + KEY_PREFIX + r"(?:" + SECRET_KEY_WORDS + r")=)[^&\s]{1,512}", re.I), r"\1<REDACTED>"),
+    (re.compile(r"([?&][A-Za-z0-9_.\-]*(?:" + SECRET_KEY_WORDS + r")=)[^&\s]{1,512}", re.I), r"\1<REDACTED>"),
     # Email addresses (PII, and Silas's own address appears in app logs).
     (re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b"), "<EMAIL>"),
     # The safety net: any long high-entropy blob. This is what catches the
     # secret shape nobody predicted. It also eats sha256 digests and container
     # IDs, which is fine -- skeletonize() would have replaced those anyway.
-    (re.compile(r"(?<![A-Za-z0-9+/=_-])(?=[A-Za-z0-9+/=_-]{32,})(?=[^\s]*[0-9])(?=[^\s]*[A-Za-z])[A-Za-z0-9+/=_-]{32,}"),
-     "<REDACTED-BLOB>"),
+    (BLOB_RE, _redact_blob),
 )
 
 
@@ -233,6 +287,7 @@ def redact(text):
     mistake that has already happened three times in this repo (conductor/t-116,
     t-128, and the 2026-08-25 session that printed a live production password).
     """
+    text = text[:MAX_LINE_CHARS]
     for pattern, replacement in REDACTIONS:
         text = pattern.sub(replacement, text)
     return text
@@ -455,7 +510,7 @@ def analyze(records, now):
     matched = 0
 
     for name, stamp, body in records:
-        clean = ANSI_RE.sub("", body).strip()
+        clean = ANSI_RE.sub("", body[:MAX_LINE_CHARS]).strip()
         if not clean:
             continue
         if not INCLUDE_RE.search(clean):
@@ -632,6 +687,130 @@ def prune(state, now):
 
 
 # --------------------------------------------------------------------------
+# Publishing — commit the digest into Conductor over HTTPS
+# --------------------------------------------------------------------------
+
+def read_publish_token(secrets_dir):
+    """Find the publish token, or None. NEVER returns it in an error string.
+
+    Env first (so a wrapper can inject one), then a mode-600 file under
+    .secrets/. The file may hold a bare token or a KEY=value line; both are
+    accepted, and surrounding quotes are stripped.
+
+    That quote-stripping is not cosmetic. AGENTS.md rule 14 records a
+    production migration that broke on 2026-08-25 because a credential fell
+    through from a `.env` with its quotes still attached and failed four steps
+    later as what looked like a TLS error. Same class of bug, so it is handled
+    here rather than discovered at 2am.
+    """
+    for name in TOKEN_ENV_VARS:
+        value = os.environ.get(name, "").strip()
+        if value:
+            return value
+
+    path = os.path.join(secrets_dir, TOKEN_FILENAME)
+    if not os.path.exists(path):
+        return None
+    try:
+        with open(path, "r", encoding="utf-8") as handle:
+            raw = handle.read().strip()
+    except OSError:
+        return None
+
+    for line in raw.splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        # Only strip a genuine KEY=value prefix. Matching on an env-var-shaped
+        # key (upper snake case) rather than "contains =" matters: GitHub
+        # tokens are lower case and can themselves contain '=', so a looser
+        # test would silently truncate a valid token to its own tail.
+        if re.match(r"^[A-Z][A-Z0-9_]*\s*=", line):
+            line = line.split("=", 1)[1].strip()
+        return line.strip("\"'")
+    return None
+
+
+def _github_request(url, token, method="GET", payload=None, timeout=30.0):
+    data = json.dumps(payload).encode("utf-8") if payload is not None else None
+    request = urllib.request.Request(url, data=data, method=method)
+    request.add_header("Authorization", "Bearer {}".format(token))
+    request.add_header("Accept", "application/vnd.github+json")
+    request.add_header("X-GitHub-Api-Version", "2022-11-28")
+    request.add_header("User-Agent", "conductor-container-log-triage")
+    if data is not None:
+        request.add_header("Content-Type", "application/json")
+    with urllib.request.urlopen(request, timeout=timeout) as response:
+        body = response.read().decode("utf-8", "replace")
+    return json.loads(body) if body else {}
+
+
+def publish_digest(digest, token, repo, path, branch, now):
+    """Commit the digest to GitHub via the Contents API. Returns (ok, message).
+
+    The Contents API rather than a git clone on the array, deliberately: no
+    checkout to keep in sync on Unraid, no git credential helper, no merge race
+    against the workflows that also commit to main, and no pack transfer for a
+    few KB of JSON. It still lands as an ordinary commit, so `git log -p` on
+    this file is the whole point and works exactly as it would otherwise.
+
+    Committed with [skip ci] -- this runs daily and must not spend a full CI
+    suite on a state file, matching the repo's other auto-generated commits.
+
+    The returned message NEVER contains the token (hard safety rule 15): the
+    caller prints it, and Silas pastes that output back.
+    """
+    api = "https://api.github.com/repos/{}/contents/{}".format(repo, path)
+    content = json.dumps(digest, indent=2, sort_keys=True) + "\n"
+    encoded = base64.b64encode(content.encode("utf-8")).decode("ascii")
+    message = "chore(logs): container log digest {} {} [skip ci]".format(
+        digest.get("host", "host"), now.date().isoformat()
+    )
+
+    last_error = "unknown error"
+    for attempt in range(1, PUBLISH_ATTEMPTS + 1):
+        sha = None
+        try:
+            existing = _github_request("{}?ref={}".format(api, branch), token)
+            sha = existing.get("sha")
+        except urllib.error.HTTPError as error:
+            if error.code != 404:
+                # 401/403 are terminal: a bad or unscoped token will not fix
+                # itself on retry, and hammering it is how tokens get blocked.
+                if error.code in (401, 403):
+                    return False, "GitHub rejected the token (HTTP {}) — check that it has Contents: write on {}".format(error.code, repo)
+                last_error = "HTTP {} reading the current file".format(error.code)
+                continue
+        except (urllib.error.URLError, OSError, ValueError) as error:
+            last_error = "could not reach GitHub: {}".format(error)
+            continue
+
+        payload = {"message": message, "content": encoded, "branch": branch}
+        if sha:
+            payload["sha"] = sha
+        try:
+            result = _github_request(api, token, method="PUT", payload=payload)
+        except urllib.error.HTTPError as error:
+            if error.code in (401, 403):
+                return False, "GitHub rejected the token (HTTP {}) — check that it has Contents: write on {}".format(error.code, repo)
+            if error.code in (409, 422) and attempt < PUBLISH_ATTEMPTS:
+                # Someone else committed between our read and our write. Re-read
+                # the sha and try again rather than clobbering blindly.
+                last_error = "conflict on write (HTTP {}), retrying".format(error.code)
+                continue
+            last_error = "HTTP {} writing the digest".format(error.code)
+            continue
+        except (urllib.error.URLError, OSError, ValueError) as error:
+            last_error = "could not reach GitHub: {}".format(error)
+            continue
+
+        commit = (result.get("commit") or {}).get("sha", "")
+        return True, "published to {}:{} as {}".format(repo, path, commit[:9] or "a new commit")
+
+    return False, "publish failed after {} attempts: {}".format(PUBLISH_ATTEMPTS, last_error)
+
+
+# --------------------------------------------------------------------------
 # Output
 # --------------------------------------------------------------------------
 
@@ -766,6 +945,19 @@ def main(argv=None):
     parser.add_argument("--json", action="store_true", help="print the digest JSON on stdout")
     parser.add_argument("--no-samples", action="store_true",
                         help="omit sample lines entirely; keep only skeletons")
+    parser.add_argument(
+        "--publish",
+        action="store_true",
+        help="commit the digest into Conductor so the sweep and daily digest can read it",
+    )
+    parser.add_argument("--publish-repo", default=PUBLISH_REPO)
+    parser.add_argument("--publish-path", default=PUBLISH_PATH)
+    parser.add_argument("--publish-branch", default=PUBLISH_BRANCH)
+    parser.add_argument(
+        "--secrets-dir",
+        default=os.environ.get("SECRETS_DIR", DEFAULT_SECRETS_DIR),
+        help="directory holding {} (hard rule 14: never under /mnt/user/pc)".format(TOKEN_FILENAME),
+    )
     parser.add_argument("--ack", action="append", default=[], metavar="FP")
     parser.add_argument("--mute", action="append", default=[], metavar="FP")
     parser.add_argument("--unmute", action="append", default=[], metavar="FP")
@@ -846,6 +1038,33 @@ def main(argv=None):
 
     print(json.dumps(digest, indent=2, sort_keys=True) if args.json else text)
 
+    published_ok = True
+    if args.publish:
+        token = read_publish_token(args.secrets_dir)
+        if not token:
+            published_ok = False
+            print(
+                "publish skipped: no token in {} or {}".format(
+                    os.path.join(args.secrets_dir, TOKEN_FILENAME),
+                    "/".join(TOKEN_ENV_VARS),
+                ),
+                file=sys.stderr,
+            )
+        else:
+            published_ok, detail = publish_digest(
+                digest, token, args.publish_repo, args.publish_path,
+                args.publish_branch, now,
+            )
+            print(detail, file=sys.stdout if published_ok else sys.stderr)
+
+    # A digest nobody can read is not a clean run, and it outranks findings:
+    # if the file never reached the repo then nobody sees those findings
+    # anyway. Without this the User Script goes green while the sweep quietly
+    # falls back to the last published copy and ages into a staleness warning
+    # days later -- the failure this whole pipeline exists to prevent,
+    # reproduced one layer up.
+    if not published_ok:
+        return EXIT_UNRESOLVED
     if digest["new"] or digest["spiking"]:
         return EXIT_FINDINGS
     return EXIT_CLEAN
