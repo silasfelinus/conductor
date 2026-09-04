@@ -46,7 +46,7 @@ At the start of every session, before responding to any task, run a conductor sw
      anything, it only skews the digest's portfolio-percentage math; exit 1 means "worth a look and an
      edit," not a genuine gate. No network/token needed.
    - `python scripts/check_container_log_drift.py` — reads the daily container-log triage digest
-     that `ops/home-server/container_log_triage.py` writes on Alexandria (Silas, 2026-09-03: *"I'm
+     that kind_robots' `scripts/container_log_triage.py` writes on Alexandria (Silas, 2026-09-03: *"I'm
      not searching around the logs of 50-ish containers regularly to find suboptimal problems. If
      something is erroring in the logs but not actually breaking the container, I'm not aware of
      it."*). Reports only signatures that are NEW, SPIKING against their own history, or newly

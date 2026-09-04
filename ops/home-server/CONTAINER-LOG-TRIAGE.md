@@ -10,7 +10,7 @@ are still nominally healthy.
 
 ## What it does
 
-`container_log_triage.py` runs on Alexandria daily, reads `docker logs` for
+`container_log_triage.py` (in kind_robots) runs on Alexandria daily, reads `docker logs` for
 every running container, keeps only error-ish lines, and collapses them into
 **signatures** — a line with its timestamps, IPs, UUIDs, paths, and numbers
 replaced by placeholders, so 4,000 occurrences of one problem become one row.
@@ -38,7 +38,7 @@ exactly that hazard. Every retained line passes through `redact()` before it is
 fingerprinted, stored, or displayed — PEM blocks, JWTs, bearer tokens,
 `password=`-style pairs, URL userinfo and query params, emails, and a catch-all
 for long high-entropy blobs — and samples are truncated to 200 characters on top
-of that. Covered by `tests/test_container_log_triage.py`.
+of that. Covered by `tests/python/test_container_log_triage.py` in kind_robots.
 
 It is defense in depth, not a proof. If you spot a secret shape it misses, add a
 pattern and a test. `--no-samples` drops sample lines entirely if you want to
@@ -82,70 +82,95 @@ is still on the stored sample line.
 
 ## Setup on Alexandria
 
+**The script lives in kind_robots now, not here.** It is
+`scripts/container_log_triage.py` in `silasfelinus/kind_robots`, and it reaches
+Alexandria the same way every other deployed script does: `/mnt/user/appdata/
+kind_robots` is a real checkout, and `scripts/unraid-user-script.sh` pulls
+`--ff-only` from `main` every five minutes. A merge is on the box in minutes.
+
+That move (2026-09-04) fixed a real failure. The script used to be hand-copied
+here, so *"does Alexandria have the fix?"* could only be answered by grepping
+the deployed file for a comment string -- and the first such check gave a FALSE
+PASS, because the phrase it grepped for also appeared inside the script's own
+regex. Time went into a bug that had already been fixed upstream. Deployment
+now answers the question instead.
+
+Its 63 tests moved with it, into a CI job that also asserts the executable bit
+survives and that it imports nothing outside the standard library -- both
+failures that would be green in CI and dead on the box. Conductor keeps only
+the *readers*: `scripts/check_container_log_drift.py` and
+`scripts/author_container_log_review.py`, which read the published digest over
+the API and never needed a checkout.
+
 ### 1. Confirm python3
 
 ```bash
 python3 --version
 ```
 
-Stdlib only — no pip, no dependencies. If that command fails, nothing below works.
+Stdlib only -- no pip, no dependencies. If that command fails, nothing below works.
 
-### 2. Put the script on the box
-
-It is a single standalone file; it does not need the Conductor checkout.
+### 2. Confirm the deploy has landed it
 
 ```bash
-mkdir -p /boot/config/plugins/user.scripts/scripts/container-log-triage
-# copy container_log_triage.py to /mnt/user/appdata/container-log-triage/
-chmod +x /mnt/user/appdata/container-log-triage/container_log_triage.py
+ls -l /mnt/user/appdata/kind_robots/scripts/container_log_triage.py
 ```
 
-### 3. Run the inventory first — before scheduling anything
+If it is missing, the auto-deploy has not run or the checkout is dirty --
+`bash /mnt/user/appdata/kind_robots/scripts/unraid-user-script.sh` reports why.
+
+### 3. Run the inventory first -- before scheduling anything
 
 ```bash
-/mnt/user/appdata/container-log-triage/container_log_triage.py --inventory
+/mnt/user/appdata/kind_robots/scripts/container_log_triage.py \
+  --state-dir /mnt/user/appdata/container-log-triage --inventory
 ```
 
 This ignores and does not write the baseline. It prints every distinct signature
 across every container, grouped and ranked. **This is the highest-value run of
-the whole project** — it is the thing you have never seen, and it is worth
+the whole project** -- it is the thing you have never seen, and it is worth
 reading properly before automating anything.
 
 Two things to check in that first output:
 
 - **`HIGH CARDINALITY` warnings.** A container producing hundreds of distinct
-  signatures means normalization is not collapsing its log format — tune
+  signatures means normalization is not collapsing its log format -- tune
   `SKELETON_STEPS` rather than accepting the noise.
 - **`unreadable` containers.** Usually a template setting `--log-driver none`.
   Expected, listed, never fatal.
 
 ### 4. Schedule it in User Scripts
 
-Create a script named `container-log-triage`, set to **Scheduled Daily**, with:
+One entry, **Custom** schedule `0 7 * * *` (an hour and a half before the
+digest workflow runs at 08:30 Pacific, so the morning email reads a fresh
+digest):
 
 ```bash
 #!/bin/bash
-/mnt/user/appdata/container-log-triage/container_log_triage.py \
+/mnt/user/appdata/kind_robots/scripts/container_log_triage.py \
   --state-dir /mnt/user/appdata/container-log-triage \
   --publish
 ```
 
+Note the entry names the *deployed* path and nothing else -- it needs no
+updating when the script changes, which is the whole point of the move.
+
 Exit codes: `0` clean, `1` findings, `2` could not run or could not publish. It
 writes `digest.json` and `digest.txt` beside the baseline on every run, and
-commits the digest into Conductor — see **Publishing** below for the one-time
-token setup. Drop `--publish` if you want to try it locally first.
+commits the digest into Conductor -- see **Publishing** below for the one-time
+token setup. Drop `--publish` to try it locally first.
 
-The first scheduled run reports everything as `new` — that is the baseline being
-built. Skim it, then acknowledge or mute the noise.
+The first scheduled run reports everything as `new` -- that is the baseline
+being built. Skim it, then acknowledge or mute the noise.
 
 ### 5. Quiet the known noise
 
 ```bash
 # looked at it, it's fine — stays silent unless its rate spikes
-container_log_triage.py --ack a1b2c3d4e5f6
+/mnt/user/appdata/kind_robots/scripts/container_log_triage.py --ack a1b2c3d4e5f6
 
 # never report this again, even if it spikes
-container_log_triage.py --mute a1b2c3d4e5f6 --note "known upstream bug"
+/mnt/user/appdata/kind_robots/scripts/container_log_triage.py --mute a1b2c3d4e5f6 --note "known upstream bug"
 ```
 
 Fingerprints are the `[a1b2c3d4e5f6]` values in the output. They are stable
@@ -235,7 +260,7 @@ One entry, **Scheduled Daily**:
 
 ```bash
 #!/bin/bash
-/mnt/user/appdata/container-log-triage/container_log_triage.py \
+/mnt/user/appdata/kind_robots/scripts/container_log_triage.py \
   --state-dir /mnt/user/appdata/container-log-triage \
   --publish
 ```

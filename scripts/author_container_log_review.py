@@ -4,7 +4,7 @@
 Silas, 2026-09-04: *"give me this kind of detail, guides on what to mute, and
 how to fix ... baked into my daily morning email."*
 
-`container_log_triage.py` on Alexandria already answers *what changed* — it
+`container_log_triage.py` (kind_robots) on Alexandria already answers *what changed* — it
 fingerprints ~50 containers' error lines and diffs them against a baseline. The
 digest it publishes is accurate and completely inert: a row saying `ownfoil ·
 warn · 3999x` does not tell you that one truncated `.xci` is two thirds of the
