@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: review
+  status: ready
   passes: 50
   stakes: reversible
   retry_context: >
@@ -205,7 +205,16 @@ tasks:
 
     RAN 2026-09-04 (slice 2): kind_robots#2394 merged as 2d09679 with every check green. Re-
     armed to ready.
-  updated: '2026-09-04T16:36:30Z'
+
+    Slice: refocus casting-board role chip after a tier move (kind_robots#2395). narrative-
+    role-assigner.vue's four tiers are separate v-for lists; toggling a role that changes
+    tier unmounted the pressed chip and dropped keyboard focus to body. Added data-cast-
+    member/data-role-key markers and a post-nextTick refocus in toggle(). Extended
+    verifyNarrativeCastTiers.ts (wired into contract-tests.yml) with two new checks. Kaizen
+    for next slice: the casting board has no aria-live announcement when a card moves tiers
+    -- screen-reader users get no auditory confirmation of a successful press even though
+    focus now follows correctly.
+  updated: '2026-09-04T16:41:44Z'
   owner: worker
   claimed_by: claude-scheduled-20260904T163022Z-sb-t010
   claimed_at: '2026-09-04T16:30:22Z'
