@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: ready
+  status: claimed
   passes: 50
   stakes: reversible
   retry_context: >
@@ -166,7 +166,10 @@ tasks:
     Production container run 33798861864 failed because storybook-library-page.vue used two newline-separated statements in each Export @click expression. The worker branch changes only those two handlers to valid semicolon-separated expressions.
 
     Fixed the Storybook production Vue parser failure in kind_robots PR #2368. All 40 PR checks completed without failure, cancellation, or skip; merged as 4d26cb6e5be77397107ddbed4374627d292f7d10; Publish Production Container run 33800660201 completed successfully. Returned the rolling Storybook polish task to ready.
-  updated: '2026-09-03T20:20:21Z'
+  updated: '2026-09-04T12:51:16Z'
+  owner: worker
+  claimed_by: claude-overnight-20260904T1315Z-sb-t010
+  claimed_at: '2026-09-04T12:51:16Z'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
