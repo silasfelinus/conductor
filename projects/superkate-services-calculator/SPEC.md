@@ -14,7 +14,7 @@ Build a polished services calculator app for Hair by Superkate that records cust
 Use the project-local references before making visual/design changes:
 
 - `projects/superkate-services-calculator/examples/` contains Superkate hair-work examples.
-- `projects/superkate-services-calculator/hairpress/` contains the current Hair by Superkate WordPress front end for reference. It may be updated or replaced later.
+- The current Hair by Superkate WordPress front end is the live site at hairbysuperkate.com, running as an Unraid container. A reference copy used to live at `projects/superkate-services-calculator/hairpress/` and was removed (conductor/t-106); only `wp-content/plugins/superkates-special-plugin/` and the Instagram archive remain in this repo.
 
 ## Install targets
 
@@ -220,7 +220,7 @@ Receipt body should include:
 
 Dark theme with purple and teal accents. It should feel polished, salon-friendly, calm, and professional — not enterprise beige spreadsheet purgatory.
 
-Use `projects/superkate-services-calculator/examples/` as the strongest local visual reference for Superkate's actual hair work. Use `projects/superkate-services-calculator/hairpress/` as the current WordPress/front-end reference, but do not treat it as permanent architecture.
+Use `projects/superkate-services-calculator/examples/` as the strongest local visual reference for Superkate's actual hair work. Use the live hairbysuperkate.com site as the current WordPress/front-end reference, but do not treat it as permanent architecture.
 
 ## Non-goals for beta
 

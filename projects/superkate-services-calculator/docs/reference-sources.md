@@ -7,7 +7,7 @@ Date: 2026-07-08
 Silas added two project-local reference folders for future Worker/Reviewer passes:
 
 - `projects/superkate-services-calculator/examples/` — Superkate hair-work examples. Use this as the strongest visual reference for styling, color, vibe, portfolio language, and design direction.
-- `projects/superkate-services-calculator/hairpress/` — the current Hair by Superkate WordPress front end. Use this as a reference for the existing public site/front-end only. It may be updated or replaced later, so do not treat it as permanent architecture.
+- The current Hair by Superkate WordPress front end is the live site at hairbysuperkate.com, running as an Unraid container — use it directly. The reference copy that used to sit at `projects/superkate-services-calculator/hairpress/` was removed (conductor/t-106); the first-party `wp-content/plugins/superkates-special-plugin/` and the Instagram archive are still tracked here.
 
 ## Design interpretation
 

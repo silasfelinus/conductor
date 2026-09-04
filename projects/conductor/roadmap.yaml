@@ -3814,7 +3814,7 @@ tasks:
 - id: t-106
   milestone: m2
   title: "Diagnose the recurring isolated CodeQL javascript-typescript analyzer stall on conductor PRs"
-  status: needs-human
+  status: done
   gate_human: false
   soft_gate: true
   owner:
@@ -3901,7 +3901,24 @@ tasks:
     reads `unstable` rather than `blocked`, attempt the merge directly rather than continuing
     to poll a non-required check. This doesn't replace fixing the root cause (still TO APPROVE
     above) but removes the actual time cost until it's fixed.
-  updated: '2026-08-09T13:05:00Z'
+    RESOLVED 2026-09-04. Silas picked the deletion option from the three offered above, in session:
+    "I actually decided on an easier fix. Neither of those repos need to be in conductor. There were
+    there for context, but we have different versions hosted as actual unraid containers." Executed in
+    this PR: 15,305 files removed across both trees -- all WordPress core (wp-admin, wp-includes,
+    bundled PHPMailer) plus every marketplace theme and plugin.
+    Kept, per this task's own caveat about customization living under wp-content: humboldt-scoop-portal
+    (15 files, a Stripe-integrated customer portal), the hss-theme and humboldt-scoop-solutions custom
+    themes (17), kind-brevo-smtp (2), the scoops uploads that CONTENT-BRIEF.md and the model-builder
+    marketing deck both reference by path (10), superkates-special-plugin (1, authored by Silas), and
+    the 514-file Instagram archive. Those are first-party and existed nowhere else in version control --
+    a blanket delete would have destroyed the only tracked copy.
+    The .gitattributes linguist-vendored markings shipped by PR #1912 as this task's partial fix are
+    removed with the trees they described. No settings change was needed after all: option (A) advanced
+    setup was drafted (PR #3583) and abandoned once the deletion made path exclusions moot.
+    SECURITY, SEPARATE FROM THIS TASK: hairpress/wp-config.php carried all eight WordPress auth keys and
+    salts as 40-char high-entropy literal fallbacks to getenv_docker(). Deleting the file does not remove
+    them from git history, so they should be rotated on the live site regardless of this change.
+  updated: '2026-09-04T01:20:00Z'
   claimed_by:
   claimed_at:
   implementation_pr: 'silasfelinus/conductor#1912'
