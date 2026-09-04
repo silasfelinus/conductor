@@ -16,6 +16,13 @@ name: daily-digest
 # replacement art through the same canonical submitter, persists evidence, and sends
 # a correction digest. It does NOT run the normal morning creation job in parallel.
 #
+# ANTHROPIC_API_KEY is OPT-IN (2026-09-04, Silas: "I'm not spending $100 a month
+# so it can then trigger the API"). The two model-authored steps -- the Daily
+# Dream proposal and the container-log review -- get the key only on a manual
+# workflow_dispatch with spend_api_credits=true. On the schedule, the docket is
+# topped up by the hourly Conductor Agent sessions (see CLAUDE.md, session
+# startup step 7) and the digest falls back to its mechanical log banner.
+#
 # The morning email itself shows the older completed bundle with art first, followed by
 # the bundle just built in a compact no-image layout. Today's newly authored proposal
 # is intentionally not a third showcase section.
@@ -32,6 +39,11 @@ on:
     inputs:
       send_email:
         description: "Actually send the Brevo email. Leave false for a safe dry run."
+        required: false
+        default: false
+        type: boolean
+      spend_api_credits:
+        description: "Hand the model-authored steps ANTHROPIC_API_KEY. Off = sessions author the docket; no API spend."
         required: false
         default: false
         type: boolean
@@ -63,7 +75,7 @@ jobs:
         continue-on-error: true
         run: python scripts/author_dream_proposal.py
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ inputs.spend_api_credits == true && secrets.ANTHROPIC_API_KEY || '' }}
 
       # These steps can produce durable evidence even when their final exit code
       # is non-zero: a build retry marker, a partial Facet ledger, or some
@@ -164,7 +176,7 @@ jobs:
         continue-on-error: true
         run: python scripts/author_container_log_review.py
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ inputs.spend_api_credits == true && secrets.ANTHROPIC_API_KEY || '' }}
 
       # The review file carries the nag counter -- when each signature was
       # first written up -- so "unfixed for 9 days" is arithmetic on a

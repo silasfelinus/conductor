@@ -8,6 +8,12 @@ name: Hourly Conductor
 # job), because the dedicated watchdog is schedule-triggered and dies in the
 # same GitHub scheduling outages it is supposed to cover.
 #
+# ANTHROPIC_API_KEY is OPT-IN (2026-09-04, Silas): the hourly Conductor Agent
+# Routine already runs this assessment inside a Max-plan Claude session, so a
+# scheduled run must not also spend API credits. The key reaches the job only
+# on a manual workflow_dispatch with spend_api_credits=true; every scheduled
+# run takes build_conductor_summary.py's rule-based fallback.
+#
 # Daily Dream creation deliberately does NOT happen here anymore. The morning
 # daily-digest workflow owns one ordered cycle: author -> build -> Facets ->
 # submit ArtJobs -> commit -> digest. Keeping the hourly assessment read-only
@@ -23,6 +29,11 @@ on:
         required: false
         default: "false"
         type: string
+      spend_api_credits:
+        description: "Hand this run ANTHROPIC_API_KEY (Haiku summary). Off = rule-based summary."
+        required: false
+        default: false
+        type: boolean
 
 concurrency:
   group: conductor-main-writers
@@ -78,7 +89,7 @@ jobs:
           if [ "${{ inputs.dry_run }}" = "true" ]; then FLAG="--dry-run"; fi
           python scripts/build_conductor_summary_report_only.py $FLAG
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ inputs.spend_api_credits == true && secrets.ANTHROPIC_API_KEY || '' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
 

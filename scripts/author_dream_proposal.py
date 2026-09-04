@@ -799,12 +799,19 @@ def main(argv=None) -> int:
 
     api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
     if not api_key:
+        # 2026-09-04: the scheduled digest no longer carries the key (it is
+        # opt-in via the workflow's spend_api_credits input), so "no key" is the
+        # normal daily state, not a failure. Authoring is owned by the hourly
+        # Conductor Agent sessions (CLAUDE.md startup step 7), which run on the
+        # Max plan rather than API credits. Still refuse to write a placeholder:
+        # a hollow proposal can hide the missing real one.
         print(
-            "ANTHROPIC_API_KEY is required to author a dream proposal. Refusing to write a "
-            "placeholder because a hollow proposal can hide the missing real one.",
+            "ANTHROPIC_API_KEY not set; skipping API authoring. Docket top-up is "
+            "owned by agent sessions (CLAUDE.md startup step 7; buffer target "
+            f"{dreams.TARGET_BUFFER_DAYS} days). Nothing written.",
             file=sys.stderr,
         )
-        return 1
+        return 0
 
     try:
         proposal = author(day, api_key)

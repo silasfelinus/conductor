@@ -62,13 +62,21 @@ At the start of every session, before responding to any task, run a conductor sw
    `--include-inactive` is supplied; `check_live_facet_coverage.py` reads live records rather than roadmaps and
    takes no such flag.
 6. Check `TALKBACK.md` tail for any unresolved escalations or security flags
-7. Run `python scripts/build_dream_proposal.py --check --fetch`. **This is now a
-   backstop, not the primary path.** `daily-digest.yml` authors proposals
-   automatically in the step after the email goes out
-   (`scripts/author_dream_proposal.py`), so on a normal day `--check` passes and
-   there is nothing to do (Silas, 2026-08-09: *"I'm not sure why the next dreams
-   aren't written the turn the digest is sent, or a step later if there isn't
-   enough process. As progress goes, that's very high on automated tasks."*).
+7. Run `python scripts/build_dream_proposal.py --check --fetch`. **Sessions own
+   the docket** (changed 2026-09-04). The `daily-digest.yml` author step no
+   longer receives `ANTHROPIC_API_KEY` on the schedule — the key is opt-in via
+   the workflow's `spend_api_credits` dispatch input — because the hourly
+   Conductor Agent Routine already runs on Silas's Max plan and the API step
+   was doing the same work twice on credits (Silas, 2026-09-04: *"They are
+   literally running as part of my normal Claude max account. I'm not spending
+   $100 a month so it can then trigger the api."*). So: **when `--check`
+   reports fewer than `TARGET_BUFFER_DAYS` (5) unbuilt proposals, author
+   exactly ONE this session** using the `--brief` → `--from-json` recipe
+   below, then move on. Never more than one per session; the hourly cadence
+   fills the buffer within a day. The earlier intent still holds (Silas,
+   2026-08-09: *"I'm not sure why the next dreams aren't written the turn the
+   digest is sent ... that's very high on automated tasks."*) — it is simply
+   done by sessions now, not by the API.
 
    **`--check` measures the docket, not the calendar** (changed 2026-08-31). It
    reports how many unbuilt proposals are queued and exits 0 whenever at least
@@ -77,8 +85,9 @@ At the start of every session, before responding to any task, run a conductor sw
    Silas would rather spend that cycle elsewhere (2026-08-31: *"we don't need to
    spend effort writing new proposals if we have a backlog (though a 5 day or so
    buffer seems reasonable, just in case). It would be better spent to either
-   take on a new task, or improve the current proposals in the docket."*). Do not
-   "fix" a shallow docket by hand-authoring — the next digest run tops it up.
+   take on a new task, or improve the current proposals in the docket."*). A
+   shallow docket (1–4 queued) means author one this session, as above; a full
+   one means leave it alone.
 
    Exit 1 means the docket is **empty**, which is the real alarm: nothing is
    queued for tomorrow. Author one yourself then: run `--brief` for the
@@ -90,9 +99,10 @@ At the start of every session, before responding to any task, run a conductor sw
    Character. All user-facing card copy must be complete sentences that parse on
    their own — `scripts/dream_prose_quality.py` is the contract. Write it with
    `--from-json` and commit it with the session's log commits. An empty docket
-   two days running means the automated step is broken — check the
-   `daily-digest` run's "Author tomorrow's daily dream" step rather than just
-   papering over it by hand each session.
+   two days running means the hourly sessions have stopped doing step 7 —
+   check the Conductor Agent Routine's recent runs and TALKBACK rather than
+   papering over it by hand each session. (Manual API authoring is still
+   possible: dispatch `daily-digest.yml` with `spend_api_credits: true`.)
 
    Builds drain the docket **oldest first, with no age cutoff**. A proposal that
    could not build on its day is picked up by the next run instead of being
