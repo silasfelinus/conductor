@@ -256,8 +256,76 @@ Once it is publishing, three things read that file with no further setup:
 | reader | what you see |
 |---|---|
 | `scripts/check_container_log_drift.py` | the session-start sweep reports new/spiking/quiet signatures |
-| the daily digest email | one line: quiet, or what changed, or that the script stopped running |
+| the daily digest email | the written review below, leading the message |
 | `git log -p ops/home-server/CONTAINER-LOG-DIGEST.json` | the whole history |
+
+## The morning review
+
+Silas, 2026-09-04: *"give me this kind of detail, guides on what to mute, and
+how to fix ... baked into my daily morning email."*
+
+Everything above answers **what changed**. A row reading `ownfoil · warn ·
+3999x` is true and inert: it does not say that one truncated `.xci` is two
+thirds of the box's daily log volume, that the fix is deleting a single file,
+or that the netdata line beside it is cosmetic and safe to silence forever.
+That reading was being done by hand, on request, in chat.
+
+`scripts/author_container_log_review.py` now does it every morning, inside the
+existing `daily-digest` workflow. It reads the published digest, and writes
+`CONTAINER-LOG-REVIEW.json`; `build_digest.py` picks that up and
+`build_digest_email.py` renders it.
+
+**It leads the email.** It occupies the slot that used to hold `daily_spark` —
+a rotating "wild idea" generated from the calendar date and nothing else, which
+Silas described as *"always quite dry and useless."* That generator is gone. A
+lead paragraph should be specific to this morning and derived from real state,
+or it should not be there.
+
+### What keeps it from becoming wallpaper
+
+A recurring automated report dies one specific way: it says the same thing
+every day until you stop reading it. Three things guard against that, and they
+are the parts worth preserving in any future change.
+
+**It leads with what changed.** Standing problems are carried as a short "still
+costing you" list, never re-explained. The prompt says so, and the input is
+split into a `CHANGED OVERNIGHT` block and a `STANDING, BY VOLUME` block so the
+distinction is structural rather than a matter of tone.
+
+**The nag counter is arithmetic, not recall.** The `history` map in the review
+file records the date each fingerprint was *first written up*. `days_standing`
+is computed from that in Python. "Unfixed for 9 days" is therefore a fact about
+a committed date, not something a model was asked to remember — which is also
+why the review gets its own commit step in the workflow rather than riding
+along with the Daily Dream evidence staged several steps earlier.
+
+**Nothing rendered is taken on the model's word.** `coerce_review()` keeps only
+items whose fingerprint was actually in today's digest, and replaces every
+count, container and severity with the digest's own values. A model that
+invents a signature produces a *shorter* review, never a wrong one.
+
+### It fails silently, on purpose
+
+Every failure path — no `ANTHROPIC_API_KEY`, no digest published, a stale
+digest, an API error, malformed JSON back — prints a line and **exits 0**,
+leaving the mechanical one-line banner in place. The digest going out matters
+more than this section being in it, and a non-zero exit would mark the whole
+workflow failed over the least important thing in the email.
+
+A stale digest is deliberately *not* reviewed. "The User Script stopped
+running" is the entire finding, the banner already says it, and writing up
+signatures from a digest that may be days old would dress staleness as news.
+
+### Mute advice
+
+The review may suggest mutes, with one pasteable command. It is told to suggest
+them only for signatures that are both genuinely benign and high-volume enough
+to matter — muting is permanent and suppresses spike detection, so it is a
+decision, not tidying. Low-count noise needs no mute at all: a signature under
+20 occurrences can never spike and under 10 can never go quiet, so it is
+already silent.
+
+The recommendation is always yours to accept. Nothing is muted automatically.
 
 ### Rotating or revoking
 

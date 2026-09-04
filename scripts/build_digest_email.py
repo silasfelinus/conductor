@@ -10,6 +10,7 @@ import html
 import json
 import sys
 from pathlib import Path
+from typing import Any
 
 # Per-type card theming, mirroring kind_robots components/dreams/dream-pitch-sheet.vue
 # (theme accents) and stores/helpers/sheetHelper.ts (pitchSheetDefaults labels).
@@ -193,6 +194,123 @@ def reel_section(creations):
     return f'<h2 style="margin-bottom:2px">🎬 New creations</h2><div>{chips}</div>'
 
 
+ACTION_LABEL = {
+    "fix": ("#7f1d1d", "#fef2f2", "FIX"),
+    "watch": ("#78350f", "#fffbeb", "WATCH"),
+    "mute": ("#334155", "#f1f5f9", "MUTE"),
+}
+BUCKET_LABEL = {"new": "new", "spiking": "spiking", "quiet": "went quiet"}
+
+
+def _review_item(item: dict[str, Any]) -> str:
+    colour, paper, label = ACTION_LABEL.get(
+        str(item.get("action") or "fix"), ACTION_LABEL["fix"]
+    )
+    finger = esc(str(item.get("fingerprint") or ""))
+    container = esc(str(item.get("container") or "?"))
+    count = item.get("count") or 0
+
+    tags = [
+        f'<span style="background:{paper};color:{colour};font-size:10px;'
+        f'font-weight:700;letter-spacing:.06em;padding:1px 5px;border-radius:3px">{label}</span>'
+    ]
+    bucket = BUCKET_LABEL.get(str(item.get("bucket") or ""))
+    if bucket:
+        tags.append(
+            f'<span style="font-size:10px;color:#475569;background:#e2e8f0;'
+            f'padding:1px 5px;border-radius:3px">{esc(bucket)}</span>'
+        )
+    # The nag counter is the whole reason a standing item earns a line at all,
+    # so it is the one number rendered in the accent colour.
+    days = item.get("days_standing") or 0
+    if days:
+        tags.append(
+            f'<span style="font-size:10px;color:#b45309">unfixed {days}d</span>'
+        )
+
+    body = [
+        f'<div style="margin:0 0 4px">{"&nbsp;".join(tags)} '
+        f'<strong style="font-size:13px">{container}</strong> '
+        f'<span style="font-size:11px;color:#64748b">{count:,}\u00d7 &middot; '
+        f'<code style="font-size:11px">{finger}</code></span></div>',
+        f'<div style="font-size:13px;line-height:1.5;margin:0 0 4px">'
+        f'{esc(str(item.get("diagnosis") or ""))}</div>',
+    ]
+    fix = str(item.get("fix") or "").strip()
+    if fix:
+        body.append(
+            f'<div style="font-size:12px;line-height:1.5;color:#0f172a;'
+            f'background:#f8fafc;border-left:3px solid #94a3b8;padding:5px 9px;'
+            f'border-radius:0 4px 4px 0"><strong>Fix:</strong> {esc(fix)}</div>'
+        )
+    return f'<div style="margin:0 0 14px">{"".join(body)}</div>'
+
+
+def container_log_review_section(digest: dict[str, Any]) -> str:
+    """The written triage, when one was authored for today's digest.
+
+    This is the part Silas actually asked for -- not that 151 signatures exist,
+    but which one is two thirds of the volume, what it costs, and what to type.
+    Returns "" whenever no review was authored, which leaves
+    container_log_banner()'s mechanical line as the fallback rather than
+    dropping the subject entirely.
+    """
+    health = digest.get("container_logs")
+    if not isinstance(health, dict):
+        return ""
+    review = health.get("review")
+    if not isinstance(review, dict):
+        return ""
+    items = [i for i in (review.get("items") or []) if isinstance(i, dict)]
+    mutes = [m for m in (review.get("mute") or []) if isinstance(m, dict)]
+    headline = str(review.get("headline") or "").strip()
+    if not (items or mutes or headline):
+        return ""
+
+    host = esc(str(review.get("host") or "the home server"))
+    parts = [
+        f'<h3 style="font-size:15px;margin:0 0 2px">Container log triage '
+        f'<span style="font-weight:400;color:#64748b;font-size:12px">&mdash; {host}</span></h3>'
+    ]
+    if headline:
+        parts.append(
+            f'<p style="font-size:13px;color:#334155;margin:0 0 12px">{esc(headline)}</p>'
+        )
+    parts.extend(_review_item(item) for item in items)
+
+    if mutes:
+        rows = []
+        for entry in mutes:
+            finger = esc(str(entry.get("fingerprint") or ""))
+            rows.append(
+                f'<div style="font-size:12px;line-height:1.5;margin:0 0 3px">'
+                f'<code style="font-size:11px">{finger}</code> '
+                f'<span style="color:#64748b">'
+                f'{esc(str(entry.get("container") or "?"))}</span> &mdash; '
+                f'{esc(str(entry.get("why") or ""))}</div>'
+            )
+        # One pasteable command beats four, and --mute is repeatable.
+        flags = " ".join(
+            "--mute " + str(entry.get("fingerprint") or "") for entry in mutes
+        )
+        rows.append(
+            f'<pre style="font-size:11px;background:#0f172a;color:#e2e8f0;'
+            f'padding:8px 10px;border-radius:4px;overflow-x:auto;margin:6px 0 0">'
+            f'container_log_triage.py --state-dir . {esc(flags)}</pre>'
+        )
+        parts.append(
+            f'<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;'
+            f'padding:9px 12px;margin:0 0 12px">'
+            f'<div style="font-size:11px;font-weight:700;letter-spacing:.06em;'
+            f'color:#475569;margin:0 0 5px">SAFE TO MUTE</div>{"".join(rows)}</div>'
+        )
+
+    return (
+        '<div style="border:1px solid #e2e8f0;border-radius:8px;'
+        'padding:12px 14px;margin:0 0 16px">' + "".join(parts) + "</div>"
+    )
+
+
 def build_payload(digest):
     project_html = ""
     for project in digest["projects"]:
@@ -214,14 +332,14 @@ def build_payload(digest):
     greeting = esc(digest.get("greeting", "Hello, Silas!"))
     activity_since = digest.get("activity_since", [])
     autonomous = digest.get("autonomous_work", [])
-    spark = digest.get("daily_spark", {})
-    spark_label = esc(spark.get("label", "✨ Daily spark"))
-    spark_text = esc(spark.get("text", ""))
-    spark_html = (
-        f'<p style="background:#f0f7ff;border-left:4px solid #7ab;padding:10px 14px;'
-        f'border-radius:0 6px 6px 0;font-style:italic;color:#335">'
-        f'<strong>{spark_label}:</strong> {spark_text}</p>'
-    ) if spark_text else ""
+    # This slot used to hold `daily_spark` -- a rotating invented "wild idea"
+    # generated from the calendar date and nothing else. Silas, 2026-09-04:
+    # *"this should actually replace our filler text that I get each morning,
+    # that is always quite dry and useless."* The container log review is what
+    # a lead paragraph should be: specific to this morning, derived from real
+    # state, and actionable. When there is no review, the slot is empty rather
+    # than refilled with generated encouragement.
+    spark_html = container_log_review_section(digest)
 
     # Art-forward sections lead the digest.
     page_link = digest.get("daily_dream_page", "")

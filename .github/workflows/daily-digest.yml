@@ -155,6 +155,51 @@ jobs:
             echo "::warning::Daily Dream live composed-field verification found drift (or failed to run); see the 'Verify live prose composition' step output above. Digest delivery will continue."
           fi
 
+      # Must run before "Build digest JSON": build_digest.py reads the review
+      # file this writes. It exits 0 on every failure path -- no key, no
+      # digest, a stale digest, an API error -- so the worst case is the email
+      # falling back to the mechanical one-line banner it had before.
+      - name: Review Alexandria's container logs
+        id: container_log_review
+        continue-on-error: true
+        run: python scripts/author_container_log_review.py
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      # The review file carries the nag counter -- when each signature was
+      # first written up -- so "unfixed for 9 days" is arithmetic on a
+      # committed date rather than something a model was asked to remember.
+      # That only works if the file survives the run, so it gets its own
+      # commit rather than riding along with the Daily Dream evidence above,
+      # which is staged several steps earlier.
+      - name: Commit the container log review
+        if: ${{ always() }}
+        continue-on-error: true
+        run: |
+          git config user.name "kind-robots-bot"
+          git config user.email "noreply@kindrobots.app"
+          if [ ! -f ops/home-server/CONTAINER-LOG-REVIEW.json ]; then
+            # No key, no digest, or a stale one -- all normal, all silent.
+            echo "No container log review was authored this run."
+            exit 0
+          fi
+          git add ops/home-server/CONTAINER-LOG-REVIEW.json
+          if git diff --staged --quiet; then
+            echo "No container log review to commit."
+            exit 0
+          fi
+          git commit -m "ops: container log review $(date -u +%Y-%m-%d) [skip ci]"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if git rebase origin/main && git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "Container log review push attempt ${attempt}/3 lost a race; retrying."
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          echo "::warning::Could not persist the container log review; the nag counter will restart."
+
       - name: Build digest JSON
         env:
           # Needed for the render-engine health line. Without it that section
