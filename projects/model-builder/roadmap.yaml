@@ -575,9 +575,9 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
-    passes: 50
+    passes: 51
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#2342'
     note: >-
@@ -613,7 +613,28 @@ tasks:
       OpenRunRequestGuard, RecordArtifactSuccessGuard, ResumeCancelledRunGuard,
       ResumeRunIdentityGuard, StaleAssetApprovalGuard -- next slice should continue down this
       list.
-    updated: '2026-09-04T05:29:50Z'
+
+      Guard-integrity slice 94 (Claude, scheduled conductor run) continued cycle 93s remaining
+      list against current kind_robots main (c85d31f): re-verified CommitStaleSnapshotGuard,
+      DraftApprovalGuard, and DraftStatusScopeGuard directly against live source (no local
+      tsx/node_modules available this session to run the guard scripts themselves).
+      commit.post.ts (~1078-1089) still re-fetches stageStatuses via
+      prisma.modelBuildItem.findUnique immediately before building const stages =
+      parseStoredJson(latest?.stageStatuses ?? item.stageStatuses, {}) and assigning
+      stages.COMMIT -- matches the fresh-read anchor exactly, no stale-snapshot regression.
+      draftText (stores/modelBuilderStore.ts ~1240-1420) still captures const runId =
+      state.run.id up front and routes all four of its status messages (edited-while-drafting
+      discard, approved-while-drafting discard, success, catch-block failure) through
+      setStatusForRun(runId, ...) with no bare setStatus( call remaining; separately still
+      checks isStageEditable(item, stageForDraftField(field)) after its result.success branch
+      and before applying the draft via updatePitch/updateFields/updatePrompt, refusing to
+      overwrite a stage approved mid-flight. No contract drift or actionable product bug found
+      in this bounded slice; no code PR opened. Remaining candidates from cycle 88s original
+      no-cross-reference list, not yet re-checked this way: DraftTextareaGuard, FacetSync,
+      FetchRunsStalenessGuard, OpenRunIdentityGuard, OpenRunRequestGuard,
+      RecordArtifactSuccessGuard, ResumeCancelledRunGuard, ResumeRunIdentityGuard,
+      StaleAssetApprovalGuard -- next slice should continue down this list.
+    updated: '2026-09-04T05:30:47Z'
     owner: worker
     claimed_by: claude-scheduled-20260904-mb-t029-cyc94
     claimed_at: '2026-09-04T05:29:50Z'
