@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3342,7 +3342,15 @@ tasks:
     (1 pre-existing empty-block error, git-stash-confirmed), prettier warnings identical to
     unmodified origin/main (git-stash-confirmed, same 4 files), test:layout-contract holds
     (207 baseline), test:lint-ratchet holds (332/-60).
-  updated: '2026-09-04T02:35:32Z'
+
+    Slice 64 merged as silasfelinus/kind_robots#2379 (squash c42e7dc). Added .kr-btn-ghost-
+    circle-xs (btn btn-ghost btn-xs btn-circle) mirroring the established naming convention;
+    migrated all 12 exact-match sites (5 files, across both class-order variants) to it. All
+    42 required kind_robots checks green. Re-arming the recurring consistency task for the
+    next bounded slice — next slice should survey remaining outline-family shapes and other
+    size/color combos not yet covered (see this session's fuller class-frequency survey for
+    candidates).
+  updated: '2026-09-04T02:43:46Z'
   implementation_pr: 'silasfelinus/kind_robots#2379'
   owner: worker
   claimed_by: claude-scheduled-20260904T022912Z-t104-slice64
