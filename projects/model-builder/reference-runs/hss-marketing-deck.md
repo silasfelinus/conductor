@@ -28,7 +28,7 @@
 - **Name (always paired):** **Humboldt Scoop Solutions — Professional Pet Waste Removal.**
   The descriptor "Professional Pet Waste Removal" always follows the name.
 - **Tagline:** "A cleaner yard, without the dirty work."
-- **Logo:** `projects/humboldt-scoop/scoops/wp-content/uploads/2026/01/logo_clean.jpg`
+- **Logo:** `projects/humboldt-scoop/assets/logo_clean.jpg`
   (real file — composite it into laid-out pieces; never AI-generate or restyle it).
 - **Voice:** warm, local, lightly playful; practical and honest. Humboldt-proud.
 - **Palette:** navy `#1b3a5c` (primary) · cream `#fbf9f5` / `#f5f0e8` (paper) ·
