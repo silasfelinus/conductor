@@ -5553,5 +5553,58 @@ tasks:
   claimed_at: '2026-09-02T11:31:28Z'
   updated: '2026-09-02T11:45:43Z'
   implementation_pr: 'silasfelinus/conductor#3468'
+
+- id: t-146
+  milestone: m2
+  title: "kind_robots' 'Generated Client Parity' required check's 5-minute job timeout was too tight for npm ci, cancelling mid-install"
+  status: done
+  gate_human: false
+  owner: reviewer
+  stakes: reversible
+  passes: 0
+  note: >-
+    Flagged as a possible tracking task in the interface-vision/t-104 slice 63 TALKBACK entry
+    (2026-09-04): kind_robots#2378's required "Generated Client Parity" check was cancelled
+    outright at the "Install dependencies" step after ~5m06s, on a diff that only touched a
+    CSS class (unrelated to Prisma or this workflow) -- speculated as a genuine intermittent
+    infra issue, with a note to file this task "with concrete repro evidence in hand" if it
+    recurred.
+
+    It recurred identically on kind_robots#2383 (interface-vision/t-104 slice 68, same session):
+    the check cancelled at Install dependencies both on the initial run and on the one allowed
+    re-run, at ~5m16s and ~5m04s respectively -- consistent timing, not random. Reading
+    `.github/workflows/generated-client-parity-contract.yml` directly found the actual root
+    cause immediately: the job declares `timeout-minutes: 5`, and `npm ci` alone (this repo's
+    `postinstall` runs `nuxi prepare` on every install, repo-wide) occasionally takes long
+    enough on a busy runner to blow that whole budget before the actual parity check ever
+    starts -- GitHub Actions then reports the job as "cancelled", which reads like an infra
+    flake but is really just an underprovisioned timeout. Not a genuine flake, not the diff's
+    fault, not GitHub-side congestion.
+
+    Fix shipped: silasfelinus/kind_robots#2384 raises `timeout-minutes` from 5 to 10 on this
+    workflow's `verify` job, matching the budget `layout-contract.yml` already uses for a
+    comparably small install + single-check job (rather than inventing a new number). The
+    same one-line change was ported directly onto kind_robots#2383's branch so that PR's own
+    re-run picked up the fix immediately instead of waiting on a rebase, per AGENTS.md's
+    "port a fix that exists ... and push" CI-red guidance.
+
+    A code-search for `timeout-minutes: 5` across silasfelinus/kind_robots' `.github/workflows/`
+    turned up roughly 50 files using the same value, all sharing the identical `npm ci` +
+    `nuxi prepare` install cost -- this session's fix only touched the one workflow with
+    concrete documented failures (generated-client-parity-contract.yml), plus noted that
+    schema-migration-parity-contract.yml shares `timeout-minutes: 5` and had its own prior
+    cancelled-check incident (kind_robots#2381, TALKBACK.md 2026-09-04, "verify" under
+    "Schema Migration Parity" cancelled once and cleared on retry -- same shape, not yet
+    root-caused at the time). FOR NEXT SESSION: schema-migration-parity-contract.yml is the
+    next most likely repeat offender (already has one incident) and is a one-line same-shape
+    fix; beyond that, whether any of the other ~48 `timeout-minutes: 5` workflows are worth a
+    blanket bump is a judgment call this session declined to make unilaterally (50-file diff,
+    no evidence yet that the other 48 are actually at risk) -- recommend fixing
+    schema-migration-parity-contract.yml opportunistically next time it's touched or fails,
+    and only doing a broader sweep if a third+ workflow shows the same failure shape.
+  claimed_by: claude-scheduled-20260904T0615Z-conductor-t146
+  claimed_at: '2026-09-04T06:15:00Z'
+  updated: '2026-09-04T06:41:00Z'
+  implementation_pr: 'silasfelinus/kind_robots#2384'
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
