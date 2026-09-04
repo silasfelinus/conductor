@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-04T08:35:54.711196+00:00",
+  "generated_at": "2026-09-04T08:38:04.866346+00:00",
   "host": "alexandria",
   "new": [
     {
@@ -8,7 +8,7 @@
       "count": 3999,
       "fingerprint": "2554bd7de390",
       "sample": "[2026-09-03 19:50:08.917] WARNING (verification) worker-2 Verification of Staffer Case\uff1a A Supernatural Mystery Adventure [01000ED0214D0000].xci failed: read returned empty 0x1762c000",
-      "severity": "error",
+      "severity": "warn",
       "skeleton": "[<ts>] warning (verification) worker-<num> verification of staffer case\uff1a a supernatural mystery adventure [<hex>].xci failed: read returned empty <hex>"
     },
     {
@@ -17,13 +17,13 @@
       "count": 3999,
       "fingerprint": "97b9eef8c160",
       "sample": "[2026-09-03 19:50:08.919] WARNING (tasks) worker-2 Verification failed for Staffer Case\uff1a A Supernatural Mystery Adventure [01000ED0214D0000].xci: read returned empty 0x1762c000",
-      "severity": "error",
+      "severity": "warn",
       "skeleton": "[<ts>] warning (tasks) worker-<num> verification failed for staffer case\uff1a a supernatural mystery adventure [<hex>].xci: read returned empty <hex>"
     },
     {
       "baseline": null,
       "container": "KindRobots",
-      "count": 717,
+      "count": 739,
       "fingerprint": "f1ddd1fa9015",
       "sample": "[Icon] failed to load icon `kind-icon:news`",
       "severity": "error",
@@ -41,7 +41,7 @@
     {
       "baseline": null,
       "container": "netdata",
-      "count": 415,
+      "count": 417,
       "fingerprint": "c7333bf2fc2d",
       "sample": "time=2026-09-03T18:41:05.737-07:00 level=error msg=\"start watching '/etc/netdata/scripts.d': no such file or directory\" plugin=scripts.d component=discovery discoverer=file",
       "severity": "error",
@@ -91,6 +91,15 @@
       "sample": "[Error] Sabnzbd: Downloading nzb for episode 'The.Walking.Dead.Dead.City.S03E02.Haven.1080p.STARZ.WEB-DL.AAC2.0.H.264-ALANSARI87' failed (https://prowlarr.acrocatranch.com/27/download?apikey=<REDACTED",
       "severity": "error",
       "skeleton": "[error] sabnzbd: downloading nzb for episode <str> failed (<url>"
+    },
+    {
+      "baseline": null,
+      "container": "sonarr",
+      "count": 94,
+      "fingerprint": "c52d93b2c84c",
+      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release 'The.Walking.Dead.Dead.City.S03E02.Haven.1080p.STARZ.WEB-DL.AAC2.0.H.264-ALANSARI87' from Indexer NzbPlanet (Prowlarr) to download queue.",
+      "severity": "warn",
+      "skeleton": "[warn] processdownloaddecisions: couldn't add release <str> from indexer nzbplanet (prowlarr) to download queue."
     },
     {
       "baseline": null,
@@ -807,10 +816,10 @@
       "baseline": null,
       "container": "hairpress",
       "count": 2,
-      "fingerprint": "bc3151ae6934",
+      "fingerprint": "89028553a7cb",
       "sample": "AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.21.0.14. Set the 'ServerName' directive globally to suppress this message",
       "severity": "other",
-      "skeleton": "ah00558: apache2: could not reliably determine the server<str>servername' directive globally to suppress this message"
+      "skeleton": "ah00558: apache2: could not reliably determine the server's fully qualified domain name, using <ip>. set the <str> directive globally to suppress this message"
     },
     {
       "baseline": null,
@@ -1300,507 +1309,57 @@
     },
     {
       "baseline": null,
-      "container": "sonarr",
+      "container": "jellyfin",
       "count": 1,
-      "fingerprint": "f1626481b6b0",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release 'The.Walking.Dead.Dead.City.S03E02.Haven.1080p.STARZ.WEB-DL.AAC2.0.H.264-ALANSARI87' from Indexer NzbPlanet (Prowlarr) to download queue.",
+      "fingerprint": "a862a5b47b98",
+      "sample": "[05:37:16] [WRN] [63] Emby.Server.Implementations.HttpServer.WebSocketConnection: WS 172.21.0.40 error receiving data: The remote party closed the WebSocket connection without completing the close han",
       "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>the.walking.dead.dead.city.s03e02.haven.1080p.starz.web-dl.aac2.<num>.h.<num>-alansari87' from indexer nzbplanet (prowlarr) to download queue."
+      "skeleton": "[<ts>] [wrn] [<num>] emby.server.implementations.httpserver.websocketconnection: ws <ip> error receiving data: the remote party closed the websocket connection without completing the close handshake."
     },
     {
       "baseline": null,
-      "container": "sonarr",
+      "container": "flaresolverr",
       "count": 1,
-      "fingerprint": "fadabd9f5f40",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release 'The.Walking.Dead.Dead.City.S03E03.Emigrants.1080p.STARZ.WEB-DL.AAC2.0.H.264-ALANSARI87' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>the.walking.dead.dead.city.s03e03.emigrants.1080p.starz.web-dl.aac2.<num>.h.<num>-alansari87' from indexer nzbplanet (prowlarr) to download queue."
+      "fingerprint": "e65ffc3ba869",
+      "sample": "2026-09-03 20:46:00 ERROR    Error starting Chrome: Message: Service /app/chromedriver unexpectedly exited. Status code was: -5",
+      "severity": "error",
+      "skeleton": "<ts> error error starting chrome: message: service <path>"
     },
     {
       "baseline": null,
-      "container": "sonarr",
+      "container": "flaresolverr",
       "count": 1,
-      "fingerprint": "0292c0b631db",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release 'The.Walking.Dead.Dead.City.S03E04.Found.Lost.1080p.STARZ.WEB-DL.AAC2.0.H.264-ALANSARI87' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>the.walking.dead.dead.city.s03e04.found.lost.1080p.starz.web-dl.aac2.<num>.h.<num>-alansari87' from indexer nzbplanet (prowlarr) to download queue."
+      "fingerprint": "0e5e4cc14a25",
+      "sample": "2026-09-03 20:46:00 ERROR    Error: Error solving the challenge. Message: Service /app/chromedriver unexpectedly exited. Status code was: -5\\n",
+      "severity": "error",
+      "skeleton": "<ts> error error: error solving the challenge. message: service <path>"
     },
     {
       "baseline": null,
-      "container": "sonarr",
+      "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "5f9277e8bbe4",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release 'The.Walking.Dead.Dead.City.S02E08.If.History.Were.a.Conflagration.1080p.STARZ.WEB-DL.AAC2.0.H.264-ALANSARI87' from Indexer NzbPlanet (Prowlarr) t",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>the.walking.dead.dead.city.s02e08.if.history.were.a.conflagration.1080p.starz.web-dl.aac2.<num>.h.<num>-alansari87' from indexer nzbplanet (prowlarr) to download queue."
+      "fingerprint": "106056485c3c",
+      "sample": "[2026-09-03 17:09:25.896] INFO: [SocketAuthority] Socket JMe96VxivMkaK-zbAABd disconnected from client \"superkate\" after 750044ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket jme96vxivmkak-zbaabd disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "sonarr",
+      "container": "radarr",
       "count": 1,
-      "fingerprint": "700a1cde95d5",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E01 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e01 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
+      "fingerprint": "843bd0cd437d",
+      "sample": "[matroska,webm @ 0x1a296c0] EBML header parsing failed",
+      "severity": "error",
+      "skeleton": "[matroska,webm @ <hex>] ebml header parsing failed"
     },
     {
       "baseline": null,
-      "container": "sonarr",
+      "container": "radarr",
       "count": 1,
-      "fingerprint": "f0dc97160b09",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E02 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e02 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "6a3b9ff6b89c",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E03 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e03 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "33ed976644aa",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E04 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e04 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "5848f41b8f01",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E05 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e05 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "c61ca144a6c5",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E06 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e06 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "a30fd54969cf",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E07 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e07 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "61e51155893b",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E08 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e08 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "678b233f8c72",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E09 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e09 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "8b55a53e39bd",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E10 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e10 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "ab3da579bebb",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E11 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e11 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "e0b597e2050e",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E12 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e12 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "647ba382759f",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E13 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e13 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "f4608c46430b",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E14 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e14 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "164c1eb80c62",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E15 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e15 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "9006f00afd99",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E16 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e16 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "7a68728693fd",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E17 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e17 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "0f85cc3df169",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E18 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e18 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "fa87e2e02971",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E19 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e19 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "886e9561dd0f",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E20 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e20 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "5f76d63147d5",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E21 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e21 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "4ce7ea713bd9",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E22 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e22 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "68ae042176d9",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E23 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e23 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "cfd2f4759da0",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E24 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e24 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "3fb26345c7fe",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E25 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e25 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "36bdb7479c58",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E26 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e26 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "86383b719833",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E27 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e27 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "d03b414fad5d",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E28 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e28 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "c660f101d803",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E29 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e29 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "d69e5ec96d7b",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E30 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e30 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "5fecf22b001c",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E31 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e31 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "70566a3aeca7",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E32 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e32 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "8cf5b2c1afde",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E33 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e33 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "ac791067c4c7",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E34 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e34 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "be478dcc6397",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E35 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e35 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "e500bd0f70df",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E36 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e36 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "c4620445845c",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E37 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e37 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "6356b8d5967d",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E38 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e38 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "67fcaa49a98c",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E39 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e39 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "38175c75af4b",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E40 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e40 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "1ca437a59cfb",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E41 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e41 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "d5abf2f41edd",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E42 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e42 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "724b0beedb7e",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E43 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e43 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "bc80456f2834",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E44 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e44 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "df4265e00b52",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E45 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e45 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "4a2a52688cc4",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E46 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e46 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "845e25c82117",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E47 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e47 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "7fd497f9c7ec",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E48 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e48 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "9c1cdb88c06f",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E49 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e49 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "c0f7ba78514f",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E50 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e50 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "e4c77f798811",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E51 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e51 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 1,
-      "fingerprint": "515198b1c2c1",
-      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '[nekotan] Hajime no Ippo S01E52 v2 (BD Remux 1080p x264 8-bit FLAC) [Dual Audio]' from Indexer NzbPlanet (Prowlarr) to download queue.",
-      "severity": "warn",
-      "skeleton": "[warn] processdownloaddecisions: couldn<str>[nekotan] hajime no ippo s01e52 v2 (bd remux 1080p x264 <num>-bit flac) [dual audio]' from indexer nzbplanet (prowlarr) to download queue."
+      "fingerprint": "27e53d72959d",
+      "sample": "[Error] EventAggregator: TrackedDownloadService failed while processing [MovieAddedEvent]",
+      "severity": "error",
+      "skeleton": "[error] eventaggregator: trackeddownloadservice failed while processing [movieaddedevent]"
     }
   ],
   "quiet": [],
@@ -1809,9 +1368,9 @@
     "containers_scanned": 43,
     "containers_total": 43,
     "high_cardinality": [],
-    "lines_matched": 12301,
-    "lines_read": 176051,
-    "signatures_total": 244,
+    "lines_matched": 12325,
+    "lines_read": 175939,
+    "signatures_total": 151,
     "truncated": []
   },
   "spiking": [],
@@ -1822,7 +1381,7 @@
       "count": 3999,
       "fingerprint": "2554bd7de390",
       "sample": "[2026-09-03 19:50:08.917] WARNING (verification) worker-2 Verification of Staffer Case\uff1a A Supernatural Mystery Adventure [01000ED0214D0000].xci failed: read returned empty 0x1762c000",
-      "severity": "error",
+      "severity": "warn",
       "skeleton": "[<ts>] warning (verification) worker-<num> verification of staffer case\uff1a a supernatural mystery adventure [<hex>].xci failed: read returned empty <hex>"
     },
     {
@@ -1831,13 +1390,13 @@
       "count": 3999,
       "fingerprint": "97b9eef8c160",
       "sample": "[2026-09-03 19:50:08.919] WARNING (tasks) worker-2 Verification failed for Staffer Case\uff1a A Supernatural Mystery Adventure [01000ED0214D0000].xci: read returned empty 0x1762c000",
-      "severity": "error",
+      "severity": "warn",
       "skeleton": "[<ts>] warning (tasks) worker-<num> verification failed for staffer case\uff1a a supernatural mystery adventure [<hex>].xci: read returned empty <hex>"
     },
     {
       "baseline": null,
       "container": "KindRobots",
-      "count": 717,
+      "count": 739,
       "fingerprint": "f1ddd1fa9015",
       "sample": "[Icon] failed to load icon `kind-icon:news`",
       "severity": "error",
@@ -1855,7 +1414,7 @@
     {
       "baseline": null,
       "container": "netdata",
-      "count": 415,
+      "count": 417,
       "fingerprint": "c7333bf2fc2d",
       "sample": "time=2026-09-03T18:41:05.737-07:00 level=error msg=\"start watching '/etc/netdata/scripts.d': no such file or directory\" plugin=scripts.d component=discovery discoverer=file",
       "severity": "error",
@@ -1905,6 +1464,15 @@
       "sample": "[Error] Sabnzbd: Downloading nzb for episode 'The.Walking.Dead.Dead.City.S03E02.Haven.1080p.STARZ.WEB-DL.AAC2.0.H.264-ALANSARI87' failed (https://prowlarr.acrocatranch.com/27/download?apikey=<REDACTED",
       "severity": "error",
       "skeleton": "[error] sabnzbd: downloading nzb for episode <str> failed (<url>"
+    },
+    {
+      "baseline": null,
+      "container": "sonarr",
+      "count": 94,
+      "fingerprint": "c52d93b2c84c",
+      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release 'The.Walking.Dead.Dead.City.S03E02.Haven.1080p.STARZ.WEB-DL.AAC2.0.H.264-ALANSARI87' from Indexer NzbPlanet (Prowlarr) to download queue.",
+      "severity": "warn",
+      "skeleton": "[warn] processdownloaddecisions: couldn't add release <str> from indexer nzbplanet (prowlarr) to download queue."
     },
     {
       "baseline": null,
@@ -2031,15 +1599,6 @@
       "sample": "WARN  2026-09-03T18:01:17.918 QObject: Cannot create children for a parent that is in a different thread.",
       "severity": "warn",
       "skeleton": "warn <ts> qobject: cannot create children for a parent that is in a different thread."
-    },
-    {
-      "baseline": null,
-      "container": "scoopspress",
-      "count": 24,
-      "fingerprint": "2a9ea010695f",
-      "sample": "[Thu Sep 03 06:39:23.589902 2026] [php:warn] [pid 97:tid 97] [client 51.4.104.8:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
-      "severity": "warn",
-      "skeleton": "[thu sep <num> <ts> <num>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>"
     }
   ],
   "version": 1,
