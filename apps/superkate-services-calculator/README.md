@@ -79,7 +79,7 @@ The Superkate Flutter CI keeps the normal analyzer/test pass and also runs debug
 Project-specific visual/reference material lives in the conductor project folder:
 
 - `projects/superkate-services-calculator/examples/` — Superkate hair-work examples for visual inspiration.
-- `projects/superkate-services-calculator/hairpress/` — current Hair by Superkate WordPress front end, for reference only. It may be updated or replaced later.
+- The current Hair by Superkate WordPress front end is the live site at hairbysuperkate.com, running as an Unraid container. Its reference copy under `projects/superkate-services-calculator/hairpress/` was removed (conductor/t-106); `wp-content/plugins/superkates-special-plugin/` and the Instagram archive are still tracked.
 
 ## Architecture (domain + persistence layer — roadmap t-003)
 
