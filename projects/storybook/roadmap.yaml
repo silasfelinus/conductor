@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: ready
+  status: claimed
   passes: 50
   stakes: reversible
   retry_context: >
@@ -230,11 +230,32 @@ tasks:
     RAN 2026-09-04 (slice: restored-selection auto-expand): kind_robots#2397 merged as
     20403c7 (squash) with all checks green. Re-armed to ready per the recurring-task
     convention.
-  updated: '2026-09-04T18:52:52Z'
+
+    Slice (scheduled conductor Agent run 2026-09-04): read narrative-cast-card.vue end-to-
+    end for the first time on its pointer-drag path's keyboard/AT reachability (previously
+    checked only for its mouse/touch split, in verifyNarrativeCastTiers.ts). Found a real
+    defect: the per-card drag handle (a real <button>, aria-label="Drag <member> to a part")
+    has only pointerdown/pointermove/pointerup/pointercancel handlers -- no click handler --
+    and startPointerDrag() bails immediately for event.pointerType === 'mouse'. A keyboard
+    or screen-reader user who tabs to it and presses Enter/Space (a synthetic click, not a
+    pointer event) gets nothing: a focusable, named control that announces an action and
+    performs none. Fixed per the board's own stated design (role chips remain the
+    keyboard/accessibility path alongside drag-and-drop) by taking the handle out of the tab
+    order and AT tree (tabindex="-1", aria-hidden="true") rather than inventing a keyboard
+    interaction it was never meant to have. Extended verifyNarrativeCastTiers.ts (wired into
+    contract-tests.yml) with a check pinning the fix, confirmed via git stash that it fails
+    pre-fix. vue-tsc clean, eslint clean, prettier clean (fixed a formatting miss in the
+    guard edit itself), test:layout-contract holds (207 baseline), test:lint-ratchet holds
+    (333/-59), test:narrative-cast-tiers and test:narrative-kit both pass. kind_robots#2398
+    merged (squash c5be74e), all 47 checks green. Re-armed to ready per this task's
+    recurring-task convention. Kaizen for next slice: no further never-audited narrative
+    surface identified this cycle -- next author should grep for one, or revisit the
+    narrator dock (narratorStore.ts, 1556 lines, flagged unread since cycle 43).
+  updated: '2026-09-04T20:10:47Z'
   owner: worker
-  claimed_by: claude-scheduled-20260904T183251Z-sb-t010
-  claimed_at: '2026-09-04T18:32:52Z'
-  implementation_pr: 'silasfelinus/kind_robots#2397'
+  claimed_by: openai-scheduled-20260904T201047Z-sb-t010-q4k8
+  claimed_at: '2026-09-04T20:10:47Z'
+  implementation_pr: 'silasfelinus/kind_robots#2398'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
