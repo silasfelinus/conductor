@@ -183,6 +183,57 @@ EXCLUDE_RE = re.compile(
     re.IGNORECASE | re.VERBOSE,
 )
 
+# An explicit level beats keyword guessing, and on this host it is not close.
+# Silas's 2026-09-03 inventory: `[Info] ... for Term: [Critical Role Vox Machina
+# Origins]` scored FATAL, `Scanning Panic (2021)` scored FATAL, and `Skipping
+# refresh of series: Trial & Error` scored ERROR -- all INFO lines promoted by a
+# word inside a MEDIA TITLE. A library full of films called Fail Safe, Panic and
+# Trial & Error is adversarial input to a keyword classifier, and no keyword list
+# survives it. Most of these containers already state their level; believe them.
+#
+# Formats seen across his ~50 containers, in one pass.
+LEVEL_PATTERNS = (
+    # [Info], [Warn], and Apache's [php:warn] / [authz_core:error]
+    re.compile(r"\[(?:[a-z_]+:)?(trace|debug|info|notice|warn|warning|error|crit|critical|fatal|alert|emerg)\]", re.I),
+    # Serilog/Jellyfin [WRN] [ERR]
+    re.compile(r"\[(TRC|DBG|INF|WRN|ERR|FTL)\]"),
+    # logfmt: level=error   (netdata, authelia, go.d)
+    re.compile(r"\blevel=(trace|debug|info|notice|warn|warning|error|critical|fatal|panic|dpanic)\b", re.I),
+    # JSON: "level":"error"  (podgrab)
+    re.compile(r"\"level\"\s*:\s*\"(trace|debug|info|notice|warn|warning|error|critical|fatal|panic|dpanic)\"", re.I),
+    # sabnzbd ::INFO::
+    re.compile(r"::(TRACE|DEBUG|INFO|NOTICE|WARNING|WARN|ERROR|CRITICAL|FATAL)::"),
+    # tautulli " - WARNING :: " and bazarr " :  ERROR (series:203)"
+    re.compile(r"[-:]\s+(TRACE|DEBUG|INFO|NOTICE|WARNING|WARN|ERROR|CRITICAL|FATAL)\s+(?:::|\()"),
+    # python logging "WARNING:webrtc_input:" (calibre)
+    re.compile(r"\b(TRACE|DEBUG|INFO|NOTICE|WARNING|WARN|ERROR|CRITICAL|FATAL):[a-z_]+:", re.I),
+    # leading bare level: "WARN  2026-.." (yac), "ERROR    Error:" (flaresolverr)
+    re.compile(r"^\s*(TRACE|DEBUG|INFO|NOTICE|WARNING|WARN|ERROR|CRITICAL|FATAL)\b", re.I),
+)
+
+# Levels whose own author considered them unremarkable. Dropped outright unless
+# --include-info. This is the single biggest noise reduction available: it takes
+# out the 355 `[debug][Watchlist Sync]` lines, every `[Info] DiskScanService`
+# media title, and sabnzbd's `::INFO::` chatter.
+QUIET_LEVELS = {"trace", "debug", "info", "notice", "trc", "dbg", "inf"}
+
+LEVEL_SEVERITY = {
+    "warn": "warn", "warning": "warn", "wrn": "warn",
+    "error": "error", "err": "error",
+    "crit": "fatal", "critical": "fatal", "fatal": "fatal", "ftl": "fatal",
+    "panic": "fatal", "dpanic": "fatal", "alert": "fatal", "emerg": "fatal",
+}
+
+
+def detect_level(text):
+    """The line's own stated level, lowercased, or None if it does not state one."""
+    for pattern in LEVEL_PATTERNS:
+        match = pattern.search(text)
+        if match:
+            return match.group(1).lower()
+    return None
+
+
 SEVERITY_PATTERNS = (
     ("fatal", re.compile(r"\b(?:fatal|critical|severe|panic|segfault)\b|\bcore\ dumped\b", re.I | re.X)),
     ("error", re.compile(r"\b(?:error|errors|errno|exception|traceback|failed|failure)\b", re.I)),
@@ -307,6 +358,18 @@ SKELETON_STEPS = (
     (re.compile(r"\b(?:[0-9a-fA-F]{0,4}:){2,7}[0-9a-fA-F]{0,4}\b"), "<IP>"),
     (re.compile(r"\b[a-zA-Z][a-zA-Z0-9+.-]*://\S+"), "<URL>"),
     (re.compile(r"(?<![\w/])/(?:[\w.@+-]+/)+[\w.@+-]*"), "<PATH>"),
+    # Silas's media library is entirely spaces and parentheses --
+    # /pc/movies/comedy/hot property (2016)/hot property (2016) {imdb-..}.mp4 --
+    # so the tight rule above stops at the first space and every filename became
+    # its own signature: 51 for bazarr where there were ~6 real problems, 43 for
+    # radarr, 33 for sonarr. Once a <PATH> marker exists, absorb the spacey
+    # remainder of the path with it.
+    #
+    # This deliberately swallows any trailing clause too, which is the right
+    # trade here: `cannot update series <PATH> because of (IntegrityError)`
+    # collapses to one row per root cause instead of one per title, and the
+    # untruncated reason is still on the stored sample line.
+    (re.compile(r"<PATH>\S*(?:[ \t][^\s/][^\t]*)?$"), "<PATH>"),
     (re.compile(r"\b0x[0-9a-fA-F]+\b"), "<HEX>"),
     (re.compile(r"\b[0-9a-fA-F]{8,}\b"), "<HEX>"),
     (re.compile(r"\"[^\"]{0,512}\""), "<STR>"),
@@ -499,7 +562,7 @@ def collect(containers, since, tail, timeout, exclude_names, stats):
 # Analysis — pure, no docker, unit-testable
 # --------------------------------------------------------------------------
 
-def analyze(records, now):
+def analyze(records, now, include_info=False):
     """Fold raw (container, ts, line) records into signatures.
 
     Every retained line is redacted BEFORE it is fingerprinted or sampled, so a
@@ -513,10 +576,20 @@ def analyze(records, now):
         clean = ANSI_RE.sub("", body[:MAX_LINE_CHARS]).strip()
         if not clean:
             continue
-        if not INCLUDE_RE.search(clean):
-            continue
-        if EXCLUDE_RE.search(clean):
-            continue
+
+        level = detect_level(clean)
+        if level is not None:
+            # The line states its own level: believe it, in both directions.
+            # Keyword matching is only a fallback for lines that say nothing.
+            if level in QUIET_LEVELS and not include_info:
+                continue
+            if level in QUIET_LEVELS and not INCLUDE_RE.search(clean):
+                continue
+        else:
+            if not INCLUDE_RE.search(clean):
+                continue
+            if EXCLUDE_RE.search(clean):
+                continue
 
         matched += 1
         safe = redact(clean)
@@ -534,7 +607,7 @@ def analyze(records, now):
                 "container": name,
                 "skeleton": skeleton,
                 "sample": safe[:SAMPLE_MAX_CHARS],
-                "severity": classify_severity(safe),
+                "severity": LEVEL_SEVERITY.get(level) or classify_severity(safe),
                 "count": 1,
                 "first_seen": when,
                 "last_seen": when,
@@ -731,6 +804,27 @@ def read_publish_token(secrets_dir):
     return None
 
 
+GITHUB_API = "https://api.github.com"
+REPO_RE = re.compile(r"^[A-Za-z0-9._-]+/[A-Za-z0-9._-]+$")
+REPO_PATH_RE = re.compile(r"^[A-Za-z0-9._/-]+$")
+
+
+def validate_publish_target(repo, path):
+    """Reject anything that could steer the request somewhere unintended.
+
+    `repo` and `path` reach a URL that carries the publish token, and both come
+    from the command line. Neither can escape api.github.com as written, but
+    validating them keeps it that way if the URL is ever built differently, and
+    a token is not a thing to leave one refactor away from a new host. Also
+    blocks `..` traversal in the repo path.
+    """
+    if not REPO_RE.match(repo or ""):
+        return "publish repo must be owner/name, got something else"
+    if not path or not REPO_PATH_RE.match(path) or ".." in path or path.startswith("/"):
+        return "publish path must be a plain repo-relative path"
+    return None
+
+
 def _github_request(url, token, method="GET", payload=None, timeout=30.0):
     data = json.dumps(payload).encode("utf-8") if payload is not None else None
     request = urllib.request.Request(url, data=data, method=method)
@@ -760,7 +854,10 @@ def publish_digest(digest, token, repo, path, branch, now):
     The returned message NEVER contains the token (hard safety rule 15): the
     caller prints it, and Silas pastes that output back.
     """
-    api = "https://api.github.com/repos/{}/contents/{}".format(repo, path)
+    invalid = validate_publish_target(repo, path)
+    if invalid:
+        return False, invalid
+    api = "{}/repos/{}/contents/{}".format(GITHUB_API, repo, path)
     content = json.dumps(digest, indent=2, sort_keys=True) + "\n"
     encoded = base64.b64encode(content.encode("utf-8")).decode("ascii")
     message = "chore(logs): container log digest {} {} [skip ci]".format(
@@ -950,6 +1047,11 @@ def main(argv=None):
         action="store_true",
         help="commit the digest into Conductor so the sweep and daily digest can read it",
     )
+    parser.add_argument(
+        "--include-info",
+        action="store_true",
+        help="keep lines whose own level is info/debug/notice (default: drop them)",
+    )
     parser.add_argument("--publish-repo", default=PUBLISH_REPO)
     parser.add_argument("--publish-path", default=PUBLISH_PATH)
     parser.add_argument("--publish-branch", default=PUBLISH_BRANCH)
@@ -999,7 +1101,8 @@ def main(argv=None):
     exclude = set(args.exclude)
     stats = {"failed": [], "truncated": [], "scanned": 0, "lines_read": 0}
     signatures, matched, noisy = analyze(
-        collect(containers, args.since, args.tail, args.timeout, exclude, stats), now
+        collect(containers, args.since, args.tail, args.timeout, exclude, stats),
+        now, include_info=args.include_info,
     )
 
     if args.no_samples:
