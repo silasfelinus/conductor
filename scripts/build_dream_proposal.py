@@ -583,7 +583,7 @@ def main(argv=None) -> int:
             return 1
         span=f"{backlog[0]}..{backlog[-1]}" if len(backlog) > 1 else backlog[0]
         note=("" if len(backlog) >= TARGET_BUFFER_DAYS
-              else f" Below the {TARGET_BUFFER_DAYS}-day buffer; the next digest run will top it up.")
+              else f" Below the {TARGET_BUFFER_DAYS}-day buffer; author ONE proposal this session (--brief, then --from-json).")
         print(f"Dream docket holds {len(backlog)} unbuilt proposal(s) ({span}).{note}")
         return 0
     if a.brief: print(json.dumps(build_brief(day),indent=2,ensure_ascii=False)); return 0

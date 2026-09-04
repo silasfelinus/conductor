@@ -10,6 +10,16 @@ Art quality is a human call (see the ArtJob trainer panel), so those passes are
 gone. This test exists so they cannot quietly come back: any workflow that hands
 a job `ANTHROPIC_API_KEY` must be listed here on purpose.
 
+2026-09-04. Silas: "They are literally running as part of my normal Claude Max
+account. I'm not spending $100 a month so it can then trigger the API." The
+hourly Conductor Agent Routine and the daily-digest author step were doing the
+same work twice -- once on the Max plan, once on API credits. So a second rule
+now applies on top of the allowlist: any workflow that runs on a `schedule:`
+may hand out the key ONLY behind an explicit `workflow_dispatch` input named
+`spend_api_credits`, so the scheduled run never spends and a human has to ask
+for it by name. The secret itself stays -- the option is useful -- it just
+never fires on its own.
+
 Adding a workflow to ALLOWED is a deliberate act, not a formality. Before you
 do, be able to answer:
 
@@ -23,6 +33,7 @@ do, be able to answer:
 from __future__ import annotations
 
 import pathlib
+import re
 import unittest
 
 WORKFLOWS = pathlib.Path(__file__).resolve().parents[1] / ".github" / "workflows"
@@ -30,21 +41,22 @@ WORKFLOWS = pathlib.Path(__file__).resolve().parents[1] / ".github" / "workflows
 # Workflow filename -> why it is allowed to spend.
 ALLOWED = {
     "hourly-conductor.yml": (
-        "Haiku 4.5 status summary, max_tokens=400, one call per run "
-        "(~$0.01/day). Falls back to rule-based output when the key is absent."
+        "Haiku 4.5 status summary, max_tokens=400, one call per run. OPT-IN "
+        "only (spend_api_credits on workflow_dispatch); every scheduled run "
+        "takes the rule-based fallback because the hourly Conductor Agent "
+        "Routine already does this assessment on the Max plan."
     ),
     "daily-digest.yml": (
-        "Daily dream authoring (scripts/author_dream_proposal.py). Sonnet 5, "
-        "max_tokens=4000, hard cap of MAX_ATTEMPTS=2 calls per run, once a day, "
-        "and it exits before the first call on any day a proposal already "
-        "exists — so the steady state is 1 call/day and the ceiling is 2. "
-        "Answering this module's three questions: (1) no human judgement is "
-        "displaced, the proposal was already model-authored, just by whichever "
-        "agent session happened to notice it missing; (2) bounded by "
-        "MAX_ATTEMPTS, not by a queue drain; (3) yes, scheduled — which is the "
-        "point, per Silas 2026-08-09: \"I'm not sure why the next dreams aren't "
-        "written the turn the digest is sent ... that's very high on automated "
-        "tasks.\""
+        "Two model-authored steps, both OPT-IN only (spend_api_credits on "
+        "workflow_dispatch): the Daily Dream proposal "
+        "(scripts/author_dream_proposal.py, Sonnet 5, max_tokens=4000, "
+        "MAX_ATTEMPTS=2, skips when the docket is at its buffer) and the "
+        "container-log review (scripts/author_container_log_review.py, Sonnet "
+        "5, max_tokens=4000, one call). On the schedule neither gets the key: "
+        "the docket is topped up by agent sessions (CLAUDE.md startup step 7) "
+        "and the digest falls back to its mechanical log banner. Silas "
+        "2026-08-09 wanted proposals written the turn the digest goes out; "
+        "2026-09-04 he wants that done by the Max-plan sessions, not the API."
     ),
     "daily-dream-prose-repair.yml": (
         "One-shot human-requested catalog prose repair, triggered only by an explicit "
@@ -82,6 +94,36 @@ class NoUnreviewedModelSpend(unittest.TestCase):
             f"{sorted(stale)}. Drop them from ALLOWED so the list keeps meaning "
             "something.",
         )
+
+    def test_scheduled_workflows_only_spend_on_explicit_request(self):
+        """A `schedule:`-triggered workflow may reference the key only on a
+        line gated by the `spend_api_credits` dispatch input, so the cron
+        never spends and a human has to opt in by name."""
+
+        for path in sorted(WORKFLOWS.glob("*.yml")):
+            text = path.read_text(encoding="utf-8")
+            if "secrets.ANTHROPIC_API_KEY" not in text:
+                continue
+            if not re.search(r"^\s+schedule:\s*$", text, re.MULTILINE):
+                continue  # manual/push-only workflows are a deliberate act already
+            for lineno, line in enumerate(text.splitlines(), start=1):
+                if "secrets.ANTHROPIC_API_KEY" not in line:
+                    continue
+                self.assertIn(
+                    "inputs.spend_api_credits == true",
+                    line,
+                    f"{path.name}:{lineno} hands out ANTHROPIC_API_KEY on a "
+                    "scheduled workflow without the spend_api_credits gate. "
+                    "Use: ${{ inputs.spend_api_credits == true && "
+                    "secrets.ANTHROPIC_API_KEY || '' }} and declare the "
+                    "boolean workflow_dispatch input (default false).",
+                )
+            self.assertRegex(
+                text,
+                r"spend_api_credits:\s*\n(?:\s+\S.*\n)*?\s+type:\s*boolean",
+                f"{path.name} must declare spend_api_credits as a boolean "
+                "workflow_dispatch input (default false).",
+            )
 
     def test_art_pipeline_has_no_vision_gate(self):
         """The removed curator modules must not reappear under any name."""

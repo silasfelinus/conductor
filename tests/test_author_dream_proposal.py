@@ -227,12 +227,19 @@ def test_already_authored_is_success_not_failure(monkeypatch, capsys):
     assert "already exists" in capsys.readouterr().out
 
 
-def test_missing_api_key_fails_loudly_and_writes_nothing(monkeypatch, capsys):
+def test_missing_api_key_skips_cleanly_and_writes_nothing(monkeypatch, capsys):
+    # 2026-09-04: the scheduled digest no longer carries the key (opt-in via
+    # spend_api_credits), so a missing key is the normal daily state. It must
+    # exit 0 -- daily-digest.yml fails the whole run after delivery on a
+    # non-success author step -- but still never write a placeholder.
     monkeypatch.setattr(dreams, "proposal_exists_for", lambda day: False)
+    monkeypatch.setattr(dreams, "unbuilt_backlog", lambda: [])
     monkeypatch.setattr(dreams, "write_proposal", lambda *a, **k: pytest.fail("must not write"))
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
-    assert authoring.main(["--date", DAY, "--no-fetch"]) == 1
-    assert "ANTHROPIC_API_KEY" in capsys.readouterr().err
+    assert authoring.main(["--date", DAY, "--no-fetch"]) == 0
+    err = capsys.readouterr().err
+    assert "ANTHROPIC_API_KEY" in err
+    assert "agent sessions" in err
 
 
 def test_api_failure_is_reported_not_swallowed(monkeypatch, capsys):
