@@ -235,9 +235,6 @@ tasks:
     Silas explicitly requested automatic deployment updates after moving kindrobots.org to Alexandria. kind_robots PR #1680 adds the GHCR publish workflow: every main push builds linux/amd64 and publishes latest plus immutable sha tags with OCI revision metadata. kindrobots-unraid PR #10 switches DockerMan to the GHCR image and documents Force Update, CA Application Auto Update, version inspection, and rollback. The first GHCR package is private by GitHub default. Human gate: after #1680 merges and the first package is published, change the kind_robots container package visibility to Public; then verify anonymous pull and merge catalog PR #10. Public package visibility is irreversible on GitHub, so the catalog PR remains unmerged until that action is done.
 
     Silas explicitly confirmed the GHCR Kind Robots package was made public in-session. The companion Unraid catalog PR #10 is merged, so DockerMan can now consume ghcr.io/silasfelinus/kind_robots:latest without registry credentials.
-goal: Run Kind Robots reliably on the Unraid/home infrastructure, with deployment, storage, networking, GPU services, 
-  and recovery procedures kept reproducible.
-
 - id: t-014
   milestone: m1
   title: "INCIDENT: kindrobots.org has returned 502 since 13:25 UTC on 2026-09-04, right after the first auto-deploy of the day's Storybook image"
@@ -274,3 +271,6 @@ goal: Run Kind Robots reliably on the Unraid/home infrastructure, with deploymen
     root TALKBACK entry of 2026-09-04), and the daily digest run can be checked for a
     failed Kind Robots step.
   updated: '2026-09-04T16:30:00Z'
+
+goal: Run Kind Robots reliably on the Unraid/home infrastructure, with deployment, storage, networking, GPU services, 
+  and recovery procedures kept reproducible.
