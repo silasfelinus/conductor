@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -3334,8 +3334,16 @@ tasks:
     resolved on their own (Contract verifiers slow-but-normal install; Generated Client
     Parity's install step cleared naturally after clearing on retry, ~4m11s, within
     baseline). Re-arming the recurring consistency task for the next bounded slice.
-  updated: '2026-09-04T02:29:13Z'
-  implementation_pr: 'silasfelinus/kind_robots#2378'
+
+    Slice 64 ready for review on claude/eager-bohr-wx1cl8 (silasfelinus/kind_robots, branch
+    pushed, PR not yet opened). Added .kr-btn-ghost-circle-xs (btn btn-ghost btn-xs btn-
+    circle) mirroring the established naming convention; migrated all 12 exact-match sites
+    (5 files) across both class-order variants. Verified vue-tsc clean, eslint 0 new issues
+    (1 pre-existing empty-block error, git-stash-confirmed), prettier warnings identical to
+    unmodified origin/main (git-stash-confirmed, same 4 files), test:layout-contract holds
+    (207 baseline), test:lint-ratchet holds (332/-60).
+  updated: '2026-09-04T02:35:32Z'
+  implementation_pr: 'silasfelinus/kind_robots#2379'
   owner: worker
   claimed_by: claude-scheduled-20260904T022912Z-t104-slice64
   claimed_at: '2026-09-04T02:29:13Z'
