@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -3320,8 +3320,15 @@ tasks:
     slice — no further hand-rolled bare-button-shape candidates surveyed yet this cycle;
     next slice should re-survey remaining shapes (e.g. btn-outline/other size variants)
     since the sm/md/xs bare, ghost, primary, and secondary families are now exhausted.
-  updated: '2026-09-04T01:45:09Z'
-  implementation_pr: 'silasfelinus/kind_robots#2377'
+
+    Slice 63 ready for review on claude/eager-bohr-vagyms (silasfelinus/kind_robots#2378).
+    Added .kr-btn-secondary-md (btn btn-secondary rounded-xl) mirroring .kr-btn-primary-md
+    naming; migrated all 11 exact-match sites (6 files) to it. Verified vue-tsc clean,
+    eslint 0 new issues (2 pre-existing, git-stash-confirmed), prettier warnings identical
+    to unmodified origin/main (git-stash-confirmed), test:layout-contract holds (207
+    baseline), test:lint-ratchet holds (332/-60).
+  updated: '2026-09-04T01:49:37Z'
+  implementation_pr: 'silasfelinus/kind_robots#2378'
   owner: reviewer
   claimed_by: claude-scheduled-20260904T014508Z-t104-slice63
   claimed_at: '2026-09-04T01:45:09Z'
