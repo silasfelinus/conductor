@@ -21,7 +21,7 @@ Files in this folder:
 | `relay_agent.py` | pull-based bridge: claims ArtJobs from kind_robots and drives local ComfyUI (enable after art-generator-connect/t-010 deploys) |
 | `relay_download_agent.py` | pull-based model downloader: claims queued LoRA/checkpoint downloads, fetches them onto the engine dirs, and catalogs them as Resources (the `kr-download` app) |
 | `start-engines.bat` | double-click launcher: starts both engines (no-op if running) and attaches the live log stream — the old bats' echo, without owning the processes |
-| `container_log_triage.py` | daily Unraid User Script: reads every container's logs, collapses them to signatures, reports only what is new, spiking, or newly silent, and commits the digest into this repo in the same run — no pm2 entry, this box is not ferngrotto (see `CONTAINER-LOG-TRIAGE.md`) |
+| `container_log_triage.py` (now in **kind_robots** `scripts/`, deployed to `/mnt/user/appdata/kind_robots/scripts/`) | daily Unraid User Script: reads every container's logs, collapses them to signatures, reports only what is new, spiking, or newly silent, and commits the digest into this repo in the same run — no pm2 entry, this box is not ferngrotto (see `CONTAINER-LOG-TRIAGE.md`) |
 
 ---
 

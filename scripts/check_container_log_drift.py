@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """check_container_log_drift.py — surface Alexandria's container-log triage in the sweep.
 
-The reading half of `ops/home-server/container_log_triage.py`, which runs daily
+The reading half of kind_robots' `scripts/container_log_triage.py`, which runs daily
 on Alexandria as an Unraid User Script and writes a small digest. This script
 reads that digest and reports it like every other check_* in this repo, so the
 findings land in the session-start sweep and the daily digest instead of in a

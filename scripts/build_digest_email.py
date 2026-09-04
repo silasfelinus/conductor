@@ -194,6 +194,11 @@ def reel_section(creations):
     return f'<h2 style="margin-bottom:2px">🎬 New creations</h2><div>{chips}</div>'
 
 
+# The deployed path, so a mute command pasted straight from the email works.
+# The script lives in kind_robots and lands here via the five-minute
+# auto-deploy pull; it is not in this repo.
+TRIAGE_CMD = "/mnt/user/appdata/kind_robots/scripts/container_log_triage.py"
+
 ACTION_LABEL = {
     "fix": ("#7f1d1d", "#fef2f2", "FIX"),
     "watch": ("#78350f", "#fffbeb", "WATCH"),
@@ -296,7 +301,7 @@ def container_log_review_section(digest: dict[str, Any]) -> str:
         rows.append(
             f'<pre style="font-size:11px;background:#0f172a;color:#e2e8f0;'
             f'padding:8px 10px;border-radius:4px;overflow-x:auto;margin:6px 0 0">'
-            f'container_log_triage.py --state-dir . {esc(flags)}</pre>'
+            f'{esc(TRIAGE_CMD)} \\\n  --state-dir /mnt/user/appdata/container-log-triage {esc(flags)}</pre>'
         )
         parts.append(
             f'<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;'
