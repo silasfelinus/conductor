@@ -235,5 +235,42 @@ tasks:
     Silas explicitly requested automatic deployment updates after moving kindrobots.org to Alexandria. kind_robots PR #1680 adds the GHCR publish workflow: every main push builds linux/amd64 and publishes latest plus immutable sha tags with OCI revision metadata. kindrobots-unraid PR #10 switches DockerMan to the GHCR image and documents Force Update, CA Application Auto Update, version inspection, and rollback. The first GHCR package is private by GitHub default. Human gate: after #1680 merges and the first package is published, change the kind_robots container package visibility to Public; then verify anonymous pull and merge catalog PR #10. Public package visibility is irreversible on GitHub, so the catalog PR remains unmerged until that action is done.
 
     Silas explicitly confirmed the GHCR Kind Robots package was made public in-session. The companion Unraid catalog PR #10 is merged, so DockerMan can now consume ghcr.io/silasfelinus/kind_robots:latest without registry credentials.
+- id: t-014
+  milestone: m1
+  title: "INCIDENT: kindrobots.org has returned 502 since 13:25 UTC on 2026-09-04, right after the first auto-deploy of the day's Storybook image"
+  status: needs-human
+  owner: null
+  passes: 0
+  stakes: irreversible
+  gate_human: true
+  approved_by_human: false
+  note: >-
+    FOR SILAS: production kindrobots.org is down. Traefik answers every request with
+    HTTP 502 (security headers present, so the proxy is up and the KindRobots container
+    is not answering). rainbowbutterflies.org and media.acrocatranch.com on the same host
+    respond normally. Timeline (UTC, 2026-09-04): 13:19 API calls from this session
+    succeeded; kind_robots#2393 merged 13:11 and its Publish Production Container run
+    33876543505 finished 13:20:28; the five-minute Alexandria auto-deploy would have run
+    at about 13:25; first 502 observed 13:25:47; still 502 at 13:36, 13:41 and 16:25.
+    kind_robots#2394 published a second image at about 13:36 and did not restore service.
+    The 14:00 UTC container-log digest (ops/home-server/CONTAINER-LOG-DIGEST.json, commit
+    cea50da) scanned 42 containers against 43 in the 11:44 digest, so one container was
+    absent at 14:00, which fits a DockerMan recreate that removed the old KindRobots
+    container and never started the new one (deploy-unraid.sh stops at the health check).
+    Neither #2393 nor #2394 touches server code, migrations, Dockerfile or the deploy
+    scripts (Vue components, one store helper, package.json test scripts, guard scripts,
+    workflows), and both images built green. TO CHECK on Alexandria:
+    `docker ps -a --filter name=KindRobots` and `docker inspect KindRobots --format
+    '{{.Image}} {{.State.Status}} {{.State.Health.Status}}'`, then the last User Script
+    run output and `/mnt/user/appdata/kind_robots/.deploy-state/`. If the container is
+    missing or unhealthy, `bash scripts/deploy-unraid.sh` from the appdata checkout is the
+    documented recovery path (docs/runbooks/unraid-auto-deploy.md). TO CLOSE: once
+    /api/health/database is 200 again, set status: done and append the root cause. What
+    unblocks: the 20 creation-burst ledger rows in projects/art-prompts.yaml can then be
+    marked done (their renders finished before the outage; see scratchpad note in the
+    root TALKBACK entry of 2026-09-04), and the daily digest run can be checked for a
+    failed Kind Robots step.
+  updated: '2026-09-04T16:30:00Z'
+
 goal: Run Kind Robots reliably on the Unraid/home infrastructure, with deployment, storage, networking, GPU services, 
   and recovery procedures kept reproducible.
