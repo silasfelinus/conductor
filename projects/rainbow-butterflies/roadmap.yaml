@@ -1295,7 +1295,7 @@ tasks:
 - id: t-052
   milestone: m2
   title: "Boot the built Nitro output in CI and assert every route serves its own page"
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -1315,6 +1315,17 @@ tasks:
     document.documentElement.scrollWidth > innerWidth, which is the same check the
     acceptance pass used. Also worth folding in: nav links on most pages measure
     about 14px tall as tap targets; a shared padding rule would bring them over 24px.
+
+    Implemented in Rainbow PR #39 (overnight session 2026-09-04): .github/workflows/route-
+    probe.yml builds the bundle, boots .output/server/index.mjs, asserts 21 routes return
+    their own marker text at the expected status, then drives Playwright at 390/820/1440px
+    failing on any horizontal page overflow. Verified locally against the merged main build:
+    21 routes x 3 widths clean, self-boot path clean. Tap-target padding was left for a
+    separate polish pass.
+
+    DONE: Rainbow PR #39 merged as 0893146; its own Route probe job ran green on the PR in
+    2m09s (21 routes x 3 widths against the built bundle).
   claimed_by: claude-overnight-20260904T1255Z-rb-t052
   claimed_at: '2026-09-04T12:37:32Z'
-  updated: '2026-09-04T12:37:32Z'
+  updated: '2026-09-04T12:44:42Z'
+  implementation_pr: 'silasfelinus/rainbowbutterflies#39'
