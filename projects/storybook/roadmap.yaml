@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: review
+  status: ready
   passes: 50
   stakes: reversible
   retry_context: >
@@ -214,9 +214,21 @@ tasks:
     for next slice: the casting board has no aria-live announcement when a card moves tiers
     -- screen-reader users get no auditory confirmation of a successful press even though
     focus now follows correctly.
-  updated: '2026-09-04T16:53:04Z'
-  owner: worker
-  claimed_by: claude-scheduled-20260904T164854Z-sb-t010-arialive
+
+    kind_robots#2396 merged 0d8a1ae (squash): sr-only role=status aria-live=polite region
+    added to narrative-role-assigner.vue; toggle() and assignRole() both call announceRole()
+    announcing '<Member> is now the <Role>.' / '<Member> is now unassigned.'. Extended
+    verifyNarrativeCastTiers.ts with two more checks pinning the live region and both call
+    sites. CI: 45/46 green; comment-contract's verifyPopulationDraftQuality.ts failed both
+    attempts on a live GET /api/bots 502 -- the ongoing kindrobots.org outage (kindrobots-
+    unraid/t-014), unrelated to this diff (confirmed via reproduction on re-run); merged
+    anyway since the check isn't required for merge and every check touching this diff's own
+    surface is green. Kaizen for next slice: narrative-role-assigner.vue's drop zones have
+    no keyboard path of their own (chip press is the only keyboard-reachable assignment
+    path) -- worth a look if the drop-zone-first mental model ever needs full parity.
+  updated: '2026-09-04T17:30:14Z'
+  owner: null
+  claimed_by: null
   claimed_at: '2026-09-04T16:48:55Z'
   implementation_pr: 'silasfelinus/kind_robots#2396'
 - id: t-011
