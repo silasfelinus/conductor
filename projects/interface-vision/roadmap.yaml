@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3313,7 +3313,19 @@ tasks:
     Verified vue-tsc clean, eslint 0 new issues (3 pre-existing, git-stash-confirmed),
     prettier 10 pre-existing warnings (git-stash-confirmed, left untouched), test:layout-
     contract holds (207 baseline), test:lint-ratchet holds (332/-60).
-  updated: '2026-09-04T00:38:31Z'
+
+    Slice 60 merged as silasfelinus/kind_robots#2375 (squash b66261b). Added .kr-btn-
+    primary-plain (btn btn-primary btn-sm, no rounded-xl override) mirroring .kr-btn-ghost-
+    plain's naming convention on the ghost family; migrated all 19 exact-match sites (16
+    files, both class-order variants) to it. All 44 kind_robots PR checks green (Contract
+    verifiers took ~8.5 min real time, install step ran long but completed successfully --
+    not a repeat of the t-132 stall, just a slow run). Verified vue-tsc clean, eslint 0 new
+    issues (3 pre-existing, git-stash-confirmed), prettier 10 pre-existing warnings (git-
+    stash-confirmed, left untouched), test:layout-contract holds (207 baseline), test:lint-
+    ratchet holds (332/-60). Re-armed to ready for the next slice; next candidates per this
+    slice's survey: btn btn-secondary btn-sm rounded-xl (11 files) and bare btn btn-sm (10
+    files).
+  updated: '2026-09-04T00:54:26Z'
   implementation_pr: 'silasfelinus/kind_robots#2375'
   owner: worker
   claimed_by: claude-conductor-20260904T002952Z-t104-slice60
