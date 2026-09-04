@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 1
   stakes: reversible
   recurring: true
@@ -3324,7 +3324,14 @@ tasks:
     (4 pre-existing, git-stash-confirmed), prettier identical 13 pre-existing warnings (git-
     stash-confirmed), test:layout-contract holds (207 baseline), test:lint-ratchet holds
     (332/-60), verifyBrainstormWorkbench.mjs passes. PR: silasfelinus/kind_robots#2387.
-  updated: '2026-09-04T09:39:48Z'
+
+    Slice 70 merged: kind_robots#2387 (squash 264ccb7) added .kr-btn-outline-md and .kr-btn-
+    outline-xs and migrated all 22 remaining outline-family occurrences across 18 files. All
+    44 checks green. Re-arming for the next slice: no further outline-family occurrences
+    remain (grep confirmed 0 leftover matches for all 4 target shapes at merge time). Next
+    slice should do a fresh repo-wide grep for the next most-repeated hand-rolled btn class
+    combination not yet covered by a kr-btn-* primitive.
+  updated: '2026-09-04T09:46:55Z'
   implementation_pr: 'silasfelinus/kind_robots#2387'
   owner: worker
   claimed_by: claude-scheduled-20260904T093131Z-ivt104-s70outline
