@@ -1,7 +1,10 @@
 # Humboldt Scoop Solutions — Content Brief
 
 Generated: 2026-06-30
-Source: `projects/humboldt-scoop/scoops/wp-content/themes/humboldt-scoop-solutions/`
+Source: the `humboldt-scoop-solutions` theme, generated from the copy that used to sit under
+`projects/humboldt-scoop/scoops/` before that tree was removed (conductor/t-106). Its canonical
+home is `humboldtscoopsolutions/site/`, per this project's README, and the live theme runs in the
+Unraid container.
 
 ---
 
@@ -9,7 +12,7 @@ Source: `projects/humboldt-scoop/scoops/wp-content/themes/humboldt-scoop-solutio
 
 - **Name is always paired with its descriptor:** "Humboldt Scoop Solutions —
   **Professional Pet Waste Removal**." The descriptor follows the name in copy.
-- **Logo file:** `projects/humboldt-scoop/scoops/wp-content/uploads/2026/01/logo_clean.jpg`
+- **Logo file:** `projects/humboldt-scoop/assets/logo_clean.jpg`
   (authoritative — never AI-generate or restyle it).
 - **Pricing** (by number of dogs; **billed on the 1st of the month**):
 
