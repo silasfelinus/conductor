@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -3325,8 +3325,18 @@ tasks:
     ratchet holds (332/-60). Re-armed to ready for the next slice; next candidates per this
     slice's survey: btn btn-secondary btn-sm rounded-xl (11 files) and bare btn btn-sm (10
     files).
-  updated: '2026-09-04T01:04:47Z'
-  implementation_pr: 'silasfelinus/kind_robots#2375'
+
+    Slice 61 ready for review on claude/interface-vision-t104-slice61
+    (silasfelinus/kind_robots#2376). Added .kr-btn-secondary (btn btn-secondary btn-sm
+    rounded-xl) mirroring .kr-btn-primary's naming; migrated all 12 exact-match sites (11
+    files) to it. Verified vue-tsc clean, eslint 0 new issues (5 pre-existing, git-stash-
+    confirmed), prettier 5 pre-existing warnings (git-stash-confirmed; bot-chat.vue/facet-
+    interact.vue collateral reflow applied and reverified clean), test:layout-contract holds
+    (207 baseline), test:lint-ratchet holds (332/-60). Note: the prior slice-60 branch
+    claude/eager-bohr-nbg0qy was auto-deleted on merge, so this slice used a fresh branch
+    name (claude/interface-vision-t104-slice61) instead of reusing it.
+  updated: '2026-09-04T01:13:08Z'
+  implementation_pr: 'silasfelinus/kind_robots#2376'
   owner: worker
   claimed_by: claude-conductor-20260904T010446Z-t104-slice61
   claimed_at: '2026-09-04T01:04:47Z'
