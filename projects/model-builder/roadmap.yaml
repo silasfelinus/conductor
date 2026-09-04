@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 51
     stakes: reversible
@@ -650,7 +650,36 @@ tasks:
       opened. Remaining candidates from cycle 88's original no-cross-reference list, not yet
       re-checked this way: FacetSync, RecordArtifactSuccessGuard, StaleAssetApprovalGuard --
       next slice should continue down this list.
-    updated: '2026-09-04T10:34:15Z'
+
+      Guard-integrity slice 96 (Claude, scheduled conductor run) finished cycle 88's original
+      no-cross-reference list: re-verified FacetSync, RecordArtifactSuccessGuard, and
+      StaleAssetApprovalGuard directly against live kind_robots source (local checkout
+      available this session, no node_modules/tsx so verified by literal-text grep matching
+      each guard script's own anchors rather than executing the guard scripts). FacetSync:
+      stores/helpers/modelBuilderFields.ts still defines FACET_TAXONOMIES with key: 'taxonomy'
+      and PROMPT_ENHANCEMENT, no resurrected FACET_KINDS/key: 'kind'; commit.post.ts still
+      calls syncCharacterFacetsInTransaction/syncBotFacetsInTransaction inside
+      prisma.$transaction, uses buildFacetProfileCreateData/buildFacetProfileUpdateData,
+      pickChoice<FacetTaxonomy>, and tx.facetProfile.upsert() (no resurrected
+      legacyFacetKindForTaxonomy, FacetKind import, or plain facetProfile.create race);
+      characterFacetSync.ts/botFacetSync.ts/facetProfileInput.ts all still carry their
+      documented taxonomy-mapping and deprecation text. RecordArtifactSuccessGuard:
+      recordArtifact() (stores/modelBuilderStore.ts:1459) still awaits performFetch() and
+      checks if (!result.success) immediately after, routing failure into setStatusForRun with
+      the documented reload-loses-preview message. StaleAssetApprovalGuard: canApproveAssets
+      (components/model-builder/model-builder-item-panel.vue:544) still returns false when
+      stages.GENERATE_ASSETS.status === 'stale', positioned before the function's other truthy
+      returns. No contract drift or actionable product bug found in this slice; no code PR
+      opened. This closes out cycle 88's entire no-cross-reference remaining-guard list
+      (BatchEditorKeyGuard through StaleAssetApprovalGuard, ~15 guards) with zero drift found
+      across all of them over slices 90-96. Next slice should either (a) do a fresh repo-wide
+      grep for any model-builder store/component function carrying a documented regression-
+      guard comment not yet covered by an existing verifyModelBuilder*.ts script, since the
+      known list is now exhausted, or (b) read a not-recently-touched model-builder surface
+      end-to-end for a genuinely new bug, per this task's original 'polish and upgrade'
+      mandate -- the guard-re-verification loop has been the dominant mode for many cycles
+      running and is now caught up.
+    updated: '2026-09-04T10:35:05Z'
     owner: reviewer
     claimed_by: claude-scheduled-20260904T-mb-t029-cycle96
     claimed_at: '2026-09-04T10:34:15Z'
