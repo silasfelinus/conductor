@@ -1,0 +1,8 @@
+version: 1
+project: conductor
+task: t-147
+operation: review
+session: 2026-09-05T220800Z-conductor-t147-gpt56sol-9f4c
+updated: '2026-09-05T22:12:00Z'
+note: >-
+  Repo-side remediation is ready for review on kind_robots branch worker/conductor-t-147-flux2-lora-guard-gpt56sol-9f4c. The scoped three-file diff makes Flux.2 LoRA compatibility generation-aware in the shared picker, reuses the same guard in server-side enqueue resolution, and replaces the prior contract that explicitly allowed Flux.1 D LoRAs on Flux.2 with regression coverage that rejects Flux.1/Kontext and accepts Flux.2 lineage. Runtime relay recovery remains a separate physical-host verification gate.
