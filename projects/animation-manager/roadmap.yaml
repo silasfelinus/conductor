@@ -239,12 +239,22 @@ tasks:
       file (components/screenfx/geode-bloom.vue), no DB/schema/secrets/deploy changes. Posted
       review-claim marker before merging (no competing claim found). Re-armed to ready per the
       recurring-task convention -- t-007 never reaches done.
-    status: review
-    updated: '2026-09-05T07:50:45Z'
-    implementation_pr: 'silasfelinus/kind_robots#2407'
+
+      FOLLOW-UP DONE 2026-09-05T07:53Z (same session, Reviewer follow-up audit): merged
+      kind_robots PR #2410 (squash 9c89051) -- registered `geode-bloom` in
+      stores/animationCatalog.ts (kind-icon:gem, color #3fb6d1). PR #2407 shipped the
+      component but never added the catalog entry, so Geode Bloom was unreachable from Screen
+      FX, startup preferences, and the random opening pool despite passing all 44 CI checks --
+      found on my own follow-up audit right after merging #2407 as Reviewer, before closing
+      this cycle out. test:animation-catalog now reports 49 effects/62 components resolved
+      (was 48/61); test:animation-component-attempts, vue-tsc, eslint all clean. Re-armed to
+      ready per the recurring-task convention.
+    status: ready
+    updated: '2026-09-05T07:56:05Z'
+    implementation_pr: 'silasfelinus/kind_robots#2410'
     owner: reviewer
-    claimed_by: claude-20260905T0748Z-am-t007-catalogfix
-    claimed_at: '2026-09-05T07:50:25Z'
+    claimed_by: null
+    claimed_at: null
 
   - id: t-008
     milestone: m3
