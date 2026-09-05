@@ -12503,3 +12503,29 @@ records:
     the growing remaining-pool size (52+ occurrences across 25 families per
     slice 87) was the signal that scoping the codemod paid off more than one
     more blind repo-wide pass would have."
+- date: 2026-09-05
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Slice 89 of the recurring kr-btn consistency sweep caught a real
+    latent bug in the slice-88 codemod tool while running it: Python's
+    Path.read_text()/write_text() always perform universal-newline
+    translation, so any CRLF-terminated file the tool touched would silently
+    collapse to LF for its entire content, not just the lines actually
+    rewritten -- a 6-occurrence bounded slice would have become a 2566-line
+    diff on one CRLF file. The tell was a large diff on one file next to a
+    clean diff on another for the identical kind of change (3 class
+    substitutions each) -- when two near-identical operations produce very
+    different diff sizes, that asymmetry is itself worth investigating before
+    trusting either result. Fixed by opening files directly with newline=\"\"
+    (disables translation on both read and write) instead of
+    read_text()/write_text() (which gained a newline= param only in Python
+    3.13). General lesson for any line-oriented codemod script: verify it
+    against a CRLF fixture if the target tree has any, since this failure
+    mode produces no error and no warning -- only an oversized diff that is
+    easy to miss if the tool's own dry-run output only reports occurrence
+    counts, not diff size."

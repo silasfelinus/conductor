@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3316,8 +3316,29 @@ tasks:
     contract suite); mergeable_state clean. Reviewer merged directly (reversible, scoped,
     tooling-only). Return the recurring consistency umbrella to ready for the next bounded
     slice (52+ btn-xs occurrences remain across 25 component families per slice 87's note).
-  updated: '2026-09-05T16:38:32Z'
-  implementation_pr: 'silasfelinus/kind_robots#2423'
+
+    Slice 89 merged as silasfelinus/kind_robots#2425 (squash
+    3505399021f246341d442c580b9c555cd6bd1f5c) from exact head
+    bf4beec69a0d5b725b1dde1d2d58f869d94d256d. Applied the kr-btn-xs codemod (--path
+    components/stages) to the Stage component family: components/stages/performer-
+    creator.vue (3 sites), components/stages/stage-manager.vue (3 sites), preserving btn-
+    primary/btn-warning/btn-success/btn-ghost variants and other utilities untouched. Also
+    fixed a real latent bug in the codemod tool found while running it:
+    Path.read_text()/write_text() always perform universal-newline translation, so a CRLF-
+    terminated .vue file it touched would silently collapse to LF for its entire content,
+    not just the lines the codemod actually changed -- stage-manager.vue alone would have
+    turned this bounded 6-occurrence slice into a 2566-line diff. Fixed by opening files
+    directly with newline="" (disables translation on read AND write) so CRLF sources round-
+    trip as CRLF; verified stage-manager.vue's post-fix diff is exactly the 6 intended class
+    substitutions and file(1) confirms CRLF survives. vue-tsc clean; eslint 0 new issues on
+    both changed files (1 pre-existing vue/no-deprecated-slot-attribute error in stage-
+    manager.vue confirmed via git stash); test:layout-contract held (207 baseline);
+    test:lint-ratchet held (333/-59); prettier pre-existing drift on both files confirmed
+    via git stash. All CI checks green; mergeable_state clean. 46 occurrences remain across
+    24 other component families (art/ being the largest single family at 17 occurrences/6
+    files) for the next slice. Return the recurring consistency umbrella to ready.
+  updated: '2026-09-05T16:53:30Z'
+  implementation_pr: 'silasfelinus/kind_robots#2425'
   retry_context: 'pass 1 failed (quality): slice 69 (kind_robots#2386) migrated the Promote-to-Character button in components/brainstorm/brainstorm-candidate-card.vue from `class="btn btn-outline btn-sm"` to the new shared `.kr-btn-outline-plain` class, but missed that utils/scripts/verifyBrainstormWorkbench.mjs:126 hardcodes that literal class string as a source-text regression guard ("the Promote to Character button must stay gated to kept candidates only"). CI job "Candidate-first workbench" fails on the new class. Do differently: before migrating a button class, grep utils/scripts/*.mjs (and any other source-text contract scripts) for the exact class string being replaced, not just run vue-tsc/eslint/layout-contract/lint-ratchet -- this file family asserts literal class attributes as regression guards and is easy to miss since it is not a normal test runner. Fix is scoped: update verifyBrainstormWorkbench.mjs line 126 to expect class="kr-btn-outline-plain" instead of class="btn btn-outline btn-sm" (same intent, new class name), then run `node utils/scripts/verifyBrainstormWorkbench.mjs` locally to confirm before reopening. Reviewer comment: silasfelinus/kind_robots#2386 (inline on components/brainstorm/brainstorm-candidate-card.vue line 363).'
   owner: reviewer
   claimed_by: claude-sweep-20260905T163000-iv-t104-s89
