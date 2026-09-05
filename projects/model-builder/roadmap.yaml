@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 52
     stakes: reversible
@@ -606,7 +606,36 @@ tasks:
       97 fix) confirmed merged 2026-09-04T12:11:29Z via direct PR lookup
       (check_pr_merged_drift.py's own GitHub API calls 403 in this sandbox). Released the
       stale claim and re-armed to ready per recurring-task convention.
-    updated: '2026-09-05T17:29:53Z'
+
+      Cycle 98 (no-op, real investigation, conductor scheduled Agent run): took cycle 97's
+      suggested next lead -- re-read model-builder-source-picker.vue and model-builder-
+      manager.vue end to end (least-recently-fully-read surfaces per cycle 97's own tracking).
+      Both are clean: source-picker's subtitle() still carries cycle 31's numeric-value fix,
+      its empty-state/loading/error branches (cycle 55/68) are intact, and its List-view row
+      styling (cycle 69) is unchanged; manager.vue's crumb-nav guards, Reset wiring, and both
+      focus-restoration watchers (history-panel close, step-content change) are unchanged and
+      correct. Cross-checked the same-day interface-vision/t-104 slice 85 (kind_robots#2420,
+      merged this morning) that renamed 'btn btn-xs ... rounded-xl' to kr-btn-xs across 5 of
+      these 7 components (manager.vue x3, progress-matrix.vue, recipe-selector.vue, run-
+      history.vue, source-picker.vue x1 site each) against every verifyModelBuilder*.ts guard
+      that references button classes -- only two guard *test* fixture files mention 'btn-
+      xs'/'rounded-xl' literal strings (fixtures, not production-path checks); the one guard
+      whose regex spans the actual 'Start build run' button's markup
+      (verifyModelBuilderStartRunLoadingGuard.ts, cycle 80) matches on :aria-
+      busy/@click/v-if/loading-dots structure, none of which the class rename touched --
+      confirmed by running the guard's exact regex against the current file content. No guard
+      broken, no stale check found. Also confirmed t-031 (live smoke test, the other named
+      lead in this task's history) is still status: needs-human -- no change there to act on.
+      No new bug found; no code change. git status --porcelain clean throughout (read-only
+      cycle). Next lead for cycle 99: cycle 88's option (a) -- a fresh repo-wide grep for any
+      model-builder store/component function carrying a documented regression-guard comment
+      not yet covered by an existing verifyModelBuilder*.ts script -- was only partially
+      attempted this cycle (34 guard names appear in this note's prose vs. 81 actual guard
+      files, but that diff is unreliable since many guards are described narratively rather
+      than named literally); a future cycle with more time budget should do this cross-
+      reference properly, or continue the end-to-end surface-read rotation once a new file
+      changes.
+    updated: '2026-09-05T17:32:32Z'
     owner: reviewer
     claimed_by: claude-20260905T172952Z-mb-t029
     claimed_at: '2026-09-05T17:29:53Z'
