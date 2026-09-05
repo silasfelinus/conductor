@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 50
   stakes: reversible
   note: >-
@@ -244,10 +244,17 @@ tasks:
     narratorStore.ts's sendNarratorMessage() (narratorSessionEpoch guard). kind_robots#2403
     merged (squash a38bbc2), all required checks green. Re-armed to ready per this task's
     recurring-task convention.
-  updated: '2026-09-05T03:14:28Z'
+
+    State reconciliation (conductor session sweep, 2026-09-05T06:27Z): stale claim (openai-
+    scheduled-20260905T031428Z-storybook-t010-oai6f2, claimed_at 2026-09-05T03:14:28Z) sat
+    past the 90-minute claim TTL. implementation_pr silasfelinus/kind_robots#2403 confirmed
+    merged 2026-09-05T02:45:29Z via direct PR lookup (check_pr_merged_drift.py's own GitHub
+    API calls 403 in this sandbox). Released the stale claim and re-armed to ready per
+    recurring-task convention.
+  updated: '2026-09-05T06:28:51Z'
   owner: worker
-  claimed_by: openai-scheduled-20260905T031428Z-storybook-t010-oai6f2
-  claimed_at: '2026-09-05T03:14:28Z'
+  claimed_by: null
+  claimed_at: null
   implementation_pr: 'silasfelinus/kind_robots#2403'
 - id: t-011
   milestone: m4
