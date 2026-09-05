@@ -12378,3 +12378,24 @@ records:
     of the classification logic itself. Worth checking other multi-tier/
     multi-bucket v-for surfaces (stage role assignment, batch/queue boards)
     for the same pattern."
+- date: 2026-09-05
+  project: storybook
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "narratorStore.ts's activeDream.value?.id watch reset narratorSessionIds
+    on Dream switch, but sendNarratorMessage() had no way to notice a switch that
+    happened mid-await -- its addChat()/streamResponse() continuation still pushed
+    the abandoned chat id into the new Dream's (already-reset) session list.
+    Any store that (a) derives visible state from an array of ids scoped to some
+    'current context' ref, and (b) resets that array on a watch when the context
+    changes, needs its own in-flight async writers to capture an epoch/ticket
+    before their first await and re-check it after every await -- the same
+    openRunRequestId shape already used in modelBuilderStore.ts. A stale
+    retry_context is also worth checking before assuming a rejected fix was
+    never resubmitted: git blame on the file it targets can confirm the fix
+    already landed under a later, unlogged cycle, in which case the field
+    should be cleared rather than left looking like an open rejection."
