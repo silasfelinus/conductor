@@ -5610,7 +5610,7 @@ tasks:
 - id: t-147
   milestone: m2
   title: "Flux2 engine hung the render relay's only concurrent slot for ~30 minutes (ArtJob 21616)"
-  status: claimed
+  status: review
   gate_human: false
   stakes: reversible
   passes: 0
@@ -5622,7 +5622,9 @@ tasks:
     TO APPROVE / RESOLVE: once you've either fixed whatever caused the hang (or confirmed the relay is healthy and this was a one-off) and optionally the flux2/Flux.1-LoRA compatibility question above, set `approved_by_human: true` and `status: done` with a short note on the cause. Until then this stays open so nobody else queues another flux2 smoke and re-triggers the same relay-wide stall.
 
     Silas explicitly asked this session to investigate the current cluster of Comfy errors. Resume repo-side diagnosis and reversible remediation now; preserve any remaining requirement for physical relay/Comfy console inspection as a separate human gate rather than blocking safe code fixes.
-  updated: '2026-09-05T22:08:00Z'
+
+    Repo-side remediation is ready for review on kind_robots branch worker/conductor-t-147-flux2-lora-guard-gpt56sol-9f4c. The scoped three-file diff makes Flux.2 LoRA compatibility generation-aware in the shared picker, reuses the same guard in server-side enqueue resolution, and replaces the prior contract that explicitly allowed Flux.1 D LoRAs on Flux.2 with regression coverage that rejects Flux.1/Kontext and accepts Flux.2 lineage. Runtime relay recovery remains a separate physical-host verification gate.
+  updated: '2026-09-05T22:12:00Z'
   owner: worker
   claimed_by: 2026-09-05T220800Z-conductor-t147-gpt56sol-9f4c
   claimed_at: '2026-09-05T22:08:00Z'
