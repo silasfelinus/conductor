@@ -61,7 +61,7 @@ tasks:
 - id: t-003
   milestone: m2
   title: "Reconcile later Resource-backed generation evidence; run one current smoke only if proof is still missing"
-  status: claimed
+  status: review
   stakes: reversible
   gate_human: false
   note: |-
@@ -74,8 +74,10 @@ tasks:
     FOR SILAS: Evidence reconciliation is merged in projects/lora-ingestion/docs/t-003-resource-backed-generation-evidence.md (Conductor #2023). It shows the Resource.localPath application plumbing is fixed, but repository evidence does not prove a Resource-backed ArtJob reached DONE and produced an ArtImage. TO UNBLOCK: no product decision is needed; a later token-equipped agent should queue exactly one Krea2/Flux2 Resource-backed smoke and record Resource id/localPath, ArtJob id, terminal DONE state, and ArtImage id/path. KR_API_TOKEN was absent in this run, so production was left untouched.
 
     Silas reproduced a live compatibility bug on the image generator: selecting Krea 2 still offers FLUX LoRAs. Reopen this Resource-backed Krea2/Flux2 verification task so the picker and enqueue guard can enforce model-family compatibility before the smoke is considered complete.
+
+    Implemented the Krea/Flux LoRA compatibility split on the Kind Robots worker branch. The shared picker now keys Krea 2 compatibility from Resource.generation, FLUX/KONTEXT resources score zero for Krea, and the enqueue resolver reuses the same check so stale/direct selections are rejected. Added contract coverage while preserving the existing Flux.2 policy.
   approved_by_human: false
-  updated: '2026-09-05T12:01:00Z'
+  updated: '2026-09-05T12:06:00Z'
   outcome_note: >
     The original July 28 gate is stale in scope. Since then Kind Robots made Resource.localPath
     authoritative for LoRA resolution across image/video engines (including PR #1090), fixed

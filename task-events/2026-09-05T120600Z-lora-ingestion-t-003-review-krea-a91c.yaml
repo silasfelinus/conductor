@@ -1,8 +1,0 @@
-version: 1
-project: lora-ingestion
-task: t-003
-operation: review
-session: 2026-09-05T120100Z-lora-ingestion-t-003-krea-a91c
-updated: '2026-09-05T12:06:00Z'
-note: >-
-  Implemented the Krea/Flux LoRA compatibility split on the Kind Robots worker branch. The shared picker now keys Krea 2 compatibility from Resource.generation, FLUX/KONTEXT resources score zero for Krea, and the enqueue resolver reuses the same check so stale/direct selections are rejected. Added contract coverage while preserving the existing Flux.2 policy.
