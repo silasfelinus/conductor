@@ -1,8 +1,0 @@
-version: 1
-project: lora-ingestion
-task: t-003
-operation: ready
-session: 2026-09-05T120100Z-lora-ingestion-t-003-krea-a91c
-updated: '2026-09-05T12:12:30Z'
-note: >-
-  Compatibility fix merged to kind_robots main as PR #2416 (merge commit 501fb31abbbbe6310cf504aad3f2b22066e9a37a). Krea 2 LoRA selection now uses Resource.generation lineage, FLUX/KONTEXT Resources are excluded for Krea, and the enqueue resolver rejects stale/direct mismatches. All PR-triggered GitHub Actions completed successfully, including TypeScript and the full Contract Tests suite; the new Art generator preset contract passed. Vercel had no PR preview deployment to inspect, so no preview was fabricated. The broader t-003 runtime Resource-backed DONE + ArtImage smoke evidence remains genuinely unresolved and should be handled separately without holding this code fix claim.

@@ -61,7 +61,7 @@ tasks:
 - id: t-003
   milestone: m2
   title: "Reconcile later Resource-backed generation evidence; run one current smoke only if proof is still missing"
-  status: review
+  status: ready
   stakes: reversible
   gate_human: false
   note: |-
@@ -76,8 +76,10 @@ tasks:
     Silas reproduced a live compatibility bug on the image generator: selecting Krea 2 still offers FLUX LoRAs. Reopen this Resource-backed Krea2/Flux2 verification task so the picker and enqueue guard can enforce model-family compatibility before the smoke is considered complete.
 
     Implemented the Krea/Flux LoRA compatibility split on the Kind Robots worker branch. The shared picker now keys Krea 2 compatibility from Resource.generation, FLUX/KONTEXT resources score zero for Krea, and the enqueue resolver reuses the same check so stale/direct selections are rejected. Added contract coverage while preserving the existing Flux.2 policy.
+
+    Compatibility fix merged to kind_robots main as PR #2416 (merge commit 501fb31abbbbe6310cf504aad3f2b22066e9a37a). Krea 2 LoRA selection now uses Resource.generation lineage, FLUX/KONTEXT Resources are excluded for Krea, and the enqueue resolver rejects stale/direct mismatches. All PR-triggered GitHub Actions completed successfully, including TypeScript and the full Contract Tests suite; the new Art generator preset contract passed. Vercel had no PR preview deployment to inspect, so no preview was fabricated. The broader t-003 runtime Resource-backed DONE + ArtImage smoke evidence remains genuinely unresolved and should be handled separately without holding this code fix claim.
   approved_by_human: false
-  updated: '2026-09-05T12:06:00Z'
+  updated: '2026-09-05T12:12:30Z'
   outcome_note: >
     The original July 28 gate is stale in scope. Since then Kind Robots made Resource.localPath
     authoritative for LoRA resolution across image/video engines (including PR #1090), fixed
@@ -86,9 +88,6 @@ tasks:
     later production/ArtJob evidence for a successful Resource-backed LoRA render. If that proof
     already exists, document it and finish the project. Only queue one fresh smoke render if the
     existing evidence is genuinely insufficient. No human product decision is required.
-  owner: worker
-  claimed_by: 2026-09-05T120100Z-lora-ingestion-t-003-krea-a91c
-  claimed_at: '2026-09-05T12:01:00Z'
 
 - id: t-004
   milestone: m3
