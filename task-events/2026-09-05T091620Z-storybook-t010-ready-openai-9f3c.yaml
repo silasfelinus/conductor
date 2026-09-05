@@ -1,0 +1,9 @@
+version: 1
+project: storybook
+task: t-010
+operation: ready
+owner: worker
+session: openai-scheduled-20260905T091149Z-storybook-t010-9f3c
+updated: '2026-09-05T09:16:20Z'
+note: >-
+  Cycle 51 found a concrete narrative storage-recovery sibling defect. Taskmaster's restoreFromLocalStorage catches a throwing getItem/parse but then calls localStorage.removeItem(STORAGE_KEY) unguarded inside that catch, so storage implementations that reject access can throw again out of the recovery path and onMounted. Storybook's equivalent recovery already nests cleanup in a second try/catch and its session-storage recovery guard documents this exact class. Filed kind_robots issue #2413 with the narrow fix and regression-test scope. No implementation was attempted connector-side because the affected store is a large file and the connector protocol forbids replacement from an abbreviated response; task remains ready for the focused store + contract slice.
