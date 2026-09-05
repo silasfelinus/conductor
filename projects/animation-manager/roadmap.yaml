@@ -218,146 +218,19 @@ tasks:
     depends_on:
       - t-003
       - t-004
-    note: >-
+    note: |-
       Reconciliation (conductor scheduled sweep, state-reconciliation duty): task was left at status: review (claimed 2026-08-12T17:30:11Z by 20260812T1727-am-t007) even though kind_robots PR #1821 (Ant Farm Excavation screen FX) merged over 6 hours ago -- merged_at 2026-08-12T20:58:06Z, verified via GitHub MCP, all CI green. Rearmed to ready per recurring-task convention -- t-007 never reaches done; no code change, bookkeeping only.
-
-      kind_robots#2135 merged (squash 2b49dc5) -- Marble Run Contraption shipped. All CI green
-      (37/37 checks including Contract verifiers, TypeScript, layout-contract). Re-armed to
-      ready per recurring-task convention.
-
+      kind_robots#2135 merged (squash 2b49dc5) -- Marble Run Contraption shipped. All CI green (37/37 checks including Contract verifiers, TypeScript, layout-contract). Re-armed to ready per recurring-task convention.
       Cycle (conductor scheduled Agent run, 2026-08-29T02:27Z session, claude-scheduled-20260829T0227Z-am-t007): re-checked before doing any work (per convention) -- interface-vision/t-104's slice 57 and mermaids-of-venice/t-013's daily check had already run earlier this same hour with no new evidence (kind_robots main advanced by one commit since t-104's last check, d93fe3a home-page pass; grepped its changed files against both t-104 mechanical pools, zero new candidates). Every other active project's ready task was either genuinely blocked pending Silas (coat-dance/t-010 on t-003's source video) or deeply exhausted with an explicit no-new-lens note (model-builder/t-029 at 65+ cycles, media-watchlist/t-006 waiting on its own t-017 retire-or-v2 decision). Fell through to this continuous-lifecycle task per AGENTS.md's fallback rule, last run 2026-08-26 (marble-run-contraption).
-
       Built the next highest-priority unbuilt pitch (strandbeest-migration, priority 15, the top of the pitched queue) rather than a polish pass, since all six already-candidate pitches (koi-memory-pond, impossible-terrarium, ink-oracle, celestial-mobile, tiny-weather-front, ant-farm-excavation) are awaiting Reaction-evidence promotion, not further build work, and this sandbox has no live DB to read Reaction data anyway (SPEC.md's standing sandbox-access-gap). Implemented the real Jansen eight-bar leg linkage (the twelve holy-number link lengths + 15-unit crank radius) via circle-circle intersection with continuity-based branch selection, precomputed once into a 180-step lookup table per the pitch's own performance-risk note. Three legs per walker at 120-degree crank-phase offsets, herd of 5 (2 reduced-motion) with click-spawn capped at 9, ambient wind + pointer-gust speed modulation, and off-screen-buffer wraparound so re-entry never pops. kind_robots PR #2190 opened from worker/animation-manager-t007. Verified: eslint clean, prettier clean (confirmed pre-existing unrelated drift elsewhere in animationCatalog.ts via git stash, left untouched per the davinci/t-025 lesson), full-project vue-tsc --noEmit exit 0, test:animation-catalog and test:animation-component-attempts both pass, test:layout-contract holds with no new violations, check_animation_novelty.py --strict reports no collision. Manual browser smoke matrix deferred per the standing sandbox-access-gap tag, same as every prior build in this project. PITCHES.yaml's strandbeest-migration promoted pitched -> candidate with its build entry (same conductor session, committed alongside this roadmap update). Flagged as a kaizen candidate on the PR: SPEC.md's 'Attempt records' section still describes the retired Component-table ledger in the present tense even though verifyAnimationComponentAttempts.ts actively guards against its return -- worth a doc-accuracy fix in a future cycle. Merging PR #2190 once CI is green; re-armed to ready per this task's recurring-task convention.
+      Cycle (conductor scheduled Agent run, session claude- scheduled-20260831T203013Z-am-t007): built the next highest-priority unbuilt pitch (shadow-puppet-theater, priority 16, top of the pitched queue) since all six candidate- tier pitches (koi-memory-pond, impossible-terrarium, ink-oracle, celestial-mobile, tiny- weather-front, ant-farm-excavation) and strandbeest-migration remain awaiting Reaction- evidence promotion, not further build work, and this sandbox still has no live DB to read Reaction data (SPEC.md's standing sandbox-access-gap). Delegated implementation to a worktree-isolated subagent per hard safety rules 11/12. Built components/screenfx/shadow-puppet-theater.vue: cached Path2D silhouette cutouts (bird/boat/lantern-bearer puppets) with per-joint save/translate/rotate/restore transforms, a drifting radial backlight rendered via a blurred-penumbra-plus-crisp- silhouette technique so cast-shadow angle/softness changes without ever flattening or washing out the puppet, three rotating vignettes (13s each, under the pitch's 20s acceptance bound), reduced-motion single-puppet/fixed-backlight fallback, and a non- blocking pointer hand-shadow + click-to-advance interaction. Verified: eslint clean, prettier clean on the new file (pre-existing animationCatalog.ts drift confirmed via git stash, left untouched), full-project vue-tsc --noEmit exit 0, test:animation- catalog/test:animation-component-attempts pass, test:layout-contract holds at the 207-violation baseline with zero new, check_animation_novelty.py --strict reports no collision. kind_robots PR #2274 merged squash 8eea226, all 37 checks green. PITCHES.yaml's shadow-puppet-theater promoted pitched -> candidate with its build entry (conductor PR #3340, merged squash f8101e7) -- the subagent's first attempt at this edit truncated the file via create_or_update_file (silently dropped the last three pitches from partial context), caught via a post-push fetch-and-diff verification, corrected with two follow-up pushes, and confirmed via a final byte-for-byte diff against main plus only the intended two-line edit; independently re-verified in this session (all 27 pitches present, zoetrope-lantern-drum/soap-film-membrane/kaleidoscope-bloom all intact). Both repos end clean, zero open PRs, zero dangling branches. Re-armed to ready per this task's recurring-task convention.
+      Cycle (conductor scheduled Agent run, session claude- scheduled-20260903T063110Z-am-t007): built the next highest-priority unbuilt pitch (kintsugi-weather, priority 17, top of the pitched queue) since all seven candidate-tier pitches (koi-memory-pond, impossible-terrarium, ink-oracle, celestial-mobile, tiny- weather-front, ant-farm-excavation, strandbeest-migration) and shadow-puppet-theater remain awaiting Reaction-evidence promotion, not further build work, and this sandbox still has no live DB to read Reaction data (SPEC.md standing sandbox-access-gap). Implemented components/screenfx/kintsugi-weather.vue: hairline fractures branch out from sparse edge points via a cached DFS branching walk (depth/segment-capped), then heal root-to-tip using the same cached Path2D revealed by lineDashOffset for both the growth and heal passes. At most 2 concurrent crack systems, pointer warmth accelerates the heal front near the cursor, a single short-lived click-spark, reduced-motion falls back to one static already-healed seam with only a slow hue drift. Full cycle ~17s, within the pitch's 30s bound. Verified: eslint clean, prettier clean on the new file (animationCatalog.ts's pre-existing unrelated drift confirmed via git stash, left untouched per the davinci/t-025 lesson), full-project vue-tsc --noEmit exit 0, test:animation-catalog and test:animation-component-attempts pass, test:layout-contract holds at the 207-violation baseline with zero new violations, check_animation_novelty.py --strict reports no collision. Manual browser smoke matrix deferred per the standing sandbox-access-gap tag, same as every prior build in this project. kind_robots PR #2352 merged (squash d9137c9), all 39 checks green. PITCHES.yaml's kintsugi-weather promoted pitched -> candidate with its build entry (same conductor session, committed alongside this roadmap update). Flagged as a kaizen candidate on the PR: SPEC.md's Attempt records section still describes the retired Component-table ledger in the present tense even though verifyAnimationComponentAttempts.ts actively guards against its return (flagged once before on the strandbeest-migration PR, still unfixed) -- worth a doc-accuracy fix in a future cycle. Re-armed to ready per recurring-task convention.
+      Cycle (conductor scheduled Agent run, session claude- scheduled-20260903T-am-t007-tapestry): built the next highest-priority unbuilt pitch (tapestry-loom, priority 18, top of the pitched queue) since all eight candidate-tier pitches (koi-memory-pond, impossible-terrarium, ink-oracle, celestial-mobile, tiny- weather-front, ant-farm-excavation, strandbeest-migration, shadow-puppet-theater) and kintsugi-weather remain awaiting Reaction-evidence promotion, not further build work, and this sandbox still has no live DB to read Reaction data (SPEC.md standing sandbox- access-gap). Picked this over another model-builder/t-029 due-diligence pass, storybook/t-010, or coat-dance/t-010, since all three had already each had one or more fresh cycles earlier this same day with no actionable finding (model-builder cycles 52/88, storybook cycles 55/56, coat-dance) -- mirroring the 2026-08-29 cycle's own precedent for falling through to this continuous-lifecycle task when the finite queue is genuinely exhausted for the day. Implemented components/screenfx/tapestry-loom.vue: a shuttle glides row by row across a fixed-count warp (28 columns, 16 rows/motif, both capped regardless of viewport per the pitch's performance_risk note), weaving weft rows into a deterministic motif sequence (stripes -> chevron -> diamond) with a rotating four-hue palette -- state progression is a cycle counter modulo fixed arrays with zero Math.random() calls anywhere, satisfying the pitch's own determinism acceptance criterion more strictly than most prior builds. Once a motif's row count completes the tapestry holds, then unravels top-down back to bare warp before the next motif/palette begins; settled rows are only re-baked into an offscreen buffer when the row set structurally changes (a row completes or fully retracts), not redrawn from scratch every frame. Pointer hover slows the current weaving row and highlights whichever row sits under the cursor; a click plucks the nearest row with a decaying sine-wave ripple. All pointer handling runs on window listeners (passive: true, no preventDefault) with the canvas itself pointer-events: none, matching every sibling screenfx component's convention -- never blocks underlying page input. Reduced motion renders one static completed tapestry (stripes motif, first palette) with only a slow hue drift, no shuttle, no unraveling, no pointer response. Worst-case full cycle (weave+hold+unravel, with continuous hover slow-down) is ~35s, within the pitch's 45s bound. Verified: eslint clean, prettier clean on the new file (animationCatalog.ts's pre-existing unrelated drift confirmed via git stash, left untouched per the davinci/t-025 lesson), full- project vue-tsc --noEmit exit 0, test:animation-catalog and test:animation-component- attempts both pass, test:layout-contract holds at the 207-violation baseline with zero new violations, check_animation_novelty.py --strict reports no collision. Manual browser smoke matrix deferred per the standing sandbox-access-gap tag, same as every prior build in this project. kind_robots PR #2360 merged (squash e47fc49), all 40 checks green including the sometimes-slow Contract verifiers/ESLint-ratchet step (conductor/t-132) which completed normally this run (~4 min, not stalled). PITCHES.yaml's tapestry-loom promoted pitched -> candidate with its build entry, committed alongside this roadmap update on the same branch. Re-armed to ready per this task's recurring-task convention.
+      Built the next pitched candidate, hourglass-cascade (PITCHES.yaml priority 19). Implemented components/screenfx/hourglass-cascade.vue: grains stream from the top bulb through the neck into a bin-height-map pile (18 fixed bins) in the bottom bulb, occasionally slumping past a fixed angle-of-repose threshold (bounded, max 5 redistribution steps per landing); once the source bulb's reservoir empties and the last in-flight grain lands, the whole glass eases through a half-turn flip (canvas rotation transform) and the two bulbs swap roles. In-flight grain pool is bounded (max 12) regardless of viewport or elapsed session time, per the pitch's own performance-risk note. Hovering the neck narrows the falling stream (jitter range only, no lasting state change); a click triggers an early flip, rate-limited to once per pour. Reduced motion renders one static mid-pour frame (fixed parabolic cone pile, no grain motion/avalanches/flip) with only a slow glass-tint drift. Registered in stores/animationCatalog.ts (generationSafe, fullscreen-preferred, no blocking input). Verified: vue-tsc --noEmit clean, eslint clean on both files, prettier clean on the new component (animationCatalog.ts's pre-existing unrelated drift confirmed via git stash against origin/main, left untouched), test:animation-catalog and test:animation- component-attempts pass, test:layout-contract holds at the 207-violation baseline, check_animation_novelty.py --strict reports no collision against all 27 pitches. Manual browser smoke matrix deferred per the standing sandbox-access-gap tag, same as every prior build. kind_robots PR #2367 merged (squash 5091654), all 40 checks green. PITCHES.yaml not yet updated with a promotion entry for hourglass-cascade -- leaving that for whoever next reviews reaction evidence, matching this project's existing pitched -> candidate promotion convention. Re-armed to ready per this task's recurring- task convention.
 
-      Cycle (conductor scheduled Agent run, session claude-
-      scheduled-20260831T203013Z-am-t007): built the next highest-priority unbuilt pitch
-      (shadow-puppet-theater, priority 16, top of the pitched queue) since all six candidate-
-      tier pitches (koi-memory-pond, impossible-terrarium, ink-oracle, celestial-mobile, tiny-
-      weather-front, ant-farm-excavation) and strandbeest-migration remain awaiting Reaction-
-      evidence promotion, not further build work, and this sandbox still has no live DB to
-      read Reaction data (SPEC.md's standing sandbox-access-gap). Delegated implementation to
-      a worktree-isolated subagent per hard safety rules 11/12. Built
-      components/screenfx/shadow-puppet-theater.vue: cached Path2D silhouette cutouts
-      (bird/boat/lantern-bearer puppets) with per-joint save/translate/rotate/restore
-      transforms, a drifting radial backlight rendered via a blurred-penumbra-plus-crisp-
-      silhouette technique so cast-shadow angle/softness changes without ever flattening or
-      washing out the puppet, three rotating vignettes (13s each, under the pitch's 20s
-      acceptance bound), reduced-motion single-puppet/fixed-backlight fallback, and a non-
-      blocking pointer hand-shadow + click-to-advance interaction. Verified: eslint clean,
-      prettier clean on the new file (pre-existing animationCatalog.ts drift confirmed via git
-      stash, left untouched), full-project vue-tsc --noEmit exit 0, test:animation-
-      catalog/test:animation-component-attempts pass, test:layout-contract holds at the
-      207-violation baseline with zero new, check_animation_novelty.py --strict reports no
-      collision. kind_robots PR #2274 merged squash 8eea226, all 37 checks green.
-      PITCHES.yaml's shadow-puppet-theater promoted pitched -> candidate with its build entry
-      (conductor PR #3340, merged squash f8101e7) -- the subagent's first attempt at this edit
-      truncated the file via create_or_update_file (silently dropped the last three pitches
-      from partial context), caught via a post-push fetch-and-diff verification, corrected
-      with two follow-up pushes, and confirmed via a final byte-for-byte diff against main
-      plus only the intended two-line edit; independently re-verified in this session (all 27
-      pitches present, zoetrope-lantern-drum/soap-film-membrane/kaleidoscope-bloom all
-      intact). Both repos end clean, zero open PRs, zero dangling branches. Re-armed to ready
-      per this task's recurring-task convention.
-
-      Cycle (conductor scheduled Agent run, session claude-
-      scheduled-20260903T063110Z-am-t007): built the next highest-priority unbuilt pitch
-      (kintsugi-weather, priority 17, top of the pitched queue) since all seven candidate-tier
-      pitches (koi-memory-pond, impossible-terrarium, ink-oracle, celestial-mobile, tiny-
-      weather-front, ant-farm-excavation, strandbeest-migration) and shadow-puppet-theater
-      remain awaiting Reaction-evidence promotion, not further build work, and this sandbox
-      still has no live DB to read Reaction data (SPEC.md standing sandbox-access-gap).
-      Implemented components/screenfx/kintsugi-weather.vue: hairline fractures branch out from
-      sparse edge points via a cached DFS branching walk (depth/segment-capped), then heal
-      root-to-tip using the same cached Path2D revealed by lineDashOffset for both the growth
-      and heal passes. At most 2 concurrent crack systems, pointer warmth accelerates the heal
-      front near the cursor, a single short-lived click-spark, reduced-motion falls back to
-      one static already-healed seam with only a slow hue drift. Full cycle ~17s, within the
-      pitch's 30s bound. Verified: eslint clean, prettier clean on the new file
-      (animationCatalog.ts's pre-existing unrelated drift confirmed via git stash, left
-      untouched per the davinci/t-025 lesson), full-project vue-tsc --noEmit exit 0,
-      test:animation-catalog and test:animation-component-attempts pass, test:layout-contract
-      holds at the 207-violation baseline with zero new violations, check_animation_novelty.py
-      --strict reports no collision. Manual browser smoke matrix deferred per the standing
-      sandbox-access-gap tag, same as every prior build in this project. kind_robots PR #2352
-      merged (squash d9137c9), all 39 checks green. PITCHES.yaml's kintsugi-weather promoted
-      pitched -> candidate with its build entry (same conductor session, committed alongside
-      this roadmap update). Flagged as a kaizen candidate on the PR: SPEC.md's Attempt records
-      section still describes the retired Component-table ledger in the present tense even
-      though verifyAnimationComponentAttempts.ts actively guards against its return (flagged
-      once before on the strandbeest-migration PR, still unfixed) -- worth a doc-accuracy fix
-      in a future cycle. Re-armed to ready per recurring-task convention.
-
-      Cycle (conductor scheduled Agent run, session claude-
-      scheduled-20260903T-am-t007-tapestry): built the next highest-priority unbuilt pitch
-      (tapestry-loom, priority 18, top of the pitched queue) since all eight candidate-tier
-      pitches (koi-memory-pond, impossible-terrarium, ink-oracle, celestial-mobile, tiny-
-      weather-front, ant-farm-excavation, strandbeest-migration, shadow-puppet-theater) and
-      kintsugi-weather remain awaiting Reaction-evidence promotion, not further build work,
-      and this sandbox still has no live DB to read Reaction data (SPEC.md standing sandbox-
-      access-gap). Picked this over another model-builder/t-029 due-diligence pass,
-      storybook/t-010, or coat-dance/t-010, since all three had already each had one or more
-      fresh cycles earlier this same day with no actionable finding (model-builder cycles
-      52/88, storybook cycles 55/56, coat-dance) -- mirroring the 2026-08-29 cycle's own
-      precedent for falling through to this continuous-lifecycle task when the finite queue is
-      genuinely exhausted for the day. Implemented components/screenfx/tapestry-loom.vue: a
-      shuttle glides row by row across a fixed-count warp (28 columns, 16 rows/motif, both
-      capped regardless of viewport per the pitch's performance_risk note), weaving weft rows
-      into a deterministic motif sequence (stripes -> chevron -> diamond) with a rotating
-      four-hue palette -- state progression is a cycle counter modulo fixed arrays with zero
-      Math.random() calls anywhere, satisfying the pitch's own determinism acceptance
-      criterion more strictly than most prior builds. Once a motif's row count completes the
-      tapestry holds, then unravels top-down back to bare warp before the next motif/palette
-      begins; settled rows are only re-baked into an offscreen buffer when the row set
-      structurally changes (a row completes or fully retracts), not redrawn from scratch every
-      frame. Pointer hover slows the current weaving row and highlights whichever row sits
-      under the cursor; a click plucks the nearest row with a decaying sine-wave ripple. All
-      pointer handling runs on window listeners (passive: true, no preventDefault) with the
-      canvas itself pointer-events: none, matching every sibling screenfx component's
-      convention -- never blocks underlying page input. Reduced motion renders one static
-      completed tapestry (stripes motif, first palette) with only a slow hue drift, no
-      shuttle, no unraveling, no pointer response. Worst-case full cycle (weave+hold+unravel,
-      with continuous hover slow-down) is ~35s, within the pitch's 45s bound. Verified: eslint
-      clean, prettier clean on the new file (animationCatalog.ts's pre-existing unrelated
-      drift confirmed via git stash, left untouched per the davinci/t-025 lesson), full-
-      project vue-tsc --noEmit exit 0, test:animation-catalog and test:animation-component-
-      attempts both pass, test:layout-contract holds at the 207-violation baseline with zero
-      new violations, check_animation_novelty.py --strict reports no collision. Manual browser
-      smoke matrix deferred per the standing sandbox-access-gap tag, same as every prior build
-      in this project. kind_robots PR #2360 merged (squash e47fc49), all 40 checks green
-      including the sometimes-slow Contract verifiers/ESLint-ratchet step (conductor/t-132)
-      which completed normally this run (~4 min, not stalled). PITCHES.yaml's tapestry-loom
-      promoted pitched -> candidate with its build entry, committed alongside this roadmap
-      update on the same branch. Re-armed to ready per this task's recurring-task convention.
-
-      Built the next pitched candidate, hourglass-cascade (PITCHES.yaml priority 19).
-      Implemented components/screenfx/hourglass-cascade.vue: grains stream from the top bulb
-      through the neck into a bin-height-map pile (18 fixed bins) in the bottom bulb,
-      occasionally slumping past a fixed angle-of-repose threshold (bounded, max 5
-      redistribution steps per landing); once the source bulb's reservoir empties and the last
-      in-flight grain lands, the whole glass eases through a half-turn flip (canvas rotation
-      transform) and the two bulbs swap roles. In-flight grain pool is bounded (max 12)
-      regardless of viewport or elapsed session time, per the pitch's own performance-risk
-      note. Hovering the neck narrows the falling stream (jitter range only, no lasting state
-      change); a click triggers an early flip, rate-limited to once per pour. Reduced motion
-      renders one static mid-pour frame (fixed parabolic cone pile, no grain
-      motion/avalanches/flip) with only a slow glass-tint drift. Registered in
-      stores/animationCatalog.ts (generationSafe, fullscreen-preferred, no blocking input).
-      Verified: vue-tsc --noEmit clean, eslint clean on both files, prettier clean on the new
-      component (animationCatalog.ts's pre-existing unrelated drift confirmed via git stash
-      against origin/main, left untouched), test:animation-catalog and test:animation-
-      component-attempts pass, test:layout-contract holds at the 207-violation baseline,
-      check_animation_novelty.py --strict reports no collision against all 27 pitches. Manual
-      browser smoke matrix deferred per the standing sandbox-access-gap tag, same as every
-      prior build. kind_robots PR #2367 merged (squash 5091654), all 40 checks green.
-      PITCHES.yaml not yet updated with a promotion entry for hourglass-cascade -- leaving
-      that for whoever next reviews reaction evidence, matching this project's existing
-      pitched -> candidate promotion convention. Re-armed to ready per this task's recurring-
-      task convention.
-    status: claimed
-    updated: '2026-09-04T22:12:23Z'
-    claimed_by: openai-scheduled-20260904T221223Z-animation-manager-t007-7f3c
-    claimed_at: '2026-09-04T22:12:23Z'
-    owner: worker
+      Coordination closeout by openai-scheduled-20260905T041114Z-animation-manager-t007-oai8c3: the prior OpenAI session's implementation already merged as kind_robots PR #2367 (squash 5091654), but t-007 remained stale-claimed. Re-arm the recurring build loop so the merged work is not left looking abandoned.
+    status: ready
+    updated: '2026-09-05T04:11:14Z'
     implementation_pr: 'silasfelinus/kind_robots#2367'
 
   - id: t-008
