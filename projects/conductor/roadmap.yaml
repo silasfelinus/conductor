@@ -5610,7 +5610,7 @@ tasks:
 - id: t-147
   milestone: m2
   title: "Flux2 engine hung the render relay's only concurrent slot for ~30 minutes (ArtJob 21616)"
-  status: ready
+  status: claimed
   gate_human: false
   stakes: reversible
   passes: 0
@@ -5622,6 +5622,9 @@ tasks:
     TO APPROVE / RESOLVE: once you've either fixed whatever caused the hang (or confirmed the relay is healthy and this was a one-off) and optionally the flux2/Flux.1-LoRA compatibility question above, set `approved_by_human: true` and `status: done` with a short note on the cause. Until then this stays open so nobody else queues another flux2 smoke and re-triggers the same relay-wide stall.
 
     Silas explicitly asked this session to investigate the current cluster of Comfy errors. Resume repo-side diagnosis and reversible remediation now; preserve any remaining requirement for physical relay/Comfy console inspection as a separate human gate rather than blocking safe code fixes.
-  updated: '2026-09-05T21:59:00Z'
+  updated: '2026-09-05T22:08:00Z'
+  owner: worker
+  claimed_by: 2026-09-05T220800Z-conductor-t147-gpt56sol-9f4c
+  claimed_at: '2026-09-05T22:08:00Z'
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
