@@ -12484,3 +12484,22 @@ records:
     rounded-lg/rounded-2xl bare variants already existed too. Comparing
     across the family's established naming grid (color x size x radius)
     surfaces gaps faster than a fresh unconstrained grep every slice."
+- date: 2026-09-05
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Slice 88 of the recurring kr-btn consistency sweep was tooling-only,
+    not another live-surface migration: hardened
+    utils/scripts/codemods/kr_btn_xs_codemod.py with repeatable --path scoping
+    (single .vue file or directory) and excluded components/abandonware/**
+    from default scans, so future slices can target a coherent surface family
+    instead of a repo-wide apply followed by a hand-revert of collateral
+    changes. Worth recognizing when a recurring migration task's next useful
+    slice is improving the tool itself rather than running it again --
+    the growing remaining-pool size (52+ occurrences across 25 families per
+    slice 87) was the signal that scoping the codemod paid off more than one
+    more blind repo-wide pass would have."
