@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 52
     stakes: reversible
@@ -635,8 +635,44 @@ tasks:
       than named literally); a future cycle with more time budget should do this cross-
       reference properly, or continue the end-to-end surface-read rotation once a new file
       changes.
-    updated: '2026-09-05T18:28:24Z'
-    owner: worker
+
+      Cycle 99 (verified no-op, conductor scheduled Agent run): took cycle 98's suggested lead
+      -- did the repo-wide guard-coverage cross-reference properly this time instead of
+      partially. Extracted all top-level function names from stores/modelBuilderStore.ts and
+      grepped each against all 86 verifyModelBuilder*.ts guard files (contract scripts only,
+      excluding .test.ts selftests) for at least one mention. Four functions came back with
+      zero hits: previewCommit, selectSourceType, toggleOutput, toggleIncludeArt. Read each
+      end-to-end: previewCommit is a pure synchronous projection of current state (no network,
+      no async ordering to race) -- nothing to guard. toggleOutput/toggleIncludeArt are
+      trivial synchronous boolean flips on state.selections/state.includeArt -- same, no async
+      surface. selectSourceType is async but its only side effect is delegating to
+      loadSources(), which already carries its own requestedType staleness guard (verified the
+      guard file mentions it and the store code at loadSources() correctly re-checks
+      state.sourceType against the captured requestedType after both the success and error
+      branches, and in the finally) -- selectSourceType itself has no independent race to
+      cover. No new bug found; no code change needed. Also re-read the two comments this
+      session flagged as candidates on first pass -- resumeRun()'s ticket comment (line ~2958,
+      referencing cycle 59/58) and resetRun()'s openRunRequestId-bump comment (line
+      ~3317-3330, referencing cycle 97) -- both are historical documentation of fixes already
+      landed inline at the same location, not open leads;
+      verifyModelBuilderResumeRunRequestGuard.ts and verifyModelBuilderOpenRunRequestGuard.ts
+      / verifyModelBuilderRunEpochGuard.ts already cover them respectively. Separately:
+      kind_robots node_modules/.nuxt were not provisioned in this session's sandbox, so 84/85
+      guard contract scripts ran fine via bare npx tsx but
+      verifyModelBuilderFieldBlobContinuationGuard.ts failed on "Cannot find package @/stores"
+      (needs .nuxt/tsconfig.json for the path alias, not present without nuxi prepare). Ran
+      source scripts/provision_kind_robots_deps.sh (conductor's own documented workaround) to
+      provision node_modules/.nuxt/Prisma client, then re-ran the full guard suite: all 85
+      contract scripts + all 84 selftests (169/169) pass clean. git status --porcelain clean
+      throughout (read-only cycle, no production code touched). Next lead for cycle 100: the
+      guard-coverage cross-reference is now genuinely exhausted for
+      stores/modelBuilderStore.ts top-level functions -- a future cycle should extend the same
+      cross-reference to the seven components/model-builder/*.vue files' own top-level
+      methods/computeds (not yet done this way, only spot-read file-by-file in cycles
+      49-56/98), or to server/api/model-builder/**/*.ts route handlers, before falling back to
+      the end-to-end surface-read rotation.
+    updated: '2026-09-05T18:34:58Z'
+    owner: reviewer
     claimed_by: claude-scheduled-20260905T-mb-t029-cycle99
     claimed_at: '2026-09-05T18:28:24Z'
 
