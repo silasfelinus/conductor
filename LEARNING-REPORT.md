@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-05T13:35:32Z
+Generated: 2026-09-05T13:44:55Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **874**
-- Outcomes: blocked: 16, cancelled: 1, done: 857
+- Closed tasks recorded: **875**
+- Outcomes: blocked: 16, cancelled: 1, done: 858
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -38,7 +38,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
 | interface-vision | 98 | 100% |
-| kapowarr | 49 | 100% |
+| kapowarr | 50 | 100% |
 | kind-economy | 6 | 100% |
 | kind-robots | 54 | 98% |
 | kindrobots-unraid | 5 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 858 | 99% |
+| software | 859 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-05 `kapowarr/t-071` — library_conflicts.py's word-overlap heuristic for 'unrelated series sharing a folder' had a blind spot exactly at its most valuable case: volumes with the identical title share every word, so the check that skipped groups with any word in common skipped identical-title pairs before it skipped anything else -- and an identical-title pair sharing a folder is precisely the case where the importer cannot tell them apart and silently misattributes files. The fix asks the same match_title() function the importer itself uses, rather than inventing a second 'same series' notion in the diagnostic script. General lesson: when a diagnostic script re-implements a decision the system under test already makes elsewhere (here, 'are these two titles the same'), call the real function instead of a parallel heuristic -- a parallel heuristic can silently diverge from what actually happens at runtime, in exactly the direction that hides the worst cases.
 - 2026-09-05 `dream-cycle/t-006` — kind_robots#2414's --repair-tainted path cancelled legacy PENDING ArtJobs and committed Facet.artPrompt updates before the eager queue.map(buildFacetArtPayload(...)) that can throw via assertArtPromptContract on any queued entry -- a destructive/cancelling write committed ahead of the step that can still fail, with no rollback. Pass 1's retry_context named the exact fix (build/validate jobRows before the cancellation); pass 2 fixed an adjacent real concern (deleted the unattended auto-merge repair workflow) but left the flagged file byte-identical, confirmed via git log on the changed file rather than trusting the PR description -- checking whether a retry actually touched the flagged file is what caught the drift before a third wasted pass. Pass 3 finally reordered validate-then-mutate as asked. General principle for any script that repairs/replaces existing state: build and validate the full replacement set first; only then commit any cancellation or in-place mutation of what it replaces.
 - 2026-09-05 `interface-vision/t-104` — Slice 80 of the recurring kr-btn consistency sweep: the local kind_robots worktree checkout was found 8 commits behind origin/main (still at slice 71) before the candidate grep ran -- always fetch/ fast-forward the working checkout first, or a grep for the next uncovered class-set risks re-surfacing patterns already migrated by slices merged since the checkout was last synced, or missing that several prior slices already landed. Separately, a create_or_update_file API call built by hand (rather than passing already-read content through) wrote a literal placeholder string as the entire file content instead of the real payload -- caught immediately by reading the file back before opening the follow-on PR, fixed with a plain follow-up commit (no force-push). Always read back a large scripted file write before trusting it. Also: this task's TALKBACK.md had drifted four slices behind its own roadmap note (last entry was slice 69, though kind_robots slices 76-79 had already merged and the note already recorded them) -- worth a dedicated catch-up pass in a future slice.
 - 2026-09-05 `storybook/t-010` — narratorStore.ts's activeDream.value?.id watch reset narratorSessionIds on Dream switch, but sendNarratorMessage() had no way to notice a switch that happened mid-await -- its addChat()/streamResponse() continuation still pushed the abandoned chat id into the new Dream's (already-reset) session list. Any store that (a) derives visible state from an array of ids scoped to some 'current context' ref, and (b) resets that array on a watch when the context changes, needs its own in-flight async writers to capture an epoch/ticket before their first await and re-check it after every await -- the same openRunRequestId shape already used in modelBuilderStore.ts. A stale retry_context is also worth checking before assuming a rejected fix was never resubmitted: git blame on the file it targets can confirm the fix already landed under a later, unlogged cycle, in which case the field should be cleared rather than left looking like an open rejection.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-02 `model-builder/t-029` — This task's own icon-coverage guard (cycle 82/84) only ever scanned the three shared data-structure arrays in modelBuilderRecipes.ts, leaving every per-component kind-icon: literal (view-mode toggles, inline button icons) completely unchecked -- a real, live, user-facing blank-icon bug (model-builder-source-picker.vue's List button, kind-icon:document, assets/icons/document.svg never existed) sat unnoticed through 84 prior cycles of otherwise-thorough code reading because none of them grepped literal icon-name strings against the actual assets/icons/ directory. When a project defines a 'coverage guard' for a hand-typed-name class of bug, scope it to every place that name shape can appear (grep the whole component family, not just the canonical data source), not just the one file where the bug was first found -- a guard that only covers its own origin story leaves the same failure mode live everywhere else. Also: a guard's own explanatory code comment can trip its own widened regex if it quotes the broken value literally (kind-icon:document appearing in prose) -- run a newly widened guard against your own diff before pushing, not just against the target file, to catch this class of self-inflicted false positive before CI does.
 - 2026-09-02 `model-builder/t-029` — A non-nested-brace entry-split regex is fragile against free-text comments that themselves contain a literal open/close brace pair (a code path like server/api/(dreams,scenarios)/... quoted in a comment, using curly braces in the real source) -- it can silently swallow the real entry that follows, while the guard still prints a plausible-looking pass/total. verifyModelBuilderIconCoverageGuard.ts (cycle 82) shipped with exactly this gap for a full cycle before cycle 84 caught it while building an unrelated sibling guard. verifyModelBuilderSourceFieldGuard.ts already used a safer key-boundary split (index-based chunking between consecutive `key: '...'` matches, never touching brace characters at all) -- worth defaulting new SOURCE_TYPES/BUILD_STAGES/RECIPES-array guards to that pattern from the start rather than brace matching, and worth a future cycle double-checking any other guard in this family that still uses brace matching.
 - 2026-09-02 `dream-cycle/t-025` — Added a per-bundle consecutive-failure counter (persisted state file already covered by the existing workflow's git-add step, so no CI/workflow change needed) to stop repair_dream_prose_catalog.py from retrying a chronically-failing bundle forever. Kept the existing per-bundle atomicity (failed bundles stay untouched, retried next run) as the default, only adding a circuit breaker on top after N consecutive failures -- and explicitly exempted an editor's own extra_fields retry from the breaker, since a human-directed re-ask is a different thing from an unattended scheduled retry. Worth remembering for any other 'runs on a schedule forever' loop in this pipeline: distinguish transient-retry-in-place from persistent-content-issue before assuming every failure is worth retrying indefinitely.
-- 2026-09-02 `dream-cycle/t-024` — Wired repair_dream_prose_catalog.py --verify-live --strict into daily-digest.yml's existing recurring cycle (same continue-on-error + folded-into-final-gate pattern as the build/Facet/ArtJob/commit steps) rather than depending on an agent remembering to run it during a t-006 maintenance pass. A scheduled workflow step that already runs daily is a more reliable detection point for silent drift than an agent-recalled manual check -- prefer wiring a new verification into an existing recurring CI/workflow run over adding it to an agent's task checklist when both are available.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-05T13:35:32Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-05T13:44:55Z_

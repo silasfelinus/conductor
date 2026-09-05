@@ -12446,3 +12446,25 @@ records:
     principle for any script that repairs/replaces existing state: build and
     validate the full replacement set first; only then commit any
     cancellation or in-place mutation of what it replaces."
+- date: 2026-09-05
+  project: kapowarr
+  task: t-071
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "library_conflicts.py's word-overlap heuristic for 'unrelated series
+    sharing a folder' had a blind spot exactly at its most valuable case:
+    volumes with the identical title share every word, so the check that
+    skipped groups with any word in common skipped identical-title pairs
+    before it skipped anything else -- and an identical-title pair sharing
+    a folder is precisely the case where the importer cannot tell them
+    apart and silently misattributes files. The fix asks the same
+    match_title() function the importer itself uses, rather than inventing
+    a second 'same series' notion in the diagnostic script. General
+    lesson: when a diagnostic script re-implements a decision the system
+    under test already makes elsewhere (here, 'are these two titles the
+    same'), call the real function instead of a parallel heuristic --
+    a parallel heuristic can silently diverge from what actually happens
+    at runtime, in exactly the direction that hides the worst cases."
