@@ -61,7 +61,7 @@ tasks:
 - id: t-003
   milestone: m2
   title: "Reconcile later Resource-backed generation evidence; run one current smoke only if proof is still missing"
-  status: ready
+  status: claimed
   stakes: reversible
   gate_human: false
   note: |-
@@ -75,7 +75,7 @@ tasks:
 
     Silas reproduced a live compatibility bug on the image generator: selecting Krea 2 still offers FLUX LoRAs. Reopen this Resource-backed Krea2/Flux2 verification task so the picker and enqueue guard can enforce model-family compatibility before the smoke is considered complete.
   approved_by_human: false
-  updated: '2026-09-05T11:57:00Z'
+  updated: '2026-09-05T12:01:00Z'
   outcome_note: >
     The original July 28 gate is stale in scope. Since then Kind Robots made Resource.localPath
     authoritative for LoRA resolution across image/video engines (including PR #1090), fixed
@@ -84,6 +84,9 @@ tasks:
     later production/ArtJob evidence for a successful Resource-backed LoRA render. If that proof
     already exists, document it and finish the project. Only queue one fresh smoke render if the
     existing evidence is genuinely insufficient. No human product decision is required.
+  owner: worker
+  claimed_by: 2026-09-05T120100Z-lora-ingestion-t-003-krea-a91c
+  claimed_at: '2026-09-05T12:01:00Z'
 
 - id: t-004
   milestone: m3
