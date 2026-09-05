@@ -1867,5 +1867,54 @@ tasks:
   claimed_at: '2026-09-02T15:35:00Z'
   updated: '2026-09-02T15:35:00Z'
 
+- id: t-071
+  milestone: m4
+  title: Detect volumes sharing a folder that the importer cannot tell apart
+  status: done
+  passes: 0
+  stakes: reversible
+  note: >
+    Retroactive roadmap entry: work was implemented and merged directly (branch
+    claude/missing-comics-j8osws, same branch name pattern as t-070, not claimed through
+    claim_task.py) before this session found it as an unreconciled live PR during a scheduled
+    conductor sweep. Recorded here so the shipped diagnostic fix isn't invisible to future
+    audits/roadmap reconciliation.
+
+    `scripts/library_conflicts.py`'s `shared_folders()` previously only flagged a folder
+    whose volumes shared *no* meaningful word in their titles -- meant to catch unrelated
+    series dumped into one folder while leaving franchise directories (many ElfQuest/Batman
+    volumes sharing a folder) silent. That rule had a blind spot: two volumes with the exact
+    same title share every word, so this check skipped the identical-title case before it
+    skipped anything else -- exactly the case that costs comics, since `scan_files` files
+    whatever it finds in a folder against whichever volume owns that folder, so an
+    indistinguishable pair silently loses one volume's issues to the other. Silas's real
+    library had three identically-titled Web of Spider-Man volumes (82/83/84) sharing one
+    folder with 24 files misattributed, reported by neither the old word-overlap check.
+
+    Fix adds a second, independent question -- `indistinguishable()` -- that asks
+    `match_title` (the same function the importer itself uses) whether any two volumes
+    sharing a folder are one title to it, rather than inventing a second "same series"
+    heuristic. The two shapes (unrelated series vs. indistinguishable titles) are reported
+    separately since they need different fixes: a stranger gets moved out, an
+    indistinguishable duplicate needs its own folder. Also corrected a test fixture (`The
+    Bunker`/`Bunker` in `/content/Bunker`) that had been miscategorized as a "must stay
+    silent" franchise case when `match_title` (which strips leading articles) actually
+    treats them as identical -- moved to its own indistinguishable-pair test.
+
+    This script only reports (read-only against the live API, confirmed by its own
+    "the only call it makes is a read" test) -- it does not move or delete anything. Which
+    volume to keep in a shared folder remains a judgement only Silas can make.
+
+    Merged silasfelinus/Kapowarr#212 ("Report the folders whose volumes cannot be told
+    apart") at 0c36a3249fefd164c53d7f9cd1af90cac6a92856. All 7 checks green (Python 3.8-3.12
+    tests, docs build, container build) before this session merged it; new coverage for the
+    three-volumes-one-folder case, the leading-article false-negative, the annual correctly
+    staying silent, and the reporting order between the two shapes. Reviewed the diff
+    directly before merging: read-only reporting change plus tests, no destructive
+    operations, no secrets touched.
+  claimed_by: claude-scheduled-20260905T143000Z-kapowarr-t071-reconcile
+  claimed_at: '2026-09-05T14:30:00Z'
+  updated: '2026-09-05T14:30:00Z'
+
 goal: Make Kapowarr a polished comic manager with reliable discovery, metadata, imports, downloads, and automation while
   preserving its clean image-first interface.
