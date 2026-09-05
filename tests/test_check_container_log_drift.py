@@ -15,6 +15,25 @@ import scripts.check_container_log_drift as check
 NOW = datetime(2026, 9, 3, 12, 0, 0, tzinfo=timezone.utc)
 
 
+class _FrozenDatetime(datetime):
+    """datetime subclass whose .now() always returns the fixed NOW above.
+
+    check.main() computes its own reference time via `datetime.now(timezone.utc)`
+    (deliberately real wall-clock time in production -- see the module docstring's
+    "WHY THIS ALSO WATCHES THE CLOCK" section). A test that exercises main() end
+    to end without freezing that clock is itself a time bomb: it passes only until
+    real wall-clock time drifts more than --stale-hours past this file's NOW
+    fixture, at which point the digest genuinely looks stale and `state` flips
+    from "findings" to "stale" with no code change involved. Freeze it here so
+    these tests assert the same thing on every date they run, not just the ones
+    within --stale-hours of whenever this file was last edited.
+    """
+
+    @classmethod
+    def now(cls, tz=None):
+        return NOW if tz is None else NOW.astimezone(tz)
+
+
 def make_digest(generated_at=None, new=(), spiking=(), quiet=(), failed=()):
     return {
         "version": 1,
@@ -143,7 +162,8 @@ def test_main_exits_clean_when_not_configured(tmp_path, capsys):
     assert "not configured yet" in capsys.readouterr().out
 
 
-def test_main_exits_findings_on_new_signatures(tmp_path):
+def test_main_exits_findings_on_new_signatures(tmp_path, monkeypatch):
+    monkeypatch.setattr(check, "datetime", _FrozenDatetime)
     path = tmp_path / "digest.json"
     path.write_text(json.dumps(make_digest(new=[signature()])), encoding="utf-8")
     assert check.main(["--digest", str(path)]) == check.EXIT_FINDINGS
@@ -155,7 +175,8 @@ def test_main_exits_unresolved_on_corrupt_digest(tmp_path):
     assert check.main(["--digest", str(path)]) == check.EXIT_UNRESOLVED
 
 
-def test_main_json_mode_is_parseable(tmp_path, capsys):
+def test_main_json_mode_is_parseable(tmp_path, capsys, monkeypatch):
+    monkeypatch.setattr(check, "datetime", _FrozenDatetime)
     path = tmp_path / "digest.json"
     path.write_text(json.dumps(make_digest(new=[signature()])), encoding="utf-8")
     check.main(["--digest", str(path), "--json"])
