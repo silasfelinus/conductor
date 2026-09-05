@@ -12399,3 +12399,27 @@ records:
     never resubmitted: git blame on the file it targets can confirm the fix
     already landed under a later, unlogged cycle, in which case the field
     should be cleared rather than left looking like an open rejection."
+- date: 2026-09-05
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Slice 80 of the recurring kr-btn consistency sweep: the local
+    kind_robots worktree checkout was found 8 commits behind origin/main
+    (still at slice 71) before the candidate grep ran -- always fetch/
+    fast-forward the working checkout first, or a grep for the next
+    uncovered class-set risks re-surfacing patterns already migrated by
+    slices merged since the checkout was last synced, or missing that
+    several prior slices already landed. Separately, a create_or_update_file
+    API call built by hand (rather than passing already-read content
+    through) wrote a literal placeholder string as the entire file content
+    instead of the real payload -- caught immediately by reading the file
+    back before opening the follow-on PR, fixed with a plain follow-up
+    commit (no force-push). Always read back a large scripted file write
+    before trusting it. Also: this task's TALKBACK.md had drifted four
+    slices behind its own roadmap note (last entry was slice 69, though
+    kind_robots slices 76-79 had already merged and the note already
+    recorded them) -- worth a dedicated catch-up pass in a future slice."
