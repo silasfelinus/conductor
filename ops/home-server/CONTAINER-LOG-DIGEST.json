@@ -1,125 +1,215 @@
 {
-  "generated_at": "2026-09-04T14:00:01.647296+00:00",
+  "generated_at": "2026-09-05T14:00:01.481032+00:00",
   "host": "alexandria",
   "new": [
     {
       "baseline": null,
-      "container": "ownfoil",
-      "count": 4000,
-      "fingerprint": "c6ebc2b71f32",
-      "sample": "[2026-09-04 05:37:25.333] WARNING (verification) worker-2 Verification of The_Sinking_City_v0_ROMSLAB.nsp failed: Not a valid PFS0 partition b'2000'",
+      "container": "prowlarr",
+      "count": 16,
+      "fingerprint": "102a871f1ccb",
+      "sample": "[Warn] Newznab: Invalid Release: 'Black.Panthers.of.WWII.2025.1080p.BluRay.HEVC.x265.5.1.BONE' from indexer: NzbPlanet. No categories provided.",
       "severity": "warn",
-      "skeleton": "[<ts>] warning (verification) worker-<num> verification of the_sinking_city_v0_romslab.nsp failed: not a valid pfs0 partition b'<num>'"
+      "skeleton": "[warn] newznab: invalid release: <str> from indexer: nzbplanet. no categories provided."
     },
     {
       "baseline": null,
-      "container": "ownfoil",
-      "count": 4000,
-      "fingerprint": "11b0fa514d3d",
-      "sample": "[2026-09-04 05:37:25.335] WARNING (tasks) worker-2 Verification failed for The_Sinking_City_v0_ROMSLAB.nsp: Not a valid PFS0 partition b'2000'",
-      "severity": "warn",
-      "skeleton": "[<ts>] warning (tasks) worker-<num> verification failed for the_sinking_city_v0_romslab.nsp: not a valid pfs0 partition b'<num>'"
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 3,
-      "fingerprint": "28dd8ae5629b",
-      "sample": "[Warn] HttpClient: HTTP Error - Res: HTTP/2.0 [GET] https://prowlarr.acrocatranch.com/15/api?t=tvsearch&cat=5000,8000,5070&extended=1&apikey=<REDACTED> 429.TooManyRequests (142 bytes)",
-      "severity": "warn",
-      "skeleton": "[warn] httpclient: http error - res: http/<num> [get] <url> <num>.toomanyrequests (<num> bytes)"
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 3,
-      "fingerprint": "43579730ff01",
-      "sample": "<error code=\"429\" description=\"Indexer is disabled till 09/04/2026 05:27:20 due to recent failures.\" />",
+      "container": "scoopspress",
+      "count": 16,
+      "fingerprint": "a7bebfb47737",
+      "sample": "[Sat Sep 05 05:35:07.291452 2026] [php:error] [pid 317:tid 317] [client 35.220.201.92:0] script '/var/www/html/phpinfo.php' not found or unable to stat",
       "severity": "error",
-      "skeleton": "<error code=<str> description=<str> />"
+      "skeleton": "[sat sep <num> <ts> <num>] [php:error] [pid <num>:tid <num>] [client <ip>] script '<path>"
     },
     {
       "baseline": null,
-      "container": "sonarr",
-      "count": 3,
-      "fingerprint": "a16c0389558f",
-      "sample": "[Warn] Torznab: API Request Limit reached for LimeTorrents (Prowlarr). Disabled for 00:05:00",
+      "container": "flaresolverr",
+      "count": 12,
+      "fingerprint": "a4739f92a073",
+      "sample": "2026-09-05 10:45:06 WARNING  Task queue depth is 1",
       "severity": "warn",
-      "skeleton": "[warn] torznab: api request limit reached for limetorrents (prowlarr). disabled for <ts>"
+      "skeleton": "<ts> warning task queue depth is <num>"
     },
     {
       "baseline": null,
-      "container": "rainbowbutterflies",
-      "count": 2,
-      "fingerprint": "44866fc1744c",
-      "sample": "[request error] [unhandled] [GET] https://www.rainbowbutterflies.org/api/forum/channels",
+      "container": "scoopspress",
+      "count": 12,
+      "fingerprint": "949367944f56",
+      "sample": "[Sat Sep 05 00:39:51.669169 2026] [php:warn] [pid 322:tid 322] [client 194.180.48.7:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
+      "severity": "warn",
+      "skeleton": "[sat sep <num> <ts> <num>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>"
+    },
+    {
+      "baseline": null,
+      "container": "subtitles",
+      "count": 11,
+      "fingerprint": "1aa12506e86d",
+      "sample": "2026-09-04 09:38:16,401 - root                             (1462c9332b30) :  ERROR (download:117) - BAZARR Error saving Subtitles file to disk for this file /pc/tv/anime/disastrous life of saiki k/s01",
       "severity": "error",
-      "skeleton": "[request error] [unhandled] [get] <url>"
+      "skeleton": "<ts> - root (<hex>) : error (download:<num>) - bazarr error saving subtitles file to disk for this file <path>"
     },
     {
       "baseline": null,
-      "container": "rainbowbutterflies",
+      "container": "logs",
+      "count": 3,
+      "fingerprint": "f32488bcd831",
+      "sample": "{\"level\":\"warn\",\"env\":\"DOZZLE_PASSWORD\",\"time\":\"2026-09-04T22:10:42Z\",\"message\":\"Unexpected environment variable\"}",
+      "severity": "warn",
+      "skeleton": "{<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>}"
+    },
+    {
+      "baseline": null,
+      "container": "sab",
+      "count": 3,
+      "fingerprint": "e4b6ce1f6a01",
+      "sample": "2026-09-05 00:13:23,864::WARNING::[assembler:597] Job \"AVX.VS.04.of.6.2012.Digital.Zo\" is probably encrypted due to RAR with same name inside this RAR",
+      "severity": "warn",
+      "skeleton": "<ts>::warning::[assembler:<num>] job <str> is probably encrypted due to rar with same name inside this rar"
+    },
+    {
+      "baseline": null,
+      "container": "sab",
+      "count": 3,
+      "fingerprint": "833d925d3449",
+      "sample": "2026-09-05 00:13:23,864::WARNING::[assembler:483] Paused job \"AVX.VS.04.of.6.2012.Digital.Zo\" because of encrypted RAR file (if supplied, all passwords were tried)",
+      "severity": "warn",
+      "skeleton": "<ts>::warning::[assembler:<num>] paused job <str> because of encrypted rar file (if supplied, all passwords were tried)"
+    },
+    {
+      "baseline": null,
+      "container": "subtitles",
+      "count": 3,
+      "fingerprint": "581e297308ed",
+      "sample": "2026-09-04 11:34:42,234 - root                             (1462c9332b30) :  ERROR (utils:55) - BAZARR Error ('.iso' is not a valid video extension) trying to get video information for this file: /pc/",
+      "severity": "error",
+      "skeleton": "<ts> - root (<hex>) : error (utils:<num>) - bazarr error (<str> is not a valid video extension) trying to get video information for this file: <path>"
+    },
+    {
+      "baseline": null,
+      "container": "scoopspress",
       "count": 2,
-      "fingerprint": "a6e3ced78afa",
-      "sample": "fatal: false,",
-      "severity": "fatal",
-      "skeleton": "fatal: false,"
+      "fingerprint": "1e4924cc9e63",
+      "sample": "[Sat Sep 05 01:05:10.002303 2026] [php:warn] [pid 320:tid 320] [client 167.71.6.60:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90, referer",
+      "severity": "warn",
+      "skeleton": "[sat sep <num> <ts> <num>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>, referer: <url>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 2,
-      "fingerprint": "365b5ce3937e",
-      "sample": "time=2026-09-04T04:50:40.227-07:00 comm=netdata source=collector level=error errno=\"2, No such file or directory\" tid=2841436 thread=\"P[proc netdev]\" msg=\"Cannot refresh veth387fd05 operstate by readi",
-      "severity": "error",
-      "skeleton": "time=<ts> comm=netdata source=collector level=error errno=<str> tid=<num> thread=<str> msg=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "sab",
-      "count": 2,
-      "fingerprint": "764b2f72388c",
-      "sample": "Exception ignored while calling deallocator <function IOBase.__del__ at 0x14c719b83ed0>:",
-      "severity": "error",
-      "skeleton": "exception ignored while calling deallocator <function iobase.__del__ at <hex>>:"
-    },
-    {
-      "baseline": null,
-      "container": "sab",
-      "count": 2,
-      "fingerprint": "a7046d76c849",
-      "sample": "Traceback (most recent call last):",
-      "severity": "error",
-      "skeleton": "traceback (most recent call last):"
-    },
-    {
-      "baseline": null,
-      "container": "sab",
-      "count": 2,
-      "fingerprint": "ecd497beb173",
-      "sample": "OSError: [Errno 9] Bad file descriptor",
-      "severity": "error",
-      "skeleton": "oserror: [errno <num>] bad file descriptor"
-    },
-    {
-      "baseline": null,
-      "container": "kapowarr",
       "count": 1,
-      "fingerprint": "6de099e9b4f5",
-      "sample": "\u001b[1;31:40m[05:26:27][WARNING] GET to https://prowlarr.acrocatranch.com/38/api is rate limited; not asking again for 14087s. Retrying would only spend more of the quota that is exhausted.",
+      "fingerprint": "2409812b3114",
+      "sample": "time=2026-09-04T22:26:06.913-07:00 comm=netdata source=health level=warning tid=1584920 thread=HEALTH <REDACTED-BLOB> node=713e8ab7a354 instance=disk_space./ context=disk.space code=0 alert_id=1787278",
       "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get to <url> is rate limited; not asking again for <num>. retrying would only spend more of the quota that is exhausted."
+      "skeleton": "time=<ts> comm=netdata source=health level=warning tid=<num> thread=health <redacted-blob> node=<hex> instance=disk_space./ context=disk.space code=<num> alert_id=<hex> alert_unique_id=<hex> alert_event_id=<num> <redacted-blob> <redacted-blob> alert=out_of_disk_space_time alert_exec=<path>"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 1,
+      "fingerprint": "0524a59b4e04",
+      "sample": "time=2026-09-05T00:18:41.407-07:00 comm=apps.plugin source=collector level=error errno=\"3, No such process\" tid=1584934  msg=\"Cannot process entries in /host/proc/3577830/fd (command 'sh')\"",
+      "severity": "error",
+      "skeleton": "time=<ts> comm=apps.plugin source=collector level=error errno=<str> tid=<num> msg=\"cannot process entries in <path>"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 1,
+      "fingerprint": "ee6319a1093f",
+      "sample": "time=2026-09-05T00:32:01.776-07:00 comm=netdata source=health level=warning tid=1584920 thread=HEALTH <REDACTED-BLOB> node=713e8ab7a354 instance=disk_backlog.sdu context=disk.backlog code=0 alert_id=1",
+      "severity": "warn",
+      "skeleton": "time=<ts> comm=netdata source=health level=warning tid=<num> thread=health <redacted-blob> node=<hex> instance=disk_backlog.sdu context=disk.backlog code=<num> alert_id=<hex> alert_unique_id=<hex> alert_event_id=<num> <redacted-blob> <redacted-blob> alert=10min_disk_backlog alert_class=latency alert"
+    },
+    {
+      "baseline": null,
+      "container": "subtitles",
+      "count": 1,
+      "fingerprint": "cd806f52b6d0",
+      "sample": "2026-09-04 18:30:38,496 - root                             (1462cce03b30) :  ERROR (signalr_client:159) - BAZARR SignalR client for Sonarr connection as been lost. Trying to reconnect...",
+      "severity": "error",
+      "skeleton": "<ts> - root (<hex>) : error (signalr_client:<num>) - bazarr signalr client for sonarr connection as been lost. trying to reconnect..."
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
+      "count": 1,
+      "fingerprint": "adb956fc469f",
+      "sample": "[Error] Newznab: An error occurred while processing indexer feed. [https://api.nzb.life/api?t=search&extended=1&apikey=<REDACTED>&q=Quests+Aside]",
+      "severity": "error",
+      "skeleton": "[error] newznab: an error occurred while processing indexer feed. [<url>"
+    },
+    {
+      "baseline": null,
+      "container": "proxysql",
+      "count": 1,
+      "fingerprint": "9119c28722e8",
+      "sample": "2026-09-05 05:45:42 MySQL_Variables.cpp:391:validate_charset(): [WARNING] Server doesn't support collation (255) utf8mb4_0900_ai_ci. Replacing it with the configured default (33) utf8_general_ci. Clie",
+      "severity": "warn",
+      "skeleton": "<ts> mysql_variables.cpp<ip>validate_charset(): [warning] server doesn't support collation (<num>) utf8mb4_0900_ai_ci. replacing it with the configured default (<num>) utf8_general_ci. client <ip>"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "8ac0346e5f35",
+      "sample": "[2026-09-04 08:19:40.258] INFO: [SocketAuthority] Socket eAHe_7rjGeHTQ5zVAABr disconnected from client \"superkate\" after 2337236ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket eahe_7rjgehtq5zvaabr disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "fa3157097ac0",
+      "sample": "[2026-09-04 08:47:59.192] INFO: [SocketAuthority] Socket IBS9bzgKMvqcYIOFAABx disconnected from client \"superkate\" after 1004070ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket ibs9bzgkmvqcyiofaabx disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "c7e9855bd35b",
+      "sample": "[2026-09-04 11:02:19.328] ERROR: [AudioFileScanner] Invalid data found when processing input : \"/podcasts/Mandarin Monkey Podcast/Real-Mandarin-English-Conversation-Podcast-We-Took-the-Kids-to-a-Priso",
+      "severity": "error",
+      "skeleton": "[<ts>] error: [audiofilescanner] invalid data found when processing input : \"<path>"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "c44f1de40772",
+      "sample": "[2026-09-04 20:25:41.108] INFO: [SocketAuthority] Socket 976hL-A3ilvcEzlqAACF disconnected from client \"fiftyone50\" after 4870463ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket 976hl-a3ilvcezlqaacf disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "55db527828f6",
+      "sample": "[2026-09-04 20:42:21.415] ERROR: Cannot validate socket - invalid token",
+      "severity": "error",
+      "skeleton": "[<ts>] error: cannot validate socket - invalid token"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "7ad6a5b933da",
+      "sample": "[2026-09-04 21:53:11.906] INFO: [SocketAuthority] Socket jtG1tqU2iXijbz0SAACL disconnected from client \"superkate\" after 4250509ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket jtg1tqu2ixijbz0saacl disconnected from client <str> after <num> (reason: ping timeout)"
     }
   ],
   "quiet": [],
   "scan": {
     "containers_failed": [],
-    "containers_scanned": 42,
-    "containers_total": 42,
+    "containers_scanned": 43,
+    "containers_total": 43,
     "high_cardinality": [],
-    "lines_matched": 12418,
-    "lines_read": 154717,
-    "signatures_total": 146,
+    "lines_matched": 11977,
+    "lines_read": 160170,
+    "signatures_total": 117,
     "truncated": []
   },
   "spiking": [],
@@ -128,42 +218,33 @@
       "baseline": null,
       "container": "ownfoil",
       "count": 4000,
-      "fingerprint": "c6ebc2b71f32",
-      "sample": "[2026-09-04 05:37:25.333] WARNING (verification) worker-2 Verification of The_Sinking_City_v0_ROMSLAB.nsp failed: Not a valid PFS0 partition b'2000'",
+      "fingerprint": "44cd6e05b14e",
+      "sample": "[2026-09-05 06:57:27.430] WARNING (verification) worker-1 Verification of Pok\u00e9mon Let's Go, Pikachu! [010003F003A34000][v0].nsp failed: index out of range",
       "severity": "warn",
-      "skeleton": "[<ts>] warning (verification) worker-<num> verification of the_sinking_city_v0_romslab.nsp failed: not a valid pfs0 partition b'<num>'"
+      "skeleton": "[<ts>] warning (verification) worker-<num> verification of pok\u00e9mon let's go, pikachu! [<hex>][v0].nsp failed: index out of range"
     },
     {
       "baseline": null,
       "container": "ownfoil",
       "count": 4000,
-      "fingerprint": "11b0fa514d3d",
-      "sample": "[2026-09-04 05:37:25.335] WARNING (tasks) worker-2 Verification failed for The_Sinking_City_v0_ROMSLAB.nsp: Not a valid PFS0 partition b'2000'",
+      "fingerprint": "f81ae7cb574c",
+      "sample": "[2026-09-05 06:57:27.432] WARNING (tasks) worker-1 Verification failed for Pok\u00e9mon Let's Go, Pikachu! [010003F003A34000][v0].nsp: index out of range",
       "severity": "warn",
-      "skeleton": "[<ts>] warning (tasks) worker-<num> verification failed for the_sinking_city_v0_romslab.nsp: not a valid pfs0 partition b'<num>'"
-    },
-    {
-      "baseline": null,
-      "container": "yac",
-      "count": 738,
-      "fingerprint": "22365e849ef3",
-      "sample": "WARN  2026-09-03T18:01:17.918 QObject: Cannot create children for a parent that is in a different thread.",
-      "severity": "warn",
-      "skeleton": "warn <ts> qobject: cannot create children for a parent that is in a different thread."
+      "skeleton": "[<ts>] warning (tasks) worker-<num> verification failed for pok\u00e9mon let's go, pikachu! [<hex>][v0].nsp: index out of range"
     },
     {
       "baseline": null,
       "container": "radarr",
-      "count": 658,
+      "count": 738,
       "fingerprint": "995ccb0d51b4",
-      "sample": "[Error] VideoFileInfoReader: Unable to parse media info from file: /pc/movies/unsorted/rasputin (1996)/rasputin (1996) {imdb-tt0117442} [dvd]][].mkv",
+      "sample": "[Error] VideoFileInfoReader: Unable to parse media info from file: /pc/miss_kitty/radarr/Dead End 2003 1080p WEBRip X264 Ac3 <REDACTED-BLOB>.mkv",
       "severity": "error",
       "skeleton": "[error] videofileinforeader: unable to parse media info from file: <path>"
     },
     {
       "baseline": null,
       "container": "radarr",
-      "count": 658,
+      "count": 738,
       "fingerprint": "843bd0cd437d",
       "sample": "[matroska,webm @ 0x1a296c0] EBML header parsing failed",
       "severity": "error",
@@ -172,7 +253,7 @@
     {
       "baseline": null,
       "container": "radarr",
-      "count": 438,
+      "count": 492,
       "fingerprint": "89aec2eeb322",
       "sample": "[Error] DetectSample: Failed to get runtime from the file, make sure ffprobe is available",
       "severity": "error",
@@ -181,25 +262,34 @@
     {
       "baseline": null,
       "container": "proxysql",
-      "count": 287,
+      "count": 244,
       "fingerprint": "a9cfc33818b3",
-      "sample": "2026-09-03 07:00:44 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.21.0.1:49872 , user 'kindrobot' , hostgroup 10 , connection 95145",
+      "sample": "2026-09-04 09:50:36 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 75.111.66.70:58158 , user 'kindrobot_migrate' , hostgroup 30 , connection 148776",
       "severity": "warn",
       "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup <num> , connection <num>"
     },
     {
       "baseline": null,
       "container": "sonarr",
-      "count": 242,
+      "count": 217,
       "fingerprint": "85e74f9dd654",
-      "sample": "[Error] VideoFileInfoReader: Unable to parse media info from file: /pc/miss_kitty/sonarr/Falcon Crest 3x05 Juez y jurado [DVD+SatRip dual][by pretender-ejulian-industex &amp; mariaro][grupots.net]/Fal",
+      "sample": "[Error] VideoFileInfoReader: Unable to parse media info from file: /pc/miss_kitty/sonarr/Vampire.Knight.2008.S02.1080p.BLURAY.REMUX.DTS.2.0.AVC-iVy/Vampire.Knight (2008).S02.1080p.BLURAY.REMUX.DTS.2.0",
       "severity": "error",
       "skeleton": "[error] videofileinforeader: unable to parse media info from file: <path>"
     },
     {
       "baseline": null,
       "container": "sonarr",
-      "count": 242,
+      "count": 216,
+      "fingerprint": "effbc70f4438",
+      "sample": "[matroska,webm @ 0x19cd180] EBML header parsing failed",
+      "severity": "error",
+      "skeleton": "[matroska,webm @ <hex>] ebml header parsing failed"
+    },
+    {
+      "baseline": null,
+      "container": "sonarr",
+      "count": 216,
       "fingerprint": "52feaf1413eb",
       "sample": "[Error] DetectSample: Failed to get runtime from the file, make sure ffprobe is available",
       "severity": "error",
@@ -207,53 +297,80 @@
     },
     {
       "baseline": null,
+      "container": "yac",
+      "count": 139,
+      "fingerprint": "22365e849ef3",
+      "sample": "WARN  2026-09-04T07:07:36.333 QObject: Cannot create children for a parent that is in a different thread.",
+      "severity": "warn",
+      "skeleton": "warn <ts> qobject: cannot create children for a parent that is in a different thread."
+    },
+    {
+      "baseline": null,
       "container": "requests",
-      "count": 130,
+      "count": 137,
       "fingerprint": "b0b22d3dd961",
-      "sample": "2026-09-04T11:34:21.084Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 395891\",\"title\"",
+      "sample": "2026-09-05T11:34:22.740Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 388535\",\"title\"",
       "severity": "error",
       "skeleton": "<ts> [error][sonarr scan]: failed to process sonarr media {<str>:<str>,<str>:<str>}"
     },
     {
       "baseline": null,
-      "container": "subtitles",
-      "count": 83,
-      "fingerprint": "5daa4a544eec",
-      "sample": "2026-09-03 07:57:49,826 - root                             (149f2007fb30) :  ERROR (series:203) - BAZARR cannot update series /pc/tv/unsorted/the secret lives of animals (2024) because of (sqlite3.Int",
-      "severity": "error",
-      "skeleton": "<ts> - root (<hex>) : error (series:<num>) - bazarr cannot update series <path>"
-    },
-    {
-      "baseline": null,
-      "container": "subtitles",
-      "count": 83,
-      "fingerprint": "4fe3c676a8e8",
-      "sample": "(Background on this error at: https://sqlalche.me/e/20/gkpj)",
-      "severity": "error",
-      "skeleton": "(background on this error at: <url>"
-    },
-    {
-      "baseline": null,
       "container": "netdata",
-      "count": 75,
+      "count": 83,
       "fingerprint": "24756dae8afd",
-      "sample": "time=2026-09-04T02:50:06.762-07:00 comm=spawn-unnamed source=collector level=warning tid=2844741  msg=\"SPAWN SERVER: child with pid 2844742 (request 1) exited with exit code 1: /usr/libexec/netdata/pl",
+      "sample": "time=2026-09-04T18:41:13.520-07:00 comm=spawn-unnamed source=collector level=warning tid=1588834  msg=\"SPAWN SERVER: child with pid 1588838 (request 1) exited with exit code 1: /usr/libexec/netdata/pl",
       "severity": "warn",
       "skeleton": "time=<ts> comm=spawn-unnamed source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 74,
+      "count": 82,
       "fingerprint": "82278af27950",
-      "sample": "time=2026-09-04T02:50:07.124-07:00 comm=spawn-unnamed source=collector level=warning tid=2844765  msg=\"SPAWN SERVER: child with pid 2844853 (request 2) killed by signal 15: callback() function\"",
+      "sample": "time=2026-09-04T18:41:13.827-07:00 comm=spawn-unnamed source=collector level=warning tid=1588958  msg=\"SPAWN SERVER: child with pid 1589088 (request 2) killed by signal 15: callback() function\"",
       "severity": "warn",
       "skeleton": "time=<ts> comm=spawn-unnamed source=collector level=warning tid=<num> msg=<str>"
     },
     {
       "baseline": null,
+      "container": "netdata",
+      "count": 81,
+      "fingerprint": "8ef3774a1987",
+      "sample": "time=2026-09-04T18:49:23.329-07:00 comm=apps.plugin source=collector level=error errno=\"3, No such process\" tid=1584934  msg=\"Cannot process /host/proc/1740077/cmdline (command 'awk')\"",
+      "severity": "error",
+      "skeleton": "time=<ts> comm=apps.plugin source=collector level=error errno=<str> tid=<num> msg=\"cannot process <path>"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 53,
+      "fingerprint": "2107195e439a",
+      "sample": "2026-09-05T01:41:03.232762Z  WARN ThreadId(08) journal_registry::registry::monitor: 23: Failed to send file system event: receiver dropped (channel closed)",
+      "severity": "error",
+      "skeleton": "<ts> warn threadid(<num>) journal_registry<ip>registry<ip>monitor: <num>: failed to send file system event: receiver dropped (channel closed)"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 50,
+      "fingerprint": "6dcd09e267ea",
+      "sample": "time=2026-09-05T01:18:17.000-07:00 level=warn msg=\"skipping data collection: previous run is still in progress for 1.999146335s (skipped 2 times in a row, interval 1s)\" plugin=go.d collector=docker jo",
+      "severity": "warn",
+      "skeleton": "time=<ts> level=warn msg=<str> plugin=go.d collector=docker job=local config_source=<str>"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 48,
+      "fingerprint": "381cf7bc9913",
+      "sample": "time=2026-09-05T01:18:17.011-07:00 level=error msg=\"Get \\\"http://%2Fvar%2Frun%2Fdocker.sock/v1.47/info\\\": context deadline exceeded\" plugin=go.d collector=docker job=local config_source=\"stock/file re",
+      "severity": "error",
+      "skeleton": "time=<ts> level=error msg=<str><url> context deadline exceeded<str>stock/file reader\""
+    },
+    {
+      "baseline": null,
       "container": "radarr",
-      "count": 72,
+      "count": 41,
       "fingerprint": "3620fc9c1d1a",
       "sample": "[Error] DownloadMonitoringService: Couldn't process tracked download The.Home.2025.1080p.AMZN.WEB-DL.DDP5.1.Atmos.x265-TBMovies",
       "severity": "error",
@@ -262,7 +379,7 @@
     {
       "baseline": null,
       "container": "radarr",
-      "count": 72,
+      "count": 41,
       "fingerprint": "13e8d8b75cd1",
       "sample": "[Error] DownloadMonitoringService: Couldn't process tracked download The.Home.[2025].1080p.WEBRip.5.1-LAMA",
       "severity": "error",
@@ -271,83 +388,56 @@
     {
       "baseline": null,
       "container": "netdata",
+      "count": 39,
+      "fingerprint": "29a758d0ae5d",
+      "sample": "time=2026-09-04T18:41:01.656-07:00 comm=tc-qos-helper.sh source=collector level=warning tid=1584996 thread=tc-qos-helper request=\"'/usr/libexec/netdata/plugins.d/tc-qos-helper.sh' '1' \" msg=\"FireQOS i",
+      "severity": "warn",
+      "skeleton": "time=<ts> comm=tc-qos-helper.sh source=collector level=warning tid=<num> thread=tc-qos-helper request=\"'<path>"
+    },
+    {
+      "baseline": null,
+      "container": "flaresolverr",
+      "count": 31,
+      "fingerprint": "c93a360a7c2f",
+      "sample": "2026-09-05 05:37:08 ERROR    Error: Error solving the challenge. Timeout after 60.0 seconds.",
+      "severity": "error",
+      "skeleton": "<ts> error error: error solving the challenge. timeout after <num> seconds."
+    },
+    {
+      "baseline": null,
+      "container": "flaresolverr",
+      "count": 31,
+      "fingerprint": "17856945a8bd",
+      "sample": "2026-09-05 05:37:08 INFO     172.21.0.1 POST http://192.168.7.172:8191/v1 500 Internal Server Error",
+      "severity": "error",
+      "skeleton": "<ts> info <ip> post <url> <num> internal server error"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
       "count": 24,
       "fingerprint": "b4a4f3c0319b",
-      "sample": "time=2026-09-04T02:49:54.762-07:00 comm=spawn-plugins source=collector level=warning tid=2839981  msg=\"SPAWN SERVER: child with pid 2841461 (request 11) exited with exit code 1: /bin/sh -c \\\"exec /usr",
+      "sample": "time=2026-09-04T18:41:01.614-07:00 comm=spawn-plugins source=collector level=warning tid=1583433  msg=\"SPAWN SERVER: child with pid 1584974 (request 10) exited with exit code 1: /bin/sh -c \\\"exec /usr",
       "severity": "warn",
       "skeleton": "time=<ts> comm=spawn-plugins source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
     },
     {
       "baseline": null,
-      "container": "subtitles",
-      "count": 24,
-      "fingerprint": "fea5d2636fe3",
-      "sample": "2026-09-03 09:32:26,746 - root                             (149f21d85b30) :  ERROR (video_analyzer:325) - BAZARR ffprobe cannot analyze this video file /pc/movies/documentary/life on bitcoin (2014)/li",
-      "severity": "error",
-      "skeleton": "<ts> - root (<hex>) : error (video_analyzer:<num>) - bazarr ffprobe cannot analyze this video file <path>"
-    },
-    {
-      "baseline": null,
-      "container": "subtitles",
-      "count": 24,
-      "fingerprint": "1c4cbb898323",
-      "sample": "Traceback (most recent call last):",
-      "severity": "error",
-      "skeleton": "traceback (most recent call last):"
-    },
-    {
-      "baseline": null,
-      "container": "subtitles",
-      "count": 24,
-      "fingerprint": "e23b69dcc901",
-      "sample": "return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,",
-      "severity": "other",
-      "skeleton": "return run(*popenargs, stdout=pipe, timeout=timeout, check=true,"
-    },
-    {
-      "baseline": null,
-      "container": "scoopspress",
-      "count": 23,
-      "fingerprint": "2a9ea010695f",
-      "sample": "[Thu Sep 03 08:17:14.569014 2026] [php:warn] [pid 53:tid 53] [client 106.75.132.181:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
-      "severity": "warn",
-      "skeleton": "[thu sep <num> <ts> <num>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>"
-    },
-    {
-      "baseline": null,
-      "container": "scoopspress",
-      "count": 23,
-      "fingerprint": "af8d354e129b",
-      "sample": "[Fri Sep 04 02:20:15.941655 2026] [php:warn] [pid 103:tid 103] [client 162.214.79.109:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
-      "severity": "warn",
-      "skeleton": "[fri sep <num> <ts> <num>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>"
-    },
-    {
-      "baseline": null,
-      "container": "radarr",
+      "container": "proxysql",
       "count": 22,
-      "fingerprint": "9bbcac50d002",
-      "sample": "[Error] EventAggregator: ExistingExtraFileService failed while processing [MovieScannedEvent]",
-      "severity": "error",
-      "skeleton": "[error] eventaggregator: existingextrafileservice failed while processing [moviescannedevent]"
+      "fingerprint": "8da141147da1",
+      "sample": "2026-09-04 09:37:01 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 85.217.149.56:48450 , user 'unknown' , hostgroup -1 , connection 0",
+      "severity": "warn",
+      "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup -<num> , connection <num>"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 20,
-      "fingerprint": "2107195e439a",
-      "sample": "2026-09-04T09:49:56.845711Z  WARN ThreadId(08) journal_registry::registry::monitor: 23: Failed to send file system event: receiver dropped (channel closed)",
-      "severity": "error",
-      "skeleton": "<ts> warn threadid(<num>) journal_registry<ip>registry<ip>monitor: <num>: failed to send file system event: receiver dropped (channel closed)"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 20,
-      "fingerprint": "8ef3774a1987",
-      "sample": "time=2026-09-04T02:51:39.584-07:00 comm=apps.plugin source=collector level=error errno=\"3, No such process\" tid=2841420  msg=\"Cannot process /host/proc/2870441/io (command 's6-ftrigrd')\"",
-      "severity": "error",
-      "skeleton": "time=<ts> comm=apps.plugin source=collector level=error errno=<str> tid=<num> msg=\"cannot process <path>"
+      "container": "prowlarr",
+      "count": 16,
+      "fingerprint": "102a871f1ccb",
+      "sample": "[Warn] Newznab: Invalid Release: 'Black.Panthers.of.WWII.2025.1080p.BluRay.HEVC.x265.5.1.BONE' from indexer: NzbPlanet. No categories provided.",
+      "severity": "warn",
+      "skeleton": "[warn] newznab: invalid release: <str> from indexer: nzbplanet. no categories provided."
     }
   ],
   "version": 1,
