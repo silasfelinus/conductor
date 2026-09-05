@@ -5610,51 +5610,18 @@ tasks:
 - id: t-147
   milestone: m2
   title: "Flux2 engine hung the render relay's only concurrent slot for ~30 minutes (ArtJob 21616)"
-  status: needs-human
+  status: ready
   gate_human: false
-  soft_gate: true
-  owner: reviewer
   stakes: reversible
   passes: 0
-  note: >-
-    FOR SILAS: While gathering lora-ingestion/t-003 evidence, queued one Resource-backed
-    LoRA smoke render on the `flux2` engine (ArtJob 21616, prompt via `POST
-    /api/art/enqueue`, LoRA Resource 1055 wired correctly onto the `flux2_dev_fp8mixed.safetensors`
-    checkpoint). Full detail in `projects/lora-ingestion/docs/t-003-resource-backed-generation-evidence.md`'s
-    2026-09-05 section.
+  note: |-
+    FOR SILAS: While gathering lora-ingestion/t-003 evidence, queued one Resource-backed LoRA smoke render on the `flux2` engine (ArtJob 21616, prompt via `POST /api/art/enqueue`, LoRA Resource 1055 wired correctly onto the `flux2_dev_fp8mixed.safetensors` checkpoint). Full detail in `projects/lora-ingestion/docs/t-003-resource-backed-generation-evidence.md`'s 2026-09-05 section.
+    What happened: the relay (Silas-PC) claimed the job (RUNNING) at 18:46:46 UTC and never completed it or claimed any other job for ~30 minutes -- `GET /api/art/queue/stats` flagged it under `staleRunning` (>15min), and zero other ArtJobs reached DONE anywhere in the queue for that whole window, meaning the relay's one concurrent slot was fully wedged, not just this one job stalled. No error was ever recorded (`error: null`) -- it hung silently rather than failing with a ComfyUI rejection.
+    TO INVESTIGATE: this needs eyes on the actual relay machine/ComfyUI install, which this sandbox has no access to. Two live guesses, neither confirmed: (1) first-ever use of `flux2_dev_fp8mixed.safetensors`/`mistral_3_small_flux2_bf16.safetensors` on this relay, stuck loading a large model for the first time (Flux.2 Klein Resources are rare in the catalog -- only 3-5 rows total -- so this engine may see near-zero live traffic and could be missing local weights entirely); (2) the LoraLoaderModelOnly node silently choking on a Flux.1-architecture LoRA (`Flux/SFW/3D_Cartoon_Vision_flux_v1.safetensors`, Resource 1055) wired onto a Flux.2 checkpoint -- `utils/loraSelection.ts`'s `artLoraCompatibilityRank()` currently ranks any `supportedServer: FLUX` LoRA (Flux.1-trained) as the top match for the `flux2` engine, which may be a genuine cross-generation mismatch rather than a real compatibility rule, similar in shape to the Krea2/Flux2 split kind_robots#2416 just fixed today for a different engine pair.
+    I cancelled ArtJob 21616 (`POST /api/art/queue/21616/cancel`) to restore the queue -- confirmed `staleRunning` dropped to empty right after -- but did NOT verify the relay resumed claiming/completing other jobs afterward within this session's window, since that needs a longer observation than this session had left. Please check the Comfy relay's own logs/console around 18:46-19:11 UTC 2026-09-05 for what it was actually doing during the hang, and confirm the queue is draining normally again.
+    TO APPROVE / RESOLVE: once you've either fixed whatever caused the hang (or confirmed the relay is healthy and this was a one-off) and optionally the flux2/Flux.1-LoRA compatibility question above, set `approved_by_human: true` and `status: done` with a short note on the cause. Until then this stays open so nobody else queues another flux2 smoke and re-triggers the same relay-wide stall.
 
-    What happened: the relay (Silas-PC) claimed the job (RUNNING) at 18:46:46 UTC and never
-    completed it or claimed any other job for ~30 minutes -- `GET /api/art/queue/stats`
-    flagged it under `staleRunning` (>15min), and zero other ArtJobs reached DONE anywhere
-    in the queue for that whole window, meaning the relay's one concurrent slot was fully
-    wedged, not just this one job stalled. No error was ever recorded (`error: null`) --
-    it hung silently rather than failing with a ComfyUI rejection.
-
-    TO INVESTIGATE: this needs eyes on the actual relay machine/ComfyUI install, which this
-    sandbox has no access to. Two live guesses, neither confirmed: (1) first-ever use of
-    `flux2_dev_fp8mixed.safetensors`/`mistral_3_small_flux2_bf16.safetensors` on this relay,
-    stuck loading a large model for the first time (Flux.2 Klein Resources are rare in the
-    catalog -- only 3-5 rows total -- so this engine may see near-zero live traffic and could
-    be missing local weights entirely); (2) the LoraLoaderModelOnly node silently choking on
-    a Flux.1-architecture LoRA (`Flux/SFW/3D_Cartoon_Vision_flux_v1.safetensors`, Resource
-    1055) wired onto a Flux.2 checkpoint -- `utils/loraSelection.ts`'s `artLoraCompatibilityRank()`
-    currently ranks any `supportedServer: FLUX` LoRA (Flux.1-trained) as the top match for the
-    `flux2` engine, which may be a genuine cross-generation mismatch rather than a real
-    compatibility rule, similar in shape to the Krea2/Flux2 split kind_robots#2416 just fixed
-    today for a different engine pair.
-
-    I cancelled ArtJob 21616 (`POST /api/art/queue/21616/cancel`) to restore the queue --
-    confirmed `staleRunning` dropped to empty right after -- but did NOT verify the relay
-    resumed claiming/completing other jobs afterward within this session's window, since that
-    needs a longer observation than this session had left. Please check the Comfy relay's
-    own logs/console around 18:46-19:11 UTC 2026-09-05 for what it was actually doing during
-    the hang, and confirm the queue is draining normally again.
-
-    TO APPROVE / RESOLVE: once you've either fixed whatever caused the hang (or confirmed the
-    relay is healthy and this was a one-off) and optionally the flux2/Flux.1-LoRA compatibility
-    question above, set `approved_by_human: true` and `status: done` with a short note on the
-    cause. Until then this stays open so nobody else queues another flux2 smoke and re-triggers
-    the same relay-wide stall.
-  updated: '2026-09-05T19:12:00Z'
+    Silas explicitly asked this session to investigate the current cluster of Comfy errors. Resume repo-side diagnosis and reversible remediation now; preserve any remaining requirement for physical relay/Comfy console inspection as a separate human gate rather than blocking safe code fixes.
+  updated: '2026-09-05T21:59:00Z'
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
