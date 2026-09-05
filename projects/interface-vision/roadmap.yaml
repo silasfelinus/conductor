@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3336,12 +3336,22 @@ tasks:
     components/art/art-styler.vue, components/art/image-upload.vue, error.vue. All 45 exact-
     head PR workflows completed successfully; mergeable_state clean before merge. Return the
     recurring consistency sweep to ready for the next bounded slice.
-  updated: '2026-09-05T13:35:04Z'
-  implementation_pr: 'silasfelinus/kind_robots#2417'
+
+    Merged kind_robots#2418 (squash f8d0d5f). Slice 83: added .kr-btn-xs (btn btn-xs
+    rounded-xl), the bare-family xs-size counterpart to .kr-btn-ghost-xs, and migrated the 5
+    exact-match sites (user-galleries.vue, account-hub.vue, newsfeed-filters.vue x2, art-
+    gallery.vue). All 46 checks green, mergeable_state clean. vue-tsc clean, eslint 0 new
+    issues, layout-contract held at 207, lint-ratchet held at 333/-59, prettier pre-existing
+    drift on 4 files confirmed via git stash (account-hub.vue got one new expected reflow,
+    same pattern as slice 82, left alone). Checked utils/scripts/*.mjs/*.ts for a hardcoded
+    regression guard on the outgoing class string (slice 69 lesson) -- none found. Re-arming
+    to ready for the next bounded slice.
+  updated: '2026-09-05T13:45:47Z'
+  implementation_pr: 'silasfelinus/kind_robots#2418'
   retry_context: 'pass 1 failed (quality): slice 69 (kind_robots#2386) migrated the Promote-to-Character button in components/brainstorm/brainstorm-candidate-card.vue from `class="btn btn-outline btn-sm"` to the new shared `.kr-btn-outline-plain` class, but missed that utils/scripts/verifyBrainstormWorkbench.mjs:126 hardcodes that literal class string as a source-text regression guard ("the Promote to Character button must stay gated to kept candidates only"). CI job "Candidate-first workbench" fails on the new class. Do differently: before migrating a button class, grep utils/scripts/*.mjs (and any other source-text contract scripts) for the exact class string being replaced, not just run vue-tsc/eslint/layout-contract/lint-ratchet -- this file family asserts literal class attributes as regression guards and is easy to miss since it is not a normal test runner. Fix is scoped: update verifyBrainstormWorkbench.mjs line 126 to expect class="kr-btn-outline-plain" instead of class="btn btn-outline btn-sm" (same intent, new class name), then run `node utils/scripts/verifyBrainstormWorkbench.mjs` locally to confirm before reopening. Reviewer comment: silasfelinus/kind_robots#2386 (inline on components/brainstorm/brainstorm-candidate-card.vue line 363).'
   owner: worker
-  claimed_by: claude-scheduled-20260905T143000Z-iv-t104-slice83
-  claimed_at: '2026-09-05T13:35:04Z'
+  claimed_by: null
+  claimed_at: null
 
 - id: t-123
   milestone: m5
