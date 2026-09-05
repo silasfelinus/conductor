@@ -133,7 +133,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: review
+  status: done
   passes: 50
   stakes: reversible
   retry_context: >
@@ -256,7 +256,12 @@ tasks:
     The task's own note already said 'Re-armed to ready per this task's recurring-task
     convention,' but the status field was never actually flipped from claimed. Re-armed to
     ready.
-  updated: '2026-09-05T02:41:45Z'
+
+    RAN 2026-09-05 (reclaimed stale claim): fixed a real cross-Dream chat-leak race in
+    narratorStore.ts's sendNarratorMessage() (narratorSessionEpoch guard). kind_robots#2403
+    merged (squash a38bbc2), all required checks green. Re-armed to ready per this task's
+    recurring-task convention.
+  updated: '2026-09-05T02:45:46Z'
   owner: worker
   claimed_by: claude-scheduled-20260905T023033Z-storybook-t010
   claimed_at: '2026-09-05T02:30:34Z'
