@@ -12423,3 +12423,26 @@ records:
     slices behind its own roadmap note (last entry was slice 69, though
     kind_robots slices 76-79 had already merged and the note already
     recorded them) -- worth a dedicated catch-up pass in a future slice."
+- date: 2026-09-05
+  project: dream-cycle
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 2
+  outcome: done
+  failure_category: quality
+  lesson: "kind_robots#2414's --repair-tainted path cancelled legacy PENDING
+    ArtJobs and committed Facet.artPrompt updates before the eager
+    queue.map(buildFacetArtPayload(...)) that can throw via
+    assertArtPromptContract on any queued entry -- a destructive/cancelling
+    write committed ahead of the step that can still fail, with no rollback.
+    Pass 1's retry_context named the exact fix (build/validate jobRows before
+    the cancellation); pass 2 fixed an adjacent real concern (deleted the
+    unattended auto-merge repair workflow) but left the flagged file
+    byte-identical, confirmed via git log on the changed file rather than
+    trusting the PR description -- checking whether a retry actually touched
+    the flagged file is what caught the drift before a third wasted pass.
+    Pass 3 finally reordered validate-then-mutate as asked. General
+    principle for any script that repairs/replaces existing state: build and
+    validate the full replacement set first; only then commit any
+    cancellation or in-place mutation of what it replaces."

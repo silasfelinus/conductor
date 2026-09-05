@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-05T12:52:37Z
+Generated: 2026-09-05T13:29:29Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **873**
-- Outcomes: blocked: 16, cancelled: 1, done: 856
+- Closed tasks recorded: **874**
+- Outcomes: blocked: 16, cancelled: 1, done: 857
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -31,7 +31,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | cthulhuquarium | 41 | 98% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
-| dream-cycle | 22 | 100% |
+| dream-cycle | 23 | 100% |
 | ecosystem-map | 5 | 100% |
 | global-ui | 13 | 100% |
 | humboldt-impropriety-calendar | 1 | 0% |
@@ -69,13 +69,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 857 | 99% |
+| software | 858 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
-| quality | 16 |
+| quality | 17 |
 | transient | 13 |
 | actionable | 12 |
 | scope | 3 |
@@ -84,13 +84,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - project `coat-dance` — 11% success over 9 closed tasks; aim the next kaizen task here
 - kind `content` — 44% success over 16 closed tasks; aim the next kaizen task here
-- failure category `quality` — 16 occurrences; look for the shared cause across its records
+- failure category `quality` — 17 occurrences; look for the shared cause across its records
 - failure category `transient` — 13 occurrences; look for the shared cause across its records
 - failure category `actionable` — 12 occurrences; look for the shared cause across its records
 - failure category `scope` — 3 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-09-05 `dream-cycle/t-006` — kind_robots#2414's --repair-tainted path cancelled legacy PENDING ArtJobs and committed Facet.artPrompt updates before the eager queue.map(buildFacetArtPayload(...)) that can throw via assertArtPromptContract on any queued entry -- a destructive/cancelling write committed ahead of the step that can still fail, with no rollback. Pass 1's retry_context named the exact fix (build/validate jobRows before the cancellation); pass 2 fixed an adjacent real concern (deleted the unattended auto-merge repair workflow) but left the flagged file byte-identical, confirmed via git log on the changed file rather than trusting the PR description -- checking whether a retry actually touched the flagged file is what caught the drift before a third wasted pass. Pass 3 finally reordered validate-then-mutate as asked. General principle for any script that repairs/replaces existing state: build and validate the full replacement set first; only then commit any cancellation or in-place mutation of what it replaces.
 - 2026-09-05 `interface-vision/t-104` — Slice 80 of the recurring kr-btn consistency sweep: the local kind_robots worktree checkout was found 8 commits behind origin/main (still at slice 71) before the candidate grep ran -- always fetch/ fast-forward the working checkout first, or a grep for the next uncovered class-set risks re-surfacing patterns already migrated by slices merged since the checkout was last synced, or missing that several prior slices already landed. Separately, a create_or_update_file API call built by hand (rather than passing already-read content through) wrote a literal placeholder string as the entire file content instead of the real payload -- caught immediately by reading the file back before opening the follow-on PR, fixed with a plain follow-up commit (no force-push). Always read back a large scripted file write before trusting it. Also: this task's TALKBACK.md had drifted four slices behind its own roadmap note (last entry was slice 69, though kind_robots slices 76-79 had already merged and the note already recorded them) -- worth a dedicated catch-up pass in a future slice.
 - 2026-09-05 `storybook/t-010` — narratorStore.ts's activeDream.value?.id watch reset narratorSessionIds on Dream switch, but sendNarratorMessage() had no way to notice a switch that happened mid-await -- its addChat()/streamResponse() continuation still pushed the abandoned chat id into the new Dream's (already-reset) session list. Any store that (a) derives visible state from an array of ids scoped to some 'current context' ref, and (b) resets that array on a watch when the context changes, needs its own in-flight async writers to capture an epoch/ticket before their first await and re-check it after every await -- the same openRunRequestId shape already used in modelBuilderStore.ts. A stale retry_context is also worth checking before assuming a rejected fix was never resubmitted: git blame on the file it targets can confirm the fix already landed under a later, unlogged cycle, in which case the field should be cleared rather than left looking like an open rejection.
 - 2026-09-04 `storybook/t-010` — A v-for split across several sibling lists by a computed classifier (narrative-role-assigner.vue's four casting tiers) is a real keyboard-focus hazard: an item that changes classification moves to a different <ul> entirely, which Vue cannot patch in place -- it unmounts the old node and mounts a fresh one, silently dropping focus to <body>. Any interactive element inside a re-classified v-for item needs an explicit post-nextTick refocus keyed on a stable identity (member+action), not just correctness of the classification logic itself. Worth checking other multi-tier/ multi-bucket v-for surfaces (stage role assignment, batch/queue boards) for the same pattern.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-02 `model-builder/t-029` — A non-nested-brace entry-split regex is fragile against free-text comments that themselves contain a literal open/close brace pair (a code path like server/api/(dreams,scenarios)/... quoted in a comment, using curly braces in the real source) -- it can silently swallow the real entry that follows, while the guard still prints a plausible-looking pass/total. verifyModelBuilderIconCoverageGuard.ts (cycle 82) shipped with exactly this gap for a full cycle before cycle 84 caught it while building an unrelated sibling guard. verifyModelBuilderSourceFieldGuard.ts already used a safer key-boundary split (index-based chunking between consecutive `key: '...'` matches, never touching brace characters at all) -- worth defaulting new SOURCE_TYPES/BUILD_STAGES/RECIPES-array guards to that pattern from the start rather than brace matching, and worth a future cycle double-checking any other guard in this family that still uses brace matching.
 - 2026-09-02 `dream-cycle/t-025` — Added a per-bundle consecutive-failure counter (persisted state file already covered by the existing workflow's git-add step, so no CI/workflow change needed) to stop repair_dream_prose_catalog.py from retrying a chronically-failing bundle forever. Kept the existing per-bundle atomicity (failed bundles stay untouched, retried next run) as the default, only adding a circuit breaker on top after N consecutive failures -- and explicitly exempted an editor's own extra_fields retry from the breaker, since a human-directed re-ask is a different thing from an unattended scheduled retry. Worth remembering for any other 'runs on a schedule forever' loop in this pipeline: distinguish transient-retry-in-place from persistent-content-issue before assuming every failure is worth retrying indefinitely.
 - 2026-09-02 `dream-cycle/t-024` — Wired repair_dream_prose_catalog.py --verify-live --strict into daily-digest.yml's existing recurring cycle (same continue-on-error + folded-into-final-gate pattern as the build/Facet/ArtJob/commit steps) rather than depending on an agent remembering to run it during a t-006 maintenance pass. A scheduled workflow step that already runs daily is a more reliable detection point for silent drift than an agent-recalled manual check -- prefer wiring a new verification into an existing recurring CI/workflow run over adding it to an agent's task checklist when both are available.
-- 2026-09-02 `kapowarr/t-070` — Found an open, fully green, well-tested Kapowarr PR (branch claude/missing-comics-j8osws, not claimed through conductor's task loop) during a routine open-PR check. Reviewed the diff directly before merging (release_feed.py's stateless feed-poll design, the settings/interval wiring, and the Newznab/Torznab query-omission change) rather than merging on green CI alone, then retroactively filed the roadmap task so the shipped feature is visible to future audits. Not every merge-worthy PR in a watched repo arrives through claim_task.py -- worth checking open PRs directly across all in-scope repos, not just ones with a matching worker/* branch.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-05T12:52:37Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-05T13:29:29Z_
