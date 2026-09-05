@@ -1,7 +1,0 @@
-version: 1
-project: conductor
-task: t-147
-operation: ready
-updated: '2026-09-05T22:18:20Z'
-note: >-
-  Review uncovered a second verified repo-side cause of misleading incident behavior: relay_agent.py only emits engine heartbeats from the outer polling loop, so any long or wedged synchronous process(job) call stops heartbeats and makes the watchdog classify an alive-but-busy relay as silent. Reopen the task to isolate heartbeats from render processing, then return the remaining physical-host recovery/console inspection to an explicit human gate if still needed.
