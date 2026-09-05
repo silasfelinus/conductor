@@ -12468,3 +12468,19 @@ records:
     same'), call the real function instead of a parallel heuristic --
     a parallel heuristic can silently diverge from what actually happens
     at runtime, in exactly the direction that hides the worst cases."
+- date: 2026-09-05
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Slice 83 of the recurring kr-btn consistency sweep: cross-checking
+    the full existing .kr-btn-* size/radius grid for the bare (no color,
+    no ghost) family before grepping found the gap directly -- .kr-btn-xs
+    (btn btn-xs rounded-xl) was missing even though its ghost-family
+    counterpart .kr-btn-ghost-xs already existed and the xs-size
+    rounded-lg/rounded-2xl bare variants already existed too. Comparing
+    across the family's established naming grid (color x size x radius)
+    surfaces gaps faster than a fresh unconstrained grep every slice."
