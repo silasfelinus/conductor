@@ -244,6 +244,7 @@ def test_missing_api_key_skips_cleanly_and_writes_nothing(monkeypatch, capsys):
 
 def test_api_failure_is_reported_not_swallowed(monkeypatch, capsys):
     monkeypatch.setattr(dreams, "proposal_exists_for", lambda day: False)
+    monkeypatch.setattr(dreams, "unbuilt_backlog", lambda: [])
     monkeypatch.setattr(dreams, "write_proposal", lambda *a, **k: pytest.fail("must not write"))
     monkeypatch.setenv("ANTHROPIC_API_KEY", "key")
 
