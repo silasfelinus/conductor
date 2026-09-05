@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3356,7 +3356,25 @@ tasks:
     reward-gallery.vue -- 3 occurrences across 2 files). Verification before push: vue-tsc
     clean; eslint 0 issues on both files; test:layout-contract held (207 baseline);
     test:lint-ratchet held (333/-59); prettier clean on both files. Awaiting CI.
-  updated: '2026-09-05T20:34:44Z'
+
+    Slice 93 merged as silasfelinus/kind_robots#2433 (squash
+    a88124d6e8a10089f6efee56700e7032ec5c9273) from exact head
+    7163405ba0b716841ad3aa30dffdbe82d52785b6. components/rewards/{reward-encounter,reward-
+    gallery}.vue -- 3 occurrences across 2 files, the rewards/ family (next-largest after
+    slice 92's dreams/ family) -- migrated from hand-rolled btn btn-* btn-xs ... rounded-xl
+    to kr-btn-xs, preserving all color/state modifiers (btn-ghost, btn-primary) and layout
+    utilities (mt-3, shrink-0); no geometry or behavior change. All 44 CI checks green
+    including Contract verifiers (~3.7 min, normal range). vue-tsc clean; eslint 0 issues on
+    both files; test:layout-contract held (207 baseline); test:lint-ratchet held (333/-59);
+    prettier clean on both files (no drift this slice). Remaining families for the next
+    slice (per kr_btn_xs_codemod.py dry-run): scenarios/{add-scenario,scenario-story}.vue (3
+    occurrences, 2 files), user-dashboard.vue (3), pages/storybook-library-page.vue (3),
+    navigation/account-hub.vue (2), wonderlab/mural-manager.vue (2), servers/{checkpoint-
+    gallery,server-gallery}.vue (2, 2 files), brainstorm-manager.vue (1), newsfeed-
+    filters.vue (1), taskmaster-page.vue (1), pages/admin/lora-triage.vue (1) -- 19
+    occurrences across 11 files. Return the recurring consistency umbrella to ready for the
+    next bounded slice.
+  updated: '2026-09-05T20:38:54Z'
   implementation_pr: 'silasfelinus/kind_robots#2433'
   retry_context: 'pass 1 failed (quality): slice 69 (kind_robots#2386) migrated the Promote-to-Character button in components/brainstorm/brainstorm-candidate-card.vue from `class="btn btn-outline btn-sm"` to the new shared `.kr-btn-outline-plain` class, but missed that utils/scripts/verifyBrainstormWorkbench.mjs:126 hardcodes that literal class string as a source-text regression guard ("the Promote to Character button must stay gated to kept candidates only"). CI job "Candidate-first workbench" fails on the new class. Do differently: before migrating a button class, grep utils/scripts/*.mjs (and any other source-text contract scripts) for the exact class string being replaced, not just run vue-tsc/eslint/layout-contract/lint-ratchet -- this file family asserts literal class attributes as regression guards and is easy to miss since it is not a normal test runner. Fix is scoped: update verifyBrainstormWorkbench.mjs line 126 to expect class="kr-btn-outline-plain" instead of class="btn btn-outline btn-sm" (same intent, new class name), then run `node utils/scripts/verifyBrainstormWorkbench.mjs` locally to confirm before reopening. Reviewer comment: silasfelinus/kind_robots#2386 (inline on components/brainstorm/brainstorm-candidate-card.vue line 363).'
   owner: reviewer
