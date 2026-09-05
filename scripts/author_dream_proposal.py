@@ -35,7 +35,15 @@ import dream_prose_quality as prose  # noqa: E402
 API_URL = "https://api.anthropic.com/v1/messages"
 API_VERSION = "2023-06-01"
 MODEL = os.environ.get("DREAM_AUTHOR_MODEL", "claude-sonnet-5")
-MAX_TOKENS = 6000
+# claude-sonnet-5 runs adaptive (always-on) extended thinking with no
+# budget_tokens knob to cap it -- thinking tokens count against max_tokens
+# the same as visible output. At 6000 this ceiling left zero room once
+# thinking ran long, producing a stop_reason: max_tokens response with only
+# a thinking block and no text at all ("empty completion" -- see run
+# 33906189934 and 33900347516, both 2026-09-04: 6000/6000 output_tokens,
+# all of it thinking_tokens). Raised well above any observed thinking spend
+# so a real answer always has room after it.
+MAX_TOKENS = 16000
 MAX_ATTEMPTS = 2
 
 REPO_ROOT = Path(__file__).resolve().parents[1]

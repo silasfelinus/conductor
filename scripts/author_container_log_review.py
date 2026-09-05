@@ -48,7 +48,15 @@ import check_container_log_drift as drift  # noqa: E402
 API_URL = "https://api.anthropic.com/v1/messages"
 API_VERSION = "2023-06-01"
 MODEL = os.environ.get("CONTAINER_LOG_REVIEW_MODEL", "claude-sonnet-5")
-MAX_TOKENS = 4000
+# claude-sonnet-5 runs adaptive (always-on) extended thinking with no
+# budget_tokens knob to cap it -- thinking tokens count against max_tokens
+# the same as visible output, so a low ceiling can be entirely consumed by
+# thinking before any review text is written, producing a stop_reason:
+# max_tokens response with only a thinking block ("empty completion"; see
+# scripts/author_dream_proposal.py's MAX_TOKENS comment for the confirmed
+# failure this exact pattern caused there on 2026-09-04). Raised for the
+# same headroom reason, not because this review needs a longer answer.
+MAX_TOKENS = 12000
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_REVIEW = REPO_ROOT / "ops" / "home-server" / "CONTAINER-LOG-REVIEW.json"
