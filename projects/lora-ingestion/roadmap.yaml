@@ -61,9 +61,10 @@ tasks:
 - id: t-003
   milestone: m2
   title: "Reconcile later Resource-backed generation evidence; run one current smoke only if proof is still missing"
-  status: ready
+  status: needs-human
   stakes: reversible
   gate_human: false
+  soft_gate: true
   note: |-
     Import half CONFIRMED 2026-07-28: standalone run detected ume as Flux, moved it, and upserted the Resource (created:1). Remaining: (1) run it as the embedded kr-relay thread on the pm2 box (pm2 restart kr-relay after setx CIVITAI_TOKEN), and (2) confirm a krea2/flux2 render selecting that Resource succeeds — closes the path bug end-to-end. Note ume sorted NSFW because Civitai flags the model nsfw; override to SFW if wrong.
 
@@ -78,8 +79,14 @@ tasks:
     Implemented the Krea/Flux LoRA compatibility split on the Kind Robots worker branch. The shared picker now keys Krea 2 compatibility from Resource.generation, FLUX/KONTEXT resources score zero for Krea, and the enqueue resolver reuses the same check so stale/direct selections are rejected. Added contract coverage while preserving the existing Flux.2 policy.
 
     Compatibility fix merged to kind_robots main as PR #2416 (merge commit 501fb31abbbbe6310cf504aad3f2b22066e9a37a). Krea 2 LoRA selection now uses Resource.generation lineage, FLUX/KONTEXT Resources are excluded for Krea, and the enqueue resolver rejects stale/direct mismatches. All PR-triggered GitHub Actions completed successfully, including TypeScript and the full Contract Tests suite; the new Art generator preset contract passed. Vercel had no PR preview deployment to inspect, so no preview was fabricated. The broader t-003 runtime Resource-backed DONE + ArtImage smoke evidence remains genuinely unresolved and should be handled separately without holding this code fix claim.
+
+    FOR SILAS: Full evidence in projects/lora-ingestion/docs/t-003-resource-backed-generation-evidence.md (2026-09-05 section, appended this session). Short version: confirmed both original candidate ArtJobs (2615, 2621) from the 2026-08-10 evidence are CANCELLED, not DONE -- they never proved anything. Scanned the 700 most recent DONE ArtJobs for any Krea2/Flux2 + LoRA combination: zero matches, so real proof was still missing.
+
+    Two separate findings, both need you specifically: (1) Krea2 cannot be smoke-tested at all right now -- zero Resources in the whole library carry a "Krea" generation tag (checked all 2344 rows via the API); not a code bug, just needs a Krea2 LoRA ingested before this half can ever be tested. (2) Queued one Flux2 Resource-backed LoRA smoke (ArtJob 21616); the application-side wiring was confirmed correct (LoRA Resource resolved to its exact localPath, wired into the right ComfyUI node), but the relay (Silas-PC) claimed the job and then went completely silent -- never completed it, never claimed anything else, and its own last-seen heartbeat stayed frozen at 18:46:46 UTC for 40+ minutes. Cancelled the job server-side to clear the DB state, but that can't un-wedge a relay process that's actually stuck locally. Filed as conductor/t-147 with full detail and two unconfirmed guesses at the cause.
+
+    TO APPROVE: this needs your eyes on the actual relay machine, which nothing in this sandbox can reach. Once you've restarted/checked the relay and resolved conductor/t-147 with what you found, t-003 can either get a fresh Flux2 smoke attempt or wait on a Krea2 Resource before it's closeable. Set approved_by_human: true and status: done (or ready, if you want another smoke attempted) once conductor/t-147 is resolved.
   approved_by_human: false
-  updated: '2026-09-05T12:12:30Z'
+  updated: '2026-09-05T19:20:00Z'
   outcome_note: >
     The original July 28 gate is stale in scope. Since then Kind Robots made Resource.localPath
     authoritative for LoRA resolution across image/video engines (including PR #1090), fixed
