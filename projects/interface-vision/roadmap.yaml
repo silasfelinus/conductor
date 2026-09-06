@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3778,7 +3778,26 @@ tasks:
     kr-panel-compact combo -- either a manual migration or adding kr-scroll to the codemod's
     safe-extras allowlist if confirmed to carry no conflicting background/border of its own.
     Return the recurring consistency umbrella to ready for that.
-  updated: '2026-09-06T17:35:22Z'
+
+    Slice 119 merged as silasfelinus/kind_robots#2467 (squash 4e07370). Added kr-scroll
+    (@apply min-h-0 flex-1 overflow-y-auto overscroll-contain in tailwind.css, verified
+    empty of bg/border/radius) to kr_panel_codemod.py's SAFE_EXTRA_RE safe-extras allowlist
+    -- this unblocked the one occurrence slice 118 flagged as next candidate:
+    components/pages/conductor-project-gallery-page.vue's <main> root now uses kr-scroll kr-
+    panel-compact instead of kr-scroll rounded-xl border border-base-300 bg-base-100 p-3; no
+    geometry or behavior change. All 45 PR checks completed successfully before merge. vue-
+    tsc clean, eslint 0 new errors, test:layout-contract held at 207 baseline, prettier pre-
+    existing warning on this file confirmed via git stash (unrelated, not newly introduced).
+    Return the non-recurring consistency umbrella to ready for the next bounded slice.
+    Remaining skipped occurrences from this slice's dry-run, left for a future slice: 5 dead
+    component-identifier root classes (art-styler.vue, stylist-calculator.vue, stylist-
+    history.vue, stylist-restyle.vue, stylist-settings.vue -- each `<name> flex flex-col
+    gap-4 rounded-2xl border border-base-300 bg-base-200 p-4`, verified zero CSS rules and
+    zero selector references anywhere in the repo for all 5 identifier classnames, so a
+    future slice could either allowlist them individually or migrate each file manually) and
+    2 DaisyUI btn-class occurrences in chat-gallery.vue (left alone per policy -- DaisyUI
+    component-root classes are deliberately excluded from the safe-extras allowlist).
+  updated: '2026-09-06T17:41:58Z'
   implementation_pr: 'silasfelinus/kind_robots#2467'
   retry_context: 'pass 1 failed (quality): slice 69 (kind_robots#2386) migrated the Promote-to-Character button in components/brainstorm/brainstorm-candidate-card.vue from `class="btn btn-outline btn-sm"` to the new shared `.kr-btn-outline-plain` class, but missed that utils/scripts/verifyBrainstormWorkbench.mjs:126 hardcodes that literal class string as a source-text regression guard ("the Promote to Character button must stay gated to kept candidates only"). CI job "Candidate-first workbench" fails on the new class. Do differently: before migrating a button class, grep utils/scripts/*.mjs (and any other source-text contract scripts) for the exact class string being replaced, not just run vue-tsc/eslint/layout-contract/lint-ratchet -- this file family asserts literal class attributes as regression guards and is easy to miss since it is not a normal test runner. Fix is scoped: update verifyBrainstormWorkbench.mjs line 126 to expect class="kr-btn-outline-plain" instead of class="btn btn-outline btn-sm" (same intent, new class name), then run `node utils/scripts/verifyBrainstormWorkbench.mjs` locally to confirm before reopening. Reviewer comment: silasfelinus/kind_robots#2386 (inline on components/brainstorm/brainstorm-candidate-card.vue line 363).'
   owner: worker
