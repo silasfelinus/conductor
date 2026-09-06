@@ -799,3 +799,24 @@ tasks:
     short of what was requested. scripts/check_live_facet_coverage.py keeps it that way
     and is in the session sweep; its tests cover the failing shapes, not just the passing
     one, because the guard this replaces had only ever passed.
+
+- id: t-027
+  milestone: m5
+  title: Extend check_live_facet_coverage.py to cover creation-burst bundles, not only daily-dream records
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-09-06T01:45:00Z'
+  note: >
+    Kaizen from the 2026-09-06 review of conductor PR #3733 (kind-robots creation burst:
+    The Shellback Reaches world card). check_live_facet_coverage.py (t-026) only walks
+    daily-dream records, so a creation-burst bundle whose Facets or world membership got
+    dropped later (a link deleted, a catalog row merged out from under a record, a bundle
+    never repaired) would go unnoticed the same way the original Character-Facets bug did
+    before t-026 existed. creation_burst.py already records everything it builds --
+    per-record Facet slugs/ids in each bundle's `built:` block, same shape daily-dream
+    records use -- so the fix is a sibling read-only live-coverage sweep over
+    `projects/kind-robots/bursts/*.yaml`'s `built:` blocks, reusing check_live_facet_coverage.py's
+    existing per-target GET-and-compare logic rather than duplicating it. Reversible,
+    read-only, no schema changes.
