@@ -321,6 +321,43 @@ def send_heartbeats():
     post_heartbeat("COMFY", comfy_ok, comfy_ms)
 
 
+def start_heartbeat_thread():
+    """Send heartbeats on their own clock, independent of the poll loop.
+
+    Before this, the poll loop itself decided when to call send_heartbeats() --
+    once per pass, only between jobs. That means a single long or wedged
+    process(job) call (synchronous: claim -> render -> upload -> complete, no
+    yielding back to the loop) silently stops heartbeats for the entire
+    duration, because the loop never comes back around to check the cadence
+    until process() returns. conductor/t-147 (ArtJob 21616, 2026-09-05): the
+    relay's one concurrent slot hung inside process() for ~30 minutes with no
+    error and no other job claimed. A watchdog reading heartbeat freshness
+    during that window could not tell "alive but busy" from "silent" -- both
+    look identical: no heartbeat. Decoupling the two means a wedged job still
+    posts COMFY health on schedule, which is the only signal that actually
+    distinguishes those two cases.
+
+    Runs on a daemon thread so it never blocks startup or shutdown; each tick
+    swallows its own exceptions (send_heartbeats -> post_heartbeat already
+    does) so a transient failure here can never kill the thread or the relay.
+    """
+
+    def _loop():
+        while True:
+            try:
+                send_heartbeats()
+            except Exception as error:  # noqa: BLE001 - heartbeat must never die
+                log(f"heartbeat loop failed to send: {error}")
+            time.sleep(HEARTBEAT_SECONDS)
+
+    if HEARTBEAT_SECONDS <= 0:
+        log("heartbeat thread disabled (HEARTBEAT_SECONDS <= 0)")
+        return None
+    thread = threading.Thread(target=_loop, name="heartbeat", daemon=True)
+    thread.start()
+    return thread
+
+
 def claim_job():
     status, response = http_json(
         "POST",
@@ -1428,6 +1465,7 @@ def main():
     log_build_identity()
     install_shutdown_handler()
     warm_object_info_async()
+    start_heartbeat_thread()
     log(
         f"agent {AGENT_ID} ({RELAY_VERSION}) polling {KR_BASE_URL} "
         f"every {POLL_SECONDS}s"
@@ -1452,17 +1490,9 @@ def main():
             "engine gate disabled (KR_ENGINE_GATE=0) - jobs will be claimed "
             "even if ComfyUI is down"
         )
-    last_heartbeat = 0.0
     while True:
         job = None
         try:
-            if (
-                HEARTBEAT_SECONDS > 0
-                and time.time() - last_heartbeat >= HEARTBEAT_SECONDS
-            ):
-                send_heartbeats()
-                last_heartbeat = time.time()
-
             # Do not claim what this box cannot render. A dead model
             # mount fails every job at the first model load, and the queue
             # counts that as an attempt -- see share_available().
