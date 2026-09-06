@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 52
     stakes: reversible
@@ -671,7 +671,41 @@ tasks:
       methods/computeds (not yet done this way, only spot-read file-by-file in cycles
       49-56/98), or to server/api/model-builder/**/*.ts route handlers, before falling back to
       the end-to-end surface-read rotation.
-    updated: '2026-09-06T20:33:06Z'
+
+      Cycle 100 (verified no-op, conductor scheduled Agent run): took cycle 99's suggested
+      lead -- extended the guard-coverage cross-reference from stores/modelBuilderStore.ts to
+      the 7 components/model-builder/*.vue files' own top-level methods/computeds. Confirmed
+      the guard-file convention: 86 verifyModelBuilder*.ts contract scripts in utils/scripts/
+      (excluding the 84 sibling .test.ts selftests, which exercise the guards against
+      synthetic fixtures rather than being guards themselves). Extracted every top-level
+      method/computed from all 7 components and grepped the 86 guard files' full contents (not
+      just filenames) for each name. Zero-hit items: batch-editor (autoBuildGroupTitle,
+      batchFieldId, draftAll, applyField, approvedCount, itemStageSummary, commitBadge), item-
+      panel (autoButtonTitle, commitButtonTitle), progress-matrix (recipeLabel,
+      batchInProgress, autoBuildAllDisabled, autoBuildAllTitle, str, sourceImage, sourceBlurb,
+      selectedItemId, selectedGroup, statusClass, statusIcon), recipe-selector (onQuantity,
+      onIncludeArt, actionBadge), run-history (armedRunId, confirmCancel, recipeLabel,
+      sourceIcon, startNew), source-picker (setViewMode, recordImage, isViewMode); manager.vue
+      had zero gaps (all hit). Read every zero-hit item end-to-end: all are either pure-
+      synchronous with no async gap, or thin wrappers delegating to store functions already
+      carrying their own singleton/epoch/request-id guard from prior cycles -- no new race
+      introduced. Specifically traced selectedItemId (progress-matrix) against every
+      store.openRun/resumeRun caller and confirmed the History overlay always
+      unmounts/remounts this component on a run switch (matching cycle 48's finding for a
+      sibling ref), and traced run-history.vue's open(runId) double-click race against
+      store.openRun's own openRunRequestId staleness guard -- both confirmed already-safe. No
+      new bug found; no code change. One coverage gap noted for the record (not a live bug):
+      verifyModelBuilderAutoBuildBatchExclusionGuard.ts only re-asserts the store-side half of
+      the cycle-25 fix and never reads model-builder-progress-matrix.vue's
+      autoBuildAllDisabled/batchInProgress text, so a future regression dropping '||
+      batchInProgress.value' from that binding would go undetected by any guard today --
+      current code is correct. Next lead for cycle 101: the Vue-component guard-coverage
+      cross-reference is now exhausted for all 7 model-builder components; a future cycle
+      should extend the same cross-reference to server/api/model-builder/**/*.ts route
+      handlers (not yet done this way), or close the coverage gap noted above by adding a
+      .vue-file assertion to the existing store-side guard, before falling back to the end-to-
+      end surface-read rotation.
+    updated: '2026-09-06T20:38:10Z'
     owner: reviewer
     claimed_by: claude-scheduled-20260906T203306Z-mb-t029-cycle100
     claimed_at: '2026-09-06T20:33:06Z'
