@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3811,7 +3811,25 @@ tasks:
     worsened). prettier --check flags the same pre-existing warnings on these 5 files as
     confirmed present on baseline main before this change (unrelated, not newly introduced).
     Awaiting CI.
-  updated: '2026-09-06T18:36:27Z'
+
+    Slice 120 merged as silasfelinus/kind_robots#2468 (squash 37314d9) from exact head
+    376e8af69ad9a62c2e39a05a29d4f74575ac1851. components/art/art-styler.vue, stylist-
+    calculator.vue, stylist-history.vue, stylist-restyle.vue, and stylist-settings.vue each
+    had a root section carrying a dead component-identifier class (verified zero CSS
+    rules/selector references repo-wide, only Vue component-tag usages remain) plus the
+    hand-rolled rounded-2xl/border-base-300/bg-base-200/p-4 sequence; the dead identifier
+    was dropped and the sequence substituted with kr-panel-muted-md -- no geometry or
+    behavior change. All 44 PR checks completed successfully before merge (TypeScript,
+    Contract verifiers, layout-contract, facet-catalog, verify x4, GitGuardian, and 36
+    Storybook/narrative contract checks), mergeable_state clean. vue-tsc clean, eslint 0
+    errors on changed files, test:layout-contract held at 207 baseline, test:lint-ratchet
+    held at 333/-59 (no rule worsened). prettier --check flagged the same 5 pre-existing
+    warnings confirmed present on baseline main before this change (unrelated, not newly
+    introduced). Return the non-recurring consistency umbrella to ready for the next bounded
+    slice; no further candidates surveyed this pass -- a future slice should re-run the mx-
+    auto+max-w-* (missing w-full) and kr-panel-muted-md/other-variant surveys to find the
+    next pool.
+  updated: '2026-09-06T18:40:33Z'
   implementation_pr: 'silasfelinus/kind_robots#2468'
   retry_context: 'pass 1 failed (quality): slice 69 (kind_robots#2386) migrated the Promote-to-Character button in components/brainstorm/brainstorm-candidate-card.vue from `class="btn btn-outline btn-sm"` to the new shared `.kr-btn-outline-plain` class, but missed that utils/scripts/verifyBrainstormWorkbench.mjs:126 hardcodes that literal class string as a source-text regression guard ("the Promote to Character button must stay gated to kept candidates only"). CI job "Candidate-first workbench" fails on the new class. Do differently: before migrating a button class, grep utils/scripts/*.mjs (and any other source-text contract scripts) for the exact class string being replaced, not just run vue-tsc/eslint/layout-contract/lint-ratchet -- this file family asserts literal class attributes as regression guards and is easy to miss since it is not a normal test runner. Fix is scoped: update verifyBrainstormWorkbench.mjs line 126 to expect class="kr-btn-outline-plain" instead of class="btn btn-outline btn-sm" (same intent, new class name), then run `node utils/scripts/verifyBrainstormWorkbench.mjs` locally to confirm before reopening. Reviewer comment: silasfelinus/kind_robots#2386 (inline on components/brainstorm/brainstorm-candidate-card.vue line 363).'
   owner: worker
