@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -3797,8 +3797,22 @@ tasks:
     future slice could either allowlist them individually or migrate each file manually) and
     2 DaisyUI btn-class occurrences in chat-gallery.vue (left alone per policy -- DaisyUI
     component-root classes are deliberately excluded from the safe-extras allowlist).
-  updated: '2026-09-06T18:35:50Z'
-  implementation_pr: 'silasfelinus/kind_robots#2467'
+
+    Slice 120: PR silasfelinus/kind_robots#2468 open (branch claude/eager-bohr-d1q5pa).
+    Migrated the 5 dead-identifier panel roots flagged by slice 119's own note (art-
+    styler.vue, stylist-calculator.vue, stylist-history.vue, stylist-restyle.vue, stylist-
+    settings.vue) -- each dropped a dead component-identifier class (verified zero CSS
+    rules/selector references repo-wide, only Vue component-tag usages remain, e.g. <art-
+    styler />) and substituted the trailing rounded-2xl/border-base-300/bg-base-200/p-4
+    sequence with kr-panel-muted-md. Manual per-file migration, not a safe-extras-eligible
+    codemod substitution (the dead identifier class is not a general-purpose utility, so it
+    wasn't added to SAFE_EXTRA_RE). vue-tsc clean, eslint 0 errors on changed files,
+    test:layout-contract held at 207 baseline, test:lint-ratchet held at 333/-59 (no rule
+    worsened). prettier --check flags the same pre-existing warnings on these 5 files as
+    confirmed present on baseline main before this change (unrelated, not newly introduced).
+    Awaiting CI.
+  updated: '2026-09-06T18:36:27Z'
+  implementation_pr: 'silasfelinus/kind_robots#2468'
   retry_context: 'pass 1 failed (quality): slice 69 (kind_robots#2386) migrated the Promote-to-Character button in components/brainstorm/brainstorm-candidate-card.vue from `class="btn btn-outline btn-sm"` to the new shared `.kr-btn-outline-plain` class, but missed that utils/scripts/verifyBrainstormWorkbench.mjs:126 hardcodes that literal class string as a source-text regression guard ("the Promote to Character button must stay gated to kept candidates only"). CI job "Candidate-first workbench" fails on the new class. Do differently: before migrating a button class, grep utils/scripts/*.mjs (and any other source-text contract scripts) for the exact class string being replaced, not just run vue-tsc/eslint/layout-contract/lint-ratchet -- this file family asserts literal class attributes as regression guards and is easy to miss since it is not a normal test runner. Fix is scoped: update verifyBrainstormWorkbench.mjs line 126 to expect class="kr-btn-outline-plain" instead of class="btn btn-outline btn-sm" (same intent, new class name), then run `node utils/scripts/verifyBrainstormWorkbench.mjs` locally to confirm before reopening. Reviewer comment: silasfelinus/kind_robots#2386 (inline on components/brainstorm/brainstorm-candidate-card.vue line 363).'
   owner: worker
   claimed_by: claude-scheduled-20260906T183531Z-iv-t104-s120
