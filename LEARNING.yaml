@@ -12551,3 +12551,28 @@ records:
     track (e.g. hand-rolled btn-sm/btn-md variants) rather than assume the
     umbrella is finished -- it is recurring precisely because the sweep
     itself never ends, only its current target family did."
+- date: 2026-09-06
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Slice 103 of the recurring kr-btn consistency sweep generalized the
+    sweep's own tooling pattern instead of hand-picking a fourth single-family
+    codemod: kr_btn_order_variant_codemod.py parses the live .kr-btn-*
+    definitions out of tailwind.css and closes any remaining site whose class
+    token *set* exactly matches an already-canonical shape but is written in a
+    different word order -- a near-miss class every prior single-family
+    codemod could only close one specific order for at a time, leaving
+    scattered leftovers across many already-'cleared' families. Found by
+    scanning all class=\"...\" attributes containing 'btn' with no kr- prefix,
+    grouping by sorted token set, and diffing against the frozenset->name map
+    already encoded in tailwind.css's own @apply rules -- 19 occurrences
+    surfaced across 6 different families and 12 files, none previously
+    visible to any single-family tool. General lesson for a long-running
+    incremental-discovery sweep: periodically re-derive the full canonical
+    mapping and re-scan for exact-set matches across ALL prior targets at
+    once, rather than only ever looking for the next new family -- word-order
+    variants of already-solved shapes accumulate silently in between."
