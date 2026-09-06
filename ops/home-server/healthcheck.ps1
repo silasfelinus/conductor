@@ -48,6 +48,14 @@ if ($env:CRASH_LOOP_RESTARTS) {
     [int]::TryParse($env:CRASH_LOOP_RESTARTS, [ref]$crashLoopRestarts) | Out-Null
 }
 
+# How long after a boot an app may take to come back before that is a finding.
+# A healthy logon-start recovery is ~90 seconds; 15 minutes is far outside it
+# and far inside the 142 minutes observed on 2026-09-06.
+$bootRecoveryMinutes = 15
+if ($env:BOOT_RECOVERY_MINUTES) {
+    [int]::TryParse($env:BOOT_RECOVERY_MINUTES, [ref]$bootRecoveryMinutes) | Out-Null
+}
+
 # How large a gap between consecutive ticks counts as this watchdog having been
 # ABSENT rather than merely slow. The task runs every 5 minutes, so two missed
 # ticks is the smallest gap that cannot be a single slow run.
@@ -258,6 +266,15 @@ function Get-PowerTransitions($since) {
 $alertState = Get-AlertState
 $hostName = $env:COMPUTERNAME
 $watchdogExitCode = 0
+
+# Read once. Every per-app recovery-lag check below measures against it, and
+# Get-CimInstance is not free enough to call per target.
+$bootTime = $null
+try {
+    $bootTime = (Get-CimInstance Win32_OperatingSystem -ErrorAction Stop).LastBootUpTime
+} catch {
+    $bootTime = $null
+}
 
 # The FIRST thing this script writes, before anything that can block.
 #
@@ -647,6 +664,49 @@ foreach ($t in $targets) {
                 "$($t.Name) is running a process that started at $startedText, newer than the one seen at the previous tick, while pm2's restart counter did not move (still $restartCount). pm2 did not do this: it was a pm2 daemon restart, a 'pm2 resurrect', a logoff, or a reboot.`n`nThat matters because nothing else reports it. The crash-loop and errored checks read the restart counter, which stands still through exactly this event, and the app comes back looking healthy with a clean history. Off the box it shows only as a hole in the heartbeat series.`n`nWhat replaced it:`n  (Get-CimInstance Win32_OperatingSystem).LastBootUpTime`n  Get-WinEvent -MaxEvents 20 -FilterHashtable @{LogName='System'; Id=6005,6006,6008,1074,41} |`n    Format-Table TimeCreated, Id, Message -AutoSize`n`n6005 is the event log starting (a boot), 6006 a clean shutdown, 6008 an unexpected one, 1074 a shutdown someone or something requested (it names the process), 41 a kernel power fault. If none of those line up, the pm2 daemon went down on its own - check whether it is started at logon rather than as a service, since a logoff takes every app with it."
             $alertState["replaced-$($t.Name)"] = $stamp
             Save-AlertState $alertState
+        }
+    }
+
+    # --- How long after a boot did this app come back? ----------------------
+    # The reboot is not the interesting number. The RECOVERY LAG is.
+    #
+    # 2026-09-06, from the System log and kr-relay's own: the box restarted at
+    # 00:16:37 and finished booting at 00:17:12 -- and kr-relay did not start
+    # until 02:39:12. Two hours and twenty-two minutes of a machine that was up,
+    # awake and idle, rendering nothing. That is the 143-minute hole in the
+    # off-box heartbeat series almost exactly, and it is a far worse fault than
+    # the restart that preceded it.
+    #
+    # The 09-05 02:49 restart, by contrast, had the relay back in 88 seconds.
+    # Same box, same week: sometimes the engines return immediately and
+    # sometimes they do not come back at all until a human signs in. Nothing
+    # measured the difference, so nobody could know which kind of reboot had
+    # just happened.
+    #
+    # Reported once per app per boot, at the first tick where the app is running
+    # -- never on a later manual restart, which would otherwise read as an
+    # enormous lag against a boot from hours ago.
+    if ($bootTime -and $currentStart -gt 0) {
+        $bootStamp = $bootTime.ToString('yyyy-MM-dd HH:mm:ss')
+        $recoveredKey = "bootrecovered_$($t.Name)"
+        if ([string]$alertState[$recoveredKey] -ne $bootStamp) {
+            $alertState[$recoveredKey] = $bootStamp
+            Save-AlertState $alertState
+
+            $bootStartedAt = ([datetimeoffset]::FromUnixTimeMilliseconds([long]$currentStart)).LocalDateTime
+            $lagMinutes = [math]::Round(($bootStartedAt - $bootTime).TotalMinutes, 1)
+            if ($lagMinutes -ge $bootRecoveryMinutes) {
+                Write-Log "$($t.Name): SLOW RECOVERY - box booted $bootStamp, this app did not start until $($bootStartedAt.ToString('yyyy-MM-dd HH:mm:ss')) - $lagMinutes minutes of nothing"
+                if (Test-AlertDue $alertState "bootlag-$($t.Name)") {
+                    $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+                    Send-Alert "SLOW RECOVERY: $($t.Name) took $lagMinutes min to come back after $hostName rebooted" `
+                        "$hostName finished booting at $bootStamp. $($t.Name) did not start until $($bootStartedAt.ToString('yyyy-MM-dd HH:mm:ss')) - $lagMinutes minutes later, during which the box was up and idle and nothing rendered.`n`nA reboot on its own is survivable; this is the part that is not. If pm2 is started at LOGON (pm2-windows-startup, README Option B) then a machine sitting at the sign-in screen runs nothing at all, however long it sits there. An update-initiated restart can sign the last user back in automatically and recover in about a minute, while a plain 'shutdown /r' does not - which is how the same box can recover in 88 seconds one night and 142 minutes the next.`n`nThe durable fix is README Option A: pm2 as a real Windows service, which comes back at BOOT with no sign-in. Run 'npm run configure' before 'npm run setup' - the field note in the README explains why that order matters.`n`nThen verify with ops\\home-server\\preflight.ps1, which exists to answer exactly this question before the next reboot asks it for you."
+                    $alertState["bootlag-$($t.Name)"] = $stamp
+                    Save-AlertState $alertState
+                }
+            } else {
+                Write-Log "$($t.Name): came back $lagMinutes min after the boot at $bootStamp"
+            }
         }
     }
 
