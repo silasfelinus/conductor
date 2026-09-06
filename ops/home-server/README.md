@@ -773,6 +773,83 @@ comparison. The watchdog deliberately does **not** kill the squatter itself — 
 can be a working engine mid-render, and choosing to end that render is a human's
 call, not a 5-minute timer's.
 
+### Triage: "something keeps resetting" — the box is asleep (2026-09-06)
+
+**Symptom.** ComfyUI, the relay, or "something" appears to restart on its own.
+Renders stall and resume for no visible reason. `pm2 status` shows no crash to
+explain it, `healthcheck.log` simply skips stretches of time, and ComfyUI's own
+log has no error at the moment the gap starts — every log just *jumps*.
+
+**The signal that does show it** is the COMFY heartbeat series on
+kindrobots.org, because it is recorded off the box. On 2026-09-06:
+
+| Window (local) | What the series shows |
+|---|---|
+| 09-05 11:46 – 15:06 | no heartbeat at all — 200 minutes |
+| 09-05 18:22 – 18:43 | no heartbeat — 21 minutes |
+| 09-05 18:51 – 21:10 | **one beat every ~7 minutes**, for 2h20m |
+| 09-06 00:15 – 02:39 | no heartbeat at all — 143 minutes |
+
+The middle row is the diagnostic one. `relay_agent.py`'s heartbeat runs on its
+own daemon thread: `time.sleep(60)`, with a 10-second engine probe and a
+15-second post. **85 seconds is the widest gap it can produce while running.**
+Seven minutes, metronomically, for two hours, is not the relay pacing itself —
+it is the relay being frozen and thawed, delivering one beat per thaw.
+
+**Cause (leading, pending `powercfg` confirmation).** The machine is sleeping.
+Windows suspends the box, every process stops mid-instruction, and on resume
+they carry on with no idea time passed. It fits the shape of the gaps (they
+land when nobody is at the machine) and it is invisible to every on-box signal
+by construction — a frozen watchdog cannot log that it was frozen.
+
+It would also retro-explain several incidents already written up above: a
+dropped SMB mapping, a stale share handle ComfyUI keeps using, `[WinError 1117]`
+on `Z:\ai\models\unet`, "the *client* rebooted, not the NAS". Suspend/resume
+produces all of those.
+
+**Confirm it on the box:**
+
+```powershell
+powercfg /lastwake                       # what woke it, and when
+powercfg /requests                       # what is (or is not) holding it awake
+powercfg /q SCHEME_CURRENT SUB_SLEEP     # the standby/hibernate timeouts in force
+powercfg /sleepstudy                     # writes an HTML report of recent cycles
+
+# The authoritative record - 42 is "entering sleep", 107 is "resumed":
+Get-WinEvent -MaxEvents 40 -FilterHashtable @{
+  LogName='System'; ProviderName='Microsoft-Windows-Kernel-Power'; Id=42,107
+} | Format-Table TimeCreated, Id, Message -AutoSize
+```
+
+**Fix, if this box is meant to stay up:**
+
+```powershell
+powercfg /change standby-timeout-ac 0
+powercfg /change hibernate-timeout-ac 0
+powercfg /change disk-timeout-ac 0
+powercfg /change monitor-timeout-ac 10
+```
+
+`monitor-timeout-ac` can stay non-zero — a dark screen is not a suspended box.
+Also check the network adapter's "Allow the computer to turn off this device to
+save power" (Device Manager → adapter → Power Management): a NIC powered down
+mid-session drops the SMB mappings even when the box itself stays up.
+
+**Guard.** Two additions, one on each side of the box, because neither works
+alone:
+
+- `healthcheck.ps1` records the time of every tick and, when the next tick is
+  more than 12 minutes later, reads Kernel-Power 42/107 across the gap. The log
+  now says either `the BOX SLEPT` or `NO Kernel-Power sleep/resume event - the
+  box was awake and this task did not run`. That distinction was previously
+  unavailable: an empty stretch of `healthcheck.log` meant both things at once.
+- `check_engine_heartbeat.py` gains a **DOZING** state next to SILENT and DOWN.
+  It scores the *spacing* of the beats rather than their content, so a box that
+  is frozen half the hour no longer reads as healthy just because each beat it
+  manages to send is fresh and `ok:true`. It refuses to score a downsampled
+  series (the uptime endpoint caps at 500 samples), so a wide `--window-hours`
+  cannot manufacture a sleep alarm.
+
 ## Why a 24-hour outage produced no alerts (2026-09-02), and what watches now
 
 The ComfyUI crash loop above ran for about a day before a human noticed. Four

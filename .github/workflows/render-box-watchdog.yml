@@ -114,6 +114,13 @@ jobs:
               INTRO="The render engine stopped reporting healthy. The art queue will not drain until this is fixed."
               ;;
           esac
+          # DOZING is the one bad state where the engine IS reporting healthy,
+          # so the wording above would be actively misleading: nothing "stopped
+          # reporting", the box is just frozen between the beats it does send.
+          if [ "$STATE" = "dozing" ]; then
+            SUBJECT="⚠️ Render box is SLEEPING — heartbeats minutes apart"
+            INTRO="The engine answers whenever it is awake, but the box is suspending and resuming underneath it. Renders cannot start while it is frozen, and SMB mappings and CUDA contexts do not reliably survive the cycle."
+          fi
           BODY="$(cat <<EOF
           $INTRO
 

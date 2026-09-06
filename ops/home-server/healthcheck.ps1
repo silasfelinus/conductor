@@ -48,6 +48,14 @@ if ($env:CRASH_LOOP_RESTARTS) {
     [int]::TryParse($env:CRASH_LOOP_RESTARTS, [ref]$crashLoopRestarts) | Out-Null
 }
 
+# How large a gap between consecutive ticks counts as this watchdog having been
+# ABSENT rather than merely slow. The task runs every 5 minutes, so two missed
+# ticks is the smallest gap that cannot be a single slow run.
+$tickGapAlertMinutes = 12
+if ($env:TICK_GAP_ALERT_MINUTES) {
+    [int]::TryParse($env:TICK_GAP_ALERT_MINUTES, [ref]$tickGapAlertMinutes) | Out-Null
+}
+
 # How long to wait for 'pm2 jlist' before giving up on it. Must stay well under
 # the scheduled task's 5-minute interval, or a slow pm2 lets each run overlap
 # the next and Task Scheduler starts killing them.
@@ -210,6 +218,43 @@ function Get-PortOwnerReport($port, $expectedPid) {
     return "port $port is held by $desc while pm2 is running NO process for this app - that engine is unsupervised, so nothing will restart it when it dies. Stop it ('taskkill /PID $ownerPid /F') and start the pm2 app so the port belongs to a supervised process again."
 }
 
+# --- Sleep and resume --------------------------------------------------------
+# A gap in this log has always had two possible meanings and no way to tell them
+# apart: the watchdog stopped running (2026-09-01: healthcheck.log ends dead at
+# 02:26:07 and stays empty for 37 hours), or the whole BOX stopped running. The
+# second is not hypothetical either - the COMFY heartbeat series on
+# kindrobots.org shows this box going quiet for 143 minutes (2026-09-06
+# 00:15-02:39 local) and 200 minutes (2026-09-05 11:46-15:06), plus a two-hour
+# stretch delivering exactly one beat every ~7 minutes when the relay's own
+# thread sleeps 60s and can block at most 85s. A frozen process cannot report
+# that it was frozen, and every on-box signal - pm2 uptime, the watchdog log,
+# ComfyUI's own log - simply skips the missing time without comment.
+#
+# Windows does say, in the System log. Kernel-Power 42 is "entering sleep" and
+# 107 is "resumed"; reading them needs no elevation. Matching them against the
+# gap turns "the log just stops" into a named cause, and it does so for the one
+# failure mode nothing else here can see.
+#
+# This matters beyond the log being tidy: a suspend/resume cycle is a plausible
+# author of several incidents already written up in the README - a dropped SMB
+# mapping, a stale share handle ComfyUI keeps using, a CUDA context lost under a
+# process that is still "running". Naming the cycle is the first step to ruling
+# it in or out.
+function Get-PowerTransitions($since) {
+    try {
+        return @(Get-WinEvent -ErrorAction Stop -MaxEvents 20 -FilterHashtable @{
+            LogName      = 'System'
+            ProviderName = 'Microsoft-Windows-Kernel-Power'
+            Id           = 42, 107
+            StartTime    = $since
+        } | Sort-Object TimeCreated)
+    } catch {
+        # Get-WinEvent THROWS when nothing matches, which is the common case on
+        # a healthy box, so this catch is the normal path and not an error path.
+        return @()
+    }
+}
+
 $alertState = Get-AlertState
 $hostName = $env:COMPUTERNAME
 $watchdogExitCode = 0
@@ -328,6 +373,47 @@ $pm2Visible = $pm2Names.Count -gt 0
 # be told apart from a task that never ran -- which is precisely the question
 # that mattered on 2026-08-27. One line per tick, ~288/day, trimmed below.
 Write-Log "tick as $($env:USERNAME) - pm2 apps: $(if ($pm2Visible) { $pm2Names -join ', ' } else { 'NONE VISIBLE' })"
+
+# Account for the time since the previous tick before anything else uses it.
+# Written every run, so the very next tick after a gap is the one that names it.
+$tickNow = Get-Date
+$previousTick = $null
+if ($alertState.ContainsKey('last_tick_at')) {
+    $parsedTick = [datetime]::MinValue
+    if ([datetime]::TryParse([string]$alertState['last_tick_at'], [ref]$parsedTick)) {
+        $previousTick = $parsedTick
+    }
+}
+$alertState['last_tick_at'] = $tickNow.ToString('yyyy-MM-dd HH:mm:ss')
+Save-AlertState $alertState
+
+if ($previousTick -and ($tickNow - $previousTick).TotalMinutes -ge $tickGapAlertMinutes) {
+    $gapMinutes = [math]::Round(($tickNow - $previousTick).TotalMinutes, 1)
+    $gapFrom = $previousTick.ToString('yyyy-MM-dd HH:mm:ss')
+    $transitions = Get-PowerTransitions $previousTick
+    $sleeps = @($transitions | Where-Object { $_.Id -eq 42 })
+    $wakes = @($transitions | Where-Object { $_.Id -eq 107 })
+
+    if ($sleeps.Count -gt 0 -or $wakes.Count -gt 0) {
+        $detail = "$($sleeps.Count) sleep + $($wakes.Count) resume event(s)"
+        if ($wakes.Count -gt 0) {
+            $detail = "$detail, last resume $($wakes[-1].TimeCreated.ToString('yyyy-MM-dd HH:mm:ss'))"
+        }
+        Write-Log "GAP of $gapMinutes min since $gapFrom - the BOX SLEPT ($detail); the watchdog was frozen, not stopped"
+        if (Test-AlertDue $alertState 'box-slept') {
+            $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+            Send-Alert "SLEEP: $hostName suspended for $gapMinutes minutes" `
+                "This watchdog ran at $gapFrom and not again until $stamp - a gap of $gapMinutes minutes - and the Windows System log attributes it to sleep, not to a stopped task ($detail).`n`nThat matters because this box is a server. While it is suspended nothing renders, the relay posts no heartbeat (so off-box checks read the engine as SILENT), SMB mappings to the model share can come back stale, and ComfyUI keeps a CUDA context and cached folder_paths listings across a cycle it never learns about. Several incidents already written up in ops/home-server/README.md have that shape.`n`nConfirm what is putting it to sleep:`n  powercfg /lastwake`n  powercfg /requests`n  powercfg /q SCHEME_CURRENT SUB_SLEEP`n`nStop it, if this box is meant to stay up:`n  powercfg /change standby-timeout-ac 0`n  powercfg /change hibernate-timeout-ac 0`n  powercfg /change disk-timeout-ac 0`n(monitor-timeout-ac can stay non-zero - a dark screen is not a suspended box.)"
+            $alertState['box-slept'] = $stamp
+            Save-AlertState $alertState
+        }
+    } else {
+        # No sleep event across the gap, so the box was up and this task was
+        # not. That is the 2026-09-01 failure, and it is worth saying out loud
+        # rather than leaving as a hole in the log.
+        Write-Log "GAP of $gapMinutes min since $gapFrom with NO Kernel-Power sleep/resume event - the box was awake and this task did not run; check Task Scheduler history for AI-Backends-Healthcheck"
+    }
+}
 
 if (-not $pm2Visible) {
     $watchdogExitCode = 2
