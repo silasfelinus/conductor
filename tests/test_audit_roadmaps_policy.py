@@ -33,6 +33,25 @@ def test_completed_approved_gate_is_history(tmp_path):
     result = findings_for(tmp_path, '  - id: t-001\n    milestone: m1\n    title: Approved history\n    status: done\n    stakes: reversible\n    gate_human: true\n    approved_by_human: true\n    note: Internal review record.\n')
     assert 'POSSIBLY_UNNECESSARY_GATE' not in codes(result)
 
+def test_completed_unapproved_gate_is_advisory_not_error(tmp_path):
+    result = findings_for(
+        tmp_path,
+        '  - id: t-001\n'
+        '    milestone: m1\n'
+        '    title: Recovered incident\n'
+        '    status: done\n'
+        '    stakes: irreversible\n'
+        '    gate_human: true\n'
+        '    approved_by_human: false\n'
+        '    note: Recovery criteria verified; no policy approval was implied.\n',
+    )
+    finding = next(item for item in result if item['code'] == 'GATED_DONE_WITHOUT_APPROVAL')
+    assert finding['severity'] == 'warning'
+    assert not any(
+        item['code'] == 'GATED_DONE_WITHOUT_APPROVAL' and item['severity'] == 'error'
+        for item in result
+    )
+
 def test_explicit_soft_gate_is_intentional(tmp_path):
     result = findings_for(tmp_path, '  - id: t-001\n    milestone: m1\n    title: Parallel scope check\n    status: needs-human\n    stakes: reversible\n    soft_gate: true\n    note: "FOR SILAS: Optional feedback; development continues."\n')
     assert 'SOFT_NEEDS_HUMAN' not in codes(result)
