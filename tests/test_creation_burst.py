@@ -116,5 +116,34 @@ def test_party_bundle_validation(mutate, message):
         burst.normalize_bundle(bundle)
 
 
+def test_art_priority_defaults_and_overrides():
+    assert burst.normalize_bundle(party_bundle())["art_priority"] == burst.PRIORITY
+    bundle = party_bundle()
+    bundle["art_priority"] = 300
+    assert burst.normalize_bundle(bundle)["art_priority"] == 300
+    bundle["art_priority"] = "high"
+    with pytest.raises(ValueError, match="art_priority must be a non-negative integer"):
+        burst.normalize_bundle(bundle)
+
+
+def test_enqueue_card_uses_the_bundle_priority(monkeypatch):
+    seen = {}
+    monkeypatch.setattr(burst.art, "enqueue", lambda job: seen.setdefault("job", job) and 77)
+    entry = {"id": "creation-burst-x-y", "bundle": "x", "prompt": "a turtle", "engine": "krea2",
+             "size": "512x768", "entity_type": "reward", "entity_id": 5, "label": "y"}
+    assert burst.enqueue_card(entry, dry_run=False, priority=300) == 77
+    assert seen["job"]["priority"] == 300
+    assert seen["job"]["payload"]["entityArt"]["entityId"] == 5
+
+
+def test_reward_owners_default_to_everyone_and_narrow_by_name():
+    shape = burst.normalize_bundle(party_bundle())
+    chars = shape["characters"]
+    assert burst.reward_owners({"name": "Kama"}, chars, False) == {"character:tom-tomtum", "character:deedum"}
+    assert burst.reward_owners({"name": "Kama", "owners": ["tom tomtum"]}, chars, False) == {"character:tom-tomtum"}
+    with pytest.raises(ValueError, match="unknown owner"):
+        burst.reward_owners({"name": "Kama", "owners": ["Nobody"]}, chars, False)
+
+
 def test_facet_collections_cover_location_dreams():
     assert burst.FACET_COLLECTIONS["dream"] == "dreams"

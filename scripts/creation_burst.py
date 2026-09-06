@@ -46,7 +46,12 @@ whose picture is a specific moment rather than a portrait may give its own
 
 Bundle-level knobs: `designer:` (default creation-burst) names who the rows are
 credited to; `creation_source:` (default AI) is stamped on the LOCATION Dreams —
-use HYBRID when a person seeded the idea and an agent wrote it up.
+use HYBRID when a person seeded the idea and an agent wrote it up; `art_priority:`
+(default 120) is the ArtJob priority for the bundle's cards — Daily Dream runs at
+200, the maintenance drip at 0, so a bundle Silas is waiting on goes above 200.
+
+Re-running a bundle after adding `rewards:` to it links the new Rewards to the
+already-built Characters from the Reward side (`characterIds`), so a set can grow.
 
 Dry-run by default. `--live` needs KR_API_TOKEN.
 
@@ -169,6 +174,9 @@ def normalize_bundle(bundle: dict[str, Any], name: str = "bundle") -> dict[str, 
     creation_source = (_text(bundle.get("creation_source")) or "AI").upper()
     if creation_source not in VALID_CREATION_SOURCES:
         raise ValueError(f"{name}: creation_source must be one of {sorted(VALID_CREATION_SOURCES)}")
+    raw_priority = bundle.get("art_priority", PRIORITY)
+    if not isinstance(raw_priority, int) or isinstance(raw_priority, bool) or raw_priority < 0:
+        raise ValueError(f"{name}: art_priority must be a non-negative integer")
 
     return {
         "characters": characters,
@@ -178,6 +186,7 @@ def normalize_bundle(bundle: dict[str, Any], name: str = "bundle") -> dict[str, 
         "legacy_character": legacy,
         "designer": designer,
         "creation_source": creation_source,
+        "art_priority": raw_priority,
     }
 
 
@@ -186,6 +195,20 @@ def character_key(index: int, ch: dict[str, Any], legacy: bool) -> str:
     if legacy and index == 0:
         return "character"
     return f"character:{slugify(ch['name'])}"
+
+
+def reward_owners(rw: dict[str, Any], characters: list[dict[str, Any]], legacy: bool) -> set[str]:
+    """Character keys a reward links to: every character in the bundle unless the
+    reward names its `owners:` (character names), so a party can carry one
+    member's gear without handing it to everyone."""
+    keys = {character_key(i, ch, legacy): _text(ch["name"]).casefold() for i, ch in enumerate(characters)}
+    wanted = [_text(x).casefold() for x in (rw.get("owners") or [])]
+    if not wanted:
+        return set(keys)
+    unknown = [w for w in wanted if w not in keys.values()]
+    if unknown:
+        raise ValueError(f"reward {rw.get('name')!r} names unknown owner(s): {', '.join(unknown)}")
+    return {k for k, name in keys.items() if name in wanted}
 
 
 # ── Kind Robots writes ───────────────────────────────────────────────────────
@@ -334,9 +357,9 @@ def set_request_job_id(req_id: str, job_id: int) -> None:
     raise KeyError(req_id)
 
 
-def enqueue_card(entry: dict[str, Any], dry_run: bool) -> Optional[int]:
+def enqueue_card(entry: dict[str, Any], dry_run: bool, priority: int = PRIORITY) -> Optional[int]:
     job = art.entry_to_job(entry)
-    job["priority"] = PRIORITY
+    job["priority"] = int(priority)
     job["idempotencyKey"] = entry["id"]
     job["projectSlug"] = "kind-robots"
     job["payload"]["collection"] = f"{SOURCE}/{entry['bundle']}"
@@ -455,11 +478,20 @@ def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
             if lid:
                 location_ids.append(int(lid))
 
-        # 2. Rewards, so the Characters can link them on create.
+        # 2. Rewards, so the Characters can link them on create. A Character that
+        #    already exists from an earlier run is linked from the Reward side
+        #    instead (`characterIds`), so a bundle can grow rewards after the fact.
+        char_keys = [character_key(i, ch, shape["legacy_character"]) for i, ch in enumerate(characters)]
         reward_ids: list[int] = []
+        reward_owner_keys: dict[str, set[str]] = {}
         for rw in rewards:
             el = slugify(rw["name"])
             key = f"reward:{el}"
+            owners = reward_owners(rw, characters, shape["legacy_character"])
+            reward_owner_keys[key] = owners
+            prebuilt_character_ids = [
+                int(built[ck]) for ck in char_keys if ck in owners and built.get(ck)
+            ]
             rtype = str(rw.get("reward_type", "ITEM")).upper()
             rarity = str(rw.get("rarity", "COMMON")).upper()
             rid = built.get(key)
@@ -474,7 +506,10 @@ def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
                     "icon": "kind-icon:gift",
                     "artPrompt": art_prompts[key],
                     "isPublic": True,
+                    "characterIds": prebuilt_character_ids,
+                    "dreamIds": location_ids,
                 }
+                body = {k: v for k, v in body.items() if v not in (None, "", [])}
                 rid = kr_create("/api/rewards", body, f"{rtype} {rw['name']}", dry_run, created)
                 if rid:
                     built[key] = rid
@@ -487,7 +522,11 @@ def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
             key = character_key(index, ch, shape["legacy_character"])
             cid = built.get(key)
             if not cid:
-                body = character_body(ch, art_prompts[key], designer, reward_ids, location_ids)
+                own_rewards = [
+                    rid for rw, rid in zip(rewards, reward_ids)
+                    if key in reward_owner_keys[f"reward:{slugify(rw['name'])}"]
+                ]
+                body = character_body(ch, art_prompts[key], designer, own_rewards, location_ids)
                 cid = kr_create("/api/characters", body, f"Character {ch['name']}", dry_run, created)
                 if cid:
                     built[key] = cid
@@ -565,7 +604,7 @@ def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
                 print(f"  ArtJob {art_state[entry['id']]} already recorded for {entry['id']}")
                 continue
             try:
-                job_id = enqueue_card(entry, dry_run)
+                job_id = enqueue_card(entry, dry_run, priority=shape["art_priority"])
             except RuntimeError as exc:
                 # A rejected prompt (Kind Robots' prompt contract returns 422) must
                 # not orphan the rows already created: record what did land, keep

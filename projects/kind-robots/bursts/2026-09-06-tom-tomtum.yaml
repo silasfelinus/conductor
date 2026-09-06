@@ -10,6 +10,8 @@ idea: >-
   hours a day of silence ever had, and everyone agreed his path led out the gate.
 designer: silasfelinus
 creation_source: HYBRID
+# Silas, 2026-09-06: these go ahead of the art backlog; the rest of that queue is maintenance.
+art_priority: 300
 facets: [high-fantasy]
 style: "luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture"
 
@@ -154,10 +156,44 @@ characters:
     luck: UNCOMMON
     facets: [patient, mentor, true-neutral]
 
+rewards:
+  - name: The Screaming Kama
+    reward_type: ITEM
+    rarity: UNCOMMON
+    owners: [Tom Tomtum]
+    look: >-
+      a short-handled monk's kama sickle with a curved dark iron blade and a worn ash
+      handle wrapped in faded blue cord, one small nick in the blade's edge, resting on a
+      pale stone terrace step beside a pair of round brass spectacles and a wooden pan
+      flute, morning light and mountain haze behind
+    grants: >-
+      The bearer of this kama fights best after they have stopped thinking about fighting,
+      and the first strike made while shouting something unplanned lands with the weight
+      of a much larger warrior.
+    catch: It refuses to be drawn quietly, and every attempt at a silent draw rings the blade against its own belt hook.
+    facets: [monk]
+  - name: Screaming Charge
+    reward_type: SKILL
+    rarity: RARE
+    owners: [Tom Tomtum]
+    look: >-
+      a small robed gnome sprinting down a long flight of pale monastery steps at night
+      with a sickle raised over his head and his mouth wide open mid-shout, swinging
+      lanterns throwing warm light up the stairs behind him, a startled brigand recoiling
+      at the bottom step
+    grants: >-
+      Once in a fight the practitioner may abandon every plan, every stance and every
+      breathing exercise and simply run at the problem screaming, which steadies every
+      ally who sees it and costs every enemy a beat.
+    catch: It works once a night, and only when the practitioner genuinely has no better idea.
+    facets: [monk, adventurous]
+
 built:
   art:
     creation-burst-tom-tomtum-deedum: 21619
+    creation-burst-tom-tomtum-screaming-charge: 21621
     creation-burst-tom-tomtum-the-monastery-of-the-long-quiet: 21617
+    creation-burst-tom-tomtum-the-screaming-kama: 21620
     creation-burst-tom-tomtum-tom-tomtum: 21618
   character:deedum: 3333
   character:tom-tomtum: 3332
@@ -191,4 +227,22 @@ built:
       - 814
       slugs:
       - high-fantasy
+    reward:2924:
+      facet_ids:
+      - 390
+      - 814
+      slugs:
+      - high-fantasy
+      - monk
+    reward:2925:
+      facet_ids:
+      - 390
+      - 814
+      - 986
+      slugs:
+      - high-fantasy
+      - monk
+      - adventurous
   location:the-monastery-of-the-long-quiet: 5732
+  reward:screaming-charge: 2925
+  reward:the-screaming-kama: 2924
