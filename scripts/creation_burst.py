@@ -11,14 +11,18 @@ Dream bundles, with its Facet seeds, docket and digest. A burst is a one-off ide
 that would otherwise stay a paragraph in someone's head — it lands as real rows a
 person can find, remix and build on, with art attached.
 
-One bundle = one Character, one ITEM Reward, one SKILL Reward, one Scenario, all
-linked to each other, all `designer: creation-burst`, all public.
+The classic bundle is one Character, one ITEM Reward, one SKILL Reward, one
+Scenario, all linked to each other, all `designer: creation-burst`, all public.
+Since 2026-09-06 a bundle may instead (or also) carry a `characters:` list and a
+`locations:` list, with rewards and the scenario optional — the shape a tabletop
+party needs: a hero, a companion, and the place they came from, each a real row.
 
     projects/kind-robots/bursts/<date>-<slug>.yaml
-        -> POST /api/rewards      (x2)
-        -> POST /api/characters   (rewardIds -> both rewards)
-        -> POST /api/scenarios    (characterIds -> the character)
-        -> four staged rows in projects/art-prompts.yaml `requests:`
+        -> POST /api/dreams       (one LOCATION Dream per `locations:` entry)
+        -> POST /api/rewards      (x2 when `rewards:` is present)
+        -> POST /api/characters   (rewardIds -> both rewards, dreamIds -> the locations)
+        -> POST /api/scenarios    (characterIds -> every character, dreamIds -> the locations)
+        -> one staged row per record in projects/art-prompts.yaml `requests:`
            (source: creation-burst, entity_type/entity_id/entity_field)
         -> POST /api/art/queue    (one ArtJob per row, payload.entityArt set so
                                    Kind Robots attaches the ArtImage atomically
@@ -36,7 +40,13 @@ Dream builder, so a retry starts clean.
 Prompts are built with `dream_art_prompts` so the Krea 2 rules that lane learned
 the hard way (lead with the visible subject, never a conditional, never a
 negation, decide people-or-no-people once) apply here too. `look` fields in the
-bundle are therefore required to describe appearance, not function.
+bundle are therefore required to describe appearance, not function. An element
+whose picture is a specific moment rather than a portrait may give its own
+`art_prompt:` instead; it is wrapped in the same world/framing/style tail.
+
+Bundle-level knobs: `designer:` (default creation-burst) names who the rows are
+credited to; `creation_source:` (default AI) is stamped on the LOCATION Dreams —
+use HYBRID when a person seeded the idea and an agent wrote it up.
 
 Dry-run by default. `--live` needs KR_API_TOKEN.
 
@@ -73,6 +83,15 @@ TARGET_REPO = "silasfelinus/kind_robots"
 # behind an idle-fallback burst, above the generic missing-image drip (0).
 PRIORITY = 120
 VALID_RARITIES = {"COMMON", "UNCOMMON", "RARE", "EPIC", "LEGENDARY"}
+VALID_CREATION_SOURCES = {"HUMAN", "AI", "HYBRID", "UPLOAD", "UNKNOWN"}
+# Character stat columns are Rarity enums on the Kind Robots side.
+STAT_FIELDS = ("luck", "might", "wits", "grace", "charm", "empathy")
+FACET_COLLECTIONS = {
+    "character": "characters",
+    "reward": "rewards",
+    "scenario": "scenarios",
+    "dream": "dreams",
+}
 
 KR_BASE_URL = art.KR_BASE_URL
 KR_API_TOKEN = art.KR_API_TOKEN
@@ -91,6 +110,82 @@ def _yq(value: str) -> str:
 
 def _text(value: object) -> str:
     return " ".join(str(value or "").split())
+
+
+# ── Bundle shape ─────────────────────────────────────────────────────────────
+
+def normalize_bundle(bundle: dict[str, Any], name: str = "bundle") -> dict[str, Any]:
+    """Return the bundle's elements in list form, whichever shape it was written in.
+
+    The classic shape has a singular `character:`; the party shape has
+    `characters:` and `locations:`. Both may appear (the singular one is listed
+    first and keeps its legacy `built.character` key so older bundles re-run as
+    no-ops). Rewards keep their ITEM+SKILL pair rule when present, and are simply
+    absent otherwise. At least one element of any kind is required.
+    """
+    for key in ("slug", "title", "vibe"):
+        if not _text(bundle.get(key)):
+            raise ValueError(f"{name}: missing {key!r}")
+
+    characters: list[dict[str, Any]] = []
+    legacy = isinstance(bundle.get("character"), dict)
+    if legacy:
+        characters.append(bundle["character"])
+    characters.extend(bundle.get("characters") or [])
+    locations = list(bundle.get("locations") or [])
+    rewards = list(bundle.get("rewards") or [])
+    scenario = bundle.get("scenario") or None
+
+    if not (characters or locations or rewards or scenario):
+        raise ValueError(f"{name}: a bundle needs at least one character, location, reward or scenario")
+    if rewards and (
+        len(rewards) != 2
+        or {str(r.get("reward_type", "")).upper() for r in rewards} != {"ITEM", "SKILL"}
+    ):
+        raise ValueError(f"{name}: rewards must be exactly one ITEM and one SKILL")
+    for rw in rewards:
+        if not _text(rw.get("look")):
+            raise ValueError(f"{name}: reward {rw.get('name')!r} needs a visual `look`")
+    for ch in characters:
+        if not _text(ch.get("name")):
+            raise ValueError(f"{name}: every character needs a `name`")
+        if not (_text(ch.get("look")) or _text(ch.get("art_prompt"))):
+            raise ValueError(f"{name}: character {ch.get('name')!r} needs a visual `look` or an `art_prompt`")
+        for stat in STAT_FIELDS:
+            value = _text(ch.get(stat)).upper()
+            if value and value not in VALID_RARITIES:
+                raise ValueError(f"{name}: character {ch.get('name')!r} {stat} must be one of {sorted(VALID_RARITIES)}")
+    for loc in locations:
+        if not _text(loc.get("title")):
+            raise ValueError(f"{name}: every location needs a `title`")
+        if not (_text(loc.get("art_direction")) or _text(loc.get("art_prompt"))):
+            raise ValueError(f"{name}: location {loc.get('title')!r} needs an `art_direction` or an `art_prompt`")
+    if scenario is not None:
+        for key in ("title", "setup"):
+            if not _text(scenario.get(key)):
+                raise ValueError(f"{name}: scenario needs a `{key}`")
+
+    designer = _text(bundle.get("designer")) or DESIGNER
+    creation_source = (_text(bundle.get("creation_source")) or "AI").upper()
+    if creation_source not in VALID_CREATION_SOURCES:
+        raise ValueError(f"{name}: creation_source must be one of {sorted(VALID_CREATION_SOURCES)}")
+
+    return {
+        "characters": characters,
+        "locations": locations,
+        "rewards": rewards,
+        "scenario": scenario,
+        "legacy_character": legacy,
+        "designer": designer,
+        "creation_source": creation_source,
+    }
+
+
+def character_key(index: int, ch: dict[str, Any], legacy: bool) -> str:
+    """`built:`/prompt key for one character: the legacy singular keeps `character`."""
+    if legacy and index == 0:
+        return "character"
+    return f"character:{slugify(ch['name'])}"
 
 
 # ── Kind Robots writes ───────────────────────────────────────────────────────
@@ -119,8 +214,7 @@ def apply_facets(entity_type: str, entity_id: int, slugs: list[str], label: str,
     ignored facetKeys and answered success over an empty list), so an empty
     response is an error, not a success.
     """
-    plural = {"character": "characters", "reward": "rewards", "scenario": "scenarios"}[entity_type]
-    path = f"/api/{plural}/{int(entity_id)}/facets"
+    path = f"/api/{FACET_COLLECTIONS[entity_type]}/{int(entity_id)}/facets"
     if dry_run:
         print(f"  [dry-run] PUT {path}: {label} <- {', '.join(slugs)}")
         return []
@@ -143,24 +237,36 @@ def rollback(created: list[tuple[str, int]]) -> None:
 # ── Prompt + request construction ────────────────────────────────────────────
 
 def bundle_prompts(bundle: dict[str, Any]) -> dict[str, str]:
+    """One Krea 2 prompt per record, keyed the same way `built:` is."""
+    shape = normalize_bundle(bundle)
     title = _text(bundle["title"])
     vibe = _text(bundle["vibe"])
     style = _text(bundle.get("style")) or prompts.style_for_world(title)
-    ch = bundle["character"]
-    out = {
-        "character": prompts.character_prompt(
-            ch["name"], ch["look"], ch.get("drive", ""), ch.get("carries", ""),
+
+    def custom(element: dict[str, Any]) -> Optional[str]:
+        scene = _text(element.get("art_prompt"))
+        return prompts.scene_prompt(scene, title, vibe, style=style) if scene else None
+
+    out: dict[str, str] = {}
+    for index, ch in enumerate(shape["characters"]):
+        out[character_key(index, ch, shape["legacy_character"])] = custom(ch) or prompts.character_prompt(
+            ch["name"], ch.get("look", ""), ch.get("drive", ""), ch.get("carries", ""),
             title, vibe, style=style,
-        ),
-        "scenario": prompts.scenario_prompt(
-            bundle["scenario"]["title"], bundle["scenario"]["setup"],
-            bundle["scenario"].get("location", ""), title, vibe, style=style,
-        ),
-    }
-    for rw in bundle["rewards"]:
-        out[f"reward:{slugify(rw['name'])}"] = prompts.reward_prompt(
+        )
+    for loc in shape["locations"]:
+        out[f"location:{slugify(loc['title'])}"] = custom(loc) or prompts.location_prompt(
+            loc["title"], loc.get("art_direction", ""), loc.get("known_for", ""),
+            loc.get("best_scene", ""), title, vibe, style=style,
+        )
+    for rw in shape["rewards"]:
+        out[f"reward:{slugify(rw['name'])}"] = custom(rw) or prompts.reward_prompt(
             rw["name"], rw.get("reward_type", "ITEM"), rw["look"], rw.get("grants", ""),
             rw.get("rarity", "COMMON"), title, vibe, style=style,
+        )
+    sc = shape["scenario"]
+    if sc:
+        out["scenario"] = custom(sc) or prompts.scenario_prompt(
+            sc["title"], sc["setup"], sc.get("location", ""), title, vibe, style=style,
         )
     return out
 
@@ -250,22 +356,84 @@ def enqueue_card(entry: dict[str, Any], dry_run: bool) -> Optional[int]:
     return int(job_id)
 
 
+# ── Record bodies ────────────────────────────────────────────────────────────
+
+def _compact(body: dict[str, Any]) -> dict[str, Any]:
+    return {k: v for k, v in body.items() if v not in (None, "")}
+
+
+def location_body(loc: dict[str, Any], art_prompt: str, designer: str,
+                  creation_source: str) -> dict[str, Any]:
+    """A LOCATION Dream, the same shape the Daily Dream builder writes for its
+    locations: the three card-copy sentences joined as prose, the local rule as
+    the flavor line, map-pin icon."""
+    description = _text(loc.get("description")) or " ".join(
+        part for part in (_text(loc.get("known_for")), _text(loc.get("local_rule")), _text(loc.get("best_scene")))
+        if part
+    )
+    return _compact({
+        "title": _text(loc["title"]),
+        "slug": _text(loc.get("slug")) or None,
+        "dreamType": "LOCATION",
+        "designer": designer,
+        "creationSource": creation_source,
+        "isPublic": True,
+        "description": description,
+        "flavorText": (_text(loc.get("local_rule")) or _text(loc.get("flavor")))[:500] or None,
+        "artPrompt": art_prompt,
+        "icon": "kind-icon:map-pin",
+    })
+
+
+def character_body(ch: dict[str, Any], art_prompt: str, designer: str,
+                   reward_ids: list[int], dream_ids: list[int]) -> dict[str, Any]:
+    backstory = _text(ch.get("backstory")) or " ".join(
+        p for p in (_text(ch.get("carries")), _text(ch.get("complication"))) if p
+    )
+    body: dict[str, Any] = {
+        "name": _text(ch["name"]),
+        "slug": _text(ch.get("slug")) or None,
+        "designer": designer,
+        "isPublic": True,
+        "species": _text(ch.get("species")) or None,
+        "gender": _text(ch.get("gender")) or None,
+        "presentation": _text(ch.get("presentation")) or None,
+        "genre": _text(ch.get("genre")) or None,
+        "role": _text(ch.get("role")) or None,
+        "title": _text(ch.get("title")) or None,
+        "honorific": _text(ch.get("honorific")) or None,
+        "class": _text(ch.get("class")) or None,
+        "alignment": _text(ch.get("alignment")) or None,
+        "drive": _text(ch.get("drive")),
+        "backstory": backstory,
+        "quirks": _text(ch.get("quirks")),
+        "personality": _text(ch.get("personality")),
+        "voice": _text(ch.get("voice")),
+        "sampleResponse": _text(ch.get("sample_response")) or None,
+        "achievements": _text(ch.get("achievements")) or None,
+        "artPrompt": art_prompt,
+        "rewardIds": reward_ids,
+        "dreamIds": dream_ids,
+    }
+    if ch.get("level") is not None:
+        body["level"] = int(ch["level"])
+    for stat in STAT_FIELDS:
+        value = _text(ch.get(stat)).upper()
+        if value:
+            body[stat] = value
+    return _compact(body)
+
+
 # ── One bundle ───────────────────────────────────────────────────────────────
 
 def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
     dry_run = not live
     raw = path.read_text(encoding="utf-8")
     bundle = yaml.safe_load(raw)
-    for key in ("slug", "title", "vibe", "character", "rewards", "scenario"):
-        if key not in bundle:
-            raise ValueError(f"{path.name}: missing {key!r}")
-    if len(bundle["rewards"]) != 2 or {str(r.get("reward_type", "")).upper() for r in bundle["rewards"]} != {"ITEM", "SKILL"}:
-        raise ValueError(f"{path.name}: rewards must be exactly one ITEM and one SKILL")
-    for rw in bundle["rewards"]:
-        if not _text(rw.get("look")):
-            raise ValueError(f"{path.name}: reward {rw.get('name')!r} needs a visual `look`")
-    if not _text(bundle["character"].get("look")):
-        raise ValueError(f"{path.name}: character needs a visual `look`")
+    shape = normalize_bundle(bundle, path.name)
+    characters, locations = shape["characters"], shape["locations"]
+    rewards, sc = shape["rewards"], shape["scenario"]
+    designer, creation_source = shape["designer"], shape["creation_source"]
 
     bundle_slug = slugify(bundle["slug"])
     built = dict(bundle.get("built") or {})
@@ -274,9 +442,22 @@ def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
     print(f"== {bundle['title']} ({path.name})")
 
     try:
-        # 1. Rewards first, so the Character can link them on create.
+        # 1. Locations first, so Characters and the Scenario can link them on create.
+        location_ids: list[int] = []
+        for loc in locations:
+            key = f"location:{slugify(loc['title'])}"
+            lid = built.get(key)
+            if not lid:
+                body = location_body(loc, art_prompts[key], designer, creation_source)
+                lid = kr_create("/api/dreams", body, f"Location {loc['title']}", dry_run, created)
+                if lid:
+                    built[key] = lid
+            if lid:
+                location_ids.append(int(lid))
+
+        # 2. Rewards, so the Characters can link them on create.
         reward_ids: list[int] = []
-        for rw in bundle["rewards"]:
+        for rw in rewards:
             el = slugify(rw["name"])
             key = f"reward:{el}"
             rtype = str(rw.get("reward_type", "ITEM")).upper()
@@ -300,78 +481,76 @@ def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
             if rid:
                 reward_ids.append(int(rid))
 
-        # 2. The Character, carrying both rewards.
-        ch = bundle["character"]
-        cid = built.get("character")
-        if not cid:
-            backstory = " ".join(p for p in (_text(ch.get("carries")), _text(ch.get("complication"))) if p)
-            body = {
-                "name": _text(ch["name"]),
-                "designer": DESIGNER,
-                "isPublic": True,
-                "species": _text(ch.get("species")) or None,
-                "gender": _text(ch.get("gender")) or None,
-                "presentation": _text(ch.get("presentation")) or None,
-                "genre": _text(ch.get("genre")) or None,
-                "role": _text(ch.get("role")) or None,
-                "title": _text(ch.get("title")) or None,
-                "drive": _text(ch.get("drive")),
-                "backstory": backstory,
-                "quirks": _text(ch.get("quirks")),
-                "personality": _text(ch.get("personality")),
-                "voice": _text(ch.get("voice")),
-                "artPrompt": art_prompts["character"],
-                "rewardIds": reward_ids,
-            }
-            body = {k: v for k, v in body.items() if v not in (None, "")}
-            cid = kr_create("/api/characters", body, f"Character {ch['name']}", dry_run, created)
+        # 3. The Characters, carrying the rewards and standing in the locations.
+        character_ids: list[int] = []
+        for index, ch in enumerate(characters):
+            key = character_key(index, ch, shape["legacy_character"])
+            cid = built.get(key)
+            if not cid:
+                body = character_body(ch, art_prompts[key], designer, reward_ids, location_ids)
+                cid = kr_create("/api/characters", body, f"Character {ch['name']}", dry_run, created)
+                if cid:
+                    built[key] = cid
             if cid:
-                built["character"] = cid
+                character_ids.append(int(cid))
 
-        # 3. The Scenario, cast with the Character.
-        sc = bundle["scenario"]
-        sid = built.get("scenario")
-        if not sid:
-            setup = _text(sc["setup"])
-            body = {
-                "title": _text(sc["title"])[:190],
-                "description": setup,
-                "intros": setup,
-                "locations": _text(sc.get("location")) or None,
-                "genres": _text(sc.get("genres")) or None,
-                "inspirations": _text(sc.get("inspirations")) or None,
-                "artPrompt": art_prompts["scenario"],
-                "isPublic": True,
-                "characterIds": [int(cid)] if cid else [],
-            }
-            body = {k: v for k, v in body.items() if v not in (None, "", [])}
-            sid = kr_create("/api/scenarios", body, f"Scenario {sc['title']}", dry_run, created)
-            if sid:
-                built["scenario"] = sid
+        # 4. The Scenario, cast with every Character.
+        if sc:
+            sid = built.get("scenario")
+            if not sid:
+                setup = _text(sc["setup"])
+                body = {
+                    "title": _text(sc["title"])[:190],
+                    "description": setup,
+                    "intros": setup,
+                    "locations": _text(sc.get("location")) or None,
+                    "genres": _text(sc.get("genres")) or None,
+                    "inspirations": _text(sc.get("inspirations")) or None,
+                    "artPrompt": art_prompts["scenario"],
+                    "isPublic": True,
+                    "characterIds": character_ids,
+                    "dreamIds": location_ids,
+                }
+                body = {k: v for k, v in body.items() if v not in (None, "", [])}
+                sid = kr_create("/api/scenarios", body, f"Scenario {sc['title']}", dry_run, created)
+                if sid:
+                    built["scenario"] = sid
     except Exception:
         if created:
             print(f"  build failed; rolling back {len(created)} row(s)", file=sys.stderr)
             rollback(created)
         raise
 
-    # 4. Card art: one staged request per row, enqueued with an entity attach.
+    # Every record this bundle owns: (entity_type, element slug, label, prompt key, id, own facets)
+    records: list[tuple[str, str, str, str, Optional[int], list[str]]] = []
+    for loc in locations:
+        key = f"location:{slugify(loc['title'])}"
+        records.append(("dream", slugify(loc["title"]), _text(loc["title"]), key, built.get(key),
+                        [str(x) for x in (loc.get("facets") or [])]))
+    for index, ch in enumerate(characters):
+        key = character_key(index, ch, shape["legacy_character"])
+        records.append(("character", slugify(ch["name"]), _text(ch["name"]), key, built.get(key),
+                        [str(x) for x in (ch.get("facets") or [])]))
+    for rw in rewards:
+        el = slugify(rw["name"])
+        records.append(("reward", el, _text(rw["name"]), f"reward:{el}", built.get(f"reward:{el}"),
+                        [str(x) for x in (rw.get("facets") or [])]))
+    if sc:
+        records.append(("scenario", slugify(sc["title"]) + "-scenario", _text(sc["title"]), "scenario",
+                        built.get("scenario"), [str(x) for x in (sc.get("facets") or [])]))
+
+    # 5. Card art: one staged request per row, enqueued with an entity attach.
     art_failures: list[str] = []
     if with_art:
         already = staged_ids()
         rows: list[str] = []
         entries: list[dict[str, Any]] = []
-        targets = [
-            ("character", slugify(ch["name"]), _text(ch["name"]), art_prompts["character"], built.get("character")),
-            ("scenario", slugify(sc["title"]) + "-scenario", _text(sc["title"]), art_prompts["scenario"], built.get("scenario")),
-        ]
-        for rw in bundle["rewards"]:
-            el = slugify(rw["name"])
-            targets.append(("reward", el, _text(rw["name"]), art_prompts[f"reward:{el}"], built.get(f"reward:{el}")))
         art_state = dict(built.get("art") or {})
-        for entity_type, el, label, prompt, entity_id in targets:
+        for entity_type, el, label, prompt_key, entity_id, _ in records:
             if not entity_id:
                 print(f"  [dry-run] would stage art for {entity_type} {label}")
                 continue
+            prompt = art_prompts[prompt_key]
             req_id, image_path, text = request_row(bundle_slug, el, label, prompt, entity_type, int(entity_id))
             if req_id not in already:
                 rows.append(text)
@@ -400,18 +579,12 @@ def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
         if art_state:
             built["art"] = art_state
 
-    # 4b. Facets: bundle-level slugs apply to every row; a row may add its own.
+    # 5b. Facets: bundle-level slugs apply to every row; a row may add its own.
     facet_state = dict(built.get("facets") or {})
     facet_failures: list[str] = []
     bundle_facets = [str(x) for x in (bundle.get("facets") or [])]
-    facet_targets = [
-        ("character", built.get("character"), _text(ch["name"]), bundle_facets + [str(x) for x in (ch.get("facets") or [])]),
-        ("scenario", built.get("scenario"), _text(sc["title"]), bundle_facets + [str(x) for x in (sc.get("facets") or [])]),
-    ]
-    for rw in bundle["rewards"]:
-        el = slugify(rw["name"])
-        facet_targets.append(("reward", built.get(f"reward:{el}"), _text(rw["name"]), bundle_facets + [str(x) for x in (rw.get("facets") or [])]))
-    for entity_type, entity_id, label, slugs in facet_targets:
+    for entity_type, _, label, _, entity_id, own_facets in records:
+        slugs = bundle_facets + own_facets
         key = f"{entity_type}:{entity_id}"
         if not slugs or not entity_id:
             continue
@@ -428,7 +601,7 @@ def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
     if facet_state:
         built["facets"] = facet_state
 
-    # 5. Write the built block back so a re-run is a no-op.
+    # 6. Write the built block back so a re-run is a no-op.
     if not dry_run and built:
         stripped = re.sub(r"(?ms)^built:\s*\n(?:[ \t]+.*\n?)*", "", raw).rstrip("\n") + "\n"
         block = yaml.safe_dump({"built": built}, sort_keys=True, default_flow_style=False)

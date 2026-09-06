@@ -220,6 +220,22 @@ def character_prompt(name: str, look: str, role_drive: str, carries: str,
     )
 
 
+def scene_prompt(scene: str, world_title: str, vibe_line: str,
+                 style: str | None = None) -> str:
+    """A hand-described scene, wrapped in the same world/framing/style tail the
+    builders add. For an element whose picture is a specific moment rather than
+    a portrait or an establishing shot (a rider on a turtle's back watching a
+    butterfly, say), the author's own words lead and nothing is prepended that
+    would fight them."""
+    return _join(
+        _clean(scene),
+        _world_context(world_title, vibe_line),
+        CARD_FRAMING,
+        style or style_for_world(world_title),
+        NO_TEXT,
+    )
+
+
 def reward_prompt(name: str, reward_type: str, look: str, grants: str,
                   rarity: str, world_title: str, vibe_line: str,
                   style: str | None = None) -> str:
