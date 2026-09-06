@@ -5610,7 +5610,7 @@ tasks:
 - id: t-147
   milestone: m2
   title: "Flux2 engine hung the render relay's only concurrent slot for ~30 minutes (ArtJob 21616)"
-  status: review
+  status: needs-human
   gate_human: false
   stakes: reversible
   passes: 0
@@ -5629,9 +5629,17 @@ tasks:
 
     Repo-side heartbeat-isolation fix pushed and PR opened: silasfelinus/conductor#3734
     (heartbeats now run on their own daemon thread, decoupled from the poll loop).
-  updated: '2026-09-06T01:37:39Z'
+
+    FOR SILAS: Both repo-side leads on the ArtJob 21616 relay hang are now merged. (1) kind_robots#2435 made Flux.2 LoRA compatibility generation-aware, so a Flux.1-architecture LoRA (Resource 1055) can no longer be paired onto a Flux.2 checkpoint. (2) conductor#3734 moved engine heartbeats onto their own daemon thread (ops/home-server/relay_agent.py), so a future wedged/long process(job) call can no longer suppress heartbeats -- the watchdog will be able to tell "alive but busy" from "silent" the next time something like this happens.
+
+    What's left: nobody has confirmed on the actual relay machine whether the LoRA pairing was really what caused the ~30-minute hang, or whether it was a first-time-model-load stall, or something else entirely -- that needs eyes on the box (pm2 status/logs) around the original 2026-09-05 18:46-19:11 UTC window, which this sandbox has no access to.
+
+    TO APPROVE: if you're satisfied the two repo-side fixes are the right response and don't need the physical-host root cause pinned down further, set approved_by_human: true and status: done. If you'd still like the relay's own logs checked for that window, leave this open and note what you find -- either way nothing else is blocked on it (soft_gate stays true).
+  updated: '2026-09-06T01:40:18Z'
   owner: worker
   claimed_by: 2026-09-06T013624Z-conductor-t147-heartbeat-fix
   claimed_at: '2026-09-06T01:36:25Z'
+  soft_gate: true
+  implementation_pr: 'silasfelinus/conductor#3734'
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
