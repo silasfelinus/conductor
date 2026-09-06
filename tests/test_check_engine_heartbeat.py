@@ -365,3 +365,93 @@ class AlertStateTests(unittest.TestCase):
             _, record = self.decide(None, heartbeat.DOWN)
             heartbeat.save_state(path, record)
             self.assertEqual(heartbeat.load_state(path), record)
+
+
+class DozingTests(unittest.TestCase):
+    """A box that suspends and resumes looks perfectly healthy beat-by-beat.
+
+    2026-09-06 — the COMFY series carried one beat every ~7 minutes for 2h20m,
+    either side of blackouts of 143 and 200 minutes. Every beat it did send was
+    fresh and ok:true, so SILENT (nothing within 15 minutes) and DOWN (ok:false
+    for 10 minutes) both stayed quiet while the machine spent most of the hour
+    frozen. The relay's heartbeat thread sleeps 60s and blocks at most 85s, so
+    the SPACING is evidence about the box that its content cannot carry.
+    """
+
+    def dozing_series(self, gap_minutes=7, span_minutes=60):
+        return [beat(m, ok=True) for m in range(span_minutes, 0, -gap_minutes)]
+
+    def test_beats_spaced_far_wider_than_the_relay_can_manage_are_dozing(self):
+        state, reason = heartbeat.assess_server(server(self.dozing_series()), NOW)
+        self.assertEqual(state, heartbeat.DOZING)
+        self.assertIn("kr-relay", reason)
+
+    def test_the_verdict_names_no_cause_it_has_not_established(self):
+        """The first guess on 2026-09-06 was sleep, and powercfg refuted it.
+
+        Standby and hibernate were both 0 on AC and the newest Kernel-Power
+        42/107 pair predated the gaps by two months. A reason line that had
+        asserted sleep would have sent every future reader down that same dead
+        end. State the measurement; leave the cause to the two log greps.
+        """
+        _, reason = heartbeat.assess_server(server(self.dozing_series()), NOW)
+        for unproven in ("suspend", "sleep", "powercfg", "CUDA"):
+            self.assertNotIn(unproven, reason.lower())
+
+    def test_a_healthy_one_minute_cadence_is_not_dozing(self):
+        state, _ = heartbeat.assess_server(server(healthy_series()), NOW)
+        self.assertEqual(state, heartbeat.OK)
+
+    def test_one_isolated_gap_is_a_restart_not_a_dozing_box(self):
+        samples = [beat(m, ok=True) for m in range(60, 40, -1)]
+        samples += [beat(m, ok=True) for m in range(30, 0, -1)]
+        state, _ = heartbeat.assess_server(server(samples), NOW)
+        self.assertEqual(state, heartbeat.OK)
+
+    def test_a_capped_series_never_scores_dozing(self):
+        """The endpoint downsamples to 500 and invents gaps doing it.
+
+        Confirmed by asking for samples=5000 and getting 500 back. Scoring a
+        24-hour window would otherwise report SLEEP on a box that never slept.
+        """
+        samples = [
+            beat(m, ok=True)
+            for m in range(heartbeat.SAMPLE_CAP * 7, 0, -7)
+        ][-heartbeat.SAMPLE_CAP :]
+        self.assertGreaterEqual(len(samples), heartbeat.SAMPLE_CAP)
+        dozing, detail = heartbeat.detect_dozing(server(samples), NOW)
+        self.assertFalse(dozing)
+        self.assertIsNone(detail)
+
+    def test_zero_min_gaps_disables_the_check_rather_than_dividing_by_nothing(self):
+        dozing, detail = heartbeat.detect_dozing(
+            server(self.dozing_series()), NOW, min_gaps=0
+        )
+        self.assertFalse(dozing)
+        self.assertIsNone(detail)
+
+    def test_a_down_engine_outranks_a_dozing_box(self):
+        """Both true at once: report the one that is failing renders right now."""
+        samples = [beat(m, ok=False) for m in range(60, 0, -7)]
+        state, _ = heartbeat.assess_server(server(samples), NOW)
+        self.assertEqual(state, heartbeat.DOWN)
+
+    def test_dozing_alerts_and_re_alerts_like_any_other_bad_state(self):
+        alert, record = heartbeat.decide_alert({}, heartbeat.DOZING, NOW)
+        self.assertEqual(alert, heartbeat.ALERT_DOWN)
+        self.assertEqual(record["state"], heartbeat.DOZING)
+
+        recovered, record = heartbeat.decide_alert(record, heartbeat.OK, NOW)
+        self.assertEqual(recovered, heartbeat.ALERT_RECOVERED)
+
+    def test_gaps_outside_the_lookback_do_not_leak_into_the_verdict(self):
+        """The window is bounded at both ends, including against future beats.
+
+        A beat newer than `now` would otherwise pull a gap from outside the
+        lookback into a reason line that claims to describe only the last hour.
+        """
+        samples = [beat(m, ok=True) for m in range(50, 0, -7)]
+        samples.append(beat(-200, ok=True))  # 200 minutes in the future
+        dozing, detail = heartbeat.detect_dozing(server(samples), NOW)
+        self.assertTrue(dozing)
+        self.assertNotIn("200 min", detail)

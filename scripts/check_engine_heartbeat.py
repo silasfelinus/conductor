@@ -37,6 +37,26 @@ Two independent alarms, neither of which depends on queue depth:
           on-box watchdog can never report, because it dies with the box.
   DOWN    heartbeats are arriving and saying ok:false for at least
           --down-minutes. The relay is alive and telling us the engine is not.
+  DOZING  heartbeats are arriving, and healthy, but far too FAR APART. The
+          relay's heartbeat thread sleeps 60s and can block at most 85s
+          (a 10s engine probe plus a 15s post), so a gap past --doze-gap-minutes
+          is not something a running relay can produce. Either the process is
+          not being scheduled, or its posts are not landing.
+
+DOZING exists because that failure looks HEALTHY from every angle. Each beat
+that does arrive is fresh and ok:true, so neither alarm above fires, while the
+box contributes nothing for most of an hour. Observed 2026-09-06: one beat every
+~7 minutes for 2h20m, either side of blackouts of 143 and 200 minutes.
+
+It deliberately does NOT name a cause. The first guess on 2026-09-06 was that
+the box was suspending, and `powercfg` refuted it outright: standby and
+hibernate are both 0 on AC, and the newest Kernel-Power 42/107 pair in the
+System log was 7/6, two months before the gaps. Meanwhile this very check read
+kindrobots.org successfully from GitHub Actions at 08:48Z, in the middle of the
+143-minute blackout, so the API was up and reachable from the internet
+throughout. What remains is on the box or on its path out: the relay not
+running, or its posts not landing. `post_heartbeat` swallows a failed POST and
+logs it, so kr-relay's own log is what separates those two.
 
 An idle queue is not a broken box — that part of check_render_box.py's
 reasoning was always right. But an idle queue with a silent or failing engine
@@ -68,10 +88,24 @@ DEFAULT_STALE_MINUTES = 15
 # reports it for a few beats. 10 minutes tells those apart.
 DEFAULT_DOWN_MINUTES = 10
 DEFAULT_WINDOW_HOURS = 6
+# The relay's heartbeat thread sleeps 60s and its two HTTP calls time out at 10s
+# and 15s, so 85s is the longest gap it can produce while running. 3 minutes is
+# comfortably past that: a gap this size means the process was not scheduled,
+# not that it was slow.
+DEFAULT_DOZE_GAP_MINUTES = 3.0
+# One such gap is a restart or a one-off stall. Three inside the lookback is a
+# pattern, and a pattern is what distinguishes a dozing box from an event.
+DEFAULT_DOZE_MIN_GAPS = 3
+DEFAULT_DOZE_LOOKBACK_MINUTES = 60.0
+# GET /api/server/uptime returns at most this many samples and downsamples to
+# fit, which manufactures gaps that look exactly like dozing. Confirmed by
+# asking for 5000 and getting 500. Never score dozing off a capped series.
+SAMPLE_CAP = 500
 
 OK = "ok"
 SILENT = "silent"
 DOWN = "down"
+DOZING = "dozing"
 UNRESOLVED = "unresolved"
 
 EXIT_HEALTHY = 0
@@ -196,11 +230,72 @@ def minutes_since(when, now):
     return (now - when).total_seconds() / 60.0
 
 
+def detect_dozing(
+    server,
+    now,
+    gap_minutes=DEFAULT_DOZE_GAP_MINUTES,
+    min_gaps=DEFAULT_DOZE_MIN_GAPS,
+    lookback_minutes=DEFAULT_DOZE_LOOKBACK_MINUTES,
+):
+    """(is_dozing, detail) for a server whose latest beat is fresh and healthy.
+
+    Reads the SPACING of the recent beats rather than their content. The relay
+    cannot space its own beats past 85 seconds, so a cluster of far larger gaps
+    is evidence about the machine, not about the relay or the engine.
+
+    Returns (False, None) on a capped sample series: the endpoint downsamples to
+    SAMPLE_CAP, and downsampling turns a perfectly healthy hour into a page of
+    invented gaps. A false SLEEP alarm would be worse than the silence this is
+    meant to end.
+    """
+    if min_gaps <= 0:
+        return False, None
+
+    samples = server.get("samples")
+    if not isinstance(samples, list) or len(samples) >= SAMPLE_CAP:
+        return False, None
+
+    beats = sorted(
+        when
+        for when in (
+            parse_timestamp(sample.get("checkedAt"))
+            for sample in samples
+            if isinstance(sample, dict)
+        )
+        if when is not None
+    )
+    # Bounded at BOTH ends. An unbounded upper end lets a beat newer than `now`
+    # into the window, which drags a gap from outside the lookback into a
+    # verdict that claims to describe only the last hour.
+    recent = [
+        when for when in beats if 0 <= minutes_since(when, now) <= lookback_minutes
+    ]
+    if len(recent) < 2:
+        return False, None
+
+    gaps = [
+        (earlier, (later - earlier).total_seconds() / 60.0)
+        for earlier, later in zip(recent, recent[1:])
+        if (later - earlier).total_seconds() / 60.0 >= gap_minutes
+    ]
+    if len(gaps) < min_gaps:
+        return False, None
+
+    widest = max(gap for _, gap in gaps)
+    return True, (
+        f"{len(gaps)} gaps of {gap_minutes:.0f}+ minutes between heartbeats in "
+        f"the last {lookback_minutes:.0f} minutes (widest {widest:.0f} min), "
+        f"against a relay that cannot space them past ~1.5 minutes"
+    )
+
+
 def assess_server(
     server,
     now,
     stale_minutes=DEFAULT_STALE_MINUTES,
     down_minutes=DEFAULT_DOWN_MINUTES,
+    doze_gap_minutes=DEFAULT_DOZE_GAP_MINUTES,
+    doze_min_gaps=DEFAULT_DOZE_MIN_GAPS,
 ):
     """(state, reason) for one server report. Pure — all I/O is the caller's."""
     title = server.get("title") or f"server {server.get('serverId')}"
@@ -249,10 +344,33 @@ def assess_server(
             f"(under the {down_minutes}-minute limit) — likely a restart."
         )
 
+    # Fresh and healthy, so nothing above fires. Ask the one remaining question:
+    # were the beats leading up to this one arriving on time?
+    dozing, detail = detect_dozing(
+        server, now, gap_minutes=doze_gap_minutes, min_gaps=doze_min_gaps
+    )
+    if dozing:
+        return DOZING, (
+            f"{title}: heartbeat is healthy right now, but {detail}. A running "
+            "relay cannot space its own beats that far, so either it is not "
+            "being scheduled or its posts are not landing — and either way the "
+            "box is contributing nothing for most of that time. On the box: "
+            "'pm2 describe kr-relay' for its uptime and restart count, then "
+            "grep kr-relay's log for 'failed to post' (a losing network) versus "
+            "'polling' (a restarting relay)."
+        )
+
     return OK, f"{title}: heartbeat healthy {age:.1f} minutes ago."
 
 
-def assess(data, now, stale_minutes=DEFAULT_STALE_MINUTES, down_minutes=DEFAULT_DOWN_MINUTES):
+def assess(
+    data,
+    now,
+    stale_minutes=DEFAULT_STALE_MINUTES,
+    down_minutes=DEFAULT_DOWN_MINUTES,
+    doze_gap_minutes=DEFAULT_DOZE_GAP_MINUTES,
+    doze_min_gaps=DEFAULT_DOZE_MIN_GAPS,
+):
     """(state, reason) across every active server in the uptime payload.
 
     Worst state wins, and an inactive Server row is skipped: deactivating a
@@ -271,9 +389,19 @@ def assess(data, now, stale_minutes=DEFAULT_STALE_MINUTES, down_minutes=DEFAULT_
         )
 
     verdicts = [
-        assess_server(server, now, stale_minutes, down_minutes) for server in active
+        assess_server(
+            server,
+            now,
+            stale_minutes,
+            down_minutes,
+            doze_gap_minutes,
+            doze_min_gaps,
+        )
+        for server in active
     ]
-    for wanted in (SILENT, DOWN):
+    # DOZING sits last: a box that is frozen half the time is a real problem,
+    # but a box that is answering ok:false right now is a worse one.
+    for wanted in (SILENT, DOWN, DOZING):
         matching = [reason for state, reason in verdicts if state == wanted]
         if matching:
             return wanted, " | ".join(matching)
@@ -320,7 +448,7 @@ def decide_alert(previous, state, now, realert_hours=DEFAULT_REALERT_HOURS):
     next reminder never comes.
     """
     stamp = now.isoformat()
-    bad_states = (SILENT, DOWN)
+    bad_states = (SILENT, DOWN, DOZING)
 
     if state == UNRESOLVED:
         return ALERT_NONE, previous
@@ -361,6 +489,20 @@ def main(argv=None):
     parser.add_argument("--stale-minutes", type=float, default=DEFAULT_STALE_MINUTES)
     parser.add_argument("--down-minutes", type=float, default=DEFAULT_DOWN_MINUTES)
     parser.add_argument("--window-hours", type=float, default=DEFAULT_WINDOW_HOURS)
+    parser.add_argument(
+        "--doze-gap-minutes",
+        type=float,
+        default=DEFAULT_DOZE_GAP_MINUTES,
+        help="a gap between heartbeats this wide is longer than the relay can "
+        "produce while running (default: %(default)s)",
+    )
+    parser.add_argument(
+        "--doze-min-gaps",
+        type=int,
+        default=DEFAULT_DOZE_MIN_GAPS,
+        help="how many such gaps in the last hour count as a dozing box rather "
+        "than a one-off stall (default: %(default)s); 0 disables the check",
+    )
     parser.add_argument("--server-type", default="COMFY")
     parser.add_argument(
         "--json",
@@ -382,7 +524,14 @@ def main(argv=None):
     except RuntimeError as error:
         state, reason = UNRESOLVED, str(error)
     else:
-        state, reason = assess(data, now, args.stale_minutes, args.down_minutes)
+        state, reason = assess(
+            data,
+            now,
+            args.stale_minutes,
+            args.down_minutes,
+            args.doze_gap_minutes,
+            args.doze_min_gaps,
+        )
 
     alert = ALERT_NONE
     if args.state_file:

@@ -773,6 +773,83 @@ comparison. The watchdog deliberately does **not** kill the squatter itself — 
 can be a working engine mid-render, and choosing to end that render is a human's
 call, not a 5-minute timer's.
 
+### Triage: "something keeps resetting" — heartbeats arriving minutes apart (2026-09-06, open)
+
+**Symptom.** ComfyUI, the relay, or "something" appears to restart on its own.
+Renders stall and resume for no visible reason. `pm2 status` shows no crash to
+explain it, `healthcheck.log` simply skips stretches of time, and ComfyUI's own
+log has no error at the moment the gap starts — every log just *jumps*.
+
+**The signal that does show it** is the COMFY heartbeat series on
+kindrobots.org, because it is recorded off the box:
+
+| Window (local) | What arrived |
+|---|---|
+| 09-05 11:46 – 15:06 | no heartbeat at all — 200 minutes |
+| 09-05 18:22 – 18:43 | no heartbeat — 21 minutes |
+| 09-05 18:51 – 21:10 | **one beat every ~7 minutes**, for 2h20m |
+| 09-06 00:15 – 02:39 | no heartbeat at all — 143 minutes |
+
+The middle row is the diagnostic one. `relay_agent.py`'s heartbeat runs on its
+own daemon thread: `time.sleep(60)`, with a 10-second engine probe and a
+15-second post. **85 seconds is the widest gap a running relay can produce.**
+Seven minutes, metronomically, for two hours, is not the relay pacing itself.
+
+Check the resolution before reading any such table: `GET /api/server/uptime`
+caps at 500 samples and downsamples to fit (confirmed by asking for 5000 and
+getting 500), which invents ~6-minute gaps in a 24-hour window. The rows above
+were re-confirmed against uncapped 9-hour and 12-hour windows.
+
+**Ruled out: the box is not sleeping.** This was the first hypothesis and it is
+wrong. On Silas-PC, `powercfg /q SCHEME_CURRENT SUB_SLEEP` reports **Sleep after
+AC = 0** and **Hibernate after AC = 0** (both disabled), `powercfg /lastwake`
+reports **Wake History Count - 0**, and the newest Kernel-Power 42/107 pair in
+the System log is **7/6/2026** — two months before these gaps. The box was awake
+the entire time.
+
+**Also ruled out: Kind Robots was not down.** `render-box-watchdog.yml` read
+`/api/server/uptime` successfully from GitHub Actions at 08:48Z — inside the
+143-minute blackout — and wrote `state: silent` from the result. The API was up
+and reachable from the public internet throughout.
+
+**What is left**, and the one command that separates them. `post_heartbeat`
+swallows a failed POST and logs it, so the relay's own log distinguishes a relay
+that was not running from one whose posts were not landing:
+
+```powershell
+pm2 describe kr-relay     # uptime shorter than the gap = it restarted
+
+Select-String -Path D:\code\Conductor\ops\home-server\logs\kr-relay.out.log `
+  -Pattern 'failed to post|polling' | Select-Object -Last 40
+```
+
+- `heartbeat(COMFY) failed to post: ...` lines across the gap → the beats were
+  attempted and lost. The relay was up; its path to kindrobots.org was not.
+  Read the error: DNS, TLS, timeout and connection-refused all look different.
+- repeated `agent ... polling https://kindrobots.org every 2s` lines → the relay
+  restarted that many times. Then `pm2 logs kr-relay --err` has the reason.
+- **neither** → the process was alive and never even attempted a beat, which
+  means its thread was not scheduled. That is a frozen process on an awake box:
+  look at what else was running (a long render pinning the machine, a driver
+  reset, disk stalls in Event Viewer under Disk/Ntfs).
+
+**Guard.** Two additions, one on each side of the box, because neither works
+alone:
+
+- `healthcheck.ps1` records the time of every tick and, when the next tick is
+  more than 12 minutes later, reads Kernel-Power 42/107 across the gap. The log
+  now says either `the BOX SLEPT` or `NO Kernel-Power sleep/resume event - the
+  box was awake and this task did not run`. That distinction was previously
+  unavailable — an empty stretch of `healthcheck.log` meant both things at once
+  — and it is what would have refuted the sleep theory in one line instead of a
+  round trip.
+- `check_engine_heartbeat.py` gains a **DOZING** state next to SILENT and DOWN.
+  It scores the *spacing* of the beats rather than their content, so a box that
+  contributes nothing for most of an hour no longer reads as healthy just
+  because each beat it manages to send is fresh and `ok:true`. It refuses to
+  score a downsampled series, so a wide `--window-hours` cannot manufacture an
+  alarm. It deliberately names no cause — that is what this section is for.
+
 ## Why a 24-hour outage produced no alerts (2026-09-02), and what watches now
 
 The ComfyUI crash loop above ran for about a day before a human noticed. Four
