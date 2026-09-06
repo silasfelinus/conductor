@@ -1,6 +1,8 @@
 """creation_burst.py bundle shapes: the classic single-character burst and the
 party shape (`characters:` + `locations:`, rewards and scenario optional)."""
 
+import json
+
 import pytest
 
 import scripts.creation_burst as burst
@@ -143,6 +145,67 @@ def test_reward_owners_default_to_everyone_and_narrow_by_name():
     assert burst.reward_owners({"name": "Kama", "owners": ["tom tomtum"]}, chars, False) == {"character:tom-tomtum"}
     with pytest.raises(ValueError, match="unknown owner"):
         burst.reward_owners({"name": "Kama", "owners": ["Nobody"]}, chars, False)
+
+
+def world_bundle():
+    b = party_bundle()
+    b["world"] = {
+        "title": "The Shellback Reaches",
+        "slug": "shellback-reaches",
+        "idea": "A country of terraced valleys where the tortoises are older than the roads.",
+        "art_direction": "a wide highland valley of stacked stone terraces in morning haze",
+        "highlights": [{"label": "Known For", "value": "The tortoise roads."}],
+    }
+    b["scenario"] = {"title": "The Night the Long Quiet Broke", "setup": "Brigands come up the terrace steps."}
+    return b
+
+
+def test_world_is_optional_and_shows_up_in_the_shape():
+    assert burst.normalize_bundle(party_bundle())["world"] is None
+    shape = burst.normalize_bundle(world_bundle())
+    assert shape["world"]["title"] == "The Shellback Reaches"
+    bad = world_bundle()
+    del bad["world"]["title"]
+    with pytest.raises(ValueError, match="world needs a `title`"):
+        burst.normalize_bundle(bad)
+
+
+def test_world_gets_its_own_prompt_led_by_art_direction():
+    prompt = burst.bundle_prompts(world_bundle())["world"]
+    assert prompt.startswith("establishing key art for The Shellback Reaches")
+    assert "a wide highland valley of stacked stone terraces" in prompt
+    assert prompt.endswith(burst.prompts.NO_TEXT)
+
+
+def test_world_body_is_a_pitch_dream_owning_its_own_slug():
+    b = world_bundle()
+    body = burst.world_body(b["world"], b, "prompt", "silasfelinus", "HYBRID", "tom-tomtum")
+    assert body["dreamType"] == "PITCH" and body["slug"] == "shellback-reaches"
+    assert body["icon"] == "kind-icon:moon" and body["creationSource"] == "HYBRID"
+    assert body["flavorText"] == b["vibe"]
+    # A world with no slug of its own falls back to the bundle's canonical slug.
+    del b["world"]["slug"]
+    assert burst.world_body(b["world"], b, "p", "d", "AI", "tom-tomtum")["slug"] == "tom-tomtum"
+
+
+def test_world_sheet_carries_highlights_and_a_serialized_extra_data():
+    b = world_bundle()
+    sheet = burst.world_sheet_body(b["world"], b, "silasfelinus", "tom-tomtum")
+    assert sheet["highlight1Label"] == "Known For" and sheet["highlight1Value"] == "The tortoise roads."
+    assert "highlight2Label" not in sheet
+    assert json.loads(sheet["extraData"])["bundle"] == "tom-tomtum"
+
+
+def test_kr_create_records_a_separate_delete_base(monkeypatch):
+    calls = {}
+    monkeypatch.setattr(burst, "http_json",
+                        lambda m, u, b=None: calls.setdefault("url", u) and None or (201, {"success": True, "data": {"id": 9}}))
+    created = []
+    rid = burst.kr_create("/api/sheets/by-dream/5", {}, "sheet", False, created, delete_base="/api/sheets")
+    assert rid == 9
+    # A rollback must hit DELETE /api/sheets/9, never /api/sheets/by-dream/5/9.
+    assert created == [("/api/sheets", 9)]
+    assert calls["url"].endswith("/api/sheets/by-dream/5")
 
 
 def test_facet_collections_cover_location_dreams():
