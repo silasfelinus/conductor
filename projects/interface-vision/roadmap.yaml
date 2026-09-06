@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3612,8 +3612,21 @@ tasks:
     min-h/rounded-2xl/bg-base-200 combo rather than a single universal primitive) or move to
     a different kr-* family entirely. Return the recurring consistency umbrella to ready for
     that.
-  updated: '2026-09-06T07:37:01Z'
-  implementation_pr: 'silasfelinus/kind_robots#2452'
+
+    Slice 109 merged: silasfelinus/kind_robots#2453 (squash
+    b974668a737651d04a2af6d958b64c9b61da1ee5). New .kr-badge-ghost-sm/.kr-badge-warning-
+    sm/.kr-badge-outline-sm primitives + kr_badge_codemod.py (mirrors
+    kr_checkbox_codemod.py's subset-match shape); --exact-only migrated 54 occurrences
+    across 31 files (ui-gallery.vue's style-guide demo excluded per established convention).
+    All checks clean (vue-tsc, eslint 0 new, layout-contract held at 207, lint-ratchet held
+    at 333/-59); 3 files needed a scoped prettier --write after class shortening collapsed a
+    multi-line tag, 21 other pre-existing drift files confirmed via git stash. Next bounded
+    slice: audit hand-rolled textarea shapes (129 class attrs, highly varied -- needs
+    picking one common min-h/rounded-2xl/bg-base-200 combo) or continue the badge family
+    (primary-sm/secondary-sm/xs variants surveyed at ~60 more subset-match occurrences).
+    Return the recurring consistency umbrella to ready for that.
+  updated: '2026-09-06T07:45:19Z'
+  implementation_pr: 'silasfelinus/kind_robots#2453'
   retry_context: 'pass 1 failed (quality): slice 69 (kind_robots#2386) migrated the Promote-to-Character button in components/brainstorm/brainstorm-candidate-card.vue from `class="btn btn-outline btn-sm"` to the new shared `.kr-btn-outline-plain` class, but missed that utils/scripts/verifyBrainstormWorkbench.mjs:126 hardcodes that literal class string as a source-text regression guard ("the Promote to Character button must stay gated to kept candidates only"). CI job "Candidate-first workbench" fails on the new class. Do differently: before migrating a button class, grep utils/scripts/*.mjs (and any other source-text contract scripts) for the exact class string being replaced, not just run vue-tsc/eslint/layout-contract/lint-ratchet -- this file family asserts literal class attributes as regression guards and is easy to miss since it is not a normal test runner. Fix is scoped: update verifyBrainstormWorkbench.mjs line 126 to expect class="kr-btn-outline-plain" instead of class="btn btn-outline btn-sm" (same intent, new class name), then run `node utils/scripts/verifyBrainstormWorkbench.mjs` locally to confirm before reopening. Reviewer comment: silasfelinus/kind_robots#2386 (inline on components/brainstorm/brainstorm-candidate-card.vue line 363).'
   owner: worker
   claimed_by: claude-scheduled-20260906T-t104-slice109
