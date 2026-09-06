@@ -56,6 +56,21 @@ module.exports = {
       // interpreter. COMFY_BASE_PYTHON is overrideable if the base Python moves.
       // Binds 127.0.0.1 on purpose: Tailscale Serve (443) fronts it for remote
       // access, and the relay agent talks to localhost directly.
+      //
+      // 2026-09-06 CONFIRMED, and it is worse than "a visible console": the
+      // venv python.exe is a REDIRECTOR. Point pm2 at it and you get two
+      // processes - the stub, which pm2 supervises, and the base interpreter it
+      // re-execs, which is the actual ComfyUI. `pm2 stop` then kills the stub
+      // and the engine keeps running, holding port 8188, the comfyui.db lock
+      // and the GPU, supervised by nothing. Every "immortal" ComfyUI in the
+      // README's port-8188 section was that child.
+      //
+      // Changing THIS FILE does not fix a running app: `pm2 restart` reuses the
+      // stored script path even when handed the file and --update-env. After
+      // editing here you must `pm2 delete comfyui` and `pm2 start
+      // ecosystem.config.js`. Verify with the process tree, not with ComfyUI's
+      // "** Python executable:" banner - that prints the venv path either way,
+      // because __PYVENV_LAUNCHER__ makes the base interpreter report it.
       name: 'comfyui',
       cwd: COMFY_DIR,
       script: COMFY_BASE_PYTHON,
