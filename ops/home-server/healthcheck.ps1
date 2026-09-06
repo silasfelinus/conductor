@@ -232,14 +232,14 @@ function Get-PortOwnerReport($port, $expectedPid) {
 #
 # Windows does say, in the System log. Kernel-Power 42 is "entering sleep" and
 # 107 is "resumed"; reading them needs no elevation. Matching them against the
-# gap turns "the log just stops" into a named cause, and it does so for the one
-# failure mode nothing else here can see.
+# gap answers, in the log itself, which of the two happened.
 #
-# This matters beyond the log being tidy: a suspend/resume cycle is a plausible
-# author of several incidents already written up in the README - a dropped SMB
-# mapping, a stale share handle ComfyUI keeps using, a CUDA context lost under a
-# process that is still "running". Naming the cycle is the first step to ruling
-# it in or out.
+# Note which way that went on 2026-09-06: sleep was the first hypothesis and the
+# System log REFUTED it. Standby and hibernate are both 0 on AC here, and the
+# newest 42/107 pair was 7/6 - two months before the gaps. So the value of this
+# block is not that it confirms sleep; it is that it settles the question either
+# way, in one line, at the moment the gap appears, instead of leaving a hole in
+# the log that every future reader has to re-litigate.
 function Get-PowerTransitions($since) {
     try {
         return @(Get-WinEvent -ErrorAction Stop -MaxEvents 20 -FilterHashtable @{

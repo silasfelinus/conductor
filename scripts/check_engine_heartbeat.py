@@ -40,14 +40,23 @@ Two independent alarms, neither of which depends on queue depth:
   DOZING  heartbeats are arriving, and healthy, but far too FAR APART. The
           relay's heartbeat thread sleeps 60s and can block at most 85s
           (a 10s engine probe plus a 15s post), so a gap past --doze-gap-minutes
-          is not something it can produce: the process was not being scheduled.
-          Repeatedly, that is a box suspending and resuming underneath a relay
-          that never learns it happened.
+          is not something a running relay can produce. Either the process is
+          not being scheduled, or its posts are not landing.
 
-DOZING exists because a box that sleeps looks HEALTHY from every angle. Each
-beat it does send is fresh and ok:true, so neither alarm above fires, while the
-machine spends most of an hour frozen. Observed 2026-09-06: one beat every ~7
-minutes for 2h20m, either side of blackouts of 143 and 200 minutes.
+DOZING exists because that failure looks HEALTHY from every angle. Each beat
+that does arrive is fresh and ok:true, so neither alarm above fires, while the
+box contributes nothing for most of an hour. Observed 2026-09-06: one beat every
+~7 minutes for 2h20m, either side of blackouts of 143 and 200 minutes.
+
+It deliberately does NOT name a cause. The first guess on 2026-09-06 was that
+the box was suspending, and `powercfg` refuted it outright: standby and
+hibernate are both 0 on AC, and the newest Kernel-Power 42/107 pair in the
+System log was 7/6, two months before the gaps. Meanwhile this very check read
+kindrobots.org successfully from GitHub Actions at 08:48Z, in the middle of the
+143-minute blackout, so the API was up and reachable from the internet
+throughout. What remains is on the box or on its path out: the relay not
+running, or its posts not landing. `post_heartbeat` swallows a failed POST and
+logs it, so kr-relay's own log is what separates those two.
 
 An idle queue is not a broken box — that part of check_render_box.py's
 reasoning was always right. But an idle queue with a silent or failing engine
@@ -342,11 +351,13 @@ def assess_server(
     )
     if dozing:
         return DOZING, (
-            f"{title}: heartbeat is healthy right now, but {detail}. The box is "
-            "being suspended and resumed underneath the relay — nothing renders "
-            "while it is frozen, and SMB mappings and CUDA contexts do not "
-            "reliably survive the cycle. Check 'powercfg /lastwake' and "
-            "'powercfg /q SCHEME_CURRENT SUB_SLEEP' on the box."
+            f"{title}: heartbeat is healthy right now, but {detail}. A running "
+            "relay cannot space its own beats that far, so either it is not "
+            "being scheduled or its posts are not landing — and either way the "
+            "box is contributing nothing for most of that time. On the box: "
+            "'pm2 describe kr-relay' for its uptime and restart count, then "
+            "grep kr-relay's log for 'failed to post' (a losing network) versus "
+            "'polling' (a restarting relay)."
         )
 
     return OK, f"{title}: heartbeat healthy {age:.1f} minutes ago."

@@ -384,7 +384,19 @@ class DozingTests(unittest.TestCase):
     def test_beats_spaced_far_wider_than_the_relay_can_manage_are_dozing(self):
         state, reason = heartbeat.assess_server(server(self.dozing_series()), NOW)
         self.assertEqual(state, heartbeat.DOZING)
-        self.assertIn("powercfg", reason)
+        self.assertIn("kr-relay", reason)
+
+    def test_the_verdict_names_no_cause_it_has_not_established(self):
+        """The first guess on 2026-09-06 was sleep, and powercfg refuted it.
+
+        Standby and hibernate were both 0 on AC and the newest Kernel-Power
+        42/107 pair predated the gaps by two months. A reason line that had
+        asserted sleep would have sent every future reader down that same dead
+        end. State the measurement; leave the cause to the two log greps.
+        """
+        _, reason = heartbeat.assess_server(server(self.dozing_series()), NOW)
+        for unproven in ("suspend", "sleep", "powercfg", "CUDA"):
+            self.assertNotIn(unproven, reason.lower())
 
     def test_a_healthy_one_minute_cadence_is_not_dozing(self):
         state, _ = heartbeat.assess_server(server(healthy_series()), NOW)

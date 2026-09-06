@@ -118,8 +118,8 @@ jobs:
           # so the wording above would be actively misleading: nothing "stopped
           # reporting", the box is just frozen between the beats it does send.
           if [ "$STATE" = "dozing" ]; then
-            SUBJECT="⚠️ Render box is SLEEPING — heartbeats minutes apart"
-            INTRO="The engine answers whenever it is awake, but the box is suspending and resuming underneath it. Renders cannot start while it is frozen, and SMB mappings and CUDA contexts do not reliably survive the cycle."
+            SUBJECT="⚠️ Render box heartbeats are minutes apart — it is only half there"
+            INTRO="Every heartbeat that arrives says the engine is healthy, but they are arriving far further apart than a running relay can space them. Either the relay is not being scheduled or its posts are not landing; either way the box contributes nothing for most of that time."
           fi
           BODY="$(cat <<EOF
           $INTRO
