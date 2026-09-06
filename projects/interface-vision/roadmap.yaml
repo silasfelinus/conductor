@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   recurring: true
@@ -3661,12 +3661,12 @@ tasks:
     ~86 more subset-match occurrences across
     primary/ghost/outline/success/warning/error/secondary-xs). Return the recurring
     consistency umbrella to ready for that.
-  updated: '2026-09-06T09:43:20Z'
+  updated: '2026-09-06T10:29:07Z'
   implementation_pr: 'silasfelinus/kind_robots#2455'
   retry_context: 'pass 1 failed (quality): slice 69 (kind_robots#2386) migrated the Promote-to-Character button in components/brainstorm/brainstorm-candidate-card.vue from `class="btn btn-outline btn-sm"` to the new shared `.kr-btn-outline-plain` class, but missed that utils/scripts/verifyBrainstormWorkbench.mjs:126 hardcodes that literal class string as a source-text regression guard ("the Promote to Character button must stay gated to kept candidates only"). CI job "Candidate-first workbench" fails on the new class. Do differently: before migrating a button class, grep utils/scripts/*.mjs (and any other source-text contract scripts) for the exact class string being replaced, not just run vue-tsc/eslint/layout-contract/lint-ratchet -- this file family asserts literal class attributes as regression guards and is easy to miss since it is not a normal test runner. Fix is scoped: update verifyBrainstormWorkbench.mjs line 126 to expect class="kr-btn-outline-plain" instead of class="btn btn-outline btn-sm" (same intent, new class name), then run `node utils/scripts/verifyBrainstormWorkbench.mjs` locally to confirm before reopening. Reviewer comment: silasfelinus/kind_robots#2386 (inline on components/brainstorm/brainstorm-candidate-card.vue line 363).'
   owner: reviewer
-  claimed_by: claude-scheduled-20260906T093040Z-t104-slice111
-  claimed_at: '2026-09-06T09:30:41Z'
+  claimed_by: claude-scheduled-20260906T102906Z-t104-slice112
+  claimed_at: '2026-09-06T10:29:07Z'
 
 - id: t-123
   milestone: m5
