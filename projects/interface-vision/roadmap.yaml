@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3490,8 +3490,27 @@ tasks:
     bounded slice should pick a different shared-class family (e.g. hand-rolled btn-sm/btn-
     md variants) per the kaizen suggestion in kind_robots#2445; return the recurring
     consistency umbrella to ready for that scoping work.
-  updated: '2026-09-06T02:56:20Z'
-  implementation_pr: 'silasfelinus/kind_robots#2445'
+
+    Slice 102: merged silasfelinus/kind_robots#2446 -- started a new target family after the
+    original btn-xs backlog cleared (slice 101). Used the existing, previously-unused
+    kr_panel_section_codemod.py tool: migrated the single remaining candidate, the hand-
+    rolled 'rounded-3xl border border-base-300 bg-base-100 p-5 shadow-sm' surface on the
+    challenge reward-card link in components/conductor/challenge-center-page.vue, to kr-
+    panel-section, preserving every other utility and hover/focus modifier. No
+    geometry/behavior change. Confirmed target file pure LF (no CRLF risk). Checked
+    utils/scripts/*.mjs and other .ts/.mjs/.js sources for the filename/exact class string
+    -- no regression-guard hits. vue-tsc clean; eslint 0 issues; test:layout-contract held
+    (207 baseline); test:lint-ratchet held (333/-59); prettier flagged pre-existing drift,
+    confirmed via git stash not introduced this slice. All CI green, mergeable_state clean.
+    Post-merge: kr_panel_section_codemod.py --root . now reports 0 candidate occurrences --
+    this family is also fully cleared. Remaining lead for next slice: kr_panel_codemod.py
+    --root . reports 0 clean auto-match candidates but 2 occurrences skipped for manual
+    review in components/user/chat-gallery.vue (extra tokens: btn-sm shrink-0 on one, no
+    btn-sm on the other) -- needs a human-judgment look at whether/how to migrate rather
+    than a mechanical codemod run. Return the recurring consistency umbrella to ready for
+    that or a freshly-scoped family.
+  updated: '2026-09-06T02:56:33Z'
+  implementation_pr: 'silasfelinus/kind_robots#2446'
   retry_context: 'pass 1 failed (quality): slice 69 (kind_robots#2386) migrated the Promote-to-Character button in components/brainstorm/brainstorm-candidate-card.vue from `class="btn btn-outline btn-sm"` to the new shared `.kr-btn-outline-plain` class, but missed that utils/scripts/verifyBrainstormWorkbench.mjs:126 hardcodes that literal class string as a source-text regression guard ("the Promote to Character button must stay gated to kept candidates only"). CI job "Candidate-first workbench" fails on the new class. Do differently: before migrating a button class, grep utils/scripts/*.mjs (and any other source-text contract scripts) for the exact class string being replaced, not just run vue-tsc/eslint/layout-contract/lint-ratchet -- this file family asserts literal class attributes as regression guards and is easy to miss since it is not a normal test runner. Fix is scoped: update verifyBrainstormWorkbench.mjs line 126 to expect class="kr-btn-outline-plain" instead of class="btn btn-outline btn-sm" (same intent, new class name), then run `node utils/scripts/verifyBrainstormWorkbench.mjs` locally to confirm before reopening. Reviewer comment: silasfelinus/kind_robots#2386 (inline on components/brainstorm/brainstorm-candidate-card.vue line 363).'
   owner: worker
   claimed_by: claude-scheduled-20260906T023046Z-t104-slice102
