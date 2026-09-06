@@ -12529,3 +12529,25 @@ records:
     mode produces no error and no warning -- only an oversized diff that is
     easy to miss if the tool's own dry-run output only reports occurrence
     counts, not diff size."
+- date: 2026-09-06
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Slice 101 of the recurring kr-btn-xs consistency sweep migrated
+    the last 3 hand-rolled 'btn btn-xs ... rounded-xl' occurrences
+    (brainstorm-manager.vue, taskmaster-page.vue, lora-triage.vue), then
+    re-ran kr_btn_xs_codemod.py (no --path) against post-merge main and
+    confirmed 0 occurrences remain across the whole repo. This is the first
+    time this task's original btn-xs scope has run out entirely -- worth
+    recording as a milestone rather than a routine bounded-slice cycle, and
+    a reminder to verify a recurring sweep's backlog on the *merged* tree,
+    not just the PR's own dry-run, since a concurrent unrelated merge could
+    in principle reintroduce the pattern between dry-run and merge. Next
+    session picking up this task should choose a new shared-class family to
+    track (e.g. hand-rolled btn-sm/btn-md variants) rather than assume the
+    umbrella is finished -- it is recurring precisely because the sweep
+    itself never ends, only its current target family did."
