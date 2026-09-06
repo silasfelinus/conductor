@@ -13,15 +13,24 @@ person can find, remix and build on, with art attached.
 
 The classic bundle is one Character, one ITEM Reward, one SKILL Reward, one
 Scenario, all linked to each other, all `designer: creation-burst`, all public.
-Since 2026-09-06 a bundle may instead (or also) carry a `characters:` list and a
-`locations:` list, with rewards and the scenario optional — the shape a tabletop
-party needs: a hero, a companion, and the place they came from, each a real row.
+Since 2026-09-06 a bundle may instead (or also) carry a `world:`, a `characters:`
+list and a `locations:` list, with rewards and the scenario optional — the shape a
+tabletop setting needs: a region, the place at its centre, the people who live
+there, and the night it all went wrong, each a real row.
+
+The `world:` is the umbrella PITCH Dream — the vibe. It owns the bundle's
+canonical slug (or its own `slug:`), CONTAINS every location, and lists every
+character, reward and scenario as its members, so one card gathers the set.
 
     projects/kind-robots/bursts/<date>-<slug>.yaml
-        -> POST /api/dreams       (one LOCATION Dream per `locations:` entry)
+        -> POST /api/dreams       (the `world:` PITCH Dream, then one LOCATION
+                                   Dream per `locations:` entry)
+        -> POST /api/sheets/by-dream/{worldId}  (the world card's PitchSheet)
+        -> POST /api/dream-relations            (world CONTAINS each location)
         -> POST /api/rewards      (x2 when `rewards:` is present)
-        -> POST /api/characters   (rewardIds -> both rewards, dreamIds -> the locations)
-        -> POST /api/scenarios    (characterIds -> every character, dreamIds -> the locations)
+        -> POST /api/characters   (rewardIds -> its rewards, dreamIds -> world + locations)
+        -> POST /api/scenarios    (characterIds -> every character, dreamIds -> world + locations)
+        -> PATCH /api/dreams/{worldId}          (the world's own member lists)
         -> one staged row per record in projects/art-prompts.yaml `requests:`
            (source: creation-burst, entity_type/entity_id/entity_field)
         -> POST /api/art/queue    (one ArtJob per row, payload.entityArt set so
@@ -52,6 +61,8 @@ use HYBRID when a person seeded the idea and an agent wrote it up; `art_priority
 
 Re-running a bundle after adding `rewards:` to it links the new Rewards to the
 already-built Characters from the Reward side (`characterIds`), so a set can grow.
+Adding a `world:` to an already-built bundle likewise back-links every existing
+row, because membership is written from the world card rather than onto each row.
 
 Dry-run by default. `--live` needs KR_API_TOKEN.
 
@@ -140,9 +151,12 @@ def normalize_bundle(bundle: dict[str, Any], name: str = "bundle") -> dict[str, 
     locations = list(bundle.get("locations") or [])
     rewards = list(bundle.get("rewards") or [])
     scenario = bundle.get("scenario") or None
+    world = bundle.get("world") or None
 
-    if not (characters or locations or rewards or scenario):
-        raise ValueError(f"{name}: a bundle needs at least one character, location, reward or scenario")
+    if not (characters or locations or rewards or scenario or world):
+        raise ValueError(f"{name}: a bundle needs at least one world, character, location, reward or scenario")
+    if world is not None and not _text(world.get("title")):
+        raise ValueError(f"{name}: world needs a `title`")
     if rewards and (
         len(rewards) != 2
         or {str(r.get("reward_type", "")).upper() for r in rewards} != {"ITEM", "SKILL"}
@@ -179,6 +193,7 @@ def normalize_bundle(bundle: dict[str, Any], name: str = "bundle") -> dict[str, 
         raise ValueError(f"{name}: art_priority must be a non-negative integer")
 
     return {
+        "world": world,
         "characters": characters,
         "locations": locations,
         "rewards": rewards,
@@ -214,7 +229,14 @@ def reward_owners(rw: dict[str, Any], characters: list[dict[str, Any]], legacy: 
 # ── Kind Robots writes ───────────────────────────────────────────────────────
 
 def kr_create(endpoint: str, body: dict[str, Any], label: str, dry_run: bool,
-              created: list[tuple[str, int]]) -> Optional[int]:
+              created: list[tuple[str, int]],
+              delete_base: Optional[str] = None) -> Optional[int]:
+    """POST one row and remember how to undo it.
+
+    `delete_base` is for the one endpoint whose create and delete paths differ:
+    a PitchSheet is created at POST /api/sheets/by-dream/{dreamId} but deleted at
+    DELETE /api/sheets/{id}. Without it a rollback would build a nonsense URL and
+    strand the sheet (build_dream_records._delete_base documents the same case)."""
     if dry_run:
         print(f"  [dry-run] POST {endpoint}: {label}")
         return None
@@ -224,8 +246,8 @@ def kr_create(endpoint: str, body: dict[str, Any], label: str, dry_run: bool,
     if status not in (200, 201) or not isinstance(resp, dict) or not resp.get("success") or not rid:
         message = resp.get("message") if isinstance(resp, dict) else resp
         raise RuntimeError(f"POST {endpoint} ({label}) -> HTTP {status}: {message}")
-    created.append((endpoint, int(rid)))
-    print(f"  created {endpoint}/{rid}: {label}")
+    created.append((delete_base or endpoint, int(rid)))
+    print(f"  created {delete_base or endpoint}/{rid}: {label}")
     return int(rid)
 
 
@@ -271,6 +293,13 @@ def bundle_prompts(bundle: dict[str, Any]) -> dict[str, str]:
         return prompts.scene_prompt(scene, title, vibe, style=style) if scene else None
 
     out: dict[str, str] = {}
+    world = shape["world"]
+    if world:
+        out["world"] = custom(world) or prompts.world_prompt(
+            world["title"], _text(world.get("idea")) or _text(bundle.get("idea")),
+            _text(world.get("flavor")) or vibe, _text(world.get("art_direction")),
+            style=style,
+        )
     for index, ch in enumerate(shape["characters"]):
         out[character_key(index, ch, shape["legacy_character"])] = custom(ch) or prompts.character_prompt(
             ch["name"], ch.get("look", ""), ch.get("drive", ""), ch.get("carries", ""),
@@ -408,6 +437,48 @@ def location_body(loc: dict[str, Any], art_prompt: str, designer: str,
     })
 
 
+def world_body(world: dict[str, Any], bundle: dict[str, Any], art_prompt: str,
+               designer: str, creation_source: str, slug: str) -> dict[str, Any]:
+    """The bundle's umbrella PITCH Dream — the vibe every other row hangs off.
+
+    Same shape the Daily Dream lane's world card uses: the idea as description,
+    the vibe line as flavor, a moon icon. It owns the bundle's canonical slug
+    unless the world names its own (specs/SLUG-POLICY.md rule 4)."""
+    return _compact({
+        "title": _text(world["title"]),
+        "slug": _text(world.get("slug")) or slug,
+        "dreamType": "PITCH",
+        "designer": designer,
+        "creationSource": creation_source,
+        "isPublic": True,
+        "description": _text(world.get("idea")) or _text(bundle.get("idea")),
+        "flavorText": (_text(world.get("flavor")) or _text(bundle.get("vibe")))[:500] or None,
+        "artPrompt": art_prompt,
+        "icon": "kind-icon:moon",
+    })
+
+
+def world_sheet_body(world: dict[str, Any], bundle: dict[str, Any], designer: str,
+                     slug: str) -> dict[str, Any]:
+    """PitchSheet for the world card, so the umbrella renders with its highlights
+    the way the Daily Dream world cards do. `extraData` is a String column — the
+    JSON goes in as a serialized string, not a raw object."""
+    highlights = list(world.get("highlights") or [])[:3]
+    body: dict[str, Any] = {
+        "designer": designer,
+        "isPublic": True,
+        "title": _text(world["title"]),
+        "subtitle": _text(world.get("subtitle")) or None,
+        "hook": (_text(world.get("flavor")) or _text(bundle.get("vibe")))[:500] or None,
+        "pitch": _text(world.get("idea")) or _text(bundle.get("idea")) or None,
+        "extraData": json.dumps({"source": SOURCE, "bundle": slug, "elementType": "PITCH"}),
+    }
+    for i, entry in enumerate(highlights, start=1):
+        body[f"highlight{i}Label"] = _text(entry.get("label"))[:120]
+        body[f"highlight{i}Value"] = _text(entry.get("value"))[:500]
+    return _compact(body)
+
+
 def character_body(ch: dict[str, Any], art_prompt: str, designer: str,
                    reward_ids: list[int], dream_ids: list[int]) -> dict[str, Any]:
     backstory = _text(ch.get("backstory")) or " ".join(
@@ -455,7 +526,7 @@ def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
     bundle = yaml.safe_load(raw)
     shape = normalize_bundle(bundle, path.name)
     characters, locations = shape["characters"], shape["locations"]
-    rewards, sc = shape["rewards"], shape["scenario"]
+    rewards, sc, world = shape["rewards"], shape["scenario"], shape["world"]
     designer, creation_source = shape["designer"], shape["creation_source"]
 
     bundle_slug = slugify(bundle["slug"])
@@ -465,7 +536,23 @@ def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
     print(f"== {bundle['title']} ({path.name})")
 
     try:
-        # 1. Locations first, so Characters and the Scenario can link them on create.
+        # 1. The world card (PITCH Dream), so everything else can link it on create.
+        world_id = built.get("world")
+        if world and not world_id:
+            body = world_body(world, bundle, art_prompts["world"], designer,
+                              creation_source, bundle_slug)
+            world_id = kr_create("/api/dreams", body, f"World {world['title']}", dry_run, created)
+            if world_id:
+                built["world"] = world_id
+        if world and world_id and not built.get("sheet"):
+            sheet = kr_create(f"/api/sheets/by-dream/{int(world_id)}",
+                              world_sheet_body(world, bundle, designer, bundle_slug),
+                              f"sheet: {world['title']}", dry_run, created,
+                              delete_base="/api/sheets")
+            if sheet:
+                built["sheet"] = sheet
+
+        # 2. Locations, so Characters and the Scenario can link them on create.
         location_ids: list[int] = []
         for loc in locations:
             key = f"location:{slugify(loc['title'])}"
@@ -478,7 +565,24 @@ def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
             if lid:
                 location_ids.append(int(lid))
 
-        # 2. Rewards, so the Characters can link them on create. A Character that
+        # The world contains its locations. POST is an upsert on
+        # (from, to, relationType), so re-running never duplicates a relation.
+        if world_id:
+            for lid in location_ids:
+                if dry_run:
+                    print(f"  [dry-run] POST /api/dream-relations: {world_id} CONTAINS {lid}")
+                    continue
+                status, resp = http_json("POST", f"{KR_BASE_URL}/api/dream-relations",
+                                         {"fromDreamId": int(world_id), "toDreamId": int(lid),
+                                          "relationType": "CONTAINS"})
+                if status not in (200, 201) or not (resp or {}).get("success"):
+                    raise RuntimeError(f"POST /api/dream-relations ({world_id} CONTAINS {lid}) "
+                                       f"-> HTTP {status}: {(resp or {}).get('message')}")
+                print(f"  relation: world {world_id} CONTAINS location {lid}")
+
+        dream_ids = [int(i) for i in ([world_id] if world_id else []) + location_ids]
+
+        # 3. Rewards, so the Characters can link them on create. A Character that
         #    already exists from an earlier run is linked from the Reward side
         #    instead (`characterIds`), so a bundle can grow rewards after the fact.
         char_keys = [character_key(i, ch, shape["legacy_character"]) for i, ch in enumerate(characters)]
@@ -507,7 +611,7 @@ def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
                     "artPrompt": art_prompts[key],
                     "isPublic": True,
                     "characterIds": prebuilt_character_ids,
-                    "dreamIds": location_ids,
+                    "dreamIds": dream_ids,
                 }
                 body = {k: v for k, v in body.items() if v not in (None, "", [])}
                 rid = kr_create("/api/rewards", body, f"{rtype} {rw['name']}", dry_run, created)
@@ -516,7 +620,7 @@ def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
             if rid:
                 reward_ids.append(int(rid))
 
-        # 3. The Characters, carrying the rewards and standing in the locations.
+        # 4. The Characters, carrying the rewards and standing in the locations.
         character_ids: list[int] = []
         for index, ch in enumerate(characters):
             key = character_key(index, ch, shape["legacy_character"])
@@ -526,14 +630,14 @@ def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
                     rid for rw, rid in zip(rewards, reward_ids)
                     if key in reward_owner_keys[f"reward:{slugify(rw['name'])}"]
                 ]
-                body = character_body(ch, art_prompts[key], designer, own_rewards, location_ids)
+                body = character_body(ch, art_prompts[key], designer, own_rewards, dream_ids)
                 cid = kr_create("/api/characters", body, f"Character {ch['name']}", dry_run, created)
                 if cid:
                     built[key] = cid
             if cid:
                 character_ids.append(int(cid))
 
-        # 4. The Scenario, cast with every Character.
+        # 5. The Scenario, cast with every Character.
         if sc:
             sid = built.get("scenario")
             if not sid:
@@ -548,7 +652,7 @@ def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
                     "artPrompt": art_prompts["scenario"],
                     "isPublic": True,
                     "characterIds": character_ids,
-                    "dreamIds": location_ids,
+                    "dreamIds": dream_ids,
                 }
                 body = {k: v for k, v in body.items() if v not in (None, "", [])}
                 sid = kr_create("/api/scenarios", body, f"Scenario {sc['title']}", dry_run, created)
@@ -562,6 +666,9 @@ def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
 
     # Every record this bundle owns: (entity_type, element slug, label, prompt key, id, own facets)
     records: list[tuple[str, str, str, str, Optional[int], list[str]]] = []
+    if world:
+        records.append(("dream", "world", _text(world["title"]), "world", built.get("world"),
+                        [str(x) for x in (world.get("facets") or [])]))
     for loc in locations:
         key = f"location:{slugify(loc['title'])}"
         records.append(("dream", slugify(loc["title"]), _text(loc["title"]), key, built.get(key),
@@ -578,7 +685,32 @@ def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
         records.append(("scenario", slugify(sc["title"]) + "-scenario", _text(sc["title"]), "scenario",
                         built.get("scenario"), [str(x) for x in (sc.get("facets") or [])]))
 
-    # 5. Card art: one staged request per row, enqueued with an entity attach.
+    # 6. The world card's membership. Dream PATCH SETS these lists rather than
+    #    appending, which is safe here precisely because the world card belongs to
+    #    this bundle and its members are exactly the bundle's rows. This is also
+    #    what retro-links rows an earlier run created before the world existed —
+    #    doing it from the Dream side avoids a Character PATCH, whose own
+    #    `dreamIds` is a set: that would drop any unrelated Dream a row belongs to.
+    if world and built.get("world"):
+        member_characters = [int(built[k]) for k in
+                             [character_key(i, ch, shape["legacy_character"]) for i, ch in enumerate(characters)]
+                             if built.get(k)]
+        member_rewards = [int(built[f"reward:{slugify(rw['name'])}"]) for rw in rewards
+                          if built.get(f"reward:{slugify(rw['name'])}")]
+        member_scenarios = [int(built["scenario"])] if built.get("scenario") else []
+        members = {"characterIds": member_characters, "rewardIds": member_rewards,
+                   "scenarioIds": member_scenarios}
+        if dry_run:
+            print(f"  [dry-run] PATCH /api/dreams/{built['world']}: members {members}")
+        else:
+            status, resp = http_json("PATCH", f"{KR_BASE_URL}/api/dreams/{int(built['world'])}", members)
+            if status not in (200, 201) or not (resp or {}).get("success"):
+                raise RuntimeError(f"PATCH /api/dreams/{built['world']} (world membership) "
+                                   f"-> HTTP {status}: {(resp or {}).get('message')}")
+            print(f"  world {built['world']} members: {len(member_characters)} character(s), "
+                  f"{len(member_rewards)} reward(s), {len(member_scenarios)} scenario(s)")
+
+    # 7. Card art: one staged request per row, enqueued with an entity attach.
     art_failures: list[str] = []
     if with_art:
         already = staged_ids()
@@ -618,7 +750,7 @@ def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
         if art_state:
             built["art"] = art_state
 
-    # 5b. Facets: bundle-level slugs apply to every row; a row may add its own.
+    # 7b. Facets: bundle-level slugs apply to every row; a row may add its own.
     facet_state = dict(built.get("facets") or {})
     facet_failures: list[str] = []
     bundle_facets = [str(x) for x in (bundle.get("facets") or [])]
@@ -640,7 +772,7 @@ def build_bundle(path: Path, live: bool, with_art: bool) -> dict[str, Any]:
     if facet_state:
         built["facets"] = facet_state
 
-    # 6. Write the built block back so a re-run is a no-op.
+    # 8. Write the built block back so a re-run is a no-op.
     if not dry_run and built:
         stripped = re.sub(r"(?ms)^built:\s*\n(?:[ \t]+.*\n?)*", "", raw).rstrip("\n") + "\n"
         block = yaml.safe_dump({"built": built}, sort_keys=True, default_flow_style=False)

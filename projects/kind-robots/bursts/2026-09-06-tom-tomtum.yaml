@@ -1,6 +1,6 @@
 slug: tom-tomtum
-title: Tom Tomtum and the Long Quiet
-vibe: A rock gnome monk who learned more in one loud night than in fifty quiet years finally goes out to see the world.
+title: The Shellback Reaches
+vibe: Every order in the Reaches keeps its silence to hear the tortoises speak, and the only novice who ever heard one answer could never sit still for a minute.
 idea: >-
   Silas's D&D character, written up as a Kind Robots object set (2026-09-06). Tom Tomtum
   is a third-level rock gnome monk with glasses, ADHD, a kama sickle, a pan flute he plays
@@ -14,6 +14,42 @@ creation_source: HYBRID
 art_priority: 300
 facets: [high-fantasy]
 style: "luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture"
+
+world:
+  title: The Shellback Reaches
+  slug: shellback-reaches
+  subtitle: A highland region of tortoise roads and listening orders
+  idea: >-
+    The Shellback Reaches are a country of terraced highland valleys where the giant
+    tortoises are older than every road, every order and every name on the map. They
+    walk the same switchbacks their grandmothers walked, at the same speed, and the
+    contemplative houses of the Reaches were built at the turns of those roads on the
+    belief that a tortoise will speak to anyone patient enough to deserve it. So the
+    orders keep their long silences and listen. Nobody has written down an answer in
+    four hundred years. The tortoises outlive abbots the way abbots outlive candles,
+    which is why the Reaches treat them as the region's memory and why a house that
+    loses its tortoise is considered to have lost its history rather than its animal.
+    In the heavy season, when the terraces are worth robbing and the passes are open,
+    brigand companies work the low roads and count on the fact that a monastery under
+    its own rule of silence is a monastery that will not raise an alarm.
+  art_direction: >-
+    a wide highland valley of stacked stone terraces in morning haze, a pale
+    monastery built onto the shoulder of the mountain with a bronze bell under a
+    wooden roof, a switchback road below carrying three enormous moss-backed
+    tortoises walking single file, distant peaks fading into layered mist
+  highlights:
+    - label: Known For
+      value: >-
+        The tortoise roads, and the listening orders that built their houses at every
+        turn of them.
+    - label: Local Rule
+      value: >-
+        Silence is kept so the tortoises can be heard, and no one in four hundred
+        years has admitted to hearing one.
+    - label: Trouble
+      value: >-
+        Brigand companies work the low passes in the heavy season, knowing a silent
+        house raises no alarm.
 
 locations:
   - title: The Monastery of the Long Quiet
@@ -188,13 +224,42 @@ rewards:
     catch: It works once a night, and only when the practitioner genuinely has no better idea.
     facets: [monk, adventurous]
 
+scenario:
+  title: The Night the Long Quiet Broke
+  setup: >-
+    Brigands come up the terrace steps of the Monastery of the Long Quiet in the hour
+    after the evening bell, when every voice in the house is bound to silence until
+    morning and the order's own rule is the best weapon anyone could hand an attacker.
+    The house has kept that rule for four hundred years and will keep it tonight,
+    which means no shout of warning, no called orders and no alarm raised anywhere on
+    the mountain. Tom Tomtum has failed at silence for fifty years and is, for the
+    first time in his life, exactly the right person in the room. DeeDum sets herself
+    across the top of the stair, a quarter ton of tortoise that no brigand can move
+    and no brigand expected. Everything the monastery values is about to be saved by
+    the novice it was on the point of sending away.
+  location: The Monastery of the Long Quiet, on the terrace steps and the bell platform
+  genres: High Fantasy, Monastery Siege
+  inspirations: >-
+    Tibetan hill monasteries, Galapagos tortoises, night raids told from inside the
+    house, the moment a rule becomes a liability
+  art_prompt: >-
+    a mountain monastery at night seen from above its terrace steps, a line of
+    brigands with torches climbing the switchback below, a bronze bell under a wooden
+    roof catching the torchlight, an enormous moss-backed tortoise planted across the
+    top of the stair like a boulder, one small robed gnome silhouetted mid-stride
+    coming down to meet them with a sickle raised, deep blue night and warm scattered
+    firelight
+  facets: [monk, adventurous]
+
 built:
   art:
     creation-burst-tom-tomtum-deedum: 21619
     creation-burst-tom-tomtum-screaming-charge: 21621
     creation-burst-tom-tomtum-the-monastery-of-the-long-quiet: 21617
+    creation-burst-tom-tomtum-the-night-the-long-quiet-broke-scenario: 21623
     creation-burst-tom-tomtum-the-screaming-kama: 21620
     creation-burst-tom-tomtum-tom-tomtum: 21618
+    creation-burst-tom-tomtum-world: 21622
   character:deedum: 3333
   character:tom-tomtum: 3332
   facets:
@@ -227,6 +292,11 @@ built:
       - 814
       slugs:
       - high-fantasy
+    dream:5733:
+      facet_ids:
+      - 814
+      slugs:
+      - high-fantasy
     reward:2924:
       facet_ids:
       - 390
@@ -243,6 +313,18 @@ built:
       - high-fantasy
       - monk
       - adventurous
+    scenario:2213:
+      facet_ids:
+      - 390
+      - 814
+      - 986
+      slugs:
+      - high-fantasy
+      - monk
+      - adventurous
   location:the-monastery-of-the-long-quiet: 5732
   reward:screaming-charge: 2925
   reward:the-screaming-kama: 2924
+  scenario: 2213
+  sheet: 1569
+  world: 5733
