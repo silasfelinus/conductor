@@ -607,6 +607,49 @@ foreach ($t in $targets) {
         $restartDelta = $restartCount - $prevRestarts
     }
 
+    # --- Replaced without a pm2 restart -------------------------------------
+    # restart_time counts only the restarts pm2 PERFORMED. A process replaced
+    # any other way -- the pm2 daemon itself restarting, a `pm2 resurrect`, a
+    # reboot -- moves the process start time forward while leaving that counter
+    # exactly where it was, so every check above stays silent.
+    #
+    # 2026-09-06: kr-relay read `restarts 0` with 44 minutes of uptime, against
+    # an app created 2026-09-02 and a fresh "polling https://kindrobots.org"
+    # line in its own log at 02:39:12 -- the same minute a 143-minute hole in
+    # the off-box heartbeat series closed. Nothing had crashed. Something had
+    # replaced the process, three times in two days, and pm2's own counter was
+    # structurally unable to say so.
+    $startedKey = "started_$($t.Name)"
+    $currentStart = -1
+    if ($entry -and $entry.PSObject.Properties['pm_uptime'] -and $null -ne $entry.pm_uptime) {
+        $currentStart = [double]$entry.pm_uptime
+    }
+    $previousStart = -1
+    if ($alertState.ContainsKey($startedKey)) {
+        $parsedStart = 0.0
+        if ([double]::TryParse([string]$alertState[$startedKey], [ref]$parsedStart)) {
+            $previousStart = $parsedStart
+        }
+    }
+    if ($currentStart -gt 0) {
+        $alertState[$startedKey] = $currentStart
+        Save-AlertState $alertState
+    }
+
+    if ($currentStart -gt 0 -and $previousStart -gt 0 -and
+        $currentStart -gt $previousStart -and $restartDelta -eq 0) {
+        $startedAt = ([datetimeoffset]::FromUnixTimeMilliseconds([long]$currentStart)).LocalDateTime
+        $startedText = $startedAt.ToString('yyyy-MM-dd HH:mm:ss')
+        Write-Log "$($t.Name): REPLACED WITHOUT A PM2 RESTART - process now started $startedText while pm2's restart count stayed at $restartCount; the daemon was restarted, resurrected, or the box rebooted"
+        if (Test-AlertDue $alertState "replaced-$($t.Name)") {
+            $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+            Send-Alert "REPLACED: $($t.Name) on $hostName restarted, but not by pm2" `
+                "$($t.Name) is running a process that started at $startedText, newer than the one seen at the previous tick, while pm2's restart counter did not move (still $restartCount). pm2 did not do this: it was a pm2 daemon restart, a 'pm2 resurrect', a logoff, or a reboot.`n`nThat matters because nothing else reports it. The crash-loop and errored checks read the restart counter, which stands still through exactly this event, and the app comes back looking healthy with a clean history. Off the box it shows only as a hole in the heartbeat series.`n`nWhat replaced it:`n  (Get-CimInstance Win32_OperatingSystem).LastBootUpTime`n  Get-WinEvent -MaxEvents 20 -FilterHashtable @{LogName='System'; Id=6005,6006,6008,1074,41} |`n    Format-Table TimeCreated, Id, Message -AutoSize`n`n6005 is the event log starting (a boot), 6006 a clean shutdown, 6008 an unexpected one, 1074 a shutdown someone or something requested (it names the process), 41 a kernel power fault. If none of those line up, the pm2 daemon went down on its own - check whether it is started at logon rather than as a service, since a logoff takes every app with it."
+            $alertState["replaced-$($t.Name)"] = $stamp
+            Save-AlertState $alertState
+        }
+    }
+
     if ($restartDelta -ge $crashLoopRestarts) {
         Write-Log "$($t.Name): CRASH LOOPING - pm2 restart count climbed $prevRestarts->$restartCount since the last tick"
         $portNote = Get-PortOwnerReport $t.Port $pm2Pid

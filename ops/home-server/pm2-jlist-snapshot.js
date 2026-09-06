@@ -41,6 +41,14 @@ process.stdin.on('end', () => {
         restart_time: proc && proc.pm2_env ? asNumber(proc.pm2_env.restart_time) : null,
         unstable_restarts:
           proc && proc.pm2_env ? asNumber(proc.pm2_env.unstable_restarts) : null,
+        // When the CURRENT process started, epoch ms. restart_time counts only
+        // the restarts pm2 itself performed, so it cannot see a process that
+        // was replaced some other way -- a pm2 daemon restart, a resurrect, a
+        // reboot. kr-relay on 2026-09-06 read `restarts 0` with 44 minutes of
+        // uptime and a fresh startup line in its log: nothing had crashed, and
+        // pm2's own counter was the wrong instrument to notice. pm_uptime
+        // moving forward while restart_time stands still is that event.
+        pm_uptime: proc && proc.pm2_env ? asNumber(proc.pm2_env.pm_uptime) : null,
       },
     }));
 
