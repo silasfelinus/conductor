@@ -765,13 +765,58 @@ plus a `pm2 status` whose restart count has stopped climbing. If pm2 had already
 parked the app in `errored`, `pm2 restart` still revives it — the counter resets
 on a successful start.
 
-**Guard.** `healthcheck.ps1` now names the port owner in both the crash-loop and
-`errored` alerts (and in `logs\healthcheck.log`): the pid, process name, start
-time, and command line of whatever holds 8188, plus whether that pid is the one
-pm2 is supervising. `pm2-jlist-snapshot.js` carries `pid` through for that
-comparison. The watchdog deliberately does **not** kill the squatter itself — it
-can be a working engine mid-render, and choosing to end that render is a human's
-call, not a 5-minute timer's.
+**Where the orphan comes from.** ComfyUI's own log says it twice, at 03:41:22
+on 2026-09-06:
+
+```
+[ERROR] Could not acquire lock on database 'D:\comfy\comfy-fast\user\comfyui.db'.
+        Another ComfyUI process may already be using it.
+[ERROR] Port 8188 is already in use on address 127.0.0.1.
+```
+
+and a minute earlier, in the same file, the *other* process is plainly working:
+
+```
+03:40:10  [INFO] Prompt executed in 58.35 seconds
+03:40:12  [INFO] got prompt
+```
+
+One ComfyUI is rendering. A second is booting into it and losing. The orphan is
+what is left when the pm2 daemon is replaced underneath a running process - a
+daemon restart, a `pm2 resurrect`, a logoff - because pm2 hands the new daemon a
+process list, not the processes. The old engine keeps the port, the database
+lock and the GPU, and nothing supervises it any more.
+
+**This is the failure that looks like a haunted desktop.** pm2's copy boots ~60
+custom nodes for ninety seconds, fails to bind, exits, and is restarted, over
+and over - painting a fresh console onto the screen each time. Renders keep
+working throughout, because the orphan serves them. From the desk it reads as
+"ComfyUI keeps popping up a window after every image."
+
+**Guard.** `healthcheck.ps1` now **kills the squatter and restarts the app**,
+rather than only reporting it. Reporting left the box broken until somebody was
+physically at it, which is not a recovery plan. Every one of these must hold
+before anything is killed:
+
+- pm2 is crash-looping on this app, or has given up on it (`errored`) - never on
+  a healthy one;
+- something owns the port and it is **not** the pid pm2 is supervising;
+- that something's command line names **both** `main.py` **and** the ComfyUI
+  install directory (`COMFY_DIR`, default `D:\comfy\comfy-fast`);
+- the last reclaim was more than `COMFY_PORT_RECLAIM_COOLDOWN_MINUTES` (15) ago.
+
+Anything else is logged as `REFUSING to reclaim` and left alone. Set
+`COMFY_PORT_RECLAIM=0` for the old report-only behaviour.
+
+It can end a render in progress. That costs one ArtJob, which the queue retries.
+The alternative costs every job until someone gets home.
+
+**If it keeps firing**, the orphan is being *created*, not merely surviving:
+the pm2 daemon is going down. Check whether pm2 runs at logon rather than as a
+service (see "Start on boot"), and re-run `pm2 save` from `ops\home-server` so a
+resurrect restores the CURRENT ecosystem definition - a stale `dump.pm2` also
+brings back the venv-python launcher, whose redirector spawns a visible console
+that `windowsHide` cannot suppress.
 
 ### Triage: "something keeps resetting" — heartbeats arriving minutes apart (2026-09-06, open)
 

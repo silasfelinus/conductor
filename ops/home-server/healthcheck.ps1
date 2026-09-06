@@ -48,6 +48,30 @@ if ($env:CRASH_LOOP_RESTARTS) {
     [int]::TryParse($env:CRASH_LOOP_RESTARTS, [ref]$crashLoopRestarts) | Out-Null
 }
 
+# Reclaiming a squatted port. ON by default, unlike almost everything else here
+# that touches a process, because the alternative has been measured: on
+# 2026-09-06 an orphaned ComfyUI held 8188 and the comfyui.db lock while pm2's
+# copy crash-looped against it, spawning a fresh console on the desktop every
+# ~35 seconds, and it stayed that way until Silas got home. A human being
+# physically present is not a recovery plan.
+#
+# Set COMFY_PORT_RECLAIM=0 to go back to report-only.
+$reclaimEnabled = $true
+if ($env:COMFY_PORT_RECLAIM -eq '0') { $reclaimEnabled = $false }
+
+# Never reclaim more often than this. pm2 needs room to actually start after a
+# kill, and a tight kill loop would be worse than the squatter. 15 minutes is
+# three ticks, and well inside the ~26 minutes pm2 takes to reach max_restarts.
+$reclaimCooldownMinutes = 15
+if ($env:COMFY_PORT_RECLAIM_COOLDOWN_MINUTES) {
+    [int]::TryParse($env:COMFY_PORT_RECLAIM_COOLDOWN_MINUTES, [ref]$reclaimCooldownMinutes) | Out-Null
+}
+
+# What a process must look like before this script will kill it. Both must
+# appear in its command line. Deliberately narrow: the only thing we are
+# willing to end is another copy of the engine this box runs.
+$comfyDir = if ($env:COMFY_DIR) { $env:COMFY_DIR } else { 'D:\comfy\comfy-fast' }
+
 # How long after a boot an app may take to come back before that is a finding.
 # A healthy logon-start recovery is ~90 seconds; 15 minutes is far outside it
 # and far inside the 142 minutes observed on 2026-09-06.
@@ -261,6 +285,105 @@ function Get-PowerTransitions($since) {
         # a healthy box, so this catch is the normal path and not an error path.
         return @()
     }
+}
+
+# --- Reclaiming a squatted port ----------------------------------------------
+# The 2026-09-06 outage, in full, from comfyui's own log at 03:39-03:41:
+#
+#   03:40:10  [INFO] Prompt executed in 58.35 seconds      <- one ComfyUI, working
+#   03:40:12  [INFO] got prompt                            <- and taking more work
+#   03:41:22  [ERROR] Could not acquire lock on database
+#             'comfyui.db'. Another ComfyUI process may already be using it.
+#   03:41:22  [ERROR] Port 8188 is already in use on address 127.0.0.1.
+#
+# Two ComfyUI processes, and the log says so twice. An orphan - left over from
+# whatever replaced pm2 underneath it, so pm2 no longer supervises it - holds
+# the port, the database and the GPU while serving renders perfectly well. pm2's
+# own copy boots its ~60 custom nodes for a minute and a half, fails to bind,
+# exits, and is restarted. Around and around, each iteration painting a fresh
+# console onto the desktop, which is what Silas actually sees: "comfy is popping
+# up with a window ... it's hijacking the computer screen."
+#
+# Reporting this - which is all the previous version did - leaves the box broken
+# until someone is physically at it. So: end the squatter, and only ever the
+# squatter. Every one of these must hold, or nothing is killed:
+#
+#   * pm2 is crash-looping or has given up on this app (never on a healthy one)
+#   * something owns the port, and it is not the pid pm2 is supervising
+#   * that something's command line names BOTH main.py and the ComfyUI install
+#   * the last reclaim was over $reclaimCooldownMinutes ago
+#
+# It can end a render in progress. That costs one ArtJob, which the queue
+# retries; the alternative costs every job until a human gets home.
+function Invoke-PortReclaim($target, $expectedPid) {
+    if (-not $reclaimEnabled) {
+        Write-Log "$($target.Name): port reclaim is disabled (COMFY_PORT_RECLAIM=0) - leaving the squatter alone"
+        return $false
+    }
+    if (-not $target.Port) { return $false }
+
+    $ownerPid = Get-PortListenerPid $target.Port
+    if (-not $ownerPid) { return $false }
+    if ($expectedPid -and [int]$expectedPid -eq [int]$ownerPid) {
+        # pm2's own process owns the port. Whatever is wrong, this is not it.
+        return $false
+    }
+
+    $commandLine = ''
+    $imagePath = ''
+    try {
+        $cim = Get-CimInstance -ClassName Win32_Process -Filter "ProcessId = $ownerPid" -ErrorAction Stop
+        if ($cim) {
+            $commandLine = [string]$cim.CommandLine
+            $imagePath = [string]$cim.ExecutablePath
+        }
+    } catch {}
+
+    $haystack = "$commandLine $imagePath"
+    if ($haystack -notmatch 'main\.py' -or $haystack -notmatch [regex]::Escape($comfyDir)) {
+        Write-Log "$($target.Name): REFUSING to reclaim port $($target.Port) - pid $ownerPid does not look like a ComfyUI from $comfyDir (cmdline: $commandLine)"
+        return $false
+    }
+
+    $reclaimKey = "reclaim_$($target.Name)"
+    if ($alertState.ContainsKey($reclaimKey)) {
+        $lastReclaim = [datetime]::MinValue
+        if ([datetime]::TryParse([string]$alertState[$reclaimKey], [ref]$lastReclaim)) {
+            $sinceMinutes = ((Get-Date) - $lastReclaim).TotalMinutes
+            if ($sinceMinutes -lt $reclaimCooldownMinutes) {
+                Write-Log "$($target.Name): reclaim suppressed - killed a squatter $([math]::Round($sinceMinutes, 1)) min ago, inside the $reclaimCooldownMinutes-min cooldown"
+                return $false
+            }
+        }
+    }
+
+    $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+    $alertState[$reclaimKey] = $stamp
+    Save-AlertState $alertState
+
+    Write-Log "$($target.Name): RECLAIMING port $($target.Port) - killing orphaned ComfyUI pid $ownerPid"
+    $killed = $false
+    try {
+        Stop-Process -Id $ownerPid -Force -ErrorAction Stop
+        $killed = $true
+    } catch {
+        Write-Log "$($target.Name): could not kill pid $ownerPid ($($_.Exception.Message)) - is this watchdog running as the same user that started it?"
+    }
+    if (-not $killed) { return $false }
+
+    # Windows frees the socket promptly once the owner is gone, but pm2 is on
+    # its own restart_delay and would otherwise sit out the rest of it.
+    Start-Sleep -Seconds 5
+    & pm2 restart $target.Name | Out-Null
+    Write-Log "$($target.Name): reclaimed port $($target.Port) and restarted the app"
+
+    if (Test-AlertDue $alertState "reclaimed-$($target.Name)") {
+        Send-Alert "RECLAIMED: killed an orphaned ComfyUI holding port $($target.Port) on $hostName" `
+            "pid $ownerPid was listening on port $($target.Port) while pm2's $($target.Name) crash-looped against it, unable to bind. It was not the process pm2 supervises, and its command line named main.py under $comfyDir, so it was an orphaned copy of the engine - the kind left behind when the pm2 daemon is replaced underneath a running process.`n`nIt has been killed and $($target.Name) restarted at $stamp.`n`nCommand line: $commandLine`n`nAn orphan like this holds the port, the comfyui.db lock and the GPU while pm2's copy reboots ~60 custom nodes every 35 seconds and paints a new console on the desktop each time. Renders may look fine throughout, because the orphan serves them - it is simply unsupervised, so nothing restarts it when it dies.`n`nIf this keeps happening, the orphan is being created rather than merely surviving: check whether the pm2 daemon is restarting (pm2 is started at logon rather than as a service), and re-run 'pm2 save' from ops\\home-server so a resurrect brings back the CURRENT ecosystem definition rather than a stale one."
+        $alertState["reclaimed-$($target.Name)"] = $stamp
+        Save-AlertState $alertState
+    }
+    return $true
 }
 
 $alertState = Get-AlertState
@@ -714,6 +837,12 @@ foreach ($t in $targets) {
         Write-Log "$($t.Name): CRASH LOOPING - pm2 restart count climbed $prevRestarts->$restartCount since the last tick"
         $portNote = Get-PortOwnerReport $t.Port $pm2Pid
         if ($portNote) { Write-Log "$($t.Name): $portNote" }
+
+        # Act before reporting. A crash loop against a squatted port is the one
+        # case here with a known, safe remedy, and the reclaim sends its own
+        # (more useful) email when it fires.
+        if (Invoke-PortReclaim $t $pm2Pid) { continue }
+
         if (Test-AlertDue $alertState "crashloop-$($t.Name)") {
             $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
             Send-Alert "CRASH LOOP: $($t.Name) on $hostName is restarting repeatedly" `
@@ -731,6 +860,11 @@ foreach ($t in $targets) {
         Write-Log "$($t.Name): pm2 status is 'errored' - pm2 has GIVEN UP restarting it"
         $portNote = Get-PortOwnerReport $t.Port $pm2Pid
         if ($portNote) { Write-Log "$($t.Name): $portNote" }
+
+        # 'errored' is the terminal state - pm2 will do nothing further on its
+        # own - so this is the last place a reclaim can help without a human.
+        if (Invoke-PortReclaim $t $pm2Pid) { continue }
+
         if (Test-AlertDue $alertState "errored-$($t.Name)") {
             $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
             Send-Alert "ERRORED: $($t.Name) on $hostName - pm2 stopped trying" `
