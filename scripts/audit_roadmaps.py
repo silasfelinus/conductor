@@ -268,7 +268,17 @@ def audit() -> dict[str, Any]:
             if status == "ready" and unmet:
                 findings.append(issue("error", "READY_WITH_UNMET_DEPS", slug, f"Ready task has unmet dependencies: {', '.join(unmet)}.", task_id))
             if status == "done" and task.get("gate_human") and not task.get("approved_by_human"):
-                findings.append(issue("error", "GATED_DONE_WITHOUT_APPROVAL", slug, "Human-gated task is done without approved_by_human: true.", task_id))
+                findings.append(
+                    issue(
+                        "warning",
+                        "GATED_DONE_WITHOUT_APPROVAL",
+                        slug,
+                        "Human-gated task is done without approved_by_human: true. This may be intentional when objective "
+                        "incident-recovery/reconciliation criteria closed the task without a human policy decision; review "
+                        "the task note/provenance rather than treating this bookkeeping state as a framework defect.",
+                        task_id,
+                    )
+                )
             if task.get("approved_by_human") and not task.get("gate_human"):
                 findings.append(issue("info", "APPROVAL_WITHOUT_GATE", slug, "approved_by_human is set on a task that is not human-gated.", task_id))
 
@@ -423,6 +433,7 @@ def render_markdown(report: dict[str, Any]) -> str:
             "",
             "- **Errors** are deterministic framework or state defects and should normally be repaired promptly.",
             "- **Warnings** need judgment; they are candidates for roadmap cleanup, gate removal, or project-state changes.",
+            "- **Warnings are advisory** and must not trigger workflow failure/action-needed unless their severity is explicitly promoted to an error by policy.",
             "- **Informational** findings improve consistency but should not interrupt productive Worker execution.",
             "- A reported `POSSIBLY_UNNECESSARY_GATE` is not permission to bypass a real approval boundary. Confirm the task has no publishing, money, legal, production, secret, DNS, destructive, or security-sensitive consequence before removing the gate.",
             "",

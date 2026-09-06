@@ -95,6 +95,19 @@ def test_classify_unresolved_parity_is_not_clean():
     assert result["status"] == "unresolved"
 
 
+def test_classify_warnings_alone_are_clean():
+    result = oversight.classify_report(
+        roadmap_report={"summary": {"errors": 0, "warnings": 9}},
+        project_scan={"forward": [], "reverse": []},
+        project_unresolved=None,
+        heartbeat={"overdue": False},
+        intent={"due": False},
+    )
+    assert result["status"] == "clean"
+    assert result["roadmap_errors"] == 0
+    assert result["roadmap_warnings"] == 9
+
+
 def test_classify_semantic_review_due_after_mechanical_checks_are_clean():
     result = oversight.classify_report(
         roadmap_report={"summary": {"errors": 0, "warnings": 7}},
