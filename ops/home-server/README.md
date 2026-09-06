@@ -152,6 +152,14 @@ pm2 start all
 pm2 logs comfyui --lines 200
 ```
 
+> **`pm2 restart` never re-reads `ecosystem.config.js`.** It reuses the app
+> definition pm2 already stored — including the `script` path — so a change to
+> this file does NOT reach a running app, however many times you restart it and
+> whether or not you pass the file and `--update-env`. Editing the config means:
+> `pm2 delete <app>`, `pm2 start ecosystem.config.js`, `pm2 save`. A changed pm2
+> **id** afterwards is the proof it took. This cost a full day on 2026-09-06 —
+> see the port-8188 triage section below.
+
 ## What carried over from the old bats (and what deliberately didn't)
 
 Checklist against `startcomfyfast.bat` / `webui-user.bat` (2026-07-05):
@@ -765,27 +773,66 @@ plus a `pm2 status` whose restart count has stopped climbing. If pm2 had already
 parked the app in `errored`, `pm2 restart` still revives it — the counter resets
 on a successful start.
 
-**Where the orphan comes from.** ComfyUI's own log says it twice, at 03:41:22
-on 2026-09-06:
+**Where the orphan comes from — SOLVED, 2026-09-06.** pm2 was supervising the
+venv *launcher stub*, not ComfyUI. Proven by the process tree:
 
 ```
-[ERROR] Could not acquire lock on database 'D:\comfy\comfy-fast\user\comfyui.db'.
-        Another ComfyUI process may already be using it.
-[ERROR] Port 8188 is already in use on address 127.0.0.1.
+6116   venv\Scripts\python.exe main.py ...     <- the stub, what pm2 held
+16744  Python310\python.exe main.py ...        <- the real ComfyUI, its child
 ```
 
-and a minute earlier, in the same file, the *other* process is plainly working:
+`venv\Scripts\python.exe` on Windows is a redirector: it re-execs the base
+interpreter with the same arguments and sits there as its parent. pm2 killed
+6116 on every stop and 16744 sailed on, holding port 8188, the `comfyui.db`
+lock and the GPU. Every "immortal" process this section describes was that
+child. `pm2 stop all` reported `[comfyui] OK` each time and left the engine
+running.
+
+**Why it survived every fix.** `ecosystem.config.js` has launched the BASE
+interpreter (with `__PYVENV_LAUNCHER__`) since 2026-07-05 precisely to avoid
+this. The running app predated that and never picked it up, because
+**`pm2 restart` does not replace a stored `script` path** — not `pm2 restart
+comfyui`, and not `pm2 restart ecosystem.config.js --only comfyui
+--update-env` either, which updates the environment and nothing else. Every
+restart re-launched the same stale definition. Only this re-reads the file:
+
+```powershell
+pm2 delete comfyui
+pm2 start ecosystem.config.js        # from ops\home-server, or give the full path
+pm2 save
+```
+
+A changed pm2 **id** (here 3 -> 4) is the tell that the definition was actually
+replaced rather than reused.
+
+**The banner is not a diagnostic — the command line is.** ComfyUI prints
 
 ```
-03:40:10  [INFO] Prompt executed in 58.35 seconds
-03:40:12  [INFO] got prompt
+** Python executable: D:/comfy/comfy-fast/venv/Scripts/python.exe
 ```
 
-One ComfyUI is rendering. A second is booting into it and losing. The orphan is
-what is left when the pm2 daemon is replaced underneath a running process - a
-daemon restart, a `pm2 resurrect`, a logoff - because pm2 hands the new daemon a
-process list, not the processes. The old engine keeps the port, the database
-lock and the GPU, and nothing supervises it any more.
+in BOTH arrangements: `__PYVENV_LAUNCHER__` makes the base interpreter report
+the venv path too. Reading that line as evidence of how the process was started
+is a dead end (it cost several rounds here). Ask the OS instead:
+
+```powershell
+Get-CimInstance Win32_Process |
+  Where-Object { $_.Name -like 'python*' -and $_.CommandLine -like '*main.py*' } |
+  Select-Object ProcessId, ParentProcessId, CommandLine | Format-List
+```
+
+Healthy is **exactly one** process, its command line naming `Python310\python.exe`,
+its parent `node.exe`. A stub/child pair — or any command line naming
+`venv\Scripts\python.exe` — means the definition is stale. Do not filter that
+query on the string "comfy": pm2's real command line is
+`C:\Users\...\Python310\python.exe main.py --listen ...` and contains no
+"comfy" anywhere; the cwd is what makes it ComfyUI. A filter that requires it
+finds nothing even while ComfyUI is running.
+
+**Proof it is fixed.** `pm2 stop comfyui`, then `netstat -ano | findstr :8188`
+prints no `LISTENING` line. (Rows in `TIME_WAIT` with PID `0` are spent
+connections from kr-relay's 2-second poll; they own nothing and clear on their
+own.) Before the fix, that same check returned a live LISTENING pid every time.
 
 **This is the failure that looks like a haunted desktop.** pm2's copy boots ~60
 custom nodes for ninety seconds, fails to bind, exits, and is restarted, over
