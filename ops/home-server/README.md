@@ -830,28 +830,44 @@ Sep 6  2:39:12AM  relay agent Silas-PC (...) polling https://kindrobots.org ever
 That splits the symptom into **two independent faults**, which is why the
 pattern looked so strange:
 
-**1. Something replaces the process, and it is not pm2.** `restarts 0` on an
-app created 09-02, with 44 minutes of uptime and a startup line at 02:39:12 —
-the same minute the 143-minute blackout ended. The 21:11 start likewise ends the
-7-minute-cadence stretch. Nothing crashed: pm2 would have counted it. So the
-pm2 *daemon* went down and came back (a logoff, a `pm2 resurrect`, a reboot),
-three times in two days, taking every app with it. Note that the Kernel-Power
-42/107 query above cannot see this — it filters for sleep and resume, not boots.
-Ask for those directly:
+**1. The box reboots unattended, and does not always come back.** Confirmed
+from the System log:
 
-```powershell
-(Get-CimInstance Win32_OperatingSystem).LastBootUpTime
-Get-WinEvent -MaxEvents 20 -FilterHashtable @{
-  LogName='System'; Id=6005,6006,6008,1074,41
-} | Format-Table TimeCreated, Id, Message -AutoSize
+```
+9/6/2026 12:16:37 AM  1074  shutdown.exe (SILAS-PC) has initiated the restart
+9/6/2026 12:17:12 AM        LastBootUpTime
+9/5/2026  2:49:19 AM  1074  RuntimeBroker.exe (SILAS-PC) has initiated the restart
+9/2/2026  4:17:14 PM  1074  RuntimeBroker.exe ...
+9/1/2026  2:29:35 AM  1074  RuntimeBroker.exe ...
+8/30/2026 (x3)        1074  RuntimeBroker.exe ...
 ```
 
-6005 = event log started (a boot), 6006 = clean shutdown, 6008 = unexpected,
-1074 = a shutdown someone or something requested (the message names the
-process — this is where Windows Update shows up), 41 = kernel power fault. If
-none of them line up with those three times, the daemon went down on its own,
-and the question becomes whether pm2 is running at *logon* (README Option B)
-rather than as a service — a logoff ends every app under it.
+Seven restarts in a week, six of them initiated by `RuntimeBroker.exe` —
+Windows Update's automatic restart, which is why they cluster at 2-4 AM and
+mid-afternoon.
+
+**The reboot is not the interesting number. The recovery lag is.** The box
+finished booting at **00:17:12** and kr-relay did not start until **02:39:12**
+— 2h22m of a machine that was up, awake and idle, rendering nothing. That is
+the 143-minute hole in the heartbeat series almost exactly. The 09-05 02:49
+restart, by contrast, had the relay back in **88 seconds**.
+
+Same box, same week, two orders of magnitude apart. The likely difference:
+`pm2-windows-startup` (README Option B) starts apps at **logon, not boot**, and
+an *update*-initiated restart can sign the last user back in automatically
+(Windows' auto-restart sign-on) while a plain `shutdown /r` cannot. A box
+sitting at the sign-in screen runs nothing, for as long as it sits there.
+
+Two fixes, in order of value:
+
+- **Make pm2 survive a boot with no sign-in** — README Option A, pm2 as a real
+  Windows service. Run `npm run configure` *before* `npm run setup`; the field
+  note above explains why that order matters. This is the durable fix.
+- **Reduce the reboots** — Windows Update active hours, or "Notify to schedule
+  restart", so an update does not take the render box at 2 AM.
+
+Then verify with `preflight.ps1`, which exists to answer exactly this question
+*before* the next reboot asks it for you.
 
 **2. When it IS running, some cycles take minutes and still succeed.** There is
 not one `failed to post` line on 09-05 or 09-06. Every beat that was attempted
