@@ -5641,5 +5641,37 @@ tasks:
   claimed_at: '2026-09-06T01:36:25Z'
   soft_gate: true
   implementation_pr: 'silasfelinus/conductor#3734'
+
+- id: t-148
+  milestone: m2
+  title: "Fix the flaky timing assertion in test_relay_heartbeat_thread.py's slow-cycle test"
+  status: ready
+  stakes: reversible
+  passes: 0
+  note: >-
+    tests/test_relay_heartbeat_thread.py::test_a_slow_but_successful_cycle_says_so is a timing-sensitive
+    flake, now observed twice independently on unrelated, docs-only close-out PRs: conductor#3786
+    (2026-09-06, TALKBACK-documented, went green on one re-run with no code change) and conductor#3794
+    (2026-09-06, same day, filed this task after a second independent occurrence).
+
+    What fails: the test's slow_send() mock returns a fixed (dns=0.09, post=0.01) tuple and asserts the
+    resulting log message contains "dns 0.1s". On both observed failures the message instead read
+    "dns 0.0s (post 0.1s)" -- dns and post appear swapped from what the mock returned, which suggests
+    the heartbeat-cycle logging computes its own wall-clock split (timing phases via real timestamps
+    around the mocked call) rather than trusting send_heartbeats()'s return tuple directly, so which
+    phase "absorbs" the mocked time.sleep(0.1) is a race against real scheduler jitter under CI's shared
+    runners.
+
+    Distinct from conductor/t-124 (job *stalls* entirely, no assertion ever runs) -- this is a specific
+    assertion that flakes both ways depending on timing, not a hang.
+
+    TO FIX: find where "heartbeat cycle took Xs (dns Ys, post Zs)" is actually formatted (relay code
+    under ops/home-server/ or utils/scripts/, wherever send_heartbeats/the heartbeat thread lives) and
+    either (a) make the test's monkeypatched timing fully deterministic -- patch whatever wall-clock
+    calls the logger itself uses, not just send_heartbeats' return tuple, or (b) if the code genuinely
+    times phases independently around one mocked call, assert loosely (both phases present, sum ~=
+    total) rather than a hardcoded per-phase split. Never skip/disable/quarantine the test -- fix its
+    determinism.
+  updated: '2026-09-06T22:38:00Z'
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
