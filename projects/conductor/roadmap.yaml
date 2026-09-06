@@ -5610,11 +5610,11 @@ tasks:
 - id: t-147
   milestone: m2
   title: "Flux2 engine hung the render relay's only concurrent slot for ~30 minutes (ArtJob 21616)"
-  status: claimed
+  status: review
   gate_human: false
   stakes: reversible
   passes: 0
-  note: |-
+  note: >-
     FOR SILAS: While gathering lora-ingestion/t-003 evidence, queued one Resource-backed LoRA smoke render on the `flux2` engine (ArtJob 21616, prompt via `POST /api/art/enqueue`, LoRA Resource 1055 wired correctly onto the `flux2_dev_fp8mixed.safetensors` checkpoint). Full detail in `projects/lora-ingestion/docs/t-003-resource-backed-generation-evidence.md`'s 2026-09-05 section.
     What happened: the relay (Silas-PC) claimed the job (RUNNING) at 18:46:46 UTC and never completed it or claimed any other job for ~30 minutes -- `GET /api/art/queue/stats` flagged it under `staleRunning` (>15min), and zero other ArtJobs reached DONE anywhere in the queue for that whole window, meaning the relay's one concurrent slot was fully wedged, not just this one job stalled. No error was ever recorded (`error: null`) -- it hung silently rather than failing with a ComfyUI rejection.
     TO INVESTIGATE: this needs eyes on the actual relay machine/ComfyUI install, which this sandbox has no access to. Two live guesses, neither confirmed: (1) first-ever use of `flux2_dev_fp8mixed.safetensors`/`mistral_3_small_flux2_bf16.safetensors` on this relay, stuck loading a large model for the first time (Flux.2 Klein Resources are rare in the catalog -- only 3-5 rows total -- so this engine may see near-zero live traffic and could be missing local weights entirely); (2) the LoraLoaderModelOnly node silently choking on a Flux.1-architecture LoRA (`Flux/SFW/3D_Cartoon_Vision_flux_v1.safetensors`, Resource 1055) wired onto a Flux.2 checkpoint -- `utils/loraSelection.ts`'s `artLoraCompatibilityRank()` currently ranks any `supportedServer: FLUX` LoRA (Flux.1-trained) as the top match for the `flux2` engine, which may be a genuine cross-generation mismatch rather than a real compatibility rule, similar in shape to the Krea2/Flux2 split kind_robots#2416 just fixed today for a different engine pair.
@@ -5626,7 +5626,10 @@ tasks:
     Repo-side remediation is ready for review on kind_robots branch worker/conductor-t-147-flux2-lora-guard-gpt56sol-9f4c. The scoped three-file diff makes Flux.2 LoRA compatibility generation-aware in the shared picker, reuses the same guard in server-side enqueue resolution, and replaces the prior contract that explicitly allowed Flux.1 D LoRAs on Flux.2 with regression coverage that rejects Flux.1/Kontext and accepts Flux.2 lineage. Runtime relay recovery remains a separate physical-host verification gate.
 
     Review uncovered a second verified repo-side cause of misleading incident behavior: relay_agent.py only emits engine heartbeats from the outer polling loop, so any long or wedged synchronous process(job) call stops heartbeats and makes the watchdog classify an alive-but-busy relay as silent. Reopen the task to isolate heartbeats from render processing, then return the remaining physical-host recovery/console inspection to an explicit human gate if still needed.
-  updated: '2026-09-06T01:36:25Z'
+
+    Repo-side heartbeat-isolation fix pushed and PR opened: silasfelinus/conductor#3734
+    (heartbeats now run on their own daemon thread, decoupled from the poll loop).
+  updated: '2026-09-06T01:37:39Z'
   owner: worker
   claimed_by: 2026-09-06T013624Z-conductor-t147-heartbeat-fix
   claimed_at: '2026-09-06T01:36:25Z'
