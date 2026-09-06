@@ -695,6 +695,84 @@ claiming. Set `KR_ENGINE_GATE=0` to restore the old always-claim behaviour.
 python scripts/drain_failed_art_backlog.py --live
 ```
 
+### Triage: `Port 8188 is already in use` (2026-09-06 incident)
+
+**Symptom.** `pm2 logs comfyui` shows a complete, healthy-looking startup —
+custom nodes load, `Adding extra search path ...` scrolls past — and then, in
+the `.err` stream:
+
+```
+[ERROR] Port 8188 is already in use on address 127.0.0.1. Please close the
+        other application or use a different port with --port.
+```
+
+…followed a few seconds later by another full startup, and another. Every
+signal *except* the pm2 restart counter says the box is fine, because it almost
+is: something is listening on 8188 and answering `/system_stats` perfectly well.
+
+**Cause.** Two ComfyUI processes, one port. ComfyUI logs that line and calls
+`sys.exit` — there is no traceback, so the usual "read the FIRST exception"
+advice finds nothing. Usual sources of the second copy:
+
+- a stray engine from the old `startcomfyfast.bat`, double-clicked out of habit;
+- a previous ComfyUI that outlived the pm2 daemon that started it (`pm2 kill`,
+  a daemon restart, or the WSL/Windows pm2 split — see the gotcha above);
+- a `pm2 restart` whose old process had not released the port yet, when the new
+  one is already trying to bind.
+
+Three things make it nastier than a plain crash:
+
+- **The liveness probe stays green.** The squatter answers `/system_stats`, so
+  the watchdog's HTTP check — and the relay's engine gate — see a healthy
+  engine. Renders may keep working the whole time.
+- **The engine that works is unsupervised.** pm2 is not watching the process
+  that owns the port, so when it dies nothing restarts it.
+- **It ends in `errored`.** Each attempt dies well inside `min_uptime` (30s), so
+  pm2 counts every restart as unstable and gives up at `max_restarts` (50).
+
+**What in that log is *not* the problem.** The same startup is full of louder
+red herrings, all of them ComfyUI-Manager reaching for the network at boot:
+`Cannot connect to comfyregistry`, `FETCH DATA from: ...custom-node-list.json`,
+`[ComfyUI-Manager] Due to a network error, switching to local mode`, and the
+tqdm bar crawling at ~6s/it (that is eight HTTP fetches each waiting out a
+timeout). None of it stops ComfyUI. `cannot schedule new futures after shutdown`
+is the *consequence* of the exit above — an in-flight Manager fetch landing on
+an interpreter that is already on its way out — not a second fault.
+
+**Diagnose.** Find out who actually owns the port, and whether it is the process
+pm2 thinks it is running:
+
+```powershell
+netstat -ano | findstr :8188          # last column is the owning PID
+tasklist /FI "PID eq <pid>"           # what it is
+pm2 status                            # comfyui's own pid + restart count
+```
+
+`pm2 status`'s pid matching the netstat pid means the port is not your problem.
+A *different* pid is the whole diagnosis.
+
+**Fix.** Stop the squatter, then let pm2 own the port:
+
+```powershell
+taskkill /PID <pid> /F
+pm2 restart ecosystem.config.js --only comfyui --update-env
+pm2 save
+```
+
+Run this from `ops\home-server` (pm2 resolves the ecosystem path relative to the
+current directory), and confirm with `curl http://127.0.0.1:8188/system_stats`
+plus a `pm2 status` whose restart count has stopped climbing. If pm2 had already
+parked the app in `errored`, `pm2 restart` still revives it — the counter resets
+on a successful start.
+
+**Guard.** `healthcheck.ps1` now names the port owner in both the crash-loop and
+`errored` alerts (and in `logs\healthcheck.log`): the pid, process name, start
+time, and command line of whatever holds 8188, plus whether that pid is the one
+pm2 is supervising. `pm2-jlist-snapshot.js` carries `pid` through for that
+comparison. The watchdog deliberately does **not** kill the squatter itself — it
+can be a working engine mid-render, and choosing to end that render is a human's
+call, not a 5-minute timer's.
+
 ## Why a 24-hour outage produced no alerts (2026-09-02), and what watches now
 
 The ComfyUI crash loop above ran for about a day before a human noticed. Four
