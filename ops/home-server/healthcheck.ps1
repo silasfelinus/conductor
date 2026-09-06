@@ -21,8 +21,11 @@
 
 $ErrorActionPreference = 'SilentlyContinue'
 
+# Port is not redundant with Url: the watchdog probes the URL, but when the app
+# is crash-looping it needs to ask a different question - who OWNS this port -
+# and a listener check takes a bare port number, not an endpoint path.
 $targets = @(
-    @{ Name = 'comfyui';  Url = 'http://127.0.0.1:8188/system_stats' }
+    @{ Name = 'comfyui';  Url = 'http://127.0.0.1:8188/system_stats'; Port = 8188 }
 )
 
 $logFile = Join-Path $PSScriptRoot 'logs\healthcheck.log'
@@ -131,6 +134,80 @@ function Send-Alert($subject, $body) {
     } catch {
         Write-Log "alert email FAILED ($($_.Exception.Message)): $subject"
     }
+}
+
+# --- Port ownership ----------------------------------------------------------
+# "Why is it crash-looping?" has one answer this watchdog could not previously
+# give, and it is a common one: the port is already taken.
+#
+# 2026-09-06: pm2's comfyui died a few seconds into every start with
+#   [ERROR] Port 8188 is already in use on address 127.0.0.1.
+# ComfyUI logs that and calls sys.exit, so there is no traceback to find - the
+# 'read the FIRST exception' advice in the crash-loop alert below leads nowhere,
+# because there is no exception at all. Worse, the HTTP liveness probe is GREEN
+# throughout: whoever holds the port answers /system_stats perfectly well, so
+# every signal except the pm2 restart counter says the box is fine. And once
+# pm2 gives up at max_restarts, the engine that IS running is unsupervised -
+# when it eventually dies, nothing brings it back.
+#
+# Naming the pid that owns the port turns all of that into one line.
+function Get-PortListenerPid($port) {
+    # Two implementations on purpose. Get-NetTCPConnection is the clean one, but
+    # it THROWS rather than returning nothing when no connection matches, and it
+    # is missing from some trimmed installs. netstat has shipped with every
+    # Windows there has ever been.
+    try {
+        $conn = Get-NetTCPConnection -State Listen -LocalPort $port -ErrorAction Stop |
+            Select-Object -First 1
+        if ($conn) { return [int]$conn.OwningProcess }
+    } catch {}
+
+    try {
+        $line = netstat -ano -p TCP |
+            Where-Object { $_ -match "^\s*TCP\s+\S+:$port\s" -and $_ -match 'LISTENING' } |
+            Select-Object -First 1
+        if ($line) {
+            $fields = ([string]$line).Trim() -split '\s+'
+            return [int]$fields[-1]
+        }
+    } catch {}
+
+    return $null
+}
+
+function Get-PortOwnerReport($port, $expectedPid) {
+    if (-not $port) { return '' }
+
+    $ownerPid = Get-PortListenerPid $port
+    if (-not $ownerPid) { return "nothing is listening on port $port" }
+
+    # Identify it well enough to act on: a start time says whether it predates
+    # the crash loop, and the command line separates 'a second ComfyUI' from
+    # 'some unrelated python' - which decides whether killing it is safe.
+    $desc = "pid $ownerPid"
+    try {
+        $proc = Get-Process -Id $ownerPid -ErrorAction Stop
+        $desc = "$($proc.ProcessName) (pid $ownerPid"
+        try { $desc = "$desc, started $($proc.StartTime.ToString('yyyy-MM-dd HH:mm:ss'))" } catch {}
+        $desc = "$desc)"
+    } catch {}
+    try {
+        $cim = Get-CimInstance -ClassName Win32_Process -Filter "ProcessId = $ownerPid" -ErrorAction Stop
+        if ($cim -and $cim.CommandLine) {
+            $cmd = [string]$cim.CommandLine
+            if ($cmd.Length -gt 200) { $cmd = $cmd.Substring(0, 200) + '...' }
+            $desc = "$desc cmdline: $cmd"
+        }
+    } catch {}
+
+    if ($expectedPid -and [int]$expectedPid -gt 0) {
+        if ([int]$expectedPid -eq [int]$ownerPid) {
+            return "port $port is held by pm2's own supervised process ($desc) - the port is not the problem"
+        }
+        return "PORT SQUATTER: port $port is held by $desc, which is NOT the process pm2 is supervising (pid $expectedPid). pm2's copy cannot bind and will keep dying at startup until that process is gone. Verify with 'netstat -ano | findstr :$port', then stop it (a stray engine from an old .bat or a pm2 daemon that lost track of it: 'taskkill /PID <pid> /F') and 'pm2 restart <ecosystem file> --only <app> --update-env'."
+    }
+
+    return "port $port is held by $desc while pm2 is running NO process for this app - that engine is unsupervised, so nothing will restart it when it dies. Stop it ('taskkill /PID $ownerPid /F') and start the pm2 app so the port belongs to a supervised process again."
 }
 
 $alertState = Get-AlertState
@@ -390,9 +467,17 @@ foreach ($t in $targets) {
     # single $pm2List read above rather than shelling out per target: three
     # `pm2 jlist` calls per tick was wasteful, and worse, each one could fail
     # independently and be silently swallowed.
-    $status = $pm2List |
+    $entry = $pm2List |
         Where-Object { $_.name -eq $t.Name } |
-        Select-Object -ExpandProperty pm2_env -ErrorAction SilentlyContinue
+        Select-Object -First 1
+    $status = $entry | Select-Object -ExpandProperty pm2_env -ErrorAction SilentlyContinue
+
+    # The OS pid pm2 believes it is supervising, or 0 when it is running none.
+    # Only used to answer "is the process holding the port ours?" below.
+    $pm2Pid = 0
+    if ($entry -and $entry.PSObject.Properties['pid'] -and $null -ne $entry.pid) {
+        $pm2Pid = [int]$entry.pid
+    }
 
     if (-not $status) {
         Write-Log "$($t.Name): not in pm2's list - not started on this box?"
@@ -438,10 +523,12 @@ foreach ($t in $targets) {
 
     if ($restartDelta -ge $crashLoopRestarts) {
         Write-Log "$($t.Name): CRASH LOOPING - pm2 restart count climbed $prevRestarts->$restartCount since the last tick"
+        $portNote = Get-PortOwnerReport $t.Port $pm2Pid
+        if ($portNote) { Write-Log "$($t.Name): $portNote" }
         if (Test-AlertDue $alertState "crashloop-$($t.Name)") {
             $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
             Send-Alert "CRASH LOOP: $($t.Name) on $hostName is restarting repeatedly" `
-                "pm2's restart count for $($t.Name) went from $prevRestarts to $restartCount in one 5-minute tick as of $stamp on $hostName - it is dying and being restarted continuously, not hung. Restarting it again will not help; read the startup error. Run 'pm2 logs $($t.Name) --err --lines 200' and look for the FIRST exception, not the last. If pm2 gives up (max_restarts) the app parks in 'errored' and this alert stops, so do not read silence as recovery."
+                "pm2's restart count for $($t.Name) went from $prevRestarts to $restartCount in one 5-minute tick as of $stamp on $hostName - it is dying and being restarted continuously, not hung. Restarting it again will not help; read the startup error. Run 'pm2 logs $($t.Name) --err --lines 200' and look for the FIRST exception, not the last - and note that a port collision produces no exception at all, only a one-line [ERROR] before the process exits, which is what the port check below is for. If pm2 gives up (max_restarts) the app parks in 'errored' and this alert stops, so do not read silence as recovery.`n`nPort check: $portNote"
             $alertState["crashloop-$($t.Name)"] = $stamp
             Save-AlertState $alertState
         }
@@ -453,10 +540,12 @@ foreach ($t in $targets) {
         # symptom will appear on its own - the single most silent failure
         # state a backend can be in.
         Write-Log "$($t.Name): pm2 status is 'errored' - pm2 has GIVEN UP restarting it"
+        $portNote = Get-PortOwnerReport $t.Port $pm2Pid
+        if ($portNote) { Write-Log "$($t.Name): $portNote" }
         if (Test-AlertDue $alertState "errored-$($t.Name)") {
             $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
             Send-Alert "ERRORED: $($t.Name) on $hostName - pm2 stopped trying" `
-                "pm2 has marked $($t.Name) 'errored' as of $stamp on $hostName, which means it exceeded max_restarts and pm2 will NOT restart it again. Nothing further will happen without a human. Read 'pm2 logs $($t.Name) --err --lines 200' for the startup failure, fix it, then 'pm2 restart <ecosystem file> --only $($t.Name) --update-env'."
+                "pm2 has marked $($t.Name) 'errored' as of $stamp on $hostName, which means it exceeded max_restarts and pm2 will NOT restart it again. Nothing further will happen without a human. Read 'pm2 logs $($t.Name) --err --lines 200' for the startup failure, fix it, then 'pm2 restart <ecosystem file> --only $($t.Name) --update-env'.`n`nPort check: $portNote"
             $alertState["errored-$($t.Name)"] = $stamp
             Save-AlertState $alertState
         }

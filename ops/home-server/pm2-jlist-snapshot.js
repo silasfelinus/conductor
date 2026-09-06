@@ -20,16 +20,27 @@ process.stdin.on('end', () => {
     // See healthcheck.ps1's crash-loop block (2026-09-02).
     const asNumber = (value) => (typeof value === 'number' && isFinite(value) ? value : null);
 
-    const snapshot = processes.map((process) => ({
-      name: process && typeof process.name === 'string' ? process.name : null,
+    // `proc`, not `process` -- the callback parameter used to shadow Node's
+    // global `process`, which is merely confusing until you add a field like
+    // `pid` that BOTH objects define. `process.pid` inside the old callback
+    // would have read the pm2 entry's pid, but only by accident of shadowing,
+    // and it reads like the snapshot helper's own pid to everyone else.
+    const snapshot = processes.map((proc) => ({
+      name: proc && typeof proc.name === 'string' ? proc.name : null,
+      // The OS pid pm2 is actually supervising. The watchdog compares it
+      // against whoever holds port 8188: when a crash-looping app cannot bind
+      // because some OTHER process owns the port, that mismatch is the whole
+      // diagnosis (2026-09-06 -- see healthcheck.ps1's Get-PortOwner). pm2
+      // reports 0 for an app that is not currently running.
+      pid: asNumber(proc ? proc.pid : null),
       pm2_env: {
         status:
-          process && process.pm2_env && typeof process.pm2_env.status === 'string'
-            ? process.pm2_env.status
+          proc && proc.pm2_env && typeof proc.pm2_env.status === 'string'
+            ? proc.pm2_env.status
             : null,
-        restart_time: process && process.pm2_env ? asNumber(process.pm2_env.restart_time) : null,
+        restart_time: proc && proc.pm2_env ? asNumber(proc.pm2_env.restart_time) : null,
         unstable_restarts:
-          process && process.pm2_env ? asNumber(process.pm2_env.unstable_restarts) : null,
+          proc && proc.pm2_env ? asNumber(proc.pm2_env.unstable_restarts) : null,
       },
     }));
 
