@@ -120,3 +120,58 @@ def test_main_starts_the_heartbeat_thread_independently_of_the_poll_loop():
     assert "start_heartbeat_thread()" in source
     # The old inline cadence check must be gone, not just supplemented.
     assert "last_heartbeat" not in source
+
+
+def test_a_slow_but_successful_cycle_says_so(monkeypatch):
+    """The 2026-09-06 shape: every beat lands, seven minutes apart.
+
+    The COMFY series carried one beat every ~7 minutes for 2h20m while
+    kr-relay.out.log recorded not one "failed to post" -- so nothing failed,
+    the cycles were simply enormous. sleep(60) plus a 10s probe and a 15s post
+    is 85 seconds, and the excess sat inside a call no timeout bound
+    (socket.getaddrinfo is not covered by urlopen's timeout). A cycle that
+    succeeds slowly must not be silent.
+    """
+    logged = []
+    monkeypatch.setattr(relay, "log", lambda message: logged.append(message))
+    monkeypatch.setattr(relay, "HEARTBEAT_SECONDS", 60)
+    monkeypatch.setattr(relay, "HEARTBEAT_SLOW_SECONDS", 0.05)
+
+    def slow_send():
+        time.sleep(0.1)
+        return 0.09, 0.01  # dns seconds, post seconds
+
+    monkeypatch.setattr(relay, "send_heartbeats", slow_send)
+
+    relay.start_heartbeat_thread()
+    deadline = time.monotonic() + 5
+    while time.monotonic() < deadline and not any("heartbeat cycle took" in m for m in logged):
+        time.sleep(0.02)
+
+    slow = [m for m in logged if "heartbeat cycle took" in m]
+    assert slow, f"a slow cycle logged nothing: {logged}"
+    assert "dns 0.1s" in slow[0], slow[0]
+
+
+def test_a_normal_cycle_stays_quiet(monkeypatch):
+    """~288 relay log lines a day is the budget this must not spend."""
+    logged = []
+    monkeypatch.setattr(relay, "log", lambda message: logged.append(message))
+    monkeypatch.setattr(relay, "HEARTBEAT_SECONDS", 0.01)
+    monkeypatch.setattr(relay, "HEARTBEAT_SLOW_SECONDS", 30)
+    monkeypatch.setattr(relay, "send_heartbeats", lambda: (0.01, 0.02))
+
+    relay.start_heartbeat_thread()
+    time.sleep(0.2)
+
+    assert not [m for m in logged if "heartbeat cycle took" in m], logged
+
+
+def test_resolve_seconds_reports_failure_as_none_not_an_exception(monkeypatch):
+    """A resolver failure must not kill the thread that reports it."""
+    def boom(*args, **kwargs):
+        raise OSError("getaddrinfo failed")
+
+    monkeypatch.setattr(relay.socket, "getaddrinfo", boom)
+    assert relay.resolve_seconds("https://kindrobots.org") is None
+    assert relay.resolve_seconds("not-a-url-with-a-host") is None

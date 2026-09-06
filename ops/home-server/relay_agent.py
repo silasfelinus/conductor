@@ -28,6 +28,7 @@ import threading
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
@@ -43,6 +44,10 @@ POLL_SECONDS = float(os.environ.get("POLL_SECONDS", "10"))
 GEN_TIMEOUT = float(os.environ.get("GEN_TIMEOUT", "600"))
 AGENT_ID = os.environ.get("AGENT_ID", socket.gethostname())
 HEARTBEAT_SECONDS = float(os.environ.get("HEARTBEAT_SECONDS", "60"))
+# A heartbeat cycle is a 10s engine probe plus a 15s post: 25 seconds of
+# timeout, and in practice well under one. 30s is past anything healthy and far
+# short of the 60s sleep, so it cannot fire on ordinary jitter.
+HEARTBEAT_SLOW_SECONDS = float(os.environ.get("HEARTBEAT_SLOW_SECONDS", "30"))
 RELAY_VERSION = os.environ.get(
     "KR_RELAY_VERSION", "conductor-relay-completion-proof-v1"
 ).strip()
@@ -316,9 +321,37 @@ def post_heartbeat(engine, ok, latency_ms):
         log(f"heartbeat({engine}) failed to post: {error}")
 
 
+def resolve_seconds(url):
+    """How long DNS takes for `url`'s host, or None if it failed.
+
+    Separated out because it is the one step in a heartbeat cycle that NO
+    timeout covers. urlopen(timeout=N) sets the socket timeout, and the socket
+    does not exist until after socket.getaddrinfo() has returned -- so a
+    resolver that answers slowly (or not at all, until it falls through to a
+    secondary) blocks for as long as it likes with the 15-second post timeout
+    looking on. This box has a documented history of it: kr-relay.out.log
+    carries `[Errno 11002] getaddrinfo failed` on 2026-09-02.
+    """
+    host = urllib.parse.urlsplit(url).hostname
+    if not host:
+        return None
+    started = time.monotonic()
+    try:
+        socket.getaddrinfo(host, None)
+    except OSError:
+        return None
+    return time.monotonic() - started
+
+
 def send_heartbeats():
     comfy_ok, comfy_ms = check_engine(COMFY_URL, "/system_stats")
+    # Timed separately so a slow cycle names its own culprit. COMFY_URL is
+    # 127.0.0.1 and needs no resolver; KR_BASE_URL is the one that leaves the
+    # house.
+    dns_seconds = resolve_seconds(KR_BASE_URL)
+    post_started = time.monotonic()
     post_heartbeat("COMFY", comfy_ok, comfy_ms)
+    return dns_seconds, time.monotonic() - post_started
 
 
 def start_heartbeat_thread():
@@ -344,10 +377,35 @@ def start_heartbeat_thread():
 
     def _loop():
         while True:
+            started = time.monotonic()
+            timings = None
             try:
-                send_heartbeats()
+                timings = send_heartbeats()
             except Exception as error:  # noqa: BLE001 - heartbeat must never die
                 log(f"heartbeat loop failed to send: {error}")
+
+            # A cycle that SUCCEEDS slowly is invisible without this line, and
+            # that is the shape 2026-09-06 actually had: the COMFY series
+            # carried one beat every ~7 minutes for 2h20m while kr-relay.out.log
+            # recorded not one "failed to post". Every beat that was attempted
+            # arrived; they were simply attempted 7 minutes apart. Nothing here
+            # can pace itself that slowly -- sleep(60) plus a 10s probe and a
+            # 15s post is 85 seconds -- so the excess was spent inside a call
+            # whose timeout did not bind it. Say so, with the phase breakdown,
+            # rather than leaving the next reader to infer it from a gap in a
+            # chart on another machine.
+            elapsed = time.monotonic() - started
+            if elapsed >= HEARTBEAT_SLOW_SECONDS:
+                detail = ""
+                if timings:
+                    dns_seconds, post_seconds = timings
+                    dns_text = "FAILED" if dns_seconds is None else f"{dns_seconds:.1f}s"
+                    detail = f" (dns {dns_text}, post {post_seconds:.1f}s)"
+                log(
+                    f"heartbeat cycle took {elapsed:.1f}s{detail} - over the "
+                    f"{HEARTBEAT_SLOW_SECONDS:.0f}s that a healthy cycle cannot "
+                    "exceed; beats will look sparse off-box"
+                )
             time.sleep(HEARTBEAT_SECONDS)
 
     if HEARTBEAT_SECONDS <= 0:

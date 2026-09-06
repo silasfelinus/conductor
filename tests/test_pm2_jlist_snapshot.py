@@ -57,6 +57,7 @@ def test_projects_only_safe_pm2_fields_when_environment_keys_differ_only_by_case
                 "status": "online",
                 "restart_time": None,
                 "unstable_restarts": None,
+                "pm_uptime": None,
             },
         }
     ]
@@ -95,3 +96,31 @@ def test_rejects_non_array_pm2_json():
 
     assert result.returncode == 2
     assert "did not return a JSON array" in result.stderr
+
+
+def test_pm_uptime_is_carried_through_for_the_replaced_process_check():
+    """restart_time cannot see a process pm2 did not restart itself.
+
+    2026-09-06 — kr-relay read `restarts 0` with 44 minutes of uptime against
+    an app created four days earlier, and a fresh startup line in its own log
+    at the same minute a 143-minute hole in the off-box heartbeat series
+    closed. Nothing crashed; something replaced the process. pm_uptime moving
+    forward while restart_time stands still is the only signal that says so.
+    """
+    payload = json.dumps(
+        [
+            {
+                "name": "kr-relay",
+                "pid": 9,
+                "pm2_env": {"status": "online", "restart_time": 0, "pm_uptime": 1757155152000},
+            },
+            {"name": "comfyui", "pm2_env": {"status": "stopped"}},
+        ]
+    )
+
+    result = run_helper(payload)
+
+    assert result.returncode == 0, result.stderr
+    snapshot = json.loads(result.stdout)
+    assert snapshot[0]["pm2_env"]["pm_uptime"] == 1757155152000
+    assert snapshot[1]["pm2_env"]["pm_uptime"] is None

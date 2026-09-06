@@ -74,7 +74,8 @@ class SnapshotTests(unittest.TestCase):
             ]
         )
         self.assertEqual(
-            set(out[0]["pm2_env"]), {"status", "restart_time", "unstable_restarts"}
+            set(out[0]["pm2_env"]),
+            {"status", "restart_time", "unstable_restarts", "pm_uptime"},
         )
 
     def test_missing_counters_become_null_not_a_crash(self):

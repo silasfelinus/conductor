@@ -812,26 +812,69 @@ the entire time.
 143-minute blackout — and wrote `state: silent` from the result. The API was up
 and reachable from the public internet throughout.
 
-**What is left**, and the one command that separates them. `post_heartbeat`
-swallows a failed POST and logs it, so the relay's own log distinguishes a relay
-that was not running from one whose posts were not landing:
+**What the relay log showed (2026-09-06).** `pm2 describe kr-relay`:
 
-```powershell
-pm2 describe kr-relay     # uptime shorter than the gap = it restarted
-
-Select-String -Path D:\code\Conductor\ops\home-server\logs\kr-relay.out.log `
-  -Pattern 'failed to post|polling' | Select-Object -Last 40
+```
+status    online          restarts   0
+uptime    44m             created at 2026-09-02T22:46:25.750Z
 ```
 
-- `heartbeat(COMFY) failed to post: ...` lines across the gap → the beats were
-  attempted and lost. The relay was up; its path to kindrobots.org was not.
-  Read the error: DNS, TLS, timeout and connection-refused all look different.
-- repeated `agent ... polling https://kindrobots.org every 2s` lines → the relay
-  restarted that many times. Then `pm2 logs kr-relay --err` has the reason.
-- **neither** → the process was alive and never even attempted a beat, which
-  means its thread was not scheduled. That is a frozen process on an awake box:
-  look at what else was running (a long render pinning the machine, a driver
-  reset, disk stalls in Event Viewer under Disk/Ntfs).
+and the last startup lines in `kr-relay.out.log`:
+
+```
+Sep 5  2:50:47AM  relay agent Silas-PC (...) polling https://kindrobots.org every 2.0s
+Sep 5  9:11:34PM  relay agent Silas-PC (...) polling https://kindrobots.org every 2.0s
+Sep 6  2:39:12AM  relay agent Silas-PC (...) polling https://kindrobots.org every 2.0s
+```
+
+That splits the symptom into **two independent faults**, which is why the
+pattern looked so strange:
+
+**1. Something replaces the process, and it is not pm2.** `restarts 0` on an
+app created 09-02, with 44 minutes of uptime and a startup line at 02:39:12 —
+the same minute the 143-minute blackout ended. The 21:11 start likewise ends the
+7-minute-cadence stretch. Nothing crashed: pm2 would have counted it. So the
+pm2 *daemon* went down and came back (a logoff, a `pm2 resurrect`, a reboot),
+three times in two days, taking every app with it. Note that the Kernel-Power
+42/107 query above cannot see this — it filters for sleep and resume, not boots.
+Ask for those directly:
+
+```powershell
+(Get-CimInstance Win32_OperatingSystem).LastBootUpTime
+Get-WinEvent -MaxEvents 20 -FilterHashtable @{
+  LogName='System'; Id=6005,6006,6008,1074,41
+} | Format-Table TimeCreated, Id, Message -AutoSize
+```
+
+6005 = event log started (a boot), 6006 = clean shutdown, 6008 = unexpected,
+1074 = a shutdown someone or something requested (the message names the
+process — this is where Windows Update shows up), 41 = kernel power fault. If
+none of them line up with those three times, the daemon went down on its own,
+and the question becomes whether pm2 is running at *logon* (README Option B)
+rather than as a service — a logoff ends every app under it.
+
+**2. When it IS running, some cycles take minutes and still succeed.** There is
+not one `failed to post` line on 09-05 or 09-06. Every beat that was attempted
+arrived; they were attempted ~7 minutes apart. Nothing in the relay can pace
+itself that slowly — `sleep(60)` plus a 10-second probe and a 15-second post is
+85 seconds — so the excess was spent inside a call whose timeout did not bind
+it. The suspect is DNS: `urlopen(timeout=N)` sets the *socket* timeout, and the
+socket does not exist until `socket.getaddrinfo()` has already returned, so a
+slow resolver blocks unbounded. This box has form — the same log carries
+`[Errno 11002] getaddrinfo failed` on 09-02, alongside `timed out`,
+`WinError 10061` and `Remote end closed connection` on 09-01 and 09-04.
+
+`relay_agent.py` now times each heartbeat cycle and logs the phase breakdown
+when one exceeds `HEARTBEAT_SLOW_SECONDS` (30):
+
+```
+heartbeat cycle took 384.2s (dns 379.1s, post 5.1s) - over the 30s that a
+healthy cycle cannot exceed; beats will look sparse off-box
+```
+
+One line, and the next occurrence names its own culprit instead of being
+inferred from a chart on another machine. If it does read `dns`, point the box
+at a resolver that answers (`1.1.1.1` / `8.8.8.8`) rather than the router's.
 
 **Guard.** Two additions, one on each side of the box, because neither works
 alone:
