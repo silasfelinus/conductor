@@ -575,7 +575,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     recurring: true
     passes: 52
     stakes: reversible
@@ -715,7 +715,22 @@ tasks:
       this only closes detection. Verified: guard selftest, guard itself against real files,
       eslint 0 errors, vue-tsc clean, prettier clean. Both scripts already wired into
       contract-tests.yml. PR: silasfelinus/kind_robots#2472.
-    updated: '2026-09-06T21:37:01Z'
+
+      Cycle 101 merged as silasfelinus/kind_robots#2472 (squash 7c34d9d) from head
+      f0b8e8c9a2a305aeed24222d38d10105704ed8dc. Closed the coverage gap cycle 100 flagged:
+      verifyModelBuilderAutoBuildBatchExclusionGuard.ts's checkAutoBuildBatchExclusionGuard()
+      only ever asserted the store-side half of the fix (modelBuilderStore.ts), never model-
+      builder-progress-matrix.vue's own autoBuildAllDisabled computed. Added
+      checkProgressMatrixAutoBuildAllDisabledGuard() (wired into main()) plus self-test
+      fixtures for the fixed/regressed/missing-computed shapes; no behavior/UI change, current
+      code was already correct. All 44 PR checks green (TypeScript, Contract verifiers,
+      layout-contract, facet-catalog, verify, GitGuardian, Storybook/narrative contract
+      checks), mergeable_state clean. eslint 0 errors, vue-tsc clean, prettier clean. Both
+      scripts already wired into contract-tests.yml. Return the recurring race-audit umbrella
+      to ready for the next cycle; next lead per cycle 100's note: extend the guard-coverage
+      cross-reference to server/api/model-builder/**/*.ts route handlers, not yet done that
+      way.
+    updated: '2026-09-06T22:08:19Z'
     owner: worker
     claimed_by: claude-scheduled-20260906T212947Z-mb-t029
     claimed_at: '2026-09-06T21:29:48Z'
