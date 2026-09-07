@@ -2422,17 +2422,22 @@ tasks:
 - id: t-061
   milestone: m3
   title: "PITCH GATE: conductorSlug immutability + consolidated slug-collision helper"
-  status: claimed
+  status: review
   gate_human: true
   passes: 0
   stakes: reversible
-  note: |-
+  note: >-
     FOR SILAS: Pitch written at pitches/2026-08-10-kind-robots-slug-integrity.md. It proposes two backend fixes found by t-058's audit: (1) make Project.conductorSlug immutable once set (server/api/projects/[id].patch.ts currently allows any owner to silently rewrite it, unlike conductor/sync.post.ts's own correct set-once pattern); (2) replace three independently-maintained slug-collision implementations (index.ts, and AppMaker's two routes) with one shared helper. TO APPROVE: read the pitch, set its `status:` to `approved` or `rejected`, and set this task's `approved_by_human: true` and `status: ready` (or leave a note with changes wanted). What unblocks: the immutability guard + regression test, and the shared-helper refactor, as separate follow-up tasks once approved.
 
 
     APPROVED by Silas via the 2026-09-07 human-gate simplification session. Use the recommended design: conductorSlug is assigned once a Project is actually linked to Conductor and is immutable thereafter; inactive/uncommitted Model Builder draft Projects may remain slugless until promotion. Consolidate slug normalization/collision handling into one shared helper and proceed without another human checkpoint.
+
+    Implementation: silasfelinus/kind_robots#2497 (conductorSlug immutability guard on PATCH
+    /api/projects/:id, mirroring conductor/sync.post.ts set-once pattern). Split the pitch
+    second half (shared slug-collision helper) into kind-robots/t-094 per the pitch own
+    suggested two-task breakdown.
   approved_by_human: true
-  updated: '2026-09-07T19:40:19Z'
+  updated: '2026-09-07T19:48:03Z'
   owner: worker
   claimed_by: claude-conductor-sweep-2026-09-07T19-30-kr-t061
   claimed_at: '2026-09-07T19:40:19Z'
