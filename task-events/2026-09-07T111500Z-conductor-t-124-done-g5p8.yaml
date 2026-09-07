@@ -1,7 +1,0 @@
-version: 1
-project: conductor
-task: t-124
-operation: done
-note: >-
-  Reconciled during Silas's 2026-09-07 human-gate backlog audit. This was a technical diagnosis task, not a remaining human decision. conductor#3415 reproduced the recurring Python test-suite stall, confirmed the additive live-network timeout mechanism, moved the Resource registry test stub into an autouse suite fixture, and verified the suite passes with production unreachable and against a hanging stand-in registry. The implementation is merged and the task's acceptance question is resolved; keeping it at needs-human solely to ask Silas whether to close completed technical work creates false human-gate load.
-verify_pr: silasfelinus/conductor#3415

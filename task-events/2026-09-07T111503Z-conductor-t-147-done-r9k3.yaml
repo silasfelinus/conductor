@@ -1,7 +1,0 @@
-version: 1
-project: conductor
-task: t-147
-operation: done
-note: >-
-  Reconciled during Silas's 2026-09-07 human-gate backlog audit. The old ArtJob 21616 relay hang has two merged repo-side mitigations: kind_robots#2435 prevents Flux.1-generation LoRAs from being sent through the Flux.2 lane, and conductor#3734 decouples relay heartbeats from synchronous render processing so a long or wedged render no longer makes the relay silently disappear. The exact historical Comfy/host root cause remains unknowable without physical-host log archaeology, but that is optional forensics and is not blocking current work. Close this incident as mitigated; a recurrence should be tracked as a fresh incident with current logs rather than keeping Silas permanently gated on an old reversible event.
-verify_pr: silasfelinus/conductor#3734
