@@ -154,13 +154,11 @@ tasks:
 - id: t-010
   milestone: m3
   title: Graduation flow (monorepo app to its own repo)
-  status: needs-human
-  owner: reviewer
+  status: ready
   passes: 0
   stakes: irreversible
   gate_human: true
   approved_by_human: true
-  soft_gate: true
   depends_on: t-009
   note: |-
     SOFT NEEDS-HUMAN (conductor scheduled Agent run, 2026-08-14T21:45Z session):
@@ -253,9 +251,9 @@ tasks:
     Original design note (unchanged): git subtree split to preserve history,
     push via installation token, flip the AppRepo row, removal PR in the
     monorepo. Both PRs are needs-human per design section 5c.
-  claimed_by:
-  claimed_at:
-  updated: '2026-08-14T21:45:00Z'
+
+    Decision accepted under Silas's 2026-09-07 default-recommendation policy. Use the lower-risk squash-graduation model rather than inventing a commit-replay history service: preserve full historical provenance in Conductor and link back to it from the graduated repo. Monorepo apps without an individual owner may be graduated only by an admin. Require an already-connected GitHub installation and explicitly selected existing target repo; do not create repos implicitly. Target-repo push and monorepo removal PRs remain explicit review gates because they mutate real repositories.
+  updated: '2026-09-07T11:36:56+00:00'
 - id: t-004
   milestone: m4
   title: Build the AppMaker page in kind_robots
@@ -401,45 +399,14 @@ tasks:
 - id: t-014
   milestone: m4
   title: "Decide: keep /appmaker admin-only and fix its self-serve copy, or open project creation to all users"
-  status: needs-human
-  soft_gate: true
-  owner:
+  status: ready
   passes: 0
   stakes: reversible
-  note: >
-    FOR SILAS: found during the 2026-08-18 t-012 polish cycle (kind_robots main,
-    no PR -- this is a read-only finding). content/channels/plan/appmaker.md sets
-    requiredRole: ADMIN, enforced live by middleware/navigation-access.global.ts,
-    so no non-admin user can currently reach /appmaker -- an anonymous visitor is
-    redirected to /login and a logged-in non-admin to / with access=denied, even
-    on the server-rendered HTML.
-
-    What it contains: appmaker-page.vue's own copy still reads as if the tab is
-    open to any signed-in user ("Sign in to create an app. Browsing is open to
-    everyone"), and describes a FREE_PROJECT_LIMIT of 2 apps per free-tier user.
-    server/api/appmaker/scaffold-request.post.ts's entire non-admin cap-enforcement
-    path is consequently unreachable in production right now. Checked sibling
-    plan-channel tabs: conductor-app.md, voice-lab.md, and watchlist.md are also
-    requiredRole: ADMIN, while brainstorm.md, model-builder.md, and coloring.md
-    are open -- so this looks like a deliberate current-phase choice (these read
-    as your internal agent-tooling views) rather than an accidental oversight,
-    but the page's own copy was never updated to match.
-
-    TO APPROVE: tell us which way to take it, and set status: ready (a future
-    t-012 cycle will implement it) or done directly if you'd rather leave it as
-    documentation: (a) keep /appmaker admin-only -- rewrite the sign-in/free-tier
-    copy in appmaker-page.vue to reflect that it's an internal tool, or (b) drop
-    requiredRole: ADMIN from appmaker.md so the existing self-serve copy and cap
-    logic actually apply, in which case also sanity-check the abuse surface of
-    public project creation (scaffold rate limits, GitHub App install flow)
-    before flipping it live, since that would be an outward-facing change.
-    Nothing unblocks on this beyond appmaker's own future polish cycles picking
-    a consistent story.
-
-    AUDITED 2026-08-18 (conductor scheduled Agent run): read appmaker-page.vue in full.
-    It is the only page component for this project (mounted once, from
-    conductor-manager.vue). Two conductorStore-driven lists exist:
-
+  note: |-
+    FOR SILAS: found during the 2026-08-18 t-012 polish cycle (kind_robots main, no PR -- this is a read-only finding). content/channels/plan/appmaker.md sets requiredRole: ADMIN, enforced live by middleware/navigation-access.global.ts, so no non-admin user can currently reach /appmaker -- an anonymous visitor is redirected to /login and a logged-in non-admin to / with access=denied, even on the server-rendered HTML.
+    What it contains: appmaker-page.vue's own copy still reads as if the tab is open to any signed-in user ("Sign in to create an app. Browsing is open to everyone"), and describes a FREE_PROJECT_LIMIT of 2 apps per free-tier user. server/api/appmaker/scaffold-request.post.ts's entire non-admin cap-enforcement path is consequently unreachable in production right now. Checked sibling plan-channel tabs: conductor-app.md, voice-lab.md, and watchlist.md are also requiredRole: ADMIN, while brainstorm.md, model-builder.md, and coloring.md are open -- so this looks like a deliberate current-phase choice (these read as your internal agent-tooling views) rather than an accidental oversight, but the page's own copy was never updated to match.
+    TO APPROVE: tell us which way to take it, and set status: ready (a future t-012 cycle will implement it) or done directly if you'd rather leave it as documentation: (a) keep /appmaker admin-only -- rewrite the sign-in/free-tier copy in appmaker-page.vue to reflect that it's an internal tool, or (b) drop requiredRole: ADMIN from appmaker.md so the existing self-serve copy and cap logic actually apply, in which case also sanity-check the abuse surface of public project creation (scaffold rate limits, GitHub App install flow) before flipping it live, since that would be an outward-facing change. Nothing unblocks on this beyond appmaker's own future polish cycles picking a consistent story.
+    AUDITED 2026-08-18 (conductor scheduled Agent run): read appmaker-page.vue in full. It is the only page component for this project (mounted once, from conductor-manager.vue). Two conductorStore-driven lists exist:
     1. The "pending" scaffolds list (apps still filing, not yet in the registry) --
        sourced from /api/appmaker/apps' `pending: PendingScaffold[]`, not
        conductorStore at all. It renders only `item.slug` in a badge, with
@@ -451,18 +418,12 @@ tasks:
        project?.notesFromSilas || ''`, falling back to "Freshly scaffolded." only when
        there is truly no project data yet).
 
-    Searched the wider kind_robots tree for any other component reading
-    `conductorStore.projects` (components/pages/{appmaker,conductor,conductor-pitch-manager}-page.vue,
-    components/taskmaster/taskmaster-sample-tasks.vue,
-    components/conductor/conductor-app-page.vue) -- none belong to the appmaker
-    project's own UI surface (conductor-manager.vue just mounts AppmakerPage under the
-    'appmaker' workspace tab; the rest are the conductor/pitch/taskmaster projects'
-    own pages, out of this task's scope). No other appmaker-specific component exists.
+    Searched the wider kind_robots tree for any other component reading `conductorStore.projects` (components/pages/{appmaker,conductor,conductor-pitch-manager}-page.vue, components/taskmaster/taskmaster-sample-tasks.vue, components/conductor/conductor-app-page.vue) -- none belong to the appmaker project's own UI surface (conductor-manager.vue just mounts AppmakerPage under the 'appmaker' workspace tab; the rest are the conductor/pitch/taskmaster projects' own pages, out of this task's scope). No other appmaker-specific component exists.
+    Verified no-op: nothing else in this project has the stale-literal gap. Closing without a code change per the task's own "if nothing else is affected" clause.
 
-    Verified no-op: nothing else in this project has the stale-literal gap. Closing
-    without a code change per the task's own "if nothing else is affected" clause.
-  claimed_by: 2026-08-18T152852Z-appmaker-t013-c7d2
-  claimed_at: '2026-08-18T15:28:57Z'
-  updated: '2026-08-18T15:30:13Z'
+
+    Decision accepted under Silas's 2026-09-07 default-recommendation policy: keep /appmaker admin-only for now and fix the stale self-serve/free-tier copy so the UI tells the truth. Do not broaden public project creation merely to match old copy; if self-serve AppMaker later becomes a real product goal, open a fresh outward-facing task with explicit abuse/rate-limit/GitHub-install review.
+  updated: '2026-09-07T11:36:56+00:00'
+  approved_by_human: true
 goal: Let a user turn an app idea into a working, maintainable project through AppMaker, from scaffold through a usable 
   handoff.

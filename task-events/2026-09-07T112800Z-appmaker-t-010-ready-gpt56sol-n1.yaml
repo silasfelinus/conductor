@@ -1,7 +1,0 @@
-version: 1
-project: appmaker
-task: t-010
-operation: ready
-approved_by_human: true
-note: >-
-  Decision accepted under Silas's 2026-09-07 default-recommendation policy. Use the lower-risk squash-graduation model rather than inventing a commit-replay history service: preserve full historical provenance in Conductor and link back to it from the graduated repo. Monorepo apps without an individual owner may be graduated only by an admin. Require an already-connected GitHub installation and explicitly selected existing target repo; do not create repos implicitly. Target-repo push and monorepo removal PRs remain explicit review gates because they mutate real repositories.
