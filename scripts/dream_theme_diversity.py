@@ -49,6 +49,9 @@ AQUATIC_CREATURE_MARKERS = {
     "manta", "octopus", "otter", "penguin", "puffin", "ray", "seal", "seahorse", "shark",
     "shrimp", "squid", "turtle", "walrus", "whale",
 }
+AQUATIC_CREATURE_HABITAT_MARKERS = AQUATIC_EXPLICIT_FACET_MARKERS | {
+    "sea", "seawater",
+}
 AQUATIC_SEED_PHRASES = AQUATIC_EXPLICIT_FACET_PHRASES | {
     "cable ferry", "mantis shrimp", "hammerhead shark", "sea otter", "tidal flat",
 }
@@ -120,12 +123,15 @@ def facets_explicitly_request_aquatic_world(seed_facets: object) -> bool:
 def facet_is_aquatic_seed(facet: dict[str, Any]) -> bool:
     """Whether this Facet should be avoided during a recent-aquatic cooldown."""
     text = _facet_text(facet)
+    taxonomy = str(facet.get("taxonomy") or "").upper()
+    words = _words(text)
+    if taxonomy in {"ANIMAL", "SPECIES"}:
+        return bool(words & (AQUATIC_CREATURE_MARKERS | AQUATIC_CREATURE_HABITAT_MARKERS)) or any(
+            phrase in text for phrase in AQUATIC_SEED_PHRASES
+        )
     if facet_explicitly_requests_aquatic_world(facet):
         return True
-    if any(phrase in text for phrase in AQUATIC_SEED_PHRASES):
-        return True
-    taxonomy = str(facet.get("taxonomy") or "").upper()
-    return taxonomy in {"ANIMAL", "SPECIES"} and bool(_words(text) & AQUATIC_CREATURE_MARKERS)
+    return any(phrase in text for phrase in AQUATIC_SEED_PHRASES)
 
 
 def apply_seed_cooldowns(
