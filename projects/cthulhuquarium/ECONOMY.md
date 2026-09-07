@@ -215,6 +215,80 @@ This scenario deliberately does not model `offline_income`'s separate 50%/8h for
 (none owned yet at this stage of a fresh account) — both are natural next scenarios for
 this same script once t-026/t-009 give them a shape to simulate against.
 
+## t-019 balance pass (2026-09-07): milestone ladder + offline-income check
+
+t-019 asked for a real-play-data retuning pass. No live DB, telemetry endpoint, or
+actual player sessions exist to retune against (same access gap this file's "where it
+lives" section below already documents), and Silas's 2026-09-07 policy on the task
+explicitly substitutes a **conservative, data-and-design-driven pass** for a personal
+playtest rather than blocking further: extend the milestone ladder using the
+simulation, the design docs, and the numbers already on record, and treat real
+telemetry as future iterative tuning rather than a prerequisite. This section is that
+pass.
+
+**Milestone ladder, extended past bestiary_20.** The four original bestiary
+breakpoints (5/10/15/20, +2 slots each) were sized for a 20-species MVP; the bible
+closed at 151 species (t-037), so those four breakpoints now cover only 13% of the
+collection and the remaining 131 species pay no capacity reward at all — a gap t-019's
+own task note records was deliberately deferred here rather than guessed at. The fix is
+not more +2 breakpoints at the same 5-species cadence: a linear continuation would push
+`slots_cap` past 50 by bestiary_100, and once a tank can hold most of what a player
+owns, the size-weighted packing problem `SCHEMA.md` was built around stops applying —
+the exact failure mode the task note warns against. `economy.yaml`'s `milestones` list
+now adds seven new bestiary breakpoints that decelerate on both axes at once — spacing
+widens (5 → 10 → 15 → 20 → 25 → 25 → 26) and the per-breakpoint reward shrinks (+2 → +1
+→ +1 → +1 → +1 → +1 → +0) — landing on a **final `slots_cap` of 19**: comfortably under
+the ~50 threshold already identified as trivializing, and nowhere near the 524 tank
+units a fully-stocked collection would require, so meaningful curation stays a live
+decision for the entire life of the game rather than only its first 13%. The terminal
+breakpoint, `bestiary_151` (full collection), is background-only with
+`slots_cap_delta: 0` — the same "reward the moment, not more room" shape
+`last_aquarium` already uses for the game's actual ending — so completing the bestiary
+reads as a collector's achievement, not a mechanical payout that would need its own
+re-balance later. Full breakdown and rationale live as a comment directly above the new
+entries in `economy.yaml`, next to the numbers they explain.
+
+**Hunger/debris/offline-income: re-verified, not re-tuned.** The task also asked
+whether "the first 10 minutes engage with zero upgrades," whether the mid-game stalls,
+and whether offline income is tuned so a day away feels rewarding but never better than
+playing. Nothing here changed `rarity_tiers`, `hunger`, or `debris` — re-running
+`simulate_economy.py` against the milestone-ladder edit reproduces the exact table
+above unchanged (the two-hour, single-fish-line scenario never reaches a bestiary
+breakpoint, so it can't be affected either way), confirming no regression and that the
+existing 3.0x net-worth / 3.5x gross-income active-vs-idle gap still holds. Two
+specific checks worth recording rather than re-deriving next time:
+
+- **Offline income is strictly worse than active play by construction, not just by this
+  simulation's numbers.** `offline_income.rate_multiplier` (0.5) applies to production
+  computed at whatever hunger/debris the tank had *at the moment of logout*, held fixed
+  for the whole offline window (hunger/debris do not continue decaying or accruing
+  while offline — see the `offline_income` section above). Active play always runs at
+  the *un-discounted* rate (multiplier 1.0 at full hunger) plus the reinvestment
+  compounding this simulation measured, and offline income never benefits from either.
+  So for any elapsed duration, offline income is bounded above by `0.5 ×` what the same
+  time spent active would earn from production alone, before compounding — it cannot
+  cross over into "better than playing" without a change to `rate_multiplier` itself.
+  This holds regardless of how long the ladder above makes a player's tank, so it did
+  not need re-simulating for this pass.
+- **First-10-minutes engagement and mid-game stall are real questions this data-only
+  pass cannot fully settle.** The active-scenario table shows the *first* affordable
+  purchase (a second COMMON fish, 50 coins) landing around minute 70 once the one
+  starting fish's own upkeep (a feed around minute 50) is paid for — meaning roughly the
+  first hour has no purchase decision available yet, only feeding and debris-clicking.
+  Whether that reads as "quiet but engaged" or "stalled" is a game-feel judgment this
+  script's numbers alone cannot make; per the task's 2026-09-07 policy, this is
+  intentionally left as the first thing to revisit once real play sessions exist, rather
+  than moved blind. If it turns out to feel slow, the more targeted lever is
+  `rarity_tiers.COMMON.unlock_cost` (currently 50) or the COMMON `income_per_tick`
+  (currently 1), not the hunger/debris curves — both of which are already validated
+  against the idle/active ratio above and would need re-simulating if touched.
+
+**Net effect of this pass:** one data commit (`economy.yaml`'s milestone list only),
+zero code changes (per the task's own "data commit only, or the economy leaked out of
+YAML somewhere" framing), simulation re-run and unchanged, and two explicit findings —
+one closed (offline-vs-active ordering is structurally guaranteed), one deliberately
+left open for real telemetry (early-game pacing feel) rather than guessed at.
+
 ## A note on where this file lives
 
 The task note asked for `economy/balance.yaml` in the `silasfelinus/cthulhuquarium`
