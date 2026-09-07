@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3395,7 +3395,30 @@ tasks:
     ruler-hooked-fishing-encounter.vue, serendipity-page.vue x4). vue-tsc clean, eslint 0
     errors, layout-contract 207 baseline unchanged, lint-ratchet held 334/-58 vs baseline,
     prettier same 2 pre-existing warnings as baseline main.
-  updated: '2026-09-07T01:39:57Z'
+
+    Slice 124 merged as silasfelinus/kind_robots#2477 (squash
+    f75d89c5b848e3573a96dc035b8ae4ddf011fe3b) from exact head
+    08f481a2ea626b07df0329f99c80b1ebc3e6444e. Added .kr-panel-tint-compact (rounded-
+    xl/border-base-300/bg-base-200/60/p-3), the rounded-xl counterpart of .kr-panel-tint-
+    sm/-md at a different opacity, named by composing the tint (opacity) family with the
+    compact (rounded-xl/p-3) shape since it doesn't extend either existing size ladder
+    cleanly. Extended kr_panel_codemod.py's VARIANTS and migrated all 6 safe candidates
+    found: cthulhuquarium-game.vue (1), ruler-hooked-fishing-encounter.vue (1), serendipity-
+    page.vue (4); no geometry or behavior change (a couple of serendipity-page.vue
+    occurrences that had wrapped onto their own line under the old longer class string re-
+    collapsed to one line under prettier). All 49 PR checks completed successfully (vue-tsc,
+    eslint, Contract verifiers, layout-contract at 207 baseline, facet-catalog, Build
+    production image, 30+ Storybook/narrative contract checks), mergeable_state clean. vue-
+    tsc clean; eslint 0 errors on changed files; test:lint-ratchet held at 334/-58
+    (confirmed via git stash against baseline, identical count); prettier --check flagged
+    the same 2 pre-existing warnings confirmed present on baseline main (tailwind.css,
+    ruler-hooked-fishing-encounter.vue). Return the recurring consistency umbrella to ready
+    for the next bounded slice: the remaining bg-base-*/opacity pool still has smaller
+    pockets left (bg-base-200/50 at both rounded-2xl and rounded-xl -- 4 and 2 occurrences
+    respectively, bg-base-100/70 at rounded-xl -- 2 occurrences) plus the manual-review
+    DaisyUI-component-root pool from slice 122's note; pick one deliberately rather than re-
+    running the now-exhausted exact-match codemods.
+  updated: '2026-09-07T01:48:33Z'
   implementation_pr: 'silasfelinus/kind_robots#2477'
   retry_context: 'pass 1 failed (quality): slice 69 (kind_robots#2386) migrated the Promote-to-Character button in components/brainstorm/brainstorm-candidate-card.vue from `class="btn btn-outline btn-sm"` to the new shared `.kr-btn-outline-plain` class, but missed that utils/scripts/verifyBrainstormWorkbench.mjs:126 hardcodes that literal class string as a source-text regression guard ("the Promote to Character button must stay gated to kept candidates only"). CI job "Candidate-first workbench" fails on the new class. Do differently: before migrating a button class, grep utils/scripts/*.mjs (and any other source-text contract scripts) for the exact class string being replaced, not just run vue-tsc/eslint/layout-contract/lint-ratchet -- this file family asserts literal class attributes as regression guards and is easy to miss since it is not a normal test runner. Fix is scoped: update verifyBrainstormWorkbench.mjs line 126 to expect class="kr-btn-outline-plain" instead of class="btn btn-outline btn-sm" (same intent, new class name), then run `node utils/scripts/verifyBrainstormWorkbench.mjs` locally to confirm before reopening. Reviewer comment: silasfelinus/kind_robots#2386 (inline on components/brainstorm/brainstorm-candidate-card.vue line 363).'
   owner: reviewer
