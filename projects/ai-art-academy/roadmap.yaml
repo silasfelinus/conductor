@@ -1586,12 +1586,12 @@ tasks:
 - id: t-045
   milestone: m2
   title: Re-run LoRA arm for the 5 styles with recorded loraPath and promote winners to mode lora
-  status: claimed
-  owner: worker
+  status: ready
+  owner: null
   passes: 0
   stakes: reversible
   depends_on: t-044
-  updated: '2026-09-07T22:33:24Z'
+  updated: '2026-09-07T22:34:53Z'
   note: >-
     Kaizen follow-up from t-004 (PR #1207, merged 2026-07-27). Once t-044's
     lora_name mismatch is fixed, re-run the LoRA arm in
@@ -1627,8 +1627,26 @@ tasks:
     styles unless a job shows FAILED/CANCELLED in the results file. Releasing the claim back
     to ready (transient wait, not blocked) so a future recheck can continue without holding
     this session open indefinitely.
-  claimed_at: '2026-09-07T22:33:24Z'
-  claimed_by: claude-scheduled-20260907T223323Z-aaa-t045
+
+    Rechecked 2026-09-07T22:35Z (this session): all 5 jobs (21638-21642) still PENDING. GET
+    /api/art/queue/stats shows the backlog has not improved since the prior session --
+    PENDING=204, oldestPending age ~52.8h (job 20618, facet-catalog, COMFY engine), 24h
+    windowThroughput only 6 DONE vs 7 newly PENDING (queue is not draining, roughly
+    flat/growing). One staleRunning entry present (job 21424, claimedBy Silas-PC, claimed
+    2026-09-07T22:07:39Z, COMFY engine) -- possibly a genuinely stuck worker rather than
+    just depth, though a single stale-running sample is not conclusive. Did not re-poll
+    further this session since a 45s live check plus the queue-stats read already confirms
+    the wait is still transient/infra-side, not job-specific -- burning more session time on
+    repeated short polls against a queue with single-digit daily DONE throughput would not
+    change the outcome. Left enqueued jobs untouched (no re-enqueue). NEXT SESSION: same as
+    before -- run t-045-lora-remix-runner.py --poll, then --download once DONE, then
+    compare/promote. If this same PENDING/backlog pattern persists for another session or
+    two, worth raising as its own infra task (render-worker capacity or the home-GPU relay
+    possibly stalled) rather than re-describing the same wait each cycle -- flagging here
+    rather than filing that task myself since I have no way to inspect the actual
+    relay/worker process from this sandbox.
+  claimed_at: null
+  claimed_by: null
 
 - id: t-043
   milestone: m6
