@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3365,8 +3365,31 @@ tasks:
     base-200/40,/50 and bg-base-100/70 shapes, or manual case-by-case review of the
     remaining DaisyUI component-root pool with extra behavioral classes) rather than re-
     running the now-exhausted codemods.
-  updated: '2026-09-07T00:41:25Z'
-  implementation_pr: 'silasfelinus/kind_robots#2475'
+
+    Slice 123 merged as silasfelinus/kind_robots#2476 (squash
+    2009a9427934690352545212058a5354a9e6ac90) from exact head
+    f60fb47f50cee4dd51d44bb54990df9fc3a074db. Added the first opacity-variant primitives in
+    the .kr-panel-muted family: .kr-panel-tint-sm / .kr-panel-tint-md (rounded-2xl/border-
+    base-300/bg-base-200/40 at p-3/p-4, the same shape as .kr-panel-muted-sm/-md but at 40%
+    background opacity). Extended kr_panel_codemod.py's VARIANTS with the two new exact-
+    match token sequences and ran it to migrate all 12 safe candidates found across 8 files
+    (artjob-editor.vue, coloring-book-cover-studio.vue, coloring-book-package-readiness.vue,
+    coloring-book-production-toolbar.vue, coloring-book-readiness.vue, davinci-page.vue,
+    packmaker-pack-editor.vue, mandarin-voice-coach.vue); no geometry or behavior change.
+    Skipped (unrelated, pre-existing codemod behavior): chat-gallery.vue's two btn+bg-
+    base-100 occurrences, which carry DaisyUI btn classes the codemod's safe-extras
+    allowlist excludes. All 48 PR checks completed successfully (vue-tsc, eslint, Contract
+    verifiers, layout-contract at 207 baseline, facet-catalog, Build production image, 30+
+    Storybook/narrative contract checks), mergeable_state clean. vue-tsc clean; eslint 0
+    errors on changed files; test:lint-ratchet held at 334/-58 (confirmed via git stash
+    against baseline, identical count); prettier --check flagged the same 7 pre-existing
+    warnings confirmed present on baseline main (unrelated). Return the recurring
+    consistency umbrella to ready for the next bounded slice: remaining bg-base-*/opacity
+    pool (bg-base-200/50, bg-base-100/70, bg-base-200/60 at rounded-xl) and the manual-
+    review DaisyUI-component-root pool from slice 122's note are both still open; pick one
+    deliberately rather than re-running the now-exhausted solid-color codemods.
+  updated: '2026-09-07T00:51:14Z'
+  implementation_pr: 'silasfelinus/kind_robots#2476'
   retry_context: 'pass 1 failed (quality): slice 69 (kind_robots#2386) migrated the Promote-to-Character button in components/brainstorm/brainstorm-candidate-card.vue from `class="btn btn-outline btn-sm"` to the new shared `.kr-btn-outline-plain` class, but missed that utils/scripts/verifyBrainstormWorkbench.mjs:126 hardcodes that literal class string as a source-text regression guard ("the Promote to Character button must stay gated to kept candidates only"). CI job "Candidate-first workbench" fails on the new class. Do differently: before migrating a button class, grep utils/scripts/*.mjs (and any other source-text contract scripts) for the exact class string being replaced, not just run vue-tsc/eslint/layout-contract/lint-ratchet -- this file family asserts literal class attributes as regression guards and is easy to miss since it is not a normal test runner. Fix is scoped: update verifyBrainstormWorkbench.mjs line 126 to expect class="kr-btn-outline-plain" instead of class="btn btn-outline btn-sm" (same intent, new class name), then run `node utils/scripts/verifyBrainstormWorkbench.mjs` locally to confirm before reopening. Reviewer comment: silasfelinus/kind_robots#2386 (inline on components/brainstorm/brainstorm-candidate-card.vue line 363).'
   owner: reviewer
   claimed_by: claude-scheduled-20260907T003217Z-iv-t104-slice123
