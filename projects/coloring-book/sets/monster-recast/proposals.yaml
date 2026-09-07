@@ -62,6 +62,7 @@ proposals:
   notes:
   - "Approved-directory assets were reported for this concept in the 2026-07-12 snapshot; reconcile exact filenames before new generation."
   - "Complete pair is physically present but was not among the three explicit approvals recorded in the legacy manifest."
+  - "REJECTED 2026-09-07 (scheduled Conductor session, creative review pass under Silas's 2026-09-07 human-gate simplification policy): the rendered color candidate (generated/color-proposals-v1/mr-001-perfect-woman.webp) reproduces the Bride of Frankenstein's single most iconic, legally-sensitive visual signature -- the black hair with a white lightning-bolt/zigzag streak -- almost exactly, plus a bandage-wrapped-arms pose and a bald lab-coated doctor + hunchbacked assistant flanking her at an electrification rig, which together read as a direct homage rather than an original design. This is an explicit, named violation of this concept's own originalization_hook (\"never make her the Bride\"), not a borderline call, so rejecting rather than escalating per AGENTS.md's creative-review policy. Needs a fresh render with an original hair treatment (no white streak), original doctor/assistant facial designs, and a clearly different framing/pose before re-review. Not re-enqueued this session (render queue is heavily backlogged; see coloring-book/t-022 note)."
 - slot: 2
   id: mr-002
   title: "Sweet Dreams, Darling"
@@ -98,7 +99,7 @@ proposals:
   prompt: {text: null, ref: homage-concepts.yaml#mr-005}
   inspirations:
   - {path: approved/moon-torn-bw.webp, kind: discovered-bw-candidate}
-  accepted: {color: null, bw: null}
+  accepted: {color: "generated/color-proposals-v1/mr-005-moon-torn.webp", bw: null}
   final: {color: null, bw: null}
   notes:
   - "Approved-directory assets were reported for this concept in the 2026-07-12 snapshot; reconcile exact filenames before new generation."
@@ -114,13 +115,14 @@ proposals:
   notes:
   - "Approved-directory assets were reported for this concept in the 2026-07-12 snapshot; reconcile exact filenames before new generation."
   - "Reconciled 2026-07-17: approved/screwhead-bw.webp matches this concept's working title (Screwhead) exactly. BW-only working base; no color candidate discovered yet."
+  - "NOT ACCEPTED 2026-09-07 (scheduled Conductor session, creative review pass): the rendered candidate (generated/color-proposals-v1/mr-006-screwhead.webp) does not match the Screwhead concept at all -- no screws visible anywhere on face or body, no petaled mechanical sphere prop, no scarred geometry; it reads as a generic ornate-headdress portrait. It also rendered essentially monochrome/grayscale rather than full color (see the mr-008 note below for the same pattern), which fails the color-proposal stage's basic purpose regardless of composition. Needs a fresh render against the actual mr-006 concept brief. Not re-enqueued this session (render queue backlog)."
 - slot: 7
   id: mr-007
   title: null
   prompt: {text: null, ref: homage-concepts.yaml#mr-007}
   inspirations:
   - {path: approved/pound-foolish-bw.webp, kind: discovered-bw-candidate}
-  accepted: {color: null, bw: null}
+  accepted: {color: "generated/color-proposals-v1/mr-007-pound-foolish.webp", bw: null}
   final: {color: null, bw: null}
   notes:
   - "Approved-directory assets were reported for this concept in the 2026-07-12 snapshot; reconcile exact filenames before new generation."
@@ -136,6 +138,7 @@ proposals:
   notes:
   - "Approved-directory assets were reported for this concept in the 2026-07-12 snapshot; reconcile exact filenames before new generation."
   - "Reconciled 2026-07-17: approved/tricycle-doll-color.webp matches this concept's source_lineage (Jigsaw's tricycle doll) exactly. Color-only working base; no BW candidate discovered yet."
+  - "REVIEWED 2026-09-07 (scheduled Conductor session): the rendered candidate (generated/color-proposals-v1/mr-008-game-mistress.webp) is original (no Jigsaw-doll spiral cheeks, grid-cut head, or copied tricycle -- a distinct tuxedo automaton with a visible robotic arm joint pushing a toy sports car) and reasonably matches the brief, but rendered essentially monochrome/grayscale rather than full color -- the same defect seen on mr-006 this pass. Flagging as a possible systemic rendering issue (color instructions not always taking effect) worth a look before more of this book's remaining slots are batch-reviewed, rather than accepting a desaturated 'color' master. Not accepted or re-enqueued this session pending that check."
 - slot: 9
   id: mr-009
   title: null
