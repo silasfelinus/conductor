@@ -132,36 +132,20 @@ tasks:
 - id: t-003
   milestone: m1
   title: "Create source-video beat map template"
-  status: needs-human
-  soft_gate: true
-  owner: worker
+  status: ready
   passes: 0
   stakes: reversible
   depends_on:
   - t-002
-  note: >
-    FOR SILAS: the reusable beat-map table format lives at
-    projects/coat-dance/source/beatmap.md. It contains: column definitions
-    (Timestamp Range, Movement/Action, Coat Behavior, Camera/Framing, Emotional
-    Tone, Candidate AI Treatment, Generation Method, Restitch Notes), the
-    suggested fill-in pipeline order from t-002's tool research, and one
-    placeholder row rather than a preset section count (per BRIEF.md, section
-    count should follow the real beat structure once it's produced).
+  note: |-
+    FOR SILAS: the reusable beat-map table format lives at projects/coat-dance/source/beatmap.md. It contains: column definitions (Timestamp Range, Movement/Action, Coat Behavior, Camera/Framing, Emotional Tone, Candidate AI Treatment, Generation Method, Restitch Notes), the suggested fill-in pipeline order from t-002's tool research, and one placeholder row rather than a preset section count (per BRIEF.md, section count should follow the real beat structure once it's produced).
+    TO APPROVE: read the template's column definitions and pipeline order -- confirm the shape looks right for populating once a render environment with ffmpeg/librosa/mediapipe is available (this sandbox has neither, so no real timestamps were produced), or leave notes if a column should change. Set approved_by_human: true and status: done, or edit the note with what to adjust.
+    What unblocks: t-004 (section-by-section creative treatment) still needs the table actually filled in with real timestamps first -- that's a separate future task once the render-environment tool inventory (BRIEF.md Q3) is confirmed, not this one.
 
-    TO APPROVE: read the template's column definitions and pipeline order --
-    confirm the shape looks right for populating once a render environment
-    with ffmpeg/librosa/mediapipe is available (this sandbox has neither, so
-    no real timestamps were produced), or leave notes if a column should
-    change. Set approved_by_human: true and status: done, or edit the note
-    with what to adjust.
 
-    What unblocks: t-004 (section-by-section creative treatment) still needs
-    the table actually filled in with real timestamps first -- that's a
-    separate future task once the render-environment tool inventory (BRIEF.md
-    Q3) is confirmed, not this one.
-  claimed_by: 20260812T103128Z-coatdance-t003
-  claimed_at: '2026-08-12T10:31:29Z'
-  updated: '2026-08-12T10:31:29Z'
+    Silas's 2026-09-07 default-recommendation policy accepts the existing beat-map columns and pipeline order. Do not close this as mere template approval: the remaining deliverable is the real timestamped beat map from the already-present coat dance_x264.mp4. Treat ffmpeg/librosa/MediaPipe availability as agent-owned tooling/setup work; prefer a dedicated isolated analysis environment as t-002 recommended, and produce exact setup/run instructions when execution must occur on a local/render host. Original synced audio remains the soundtrack per Silas's earlier decision.
+  updated: '2026-09-07T11:35:54+00:00'
+  approved_by_human: true
 
 - id: t-004
   milestone: m2

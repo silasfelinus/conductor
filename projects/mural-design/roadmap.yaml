@@ -69,45 +69,24 @@ tasks:
 - id: t-002
   milestone: m2
   title: Create the fence-only coloring-page source assets from firstdraft
-  status: needs-human
-  owner:
+  status: done
   passes: 0
   stakes: reversible
-  updated: '2026-08-04T08:00:00Z'
+  updated: '2026-09-07T11:35:54+00:00'
   depends_on: t-001
-  note: >
-    FOR SILAS: FOR SILAS (Todo #1145): the maximalist-then-coloring-book fence mural pair you asked for is ready to review
-    in projects/mural-design/. Read projects/mural-design/GENERATION-LOG.md for full prompt/model/source provenance on every
-    file below.
+  note: |-
+    FOR SILAS: FOR SILAS (Todo #1145): the maximalist-then-coloring-book fence mural pair you asked for is ready to review in projects/mural-design/. Read projects/mural-design/GENERATION-LOG.md for full prompt/model/source provenance on every file below.
+    What's in it: (1) projects/mural-design/colored_revision2.png — the strongest maximalist candidate: thick black outlines, flat single-color sections, Totoro-like spirit in an ivy portal on the left, hidden soot sprites, a small Kind-Robots-style robot, rainbow butterflies, stylized alien-leaning foliage, and the refreshed Catbus on the right, generated img2img from your actual current.jpg fence photo with a wine/magenta background per your 2026-07-07 palette note. (2) A second maximalist candidate, projects/mural-design/mural-mockup-4878-15428.png (this session's ArtJob 4878, fully documented) — same brief, a looser/more-divergent interpretation, kept for comparison rather than as the lead choice. (3) The coloring-book remix, projects/mural-design/5f3d5014-a6aa-464a-8cee-b58b49cf51ad.png — thick black linework on white for the fence and everything painted on it, while the sky, house, sidewalk, curb, street, hedge/ivy, and off-fence flowers stay in full color, per WONDERLAB-COLORING-SPEC.md's fence-only rule. One known imperfection: the soot sprites render as solid black filled shapes rather than white-interior line art (soot sprites are canonically black, so this may already be the right call — your eye needed either way).
+    Provenance gap disclosed: colored_revision2.png and the 5f3d5014 coloring page were already sitting in the project folder with no prior TALKBACK/roadmap record of the job that made them (shallow git history only shows a truncation-boundary commit) — their content was visually verified against the design brief this session, but their exact prompt/seed could not be recovered. A second, fully-documented coloring-page remix (ArtJob 4879, same source image, WONDERLAB-COLORING-SPEC's exact prompt) was queued this session but had not finished rendering by the end of the session — see GENERATION-LOG.md's follow-up note to fetch it later (projects/mural-design/mural-coloring-4879-<artImageId>.png once done) as an additional comparison candidate; it is not required to review what's already here.
+    TO APPROVE: pick a maximalist direction (colored_revision2.png recommended) and confirm the coloring-book remix's black/white split matches what you want to color-test, or note what to change (e.g. the soot-sprite fill). Set approved_by_human: true and status: done, or leave a correction note here. This unblocks t-003 (reviewing the section map / color-workflow adjustments) once the coloring-page direction is confirmed.
 
-    What's in it: (1) projects/mural-design/colored_revision2.png — the strongest maximalist candidate: thick black outlines,
-    flat single-color sections, Totoro-like spirit in an ivy portal on the left, hidden soot sprites, a small Kind-Robots-style
-    robot, rainbow butterflies, stylized alien-leaning foliage, and the refreshed Catbus on the right, generated img2img from
-    your actual current.jpg fence photo with a wine/magenta background per your 2026-07-07 palette note. (2) A second maximalist
-    candidate, projects/mural-design/mural-mockup-4878-15428.png (this session's ArtJob 4878, fully documented) — same brief,
-    a looser/more-divergent interpretation, kept for comparison rather than as the lead choice. (3) The coloring-book remix,
-    projects/mural-design/5f3d5014-a6aa-464a-8cee-b58b49cf51ad.png — thick black linework on white for the fence and everything
-    painted on it, while the sky, house, sidewalk, curb, street, hedge/ivy, and off-fence flowers stay in full color, per
-    WONDERLAB-COLORING-SPEC.md's fence-only rule. One known imperfection: the soot sprites render as solid black filled shapes
-    rather than white-interior line art (soot sprites are canonically black, so this may already be the right call — your
-    eye needed either way).
 
-    Provenance gap disclosed: colored_revision2.png and the 5f3d5014 coloring page were already sitting in the project folder
-    with no prior TALKBACK/roadmap record of the job that made them (shallow git history only shows a truncation-boundary
-    commit) — their content was visually verified against the design brief this session, but their exact prompt/seed could
-    not be recovered. A second, fully-documented coloring-page remix (ArtJob 4879, same source image, WONDERLAB-COLORING-SPEC's
-    exact prompt) was queued this session but had not finished rendering by the end of the session — see GENERATION-LOG.md's
-    follow-up note to fetch it later (projects/mural-design/mural-coloring-4879-<artImageId>.png once done) as an additional
-    comparison candidate; it is not required to review what's already here.
-
-    TO APPROVE: pick a maximalist direction (colored_revision2.png recommended) and confirm the coloring-book remix's black/white
-    split matches what you want to color-test, or note what to change (e.g. the soot-sprite fill). Set approved_by_human:
-    true and status: done, or leave a correction note here. This unblocks t-003 (reviewing the section map / color-workflow
-    adjustments) once the coloring-page direction is confirmed.
+    Decision accepted under Silas's 2026-09-07 default-recommendation policy: use colored_revision2.png as the lead maximalist mural direction and accept the fence-only coloring-page split as the working baseline. Keep soot sprites as small solid-black forms rather than forcing white-interior coloring regions, consistent with the established character direction. Proceed to section-map/palette iteration; all of this remains reversible internal design work until physical painting.
+  approved_by_human: true
 - id: t-003
   milestone: m2
   title: Review the section map and choose color-workflow adjustments
-  status: waiting
+  status: ready
   owner:
   passes: 0
   stakes: reversible
