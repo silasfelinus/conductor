@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-07T15:35:43Z
+Generated: 2026-09-07T15:37:11Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **885**
-- Outcomes: blocked: 16, cancelled: 1, done: 868
+- Closed tasks recorded: **887**
+- Outcomes: blocked: 16, cancelled: 1, done: 870
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -39,7 +39,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop-cms | 21 | 95% |
 | interface-vision | 105 | 100% |
 | kapowarr | 50 | 100% |
-| kind-economy | 7 | 100% |
+| kind-economy | 9 | 100% |
 | kind-robots | 54 | 98% |
 | kindrobots-unraid | 5 | 100% |
 | lora-ingestion | 1 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 869 | 99% |
+| software | 871 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,8 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-07 `kind-economy/t-023` — Same pattern as t-014/t-022 in this batch: a task released from needs-human back to ready under the 2026-09-07 human-gate-simplification policy already had its deliverable (THE-SIFT-DESIGN.md) complete and matching the release note's ask verbatim, including the hardest mechanical problem (attribution without custody) resolved concretely. Reconciled to done rather than treated as new design work owed.
+- 2026-09-07 `kind-economy/t-022` — Same pattern as t-014 in this batch: a task released from needs-human back to ready under the 2026-09-07 human-gate-simplification policy already had its deliverable (BUTTERFLY-EVENT-PLAN.md) complete and matching the release note's ask verbatim. Reconciled to done rather than treated as new planning work owed.
 - 2026-09-07 `kind-economy/t-014` — The 2026-09-07 human-gate simplification pass flipped several complete-but-parked needs-human design tasks back to ready with a "design around the accepted model, don't wait on Silas" instruction. For kind-economy/t-014 the deliverable (PAYOUT-MECHANISM-DESIGN.md) already matched that instruction verbatim from 2026-08-19 -- the correct action was reconciling stale roadmap state to done, not producing new design content. Check whether a task's own deliverable file already satisfies a "release" note before assuming more design work is owed.
 - 2026-09-07 `cthulhuquarium/t-041` — The task's only open item (Decision 2: whether the egg purchase OPTION itself should be concealed, vs. only its CONTENTS) was resolved by Silas's 2026-09-07 default-recommendation policy in the task note itself -- keep the option visibly on sale, hide only the species. Re-reading the already-merged implementation (kind_robots PR #2172) against that decision found it already compliant end to end: the egg catalog API/UI exposes only rarity/size/cost/description, never species or the eligible pool; hatchEggForUser resolves the species server-side at hatch time only; the shop panel has no discovery gate on the purchase option; the hatch reveal dialog always shows the result, never silently. No code change was needed -- this closed as a verification-only pass. General lesson: when a roadmap task's remaining note is a Silas decision on an already-shipped feature rather than a design gate blocking new work, check the live diff against the decision before assuming implementation work remains -- a 'ready' status can mean 'verify and close', not always 'build something'.
 - 2026-09-07 `cthulhuquarium/t-019` — Balance pass on real play data had no live DB/telemetry to retune hunger/debris/offline-income against (same gap the task's own note flagged weeks earlier), and Silas's 2026-09-07 policy resolved that by substituting a conservative data-and-design-driven pass rather than blocking further: extend the milestone ladder using the existing simulation and design docs, treat real telemetry as future iterative tuning. Extended the bestiary milestone ladder past bestiary_20 (4 breakpoints, +2 each, covering 20/151 species) with 7 new decelerating breakpoints (25/35/50/70/95/125/151, reward shrinking +2->+1->+0) landing on slots_cap 19 -- comfortably under the ~50 threshold already flagged as trivializing the tank-packing design. Re-ran simulate_economy.py to confirm no regression (output byte-identical since the 2-hour single-fish-line scenario never reaches a bestiary breakpoint) and added a structural (not just simulated) argument in ECONOMY.md for why offline income can never exceed active play under the current formula, rather than re-deriving it from scratch next time. General lesson: when a task's own gap note already sketches the shape of a defensible answer (decelerating ladder, terminate well below the collection total, later breakpoints pay in non-capacity rewards), a 'data-only, conservative' policy resolution is enough to act on directly -- it does not require re-opening design questions the note already closed. Also: a PR's CI 'Python test suite' failure should always be checked against origin/main before treating it as this diff's problem -- test_current_project_lifecycle.py's active-project-with-no-open-tasks check (alexa-integration/mandarin-tutor/media-watchlist/scene-animator) was already failing on main before this PR touched anything, confirmed by running the test against a fresh origin/main checkout.
@@ -99,8 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-06 `interface-vision/t-104` — Slice 103 of the recurring kr-btn consistency sweep generalized the sweep's own tooling pattern instead of hand-picking a fourth single-family codemod: kr_btn_order_variant_codemod.py parses the live .kr-btn-* definitions out of tailwind.css and closes any remaining site whose class token *set* exactly matches an already-canonical shape but is written in a different word order -- a near-miss class every prior single-family codemod could only close one specific order for at a time, leaving scattered leftovers across many already-'cleared' families. Found by scanning all class="..." attributes containing 'btn' with no kr- prefix, grouping by sorted token set, and diffing against the frozenset->name map already encoded in tailwind.css's own @apply rules -- 19 occurrences surfaced across 6 different families and 12 files, none previously visible to any single-family tool. General lesson for a long-running incremental-discovery sweep: periodically re-derive the full canonical mapping and re-scan for exact-set matches across ALL prior targets at once, rather than only ever looking for the next new family -- word-order variants of already-solved shapes accumulate silently in between.
 - 2026-09-06 `interface-vision/t-104` — Slice 101 of the recurring kr-btn-xs consistency sweep migrated the last 3 hand-rolled 'btn btn-xs ... rounded-xl' occurrences (brainstorm-manager.vue, taskmaster-page.vue, lora-triage.vue), then re-ran kr_btn_xs_codemod.py (no --path) against post-merge main and confirmed 0 occurrences remain across the whole repo. This is the first time this task's original btn-xs scope has run out entirely -- worth recording as a milestone rather than a routine bounded-slice cycle, and a reminder to verify a recurring sweep's backlog on the *merged* tree, not just the PR's own dry-run, since a concurrent unrelated merge could in principle reintroduce the pattern between dry-run and merge. Next session picking up this task should choose a new shared-class family to track (e.g. hand-rolled btn-sm/btn-md variants) rather than assume the umbrella is finished -- it is recurring precisely because the sweep itself never ends, only its current target family did.
 - 2026-09-05 `interface-vision/t-104` — Slice 89 of the recurring kr-btn consistency sweep caught a real latent bug in the slice-88 codemod tool while running it: Python's Path.read_text()/write_text() always perform universal-newline translation, so any CRLF-terminated file the tool touched would silently collapse to LF for its entire content, not just the lines actually rewritten -- a 6-occurrence bounded slice would have become a 2566-line diff on one CRLF file. The tell was a large diff on one file next to a clean diff on another for the identical kind of change (3 class substitutions each) -- when two near-identical operations produce very different diff sizes, that asymmetry is itself worth investigating before trusting either result. Fixed by opening files directly with newline="" (disables translation on both read and write) instead of read_text()/write_text() (which gained a newline= param only in Python 3.13). General lesson for any line-oriented codemod script: verify it against a CRLF fixture if the target tree has any, since this failure mode produces no error and no warning -- only an oversized diff that is easy to miss if the tool's own dry-run output only reports occurrence counts, not diff size.
-- 2026-09-05 `interface-vision/t-104` — Slice 88 of the recurring kr-btn consistency sweep was tooling-only, not another live-surface migration: hardened utils/scripts/codemods/kr_btn_xs_codemod.py with repeatable --path scoping (single .vue file or directory) and excluded components/abandonware/** from default scans, so future slices can target a coherent surface family instead of a repo-wide apply followed by a hand-revert of collateral changes. Worth recognizing when a recurring migration task's next useful slice is improving the tool itself rather than running it again -- the growing remaining-pool size (52+ occurrences across 25 families per slice 87) was the signal that scoping the codemod paid off more than one more blind repo-wide pass would have.
-- 2026-09-05 `interface-vision/t-104` — Slice 83 of the recurring kr-btn consistency sweep: cross-checking the full existing .kr-btn-* size/radius grid for the bare (no color, no ghost) family before grepping found the gap directly -- .kr-btn-xs (btn btn-xs rounded-xl) was missing even though its ghost-family counterpart .kr-btn-ghost-xs already existed and the xs-size rounded-lg/rounded-2xl bare variants already existed too. Comparing across the family's established naming grid (color x size x radius) surfaces gaps faster than a fresh unconstrained grep every slice.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-07T15:35:43Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-07T15:37:11Z_
