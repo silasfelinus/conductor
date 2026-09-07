@@ -599,17 +599,34 @@ tasks:
 - id: t-014
   milestone: m4
   title: "Design the creator payout mechanism"
-  status: claimed
-  updated: '2026-09-07T15:31:21Z'
+  status: done
+  updated: '2026-09-07T15:31:35Z'
   passes: 0
   stakes: reversible
   depends_on: [t-008]
-  note: |-
+  note: >-
     FOR SILAS: Design complete for the settled model (see PAYOUT-MECHANISM-DESIGN.md): liability accounting, chargeback-window-based withdrawal timer (recommend 120 days), and the token/earnedTokens data-shape gap is now closed by t-006/t-007/t-008. Four items need Silas: payout path (manual vs Stripe Connect, recommend manual v1), minimum threshold, identity/tax collection policy, and unclaimed-balance handling. One needs a CPA: constructive-receipt timing on earnedTokens. Parked at needs-human for those five decisions.
 
     Oversight reconciliation: the payout-mechanism design is complete and is waiting on Silas's product choices plus CPA confirmation. Marking this as a soft human-decision gate distinguishes it from irreversible payout execution, which remains separately hard-gated in t-015.
 
     This is design work, not a payout action. Release under Silas's 2026-09-07 human-gate simplification policy. Design around the accepted model: per-interaction accrual, pooled/scheduled disbursement above a threshold, append-only ledger, and no self-attribution rebate. Do not create processor accounts, handle live secrets, enable payouts, or move money; those remain the separate hard gate t-015.
+
+    RECONCILED 2026-09-07 (scheduled Agent sweep): the design deliverable this task actually
+    asks for (PAYOUT-MECHANISM-DESIGN.md) has been complete since 2026-08-19 and already
+    follows the accepted model named in the 2026-09-07 human-gate-simplification release
+    note verbatim -- per-interaction accrual (earnedTokens credited only from RevenueSplit),
+    pooled/scheduled disbursement above a threshold (recommend 120-day chargeback-window
+    timer), an append-only ledger (PayoutRequest, never edited/deleted), and no self-
+    attribution rebate (SELF-ATTRIBUTION-POLICY.md). Nothing further for an agent to design:
+    the five remaining items (payout path, minimum threshold, identity/tax policy,
+    unclaimed-balance handling, and the CPA constructive-receipt question) are genuine
+    product/legal decisions, not design gaps, and they stay tracked exactly where they
+    already are -- t-015 (GATE: enable real creator payouts, hard, depends_on t-014+t-013,
+    unaffected by this close-out) requires the design be "reviewed by someone qualified"
+    before anything proceeds, which is precisely those five items. Closing this design task
+    to done rather than leaving it re-parked at needs-human matches the release note's own
+    instruction that planning/design work should not wait on Silas. No code, secrets,
+    processor accounts, or money-movement touched.
   owner: reviewer
   claimed_by: claude-scheduled-20260907T153120Z-ke-t014
   claimed_at: '2026-09-07T15:31:21Z'
