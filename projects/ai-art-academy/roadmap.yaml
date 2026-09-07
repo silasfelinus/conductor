@@ -1586,13 +1586,13 @@ tasks:
 - id: t-045
   milestone: m2
   title: Re-run LoRA arm for the 5 styles with recorded loraPath and promote winners to mode lora
-  status: claimed
-  owner: reviewer
+  status: ready
+  owner: null
   passes: 0
   stakes: reversible
   depends_on: t-044
-  updated: '2026-09-07T21:30:35Z'
-  note: >
+  updated: '2026-09-07T22:01:44Z'
+  note: >-
     Kaizen follow-up from t-004 (PR #1207, merged 2026-07-27). Once t-044's
     lora_name mismatch is fixed, re-run the LoRA arm in
     docs/style-remix-configs.yaml for the 5 styles that already have a
@@ -1604,8 +1604,31 @@ tasks:
     beats its existing prompt-only winner to `mode: lora`, updating the
     `winner`/`evidence` fields in place. No new research needed -- this is
     purely re-running jobs once the naming bug is fixed.
-  claimed_at: '2026-09-07T21:30:35Z'
-  claimed_by: claude-20260907T213034Z-t045-loraarm
+
+    Enqueued the 5-style LoRA re-run this task specifies (impressionism, illuminated-
+    manuscript, watercolor, oil-painting, pop-art) against the fixed reference image and
+    remix seed 909090, via POST /api/art/enqueue (same production path buildKontextWorkflow
+    uses): ArtJob 21638 (impressionism, FLUX/impressionist.safetensors), 21639 (illuminated-
+    manuscript, FLUX/manuscript_illustration_kontext.safetensors), 21640 (watercolor,
+    FLUX/watercolor.safetensors), 21641 (oil-painting,
+    FLUX/flux1-kt_oil_painting_lora_v2.safetensors), 21642 (pop-art,
+    Kontext/SFW/popart.safetensors). Polled for ~30 minutes (two windows); all 5 remained
+    PENDING the whole time -- the render queue is heavily backed up right now (GET
+    /api/art/queue/stats at enqueue time: PENDING=210, oldestPending age ~52h), not a job-
+    specific failure, so this is a transient/infra wait, not a quality or actionable
+    blocker. Job state is tracked in projects/ai-art-academy/docs/t-045-lora-arm-
+    results.json and the runner is projects/ai-art-academy/docs/t-045-lora-remix-runner.py.
+    NEXT SESSION: run 'python projects/ai-art-academy/docs/t-045-lora-remix-runner.py
+    --poll' (reads the existing results file, does NOT re-enqueue) to keep waiting on the 5
+    already-queued jobs; once all 5 reach DONE, run '--download' to save the LoRA renders to
+    docs/t-045-lora-evidence/, then compare each against its style's existing prompt-only
+    evidence in docs/t-004-remix-evidence/ and promote any LoRA winner to mode: lora in
+    style-remix-configs.yaml per the task note. Do not re-enqueue new jobs for these 5
+    styles unless a job shows FAILED/CANCELLED in the results file. Releasing the claim back
+    to ready (transient wait, not blocked) so a future recheck can continue without holding
+    this session open indefinitely.
+  claimed_at: null
+  claimed_by: null
 
 - id: t-043
   milestone: m6
