@@ -1586,12 +1586,12 @@ tasks:
 - id: t-045
   milestone: m2
   title: Re-run LoRA arm for the 5 styles with recorded loraPath and promote winners to mode lora
-  status: ready
-  owner:
+  status: claimed
+  owner: reviewer
   passes: 0
   stakes: reversible
   depends_on: t-044
-  updated: '2026-07-27T07:15:00Z'
+  updated: '2026-09-07T21:30:35Z'
   note: >
     Kaizen follow-up from t-004 (PR #1207, merged 2026-07-27). Once t-044's
     lora_name mismatch is fixed, re-run the LoRA arm in
@@ -1604,7 +1604,8 @@ tasks:
     beats its existing prompt-only winner to `mode: lora`, updating the
     `winner`/`evidence` fields in place. No new research needed -- this is
     purely re-running jobs once the naming bug is fixed.
-  claimed_at:
+  claimed_at: '2026-09-07T21:30:35Z'
+  claimed_by: claude-20260907T213034Z-t045-loraarm
 
 - id: t-043
   milestone: m6
