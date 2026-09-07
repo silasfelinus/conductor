@@ -101,3 +101,32 @@ tasks:
     claimed_at: '2026-08-25T17:29:58Z'
     updated: '2026-08-25T17:44:43Z'
     implementation_pr: 'silasfelinus/kind_robots#2111'
+
+  - id: t-005
+    title: "FOR SILAS: confirm the admin Scene Animator surface to close out this finished project"
+    status: needs-human
+    passes: 0
+    stakes: reversible
+    soft_gate: true
+    note: |-
+      FOR SILAS: all 4 roadmap tasks across all three milestones (shape, build, polish/
+      ship) are done -- nothing agent-actionable remains in the queue. Reconciled
+      2026-09-07 (scheduled Agent sweep) per AGENTS.md's rule that a user-facing
+      software project isn't `finished` on task count alone. This one is scoped
+      intentionally as internal/admin-only (per t-002's own note), so the bar is lighter
+      than a public-facing surface, but the same closing step still applies: you should
+      look at it once before it's marked done.
+      What I could verify from this sandbox: `https://kindrobots.org/admin/scene-animator`
+      returns 200 with real SSR markup (confirmed live "Scene Animator" content in the
+      response, not the bare SPA shell). What I could NOT verify: actual layout,
+      spacing, or a real folder-to-video batch run (that needs real source media and the
+      Comfy video pipeline, not a sandbox check).
+      TO APPROVE: open /admin/scene-animator yourself, and if you have a moment, run one
+      real batch against real source folders. If it looks and works right, set
+      `approved_by_human: true` and flip project-overrides.yaml's scene-animator entry to
+      `status: finished`. If something needs fixing first, note what and I'll file it as
+      a fresh `ready` task.
+      What unblocks when you do: nothing else is waiting on this -- it's the project's
+      own closing step, and it also clears a currently-failing CI assertion
+      (`test_current_project_lifecycle.py`) that flags any `active` project sitting with
+      zero open tasks.

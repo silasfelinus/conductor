@@ -579,3 +579,31 @@ tasks:
     claimed_by: claude-scheduled-20260902T042738Z-mandarin-t020
     claimed_at: '2026-09-02T04:43:32Z'
     approved_by_human: true
+
+  - id: t-021
+    title: "FOR SILAS: visually accept Mandarin Tutor at phone/tablet/desktop widths to close the project out"
+    status: needs-human
+    passes: 0
+    stakes: reversible
+    soft_gate: true
+    note: |-
+      FOR SILAS: all 20 roadmap tasks across all four milestones (foundation, depth,
+      curriculum, expansion) are done -- nothing agent-actionable remains in the queue.
+      Reconciled 2026-09-07 (scheduled Agent sweep) per AGENTS.md's rule that a
+      user-facing software project isn't `finished` on task count alone: the live
+      front end must be checked at phone/tablet/desktop widths and you must accept the
+      visual state (or explicitly waive the check) before it flips.
+      What I could verify from this sandbox: `https://kindrobots.org/mandarin-tutor`
+      returns 200 with real SSR markup (confirmed live Mandarin content in the
+      response, not the bare SPA shell). What I could NOT verify: actual layout,
+      spacing, or anything pixel-level at any width -- headless Chromium fails through
+      this sandbox's proxy regardless of target host (documented, unrelated to this
+      project).
+      TO APPROVE: open /mandarin-tutor yourself at phone/tablet/desktop widths. If it
+      looks right, set `approved_by_human: true` and flip project-overrides.yaml's
+      mandarin-tutor entry to `status: finished`. If something needs fixing first, note
+      what and I'll file it as a fresh `ready` task.
+      What unblocks when you do: nothing else is waiting on this -- it's the project's
+      own closing step, and it also clears a currently-failing CI assertion
+      (`test_current_project_lifecycle.py`) that flags any `active` project sitting with
+      zero open tasks.
