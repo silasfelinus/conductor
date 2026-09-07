@@ -1586,12 +1586,12 @@ tasks:
 - id: t-045
   milestone: m2
   title: Re-run LoRA arm for the 5 styles with recorded loraPath and promote winners to mode lora
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-044
-  updated: '2026-09-07T22:01:44Z'
+  updated: '2026-09-07T22:33:24Z'
   note: >-
     Kaizen follow-up from t-004 (PR #1207, merged 2026-07-27). Once t-044's
     lora_name mismatch is fixed, re-run the LoRA arm in
@@ -1627,8 +1627,8 @@ tasks:
     styles unless a job shows FAILED/CANCELLED in the results file. Releasing the claim back
     to ready (transient wait, not blocked) so a future recheck can continue without holding
     this session open indefinitely.
-  claimed_at: null
-  claimed_by: null
+  claimed_at: '2026-09-07T22:33:24Z'
+  claimed_by: claude-scheduled-20260907T223323Z-aaa-t045
 
 - id: t-043
   milestone: m6
