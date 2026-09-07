@@ -1,0 +1,8 @@
+version: 1
+project: text-generation
+task: t-005
+operation: done
+approved_by_human: true
+verify_pr: silasfelinus/kind_robots#1926
+note: >-
+  Closed under Silas's 2026-09-07 human-gate simplification instruction. The recommended boundary is accepted: DB-stored server profiles block loopback/cloud-metadata/link-local destinations, while explicitly trusted RFC1918 LAN and Tailscale CGNAT remain usable because private/self-hosted text servers are the feature's purpose; only the operator-configured Ollama localhost fallback opts into loopback. Kind Robots PR #1926 already merged with focused security coverage, so leaving the roadmap at needs-human was stale bookkeeping.
