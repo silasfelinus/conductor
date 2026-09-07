@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-07T09:28:48Z
+Generated: 2026-09-07T09:54:47Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **881**
-- Outcomes: blocked: 16, cancelled: 1, done: 864
+- Closed tasks recorded: **882**
+- Outcomes: blocked: 16, cancelled: 1, done: 865
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
-| interface-vision | 104 | 100% |
+| interface-vision | 105 | 100% |
 | kapowarr | 50 | 100% |
 | kind-economy | 6 | 100% |
 | kind-robots | 54 | 98% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 865 | 99% |
+| software | 866 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-07 `interface-vision/t-104` — Slice 133 found kr-panel-compact-row (rounded-xl border border-base-300 bg-base-100 px-3 py-2, 5 occurrences across 4 files) by the same exact- contiguous-token-window survey method used since slice 130: extract every class attribute containing border-base-300, tokenize, and count fixed-width windows around it to surface repeated shapes not yet in VARIANTS, rather than scanning file-by-file. This slice's pool sat right at the established viability floor (5 safe occurrences after excluding 2 unsafe DaisyUI-label matches in art-interact.vue) -- worth noting for whoever eventually judges the umbrella's mechanical phase exhausted: the token-window survey keeps finding small-but-real pools well past the point slice 129's note predicted the VARIANTS list itself was exhausted, so 'small pool this slice' is not yet evidence the survey method has stopped paying off. No CI stall this slice (Build production image ~9.5min, all 49 checks green first try) -- contrasts with slice 130's two independent stalls in the same session; the conductor/t-132 and t-124-tracked infra flakiness remains intermittent, not constant.
 - 2026-09-07 `interface-vision/t-104` — Slice 123 of the recurring kr-panel consistency sweep opened the first opacity-variant branch of the .kr-panel-muted family (.kr-panel-tint-sm/-md at bg-base-200/40) rather than continuing to treat every non-exact-match occurrence as needing manual review. Prior slices (117-122) only ever matched a class token sequence byte-for-byte against a solid-color background token; once the codemod also carries the opacity-suffixed token as its own listed variant, the exact-match approach generalizes cleanly to the alpha-channel dimension without loosening the matcher's safety guarantees (still a literal token-sequence match, still gated by the same safe-extras allowlist). Found 12 real occurrences across 8 files this way that a purely solid-background scan would never have surfaced. General lesson for a long-running class-consolidation sweep: when a 'needs manual review, not a safe codemod' note names a *reason* (here: opacity changes appearance) rather than a genuine ambiguity, check whether that reason is itself just an unhandled dimension of the same exact-match pattern before assuming the whole pool needs hand judgment -- an opacity-suffixed background is still a literal, deterministic token to match on, not a judgment call.
 - 2026-09-06 `interface-vision/t-104` — Slice 103 of the recurring kr-btn consistency sweep generalized the sweep's own tooling pattern instead of hand-picking a fourth single-family codemod: kr_btn_order_variant_codemod.py parses the live .kr-btn-* definitions out of tailwind.css and closes any remaining site whose class token *set* exactly matches an already-canonical shape but is written in a different word order -- a near-miss class every prior single-family codemod could only close one specific order for at a time, leaving scattered leftovers across many already-'cleared' families. Found by scanning all class="..." attributes containing 'btn' with no kr- prefix, grouping by sorted token set, and diffing against the frozenset->name map already encoded in tailwind.css's own @apply rules -- 19 occurrences surfaced across 6 different families and 12 files, none previously visible to any single-family tool. General lesson for a long-running incremental-discovery sweep: periodically re-derive the full canonical mapping and re-scan for exact-set matches across ALL prior targets at once, rather than only ever looking for the next new family -- word-order variants of already-solved shapes accumulate silently in between.
 - 2026-09-06 `interface-vision/t-104` — Slice 101 of the recurring kr-btn-xs consistency sweep migrated the last 3 hand-rolled 'btn btn-xs ... rounded-xl' occurrences (brainstorm-manager.vue, taskmaster-page.vue, lora-triage.vue), then re-ran kr_btn_xs_codemod.py (no --path) against post-merge main and confirmed 0 occurrences remain across the whole repo. This is the first time this task's original btn-xs scope has run out entirely -- worth recording as a milestone rather than a routine bounded-slice cycle, and a reminder to verify a recurring sweep's backlog on the *merged* tree, not just the PR's own dry-run, since a concurrent unrelated merge could in principle reintroduce the pattern between dry-run and merge. Next session picking up this task should choose a new shared-class family to track (e.g. hand-rolled btn-sm/btn-md variants) rather than assume the umbrella is finished -- it is recurring precisely because the sweep itself never ends, only its current target family did.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-05 `kapowarr/t-071` — library_conflicts.py's word-overlap heuristic for 'unrelated series sharing a folder' had a blind spot exactly at its most valuable case: volumes with the identical title share every word, so the check that skipped groups with any word in common skipped identical-title pairs before it skipped anything else -- and an identical-title pair sharing a folder is precisely the case where the importer cannot tell them apart and silently misattributes files. The fix asks the same match_title() function the importer itself uses, rather than inventing a second 'same series' notion in the diagnostic script. General lesson: when a diagnostic script re-implements a decision the system under test already makes elsewhere (here, 'are these two titles the same'), call the real function instead of a parallel heuristic -- a parallel heuristic can silently diverge from what actually happens at runtime, in exactly the direction that hides the worst cases.
 - 2026-09-05 `dream-cycle/t-006` — kind_robots#2414's --repair-tainted path cancelled legacy PENDING ArtJobs and committed Facet.artPrompt updates before the eager queue.map(buildFacetArtPayload(...)) that can throw via assertArtPromptContract on any queued entry -- a destructive/cancelling write committed ahead of the step that can still fail, with no rollback. Pass 1's retry_context named the exact fix (build/validate jobRows before the cancellation); pass 2 fixed an adjacent real concern (deleted the unattended auto-merge repair workflow) but left the flagged file byte-identical, confirmed via git log on the changed file rather than trusting the PR description -- checking whether a retry actually touched the flagged file is what caught the drift before a third wasted pass. Pass 3 finally reordered validate-then-mutate as asked. General principle for any script that repairs/replaces existing state: build and validate the full replacement set first; only then commit any cancellation or in-place mutation of what it replaces.
 - 2026-09-05 `interface-vision/t-104` — Slice 80 of the recurring kr-btn consistency sweep: the local kind_robots worktree checkout was found 8 commits behind origin/main (still at slice 71) before the candidate grep ran -- always fetch/ fast-forward the working checkout first, or a grep for the next uncovered class-set risks re-surfacing patterns already migrated by slices merged since the checkout was last synced, or missing that several prior slices already landed. Separately, a create_or_update_file API call built by hand (rather than passing already-read content through) wrote a literal placeholder string as the entire file content instead of the real payload -- caught immediately by reading the file back before opening the follow-on PR, fixed with a plain follow-up commit (no force-push). Always read back a large scripted file write before trusting it. Also: this task's TALKBACK.md had drifted four slices behind its own roadmap note (last entry was slice 69, though kind_robots slices 76-79 had already merged and the note already recorded them) -- worth a dedicated catch-up pass in a future slice.
-- 2026-09-05 `storybook/t-010` — narratorStore.ts's activeDream.value?.id watch reset narratorSessionIds on Dream switch, but sendNarratorMessage() had no way to notice a switch that happened mid-await -- its addChat()/streamResponse() continuation still pushed the abandoned chat id into the new Dream's (already-reset) session list. Any store that (a) derives visible state from an array of ids scoped to some 'current context' ref, and (b) resets that array on a watch when the context changes, needs its own in-flight async writers to capture an epoch/ticket before their first await and re-check it after every await -- the same openRunRequestId shape already used in modelBuilderStore.ts. A stale retry_context is also worth checking before assuming a rejected fix was never resubmitted: git blame on the file it targets can confirm the fix already landed under a later, unlogged cycle, in which case the field should be cleared rather than left looking like an open rejection.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-07T09:28:48Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-07T09:54:47Z_
