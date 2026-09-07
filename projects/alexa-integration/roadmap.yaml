@@ -403,5 +403,35 @@ tasks:
   claimed_at: '2026-08-16T20:28:03Z'
   updated: '2026-08-16T20:41:39Z'
   implementation_pr: 'silasfelinus/kind_robots#1917'
-goal: Make Alexa a reliable and secure voice entry point into the Kind Robots ecosystem, with the defined voice flows 
+
+- id: t-022
+  title: "FOR SILAS: visually accept the Alexa/Voice Lab surface at phone/tablet/desktop widths to close the project out"
+  status: needs-human
+  passes: 0
+  stakes: reversible
+  soft_gate: true
+  note: |-
+    FOR SILAS: all 21 roadmap tasks across all five milestones (command design, relay
+    design, review/rollout, Serendipity voice surface, local adapters) are done --
+    nothing agent-actionable remains in the queue. Reconciled 2026-09-07 (scheduled
+    Agent sweep) per AGENTS.md's rule that a user-facing software project isn't
+    `finished` on task count alone: the live front end must be checked at
+    phone/tablet/desktop widths and you must accept the visual state (or explicitly
+    waive the check) before it flips.
+    What I could verify from this sandbox: `https://kindrobots.org/plan/voice-lab`
+    returns 200 with real SSR markup (confirmed live "Voice Lab"/Alexa content in the
+    response, not the bare SPA shell). What I could NOT verify: actual layout,
+    spacing, or anything pixel-level at any width, nor a live end-to-end Alexa voice
+    round-trip (that needs a real device/skill invocation, not a sandbox).
+    TO APPROVE: open /plan/voice-lab yourself at phone/tablet/desktop widths (and, if
+    you have an Alexa device handy, try a real voice command). If it looks and works
+    right, set `approved_by_human: true` and flip project-overrides.yaml's
+    alexa-integration entry to `status: finished`. If something needs fixing first,
+    note what and I'll file it as a fresh `ready` task.
+    What unblocks when you do: nothing else is waiting on this -- it's the project's
+    own closing step, and it also clears a currently-failing CI assertion
+    (`test_current_project_lifecycle.py`) that flags any `active` project sitting with
+    zero open tasks.
+
+goal: Make Alexa a reliable and secure voice entry point into the Kind Robots ecosystem, with the defined voice flows
   working end to end.
