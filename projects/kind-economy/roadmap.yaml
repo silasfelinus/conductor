@@ -599,8 +599,8 @@ tasks:
 - id: t-014
   milestone: m4
   title: "Design the creator payout mechanism"
-  status: ready
-  updated: '2026-09-07T11:28:19+00:00'
+  status: claimed
+  updated: '2026-09-07T15:31:21Z'
   passes: 0
   stakes: reversible
   depends_on: [t-008]
@@ -610,6 +610,9 @@ tasks:
     Oversight reconciliation: the payout-mechanism design is complete and is waiting on Silas's product choices plus CPA confirmation. Marking this as a soft human-decision gate distinguishes it from irreversible payout execution, which remains separately hard-gated in t-015.
 
     This is design work, not a payout action. Release under Silas's 2026-09-07 human-gate simplification policy. Design around the accepted model: per-interaction accrual, pooled/scheduled disbursement above a threshold, append-only ledger, and no self-attribution rebate. Do not create processor accounts, handle live secrets, enable payouts, or move money; those remain the separate hard gate t-015.
+  owner: reviewer
+  claimed_by: claude-scheduled-20260907T153120Z-ke-t014
+  claimed_at: '2026-09-07T15:31:21Z'
 
 - id: t-015
   milestone: m4
