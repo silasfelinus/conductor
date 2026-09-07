@@ -168,9 +168,8 @@ tasks:
 - id: t-010
   milestone: m3
   title: Capture local Echo dry-run transcript and approval checklist
-  status: needs-human
-  owner: claude
-  updated: '2026-07-20T22:30:00Z'
+  status: done
+  updated: '2026-09-07T11:36:15+00:00'
   passes: 1
   stakes: reversible
   gate_human: true
@@ -180,28 +179,14 @@ tasks:
   - t-008
   - t-009
   - t-011
-  note: 'FOR SILAS: the dry-run transcript is at projects/alexa-integration/docs/t-010-dry-run-transcript.md (conductor burst-rotation
-    session, 2026-07-20). It runs all 10 lines of rollout-safety-checklist.md Section 4 against silasfelinus/serendipity-voice
-    main via the CLI (npm run handle), with every feature flag at its safe default (no .env, art/chat/music all off, no service
-    token) — the same entry point the real relay uses.
+  note: |-
+    FOR SILAS: the dry-run transcript is at projects/alexa-integration/docs/t-010-dry-run-transcript.md (conductor burst-rotation session, 2026-07-20). It runs all 10 lines of rollout-safety-checklist.md Section 4 against silasfelinus/serendipity-voice main via the CLI (npm run handle), with every feature flag at its safe default (no .env, art/chat/music all off, no service token) — the same entry point the real relay uses.
+    What it contains: a pass/fail table for all 10 lines, and 4 findings from the runs: (1) "what is next" and "what is the goal" return the same PROJECT Dream summary rather than naming a specific ready task; (2) "ask AMI ..." routes to the character domain rather than chat (arguably correct, checklist wording is stale); (3) the checklist's own sample Dream-story line ("start a cozy mystery in the redwood library") never matches any router pattern because dreamPatterns require the literal word "story" — filed as new task t-017; (4) "deploy the relay" / "change DNS" fall through to a generic clarification instead of the specific blocked-refusal message approve/merge/publish/etc. get, because blockedActions in voice-router.ts omits deploy/DNS-shaped words — filed as new task t-018. Nothing in any of the 10 runs wrote to Conductor, called a network API, played a file, or mutated state — the safety boundary itself held in every case, including the two "blocked" partials.
+    TO APPROVE: read the transcript doc, physical-echo-runbook.md, and rollout-safety-checklist.md, then decide on the auth model, disable switch, and exact endpoint exposure plan (Cloudflare Tunnel / Lambda / small host — runbook Step 3). Set approved_by_human: true and status: done here when ready to move toward a real (still local-network-only, still feature-flagged) Echo test. This does not by itself authorize a public skill or live endpoint — that still needs the exposure-plan decision above.
+    Unblocks: nothing else is currently depends_on t-010 in this roadmap, but this is the last gate before any real Echo hardware test per physical-echo-runbook.md.
 
-    What it contains: a pass/fail table for all 10 lines, and 4 findings from the runs: (1) "what is next" and "what is the
-    goal" return the same PROJECT Dream summary rather than naming a specific ready task; (2) "ask AMI ..." routes to the
-    character domain rather than chat (arguably correct, checklist wording is stale); (3) the checklist''s own sample Dream-story
-    line ("start a cozy mystery in the redwood library") never matches any router pattern because dreamPatterns require the
-    literal word "story" — filed as new task t-017; (4) "deploy the relay" / "change DNS" fall through to a generic clarification
-    instead of the specific blocked-refusal message approve/merge/publish/etc. get, because blockedActions in voice-router.ts
-    omits deploy/DNS-shaped words — filed as new task t-018. Nothing in any of the 10 runs wrote to Conductor, called a network
-    API, played a file, or mutated state — the safety boundary itself held in every case, including the two "blocked" partials.
-
-    TO APPROVE: read the transcript doc, physical-echo-runbook.md, and rollout-safety-checklist.md, then decide on the auth
-    model, disable switch, and exact endpoint exposure plan (Cloudflare Tunnel / Lambda / small host — runbook Step 3). Set
-    approved_by_human: true and status: done here when ready to move toward a real (still local-network-only, still feature-flagged)
-    Echo test. This does not by itself authorize a public skill or live endpoint — that still needs the exposure-plan decision
-    above.
-
-    Unblocks: nothing else is currently depends_on t-010 in this roadmap, but this is the last gate before any real Echo hardware
-    test per physical-echo-runbook.md.'
+    Closed as superseded during the 2026-09-07 human-gate cleanup. Silas previously retired the need to support the Serendipity voice runtime; therefore endpoint exposure, auth-model selection, and a physical Echo rollout are no longer desired launch work. Preserve the existing implementation/history, but do not create a live endpoint, publish an Alexa skill, or spend further cycles seeking approval for this retired rollout path.
+  approved_by_human: true
 - id: t-011
   milestone: m5
   title: Wire art generation intents
