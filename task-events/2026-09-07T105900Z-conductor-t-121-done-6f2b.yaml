@@ -1,7 +1,0 @@
-version: 1
-project: conductor
-task: t-121
-operation: done
-updated: '2026-09-07T10:59:00Z'
-note: >-
-  Reconciled during Silas's 2026-09-07 human-gate backlog audit. This soft gate was opened for a persistent SSL EOF failure in the Project Sync workflow after retries proved insufficient. The incident is no longer reproducing: current main has completed Project Sync runs #4028 (run 34112679713), #4029 (34113495781), and #4030 (34113606372) successfully on 2026-09-07. Close the historical incident as resolved/stale rather than requiring a human decision. If the SSL EOF failure recurs, treat that recurrence as a new technical incident with fresh logs rather than reopening a human gate.
