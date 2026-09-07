@@ -2422,7 +2422,7 @@ tasks:
 - id: t-061
   milestone: m3
   title: "PITCH GATE: conductorSlug immutability + consolidated slug-collision helper"
-  status: ready
+  status: claimed
   gate_human: true
   passes: 0
   stakes: reversible
@@ -2432,7 +2432,10 @@ tasks:
 
     APPROVED by Silas via the 2026-09-07 human-gate simplification session. Use the recommended design: conductorSlug is assigned once a Project is actually linked to Conductor and is immutable thereafter; inactive/uncommitted Model Builder draft Projects may remain slugless until promotion. Consolidate slug normalization/collision handling into one shared helper and proceed without another human checkpoint.
   approved_by_human: true
-  updated: '2026-09-07T11:26:08+00:00'
+  updated: '2026-09-07T19:40:19Z'
+  owner: worker
+  claimed_by: claude-conductor-sweep-2026-09-07T19-30-kr-t061
+  claimed_at: '2026-09-07T19:40:19Z'
 
 - id: t-062
   milestone: m4
