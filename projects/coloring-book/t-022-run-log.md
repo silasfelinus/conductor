@@ -1150,3 +1150,70 @@ stages have always used seemed like the more honest approach.
    pass at all yet.
 
 Re-arming to `ready` (recurring), releasing the claim.
+
+## 2026-09-07T23:33Z | Agent run (scheduled Conductor session) | coloring-book/t-022 -- second creative review slice, mr-009 through mr-014
+
+Continued the creative review from mr-009 onward per the prior pass's own next-steps,
+per Silas's 2026-09-07 human-gate simplification policy. Reviewed all 6 not-yet-reviewed
+Monster Recast slots in this range against `homage-concepts.yaml` and
+`DESIGN-BRIEF.md`'s originality rules (never franchise names/actor likenesses/exact
+masks/signature costumes/famous scene or poster compositions):
+
+- **mr-009 (Draculina and Her Three Husbands) -- ACCEPTED.** Original vampire-court
+  designs (no specific actor or poster likeness), matches the brief's central-matriarch
+  framing and Hammer-style sensuality bounds. `accept-color` run live.
+- **mr-010 (The Madam in the Hat) -- NOT ACCEPTED.** This concept's own
+  `originalization_hook` already flags it as an open test ("Test whether the image can
+  move beyond the source silhouette"), and the render doesn't clear that test: it
+  reproduces the Babadook's defining signature (tall dark hat, elongated black-coat
+  silhouette, unnaturally long clawed fingers, doorway threshold) closely enough to read
+  as the source character rather than an original design -- a `DESIGN-BRIEF.md`
+  signature-silhouette violation. Flagged per the brief's own stated uncertainty rather
+  than deciding unilaterally.
+- **mr-011 (The Alien King) -- ACCEPTED.** Original crown/mineral-exoskeleton design,
+  no Xenomorph biomechanical signature reproduced. `accept-color` run live.
+- **mr-012 (Hush, Darling) -- ACCEPTED.** New doll-face design in the close-up poster
+  grammar; no specific Dead Silence dummy design copied. `accept-color` run live.
+- **mr-013 (Ansel Bell) -- NOT ACCEPTED.** The concept's entire recast premise is
+  turning Annabelle into a boy doll in sailor-inspired formalwear specifically to move
+  away from Annabelle's own girl-doll design; the render instead shows a gender-ambiguous
+  child in a plain white christening-style dress, which doesn't follow the recast
+  direction and drifts back toward generic Annabelle-adjacent imagery.
+- **mr-014 (Ghostface Gets Ready) -- NOT ACCEPTED.** The render doesn't depict the
+  concept at all -- no mask, no knife/razor gag, no visible shaved-leg detail; it reads
+  as a generic pinup on the phone in a bubble bath. A rendering/matching failure, not a
+  copyright judgment call.
+
+For the 3 accepted slots, ran `generate-bw` live: all three enqueued real ArtJobs
+(mr-009: 21645; mr-011 and mr-012 also enqueued, ids visible in
+`color-art-jobs.yaml`) but each timed out waiting (still queued/running) -- consistent
+with the render queue backlog observed in this session's other work (`GET
+/api/art/queue/stats`: PENDING in the low 200s, oldest pending age tens of hours). Left
+all three jobs in flight, `bw_status: running`, no duplicate re-enqueue. Transient wait,
+not a failure -- no pass consumed.
+
+**Process note:** `manage_coloring_book_production.py --operation accept-color` failed
+outright with "PIL unavailable -- image guard skipped" until `pip3 install Pillow` was
+run in this sandbox session -- the same recurring, non-persistent gap this project's
+TALKBACK has hit at least four times now.
+
+Decisions and full reasoning recorded as dated notes on each proposal in
+`sets/monster-recast/proposals.yaml` (targeted string edits appending to each slot's
+existing `notes:` list, not a `yaml.safe_dump` round-trip, per the prior pass's own
+caught mistake).
+
+Verification: `validate_roadmaps.py` clean; `coloring_proposal_status.py` before/after
+(Monster Recast accepted color/BW 5/3 -> 8/3, other two books unchanged);
+`coloring_queue_status.py --book monster-recast` shows `queue_integrity_safe: true`, 0
+duplicate job/entry ids; `git diff --stat` reviewed before committing
+(`color-art-jobs.yaml` queue-state text plus `proposals.yaml` notes only -- no binaries
+touched, no re-renders requested for the 3 rejected slots).
+
+**For the next pass:**
+1. mr-010, mr-013, mr-014 need fresh renders before they can be re-reviewed; not
+   re-enqueued this session given the render queue backlog.
+2. Continue the creative review from mr-015 onward for Monster Recast.
+3. Hollywood Recast and Kind Robots (36 slots each) still haven't been touched by this
+   review pass.
+
+Re-arming to `ready` (recurring), releasing the claim.
