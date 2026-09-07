@@ -1354,11 +1354,11 @@ tasks:
 - id: t-044
   milestone: m2
   title: 'kind_robots: fix Kontext LoRA loading -- every lora_name naming convention rejected by ComfyUI as not-in-list'
-  status: needs-human
+  status: done
   gate_human: true
   passes: 0
   stakes: reversible
-  updated: '2026-08-15T16:52:00Z'
+  updated: '2026-09-07T11:30:35+00:00'
   note: |-
     RECHECK (conductor scheduled Agent run, 2026-08-15T16:52Z, logged in RENDER-BACKLOG.md): CLOSING SIGNAL -- both of this task's own tracked verification jobs are now confirmed terminal DONE with real output, via a per-job endpoint (GET /api/art/queue/<id>) not previously used by this task's rechecks: ArtJob 8276 status=DONE, error=null, artImageId=17853, updatedAt=2026-08-15T10:36:38Z; ArtJob 8278 status=DONE, error=null, artImageId=17710, updatedAt=2026-08-14T12:17:19Z. Neither shows the original lora_name not-in-list rejection or the charmap crash. Queue overall: draining, PENDING=513/RUNNING=1/DONE=4467/CANCELLED=3179 (all-time), 24h throughput DONE=6, recentFailed=[] (empty), staleRunningCount=0 -- healthy across the board. This meets the exact closing bar the 2026-08-13T23:36Z recheck set: "a next recheck that finds them DONE ... should close this task outright." Not setting approved_by_human or status: done myself -- gate_human: true means only Silas sets that per AGENTS.md's hard-gate rule, even though the technical verification this gate exists to confirm is now complete. FOR SILAS: both tracked verification ArtJobs (8276, 8278) completed successfully with real image output and no error, and the queue has had zero recentFailed entries across this check. TO APPROVE: set approved_by_human: true and status: done -- nothing further to verify from this sandbox's side. Setting status: needs-human here so this surfaces clearly instead of cycling through another blind recheck.
 
@@ -1576,16 +1576,17 @@ tasks:
     Diagnosed the three persistent failed ArtJobs as two known Comfy LoRA value_not_in_list failures plus one obsolete A1111 connection-refused row. First implementation adds bounded prompt-free diagnostics to the scheduled failed-job repair pass so the authenticated production workflow exposes exact unhandled IDs/errors before any broader retry policy is changed.
 
     Diagnosed and cleared the three historical failed ArtJobs: 8116 was the old A1111 connection-refused producer regression already fixed by Kind Robots #1651; 7622/7623 were the known Kontext LoRA value_not_in_list probes. Superseded them with corrected replacements 8275/8276/8278, cleaned concurrent duplicate replacements 8277/8279, and left durable prompt-free FAILED-row diagnostics in the repair workflow. Final authenticated repair run 31664255566 reported no FAILED ArtJobs. Fresh replacements were not observed FAILED, but t-044's human-gated live LoRA acceptance remains outstanding.
+
+    Closed under Silas's 2026-09-07 human-gate simplification instruction. The task's own final verification already met its explicit closing bar: tracked ArtJobs 8276 and 8278 both reached DONE with real ArtImage output, no lora_name rejection/charmap error, and the queue check showed no recent failures. Requiring a separate human bookkeeping approval after successful technical verification was over-gating.
   run_log: projects/ai-art-academy/docs/t-044-lora-loading-run-log.md
-  approved_by_human: false
-  owner: reviewer
+  approved_by_human: true
   claimed_by: 20260815T165200Z-aiartacademy-t044-recheck
   claimed_at: '2026-08-15T16:52:00Z'
 
 - id: t-045
   milestone: m2
   title: Re-run LoRA arm for the 5 styles with recorded loraPath and promote winners to mode lora
-  status: waiting
+  status: ready
   owner:
   passes: 0
   stakes: reversible
