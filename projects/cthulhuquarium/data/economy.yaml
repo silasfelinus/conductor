@@ -281,9 +281,53 @@ milestones:
   - id: bestiary_20
     trigger: "20 distinct species collected"
     reward: { background: true, slots_cap_delta: 2 }
-  # slots_cap total across all bestiary breakpoints: starting_cap (4) + 4*2 = 12 by bestiary_20,
-  # matching Silas's 20-species MVP bar with real room to build interesting tanks, not just
-  # room to hold everything at once.
+  # slots_cap total across the original four breakpoints: starting_cap (4) + 4*2 = 12 by
+  # bestiary_20, matching Silas's 20-species MVP bar with real room to build interesting
+  # tanks, not just room to hold everything at once.
+  #
+  # EXTENDED 2026-09-07 (t-019 balance pass, conservative data-only pass per Silas's
+  # 2026-09-07 policy substituting for a personal playtest -- see roadmap note). The
+  # bible closed at 151 species (t-037) and stocking one of everything now costs 524
+  # tank units, so the ladder above covers only 13% of the collection and the other 131
+  # species pay no capacity reward at all. A naive continuation at the same +2-per-5-
+  # species rate would put slots_cap past 50 by bestiary_100 alone and trivialize the
+  # tank-packing constraint SCHEMA.md deliberately built the game around (this was
+  # flagged as the wrong fix in the task's own gap note). The breakpoints below instead
+  # decelerate on both axes -- spacing widens and the reward per breakpoint shrinks from
+  # +2 to +1 to +0 -- so growth continues to reward deep collection without ever letting
+  # capacity catch up to the collection size. slots_cap terminates at 19: comfortably
+  # under the ~50 threshold already identified as trivializing, and nowhere near the 524
+  # units a fully-stocked tank would need, so packing/curation stays a real decision for
+  # the whole life of the game. bestiary_151 (full collection) is intentionally a
+  # background-only milestone with slots_cap_delta: 0 -- the same "reward the moment, not
+  # more room" pattern last_aquarium already uses for the actual ending, marking bestiary
+  # completion as a cosmetic/collector's achievement rather than a capacity payout.
+  - id: bestiary_25
+    trigger: "25 distinct species collected"
+    reward: { background: true, slots_cap_delta: 2 }
+  - id: bestiary_35
+    trigger: "35 distinct species collected"
+    reward: { background: true, slots_cap_delta: 1 }
+  - id: bestiary_50
+    trigger: "50 distinct species collected"
+    reward: { background: true, slots_cap_delta: 1 }
+  - id: bestiary_70
+    trigger: "70 distinct species collected"
+    reward: { background: true, slots_cap_delta: 1 }
+  - id: bestiary_95
+    trigger: "95 distinct species collected"
+    reward: { background: true, slots_cap_delta: 1 }
+  - id: bestiary_125
+    trigger: "125 distinct species collected"
+    reward: { background: true, slots_cap_delta: 1 }
+  - id: bestiary_151
+    trigger: "all 151 distinct species collected (full bestiary completion)"
+    reward: { background: true, slots_cap_delta: 0 }
+  # Full-ladder total: starting_cap (4) + 4*2 (through bestiary_20) + 2 (bestiary_25)
+  # + 1+1+1+1 (bestiary_35/50/70/95) + 1 (bestiary_125) + 0 (bestiary_151) = 19.
+  # Spacing across the extension: 5, 10, 15, 20, 25, 25, 26 -- monotonically widening
+  # (bestiary_125 -> bestiary_151 holds flat at 26 only because 151 is the hard ceiling
+  # of the bible, not a deliberate plateau).
 
 # ---------------------------------------------------------------------------
 # The last aquarium — t-039's terminal purchase, and the ONLY thing coins buy
