@@ -1072,3 +1072,81 @@ small script fix (prefer the id after "Keeping ArtJob" when both appear) if it r
 second time, rather than a one-off manual recovery again.
 
 Re-arming to `ready` (recurring), releasing the claim.
+
+## 2026-09-07T22:33Z | Agent run (scheduled Conductor session) | coloring-book/t-022 -- first agent-side creative review pass under Silas's 2026-09-07 human-gate simplification policy
+
+All three books' color-proposal stages were fully drained (36/36 rendered, 0 pending)
+per `coloring_proposal_status.py`, with each book's `next` action reading "review
+rendered color proposal; accept or revise" -- the first time this task's actual creative
+gate (not queue plumbing) has been agent-actionable, per the roadmap note's 2026-09-07
+release language.
+
+Reviewed the first 4 not-yet-accepted Monster Recast slots (mr-001, mr-005, mr-006,
+mr-008) by reading each rendered candidate directly against its `homage-concepts.yaml`
+brief and the book's originality rules (`DESIGN-BRIEF.md`'s "never reproduce a protected
+character... signature costumes... famous scene/poster compositions"):
+
+- **mr-001 (The Perfect Woman) -- REJECTED.** The rendered candidate reproduces the
+  Bride of Frankenstein's single most iconic visual signature (the black hair with a
+  white lightning-bolt streak) almost exactly, plus a bandage-wrapped-arms pose and a
+  bald doctor + hunchbacked assistant flanking her at an electrification rig. This is an
+  explicit, named violation of the concept's own `originalization_hook` ("never make her
+  the Bride"), not a borderline call -- rejected per policy rather than escalated. Needs
+  a fresh render with an original hair treatment and different doctor/assistant designs.
+- **mr-005 (Moon-Torn) -- ACCEPTED.** Original werewolf design, no single-franchise
+  signature silhouette reproduced; imperfect fidelity to "she-wolf"/torn-clothing details
+  but nothing copyright-risky or concept-breaking. `accept-color` run live.
+- **mr-006 (Screwhead) -- NOT ACCEPTED.** Doesn't match its own concept at all (no
+  screws, no petaled sphere prop -- reads as an unrelated ornate-headdress portrait), and
+  rendered essentially monochrome/grayscale rather than color. Needs a fresh render
+  against the actual brief.
+- **mr-007 (Pound Foolish) -- ACCEPTED.** Six-armed carnival ringmaster clown matches the
+  brief; makeup/costume read as generic-clown rather than a specific franchise copy.
+  `accept-color` run live.
+- **mr-008 (The Little Game Mistress) -- NOT ACCEPTED (yet).** Original tuxedo-automaton
+  design (no Jigsaw-doll spiral cheeks/tricycle), reasonably on-brief, but also rendered
+  essentially monochrome/grayscale like mr-006. Flagging monochrome rendering as a
+  possible systemic issue across this batch rather than a one-off, worth checking before
+  more slots are reviewed.
+
+Decisions and full reasoning recorded as dated notes on each proposal in
+`sets/monster-recast/proposals.yaml` (not overwriting or removing any prior note).
+
+For the 2 accepted slots, also ran `generate-bw` live: both enqueued real ArtJobs
+(21643, 21644) but timed out waiting (still queued/running after 30s) -- consistent with
+the render queue backlog observed elsewhere this session (`GET /api/art/queue/stats`:
+PENDING=204, oldestPending age ~52.8h, 24h throughput only 6 DONE). Left both jobs
+in flight, `bw_status: running`, no duplicate re-enqueue. This is a transient wait, not a
+failure -- no pass consumed.
+
+Verification: `validate_roadmaps.py` clean; `coloring_proposal_status.py` before/after
+(Monster Recast accepted color/BW 3/3 -> 5/3, other two books unchanged);
+`coloring_queue_status.py --book monster-recast` shows `queue_integrity_safe: true`, 0
+duplicate job/entry ids; `git diff --stat` reviewed before committing (`color-art-jobs.yaml`
+queue-state text plus `proposals.yaml` notes only -- no binaries touched, no re-renders
+requested).
+
+**Scope note:** deliberately stopped after 4 slots rather than pushing through all 33
+remaining Monster Recast slots (let alone Hollywood Recast's and Kind Robots' 36 each)
+in one pass. This is genuine subjective creative/copyright-risk judgment per image, not a
+mechanical check -- the first slot reviewed (mr-001) turned out to be a real, explicit
+rejection, and 2 of the remaining 3 sampled slots (mr-006, mr-008) surfaced a possible
+systemic monochrome-rendering defect. Rushing through the full ~100-slot backlog in one
+session risked either rubber-stamping copyright-risky designs or a shallow pass that
+misses real defects. Continuing in the same bounded-slice pattern this task's other
+stages have always used seemed like the more honest approach.
+
+**For the next pass:**
+1. Check whether the monochrome-rendering pattern (mr-006, mr-008 this pass) is
+   widespread across the remaining Monster Recast slots, and Hollywood Recast/Kind
+   Robots too, before batch-accepting anything -- if it's systemic, it may be worth a
+   small script/pipeline check (are color-mode render params being dropped for some
+   requests?) rather than flagging it slot-by-slot forever.
+2. Continue the creative review from mr-009 onward for Monster Recast.
+3. mr-001 and mr-006 need fresh renders before they can be re-reviewed; not re-enqueued
+   this session given the render queue backlog -- a future session with more queue
+   headroom should request them.
+4. Hollywood Recast and Kind Robots (36 slots each) haven't been touched by this review
+   pass at all yet.
+
+Re-arming to `ready` (recurring), releasing the claim.
