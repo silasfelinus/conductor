@@ -12657,3 +12657,27 @@ records:
     check (alexa-integration/mandarin-tutor/media-watchlist/scene-animator)
     was already failing on main before this PR touched anything, confirmed by
     running the test against a fresh origin/main checkout."
+- date: 2026-09-07
+  project: cthulhuquarium
+  task: t-041
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The task's only open item (Decision 2: whether the egg purchase
+    OPTION itself should be concealed, vs. only its CONTENTS) was resolved by
+    Silas's 2026-09-07 default-recommendation policy in the task note itself
+    -- keep the option visibly on sale, hide only the species. Re-reading the
+    already-merged implementation (kind_robots PR #2172) against that
+    decision found it already compliant end to end: the egg catalog API/UI
+    exposes only rarity/size/cost/description, never species or the eligible
+    pool; hatchEggForUser resolves the species server-side at hatch time
+    only; the shop panel has no discovery gate on the purchase option; the
+    hatch reveal dialog always shows the result, never silently. No code
+    change was needed -- this closed as a verification-only pass. General
+    lesson: when a roadmap task's remaining note is a Silas decision on an
+    already-shipped feature rather than a design gate blocking new work,
+    check the live diff against the decision before assuming implementation
+    work remains -- a 'ready' status can mean 'verify and close', not always
+    'build something'."
