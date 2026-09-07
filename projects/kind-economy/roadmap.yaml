@@ -599,17 +599,34 @@ tasks:
 - id: t-014
   milestone: m4
   title: "Design the creator payout mechanism"
-  status: claimed
-  updated: '2026-09-07T15:31:21Z'
+  status: done
+  updated: '2026-09-07T15:31:35Z'
   passes: 0
   stakes: reversible
   depends_on: [t-008]
-  note: |-
+  note: >-
     FOR SILAS: Design complete for the settled model (see PAYOUT-MECHANISM-DESIGN.md): liability accounting, chargeback-window-based withdrawal timer (recommend 120 days), and the token/earnedTokens data-shape gap is now closed by t-006/t-007/t-008. Four items need Silas: payout path (manual vs Stripe Connect, recommend manual v1), minimum threshold, identity/tax collection policy, and unclaimed-balance handling. One needs a CPA: constructive-receipt timing on earnedTokens. Parked at needs-human for those five decisions.
 
     Oversight reconciliation: the payout-mechanism design is complete and is waiting on Silas's product choices plus CPA confirmation. Marking this as a soft human-decision gate distinguishes it from irreversible payout execution, which remains separately hard-gated in t-015.
 
     This is design work, not a payout action. Release under Silas's 2026-09-07 human-gate simplification policy. Design around the accepted model: per-interaction accrual, pooled/scheduled disbursement above a threshold, append-only ledger, and no self-attribution rebate. Do not create processor accounts, handle live secrets, enable payouts, or move money; those remain the separate hard gate t-015.
+
+    RECONCILED 2026-09-07 (scheduled Agent sweep): the design deliverable this task actually
+    asks for (PAYOUT-MECHANISM-DESIGN.md) has been complete since 2026-08-19 and already
+    follows the accepted model named in the 2026-09-07 human-gate-simplification release
+    note verbatim -- per-interaction accrual (earnedTokens credited only from RevenueSplit),
+    pooled/scheduled disbursement above a threshold (recommend 120-day chargeback-window
+    timer), an append-only ledger (PayoutRequest, never edited/deleted), and no self-
+    attribution rebate (SELF-ATTRIBUTION-POLICY.md). Nothing further for an agent to design:
+    the five remaining items (payout path, minimum threshold, identity/tax policy,
+    unclaimed-balance handling, and the CPA constructive-receipt question) are genuine
+    product/legal decisions, not design gaps, and they stay tracked exactly where they
+    already are -- t-015 (GATE: enable real creator payouts, hard, depends_on t-014+t-013,
+    unaffected by this close-out) requires the design be "reviewed by someone qualified"
+    before anything proceeds, which is precisely those five items. Closing this design task
+    to done rather than leaving it re-parked at needs-human matches the release note's own
+    instruction that planning/design work should not wait on Silas. No code, secrets,
+    processor accounts, or money-movement touched.
   owner: reviewer
   claimed_by: claude-scheduled-20260907T153120Z-ke-t014
   claimed_at: '2026-09-07T15:31:21Z'
@@ -675,11 +692,11 @@ tasks:
 - id: t-022
   milestone: m5
   title: "Design the butterfly-themed public fundraising event"
-  status: claimed
-  updated: '2026-09-07T15:32:25Z'
+  status: done
+  updated: '2026-09-07T15:32:38Z'
   passes: 0
   stakes: reversible
-  note: |-
+  note: >-
     FOR SILAS: FROM SILAS, 2026-08-19: "hosting a public event for fundraising, themed on butterflies." AMI is a horde of rainbow butterflies and malaria nets are the thing being funded, so the theme is not decoration — it is the pitch, and it should carry the actual argument (a net costs a few dollars; a life costs about $5,000; here is what your twenty bucks does). Planning and design only — no venue booked, no deposit paid, no date announced, no vendor contacted. Produce a written event plan: format and scale options (gallery night of AMI-generated art, community make-a-butterfly workshop, talk plus donation drive), venue candidates, rough budget, what the site's own generated art contributes, and what would have to be true for it to break even rather than cost more than it raises — a fundraiser that loses money is a donation with extra steps. THE CRITICAL DESIGN CONSTRAINT, and it is the same one that keeps the website simple: DO NOT TAKE CUSTODY OF DONATIONS. Point attendees at againstmalaria.com/amibot and let them give directly — QR codes on the wall, a laptop at the door. The moment Kind Robots collects money at an event and forwards it, it is soliciting charitable contributions on another organization's behalf, and California has registration rules for that which are wildly out of proportion to a small community event. Direct-to-AMF sidesteps the entire category. If Silas wants to sell something at the event (prints, merch), that is ordinary commerce and goes through the normal storefront — keep the two flows visibly separate. Escalate to needs-human before anything is booked, paid for, or publicly announced.
     PLAN READY 2026-08-19, escalated per the task's own instruction. Full written plan at projects/kind-economy/BUTTERFLY-EVENT-PLAN.md: three format options (gallery night of curated existing Daily Dream art, make-a-butterfly workshop, talk plus donation drive) with a recommended A+B combination; six venue-type candidates (library community room, coworking space, cafe, rec center, gallery community night, backyard/park shelter) with rough cost ranges, none contacted; a rough budget (~$55-$505 for a first small run); and a break-even framing that treats the event as a bounded out-of-pocket outreach spend rather than something the donations (which never touch Kind Robots, per the no-custody constraint) need to cover. Needs Silas to: pick a format, approve a venue category to start canvassing, and green-light a date before any booking/payment/announcement.
 
@@ -687,6 +704,22 @@ tasks:
     Oversight reconciliation: the butterfly fundraising-event plan is complete and is waiting on Silas to choose format, venue category, and date. This classifies the current planning hold as a soft human-decision gate; any booking, payment, contact, or public announcement remains separately outward-facing and requires explicit approval.
 
     Release as agent-owned planning under Silas's 2026-09-07 human-gate simplification policy. Produce the butterfly-themed fundraiser plan with direct-to-AMF donations as the default, clearly separate any ordinary merchandise sales, and keep venue booking, deposits, public date announcements, vendor contact, and any live solicitation behind a fresh explicit human gate. Planning itself should not wait on Silas.
+
+    RECONCILED 2026-09-07 (scheduled Agent sweep): the planning deliverable this task asks
+    for (BUTTERFLY-EVENT-PLAN.md) has been complete since 2026-08-19 and already covers
+    everything the 2026-09-07 human-gate-simplification release note asks for -- three
+    format/scale options (gallery night, make-a-butterfly workshop, talk+donation drive)
+    with a recommended A+B combination, six unconfirmed venue-type candidates with rough
+    cost ranges, a rough budget, and an explicit break-even framing that treats the event as
+    a bounded outreach spend since donations never touch Kind Robots (no-custody
+    constraint). Nothing further for an agent to plan. Closing to done rather than re-
+    parking at needs-human, matching the release note's own instruction that planning should
+    not wait on Silas. Booking a venue, paying a deposit, contacting a vendor, announcing a
+    date, or any public solicitation remains explicitly out of scope and requires a fresh
+    outward-facing human gate at whatever future point Silas decides to actually run this --
+    no such gate exists yet because no execution task has been filed; one should be opened
+    fresh, not implied by this close-out, if/when Silas picks a format and green-lights a
+    date.
   owner: reviewer
   claimed_by: claude-scheduled-20260907T153225Z-ke-t022
   claimed_at: '2026-09-07T15:32:25Z'
