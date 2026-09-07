@@ -4909,7 +4909,26 @@ tasks:
     already finished, or conversely could think a stalled run is still 'normal' when
     actions_get would show it's genuinely stuck. Worth folding into whichever future fix
     investigates this task's item (b).
-  updated: '2026-09-02T16:52:35Z'
+
+    New evidence, 2026-09-07 (interface-vision/t-104 slice 130, kind_robots PR #2483): this
+    stall pattern is not limited to Contract verifiers/ESLint ratchet. The 'Build production
+    image' (Publish Production Container workflow) job on this PR sat in_progress at the
+    exact same 'Build and publish' step for 35+ minutes on attempt 1 with zero step-level
+    progress; cancelled and re-run once per this task's own established 're-run at most
+    once' convention, and attempt 2 also sat at the identical step for 40+ minutes with zero
+    progress before this session stopped retrying. All other 49 required checks on the same
+    commit passed cleanly each time they ran (vue-tsc, eslint, layout-contract, lint-
+    ratchet, Contract Tests' ~330 sequential checks, etc.) -- consistent with every prior
+    occurrence's own local verification showing this is a CI-infrastructure stall, not a
+    content issue. Per the established convention, left kind_robots#2483 open, unmerged,
+    with a standing-down comment, for a later session or Silas to re-check CI and merge once
+    green. Widening this task's scope: the stall signature (sits in_progress with zero step-
+    level progress for 20-40+ minutes, a fresh rerun sometimes but not reliably clears it)
+    now spans at least two different required-check workflows (Contract Tests' ESLint
+    ratchet step, and Publish Production Container's Build and publish step), suggesting a
+    shared runner/infra-level cause rather than something specific to either job's own
+    script.
+  updated: '2026-09-07T06:48:56Z'
 
 - id: t-133
   milestone: m2
