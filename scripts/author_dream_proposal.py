@@ -31,6 +31,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 import build_dream_proposal as dreams  # noqa: E402
 import dream_creative_ruts as ruts  # noqa: E402
 import dream_prose_quality as prose  # noqa: E402
+import dream_theme_diversity as themes  # noqa: E402
 
 API_URL = "https://api.anthropic.com/v1/messages"
 API_VERSION = "2023-06-01"
@@ -219,6 +220,14 @@ causality, body/space unease, forbidden perception, or existential stakes.
 Anthropomorphic animals should be embodied animals whose anatomy, habitat,
 senses, social behavior, scale, tools, or movement matter, not ordinary humans
 with animal nouns pasted onto them. Other genres deserve the same commitment.
+
+An aquatic ANIMAL or SPECIES Facet constrains the creature, not the whole world's
+biome. Preserve the creature's anatomy and physiological needs, but unless an
+assigned SETTING or GENRE actually asks for an oceanic world, do not automatically
+turn otters, manatees, sharks, shrimp, or similar creatures into another civilization
+of reefs, flotillas, drowned cities, docks, tides, hulls, and underwater civic
+institutions. A creature can require water without everybody in the premise living
+on the ocean.
 
 Do not default to whimsical bureaucracy. Unless today's Facets specifically ask
 for administration or records, avoid ledgers, filing, archives, permit offices,
@@ -556,6 +565,27 @@ def story_diversity_complaints(
             "story falls back into the overused bureaucracy/record-keeping motif "
             f"({examples}) even though today's Facets do not request it; replace the "
             "institution, conflict engine, and signature objects with a different kind of story"
+        )
+
+    aquatic_hits = themes.aquatic_world_hits(creative_text)
+    recent_aquatic_world = any(
+        themes.is_aquatic_world(recent)
+        for recent in recent_premises[-dreams.RECENT_THEME_LOOKBACK:]
+    )
+    facets_request_aquatic_world = themes.facets_explicitly_request_aquatic_world(
+        seed_facets or {}
+    )
+    if (
+        len(aquatic_hits) >= themes.AQUATIC_WORLD_MIN_HITS
+        and recent_aquatic_world
+        and not facets_request_aquatic_world
+    ):
+        examples = ", ".join(sorted(aquatic_hits)[:6])
+        complaints.append(
+            "story turns the whole setting into the recently overused aquatic-world motif "
+            f"({examples}) even though today's Facets do not request an oceanic setting; "
+            "keep any aquatic creature's physiology meaningful without making the location, "
+            "society, conflict engine, and signature objects another reef/flotilla/drowned world"
         )
 
     all_names = _proposal_names(proposal)

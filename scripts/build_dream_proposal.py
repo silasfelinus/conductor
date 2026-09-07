@@ -10,8 +10,13 @@ from typing import Any
 from zoneinfo import ZoneInfo
 import yaml
 
+try:
+    import dream_theme_diversity as theme_diversity
+except ModuleNotFoundError:  # imported as scripts.build_dream_proposal in pytest
+    from scripts import dream_theme_diversity as theme_diversity
+
 ROOT = Path(__file__).resolve().parent.parent
-BACKLOG = ROOT / "projects/dream-cycle/backlog"
+BACKLOG = ROOT / "projects" / "dream-cycle/backlog"
 KR_BASE_URL = "https://kindrobots.org"
 PACIFIC = ZoneInfo("America/Los_Angeles")
 
@@ -80,6 +85,7 @@ FIELDS = {
  "reward": ("name", "reward_type", "rarity", "grants", "best_used_when", "catch", "look"),
  "scenario": ("title", "setup"),
 }
+RECENT_THEME_LOOKBACK = 5
 
 
 def _target_date(now: datetime | None = None) -> str:
@@ -145,6 +151,48 @@ def _draw(rng: random.Random, pool: list[dict[str, Any]], count: int = 1) -> lis
     return chosen
 
 
+def _proposal_data(text: str) -> dict[str, Any]:
+    match = re.search(r"<!--\s*proposal-data\s*\n(.*?)\n-->", text, re.DOTALL)
+    if not match:
+        return {}
+    try:
+        payload = json.loads(match.group(1))
+    except json.JSONDecodeError:
+        return {}
+    return payload if isinstance(payload, dict) else {}
+
+
+def recent_theme_cooldowns(
+    day: str,
+    backlog_dir: Path | str | None = None,
+    lookback: int = RECENT_THEME_LOOKBACK,
+) -> set[str]:
+    """Theme families recent authored worlds have temporarily spent.
+
+    Daily Dream is a curated sequence, not a sequence of independent dice rolls. If a
+    world-scale motif appeared anywhere in the previous five proposals, avoid drawing
+    Facets that naturally pull the next proposal back into the same motif. This is a
+    preference layer: apply_seed_cooldowns falls back to the full pool if filtering would
+    make a required draw impossible.
+    """
+    root = Path(backlog_dir) if backlog_dir is not None else BACKLOG
+    if not root.exists() or lookback <= 0:
+        return set()
+    paths = [
+        path
+        for path in sorted(root.glob("20??-??-??-*.md"))
+        if path.name[:10] < day
+    ][-lookback:]
+    for path in paths:
+        try:
+            proposal = _proposal_data(path.read_text(encoding="utf-8"))
+        except OSError:
+            continue
+        if proposal and theme_diversity.proposal_is_aquatic_world(proposal):
+            return {theme_diversity.AQUATIC_WORLD_FAMILY}
+    return set()
+
+
 def plan_inventions(
     rng: random.Random,
     catalog: dict[str, list[dict[str, Any]]],
@@ -194,11 +242,20 @@ def plan_inventions(
     return chosen
 
 
-def facet_seed_plan(day: str, catalog: dict[str, list[dict[str, Any]]] | None = None) -> dict[str, Any]:
+def facet_seed_plan(
+    day: str,
+    catalog: dict[str, list[dict[str, Any]]] | None = None,
+    cooldowns: set[str] | None = None,
+) -> dict[str, Any]:
     source = "provided"
     if catalog is None: catalog, source = fetch_facet_catalog()
+    active_cooldowns = recent_theme_cooldowns(day) if cooldowns is None else set(cooldowns)
     seed = int.from_bytes(hashlib.sha256(f"daily-dream-v2:{day}".encode()).digest()[:8], "big")
-    rng = random.Random(seed); genres = _draw(rng, catalog["GENRE"], 7)
+    rng = random.Random(seed)
+    genre_pool = theme_diversity.apply_seed_cooldowns(
+        catalog["GENRE"], active_cooldowns, minimum=7
+    )
+    genres = _draw(rng, genre_pool, 7)
 
     # ROTATED, not fixed. Every dream ever built drew its non-genre seeds from
     # the same three taxonomies (OCCUPATION, MATERIAL, PERSONALITY), which is a
@@ -209,12 +266,27 @@ def facet_seed_plan(day: str, catalog: dict[str, list[dict[str, Any]]] | None = 
     flavour_taxes = rng.sample(flavour_pool, min(2, len(flavour_pool))) if flavour_pool else ["OCCUPATION"]
     while len(flavour_taxes) < 2: flavour_taxes.append(flavour_taxes[0])
 
-    creature = _draw(rng, catalog[creature_tax])[0]
+    creature = _draw(
+        rng,
+        theme_diversity.apply_seed_cooldowns(
+            catalog[creature_tax], active_cooldowns, minimum=1
+        ),
+    )[0]
     # `wildcard` and `shared.personality` keep their names: several consumers
     # (the digest, render_markdown, the creative contract) read them by key, and
     # what rotates is which taxonomy fills them, not what they are called.
-    occupation = _draw(rng, catalog[flavour_taxes[0]])[0]
-    personality = _draw(rng, catalog[flavour_taxes[1]])[0]
+    occupation = _draw(
+        rng,
+        theme_diversity.apply_seed_cooldowns(
+            catalog[flavour_taxes[0]], active_cooldowns, minimum=1
+        ),
+    )[0]
+    personality = _draw(
+        rng,
+        theme_diversity.apply_seed_cooldowns(
+            catalog[flavour_taxes[1]], active_cooldowns, minimum=1
+        ),
+    )[0]
     material = _draw(rng, catalog["MATERIAL"])[0]
     umbrella = genres[:2]
     extras = dict(zip(("location", "character", "reward_item", "reward_skill", "scenario"), genres[2:]))
