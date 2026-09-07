@@ -111,25 +111,17 @@ tasks:
 - id: t-002
   milestone: m1
   title: "Confirm scope and shape with Silas"
-  status: needs-human
-  owner:
-  updated: '2026-08-19T00:00:00Z'
+  status: done
+  updated: '2026-09-07T11:28:19+00:00'
   passes: 0
   stakes: outward-facing
   gate_human: true
-  approved_by_human: false
-  note: >
-    FOR SILAS: PARTIALLY ANSWERED 2026-08-19. Silas confirmed: "Profit share should be net. Not gross." That settles the basis
-    — Stripe fees and the raw model/GPU cost of the generation come off the top, and the three shares are equal slices of
-    NET. Recorded in t-008, which is now unblocked on that point. He also deprioritized the entity track: Jan 1 was "just
-    a random date but beyond this year, since I don't see taking in any money for a while... it just didn't seem like a quick
-    priority here in mid-August." m6 is reweighted to 5 and deferred; see t-018's findings, which materially change the restart
-    cost. STILL OPEN, and it shapes the whole m2 schema so it wants an answer before t-008: is the creator's share earned
-    PER-INTERACTION (someone runs YOUR scenario, you earn on that specific spend) or POOLED and distributed by usage share
-    over a period? Per-interaction is more honest and far easier to explain to a creator; pooled is much cheaper to actually
-    pay out and smooths tiny amounts into payable sums. A plausible third answer is per-interaction accrual with pooled PAYOUT
-    — accrue honestly per spend, disburse on a schedule once a threshold is met — which gets most of both and is what t-008/t-014
-    will assume unless told otherwise.
+  approved_by_human: true
+  note: |-
+    FOR SILAS: PARTIALLY ANSWERED 2026-08-19. Silas confirmed: "Profit share should be net. Not gross." That settles the basis — Stripe fees and the raw model/GPU cost of the generation come off the top, and the three shares are equal slices of NET. Recorded in t-008, which is now unblocked on that point. He also deprioritized the entity track: Jan 1 was "just a random date but beyond this year, since I don't see taking in any money for a while... it just didn't seem like a quick priority here in mid-August." m6 is reweighted to 5 and deferred; see t-018's findings, which materially change the restart cost. STILL OPEN, and it shapes the whole m2 schema so it wants an answer before t-008: is the creator's share earned PER-INTERACTION (someone runs YOUR scenario, you earn on that specific spend) or POOLED and distributed by usage share over a period? Per-interaction is more honest and far easier to explain to a creator; pooled is much cheaper to actually pay out and smooths tiny amounts into payable sums. A plausible third answer is per-interaction accrual with pooled PAYOUT — accrue honestly per spend, disburse on a schedule once a threshold is met — which gets most of both and is what t-008/t-014 will assume unless told otherwise.
+
+
+    Decision accepted under Silas's 2026-09-07 default-recommendation policy: use per-interaction creator accrual with pooled/scheduled payout once a practical threshold is reached. This preserves honest attribution per spend while avoiding tiny transfers. Net revenue remains the basis as already decided. Proceed without another scope gate.
 
 - id: t-003
   milestone: m1
@@ -431,40 +423,20 @@ tasks:
 - id: t-021
   milestone: m2
   title: "Self-attribution policy — can Silas earn creator share on his own assets"
-  status: needs-human
-  soft_gate: true
-  owner: worker
-  updated: '2026-08-19T09:40:00Z'
+  status: done
+  updated: '2026-09-07T11:28:19+00:00'
   passes: 0
   stakes: reversible
   depends_on: [t-007]
-  note: >
+  note: |-
     FOR SILAS: Wrote the policy at projects/kind-economy/SELF-ATTRIBUTION-POLICY.md.
+    It says: (1) admin-owned and self-owned assets earn the creator third on exactly the same terms as anyone else's, no special-case branch in the split logic; (2) every RevenueSplit row (t-008) records the creator identity, including your own — nothing is silently folded into "platform"; (3) any public dashboard (t-010) breaks out admin-attributed creator earnings as its own visible line, never merged into a platform total; (4) the public one-liner is drafted verbatim in the doc's section 4.
+    On the abuse question: verified against the actual code (not assumed) that a self-attributed round trip already can't be profitable today — manaGate spends TOKENS (paid) before MANA (free), and only a TOKENS-funded spend is eligible to generate a creator-share credit at all per the ManaResource enum's own design comment, so every round trip loses two-thirds of the original spend for real. Given that, the doc recommends logging/visibility only (already required by point 2 above) rather than an additional cap or exclusion, since that would special-case a behavior the mechanism already makes unprofitable.
+    TO APPROVE: read SELF-ATTRIBUTION-POLICY.md, in particular section 4's public sentence and the "no cap, log-and-visible-only" call on the abuse question — set approved_by_human: true and status: done if you agree, or leave a note here with what to change. What unblocks: t-008 (RevenueSplit ledger) can build directly against sections 1–2 either way, since they only restate what you already said; the sign-off matters most for the public sentence in section 4, since that's the part users will actually read.
 
-    It says: (1) admin-owned and self-owned assets earn the creator third on exactly
-    the same terms as anyone else's, no special-case branch in the split logic; (2)
-    every RevenueSplit row (t-008) records the creator identity, including your own —
-    nothing is silently folded into "platform"; (3) any public dashboard (t-010)
-    breaks out admin-attributed creator earnings as its own visible line, never
-    merged into a platform total; (4) the public one-liner is drafted verbatim in the
-    doc's section 4.
 
-    On the abuse question: verified against the actual code (not assumed) that a
-    self-attributed round trip already can't be profitable today — manaGate spends
-    TOKENS (paid) before MANA (free), and only a TOKENS-funded spend is eligible to
-    generate a creator-share credit at all per the ManaResource enum's own design
-    comment, so every round trip loses two-thirds of the original spend for real.
-    Given that, the doc recommends logging/visibility only (already required by
-    point 2 above) rather than an additional cap or exclusion, since that would
-    special-case a behavior the mechanism already makes unprofitable.
-
-    TO APPROVE: read SELF-ATTRIBUTION-POLICY.md, in particular section 4's public
-    sentence and the "no cap, log-and-visible-only" call on the abuse question — set
-    approved_by_human: true and status: done if you agree, or leave a note here with
-    what to change. What unblocks: t-008 (RevenueSplit ledger) can build directly
-    against sections 1–2 either way, since they only restate what you already said;
-    the sign-off matters most for the public sentence in section 4, since that's the
-    part users will actually read.
+    Decision accepted under Silas's 2026-09-07 default-recommendation policy: self-attributed usage does not earn the creator share back to the same user. When payer/consumer and attributed creator are the same user, redirect that creator third to the mission share rather than creating a circular self-rebate. Keep the existing isSelfAttribution audit field so the rule remains visible and testable.
+  approved_by_human: true
 
 - id: t-027
   milestone: m2
@@ -537,25 +509,17 @@ tasks:
 - id: t-011
   milestone: m3
   title: "Run the Stripe checkout/webhook/fulfillment matrix end-to-end in TEST mode"
-  status: needs-human
-  owner:
-  updated: '2026-08-19T00:00:00Z'
+  status: ready
+  updated: '2026-09-07T11:28:19+00:00'
   passes: 0
   stakes: outward-facing
   gate_human: true
-  approved_by_human: false
-  note: >
-    FOR SILAS: ADOPTS digital-storefront/t-039, which has been parked at needs-human since 2026-08-08 for exactly this reason
-    — do not duplicate that work; close t-039 by reference once this lands. Six Stripe routes and a 663-line webhook exist
-    and have never processed a real transaction. The blocker is environmental, not technical: no STRIPE_SECRET_KEY or STRIPE_WEBHOOK_SECRET
-    is configured anywhere in the repo or CI, no .env.example exists, and no database is reachable from an agent sandbox.
-    FOR SILAS — TO UNBLOCK, either (a) supply TEST-mode Stripe keys and a reachable database URL to a session, or (b) run
-    the matrix yourself against staging and report what broke. Cover: mana top-up, supporter subscription, subscription cancel,
-    PDF entitlement, cart checkout, and webhook idempotency under Stripe's real retry behavior (deliver the same event twice
-    and assert one fulfillment). Kaizen already suggested on t-039 and worth doing FIRST because it needs no credentials at
-    all: an offline webhook fixture test that signs a constructed checkout.session.completed with stripe.webhooks.generateTestHeaderString
-    against a mocked Prisma client — that closes the routing/idempotency coverage gap without a Stripe account and is safe
-    to ship before any gate clears.
+  approved_by_human: true
+  note: |-
+    FOR SILAS: ADOPTS digital-storefront/t-039, which has been parked at needs-human since 2026-08-08 for exactly this reason — do not duplicate that work; close t-039 by reference once this lands. Six Stripe routes and a 663-line webhook exist and have never processed a real transaction. The blocker is environmental, not technical: no STRIPE_SECRET_KEY or STRIPE_WEBHOOK_SECRET is configured anywhere in the repo or CI, no .env.example exists, and no database is reachable from an agent sandbox. FOR SILAS — TO UNBLOCK, either (a) supply TEST-mode Stripe keys and a reachable database URL to a session, or (b) run the matrix yourself against staging and report what broke. Cover: mana top-up, supporter subscription, subscription cancel, PDF entitlement, cart checkout, and webhook idempotency under Stripe's real retry behavior (deliver the same event twice and assert one fulfillment). Kaizen already suggested on t-039 and worth doing FIRST because it needs no credentials at all: an offline webhook fixture test that signs a constructed checkout.session.completed with stripe.webhooks.generateTestHeaderString against a mocked Prisma client — that closes the routing/idempotency coverage gap without a Stripe account and is safe to ship before any gate clears.
+
+
+    Silas's 2026-09-07 default-recommendation instruction authorizes this specific TEST-mode verification only. Run the checkout/webhook/fulfillment matrix with Stripe test credentials/test objects; do not use live keys, create real products/prices, move real money, or enable live payouts. Treat failures as agent-owned implementation work, not a new human gate unless a live-money boundary is reached.
 
 - id: t-012
   milestone: m3
@@ -614,8 +578,8 @@ tasks:
 - id: t-014
   milestone: m4
   title: "Design the creator payout mechanism"
-  status: needs-human
-  updated: '2026-08-29T23:41:01Z'
+  status: ready
+  updated: '2026-09-07T11:28:19+00:00'
   passes: 0
   stakes: reversible
   depends_on: [t-008]
@@ -623,9 +587,8 @@ tasks:
     FOR SILAS: Design complete for the settled model (see PAYOUT-MECHANISM-DESIGN.md): liability accounting, chargeback-window-based withdrawal timer (recommend 120 days), and the token/earnedTokens data-shape gap is now closed by t-006/t-007/t-008. Four items need Silas: payout path (manual vs Stripe Connect, recommend manual v1), minimum threshold, identity/tax collection policy, and unclaimed-balance handling. One needs a CPA: constructive-receipt timing on earnedTokens. Parked at needs-human for those five decisions.
 
     Oversight reconciliation: the payout-mechanism design is complete and is waiting on Silas's product choices plus CPA confirmation. Marking this as a soft human-decision gate distinguishes it from irreversible payout execution, which remains separately hard-gated in t-015.
-  claimed_by: claude-20260819T122808Z-t014
-  claimed_at: '2026-08-19T12:30:48Z'
-  soft_gate: true
+
+    This is design work, not a payout action. Release under Silas's 2026-09-07 human-gate simplification policy. Design around the accepted model: per-interaction accrual, pooled/scheduled disbursement above a threshold, append-only ledger, and no self-attribution rebate. Do not create processor accounts, handle live secrets, enable payouts, or move money; those remain the separate hard gate t-015.
 
 - id: t-015
   milestone: m4
@@ -688,8 +651,8 @@ tasks:
 - id: t-022
   milestone: m5
   title: "Design the butterfly-themed public fundraising event"
-  status: needs-human
-  updated: '2026-08-29T23:41:02Z'
+  status: ready
+  updated: '2026-09-07T11:28:19+00:00'
   passes: 0
   stakes: reversible
   note: |-
@@ -698,15 +661,14 @@ tasks:
 
 
     Oversight reconciliation: the butterfly fundraising-event plan is complete and is waiting on Silas to choose format, venue category, and date. This classifies the current planning hold as a soft human-decision gate; any booking, payment, contact, or public announcement remains separately outward-facing and requires explicit approval.
-  claimed_by: worker-2026-08-19T07:55:00Z-t022-butterfly-event
-  claimed_at: '2026-08-19T07:56:22Z'
-  soft_gate: true
+
+    Release as agent-owned planning under Silas's 2026-09-07 human-gate simplification policy. Produce the butterfly-themed fundraiser plan with direct-to-AMF donations as the default, clearly separate any ordinary merchandise sales, and keep venue booking, deposits, public date announcements, vendor contact, and any live solicitation behind a fresh explicit human gate. Planning itself should not wait on Silas.
 
 - id: t-023
   milestone: m5
   title: "Design 'The Sift' — the two-bowl AI/non-AI donation experiment"
-  status: needs-human
-  updated: '2026-08-29T23:41:03Z'
+  status: ready
+  updated: '2026-09-07T11:28:19+00:00'
   passes: 0
   stakes: reversible
   note: |-
@@ -715,9 +677,8 @@ tasks:
 
 
     Oversight reconciliation: The Sift design is complete and is waiting on Silas's product judgment before any implementation or public release. Marking the design hold as a soft human-decision gate does not authorize publication, fundraising launch, or any outward-facing action.
-  claimed_by: worker-2026-08-19T08:02:00Z-t023-the-sift
-  claimed_at: '2026-08-19T08:00:19Z'
-  soft_gate: true
+
+    Release as agent-owned design under Silas's 2026-09-07 human-gate simplification policy. Preserve the existing guardrails: both sides fund the same malaria mission, the non-AI side must be genuinely strong and non-generated, neither side mocks the other, and provenance is explicit. Solve the tally/direct-donation mechanics in the design. Do not publish or launch the culture-war-facing fundraiser without a fresh outward-facing human gate.
 
 - id: t-024
   milestone: m5
