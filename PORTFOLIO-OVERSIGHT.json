@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-09-07T04:52:07.779939+00:00",
+  "generated_at": "2026-09-07T12:45:10.170967+00:00",
   "summary": {
     "status": "action-needed",
     "roadmap_errors": 0,
-    "roadmap_warnings": 2,
+    "roadmap_warnings": 9,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -13,7 +13,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-09-05T15:16:31+00:00",
-    "hours_since": 37.59,
+    "hours_since": 45.48,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "OpenAI commit activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit."
@@ -30,29 +30,36 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-09-07T04:52:07.779944+00:00",
+    "generated_at": "2026-09-07T12:45:10.170974+00:00",
     "summary": {
       "roadmaps": 52,
       "active_projects": 29,
       "continuous_projects": 2,
       "tasks": 1384,
-      "ready": 9,
-      "waiting": 56,
-      "needs_human": 79,
-      "in_progress": 1,
-      "done": 1222,
+      "ready": 31,
+      "waiting": 53,
+      "needs_human": 40,
+      "in_progress": 0,
+      "done": 1243,
       "errors": 0,
-      "warnings": 2,
-      "info": 4
+      "warnings": 9,
+      "info": 9
     },
     "errors": [],
     "warnings": [
       {
         "severity": "warning",
-        "code": "SOFT_NEEDS_HUMAN",
-        "project": "kind-robots",
-        "task": "t-078",
-        "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
+        "code": "ACTIVE_PROJECT_ALL_DONE",
+        "project": "alexa-integration",
+        "task": null,
+        "message": "All tasks are done but project override remains active."
+      },
+      {
+        "severity": "warning",
+        "code": "ACTIVE_PROJECT_NO_OPEN_TASKS",
+        "project": "alexa-integration",
+        "task": null,
+        "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
       },
       {
         "severity": "warning",
@@ -60,6 +67,48 @@
         "project": "kindrobots-unraid",
         "task": "t-014",
         "message": "Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect."
+      },
+      {
+        "severity": "warning",
+        "code": "ACTIVE_PROJECT_ALL_DONE",
+        "project": "mandarin-tutor",
+        "task": null,
+        "message": "All tasks are done but project override remains active."
+      },
+      {
+        "severity": "warning",
+        "code": "ACTIVE_PROJECT_NO_OPEN_TASKS",
+        "project": "mandarin-tutor",
+        "task": null,
+        "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
+      },
+      {
+        "severity": "warning",
+        "code": "ACTIVE_PROJECT_ALL_DONE",
+        "project": "media-watchlist",
+        "task": null,
+        "message": "All tasks are done but project override remains active."
+      },
+      {
+        "severity": "warning",
+        "code": "ACTIVE_PROJECT_NO_OPEN_TASKS",
+        "project": "media-watchlist",
+        "task": null,
+        "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
+      },
+      {
+        "severity": "warning",
+        "code": "ACTIVE_PROJECT_ALL_DONE",
+        "project": "scene-animator",
+        "task": null,
+        "message": "All tasks are done but project override remains active."
+      },
+      {
+        "severity": "warning",
+        "code": "ACTIVE_PROJECT_NO_OPEN_TASKS",
+        "project": "scene-animator",
+        "task": null,
+        "message": "Active project has no open tasks; mark finished/paused or add an intentional recurring task."
       }
     ]
   }
