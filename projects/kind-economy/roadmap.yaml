@@ -509,8 +509,8 @@ tasks:
 - id: t-011
   milestone: m3
   title: "Run the Stripe checkout/webhook/fulfillment matrix end-to-end in TEST mode"
-  status: ready
-  updated: '2026-09-07T11:28:19+00:00'
+  status: claimed
+  updated: '2026-09-07T14:31:50Z'
   passes: 0
   stakes: outward-facing
   gate_human: true
@@ -520,6 +520,9 @@ tasks:
 
 
     Silas's 2026-09-07 default-recommendation instruction authorizes this specific TEST-mode verification only. Run the checkout/webhook/fulfillment matrix with Stripe test credentials/test objects; do not use live keys, create real products/prices, move real money, or enable live payouts. Treat failures as agent-owned implementation work, not a new human gate unless a live-money boundary is reached.
+  owner: worker
+  claimed_by: claude-scheduled-20260907T143500Z-ke-t011
+  claimed_at: '2026-09-07T14:31:50Z'
 
 - id: t-012
   milestone: m3
