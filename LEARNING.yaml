@@ -12623,3 +12623,37 @@ records:
     all 49 checks green first try) -- contrasts with slice 130's two independent
     stalls in the same session; the conductor/t-132 and t-124-tracked infra flakiness
     remains intermittent, not constant."
+- date: 2026-09-07
+  project: cthulhuquarium
+  task: t-019
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Balance pass on real play data had no live DB/telemetry to retune
+    hunger/debris/offline-income against (same gap the task's own note flagged
+    weeks earlier), and Silas's 2026-09-07 policy resolved that by substituting
+    a conservative data-and-design-driven pass rather than blocking further:
+    extend the milestone ladder using the existing simulation and design docs,
+    treat real telemetry as future iterative tuning. Extended the bestiary
+    milestone ladder past bestiary_20 (4 breakpoints, +2 each, covering 20/151
+    species) with 7 new decelerating breakpoints (25/35/50/70/95/125/151,
+    reward shrinking +2->+1->+0) landing on slots_cap 19 -- comfortably under
+    the ~50 threshold already flagged as trivializing the tank-packing design.
+    Re-ran simulate_economy.py to confirm no regression (output byte-identical
+    since the 2-hour single-fish-line scenario never reaches a bestiary
+    breakpoint) and added a structural (not just simulated) argument in
+    ECONOMY.md for why offline income can never exceed active play under the
+    current formula, rather than re-deriving it from scratch next time.
+    General lesson: when a task's own gap note already sketches the shape of a
+    defensible answer (decelerating ladder, terminate well below the
+    collection total, later breakpoints pay in non-capacity rewards), a
+    'data-only, conservative' policy resolution is enough to act on directly
+    -- it does not require re-opening design questions the note already
+    closed. Also: a PR's CI 'Python test suite' failure should always be
+    checked against origin/main before treating it as this diff's problem --
+    test_current_project_lifecycle.py's active-project-with-no-open-tasks
+    check (alexa-integration/mandarin-tutor/media-watchlist/scene-animator)
+    was already failing on main before this PR touched anything, confirmed by
+    running the test against a fresh origin/main checkout."
