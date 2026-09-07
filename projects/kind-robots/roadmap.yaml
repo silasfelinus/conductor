@@ -2422,20 +2422,26 @@ tasks:
 - id: t-061
   milestone: m3
   title: "PITCH GATE: conductorSlug immutability + consolidated slug-collision helper"
-  status: claimed
+  status: done
   gate_human: true
   passes: 0
   stakes: reversible
-  note: |-
+  note: >-
     FOR SILAS: Pitch written at pitches/2026-08-10-kind-robots-slug-integrity.md. It proposes two backend fixes found by t-058's audit: (1) make Project.conductorSlug immutable once set (server/api/projects/[id].patch.ts currently allows any owner to silently rewrite it, unlike conductor/sync.post.ts's own correct set-once pattern); (2) replace three independently-maintained slug-collision implementations (index.ts, and AppMaker's two routes) with one shared helper. TO APPROVE: read the pitch, set its `status:` to `approved` or `rejected`, and set this task's `approved_by_human: true` and `status: ready` (or leave a note with changes wanted). What unblocks: the immutability guard + regression test, and the shared-helper refactor, as separate follow-up tasks once approved.
 
 
     APPROVED by Silas via the 2026-09-07 human-gate simplification session. Use the recommended design: conductorSlug is assigned once a Project is actually linked to Conductor and is immutable thereafter; inactive/uncommitted Model Builder draft Projects may remain slugless until promotion. Consolidate slug normalization/collision handling into one shared helper and proceed without another human checkpoint.
+
+    Implementation: silasfelinus/kind_robots#2497 (conductorSlug immutability guard on PATCH
+    /api/projects/:id, mirroring conductor/sync.post.ts set-once pattern). Split the pitch
+    second half (shared slug-collision helper) into kind-robots/t-094 per the pitch own
+    suggested two-task breakdown.
   approved_by_human: true
-  updated: '2026-09-07T19:40:19Z'
-  owner: worker
-  claimed_by: claude-conductor-sweep-2026-09-07T19-30-kr-t061
-  claimed_at: '2026-09-07T19:40:19Z'
+  updated: '2026-09-07T19:58:01Z'
+  owner: null
+  claimed_by: null
+  claimed_at: null
+  implementation_pr: 'silasfelinus/kind_robots#2497'
 
 - id: t-062
   milestone: m4
@@ -4102,6 +4108,44 @@ tasks:
     against the pre-fix code path.
   claimed_by: claude-20260903T185500Z-kr-t093
   claimed_at: '2026-09-03T18:55:00Z'
+
+- id: t-094
+  milestone: m4
+  title: "Consolidate the three independently-maintained Project slug-collision implementations into one shared helper"
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: >-
+    Split off t-061 (pitches/2026-08-10-kind-robots-slug-integrity.md's second fix,
+    already Silas-approved) after that task's first half -- the conductorSlug
+    immutability guard on PATCH /api/projects/:id -- landed alone. The pitch's own
+    "Suggested first task" section always described these as two separate follow-ups;
+    this is the second one.
+
+    Three creation paths each maintain their own slug normalize/collision-check logic:
+    `server/api/appmaker/scaffold-request.post.ts` and
+    `server/api/appmaker/github/create-app.post.ts` (both flagged by
+    `appmaker-page.vue:169`'s own "keep in sync" comment, and each with a duplicated
+    local `SLUG_RE`/`slugify()`), plus `server/api/conductor/sync.post.ts`'s own
+    normalize/collision handling. Extract one shared helper (slug normalization +
+    `SLUG_RE` + the Project/Dream/conductor-apps-folder collision check the two
+    AppMaker routes already perform) and point all three creation paths at it instead
+    of three copies that can silently drift apart.
+
+    SCOPE NOTE for whoever picks this up: `utils/scripts/verifyAppmakerScaffoldCollisionGuard.ts`
+    is a source-text regression guard that currently asserts the exact *inline* shape of
+    each AppMaker route's collision check (imports `conductorList`, calls it, filters
+    `dir` entries, folds the result into the route's own `if (existingProject || ...)`
+    throw). Extracting that logic into a shared function will change the route files'
+    text and break this guard's literal pattern-matching unless it is updated in the
+    same PR to check the new shared-helper call site instead (or to check the helper's
+    own implementation directly). Update or replace that guard as part of this task --
+    do not leave it failing or silently gut its coverage.
+
+    No schema change. `server/api/model-builder/items/[id]/commit.post.ts`'s orphan,
+    slugless draft Projects are intentionally out of scope (Silas's t-061 approval note:
+    "inactive/uncommitted Model Builder draft Projects may remain slugless until
+    promotion").
 
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination

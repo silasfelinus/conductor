@@ -12724,3 +12724,18 @@ records:
     (THE-SIFT-DESIGN.md) complete and matching the release note's ask verbatim, including
     the hardest mechanical problem (attribution without custody) resolved concretely.
     Reconciled to done rather than treated as new design work owed.
+- date: '2026-09-07'
+  project: kind-robots
+  task: t-061
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A pitch's own "Suggested first task" section splitting a two-part fix into two
+    follow-on tasks is worth honoring literally rather than forcing both into one PR:
+    the conductorSlug immutability guard landed clean and small (kind_robots#2497), while
+    the slug-collision-helper consolidation (split into t-094) needs its own careful pass
+    because an existing source-text regression guard (verifyAppmakerScaffoldCollisionGuard.ts)
+    asserts the exact inline shape of the code it would refactor away.
