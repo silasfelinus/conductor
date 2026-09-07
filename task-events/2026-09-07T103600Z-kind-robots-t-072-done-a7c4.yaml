@@ -1,7 +1,0 @@
-version: 1
-project: kind-robots
-task: t-072
-operation: done
-updated: '2026-09-07T10:36:00Z'
-note: >-
-  Reconciled during Silas's 2026-09-07 human-gate backlog audit. This gate asked Silas to choose how migrate-on-deploy should preserve the elevated MIGRATION_DATABASE_URL boundary. That decision has since been implemented and merged in kind_robots PR #2351 (commit bd6c397b): the Alexandria User Scripts deploy path pulls the production image, loads the migration credential only into a throwaway migration process, runs pending migrations before the container update, aborts on migration failure, then updates and health-checks KindRobots. docs/runbooks/migration-credential-boundary.md now documents this as the canonical production deploy path. No new production mutation is performed by this close-out; it records that the previously-open design gate is already resolved in code and documentation.
