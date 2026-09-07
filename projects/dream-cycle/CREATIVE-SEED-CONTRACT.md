@@ -93,7 +93,7 @@ The live guards preserve intentional Facet fusion:
 
 - a historical rut family is only a complaint when the day's **Facets did not ask for it**, so a Bureaucratic Fantasy Facet may still produce a permit office on purpose;
 - outside bureaucracy, the older lexical families only complain when the motif reaches an **asset name**. A lighthouse in passing is scenery; *The Lighthouse of Small Regrets* is the rut;
-- a semantic aquatic-world proposal is rejected only when its authored creative text contains several world-scale aquatic signals **and** no assigned genre or setting explicitly requests an aquatic world. An ANIMAL or SPECIES Facet alone is deliberately not that permission.
+- an aquatic-world proposal is rejected as a repetition only when its authored creative text contains several world-scale aquatic signals, one of the preceding five authored proposals was already aquatic-world shaped, **and** no assigned non-creature genre or setting explicitly requests an aquatic world. ANIMAL and SPECIES Facets never grant that exemption, even when a creature's own name contains words such as `ocean` or `marine`.
 
 At catalog scale the audit is stricter than the live contract: a motif carried by ≥30% of
 the built catalog counts against a bundle even when its Facets did request it. See
