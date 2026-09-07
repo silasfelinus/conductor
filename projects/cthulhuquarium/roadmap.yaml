@@ -676,7 +676,7 @@ tasks:
 - id: t-019
   milestone: m3
   title: "Balance pass on real play data"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   depends_on: t-016
@@ -685,7 +685,10 @@ tasks:
     FOR SILAS: t-019 (balance pass on real play data) is blocked in this sandboxed session -- no live DB access, no aquarium telemetry/analytics endpoint exists yet, and the sandbox cannot itself generate real player sessions to observe. What it contains: the task asks for two things -- (1) tune hunger/debris/offline-income feel against real player behavior (first-10-minutes engagement, mid-game stall, offline reward feel), which needs an actual play session to judge; (2) extend the bestiary-breakpoint milestone ladder past bestiary_20 (20/151 species currently covered) -- a prior session (2026-08-25, recorded in economy.yaml and roadmap.yaml t-032) deliberately deferred this specifically to real play data, because a naive linear extension (20 more breakpoints at +2 each) would push slots_cap past 50 and trivialize the tank-packing design the game is built around. TO APPROVE, pick one: (a) play the aquarium yourself for a stretch and tell the next session how it actually feels plus what final slots_cap the milestone ladder should land on (the note in economy.yaml already sketches the shape: decelerating breakpoints, terminates well below 151 species, later breakpoints pay in backgrounds rather than room) -- the next session then applies it as a straight data commit; or (b) explicitly say you want an agent to estimate defensible numbers from the design docs alone, clearly labeled as an un-playtested estimate rather than tuned-from-real-data. Set status back to ready with your answer (or the numbers themselves) in the note and it unblocks immediately -- nothing else is gating it.
 
     Silas's 2026-09-07 policy removes this as a personal-playtest gate. Proceed with a conservative data-only balance pass using the existing simulation, design constraints, and any available telemetry; extend the milestone ladder with decelerating capacity rewards that terminate well below the 151-species collection, and use non-capacity rewards later in the ladder. Treat future real-player telemetry as iterative tuning, not a prerequisite for doing reasonable reversible balance work now.
-  updated: '2026-09-07T11:26:09+00:00'
+  updated: '2026-09-07T12:33:54Z'
+  owner: worker
+  claimed_by: claude-20260907T123352Z-cq-t019
+  claimed_at: '2026-09-07T12:33:54Z'
 
 - id: t-020
   milestone: m3
