@@ -55,11 +55,14 @@ def test_aquatic_world_requires_multiple_world_scale_signals():
 
 
 def test_aquatic_creature_is_not_permission_to_make_the_whole_world_aquatic():
-    otter = _facet("Otter", "ANIMAL")
-    seeds = {"elements": {"vibe": [otter]}}
-
-    assert themes.facet_is_aquatic_seed(otter)
-    assert not themes.facets_explicitly_request_aquatic_world(seeds)
+    for creature in (
+        _facet("Otter", "ANIMAL"),
+        _facet("Ocean Sunfish", "ANIMAL"),
+        _facet("Marine Dragon", "SPECIES"),
+    ):
+        seeds = {"elements": {"vibe": [creature]}}
+        assert themes.facet_is_aquatic_seed(creature)
+        assert not themes.facets_explicitly_request_aquatic_world(seeds)
 
 
 def test_explicit_aquatic_setting_or_genre_allows_an_aquatic_world():
