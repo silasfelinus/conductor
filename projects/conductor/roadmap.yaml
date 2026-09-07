@@ -4479,7 +4479,7 @@ tasks:
   owner:
   stakes: reversible
   passes: 0
-  note: >
+  note: >-
     FOR SILAS: Observed twice in a row on the same PR the same day (2026-08-23), on conductor#2728, a docs-only close-out
     PR touching only `LEARNING.yaml` and `TALKBACK.md` (no code, no test files). The `Python test suite` job's `Run full pytest
     suite` step hung `in_progress` indefinitely both times -- first attempt cancelled and re-run after ~15 minutes with no
@@ -4596,7 +4596,22 @@ tasks:
     monkeypatch it themselves, so a blanket conftest override of `http_json`
     risks fixture-ordering conflicts for a much smaller benefit than the change
     above. Worth doing if the residual 60s ever matters.
-  updated: '2026-08-24T18:55:43Z'
+
+    New occurrence, 2026-09-07 (interface-vision/t-104 slice 130 session, conductor PR #3814
+    -- itself a 1-file note-only change to this very task's sibling t-132): 'Python test
+    suite' sat in_progress at the 'Run full pytest suite' step for 20+ minutes on attempt 1
+    with zero step-level progress (confirmed via get_workflow_job, not just check-run
+    listing, so this was not the earlier-documented stale-listing case -- the job genuinely
+    had not completed). Cancelled and re-ran once per the established convention; attempt 2
+    showed the identical symptom (same step, in_progress, no progress) for 20+ minutes again
+    before this session stopped retrying. Notably this happened in the same session as a
+    second, independent CI-infra stall on a different repo/workflow (kind_robots' 'Build
+    production image', folded into conductor/t-132) -- two unrelated jobs across two repos
+    both stalling within the same ~30 minute window suggests a shared runner-pool or infra-
+    level cause during that window rather than something specific to this task's script.
+    Left conductor#3814 open with a standing-down comment for a later session or Silas to
+    re-check.
+  updated: '2026-09-07T06:53:56Z'
 
 - id: t-125
   milestone: m2
