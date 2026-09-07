@@ -1,0 +1,6 @@
+version: 1
+project: conductor
+task: t-132
+operation: ready
+note: >-
+  Reconciled during Silas's 2026-09-07 human-gate backlog audit. This is recurring CI/platform diagnosis work, not a decision for Silas. Recent evidence includes stalls at multiple Contract verifiers steps and, on 2026-09-07, the Build production image job showing the same 35-40+ minute no-progress signature while the rest of the PR checks completed. Return to the worker queue to investigate the Actions-level stall, observability, timeout, and recovery behavior; do not park routine CI diagnosis in the human queue.
