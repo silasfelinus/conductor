@@ -30,8 +30,8 @@ AQUATIC_WORLD_MARKERS = {
 }
 
 # These Facets really do ask for an aquatic world. Creature Facets are intentionally not
-# here: an otter, manatee, shark, or shrimp constrains anatomy and life support, not the
-# geography and civic architecture of everybody else in the setting.
+# permission, even if their own title contains words such as "ocean" or "marine": an
+# ocean sunfish still constrains anatomy and life support, not everybody else's geography.
 AQUATIC_EXPLICIT_FACET_MARKERS = {
     "aquatic", "coastal", "marine", "maritime", "nautical", "ocean", "oceanic",
     "seafaring", "subaquatic", "tidal", "tidepool", "undersea", "underwater",
@@ -102,6 +102,9 @@ def _facet_text(facet: dict[str, Any]) -> str:
 
 def facet_explicitly_requests_aquatic_world(facet: dict[str, Any]) -> bool:
     """Whether one Facet is a genuine world/habitat request rather than a creature."""
+    taxonomy = str(facet.get("taxonomy") or "").upper()
+    if taxonomy in {"ANIMAL", "SPECIES"}:
+        return False
     text = _facet_text(facet)
     words = _words(text)
     return bool(words & AQUATIC_EXPLICIT_FACET_MARKERS) or any(
