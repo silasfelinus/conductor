@@ -125,20 +125,36 @@ def test_seed_plan_filters_aquatic_facets_during_cooldown_when_alternatives_exis
     assert not any(themes.facet_is_aquatic_seed(facet) for facet in drawn)
 
 
-def test_author_rejects_gratuitous_aquatic_world_from_an_otter_seed():
+def test_author_rejects_repeated_gratuitous_aquatic_world_from_an_otter_seed():
+    recent = [
+        "A reef city follows the tide across the ocean while coral gates close behind it."
+    ]
     complaints = authoring.story_diversity_complaints(
         _aquatic_proposal(),
-        [],
+        recent,
         {"elements": {"vibe": [_facet("Otter", "ANIMAL")]}}
     )
 
     assert any("aquatic-world motif" in complaint for complaint in complaints)
 
 
-def test_author_allows_aquatic_world_when_oceanic_genre_requests_it():
+def test_author_allows_isolated_aquatic_world_when_recent_history_is_dry():
     complaints = authoring.story_diversity_complaints(
         _aquatic_proposal(),
-        [],
+        ["A desert observatory negotiates with migrating glass moths at noon."],
+        {"elements": {"vibe": [_facet("Otter", "ANIMAL")]}}
+    )
+
+    assert not any("aquatic-world motif" in complaint for complaint in complaints)
+
+
+def test_author_allows_aquatic_world_when_oceanic_genre_requests_it():
+    recent = [
+        "A reef city follows the tide across the ocean while coral gates close behind it."
+    ]
+    complaints = authoring.story_diversity_complaints(
+        _aquatic_proposal(),
+        recent,
         {"elements": {"vibe": [_facet("Oceanic Mythology", "GENRE")]}}
     )
 
