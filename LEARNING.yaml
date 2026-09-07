@@ -12576,3 +12576,27 @@ records:
     mapping and re-scan for exact-set matches across ALL prior targets at
     once, rather than only ever looking for the next new family -- word-order
     variants of already-solved shapes accumulate silently in between."
+- date: 2026-09-07
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Slice 123 of the recurring kr-panel consistency sweep opened the first
+    opacity-variant branch of the .kr-panel-muted family (.kr-panel-tint-sm/-md at
+    bg-base-200/40) rather than continuing to treat every non-exact-match occurrence
+    as needing manual review. Prior slices (117-122) only ever matched a class token
+    sequence byte-for-byte against a solid-color background token; once the codemod
+    also carries the opacity-suffixed token as its own listed variant, the exact-match
+    approach generalizes cleanly to the alpha-channel dimension without loosening the
+    matcher's safety guarantees (still a literal token-sequence match, still gated by
+    the same safe-extras allowlist). Found 12 real occurrences across 8 files this way
+    that a purely solid-background scan would never have surfaced. General lesson for
+    a long-running class-consolidation sweep: when a 'needs manual review, not a safe
+    codemod' note names a *reason* (here: opacity changes appearance) rather than a
+    genuine ambiguity, check whether that reason is itself just an unhandled dimension
+    of the same exact-match pattern before assuming the whole pool needs hand
+    judgment -- an opacity-suffixed background is still a literal, deterministic token
+    to match on, not a judgment call."
