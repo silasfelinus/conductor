@@ -2422,47 +2422,32 @@ tasks:
 - id: t-061
   milestone: m3
   title: "PITCH GATE: conductorSlug immutability + consolidated slug-collision helper"
-  status: needs-human
-  soft_gate: true
+  status: ready
   gate_human: true
-  owner:
   passes: 0
   stakes: reversible
-  note: >
-    FOR SILAS: Pitch written at pitches/2026-08-10-kind-robots-slug-integrity.md.
-    It proposes two backend fixes found by t-058's audit: (1) make Project.conductorSlug
-    immutable once set (server/api/projects/[id].patch.ts currently allows any owner to
-    silently rewrite it, unlike conductor/sync.post.ts's own correct set-once pattern);
-    (2) replace three independently-maintained slug-collision implementations
-    (index.ts, and AppMaker's two routes) with one shared helper.
-    TO APPROVE: read the pitch, set its `status:` to `approved` or `rejected`, and set
-    this task's `approved_by_human: true` and `status: ready` (or leave a note with
-    changes wanted). What unblocks: the immutability guard + regression test, and the
-    shared-helper refactor, as separate follow-up tasks once approved.
+  note: |-
+    FOR SILAS: Pitch written at pitches/2026-08-10-kind-robots-slug-integrity.md. It proposes two backend fixes found by t-058's audit: (1) make Project.conductorSlug immutable once set (server/api/projects/[id].patch.ts currently allows any owner to silently rewrite it, unlike conductor/sync.post.ts's own correct set-once pattern); (2) replace three independently-maintained slug-collision implementations (index.ts, and AppMaker's two routes) with one shared helper. TO APPROVE: read the pitch, set its `status:` to `approved` or `rejected`, and set this task's `approved_by_human: true` and `status: ready` (or leave a note with changes wanted). What unblocks: the immutability guard + regression test, and the shared-helper refactor, as separate follow-up tasks once approved.
+
+
+    APPROVED by Silas via the 2026-09-07 human-gate simplification session. Use the recommended design: conductorSlug is assigned once a Project is actually linked to Conductor and is immutable thereafter; inactive/uncommitted Model Builder draft Projects may remain slugless until promotion. Consolidate slug normalization/collision handling into one shared helper and proceed without another human checkpoint.
+  approved_by_human: true
+  updated: '2026-09-07T11:26:08+00:00'
 
 - id: t-062
   milestone: m4
   title: "PITCH GATE: Grant CRUD API + canView() route integration + minimal share UI"
-  status: needs-human
-  soft_gate: true
+  status: ready
   gate_human: true
-  owner:
   passes: 0
   stakes: reversible
-  note: >
-    FOR SILAS: Pitch written at pitches/2026-08-10-kind-robots-grant-sharing-api.md.
-    SHARING-SPEC.md's Grant model and canView()/existsActiveGrant() helpers already
-    exist (t-044/t-050) but SHARING-SPEC.md:138 explicitly labels the API surface
-    "illustrative -- routes, not committed contracts", and there is currently zero way
-    for anyone to create a Grant or for the projects/resources view routes to check one.
-    The pitch proposes: POST/DELETE/GET /api/grants* (SHARING-SPEC.md:140-150's own
-    illustrative shape), migrating projects/[id].get.ts and resources/[id].get.ts/.patch.ts
-    onto canView(), and a minimal share/shared-with-me UI. No schema change -- the model
-    is already migration-approved.
-    TO APPROVE: read the pitch, set its `status:` to `approved` or `rejected`, and set
-    this task's `approved_by_human: true` and `status: ready`. What unblocks: the four
-    Grant routes, then the two route migrations, then the share UI, as sequential
-    follow-up tasks once approved (pitch's own "Suggested first task" has the order).
+  note: |-
+    FOR SILAS: Pitch written at pitches/2026-08-10-kind-robots-grant-sharing-api.md. SHARING-SPEC.md's Grant model and canView()/existsActiveGrant() helpers already exist (t-044/t-050) but SHARING-SPEC.md:138 explicitly labels the API surface "illustrative -- routes, not committed contracts", and there is currently zero way for anyone to create a Grant or for the projects/resources view routes to check one. The pitch proposes: POST/DELETE/GET /api/grants* (SHARING-SPEC.md:140-150's own illustrative shape), migrating projects/[id].get.ts and resources/[id].get.ts/.patch.ts onto canView(), and a minimal share/shared-with-me UI. No schema change -- the model is already migration-approved. TO APPROVE: read the pitch, set its `status:` to `approved` or `rejected`, and set this task's `approved_by_human: true` and `status: ready`. What unblocks: the four Grant routes, then the two route migrations, then the share UI, as sequential follow-up tasks once approved (pitch's own "Suggested first task" has the order).
+
+
+    APPROVED by Silas via the 2026-09-07 human-gate simplification session. Implement the pitch as written: narrow Grant CRUD, existing canView()/grant integration on Project and Resource routes, and minimal Share / Shared with me UI. No broader RBAC redesign and no additional human checkpoint for these reversible implementation slices.
+  approved_by_human: true
+  updated: '2026-09-07T11:26:08+00:00'
 
 - id: t-063
   milestone: m3
@@ -3126,61 +3111,16 @@ tasks:
 - id: t-078
   milestone: m6
   title: "Home page visual iteration with Silas"
-  status: needs-human
-  owner: null
+  status: ready
   passes: 0
   stakes: reversible
-  updated: '2026-09-01T08:35:00Z'
+  updated: '2026-09-07T11:26:08+00:00'
   depends_on: [t-077, t-080, t-081, t-082, t-083, t-084, t-088]
-  note: >-
-    The back-and-forth t-077 shipped a first draft for. Silas, 2026-08-28: "this
-    part may take some back and forth, I want it to look great ... this is going
-    to be the first thing people see when the site loads, so I want it to be
-    special." needs-human because the remaining question is aesthetic judgement,
-    and only Silas can supply it.
-    REWRITTEN AFTER EACH PASS -- t-080 through t-084, now t-088 -- because a
-    needs-human note describing a version no longer on main invites a decision
-    about something that does not exist. What is live now, MEASURED at
-    1920x1080 rather than estimated (see t-084 for why that distinction earned
-    its own task):
-    TOP BAND, one definite height, all columns filling it: dream card 384px
-    (20.0% of screen, stated as 20vw clamped to [14rem,26rem]); the cast as one
-    horizontally scrolling row of full-height 239x358 portrait cards filling the
-    middle at 833px; Needs-you 629px (32.8%, a third at xl and a half at lg) as
-    a single vertically scrolling column.
-    NEEDS YOU is a composer, not a list of links. Each gate expands in place to
-    a textarea and three actions. "Send to agent" writes the note AND releases
-    the task to `ready`, so conductor's next Worker cycle picks it up carrying
-    the answer. "Note only" keeps it parked and conductor's audit surfaces it.
-    "Approve" closes it.
-    SHELVES are one horizontally scrolling row: seven shelves, four visible,
-    three a chevron away. Headers are a single icon plus a count. The art shelf
-    toggles between finished art and the live ArtJob queue with a status filter.
-    CLICKING AN OBJECT opens an interstitial with its description, attributes
-    and reviews; clicking outside returns. Tiles are plain anchors, so
-    middle-click and cmd-click still navigate.
-    PROJECTS: title, one-letter priority, progress joined to conductor's own
-    figure. NEWSFEED: bounded scroller; compact cards are picture, then a
-    three-line headline, then one provenance line, with no summary; topic chips,
-    controls, heading and lab link all on one row. NAV: brand line plus the
-    page's tabMessage, or its subtitle where none is authored.
-    Page height 865px: well inside his "not larger than two screens".
-    OPEN FOR HIM, in rough order of how much it would change:
-    (1) Whether the band's three-way split now feels right. Every number in it
-    has been moved at his request at least once, and this is the first version
-    where all three were satisfied simultaneously rather than traded off, so it
-    is worth a fresh look rather than assuming it has converged.
-    (2) Whether "Send to agent" should be able to close a gate outright, or
-    whether releasing to `ready` with the answer attached is the right ceiling
-    for a one-click action on the coordination system of record.
-    (3) Whether the hero should server-render. It loads client-side in
-    home-page.vue's onMounted, so the first paint of the front page is a
-    skeleton.
-    (4) The cast row has no visible scrollbar and no chevrons -- the partial card
-    at the right edge is the only affordance, on the same argument home-rail.vue
-    makes. The shelves below DO have chevrons, so the two rows are inconsistent
-    on purpose; if that reads as an oversight rather than a choice, the shelves'
-    chevrons are one prop away.
+  note: |-
+    The back-and-forth t-077 shipped a first draft for. Silas, 2026-08-28: "this part may take some back and forth, I want it to look great ... this is going to be the first thing people see when the site loads, so I want it to be special." needs-human because the remaining question is aesthetic judgement, and only Silas can supply it. REWRITTEN AFTER EACH PASS -- t-080 through t-084, now t-088 -- because a needs-human note describing a version no longer on main invites a decision about something that does not exist. What is live now, MEASURED at 1920x1080 rather than estimated (see t-084 for why that distinction earned its own task): TOP BAND, one definite height, all columns filling it: dream card 384px (20.0% of screen, stated as 20vw clamped to [14rem,26rem]); the cast as one horizontally scrolling row of full-height 239x358 portrait cards filling the middle at 833px; Needs-you 629px (32.8%, a third at xl and a half at lg) as a single vertically scrolling column. NEEDS YOU is a composer, not a list of links. Each gate expands in place to a textarea and three actions. "Send to agent" writes the note AND releases the task to `ready`, so conductor's next Worker cycle picks it up carrying the answer. "Note only" keeps it parked and conductor's audit surfaces it. "Approve" closes it. SHELVES are one horizontally scrolling row: seven shelves, four visible, three a chevron away. Headers are a single icon plus a count. The art shelf toggles between finished art and the live ArtJob queue with a status filter. CLICKING AN OBJECT opens an interstitial with its description, attributes and reviews; clicking outside returns. Tiles are plain anchors, so middle-click and cmd-click still navigate. PROJECTS: title, one-letter priority, progress joined to conductor's own figure. NEWSFEED: bounded scroller; compact cards are picture, then a three-line headline, then one provenance line, with no summary; topic chips, controls, heading and lab link all on one row. NAV: brand line plus the page's tabMessage, or its subtitle where none is authored. Page height 865px: well inside his "not larger than two screens". OPEN FOR HIM, in rough order of how much it would change: (1) Whether the band's three-way split now feels right. Every number in it has been moved at his request at least once, and this is the first version where all three were satisfied simultaneously rather than traded off, so it is worth a fresh look rather than assuming it has converged. (2) Whether "Send to agent" should be able to close a gate outright, or whether releasing to `ready` with the answer attached is the right ceiling for a one-click action on the coordination system of record. (3) Whether the hero should server-render. It loads client-side in home-page.vue's onMounted, so the first paint of the front page is a skeleton. (4) The cast row has no visible scrollbar and no chevrons -- the partial card at the right edge is the only affordance, on the same argument home-rail.vue makes. The shelves below DO have chevrons, so the two rows are inconsistent on purpose; if that reads as an oversight rather than a choice, the shelves' chevrons are one prop away.
+
+    Silas's 2026-09-07 standing instruction is to take reasonable reversible recommendations as the decision instead of manufacturing human gates. Accept the current measured home-page three-way composition as the baseline. Remaining work is agent-owned polish: preserve Send to agent as answer + ready rather than one-click closure, add a durable submission receipt that survives the gate row disappearing, present concise actionable question/action + recommendation text, and handle SSR/scroll affordance as normal technical UX decisions without another Silas gate unless a genuinely subjective conflict remains.
+  approved_by_human: true
 
 - id: t-079
   milestone: m6

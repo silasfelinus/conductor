@@ -1,7 +1,0 @@
-version: 1
-project: kind-robots
-task: t-061
-operation: ready
-approved_by_human: true
-note: >-
-  APPROVED by Silas via the 2026-09-07 human-gate simplification session. Use the recommended design: conductorSlug is assigned once a Project is actually linked to Conductor and is immutable thereafter; inactive/uncommitted Model Builder draft Projects may remain slugless until promotion. Consolidate slug normalization/collision handling into one shared helper and proceed without another human checkpoint.
