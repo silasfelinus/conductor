@@ -2,7 +2,7 @@
 
 date: 2026-08-10
 project-target: kind-robots
-status: awaiting-silas
+status: approved
 
 ## The idea
 
