@@ -1,0 +1,6 @@
+version: 1
+project: conductor
+task: t-111
+operation: ready
+note: >-
+  Reconciled during Silas's 2026-09-07 human-gate backlog audit. This is an agent-workable tooling defect, not a human decision: audit_human_gates.py's active-only default can hide a still-unresolved lifecycle-dispute gate after the disputed lifecycle change makes the project inactive. Return this to the worker queue to implement a narrow classification fix with regression coverage that keeps genuine lifecycle-dispute gates visible without resurfacing stale inactive-project clutter.
