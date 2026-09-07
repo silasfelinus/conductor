@@ -12600,3 +12600,26 @@ records:
     of the same exact-match pattern before assuming the whole pool needs hand
     judgment -- an opacity-suffixed background is still a literal, deterministic token
     to match on, not a judgment call."
+- date: 2026-09-07
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Slice 133 found kr-panel-compact-row (rounded-xl border border-base-300
+    bg-base-100 px-3 py-2, 5 occurrences across 4 files) by the same exact-
+    contiguous-token-window survey method used since slice 130: extract every class
+    attribute containing border-base-300, tokenize, and count fixed-width windows
+    around it to surface repeated shapes not yet in VARIANTS, rather than scanning
+    file-by-file. This slice's pool sat right at the established viability floor (5
+    safe occurrences after excluding 2 unsafe DaisyUI-label matches in
+    art-interact.vue) -- worth noting for whoever eventually judges the umbrella's
+    mechanical phase exhausted: the token-window survey keeps finding small-but-real
+    pools well past the point slice 129's note predicted the VARIANTS list itself was
+    exhausted, so 'small pool this slice' is not yet evidence the survey method has
+    stopped paying off. No CI stall this slice (Build production image ~9.5min,
+    all 49 checks green first try) -- contrasts with slice 130's two independent
+    stalls in the same session; the conductor/t-132 and t-124-tracked infra flakiness
+    remains intermittent, not constant."
