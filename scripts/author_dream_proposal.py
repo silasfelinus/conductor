@@ -568,11 +568,16 @@ def story_diversity_complaints(
         )
 
     aquatic_hits = themes.aquatic_world_hits(creative_text)
+    recent_aquatic_world = any(
+        themes.is_aquatic_world(recent)
+        for recent in recent_premises[-dreams.RECENT_THEME_LOOKBACK:]
+    )
     facets_request_aquatic_world = themes.facets_explicitly_request_aquatic_world(
         seed_facets or {}
     )
     if (
         len(aquatic_hits) >= themes.AQUATIC_WORLD_MIN_HITS
+        and recent_aquatic_world
         and not facets_request_aquatic_world
     ):
         examples = ", ".join(sorted(aquatic_hits)[:6])
