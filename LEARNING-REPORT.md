@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-07T19:50:56Z
+Generated: 2026-09-07T20:01:54Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **887**
-- Outcomes: blocked: 16, cancelled: 1, done: 870
+- Closed tasks recorded: **888**
+- Outcomes: blocked: 16, cancelled: 1, done: 871
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -40,7 +40,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | interface-vision | 105 | 100% |
 | kapowarr | 50 | 100% |
 | kind-economy | 9 | 100% |
-| kind-robots | 54 | 98% |
+| kind-robots | 55 | 98% |
 | kindrobots-unraid | 5 | 100% |
 | lora-ingestion | 1 | 100% |
 | mandarin-tutor | 11 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 871 | 99% |
+| software | 872 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-07 `kind-robots/t-061` — A pitch's own "Suggested first task" section splitting a two-part fix into two follow-on tasks is worth honoring literally rather than forcing both into one PR: the conductorSlug immutability guard landed clean and small (kind_robots#2497), while the slug-collision-helper consolidation (split into t-094) needs its own careful pass because an existing source-text regression guard (verifyAppmakerScaffoldCollisionGuard.ts) asserts the exact inline shape of the code it would refactor away.
 - 2026-09-07 `kind-economy/t-023` — Same pattern as t-014/t-022 in this batch: a task released from needs-human back to ready under the 2026-09-07 human-gate-simplification policy already had its deliverable (THE-SIFT-DESIGN.md) complete and matching the release note's ask verbatim, including the hardest mechanical problem (attribution without custody) resolved concretely. Reconciled to done rather than treated as new design work owed.
 - 2026-09-07 `kind-economy/t-022` — Same pattern as t-014 in this batch: a task released from needs-human back to ready under the 2026-09-07 human-gate-simplification policy already had its deliverable (BUTTERFLY-EVENT-PLAN.md) complete and matching the release note's ask verbatim. Reconciled to done rather than treated as new planning work owed.
 - 2026-09-07 `kind-economy/t-014` — The 2026-09-07 human-gate simplification pass flipped several complete-but-parked needs-human design tasks back to ready with a "design around the accepted model, don't wait on Silas" instruction. For kind-economy/t-014 the deliverable (PAYOUT-MECHANISM-DESIGN.md) already matched that instruction verbatim from 2026-08-19 -- the correct action was reconciling stale roadmap state to done, not producing new design content. Check whether a task's own deliverable file already satisfies a "release" note before assuming more design work is owed.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-07 `interface-vision/t-104` — Slice 123 of the recurring kr-panel consistency sweep opened the first opacity-variant branch of the .kr-panel-muted family (.kr-panel-tint-sm/-md at bg-base-200/40) rather than continuing to treat every non-exact-match occurrence as needing manual review. Prior slices (117-122) only ever matched a class token sequence byte-for-byte against a solid-color background token; once the codemod also carries the opacity-suffixed token as its own listed variant, the exact-match approach generalizes cleanly to the alpha-channel dimension without loosening the matcher's safety guarantees (still a literal token-sequence match, still gated by the same safe-extras allowlist). Found 12 real occurrences across 8 files this way that a purely solid-background scan would never have surfaced. General lesson for a long-running class-consolidation sweep: when a 'needs manual review, not a safe codemod' note names a *reason* (here: opacity changes appearance) rather than a genuine ambiguity, check whether that reason is itself just an unhandled dimension of the same exact-match pattern before assuming the whole pool needs hand judgment -- an opacity-suffixed background is still a literal, deterministic token to match on, not a judgment call.
 - 2026-09-06 `interface-vision/t-104` — Slice 103 of the recurring kr-btn consistency sweep generalized the sweep's own tooling pattern instead of hand-picking a fourth single-family codemod: kr_btn_order_variant_codemod.py parses the live .kr-btn-* definitions out of tailwind.css and closes any remaining site whose class token *set* exactly matches an already-canonical shape but is written in a different word order -- a near-miss class every prior single-family codemod could only close one specific order for at a time, leaving scattered leftovers across many already-'cleared' families. Found by scanning all class="..." attributes containing 'btn' with no kr- prefix, grouping by sorted token set, and diffing against the frozenset->name map already encoded in tailwind.css's own @apply rules -- 19 occurrences surfaced across 6 different families and 12 files, none previously visible to any single-family tool. General lesson for a long-running incremental-discovery sweep: periodically re-derive the full canonical mapping and re-scan for exact-set matches across ALL prior targets at once, rather than only ever looking for the next new family -- word-order variants of already-solved shapes accumulate silently in between.
 - 2026-09-06 `interface-vision/t-104` — Slice 101 of the recurring kr-btn-xs consistency sweep migrated the last 3 hand-rolled 'btn btn-xs ... rounded-xl' occurrences (brainstorm-manager.vue, taskmaster-page.vue, lora-triage.vue), then re-ran kr_btn_xs_codemod.py (no --path) against post-merge main and confirmed 0 occurrences remain across the whole repo. This is the first time this task's original btn-xs scope has run out entirely -- worth recording as a milestone rather than a routine bounded-slice cycle, and a reminder to verify a recurring sweep's backlog on the *merged* tree, not just the PR's own dry-run, since a concurrent unrelated merge could in principle reintroduce the pattern between dry-run and merge. Next session picking up this task should choose a new shared-class family to track (e.g. hand-rolled btn-sm/btn-md variants) rather than assume the umbrella is finished -- it is recurring precisely because the sweep itself never ends, only its current target family did.
-- 2026-09-05 `interface-vision/t-104` — Slice 89 of the recurring kr-btn consistency sweep caught a real latent bug in the slice-88 codemod tool while running it: Python's Path.read_text()/write_text() always perform universal-newline translation, so any CRLF-terminated file the tool touched would silently collapse to LF for its entire content, not just the lines actually rewritten -- a 6-occurrence bounded slice would have become a 2566-line diff on one CRLF file. The tell was a large diff on one file next to a clean diff on another for the identical kind of change (3 class substitutions each) -- when two near-identical operations produce very different diff sizes, that asymmetry is itself worth investigating before trusting either result. Fixed by opening files directly with newline="" (disables translation on both read and write) instead of read_text()/write_text() (which gained a newline= param only in Python 3.13). General lesson for any line-oriented codemod script: verify it against a CRLF fixture if the target tree has any, since this failure mode produces no error and no warning -- only an oversized diff that is easy to miss if the tool's own dry-run output only reports occurrence counts, not diff size.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-07T19:50:56Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-07T20:01:54Z_
