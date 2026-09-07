@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-07T13:32:40Z
+Generated: 2026-09-07T13:36:51Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **883**
-- Outcomes: blocked: 16, cancelled: 1, done: 866
+- Closed tasks recorded: **884**
+- Outcomes: blocked: 16, cancelled: 1, done: 867
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 93 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 42 | 98% |
+| cthulhuquarium | 43 | 98% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 23 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 867 | 99% |
+| software | 868 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-07 `cthulhuquarium/t-041` — The task's only open item (Decision 2: whether the egg purchase OPTION itself should be concealed, vs. only its CONTENTS) was resolved by Silas's 2026-09-07 default-recommendation policy in the task note itself -- keep the option visibly on sale, hide only the species. Re-reading the already-merged implementation (kind_robots PR #2172) against that decision found it already compliant end to end: the egg catalog API/UI exposes only rarity/size/cost/description, never species or the eligible pool; hatchEggForUser resolves the species server-side at hatch time only; the shop panel has no discovery gate on the purchase option; the hatch reveal dialog always shows the result, never silently. No code change was needed -- this closed as a verification-only pass. General lesson: when a roadmap task's remaining note is a Silas decision on an already-shipped feature rather than a design gate blocking new work, check the live diff against the decision before assuming implementation work remains -- a 'ready' status can mean 'verify and close', not always 'build something'.
 - 2026-09-07 `cthulhuquarium/t-019` — Balance pass on real play data had no live DB/telemetry to retune hunger/debris/offline-income against (same gap the task's own note flagged weeks earlier), and Silas's 2026-09-07 policy resolved that by substituting a conservative data-and-design-driven pass rather than blocking further: extend the milestone ladder using the existing simulation and design docs, treat real telemetry as future iterative tuning. Extended the bestiary milestone ladder past bestiary_20 (4 breakpoints, +2 each, covering 20/151 species) with 7 new decelerating breakpoints (25/35/50/70/95/125/151, reward shrinking +2->+1->+0) landing on slots_cap 19 -- comfortably under the ~50 threshold already flagged as trivializing the tank-packing design. Re-ran simulate_economy.py to confirm no regression (output byte-identical since the 2-hour single-fish-line scenario never reaches a bestiary breakpoint) and added a structural (not just simulated) argument in ECONOMY.md for why offline income can never exceed active play under the current formula, rather than re-deriving it from scratch next time. General lesson: when a task's own gap note already sketches the shape of a defensible answer (decelerating ladder, terminate well below the collection total, later breakpoints pay in non-capacity rewards), a 'data-only, conservative' policy resolution is enough to act on directly -- it does not require re-opening design questions the note already closed. Also: a PR's CI 'Python test suite' failure should always be checked against origin/main before treating it as this diff's problem -- test_current_project_lifecycle.py's active-project-with-no-open-tasks check (alexa-integration/mandarin-tutor/media-watchlist/scene-animator) was already failing on main before this PR touched anything, confirmed by running the test against a fresh origin/main checkout.
 - 2026-09-07 `interface-vision/t-104` — Slice 133 found kr-panel-compact-row (rounded-xl border border-base-300 bg-base-100 px-3 py-2, 5 occurrences across 4 files) by the same exact- contiguous-token-window survey method used since slice 130: extract every class attribute containing border-base-300, tokenize, and count fixed-width windows around it to surface repeated shapes not yet in VARIANTS, rather than scanning file-by-file. This slice's pool sat right at the established viability floor (5 safe occurrences after excluding 2 unsafe DaisyUI-label matches in art-interact.vue) -- worth noting for whoever eventually judges the umbrella's mechanical phase exhausted: the token-window survey keeps finding small-but-real pools well past the point slice 129's note predicted the VARIANTS list itself was exhausted, so 'small pool this slice' is not yet evidence the survey method has stopped paying off. No CI stall this slice (Build production image ~9.5min, all 49 checks green first try) -- contrasts with slice 130's two independent stalls in the same session; the conductor/t-132 and t-124-tracked infra flakiness remains intermittent, not constant.
 - 2026-09-07 `interface-vision/t-104` — Slice 123 of the recurring kr-panel consistency sweep opened the first opacity-variant branch of the .kr-panel-muted family (.kr-panel-tint-sm/-md at bg-base-200/40) rather than continuing to treat every non-exact-match occurrence as needing manual review. Prior slices (117-122) only ever matched a class token sequence byte-for-byte against a solid-color background token; once the codemod also carries the opacity-suffixed token as its own listed variant, the exact-match approach generalizes cleanly to the alpha-channel dimension without loosening the matcher's safety guarantees (still a literal token-sequence match, still gated by the same safe-extras allowlist). Found 12 real occurrences across 8 files this way that a purely solid-background scan would never have surfaced. General lesson for a long-running class-consolidation sweep: when a 'needs manual review, not a safe codemod' note names a *reason* (here: opacity changes appearance) rather than a genuine ambiguity, check whether that reason is itself just an unhandled dimension of the same exact-match pattern before assuming the whole pool needs hand judgment -- an opacity-suffixed background is still a literal, deterministic token to match on, not a judgment call.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-05 `interface-vision/t-104` — Slice 88 of the recurring kr-btn consistency sweep was tooling-only, not another live-surface migration: hardened utils/scripts/codemods/kr_btn_xs_codemod.py with repeatable --path scoping (single .vue file or directory) and excluded components/abandonware/** from default scans, so future slices can target a coherent surface family instead of a repo-wide apply followed by a hand-revert of collateral changes. Worth recognizing when a recurring migration task's next useful slice is improving the tool itself rather than running it again -- the growing remaining-pool size (52+ occurrences across 25 families per slice 87) was the signal that scoping the codemod paid off more than one more blind repo-wide pass would have.
 - 2026-09-05 `interface-vision/t-104` — Slice 83 of the recurring kr-btn consistency sweep: cross-checking the full existing .kr-btn-* size/radius grid for the bare (no color, no ghost) family before grepping found the gap directly -- .kr-btn-xs (btn btn-xs rounded-xl) was missing even though its ghost-family counterpart .kr-btn-ghost-xs already existed and the xs-size rounded-lg/rounded-2xl bare variants already existed too. Comparing across the family's established naming grid (color x size x radius) surfaces gaps faster than a fresh unconstrained grep every slice.
 - 2026-09-05 `kapowarr/t-071` — library_conflicts.py's word-overlap heuristic for 'unrelated series sharing a folder' had a blind spot exactly at its most valuable case: volumes with the identical title share every word, so the check that skipped groups with any word in common skipped identical-title pairs before it skipped anything else -- and an identical-title pair sharing a folder is precisely the case where the importer cannot tell them apart and silently misattributes files. The fix asks the same match_title() function the importer itself uses, rather than inventing a second 'same series' notion in the diagnostic script. General lesson: when a diagnostic script re-implements a decision the system under test already makes elsewhere (here, 'are these two titles the same'), call the real function instead of a parallel heuristic -- a parallel heuristic can silently diverge from what actually happens at runtime, in exactly the direction that hides the worst cases.
-- 2026-09-05 `dream-cycle/t-006` — kind_robots#2414's --repair-tainted path cancelled legacy PENDING ArtJobs and committed Facet.artPrompt updates before the eager queue.map(buildFacetArtPayload(...)) that can throw via assertArtPromptContract on any queued entry -- a destructive/cancelling write committed ahead of the step that can still fail, with no rollback. Pass 1's retry_context named the exact fix (build/validate jobRows before the cancellation); pass 2 fixed an adjacent real concern (deleted the unattended auto-merge repair workflow) but left the flagged file byte-identical, confirmed via git log on the changed file rather than trusting the PR description -- checking whether a retry actually touched the flagged file is what caught the drift before a third wasted pass. Pass 3 finally reordered validate-then-mutate as asked. General principle for any script that repairs/replaces existing state: build and validate the full replacement set first; only then commit any cancellation or in-place mutation of what it replaces.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-07T13:32:40Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-07T13:36:51Z_
