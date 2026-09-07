@@ -61,10 +61,9 @@ tasks:
 - id: t-003
   milestone: m2
   title: "Reconcile later Resource-backed generation evidence; run one current smoke only if proof is still missing"
-  status: needs-human
+  status: ready
   stakes: reversible
   gate_human: false
-  soft_gate: true
   note: |-
     Import half CONFIRMED 2026-07-28: standalone run detected ume as Flux, moved it, and upserted the Resource (created:1). Remaining: (1) run it as the embedded kr-relay thread on the pm2 box (pm2 restart kr-relay after setx CIVITAI_TOKEN), and (2) confirm a krea2/flux2 render selecting that Resource succeeds — closes the path bug end-to-end. Note ume sorted NSFW because Civitai flags the model nsfw; override to SFW if wrong.
 
@@ -85,8 +84,10 @@ tasks:
     Two separate findings, both need you specifically: (1) Krea2 cannot be smoke-tested at all right now -- zero Resources in the whole library carry a "Krea" generation tag (checked all 2344 rows via the API); not a code bug, just needs a Krea2 LoRA ingested before this half can ever be tested. (2) Queued one Flux2 Resource-backed LoRA smoke (ArtJob 21616); the application-side wiring was confirmed correct (LoRA Resource resolved to its exact localPath, wired into the right ComfyUI node), but the relay (Silas-PC) claimed the job and then went completely silent -- never completed it, never claimed anything else, and its own last-seen heartbeat stayed frozen at 18:46:46 UTC for 40+ minutes. Cancelled the job server-side to clear the DB state, but that can't un-wedge a relay process that's actually stuck locally. Filed as conductor/t-147 with full detail and two unconfirmed guesses at the cause.
 
     TO APPROVE: this needs your eyes on the actual relay machine, which nothing in this sandbox can reach. Once you've restarted/checked the relay and resolved conductor/t-147 with what you found, t-003 can either get a fresh Flux2 smoke attempt or wait on a Krea2 Resource before it's closeable. Set approved_by_human: true and status: done (or ready, if you want another smoke attempted) once conductor/t-147 is resolved.
+
+    Release under Silas's 2026-09-07 human-gate simplification policy. No product decision is required. conductor/t-147 has been closed as mitigated; a token-equipped agent should now queue exactly one fresh Flux2 Resource-backed LoRA smoke and record Resource id/localPath, ArtJob id, terminal DONE state, and ArtImage id/path. Krea2 proof may remain deferred until a genuinely Krea2-tagged LoRA Resource exists; absence of such a Resource is not a Silas gate.
   approved_by_human: false
-  updated: '2026-09-05T19:20:00Z'
+  updated: '2026-09-07T11:33:49+00:00'
   outcome_note: >
     The original July 28 gate is stale in scope. Since then Kind Robots made Resource.localPath
     authoritative for LoRA resolution across image/video engines (including PR #1090), fixed

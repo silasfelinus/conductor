@@ -182,7 +182,7 @@ tasks:
   - id: t-004
     milestone: m3
     title: "Audit other dashboard-tab/tutorial image paths for silently-wrong assets"
-    status: needs-human
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -193,8 +193,6 @@ tasks:
       Soft gate reason: the render queue is backlogged (PENDING=1077, oldest pending ~147h, 44/24h throughput) -- the same infra issue already tracked for ai-art-academy/t-044 and model-builder/t-031. None of the 14 jobs rendered to completion this session; this is a genuine capacity wait, not something this session can push through.
 
       TO APPROVE: no decision needed from you -- this is process, not content. When the render backlog drains (or someone pushes these 14 specific job ids), a future session should poll job ids 8234-8247 directly (GET /api/art/queue/{id}) rather than re-running consume_art_requests_to_media.py, which would resubmit duplicates for any still-pending entry. Once all 14 land and are verified 200, close t-004 to done. What unblocks: nothing downstream depends on this task; it can sit soft-gated until the backlog clears.
-    owner: worker
-    claimed_by: conductor-sweep-2026-08-11-t004
-    claimed_at: '2026-08-11T04:29:01Z'
-    updated: '2026-08-11T04:47:39Z'
-    soft_gate: true
+
+      Release under Silas's 2026-09-07 human-gate simplification policy. The task note explicitly says no human decision is needed. A worker should reconcile ArtJobs 8234-8247 against current queue/media state, avoid duplicate submissions, repair or requeue only missing outputs, verify the targeted tutorial assets return 200, and close when complete. Render backlog/capacity is technical process state, not a Silas gate.
+    updated: '2026-09-07T11:33:49+00:00'
