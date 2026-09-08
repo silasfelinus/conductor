@@ -757,30 +757,13 @@ tasks:
   - id: t-031
     milestone: m6
     title: "Live smoke test of the t-025 async ArtJob queue path on /model-builder"
-    status: needs-human
-    owner: worker
+    status: ready
     passes: 0
     stakes: reversible
-    note: >
-      FOR SILAS: t-031 (live smoke test of the t-025 async ArtJob queue path) could not be
-      completed as a true live UI-driven test this session -- two independent blockers, not
-      one this session can retry past.
-
-      What was done: read generateItemAssetAsync/pollAsyncArtJob/enqueueCurrentArt/
-      getArtJobStatus/finalizeQueuedArtImage end-to-end in stores/modelBuilderStore.ts and
-      stores/artStore.ts. Confirmed the design the task worried about (multiple items
-      clobbering a shared queue state) does not exist: queueState and artJobId are fields on
-      each BuildItem object, not store-level singletons -- pollAsyncArtJob's own while-loop
-      guard (`while (item.artJobId === jobId)`) plus extensive existing doc comments already
-      walk through the exact concurrent-cancel/regenerate-during-approval races the task asks
-      to confirm, and the code handles them (e.g. a stale poll for a re-queued/dropped item
-      stops itself; a job that resolves after its stage was already approved is discarded
-      rather than silently overwriting the approved image). generatingItemId (the synchronous
-      path's singleton) is explicitly NOT reused here per its own comment. This reads as
-      correct by inspection, consistent with t-025's design intent.
-
-      Why a real live test didn't happen:
-      1. This sandbox's browser (Chromium via the agent proxy) fails on every HTTPS host,
+    note: |-
+      FOR SILAS: t-031 (live smoke test of the t-025 async ArtJob queue path) could not be completed as a true live UI-driven test this session -- two independent blockers, not one this session can retry past.
+      What was done: read generateItemAssetAsync/pollAsyncArtJob/enqueueCurrentArt/ getArtJobStatus/finalizeQueuedArtImage end-to-end in stores/modelBuilderStore.ts and stores/artStore.ts. Confirmed the design the task worried about (multiple items clobbering a shared queue state) does not exist: queueState and artJobId are fields on each BuildItem object, not store-level singletons -- pollAsyncArtJob's own while-loop guard (`while (item.artJobId === jobId)`) plus extensive existing doc comments already walk through the exact concurrent-cancel/regenerate-during-approval races the task asks to confirm, and the code handles them (e.g. a stale poll for a re-queued/dropped item stops itself; a job that resolves after its stage was already approved is discarded rather than silently overwriting the approved image). generatingItemId (the synchronous path's singleton) is explicitly NOT reused here per its own comment. This reads as correct by inspection, consistent with t-025's design intent.
+      Why a real live test didn't happen: 1. This sandbox's browser (Chromium via the agent proxy) fails on every HTTPS host,
          not just this one -- documented in AGENTS.md's "visual verification" section. There
          is no way for this session to open /model-builder, log in, and click the async
          generate button on 2-3 items the way the task literally specifies.
@@ -792,17 +775,11 @@ tasks:
          returns a jobId," not the queued->rendering->done transition or the finalized
          artImageId/imagePath the task actually wants verified.
 
-      TO APPROVE: this needs a human (or a session with real browser access) to actually
-      click through /model-builder's async button on a couple of build items and watch the
-      result -- there's no further code-only step this repo's current sandbox can take.
-      Recommend either you run it yourself next time you're in the app, or note here if/when
-      Silas Code Web or another environment with working Chromium picks this repo up. Setting
-      `status: needs-human` / `soft_gate: true` so other ready work isn't blocked behind it in
-      the meantime -- this doesn't gate anything else in the project.
-    claimed_by: 20260810T2226Z-mb031-sweep
-    claimed_at: '2026-08-10T22:28:59Z'
-    updated: '2026-08-10T22:32:56Z'
-    soft_gate: true
+      TO APPROVE: this needs a human (or a session with real browser access) to actually click through /model-builder's async button on a couple of build items and watch the result -- there's no further code-only step this repo's current sandbox can take. Recommend either you run it yourself next time you're in the app, or note here if/when Silas Code Web or another environment with working Chromium picks this repo up. Setting `status: needs-human` / `soft_gate: true` so other ready work isn't blocked behind it in the meantime -- this doesn't gate anything else in the project.
+
+
+      Reclassified under Silas's anti-overgating policy. This is a reversible product/browser smoke test, not a human-only decision. A browser-capable agent should exercise the real /model-builder async ArtJob path on a couple of ordinary build items, verify queued jobs reach terminal success with the expected outputs, and file/fix any real defect it finds. Escalate to Silas only if authentication or a production-only action genuinely cannot be completed through the available browser/tooling; do not use needs-human merely because earlier sandboxes lacked Chromium.
+    updated: '2026-09-08T01:12:00Z'
 
   - id: t-032
     milestone: m6
