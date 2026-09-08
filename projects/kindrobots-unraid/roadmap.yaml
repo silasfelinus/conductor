@@ -331,5 +331,32 @@ tasks:
     cleared.
   updated: '2026-09-08T05:53:03Z'
 
+- id: t-016
+  milestone: m1
+  title: Add an external health probe/alert for kindrobots.org so outages are caught without waiting on a scheduled sweep
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from t-014 (2026-09-04, ~4h15m outage) and t-015 (2026-09-08, ~2h57m outage) --
+    both instances of the same site-wide 502 signature were only ever observed and cleared
+    by whichever scheduled conductor sweep happened to run during the outage window, never
+    caught or alerted on independently. Root cause remains unconfirmed both times
+    (container-recreate-without-restart is the leading but unverified theory) because no
+    session has direct Alexandria/Unraid `docker ps`/UI access to inspect state live during
+    an active outage -- by the time a sweep session investigates, the window may already be
+    closing or closed. Scope: a scheduled (e.g. every 5-15 min) external check of
+    `https://kindrobots.org/api/health/database`, run from somewhere independent of the
+    sweep cadence (a GitHub Actions cron in this repo is the simplest fit, matching
+    `container_log_triage.py`'s existing off-host-publish pattern), that pages/notifies on
+    a transition to failing and, ideally, captures `docker ps`/container-recreate timestamps
+    at failure time if Alexandria access can be arranged -- that last part is what would
+    finally let a root-cause investigation happen during the outage instead of after it
+    recovers. Does not require solving the container-recreate theory itself in this task;
+    the immediate win is catching the next occurrence in real time rather than relying on
+    a sweep's luck.
+  updated: '2026-09-08T05:53:03Z'
+
 goal: Run Kind Robots reliably on the Unraid/home infrastructure, with deployment, storage, networking, GPU services,
   and recovery procedures kept reproducible.
