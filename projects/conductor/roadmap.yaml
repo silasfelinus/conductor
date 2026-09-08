@@ -5361,7 +5361,7 @@ tasks:
 - id: t-148
   milestone: m2
   title: "Fix the flaky timing assertion in test_relay_heartbeat_thread.py's slow-cycle test"
-  status: review
+  status: done
   stakes: reversible
   passes: 0
   note: >-
@@ -5388,9 +5388,10 @@ tasks:
     times phases independently around one mocked call, assert loosely (both phases present, sum ~=
     total) rather than a hardcoded per-phase split. Never skip/disable/quarantine the test -- fix its
     determinism.
-  updated: '2026-09-08T03:38:04Z'
+  updated: '2026-09-08T03:49:35Z'
   owner: worker
   claimed_by: claude-scheduled-20260908T-conductor-t148
   claimed_at: '2026-09-08T03:37:20Z'
+  implementation_pr: 'silasfelinus/conductor#3873'
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
