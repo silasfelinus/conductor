@@ -1025,10 +1025,10 @@ tasks:
 - id: t-040
   milestone: m8
   title: Add an Anna's Archive source adapter
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  updated: '2026-09-08T01:15:00Z'
+  updated: '2026-09-08T01:30:29Z'
   note: |-
     FOR SILAS: Nothing has been built. This needs one scope decision from you before an
     agent writes any code, and it is now a soft gate so it stops being re-derived by every
@@ -1053,6 +1053,9 @@ tasks:
     do not bypass access controls.
 
     Apply Silas's standing default-recommendation policy with the conservative lawful boundary: implement Anna's Archive as metadata/search discovery plus link-out only. Do not automate downloads from the shadow-library service, bypass access controls, or infer entitlement. This gives Kapowarr useful discovery without creating an unattended acquisition-policy gate.
+  owner: worker
+  claimed_by: conductor-scheduled-20260908T013028Z-kapowarr-t040
+  claimed_at: '2026-09-08T01:30:29Z'
 - id: t-041
   milestone: m8
   title: Add Internet Archive public-download source support
