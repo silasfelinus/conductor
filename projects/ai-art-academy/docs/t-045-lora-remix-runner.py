@@ -150,7 +150,9 @@ def poll_all(timeout_seconds=1800, interval=15):
     pending = {
         slug: entry
         for slug, entry in results.items()
-        if entry.get("job_id") and entry.get("status") not in ("DONE", "FAILED", "CANCELLED")
+        if isinstance(entry, dict)
+        and entry.get("job_id")
+        and entry.get("status") not in ("DONE", "FAILED", "CANCELLED")
     }
     while pending and time.time() < deadline:
         for slug in list(pending.keys()):
@@ -185,6 +187,8 @@ def download_images():
     out_dir = DOCS_DIR / "t-045-lora-evidence"
     out_dir.mkdir(exist_ok=True)
     for slug, entry in results.items():
+        if not isinstance(entry, dict):
+            continue
         art_image_id = entry.get("art_image_id")
         if not art_image_id:
             continue
