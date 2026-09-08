@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -4020,8 +4020,24 @@ tasks:
     single digits -- worth doing that one next slice, then genuinely moving to a fresh full-
     repo class-frequency survey outside this family for slice 164+. Return the recurring
     consistency umbrella to ready for the next bounded slice.
-  updated: '2026-09-08T22:43:18Z'
-  implementation_pr: 'silasfelinus/kind_robots#2534'
+
+    Slice 163 merged as silasfelinus/kind_robots#2535 (squash e7e5ac3a) from exact head
+    53c4ef66. Added .kr-text-dim-xs-70 (text-xs text-base-content/70), the last remaining
+    opacity in the text-xs text-base-content/NN family surveyed since slice 152 -- migrated
+    all 51 occurrences across 35 files, extra tokens preserved verbatim; no geometry or
+    behavior change. New codemod kr_text_dim_xs_70_codemod.py, sibling of the six existing
+    kr_text_dim_* codemods. Verification: vue-tsc clean; eslint 333 problems (327 errors, 6
+    warnings) unchanged before/after (confirmed via git stash); test:layout-contract holds
+    (same unrelated -2 ratchet opportunity in narrative-ingredient-multi-picker.vue left
+    untouched, out of scope); test:lint-ratchet holds at 333/-59; prettier needed a targeted
+    --write on 5 files for collapsed-line fallout (confirmed via git stash the rest carry
+    pre-existing debt), final --check matched that baseline exactly. All 53 kind_robots CI
+    checks green. This closes out the text-xs/sm text-base-content/NN family entirely (/40,
+    /45, /50, /55, /60, /70 all now named) -- slice 164 should run a genuinely fresh full-
+    repo class-frequency survey outside this family rather than re-surveying already-covered
+    siblings. Return the recurring consistency umbrella to ready for the next bounded slice.
+  updated: '2026-09-08T22:55:07Z'
+  implementation_pr: 'silasfelinus/kind_robots#2535'
   retry_context: ''
   owner: worker
   claimed_by: claude-scheduled-20260908T222926Z-iv-t104-s163
