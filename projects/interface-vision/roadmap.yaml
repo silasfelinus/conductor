@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -4057,8 +4057,17 @@ tasks:
     pivot this umbrella task to a different consistency dimension (component composition/kr-
     container adoption, per the task's own title) rather than continuing pure class-string
     frequency mining now that the easy exact-duplicate pool is spent.
-  updated: '2026-09-08T23:38:21Z'
-  implementation_pr: 'silasfelinus/kind_robots#2535'
+
+    Slice 164: fresh full-repo class-frequency survey outside the now fully-mined text-xs/sm
+    text-base-content/NN family found font-black text-lg the largest bounded family (115
+    subset-match occurrences, 69 files, 39 exact base pair). Added kr-text-black-lg (first
+    of a new kr-text-black-* family) and kr_text_black_lg_codemod.py, migrated all 115
+    occurrences. Verification: vue-tsc clean, eslint 30/28/2 unchanged (git stash), layout-
+    contract holds, lint-ratchet holds 333/-59, prettier unchanged (same 39 pre-existing
+    files). kind_robots#2536 opened. Sibling sizes (font-black text-xl 78x, font-black text-
+    sm 109x) left for future slices.
+  updated: '2026-09-08T23:38:37Z'
+  implementation_pr: 'silasfelinus/kind_robots#2536'
   retry_context: ''
   owner: worker
   claimed_by: claude-scheduled-20260908T-iv-t104-s164
