@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3925,7 +3925,27 @@ tasks:
     next bounded slice. Next slice target: run a fresh frequency survey of the codebase's
     most-repeated static class="..." values to find the next bounded family -- both
     candidates from slice 152's original survey are now closed out.
-  updated: '2026-09-08T16:51:46Z'
+
+    Slice 157 merged as silasfelinus/kind_robots#2529 (squash 4f995f2f, exact head
+    42012c60). Added .kr-spinner-lg-primary (loading loading-spinner loading-lg text-
+    primary) to assets/css/tailwind.css and
+    utils/scripts/codemods/kr_spinner_lg_primary_codemod.py, then migrated all 28 exact
+    occurrences across 26 files -- no geometry or behavior change. This was the largest
+    bounded family from this slice's frequency survey (flex items-center gap-2, 87
+    occurrences, again set aside as too generic/context-varied, same call as slice 153).
+    Follows the .kr-spinner-xs/.kr-spinner-sm naming convention but bakes in text-primary
+    since this exact shape always carries it. Fixed one prettier collapse fallout in
+    components/academy/academy-manager.vue; confirmed via git stash that the other 8 flagged
+    files carry pre-existing unrelated prettier debt and left them untouched. All checks
+    green: vue-tsc, eslint (0 new errors), test:layout-contract (holds), test:lint-ratchet
+    (holds, -59), prettier clean on touched files, no source-text contract script depends on
+    the old class string. Returning the recurring consistency umbrella to ready for the next
+    bounded slice. Next slice target: label-text text-xs font-bold (23 occurrences) and
+    label-text text-xs font-semibold (15 occurrences) -- both deliberately excluded by
+    kr_label_bold_codemod.py's own docstring as a future slice; label-text itself is dead
+    CSS markup in this DaisyUI 5 codebase, so the new primitive would @apply text-xs font-
+    bold/font-semibold while still requiring the literal label-text token for matching.
+  updated: '2026-09-08T16:52:02Z'
   implementation_pr: 'silasfelinus/kind_robots#2529'
   retry_context: ''
   owner: reviewer
