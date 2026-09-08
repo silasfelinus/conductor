@@ -3887,7 +3887,26 @@ tasks:
     that collapsed under the shortened class string). Returning the recurring consistency
     umbrella to ready for the next bounded slice. Next slice target: text-sm text-base-
     content/70 (35 occurrences) or text-xs text-base-content/45 (17 occurrences).
-  updated: '2026-09-08T15:51:41Z'
+
+    Slice 155 merged as silasfelinus/kind_robots#2527 (squash db297f5d, exact head
+    23ce19a4). Added .kr-text-dim-sm-70 (text-sm text-base-content/70) to
+    assets/css/tailwind.css and utils/scripts/codemods/kr_text_dim_sm_70_codemod.py, then
+    migrated all 118 subset-match occurrences across 63 files -- no geometry or behavior
+    change, extra utility tokens (leading-relaxed, line-clamp-*, font-*, mt-*, etc.)
+    preserved verbatim per the established kr-badge-*/kr-spinner-*/kr-text-dim-* subset-
+    match convention. This was the larger of the two candidates named as slice 154's own
+    follow-up target (35 exact-only occurrences vs. text-xs text-base-content/45's 17).
+    Fixed a scoped prettier collapse in 11 files where the shortened class string let a
+    multi-line tag fit prettier's print width on one line (same recurring pattern as slices
+    153/154); confirmed via git stash that the other 29 flagged files already carried pre-
+    existing prettier debt unrelated to this change and left them untouched. All checks
+    green: vue-tsc, test:lint-ratchet (333/-59, holds), test:layout-contract (holds; noticed
+    and left alone an unrelated pre-existing 2-entry viewport-grid baseline improvement, not
+    this slice's to claim), prettier clean on all touched files,
+    verifyDaVinciNarrationErrorRoleGuard/ToneGuard pass against the real file. Returning the
+    recurring consistency umbrella to ready for the next bounded slice. Next slice target:
+    text-xs text-base-content/45 (~83 subset-match occurrences across 35 files).
+  updated: '2026-09-08T15:52:08Z'
   implementation_pr: 'silasfelinus/kind_robots#2527'
   retry_context: ''
   owner: worker
