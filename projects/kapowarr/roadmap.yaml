@@ -1059,10 +1059,10 @@ tasks:
 - id: t-041
   milestone: m8
   title: Add Internet Archive public-download source support
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  updated: '2026-09-08T01:15:01Z'
+  updated: '2026-09-08T02:40:24Z'
   note: |-
     FOR SILAS: Nothing has been built. Same scope call as t-040, one step milder — decide
     both together.
@@ -1083,6 +1083,9 @@ tasks:
     bypasses.
 
     Apply Silas's standing default-recommendation policy: automate only Internet Archive assets that are directly and publicly downloadable. Controlled-lending/borrow-only items may appear in discovery results as link-out entries but must not be acquired automatically or have lending/access controls bypassed. This preserves useful catalog discovery while keeping the acquisition boundary explicit.
+  owner: worker
+  claimed_by: claude-20260908T023104Z-kapowarr-t041
+  claimed_at: '2026-09-08T02:40:24Z'
 - id: t-042
   milestone: m8
   title: Evaluate debrid acquisition support
