@@ -281,7 +281,7 @@ tasks:
 - id: t-015
   milestone: m1
   title: "INCIDENT: kindrobots.org is returning 502 as of 02:56 UTC on 2026-09-08"
-  status: needs-human
+  status: done
   owner: null
   passes: 0
   stakes: irreversible
@@ -314,7 +314,22 @@ tasks:
     a live policy decision (approved_by_human may stay false, as t-014's did). If the
     outage clears before the next sweep, the next session should apply this same
     closure pattern itself rather than waiting for you.
-  updated: '2026-09-08T02:56:41Z'
+
+    RECOVERY CONFIRMED 2026-09-08 ~05:53 UTC (scheduled conductor sweep session):
+    https://kindrobots.org/ and https://kindrobots.org/api/health/database both answered 200
+    cleanly on 10/10 attempts (5 each, spread over the session), after having been confirmed
+    still 502 as recently as this same session's earlier facet-coverage check (~05:20 UTC).
+    Total outage duration ~2h57m (02:56 UTC start per this task's own note -> ~05:53 UTC
+    recovery), shorter than t-014's ~4h15m. Root cause remains unconfirmed, same as t-014 --
+    this session has no Alexandria/Unraid access to inspect docker ps or the Unraid UI
+    directly. Per docs/state-reconciliation.md's incident-recovery closure pathway (and this
+    task's own note: "If the outage clears before the next sweep, the next session should
+    apply this same closure pattern itself"), closing now on the documented recovery
+    criterion alone; approved_by_human intentionally left false, matching t-014's precedent.
+    Recommend the standing follow-up (an external health-probe/alerting task) if Silas wants
+    the recurring-outage mechanism actually root-caused rather than repeatedly observed-and-
+    cleared.
+  updated: '2026-09-08T05:53:03Z'
 
 goal: Run Kind Robots reliably on the Unraid/home infrastructure, with deployment, storage, networking, GPU services,
   and recovery procedures kept reproducible.
