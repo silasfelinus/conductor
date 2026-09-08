@@ -1,0 +1,10 @@
+version: 1
+project: rainbow-butterflies
+task: t-027
+operation: ready
+note: |-
+  SENT BACK by Silas via ChatGPT acceptance review. Rainbow Butterflies is not accepted.
+
+  Production Google sign-in at https://rainbowbutterflies.org fails immediately with Rainbow's own "Google sign-in is temporarily unavailable" message. Silas supplied the Google OAuth client configuration showing https://rainbowbutterflies.org as an authorized origin and the exact application callback https://rainbowbutterflies.org/auth/google/callback as an authorized redirect URI.
+
+  Treat this as an implementation/deployment auth defect, not a pending human Google-console decision. Diagnose and fix the Rainbow -> Kind Robots first-party Google config/exchange path and production runtime configuration. In particular verify KIND_ROBOTS_BASE_URL / NUXT_PUBLIC_SITE_URL on Rainbow and FIRST_PARTY_SSO_CLIENTS_JSON / GOOGLE_ID on the Kind Robots production runtime. Do not return t-027 to human acceptance until a real production Google sign-in reaches Google, returns through the Rainbow callback, and establishes the shared account session successfully.
