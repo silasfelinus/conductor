@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3960,7 +3960,20 @@ tasks:
     remaining text-xs text-base-content/NN siblings (/40: 14 occ, /55: several related patterns, /70:
     10 occ) are still open for a future slice, same cadence as the .kr-spinner-* family. Return the
     recurring consistency umbrella to ready for the next bounded slice.
-  updated: '2026-09-08T20:47:44Z'
+
+    Slice 160 merged as silasfelinus/kind_robots#2532 (squash eac2d36) from exact head
+    27f77501639d767139c78fea5813dd98bc646f8a. Re-ran kr_text_dim_xs_codemod.py without
+    --exact-only (the flag slice 154 deliberately used to bound its first pass): 150 further
+    occurrences across 74 files carried the base text-xs text-base-content/50 pair -- in
+    either token order -- alongside extra utility tokens, all migrated to .kr-text-dim-xs
+    via the codemod's existing subset-match support. No CSS/script changes needed beyond a
+    doc-comment update. 0 hand-rolled occurrences of the pair remain in *.vue. All 61
+    kind_robots CI checks green including the Build production image job (~8 min this run).
+    Kaizen: several other already-named kr-text-dim-* primitives (kr-text-dim-sm, kr-text-
+    dim-sm-70, kr-text-dim-xs-45/55/60) were likely also migrated --exact-only on their
+    first pass -- worth a subset-match re-run sweep across all of them next. Return the
+    recurring consistency umbrella to ready for the next bounded slice.
+  updated: '2026-09-08T21:00:35Z'
   implementation_pr: 'silasfelinus/kind_robots#2532'
   retry_context: ''
   owner: worker
