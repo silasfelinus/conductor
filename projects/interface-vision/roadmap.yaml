@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -4066,7 +4066,11 @@ tasks:
     contract holds, lint-ratchet holds 333/-59, prettier unchanged (same 39 pre-existing
     files). kind_robots#2536 opened. Sibling sizes (font-black text-xl 78x, font-black text-
     sm 109x) left for future slices.
-  updated: '2026-09-08T23:38:37Z'
+
+    Slice 164 merged as silasfelinus/kind_robots#2536 (squash 0f05efcf) from exact head 73d8a24. Added .kr-text-black-lg (font-black text-lg), first of a new kr-text-black-* family (sibling in spirit to kr-text-dim-* but for weight instead of opacity) -- migrated all 115 subset-match occurrences across 69 files, extra tokens preserved verbatim; no geometry or behavior change. New codemod kr_text_black_lg_codemod.py, same subset-match convention as the kr-badge-*/kr-spinner-*/kr-text-dim-* codemods. Verification: vue-tsc clean; eslint 30 problems (28 errors, 2 warnings) unchanged before/after (confirmed via git stash); test:layout-contract holds (same unrelated -2 ratchet opportunity in narrative-ingredient-multi-picker.vue left untouched, out of scope); test:lint-ratchet holds at 333/-59; prettier flagged the same 39 pre-existing files before and after (git stash), no new fallout, no --write needed. All 61 kind_robots CI checks green. Return the recurring consistency umbrella to ready for the next bounded slice.
+
+    Kaizen suggestion: slice 165 should take font-black text-xl (78 occurrences) as the next sibling in the new kr-text-black-* family, following the same subset-match convention -- font-black text-sm (109 occurrences) remains after that. Recorded in the roadmap task note and PR body; no separate kaizen task filed, matching the established convention for this recurring umbrella.
+  updated: '2026-09-08T23:49:20Z'
   implementation_pr: 'silasfelinus/kind_robots#2536'
   retry_context: ''
   owner: worker
