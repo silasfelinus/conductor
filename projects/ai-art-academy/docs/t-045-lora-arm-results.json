@@ -3,30 +3,41 @@
     "style_slug": "impressionism",
     "loraPath": "FLUX/impressionist.safetensors",
     "job_id": 21638,
-    "status": "PENDING"
+    "status": "PENDING",
+    "duplicate_job_id": 21648,
+    "duplicate_job_status": "PENDING"
   },
   "illuminated-manuscript": {
     "style_slug": "illuminated-manuscript",
     "loraPath": "FLUX/manuscript_illustration_kontext.safetensors",
     "job_id": 21639,
-    "status": "PENDING"
+    "status": "PENDING",
+    "duplicate_job_id": 21649,
+    "duplicate_job_status": "PENDING"
   },
   "watercolor": {
     "style_slug": "watercolor",
     "loraPath": "FLUX/watercolor.safetensors",
     "job_id": 21640,
-    "status": "PENDING"
+    "status": "PENDING",
+    "duplicate_job_id": 21650,
+    "duplicate_job_status": "PENDING"
   },
   "oil-painting": {
     "style_slug": "oil-painting",
     "loraPath": "FLUX/flux1-kt_oil_painting_lora_v2.safetensors",
     "job_id": 21641,
-    "status": "PENDING"
+    "status": "PENDING",
+    "duplicate_job_id": 21651,
+    "duplicate_job_status": "PENDING"
   },
   "pop-art": {
     "style_slug": "pop-art",
     "loraPath": "Kontext/SFW/popart.safetensors",
     "job_id": 21642,
-    "status": "PENDING"
-  }
+    "status": "PENDING",
+    "duplicate_job_id": 21652,
+    "duplicate_job_status": "PENDING"
+  },
+  "_note": "duplicate_job_id/duplicate_job_status (21648-21652) were accidentally re-enqueued by a later 2026-09-08 session that did not read this file/the roadmap note closely enough before running --enqueue-only again. job_id (21638-21642) is the authoritative original set. Prefer job_id's result when both complete; the duplicate set is wasted relay work, not a second real trial -- do not treat it as an independent data point. See TALKBACK.md 2026-09-08 for the kaizen entry."
 }
