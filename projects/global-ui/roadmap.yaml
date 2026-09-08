@@ -754,11 +754,11 @@ tasks:
 - id: t-026
   milestone: m5
   title: Fix 35 missing kind-icon SVG references surfaced by the new audit:icons PR gate
-  status: ready
+  status: done
   owner: null
   passes: 0
   stakes: reversible
-  note: >
+  note: >-
     Surfaced 2026-09-08 while reviewing kind_robots PR #2503
     ("Confirm prompt/icon safety lane runs on PRs", branch
     openai/wire-art-icon-guards-contract-tests). That PR's own acceptance
@@ -823,7 +823,22 @@ tasks:
     to confirm 0 remaining before opening the PR. Once this lands and
     kind_robots main is clean, re-run/merge PR #2503's audit:icons check
     (may already pass once main moves, or may need a rebase).
+
+    RESOLVED (drift reconciliation, scheduled Conductor session): all 35 missing kind-icon
+    SVG references from this task note were added directly on kind_robots main by PR #2505
+    ("fix(icons): add all 38 referenced missing icon assets", merged 2026-09-07 18:36 by
+    silasfelinus) before this task was ever claimed here. Verified against a fresh local
+    kind_robots checkout (HEAD 8de0576, branch claude/eager-bohr-nbncfm) that every one of
+    the 35 icon names listed in this task note now has a real SVG under assets/icons/ --
+    confirmed file-by-file, not just commit-stat count. Closing rather than duplicating
+    already-shipped work. Downstream: kind_robots PR #2503 (the audit:icons PR gate) is
+    still open against a stale base (0718542, predates #2505) -- its "Prompt repair + icon
+    audit" check will need the branch updated to current main before it can re-run and pass;
+    left as a separate note on that PR rather than merging it myself since it is Silas's own
+    directly-authored branch, not a Worker/Reviewer PR.
   claimed_by: null
+  updated: '2026-09-08T02:31:10Z'
+  implementation_pr: 'silasfelinus/kind_robots#2505'
 
 milestones:
 - id: m1
