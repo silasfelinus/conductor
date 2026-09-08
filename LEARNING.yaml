@@ -12902,3 +12902,23 @@ records:
     (or the app's own `assets/`) for an actual CSS rule first -- a class
     present in markup is not proof it is a real, applyable utility,
     especially across a daisyUI major-version bump.
+- date: 2026-09-08
+  project: ai-art-academy
+  task: t-045
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: actionable
+  lesson: >-
+    A "DONE" render-queue job is not proof of a usable image -- t-045's 5-style
+    Kontext+LoRA re-run all completed DONE with valid 1024x1024 PNGs (correct
+    file format, correct dimensions) that were nonetheless pure uniform
+    static/noise with zero recognizable content, identical corruption
+    signature across all 5 independent LoRA files. A polling script that only
+    checks job status/artImageId presence, never image content, will report
+    success on a systemically broken render path. Add a cheap low-entropy/
+    uniform-pixel sanity check (e.g. stddev of decoded pixel values) to any
+    future job-polling script before treating DONE as "safe to compare/
+    promote" -- would have caught this the moment results first came back
+    instead of needing a manual visual compare pass.
