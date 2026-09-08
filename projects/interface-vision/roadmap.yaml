@@ -3945,7 +3945,22 @@ tasks:
     kr_label_bold_codemod.py's own docstring as a future slice; label-text itself is dead
     CSS markup in this DaisyUI 5 codebase, so the new primitive would @apply text-xs font-
     bold/font-semibold while still requiring the literal label-text token for matching.
-  updated: '2026-09-08'
+    Slice 158 merged as silasfelinus/kind_robots#2530 (squash 70e7cfb1353bef88725534760c089fa599861ef2)
+    from exact head 7feb339a8bea1e873352a75e97e2eaa0cb6f9f84. Re-ran the frequency survey against the
+    text-xs text-base-content/NN siblings left open by slices 154-156 (50% and 45% opacity already
+    covered) and found text-xs text-base-content/60 as the next largest bounded family: 145 occurrences
+    (subset-match) across 74 files. Added .kr-text-dim-xs-60 to assets/css/tailwind.css and
+    kr_text_dim_xs_60_codemod.py, mirroring the existing kr-text-dim-* codemods' subset-match
+    convention, and migrated all 145 occurrences. Verification: vue-tsc clean; eslint 26 pre-existing
+    errors unchanged before/after (confirmed via git stash); test:layout-contract holds, no new
+    violations; test:lint-ratchet holds at 333/-59; prettier needed a targeted --write on 12 files for
+    collapsed-<span> fallout from shortened class strings (confirmed via git stash that none carried
+    pre-existing debt first), final --check matched the 38-file pre-existing baseline exactly. All 59
+    kind_robots CI checks green including the ~10-minute Build production image job. Kaizen: the
+    remaining text-xs text-base-content/NN siblings (/40: 14 occ, /55: several related patterns, /70:
+    10 occ) are still open for a future slice, same cadence as the .kr-spinner-* family. Return the
+    recurring consistency umbrella to ready for the next bounded slice.
+  updated: '2026-09-08T17:46:33Z'
   implementation_pr: 'silasfelinus/kind_robots#2530'
   retry_context: ''
   owner: worker
