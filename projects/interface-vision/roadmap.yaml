@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3998,7 +3998,29 @@ tasks:
 
     Slice 162 in progress: kind_robots#2534 (new kr-text-dim-xs-40 primitive, 56
     occurrences/33 files).
-  updated: '2026-09-08T21:57:35Z'
+
+    Slice 162 merged as silasfelinus/kind_robots#2534 (squash
+    9ccc30ab250e8508d512b37f2d4ea18a583a6dec) from exact head
+    1fd32ea5d2e9cd36d0f12876cea97e56cb849dfe. Added new primitive .kr-text-dim-xs-40 (@apply
+    text-xs text-base-content/40) -- the most-dimmed caption-size metadata line in the text-
+    xs text-base-content/NN family, one notch quieter than kr-text-dim-xs-45. A full re-
+    survey of the remaining text-{xs,sm} text-base-content/NN space (since slice 161 flagged
+    the family as nearly exhausted) found this the largest still-uncovered bounded family:
+    56 occurrences across 33 files, migrated with extra tokens preserved verbatim; no
+    geometry or behavior change. New codemod kr_text_dim_xs_40_codemod.py, sibling of the
+    existing kr_text_dim_* codemods. Verification: vue-tsc clean; eslint 333 problems (327
+    errors, 6 warnings) unchanged before/after (confirmed via git stash); test:layout-
+    contract holds, no new violations (same unrelated -2 ratchet opportunity in narrative-
+    ingredient-multi-picker.vue left untouched, out of scope); test:lint-ratchet holds at
+    333/-59; prettier needed a targeted --write on 4 files for collapsed-line fallout from
+    shortened class strings (confirmed via git stash the other 24 flagged files carry pre-
+    existing debt), final --check matched that 24-file baseline exactly. All kind_robots CI
+    checks green. Kaizen: only text-xs text-base-content/70 (51 occurrences) remains as a
+    sizeable bounded family in this space after this slice; everything else surveyed is
+    single digits -- worth doing that one next slice, then genuinely moving to a fresh full-
+    repo class-frequency survey outside this family for slice 164+. Return the recurring
+    consistency umbrella to ready for the next bounded slice.
+  updated: '2026-09-08T22:09:51Z'
   implementation_pr: 'silasfelinus/kind_robots#2534'
   retry_context: ''
   owner: worker
