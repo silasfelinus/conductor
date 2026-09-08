@@ -1025,12 +1025,10 @@ tasks:
 - id: t-040
   milestone: m8
   title: Add an Anna's Archive source adapter
-  status: needs-human
-  owner:
+  status: ready
   passes: 0
   stakes: reversible
-  soft_gate: true
-  updated: '2026-08-20T16:45:00Z'
+  updated: '2026-09-08T01:15:00Z'
   note: |-
     FOR SILAS: Nothing has been built. This needs one scope decision from you before an
     agent writes any code, and it is now a soft gate so it stops being re-derived by every
@@ -1053,15 +1051,15 @@ tasks:
     Archive over separate Z-Library/Libgen integrations. Fit discovery into the generic
     source/indexer boundary and only automate downloads lawfully accessible to the user;
     do not bypass access controls.
+
+    Apply Silas's standing default-recommendation policy with the conservative lawful boundary: implement Anna's Archive as metadata/search discovery plus link-out only. Do not automate downloads from the shadow-library service, bypass access controls, or infer entitlement. This gives Kapowarr useful discovery without creating an unattended acquisition-policy gate.
 - id: t-041
   milestone: m8
   title: Add Internet Archive public-download source support
-  status: needs-human
-  owner:
+  status: ready
   passes: 0
   stakes: reversible
-  soft_gate: true
-  updated: '2026-08-20T16:45:00Z'
+  updated: '2026-09-08T01:15:01Z'
   note: |-
     FOR SILAS: Nothing has been built. Same scope call as t-040, one step milder — decide
     both together.
@@ -1080,6 +1078,8 @@ tasks:
     assets where an item permits direct public access. Treat controlled-lending or
     restricted items as browse/link-out only; do not build page ripping or access-control
     bypasses.
+
+    Apply Silas's standing default-recommendation policy: automate only Internet Archive assets that are directly and publicly downloadable. Controlled-lending/borrow-only items may appear in discovery results as link-out entries but must not be acquired automatically or have lending/access controls bypassed. This preserves useful catalog discovery while keeping the acquisition boundary explicit.
 - id: t-042
   milestone: m8
   title: Evaluate debrid acquisition support
