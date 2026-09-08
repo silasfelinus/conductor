@@ -4036,7 +4036,28 @@ tasks:
     /45, /50, /55, /60, /70 all now named) -- slice 164 should run a genuinely fresh full-
     repo class-frequency survey outside this family rather than re-surveying already-covered
     siblings. Return the recurring consistency umbrella to ready for the next bounded slice.
-  updated: '2026-09-08T22:55:07Z'
+
+    Slice 164 survey (fresh full-repo class-frequency pass outside the now-fully-mined text-
+    xs/sm text-base-content/NN family, as slice 163's own note asked for): excluding any
+    class attribute already carrying a kr-* token, the largest exact multi-token class-
+    string families remaining are almost entirely generic layout/sizing utilities -- (h-4,
+    w-4) 298x/96 files, (flex-1, min-w-0) 101x/64 files, (flex, gap-2, items-center) 87x/59
+    files, (h-3.5, w-3.5) 71x/28 files, (hidden, sm:inline) 57x/31 files, (flex, flex-wrap,
+    gap-2, items-center) 69x/53 files -- the same category slice 153 already set aside as
+    too generic (flex items-center gap-2, 87 occurrences) rather than naming a primitive
+    for. The largest non-layout, semantically-themed candidates are much smaller and would
+    establish a brand-new naming category with no existing sibling to follow (unlike text-
+    dim-*, which had five committed siblings to pattern-match): font-black+text-{lg,xl,sm}
+    heading-emphasis pairs (39/24/20 occurrences respectively, 20/13/13 files),
+    h-5+w-5+text-primary icon-with-color (17 occurrences/16 files), text-error+text-xs
+    (19/17), label-text+text-xs (21/4). None of these has the same one-obvious-name, high-
+    confidence shape the text-dim-* family had. Recommend the next slice either (a) pick one
+    of the semantic candidates above and propose a naming convention for review rather than
+    assuming one, or (b) treat the text-{xs,sm} text-base-content/NN sweep as complete and
+    pivot this umbrella task to a different consistency dimension (component composition/kr-
+    container adoption, per the task's own title) rather than continuing pure class-string
+    frequency mining now that the easy exact-duplicate pool is spent.
+  updated: '2026-09-08T23:01:47Z'
   implementation_pr: 'silasfelinus/kind_robots#2535'
   retry_context: ''
   owner: worker
