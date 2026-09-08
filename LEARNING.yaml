@@ -12772,3 +12772,43 @@ records:
     fully-restricted source would use -- and the adversarial test that
     matters most is proving the restricted case can never produce the
     real acquisition artifact, not just that the happy path works.
+- date: '2026-09-08'
+  project: conductor
+  task: t-148
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A flaky test that asserts on positional order of a shared mutable list
+    (e.g. "the first matching log line") rather than content that only its
+    own code path can produce is a signal to look for concurrent producers
+    with no lifecycle boundary between tests -- here, every other test in
+    the same file intentionally leaves a daemon thread running forever, and
+    the production code re-reads its config/behavior off live module
+    globals each iteration, so a still-running thread from an earlier test
+    races the current test's own thread using whatever the current test has
+    monkeypatched. Fix the race by waiting for and asserting on a signature
+    only the current test's own call can produce, not by loosening the
+    assertion or adding thread-lifecycle management the rest of the suite
+    doesn't use.
+- date: '2026-09-08'
+  project: conductor
+  task: t-111
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    When a suppression filter needs to distinguish "genuinely stale, keep
+    hiding it" from "the disputed thing itself, must surface," reach for a
+    narrow content classifier on the task's own title before reaching for
+    timing heuristics (e.g. "how close is the task's updated: to the
+    override's status change"). A real check here (pinball-hero/t-002's
+    updated: was only ~1 week after its project's retirement date -- well
+    within any generous same-day-ish margin) showed a date-proximity
+    threshold would have reintroduced the exact false positive the original
+    filter existed to prevent. Matching what the task's title is actually
+    about was both simpler and correct where a tuned margin was neither.
