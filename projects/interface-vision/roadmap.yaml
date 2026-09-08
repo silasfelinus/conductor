@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3760,7 +3760,33 @@ tasks:
     confirmed step-level progress via get_workflow_job). Return the non-recurring
     consistency umbrella to ready for the next bounded slice -- next slice needs its own
     fresh survey for a not-yet-named hand-rolled pattern.
-  updated: '2026-09-08T10:07:01Z'
+
+    Slice 149 merged as silasfelinus/kind_robots#2519 (squash
+    d9fdce0bea8461a1b0d4ac35e0f8a0da8f3f5637) from exact head
+    d9ef16594eca2feb264db038c472e1b92278849e. Fresh survey (icon/avatar-tint family) found
+    the page-header icon badge: a tinted h-12 w-12 square housing a page-header <Icon>,
+    sitting beside the page title -- previously hand-rolled identically across 8 occurrences
+    (build-bench.vue, mission-accrual-page.vue, creator-earnings-page.vue, click-
+    leaderboard.vue, privacy-page.vue, appmaker-page.vue, rebel-button.vue, wallet-
+    page.vue), every one of them a page-header hero row's leading icon slot. Added .kr-icon-
+    tile plus kr_icon_tile_codemod.py (same subset-match/extras-preserved convention as
+    prior slices). Migrated all 8 occurrences; no geometry or behavior change. Three files
+    with pre-existing (unrelated) prettier warnings had their now-short <span> collapsed
+    onto one line by hand rather than run through whole-file prettier --write, which would
+    have reformatted unrelated pre-existing code and blown up the diff -- caught this by
+    checking git diff --stat against baseline before committing, after an initial prettier
+    --write attempt on those files pulled in unrelated reformatting. Verified: vue-tsc
+    clean, eslint 0 new errors, test:layout-contract holds at 207, test:lint-ratchet holds
+    at 334/-58, prettier warnings match baseline exactly (confirmed via git stash). All 48
+    kind_robots PR checks passed (Build production image ran ~8 minutes, normal). Return the
+    non-recurring consistency umbrella to ready for the next bounded slice -- next slice
+    needs its own fresh survey for a not-yet-named hand-rolled pattern. The broader bg-
+    primary/1x icon-avatar family surveyed this slice has far more variance (different sizes
+    h-8/h-9/h-10/h-11/h-12/h-14/h-16, radii rounded-lg/rounded-xl/rounded-2xl/rounded-full,
+    opacities /10//12//15, with/without border) than this one clean 8-occurrence subset --
+    worth a dedicated future survey rather than trying to force it into one primitive, since
+    forcing variance into a single class risks visual drift across the many call sites.
+  updated: '2026-09-08T10:16:51Z'
   implementation_pr: 'silasfelinus/kind_robots#2519'
   retry_context: 'pass 1 failed (quality): slice 69 (kind_robots#2386) migrated the Promote-to-Character button in components/brainstorm/brainstorm-candidate-card.vue from `class="btn btn-outline btn-sm"` to the new shared `.kr-btn-outline-plain` class, but missed that utils/scripts/verifyBrainstormWorkbench.mjs:126 hardcodes that literal class string as a source-text regression guard ("the Promote to Character button must stay gated to kept candidates only"). CI job "Candidate-first workbench" fails on the new class. Do differently: before migrating a button class, grep utils/scripts/*.mjs (and any other source-text contract scripts) for the exact class string being replaced, not just run vue-tsc/eslint/layout-contract/lint-ratchet -- this file family asserts literal class attributes as regression guards and is easy to miss since it is not a normal test runner. Fix is scoped: update verifyBrainstormWorkbench.mjs line 126 to expect class="kr-btn-outline-plain" instead of class="btn btn-outline btn-sm" (same intent, new class name), then run `node utils/scripts/verifyBrainstormWorkbench.mjs` locally to confirm before reopening. Reviewer comment: silasfelinus/kind_robots#2386 (inline on components/brainstorm/brainstorm-candidate-card.vue line 363).'
   owner: worker
