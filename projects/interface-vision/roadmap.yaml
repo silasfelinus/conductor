@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3875,12 +3875,24 @@ tasks:
     Returning the recurring consistency umbrella to ready for the next bounded slice. Next
     slice target: take a deliberate second look at flex items-center gap-2, splitting by
     parent tag/context to see if 2-3 narrower real primitives fall out.
-  updated: '2026-09-08T15:05:42Z'
+
+    Slice 154 merged as silasfelinus/kind_robots#2526 (squash f3b295a4, exact head
+    77a69788). Added .kr-text-dim-xs (text-xs text-base-content/50) to
+    assets/css/tailwind.css and utils/scripts/codemods/kr_text_dim_xs_codemod.py, then
+    migrated all 42 exact hand-rolled occurrences across 33 files -- no geometry or behavior
+    change. This was the next-largest bounded family from slice 152's original frequency
+    survey, named as slice 153's own follow-up target. All checks green: vue-tsc, eslint (6
+    pre-existing unrelated errors confirmed via git stash), test:layout-contract (holds),
+    test:lint-ratchet (333/-59, holds), prettier (clean after a scoped 1-file fix for a line
+    that collapsed under the shortened class string). Returning the recurring consistency
+    umbrella to ready for the next bounded slice. Next slice target: text-sm text-base-
+    content/70 (35 occurrences) or text-xs text-base-content/45 (17 occurrences).
+  updated: '2026-09-08T15:16:10Z'
   implementation_pr: 'silasfelinus/kind_robots#2526'
   retry_context: ''
-  owner: worker
-  claimed_by: claude-scheduled-20260908T150500Z-iv-t104-s154
-  claimed_at: '2026-09-08T15:05:35Z'
+  owner: null
+  claimed_by: null
+  claimed_at: null
 
 - id: t-123
   milestone: m5
