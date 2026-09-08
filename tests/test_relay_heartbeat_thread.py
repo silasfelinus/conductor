@@ -131,6 +131,24 @@ def test_a_slow_but_successful_cycle_says_so(monkeypatch):
     is 85 seconds, and the excess sat inside a call no timeout bound
     (socket.getaddrinfo is not covered by urlopen's timeout). A cycle that
     succeeds slowly must not be silent.
+
+    conductor/t-148: every other test in this module leaves its heartbeat
+    thread running forever (documented above -- "no stop switch ... just
+    stop asserting"), and `_loop()` re-reads `send_heartbeats`/`log`/
+    `HEARTBEAT_SECONDS`/`HEARTBEAT_SLOW_SECONDS` off the module as live
+    globals on every iteration rather than capturing them once at thread
+    start. So a still-running daemon thread left over from an earlier test
+    in this file can wake up during THIS test's wait window and execute
+    against whatever this test has currently monkeypatched those globals
+    to, racing this test's own thread to append its own "heartbeat cycle
+    took ..." line into `logged` -- with genuinely different (that zombie
+    thread's own concurrent) timing content. The original assertion keyed
+    on "whichever matching line landed first", so which thread won that
+    race decided pass/fail, not this test's own send_heartbeats() call.
+    Wait for and assert on our own thread's message specifically -- the
+    fixed (0.09, 0.01) mock return makes "dns 0.1s" a signature only our
+    call can produce -- rather than the first "heartbeat cycle took" line
+    to appear from any thread.
     """
     logged = []
     monkeypatch.setattr(relay, "log", lambda message: logged.append(message))
@@ -143,14 +161,16 @@ def test_a_slow_but_successful_cycle_says_so(monkeypatch):
 
     monkeypatch.setattr(relay, "send_heartbeats", slow_send)
 
+    def is_our_message(m):
+        return "heartbeat cycle took" in m and "dns 0.1s" in m
+
     relay.start_heartbeat_thread()
     deadline = time.monotonic() + 5
-    while time.monotonic() < deadline and not any("heartbeat cycle took" in m for m in logged):
+    while time.monotonic() < deadline and not any(is_our_message(m) for m in logged):
         time.sleep(0.02)
 
-    slow = [m for m in logged if "heartbeat cycle took" in m]
-    assert slow, f"a slow cycle logged nothing: {logged}"
-    assert "dns 0.1s" in slow[0], slow[0]
+    ours = [m for m in logged if is_our_message(m)]
+    assert ours, f"a slow cycle logged nothing matching our own thread's timing: {logged}"
 
 
 def test_a_normal_cycle_stays_quiet(monkeypatch):
