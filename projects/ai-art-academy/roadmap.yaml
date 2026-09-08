@@ -1586,12 +1586,12 @@ tasks:
 - id: t-045
   milestone: m2
   title: Re-run LoRA arm for the 5 styles with recorded loraPath and promote winners to mode lora
-  status: claimed
+  status: ready
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-044
-  updated: '2026-09-08T07:32:17Z'
+  updated: '2026-09-08T07:46:26Z'
   note: >-
     Kaizen follow-up from t-004 (PR #1207, merged 2026-07-27). Once t-044's
     lora_name mismatch is fixed, re-run the LoRA arm in
@@ -1645,6 +1645,27 @@ tasks:
     possibly stalled) rather than re-describing the same wait each cycle -- flagging here
     rather than filing that task myself since I have no way to inspect the actual
     relay/worker process from this sandbox.
+
+    SELF-CRITIQUE (2026-09-08, later cycle): re-claimed this task after the prior session's
+    claim went stale (>90min TTL) without reading this note's own 'Do not re-enqueue new
+    jobs for these 5' instruction closely enough first. Ran t-045-lora-remix-runner.py
+    --enqueue-only again, which has no duplicate-detection, and it submitted a second,
+    redundant set of 5 ArtJobs: 21648 (impressionism), 21649 (illuminated-manuscript), 21650
+    (watercolor), 21651 (oil-painting), 21652 (pop-art) -- wasted relay work duplicating
+    21638-21642 exactly (same reference image, seed, loraPath, prompt). Polled both sets;
+    all 10 still PENDING after ~10 more minutes -- recheck_render_queue.py confirms the
+    queue is genuinely backed up (oldestPending ~62h, 24h throughput only 6 DONE), not a
+    fault in either submission. t-045-lora-arm-results.json now tracks both sets per style
+    (job_id = original/authoritative, duplicate_job_id = this session's redundant one) so a
+    future session can tell them apart and isn't misled into treating the duplicate as a
+    second real trial. NEXT SESSION: before touching this task, read t-045-lora-arm-
+    results.json AND this note in full. Run 'python projects/ai-art-academy/docs/t-045-lora-
+    remix-runner.py --poll' (reads job_id only, does not re-enqueue) until all 5 original
+    jobs reach DONE, then '--download', then compare each render against its style's
+    existing prompt-only evidence in docs/t-004-remix-evidence/ and promote any LoRA winner
+    to mode: lora in style-remix-configs.yaml. Do NOT run --enqueue-only again for these 5
+    styles under any circumstance -- two full sets already exist. Logged as a kaizen entry
+    in root TALKBACK.md.
   claimed_at: '2026-09-08T07:32:17Z'
   claimed_by: claude-scheduled-20260908T072700Z-aa-t045
 
