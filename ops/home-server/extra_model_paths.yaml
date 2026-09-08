@@ -80,6 +80,47 @@
 # Switching does NOT remove the need to restart ComfyUI when a share returns
 # after an outage -- folder_paths caches regardless. healthcheck.ps1's share
 # watchdog now does that restart automatically.
+#
+# ---------------------------------------------------------------------------
+# LOCAL-FIRST (added 2026-09-08, for the model migration to D:)
+#
+# `comfyui_local` declares the copies that scripts/sync-comfy-models.ps1 pulls
+# onto Ferngrotto's own disk. Both sections list the same filenames, so search
+# ORDER decides which copy is opened -- and a local NVMe read beats an SMB read
+# by enough to matter on every model load.
+#
+# How ComfyUI actually orders them (folder_paths.add_model_folder_path):
+#   is_default: true  -> insert at position 0
+#   otherwise         -> append
+# Sections are processed top to bottom. So the ONLY section carrying
+# `is_default: true` here is the local one, which puts every local directory
+# ahead of its share twin no matter where the sections sit in the file.
+#
+# Do NOT put `is_default: true` on the share section as well. Two defaults make
+# priority depend on file order (last one processed lands at 0), and worse, each
+# LINE inside an is_default block also inserts at 0 -- so a four-line block is
+# searched in reverse of how it reads. Written this way, order is explicit and
+# the blocks read in the order they are searched.
+#
+# A file present locally shadows the share copy completely. That is the point,
+# but it also means a truncated local file wins over a good remote one: on
+# 2026-09-08 a corrupt GGUF unet (`ValueError: GGUF magic invalid`) failed every
+# Krea2 render in under a second, which is what fed healthcheck.ps1's render
+# watchdog the failure spike that then restarted ComfyUI all night. After any
+# sync, verify the magic bytes, not just the byte count.
+#
+# The local section covers exactly the five categories sync-comfy-models.ps1
+# can place (unet, clip, vae, checkpoints, loras) plus their aliases. Everything
+# else -- controlnet, upscale, ipadapter, embeddings, the lot -- resolves to the
+# share only, which is correct: those are small or rarely read.
+#
+# NOT declared locally, deliberately: a `ferngrotto:` section with
+# `base_path: D:/comfy/comfy-fast/models` and bare `unet: unet` entries. It
+# resolves to the same directories as `comfyui_local`, but by a different
+# string (`...\models\unet` vs `...\models/unet`), and the dedupe in
+# add_model_folder_path compares strings -- so the same directory is added
+# twice, scanned twice, and every local file appears twice in the node
+# dropdowns. One local section, one spelling.
 
 comfyui:
   base_path: //192.168.7.172/pc/ai
@@ -172,3 +213,31 @@ comfyui:
 
   wildcards: |
     models/wildcards
+
+# ---------------------------------------------------------------------------
+# Local copies on Ferngrotto's own disk. Searched FIRST (see is_default above).
+# Populated by kind_robots/scripts/sync-comfy-models.ps1.
+comfyui_local:
+  base_path: D:/comfy/comfy-fast
+  is_default: true
+
+  checkpoints: |
+    models/checkpoints
+
+  diffusion_models: |
+    models/unet
+
+  unet: |
+    models/unet
+
+  clip: |
+    models/text_encoders
+
+  text_encoders: |
+    models/text_encoders
+
+  vae: |
+    models/vae
+
+  loras: |
+    models/loras
