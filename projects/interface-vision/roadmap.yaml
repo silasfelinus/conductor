@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3906,7 +3906,26 @@ tasks:
     verifyDaVinciNarrationErrorRoleGuard/ToneGuard pass against the real file. Returning the
     recurring consistency umbrella to ready for the next bounded slice. Next slice target:
     text-xs text-base-content/45 (~83 subset-match occurrences across 35 files).
-  updated: '2026-09-08T16:06:32Z'
+
+    Slice 156 merged as silasfelinus/kind_robots#2528 (squash 10761e9a, exact head
+    763ed3c3). Added .kr-text-dim-xs-45 (text-xs text-base-content/45) to
+    assets/css/tailwind.css and utils/scripts/codemods/kr_text_dim_xs_45_codemod.py, then
+    migrated all 83 subset-match occurrences across 36 files -- no geometry or behavior
+    change, extra utility tokens (flex items-center gap-*, mt-*, truncate, font-*, etc.)
+    preserved verbatim per the established convention. This closes out both candidates named
+    as slice 154's own follow-up target (text-sm text-base-content/70 in slice 155, this one
+    in slice 156). Fixed a scoped prettier collapse in 5 files where the shortened class
+    string let a multi-line tag fit prettier's print width on one line; confirmed via git
+    stash that the other 26 flagged files already carried pre-existing prettier debt
+    unrelated to this change and left them untouched. All checks green: vue-tsc, test:lint-
+    ratchet (333/-59, holds), test:layout-contract (holds; noticed and left alone an
+    unrelated pre-existing 2-entry viewport-grid baseline improvement, not this slice's to
+    claim), prettier clean on all touched files. No source-text contract scripts reference
+    this literal class string. Returning the recurring consistency umbrella to ready for the
+    next bounded slice. Next slice target: run a fresh frequency survey of the codebase's
+    most-repeated static class="..." values to find the next bounded family -- both
+    candidates from slice 152's original survey are now closed out.
+  updated: '2026-09-08T16:20:42Z'
   implementation_pr: 'silasfelinus/kind_robots#2528'
   retry_context: ''
   owner: worker
