@@ -201,6 +201,102 @@ def test_render_surfaces_the_answer_text_and_counts_it():
     assert "ANSWER FROM SILAS: HUMAN NOTE from silas" in output
 
 
+def test_scan_surfaces_a_hard_gate_disputing_its_own_projects_retirement(tmp_path):
+    """conductor/t-111 (wishmaster/t-004 shape): a hard gate whose own title is
+    the question of whether the project should have been retired must survive
+    the active-only default even though its project is now retired -- the
+    disputed lifecycle change is exactly what it's asking Silas to resolve."""
+    write_roadmap(
+        tmp_path,
+        "wishmaster",
+        [
+            {
+                "id": "t-004",
+                "status": "needs-human",
+                "title": "Decide whether to retire Wishmaster as a live project surface",
+                "gate_human": True,
+                "note": "Two PRs retired the project before this gate was answered.",
+            }
+        ],
+    )
+    write_overrides(tmp_path, [("wishmaster", "retired")])
+
+    gates = audit.scan(tmp_path / "projects")
+    assert len(gates) == 1
+    assert gates[0]["task_id"] == "t-004"
+    assert gates[0]["orphaned_by_lifecycle_change"] is True
+
+
+def test_scan_still_suppresses_unrelated_hard_gates_in_tabled_projects(tmp_path):
+    """conductor/t-111's other half: career-transition/t-003 and pinball-hero/
+    t-002 (CLAUDE.md, 2026-07-25) are real hard gates in tabled projects, but
+    they are ordinary stale busywork unrelated to the lifecycle decision --
+    they must stay suppressed, or the fix just reintroduces the original bug."""
+    write_roadmap(
+        tmp_path,
+        "pinball-hero",
+        [
+            {
+                "id": "t-002",
+                "status": "needs-human",
+                "title": "Research BOM tiers and common-source parts",
+                "gate_human": True,
+                "note": "Pick starter/solid/deluxe bill-of-materials tiers.",
+            }
+        ],
+    )
+    write_overrides(tmp_path, [("pinball-hero", "retired")])
+
+    assert audit.scan(tmp_path / "projects") == []
+    # --include-inactive still surfaces it for an explicit archive sweep.
+    gates = audit.scan(tmp_path / "projects", include_inactive=True)
+    assert len(gates) == 1
+    assert gates[0]["orphaned_by_lifecycle_change"] is False
+
+
+def test_scan_does_not_orphan_a_soft_gate_that_merely_mentions_retirement(tmp_path):
+    """Only a hard gate's own subject counts -- a soft gate (an agent stuck
+    note) mentioning retirement in passing must not bypass suppression."""
+    write_roadmap(
+        tmp_path,
+        "old-project",
+        [
+            {
+                "id": "t-009",
+                "status": "needs-human",
+                "title": "Confirm the archived retirement checklist matches reality",
+                "soft_gate": True,
+                "note": "Agent got stuck reconciling an old note.",
+            }
+        ],
+    )
+    write_overrides(tmp_path, [("old-project", "finished")])
+
+    assert audit.scan(tmp_path / "projects") == []
+
+
+def test_render_lists_orphaned_gates_in_their_own_section(tmp_path):
+    write_roadmap(
+        tmp_path,
+        "wishmaster",
+        [
+            {
+                "id": "t-004",
+                "status": "needs-human",
+                "title": "Decide whether to retire Wishmaster as a live project surface",
+                "gate_human": True,
+            }
+        ],
+    )
+    write_overrides(tmp_path, [("wishmaster", "retired")])
+
+    gates = audit.scan(tmp_path / "projects")
+    output = audit.render(gates)
+    assert "Active human gates: 0" in output
+    assert "Gates orphaned by a concurrent lifecycle change (1)" in output
+    assert "wishmaster/t-004 [retired]" in output
+
+
 def test_scan_sorts_answered_gates_first(tmp_path):
     write_roadmap(
         tmp_path,

@@ -147,6 +147,37 @@ def stale_reasons(task: dict[str, Any]) -> list[str]:
     return reasons
 
 
+# conductor/t-111: the active-only default is correct for genuinely stale
+# gates left behind in a project Silas already tabled (career-transition/t-003,
+# pinball-hero/t-002 -- CLAUDE.md, 2026-07-25) -- those gates predate or are
+# unrelated to the lifecycle change and should stay suppressed. But it applies
+# the same blanket suppression to a hard gate that IS the disputed lifecycle
+# decision itself (wishmaster/t-004: "Decide whether to retire Wishmaster as a
+# live project surface" -- filed the same day project-overrides.yaml flipped
+# wishmaster to retired, in the very merge race the gate disputes), making the
+# one tool built to surface unresolved hard gates blind to exactly the case
+# that most needs a human to see it.
+#
+# Matched on the TITLE only, and only for a hard gate. A long note can mention
+# "retire" in passing (a status update, a cross-reference) without the task
+# itself being about that decision; the title is a tight statement of what the
+# task actually is. Matching on notes too would risk resurfacing exactly the
+# career-transition/pinball-hero noise this filter exists to suppress.
+LIFECYCLE_DISPUTE_TITLE = re.compile(
+    r"\bretir(?:e|ed|ing|ement)\b",
+    re.IGNORECASE,
+)
+
+
+def is_lifecycle_dispute_gate(task: dict[str, Any], lifecycle: str) -> bool:
+    """True when a hard gate's own subject is the project's lifecycle status."""
+    if lifecycle == ACTIVE_STATUS:
+        return False
+    if not task.get("gate_human"):
+        return False
+    return bool(LIFECYCLE_DISPUTE_TITLE.search(str(task.get("title") or "")))
+
+
 def scan(
     projects_dir: Path = PROJECTS,
     overrides_path: Path | None = None,
@@ -161,13 +192,24 @@ def scan(
         if project_slug == "_template":
             continue
         lifecycle = project_statuses.get(project_slug, ACTIVE_STATUS)
-        if not include_inactive and lifecycle != ACTIVE_STATUS:
-            continue
+        is_active = lifecycle == ACTIVE_STATUS
 
         roadmap = load_yaml(roadmap_path)
         for task in roadmap.get("tasks", []) or []:
             if not isinstance(task, dict) or task.get("status") != "needs-human":
                 continue
+
+            orphaned = False
+            if not is_active:
+                if include_inactive:
+                    # An explicit archive sweep already surfaces everything in
+                    # this project -- no need for the special orphaned framing.
+                    pass
+                else:
+                    orphaned = is_lifecycle_dispute_gate(task, lifecycle)
+                    if not orphaned:
+                        continue
+
             gates.append(
                 {
                     "project": project_slug,
@@ -181,6 +223,7 @@ def scan(
                     "updated": task.get("updated"),
                     "human_answer": human_answer_unread(task),
                     "stale_reasons": stale_reasons(task),
+                    "orphaned_by_lifecycle_change": orphaned,
                 }
             )
 
@@ -202,15 +245,18 @@ def render(gates: list[dict[str, Any]]) -> str:
     if not gates:
         return "No active-project human gates found."
 
-    findings = [gate for gate in gates if gate["stale_reasons"]]
-    answered = [gate for gate in gates if gate.get("human_answer")]
+    orphaned = [gate for gate in gates if gate.get("orphaned_by_lifecycle_change")]
+    core = [gate for gate in gates if not gate.get("orphaned_by_lifecycle_change")]
+
+    findings = [gate for gate in core if gate["stale_reasons"]]
+    answered = [gate for gate in core if gate.get("human_answer")]
     lines = [
-        f"Active human gates: {len(gates)}",
+        f"Active human gates: {len(core)}",
         f"Strong stale-state signals: {len(findings)}",
         f"Gates with an unread answer from Silas: {len(answered)}",
         "",
     ]
-    for gate in gates:
+    for gate in core:
         flavor = "soft" if gate["soft_gate"] else "hard"
         suffix = ""
         if gate["stale_reasons"]:
@@ -235,6 +281,24 @@ def render(gates: list[dict[str, Any]]) -> str:
                 "authorize closing a genuine gate.",
             ]
         )
+
+    if orphaned:
+        lines.extend(
+            [
+                "",
+                f"Gates orphaned by a concurrent lifecycle change ({len(orphaned)}): "
+                "hard gates whose own subject is the project's paused/retired/"
+                "finished status -- not suppressed by the active-only default "
+                "because the disputed lifecycle change is exactly what each of "
+                "these is asking Silas to resolve.",
+            ]
+        )
+        for gate in orphaned:
+            lines.append(
+                f"- {gate['project']}/{gate['task_id']} "
+                f"[{gate['project_status']}] {gate['title']}"
+            )
+
     return "\n".join(lines)
 
 
