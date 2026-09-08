@@ -72,6 +72,15 @@ if ($env:COMFY_PORT_RECLAIM_COOLDOWN_MINUTES) {
 # willing to end is another copy of the engine this box runs.
 $comfyDir = if ($env:COMFY_DIR) { $env:COMFY_DIR } else { 'D:\comfy\comfy-fast' }
 
+# The interpreter pm2 launches the engine with (ecosystem.config.js
+# COMFY_BASE_PYTHON). Used to recognise our own engine when the command line
+# carries only a relative 'main.py' - see Invoke-PortReclaim.
+$comfyPython = if ($env:COMFY_BASE_PYTHON) {
+    $env:COMFY_BASE_PYTHON
+} else {
+    'C:\Users\silasfelinus\AppData\Local\Programs\Python\Python310\python.exe'
+}
+
 # How long after a boot an app may take to come back before that is a finding.
 # A healthy logon-start recovery is ~90 seconds; 15 minutes is far outside it
 # and far inside the 142 minutes observed on 2026-09-06.
@@ -315,6 +324,69 @@ function Get-PowerTransitions($since) {
 #
 # It can end a render in progress. That costs one ArtJob, which the queue
 # retries; the alternative costs every job until a human gets home.
+# ---------------------------------------------------------------------------
+# Restart via pm2, then MAKE SURE the old engine actually died.
+#
+# 2026-09-08: `pm2 pid comfyui` reported 8980, a process that no longer existed,
+# while THREE real ComfyUI engines ran as children of the pm2 daemon. Every
+# `pm2 restart` therefore signalled a corpse, killed nothing, and spawned one
+# more copy. Four watchdog restarts across one night stacked engines onto a 12GB
+# card; the survivor held port 8188 and the comfyui.db lock, so each new copy
+# spent ~45 seconds loading 60 custom nodes only to exit on 'Port 8188 is
+# already in use'. That is the ~60-90 second restart cycle in the log.
+#
+# kill_timeout is 15s in ecosystem.config.js. A ComfyUI blocked in CUDA init or
+# on an SMB read against the model share outlives that, and pm2's Windows kill
+# then gives up quietly and starts the new copy anyway - same outcome, orphan
+# either way. Reporting it is not enough: nothing else on this box reaps them.
+#
+# So: snapshot the engines before the restart, and afterwards force-kill any
+# that survived and are not the pid pm2 now reports.
+function Get-ComfyEnginePids {
+    @(Get-CimInstance -ClassName Win32_Process -Filter "Name='python.exe'" -ErrorAction SilentlyContinue |
+        Where-Object { [string]$_.CommandLine -match 'main\.py' } |
+        Select-Object -ExpandProperty ProcessId)
+}
+
+function Restart-Supervised($name) {
+    $before = @()
+    if ($name -eq 'comfyui') { $before = Get-ComfyEnginePids }
+
+    & pm2 restart $name | Out-Null
+    if ($name -ne 'comfyui') { return }
+
+    # pm2 reports 'online' well before the engine is up; 8s is only long enough
+    # for the new pid to be recorded, which is all we need to spare it.
+    Start-Sleep -Seconds 8
+    $newPid = 0
+    [int]::TryParse("$(& pm2 pid $name)".Trim(), [ref]$newPid) | Out-Null
+
+    # Never sweep blind. If pm2 cannot tell us which pid is now ITS engine, the
+    # restart itself probably failed - and killing every surviving engine would
+    # leave the box with none at all, which is strictly worse than an orphan.
+    if (-not $newPid) {
+        Write-Log "$name: pm2 did not report a pid after the restart - skipping the orphan sweep rather than killing blind"
+        return
+    }
+
+    foreach ($oldPid in $before) {
+        if ($newPid -and ([int]$oldPid -eq $newPid)) { continue }
+
+        # Re-read the process rather than trusting the snapshot: Windows recycles
+        # pids, and we must never kill whatever inherited the number.
+        $still = Get-CimInstance -ClassName Win32_Process -Filter "ProcessId = $oldPid" -ErrorAction SilentlyContinue
+        if (-not $still) { continue }
+        if ([string]$still.CommandLine -notmatch 'main\.py') { continue }
+
+        Write-Log "$name: pm2 restart left engine pid $oldPid alive (pm2 now reports $newPid) - force-killing the orphan"
+        try {
+            Stop-Process -Id $oldPid -Force -ErrorAction Stop
+        } catch {
+            Write-Log "$name: could not kill orphaned pid $oldPid ($($_.Exception.Message))"
+        }
+    }
+}
+
 function Invoke-PortReclaim($target, $expectedPid) {
     if (-not $reclaimEnabled) {
         Write-Log "$($target.Name): port reclaim is disabled (COMFY_PORT_RECLAIM=0) - leaving the squatter alone"
@@ -339,8 +411,27 @@ function Invoke-PortReclaim($target, $expectedPid) {
         }
     } catch {}
 
+    # 2026-09-08: this check could never pass, so the reclaim below had never
+    # once fired. pm2 launches the engine with a RELATIVE script path from
+    # cwd=$comfyDir, so the observed command line is
+    #     ...\Python310\python.exe main.py --listen 127.0.0.1 --port 8188 ...
+    # and the executable path is the interpreter. Neither string contains
+    # 'D:\comfy\comfy-fast' - the install directory only ever appears as the
+    # working directory, which Win32_Process does not expose. So every tick
+    # logged REFUSING and left the orphan holding the port, which is exactly the
+    # outage this function was written for (2026-09-06) happening again.
+    #
+    # Corroborate the install a different way: it must be a python running
+    # main.py, AND at least one of - it names $comfyDir outright (a launcher
+    # started with an absolute path), it IS the interpreter pm2 launches, or it
+    # is bound to the port we are reclaiming. Any of those, plus the crash-loop
+    # precondition and the "not pm2's pid" test above, is a ComfyUI of ours.
     $haystack = "$commandLine $imagePath"
-    if ($haystack -notmatch 'main\.py' -or $haystack -notmatch [regex]::Escape($comfyDir)) {
+    $looksLikeComfy =
+        ($haystack -match [regex]::Escape($comfyDir)) -or
+        ($imagePath -and $comfyPython -and ($imagePath -ieq $comfyPython)) -or
+        ($commandLine -match "--port\s+$([regex]::Escape([string]$target.Port))")
+    if ($haystack -notmatch 'main\.py' -or -not $looksLikeComfy) {
         Write-Log "$($target.Name): REFUSING to reclaim port $($target.Port) - pid $ownerPid does not look like a ComfyUI from $comfyDir (cmdline: $commandLine)"
         return $false
     }
@@ -374,7 +465,7 @@ function Invoke-PortReclaim($target, $expectedPid) {
     # Windows frees the socket promptly once the owner is gone, but pm2 is on
     # its own restart_delay and would otherwise sit out the rest of it.
     Start-Sleep -Seconds 5
-    & pm2 restart $target.Name | Out-Null
+    Restart-Supervised $target.Name
     Write-Log "$($target.Name): reclaimed port $($target.Port) and restarted the app"
 
     if (Test-AlertDue $alertState "reclaimed-$($target.Name)") {
@@ -651,7 +742,7 @@ if ($shareProbePath) {
     if ($shareOk) {
         if ($sharePrev -eq 'down') {
             Write-Log "share watchdog: share is back - restarting comfyui to rebuild folder_paths"
-            & pm2 restart comfyui | Out-Null
+            Restart-Supervised 'comfyui'
             $comfyuiJustRestarted = $true
             Send-Alert "RECOVERED: model share is back on $hostName - comfyui restarted" `
                 "The model share $shareProbePath was unreadable and is now answering again as of $shareStamp on $hostName. comfyui has been restarted so folder_paths rebuilds its cached filename lists - without that it would keep failing reads against the names it cached while the share was down. Renders should resume on the next claim. No action needed unless this repeats."
@@ -896,9 +987,28 @@ foreach ($t in $targets) {
         if ($resp.StatusCode -eq 200) { $ok = $true }
     } catch { $ok = $false }
 
+    # 20 seconds is a fine budget for a HUNG process and a poor one for a BUSY
+    # one. ComfyUI serves its API from the same loop that runs the sampler, so a
+    # heavy step - or a model read across the share - can push /system_stats
+    # past 20s on a box that is working exactly as intended. Restarting then
+    # kills a render in progress and, because pm2's kill has been unreliable
+    # here, leaves an orphan behind (see Restart-Supervised). Ask twice, with
+    # room the second time: a busy engine answers, a wedged one still does not.
+    if (-not $ok) {
+        Write-Log "$($t.Name): health probe missed 20s - retrying with a 60s budget before calling it hung"
+        Start-Sleep -Seconds 5
+        try {
+            $retry = Invoke-WebRequest -Uri $t.Url -TimeoutSec 60 -UseBasicParsing
+            if ($retry.StatusCode -eq 200) {
+                $ok = $true
+                Write-Log "$($t.Name): answered on the retry - busy, not hung; leaving it alone"
+            }
+        } catch { $ok = $false }
+    }
+
     if (-not $ok) {
         Write-Log "$($t.Name): health probe failed ($($t.Url)) - restarting via pm2"
-        & pm2 restart $t.Name | Out-Null
+        Restart-Supervised $t.Name
 
         # Confirm whether it came back before deciding what to say, then alert
         # (rate-limited by the cooldown).
@@ -999,11 +1109,21 @@ if (-not $krToken) {
                 # normally; restarting it back into an unreadable share fixes
                 # nothing and just churns the GPU. The share watchdog above owns
                 # that case and restarts comfyui when the mount actually returns.
-                if (-not $shareOk) {
+                # A deliberate `pm2 stop comfyui` must not be fought. The
+                # liveness probe already honours this (see "pm2 status is
+                # 'stopped' - deliberate" above); this block did not, and
+                # `pm2 restart` on a stopped app STARTS it - so stopping the
+                # engine to work on the box bought at most one cooldown before
+                # the watchdog put it back (2026-09-08).
+                $comfyEntry = $pm2List | Where-Object { $_.name -eq 'comfyui' } | Select-Object -First 1
+                $comfyPm2Env = $comfyEntry | Select-Object -ExpandProperty pm2_env -ErrorAction SilentlyContinue
+                if ($comfyPm2Env -and $comfyPm2Env.status -eq 'stopped') {
+                    Write-Log "render watchdog: comfyui restart suppressed (pm2 status is 'stopped' - deliberate, leaving it alone)"
+                } elseif (-not $shareOk) {
                     Write-Log "render watchdog: comfyui restart suppressed (model share is down - see share watchdog)"
                 } elseif (Test-AlertDue $alertState 'render-watchdog-restart') {
                     Write-Log "render watchdog: failure spike (+$deltaFailed) - restarting comfyui via pm2"
-                    & pm2 restart comfyui | Out-Null
+                    Restart-Supervised 'comfyui'
                     $alertState['render-watchdog-restart'] = $stamp
                 } else {
                     Write-Log "render watchdog: comfyui restart suppressed (within $($cooldownMinutes)-min cooldown)"
