@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-"""Repair and requeue failed Kind Robots ArtJobs with legacy paths/prompts.
+"""Repair and requeue failed Kind Robots ArtJobs with known legacy defects.
 
 The script first lists FAILED jobs through the authenticated queue API, selects
-only Kind Robots-targeted jobs whose imagePath is not canonical or whose prompt
-contains the retired brand-style token, then sends those exact IDs to the
-scoped requeue endpoint. Dry-run by default.
+only Kind Robots-targeted jobs whose imagePath is not canonical, whose prompt
+contains the retired brand-style token, or whose failure matches one of the
+specific pre-2026-08-08 prompt shapes that Kind Robots now knows how to migrate
+on requeue. It then sends those exact IDs to the scoped requeue endpoint.
+Dry-run by default.
 
 Failures outside that deliberately narrow repair policy are reported with a
 bounded diagnostic (id, engine, and error only). This keeps scheduled repair
@@ -29,6 +31,7 @@ VAGUE_ART_DIRECTION = re.compile(
     r"(?:visual\s+)?(?:style|language)\b",
     re.IGNORECASE,
 )
+PROMPT_CONTRACT_FAILURE = "Art prompt rejected by the prompt contract"
 
 
 def failed_jobs():
@@ -57,6 +60,37 @@ def failed_jobs():
         page += 1
 
 
+def legacy_prompt_contract_reason(job):
+    """Recognize only prompt failures backed by the Aug 8 production incident.
+
+    Kind Robots #1606/#1609/#1622 fixed the producers and the claim-time gate.
+    The requeue endpoint now migrates these exact historical phrases. This
+    classifier merely allows those known fossils to reach that migration; it
+    intentionally does not try to rewrite or auto-retry arbitrary contract
+    failures.
+    """
+    error = " ".join(str(job.get("error") or "").split())
+    if PROMPT_CONTRACT_FAILURE not in error:
+        return None
+
+    if (
+        '[format-vocabulary] "card composition"' in error
+        and (
+            '[format-vocabulary] "treasure card"' in error
+            or '[format-vocabulary] "ability card"' in error
+        )
+    ):
+        return "pre-contract card-format prompt"
+
+    if (
+        '[conditional-instruction] "only when"' in error
+        and '[conditional-instruction] "when the subject"' in error
+    ):
+        return "pre-contract conditional cast prompt"
+
+    return None
+
+
 def repair_reasons(job):
     payload = job.get("payload") or {}
     if not isinstance(payload, dict):
@@ -77,6 +111,10 @@ def repair_reasons(job):
         reasons.append(f"legacy imagePath {image_path}")
     if VAGUE_ART_DIRECTION.search(prompt):
         reasons.append("vague Kind Robots style token")
+
+    contract_reason = legacy_prompt_contract_reason(job)
+    if contract_reason:
+        reasons.append(contract_reason)
     return reasons
 
 
@@ -124,7 +162,7 @@ def main() -> int:
             print(f"  {failure_diagnostic(job)}")
 
     if not selected:
-        print("No failed Kind Robots ArtJobs need path/style repair.")
+        print("No failed Kind Robots ArtJobs need a known legacy repair.")
         return 0
 
     print(
