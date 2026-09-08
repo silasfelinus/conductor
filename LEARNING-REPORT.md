@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-08T09:42:26Z
+Generated: 2026-09-08T09:57:50Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **893**
-- Outcomes: blocked: 16, cancelled: 1, done: 876
+- Closed tasks recorded: **894**
+- Outcomes: blocked: 16, cancelled: 1, done: 877
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
-| interface-vision | 105 | 100% |
+| interface-vision | 106 | 100% |
 | kapowarr | 52 | 100% |
 | kind-economy | 9 | 100% |
 | kind-robots | 55 | 98% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 877 | 99% |
+| software | 878 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-08 `interface-vision/t-104` — A codemod's subset-match convention (base tokens present, extras preserved) generalizes further than a manual literal grep once written -- the initial grep for the exact string "rounded-2xl bg-base-200 p-3" found 10 occurrences, but the codemod's subset match found 22 once it stopped caring about surrounding utility tokens (max-h-96, text-sm, sm:p-4, ...). The inverse risk showed up in the same slice: two occurrences (stylist-manager.vue, checkpoint-card.vue) matched the same base-token subset but also carried a `border border-base-300` token the target primitive doesn't have -- a structurally different bordered shape, not a superset of the borderless one. Subset-matching on the tokens you want is not enough; a family that is defined by the *absence* of a token (no border) needs an explicit negative check too, or it silently strips that token from occurrences that actually need it.
 - 2026-09-08 `kindrobots-unraid/t-015` — A site-wide kindrobots.org 502 outage (02:56-05:53 UTC, ~2h57m) recovered on its own before root cause could be investigated -- the second such occurrence after t-014's ~4h15m outage with the same unconfirmed container-recreate-without-restart theory. Closed per docs/state-reconciliation.md's incident-recovery closure pathway (10/10 clean 200s on both / and /api/health/database) with approved_by_human left false, matching t-014's precedent. Recurring unexplained outages with no external health-probe/alerting in place mean each one is only ever observed-and-cleared by whichever session happens to sweep during the window -- the standing follow-up (an external probe/alert task) is still unfiled after two occurrences.
 - 2026-09-08 `conductor/t-111` — When a suppression filter needs to distinguish "genuinely stale, keep hiding it" from "the disputed thing itself, must surface," reach for a narrow content classifier on the task's own title before reaching for timing heuristics (e.g. "how close is the task's updated: to the override's status change"). A real check here (pinball-hero/t-002's updated: was only ~1 week after its project's retirement date -- well within any generous same-day-ish margin) showed a date-proximity threshold would have reintroduced the exact false positive the original filter existed to prevent. Matching what the task's title is actually about was both simpler and correct where a tuned margin was neither.
 - 2026-09-08 `conductor/t-148` — A flaky test that asserts on positional order of a shared mutable list (e.g. "the first matching log line") rather than content that only its own code path can produce is a signal to look for concurrent producers with no lifecycle boundary between tests -- here, every other test in the same file intentionally leaves a daemon thread running forever, and the production code re-reads its config/behavior off live module globals each iteration, so a still-running thread from an earlier test races the current test's own thread using whatever the current test has monkeypatched. Fix the race by waiting for and asserting on a signature only the current test's own call can produce, not by loosening the assertion or adding thread-lifecycle management the rest of the suite doesn't use.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-07 `kind-economy/t-023` — Same pattern as t-014/t-022 in this batch: a task released from needs-human back to ready under the 2026-09-07 human-gate-simplification policy already had its deliverable (THE-SIFT-DESIGN.md) complete and matching the release note's ask verbatim, including the hardest mechanical problem (attribution without custody) resolved concretely. Reconciled to done rather than treated as new design work owed.
 - 2026-09-07 `kind-economy/t-022` — Same pattern as t-014 in this batch: a task released from needs-human back to ready under the 2026-09-07 human-gate-simplification policy already had its deliverable (BUTTERFLY-EVENT-PLAN.md) complete and matching the release note's ask verbatim. Reconciled to done rather than treated as new planning work owed.
 - 2026-09-07 `kind-economy/t-014` — The 2026-09-07 human-gate simplification pass flipped several complete-but-parked needs-human design tasks back to ready with a "design around the accepted model, don't wait on Silas" instruction. For kind-economy/t-014 the deliverable (PAYOUT-MECHANISM-DESIGN.md) already matched that instruction verbatim from 2026-08-19 -- the correct action was reconciling stale roadmap state to done, not producing new design content. Check whether a task's own deliverable file already satisfies a "release" note before assuming more design work is owed.
-- 2026-09-07 `cthulhuquarium/t-041` — The task's only open item (Decision 2: whether the egg purchase OPTION itself should be concealed, vs. only its CONTENTS) was resolved by Silas's 2026-09-07 default-recommendation policy in the task note itself -- keep the option visibly on sale, hide only the species. Re-reading the already-merged implementation (kind_robots PR #2172) against that decision found it already compliant end to end: the egg catalog API/UI exposes only rarity/size/cost/description, never species or the eligible pool; hatchEggForUser resolves the species server-side at hatch time only; the shop panel has no discovery gate on the purchase option; the hatch reveal dialog always shows the result, never silently. No code change was needed -- this closed as a verification-only pass. General lesson: when a roadmap task's remaining note is a Silas decision on an already-shipped feature rather than a design gate blocking new work, check the live diff against the decision before assuming implementation work remains -- a 'ready' status can mean 'verify and close', not always 'build something'.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-08T09:42:26Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-08T09:57:50Z_
