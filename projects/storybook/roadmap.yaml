@@ -230,19 +230,24 @@ tasks:
 - id: t-016
   milestone: m4
   title: "FOR SILAS: visually accept the redesigned Storybook setup and reading experience"
-  status: needs-human
-  owner: silas
+  status: ready
   passes: 0
   stakes: reversible
   gate_human: true
   approved_by_human: false
   depends_on: [t-011, t-012, t-013, t-014]
-  note: >
-    FOR SILAS: once the current casting-board/setup/deep-link redesign tasks are complete, review
-    Storybook at phone/tablet/desktop widths with a real scenario/cast. TO APPROVE: confirm the
-    front end feels like assembling and reading a story rather than nested admin panels, or leave
-    concrete visual/interaction notes. This is separate from t-015's stage-role architecture choice.
-  updated: '2026-08-22T23:37:22Z'
+  note: |-
+    FOR SILAS: once the current casting-board/setup/deep-link redesign tasks are complete, review Storybook at phone/tablet/desktop widths with a real scenario/cast. TO APPROVE: confirm the front end feels like assembling and reading a story rather than nested admin panels, or leave concrete visual/interaction notes. This is separate from t-015's stage-role architecture choice.
+
+
+    SENT BACK by Silas via ChatGPT acceptance review. Visual acceptance failed.
+
+    The current Storybook setup is fundamentally too text-and-button driven for Kind Robots. This is an art-focused site: outside settings/admin utility screens, creative product surfaces must be visual rather than merely technically complete.
+
+    Required redesign: replace the four-step/tab-like setup with one open selection surface. Story ingredients should be image-led, placeable/choosable cards with a tarot-deck/tableau feeling; entity choices must use their real Character/Dream/Scenario/Facet/Reward artwork when available. Narrator/style/structure choices should also be visually represented rather than plain button rows. Keep the existing story engine and persistence behavior; this is a front-end architecture and art-direction rejection, not a request to rebuild the narrative backend.
+
+    Kind Robots implementation is underway on fix/storybook-art-first-setup. Do not ask Silas to re-review until that redesign has merged and deployed.
+  updated: '2026-09-08 02:40:00+00:00'
 - id: t-017
   milestone: m4
   title: Add a contract for Storybook object-entry links
