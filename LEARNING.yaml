@@ -12812,3 +12812,23 @@ records:
     threshold would have reintroduced the exact false positive the original
     filter existed to prevent. Matching what the task's title is actually
     about was both simpler and correct where a tuned margin was neither.
+- date: '2026-09-08'
+  project: kindrobots-unraid
+  task: t-015
+  kind: software
+  stakes: irreversible
+  passes: 0
+  outcome: done
+  failure_category: transient
+  lesson: >-
+    A site-wide kindrobots.org 502 outage (02:56-05:53 UTC, ~2h57m) recovered
+    on its own before root cause could be investigated -- the second such
+    occurrence after t-014's ~4h15m outage with the same unconfirmed
+    container-recreate-without-restart theory. Closed per
+    docs/state-reconciliation.md's incident-recovery closure pathway (10/10
+    clean 200s on both / and /api/health/database) with approved_by_human
+    left false, matching t-014's precedent. Recurring unexplained outages
+    with no external health-probe/alerting in place mean each one is only
+    ever observed-and-cleared by whichever session happens to sweep during
+    the window -- the standing follow-up (an external probe/alert task) is
+    still unfiled after two occurrences.
