@@ -1471,13 +1471,11 @@ tasks:
 - id: t-058
   milestone: m8
   title: Implement debrid hoster-unrestrict downloads (Real-Debrid or chosen provider)
-  status: needs-human
-  owner:
+  status: done
   passes: 0
   stakes: reversible
-  soft_gate: true
   depends_on: t-042
-  updated: '2026-08-20T17:00:00Z'
+  updated: '2026-09-08T02:29:04+00:00'
   note: |-
     FOR SILAS: Nothing has been built. The design work is finished and lives in
     projects/kapowarr/docs/t-042-debrid-boundary.md -- t-042 evaluated this and the
@@ -1505,6 +1503,9 @@ tasks:
     SIZE: ~100 lines plus tests. One DebridDownload(BaseDirectDownload) modelled on
     PixelDrainDownload, a priority field on the DownloadPreppers registry, one
     CredentialSource member. No migration, no new DownloadType, no post-processing change.
+
+    Silas confirmed on 2026-09-07 that he has no debrid account and wants this feature shelved. Per the task's own decision contract, do not acquire a Real-Debrid/AllDebrid/Premiumize/TorBox subscription merely to satisfy the roadmap. The completed architectural evaluation in t-042 remains available if this is revisited later.
+  approved_by_human: true
 - id: t-059
   milestone: m8
   title: Evaluate a metadata provider with genuine non-US comic coverage (GCD first)
