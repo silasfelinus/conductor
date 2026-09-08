@@ -750,6 +750,81 @@ tasks:
     shared surface class, same background/border/radius/padding as before.
   claimed_by: claude-conductor-burst-20260718T121029Z-4512
   claimed_at: '2026-07-18T12:10:29Z'
+
+- id: t-026
+  milestone: m5
+  title: Fix 35 missing kind-icon SVG references surfaced by the new audit:icons PR gate
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >
+    Surfaced 2026-09-08 while reviewing kind_robots PR #2503
+    ("Confirm prompt/icon safety lane runs on PRs", branch
+    openai/wire-art-icon-guards-contract-tests). That PR's own acceptance
+    criteria assumed `npm run audit:icons` already passed clean after PR #2502
+    ("Fix missing icons and repair legacy failed art prompts", which only added
+    book-open and refresh-cw); it does not. Confirmed directly against
+    kind_robots main HEAD (0718542565c238a72c007abbacfb74604b1b5f01, verbatim
+    checkout) that these 35 `kind-icon:<name>` references are missing real
+    SVGs under assets/icons/, predate PR #2503 entirely, and sit in files
+    PR #2503's diff never touches (it only edits the workflow comment and
+    adds 'scripts' to auditIcons.ts's SKIPPED_DIRECTORIES) -- this is not
+    PR #2503's regression, it is pre-existing repo debt the new required
+    check now correctly exposes for the first time. Each fails silently at
+    runtime (console-only `[Icon] failed to load icon '...'`, renders
+    nothing) per auditIcons.ts's own module comment.
+
+    Missing icon -> referencing file(s):
+    - alert-triangle: components/pages/mission-accrual-page.vue
+    - briefcase: stores/helpers/conductorCards.ts
+    - calendar: components/conductor/humboldt-scoop-page.vue, components/conductor/scoop-cms-page.vue, components/conductor/watchlist-page.vue, stores/helpers/conductorCards.ts
+    - chart: components/conductor/watchlist-page.vue
+    - check-square: components/pages/for-you-manager.vue
+    - dance: stores/helpers/conductorCards.ts
+    - document: components/conductor/project-detail.vue, components/pages/conductor-page.vue, components/pages/conductor-project-gallery-page.vue
+    - file-plus: components/dreams/dream-pitch-sheet.vue, components/dreams/dream-sheet-toolbar.vue
+    - file-sparkles: components/dreams/dream-pitch-sheet.vue, components/dreams/dream-sheet-toolbar.vue
+    - forward: pages/play/mandarin.vue
+    - git-branch: components/dreams/dream-pitch-sheet.vue
+    - hammer: components/conductor/project-detail.vue, components/pages/conductor-page.vue
+    - handshake: utils/narrativeRoles.ts
+    - history: components/art/entity-art-manager.vue, components/coloring/coloring-book-production-history.vue, components/watchlist/watchlist-browse.vue
+    - image-off: components/coloring/coloring-book-production-history.vue
+    - key: components/user/agent-credentials-panel.vue
+    - language: pages/play/mandarin.vue
+    - layout-dashboard: stores/sheetStore.ts
+    - map-pin: components/conductor/humboldt-scoop-page.vue, components/dreams/dream-pitch-sheet.vue
+    - message-square: components/pages/for-you-manager.vue
+    - message-square-magic: components/dreams/dream-pitch-sheet.vue
+    - mirror: utils/narrativeRoles.ts
+    - people: utils/narrativeRoles.ts
+    - phone: stores/helpers/conductorCards.ts
+    - pin: components/navigation/workspace-narrator.vue
+    - ruler: components/coloring/coloring-book-package-readiness.vue
+    - sheet: components/dreams/dream-narration.vue
+    - skills: components/characters/add-character.vue
+    - sprout: stores/animationCatalog.ts
+    - swords: utils/narrativeRoles.ts
+    - undo: components/pages/conductor-pitch-manager.vue
+    - user-round: components/dreams/dream-pitch-sheet.vue
+    - volume: pages/play/mandarin.vue
+    - wish: stores/helpers/conductorCards.ts
+    - x-circle: components/servers/server-status.vue
+
+    For each: either add the missing SVG to assets/icons/ (fill="currentColor",
+    matching the style of scroll.svg/book.svg per auditIcons.ts's own guidance),
+    or repoint the reference at an existing semantically-equivalent icon
+    already on disk (e.g. several of these have a plausible existing
+    neighbor -- alert.svg/warning.svg, message.svg/chat.svg, user.svg,
+    users.svg/players.svg, volume-high.svg, back-arrow.svg/forward-arrow.svg,
+    check.svg/checklist.svg, x.svg -- verify each visually/semantically
+    before reusing rather than assuming). Run `npm run audit:icons` locally
+    to confirm 0 remaining before opening the PR. Once this lands and
+    kind_robots main is clean, re-run/merge PR #2503's audit:icons check
+    (may already pass once main moves, or may need a rebase).
+  claimed_by: null
+
 milestones:
 - id: m1
   title: Task language + presentation model
