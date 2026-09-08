@@ -12757,3 +12757,18 @@ records:
     plumbing untouched. Worth checking an existing plugin-style registry's
     own docstring for "a second X could be added later" promises before
     assuming a scope-constrained integration needs new orchestration.
+- date: '2026-09-08'
+  project: kapowarr
+  task: t-041
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A source that is sometimes-restricted needs a per-item eligibility check
+    enforced once at the data boundary (here, before a download link is ever
+    built), not a per-source allow/deny decision like a fully-open or
+    fully-restricted source would use -- and the adversarial test that
+    matters most is proving the restricted case can never produce the
+    real acquisition artifact, not just that the happy path works.
