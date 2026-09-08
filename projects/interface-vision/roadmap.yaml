@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3976,7 +3976,26 @@ tasks:
 
     Slice 161 in progress: kind_robots#2533 (kr-text-dim-sm subset-match sweep, 86
     occurrences/61 files).
-  updated: '2026-09-08T21:39:13Z'
+
+    Slice 161 merged as silasfelinus/kind_robots#2533 (squash
+    67d3c2ddbb56e034ed2c8456ed7f7ebd4f1edb2d) from exact head
+    ca3c8c2ab093f31c2c1720a348895eb078534ae7. Re-ran kr_text_dim_sm_codemod.py without
+    --exact-only per slice 160's kaizen note: 86 occurrences across 61 files carrying the
+    text-sm text-base-content/60 base pair (plus extra utility tokens) migrated to .kr-text-
+    dim-sm; no geometry or behavior change. Also surveyed kr-text-dim-sm-70, kr-text-dim-
+    xs-45, kr-text-dim-xs-55 for the same re-run: all found 0 further candidates, first pass
+    already covered the full subset-match pool. Verification: vue-tsc clean; eslint 333
+    problems (327 errors, 6 warnings) unchanged before/after (confirmed via git stash);
+    test:layout-contract holds, no new violations (an unrelated -2 ratchet opportunity in
+    narrative-ingredient-multi-picker.vue left untouched, out of scope); test:lint-ratchet
+    holds at 333/-59; prettier needed a targeted --write on 7 files for collapsed-line
+    fallout from shortened class strings (confirmed via git stash the other 23 flagged files
+    carry pre-existing debt), final --check matched that 23-file baseline exactly. All 56
+    kind_robots CI checks green. Kaizen: the text-{xs,sm} text-base-content/NN family
+    (slices 153-161) is now fairly exhausted -- worth a fresh full-repo class-frequency
+    survey next slice to find the next largest bounded family from scratch. Return the
+    recurring consistency umbrella to ready for the next bounded slice.
+  updated: '2026-09-08T21:46:23Z'
   implementation_pr: 'silasfelinus/kind_robots#2533'
   retry_context: ''
   owner: worker
