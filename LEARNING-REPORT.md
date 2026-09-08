@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-08T13:40:18Z
+Generated: 2026-09-08T14:03:57Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **895**
-- Outcomes: blocked: 16, cancelled: 1, done: 878
+- Closed tasks recorded: **896**
+- Outcomes: blocked: 16, cancelled: 1, done: 879
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
-| interface-vision | 107 | 100% |
+| interface-vision | 108 | 100% |
 | kapowarr | 52 | 100% |
 | kind-economy | 9 | 100% |
 | kind-robots | 55 | 98% |
@@ -69,14 +69,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 879 | 99% |
+| software | 880 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
 | quality | 17 |
-| transient | 14 |
+| transient | 15 |
 | actionable | 12 |
 | scope | 3 |
 
@@ -85,12 +85,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - project `coat-dance` — 11% success over 9 closed tasks; aim the next kaizen task here
 - kind `content` — 44% success over 16 closed tasks; aim the next kaizen task here
 - failure category `quality` — 17 occurrences; look for the shared cause across its records
-- failure category `transient` — 14 occurrences; look for the shared cause across its records
+- failure category `transient` — 15 occurrences; look for the shared cause across its records
 - failure category `actionable` — 12 occurrences; look for the shared cause across its records
 - failure category `scope` — 3 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-09-08 `interface-vision/t-104` — A new `.kr-*` primitive that wraps daisyUI tokens via `@apply` can pass every local check (vue-tsc, eslint, layout-contract, lint-ratchet, prettier) and still fail CI's `Build production image` check alone: `@apply label-text font-bold` broke with `Cannot apply unknown utility class 'label-text'` because `label-text` is dead markup left over from a pre-5 daisyUI form convention -- present in 200+ templates but with zero matching CSS rule anywhere in daisyUI 5's own dist CSS or this repo's assets/. Tailwind v4's `@apply` validates its argument against real utilities; a raw template `class="..."` attribute is never validated, so the dead token was invisible everywhere except the actual production build (the most expensive place to discover it, ~8-10 minutes per run). Before writing a new `kr-*` primitive's `@apply` line, grep the base tokens against `node_modules/daisyui/dist/*.css` (or the app's own `assets/`) for an actual CSS rule first -- a class present in markup is not proof it is a real, applyable utility, especially across a daisyUI major-version bump.
 - 2026-09-08 `interface-vision/t-104` — Shrinking a long `class="..."` attribute down to a short primitive name can leave stale multi-line Vue-template formatting behind: prettier had wrapped the original long class onto its own line inside a 3-line `<span>\n  class="..."\n>`, and after the codemod collapsed it to `kr-icon-tile` that wrapping was no longer prettier's own preference, so `prettier --check` flagged it as newly non-conforming on files that were otherwise already prettier-clean. The fix is NOT `prettier --write` on the whole file when the file has *other*, unrelated pre-existing prettier violations (a real trap hit mid-slice: running it reformatted unrelated code throughout build-bench.vue, privacy-page.vue, and wallet-page.vue, turning a 4-line diff into a 100+-line one) -- diff `git stash` baseline vs. current per file first, and hand-collapse just the specific tag when the file has pre-existing noise the tool would otherwise sweep in.
 - 2026-09-08 `interface-vision/t-104` — A codemod's subset-match convention (base tokens present, extras preserved) generalizes further than a manual literal grep once written -- the initial grep for the exact string "rounded-2xl bg-base-200 p-3" found 10 occurrences, but the codemod's subset match found 22 once it stopped caring about surrounding utility tokens (max-h-96, text-sm, sm:p-4, ...). The inverse risk showed up in the same slice: two occurrences (stylist-manager.vue, checkpoint-card.vue) matched the same base-token subset but also carried a `border border-base-300` token the target primitive doesn't have -- a structurally different bordered shape, not a superset of the borderless one. Subset-matching on the tokens you want is not enough; a family that is defined by the *absence* of a token (no border) needs an explicit negative check too, or it silently strips that token from occurrences that actually need it.
 - 2026-09-08 `kindrobots-unraid/t-015` — A site-wide kindrobots.org 502 outage (02:56-05:53 UTC, ~2h57m) recovered on its own before root cause could be investigated -- the second such occurrence after t-014's ~4h15m outage with the same unconfirmed container-recreate-without-restart theory. Closed per docs/state-reconciliation.md's incident-recovery closure pathway (10/10 clean 200s on both / and /api/health/database) with approved_by_human left false, matching t-014's precedent. Recurring unexplained outages with no external health-probe/alerting in place mean each one is only ever observed-and-cleared by whichever session happens to sweep during the window -- the standing follow-up (an external probe/alert task) is still unfiled after two occurrences.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-08 `kapowarr/t-040` — Once Silas released the soft scope-gate with a conservative default (metadata/search discovery plus link-out only, never automate a download from the shadow library), the existing `DiscoverSources` registry in `backend.features.discover` (kind_robots-fork Kapowarr) already had the exact extension point this needed -- register a second `DiscoverSource` alongside GetComics, reusing all its merge/cross-reference/link-out plumbing untouched. Worth checking an existing plugin-style registry's own docstring for "a second X could be added later" promises before assuming a scope-constrained integration needs new orchestration.
 - 2026-09-07 `kind-robots/t-061` — A pitch's own "Suggested first task" section splitting a two-part fix into two follow-on tasks is worth honoring literally rather than forcing both into one PR: the conductorSlug immutability guard landed clean and small (kind_robots#2497), while the slug-collision-helper consolidation (split into t-094) needs its own careful pass because an existing source-text regression guard (verifyAppmakerScaffoldCollisionGuard.ts) asserts the exact inline shape of the code it would refactor away.
 - 2026-09-07 `kind-economy/t-023` — Same pattern as t-014/t-022 in this batch: a task released from needs-human back to ready under the 2026-09-07 human-gate-simplification policy already had its deliverable (THE-SIFT-DESIGN.md) complete and matching the release note's ask verbatim, including the hardest mechanical problem (attribution without custody) resolved concretely. Reconciled to done rather than treated as new design work owed.
-- 2026-09-07 `kind-economy/t-022` — Same pattern as t-014 in this batch: a task released from needs-human back to ready under the 2026-09-07 human-gate-simplification policy already had its deliverable (BUTTERFLY-EVENT-PLAN.md) complete and matching the release note's ask verbatim. Reconciled to done rather than treated as new planning work owed.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-08T13:40:18Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-08T14:03:57Z_
