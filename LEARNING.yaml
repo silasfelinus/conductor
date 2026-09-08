@@ -12739,3 +12739,21 @@ records:
     the slug-collision-helper consolidation (split into t-094) needs its own careful pass
     because an existing source-text regression guard (verifyAppmakerScaffoldCollisionGuard.ts)
     asserts the exact inline shape of the code it would refactor away.
+- date: '2026-09-08'
+  project: kapowarr
+  task: t-040
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Once Silas released the soft scope-gate with a conservative default
+    (metadata/search discovery plus link-out only, never automate a download
+    from the shadow library), the existing `DiscoverSources` registry in
+    `backend.features.discover` (kind_robots-fork Kapowarr) already had the
+    exact extension point this needed -- register a second `DiscoverSource`
+    alongside GetComics, reusing all its merge/cross-reference/link-out
+    plumbing untouched. Worth checking an existing plugin-style registry's
+    own docstring for "a second X could be added later" promises before
+    assuming a scope-constrained integration needs new orchestration.
