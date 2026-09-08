@@ -1586,12 +1586,12 @@ tasks:
 - id: t-045
   milestone: m2
   title: Re-run LoRA arm for the 5 styles with recorded loraPath and promote winners to mode lora
-  status: ready
+  status: claimed
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-044
-  updated: '2026-09-08T07:46:26Z'
+  updated: '2026-09-08T19:31:55Z'
   note: >-
     Kaizen follow-up from t-004 (PR #1207, merged 2026-07-27). Once t-044's
     lora_name mismatch is fixed, re-run the LoRA arm in
@@ -1666,8 +1666,8 @@ tasks:
     to mode: lora in style-remix-configs.yaml. Do NOT run --enqueue-only again for these 5
     styles under any circumstance -- two full sets already exist. Logged as a kaizen entry
     in root TALKBACK.md.
-  claimed_at: '2026-09-08T07:32:17Z'
-  claimed_by: claude-scheduled-20260908T072700Z-aa-t045
+  claimed_at: '2026-09-08T19:31:55Z'
+  claimed_by: claude-20260908T193154Z-aa-t045
 
 - id: t-043
   milestone: m6
