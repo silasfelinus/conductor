@@ -72,6 +72,21 @@ if ($env:COMFY_PORT_RECLAIM_COOLDOWN_MINUTES) {
 # willing to end is another copy of the engine this box runs.
 $comfyDir = if ($env:COMFY_DIR) { $env:COMFY_DIR } else { 'D:\comfy\comfy-fast' }
 
+# The standing orphan sweep (Invoke-OrphanSweep). ON by default: an orphan that
+# is only reaped when THIS script happens to restart something is not reaped at
+# all in the common cases - a hand-typed pm2 restart, a stop whose kill failed,
+# a resurrect at logon. Set COMFY_ORPHAN_SWEEP=0 to go back to report-only.
+$orphanSweepEnabled = $true
+if ($env:COMFY_ORPHAN_SWEEP -eq '0') { $orphanSweepEnabled = $false }
+
+# How long a second engine must have been alive before the sweep will end it.
+# A pm2 restart legitimately has two processes for a moment; five minutes is far
+# past any handover and still inside one tick of noticing.
+$orphanGraceMinutes = 5
+if ($env:COMFY_ORPHAN_GRACE_MINUTES) {
+    [int]::TryParse($env:COMFY_ORPHAN_GRACE_MINUTES, [ref]$orphanGraceMinutes) | Out-Null
+}
+
 # The interpreter pm2 launches the engine with (ecosystem.config.js
 # COMFY_BASE_PYTHON). Used to recognise our own engine when the command line
 # carries only a relative 'main.py' - see Invoke-PortReclaim.
@@ -324,6 +339,104 @@ function Get-PowerTransitions($since) {
 #
 # It can end a render in progress. That costs one ArtJob, which the queue
 # retries; the alternative costs every job until a human gets home.
+# Does this process look like OUR ComfyUI engine?
+#
+# 2026-09-08: the check this replaces required $comfyDir to appear in the
+# command line or executable path, and it never can. pm2 launches the engine
+# with a RELATIVE script path from cwd=$comfyDir, so the observed command line
+# is `...\Python310\python.exe main.py --listen 127.0.0.1 --port 8188 ...` and
+# the executable path is just the interpreter. The install directory exists
+# only as the working directory, which Win32_Process does not expose. So
+# Invoke-PortReclaim logged REFUSING every tick and had never once fired -
+# including through the outage it was written for.
+#
+# Corroborate the install a different way: it must be a python running main.py,
+# AND at least one of - it names $comfyDir outright (a launcher started with an
+# absolute path), it IS the interpreter pm2 launches, or it is bound to the
+# port we care about.
+function Test-IsComfyEngine($cim, $port) {
+    if (-not $cim) { return $false }
+    $commandLine = [string]$cim.CommandLine
+    $imagePath = [string]$cim.ExecutablePath
+    $haystack = "$commandLine $imagePath"
+
+    if ($haystack -notmatch 'main\.py') { return $false }
+
+    return (
+        ($haystack -match [regex]::Escape($comfyDir)) -or
+        ($imagePath -and $comfyPython -and ($imagePath -ieq $comfyPython)) -or
+        ($port -and ($commandLine -match "--port\s+$([regex]::Escape([string]$port))"))
+    )
+}
+
+# ---------------------------------------------------------------------------
+# Standing orphan sweep. Runs EVERY tick, not only after a restart this script
+# initiated.
+#
+# Restart-Supervised closes the loop for restarts the watchdog itself runs. It
+# cannot cover the other ways an orphan is born, and those are the common ones:
+# a `pm2 restart` typed by hand, a `pm2 stop`/`pm2 delete` whose kill silently
+# failed, a `pm2 resurrect` at logon landing on top of a survivor. The doubling
+# predates any one trigger - healthcheck.log has it crash-looping from
+# 2026-09-05, and README.md's "Port 8188 is already in use (2026-09-06
+# incident)" is the same fault - so nothing that only reacts to this script's
+# own actions can be said to have fixed it.
+#
+# Root cause, as far as it has been established: pm2 on Windows cannot reliably
+# kill ComfyUI inside kill_timeout (15s in ecosystem.config.js). A process
+# blocked in CUDA init or on an SMB read outlives that, pm2 gives up SILENTLY,
+# and starts the replacement anyway. That is pm2 behaviour we do not control.
+# What we can do is notice the survivor within one tick and end it.
+#
+# Deliberately narrow. An engine is only swept when ALL of these hold:
+#   * pm2 says this app is 'online' AND reports a pid that is itself a live
+#     ComfyUI - if pm2's own bookkeeping is broken, this stays out of the way
+#     and Invoke-PortReclaim owns the crash-loop case instead
+#   * the candidate is a different pid, and looks like our engine
+#   * it has been alive longer than $orphanGraceMinutes, so a legitimate
+#     handover mid-restart is never mistaken for an orphan
+function Invoke-OrphanSweep($target, $expectedPid) {
+    if (-not $orphanSweepEnabled) { return }
+    if (-not $expectedPid) { return }
+
+    $keeper = Get-CimInstance -ClassName Win32_Process -Filter "ProcessId = $expectedPid" -ErrorAction SilentlyContinue
+    if (-not $keeper -or -not (Test-IsComfyEngine $keeper $target.Port)) {
+        # pm2's recorded pid is not a live engine. That is the crash-loop shape
+        # (2026-09-08: `pm2 pid comfyui` said 8980, a process that no longer
+        # existed, while three real engines ran). Killing on a broken reference
+        # is how you end up with none at all - leave it to the port reclaim.
+        return
+    }
+
+    foreach ($cim in @(Get-CimInstance -ClassName Win32_Process -Filter "Name='python.exe'" -ErrorAction SilentlyContinue)) {
+        if ([int]$cim.ProcessId -eq [int]$expectedPid) { continue }
+        if (-not (Test-IsComfyEngine $cim $target.Port)) { continue }
+
+        $ageMinutes = $null
+        if ($cim.CreationDate) {
+            $ageMinutes = ((Get-Date) - [datetime]$cim.CreationDate).TotalMinutes
+        }
+        if ($null -ne $ageMinutes -and $ageMinutes -lt $orphanGraceMinutes) {
+            Write-Log "$($target.Name): engine pid $($cim.ProcessId) is not pm2's ($expectedPid) but is only $([math]::Round($ageMinutes,1)) min old - inside the $orphanGraceMinutes-min grace, leaving it this tick"
+            continue
+        }
+
+        Write-Log "$($target.Name): ORPHAN SWEEP - killing engine pid $($cim.ProcessId), which pm2 does not supervise (pm2's pid is $expectedPid)"
+        try {
+            Stop-Process -Id $cim.ProcessId -Force -ErrorAction Stop
+            $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+            if (Test-AlertDue $alertState "orphan-sweep-$($target.Name)") {
+                Send-Alert "SWEPT: an unsupervised $($target.Name) engine was running on $hostName" `
+                    "pid $($cim.ProcessId) was a second $($target.Name) engine that pm2 was not supervising (pm2's own pid is $expectedPid). It has been killed at $stamp.`n`nCommand line: $($cim.CommandLine)`n`nA second engine shares the GPU, and if it holds port 8188 or the comfyui.db lock, pm2's copy cannot start at all. These are left behind when a pm2 stop/restart/delete fails to kill the process inside kill_timeout - pm2 gives up silently and starts the replacement anyway. No action needed unless this recurs often, which would mean something is creating them faster than one per tick."
+                $alertState["orphan-sweep-$($target.Name)"] = $stamp
+                Save-AlertState $alertState
+            }
+        } catch {
+            Write-Log "$($target.Name): could not kill orphan pid $($cim.ProcessId) ($($_.Exception.Message))"
+        }
+    }
+}
+
 # ---------------------------------------------------------------------------
 # Restart via pm2, then MAKE SURE the old engine actually died.
 #
@@ -401,37 +514,14 @@ function Invoke-PortReclaim($target, $expectedPid) {
         return $false
     }
 
+    $cim = $null
     $commandLine = ''
-    $imagePath = ''
     try {
         $cim = Get-CimInstance -ClassName Win32_Process -Filter "ProcessId = $ownerPid" -ErrorAction Stop
-        if ($cim) {
-            $commandLine = [string]$cim.CommandLine
-            $imagePath = [string]$cim.ExecutablePath
-        }
+        if ($cim) { $commandLine = [string]$cim.CommandLine }
     } catch {}
 
-    # 2026-09-08: this check could never pass, so the reclaim below had never
-    # once fired. pm2 launches the engine with a RELATIVE script path from
-    # cwd=$comfyDir, so the observed command line is
-    #     ...\Python310\python.exe main.py --listen 127.0.0.1 --port 8188 ...
-    # and the executable path is the interpreter. Neither string contains
-    # 'D:\comfy\comfy-fast' - the install directory only ever appears as the
-    # working directory, which Win32_Process does not expose. So every tick
-    # logged REFUSING and left the orphan holding the port, which is exactly the
-    # outage this function was written for (2026-09-06) happening again.
-    #
-    # Corroborate the install a different way: it must be a python running
-    # main.py, AND at least one of - it names $comfyDir outright (a launcher
-    # started with an absolute path), it IS the interpreter pm2 launches, or it
-    # is bound to the port we are reclaiming. Any of those, plus the crash-loop
-    # precondition and the "not pm2's pid" test above, is a ComfyUI of ours.
-    $haystack = "$commandLine $imagePath"
-    $looksLikeComfy =
-        ($haystack -match [regex]::Escape($comfyDir)) -or
-        ($imagePath -and $comfyPython -and ($imagePath -ieq $comfyPython)) -or
-        ($commandLine -match "--port\s+$([regex]::Escape([string]$target.Port))")
-    if ($haystack -notmatch 'main\.py' -or -not $looksLikeComfy) {
+    if (-not (Test-IsComfyEngine $cim $target.Port)) {
         Write-Log "$($target.Name): REFUSING to reclaim port $($target.Port) - pid $ownerPid does not look like a ComfyUI from $comfyDir (cmdline: $commandLine)"
         return $false
     }
@@ -980,6 +1070,10 @@ foreach ($t in $targets) {
         Write-Log "$($t.Name): pm2 status is '$($status.status)' - in transition, probing next tick"
         continue
     }
+
+    # Before probing: is anything ELSE running as this engine? A second copy
+    # answers /system_stats perfectly well, so the probe below cannot see it.
+    Invoke-OrphanSweep $t $pm2Pid
 
     $ok = $false
     try {
