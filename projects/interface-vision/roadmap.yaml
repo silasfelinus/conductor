@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3806,7 +3806,33 @@ tasks:
     string -- no source-text contract hits. All 59 PR checks green including Build
     production image. Return this recurring consistency umbrella to ready for the next
     bounded slice.
-  updated: '2026-09-08T12:37:18Z'
+
+    Slice 151 merged as silasfelinus/kind_robots#2523 (squash 8e559f3) from exact head
+    fa74eb1. Fresh survey (frequency scan of the codebase's most-repeated static class="..."
+    values) found loading loading-spinner loading-sm -- the size-up sibling of slice 150's
+    loading-xs spinner, named directly by that slice's own kaizen suggestion -- as the next
+    largest bounded family: 37 files, 50 exact colorless occurrences. Added .kr-spinner-sm
+    to assets/css/tailwind.css and kr_spinner_sm_codemod.py (--exact-only, --write), a
+    sibling of kr_spinner_codemod.py using the same subset-match convention. Migrated all 50
+    exact occurrences; deliberately left the colored variants (text-primary: 5, text-
+    primary-content: 1, motion-reduce:hidden: 4, plus one combo) out of scope for a future
+    slice. Verified: vue-tsc clean, eslint 0 new errors on all 37 changed files (2 pre-
+    existing errors on add-bot.vue/add-checkpoint.vue confirmed present on baseline via git
+    stash), test:layout-contract holds (an unrelated -2 viewport-grid baseline improvement
+    on narrative-ingredient-multi-picker.vue was visible but not this slice's to claim),
+    test:lint-ratchet holds at 333/-59, prettier --check matches the 21-file baseline debt
+    set exactly after fixing 8 files whose shortened <span> collapsed onto one line under
+    prettier's print width (same fix pattern as slices 149/150, applied via targeted
+    prettier --write only on those 8 files). Grepped utils/scripts/*.{mjs,ts} for the
+    literal class string -- no source-text contract hits. All 58 kind_robots PR checks
+    passed including Build production image (~10 min, confirmed via the CI-completion wake).
+    Return this recurring consistency umbrella to ready for the next bounded slice -- next
+    slice needs its own fresh survey. Kaizen suggestion for next slice: label-text font-bold
+    (145 occurrences) is the next largest exact-duplicate class string in the app, likely a
+    DaisyUI form-label pattern mechanically similar to the existing kr-badge-*/kr-spinner-*
+    wrap-and-codemod approach; flex items-center gap-2 (87 occurrences) is bigger but may be
+    too generic to deserve its own primitive without a closer scoping look first.
+  updated: '2026-09-08T12:48:12Z'
   implementation_pr: 'silasfelinus/kind_robots#2523'
   retry_context: 'pass 1 failed (quality): slice 69 (kind_robots#2386) migrated the Promote-to-Character button in components/brainstorm/brainstorm-candidate-card.vue from `class="btn btn-outline btn-sm"` to the new shared `.kr-btn-outline-plain` class, but missed that utils/scripts/verifyBrainstormWorkbench.mjs:126 hardcodes that literal class string as a source-text regression guard ("the Promote to Character button must stay gated to kept candidates only"). CI job "Candidate-first workbench" fails on the new class. Do differently: before migrating a button class, grep utils/scripts/*.mjs (and any other source-text contract scripts) for the exact class string being replaced, not just run vue-tsc/eslint/layout-contract/lint-ratchet -- this file family asserts literal class attributes as regression guards and is easy to miss since it is not a normal test runner. Fix is scoped: update verifyBrainstormWorkbench.mjs line 126 to expect class="kr-btn-outline-plain" instead of class="btn btn-outline btn-sm" (same intent, new class name), then run `node utils/scripts/verifyBrainstormWorkbench.mjs` locally to confirm before reopening. Reviewer comment: silasfelinus/kind_robots#2386 (inline on components/brainstorm/brainstorm-candidate-card.vue line 363).'
   owner: worker
