@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3832,12 +3832,39 @@ tasks:
     DaisyUI form-label pattern mechanically similar to the existing kr-badge-*/kr-spinner-*
     wrap-and-codemod approach; flex items-center gap-2 (87 occurrences) is bigger but may be
     too generic to deserve its own primitive without a closer scoping look first.
-  updated: '2026-09-08T13:35:17Z'
-  implementation_pr: 'silasfelinus/kind_robots#2523'
+
+    Slice 152 merged as silasfelinus/kind_robots#2524 (squash 7c443c9) from exact head
+    8e559f3. Frequency survey named label-text font-bold (slice 151's kaizen suggestion) as
+    the next largest bounded family: 145 exact occurrences across 16 files. Added .kr-label-
+    bold to assets/css/tailwind.css and kr_label_bold_codemod.py (--exact-only, --write),
+    sibling of kr_spinner_sm_codemod.py. Migrated all 145 occurrences. Build-time finding:
+    label-text has zero CSS definition anywhere in daisyUI 5 or this repo (dead markup left
+    over from a pre-5 daisyUI form convention) -- @apply label-text font-bold failed CI's
+    Build production image check with Cannot apply unknown utility class label-text, since
+    Tailwind v4's @apply validates against real utilities while a raw template class
+    attribute is never validated. Not caught by vue-tsc/eslint/layout-contract/lint-ratchet
+    locally, only by the production build. Fixed by applying only font-bold (the sole token
+    with visual effect); confirmed npm run build passes clean before repushing. Verified:
+    vue-tsc clean, eslint 0 new errors (3 pre-existing on add-bot.vue/dream-maker.vue/add-
+    checkpoint.vue confirmed via git stash), layout-contract holds, lint-ratchet holds at
+    333/-59, prettier matches baseline exactly, no source-text contract hits, all 51
+    kind_robots PR checks green including Build production image on the fixed commit. Return
+    this recurring consistency umbrella to ready for the next bounded slice. Kaizen
+    suggestion for next slice: flex items-center gap-2 (87 occurrences) is the next largest
+    exact-duplicate class string, but likely too generic for one primitive without checking
+    whether it clusters into coherent sub-families (icon+label rows vs. form-row layouts)
+    first. Process kaizen: before defining a new kr-* primitive's @apply target, grep
+    node_modules/daisyui/dist/*.css (or the app's own assets/) for each base token's actual
+    CSS definition -- a class present in markup is not proof it is a real, applyable
+    utility; this is now the second dead/renamed-utility class this consistency sweep could
+    hit (daisyUI major-version churn), worth a one-line check before writing the CSS, not
+    after CI fails.
+  updated: '2026-09-08T13:58:57Z'
+  implementation_pr: 'silasfelinus/kind_robots#2524'
   retry_context: 'pass 1 failed (quality): slice 69 (kind_robots#2386) migrated the Promote-to-Character button in components/brainstorm/brainstorm-candidate-card.vue from `class="btn btn-outline btn-sm"` to the new shared `.kr-btn-outline-plain` class, but missed that utils/scripts/verifyBrainstormWorkbench.mjs:126 hardcodes that literal class string as a source-text regression guard ("the Promote to Character button must stay gated to kept candidates only"). CI job "Candidate-first workbench" fails on the new class. Do differently: before migrating a button class, grep utils/scripts/*.mjs (and any other source-text contract scripts) for the exact class string being replaced, not just run vue-tsc/eslint/layout-contract/lint-ratchet -- this file family asserts literal class attributes as regression guards and is easy to miss since it is not a normal test runner. Fix is scoped: update verifyBrainstormWorkbench.mjs line 126 to expect class="kr-btn-outline-plain" instead of class="btn btn-outline btn-sm" (same intent, new class name), then run `node utils/scripts/verifyBrainstormWorkbench.mjs` locally to confirm before reopening. Reviewer comment: silasfelinus/kind_robots#2386 (inline on components/brainstorm/brainstorm-candidate-card.vue line 363).'
   owner: worker
-  claimed_by: claude-scheduled-20260908T132955Z-iv-t104-s152
-  claimed_at: '2026-09-08T13:29:56Z'
+  claimed_by: null
+  claimed_at: null
 
 - id: t-123
   milestone: m5
