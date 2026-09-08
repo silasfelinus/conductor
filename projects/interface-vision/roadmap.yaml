@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3786,7 +3786,27 @@ tasks:
     opacities /10//12//15, with/without border) than this one clean 8-occurrence subset --
     worth a dedicated future survey rather than trying to force it into one primitive, since
     forcing variance into a single class risks visual drift across the many call sites.
-  updated: '2026-09-08T10:45:30Z'
+
+    Slice 150 merged as silasfelinus/kind_robots#2520 (squash 8d12c1f) from exact head
+    d0656cee6e2e5ec7612eaef4a7b1d86d317b96eb. Surveyed the codebase's most-repeated static
+    class="..." values (not a targeted grep this time) and found loading loading-spinner
+    loading-xs -- DaisyUI's plain busy-indicator spinner, no color tint -- as the single
+    largest exact-duplicate class string in the app: hand-rolled identically in 83 files,
+    123 occurrences, almost all standalone <span> pending-state indicators inside buttons.
+    Added .kr-spinner-xs and kr_spinner_codemod.py (--exact-only, --write, mirroring
+    kr_badge_codemod.py's subset-match convention). Migrated all 123 exact occurrences;
+    deliberately left the colored variants (loading-xs text-primary: 6/7 occurrences;
+    loading-sm: 50; loading-lg text-primary: 28; loading-dots/-ring variants) out of scope
+    as separate future slices. Verified: vue-tsc clean, eslint 0 new errors, test:lint-
+    ratchet holds at 333/-59, test:layout-contract holds (no new violations), prettier
+    --check matches baseline file-for-file (confirmed via git stash -- 21 files needed a
+    follow-up prettier --write after the codemod since shortening the class value let
+    several multi-line <span> tags collapse to one line under prettier's print width, same
+    failure mode as slice 149). Grepped utils/scripts/*.{mjs,ts} for the literal class
+    string -- no source-text contract hits. All 59 PR checks green including Build
+    production image. Return this recurring consistency umbrella to ready for the next
+    bounded slice.
+  updated: '2026-09-08T10:56:37Z'
   implementation_pr: 'silasfelinus/kind_robots#2520'
   retry_context: 'pass 1 failed (quality): slice 69 (kind_robots#2386) migrated the Promote-to-Character button in components/brainstorm/brainstorm-candidate-card.vue from `class="btn btn-outline btn-sm"` to the new shared `.kr-btn-outline-plain` class, but missed that utils/scripts/verifyBrainstormWorkbench.mjs:126 hardcodes that literal class string as a source-text regression guard ("the Promote to Character button must stay gated to kept candidates only"). CI job "Candidate-first workbench" fails on the new class. Do differently: before migrating a button class, grep utils/scripts/*.mjs (and any other source-text contract scripts) for the exact class string being replaced, not just run vue-tsc/eslint/layout-contract/lint-ratchet -- this file family asserts literal class attributes as regression guards and is easy to miss since it is not a normal test runner. Fix is scoped: update verifyBrainstormWorkbench.mjs line 126 to expect class="kr-btn-outline-plain" instead of class="btn btn-outline btn-sm" (same intent, new class name), then run `node utils/scripts/verifyBrainstormWorkbench.mjs` locally to confirm before reopening. Reviewer comment: silasfelinus/kind_robots#2386 (inline on components/brainstorm/brainstorm-candidate-card.vue line 363).'
   owner: worker
