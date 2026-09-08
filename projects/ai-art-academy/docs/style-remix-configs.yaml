@@ -84,16 +84,17 @@ styles:
     reasoning: >
       Prompt-only arm rendered a strong, confident Impressionist result:
       visible broken brushwork, warm dappled light, vibrant unmixed color,
-      subject/composition fully preserved. The LoRA arm could not be tested --
-      every lora_name value this session tried (including the exact string
-      production's BUILTIN_STYLES already uses) was rejected by ComfyUI as
-      "not in list" (see the file-level LoRA-loading finding above). Winner is
-      prompt by default (the only arm that actually renders) but the
-      prompt-only quality is genuinely good on its own merits, not just a
-      fallback.
+      subject/composition fully preserved. LoRA arm re-run in t-045 (2026-09-08)
+      after t-044 fixed the loraPath naming bug -- it now enqueues and renders
+      (ArtJob 21638, ArtImage 23740) instead of 400ing, but the output is pure
+      uniform static/noise (1024x1024 PNG, no recognizable structure, same
+      corrupted-noise signature as all 5 styles t-045 re-ran), not a usable
+      image. Winner stays prompt; this is a genuine broken-render finding, not
+      "LoRA lost on quality" -- see ai-art-academy/t-079 for the render-path
+      investigation this finding kicked off.
     evidence:
       prompt_only: t-004-remix-evidence/impressionism-prompt.webp
-      lora_attempted: null  # every naming convention 400'd before rendering; no image produced
+      lora_attempted: t-045-lora-evidence/impressionism-lora.webp  # renders now (t-044 fix) but output is corrupted noise, not a real image
     generation_metadata:
       engine: kontext
       seed: 909090
@@ -121,12 +122,14 @@ styles:
       prompt-only result of the batch -- flagging for a prompt-template
       refinement pass (try leading with "gold background" and "flat, no
       shading" more forcefully) once a follow-up session has time, rather than
-      treating this as a finished, polished config. LoRA arm untestable this
-      session (see file-level finding above) -- winner is prompt by default,
-      not by quality conviction.
+      treating this as a finished, polished config. LoRA arm re-run in t-045
+      (2026-09-08) after t-044's naming fix -- now renders (ArtJob 21639,
+      ArtImage 23741) but the output is pure corrupted noise, same broken-render
+      signature as all 5 styles t-045 re-ran. Winner stays prompt; see
+      ai-art-academy/t-079 for the render-path investigation.
     evidence:
       prompt_only: t-004-remix-evidence/illuminated-manuscript-prompt.webp
-      lora_attempted: null
+      lora_attempted: t-045-lora-evidence/illuminated-manuscript-lora.webp  # renders now but output is corrupted noise
     generation_metadata:
       engine: kontext
       seed: 909090
@@ -147,11 +150,13 @@ styles:
       Prompt-only arm produced a convincing watercolor result: soft washes,
       visible torn-paper edge vignette, delicate light brushwork, airy feel,
       composition/subject fully preserved. Good quality on its own merits.
-      LoRA arm untestable this session (see file-level finding above); winner
-      is prompt by default but a genuinely strong result.
+      LoRA arm re-run in t-045 (2026-09-08) after t-044's naming fix -- now
+      renders (ArtJob 21640, ArtImage 23742) but the output is pure corrupted
+      noise, same broken-render signature as all 5 styles t-045 re-ran. Winner
+      stays prompt; see ai-art-academy/t-079 for the render-path investigation.
     evidence:
       prompt_only: t-004-remix-evidence/watercolor-prompt.webp
-      lora_attempted: null
+      lora_attempted: t-045-lora-evidence/watercolor-lora.webp  # renders now but output is corrupted noise
     generation_metadata:
       engine: kontext
       seed: 909090
@@ -171,11 +176,13 @@ styles:
       Prompt-only arm produced a convincing classical oil painting: warm
       saturated palette, visible painterly brushwork, subtle canvas texture,
       composition/subject fully preserved. Good quality on its own merits.
-      LoRA arm untestable this session (see file-level finding above); winner
-      is prompt by default but a genuinely strong result.
+      LoRA arm re-run in t-045 (2026-09-08) after t-044's naming fix -- now
+      renders (ArtJob 21641, ArtImage 23743) but the output is pure corrupted
+      noise, same broken-render signature as all 5 styles t-045 re-ran. Winner
+      stays prompt; see ai-art-academy/t-079 for the render-path investigation.
     evidence:
       prompt_only: t-004-remix-evidence/oil-painting-prompt.webp
-      lora_attempted: null
+      lora_attempted: t-045-lora-evidence/oil-painting-lora.webp  # renders now but output is corrupted noise
     generation_metadata:
       engine: kontext
       seed: 909090
@@ -366,12 +373,14 @@ styles:
       Prompt-only arm was the strongest result of the whole batch: bold flat
       Lichtenstein-style color blocking, thick black outlines, clean Ben-Day
       halftone dot shading, high contrast, composition/subject fully
-      preserved. LoRA arm untestable this session (see file-level finding
-      above, same bug). Winner is prompt by default but this result needs no
-      LoRA to look production-ready.
+      preserved. LoRA arm re-run in t-045 (2026-09-08) after t-044's naming
+      fix -- now renders (ArtJob 21642, ArtImage 23744) but the output is pure
+      corrupted noise, same broken-render signature as all 5 styles t-045
+      re-ran. Winner stays prompt; see ai-art-academy/t-079 for the
+      render-path investigation.
     evidence:
       prompt_only: t-004-remix-evidence/pop-art-prompt.webp
-      lora_attempted: null
+      lora_attempted: t-045-lora-evidence/pop-art-lora.webp  # renders now but output is corrupted noise
     generation_metadata:
       engine: kontext
       seed: 909090

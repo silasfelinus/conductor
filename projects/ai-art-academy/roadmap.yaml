@@ -1586,12 +1586,12 @@ tasks:
 - id: t-045
   milestone: m2
   title: Re-run LoRA arm for the 5 styles with recorded loraPath and promote winners to mode lora
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-044
-  updated: '2026-09-08T19:31:55Z'
+  updated: '2026-09-08T19:45:00Z'
   note: >-
     Kaizen follow-up from t-004 (PR #1207, merged 2026-07-27). Once t-044's
     lora_name mismatch is fixed, re-run the LoRA arm in
@@ -1666,6 +1666,34 @@ tasks:
     to mode: lora in style-remix-configs.yaml. Do NOT run --enqueue-only again for these 5
     styles under any circumstance -- two full sets already exist. Logged as a kaizen entry
     in root TALKBACK.md.
+
+    RESOLVED 2026-09-08 (this session): the render-queue backlog finally drained --
+    polling the authoritative job_id set (21638-21642) found all 5 already DONE
+    (ArtImages 23740-23744), no further wait needed. Fixed a real bug in
+    t-045-lora-remix-runner.py first: poll_all()/download_images() both crashed
+    with AttributeError on results.json's "_note" key (a string, not a dict) that a
+    prior session's edit added without updating the two loops that iterate
+    results.items() -- added an isinstance(entry, dict) guard to both. Downloaded
+    all 5 renders to docs/t-045-lora-evidence/*.webp and compared each against its
+    style's prompt-only evidence in docs/t-004-remix-evidence/. Finding: every
+    single LoRA render is pure uniform static/noise (1024x1024 PNG, valid file
+    format per `file`, no download/decode bug -- just no recognizable image
+    content), not a real generation. No style beats its prompt-only baseline
+    because none of the 5 LoRA arms produced a usable image at all -- this is a
+    genuine broken-render finding, not a close-quality-call. Updated
+    style-remix-configs.yaml's evidence.lora_attempted field (was null, pending
+    t-044's fix) to point at the new evidence files for all 5 styles, with reasoning
+    text explaining the corrupted-noise finding; winner/mode stay `prompt` for all
+    5 -- no promotions. Left the duplicate job set (21648-21652, also DONE per a
+    quick check) untouched; they carry the same corrupted-noise output and add
+    nothing. Filed ai-art-academy/t-079 (ready, reversible) to investigate the
+    Kontext+LoRA render corruption itself -- identical noise signature across all 5
+    styles/LoRA files points at one shared broken node in the relay's
+    buildKontextWorkflow LoRA branch rather than 5 independent per-file issues, but
+    diagnosing it needs relay/ComfyUI-side access this sandbox doesn't have.
+    Task's original ask (re-run + compare + promote winners) is complete: the
+    comparison was run, and the answer is "no promotions" for a well-evidenced
+    reason. Setting status: review pending this session's own PR merge.
   claimed_at: '2026-09-08T19:31:55Z'
   claimed_by: claude-20260908T193154Z-aa-t045
 
@@ -2981,3 +3009,45 @@ tasks:
   passes: 1
   claimed_by: 2026-09-02T201800Z-ai-art-academy-t078-domain-revert-k9n4
   claimed_at: '2026-09-02T20:18:00Z'
+
+- id: t-079
+  milestone: m2
+  title: "Investigate: Kontext LoRA arm renders pure corrupted noise instead of a real image (5/5 styles, t-045)"
+  status: ready
+  stakes: reversible
+  note: >-
+    Kaizen from t-045's close-out (2026-09-08). t-044 fixed the loraPath naming
+    bug that had been 400ing every LoRA enqueue; t-045 re-ran the 5-style LoRA
+    arm (impressionism, illuminated-manuscript, watercolor, oil-painting,
+    pop-art -- ArtJobs 21638-21642, ArtImages 23740-23744) against the same
+    fixed reference image and remix seed (909090) used for each style's
+    prompt-only arm. All 5 jobs completed DONE and produced valid 1024x1024
+    PNGs (not a download/decode bug -- `file` confirms well-formed PNG headers,
+    and this same runner script's download path already works correctly for
+    the prompt-only evidence), but every single one is pure uniform
+    static/noise with no recognizable image content -- no subject, no
+    composition, nothing resembling the style prompt or the source reference
+    image. All 5 renders show the identical corruption signature (same
+    speckled noise texture, differing only in exact per-pixel values), which
+    points at something systemic in the Kontext+LoRA combination itself
+    (wrong VAE/decode step skipped for this workflow branch, a LoRA weight
+    destabilizing the model, or a raw-latent-instead-of-decoded-image bug in
+    buildKontextWorkflow when loraName/loraStrength are set) rather than 5
+    independent per-style failures. Evidence saved:
+    projects/ai-art-academy/docs/t-045-lora-evidence/*.webp (LoRA arm, all
+    noise) vs projects/ai-art-academy/docs/t-004-remix-evidence/*.webp
+    (prompt-only arm, all real images) for direct comparison. No style was
+    promoted to mode: lora as a result -- all 5 stay at winner: prompt (see
+    style-remix-configs.yaml). This needs backend/relay-side investigation
+    (ComfyUI workflow graph for the kontext+lora branch, or the relay's
+    buildKontextWorkflow implementation) that this sandbox cannot do directly
+    -- no access to inspect the actual ComfyUI node graph or relay process.
+    Suggested first step: enqueue one more single-style LoRA job with
+    verbose/debug logging enabled (if the relay supports it) or manually
+    inspect the ComfyUI workflow JSON buildKontextWorkflow emits when loraName
+    is set, comparing node-for-node against the prompt-only (no LoRA) graph to
+    find where the LoRA branch diverges -- the fact every style produces the
+    same noise signature strongly suggests one shared broken node (e.g. a
+    LoraLoader wired to bypass or precede the wrong VAEDecode) rather than a
+    per-LoRA-file issue.
+  updated: '2026-09-08T19:30:00Z'
