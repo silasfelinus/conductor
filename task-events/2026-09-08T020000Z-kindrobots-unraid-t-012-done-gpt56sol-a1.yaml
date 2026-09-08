@@ -1,0 +1,27 @@
+version: 1
+project: kindrobots-unraid
+task: t-012
+operation: done
+approved_by_human: true
+updated: '2026-09-08T02:00:00Z'
+note: >-
+  Silas supplied a fresh Alexandria ProxySQL admin snapshot after normal production traffic.
+  Hostgroup 10 (mariadb-kindrobots2:3306) is ONLINE at 3 ConnUsed / 4 ConnFree, MaxConnUsed 18
+  against the configured 40-connection backend cap, 157763 queries, ConnERR 0, and measured
+  backend latency 92us. Hostgroup 30 is also ONLINE with ConnERR 0. Global stats show 0 active
+  transactions at capture, 0 server connections aborted, 0 delayed server connections, 0
+  ConnPool_get_conn failures, 0 killed backend connections/queries, and only 4 slow queries
+  across 338077 Questions. The monitor reports 19233 successful / 0 failed connect checks and
+  19568 successful / 0 failed ping checks; the latest 20 connect checks are all successful
+  (~350-533us) and latest 20 pings are all successful (~66-170us).
+
+  This establishes a healthy steady-state baseline with substantial connection headroom.
+  Recommended operational thresholds: warn if hostgroup 10 ConnUsed sustains >=28/40 (70%) or
+  MaxConnUsed reaches >=30 between restarts; critical if ConnUsed sustains >=36/40 (90%), any
+  ConnERR/ConnPool_get_conn_failure begins increasing, or monitor connect/ping errors appear.
+  Treat backend latency sustained above ~5ms as an investigation signal relative to this ~0.1ms
+  local baseline rather than tuning from isolated query max-times. The 8 wrong-password/access-
+  denied counters are authentication noise rather than pool-health failures; track only if they
+  continue increasing unexpectedly.
+
+  Human action complete. No ProxySQL capacity change is warranted from this snapshot.
