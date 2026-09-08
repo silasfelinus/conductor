@@ -1,0 +1,8 @@
+version: 1
+project: kind-robots
+task: t-073
+operation: done
+approved_by_human: true
+updated: '2026-09-08T01:06:00Z'
+note: >-
+  Silas re-ran the production privilege verifier on Alexandria in the current session: npm run test:app-account-privileges. It reports the kindrobot application account has exactly two grants on active database kindblank_fresh: USAGE ON *.* and SELECT, INSERT, UPDATE, DELETE ON kindblank_fresh.*, with no CREATE/ALTER/DROP, no server-wide ALL PRIVILEGES, and no GRANT OPTION. The verifier concludes: application account holds only DML on its own database. This is the exact final production verification the task requested after PR #2102, so the least-privilege boundary is confirmed and the security incident is closed.
