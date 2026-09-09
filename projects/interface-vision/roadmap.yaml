@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -4081,8 +4081,18 @@ tasks:
     Slice 165 merged as silasfelinus/kind_robots#2537 (squash e07a99e) from exact head b4cff1f. Added .kr-text-black-xl (font-black text-xl), second of the kr-text-black-* family -- migrated all 72 subset-match occurrences across 25 files, extra tokens preserved verbatim; no geometry or behavior change. New codemod kr_text_black_xl_codemod.py, sibling of kr_text_black_lg_codemod.py. Verification: vue-tsc clean; eslint 4 problems (4 errors, 0 warnings) unchanged before/after (confirmed via git stash); test:layout-contract holds (same unrelated -2 ratchet opportunity in narrative-ingredient-multi-picker.vue left untouched, out of scope); test:lint-ratchet holds at 333/-59; prettier flagged the same 25 pre-existing files before and after (git stash), no new fallout, no --write needed. All checks green. Return the recurring consistency umbrella to ready for the next bounded slice.
 
     Kaizen suggestion: slice 166 should take font-black text-sm (108 occurrences) to close out the kr-text-black-* family entirely, then pivot to a genuinely new pattern outside both mined families (text-dim-*/text-black-*). Recorded in the roadmap task note and PR body; no separate kaizen task filed, matching the established convention for this recurring umbrella.
-  updated: '2026-09-09T00:44:19Z'
-  implementation_pr: 'silasfelinus/kind_robots#2537'
+
+    Slice 166 merged as silasfelinus/kind_robots#2538 (squash
+    a85bc599c4910ba8cebaa199992f85f2076f72b5) from head
+    6df79ac842d7005eee7a0cea6f434daf97148ff3. Added .kr-text-black-sm (font-black text-sm),
+    third and final sibling of .kr-text-black-lg/-xl, closing out the kr-text-black-*
+    family; migrated 108 subset-match occurrences of "font-black text-sm" across 70 files.
+    New codemod utils/scripts/codemods/kr_text_black_sm_codemod.py. All 62 PR checks
+    passed/skipped, mergeable_state clean. Kaizen: slice 167 should run a fresh full-repo
+    class-frequency survey outside both the kr-text-black-* and kr-text-dim-* families (both
+    now fully mined) rather than re-surveying either. Returning to ready for the next slice.
+  updated: '2026-09-09T01:27:31Z'
+  implementation_pr: 'silasfelinus/kind_robots#2538'
   retry_context: ''
   owner: worker
   claimed_by: claude-scheduled-20260909T004300Z-iv-t104-s166
