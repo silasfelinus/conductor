@@ -4088,5 +4088,45 @@ tasks:
     promotion").
 
 
+- id: t-095
+  milestone: m1
+  title: "Investigate and document the disappearance of components/abandonware/ and the now-dangling ignore rules that still reference it"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Filed 2026-09-09 (weekly site audit, global-ui/SITE-AUDIT-AGENT.md, same shape as
+    the already-resolved t-091 Component-model investigation). `components/abandonware/`
+    was the app-wide convention for parking orphaned/unreferenced components rather than
+    deleting them outright -- kind-robots/t-055, interface-vision/t-101 (citing kind_robots
+    PR #1475, "Park orphaned components in abandonware," 80+ files moved 2026-08-05),
+    digital-storefront/t-037, ruler-hooked/t-012/t-013, and ai-art-academy/t-057 all
+    record files parked there, and the 2026-09-02 weekly audit itself confirmed
+    `components/abandonware/butterfly/store-butterfly.vue` live at that path.
+
+    As of this audit (2026-09-09), `components/abandonware/` does not exist anywhere in
+    the checkout -- confirmed via `find`/`git ls-files` (0 files) and `git log --all --
+    components/abandonware` (0 history hits within the local clone's available window).
+    Unlike t-091's resolved case, nothing here looks like a coordinated, documented
+    removal: `nuxt.config.ts:288` (`ignore: ['abandonware/**/*.vue']`) and
+    `tsconfig.json:15` (`exclude: [..., "components/abandonware/**/*"]`) still actively
+    reference the directory, and `utils/scripts/verifyComponentReachability.ts` still
+    contains extensive current-tense logic treating "park it in abandonware" as live
+    policy (`PARKED_SEGMENT`, its broken-import checker, and PR-facing guidance text all
+    assume the directory exists).
+
+    Next worker: `git fetch --unshallow` (per t-091's precedent) to get full history,
+    then `git log --all -- components/abandonware` to find the removing commit/PR and
+    confirm whether it was a deliberate cleanup (if so, find what superseded the parked
+    components -- restored to active use, or genuinely deleted -- and record it) or an
+    accidental regression. Either way, update or remove the now-dangling references in
+    `nuxt.config.ts`, `tsconfig.json`, and `verifyComponentReachability.ts` to match
+    reality, and check whether any of the specific files the audits tracked there
+    (`store-butterfly.vue`, `plan-projects-grid.vue`, `registration-form.vue`,
+    `theme-manager.vue`, `lab-gallery.vue`, `print-swag.vue`, `single-slider.vue`,
+    `builder-manager.vue`) need their owning roadmap task's note corrected to reflect
+    the new reality.
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
