@@ -1,0 +1,8 @@
+version: 1
+project: scene-animator
+task: t-005
+operation: review
+session: 2026-09-09T055100Z-scene-animator-t-005-gpt56sol-navfix
+updated: '2026-09-09T05:55:00Z'
+note: >-
+  Root cause confirmed: the Scene Animator application expects /app/animate, but the deployment definition mounted only the public image tree. The implementation branch adds the missing dedicated read-only animate bind, documents the DockerMan production mapping, and adds a source-level deployment contract verifier. Production remains blocked on applying the equivalent saved Unraid template mount before the acceptance test can pass.
