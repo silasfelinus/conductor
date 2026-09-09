@@ -3013,7 +3013,7 @@ tasks:
 - id: t-079
   milestone: m2
   title: "Investigate: Kontext LoRA arm renders pure corrupted noise instead of a real image (5/5 styles, t-045)"
-  status: claimed
+  status: needs-human
   stakes: reversible
   note: >-
     Kaizen from t-045's close-out (2026-09-08). t-044 fixed the loraPath naming
@@ -3050,7 +3050,20 @@ tasks:
     same noise signature strongly suggests one shared broken node (e.g. a
     LoraLoader wired to bypass or precede the wrong VAEDecode) rather than a
     per-LoRA-file issue.
-  updated: '2026-09-09T01:35:35Z'
-  owner: reviewer
+
+    Code-level investigation complete (2026-09-09, this session had no ComfyUI/relay access, so this narrows the hypothesis but cannot execute the confirming test). Read both buildKontextWorkflow implementations plus the LoRA-chain helper in kind_robots (main):
+
+    1. server/api/comfy/kontext/utils/workflow.ts (the shared builder every enqueue route actually calls, including the one t-045s 5 LoRA jobs went through) wires the graph correctly: VAEDecode (node 8) always reads samples from node 13 (SamplerCustomAdvanced); node 13s guider/sigmas come from nodes 22/17, which both reference model via node 30 (ModelSamplingFlux) by node ID. When a LoRA is requested, node 30s model input is repointed in place to the end of the LoraLoaderModelOnly chain -- since 17/22 reference node 30 by ID rather than a captured value, they automatically pick up the LoRAd model. LoRA chain node IDs start at 61 (cap 66 at MAX_LORAS_PER_JOB=6), well clear of the mask nodes at 70/71. No missing rewire, no ID collision, no pre-LoRA-latent bypass -- the wiring bug the task note speculated about (a LoraLoader wired to bypass or precede the wrong VAEDecode) is not present.
+
+    2. The one concrete lead: node 59 (the base model) is UnetLoaderGGUF loading a quantized flux1-kontext-dev-Q5_K_M.gguf checkpoint, and the LoRA chain (loraChain.ts::appendModelOnlyLoraChain) always emits core ComfyUIs class_type: LoraLoaderModelOnly -- not a GGUF-aware variant. Applying the standard (non-quantization-aware) LoRA loader node to a GGUF-quantized model is a known ComfyUI-GGUF (city96) compatibility gap in some node-pack versions: it can produce NaN/Inf-corrupted patched weights that decode through VAEDecode as exactly the kind of uniform speckled static this tasks evidence shows -- identical corruption signature regardless of which specific LoRA file is loaded, because the failure mode is structural (quantized-model + naive LoRA patch), not per-file. This fits the evidence better than a wiring bug: 5 different LoRA files, 5 pixel-identical noise signatures.
+
+    3. Not confirmed -- needs an actual run against the relays live ComfyUI instance, which this sandbox cannot reach. Suggested test for whoever has relay access: enqueue one Kontext+LoRA job against a non-GGUF (full-precision safetensors) Kontext checkpoint if one is available on the relay, with everything else unchanged. If that produces a real image instead of noise, the GGUF+LoraLoaderModelOnly combination is confirmed as the cause, and the fix is either (a) update/patch the relays ComfyUI-GGUF custom node pack to a version with confirmed LoRA-on-quantized-model support, or (b) swap the graph to dequantize to a full checkpoint before applying LoRAs, or (c) source a GGUF-native LoRA loader node if the installed pack ships one. If the non-GGUF checkpoint also produces noise, the cause is elsewhere (VAE mismatch, a bad flux1-kontext-dev-Q5_K_M.gguf file, or a relay-side ComfyUI version issue) and the GGUF+LoRA hypothesis is ruled out.
+
+    Also flagged in passing (not this tasks scope, filed for awareness only): the *private*, unexported buildKontextWorkflow in server/api/comfy/kontext/generate.post.ts (the direct/synchronous route, distinct from the shared builder above) has zero LoRA support at all -- and server/api/comfy/kontext/enqueue.post.ts (the Kontext-specific enqueue route, distinct from the generic one t-045 used) never forwards loraName/loraStrength/loras to the builder either. Neither is what t-045s jobs went through, so neither explains this noise bug, but both are real functional gaps already flagged by an existing code comment as tech debt to dedupe.
+
+    FOR SILAS: this needs one test run on the actual relay/ComfyUI host, which no sandboxed agent session can do. If you (or someone with relay access) can enqueue one Kontext+LoRA job against a non-GGUF Kontext checkpoint and report whether it still produces noise, that single result confirms or rules out the GGUF+LoraLoaderModelOnly hypothesis above and tells the next session exactly what to fix.
+  updated: '2026-09-09T01:36:34Z'
+  owner: worker
   claimed_by: claude-scheduled-20260909T014500Z-aa-t079
   claimed_at: '2026-09-09T01:35:35Z'
+  soft_gate: true
