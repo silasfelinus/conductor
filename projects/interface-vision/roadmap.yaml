@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3485,8 +3485,30 @@ tasks:
     remaining candidate outside all closed families is text-xs text-error (36 subset-
     match/32 files, coherent inline validation/error-message caption pattern). Return the
     recurring consistency umbrella to ready for the next bounded slice.
-  updated: '2026-09-09T12:31:51Z'
-  implementation_pr: 'silasfelinus/kind_robots#2556'
+
+    Slice 178 merged as silasfelinus/kind_robots#2557 (squash
+    a7c3314d1b530c48bd0013d2bbef7de0c98408c9) from exact head
+    b4b6f815e651c3fa1f9d7c72d136050aa41715c3. Added .kr-text-error-xs (@apply text-xs text-
+    error;) to assets/css/tailwind.css -- inline validation/error-message caption shape
+    flagged by slice 177's own kaizen note. New codemod
+    utils/scripts/codemods/kr_text_error_xs_codemod.py (sibling of the kr-text-bold-*/kr-
+    text-black-*/kr-text-dim-* family's codemods, same subset-match convention). Migrated
+    all 36 hand-rolled text-xs text-error occurrences across 32 files, consistently a
+    conditionally-rendered <p>/<span> error caption (often role="alert") below a form/store
+    field; no geometry or behavior change, extra tokens preserved verbatim. Verified: vue-
+    tsc clean (identical to baseline); eslint 333/327/6 identical to baseline; test:layout-
+    contract holds, 0 new violations (same pre-existing narrative-ingredient-multi-
+    picker.vue viewport-grid ratchet note as every recent slice, left untouched); test:lint-
+    ratchet holds at 333/-59; prettier --check . dirty-file list byte-identical to baseline
+    (1143 files, no new drift). All 56 kind_robots PR checks green, mergeable_state clean,
+    squash-merged. Kaizen for the next slice: kr-text-bold-* still covers only -sm/-xs/-lg
+    (worth a one-off check for -xl/-2xl siblings, unsurveyed across several slices now);
+    otherwise no new candidate flagged yet outside all now-closed families (kr-text-black-*,
+    kr-text-bold-*, kr-text-dim-*, kr-text-eyebrow-*, kr-label-*, kr-badge-*, kr-text-error-
+    xs) -- next slice should run a fresh full-repo class-frequency survey. Return the
+    recurring consistency umbrella to ready for the next bounded slice.
+  updated: '2026-09-09T12:54:07Z'
+  implementation_pr: 'silasfelinus/kind_robots#2557'
   retry_context: ''
   owner: worker
   claimed_by: claude-20260909T123150Z-t104slice178
