@@ -22,6 +22,10 @@ milestones:
   title: Prototype UX
   weight: 20
   status: in-progress
+- id: m5
+  title: Da Vinci convergence
+  weight: 25
+  status: not-started
 tasks:
 - id: t-001
   milestone: m1
@@ -383,3 +387,49 @@ tasks:
   claimed_at: '2026-08-24T06:29:36Z'
   updated: '2026-08-24T06:40:39Z'
   implementation_pr: 'silasfelinus/kind_robots#2060'
+- id: t-024
+  milestone: m5
+  title: Design the Storybook/Da Vinci merge Silas asked for, superseding the 2026-07-05 boundary recommendation
+  status: ready
+  owner: worker
+  stakes: reversible
+  gate_human: true
+  updated: '2026-09-09T00:00:00Z'
+  passes: 0
+  note: >
+    Silas, 2026-09-09, reviewing the Storybook setup screen: "this should also be merged 100%
+    with da vinci." That is a direct reversal of standing architecture, so it gets a design pass
+    before any code moves.
+
+    What it reverses. projects/davinci/docs/storybook-boundary-comparison.md (davinci/t-007,
+    2026-07-05) recommended keeping the two separate through "Da Vinci's play-loop MVP and
+    Storybook's first schema milestone", sharing only through existing Kind Robots models and
+    later through extracted utilities -- never a merged session table. This project's
+    notes_from_silas still carries that boundary as a constraint ("no shared run/session tables,
+    no columns added to Life* models"). The doc set its own expiry: "Revisit after BOTH of those
+    milestones land, not before." Both have landed -- Storybook m1-m3 are done and Da Vinci's
+    engine, play loop, and endings are shipped -- so this is the revisit the doc asked for, not
+    a violation of it. The four reasons it gave against merging (opposite outcome geometry, 1024
+    deterministic endings vs open-ended collaboration; single-owner vs multi-actor turn custody;
+    maturity asymmetry; different unlock invariants) are the specific things a merge design has
+    to answer, and three of them are now weaker than they were: Storybook has a real schema, and
+    the asymmetry argument has expired.
+
+    Deliverable. A merge design doc that replaces storybook-boundary-comparison.md as the
+    standing guidance, covering at minimum: (a) what "100%" means concretely -- one route, one
+    engine, one session table, or some subset; (b) what happens to LifeRun/LifeChoice/LifeStat/
+    LifeEnding/LifeAchievement/LifeAchievementUnlock/LifeRunArt and the 1,024 seeded endings,
+    which are live data with a shipped achievement economy behind them; (c) whether Da Vinci's
+    deterministic 10-bit outcome resolution survives as a mode of the merged engine or as a
+    Scenario/Facet-shaped configuration of it; (d) turn custody for a single-player game inside
+    a multi-actor engine; (e) a migration order that never leaves Da Vinci unplayable on main,
+    since Silas tests there. Name the pieces that genuinely duplicate today -- narration prompt
+    assembly, art-scene hooks, session-resume UX, choice interpretation -- and say which merge
+    first, because those are landable ahead of any schema decision and are worth doing even if
+    the full merge is later scoped down.
+
+    Gate. The doc goes to Silas before any schema or route change. Execution tasks get filed
+    from the approved plan; do not open a schema PR off this task. The UI complaints from the
+    same review (oversized setup header, "Your spread", borrowed tutorial banner art, and the
+    setup surface not scrolling at all) were fixed separately in kind_robots PR #2547 and are
+    not part of this task.
