@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3464,8 +3464,29 @@ tasks:
     badge-sm, whose color is supplied dynamically via a sibling :class binding -- matches
     kr-badge-sm's own documented rationale). Return the recurring consistency umbrella to
     ready for the next bounded slice.
-  updated: '2026-09-09T11:28:56Z'
-  implementation_pr: 'silasfelinus/kind_robots#2555'
+
+    Slice 177 merged as silasfelinus/kind_robots#2556 (squash
+    f6d10a67290f25e96f312c721892d83b9d9670e9) from exact head
+    ebc3473b5ea541b53bd8ad1172de171132bb78f4. Added .kr-badge-xs (@apply badge badge-xs;) to
+    assets/css/tailwind.css -- colorless -xs sibling of .kr-badge-sm, per the kaizen note
+    from slice 176. Extended utils/scripts/codemods/kr_badge_codemod.py's FAMILIES with the
+    new entry (ordered last, after every colored -xs family). Migrated all 26 hand-rolled
+    badge badge-xs occurrences across 13 files; left unrestricted (no BOUNDED_EXTRAS) since
+    every occurrence was individually audited this slice, unlike kr-badge-sm's original
+    91-hit survey. No geometry/behavior change; :class color bindings preserved verbatim.
+    Also fixed pre-existing Prettier drift in 8 of the touched files (repo-wide prettier
+    --check . dirty-file count: 1151 baseline -> 1143, exactly the 8 fixed, confirmed via
+    git stash before/after). Verified: vue-tsc clean; eslint 333/327/6 identical to baseline
+    (git stash confirmed); test:layout-contract holds, 0 new violations (same pre-existing
+    narrative-ingredient-multi-picker.vue viewport-grid ratchet note as every recent slice,
+    left untouched); test:lint-ratchet holds at 333/-59. All 52 kind_robots PR checks green,
+    mergeable_state clean, squash-merged. Kaizen for the next slice: kr-text-bold-* now
+    covers -sm/-xs/-lg (worth a quick check for -xl/-2xl siblings, unsurveyed); strongest
+    remaining candidate outside all closed families is text-xs text-error (36 subset-
+    match/32 files, coherent inline validation/error-message caption pattern). Return the
+    recurring consistency umbrella to ready for the next bounded slice.
+  updated: '2026-09-09T11:55:05Z'
+  implementation_pr: 'silasfelinus/kind_robots#2556'
   retry_context: ''
   owner: worker
   claimed_by: claude-20260909T112856Z-t104
