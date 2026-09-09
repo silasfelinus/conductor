@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -4145,8 +4145,31 @@ tasks:
     kr_label_bold_codemod.py's own docstring as its own bounded family) -- this closes out
     every candidate surveyed across slices 168-170; after this, a fresh full-repo class-
     frequency survey is needed to find the next pattern.
-  updated: '2026-09-09T05:37:33Z'
-  implementation_pr: 'silasfelinus/kind_robots#2544'
+
+    Slice 173 merged as silasfelinus/kind_robots#2545 (squash
+    995c0e5b74fced1181da3e6b7611523cb053a9fb). Added .kr-label-xs (text-xs) and .kr-label-
+    xs-semibold (text-xs font-semibold), siblings of .kr-label-bold, dropping the dead
+    label-text token (no .label-text CSS rule exists anywhere in this repo's assets/ or in
+    daisyui's dist CSS). Migrated all 21 label-text text-xs occurrences (4 files) and all 29
+    subset-match label-text text-xs font-semibold occurrences (5 files, 15 exact + 14
+    carrying an extra mb-1 preserved verbatim). No geometry/behavior change. vue-tsc clean;
+    eslint 333/327/6 identical to baseline; test:layout-contract holds (same unrelated -2
+    ratchet opportunity in narrative-ingredient-multi-picker.vue, left untouched);
+    test:lint-ratchet holds at 333/-59; prettier flagged 5 genuinely new fallout files
+    (facet-profile-editor.vue, art-styler.vue, image-upload.vue, davinci-page.vue, project-
+    detail.vue), targeted --write landed them clean, the other 4 touched files (conductor-
+    project-gallery-page.vue, ruler-hooked-slots.vue, conductor-page.vue, tailwind.css)
+    confirmed pre-existing drift via git stash and left untouched. All 51 kind_robots CI
+    checks green, mergeable_state clean, merged. This closes out every label-
+    text/kr-*-adjacent family flagged since slice 151/152. Kaizen suggestion: the remaining
+    bare label-text occurrences (13 files: label-text alone, label-text-alt, label-text
+    text-sm, label-text text-smart-caption font-bold, label-text flex items-center gap-1.5
+    text-base font-bold text-primary, etc.) are each too small/varied to be one bounded
+    family -- a fresh full-repo class-frequency survey outside the now-closed kr-text-*/kr-
+    label-* families is the right next step for slice 174. Session ended with both repos on
+    a clean main, no open PRs, no leftover branches.
+  updated: '2026-09-09T05:47:05Z'
+  implementation_pr: 'silasfelinus/kind_robots#2545'
   retry_context: ''
   owner: worker
   claimed_by: scheduled-20260909-slice173
