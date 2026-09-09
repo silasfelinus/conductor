@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3598,8 +3598,33 @@ tasks:
     and icon-size utilities like h-4 w-4, which are too context-varied to safely fold into a
     single kr-* primitive without more design input). Return the recurring consistency
     umbrella to ready for the next bounded slice.
-  updated: '2026-09-09T16:45:14Z'
-  implementation_pr: 'silasfelinus/kind_robots#2562'
+
+    Slice 183 merged as silasfelinus/kind_robots#2563 (squash
+    75dd6b83165f5af76c4dae564a213068574f9325) from exact head
+    70354512f7825db2523a30b2e477e89e9a552c01. Added .kr-badge-outline (bare badge badge-
+    outline, no size modifier) as the sizeless sibling of the existing .kr-badge-outline-
+    sm/.kr-badge-outline-xs primitives, matching the .kr-badge-ghost sizeless-sibling
+    convention from slice 181. Extended utils/scripts/codemods/kr_badge_codemod.py's
+    FAMILIES with the new shape, bounded via BOUNDED_EXTRAS to an exact-token match only: 13
+    occurrences migrated across 8 files (mandarin-voice-coach.vue x2, ruler-hooked-fishing-
+    encounter.vue, ruler-hooked-fishopedia.vue, forum-moderation-panel.vue, reaction-
+    card.vue, curation-studio.vue x3, scene-animator.vue x2, social-drafts.vue x2). A 14th
+    exact match in components/ui/ui-gallery.vue's "Badges & status" design-system showcase
+    section is a deliberate raw-DaisyUI comparison row and was left untouched, matching the
+    precedent set for that section's other rows. Verified: vue-tsc clean; eslint 333/327/6
+    identical to baseline (git-stash-confirmed); prettier --check . byte-identical to
+    baseline (1145 files, confirmed via before/after diff of the full warning list);
+    test:layout-contract holds, 0 new violations (same pre-existing narrative-ingredient-
+    multi-picker.vue viewport-grid ratchet note as every recent slice, left untouched);
+    test:lint-ratchet holds at 333/-59. All 52 kind_robots PR checks green, mergeable_state
+    clean at merge time. Kaizen for the next slice: run a fresh full-repo class-frequency
+    survey outside all now-closed families (kr-text-black-*, kr-text-bold-*, kr-text-dim-*,
+    kr-text-eyebrow-*, kr-label-*, kr-badge-* incl. -ghost/-outline sizeless siblings, kr-
+    text-error-xs), or individually audit the remaining one-off kr-badge-outline extra-token
+    occurrences as a bounded follow-up slice. Return the recurring consistency umbrella to
+    ready for the next bounded slice.
+  updated: '2026-09-09T16:55:27Z'
+  implementation_pr: 'silasfelinus/kind_robots#2563'
   retry_context: ''
   owner: worker
   claimed_by: claude-scheduled-20260909T163203Z-iv-t104
