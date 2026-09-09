@@ -104,10 +104,9 @@ tasks:
 
   - id: t-005
     title: "FOR SILAS: confirm the admin Scene Animator surface to close out this finished project"
-    status: needs-human
+    status: ready
     passes: 0
     stakes: reversible
-    soft_gate: true
     note: |-
       FOR SILAS: all 4 roadmap tasks across all three milestones (shape, build, polish/
       ship) are done -- nothing agent-actionable remains in the queue. Reconciled
@@ -130,3 +129,6 @@ tasks:
       own closing step, and it also clears a currently-failing CI assertion
       (`test_current_project_lifecycle.py`) that flags any `active` project sitting with
       zero open tasks.
+
+      Silas tested the Scene Animator surface on 2026-09-08 and rejected the closeout: the UI reports "Scene Animator source root is unavailable: /app/animate" and the animator does not work. Reopen this acceptance task for repair. Treat the observed production source-root failure as the concrete bug to fix before asking for acceptance again.
+    updated: '2026-09-09T05:50:06Z'
