@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -4115,7 +4115,22 @@ tasks:
     eyebrow-bold for the next largest bounded pattern -- candidates spotted but not yet
     mined: font-bold text-xs/text-sm label pairs, label-text text-xs form-label pairs.
     Return the recurring consistency umbrella to ready for the next bounded slice.
-  updated: '2026-09-09T03:39:07Z'
+
+    Slice 169 merged as silasfelinus/kind_robots#2541 (squash
+    0f2702b7a46e22c13c2fb99d3b1c3eb27e5543b0) from exact head
+    ee85ae8613318f4dab59c3b9bf71ee3bf04b179a. Added .kr-text-bold-sm (font-bold text-sm) and
+    kr_text_bold_sm_codemod.py, first of a new kr-text-bold-* family. Migrated 90 subset-
+    match occurrences across 57 files; no geometry or behavior change. vue-tsc clean; eslint
+    333/327/6 identical before/after (git stash confirmed); test:layout-contract holds (same
+    unrelated -2 ratchet opportunity in narrative-ingredient-multi-picker.vue, left
+    untouched); prettier flagged 1 genuinely new fallout file (character-chat.vue), targeted
+    --write landed back at the exact pre-existing baseline (1148 files). All 58 kind_robots
+    CI checks green, mergeable_state clean, merged. Return the recurring consistency
+    umbrella to ready for the next slice. Kaizen: slice 170 should take font-bold text-xs
+    (84 occurrences, 35 files, next kr-text-bold-* sibling) or label-text text-xs font-bold
+    (25 occurrences, 4 files, previously flagged in kr_label_bold_codemod.py's own
+    docstring).
+  updated: '2026-09-09T03:47:47Z'
   implementation_pr: 'silasfelinus/kind_robots#2541'
   retry_context: ''
   owner: worker
