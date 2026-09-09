@@ -1,1196 +1,1088 @@
 {
-  "generated_at": "2026-09-08T14:00:01.759194+00:00",
+  "generated_at": "2026-09-09T14:00:02.126966+00:00",
   "host": "alexandria",
   "new": [
     {
       "baseline": null,
-      "container": "sonarr",
-      "count": 1628,
-      "fingerprint": "f02f2e89bcef",
-      "sample": "[Warn] QualityFinder: Unable to find exact quality for DVD and 576. Using Bluray-576p as fallback",
-      "severity": "warn",
-      "skeleton": "[warn] qualityfinder: unable to find exact quality for dvd and <num>. using bluray-576p as fallback"
-    },
-    {
-      "baseline": null,
       "container": "qbit",
-      "count": 124,
-      "fingerprint": "78027c85326d",
-      "sample": "Mon Sep  7 12:34:00 2026 AEAD Decrypt error: bad packet ID (may be a replay): [ #543090 ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mut",
+      "count": 1067,
+      "fingerprint": "46d08c635a8f",
+      "sample": "Wed Sep  9 05:25:58 2026 AEAD Decrypt error: bad packet ID (may be a replay): [ #10021503 ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --m",
       "severity": "error",
-      "skeleton": "<ts> aead decrypt error: bad packet id (may be a replay): [ #<num> ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mute-replay-warnings"
+      "skeleton": "<ts> aead decrypt error: bad packet id (may be a replay): [ #<hex> ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mute-replay-warnings"
     },
     {
       "baseline": null,
-      "container": "jellyfin",
-      "count": 58,
-      "fingerprint": "bc5e13dcc2f6",
-      "sample": "[18:41:24] [WRN] [7] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService: Health check StartupCheck with status Degraded completed after 0.6933ms with message 'Server is still star",
-      "severity": "warn",
-      "skeleton": "[<ts>] [wrn] [<num>] microsoft.extensions.diagnostics.healthchecks.defaulthealthcheckservice: health check startupcheck with status degraded completed after <num> with message <str>"
+      "container": "flaresolverr",
+      "count": 354,
+      "fingerprint": "3b030fffc6de",
+      "sample": "2026-09-08 18:34:49 ERROR    Error: Message: session not created: cannot connect to chrome at 127.0.0.1:57987",
+      "severity": "error",
+      "skeleton": "<ts> error error: message: session not created: cannot connect to chrome at <ip>"
     },
     {
       "baseline": null,
-      "container": "proxysql",
+      "container": "flaresolverr",
       "count": 51,
-      "fingerprint": "7ada29ceece5",
-      "sample": "2026-09-07 07:46:02 MyHGC.cpp:202:get_random_MySrvC(): [ERROR] Hostgroup 10 has no servers available! Checking servers shunned for more than 1 second",
+      "fingerprint": "4f8013f8a0ea",
+      "sample": "2026-09-08 23:20:09 ERROR    Error starting Chrome: HTTPConnectionPool(host='localhost', port=46039): Read timed out. (read timeout=120)",
       "severity": "error",
-      "skeleton": "<ts> myhgc.cpp<ip>get_random_mysrvc(): [error] hostgroup <num> has no servers available! checking servers shunned for more than <num> second"
+      "skeleton": "<ts> error error starting chrome: httpconnectionpool(host=<str>, port=<num>): read timed out. (read timeout=<num>)"
     },
     {
       "baseline": null,
-      "container": "kapowarr",
-      "count": 47,
-      "fingerprint": "5f87adda8786",
-      "sample": "\u001b[1;31:40m[03:45:10][WARNING] Unable to add indexer download; fail_reason=\"This release does not match the issue you asked for. Use Download anyway (next to Download) to add it regardless.\"",
-      "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] unable to add indexer download; fail_reason=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "ubooquity",
-      "count": 47,
-      "fingerprint": "fc1e7148605b",
-      "sample": "20260907 07:55:50 [Scanner thread] WARN  com.ubooquity.b.c - Could not read document metadata for file: /comics/Incal/Before the Incal (2012)/Before the Incal 001.cbz - NullPointerException:  must not",
-      "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn com.ubooquity.b.c - could not read document metadata for file: <path>"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 42,
-      "fingerprint": "b55fd5e80411",
-      "sample": "2026-09-07 07:45:54 MySQL_Monitor.cpp:3412:monitor_ping(): [ERROR] Server mariadb-kindrobots2:3306 missed 3 heartbeats, shunning it and killing all the connections. Disabling other checks until the no",
+      "container": "flaresolverr",
+      "count": 51,
+      "fingerprint": "1f226149bbb0",
+      "sample": "2026-09-08 23:20:09 ERROR    Error: HTTPConnectionPool(host='localhost', port=46039): Read timed out. (read timeout=120)",
       "severity": "error",
-      "skeleton": "<ts> mysql_monitor.cpp<ip>monitor_ping(): [error] server mariadb-kindrobots2:<num> missed <num> heartbeats, shunning it and killing all the connections. disabling other checks until the node comes back online."
+      "skeleton": "<ts> error error: httpconnectionpool(host=<str>, port=<num>): read timed out. (read timeout=<num>)"
     },
     {
       "baseline": null,
-      "container": "kapowarr",
-      "count": 36,
-      "fingerprint": "16185a7aa503",
-      "sample": "\u001b[1;31:40m[03:45:10][WARNING] Failed to enqueue download: This release does not match the issue you asked for. Use Download anyway (next to Download) to add it regardless.",
-      "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] failed to enqueue download: this release does not match the issue you asked for. use download anyway (next to download) to add it regardless."
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 31,
-      "fingerprint": "99ab886be729",
-      "sample": "[18:54:09] [WRN] [10] Jellyfin.Server.Implementations.Item.BaseItemRepository: Skipping item 00000000-0000-0000-0000-000000000001 with unknown type 'PLACEHOLDER'. This may indicate a removed plugin or",
-      "severity": "warn",
-      "skeleton": "[<ts>] [wrn] [<num>] jellyfin.server.implementations.item.baseitemrepository: skipping item <uuid> with unknown type <str>. this may indicate a removed plugin or database corruption."
-    },
-    {
-      "baseline": null,
-      "container": "explore",
+      "container": "sonarr",
       "count": 29,
-      "fingerprint": "37efdbf11d8a",
-      "sample": "error 3: BadWindow (invalid Window parameter) request 15 minor 0 serial 417",
+      "fingerprint": "53e14528a506",
+      "sample": "[Error] Sabnzbd: API Grab Limit reached for https://prowlarr.acrocatranch.com/9/download?apikey=<REDACTED>",
       "severity": "error",
-      "skeleton": "error <num>: badwindow (invalid window parameter) request <num> minor <num> serial <num>"
+      "skeleton": "[error] sabnzbd: api grab limit reached for <url>"
     },
     {
       "baseline": null,
-      "container": "ubooquity",
-      "count": 27,
-      "fingerprint": "71b2cffbb43c",
-      "sample": "WARNING: exception in archive constructor maybe file is encrypted or currupt",
-      "severity": "warn",
-      "skeleton": "warning: exception in archive constructor maybe file is encrypted or currupt"
-    },
-    {
-      "baseline": null,
-      "container": "ubooquity",
-      "count": 24,
-      "fingerprint": "360e9856f6a1",
-      "sample": "20260907 07:55:45 [Scanner thread] WARN  com.ubooquity.f.a - Failed to read file based on extension format, now checking file header",
-      "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn com.ubooquity.f.a - failed to read file based on extension format, now checking file header"
-    },
-    {
-      "baseline": null,
-      "container": "ubooquity",
-      "count": 23,
-      "fingerprint": "aa4ec05157ef",
-      "sample": "20260907 07:55:45 [Scanner thread] WARN  com.ubooquity.f.a - Could not open file: RarException: notRarArchive",
-      "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn com.ubooquity.f.a - could not open file: rarexception: notrararchive"
-    },
-    {
-      "baseline": null,
-      "container": "kapowarr",
-      "count": 17,
-      "fingerprint": "221b19a69687",
-      "sample": "\u001b[1;31:40m[04:08:15][WARNING] Unable to extract download links from source; fail_reason=\"All download links found on the webpage are broken\"",
-      "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] unable to extract download links from source; fail_reason=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "kapowarr",
-      "count": 15,
-      "fingerprint": "36781837aa41",
-      "sample": "\u001b[1;31:40m[04:08:15][WARNING] Failed to enqueue download: All download links found on the webpage are broken",
-      "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] failed to enqueue download: all download links found on the webpage are broken"
-    },
-    {
-      "baseline": null,
-      "container": "ubooquity",
-      "count": 15,
-      "fingerprint": "0daae14e602c",
-      "sample": "com.github.junrar.exception.RarException: badRarArchive",
+      "container": "sonarr",
+      "count": 29,
+      "fingerprint": "551712b5f5d0",
+      "sample": "---> NzbDrone.Common.Http.TooManyRequestsException: HTTP request failed: [429:TooManyRequests] [GET] at [https://prowlarr.acrocatranch.com/9/download?apikey=<REDACTED>",
       "severity": "error",
-      "skeleton": "com.github.junrar.exception.rarexception: badrararchive"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 14,
-      "fingerprint": "7f9a78d5d0d8",
-      "sample": "2026-09-07 07:46:20 mysql_connection.cpp:1357:handler(): [ERROR] Failed to mysql_real_connect() on 10:mariadb-kindrobots2:3306 , FD (Conn:0 , MyDS:90) , 2002: Can't connect to server on '172.21.0.19' ",
-      "severity": "error",
-      "skeleton": "<ts> mysql_connection.cpp<ip>handler(): [error] failed to mysql_real_connect() on <num>:mariadb-kindrobots2:<num> , fd (conn:<num> , myds:<num>) , <num>: can't connect to server on <str> (<num>)."
+      "skeleton": "---> nzbdrone.common.http.toomanyrequestsexception: http request failed: [<num>:toomanyrequests] [get] at [<url>"
     },
     {
       "baseline": null,
       "container": "kapowarr",
       "count": 12,
-      "fingerprint": "336c4e70da10",
-      "sample": "\u001b[1;31:40m[04:02:48][WARNING] POST request failed for url http://192.168.7.172:8191/v1 (SocketTimeoutError: Timeout on reading data from socket). Retrying for round 2...",
-      "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] post request failed for url <url> (sockettimeouterror: timeout on reading data from socket). retrying for round <num>..."
-    },
-    {
-      "baseline": null,
-      "container": "ubooquity",
-      "count": 12,
-      "fingerprint": "d1fecb4aa273",
-      "sample": "java.lang.NullPointerException: Cannot invoke \"com.github.junrar.rarfile.UnrarHeadertype.ordinal()\" because the return value of \"com.github.junrar.rarfile.BaseBlock.getHeaderType()\" is null",
-      "severity": "other",
-      "skeleton": "java.lang.nullpointerexception: cannot invoke <str> because the return value of <str> is null"
-    },
-    {
-      "baseline": null,
-      "container": "ubooquity",
-      "count": 12,
-      "fingerprint": "6c5d22e0240e",
-      "sample": "20260907 08:23:20 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph B of font CoreSansM55Medium",
-      "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph b of font coresansm55medium"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 12,
-      "fingerprint": "d558b7812f86",
-      "sample": "2026-09-07 07:46:12 MySQL_Session.cpp:3536:handler_again___status_CONNECTING_SERVER(): [ERROR] Max connect timeout reached while reaching hostgroup 10 after 10000ms . HG status: [{\"Bytes_recv\":\"134431",
+      "fingerprint": "0113f5ab2a52",
+      "sample": "The Dreaming - Waking Hours (2020-) 011-004.jpg - checksum error",
       "severity": "error",
-      "skeleton": "<ts> mysql_session.cpp<ip>handler_again___status_connecting_server(): [error] max connect timeout reached while reaching hostgroup <num> after <num> . hg status: [{<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str>:<str>,<str"
+      "skeleton": "the dreaming - waking hours (<num>-) <num>-<num>.jpg - checksum error"
     },
     {
       "baseline": null,
-      "container": "kapowarr",
-      "count": 11,
-      "fingerprint": "02ab3be4d9ce",
-      "sample": "\u001b[1;31:40m[04:13:09][WARNING] Indexer answered HTTP 510 for a release of NZB Planet",
-      "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] indexer answered http <num> for a release of nzb planet"
+      "container": "flaresolverr",
+      "count": 12,
+      "fingerprint": "149003d8d277",
+      "sample": "2026-09-08 19:40:26 ERROR    Error starting Chrome: Message: unknown error: failed to start a thread for the new session",
+      "severity": "error",
+      "skeleton": "<ts> error error starting chrome: message: unknown error: failed to start a thread for the new session"
     },
     {
       "baseline": null,
-      "container": "kapowarr",
-      "count": 11,
-      "fingerprint": "46bdf8af1a85",
-      "sample": "\u001b[1;31:40m[04:13:09][WARNING] NZB Planet is not serving downloads; not asking it for another 900s rather than once per release",
-      "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] nzb planet is not serving downloads; not asking it for another <num> rather than once per release"
+      "container": "flaresolverr",
+      "count": 12,
+      "fingerprint": "121fdcf572a2",
+      "sample": "2026-09-08 19:40:26 ERROR    Error: Message: unknown error: failed to start a thread for the new session",
+      "severity": "error",
+      "skeleton": "<ts> error error: message: unknown error: failed to start a thread for the new session"
     },
     {
       "baseline": null,
-      "container": "kapowarr",
-      "count": 11,
-      "fingerprint": "26fe33a01262",
-      "sample": "\u001b[1;31:40m[04:13:09][WARNING] Failed to enqueue download: The indexer could not be reached just now",
+      "container": "ubooquity",
+      "count": 9,
+      "fingerprint": "0e44829e00e6",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph G of font HeadingNow-66Bold",
       "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] failed to enqueue download: the indexer could not be reached just now"
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph g of font headingnow-66bold"
     },
     {
       "baseline": null,
       "container": "ubooquity",
       "count": 8,
-      "fingerprint": "d99b7d108143",
-      "sample": "20260907 08:39:35 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph M of font Syntax-Roman",
+      "fingerprint": "d70abb622ef7",
+      "sample": "20260908 17:51:52 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph a of font HeadingNow-45Medium",
       "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph m of font syntax-roman"
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph a of font headingnow-45medium"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 8,
+      "fingerprint": "735d311ca22d",
+      "sample": "\u001b[1;31:40m[04:46:15][WARNING] GET request failed for url https://getcomics.<REDACTED-BLOB>:mmmcs2t1ycio40833ErZ4Q== (ClientResponseError: 400, message='Got more than 8190 bytes when reading: b\"default",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get request failed for url <url> (clientresponseerror: <num>, message=<str>, url='<url> retrying for round <num>..."
     },
     {
       "baseline": null,
       "container": "ubooquity",
-      "count": 8,
-      "fingerprint": "3e60644ebe3b",
-      "sample": "20260907 08:39:35 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph ampersand of font Syntax-Roman",
-      "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph ampersand of font syntax-roman"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 8,
-      "fingerprint": "ba1505042c52",
-      "sample": "2026-09-07 07:46:25 mysql_connection.cpp:1357:handler(): [ERROR] Failed to mysql_real_connect() on 10:mariadb-kindrobots2:3306 , FD (Conn:90 , MyDS:90) , 2013: Lost connection to server at 'handshake:",
-      "severity": "error",
-      "skeleton": "<ts> mysql_connection.cpp<ip>handler(): [error] failed to mysql_real_connect() on <num>:mariadb-kindrobots2:<num> , fd (conn:<num> , myds:<num>) , <num>: lost connection to server at <str>, system error: <num>."
-    },
-    {
-      "baseline": null,
-      "container": "photos",
       "count": 7,
-      "fingerprint": "45b5d3f5ce0e",
-      "sample": "dial tcp 192.168.7.172:4445: connect: connection refused",
-      "severity": "other",
-      "skeleton": "dial tcp <ip>: connect: connection refused"
+      "fingerprint": "13d2a5cb4908",
+      "sample": "20260908 17:51:49 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph W of font HeadingNow-27Extrabold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph w of font headingnow-27extrabold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 7,
+      "fingerprint": "b205b4172e7a",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph A of font HeadingNow-66Bold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph a of font headingnow-66bold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 7,
+      "fingerprint": "a50cf87bb46a",
+      "sample": "20260908 17:51:52 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph r of font HeadingNow-45Medium",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph r of font headingnow-45medium"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 7,
+      "fingerprint": "d3d419706b19",
+      "sample": "\u001b[1;31:40m[05:12:40][WARNING] SABnzbd download <REDACTED-BLOB> failed: Aborted, cannot be completed - https://sabnzbd.org/not-complete",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] sabnzbd download <redacted-blob> failed: aborted, cannot be completed - <url>"
     },
     {
       "baseline": null,
       "container": "ubooquity",
       "count": 6,
-      "fingerprint": "498b8e0fe82c",
-      "sample": "20260907 08:39:35 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph a of font Syntax-Roman",
+      "fingerprint": "37ab1852e07f",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph a of font HeadingNow-47ExtraboldItalic",
       "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph a of font syntax-roman"
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph a of font headingnow-47extrabolditalic"
     },
     {
       "baseline": null,
-      "container": "jellyfin",
-      "count": 5,
-      "fingerprint": "140f403e0c24",
-      "sample": "[05:43:57] [ERR] [45] Jellyfin.Api.Middleware.ExceptionMiddleware: Error processing request: Token is required. URL GET /socket.",
+      "container": "sonarr",
+      "count": 6,
+      "fingerprint": "6d6a92c2ac00",
+      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release '8.Out.of.10.Cats.Does.Countdown.2013.S07E04.Series.7.Episode.4.1080p.ALL4.WEB-DL.AAC2.0.H.264-FUZEER' from Indexer NZBgeek (Prowlarr) to download",
+      "severity": "warn",
+      "skeleton": "[warn] processdownloaddecisions: couldn't add release <str> from indexer nzbgeek (prowlarr) to download queue."
+    },
+    {
+      "baseline": null,
+      "container": "flaresolverr",
+      "count": 6,
+      "fingerprint": "5ea5cef33d35",
+      "sample": "2026-09-08 23:57:28 ERROR    Error: Error solving the challenge. Message: invalid session id; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troublesho",
       "severity": "error",
-      "skeleton": "[<ts>] [err] [<num>] jellyfin.api.middleware.exceptionmiddleware: error processing request: token is required. url get /socket."
+      "skeleton": "<ts> error error: error solving the challenge. message: invalid session id; for documentation on this error, please visit: <url> <hex> <unknown>\\n#<num> <hex> <unknown>\\n#<num> <hex> <unknown>\\n#<num> <hex> <unknown>\\n#<num> <hex> <unknown>\\n#<num> <hex> <unknown>\\n#<num> <hex> <unknown>\\n#<num> <he"
     },
     {
       "baseline": null,
-      "container": "tautulli",
-      "count": 5,
-      "fingerprint": "c549f680a0c8",
-      "sample": "2026-09-07 08:50:36 - WARNING :: Thread-18 (run) : Tautulli WebSocket :: Reconnection attempt 1.",
-      "severity": "warn",
-      "skeleton": "<ts> - warning :: thread-<num> (run) : tautulli websocket :: reconnection attempt <num>."
-    },
-    {
-      "baseline": null,
-      "container": "tautulli",
-      "count": 5,
-      "fingerprint": "9c1d6b38c450",
-      "sample": "2026-09-07 08:50:36 - ERROR :: Thread-18 (run) : Tautulli WebSocket :: [Errno 111] Connection refused.",
+      "container": "flaresolverr",
+      "count": 6,
+      "fingerprint": "d2dd99f0046b",
+      "sample": "2026-09-09 00:58:28 ERROR    Error: Message: Service /app/chromedriver unexpectedly exited. Status code was: -5",
       "severity": "error",
-      "skeleton": "<ts> - error :: thread-<num> (run) : tautulli websocket :: [errno <num>] connection refused."
+      "skeleton": "<ts> error error: message: service <path>"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 4,
-      "fingerprint": "5f57a703482e",
-      "sample": "time=2026-09-07T20:33:25.408-07:00 comm=apps.plugin source=collector level=warning tid=833749  msg=\"pid 2667107 lsof states parent 2667103, but the later does not exist.\"",
+      "container": "ubooquity",
+      "count": 5,
+      "fingerprint": "4e967c1753cc",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph S of font HeadingNow-87Extrabold",
       "severity": "warn",
-      "skeleton": "time=<ts> comm=apps.plugin source=collector level=warning tid=<num> msg=<str>"
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph s of font headingnow-87extrabold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 5,
+      "fingerprint": "b777a1cbc873",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph r of font HeadingNow-66Bold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph r of font headingnow-66bold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 5,
+      "fingerprint": "f07199ec82be",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph m of font HeadingNow-67ExtraboldItalic",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph m of font headingnow-67extrabolditalic"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 5,
+      "fingerprint": "3fc97e604504",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph c of font HeadingNow-67ExtraboldItalic",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph c of font headingnow-67extrabolditalic"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 5,
+      "fingerprint": "191c7577beab",
+      "sample": "20260908 17:51:52 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph S of font HeadingNow-47Extrabold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph s of font headingnow-47extrabold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 5,
+      "fingerprint": "7d48da027a25",
+      "sample": "20260908 17:51:52 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph s of font HeadingNow-45Medium",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph s of font headingnow-45medium"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 5,
+      "fingerprint": "6838e0914ff7",
+      "sample": "20260908 17:51:52 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph p of font HeadingNow-45Medium",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph p of font headingnow-45medium"
     },
     {
       "baseline": null,
       "container": "ubooquity",
       "count": 4,
-      "fingerprint": "f52ae38e9867",
-      "sample": "20260907 08:23:23 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph B of font CoreSansM75ExtraBold",
+      "fingerprint": "d4785e5e9aa6",
+      "sample": "20260908 17:51:49 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph A of font HeadingNow-27Extrabold",
       "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph b of font coresansm75extrabold"
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph a of font headingnow-27extrabold"
     },
     {
       "baseline": null,
       "container": "ubooquity",
       "count": 4,
-      "fingerprint": "00c5b26a2882",
-      "sample": "20260907 08:39:35 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph r of font Syntax-Roman",
+      "fingerprint": "a48f40df0efc",
+      "sample": "20260908 17:51:49 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph question of font HeadingNow-27Extrabold",
       "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph r of font syntax-roman"
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph question of font headingnow-27extrabold"
     },
     {
       "baseline": null,
       "container": "ubooquity",
       "count": 4,
-      "fingerprint": "ffaa4d3daab2",
-      "sample": "20260907 08:39:35 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph n of font Syntax-Roman",
+      "fingerprint": "094e11c7a09a",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph d of font HeadingNow-66Bold",
       "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph n of font syntax-roman"
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph d of font headingnow-66bold"
     },
     {
       "baseline": null,
       "container": "ubooquity",
       "count": 4,
-      "fingerprint": "32550b1c2183",
-      "sample": "20260907 08:39:42 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph M of font UGKBPQ+Syntax-Roman",
+      "fingerprint": "6b20febd9105",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph n of font HeadingNow-66Bold",
       "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph m of font ugkbpq+syntax-roman"
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph n of font headingnow-66bold"
     },
     {
       "baseline": null,
       "container": "ubooquity",
       "count": 4,
-      "fingerprint": "14c6a5b39c62",
-      "sample": "20260907 08:39:42 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph ampersand of font UGKBPQ+Syntax-Roman",
+      "fingerprint": "a9cecb107f5a",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph u of font HeadingNow-66Bold",
       "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph ampersand of font ugkbpq+syntax-roman"
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph u of font headingnow-66bold"
     },
     {
       "baseline": null,
       "container": "ubooquity",
       "count": 4,
-      "fingerprint": "9c5ee0e981c7",
-      "sample": "20260907 08:39:46 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph dollar of font Futura-Bold",
+      "fingerprint": "944b87634db8",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph u of font HeadingNow-67ExtraboldItalic",
       "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph dollar of font futura-bold"
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph u of font headingnow-67extrabolditalic"
     },
     {
       "baseline": null,
-      "container": "proxysql",
+      "container": "ubooquity",
       "count": 4,
-      "fingerprint": "127fc0b30822",
-      "sample": "2026-09-07 07:45:46 MySQL_Thread.cpp:4475:process_data_on_data_stream(): [WARNING] Detected broken idle connection on mariadb-kindrobots2:3306",
+      "fingerprint": "b34eaf39fa9d",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph ampersand of font CoreSansM55Medium",
       "severity": "warn",
-      "skeleton": "<ts> mysql_thread.cpp<ip>process_data_on_data_stream(): [warning] detected broken idle connection on mariadb-kindrobots2:<num>"
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph ampersand of font coresansm55medium"
     },
     {
       "baseline": null,
-      "container": "podgrab",
+      "container": "ubooquity",
       "count": 4,
-      "fingerprint": "99ac8664accb",
-      "sample": "Response status: 403 Forbidden",
+      "fingerprint": "affec38f469b",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph p of font HeadingNow-47ExtraboldItalic",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph p of font headingnow-47extrabolditalic"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 4,
+      "fingerprint": "26b5ac6c8396",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph n of font HeadingNow-47ExtraboldItalic",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph n of font headingnow-47extrabolditalic"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 4,
+      "fingerprint": "af71f31adb9f",
+      "sample": "20260908 17:51:52 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph n of font HeadingNow-45Medium",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph n of font headingnow-45medium"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 4,
+      "fingerprint": "208d199829e1",
+      "sample": "\u001b[1;31:40m[05:15:10][ERROR] Could not verify archive integrity of /pc/miss_kitty/kapowarr/[COMIC].Batman-Dark.Victory.2.cbr.1:",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] could not verify archive integrity of <path>"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 4,
+      "fingerprint": "0500e5e282b3",
+      "sample": "IsADirectoryError: [Errno 21] Is a directory: '/pc/miss_kitty/kapowarr/[COMIC].Batman-Dark.Victory.2.cbr.1'",
+      "severity": "error",
+      "skeleton": "isadirectoryerror: [errno <num>] is a directory: '<path>"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 4,
+      "fingerprint": "4e1df383c837",
+      "sample": "\u001b[1;31:40m[05:39:01][ERROR] Rejecting download 787: unreadable (rar exited 10: RAR 6.24   Copyright (c) 1993-2023 Alexander Roshal   3 Oct 2023",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] rejecting download <num>: unreadable (rar exited <num>: rar <num> copyright (c) <num>-<num> alexander roshal <num> oct <num>"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 3,
+      "fingerprint": "5b726f724c37",
+      "sample": "20260908 17:51:49 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph S of font HeadingNow-76Bold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph s of font headingnow-76bold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 3,
+      "fingerprint": "6a3b0215431d",
+      "sample": "20260908 17:51:49 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph G of font HeadingNow-27Extrabold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph g of font headingnow-27extrabold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 3,
+      "fingerprint": "3b86fa5cac3c",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph m of font HeadingNow-66Bold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph m of font headingnow-66bold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 3,
+      "fingerprint": "257377638c9a",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph J of font HeadingNow-66Bold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph j of font headingnow-66bold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 3,
+      "fingerprint": "336649e1bac9",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph C of font HeadingNow-66Bold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph c of font headingnow-66bold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 3,
+      "fingerprint": "436d491cd623",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph t of font HeadingNow-66Bold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph t of font headingnow-66bold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 3,
+      "fingerprint": "8ef1770caafa",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph s of font HeadingNow-66Bold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph s of font headingnow-66bold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 3,
+      "fingerprint": "b4ac8dabc834",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph d of font HeadingNow-67ExtraboldItalic",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph d of font headingnow-67extrabolditalic"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 3,
+      "fingerprint": "441cdfb515e7",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph R of font HeadingNow-57Extrabold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph r of font headingnow-57extrabold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 3,
+      "fingerprint": "099b61e08f44",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph e of font HeadingNow-47ExtraboldItalic",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph e of font headingnow-47extrabolditalic"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 3,
+      "fingerprint": "0c4672fd61dd",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph f of font HeadingNow-47ExtraboldItalic",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph f of font headingnow-47extrabolditalic"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 3,
+      "fingerprint": "7214d1598222",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph g of font HeadingNow-47ExtraboldItalic",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph g of font headingnow-47extrabolditalic"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 3,
+      "fingerprint": "1065c9b388f7",
+      "sample": "20260908 17:51:52 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph R of font HeadingNow-47Extrabold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph r of font headingnow-47extrabold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 3,
+      "fingerprint": "ec40584ee60b",
+      "sample": "20260908 17:51:52 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph h of font HeadingNow-45Medium",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph h of font headingnow-45medium"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 3,
+      "fingerprint": "f97d04c572df",
+      "sample": "20260908 17:51:52 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph c of font HeadingNow-45Medium",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph c of font headingnow-45medium"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 3,
+      "fingerprint": "547fd1c7c090",
+      "sample": "20260908 17:51:52 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph u of font HeadingNow-45Medium",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph u of font headingnow-45medium"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 3,
+      "fingerprint": "26564d610dc0",
+      "sample": "20260908 17:51:52 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph w of font HeadingNow-45Medium",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph w of font headingnow-45medium"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 3,
+      "fingerprint": "c573215a48f4",
+      "sample": "20260908 17:51:52 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph g of font CoreSansN77CnExtraBold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph g of font coresansn77cnextrabold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 3,
+      "fingerprint": "ea6f2adad211",
+      "sample": "20260908 17:51:52 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph u of font CoreSansN77CnExtraBold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph u of font coresansn77cnextrabold"
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
+      "count": 2,
+      "fingerprint": "17a6ef9802d0",
+      "sample": "[Warn] Cardigann: Request for 1337x failed with exception 'HTTP request failed: [500:InternalServerError] [POST] at [http://192.168.7.172:8191/v1]'. Retrying in 2.535612s.",
+      "severity": "warn",
+      "skeleton": "[warn] cardigann: request for 1337x failed with exception 'http request failed: [<num>:internalservererror] [post] at [<url> retrying in <num>."
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 2,
+      "fingerprint": "3de8650477a5",
+      "sample": "20260908 17:51:49 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph W of font HeadingNow-76Bold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph w of font headingnow-76bold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 2,
+      "fingerprint": "be7803d08927",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph i of font HeadingNow-66Bold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph i of font headingnow-66bold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 2,
+      "fingerprint": "368c9f9af82c",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph h of font HeadingNow-66Bold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph h of font headingnow-66bold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 2,
+      "fingerprint": "2dedd1cbe363",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph W of font HeadingNow-66Bold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph w of font headingnow-66bold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 2,
+      "fingerprint": "617ef940fd51",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph v of font HeadingNow-66Bold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph v of font headingnow-66bold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 2,
+      "fingerprint": "2488e903bf54",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph A of font HeadingNow-57Extrabold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph a of font headingnow-57extrabold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 2,
+      "fingerprint": "227c1817077e",
+      "sample": "20260908 17:51:51 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph quotedblright of font HeadingNow-47ExtraboldItalic",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph quotedblright of font headingnow-47extrabolditalic"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 2,
+      "fingerprint": "ecefd2021536",
+      "sample": "20260908 17:51:52 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph A of font HeadingNow-47Extrabold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph a of font headingnow-47extrabold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 2,
+      "fingerprint": "74dbad459bcb",
+      "sample": "20260908 17:51:52 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph V of font HeadingNow-47Extrabold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph v of font headingnow-47extrabold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 2,
+      "fingerprint": "bf848622a4b6",
+      "sample": "20260908 17:51:52 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph i of font HeadingNow-45Medium",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph i of font headingnow-45medium"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 2,
+      "fingerprint": "697dae4146fd",
+      "sample": "20260908 17:51:52 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph d of font CoreSansN77CnExtraBold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph d of font coresansn77cnextrabold"
+    },
+    {
+      "baseline": null,
+      "container": "ubooquity",
+      "count": 2,
+      "fingerprint": "d821d31391e5",
+      "sample": "20260908 17:51:52 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph b of font CoreSansN77CnExtraBold",
+      "severity": "warn",
+      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph b of font coresansn77cnextrabold"
+    },
+    {
+      "baseline": null,
+      "container": "subtitles",
+      "count": 2,
+      "fingerprint": "f4cd99fd69fc",
+      "sample": "2026-09-09 01:47:37,410 - root                             (152c00721b30) :  ERROR (utils:153) - BAZARR Error trying to get episodeFiles from Sonarr. Http error.",
+      "severity": "error",
+      "skeleton": "<ts> - root (<hex>) : error (utils:<num>) - bazarr error trying to get episodefiles from sonarr. http error."
+    },
+    {
+      "baseline": null,
+      "container": "subtitles",
+      "count": 2,
+      "fingerprint": "d881c126ef1c",
+      "sample": "2026-09-09 01:47:37,420 - root                             (152c00721b30) :  ERROR (episodes:270) - BAZARR cannot get episode returned by SignalR feed from Sonarr API.",
+      "severity": "error",
+      "skeleton": "<ts> - root (<hex>) : error (episodes:<num>) - bazarr cannot get episode returned by signalr feed from sonarr api."
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 2,
+      "fingerprint": "049c289f5598",
+      "sample": "\u001b[1;31:40m[04:46:27][WARNING] GET request to https://getcomics.<REDACTED-BLOB>:mmmcs2t1ycio40833ErZ4Q== failed after 5 attempts (ClientResponseError: 400, message='Got more than 8190 bytes when readin",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get request to <url> failed after <num> attempts (clientresponseerror: <num>, message=<str>, url='<url>"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 2,
+      "fingerprint": "64f21eff5fac",
+      "sample": "Star Trek - Starfleet Academy - Lost Contact 003-0011.jpg - checksum error",
+      "severity": "error",
+      "skeleton": "star trek - starfleet academy - lost contact <num>-<num>.jpg - checksum error"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 2,
+      "fingerprint": "eecc602846cb",
+      "sample": "\u001b[1;31:40m[05:19:03][WARNING] SABnzbd download <REDACTED-BLOB> failed: Repair failed, not enough repair blocks (433 short)",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] sabnzbd download <redacted-blob> failed: repair failed, not enough repair blocks (<num> short)"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 2,
+      "fingerprint": "5fc8bb80cb28",
+      "sample": "\u001b[1;31:40m[05:22:59][WARNING] Failed to enqueue download: No links found on webpage that match to volume and are not blocklisted",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] failed to enqueue download: no links found on webpage that match to volume and are not blocklisted"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 2,
+      "fingerprint": "e4fe4a3191f2",
+      "sample": "\u001b[1;31:40m[05:42:08][ERROR] Rejecting download 800: corrupt (rar reported a CRC error: Blue Flame 005-007.jpg - checksum error",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] rejecting download <num>: corrupt (rar reported a crc error: blue flame <num>-<num>.jpg - checksum error"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 2,
+      "fingerprint": "be33d366519a",
+      "sample": "--- Logging error ---",
+      "severity": "error",
+      "skeleton": "--- logging error ---"
+    },
+    {
+      "baseline": null,
+      "container": "flaresolverr",
+      "count": 2,
+      "fingerprint": "305f08119fe2",
+      "sample": "2026-09-08 23:57:26 ERROR    Error: Error solving the challenge. Message: tab crashed\\n  (Session info: chrome=148.0.7778.178)\\n",
+      "severity": "error",
+      "skeleton": "<ts> error error: error solving the challenge. message: tab crashed\\n (session info: chrome=<num>.<num>)\\n"
+    },
+    {
+      "baseline": null,
+      "container": "flaresolverr",
+      "count": 2,
+      "fingerprint": "8416e9faf0a3",
+      "sample": "2026-09-08 23:57:27 ERROR    Error: Error solving the challenge. Message: invalid session id: session deleted as the browser has closed the connection\\nfrom disconnected: not connected to DevTools\\n  ",
+      "severity": "error",
+      "skeleton": "<ts> error error: error solving the challenge. message: invalid session id: session deleted as the browser has closed the connection\\nfrom disconnected: not connected to devtools\\n (session info: chrome=<num>.<num>); for documentation on this error, please visit: <url> <hex> <unknown>\\n#<num> <hex> "
+    },
+    {
+      "baseline": null,
+      "container": "flaresolverr",
+      "count": 2,
+      "fingerprint": "eb98387c875a",
+      "sample": "from disconnected: Unable to receive message from renderer",
       "severity": "other",
-      "skeleton": "response status: <num> forbidden"
+      "skeleton": "from disconnected: unable to receive message from renderer"
     },
     {
       "baseline": null,
-      "container": "kapowarr",
-      "count": 3,
-      "fingerprint": "1f6d429e1dbf",
-      "sample": "\u001b[1;31:40m[04:04:56][WARNING] POST request to http://192.168.7.172:8191/v1 failed after 5 attempts (SocketTimeoutError: Timeout on reading data from socket)",
-      "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] post request to <url> failed after <num> attempts (sockettimeouterror: timeout on reading data from socket)"
+      "container": "flaresolverr",
+      "count": 2,
+      "fingerprint": "14511ddaf519",
+      "sample": "(Session info: chrome=148.0.7778.178); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalidsessionidexception",
+      "severity": "error",
+      "skeleton": "(session info: chrome=<num>.<num>); for documentation on this error, please visit: <url>"
     },
     {
       "baseline": null,
-      "container": "kapowarr",
-      "count": 3,
-      "fingerprint": "d820dd14f06b",
-      "sample": "\u001b[1;31:40m[04:07:56][WARNING] Link is broken: https://mega.nz/file/haF1RQzL#<REDACTED-BLOB>",
-      "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] link is broken: <url>"
-    },
-    {
-      "baseline": null,
-      "container": "kapowarr",
-      "count": 3,
-      "fingerprint": "9dfcdf588b86",
+      "container": "flaresolverr",
+      "count": 2,
+      "fingerprint": "85d10de5ab0d",
       "sample": "Traceback (most recent call last):",
       "severity": "error",
       "skeleton": "traceback (most recent call last):"
     },
     {
       "baseline": null,
-      "container": "ubooquity",
-      "count": 3,
-      "fingerprint": "76a1dc6a0293",
-      "sample": "20260907 08:23:23 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph t of font CoreSansM55Medium-Italic",
-      "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph t of font coresansm55medium-italic"
-    },
-    {
-      "baseline": null,
-      "container": "ubooquity",
-      "count": 3,
-      "fingerprint": "902d2b2c469a",
-      "sample": "20260907 08:39:39 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph u of font Syntax-Roman",
-      "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph u of font syntax-roman"
-    },
-    {
-      "baseline": null,
-      "container": "ubooquity",
-      "count": 3,
-      "fingerprint": "fca4a825e498",
-      "sample": "20260907 08:39:39 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph d of font Syntax-Roman",
-      "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph d of font syntax-roman"
-    },
-    {
-      "baseline": null,
-      "container": "ubooquity",
-      "count": 3,
-      "fingerprint": "9d1704e2d461",
-      "sample": "20260907 08:39:42 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph a of font UGKBPQ+Syntax-Roman",
-      "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph a of font ugkbpq+syntax-roman"
-    },
-    {
-      "baseline": null,
-      "container": "ubooquity",
-      "count": 3,
-      "fingerprint": "d2e5498c441a",
-      "sample": "20260907 08:39:42 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph K of font UGKBPQ+Syntax-Roman",
-      "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph k of font ugkbpq+syntax-roman"
-    },
-    {
-      "baseline": null,
-      "container": "ubooquity",
-      "count": 3,
-      "fingerprint": "bf7654364e26",
-      "sample": "20260907 08:39:46 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph N of font Futura-Heavy",
-      "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph n of font futura-heavy"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 3,
-      "fingerprint": "d9d006c8f014",
-      "sample": "2026-09-07 07:47:52 MySQL_Session.cpp:5424:handler_ProcessingQueryError_CheckBackendConnectionStatus(): [ERROR] Detected an offline server during query: mariadb-kindrobots2, 3306, session_id:<REDACTED",
+      "container": "flaresolverr",
+      "count": 2,
+      "fingerprint": "e458b96a8fcb",
+      "sample": "BlockingIOError: [Errno 11] Resource temporarily unavailable",
       "severity": "error",
-      "skeleton": "<ts> mysql_session.cpp<ip>handler_processingqueryerror_checkbackendconnectionstatus(): [error] detected an offline server during query: mariadb-kindrobots2, <num>, session_id:<redacted>"
-    },
-    {
-      "baseline": null,
-      "container": "kapowarr",
-      "count": 2,
-      "fingerprint": "f617e5c56dda",
-      "sample": "\u001b[1;31:40m[03:45:15][WARNING] SABnzbd download <REDACTED-BLOB> failed: RAR files failed to verify",
-      "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] sabnzbd download <redacted-blob> failed: rar files failed to verify"
-    },
-    {
-      "baseline": null,
-      "container": "kapowarr",
-      "count": 2,
-      "fingerprint": "512bc9539252",
-      "sample": "\u001b[1;31:40m[04:13:05][WARNING] GET request failed for url https://archive.<REDACTED-BLOB> (ConnectionTimeoutError: Connection timeout to host https://archive.<REDACTED-BLOB>). Retrying for round 2...",
-      "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get request failed for url <url> (connectiontimeouterror: connection timeout to host <url> retrying for round <num>..."
-    },
-    {
-      "baseline": null,
-      "container": "kapowarr",
-      "count": 2,
-      "fingerprint": "2fcdad6466cb",
-      "sample": "\u001b[1;31:40m[04:36:39][ERROR] Post-processing of download 5 failed:",
-      "severity": "error",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] post-processing of download <num> failed:"
-    },
-    {
-      "baseline": null,
-      "container": "kapowarr",
-      "count": 2,
-      "fingerprint": "0d8ccda1ab46",
-      "sample": "\u001b[1;31:40m[04:53:18][WARNING] Failed to enqueue download: Webpage unavailable",
-      "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] failed to enqueue download: webpage unavailable"
-    },
-    {
-      "baseline": null,
-      "container": "kapowarr",
-      "count": 2,
-      "fingerprint": "6c8b3d58f4a7",
-      "sample": "\u001b[1;31:40m[04:57:08][WARNING] The file/folder /content/Alice in Sexland (2001)/Alice_in_Sexland_4 already exists; replacing with downloaded file",
-      "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] the file/folder <path>"
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 2,
-      "fingerprint": "f8d87214fc45",
-      "sample": "[18:46:06] [WRN] [10] Microsoft.EntityFrameworkCore.Migrations: An operation of type 'SqlOperation' will be attempted while a rebuild of table 'BaseItems' is pending. The database may not be in an exp",
-      "severity": "warn",
-      "skeleton": "[<ts>] [wrn] [<num>] microsoft.entityframeworkcore.migrations: an operation of type <str> will be attempted while a rebuild of table <str> is pending. the database may not be in an expected state. review the sql generated by this migration to help diagnose any failures. consider moving these operati"
-    },
-    {
-      "baseline": null,
-      "container": "tautulli",
-      "count": 2,
-      "fingerprint": "c1b8e6636509",
-      "sample": "Job \"force_stop_stream (trigger: date[2026-09-07 15:55:25 UTC], next run at: 2026-09-07 15:55:25 UTC)\" raised an exception",
-      "severity": "error",
-      "skeleton": "job <str> raised an exception"
-    },
-    {
-      "baseline": null,
-      "container": "tautulli",
-      "count": 2,
-      "fingerprint": "a27db8f7d7e3",
-      "sample": "Traceback (most recent call last):",
-      "severity": "error",
-      "skeleton": "traceback (most recent call last):"
-    },
-    {
-      "baseline": null,
-      "container": "ubooquity",
-      "count": 2,
-      "fingerprint": "c131162fbc63",
-      "sample": "20260907 07:59:02 [Scanner thread] ERROR com.ubooquity.f.a - Could not get image from file: /comics/Black Panther/Black Panther The Most Dangerous Man Alive (2011)/Black Panther - The Most Dangerous M",
-      "severity": "error",
-      "skeleton": "<hex> <ts> [scanner thread] error com.ubooquity.f.a - could not get image from file: <path>"
-    },
-    {
-      "baseline": null,
-      "container": "ubooquity",
-      "count": 2,
-      "fingerprint": "7c038fdf3046",
-      "sample": "20260907 08:23:23 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph a of font CoreSansM57CnMedium-Italic",
-      "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph a of font coresansm57cnmedium-italic"
-    },
-    {
-      "baseline": null,
-      "container": "ubooquity",
-      "count": 2,
-      "fingerprint": "a5507a7209fd",
-      "sample": "20260907 08:23:25 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph f_i of font CoreSansM55Medium",
-      "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph f_i of font coresansm55medium"
-    },
-    {
-      "baseline": null,
-      "container": "ubooquity",
-      "count": 2,
-      "fingerprint": "85c329927c32",
-      "sample": "20260907 08:23:26 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph Q of font CoreSansM55Medium",
-      "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph q of font coresansm55medium"
-    },
-    {
-      "baseline": null,
-      "container": "ubooquity",
-      "count": 2,
-      "fingerprint": "1138e2756d5d",
-      "sample": "20260907 08:39:42 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph r of font UGKBPQ+Syntax-Roman",
-      "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph r of font ugkbpq+syntax-roman"
-    },
-    {
-      "baseline": null,
-      "container": "ubooquity",
-      "count": 2,
-      "fingerprint": "efdef5ee6855",
-      "sample": "20260907 08:39:42 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph i of font UGKBPQ+Syntax-Roman",
-      "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph i of font ugkbpq+syntax-roman"
-    },
-    {
-      "baseline": null,
-      "container": "ubooquity",
-      "count": 2,
-      "fingerprint": "d5c4f2802ceb",
-      "sample": "20260907 08:39:42 [Scanner thread] WARN  o.apache.fontbox.cff.Type1CharString - Unknown charstring command in glyph b of font UGKBPQ+Syntax-Roman",
-      "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn o.apache.fontbox.cff.type1charstring - unknown charstring command in glyph b of font ugkbpq+syntax-roman"
+      "skeleton": "blockingioerror: [errno <num>] resource temporarily unavailable"
     },
     {
       "baseline": null,
       "container": "prowlarr",
-      "count": 2,
-      "fingerprint": "60ca4aad621d",
-      "sample": "[Warn] Newznab: Unable to connect to indexer [https://api.nzb.life/api?t=search&extended=1&apikey=<REDACTED>&q=Archie+Double+Digest+Archie+Comics+Digest+Archie+Jumbo+Comics+Digest+Archie+Comics+Annual",
+      "count": 1,
+      "fingerprint": "637fd29caedb",
+      "sample": "[Warn] Cardigann: Unable to connect to 1337x at [https://1337x.to/sort-search/Smile%202%202024/time/desc/1/]. Indexer's server is unavailable. Try again later. HTTP request failed: [500:InternalServer",
       "severity": "warn",
-      "skeleton": "[warn] newznab: unable to connect to indexer [<url> this is typically caused by dns/ssl issues. check dns settings, ensure ipv6 is working or disabled, and consider using different dns servers or a vpn. see: '<url>"
+      "skeleton": "[warn] cardigann: unable to connect to 1337x at [<url> indexer's server is unavailable. try again later. http request failed: [<num>:internalservererror] [post] at [<url>"
     },
     {
       "baseline": null,
       "container": "prowlarr",
-      "count": 2,
-      "fingerprint": "06ab0d60cd4d",
-      "sample": "[v2.6.3.5592] System.Net.Http.HttpRequestException: An error occurred while sending the request.",
-      "severity": "error",
-      "skeleton": "[v2.<num>.<num>] system.net.http.httprequestexception: an error occurred while sending the request."
-    },
-    {
-      "baseline": null,
-      "container": "prowlarr",
-      "count": 2,
-      "fingerprint": "d44cc08a044e",
-      "sample": "---> System.IO.IOException: Unable to read data from the transport connection: Connection reset by peer.",
+      "count": 1,
+      "fingerprint": "08148e818770",
+      "sample": "---> System.IO.IOException: Unable to read data from the transport connection: Operation canceled.",
       "severity": "other",
-      "skeleton": "---> system.io.ioexception: unable to read data from the transport connection: connection reset by peer."
+      "skeleton": "---> system.io.ioexception: unable to read data from the transport connection: operation canceled."
     },
     {
       "baseline": null,
-      "container": "prowlarr",
-      "count": 2,
-      "fingerprint": "3b5523d63b3b",
-      "sample": "at System.Net.Http.Http2Connection.ThrowRequestAborted(Exception innerException)",
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "0c83b1b7cab8",
+      "sample": "\u001b[1;31:40m[04:34:52][WARNING] Integrity check failed for <REDACTED-BLOB>.1/Joker-Mask 02 (2000) (c2c) (OllietheOx-ActionComics).cbz: corrupt (CRC check failed on '00a-FC.jpg')",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] integrity check failed for <redacted-blob>.<num>/joker-mask <num> (<num>) (c2c) (ollietheox-actioncomics).cbz: corrupt (crc check failed on <str>)"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "6ab78793be6b",
+      "sample": "\u001b[1;31:40m[04:34:52][ERROR] Rejecting download 739: corrupt (CRC check failed on '00a-FC.jpg')",
       "severity": "error",
-      "skeleton": "at system.net.http.http2connection.throwrequestaborted(exception innerexception)"
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] rejecting download <num>: corrupt (crc check failed on <str>)"
     },
     {
       "baseline": null,
-      "container": "scoopspress",
-      "count": 2,
-      "fingerprint": "0174d77ccc5f",
-      "sample": "AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.21.0.36. Set the 'ServerName' directive globally to suppress this message",
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "e2ca68fb3d0e",
+      "sample": "\u001b[1;31:40m[04:38:19][ERROR] Rejecting download 250: corrupt (rar reported a CRC error: Estuary - A Ghost Story 02 (of 04) (2026) (Digital Rip) (Hourman-DCP)/Estuary - A Ghost Story 002 (2026)-006.jpg ",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] rejecting download <num>: corrupt (rar reported a crc error: estuary - a ghost story <num> (of <num>) (<num>) (digital rip) (hourman-dcp)/estuary - a ghost story <num> (<num>)-<num>.jpg - checksum error"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "87a12741665f",
+      "sample": "\u001b[1;31:40m[05:03:39][ERROR] Rejecting download 260: corrupt (rar reported a CRC error: Corrupt header is found",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] rejecting download <num>: corrupt (rar reported a crc error: corrupt header is found"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "0ab5c89dfd08",
+      "sample": "raise Error(\"Destination path '%s' already exists\" % real_dst)",
+      "severity": "error",
+      "skeleton": "raise error(<str> % real_dst)"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "4ecb14b072d2",
+      "sample": "shutil.Error: Destination path '/content/Batman/Batman Dark Victory (1999)/[COMIC].Batman-Dark.Victory.2.cbr.cbr/[COMIC].Batman-Dark.Victory.2.cbr.cbr' already exists",
+      "severity": "error",
+      "skeleton": "shutil.error: destination path '<path>"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "936c1f7239c2",
+      "sample": "\u001b[1;31:40m[05:51:45][ERROR] Rejecting download 803: corrupt (member data could not be decompressed: Error -3 while decompressing data: invalid literal/length code)",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] rejecting download <num>: corrupt (member data could not be decompressed: error -<num> while decompressing data: invalid literal/length code)"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "2b7462d9dc98",
+      "sample": "\u001b[1;31:40m[06:06:05][WARNING] POST request failed for url http://192.168.7.172:8191/v1 (HTTP 500). Retrying for round 3...",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] post request failed for url <url> (http <num>). retrying for round <num>..."
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "77d384e5278a",
+      "sample": "\u001b[1;31:40m[06:13:03][ERROR] Rejecting download 832: corrupt (rar reported a CRC error: Batman- The Dark Knight (2011-) - Featuring Clayface23.3-009.jpg - checksum error",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] rejecting download <num>: corrupt (rar reported a crc error: batman- the dark knight (<num>-) - featuring clayface23.<num>-<num>.jpg - checksum error"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "23e9f946ccf6",
+      "sample": "\u001b[1;31:40m[06:15:32][ERROR] Could not queue what the search found for volume 1681 (Bettie Page); continuing with the rest of the library",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] could not queue what the search found for volume <num> (bettie page); continuing with the rest of the library"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "6a9d5a979f9c",
+      "sample": "\u001b[1;31:40m[06:25:35][WARNING] Link is broken: magnet:?xt=urn:btih:<REDACTED-BLOB>&dn=Deadpool%20Classic%20%28v01-v22%29%282008-2018%29.torrent&tr=udp://tracker.coppersurfer.tk:6969/announce",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] link is broken: magnet:?xt=urn:btih:<redacted-blob>&dn=deadpool%20classic%<num>28v01-v22%<num><num>-<num><num>.torrent&tr=<url>"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 1,
+      "fingerprint": "e37f22996ef3",
+      "sample": "\u001b[1;31:40m[06:34:05][ERROR] Rejecting download 844: corrupt (rar reported a CRC error: The Dreaming - Waking Hours (2020-) 011-003.jpg - checksum error",
+      "severity": "error",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] rejecting download <num>: corrupt (rar reported a crc error: the dreaming - waking hours (<num>-) <num>-<num>.jpg - checksum error"
+    },
+    {
+      "baseline": null,
+      "container": "jellyfin",
+      "count": 1,
+      "fingerprint": "c0cc72dc41fb",
+      "sample": "[07:22:22] [ERR] [165] Emby.Photos.PhotoProvider: Image Provider - Error reading image tag for <REDACTED-BLOB> _ illustration_photograph_render_photograph_render _candypunk_style _ Steelpunk_mix_of_Cl",
+      "severity": "error",
+      "skeleton": "[<ts>] [err] [<num>] emby.photos.photoprovider: image provider - error reading image tag for <redacted-blob> _ illustration_photograph_render_photograph_render _candypunk_style _ steelpunk_mix_of_clive_barker_and_nereo_l\ufffd.jpg"
+    },
+    {
+      "baseline": null,
+      "container": "jellyfin",
+      "count": 1,
+      "fingerprint": "d27025021ad2",
+      "sample": "System.IO.FileNotFoundException: Could not find file '<REDACTED-BLOB> _ illustration_photograph_render_photograph_render _candypunk_style _ Steelpunk_mix_of_Clive_Barker_and_Nereo_L\ufffd.jpg'.",
       "severity": "other",
-      "skeleton": "ah00558: apache2: could not reliably determine the server's fully qualified domain name, using <ip>. set the <str> directive globally to suppress this message"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 2,
-      "fingerprint": "e0136f40d86b",
-      "sample": "2026-09-07 07:45:48 MySQL_Monitor.cpp:8936:monitor_ping_process_ready_task_thread(): [ERROR] Error after 7ms on server mariadb-kindrobots2:3306 : Lost connection to server during query",
-      "severity": "error",
-      "skeleton": "<ts> mysql_monitor.cpp<ip>monitor_ping_process_ready_task_thread(): [error] error after <num> on server mariadb-kindrobots2:<num> : lost connection to server during query"
-    },
-    {
-      "baseline": null,
-      "container": "explore",
-      "count": 2,
-      "fingerprint": "2f6bd1543e44",
-      "sample": "[mi] mieq: warning: overriding existing handler (nil) with 0x55d1ccac9210 for event 2",
-      "severity": "warn",
-      "skeleton": "[mi] mieq: warning: overriding existing handler (nil) with <hex> for event <num>"
-    },
-    {
-      "baseline": null,
-      "container": "mariadb-kindrobots2",
-      "count": 1,
-      "fingerprint": "aeef0c1752b7",
-      "sample": "260908 05:41:18 mysqld_safe Logging to '/config/log/mysql/mariadb-error.log'.",
-      "severity": "error",
-      "skeleton": "<num> <ts> mysqld_safe logging to '<path>"
-    },
-    {
-      "baseline": null,
-      "container": "auth",
-      "count": 1,
-      "fingerprint": "9213222242d5",
-      "sample": "time=\"2026-09-08T04:30:52-07:00\" level=warning msg=\"Configuration: identity_providers: oidc: clients: client 'kind-robots': option 'client_secret' is plaintext but for clients not using any endpoint a",
-      "severity": "warn",
-      "skeleton": "time=<str> level=warning msg=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "sab",
-      "count": 1,
-      "fingerprint": "39e328008961",
-      "sample": "2026-09-08 04:28:00,232::WARNING::[newswrapper:705] Failed to connect: timed out <EMAIL>:563 (news.iad.highwinds-media.com)",
-      "severity": "warn",
-      "skeleton": "<ts>::warning::[newswrapper:<num>] failed to connect: timed out <email>:<num> (news.iad.highwinds-media.com)"
-    },
-    {
-      "baseline": null,
-      "container": "kapowarr",
-      "count": 1,
-      "fingerprint": "2bfc25f07c38",
-      "sample": "\u001b[1;31:40m[04:01:38][WARNING] Integrity check failed for /pc/miss_kitty/kapowarr/The.Authority.020.(2010).(Digital).(Lil.DR.and.Quinch-Empire)/The Authority 020 (2010) (Digital) (Li'l DR & Quinch-Empi",
-      "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] integrity check failed for <path>"
-    },
-    {
-      "baseline": null,
-      "container": "kapowarr",
-      "count": 1,
-      "fingerprint": "d850fb6bf0b5",
-      "sample": "\u001b[1;31:40m[04:01:38][ERROR] Rejecting download 1: corrupt (rar reported a CRC error: The Authority v5 020-018.jpg - checksum error)",
-      "severity": "error",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] rejecting download <num>: corrupt (rar reported a crc error: the authority v5 <num>-<num>.jpg - checksum error)"
-    },
-    {
-      "baseline": null,
-      "container": "kapowarr",
-      "count": 1,
-      "fingerprint": "80cd40df6f19",
-      "sample": "\u001b[1;31:40m[04:04:57][ERROR] Unclosed connection",
-      "severity": "error",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] unclosed connection"
-    },
-    {
-      "baseline": null,
-      "container": "kapowarr",
-      "count": 1,
-      "fingerprint": "ae44a23392c6",
-      "sample": "\u001b[1;31:40m[04:47:33][ERROR] Could not convert /content/Adult/Druuna/Druuna (2016)/Druuna_3_-_Creatura.cbr: rar exited 10 and extracted nothing. Leaving the original alone -- a conversion that fails mu",
-      "severity": "error",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] could not convert <path>"
-    },
-    {
-      "baseline": null,
-      "container": "kapowarr",
-      "count": 1,
-      "fingerprint": "d6499a267707",
-      "sample": "\u001b[1;31:40m[04:58:19][WARNING] The issue with the given (comicvine) key was not found: -1",
-      "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] the issue with the given (comicvine) key was not found: -<num>"
-    },
-    {
-      "baseline": null,
-      "container": "kapowarr",
-      "count": 1,
-      "fingerprint": "bccf81b819e3",
-      "sample": "\u001b[1;31:40m[04:58:19][ERROR] Could not queue what the search found for volume 291 (Alien); continuing with the rest of the library",
-      "severity": "error",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][error] could not queue what the search found for volume <num> (alien); continuing with the rest of the library"
-    },
-    {
-      "baseline": null,
-      "container": "kapowarr",
-      "count": 1,
-      "fingerprint": "2cdf70273bde",
-      "sample": "\u001b[1;31:40m[05:12:53][WARNING] GET request to https://getcomics.<REDACTED-BLOB>:7uTCoukh9F8oxn687Ojoxw== returned with code 404",
-      "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get request to <url> returned with code <num>"
-    },
-    {
-      "baseline": null,
-      "container": "kapowarr",
-      "count": 1,
-      "fingerprint": "3f8f762a5347",
-      "sample": "\u001b[1;31:40m[06:48:22][WARNING] Link is broken: magnet:?xt=urn:btih:<REDACTED-BLOB>&dn=Jughead%20#127%20-%20352%20(1965-1987)&tr=udp%3A%2F%2Fopen.stealth.si%3A80%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.",
-      "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] link is broken: magnet:?xt=urn:btih:<redacted-blob>&dn=jughead%<num>#<num><num>-%<num><num>(<num>-<num>)&tr=udp%3a%2f%2fopen.stealth.si%3a80%2fannounce&tr=udp%3a%2f%2fexodus.desync.com%3a6969%2fannounce&tr=udp%3a%2f%2ftracker.cyberia.is%3a6969%2fannounce&tr=udp%3a%"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 1,
-      "fingerprint": "95b995884330",
-      "sample": "time=2026-09-08T05:04:43.319-07:00 comm=netdata source=health level=warning tid=833735 thread=HEALTH <REDACTED-BLOB> node=f4c926a8f08c instance=system.softnet_stat context=system.softnet_stat code=0 a",
-      "severity": "warn",
-      "skeleton": "time=<ts> comm=netdata source=health level=warning tid=<num> thread=health <redacted-blob> node=<hex> instance=system.softnet_stat context=system.softnet_stat code=<num> alert_id=<hex> alert_unique_id=<hex> alert_event_id=<num> <redacted-blob> <redacted-blob> <redacted-blob> alert_class=errors alert"
+      "skeleton": "system.io.filenotfoundexception: could not find file <str>."
     },
     {
       "baseline": null,
       "container": "jellyfin",
       "count": 1,
-      "fingerprint": "a522846d3e7e",
-      "sample": "[18:41:22] [ERR] [10] Emby.Server.Implementations.AppBase.BaseConfigurationManager: Error loading configuration file: /config/config/encoding.xml",
+      "fingerprint": "173819887ece",
+      "sample": "[07:22:22] [ERR] [165] MediaBrowser.Providers.Photos.PhotoMetadataService: Error in Embedded Information for <REDACTED-BLOB> _ illustration_photograph_render_photograph_render _candypunk_style _ Steel",
       "severity": "error",
-      "skeleton": "[<ts>] [err] [<num>] emby.server.implementations.appbase.baseconfigurationmanager: error loading configuration file: <path>"
+      "skeleton": "[<ts>] [err] [<num>] mediabrowser.providers.photos.photometadataservice: error in embedded information for <redacted-blob> _ illustration_photograph_render_photograph_render _candypunk_style _ steelpunk_mix_of_clive_barker_and_nereo_l\ufffd.jpg"
     },
     {
       "baseline": null,
       "container": "jellyfin",
       "count": 1,
-      "fingerprint": "3e756b0c2b07",
-      "sample": "System.InvalidOperationException: There is an error in XML document (30, 35).",
-      "severity": "error",
-      "skeleton": "system.invalidoperationexception: there is an error in xml document (<num>, <num>)."
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 1,
-      "fingerprint": "b70e8f338d44",
-      "sample": "---> System.InvalidOperationException: Instance validation error: '' is not a valid value for EncoderPreset.",
-      "severity": "error",
-      "skeleton": "---> system.invalidoperationexception: instance validation error: <str> is not a valid value for encoderpreset."
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 1,
-      "fingerprint": "895822405825",
-      "sample": "--- End of inner exception stack trace ---",
-      "severity": "error",
-      "skeleton": "--- end of inner exception stack trace ---"
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 1,
-      "fingerprint": "3d25446bc2ad",
-      "sample": "[19:10:23] [WRN] [35] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: No XML encryptor configured. Key {<REDACTED-BLOB>} may be persisted to storage in unencrypted form.",
+      "fingerprint": "228d75dd8b17",
+      "sample": "[07:22:22] [WRN] [165] Emby.Server.Implementations.Library.LibraryManager: Primary image for <REDACTED-BLOB> _ illustration_photograph_render_photograph_render _candypunk_style _ Steelpunk_mix_of_Cliv",
       "severity": "warn",
-      "skeleton": "[<ts>] [wrn] [<num>] microsoft.aspnetcore.dataprotection.keymanagement.xmlkeymanager: no xml encryptor configured. key {<redacted-blob>} may be persisted to storage in unencrypted form."
+      "skeleton": "[<ts>] [wrn] [<num>] emby.server.implementations.library.librarymanager: primary image for <redacted-blob> _ illustration_photograph_render_photograph_render _candypunk_style _ steelpunk_mix_of_clive_barker_and_nereo_l\ufffd (<redacted-blob>) not found at <str>, source was <redacted-blob> _ illustration_"
     },
     {
       "baseline": null,
       "container": "jellyfin",
       "count": 1,
-      "fingerprint": "fa3d1d89a0f6",
-      "sample": "[19:10:23] [WRN] [35] Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware: The WebRootPath was not found: /wwwroot. Static files may be unavailable.",
+      "fingerprint": "891da79bd07c",
+      "sample": "[07:22:28] [ERR] [169] Emby.Photos.PhotoProvider: Image Provider - Error reading image tag for /personal/silas/graphic novels/aaa <REDACTED-BLOB> _ illustration_photograph_render_photograph_render _ca",
+      "severity": "error",
+      "skeleton": "[<ts>] [err] [<num>] emby.photos.photoprovider: image provider - error reading image tag for <path>"
+    },
+    {
+      "baseline": null,
+      "container": "jellyfin",
+      "count": 1,
+      "fingerprint": "a3462c147b3f",
+      "sample": "System.IO.FileNotFoundException: Could not find file '/personal/silas/graphic novels/aaa <REDACTED-BLOB> _ illustration_photograph_render_photograph_render _candypunk_style _ Steelpunk_mix_of_Clive_Ba",
+      "severity": "other",
+      "skeleton": "system.io.filenotfoundexception: could not find file '<path>"
+    },
+    {
+      "baseline": null,
+      "container": "jellyfin",
+      "count": 1,
+      "fingerprint": "5bf2737b8b99",
+      "sample": "[07:22:28] [ERR] [169] MediaBrowser.Providers.Photos.PhotoMetadataService: Error in Embedded Information for /personal/silas/graphic novels/aaa <REDACTED-BLOB> _ illustration_photograph_render_photogr",
+      "severity": "error",
+      "skeleton": "[<ts>] [err] [<num>] mediabrowser.providers.photos.photometadataservice: error in embedded information for <path>"
+    },
+    {
+      "baseline": null,
+      "container": "jellyfin",
+      "count": 1,
+      "fingerprint": "9343ef18d01e",
+      "sample": "[07:22:28] [WRN] [169] Emby.Server.Implementations.Library.LibraryManager: Primary image for <REDACTED-BLOB> _ illustration_photograph_render_photograph_render _candypunk_style _ Steelpunk_mix_of_Cliv",
       "severity": "warn",
-      "skeleton": "[<ts>] [wrn] [<num>] microsoft.aspnetcore.staticfiles.staticfilemiddleware: the webrootpath was not found: /wwwroot. static files may be unavailable."
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 1,
-      "fingerprint": "4dd501281e3a",
-      "sample": "[05:44:03] [ERR] [41] Jellyfin.Api.Middleware.ExceptionMiddleware: Error processing request: Invalid username or password entered. URL POST /Users/authenticatebyname.",
-      "severity": "error",
-      "skeleton": "[<ts>] [err] [<num>] jellyfin.api.middleware.exceptionmiddleware: error processing request: invalid username or password entered. url post <path>"
-    },
-    {
-      "baseline": null,
-      "container": "plex",
-      "count": 1,
-      "fingerprint": "29923f29e746",
-      "sample": "Starting Plex Media Server. . . (you can ignore the libusb_init error)",
-      "severity": "error",
-      "skeleton": "starting plex media server. . . (you can ignore the libusb_init error)"
-    },
-    {
-      "baseline": null,
-      "container": "plex",
-      "count": 1,
-      "fingerprint": "caeed9dc5e3d",
-      "sample": "Critical: libusb_init failed",
-      "severity": "fatal",
-      "skeleton": "critical: libusb_init failed"
+      "skeleton": "[<ts>] [wrn] [<num>] emby.server.implementations.library.librarymanager: primary image for <redacted-blob> _ illustration_photograph_render_photograph_render _candypunk_style _ steelpunk_mix_of_clive_barker_and_nereo_l\ufffd (<redacted-blob>) not found at \"<path>"
     },
     {
       "baseline": null,
       "container": "sonarr",
       "count": 1,
-      "fingerprint": "aa7945f0f0e5",
+      "fingerprint": "af2ab72a2121",
+      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release 'Spider-Noir.S01E05.Betrayal.True.Hue.1080p.AMZN.WEB-DL.DDP5.1.SDR.H.265-OnlyWeb' from Indexer Nzb.su (Prowlarr) to download queue.",
+      "severity": "warn",
+      "skeleton": "[warn] processdownloaddecisions: couldn't add release <str> from indexer nzb.su (prowlarr) to download queue."
+    },
+    {
+      "baseline": null,
+      "container": "sonarr",
+      "count": 1,
+      "fingerprint": "93630362afc9",
+      "sample": "[Fatal] SonarrErrorPipeline: Request Failed. POST /api/v3/queue/grab/852400177",
+      "severity": "fatal",
+      "skeleton": "[fatal] sonarrerrorpipeline: request failed. post <path>"
+    },
+    {
+      "baseline": null,
+      "container": "sonarr",
+      "count": 1,
+      "fingerprint": "77576d147a22",
+      "sample": "[Fatal] SonarrErrorPipeline: Request Failed. DELETE /api/v3/queue/bulk",
+      "severity": "fatal",
+      "skeleton": "[fatal] sonarrerrorpipeline: request failed. delete <path>"
+    },
+    {
+      "baseline": null,
+      "container": "flaresolverr",
+      "count": 1,
+      "fingerprint": "ab03634870e8",
+      "sample": "2026-09-09 00:42:46 ERROR    Error starting Chrome: Message: invalid session id: session deleted as the browser has closed the connection",
+      "severity": "error",
+      "skeleton": "<ts> error error starting chrome: message: invalid session id: session deleted as the browser has closed the connection"
+    },
+    {
+      "baseline": null,
+      "container": "flaresolverr",
+      "count": 1,
+      "fingerprint": "63cfcdec8c01",
+      "sample": "2026-09-09 00:42:46 ERROR    Error: Message: invalid session id: session deleted as the browser has closed the connection",
+      "severity": "error",
+      "skeleton": "<ts> error error: message: invalid session id: session deleted as the browser has closed the connection"
+    },
+    {
+      "baseline": null,
+      "container": "scoopspress",
+      "count": 1,
+      "fingerprint": "6f89b1ae8acd",
+      "sample": "54.191.154.146 - - [08/Sep/2026:07:07:08 -0700] \"GET /error.log HTTP/1.1\" 404 489 \"-\" \"MerchantSecurityScanner/1.0 (+https://stri.pe/go/merchant-security-scanner)\"",
+      "severity": "error",
+      "skeleton": "<ip> - - [<ts>] <str> <num> <num> <str> \"merchantsecurityscanner/<num> (+<url>"
+    },
+    {
+      "baseline": null,
+      "container": "scoopspress",
+      "count": 1,
+      "fingerprint": "b7cfe92bdfa7",
+      "sample": "[Tue Sep 08 17:18:18.182414 2026] [authz_core:error] [pid 19:tid 19] [client 146.190.242.161:0] AH01630: client denied by server configuration: /var/www/html/server-status",
+      "severity": "error",
+      "skeleton": "[<ts>] [authz_core:error] [pid <num>:tid <num>] [client <ip>] ah01630: client denied by server configuration: <path>"
+    },
+    {
+      "baseline": null,
+      "container": "hairpress",
+      "count": 1,
+      "fingerprint": "ce00af1760fc",
+      "sample": "[Tue Sep 08 07:16:14.164947 2026] [authz_core:error] [pid 478:tid 478] [client 185.226.197.59:0] AH01630: client denied by server configuration: /var/www/html/wp-content/plugins/akismet/readme.txt",
+      "severity": "error",
+      "skeleton": "[<ts>] [authz_core:error] [pid <num>:tid <num>] [client <ip>] ah01630: client denied by server configuration: <path>"
+    },
+    {
+      "baseline": null,
+      "container": "radarr",
+      "count": 1,
+      "fingerprint": "9a145f189ad4",
       "sample": "[Warn] Torznab: API Request Limit reached for LimeTorrents (Prowlarr). Disabled for 1.00:00:00",
       "severity": "warn",
       "skeleton": "[warn] torznab: api request limit reached for limetorrents (prowlarr). disabled for <num>.<ts>"
     },
     {
       "baseline": null,
-      "container": "qbit",
+      "container": "radarr",
       "count": 1,
-      "fingerprint": "94640833c829",
-      "sample": "Mon Sep  7 07:56:04 2026 WARNING: file 'credentials.conf' is group or others accessible",
+      "fingerprint": "163033b3a9af",
+      "sample": "[Warn] Torznab: 1337x (Prowlarr) server is currently unavailable. https://prowlarr.acrocatranch.com/39/api?t=search&cat=2000,8000,2070,2030,2010,2040&extended=1&apikey=<REDACTED>&offset=0&limit=100&q=",
       "severity": "warn",
-      "skeleton": "<ts> warning: file <str> is group or others accessible"
-    },
-    {
-      "baseline": null,
-      "container": "qbit",
-      "count": 1,
-      "fingerprint": "accb036d4d6b",
-      "sample": "Mon Sep  7 07:56:04 2026 WARNING: this configuration may cache passwords in memory -- use the auth-nocache option to prevent this",
-      "severity": "warn",
-      "skeleton": "<ts> warning: this configuration may cache passwords in memory -- use the auth-nocache option to prevent this"
-    },
-    {
-      "baseline": null,
-      "container": "qbit",
-      "count": 1,
-      "fingerprint": "65d0e828a91c",
-      "sample": "Mon Sep  7 07:56:06 2026 OpenVPN ROUTE: failed to parse/resolve route for host/network: 2000::/3",
-      "severity": "error",
-      "skeleton": "<ts> openvpn route: failed to parse/resolve route for host/network: <num>::/<num>"
-    },
-    {
-      "baseline": null,
-      "container": "qbit",
-      "count": 1,
-      "fingerprint": "cd9b332b9461",
-      "sample": "Mon Sep  7 07:56:06 2026 WARNING: OpenVPN was configured to add an IPv6 route over tun0. However, no IPv6 has been configured for this interface, therefore the route installation may fail or may not w",
-      "severity": "warn",
-      "skeleton": "<ts> warning: openvpn was configured to add an ipv6 route over tun0. however, no ipv6 has been configured for this interface, therefore the route installation may fail or may not work as expected."
-    },
-    {
-      "baseline": null,
-      "container": "tautulli",
-      "count": 1,
-      "fingerprint": "e7183aeb82ac",
-      "sample": "2026-09-07 08:50:36 - WARNING :: Thread-18 (run) : Tautulli WebSocket :: Connection has closed.",
-      "severity": "warn",
-      "skeleton": "<ts> - warning :: thread-<num> (run) : tautulli websocket :: connection has closed."
-    },
-    {
-      "baseline": null,
-      "container": "ubooquity",
-      "count": 1,
-      "fingerprint": "ec3fc85725f0",
-      "sample": "Exception: java.lang.IllegalStateException thrown from the UncaughtExceptionHandler in thread \"Thread-1\"",
-      "severity": "error",
-      "skeleton": "exception: java.lang.illegalstateexception thrown from the uncaughtexceptionhandler in thread <str>"
-    },
-    {
-      "baseline": null,
-      "container": "ubooquity",
-      "count": 1,
-      "fingerprint": "972686e23c58",
-      "sample": "20260907 08:32:18 [Scanner thread] WARN  com.ubooquity.f.a - Could not open file: ZipException: Archive is not a ZIP archive",
-      "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn com.ubooquity.f.a - could not open file: zipexception: archive is not a zip archive"
-    },
-    {
-      "baseline": null,
-      "container": "subtitles",
-      "count": 1,
-      "fingerprint": "ccf3ee7a23f9",
-      "sample": "2026-09-07 07:53:28,576 - root                             (148b62c90b30) :  ERROR (signalr_client:226) - BAZARR SignalR client for Radarr connection as been lost. Trying to reconnect...",
-      "severity": "error",
-      "skeleton": "<ts> - root (<hex>) : error (signalr_client:<num>) - bazarr signalr client for radarr connection as been lost. trying to reconnect..."
-    },
-    {
-      "baseline": null,
-      "container": "subtitles",
-      "count": 1,
-      "fingerprint": "293bddb7c5fd",
-      "sample": "2026-09-07 22:35:11,427 - root                             (148b5fbedb30) :  ERROR (jobs_queue:582) - Exception raised while running function: malformed node or string: None",
-      "severity": "error",
-      "skeleton": "<ts> - root (<hex>) : error (jobs_queue:<num>) - exception raised while running function: malformed node or string: none"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 1,
-      "fingerprint": "3ba35d0ffba8",
-      "sample": "2026-09-07 07:45:53 MySQL_Session.cpp:5623:<REDACTED-BLOB>(): [ERROR] Detected a broken connection while running query on (10,mariadb-kindrobots2,3306,277870) , FD (Conn:97 , MyDS:97) , user kindrobot",
-      "severity": "error",
-      "skeleton": "<ts> mysql_session.cpp:<num>:<redacted-blob>(): [error] detected a broken connection while running query on (<num>,mariadb-kindrobots2,<num>,<num>) , fd (conn:<num> , myds:<num>) , user kindrobot , last_used <num> ago : <num>, lost connection to server during query"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 1,
-      "fingerprint": "8a91a32ebf8e",
-      "sample": "2026-09-07 07:47:52 MySQL_Session.cpp:5436:handler_ProcessingQueryError_CheckBackendConnectionStatus(): [WARNING] Retrying query.",
-      "severity": "warn",
-      "skeleton": "<ts> mysql_session.cpp<ip>handler_processingqueryerror_checkbackendconnectionstatus(): [warning] retrying query."
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 1,
-      "fingerprint": "889389074378",
-      "sample": "2026-09-07 08:05:38 ProxySQL_GloVars.cpp:32:term_handler(): [WARNING] Received TERM signal: shutdown in progress...",
-      "severity": "warn",
-      "skeleton": "<ts> proxysql_glovars.cpp<ip>term_handler(): [warning] received term signal: shutdown in progress..."
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 1,
-      "fingerprint": "8246998f87f8",
-      "sample": "2026-09-07 08:05:40 Admin_FlushVariables.cpp:232:flush_GENERIC_variables__process__database_to_runtime(): [WARNING] Impossible to set read-only variable version with value \"3.0.9-618-g7ddb3dc\". Resett",
-      "severity": "warn",
-      "skeleton": "<ts> admin_flushvariables.cpp<ip>flush_generic_variables__process__database_to_runtime(): [warning] impossible to set read-only variable version with value <str>. resetting to current <str>."
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 1,
-      "fingerprint": "4b20e52b568e",
-      "sample": "2026-09-07 08:05:40 Admin_FlushVariables.cpp:989:flush_pgsql_variables___database_to_runtime(): [WARNING] Impossible to set not existing variable ffto_enabled with value \"\". Deleting. If the variable ",
-      "severity": "warn",
-      "skeleton": "<ts> admin_flushvariables.cpp<ip>flush_pgsql_variables___database_to_runtime(): [warning] impossible to set not existing variable ffto_enabled with value <str>. deleting. if the variable name is correct, this version doesn't support it"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 1,
-      "fingerprint": "d09933d0d726",
-      "sample": "2026-09-07 08:05:40 Admin_FlushVariables.cpp:989:flush_pgsql_variables___database_to_runtime(): [WARNING] Impossible to set not existing variable ffto_max_buffer_size with value \"\". Deleting. If the v",
-      "severity": "warn",
-      "skeleton": "<ts> admin_flushvariables.cpp<ip>flush_pgsql_variables___database_to_runtime(): [warning] impossible to set not existing variable ffto_max_buffer_size with value <str>. deleting. if the variable name is correct, this version doesn't support it"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 1,
-      "fingerprint": "eaf966d1367a",
-      "sample": "2026-09-07 18:35:20 MySQL_Session.cpp:7037:handler___status_CONNECTING_CLIENT___STATE_SERVER_HANDSHAKE(): [ERROR] ProxySQL Error: Access denied for user 'kindrobot' (using password: <REDACTED>). SSL i",
-      "severity": "error",
-      "skeleton": "<ts> mysql_session.cpp<ip>handler___status_connecting_client___state_server_handshake(): [error] proxysql error: access denied for user <str> (using password: <redacted>). ssl is required"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 1,
-      "fingerprint": "a131e8f314fd",
-      "sample": "2026-09-08 05:40:52 MySrvC.cpp:129:connect_error(): [ERROR] Shunning server mariadb-kindrobots2:3306 with 4 errors/sec. Shunning for 10 seconds",
-      "severity": "error",
-      "skeleton": "<ts> mysrvc.cpp<ip>connect_error(): [error] shunning server mariadb-kindrobots2:<num> with <num> errors/sec. shunning for <num> seconds"
-    },
-    {
-      "baseline": null,
-      "container": "mariadb-scoopspress",
-      "count": 1,
-      "fingerprint": "0bd992c6e3fc",
-      "sample": "2026-09-07  8:05:29 0 [Warning] mariadbd: io_uring_queue_init() failed with EPERM: sysctl kernel.io_uring_disabled has the value 2, or 1 and the user of the process is not a member of sysctl kernel.io",
-      "severity": "warn",
-      "skeleton": "<date> <ip> <num> [warning] mariadbd: io_uring_queue_init() failed with eperm: sysctl kernel.io_uring_disabled has the value <num>, or <num> and the user of the process is not a member of sysctl kernel.io_uring_group. (see man <num> io_uring_setup)."
-    },
-    {
-      "baseline": null,
-      "container": "mariadb-scoopspress",
-      "count": 1,
-      "fingerprint": "842b840fc4db",
-      "sample": "create_uring failed: falling back to libaio",
-      "severity": "error",
-      "skeleton": "create_uring failed: falling back to libaio"
-    },
-    {
-      "baseline": null,
-      "container": "podgrab",
-      "count": 1,
-      "fingerprint": "d005ecf43713",
-      "sample": "{\"level\":\"dpanic\",\"ts\":1788865102.1622827,\"caller\":\"zap@v1.16.0/sugar.go:191\",\"msg\":\"Ignored key without a value.\",\"ignored\":null,\"stacktrace\":\"go.uber.org/zap.(*SugaredLogger).Errorw\\n\\t/go/pkg/mod/g",
-      "severity": "fatal",
-      "skeleton": "{<str>:<str>,<str>:<hex>.<num>,<str>:<str>,<str>:<str>,<str>:null,<str>:<str>}"
-    },
-    {
-      "baseline": null,
-      "container": "podgrab",
-      "count": 1,
-      "fingerprint": "1eb6d9d39414",
-      "sample": "{\"level\":\"error\",\"ts\":1788865102.1622028,\"caller\":\"service/fileService.go:64\",\"msg\":\"Error saving filehttps://dts.podtrac.com/redirect.mp3/pdst.fm/e/pfx.vpixl.com/6qj4J/pscrb.fm/rss/p/nyt.simplecastau",
-      "severity": "error",
-      "skeleton": "{<str>:<str>,<str>:<hex>.<num>,<str>:<str>,<str>:\"error saving <url>"
-    },
-    {
-      "baseline": null,
-      "container": "explore",
-      "count": 1,
-      "fingerprint": "8679bdeb4b84",
-      "sample": "2026-09-07 07:58:10,238 WARN received SIGTERM indicating exit request",
-      "severity": "warn",
-      "skeleton": "<ts> warn received sigterm indicating exit request"
-    },
-    {
-      "baseline": null,
-      "container": "explore",
-      "count": 1,
-      "fingerprint": "f8274fb0b9aa",
-      "sample": "2026-09-07 07:58:10,328 WARN stopped: start (exit status 143)",
-      "severity": "warn",
-      "skeleton": "<ts> warn stopped: start (exit status <num>)"
-    },
-    {
-      "baseline": null,
-      "container": "explore",
-      "count": 1,
-      "fingerprint": "11f522cdaff0",
-      "sample": "mkdir: cannot create directory \u2018/mnt/user\u2019: Permission denied",
-      "severity": "other",
-      "skeleton": "mkdir: cannot create directory \u2018<path>"
-    },
-    {
-      "baseline": null,
-      "container": "explore",
-      "count": 1,
-      "fingerprint": "822163073961",
-      "sample": "_XSERVTransmkdir: ERROR: euid != 0,directory /tmp/.X11-unix will not be created.",
-      "severity": "error",
-      "skeleton": "_xservtransmkdir: error: euid != <num>,directory <path>"
-    },
-    {
-      "baseline": null,
-      "container": "explore",
-      "count": 1,
-      "fingerprint": "d398de92e5ee",
-      "sample": "Could not find any render nodes",
-      "severity": "other",
-      "skeleton": "could not find any render nodes"
-    },
-    {
-      "baseline": null,
-      "container": "explore",
-      "count": 1,
-      "fingerprint": "11ee92f22a75",
-      "sample": "Failed to initialize DRI3 extension",
-      "severity": "error",
-      "skeleton": "failed to initialize dri3 extension"
-    },
-    {
-      "baseline": null,
-      "container": "explore",
-      "count": 1,
-      "fingerprint": "4fa1ab104976",
-      "sample": "> Warning:          Multiple symbols for level 1/group 1 on key <FK23>",
-      "severity": "warn",
-      "skeleton": "> warning: multiple symbols for level <num>/group <num> on key <fk23>"
-    },
-    {
-      "baseline": null,
-      "container": "explore",
-      "count": 1,
-      "fingerprint": "8d0b30898a6b",
-      "sample": "> Warning:          Symbol map for key <FK23> redefined",
-      "severity": "warn",
-      "skeleton": "> warning: symbol map for key <fk23> redefined"
-    },
-    {
-      "baseline": null,
-      "container": "explore",
-      "count": 1,
-      "fingerprint": "c39eab7f8abe",
-      "sample": "> Warning:          Symbol map for key <FK24> redefined",
-      "severity": "warn",
-      "skeleton": "> warning: symbol map for key <fk24> redefined"
-    },
-    {
-      "baseline": null,
-      "container": "explore",
-      "count": 1,
-      "fingerprint": "60785bdaf657",
-      "sample": "Errors from xkbcomp are not fatal to the X server",
-      "severity": "fatal",
-      "skeleton": "errors from xkbcomp are not fatal to the x server"
-    },
-    {
-      "baseline": null,
-      "container": "explore",
-      "count": 1,
-      "fingerprint": "14e46c30d910",
-      "sample": "ERROR: openbox-xdg-autostart requires PyXDG to be installed",
-      "severity": "error",
-      "skeleton": "error: openbox-xdg-autostart requires pyxdg to be installed"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "818136d981f2",
-      "sample": "[2026-09-07 21:37:37.793] INFO: [SocketAuthority] Socket Y5OVt2z0WqjpAY9DAAAH disconnected from client \"superkate\" after 95006ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket y5ovt2z0wqjpay9daaah disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[warn] torznab: 1337x (prowlarr) server is currently unavailable. <url> http request timed out"
     }
   ],
   "quiet": [
     {
-      "baseline": 1987.5,
-      "container": "ownfoil",
+      "baseline": 73.0,
+      "container": "KindRobots",
       "count": 0,
-      "fingerprint": "11b0fa514d3d",
-      "sample": "[2026-09-05 11:22:43.632] WARNING (tasks) worker-2 Verification failed for The_Sinking_City_v0_ROMSLAB.nsp: Not a valid PFS0 partition b'2000'",
-      "severity": "warn",
-      "skeleton": "[<ts>] warning (tasks) worker-<num> verification failed for the_sinking_city_v0_romslab.nsp: not a valid pfs0 partition b'<num>'"
-    },
-    {
-      "baseline": 1987.5,
-      "container": "ownfoil",
-      "count": 0,
-      "fingerprint": "c6ebc2b71f32",
-      "sample": "[2026-09-05 11:22:43.630] WARNING (verification) worker-2 Verification of The_Sinking_City_v0_ROMSLAB.nsp failed: Not a valid PFS0 partition b'2000'",
-      "severity": "warn",
-      "skeleton": "[<ts>] warning (verification) worker-<num> verification of the_sinking_city_v0_romslab.nsp failed: not a valid pfs0 partition b'<num>'"
-    },
-    {
-      "baseline": 108.5,
-      "container": "sonarr",
-      "count": 0,
-      "fingerprint": "85e74f9dd654",
-      "sample": "[Error] VideoFileInfoReader: Unable to parse media info from file: /pc/miss_kitty/sonarr/Vampire.Knight.2008.S02.1080p.BLURAY.REMUX.DTS.2.0.AVC-iVy/Vampire.Knight (2008).S02.1080p.BLURAY.REMUX.DTS.2.0",
+      "fingerprint": "f86adc80658c",
+      "sample": "[Icon] failed to load icon `kind-icon:book-open`",
       "severity": "error",
-      "skeleton": "[error] videofileinforeader: unable to parse media info from file: <path>"
+      "skeleton": "[icon] failed to load icon `kind-icon:book-open`"
     },
     {
-      "baseline": 108.0,
-      "container": "sonarr",
+      "baseline": 71.0,
+      "container": "netdata",
       "count": 0,
-      "fingerprint": "52feaf1413eb",
-      "sample": "[Error] DetectSample: Failed to get runtime from the file, make sure ffprobe is available",
-      "severity": "error",
-      "skeleton": "[error] detectsample: failed to get runtime from the file, make sure ffprobe is available"
+      "fingerprint": "82278af27950",
+      "sample": "time=2026-09-07T18:51:14.563-07:00 comm=spawn-unnamed source=collector level=warning tid=837360  msg=\"SPAWN SERVER: child with pid 837401 (request 2) killed by signal 15: callback() function\"",
+      "severity": "warn",
+      "skeleton": "time=<ts> comm=spawn-unnamed source=collector level=warning tid=<num> msg=<str>"
     },
     {
       "baseline": 41.0,
@@ -1200,6 +1092,33 @@
       "sample": "[Error] DownloadMonitoringService: Couldn't process tracked download The.Home.[2025].1080p.WEBRip.5.1-LAMA",
       "severity": "error",
       "skeleton": "[error] downloadmonitoringservice: couldn't process tracked download the.home.[<num>].1080p.webrip.<num>-lama"
+    },
+    {
+      "baseline": 41.0,
+      "container": "radarr",
+      "count": 0,
+      "fingerprint": "3620fc9c1d1a",
+      "sample": "[Error] DownloadMonitoringService: Couldn't process tracked download The.Home.2025.1080p.AMZN.WEB-DL.DDP5.1.Atmos.x265-TBMovies",
+      "severity": "error",
+      "skeleton": "[error] downloadmonitoringservice: couldn't process tracked download the.home.<num>.1080p.amzn.web-dl.ddp5.<num>.atmos.x265-tbmovies"
+    },
+    {
+      "baseline": 12.0,
+      "container": "yac",
+      "count": 0,
+      "fingerprint": "7b74a63d705f",
+      "sample": "WARN  2026-09-07T16:58:30.757 StaticFileController: detected forbidden characters in path /@fs/../.env",
+      "severity": "warn",
+      "skeleton": "warn <ts> staticfilecontroller: detected forbidden characters in path <path>"
+    },
+    {
+      "baseline": 10.0,
+      "container": "flaresolverr",
+      "count": 0,
+      "fingerprint": "c93a360a7c2f",
+      "sample": "2026-09-07 22:14:00 ERROR    Error: Error solving the challenge. Timeout after 60.0 seconds.",
+      "severity": "error",
+      "skeleton": "<ts> error error: error solving the challenge. timeout after <num> seconds."
     }
   ],
   "scan": {
@@ -1207,81 +1126,171 @@
     "containers_scanned": 43,
     "containers_total": 43,
     "high_cardinality": [],
-    "lines_matched": 6758,
-    "lines_read": 165476,
-    "signatures_total": 244,
+    "lines_matched": 8676,
+    "lines_read": 183854,
+    "signatures_total": 273,
     "truncated": []
   },
   "spiking": [
     {
-      "baseline": 5.0,
+      "baseline": 0.0,
       "container": "flaresolverr",
-      "count": 65,
-      "fingerprint": "c93a360a7c2f",
-      "sample": "2026-09-07 22:14:00 ERROR    Error: Error solving the challenge. Timeout after 60.0 seconds.",
-      "severity": "error",
-      "skeleton": "<ts> error error: error solving the challenge. timeout after <num> seconds."
+      "count": 740,
+      "fingerprint": "bf16ddd5a95a",
+      "sample": "Stacktrace:",
+      "severity": "other",
+      "skeleton": "stacktrace:"
     },
     {
-      "baseline": 5.0,
+      "baseline": 0.0,
       "container": "flaresolverr",
-      "count": 65,
+      "count": 714,
+      "fingerprint": "f882db4d174b",
+      "sample": "from chrome not reachable; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception",
+      "severity": "error",
+      "skeleton": "from chrome not reachable; for documentation on this error, please visit: <url>"
+    },
+    {
+      "baseline": 10.0,
+      "container": "flaresolverr",
+      "count": 441,
       "fingerprint": "17856945a8bd",
-      "sample": "2026-09-07 22:14:00 INFO     172.21.0.1 POST http://192.168.7.172:8191/v1 500 Internal Server Error",
+      "sample": "2026-09-08 18:34:49 INFO     172.21.0.1 POST http://192.168.7.172:8191/v1 500 Internal Server Error",
       "severity": "error",
       "skeleton": "<ts> info <ip> post <url> <num> internal server error"
     },
     {
+      "baseline": 0.0,
+      "container": "flaresolverr",
+      "count": 360,
+      "fingerprint": "d83351decccd",
+      "sample": "2026-09-08 18:35:20 ERROR    Error starting Chrome: Message: session not created: cannot connect to chrome at 127.0.0.1:52995",
+      "severity": "error",
+      "skeleton": "<ts> error error starting chrome: message: session not created: cannot connect to chrome at <ip>"
+    },
+    {
       "baseline": 6.0,
+      "container": "flaresolverr",
+      "count": 95,
+      "fingerprint": "a4739f92a073",
+      "sample": "2026-09-08 23:19:01 WARNING  Task queue depth is 1",
+      "severity": "warn",
+      "skeleton": "<ts> warning task queue depth is <num>"
+    },
+    {
+      "baseline": 12.0,
       "container": "sonarr",
-      "count": 39,
+      "count": 81,
       "fingerprint": "39069f455224",
       "sample": "[Warn] HttpClient: HTTP Error - Res: HTTP/2.0 [GET] https://api.nzbplanet.<REDACTED-BLOB>.nzb&i=425756&<REDACTED-BLOB>: 510.NotExtended (1807 bytes)",
       "severity": "warn",
       "skeleton": "[warn] httpclient: http error - res: http/<num> [get] <url> <num>.notextended (<num> bytes)"
     },
     {
-      "baseline": 6.0,
+      "baseline": 12.0,
       "container": "sonarr",
-      "count": 39,
+      "count": 81,
       "fingerprint": "55b528497e1f",
       "sample": "[v4.0.19.2979] NzbDrone.Common.Http.HttpException: HTTP request failed: [510:NotExtended] [GET] at [https://api.nzbplanet.<REDACTED-BLOB>.nzb&i=425756&<REDACTED-BLOB>]",
       "severity": "error",
       "skeleton": "[v4.<num>.<num>] nzbdrone.common.http.httpexception: http request failed: [<num>:notextended] [get] at [<url>"
     },
     {
-      "baseline": 0.0,
-      "container": "prowlarr",
-      "count": 24,
-      "fingerprint": "102a871f1ccb",
-      "sample": "[Warn] Newznab: Invalid Release: 'Black.Panthers.of.WWII.2025.1080p.BluRay.HEVC.x265.5.1.BONE' from indexer: NzbPlanet. No categories provided.",
+      "baseline": 1.0,
+      "container": "sonarr",
+      "count": 58,
+      "fingerprint": "43579730ff01",
+      "sample": "<error code=\"429\" description=\"Indexer is disabled till 09/08/2026 23:20:01 due to recent failures.\" />",
+      "severity": "error",
+      "skeleton": "<error code=<str> description=<str> />"
+    },
+    {
+      "baseline": 4.0,
+      "container": "sonarr",
+      "count": 56,
+      "fingerprint": "d746d3ecb830",
+      "sample": "[v4.0.19.2979] NzbDrone.Core.Exceptions.ReleaseDownloadException: Downloading nzb failed",
+      "severity": "error",
+      "skeleton": "[v4.<num>.<num>] nzbdrone.core.exceptions.releasedownloadexception: downloading nzb failed"
+    },
+    {
+      "baseline": 5.0,
+      "container": "sonarr",
+      "count": 56,
+      "fingerprint": "e75ce1720010",
+      "sample": "--- End of inner exception stack trace ---",
+      "severity": "error",
+      "skeleton": "--- end of inner exception stack trace ---"
+    },
+    {
+      "baseline": 4.0,
+      "container": "sonarr",
+      "count": 48,
+      "fingerprint": "c52d93b2c84c",
+      "sample": "[Warn] ProcessDownloadDecisions: Couldn't add release 'Spider-Noir.S01E03.Double.Cross.True.Hue.1080p.AMZN.WEB-DL.DDP5.1.SDR.H.265-OnlyWeb' from Indexer NzbPlanet (Prowlarr) to download queue.",
       "severity": "warn",
-      "skeleton": "[warn] newznab: invalid release: <str> from indexer: nzbplanet. no categories provided."
+      "skeleton": "[warn] processdownloaddecisions: couldn't add release <str> from indexer nzbplanet (prowlarr) to download queue."
+    },
+    {
+      "baseline": 1.0,
+      "container": "sonarr",
+      "count": 29,
+      "fingerprint": "28dd8ae5629b",
+      "sample": "[Warn] HttpClient: HTTP Error - Res: HTTP/2.0 [GET] https://prowlarr.acrocatranch.com/9/download?apikey=<REDACTED> 429.TooManyRequests (142 bytes)",
+      "severity": "warn",
+      "skeleton": "[warn] httpclient: http error - res: http/<num> [get] <url> <num>.toomanyrequests (<num> bytes)"
+    },
+    {
+      "baseline": 4.0,
+      "container": "sonarr",
+      "count": 27,
+      "fingerprint": "95a902660124",
+      "sample": "[Error] Sabnzbd: Downloading nzb for episode 'Historys.Greatest.Mysteries.S07E07.The.Unabomber.Case.Closed.REPACK.1080p.AMZN.WEB-DL.DD.2.0.H.264-playWEB' failed (https://prowlarr.acrocatranch.com/27/d",
+      "severity": "error",
+      "skeleton": "[error] sabnzbd: downloading nzb for episode <str> failed (<url>"
+    },
+    {
+      "baseline": 4.0,
+      "container": "sonarr",
+      "count": 27,
+      "fingerprint": "67cb04f05066",
+      "sample": "---> NzbDrone.Common.Http.HttpException: HTTP request failed: [510:NotExtended] [GET] at [https://api.nzbplanet.<REDACTED-BLOB>.nzb&i=425756&<REDACTED-BLOB>]",
+      "severity": "error",
+      "skeleton": "---> nzbdrone.common.http.httpexception: http request failed: [<num>:notextended] [get] at [<url>"
+    },
+    {
+      "baseline": 0.0,
+      "container": "kapowarr",
+      "count": 23,
+      "fingerprint": "6de099e9b4f5",
+      "sample": "\u001b[1;31:40m[05:00:11][WARNING] GET to https://getcomics.org/page/10 is rate limited; not asking again for 900s. Retrying would only spend more of the quota that is exhausted.",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] get to <url> is rate limited; not asking again for <num>. retrying would only spend more of the quota that is exhausted."
     }
   ],
   "top": [
     {
       "baseline": null,
-      "container": "sonarr",
-      "count": 1628,
-      "fingerprint": "f02f2e89bcef",
-      "sample": "[Warn] QualityFinder: Unable to find exact quality for DVD and 576. Using Bluray-576p as fallback",
-      "severity": "warn",
-      "skeleton": "[warn] qualityfinder: unable to find exact quality for dvd and <num>. using bluray-576p as fallback"
+      "container": "qbit",
+      "count": 1067,
+      "fingerprint": "46d08c635a8f",
+      "sample": "Wed Sep  9 05:25:58 2026 AEAD Decrypt error: bad packet ID (may be a replay): [ #10021503 ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --m",
+      "severity": "error",
+      "skeleton": "<ts> aead decrypt error: bad packet id (may be a replay): [ #<hex> ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mute-replay-warnings"
     },
     {
       "baseline": null,
-      "container": "yac",
-      "count": 926,
-      "fingerprint": "22365e849ef3",
-      "sample": "WARN  2026-09-07T08:03:15.982 QObject: Cannot create children for a parent that is in a different thread.",
-      "severity": "warn",
-      "skeleton": "warn <ts> qobject: cannot create children for a parent that is in a different thread."
+      "container": "flaresolverr",
+      "count": 740,
+      "fingerprint": "bf16ddd5a95a",
+      "sample": "Stacktrace:",
+      "severity": "other",
+      "skeleton": "stacktrace:"
     },
     {
       "baseline": null,
       "container": "radarr",
-      "count": 684,
+      "count": 720,
       "fingerprint": "995ccb0d51b4",
       "sample": "[Error] VideoFileInfoReader: Unable to parse media info from file: /pc/miss_kitty/radarr/Stroker.Ace.1983.1080p.WEB-DL.DD2.0.x264-AM.mkv-xpost/Stroker.Ace.1983.1080p.WEB-DL.DD2.0.x264-AM.mkv",
       "severity": "error",
@@ -1290,7 +1299,7 @@
     {
       "baseline": null,
       "container": "radarr",
-      "count": 684,
+      "count": 720,
       "fingerprint": "843bd0cd437d",
       "sample": "[matroska,webm @ 0x1a296c0] EBML header parsing failed",
       "severity": "error",
@@ -1298,8 +1307,17 @@
     },
     {
       "baseline": null,
+      "container": "flaresolverr",
+      "count": 714,
+      "fingerprint": "f882db4d174b",
+      "sample": "from chrome not reachable; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception",
+      "severity": "error",
+      "skeleton": "from chrome not reachable; for documentation on this error, please visit: <url>"
+    },
+    {
+      "baseline": null,
       "container": "radarr",
-      "count": 456,
+      "count": 480,
       "fingerprint": "89aec2eeb322",
       "sample": "[Error] DetectSample: Failed to get runtime from the file, make sure ffprobe is available",
       "severity": "error",
@@ -1307,143 +1325,89 @@
     },
     {
       "baseline": null,
+      "container": "flaresolverr",
+      "count": 441,
+      "fingerprint": "17856945a8bd",
+      "sample": "2026-09-08 18:34:49 INFO     172.21.0.1 POST http://192.168.7.172:8191/v1 500 Internal Server Error",
+      "severity": "error",
+      "skeleton": "<ts> info <ip> post <url> <num> internal server error"
+    },
+    {
+      "baseline": null,
+      "container": "flaresolverr",
+      "count": 360,
+      "fingerprint": "d83351decccd",
+      "sample": "2026-09-08 18:35:20 ERROR    Error starting Chrome: Message: session not created: cannot connect to chrome at 127.0.0.1:52995",
+      "severity": "error",
+      "skeleton": "<ts> error error starting chrome: message: session not created: cannot connect to chrome at <ip>"
+    },
+    {
+      "baseline": null,
+      "container": "flaresolverr",
+      "count": 354,
+      "fingerprint": "3b030fffc6de",
+      "sample": "2026-09-08 18:34:49 ERROR    Error: Message: session not created: cannot connect to chrome at 127.0.0.1:57987",
+      "severity": "error",
+      "skeleton": "<ts> error error: message: session not created: cannot connect to chrome at <ip>"
+    },
+    {
+      "baseline": null,
       "container": "proxysql",
-      "count": 305,
+      "count": 294,
       "fingerprint": "a9cfc33818b3",
-      "sample": "2026-09-07 07:40:38 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.21.0.1:36194 , user 'kindrobot' , hostgroup 10 , connection 277213",
+      "sample": "2026-09-08 07:05:38 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 75.111.66.70:33960 , user 'kindrobot_migrate' , hostgroup 30 , connection 2671",
       "severity": "warn",
       "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup <num> , connection <num>"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 201,
+      "fingerprint": "5f87adda8786",
+      "sample": "\u001b[1;31:40m[04:26:13][WARNING] Unable to add indexer download; fail_reason=\"This release does not match the issue you asked for. Use Download anyway (next to Download) to add it regardless.\"",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] unable to add indexer download; fail_reason=<str>"
+    },
+    {
+      "baseline": null,
+      "container": "kapowarr",
+      "count": 164,
+      "fingerprint": "16185a7aa503",
+      "sample": "\u001b[1;31:40m[04:26:13][WARNING] Failed to enqueue download: This release does not match the issue you asked for. Use Download anyway (next to Download) to add it regardless.",
+      "severity": "warn",
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] failed to enqueue download: this release does not match the issue you asked for. use download anyway (next to download) to add it regardless."
     },
     {
       "baseline": null,
       "container": "requests",
       "count": 137,
       "fingerprint": "b0b22d3dd961",
-      "sample": "2026-09-08T11:34:05.699Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 388535\",\"title\"",
+      "sample": "2026-09-09T11:34:07.588Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 343153\",\"title\"",
       "severity": "error",
       "skeleton": "<ts> [error][sonarr scan]: failed to process sonarr media {<str>:<str>,<str>:<str>}"
     },
     {
       "baseline": null,
-      "container": "qbit",
-      "count": 124,
-      "fingerprint": "78027c85326d",
-      "sample": "Mon Sep  7 12:34:00 2026 AEAD Decrypt error: bad packet ID (may be a replay): [ #543090 ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mut",
-      "severity": "error",
-      "skeleton": "<ts> aead decrypt error: bad packet id (may be a replay): [ #<num> ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mute-replay-warnings"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 97,
-      "fingerprint": "8ef3774a1987",
-      "sample": "time=2026-09-07T19:02:04.340-07:00 comm=apps.plugin source=collector level=error errno=\"3, No such process\" tid=833749  msg=\"Cannot process /host/proc/1031489/io (command 'awk')\"",
-      "severity": "error",
-      "skeleton": "time=<ts> comm=apps.plugin source=collector level=error errno=<str> tid=<num> msg=\"cannot process <path>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 75,
-      "fingerprint": "24756dae8afd",
-      "sample": "time=2026-09-07T18:51:14.241-07:00 comm=spawn-unnamed source=collector level=warning tid=837317  msg=\"SPAWN SERVER: child with pid 837318 (request 1) exited with exit code 1: /usr/libexec/netdata/plug",
-      "severity": "warn",
-      "skeleton": "time=<ts> comm=spawn-unnamed source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 71,
-      "fingerprint": "82278af27950",
-      "sample": "time=2026-09-07T18:51:14.563-07:00 comm=spawn-unnamed source=collector level=warning tid=837360  msg=\"SPAWN SERVER: child with pid 837401 (request 2) killed by signal 15: callback() function\"",
-      "severity": "warn",
-      "skeleton": "time=<ts> comm=spawn-unnamed source=collector level=warning tid=<num> msg=<str>"
-    },
-    {
-      "baseline": null,
       "container": "flaresolverr",
-      "count": 65,
-      "fingerprint": "c93a360a7c2f",
-      "sample": "2026-09-07 22:14:00 ERROR    Error: Error solving the challenge. Timeout after 60.0 seconds.",
-      "severity": "error",
-      "skeleton": "<ts> error error: error solving the challenge. timeout after <num> seconds."
-    },
-    {
-      "baseline": null,
-      "container": "flaresolverr",
-      "count": 65,
-      "fingerprint": "17856945a8bd",
-      "sample": "2026-09-07 22:14:00 INFO     172.21.0.1 POST http://192.168.7.172:8191/v1 500 Internal Server Error",
-      "severity": "error",
-      "skeleton": "<ts> info <ip> post <url> <num> internal server error"
-    },
-    {
-      "baseline": null,
-      "container": "jellyfin",
-      "count": 58,
-      "fingerprint": "bc5e13dcc2f6",
-      "sample": "[18:41:24] [WRN] [7] Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService: Health check StartupCheck with status Degraded completed after 0.6933ms with message 'Server is still star",
+      "count": 95,
+      "fingerprint": "a4739f92a073",
+      "sample": "2026-09-08 23:19:01 WARNING  Task queue depth is 1",
       "severity": "warn",
-      "skeleton": "[<ts>] [wrn] [<num>] microsoft.extensions.diagnostics.healthchecks.defaulthealthcheckservice: health check startupcheck with status degraded completed after <num> with message <str>"
+      "skeleton": "<ts> warning task queue depth is <num>"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 56,
-      "fingerprint": "2107195e439a",
-      "sample": "2026-09-08T01:51:04.538443Z  WARN ThreadId(09) journal_registry::registry::monitor: 23: Failed to send file system event: receiver dropped (channel closed)",
-      "severity": "error",
-      "skeleton": "<ts> warn threadid(<num>) journal_registry<ip>registry<ip>monitor: <num>: failed to send file system event: receiver dropped (channel closed)"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 51,
-      "fingerprint": "7ada29ceece5",
-      "sample": "2026-09-07 07:46:02 MyHGC.cpp:202:get_random_MySrvC(): [ERROR] Hostgroup 10 has no servers available! Checking servers shunned for more than 1 second",
-      "severity": "error",
-      "skeleton": "<ts> myhgc.cpp<ip>get_random_mysrvc(): [error] hostgroup <num> has no servers available! checking servers shunned for more than <num> second"
-    },
-    {
-      "baseline": null,
-      "container": "kapowarr",
-      "count": 47,
-      "fingerprint": "5f87adda8786",
-      "sample": "\u001b[1;31:40m[03:45:10][WARNING] Unable to add indexer download; fail_reason=\"This release does not match the issue you asked for. Use Download anyway (next to Download) to add it regardless.\"",
+      "container": "yac",
+      "count": 90,
+      "fingerprint": "22365e849ef3",
+      "sample": "WARN  2026-09-08T07:03:37.797 QObject: Cannot create children for a parent that is in a different thread.",
       "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] unable to add indexer download; fail_reason=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "ubooquity",
-      "count": 47,
-      "fingerprint": "fc1e7148605b",
-      "sample": "20260907 07:55:50 [Scanner thread] WARN  com.ubooquity.b.c - Could not read document metadata for file: /comics/Incal/Before the Incal (2012)/Before the Incal 001.cbz - NullPointerException:  must not",
-      "severity": "warn",
-      "skeleton": "<hex> <ts> [scanner thread] warn com.ubooquity.b.c - could not read document metadata for file: <path>"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 42,
-      "fingerprint": "b55fd5e80411",
-      "sample": "2026-09-07 07:45:54 MySQL_Monitor.cpp:3412:monitor_ping(): [ERROR] Server mariadb-kindrobots2:3306 missed 3 heartbeats, shunning it and killing all the connections. Disabling other checks until the no",
-      "severity": "error",
-      "skeleton": "<ts> mysql_monitor.cpp<ip>monitor_ping(): [error] server mariadb-kindrobots2:<num> missed <num> heartbeats, shunning it and killing all the connections. disabling other checks until the node comes back online."
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 39,
-      "fingerprint": "29a758d0ae5d",
-      "sample": "time=2026-09-07T18:51:03.151-07:00 comm=tc-qos-helper.sh source=collector level=warning tid=833808 thread=tc-qos-helper request=\"'/usr/libexec/netdata/plugins.d/tc-qos-helper.sh' '1' \" msg=\"FireQOS is",
-      "severity": "warn",
-      "skeleton": "time=<ts> comm=tc-qos-helper.sh source=collector level=warning tid=<num> thread=tc-qos-helper request=\"'<path>"
+      "skeleton": "warn <ts> qobject: cannot create children for a parent that is in a different thread."
     },
     {
       "baseline": null,
       "container": "sonarr",
-      "count": 39,
+      "count": 81,
       "fingerprint": "39069f455224",
       "sample": "[Warn] HttpClient: HTTP Error - Res: HTTP/2.0 [GET] https://api.nzbplanet.<REDACTED-BLOB>.nzb&i=425756&<REDACTED-BLOB>: 510.NotExtended (1807 bytes)",
       "severity": "warn",
@@ -1452,7 +1416,7 @@
     {
       "baseline": null,
       "container": "sonarr",
-      "count": 39,
+      "count": 81,
       "fingerprint": "55b528497e1f",
       "sample": "[v4.0.19.2979] NzbDrone.Common.Http.HttpException: HTTP request failed: [510:NotExtended] [GET] at [https://api.nzbplanet.<REDACTED-BLOB>.nzb&i=425756&<REDACTED-BLOB>]",
       "severity": "error",
@@ -1460,30 +1424,75 @@
     },
     {
       "baseline": null,
-      "container": "radarr",
-      "count": 38,
-      "fingerprint": "3620fc9c1d1a",
-      "sample": "[Error] DownloadMonitoringService: Couldn't process tracked download The.Home.2025.1080p.AMZN.WEB-DL.DDP5.1.Atmos.x265-TBMovies",
+      "container": "netdata",
+      "count": 77,
+      "fingerprint": "24756dae8afd",
+      "sample": "time=2026-09-08T18:41:13.547-07:00 comm=spawn-unnamed source=collector level=warning tid=1291798  msg=\"SPAWN SERVER: child with pid 1291799 (request 1) exited with exit code 1: /usr/libexec/netdata/pl",
+      "severity": "warn",
+      "skeleton": "time=<ts> comm=spawn-unnamed source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
+    },
+    {
+      "baseline": null,
+      "container": "qbit",
+      "count": 72,
+      "fingerprint": "78027c85326d",
+      "sample": "Wed Sep  9 05:23:39 2026 AEAD Decrypt error: bad packet ID (may be a replay): [ #9045178 ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mu",
       "severity": "error",
-      "skeleton": "[error] downloadmonitoringservice: couldn't process tracked download the.home.<num>.1080p.amzn.web-dl.ddp5.<num>.atmos.x265-tbmovies"
+      "skeleton": "<ts> aead decrypt error: bad packet id (may be a replay): [ #<num> ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mute-replay-warnings"
     },
     {
       "baseline": null,
       "container": "kapowarr",
-      "count": 36,
-      "fingerprint": "16185a7aa503",
-      "sample": "\u001b[1;31:40m[03:45:10][WARNING] Failed to enqueue download: This release does not match the issue you asked for. Use Download anyway (next to Download) to add it regardless.",
+      "count": 67,
+      "fingerprint": "336c4e70da10",
+      "sample": "\u001b[1;31:40m[04:47:16][WARNING] POST request failed for url http://192.168.7.172:8191/v1 (SocketTimeoutError: Timeout on reading data from socket). Retrying for round 2...",
       "severity": "warn",
-      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] failed to enqueue download: this release does not match the issue you asked for. use download anyway (next to download) to add it regardless."
+      "skeleton": "\u001b[<num>;<num>:<num>[<ts>][warning] post request failed for url <url> (sockettimeouterror: timeout on reading data from socket). retrying for round <num>..."
     },
     {
       "baseline": null,
-      "container": "jellyfin",
-      "count": 31,
-      "fingerprint": "99ab886be729",
-      "sample": "[18:54:09] [WRN] [10] Jellyfin.Server.Implementations.Item.BaseItemRepository: Skipping item 00000000-0000-0000-0000-000000000001 with unknown type 'PLACEHOLDER'. This may indicate a removed plugin or",
-      "severity": "warn",
-      "skeleton": "[<ts>] [wrn] [<num>] jellyfin.server.implementations.item.baseitemrepository: skipping item <uuid> with unknown type <str>. this may indicate a removed plugin or database corruption."
+      "container": "sonarr",
+      "count": 58,
+      "fingerprint": "43579730ff01",
+      "sample": "<error code=\"429\" description=\"Indexer is disabled till 09/08/2026 23:20:01 due to recent failures.\" />",
+      "severity": "error",
+      "skeleton": "<error code=<str> description=<str> />"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 56,
+      "fingerprint": "8ef3774a1987",
+      "sample": "time=2026-09-08T18:47:10.497-07:00 comm=apps.plugin source=collector level=error errno=\"3, No such process\" tid=1288907  msg=\"Cannot process /host/proc/1374983/io (command 'mariadbd-safe-h')\"",
+      "severity": "error",
+      "skeleton": "time=<ts> comm=apps.plugin source=collector level=error errno=<str> tid=<num> msg=\"cannot process <path>"
+    },
+    {
+      "baseline": null,
+      "container": "sonarr",
+      "count": 56,
+      "fingerprint": "d746d3ecb830",
+      "sample": "[v4.0.19.2979] NzbDrone.Core.Exceptions.ReleaseDownloadException: Downloading nzb failed",
+      "severity": "error",
+      "skeleton": "[v4.<num>.<num>] nzbdrone.core.exceptions.releasedownloadexception: downloading nzb failed"
+    },
+    {
+      "baseline": null,
+      "container": "sonarr",
+      "count": 56,
+      "fingerprint": "e75ce1720010",
+      "sample": "--- End of inner exception stack trace ---",
+      "severity": "error",
+      "skeleton": "--- end of inner exception stack trace ---"
+    },
+    {
+      "baseline": null,
+      "container": "flaresolverr",
+      "count": 51,
+      "fingerprint": "4f8013f8a0ea",
+      "sample": "2026-09-08 23:20:09 ERROR    Error starting Chrome: HTTPConnectionPool(host='localhost', port=46039): Read timed out. (read timeout=120)",
+      "severity": "error",
+      "skeleton": "<ts> error error starting chrome: httpconnectionpool(host=<str>, port=<num>): read timed out. (read timeout=<num>)"
     }
   ],
   "version": 1,
