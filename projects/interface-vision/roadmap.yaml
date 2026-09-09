@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3681,8 +3681,26 @@ tasks:
     safer next candidate; font-sans opacity-70 (13 occurrences, all in components/ui/ui-
     gallery.vue) needs a check first for whether that file is a live design-token showcase
     rather than an ordinary migration target.
-  updated: '2026-09-09T20:39:37Z'
-  implementation_pr: 'silasfelinus/kind_robots#2566'
+
+    Slice 187 merged as silasfelinus/kind_robots#2567 (squash
+    2e41147572eb6edb923997cf1a4d4daecf597eec) from exact head
+    ea55bdde96b7dfc82201fb5b87bad37c7c44eef1. Added .kr-text-faded-xs-55 (text-xs
+    opacity-55), the last sibling opacity-NN shape slice 184's survey left open (text-sm
+    opacity-70/80 shipped in slices 185/186). New codemod
+    utils/scripts/codemods/kr_text_faded_xs_55_codemod.py. Migrated 16 subset-match
+    occurrences across 4 files (mandarin-voice-coach.vue 5, pages/play/mandarin.vue 7,
+    ruler-hooked-fishing-encounter.vue 2, video-lora-picker.vue 2); no geometry or behavior
+    change. Verified vue-tsc clean, eslint 333/327/6 identical to baseline, test:layout-
+    contract holds (0 new violations, same pre-existing narrative-ingredient-multi-
+    picker.vue viewport-grid note left untouched), test:lint-ratchet holds at 333/-59,
+    prettier --check byte-identical warning list (1145 lines, git-stash before/after diff).
+    All 50 kind_robots PR checks green, mergeable_state clean at merge time. Return the
+    recurring consistency umbrella to ready for the next bounded slice. Kaizen for next
+    slice: font-sans opacity-70 (13 occurrences, all in components/ui/ui-gallery.vue) needs
+    a check first for whether that file is a live design-token showcase rather than an
+    ordinary migration target.
+  updated: '2026-09-09T20:49:33Z'
+  implementation_pr: 'silasfelinus/kind_robots#2567'
   retry_context: ''
   owner: worker
   claimed_by: claude-scheduled-20260909T203006Z-t104s187
