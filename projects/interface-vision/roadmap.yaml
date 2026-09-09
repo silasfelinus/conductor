@@ -3726,3 +3726,27 @@ tasks:
     (c) propose a different name/shape. Either way, set approved_by_human: true and
     status: done with your choice recorded in this note.
     Kaizen suggestion filed from t-104 slice 34 (kind_robots#2328).
+
+- id: t-125
+  milestone: m5
+  title: "Propagate the authored navigation frontmatter field through ResolvedTab instead of mirroring hidden-tab keys"
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: |-
+    Kaizen from t-104's navigation-consolidation slice (kind_robots#2548, merged
+    29d8384). That slice hid six nested destinations (home:newsfeed, home:friends,
+    home:giving, home:giftshop, admin:project-placement, admin:forum-moderation) from
+    tab menus, the full navigation directory, and fallback channel card decks by adding
+    a `NAVIGATION_HIDDEN_TABS` set in utils/channelTabGroups.ts (navigationTabs()/
+    isNavigationTab()) that mirrors the `navigation: false` frontmatter already authored
+    on each of those six content files. The mirror works but duplicates intent that's
+    already on disk: `ResolvedTab` (stores/helpers/channelContent.ts) does not currently
+    carry the `navigation` field through from frontmatter, so channelTabGroups.ts can't
+    just read it off the tab.
+    Do: thread `navigation` through `ResolvedTab` in channelContent.ts's resolution
+    step, change `isNavigationTab`/`navigationTabs` in utils/channelTabGroups.ts to read
+    `tab.navigation !== false` instead of the hardcoded `NAVIGATION_HIDDEN_TABS` set, and
+    delete the set. No visible behavior change intended -- utils/scripts/
+    verifyNavigationConsolidation.ts (added in the same PR) should still pass unchanged
+    and is the regression check for this refactor.
