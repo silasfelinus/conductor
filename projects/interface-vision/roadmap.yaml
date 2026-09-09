@@ -3940,3 +3940,45 @@ tasks:
     delete the set. No visible behavior change intended -- utils/scripts/
     verifyNavigationConsolidation.ts (added in the same PR) should still pass unchanged
     and is the regression check for this refactor.
+
+- id: t-126
+  milestone: m5
+  title: "Fix the :class= false-positive risk shared by every kr-* codemod's class=\"...\" regex"
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: |-
+    Kaizen from t-104 slice 180 (kind_robots#2559, merged 2803c16). Every existing
+    kr-* codemod (~30 scripts in utils/scripts/codemods/) uses the same unanchored
+    regex, `re.compile(r'class="([^"]*)"')`, to find static class attributes to
+    migrate. Because the pattern isn't anchored against the attribute name, it can
+    match starting one character into a `:class="..."` or `v-bind:class="..."`
+    dynamic binding whenever the bound expression happens to contain a literal
+    `class="`-shaped substring -- corrupting the binding instead of leaving it
+    untouched, which every codemod's own docstring claims it does.
+    This is not hypothetical: slice 180's first --write run hit it for real against
+    components/pages/rebel-button.vue's `:class="`... text-2xl ... font-bold
+    ...`"` binding, stripping its enclosing template-literal structure and
+    inserting the new primitive class as bare unquoted text. Caught via manual
+    diff review (vue-tsc/eslint don't parse `:class` template-literal contents, so
+    CI would not have caught this), fixed in that one codemod
+    (utils/scripts/codemods/kr_text_bold_2xl_codemod.py) with a `(?<!:)` negative
+    lookbehind, and confirmed the already-merged slice 179 output
+    (kr_text_bold_xl_codemod.py, kind_robots#2558) did not hit the same trap
+    anywhere in the repo.
+    Do: audit every codemod under utils/scripts/codemods/ that defines
+    `CLASS_ATTR = re.compile(r'class="([^"]*)"')` (or equivalent), and add the same
+    `(?<!:)` guard -- or, better, factor the pattern into one shared helper module
+    (e.g. utils/scripts/codemods/_class_attr.py) that all of them import, so a
+    future codemod can't reintroduce the gap. None of the other codemods are known
+    to have produced bad output to date (this is a latent risk, not a confirmed
+    second incident), so this is a hardening pass, not an emergency fix -- but it
+    should land before the next full re-run of any existing codemod against a file
+    that didn't exist (or didn't carry a matching `:class` binding) at the time
+    that codemod was first written and run.
+    Verification: after the fix, re-run every codemod in --dry-run (no --write)
+    mode across the current repo and confirm the reported occurrence counts are
+    unchanged from before the fix (proving the guard adds no false negatives on
+    real static class="..." attributes) -- a synthetic test fixture containing a
+    :class="`... <base tokens> ...`" binding is the direct regression check for
+    the false-positive this task closes.
