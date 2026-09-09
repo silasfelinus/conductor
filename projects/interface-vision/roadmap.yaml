@@ -4068,10 +4068,10 @@ tasks:
 - id: t-125
   milestone: m5
   title: "Propagate the authored navigation frontmatter field through ResolvedTab instead of mirroring hidden-tab keys"
-  status: claimed
+  status: done
   passes: 0
   stakes: reversible
-  note: |-
+  note: >-
     Kaizen from t-104's navigation-consolidation slice (kind_robots#2548, merged
     29d8384). That slice hid six nested destinations (home:newsfeed, home:friends,
     home:giving, home:giftshop, admin:project-placement, admin:forum-moderation) from
@@ -4088,10 +4088,22 @@ tasks:
     delete the set. No visible behavior change intended -- utils/scripts/
     verifyNavigationConsolidation.ts (added in the same PR) should still pass unchanged
     and is the regression check for this refactor.
+
+    Merged as silasfelinus/kind_robots#2570 (squash f30333a) from head d3b7546: threaded the
+    navigation frontmatter field through ResolvedTab (ChannelContentItem.navigation?,
+    ResolvedTab.navigation, resolveTabItem() sets navigation: item.navigation !== false);
+    isNavigationTab()/navigationTabs() in channelTabGroups.ts now read tab.navigation !==
+    false instead of the hardcoded NAVIGATION_HIDDEN_TABS set, which is deleted. Also set
+    navigation: true on workspace-header.vue's hand-built fallbackTab (now-required field)
+    and updated verifyNavigationConsolidation.ts's synthetic tab()/channel() fixtures to set
+    navigation on the six known-nested tab keys the same way real frontmatter does. vue-tsc/
+    eslint/verifyNavigationConsolidation/verifyNavigationRouteAccess/verifyChannelResolver/l
+    ayout-contract/lint-ratchet/prettier all held; CI green (47/48 checks success, 1 skip).
   owner: worker
   claimed_by: claude-scheduled-20260909T233204Z-t125
   claimed_at: '2026-09-09T23:32:05Z'
-  updated: '2026-09-09T23:32:05Z'
+  updated: '2026-09-09T23:47:28Z'
+  implementation_pr: 'silasfelinus/kind_robots#2570'
 
 - id: t-126
   milestone: m5
