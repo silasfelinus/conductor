@@ -3623,6 +3623,33 @@ tasks:
     text-error-xs), or individually audit the remaining one-off kr-badge-outline extra-token
     occurrences as a bounded follow-up slice. Return the recurring consistency umbrella to
     ready for the next bounded slice.
+
+    Slice 184 merged as silasfelinus/kind_robots#2564 (squash 78b9d6e87538f60e21fed43fb67349343566f6d2)
+    from exact head c2ae5e433910b884e7f802a679177a44e206256d. A fresh full-repo class-frequency
+    survey outside all now-closed families (kr-text-black-*, kr-text-bold-*, kr-text-dim-*,
+    kr-text-eyebrow-*, kr-label-*, kr-badge-* incl. -ghost/-outline sizeless siblings,
+    kr-text-error-xs) found `text-xs opacity-60` at 23 exact occurrences across 9 files -- a
+    status/loading caption shape distinct from the kr-text-dim-xs-* family (bare opacity-N dims
+    the whole element, not just the text color via text-base-content/NN). Added .kr-text-faded-xs
+    (@apply text-xs opacity-60) to assets/css/tailwind.css, named separately from
+    kr-text-dim-xs-*/-muted for that reason. New codemod
+    utils/scripts/codemods/kr_text_faded_xs_codemod.py, sibling of
+    kr_text_error_xs_codemod.py/kr_text_dim_xs_60_codemod.py (imports the shared
+    _class_attr.py CLASS_ATTR guard). Ran --exact-only for this bounded first slice: migrated
+    all 23 occurrences across cthulhuquarium-game.vue (11), mandarin-voice-coach.vue (1),
+    appmaker-page.vue (2), ruler-hooked-card.vue (1), ruler-hooked-game.vue (1),
+    video-lora-picker.vue (1), music-mentor.vue (1), pages/play/mandarin.vue (2),
+    pages/play/video-generator.vue (3); no geometry or behavior change. Verified: vue-tsc clean;
+    eslint 333/327/6 identical to baseline; test:layout-contract holds, 0 new violations (same
+    pre-existing narrative-ingredient-multi-picker.vue viewport-grid ratchet note as every
+    recent slice, left untouched); test:lint-ratchet holds at 333/-59; prettier --check . warn
+    list byte-identical to baseline (1144 files, confirmed via git-stash before/after diff of
+    the full warning list, not just the count). All 50 kind_robots PR checks green,
+    mergeable_state clean at merge time. Kaizen for the next slice: sibling opacity-NN shapes
+    surveyed alongside this one and left open -- text-sm opacity-70 (13 occurrences), text-sm
+    opacity-80 (10), text-xs opacity-55 (7), font-sans opacity-70 (13) -- any is a reasonable
+    next bounded slice under the same kr-text-faded-* naming convention. Return the recurring
+    consistency umbrella to ready for the next bounded slice.
   updated: '2026-09-09T17:58:02Z'
   implementation_pr: 'silasfelinus/kind_robots#2564'
   retry_context: ''
