@@ -1,9 +1,0 @@
-version: 1
-project: scene-animator
-task: t-005
-operation: needs-human
-session: 2026-09-09T055100Z-scene-animator-t-005-gpt56sol-navfix
-soft_gate: true
-updated: '2026-09-09T06:05:00Z'
-note: >-
-  FOR SILAS: The repository-side Scene Animator fix is merged as silasfelinus/kind_robots#2546 (squash ef8397343d8cd74344399469acf75270ffa74a74). Root cause was the production container contract: the app resolves /app/animate, but only the public image tree was mounted. The repo now declares ANIMATE_PATH=/app/animate plus a dedicated read-only host bind from /mnt/user/pc/kindrobots/animate, documents the mapping, and includes a deployment-contract verifier. All exact-head PR workflows completed successfully, including TypeScript, Layout, Schema Migration Parity, and Contract Tests. TO APPROVE / COMPLETE: on Alexandria, add the equivalent saved DockerMan template path mapping Host /mnt/user/pc/kindrobots/animate -> Container /app/animate as Read Only, then recreate/update KindRobots through the normal guarded deployment path and re-test /admin/scene-animator. This is a physical-host configuration gate; no further GitHub code change can make the currently running container see an unmounted host directory. Once the health endpoint reports the source available and one real batch works, this acceptance task can close and the scene-animator project can be marked finished.

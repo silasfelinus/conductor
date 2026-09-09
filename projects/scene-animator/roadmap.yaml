@@ -104,7 +104,7 @@ tasks:
 
   - id: t-005
     title: "FOR SILAS: confirm the admin Scene Animator surface to close out this finished project"
-    status: review
+    status: needs-human
     passes: 0
     stakes: reversible
     note: |-
@@ -133,7 +133,9 @@ tasks:
       Silas tested the Scene Animator surface on 2026-09-08 and rejected the closeout: the UI reports "Scene Animator source root is unavailable: /app/animate" and the animator does not work. Reopen this acceptance task for repair. Treat the observed production source-root failure as the concrete bug to fix before asking for acceptance again.
 
       Root cause confirmed: the Scene Animator application expects /app/animate, but the deployment definition mounted only the public image tree. The implementation branch adds the missing dedicated read-only animate bind, documents the DockerMan production mapping, and adds a source-level deployment contract verifier. Production remains blocked on applying the equivalent saved Unraid template mount before the acceptance test can pass.
-    updated: '2026-09-09T05:55:00Z'
-    owner: worker
+
+      FOR SILAS: The repository-side Scene Animator fix is merged as silasfelinus/kind_robots#2546 (squash ef8397343d8cd74344399469acf75270ffa74a74). Root cause was the production container contract: the app resolves /app/animate, but only the public image tree was mounted. The repo now declares ANIMATE_PATH=/app/animate plus a dedicated read-only host bind from /mnt/user/pc/kindrobots/animate, documents the mapping, and includes a deployment-contract verifier. All exact-head PR workflows completed successfully, including TypeScript, Layout, Schema Migration Parity, and Contract Tests. TO APPROVE / COMPLETE: on Alexandria, add the equivalent saved DockerMan template path mapping Host /mnt/user/pc/kindrobots/animate -> Container /app/animate as Read Only, then recreate/update KindRobots through the normal guarded deployment path and re-test /admin/scene-animator. This is a physical-host configuration gate; no further GitHub code change can make the currently running container see an unmounted host directory. Once the health endpoint reports the source available and one real batch works, this acceptance task can close and the scene-animator project can be marked finished.
+    updated: '2026-09-09T06:05:00Z'
     claimed_by: 2026-09-09T055100Z-scene-animator-t-005-gpt56sol-navfix
     claimed_at: '2026-09-09T05:51:00Z'
+    soft_gate: true
