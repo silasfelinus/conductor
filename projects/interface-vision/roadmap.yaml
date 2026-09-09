@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3708,8 +3708,17 @@ tasks:
     during this session's startup sweep (check_pr_merged_drift.py did not catch it because
     the task was at status:ready, not claimed/review, at sweep time -- its drift check only
     inspects claimed/review tasks).
-  updated: '2026-09-09T22:39:49Z'
-  implementation_pr: 'silasfelinus/kind_robots#2568'
+
+    Slice 189 merged as silasfelinus/kind_robots#2569 (squash dc97ca3) from exact head
+    6ec8b45fc3f53392b2f8b9a4e9cfebec7c74e0c1: migrated the remaining 23 subset-match kr-
+    text-dim-sm-50 occurrences across 20 files, closing out the kr-text-dim-sm-50 family
+    (exact pool shipped in slice 188/#2568). The originating session's own close-out PR
+    (#3985) sat open with the task at status:review and CI already green on #2569 with no
+    further activity since creation -- picked up and completed by a later scheduled sweep
+    (session ending in t125) per the standing merge-when-green policy: merged #2569, then
+    landed this ready+implementation_pr transition on the same branch to close out #3985.
+  updated: '2026-09-09T23:42:22Z'
+  implementation_pr: 'silasfelinus/kind_robots#2569'
   retry_context: ''
   owner: worker
   claimed_by: claude-scheduled-20260909T223948Z-t104s189
