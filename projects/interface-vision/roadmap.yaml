@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3400,12 +3400,49 @@ tasks:
     (flex items-center gap-2 etc.) are each too small/varied or too generic to be a single
     bounded family. Return the recurring consistency umbrella to ready for the next bounded
     slice.
-  updated: '2026-09-09T09:29:59Z'
-  implementation_pr: 'silasfelinus/kind_robots#2550'
+
+    Slice 175 merged as silasfelinus/kind_robots#2553 (squash
+    7d3e0ef57652b6c7a7ab058f22331e85818afcd1) from exact head
+    ec846bbe95273dc36814952d6d75c9bf061013da. Fifth sibling of the kr-text-black-* family:
+    added .kr-text-black-2xl (font-black text-2xl) and
+    utils/scripts/codemods/kr_text_black_2xl_codemod.py, same subset-match convention as
+    every prior sibling. Migrated 71 occurrences across 57 .vue files (a fresh full-repo
+    class-frequency survey after slice 174 closed the family, at the time, at
+    -lg/-xl/-sm/-xs found this shape unnamed at 72 subset-match occurrences -- same 'closed
+    at the sizes surveyed, not a deliberate exclusion' situation that reopened it for -xs
+    one slice earlier). components/pages/serendipity-page.vue is excluded from the codemod:
+    its Serendipity label is pinned verbatim by
+    utils/scripts/verifySerendipityRouteCutover.mjs's locked route-cutover contract on the
+    exact class string, caught by that check's own CI failure on this PR's first push and
+    fixed by excluding the file rather than editing the locked contract. Second commit in
+    the same PR, out of t-104's own scope but bundled because it blocked this PR's required
+    check: fixed a pre-existing base-branch build failure in components/pages/storybook-
+    library-page.vue (confirmed identically red on main before this fix) -- two @click
+    statements with no semicolon across template lines parsed as a single ambiguous
+    expression by Vue's template compiler, breaking npm run build/the Build production image
+    CI job; fixed by extracting downloadStoryAsMarkdown()/downloadStoryAsJson() wrapper
+    functions rather than rejoining onto one semicolon-joined line, since Prettier's own
+    canonical formatting for a multi-statement no-semicolon inline handler is exactly that
+    broken multi-line shape (verified via git stash and a direct npm run build repro
+    before/after). Verified: vue-tsc --noEmit clean, eslint byte-identical to baseline
+    (confirmed via git stash), npm run test:layout-contract holds (0 new violations, same
+    pre-existing narrative-ingredient-multi-picker.vue viewport-grid ratchet note as every
+    recent slice, left untouched), npm run test:lint-ratchet holds at 333/-59, prettier
+    --check clean on both touched files (storybook-library-page.vue's new form confirmed
+    Prettier-stable). All 57 kind_robots PR checks green, mergeable_state clean, merged.
+    Kaizen for the next slice: a fresh full-repo class-frequency survey outside the now
+    five-sibling kr-text-black-* family and the closed kr-label-*/kr-text-dim-* families --
+    remaining bare label-text occurrences and generic layout-utility combos (flex items-
+    center gap-2, icon-sizing pairs like h-4 w-4) are candidates but need judgment on
+    whether they are semantically bounded enough to name, versus common Tailwind
+    sizing/layout idioms that happen to repeat. Return the non-recurring consistency
+    umbrella to ready for the next bounded slice.
+  updated: '2026-09-09T10:11:03Z'
+  implementation_pr: 'silasfelinus/kind_robots#2553'
   retry_context: ''
   owner: worker
-  claimed_by: claude-20260909T092958Z-t104
-  claimed_at: '2026-09-09T09:29:59Z'
+  claimed_by: null
+  claimed_at: null
 
 - id: t-123
   milestone: m5
