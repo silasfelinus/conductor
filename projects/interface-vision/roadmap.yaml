@@ -3973,10 +3973,10 @@ tasks:
 - id: t-126
   milestone: m5
   title: "Fix the :class= false-positive risk shared by every kr-* codemod's class=\"...\" regex"
-  status: review
+  status: done
   passes: 0
   stakes: reversible
-  note: |-
+  note: >-
     Kaizen from t-104 slice 180 (kind_robots#2559, merged 2803c16). Every existing
     kr-* codemod (~30 scripts in utils/scripts/codemods/) uses the same unanchored
     regex, `re.compile(r'class="([^"]*)"')`, to find static class attributes to
@@ -4011,7 +4011,32 @@ tasks:
     real static class="..." attributes) -- a synthetic test fixture containing a
     :class="`... <base tokens> ...`" binding is the direct regression check for
     the false-positive this task closes.
+
+    Fixed as silasfelinus/kind_robots#2561 (squash 470856ec546a6d8ea1a1360e04332ef52a17e991)
+    from exact head 23ec414f27503c2bff66f78eee79dd802d934e73. Audited every kr-* codemod
+    under utils/scripts/codemods/ for the unanchored 'class="..."' regex that could match
+    inside a :class="..."/v-bind:class="..." dynamic binding: 38 codemods still carried the
+    unguarded pattern (2 -- kr_text_bold_2xl_codemod.py and kr_badge_codemod.py -- already
+    had a hand-added (?<!:) guard from slices 180/181). Factored the guard into one shared
+    module, utils/scripts/codemods/_class_attr.py, that all 40 now import
+    (kr_panel_codemod.py's own stricter (?<![:\w-]) guard was already safe and left
+    untouched). Every touched codemod's diff is a single mechanical line swap, verified via
+    git diff --numstat. Caught and fixed a real bug the refactor's own mechanical migration
+    script introduced along the way: it mistook a docstring prose sentence starting with the
+    word 'from' for an import statement in kr_dead_label_text_cleanup_codemod.py, inserting
+    the new import inside the docstring and breaking the module (NameError) -- found by
+    literally dry-running every codemod after the refactor, not just py_compile.
+    Verification: every codemod compiles; every codemod's --dry-run output is byte-identical
+    before/after the fix (no false negatives against any real static class="..." attribute
+    in the repo); new tests/python/test_class_attr.py is the synthetic-fixture regression
+    check the task's own note asked for -- a :class template-literal binding (the exact
+    rebel-button.vue shape) and a v-bind:class binding are confirmed rejected, static class
+    attributes (including one immediately following a dynamic binding on the same tag) are
+    confirmed still matched, and a same-fixture check against the old unguarded pattern
+    proves the regression test is real. Full tests/python/ suite: 73 passed (was 67). All 46
+    kind_robots PR checks green, mergeable_state clean at merge time.
   owner: worker
   claimed_by: claude-scheduled-20260909T143137Z-iv-t126
   claimed_at: '2026-09-09T15:06:34Z'
-  updated: '2026-09-09T15:12:04Z'
+  updated: '2026-09-09T15:17:37Z'
+  implementation_pr: 'silasfelinus/kind_robots#2561'
