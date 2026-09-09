@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -4102,7 +4102,20 @@ tasks:
     kind_robots CI checks passed, mergeable_state clean. Kaizen: slice 168 should run a
     fresh survey outside kr-text-black-*/kr-text-dim-*/kr-text-eyebrow. Returning to ready
     for the next slice.
-  updated: '2026-09-09T02:42:24Z'
+
+    Slice 168 merged as silasfelinus/kind_robots#2540 (squash 2f4cc436) from exact head
+    a41943b7f1eca0fb5d4ce3e133690bbee690d2dd. Added kr-text-eyebrow-bold (font-bold
+    uppercase, weight sibling of kr-text-eyebrow) and kr_text_eyebrow_bold_codemod.py;
+    migrated 127 subset-match occurrences across 44 files. vue-tsc clean; eslint 333/327/6
+    identical before/after (git stash); test:layout-contract holds (same unrelated -2
+    ratchet opportunity in narrative-ingredient-multi-picker.vue, out of scope); test:lint-
+    ratchet holds at 333/-59; prettier --check flagged 4 genuinely new fallout files,
+    targeted --write landed back at the exact pre-existing baseline byte-for-byte. Kaizen:
+    slice 169 should survey outside kr-text-black-*/kr-text-dim-*/kr-text-eyebrow/kr-text-
+    eyebrow-bold for the next largest bounded pattern -- candidates spotted but not yet
+    mined: font-bold text-xs/text-sm label pairs, label-text text-xs form-label pairs.
+    Return the recurring consistency umbrella to ready for the next bounded slice.
+  updated: '2026-09-09T02:51:41Z'
   implementation_pr: 'silasfelinus/kind_robots#2540'
   retry_context: ''
   owner: worker
