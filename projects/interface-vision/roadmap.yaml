@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -4130,7 +4130,22 @@ tasks:
     (84 occurrences, 35 files, next kr-text-bold-* sibling) or label-text text-xs font-bold
     (25 occurrences, 4 files, previously flagged in kr_label_bold_codemod.py's own
     docstring).
-  updated: '2026-09-09T03:56:05Z'
+
+    Slice 170 merged as silasfelinus/kind_robots#2542 (squash
+    2c07a49c86fd1d4574b6c20162b04871f845cee7) from exact head
+    b62fdbba4674eba98bb682d5d325946750ce142c. Added .kr-text-bold-xs (font-bold text-xs),
+    second entry in the kr-text-bold-* family. Migrated 84 subset-match occurrences across
+    35 files; no geometry or behavior change. vue-tsc clean; eslint 333/327/6 identical to
+    established baseline; test:layout-contract holds (same unrelated -2 ratchet opportunity,
+    left untouched); prettier flagged 1 genuinely new fallout file (art-interact.vue),
+    targeted --write landed back at the exact pre-existing baseline (1148 files). All 56
+    kind_robots CI checks green, mergeable_state clean, merged. Return the recurring
+    consistency umbrella to ready for the next slice. Kaizen: slice 171 should take label-
+    text text-xs font-bold (25 occurrences, 4 files, previously flagged in
+    kr_label_bold_codemod.py's own docstring as its own bounded family) -- this closes out
+    every candidate surveyed across slices 168-170; after this, a fresh full-repo class-
+    frequency survey is needed to find the next pattern.
+  updated: '2026-09-09T04:05:17Z'
   implementation_pr: 'silasfelinus/kind_robots#2542'
   retry_context: ''
   owner: worker
