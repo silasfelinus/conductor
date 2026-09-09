@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3533,8 +3533,44 @@ tasks:
         coverage; otherwise run a fresh full-repo class-frequency survey outside all now-
         closed families. Return the recurring consistency umbrella to ready for the next
         bounded slice.
-  updated: '2026-09-09T14:01:12Z'
-  implementation_pr: 'silasfelinus/kind_robots#2558'
+
+    Slice 180 merged as silasfelinus/kind_robots#2559 (squash
+        2803c1664b23d018cbc5358bad840b1a6bfb765d) from exact head
+        3d4fdc7f1f3779a8283367aeec15d8bc6105f628. Added .kr-text-bold-2xl (@apply font-bold
+        text-2xl;) to assets/css/tailwind.css -- fifth and final entry in the kr-text-bold-*
+        family, closing it out to fully match kr-text-black-*'s complete -sm/-xs/-lg/-xl/-2xl
+        coverage per slice 179's own kaizen note. New codemod
+        utils/scripts/codemods/kr_text_bold_2xl_codemod.py. Migrated 9 hand-rolled
+        font-bold text-2xl occurrences across 8 files. A 10th candidate in
+        components/pages/rebel-button.vue is a :class="`...`" dynamic template-literal
+        binding, not a static class="..." attribute -- correctly left untouched.
+
+        Bug found and fixed: the shared class="([^"]*)" regex every prior kr-* codemod in
+        this repo uses can match inside a :class="..." dynamic binding whenever the bound
+        expression contains a literal class="-shaped substring. The first codemod run
+        corrupted rebel-button.vue's binding this way; caught it, added a (?<!:) negative
+        lookbehind to this codemod's regex, reverted the corrupted file, and re-verified with
+        0 remaining false-positive matches before committing. Confirmed the already-merged
+        slice 179 (kr-text-bold-xl, kind_robots#2558) did not hit this same trap anywhere in
+        the repo. Every sibling kr-* codemod (~30 scripts) shares the same latent gap --
+        flagged as a kaizen candidate for a dedicated audit/fix pass rather than rewritten in
+        scope.
+
+        Verified: vue-tsc clean; eslint 333/327/6 identical to baseline; test:layout-contract
+        holds, 0 new violations (same pre-existing narrative-ingredient-multi-picker.vue
+        viewport-grid ratchet note as every recent slice, left untouched); test:lint-ratchet
+        holds at 333/-59; prettier --check . 1143 files flagged, byte-identical to baseline (4
+        touched files confirmed pre-existing drift via git stash before/after). All 51
+        kind_robots PR checks resolved success, mergeable_state clean at merge time.
+
+        Kaizen for the next slice: audit the ~30 existing kr-* codemods for the same
+        class="([^"]*)" -> :class="..." false-positive risk this slice caught, adding the
+        (?<!:) guard to each (or factoring the pattern into a shared helper module all the
+        codemods import). This closes the kr-text-bold-* family fully; otherwise run a fresh
+        full-repo class-frequency survey outside all now-closed families. Return the
+        recurring consistency umbrella to ready for the next bounded slice.
+  updated: '2026-09-09T14:23:24Z'
+  implementation_pr: 'silasfelinus/kind_robots#2559'
   retry_context: ''
   owner: worker
   claimed_by: claude-20260909T140700Z-t104slice180
