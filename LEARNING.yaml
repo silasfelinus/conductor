@@ -12968,3 +12968,52 @@ records:
     to the one primitive first discovered -- writing a general-purpose
     cleanup codemod once (`kr_dead_label_text_cleanup_codemod.py`) beat
     writing six more single-primitive ones.
+- date: 2026-09-09
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A prior session's slice 189 close-out (kind_robots#2569, conductor#3985)
+    sat fully green and unmerged for ~20 minutes with the conductor task
+    stuck at status:claimed -- the originating session appears to have ended
+    before merging its own already-green PRs. A later scheduled sweep found
+    both PRs via GitHub MCP (select_role.py's own reachability probe had
+    403'd on an unrelated repo and silently reported 0 candidate PRs, so the
+    live MCP check was what actually caught this), confirmed CI green and
+    mergeable_state clean on the exact head SHA, merged both, and landed the
+    ready+implementation_pr transition on the same close-out branch per the
+    recurring-task convention. Lesson: select_role.py's GitHub-reachability
+    signal is per-probe, not global -- a 403 on one repo in its scan list can
+    silently zero out candidate_reviewable_prs for every repo it checks, so a
+    session should independently confirm 0-open-PRs via a working transport
+    (GitHub MCP here) before trusting that field, not just when the script
+    already flags github_api_unreachable at the top level.
+- date: 2026-09-09
+  project: interface-vision
+  task: t-125
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Threaded the `navigation` frontmatter field through `ResolvedTab`
+    (kind_robots#2570), replacing t-104's hand-maintained
+    `NAVIGATION_HIDDEN_TABS` set in channelTabGroups.ts with a
+    frontmatter-carried boolean, mirroring the existing `visible !== false`
+    pattern. The one non-obvious spot: a regression script
+    (verifyNavigationConsolidation.ts) builds synthetic ResolvedTab fixtures
+    by hand rather than through resolveTabItem(), so switching the
+    production check to read `tab.navigation` required updating those
+    fixtures too, or the same six nested tabs it was meant to keep pinned
+    would have silently reported navigable. When retiring a hardcoded
+    lookup table in favor of a data-carried field, grep for every place a
+    type's shape is hand-constructed (test fixtures, fallback objects) --
+    vue-tsc's required-field error caught one instance
+    (workspace-header.vue's fallbackTab) for free, but the fixture-based
+    regression script's *values* wouldn't have been caught by the
+    typechecker, only by actually running it.
