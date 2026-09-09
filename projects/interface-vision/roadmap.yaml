@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3507,8 +3507,34 @@ tasks:
     kr-text-bold-*, kr-text-dim-*, kr-text-eyebrow-*, kr-label-*, kr-badge-*, kr-text-error-
     xs) -- next slice should run a fresh full-repo class-frequency survey. Return the
     recurring consistency umbrella to ready for the next bounded slice.
-  updated: '2026-09-09T13:30:48Z'
-  implementation_pr: 'silasfelinus/kind_robots#2557'
+
+    Slice 179 merged as silasfelinus/kind_robots#2558 (squash
+        440cb4478c8d872c2ae68ab27f127b7d98231b33) from exact head
+        371577ac706e7b5947e24786e3d265a81f5f15fe. Added .kr-text-bold-xl (@apply font-bold
+        text-xl;) to assets/css/tailwind.css -- fourth entry in the kr-text-bold-* family,
+        closing the -xl gap slice 178's kaizen note flagged (kr-text-bold-* previously
+        covered only -sm/-xs/-lg). New codemod
+        utils/scripts/codemods/kr_text_bold_xl_codemod.py (sibling of the kr-text-bold-*/kr-
+        text-black-* family's codemods, same subset-match convention). Migrated all 35
+        hand-rolled font-bold text-xl occurrences across 13 files -- character/bot/scenario/
+        reward creation-form section titles and card headings; no geometry or behavior
+        change, extra tokens preserved verbatim. Verified: vue-tsc clean; eslint 333/327/6
+        identical to baseline; test:layout-contract holds, 0 new violations (same pre-
+        existing narrative-ingredient-multi-picker.vue viewport-grid ratchet note as every
+        recent slice, left untouched); test:lint-ratchet holds at 333/-59; prettier --check .
+        1143 files flagged, byte-identical to baseline (6 touched files confirmed pre-
+        existing drift via git stash before/after). All 51 kind_robots PR checks resolved
+        success (one check-run object -- Narrative streaming-text isolation contract --
+        lagged the checks API at in_progress past its own workflow run's confirmed
+        completed/success state; verified directly via the Actions API and job logs before
+        merging), mergeable_state clean at merge time. Kaizen for the next slice: kr-text-
+        bold-2xl (10 occurrences, 8 files) is the remaining sibling to fully close the kr-
+        text-bold-* family out to match kr-text-black-*'s complete -sm/-xs/-lg/-xl/-2xl
+        coverage; otherwise run a fresh full-repo class-frequency survey outside all now-
+        closed families. Return the recurring consistency umbrella to ready for the next
+        bounded slice.
+  updated: '2026-09-09T13:56:54Z'
+  implementation_pr: 'silasfelinus/kind_robots#2558'
   retry_context: ''
   owner: worker
   claimed_by: claude-20260909T134500Z-t104slice179
