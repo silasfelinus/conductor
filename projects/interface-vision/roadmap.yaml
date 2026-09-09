@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3569,8 +3569,37 @@ tasks:
         codemods import). This closes the kr-text-bold-* family fully; otherwise run a fresh
         full-repo class-frequency survey outside all now-closed families. Return the
         recurring consistency umbrella to ready for the next bounded slice.
-  updated: '2026-09-09T14:52:41Z'
-  implementation_pr: 'silasfelinus/kind_robots#2559'
+
+    Slice 181 merged as silasfelinus/kind_robots#2560 (squash
+    8e7a8ad16f391f12d6e0866d906f26fe7c708c3d) from exact head
+    694c87984670f94f75ae7960798a0673324bd504. Added .kr-badge-ghost (bare badge badge-ghost,
+    no size modifier) as the sizeless sibling of the existing .kr-badge-ghost-sm/.kr-badge-
+    ghost-xs primitives, matching the .kr-badge-sm/.kr-badge-xs colorless-sibling
+    convention. Extended utils/scripts/codemods/kr_badge_codemod.py's FAMILIES with the new
+    shape, bounded via BOUNDED_EXTRAS to an exact-token match only: 11 occurrences migrated
+    across 11 files. A further ~13 occurrences carry varied, not-yet-individually-audited
+    extra tokens (hover states, rounded-*, backdrop-blur, ...) and are left for a future
+    slice. A twelfth exact match in components/ui/ui-gallery.vue's 'Badges & status' design-
+    system showcase section is a deliberate raw-DaisyUI comparison row and was left
+    untouched, matching the precedent set for that file's btn btn-primary showcase row in an
+    earlier slice. Also added the (?<!:) negative-lookbehind guard to this codemod's
+    CLASS_ATTR regex (kaizen from slice 180 / interface-vision t-126) -- one fewer script
+    for t-126 to still cover. Verified: vue-tsc clean; eslint 333/327/6 identical to
+    baseline (git-stash-confirmed); prettier --check . byte-identical to baseline after
+    fixing one line-collapse side effect in bot-gallery.vue (git-stash-confirmed, same class
+    of Prettier line-collapse gotcha documented in slice 71's TALKBACK entry); test:layout-
+    contract holds, 0 new violations; test:lint-ratchet holds at 333/-59. All 50 kind_robots
+    PR checks green, mergeable_state clean at merge time. Kaizen for the next slice: audit
+    the ~13 remaining kr-badge-ghost subset-match occurrences with extra tokens (per-file,
+    since they vary a lot -- hover/cursor states in coloring-book-manager.vue look like a
+    distinct clickable-badge shape worth its own primitive), or run a fresh full-repo class-
+    frequency survey outside all now-closed families (this slice's own broad survey found
+    nothing else as clean-cut outside generic layout utilities like flex/gap/items-center
+    and icon-size utilities like h-4 w-4, which are too context-varied to safely fold into a
+    single kr-* primitive without more design input). Return the recurring consistency
+    umbrella to ready for the next bounded slice.
+  updated: '2026-09-09T15:02:25Z'
+  implementation_pr: 'silasfelinus/kind_robots#2560'
   retry_context: ''
   owner: worker
   claimed_by: claude-scheduled-20260909T143137Z-ivt104
