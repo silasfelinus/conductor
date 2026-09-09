@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3437,8 +3437,35 @@ tasks:
     whether they are semantically bounded enough to name, versus common Tailwind
     sizing/layout idioms that happen to repeat. Return the non-recurring consistency
     umbrella to ready for the next bounded slice.
-  updated: '2026-09-09T10:30:27Z'
-  implementation_pr: 'silasfelinus/kind_robots#2553'
+
+    Slice 176 merged as silasfelinus/kind_robots#2555 (squash
+    ebc3473b5ea541b53bd8ad1172de171132bb78f4) from exact head
+    7d3e0ef57652b6c7a7ab058f22331e85818afcd1. Added .kr-text-bold-lg (@apply font-bold text-
+    lg;) to assets/css/tailwind.css -- the third sibling in the kr-text-bold-* family (after
+    -sm/-xs from slices 169/170). A fresh full-repo class-frequency survey outside all
+    closed families (kr-text-black-*, kr-text-dim-*, kr-text-eyebrow-*, kr-label-*) found
+    font-bold text-lg at 48 subset-match occurrences (21 exact) across 24 files,
+    consistently used for h2/h3/p section-heading emphasis text -- the same role .kr-text-
+    black-lg already covers for font-black. New codemod
+    utils/scripts/codemods/kr_text_bold_lg_codemod.py (mirrors kr_text_bold_xs_codemod.py:
+    dry-run default, --write, --exact-only, subset-match). Migrated all 48 occurrences
+    across 24 files; no geometry or behavior change. Verified: vue-tsc clean before/after;
+    eslint 333 problems (327 errors, 6 warnings) identical before/after (git stash
+    confirmed); test:layout-contract holds, 0 new violations (same pre-existing narrative-
+    ingredient-multi-picker.vue viewport-grid ratchet note as every recent slice, left
+    untouched); test:lint-ratchet holds at 333/-59; prettier --check needed a targeted
+    --write on 3 new fallout files (bot-chat.vue, character-chat.vue, reward-encounter.vue),
+    final --check matched the exact 1151-file pre-existing baseline. All 52 kind_robots PR
+    checks green, merged. Kaizen for the next slice: kr-text-bold-* now covers -sm/-xs/-lg
+    (worth a quick check for -xl/-2xl siblings, unsurveyed). Strongest remaining candidates
+    outside all closed families: text-xs text-error (36 subset-match/32 files, a coherent
+    inline validation/error-message caption pattern) and the colorless badge badge-xs base
+    (26 subset-match/13 files, natural xs sibling of the already-established colorless kr-
+    badge-sm, whose color is supplied dynamically via a sibling :class binding -- matches
+    kr-badge-sm's own documented rationale). Return the recurring consistency umbrella to
+    ready for the next bounded slice.
+  updated: '2026-09-09T11:01:39Z'
+  implementation_pr: 'silasfelinus/kind_robots#2555'
   retry_context: ''
   owner: worker
   claimed_by: claude-20260909T103026Z-t104
