@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3665,7 +3665,23 @@ tasks:
     recurring consistency umbrella to ready for the next bounded slice. Kaizen for next
     slice: remaining sibling opacity-NN shapes from slice 184's survey -- text-sm opacity-80
     (10 occurrences), text-xs opacity-55 (7), font-sans opacity-70 (13).
-  updated: '2026-09-09T19:36:44Z'
+
+    Slice 186 merged as silasfelinus/kind_robots#2566 (squash
+    20449c8141fdc78340cf8126edafe706a8a3410a) from exact head
+    2caa29d7805fb687ab46bf9cb16843cfa3805411. Added .kr-text-faded-sm-80 (text-sm
+    opacity-80), sibling of slice 185's kr-text-faded-sm, migrated 17 subset-match
+    occurrences across 8 files (cthulhuquarium-game.vue x7, brainstorm-manager.vue x3, kr-
+    manager.vue, appmaker-page.vue, memory-dungeon.vue, ruler-hooked-card.vue, ruler-hooked-
+    fishing-encounter.vue, ruler-hooked-game.vue x2); no geometry or behavior change.
+    Verified vue-tsc clean, eslint 333/327/6 identical to baseline, test:layout-contract
+    holds (0 new violations), test:lint-ratchet holds at 333/-59, prettier --check byte-
+    identical warning list (1145 lines). All 52 kind_robots PR workflows completed
+    successfully. Return the recurring consistency umbrella to ready for the next bounded
+    slice. Kaizen for next slice: text-xs opacity-55 (10 occurrences across 6 files) is the
+    safer next candidate; font-sans opacity-70 (13 occurrences, all in components/ui/ui-
+    gallery.vue) needs a check first for whether that file is a live design-token showcase
+    rather than an ordinary migration target.
+  updated: '2026-09-09T19:47:07Z'
   implementation_pr: 'silasfelinus/kind_robots#2566'
   retry_context: ''
   owner: worker
