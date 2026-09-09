@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3650,8 +3650,23 @@ tasks:
     opacity-80 (10), text-xs opacity-55 (7), font-sans opacity-70 (13) -- any is a reasonable
     next bounded slice under the same kr-text-faded-* naming convention. Return the recurring
     consistency umbrella to ready for the next bounded slice.
-  updated: '2026-09-09T18:53:31Z'
-  implementation_pr: 'silasfelinus/kind_robots#2564'
+
+    Slice 185 merged as silasfelinus/kind_robots#2565 (squash
+    b053bb2e6d13e81e38cbfd7d68ecae2977e14f5e) from exact head
+    1d97c456242419fdb9eb59a6cf04d0c0e75e4450. Added .kr-text-faded-sm (text-sm opacity-70),
+    sibling of slice 184's kr-text-faded-xs, migrated 16 subset-match occurrences across 13
+    files (art-test.vue, dream-inspire-button.vue, dream-relationship-gallery.vue, mandarin-
+    voice-coach.vue, appmaker-page.vue x3, reward-gallery.vue, ruler-hooked-slots.vue,
+    scenario-gallery.vue, scenario-relationship-gallery.vue, video-lora-picker.vue, music-
+    mentor.vue, video-generator.vue x3); no geometry or behavior change. Verified vue-tsc
+    clean, eslint 333/327/6 identical to baseline, test:layout-contract holds (0 new
+    violations), test:lint-ratchet holds at 333/-59, prettier --check byte-identical warning
+    list (1145 lines). All 50 kind_robots PR workflows completed successfully. Return the
+    recurring consistency umbrella to ready for the next bounded slice. Kaizen for next
+    slice: remaining sibling opacity-NN shapes from slice 184's survey -- text-sm opacity-80
+    (10 occurrences), text-xs opacity-55 (7), font-sans opacity-70 (13).
+  updated: '2026-09-09T19:02:51Z'
+  implementation_pr: 'silasfelinus/kind_robots#2565'
   retry_context: ''
   owner: worker
   claimed_by: 2026-09-09T18:50:00Z-slice185
