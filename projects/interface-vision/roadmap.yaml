@@ -4059,7 +4059,7 @@ tasks:
 - id: t-125
   milestone: m5
   title: "Propagate the authored navigation frontmatter field through ResolvedTab instead of mirroring hidden-tab keys"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   note: |-
@@ -4079,6 +4079,10 @@ tasks:
     delete the set. No visible behavior change intended -- utils/scripts/
     verifyNavigationConsolidation.ts (added in the same PR) should still pass unchanged
     and is the regression check for this refactor.
+  owner: worker
+  claimed_by: claude-scheduled-20260909T233204Z-t125
+  claimed_at: '2026-09-09T23:32:05Z'
+  updated: '2026-09-09T23:32:05Z'
 
 - id: t-126
   milestone: m5
