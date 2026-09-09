@@ -5,7 +5,11 @@ goal: >
   tested on phone, tablet, and desktop, uses art throughout the run, and has verified
   art coverage for all 1,024 deterministic endings before the project is called finished.
 notes_from_silas: |
-  Da Vinci is a life simulator app/game/webgame: a branching life narrative with pass/fail victory conditions and 1024 achievements/endpoints. It integrates with Kind Robots characters, Dreams, Chat, generated art collections, and the existing milestone system. Focus development on milestone/achievement/ending generation first, so narrative generation has concrete targets. This may later share pieces with Storybook, but do not merge it prematurely.
+  Da Vinci is a life simulator: a branching life narrative with pass/fail victory conditions and 1024 achievements/endpoints. It integrates with Kind Robots characters, Dreams, Chat, generated art collections, and the existing milestone system. Focus development on milestone/achievement/ending generation first, so narrative generation has concrete targets.
+
+  2026-09-09, replacing the "do not merge it prematurely" clause that closed this note from the start: "merge the projects, and kill any reference that says we should separate them. we care about having a solid *single* interface that is a stylish and effective storymaker with many endings. Whatever has been done should be merged."
+
+  Da Vinci is no longer a standalone product. Its engine shipped into Storybook as the `life` shape (kind_robots PR #2549): one route at /storybook, one setup screen, one story library, and /play/davinci permanently redirecting there. Nothing was rewritten and nothing was thrown away — the whole play loop moved across intact. This roadmap stays open only for the art-coverage work below, which is about the 1,024 endings themselves rather than about a separate product; anything NEW belongs on projects/storybook. See projects/davinci/docs/storybook-boundary-comparison.md, which now records the merge rather than arguing against it.
 
 milestones:
 - id: m1

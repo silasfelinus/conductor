@@ -4,7 +4,7 @@ goal: >
   Ship the collaborative Storybook experience as a polished story-first product: guided and
   limited-visibility play, reusable story state/artifacts, the in-progress casting/setup
   redesign, and a responsive front end that has been visually accepted on phone/tablet/desktop.
-notes_from_silas: 'Build the collaborative storytelling experience layer on top of the existing Kind Robots models. Support guided adventure and limited-visibility collaboration modes with async-first play, branching choices, custom inputs, rewards, inventory, and reusable story state. Boundaries with Da Vinci (see projects/davinci/docs/storybook-boundary-comparison.md): no shared run/session tables, no columns added to Life* models — shared behavior only through existing Kind Robots models (Bot, Chat, Character, Dream, Scenario, ArtCollection, Milestone) or extracted pure utilities. Respect this when designing the session schema.'
+notes_from_silas: 'Build the collaborative storytelling experience layer on top of the existing Kind Robots models. Support guided adventure and limited-visibility collaboration modes with async-first play, branching choices, custom inputs, rewards, inventory, and reusable story state. 2026-09-09, superseding the Da Vinci separation clause that stood here from 2026-07-02: "merge the projects, and kill any reference that says we should separate them. we care about having a solid *single* interface that is a stylish and effective storymaker with many endings. Whatever has been done should be merged." Da Vinci is now the `life` shape of Storybook (kind_robots PR #2549) — one route, one setup screen, one library. Nothing forbids a shared session table or a column on a Life* model any more; judge such a change on its merits like any other.'
 milestones:
 - id: m1
   title: Session model and boundaries
@@ -25,7 +25,7 @@ milestones:
 - id: m5
   title: Da Vinci convergence
   weight: 25
-  status: not-started
+  status: in-progress
 tasks:
 - id: t-001
   milestone: m1
@@ -131,6 +131,14 @@ tasks:
     Any future session-schema design task will read notes_from_silas first per
     AGENTS.md's picking-order rules, so this is in the right place to actually
     be seen before schema work starts.
+
+    SUPERSEDED 2026-09-09. The rule this task installed in notes_from_silas --
+    no shared run/session tables, no columns on Life* models -- is gone. Silas
+    merged the two projects ("kill any reference that says we should separate
+    them"), Da Vinci is now Storybook's `life` shape, and notes_from_silas
+    carries the reversal instead. The task itself is left done and unedited
+    above: it did what it was asked to do, and the record of that is worth more
+    than a tidy note. Nothing should act on the rule it describes.
   claimed_by: claude-conductor-scheduled-20260720T0511Z
   claimed_at: '2026-07-20T05:13:44Z'
   updated: '2026-07-20T05:21:14Z'
@@ -390,13 +398,59 @@ tasks:
 - id: t-024
   milestone: m5
   title: Design the Storybook/Da Vinci merge Silas asked for, superseding the 2026-07-05 boundary recommendation
-  status: ready
+  status: done
   owner: worker
   stakes: reversible
   gate_human: true
+  approved_by_human: true
   updated: '2026-09-09T00:00:00Z'
   passes: 0
+  implementation_pr: 'silasfelinus/kind_robots#2549'
   note: >
+    CLOSED 2026-09-09, same session it was filed. This task existed to bring a
+    merge design back to Silas before any code moved. He answered it directly
+    instead: "merge the projects, and kill any reference that says we should
+    separate them. we care about having a solid *single* interface that is a
+    stylish and effective storymaker with many endings. Whatever has been done
+    should be merged." That answers every open question the deliverable below
+    was meant to raise, so the design pass collapsed into the build.
+
+    SHIPPED (kind_robots PR #2549). One product at /storybook: one route, one
+    setup screen, one story library, four shapes. The fourth shape, "A whole
+    life", is the endings engine. /play/davinci is a permanent 301.
+    components/conductor/davinci-page.vue moved to
+    components/storybook/storybook-life-run.vue with its play loop intact --
+    run creation, resume, AI narration with the curated fallback pool, the ten
+    dimensions, chapter and ending art, resolution into one of the 1,024 seeded
+    LifeEndings, and every focus/stale-response/art-attribution guard the
+    davinci/t-021 slices added. It lost exactly two things: the
+    project-front-page landing card and its own start form.
+
+    NO MIGRATION WAS NEEDED, which is the part worth remembering. LifeRun has
+    carried characterId, dreamId, botId and artCollectionId since it was built
+    -- the same ingredients the storymaker's setup screen already collects --
+    so seeding a life from a chosen Character and LOCATION Dream is a body on
+    an existing POST. The four objections in the 2026-07-05 boundary doc were
+    about tables; the actual problem was two front doors.
+
+    A RUN IN FLIGHT SURVIVES. The engine's localStorage keys are unchanged and
+    the store treats an active-run key with no seed as a pre-merge run,
+    synthesizing a placeholder seed so it resumes inside the storymaker instead
+    of being stranded behind a setup screen it could never get past.
+
+    REFERENCES KILLED: notes_from_silas above (the separation clause is
+    replaced by the reversal), projects/davinci/docs/storybook-boundary-
+    comparison.md (rewritten in place, same path so no link anywhere dangles),
+    narration-layer-spec.md's "per the boundary doc's standing rule" section,
+    the boundary note in kind_robots docs/notes/davinci-play-loop-api.md, and
+    the "per the Storybook boundary doc" comment in server/utils/davinci.ts.
+    t-009's note is marked superseded rather than edited. Left deliberately in
+    place: davinciNarration.ts's BOUNDARY comment, which is about narration
+    never owning durable state -- a different boundary, and still true.
+
+    Remaining unification is filed as t-025 and t-026. Neither blocks anything.
+
+    ORIGINAL BRIEF, for the record:
     Silas, 2026-09-09, reviewing the Storybook setup screen: "this should also be merged 100%
     with da vinci." That is a direct reversal of standing architecture, so it gets a design pass
     before any code moves.
@@ -433,3 +487,60 @@ tasks:
     same review (oversized setup header, "Your spread", borrowed tutorial banner art, and the
     setup surface not scrolling at all) were fixed separately in kind_robots PR #2547 and are
     not part of this task.
+- id: t-025
+  milestone: m5
+  title: Unify narration prompt assembly across the beat shapes and the life shape
+  status: ready
+  owner: worker
+  stakes: reversible
+  passes: 0
+  updated: '2026-09-09T00:00:00Z'
+  depends_on: t-024
+  note: >
+    The one piece of real duplication the merge exposed rather than removed.
+    Both shapes build the same thing -- (narrator config + seed objects + state
+    snapshot + recent history) -> a structured response -- in two places:
+    stores/storybookStore.ts builds it client-side for the beat shapes, and
+    server/utils/davinciNarration.ts builds it server-side for the life shape.
+
+    That client/server split is the actual obstacle, not any policy, and it is
+    the first thing to decide: whether the beat loop's assembly moves to the
+    server, or the shared piece is a pure function both sides import. The
+    davinciNarration.ts contract was deliberately written extraction-ready
+    (plain values in the request, no LifeRun-specific fields; the
+    DaVinciDimension-keyed effects map becomes a generic Record<string, number>
+    with each caller supplying its own allowed-keys validator), so the shape of
+    the utility is already settled -- only where it runs is open.
+
+    Not urgent. Two implementations of one idea inside one product is a real
+    cost, but both work today and the merge did not make either worse. Do it
+    when a session has room to do it properly, and keep every existing
+    narration guard passing.
+- id: t-026
+  milestone: m5
+  title: Rename the /api/davinci/* namespace and davinci-* storage keys, migrating runs in flight
+  status: waiting
+  owner: worker
+  stakes: reversible
+  passes: 0
+  updated: '2026-09-09T00:00:00Z'
+  depends_on: t-025
+  note: >
+    The merge deliberately left the API namespace and the two localStorage keys
+    (davinci-active-life-run-id, davinci-active-life-run-art-jobs) with their
+    old names. Renaming a live API and orphaning every in-flight run buys
+    nothing Silas asked for -- he asked for one interface, and the merge
+    delivered that -- so the cost of a stale name was the right trade at the
+    time.
+
+    Worth doing eventually, behind a plan that MIGRATES running games rather
+    than stranding them: the client should read the old keys and write the new
+    ones for a release, and the old routes should redirect or dual-serve rather
+    than 404 a player mid-chapter. A rename that resets someone's life at
+    chapter five is worse than a name that reads oddly in a URL.
+
+    Sequenced behind t-025 rather than merely deprioritised: unifying narration
+    prompt assembly moves code between exactly the files this rename would
+    touch, so doing the rename first means doing it twice. It is also cosmetic,
+    and should not be picked up ahead of anything that changes what the
+    storymaker can actually do.

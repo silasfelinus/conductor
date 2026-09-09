@@ -175,23 +175,31 @@ generation path.
 
 ## Relationship to Storybook's narrator pattern
 
-Per `storybook-boundary-comparison.md`, narration prompt assembly is the
-first concrete piece both projects could share (item 1 under "What they
-genuinely could share — later"), but Storybook has no schema yet, so there
-is nothing to extract from today. This spec is written so extraction stays
-possible without a rewrite:
+**Updated 2026-09-09:** Da Vinci is no longer a separate project — it is the
+`life` shape of Storybook (kind_robots PR #2549). This section used to say
+extraction had to wait for a standing rule to lift; the rule is gone, and what
+is left is an ordinary engineering judgement about two implementations of the
+same idea inside one product.
 
-- The `(narrator config + seed objects + state snapshot + recent history) →
-  structured response` shape here is generic — it doesn't reference
-  `LifeRun` fields directly in the request contract, only plain values
-  (`protagonistName`, `genre`, `seed`, `statsSoFar`, `recentChoices`).
-- The one Da Vinci–specific piece is the `DaVinciDimension`-keyed `effects`
-  map. If/when a shared utility is extracted, that becomes a generic
-  `Record<string, number>` at the utility boundary, with each caller
-  (Da Vinci, later Storybook) supplying its own allowed-keys validator.
-- Per the boundary doc's standing rule, this stays inside
-  `server/utils/davinciNarration.ts` until Storybook's own m1 schema lands
-  and there's real duplicated code to extract from, not before.
+Narration prompt assembly is now genuinely duplicated: the beat shapes build
+`(narrator config + seed objects + state snapshot + recent history) →
+structured response` client-side in `stores/storybookStore.ts`, and the life
+shape builds it server-side here. That client/server split is the real
+obstacle to sharing it, not any policy. Worth resolving deliberately rather
+than in passing.
+
+This spec was written so extraction stays possible without a rewrite, and that
+still holds:
+
+- The request contract here is generic — it doesn't reference `LifeRun` fields
+  directly, only plain values (`protagonistName`, `genre`, `seed`,
+  `statsSoFar`, `recentChoices`).
+- The one life-shape-specific piece is the `DaVinciDimension`-keyed `effects`
+  map. When a shared utility is extracted, that becomes a generic
+  `Record<string, number>` at the utility's edge, with each caller supplying
+  its own allowed-keys validator.
+- Until then it stays inside `server/utils/davinciNarration.ts` — because
+  nothing has been extracted yet, not because anything forbids it.
 
 ## First build slice (what unblocks a playable run UI)
 
