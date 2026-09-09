@@ -1217,3 +1217,112 @@ touched, no re-renders requested for the 3 rejected slots).
    review pass.
 
 Re-arming to `ready` (recurring), releasing the claim.
+
+---
+
+## 2026-09-09 (scheduled Conductor session, creative review pass, mr-015 through mr-035 + mr-group-001)
+
+Continued the Monster Recast creative review from mr-015 onward per the prior pass's
+own next-step note. Reviewed all 20 remaining numbered slots (mr-015 through mr-035)
+plus the mr-group-001 "Monster Matinee" group page against `homage-concepts.yaml` and
+`DESIGN-BRIEF.md`'s originality rules.
+
+**Accepted (7), `accept-color` run live for each:**
+- **mr-016 (Creature in Drag)** -- broad amphibious body, fins/gills/scales preserved,
+  dressing-room mirror scene with seaweed boa and shell crown; a good original design,
+  no copied Black Lagoon head shape.
+- **mr-020 (Fly Girl Summer)** -- original insect head (compound eyes, mouthparts,
+  antennae) on a human pinup body in the described swimsuit pose; matches the brief.
+- **mr-024 (Madame Phantasm)** -- grand-staircase conductor pose, masks orbiting her
+  head rather than worn on her face, original organ-pipe skirt; avoids the classic
+  white half-mask entirely.
+- **mr-029 (Madame Close-Shave)** -- razor at the customer's throat, salon mirrors,
+  visibly red-stained rinse water in the basin; strong original design, no copied
+  Sweeney Todd production elements.
+- **mr-033 (The Hallway Boys)** -- symmetric hotel corridor, chandelier, carpet
+  literally rendered with directional arrows pointing at the boys as specified;
+  two differently-built boys, not identical twin girls in blue.
+- **mr-034 (Mother of the Patch)** -- towering vine/root creature holding carved
+  pumpkins in claw-like vine hands over a praying summoner in a moonlit patch;
+  original harvest-demon design, not the film creature's head shape.
+- **mr-035 (The Ticking Captain)** -- explicit non-homage prompt (no source_lineage
+  reference); storm-deck captain at the wheel with a chronometer on the binnacle and a
+  glowing clockwork-textured sea predator beneath the hull, matching its own prompt
+  closely.
+
+**Not accepted (13), reasoning recorded on each proposal's `notes:` in
+`sets/monster-recast/proposals.yaml`:**
+- **mr-015 (Unraveled on the Red Carpet)** -- exactly the failure mode the concept's own
+  body_direction warns against: a glamorous, unblemished fashion photo, no decay, no
+  unraveling, no curse symbols.
+- **mr-017 (Trophy Queen)** -- fully human face (no mandibles/alien features at all,
+  the concept's one required differentiator), helmet still on, camo-and-dreadlock
+  silhouette too close to the Predator's own look without it.
+- **mr-018 (Doctor Feast)** -- no mask of any kind, the concept's single defining
+  visual element and its own originalization_hook's central ask.
+- **mr-019 (Countess Vermin)** -- no ratlike/skeletal/repulsive features, no vampire
+  content at all; two ordinary women, one in silhouette.
+- **mr-021 (The Invisible Exhibitionist)** -- fully visible, fully corporeal woman;
+  the entire "body defined by negative space" premise is absent.
+- **mr-022 (Prom King Ascendant)** -- otherwise strong (ruined gym, intact KING banner,
+  unharmed crowned figure) but missing the described dark ceremonial fluid, the
+  concept's one named identity marker.
+- **mr-023 (Babs O'Blob)** -- exactly the excluded case named in its own
+  body_direction: "a woman wearing a blob dress," no amorphous anatomy at all.
+- **mr-025 (Little Miss Omen)** -- good compositional match but rendered essentially
+  monochrome/sepia, the same systemic color-rendering defect flagged on mr-006/mr-008.
+- **mr-026 (Madam Satan)** -- confident banquet hostess but no horns/hoof clues, no
+  impossible shadow; reads as a generic gala host rather than Satan as a woman.
+- **mr-027 (Half Possessed)** -- no partial facial transformation and no levitation,
+  the concept's two core identity markers; frost atmosphere alone isn't enough.
+- **mr-028 (Backward Boy)** -- the body/shadow relationship is inverted from the
+  concept's visual_hook (impossible pose belongs on the shadow here, not the body).
+- **mr-030 (Honeyed Hook)** -- no bees, no hook, no honey-face mirror reflection; an
+  intact elegant room rather than an abandoned apartment invocation scene.
+- **mr-031 (The Tall Woman)** -- average height, gender-ambiguous figure; neither the
+  required extreme height nor the varied/stretched mirror reflections are present.
+- **mr-032 (The Shape at Home)** -- nice pumpkin-sheet and knife-through-fabric
+  details, but she's shown unmasked and as a separate figure from the knife shadow.
+- **mr-group-001 (Monster Matinee)** -- shows adult handlers (one human, one android)
+  plus a boy rather than three dolls alone; also not buildable yet regardless since
+  none of its three source concepts (mr-008, mr-012, mr-013) are accepted.
+
+**Process note:** `manage_coloring_book_production.py --operation accept-color`
+required `pip3 install Pillow` again this session (mechanical_check's PIL import) --
+the same recurring, non-persistent sandbox gap logged on every prior pass.
+
+**BW derivation:** ran `generate-bw` live for the two color-only accepts with no
+existing BW inspiration (mr-016, mr-020); both timed out after 180s with the ArtJob
+still queued/running server-side (job 21667, 21668) -- consistent with the render
+queue backlog observed on every recent pass. Left both `bw_status: running`, no
+duplicate re-enqueue, no pass consumed (transient wait, not a failure). mr-024,
+mr-029, mr-033, mr-034, mr-035 already carry BW-capable inspirations or can derive
+BW next pass; not attempted this session given the backlog and time already spent
+generating.
+
+Decisions and full reasoning recorded as dated notes on each proposal in
+`sets/monster-recast/proposals.yaml` (targeted string edits appending to each slot's
+existing `notes:` list, not a `yaml.safe_dump` round-trip, matching established
+convention).
+
+Verification: `validate_roadmaps.py` clean; `coloring_proposal_status.py` before/after
+(Monster Recast accepted color/BW 8/3 -> 15/3, other two books unchanged);
+`coloring_queue_status.py --book monster-recast` shows `queue_integrity_safe: true`,
+0 duplicate job/entry ids; `git diff --stat` reviewed before committing
+(`color-art-jobs.yaml` queue-state text plus `proposals.yaml` notes only -- no binaries
+touched, no re-renders requested for the 13 rejected slots).
+
+**For the next pass:**
+1. Recovery-poll mr-016 (job 21667) and mr-020 (job 21668) once they finish
+   server-side, then run `generate-bw` for the other 5 new accepts (mr-024, mr-029,
+   mr-033, mr-034, mr-035).
+2. All 36 Monster Recast slots have now had at least one creative review pass. Next
+   actionable step is re-review of the rejected slots once fresh renders exist for
+   them (16 rejected across both passes: mr-001, mr-006, mr-010, mr-013, mr-014,
+   mr-015, mr-017, mr-018, mr-019, mr-021, mr-022, mr-023, mr-025, mr-026, mr-027,
+   mr-028, mr-030, mr-031, mr-032, mr-group-001 -- 20 total, some may need the
+   systemic color-rendering issue looked at first per the mr-006/mr-008/mr-025 pattern).
+3. Hollywood Recast and Kind Robots (36 slots each) still haven't been touched by
+   either creative review pass.
+
+Re-arming to `ready` (recurring), releasing the claim.
