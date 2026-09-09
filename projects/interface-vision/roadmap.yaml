@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3379,8 +3379,29 @@ tasks:
     frontmatter field through ResolvedTab/channelContent.ts and delete the small mirrored
     NAVIGATION_HIDDEN_TABS key set in utils/channelTabGroups.ts, once ResolvedTab carries it
     natively.
-  updated: '2026-09-09T08:30:06Z'
-  implementation_pr: 'silasfelinus/kind_robots#2548'
+
+    Slice 174 merged as silasfelinus/kind_robots#2550 (squash
+    01d603b9ce4d3c2b96c3f55eade0cfbe295e2a54) from head
+    db0638cdec83ad398597588b5febe18b7cbaddb1. A fresh full-repo class-frequency survey after
+    slice 173 closed out the label-text/kr-label-* families found font-black text-xs still
+    unnamed at 56 subset-match occurrences across 27 files -- slice 166 had called the kr-
+    text-black-* family closed at -lg/-xl/-sm, but that was simply the set surveyed at the
+    time, not a deliberate exclusion of -xs. Added .kr-text-black-xs and
+    kr_text_black_xs_codemod.py, same subset-match/--exact-only convention as the rest of
+    the family; migrated all 56 occurrences, closing the kr-text-black-* family out fully
+    (-lg/-xl/-sm/-xs). Verified: vue-tsc clean, eslint 333/327/6 identical to baseline,
+    test:layout-contract holds (same unrelated -2 ratchet opportunity in narrative-
+    ingredient-multi-picker.vue, left untouched), test:lint-ratchet holds at 333/-59,
+    prettier --check flagged 18 files, all confirmed pre-existing baseline drift via git
+    stash, none newly introduced. All 57 kind_robots PR checks green (1 skipped),
+    mergeable_state clean, merged. Kaizen: a fresh full-repo class-frequency survey outside
+    all now-closed kr-text-*/kr-label-* families is still the next open item -- remaining
+    bare label-text occurrences (13 files, varied shapes) and generic layout-utility combos
+    (flex items-center gap-2 etc.) are each too small/varied or too generic to be a single
+    bounded family. Return the recurring consistency umbrella to ready for the next bounded
+    slice.
+  updated: '2026-09-09T08:49:28Z'
+  implementation_pr: 'silasfelinus/kind_robots#2550'
   retry_context: ''
   owner: worker
   claimed_by: 2026-09-09T-scheduled-slice173
