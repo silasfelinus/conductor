@@ -1,99 +1,87 @@
-# Da Vinci ↔ Storybook Boundary Comparison
+# Da Vinci ↔ Storybook: one storymaker
 
-**Task:** davinci/t-007 — revisit the project boundary now that the Da Vinci
-endpoint engine exists.
+> **This document used to argue for keeping Da Vinci and Storybook apart. That
+> recommendation is dead.** Silas merged the two on 2026-09-09 and asked that
+> every reference telling us to separate them be killed. This file keeps its
+> original path so that nothing linking to it lands on a dead page — the
+> filename is a URL, not a claim. What follows is what is actually true now.
+>
+> Shipped in kind_robots PR #2549. Superseded: davinci/t-007 (2026-07-05).
 
-**Recommendation up front:** keep them separate projects with separate data
-models through Da Vinci's play-loop MVP and Storybook's first schema
-milestone. Share through the existing Kind Robots models (Bot, Chat,
-Character, Dream, Scenario, ArtCollection, Milestone) and, later, through
-small extracted utilities — never through merged tables or a shared session
-row. Revisit after BOTH of those milestones land, not before.
+## The decision
 
-## Where each project stands (2026-07-05)
+Silas, 2026-09-09, verbatim:
 
-| | Da Vinci | Storybook |
+> merge the projects, and kill any reference that says we should separate them.
+> we care about having a solid *single* interface that is a stylish and
+> effective storymaker with many endings. Whatever has been done should be
+> merged.
+
+There is one product: **Storybook**, at `/storybook`. One route, one setup
+screen, one story library. `/play/davinci` is a permanent 301 to it.
+
+## How the two engines coexist
+
+The storymaker's setup screen asks for a **shape** alongside the narrator
+voice. Four shapes; the fourth is the endings engine:
+
+| Shape | Engine | Ends when |
 |---|---|---|
-| Schema | **Live in kind_robots** (LifeRun, LifeChoice, LifeStat, LifeEnding, LifeAchievement, LifeAchievementUnlock, LifeRunArt + 4 enums, PR #87) | Spec only (session data model approved, no tables) |
-| Engine | **Working + verified**: 1024 seeded endings, importer (PR #89), resolution/award API (PR #92), regression suite (PR #93) | Spec only (turn lifecycle, collaboration rules, artifact mapping, UX flow) |
-| Players | Single player per run | Multi-player, async-first, turn custody rules |
-| Outcome space | Closed and deterministic: 10-bit outcomeKey → exactly 1024 endings | Open-ended: stories end where players stop; value is the artifacts and the log |
-| Progression | Pass/fail stat thresholds → milestone + achievement awards | Artifact lifecycle: ephemeral → candidate → unlocked → reusable |
-| Source of truth | App-owned outcome math; AI narrates but never decides results | Server-held session state; player text is a contribution request, not authority |
+| Short story | client-side beat loop | the arc closes |
+| Chaptered tale | client-side beat loop | the reader finishes it |
+| Episodic serial | client-side beat loop | the reader stops |
+| **A whole life** | **server-side `LifeRun`** | **ten dimensions resolve to one of 1,024 seeded `LifeEnding`s** |
 
-## Why they feel similar
+Both shapes are seeded from the same ingredients — cast, primary setting,
+Facets, Rewards, a premise. The life shape maps them onto the FK columns
+`LifeRun` has carried since it was built (`characterId`, `dreamId`, `botId`,
+`artCollectionId`), which is why the merge needed **no migration**.
 
-Both are "AI narrates, app owns state" story games sitting on the same Kind
-Robots anchors: a Bot narrator, Chat as the narration surface, Characters and
-Dreams as seeds, generated art collected along the way, and unlockable
-records at the end. Both reject freeform AI as the source of truth. That
-shared philosophy is why the merge question keeps recurring.
+## The `Life*` models stay, and that is not a boundary
 
-## Why they should not merge yet
+`LifeRun`, `LifeChoice`, `LifeStat`, `LifeEnding`, `LifeAchievement`,
+`LifeAchievementUnlock` and `LifeRunArt` keep their own tables because they
+encode something the beat loop has no equivalent of: a closed, deterministic
+outcome space (a 10-bit `outcomeKey` → exactly one of 1,024 pre-seeded endings)
+with a live achievement economy on top of it. That is a statement about what
+those rows hold, not a wall between two products. There is no rule here that
+forbids a future shared table, a shared session row, or a column added to a
+`Life*` model — if a change to the merged storymaker wants one, the only
+question is whether it is a good change.
 
-1. **Opposite outcome geometry.** Da Vinci's whole identity is a closed,
-   deterministic endpoint space — every run resolves to one of 1024
-   pre-seeded endings, and the achievement economy depends on that being
-   stable. Storybook's identity is the opposite: bounded-visibility
-   surprise and open-ended collaboration. A shared "session" abstraction
-   would have to carry both a deterministic resolver and a freeform
-   turn-custody engine, and would serve both badly.
+The one invariant worth keeping from the old doc, because it was never about
+project separation: **the narrator proposes, the app disposes.** Narration
+never owns durable state. A narration response that invents an eleventh
+dimension or swings a stat by 40 is a schema violation, not a new rule. That
+lives in `server/utils/davinciNarration.ts`'s own header comment and holds for
+every shape.
 
-2. **Custody models differ in kind, not degree.** LifeRun has one owner;
-   ownership checks are a single userId comparison (already implemented and
-   tested). Storybook turns require actor validation, turn order, and
-   visibility windows. Merging tables means every Da Vinci query inherits
-   multi-actor complexity it never uses.
+## What is still worth unifying
 
-3. **Maturity asymmetry.** Da Vinci's engine is merged, seeded, and
-   regression-checked. Storybook has no schema. Coupling a working system
-   to an unbuilt one means every Storybook schema decision becomes a
-   potential Da Vinci migration — the cheapest possible way to destabilize
-   the thing that currently works.
+Real duplication, now that the two live in one product — none of it blocking,
+all of it worth doing when a session has room:
 
-4. **The milestone economies shouldn't blur.** Da Vinci endings are
-   one-per-user global unlocks with an API-layer duplicate guard shaped by
-   MySQL NULL semantics. Storybook rewards are curated artifact copies into
-   profile inventory. Same word ("unlock"), different invariants.
+1. **Narration prompt assembly.** Both shapes build a bounded prompt from
+   (narrator config + seed objects + state snapshot + recent history), in two
+   places: `stores/storybookStore.ts` and `server/utils/davinciNarration.ts`.
+   The beat loop builds it client-side and the life engine server-side, which
+   is the actual obstacle to sharing it — worth resolving deliberately.
+2. **The `/api/davinci/*` namespace and the `davinci-*` localStorage keys.**
+   Kept at the merge, deliberately: renaming a live API and orphaning every
+   in-flight run buys nothing Silas asked for. Worth renaming later, behind a
+   plan that migrates running games rather than stranding them.
+3. **Session resume UX.** "Where was I" is answered twice, in
+   `storybook-life-run.vue` and `storybookLibraryHelper.ts`.
+4. **Choice interpretation.** Structured options plus freeform input mapping to
+   validated effects — the same shape either side of the split, even though
+   the effects differ (`LifeStat` deltas vs. story mutations).
 
-## What they genuinely could share — later
+## History
 
-Ranked by likelihood that duplication actually hurts:
-
-1. **Narration prompt assembly** — both build a bounded prompt from
-   (narrator Bot config + seed objects + state snapshot + recent history).
-   When Da Vinci's play loop lands, this is the first real duplication risk.
-   Extract as a utility function contract, not a table.
-2. **Art-scene hooks** — both generate scene art into an ArtCollection with
-   a scene-type tag. LifeRunArt's sceneType enum is a reasonable prototype
-   for a shared pattern (pattern, not shared table).
-3. **Session resume UX** — "whose turn / where was I" card state. Shareable
-   as a frontend component once both exist.
-4. **Choice interpretation** — mapping structured options + freeform input
-   to validated effects. Same shape at the API layer even though effects
-   differ (LifeStat deltas vs story mutations).
-
-What should NOT be shared even then: run/session tables, outcome resolution,
-unlock/award records, turn custody. These are the identity of each game.
-
-## Concrete boundary rules (proposed as standing guidance)
-
-- Da Vinci code lives under `server/api/davinci/` + `server/utils/davinci.ts`
-  in kind_robots; Storybook gets its own namespaces when built. No shared
-  `story/` namespace until a real utility is extracted from working code on
-  both sides.
-- Neither project's roadmap may add columns to the other's tables.
-- Shared behavior enters through the existing Kind Robots models or through
-  a pure-function utility with tests — merged storage is out of bounds
-  without a Silas-approved schema pitch.
-- The merge question is closed until: Da Vinci play-loop MVP is merged AND
-  Storybook m1 (session schema) is merged. Then re-open t-007-style review
-  with actual duplication evidence in hand.
-
-## Decision requested from Silas (soft — nothing blocked)
-
-This doc recommends "separate projects, shared primitives later, revisit
-after both MVPs." If that matches your intent, no action needed — t-002's
-open scope confirmation can absorb this. If you want a different shape
-(e.g., Da Vinci as a Storybook mode from day one), say so before the
-Da Vinci play-loop task gets scoped, because that's the fork in the road.
+The 2026-07-05 version of this file recommended separation on four grounds:
+opposite outcome geometry, differing turn-custody models, maturity asymmetry,
+and distinct unlock economies. It set its own expiry — revisit once Da Vinci's
+play-loop MVP and Storybook's first schema milestone both landed. Both landed.
+The maturity argument expired with them, and Silas answered the rest: a single
+stylish interface with many endings is worth more than the tidiness of two
+separate products. The engines were never the problem; two front doors were.
