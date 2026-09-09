@@ -3699,8 +3699,17 @@ tasks:
     slice: font-sans opacity-70 (13 occurrences, all in components/ui/ui-gallery.vue) needs
     a check first for whether that file is a live design-token showcase rather than an
     ordinary migration target.
-  updated: '2026-09-09T20:49:33Z'
-  implementation_pr: 'silasfelinus/kind_robots#2567'
+
+    Reconciliation (state-reconciliation.md): slice 188 (kr-text-dim-sm-50, PR
+    silasfelinus/kind_robots#2568, commit 284c1b8) was already merged to kind_robots main by
+    a prior session that ended before closing out the conductor side -- roadmap task was
+    still sitting at the slice-187 re-arm note with no record of slice 188. Backfilling the
+    implementation_pr link and this note now; no new code work in this commit. Discovered
+    during this session's startup sweep (check_pr_merged_drift.py did not catch it because
+    the task was at status:ready, not claimed/review, at sweep time -- its drift check only
+    inspects claimed/review tasks).
+  updated: '2026-09-09T22:30:01Z'
+  implementation_pr: 'silasfelinus/kind_robots#2568'
   retry_context: ''
   owner: worker
   claimed_by: claude-scheduled-20260909T203006Z-t104s187
