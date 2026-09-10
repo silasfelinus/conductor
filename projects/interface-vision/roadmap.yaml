@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3387,7 +3387,16 @@ tasks:
     no geometry or behavior change. All 49 CI checks passed (mergeable_state clean,
     additions/deletions 179/-47 across 17 files matched the intended diff exactly). Return
     the recurring consistency umbrella to ready for the next bounded slice.
-  updated: '2026-09-10T12:58:28Z'
+
+    Slice 205 merged as silasfelinus/kind_robots#2587 (squash
+    2aa633d70a0e479f6ea8a1c7ce856dced926a7b0) from exact head
+    b0d3137301b8b812fef1f729dcc8cb8f132e6477. Continued the h-4 w-4 -> kr-icon-4 directory-
+    by-directory migration (slice 204 took components/art/): this slice took
+    components/navigation/ (9 files, 17 occurrences via subset-match), no geometry or
+    behavior change. All 48 CI checks passed (mergeable_state clean, additions/deletions
+    24/-24 across 10 files matched the intended diff exactly). Return the recurring
+    consistency umbrella to ready for the next bounded slice.
+  updated: '2026-09-10T13:08:05Z'
   implementation_pr: 'silasfelinus/kind_robots#2587'
   retry_context: ''
   owner: worker
