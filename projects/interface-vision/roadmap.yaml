@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3762,8 +3762,20 @@ tasks:
     w-10 text-primary/60 (3 files, different opacity), h-12 w-12 text-primary (5 files,
     distinct from kr-icon-tile's own h-12 w-12 which also carries the tile's
     background/shape tokens).
-  updated: '2026-09-10T02:29:49Z'
-  implementation_pr: 'silasfelinus/kind_robots#2572'
+
+    Slice 192 merged as silasfelinus/kind_robots#2573 (squash
+    2f70379c3cc92314eab465834190d80cd92ca1a0) from exact head
+    82d30f33f2a0ce81283491181521ca10e32794e4. Added .kr-icon-primary-6 (h-6 w-6 text-
+    primary) sibling of kr-icon-primary-5 (slice 191); migrated 13 exact occurrences across
+    13 files, extras (mt-1, absolute bottom-2 left-2 drop-shadow) preserved verbatim; no
+    geometry/behavior change. All 49 checks green. Kaizen: sibling icon sizes still open for
+    future slices -- h-4 w-4 text-primary (8 files), h-7 w-7 text-primary (6 files,
+    excluding a sample/*.vue.txt template file out of codemod scope), h-10 w-10 text-
+    primary/60 (3 files, different opacity), h-12 w-12 text-primary (7 files, distinct from
+    .kr-icon-tile's own h-12 w-12 which also carries the tile's background/shape tokens).
+    Return the non-recurring consistency umbrella to ready for the next bounded slice.
+  updated: '2026-09-10T02:47:37Z'
+  implementation_pr: 'silasfelinus/kind_robots#2573'
   retry_context: ''
   owner: worker
   claimed_by: claude-scheduled-20260910T022948-t104s192
