@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3373,12 +3373,11 @@ tasks:
     Slice 211 merged as silasfelinus/kind_robots#2593 (squash 82328cb976e88761553be8218b0649588aa3c767) from exact head 8f0700e9f0ccd637c23e52f5208dc989f393593c. components/servers/ (4 files, 9 occurrences): add-checkpoint.vue, add-server.vue, checkpoint-card.vue, server-card.vue now use kr- icon-4 instead of bare h-4 w-4; no geometry or behavior change. Updated the .kr-icon-4 doc comment in assets/css/tailwind.css. All 48 CI checks passed, mergeable_state: clean, additions/deletions (14/-13, 5 files) matched the intended diff exactly. Return the recurring consistency umbrella to ready for the next bounded slice. Kaizen for the next slice: continue splitting the h-4 w-4 family by directory -- remaining bounded sibling directory: components/pages (4 files, 11 occurrences), then the scattered remainder (143 occurrences repo-wide as of slice 211).
 
     Slice 214 migrates the two bare h-4 w-4 action glyphs in components/bots/bot-card.vue to the shared kr-icon-4 primitive with no behavior or geometry change.
-  updated: '2026-09-10T22:21:00Z'
+
+    Slice 214 merged as silasfelinus/kind_robots#2597 (squash 0f0cf28a473c8d689705ff7b3e93d1cd0696fb7a) from exact head 96ccc9654ddee34190535156a9259d951f411cd5. components/bots/bot-card.vue now uses kr-icon-4 for its Chat and Select action glyphs instead of bare h-4 w-4; no geometry, color, or behavior change. The branch diff was exactly one file (+2/-2) and zero commits behind main before PR creation. All 45 exact-head pull-request workflow runs completed successfully before merge, including TypeScript Type Check, Contract Tests, layout/icon safety and the full narrative/storybook contract suite. Return the recurring consistency umbrella to ready for the next bounded slice.
+  updated: '2026-09-10T22:25:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2596'
   retry_context: ''
-  owner: worker
-  claimed_by: 2026-09-10T221751Z-interface-vision-t104-a7c2
-  claimed_at: '2026-09-10T22:17:51Z'
 
 - id: t-123
   milestone: m5
