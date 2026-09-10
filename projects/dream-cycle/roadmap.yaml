@@ -761,3 +761,34 @@ tasks:
     `projects/kind-robots/bursts/*.yaml`'s `built:` blocks, reusing check_live_facet_coverage.py's
     existing per-target GET-and-compare logic rather than duplicating it. Reversible,
     read-only, no schema changes.
+
+- id: t-028
+  milestone: m5
+  title: Add a local conditional-instruction pre-check to Daily Dream art_prompt authoring
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-09-10T19:31:38Z'
+  note: >
+    workflow-medic finding, 2026-09-10: daily-digest.yml failed 2 runs in a row
+    (#101, #102) because the-drowned-compact/t-2026-09-09's Split Vow reward item
+    carried an art_prompt with a conditional clause ("...a hairline vein of blue
+    light running along the fracture only when both halves touch"). The Kind
+    Robots prompt contract rejects this at ArtJob submission time with HTTP 422
+    [conditional-instruction] "only when" -- diffusion models render the words,
+    they cannot evaluate a condition -- so the request sat stuck in
+    projects/art-prompts.yaml re-failing every digest run until a human/session
+    noticed and hand-edited the prompt (done this session; ArtJob 21681 now
+    queued). scripts/dream_prose_quality.py's build-time creative contract has no
+    check for this rule at all, unlike scripts/build_ruler_hooked_art_queue.py
+    (~line 1224), which already scans its own queue for the same
+    conditional-instruction shape before submission. Fix: give dream-cycle's
+    art_prompt authoring (wherever build_dream_records.py assembles the "Look:"
+    text into a submittable prompt) the same pre-submission regex/heuristic scan
+    -- flag "only when", "if X then", "whenever", and similar conditional
+    phrasing -- and either reject/re-author the prompt before it's queued, or at
+    minimum fail loudly at build time instead of silently at submit time two
+    digest runs later. Reversible, no schema changes; a good candidate to share
+    logic with build_ruler_hooked_art_queue.py's existing check rather than
+    duplicating the regex a third time.
