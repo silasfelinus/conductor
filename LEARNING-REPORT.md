@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-10T01:44:46Z
+Generated: 2026-09-10T01:53:54Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **901**
-- Outcomes: blocked: 16, cancelled: 1, done: 884
+- Closed tasks recorded: **902**
+- Outcomes: blocked: 16, cancelled: 1, done: 885
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
-| interface-vision | 112 | 100% |
+| interface-vision | 113 | 100% |
 | kapowarr | 52 | 100% |
 | kind-economy | 9 | 100% |
 | kind-robots | 55 | 98% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 885 | 99% |
+| software | 886 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-10 `interface-vision/t-104` — Slice 191 (kind_robots#2572): a fresh full-repo class-frequency survey turned up both semantically-named shapes (h-5 w-5 text-primary, a bare icon glyph) and much higher-frequency generic layout idioms (h-4 w-4 at 301x, flex-1 min-w-0 at 103x, flex gap-2 items-center at 87x). Picking the icon shape over the layout idioms wasn't about frequency -- it was about matching this recurring umbrella's established scope: every prior slice targets a single-purpose, semantically-named style token (text color/weight/opacity, badge/label/input variant, icon size+color), never a structural layout composition. A frequency survey for this kind of recurring migration task should filter to the established shape-class before ranking by count, or it surfaces technically-larger but out-of-scope candidates ahead of the actually-bounded ones.
 - 2026-09-09 `interface-vision/t-125` — Threaded the `navigation` frontmatter field through `ResolvedTab` (kind_robots#2570), replacing t-104's hand-maintained `NAVIGATION_HIDDEN_TABS` set in channelTabGroups.ts with a frontmatter-carried boolean, mirroring the existing `visible !== false` pattern. The one non-obvious spot: a regression script (verifyNavigationConsolidation.ts) builds synthetic ResolvedTab fixtures by hand rather than through resolveTabItem(), so switching the production check to read `tab.navigation` required updating those fixtures too, or the same six nested tabs it was meant to keep pinned would have silently reported navigable. When retiring a hardcoded lookup table in favor of a data-carried field, grep for every place a type's shape is hand-constructed (test fixtures, fallback objects) -- vue-tsc's required-field error caught one instance (workspace-header.vue's fallbackTab) for free, but the fixture-based regression script's *values* wouldn't have been caught by the typechecker, only by actually running it.
 - 2026-09-09 `interface-vision/t-104` — A prior session's slice 189 close-out (kind_robots#2569, conductor#3985) sat fully green and unmerged for ~20 minutes with the conductor task stuck at status:claimed -- the originating session appears to have ended before merging its own already-green PRs. A later scheduled sweep found both PRs via GitHub MCP (select_role.py's own reachability probe had 403'd on an unrelated repo and silently reported 0 candidate PRs, so the live MCP check was what actually caught this), confirmed CI green and mergeable_state clean on the exact head SHA, merged both, and landed the ready+implementation_pr transition on the same close-out branch per the recurring-task convention. Lesson: select_role.py's GitHub-reachability signal is per-probe, not global -- a 403 on one repo in its scan list can silently zero out candidate_reviewable_prs for every repo it checks, so a session should independently confirm 0-open-PRs via a working transport (GitHub MCP here) before trusting that field, not just when the script already flags github_api_unreachable at the top level.
 - 2026-09-09 `interface-vision/t-104` — The prior record's lesson (slice 171: one subset-match codemod silently absorbed a dead `label-text` token into `kr-text-bold-xs`) generalized immediately on inspection -- slice 172 found the identical leftover trailing `label-text` behind six more already-shipped `kr-*` primitives (`kr-text-eyebrow`, `kr-text-eyebrow-bold`, `kr-text-dim-xs`, `kr-text-dim-xs-55`, `kr-text-dim-xs-70`, `kr-text-bold-sm`), 22 more occurrences across 10 files, via the same mechanism repeated seven times independently. When a systemic bug is found in one instance of a repeated pattern (here: N similar codemods sharing one convention), the efficient next step is a fresh full-repo grep for the general shape of the bug (any `kr-*` token + `label-text`) before assuming it was scoped to the one primitive first discovered -- writing a general-purpose cleanup codemod once (`kr_dead_label_text_cleanup_codemod.py`) beat writing six more single-primitive ones.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-08 `interface-vision/t-104` — Shrinking a long `class="..."` attribute down to a short primitive name can leave stale multi-line Vue-template formatting behind: prettier had wrapped the original long class onto its own line inside a 3-line `<span>\n  class="..."\n>`, and after the codemod collapsed it to `kr-icon-tile` that wrapping was no longer prettier's own preference, so `prettier --check` flagged it as newly non-conforming on files that were otherwise already prettier-clean. The fix is NOT `prettier --write` on the whole file when the file has *other*, unrelated pre-existing prettier violations (a real trap hit mid-slice: running it reformatted unrelated code throughout build-bench.vue, privacy-page.vue, and wallet-page.vue, turning a 4-line diff into a 100+-line one) -- diff `git stash` baseline vs. current per file first, and hand-collapse just the specific tag when the file has pre-existing noise the tool would otherwise sweep in.
 - 2026-09-08 `interface-vision/t-104` — A codemod's subset-match convention (base tokens present, extras preserved) generalizes further than a manual literal grep once written -- the initial grep for the exact string "rounded-2xl bg-base-200 p-3" found 10 occurrences, but the codemod's subset match found 22 once it stopped caring about surrounding utility tokens (max-h-96, text-sm, sm:p-4, ...). The inverse risk showed up in the same slice: two occurrences (stylist-manager.vue, checkpoint-card.vue) matched the same base-token subset but also carried a `border border-base-300` token the target primitive doesn't have -- a structurally different bordered shape, not a superset of the borderless one. Subset-matching on the tokens you want is not enough; a family that is defined by the *absence* of a token (no border) needs an explicit negative check too, or it silently strips that token from occurrences that actually need it.
 - 2026-09-08 `kindrobots-unraid/t-015` — A site-wide kindrobots.org 502 outage (02:56-05:53 UTC, ~2h57m) recovered on its own before root cause could be investigated -- the second such occurrence after t-014's ~4h15m outage with the same unconfirmed container-recreate-without-restart theory. Closed per docs/state-reconciliation.md's incident-recovery closure pathway (10/10 clean 200s on both / and /api/health/database) with approved_by_human left false, matching t-014's precedent. Recurring unexplained outages with no external health-probe/alerting in place mean each one is only ever observed-and-cleared by whichever session happens to sweep during the window -- the standing follow-up (an external probe/alert task) is still unfiled after two occurrences.
-- 2026-09-08 `conductor/t-111` — When a suppression filter needs to distinguish "genuinely stale, keep hiding it" from "the disputed thing itself, must surface," reach for a narrow content classifier on the task's own title before reaching for timing heuristics (e.g. "how close is the task's updated: to the override's status change"). A real check here (pinball-hero/t-002's updated: was only ~1 week after its project's retirement date -- well within any generous same-day-ish margin) showed a date-proximity threshold would have reintroduced the exact false positive the original filter existed to prevent. Matching what the task's title is actually about was both simpler and correct where a tuned margin was neither.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-10T01:44:46Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-10T01:53:54Z_
