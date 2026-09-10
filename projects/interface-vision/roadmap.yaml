@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3376,7 +3376,18 @@ tasks:
     31 files. Only h-4 w-4 (95 files) remains open in the sizeless-and-colorless icon-glyph
     family, still needing further splitting before it is a bounded slice. Rearming the
     recurring umbrella to ready for the next slice.
-  updated: '2026-09-10T12:36:30Z'
+
+    Slice 204 merged as silasfelinus/kind_robots#2586 (squash
+    de65d82bb980aa1073d2b89dc75c8262193b3fe9) from exact head
+    773ce7fa0777609ae52416d6971c521628750820. Added .kr-icon-4 (h-4 w-4) to
+    assets/css/tailwind.css, completing the sizeless-and-colorless icon-glyph family (kr-
+    icon-3/3-5/5/6/7/8). Added utils/scripts/codemods/kr_icon_4_codemod.py (sibling
+    convention, supports --root for directory-scoped slices of the ~100-file h-4 w-4
+    family). Migrated the components/art/ directory subset: 47 occurrences across 15 files,
+    no geometry or behavior change. All 49 CI checks passed (mergeable_state clean,
+    additions/deletions 179/-47 across 17 files matched the intended diff exactly). Return
+    the recurring consistency umbrella to ready for the next bounded slice.
+  updated: '2026-09-10T12:47:22Z'
   implementation_pr: 'silasfelinus/kind_robots#2586'
   retry_context: ''
   owner: worker
