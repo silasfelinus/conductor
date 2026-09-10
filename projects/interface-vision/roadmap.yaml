@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3423,7 +3423,21 @@ tasks:
     remaining bounded sibling directories: components/giftshop (6 files),
     components/scenarios (5 files), components/characters (5 files), components/servers (4
     files), components/pages (4 files), and the rest scattered across smaller directories.
-  updated: '2026-09-10T15:46:47Z'
+
+    Slice 208 merged as silasfelinus/kind_robots#2590 (squash
+    1218f4100f874974a54cd75f8b661c3e3e8b38e5) from exact head
+    9ea2d04e29a96d66ef6745288d6d982d429de41d. components/giftshop/ (6 files, 14
+    occurrences): checkout-cancel.vue, checkout-success.vue, giftshop-interact.vue,
+    giftshop-manager.vue, mermaids-pdf-purchase.vue, shopping-cart.vue now use kr-icon-4
+    instead of bare h-4 w-4; no geometry or behavior change. Updated the .kr-icon-4 doc
+    comment in assets/css/tailwind.css. All 48 CI checks passed, mergeable_state: clean,
+    additions/deletions (19/-18, 7 files) matched the intended diff exactly. Return the
+    recurring consistency umbrella to ready for the next bounded slice. Kaizen for the next
+    slice: continue splitting the h-4 w-4 family by directory -- remaining bounded sibling
+    directories: components/scenarios (5 files), components/characters (5 files),
+    components/servers (4 files), components/pages (4 files), and the rest scattered across
+    smaller directories.
+  updated: '2026-09-10T15:47:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2590'
   retry_context: ''
   owner: worker
