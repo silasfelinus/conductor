@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3738,7 +3738,31 @@ tasks:
     outside all now-closed families (kr-text-black-*, kr-text-bold-*, kr-text-dim-*, kr-
     text-eyebrow-*, kr-label-*, kr-badge-* incl. -ghost/-outline sizeless siblings and their
     bounded extras, kr-text-error-xs, kr-text-faded-*) to find the next bounded target.
-  updated: '2026-09-10T01:41:03Z'
+
+    Slice 191 merged as silasfelinus/kind_robots#2572 (squash 35fd2dc) from exact head
+    4de281f, base 352fd13. Fresh full-repo class-frequency survey outside all now-closed
+    families (kr-text-black-*, kr-text-bold-*, kr-text-dim-*, kr-text-eyebrow-*, kr-label-*,
+    kr-badge-* incl. -ghost/-outline sizeless siblings and their bounded extras, kr-text-
+    error-xs, kr-text-faded-*) found h-5 w-5 text-primary -- a bare 20px primary-tinted icon
+    glyph, distinct from .kr-icon-tile's tinted rounded-square page-header treatment -- at
+    17 exact occurrences across 16 files plus 11 further subset-match occurrences (mostly
+    carrying an extra shrink-0) across 8 more files. Added .kr-icon-primary-5 to
+    assets/css/tailwind.css and a new codemod
+    utils/scripts/codemods/kr_icon_primary_5_codemod.py, sibling of the other kr-* codemods.
+    Ran the full subset-match pass: migrated 28 occurrences across 24 files; no geometry or
+    behavior change. Verified vue-tsc clean, eslint 333/327/6 identical to baseline,
+    test:layout-contract holds (0 new violations, same pre-existing narrative-ingredient-
+    multi-picker.vue viewport-grid note left untouched), test:lint-ratchet holds at 333/-59,
+    prettier --check byte-identical warning list (1145 lines, git-stash before/after diff).
+    All 52 kind_robots PR checks green, mergeable_state clean at merge time,
+    additions/deletions (150/-28, 26 files) matched the intended diff exactly. Return the
+    recurring consistency umbrella to ready for the next bounded slice. Kaizen for next
+    slice: sibling icon sizes surveyed alongside this one and left open -- h-4 w-4 text-
+    primary (7 files), h-6 w-6 text-primary (11 files), h-7 w-7 text-primary (5 files), h-10
+    w-10 text-primary/60 (3 files, different opacity), h-12 w-12 text-primary (5 files,
+    distinct from kr-icon-tile's own h-12 w-12 which also carries the tile's
+    background/shape tokens).
+  updated: '2026-09-10T01:49:54Z'
   implementation_pr: 'silasfelinus/kind_robots#2572'
   retry_context: ''
   owner: worker
