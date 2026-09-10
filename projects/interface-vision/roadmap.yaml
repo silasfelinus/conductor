@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3774,8 +3774,25 @@ tasks:
     primary/60 (3 files, different opacity), h-12 w-12 text-primary (7 files, distinct from
     .kr-icon-tile's own h-12 w-12 which also carries the tile's background/shape tokens).
     Return the non-recurring consistency umbrella to ready for the next bounded slice.
-  updated: '2026-09-10T03:29:12Z'
-  implementation_pr: 'silasfelinus/kind_robots#2573'
+
+    Slice 193 merged as silasfelinus/kind_robots#2574. Added .kr-icon-primary-4 (h-4 w-4
+    text-primary) sibling of kr-icon-primary-5 (slice 191) and kr-icon-primary-6 (slice
+    192), one size down; new codemod utils/scripts/codemods/kr_icon_primary_4_codemod.py.
+    Migrated 16 subset-match occurrences across 10 files (art-gallery.vue, art-styler.vue
+    x2, image-upload.vue x2, stylist-restyle.vue, dream-gallery.vue, model-builder-batch-
+    editor.vue, model-builder-item-panel.vue x4, model-builder-manager.vue, workspace-
+    sheet.vue, theme-gallery.vue); no geometry/behavior change. vue-tsc clean; eslint
+    333/327/6 identical to baseline; test:layout-contract holds (0 new violations, same pre-
+    existing narrative-ingredient-multi-picker.vue note left untouched); test:lint-ratchet
+    holds at 333/-59; prettier --check byte-identical warning list (1145 lines, git-stash
+    before/after diff). Return the non-recurring consistency umbrella to ready for the next
+    bounded slice. Kaizen: sibling icon sizes still open for future slices -- h-7 w-7 text-
+    primary (6 files, excluding a sample/*.vue.txt template file out of codemod scope), h-10
+    w-10 text-primary/60 (3 files, different opacity -- distinct token set, not a subset
+    match), h-12 w-12 text-primary (7 files, distinct from kr-icon-tile's own h-12 w-12
+    which also carries the tile's background/shape tokens).
+  updated: '2026-09-10T03:48:28Z'
+  implementation_pr: 'silasfelinus/kind_robots#2574'
   retry_context: ''
   owner: worker
   claimed_by: claude-scheduled-20260910T032909Z-t104s193
