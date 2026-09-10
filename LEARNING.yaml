@@ -13059,3 +13059,25 @@ records:
     tailwind.css should be treated as a standing signal to prefer a
     shell-capable cycle for this recurring task's CSS-edit step specifically,
     rather than retrying the same Contents API edit repeatedly.
+- date: 2026-09-10
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Slice 212 (kind_robots#2594) touched assets/css/tailwind.css (the
+    .kr-icon-4 doc comment) in addition to the usual .vue files. That path is
+    in publish-container.yml's pull_request path filter, so this PR's CI
+    included a ~10-minute "Build production image" Docker job on top of the
+    usual ~50 contract/unit checks -- prior slices in this same series that
+    only touched .vue files never triggered it and finished CI in ~2-3
+    minutes. Any future task/kaizen note estimating CI wall-clock for this
+    recurring migration should account for whether the slice's doc-comment
+    update to tailwind.css is included, not assume the faster .vue-only
+    baseline. Also confirms components/pages was the last directory large
+    enough to bound a slice by directory; the ~124 remaining occurrences (35
+    files) are thin enough that the next slice needs an occurrence-count-band
+    strategy instead.
