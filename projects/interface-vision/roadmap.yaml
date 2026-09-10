@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3461,7 +3461,19 @@ tasks:
     test:layout-contract holds; test:lint-ratchet holds at 333/-59; prettier --check flags
     only the same pre-existing checkpoint-card.vue drift before/after (confirmed via git
     stash). Awaiting CI.
-  updated: '2026-09-10T18:40:23Z'
+
+    Slice 211 merged as silasfelinus/kind_robots#2593 (squash
+    82328cb976e88761553be8218b0649588aa3c767) from exact head
+    8f0700e9f0ccd637c23e52f5208dc989f393593c. components/servers/ (4 files, 9 occurrences):
+    add-checkpoint.vue, add-server.vue, checkpoint-card.vue, server-card.vue now use kr-
+    icon-4 instead of bare h-4 w-4; no geometry or behavior change. Updated the .kr-icon-4
+    doc comment in assets/css/tailwind.css. All 48 CI checks passed, mergeable_state: clean,
+    additions/deletions (14/-13, 5 files) matched the intended diff exactly. Return the
+    recurring consistency umbrella to ready for the next bounded slice. Kaizen for the next
+    slice: continue splitting the h-4 w-4 family by directory -- remaining bounded sibling
+    directory: components/pages (4 files, 11 occurrences), then the scattered remainder (143
+    occurrences repo-wide as of slice 211).
+  updated: '2026-09-10T18:49:10Z'
   implementation_pr: 'silasfelinus/kind_robots#2593'
   retry_context: ''
   owner: worker
