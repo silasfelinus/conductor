@@ -13017,3 +13017,24 @@ records:
     (workspace-header.vue's fallbackTab) for free, but the fixture-based
     regression script's *values* wouldn't have been caught by the
     typechecker, only by actually running it.
+- date: 2026-09-10
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Slice 191 (kind_robots#2572): a fresh full-repo class-frequency survey
+    turned up both semantically-named shapes (h-5 w-5 text-primary, a bare
+    icon glyph) and much higher-frequency generic layout idioms (h-4 w-4 at
+    301x, flex-1 min-w-0 at 103x, flex gap-2 items-center at 87x). Picking
+    the icon shape over the layout idioms wasn't about frequency -- it was
+    about matching this recurring umbrella's established scope: every prior
+    slice targets a single-purpose, semantically-named style token (text
+    color/weight/opacity, badge/label/input variant, icon size+color), never
+    a structural layout composition. A frequency survey for this kind of
+    recurring migration task should filter to the established shape-class
+    before ranking by count, or it surfaces technically-larger but
+    out-of-scope candidates ahead of the actually-bounded ones.
