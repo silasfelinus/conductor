@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   recurring: true
@@ -3389,12 +3389,12 @@ tasks:
     Verified: vue-tsc --noEmit clean; eslint 333/327/6 identical to the documented baseline; test:layout-contract holds, 0 new violations (same pre-existing narrative-ingredient-multi-picker.vue viewport-grid ratchet note as every recent slice, left untouched); test:lint-ratchet holds at 333/-59; prettier --check . 1145 lines flagged, byte-identical to baseline (3 touched files -- art-gallery.vue, giving-page.vue, tailwind.css -- confirmed pre-existing drift via git stash before/after). Manually reviewed every diff hunk -- only static class="..." attributes touched, no :class bindings, no geometry/behavior change. All 49 kind_robots PR checks resolved success, mergeable_state clean at merge time (140/-9, 10 files matched the intended diff exactly), squash-merged. Conductor close-out PR #4000 (claimed -> review with implementation_pr pointed at kind_robots#2577, then ready + TALKBACK note on the same branch) watched the same way.
 
     Kaizen for the next slice: the kr-icon-primary-* family is now fully closed out. A fresh full-repo class-frequency survey outside all now-closed families (kr-text-black-*, kr-text-bold-*, kr-text-dim-*, kr-text-eyebrow-*, kr-label-*, kr-badge-* incl. -ghost/-outline sizeless siblings, kr-text-error-xs, kr-text-faded-*, kr-icon-primary-*) is the right next bounded slice. Return the recurring consistency umbrella to ready for the next bounded slice.
-  updated: '2026-09-10T05:54:13Z'
+  updated: '2026-09-10T06:31:52Z'
   implementation_pr: 'silasfelinus/kind_robots#2577'
   retry_context: ''
   owner: worker
-  claimed_by: claude-scheduled-20260910T054111-t104s196
-  claimed_at: '2026-09-10T05:41:11Z'
+  claimed_by: claude-scheduled-20260910T063151Z-t104s197
+  claimed_at: '2026-09-10T06:31:52Z'
 
 - id: t-123
   milestone: m5
