@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   recurring: true
@@ -3375,9 +3375,12 @@ tasks:
     Slice 214 migrates the two bare h-4 w-4 action glyphs in components/bots/bot-card.vue to the shared kr-icon-4 primitive with no behavior or geometry change.
 
     Slice 214 merged as silasfelinus/kind_robots#2597 (squash 0f0cf28a473c8d689705ff7b3e93d1cd0696fb7a) from exact head 96ccc9654ddee34190535156a9259d951f411cd5. components/bots/bot-card.vue now uses kr-icon-4 for its Chat and Select action glyphs instead of bare h-4 w-4; no geometry, color, or behavior change. The branch diff was exactly one file (+2/-2) and zero commits behind main before PR creation. All 45 exact-head pull-request workflow runs completed successfully before merge, including TypeScript Type Check, Contract Tests, layout/icon safety and the full narrative/storybook contract suite. Return the recurring consistency umbrella to ready for the next bounded slice.
-  updated: '2026-09-10T22:25:00Z'
+  updated: '2026-09-10T22:34:32Z'
   implementation_pr: 'silasfelinus/kind_robots#2596'
   retry_context: ''
+  owner: worker
+  claimed_by: claude-web-20260910T223431Z-slice214
+  claimed_at: '2026-09-10T22:34:32Z'
 
 - id: t-123
   milestone: m5
