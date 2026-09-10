@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3433,8 +3433,32 @@ tasks:
     w-3, h-7 w-7 with no color modifier) -- a much larger family (h-4 w-4 alone is 299
     occurrences across 94 files) that will need to be split into several bounded slices
     rather than one, since it is an order of magnitude larger than any family closed so far.
-  updated: '2026-09-10T07:29:42Z'
-  implementation_pr: 'silasfelinus/kind_robots#2578'
+
+    Slice 198 merged as silasfelinus/kind_robots#2579 (squash
+    2819733994a5581cdc986cc3af2aa9b3e04352a2) from exact head
+    1a582338ff3556d97c869cce87071aef7de7beaf. Added .kr-icon-6 (h-6 w-6, no color) to
+    assets/css/tailwind.css, opening the sizeless-and-colorless sibling family to the now-
+    closed kr-icon-primary-* family (slices 191-196, all of which carry a text-primary color
+    token). Added utils/scripts/codemods/kr_icon_6_codemod.py, sibling of the
+    kr_icon_primary_*_codemod.py scripts, excluding any text-*/stroke-*/fill-* color token
+    so it never clashes with the primary-colored sibling primitive. Migrated 11 occurrences
+    across 10 files (achievement-gallery.vue, animation-manager.vue x2, hair-studio-
+    manager.vue, builder-card.vue, home-account-links.vue, model-builder-source-picker.vue,
+    server-selector.vue, conductor-page.vue, animation-selector.vue, login-page.vue) -- 9
+    exact h-6 w-6 matches plus 2 subset-match occurrences (extra shrink-0 in one, a larger
+    rounded-full badge composition in another); no geometry or behavior change. vue-tsc
+    clean; eslint 333/327/6 identical to the documented baseline; test:layout-contract holds
+    (0 new violations -- same pre-existing narrative-ingredient-multi-picker.vue viewport-
+    grid ratchet opportunity left untouched per scope discipline); test:lint-ratchet holds
+    at 333/-59; prettier --check byte-identical before/after. Return the recurring
+    consistency umbrella to ready for the next bounded slice. Kaizen for the next slice:
+    continue opening the sizeless-and-colorless icon-glyph family size by size -- remaining
+    sibling sizes surveyed and left open: h-3 w-3 (19 files), h-3.5 w-3.5 (31 files), h-5
+    w-5 (35 files), h-7 w-7 (15 files), h-8 w-8 (18 files); h-4 w-4 alone is ~326
+    occurrences/102 files and needs further splitting before it is a bounded slice on its
+    own.
+  updated: '2026-09-10T07:49:42Z'
+  implementation_pr: 'silasfelinus/kind_robots#2579'
   retry_context: ''
   owner: worker
   claimed_by: claude-scheduled-20260910T072941Z-t104s198
