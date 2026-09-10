@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3717,7 +3717,28 @@ tasks:
     further activity since creation -- picked up and completed by a later scheduled sweep
     (session ending in t125) per the standing merge-when-green policy: merged #2569, then
     landed this ready+implementation_pr transition on the same branch to close out #3985.
-  updated: '2026-09-10T00:43:48Z'
+
+    Slice 190 merged as silasfelinus/kind_robots#2571 (squash 352fd13) from exact head
+    0a2a4d2, base f30333a. Extended kr_badge_codemod.py's BOUNDED_EXTRAS[kr-badge-outline]
+    with rounded-2xl/rounded-xl (per slice 187/189's kaizen note auditing the remaining one-
+    off pool), migrated 15 subset-match occurrences across 10 files (coloring-book-
+    production-history.vue, coloring-book-production-toolbar.vue x5, coloring-book-package-
+    readiness.vue, coloring-book-cover-studio.vue, coloring-book-studio.vue x2, coloring-
+    book-readiness.vue, chat-gallery.vue, daily-digest-object-dialog.vue, dream-maker.vue,
+    pages/users/[id].vue); no geometry or behavior change. Manually reverted the two pre-
+    existing bare badge-outline/badge-ghost showcase rows in ui-gallery.vue, same precedent
+    as every prior badge-family slice touching that file. Verified vue-tsc clean, eslint
+    333/327/6 identical to baseline, test:layout-contract holds (0 new violations),
+    test:lint-ratchet holds at 333/-59, prettier --check byte-identical warning list (1145
+    lines, git-stash before/after diff). All 51 kind_robots PR checks green, mergeable_state
+    clean at merge time, additions/deletions (45/-20, 12 files) matched the intended diff
+    exactly. Return the recurring consistency umbrella to ready for the next bounded slice.
+    Kaizen for next slice: kr-badge-outline's bounded-extras pool is now closed (remaining
+    occurrences are genuine one-offs) -- run a fresh full-repo class-frequency survey
+    outside all now-closed families (kr-text-black-*, kr-text-bold-*, kr-text-dim-*, kr-
+    text-eyebrow-*, kr-label-*, kr-badge-* incl. -ghost/-outline sizeless siblings and their
+    bounded extras, kr-text-error-xs, kr-text-faded-*) to find the next bounded target.
+  updated: '2026-09-10T00:55:07Z'
   implementation_pr: 'silasfelinus/kind_robots#2571'
   retry_context: ''
   owner: worker
