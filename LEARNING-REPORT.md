@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-10T22:35:03Z
+Generated: 2026-09-10T22:52:52Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **904**
-- Outcomes: blocked: 16, cancelled: 1, done: 887
+- Closed tasks recorded: **905**
+- Outcomes: blocked: 16, cancelled: 1, done: 888
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
-| interface-vision | 115 | 100% |
+| interface-vision | 116 | 100% |
 | kapowarr | 52 | 100% |
 | kind-economy | 9 | 100% |
 | kind-robots | 55 | 98% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 888 | 99% |
+| software | 889 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-10 `interface-vision/t-104` — Slice 214 (kind_robots#2598)'s "Build production image" Docker check hung well past its normal duration -- comparable recent slice PRs with a near-identical mechanical diff completed the same job in ~8 minutes (21:37:43-21:45:59 and 21:47:25-21:55:40), but this run's single "Build and publish" step showed zero progress for 60+ minutes while every other check (including a ~340-step Contract verifiers job) passed normally. cancel_workflow_run did not take effect promptly either. Confirmed this workflow only logs in to GHCR on push (not pull_request), so it cannot be gating this repo's actual deploy image on a PR -- merged directly once every other check was green rather than waiting indefinitely on a stuck runner. Future sessions hitting an isolated stuck/non-progressing check on an otherwise-green PR should check whether it's actually required before treating it as a hard blocker, and a runner-health spot-check is worth doing if this recurs.
 - 2026-09-10 `interface-vision/t-104` — Slice 212 (kind_robots#2594) touched assets/css/tailwind.css (the .kr-icon-4 doc comment) in addition to the usual .vue files. That path is in publish-container.yml's pull_request path filter, so this PR's CI included a ~10-minute "Build production image" Docker job on top of the usual ~50 contract/unit checks -- prior slices in this same series that only touched .vue files never triggered it and finished CI in ~2-3 minutes. Any future task/kaizen note estimating CI wall-clock for this recurring migration should account for whether the slice's doc-comment update to tailwind.css is included, not assume the faster .vue-only baseline. Also confirms components/pages was the last directory large enough to bound a slice by directory; the ~124 remaining occurrences (35 files) are thin enough that the next slice needs an occurrence-count-band strategy instead.
 - 2026-09-10 `interface-vision/t-104` — Slice 196 (kind_robots#2577): a prior connector-only Worker session attempted this exact slice and correctly re-armed the task rather than risk corrupting assets/css/tailwind.css, because the GitHub Contents API returned a truncated response for that file and its protocol forbids reconstructing/replacing a large file from an abbreviated response. A shell-capable session with a local git checkout has no such limit and landed the identical scoped change safely on the next cycle. This is not a failure to route around -- it is the connector-only protocol working as intended (docs/github-connector-worker.md): large shared files like tailwind.css should be treated as a standing signal to prefer a shell-capable cycle for this recurring task's CSS-edit step specifically, rather than retrying the same Contents API edit repeatedly.
 - 2026-09-10 `interface-vision/t-104` — Slice 191 (kind_robots#2572): a fresh full-repo class-frequency survey turned up both semantically-named shapes (h-5 w-5 text-primary, a bare icon glyph) and much higher-frequency generic layout idioms (h-4 w-4 at 301x, flex-1 min-w-0 at 103x, flex gap-2 items-center at 87x). Picking the icon shape over the layout idioms wasn't about frequency -- it was about matching this recurring umbrella's established scope: every prior slice targets a single-purpose, semantically-named style token (text color/weight/opacity, badge/label/input variant, icon size+color), never a structural layout composition. A frequency survey for this kind of recurring migration task should filter to the established shape-class before ranking by count, or it surfaces technically-larger but out-of-scope candidates ahead of the actually-bounded ones.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-09 `interface-vision/t-104` — A subset-match codemod's BASE_TOKENS check matches any class string containing that pair regardless of what else rides along -- slice 170's kr_text_bold_xs_codemod.py ({"font-bold","text-xs"}) silently absorbed the entire `label-text text-xs font-bold` family (25 occurrences) that both its own docstring and kr_label_bold_codemod.py's had explicitly flagged as "left for a future slice." The result wasn't wrong (kr-text-bold-xs correctly carries font-bold+text-xs), just incomplete: the dead `label-text` token got preserved as a harmless-looking "extra" token instead of recognized as markup this project's other codemods already knew was inert. Before treating a kaizen note's "still open" family as untouched, grep the current class strings for the just-shipped primitive already combined with that family's extra tokens -- a broad subset-match sibling from the same slice may have already swept it in incompletely.
 - 2026-09-08 `ai-art-academy/t-045` — A "DONE" render-queue job is not proof of a usable image -- t-045's 5-style Kontext+LoRA re-run all completed DONE with valid 1024x1024 PNGs (correct file format, correct dimensions) that were nonetheless pure uniform static/noise with zero recognizable content, identical corruption signature across all 5 independent LoRA files. A polling script that only checks job status/artImageId presence, never image content, will report success on a systemically broken render path. Add a cheap low-entropy/ uniform-pixel sanity check (e.g. stddev of decoded pixel values) to any future job-polling script before treating DONE as "safe to compare/ promote" -- would have caught this the moment results first came back instead of needing a manual visual compare pass.
 - 2026-09-08 `interface-vision/t-104` — A new `.kr-*` primitive that wraps daisyUI tokens via `@apply` can pass every local check (vue-tsc, eslint, layout-contract, lint-ratchet, prettier) and still fail CI's `Build production image` check alone: `@apply label-text font-bold` broke with `Cannot apply unknown utility class 'label-text'` because `label-text` is dead markup left over from a pre-5 daisyUI form convention -- present in 200+ templates but with zero matching CSS rule anywhere in daisyUI 5's own dist CSS or this repo's assets/. Tailwind v4's `@apply` validates its argument against real utilities; a raw template `class="..."` attribute is never validated, so the dead token was invisible everywhere except the actual production build (the most expensive place to discover it, ~8-10 minutes per run). Before writing a new `kr-*` primitive's `@apply` line, grep the base tokens against `node_modules/daisyui/dist/*.css` (or the app's own `assets/`) for an actual CSS rule first -- a class present in markup is not proof it is a real, applyable utility, especially across a daisyUI major-version bump.
-- 2026-09-08 `interface-vision/t-104` — Shrinking a long `class="..."` attribute down to a short primitive name can leave stale multi-line Vue-template formatting behind: prettier had wrapped the original long class onto its own line inside a 3-line `<span>\n  class="..."\n>`, and after the codemod collapsed it to `kr-icon-tile` that wrapping was no longer prettier's own preference, so `prettier --check` flagged it as newly non-conforming on files that were otherwise already prettier-clean. The fix is NOT `prettier --write` on the whole file when the file has *other*, unrelated pre-existing prettier violations (a real trap hit mid-slice: running it reformatted unrelated code throughout build-bench.vue, privacy-page.vue, and wallet-page.vue, turning a 4-line diff into a 100+-line one) -- diff `git stash` baseline vs. current per file first, and hand-collapse just the specific tag when the file has pre-existing noise the tool would otherwise sweep in.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-10T22:35:03Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-10T22:52:52Z_
