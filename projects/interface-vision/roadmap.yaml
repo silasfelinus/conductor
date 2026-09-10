@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3813,7 +3813,25 @@ tasks:
     background/shape tokens) are the two remaining kr-icon-primary-* siblings; after those,
     a fresh full-repo class-frequency survey outside all now-closed families is the right
     next step.
-  updated: '2026-09-10T04:38:28Z'
+
+    Slice 195 merged as silasfelinus/kind_robots#2576. Added .kr-icon-primary-10 (h-10 w-10
+    text-primary/60), a distinct token set from the other kr-icon-primary-* siblings
+    (opacity modifier on the color rather than the bare color) -- new codemod
+    utils/scripts/codemods/kr_icon_primary_10_codemod.py. Migrated 7 exact occurrences
+    across 3 files (dream-art-chooser.vue, dream-list.vue x5, avatar-picker.vue); no
+    geometry/behavior change. vue-tsc clean; eslint 333/327/6 identical to baseline;
+    test:layout-contract holds (0 new violations -- note the narrative-ingredient-multi-
+    picker.vue viewport-grid baseline could shrink by 2 entries per the run output,
+    unrelated to this slice, left untouched per scope discipline); test:lint-ratchet holds
+    at 333/-59; prettier --check byte-identical warning list (1145 lines, git-stash
+    before/after diff). All 48 kind_robots CI checks green, mergeable_state clean,
+    additions/deletions (125/-7, 5 files) matched the intended diff exactly. Return the non-
+    recurring consistency umbrella to ready for the next bounded slice. Kaizen: only one kr-
+    icon-primary-* sibling remains open -- h-12 w-12 text-primary (7 files, distinct from
+    kr-icon-tile's own h-12 w-12 which also carries the tile's background/shape tokens).
+    After that lands, a fresh full-repo class-frequency survey outside all now-closed
+    families is the right next step.
+  updated: '2026-09-10T04:49:50Z'
   implementation_pr: 'silasfelinus/kind_robots#2576'
   retry_context: ''
   owner: worker
