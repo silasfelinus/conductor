@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3389,7 +3389,51 @@ tasks:
     Verified: vue-tsc --noEmit clean; eslint 333/327/6 identical to the documented baseline; test:layout-contract holds, 0 new violations (same pre-existing narrative-ingredient-multi-picker.vue viewport-grid ratchet note as every recent slice, left untouched); test:lint-ratchet holds at 333/-59; prettier --check . 1145 lines flagged, byte-identical to baseline (3 touched files -- art-gallery.vue, giving-page.vue, tailwind.css -- confirmed pre-existing drift via git stash before/after). Manually reviewed every diff hunk -- only static class="..." attributes touched, no :class bindings, no geometry/behavior change. All 49 kind_robots PR checks resolved success, mergeable_state clean at merge time (140/-9, 10 files matched the intended diff exactly), squash-merged. Conductor close-out PR #4000 (claimed -> review with implementation_pr pointed at kind_robots#2577, then ready + TALKBACK note on the same branch) watched the same way.
 
     Kaizen for the next slice: the kr-icon-primary-* family is now fully closed out. A fresh full-repo class-frequency survey outside all now-closed families (kr-text-black-*, kr-text-bold-*, kr-text-dim-*, kr-text-eyebrow-*, kr-label-*, kr-badge-* incl. -ghost/-outline sizeless siblings, kr-text-error-xs, kr-text-faded-*, kr-icon-primary-*) is the right next bounded slice. Return the recurring consistency umbrella to ready for the next bounded slice.
-  updated: '2026-09-10T06:41:03Z'
+
+    Slice 197 merged as silasfelinus/kind_robots#2578 (squash
+    56b8c2b5f960bc6500f8ed6ecbf826529e660479). Added .kr-label-row (@apply label py-1;) to
+    assets/css/tailwind.css and utils/scripts/codemods/kr_label_row_codemod.py, sibling of
+    the existing kr-*-codemods -- the strongest remaining candidate outside all now-closed
+    kr-* families per slice 196's kaizen note, found by a fresh full-repo class-frequency
+    survey. Distinct from the existing kr-label-xs/kr-label-xs-semibold/kr-label-bold
+    family: those style the inner label-text span's typography, while kr-label-row is the
+    outer DaisyUI .label wrapper span's own layout override -- a different element in the
+    same field. Ran the codemod with --write: migrated 44 occurrences across 12 files (42
+    exact label py-1, plus 2 subset-match occurrences in daily-dream-generator.vue carrying
+    an extra kr-text-bold-xs token, preserved verbatim). No geometry or behavior change --
+    manually reviewed every diff hunk, only static class="..." attributes touched, no :class
+    bindings. Verified: vue-tsc --noEmit clean; eslint 333/327/6 identical to the documented
+    baseline; test:layout-contract holds, 0 new violations (same pre-existing narrative-
+    ingredient-multi-picker.vue viewport-grid ratchet opportunity as prior slices, left
+    untouched); test:lint-ratchet holds at 333/-59; prettier --check . 1145 lines flagged,
+    byte-identical to a git stash before/after diff. All 53 kind_robots PR checks resolved
+    success (watched via a Monitor polling $GH_TOKEN+curl against the REST API, ~10 min wall
+    clock -- Build production image was the long pole), mergeable_state clean at merge time
+    (165/-44, 14 files matched the intended diff exactly), squash-merged. Conductor close-
+    out PR #4001 (claimed -> review with implementation_pr pointed at kind_robots#2578)
+    watched the same way (24 checks, ~4 min), confirmed clean, squash-merged (e426bd9).
+    Session-start sweep this cycle: AGENTS.md/CLAUDE.md read in full;
+    check_pr_merged_drift.py, audit_human_gates.py (29 active gates, no new stale signals),
+    check_project_scaffold_drift.py, check_live_facet_coverage.py (264/1305, all clean),
+    check_milestone_status_drift.py all clean; check_container_log_drift.py: 118 new/15
+    spiking/6 newly-quiet signatures across 43 containers, same routine infra-noise category
+    as prior sweeps (qbit replay warnings, flaresolverr Chrome-session churn,
+    sonarr/prowlarr rate limiting, kapowarr checksum errors, ubooquity font warnings),
+    advisory only, no action taken; build_dream_proposal.py --check --fetch: docket at 5
+    (buffer target met); fetch_todos.py: no open todos; TALKBACK tail: no unresolved
+    escalations. select_role.py returned reviewer-uncertain again (GitHub API 403 against
+    api.github.com/repos/silasfelinus/cthulhuquarium/*, outside this session's repo scope)
+    -- checked GitHub MCP list_pull_requests directly for conductor/kind_robots/kapowarr:
+    zero open PRs on all three, confirming worker (ready task interface-vision/t-104) was
+    the correct role. Return the non-recurring consistency umbrella to ready for the next
+    bounded slice. Kaizen for the next slice: test:layout-contract's viewport-grid baseline
+    can shrink by 2 entries (narrative-ingredient-multi-picker.vue no longer violates the
+    contract) -- run with --update to ratchet it down. Beyond that, the next class-frequency
+    survey should look at plain sizeless icon glyphs (h-4 w-4, h-3.5 w-3.5, h-5 w-5, h-3
+    w-3, h-7 w-7 with no color modifier) -- a much larger family (h-4 w-4 alone is 299
+    occurrences across 94 files) that will need to be split into several bounded slices
+    rather than one, since it is an order of magnitude larger than any family closed so far.
+  updated: '2026-09-10T06:51:39Z'
   implementation_pr: 'silasfelinus/kind_robots#2578'
   retry_context: ''
   owner: worker
