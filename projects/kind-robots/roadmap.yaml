@@ -2446,7 +2446,7 @@ tasks:
 - id: t-062
   milestone: m4
   title: "PITCH GATE: Grant CRUD API + canView() route integration + minimal share UI"
-  status: review
+  status: ready
   gate_human: true
   passes: 0
   stakes: reversible
@@ -2457,11 +2457,10 @@ tasks:
     APPROVED by Silas via the 2026-09-07 human-gate simplification session. Implement the pitch as written: narrow Grant CRUD, existing canView()/grant integration on Project and Resource routes, and minimal Share / Shared with me UI. No broader RBAC redesign and no additional human checkpoint for these reversible implementation slices.
 
     First approved Grant-sharing backend slice is implemented in silasfelinus/kind_robots#2581: manual grant creation, subject grant listing, active shared-with-me listing, audit-preserving revocation, and shared owner/admin subject authorization for PROJECT/RESOURCE/PACK. Full PR diff inspected; exact-head CI is running. Remaining approved t-062 scope after this slice is the canView route integration and minimal Share/Shared-with-me UI.
+
+    Merged the first approved Grant-sharing backend slice as silasfelinus/kind_robots#2581 (squash 00a3bc7adb5c6b796260ac9d3d8c88d3d2d1c7a1) after reviewing the full five-file diff and verifying all exact-head registered workflows completed successfully. Remaining approved scope is canView() route integration plus minimal Share / Shared-with-me UI, so return this non-recurring task to ready rather than marking it done.
   approved_by_human: true
-  updated: '2026-09-10T09:35:00Z'
-  owner: worker
-  claimed_by: openai-scheduled-20260910T091149Z-iv104-p2x7
-  claimed_at: '2026-09-10T09:27:00Z'
+  updated: '2026-09-10T09:47:00Z'
 
 - id: t-063
   milestone: m3
