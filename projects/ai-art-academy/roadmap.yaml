@@ -2337,17 +2337,29 @@ tasks:
 - id: t-065
   milestone: m7
   title: "FOR SILAS: visually accept Academy web, iOS, and Android builds"
-  status: waiting
+  status: done
   owner: silas
   passes: 0
   stakes: reversible
   gate_human: true
-  approved_by_human: false
+  approved_by_human: true
   depends_on: t-064
-  note: >
+  note: >-
     FOR SILAS: review the polished Academy on web plus installable/testable iOS and Android builds.
     TO APPROVE: confirm the three surfaces feel finished or leave concrete product/visual notes.
     The Academy remains active until this acceptance and any resulting fixes are complete.
+
+    CLOSED AS OUT OF SCOPE, 2026-09-11, by Silas in session: "Ai art academy is actually an
+    outdated project to test things. It has gone as far as it needs, I don't see it becoming
+    an app, it should be considered finished and closed as is." The Academy served its
+    purpose as a testbed for the Kontext remix path and the art-history teaching surface; it
+    is not becoming a mobile app, so the native/app-shaped work below is retired rather than
+    deferred. Not a failure and not a task-count flip -- a deliberate scope end.
+    Specifically: this was the FOR SILAS acceptance of web + iOS + Android builds together.
+    He has closed the project as-is instead, which is itself the disposition -- accepting it
+    in its current state without requiring a further cross-platform review. No separate
+    visual acceptance is outstanding.
+  updated: '2026-09-11T11:11:05Z'
 
 - id: t-066
   milestone: m7
