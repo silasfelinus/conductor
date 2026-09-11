@@ -3117,38 +3117,17 @@ tasks:
 - id: t-076
   milestone: m3
   title: Bulk-create real ArtImage records and link them to the 119 Monster rows that have art
-  status: claimed
+  status: review
   gate_human: false
   owner: worker
   stakes: reversible
   passes: 0
-  note: >-
-    Split from t-072 (2026-09-11) -- see that task's note for the full scope
-    investigation. Monster.iconPath/cardPath/artImageId are still null for all 119
-    species that already have a delivered plate (client-side fallback only, via
-    utils/cthulhuquariumArt.ts's withCthulhuquariumArt -- that helper already yields to
-    real DB values automatically once set, so this closes a permanent workaround
-    without touching the fallback code).
+  note: |-
+    Split from t-072 (2026-09-11) -- see that task's note for the full scope investigation. Monster.iconPath/cardPath/artImageId are still null for all 119 species that already have a delivered plate (client-side fallback only, via utils/cthulhuquariumArt.ts's withCthulhuquariumArt -- that helper already yields to real DB values automatically once set, so this closes a permanent workaround without touching the fallback code).
+    Requires: (1) a bulk script creating one ArtImage row per fish, adapting scripts/seed_kr_logo_art_image.ts's dry-run-by-default/--write-gated, idempotent-by-fileName pattern; (2) linking each to its Monster row by slug, adapting scripts/seed_bestiary.ts's two-pass upsert idiom and mirroring server/api/monsters/[id].patch.ts's FK-existence validation for artImageId; (3) a decision on where the 119 static files get a stable public URL for ArtImage.imagePath -- utils/artImageSrc.ts renders that field verbatim as an <img src>, not through Vite asset resolution, so the current assets/images/cthulhuquarium/ Vite-src location (fingerprinted per-build _nuxt/... URLs) won't work as-is; duplicating the 119 files into public/images/cthulhuquarium/ for stable /images/... URLs is the realistic in-repo option, since the real home-network media-share pipeline is explicitly unreachable from any CI/agent session (see utils/cthulhuquariumArt.ts's own header comment). REQUIRES A SESSION WITH LIVE DATABASE_URL ACCESS: this cannot be run or verified from a generic sandbox checkout (confirmed 2026-09-11 -- no .env, dummy-only DATABASE_URL in the provisioning script, no reachable DB port; see docs/runbooks/migration-credential-boundary.md for where real credentials actually live). The script itself can be drafted/reviewed in a sandbox as prep work, but should not attempt --write there.
 
-    Requires: (1) a bulk script creating one ArtImage row per fish, adapting
-    scripts/seed_kr_logo_art_image.ts's dry-run-by-default/--write-gated,
-    idempotent-by-fileName pattern; (2) linking each to its Monster row by slug,
-    adapting scripts/seed_bestiary.ts's two-pass upsert idiom and mirroring
-    server/api/monsters/[id].patch.ts's FK-existence validation for artImageId; (3) a
-    decision on where the 119 static files get a stable public URL for ArtImage.imagePath
-    -- utils/artImageSrc.ts renders that field verbatim as an <img src>, not through
-    Vite asset resolution, so the current assets/images/cthulhuquarium/ Vite-src
-    location (fingerprinted per-build _nuxt/... URLs) won't work as-is; duplicating the
-    119 files into public/images/cthulhuquarium/ for stable /images/... URLs is the
-    realistic in-repo option, since the real home-network media-share pipeline is
-    explicitly unreachable from any CI/agent session (see utils/cthulhuquariumArt.ts's
-    own header comment). REQUIRES A SESSION WITH LIVE DATABASE_URL ACCESS: this cannot
-    be run or verified from a generic sandbox checkout (confirmed 2026-09-11 -- no
-    .env, dummy-only DATABASE_URL in the provisioning script, no reachable DB port; see
-    docs/runbooks/migration-credential-boundary.md for where real credentials actually
-    live). The script itself can be drafted/reviewed in a sandbox as prep work, but
-    should not attempt --write there.
-  updated: '2026-09-11T14:18:47Z'
+    Added a dry-run-by-default bulk linker that discovers delivered fish plates, prepares stable public paths, idempotently creates or updates ArtImage rows by fileName, verifies every plate has a Monster slug match, and links artImageId/iconPath/cardPath. Live --write remains intentionally unrun without production DATABASE_URL access.
+  updated: '2026-09-11T15:24:20Z'
   claimed_by: 2026-09-11T141847Z-cthulhuquarium-t-076-r4m9
   claimed_at: '2026-09-11T14:18:47Z'
 
