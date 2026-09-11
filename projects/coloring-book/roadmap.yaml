@@ -172,7 +172,7 @@ tasks:
 - id: t-022
   milestone: m4
   title: Monster Recast book 1 production pass — 36 final color/BW pairs
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   updated: '2026-09-11T00:29:57Z'
@@ -214,12 +214,28 @@ tasks:
     the other new accepts, then re-review rejected slots once fresh renders exist;
     Hollywood Recast and Kind Robots still untouched. Re-arming to ready (recurring),
     releasing the claim.
+
+    Fourth pass (2026-09-11): attempted BW derivation for mr-016/mr-020's finished
+    jobs -- both came back as pure corrupted noise with identical mechanical-check
+    stats, matching the ai-art-academy/t-079 Kontext corruption signature. Filed
+    coloring-book/t-039 to track (soft needs-human, not blocking other work) and
+    cross-referenced it on t-079. Not re-attempting generate-bw on any slot in this
+    project until that clears. Pivoted to Hollywood Recast creative review instead
+    (color-only, doesn't touch the broken BW path): reviewed hwr-001 through
+    hwr-010, accepted 7 (hwr-001, 003, 004, 006, 007, 009, 010), rejected 3
+    (hwr-002 not plus-size as cast, hwr-005 has readable "HOTEL" signage violating
+    the book's no-text rule, hwr-008 missing the trans-man/scars/mature-body casting
+    the prompt specifies) with reasoning recorded on each proposal's notes in
+    sets/hollywood-recast/proposals.yaml. Full detail in t-022-run-log.md. Next
+    actionable step: hwr-011 onward for Hollywood Recast; Kind Robots still
+    untouched; Monster Recast re-review and BW derivation blocked on t-039.
+    Re-arming to ready (recurring), releasing the claim.
   run_log: projects/coloring-book/t-022-run-log.md
   recurring: true
-  owner: worker
-  claimed_by: agent-20260911T002957Z-mr-review
-  claimed_at: '2026-09-11T00:29:57Z'
-  implementation_pr: 'silasfelinus/conductor#3954'
+  owner: null
+  claimed_by: null
+  claimed_at: null
+  implementation_pr: 'silasfelinus/conductor#4041'
 - id: t-025
   milestone: m6
   title: Package and register Monster Recast book 1
@@ -691,3 +707,53 @@ tasks:
     Merged silasfelinus/conductor#2031 as c08a349b6b4ce61a80f1a4e5c59a7463e65af222. scripts/provision_kind_robots_deps.sh now checks for PIL and installs Pillow idempotently with python -m pip install --user Pillow before coloring-book WebP recovery work. Exact PR head passed Process task events #31387694213, Security Audit #31387694254, and Worker PR CI #31387694230.
   claimed_by: 20260810T121715Z-coloring-t038-7c4e
   claimed_at: '2026-08-10T12:17:15Z'
+- id: t-039
+  milestone: m4
+  title: "Investigate: Kontext BW-derivation renders pure corrupted noise (mr-016, mr-020) -- resembles ai-art-academy/t-079"
+  status: needs-human
+  soft_gate: true
+  stakes: reversible
+  note: >-
+    Kaizen from t-022's 2026-09-11 pass. `manage_coloring_book_production.py`'s
+    `generate-bw` always calls the art-enqueue endpoint with `"engine": "kontext"`
+    (image-to-image line-art derivation from an accepted color master, no LoRA
+    fields set). Two Monster Recast accepts left in-flight from the prior pass
+    (mr-016 job 21667, mr-020 job 21668) both landed as pure corrupted color noise
+    -- not line art, not a bad rendering of the source scene, just static -- and
+    both were mechanically rejected by `art_quality.assess_file` with byte-identical
+    statistics (mean_saturation=0.17, colorful_fraction=0.35, white_fraction=0.00)
+    despite being derived from two completely different source color images. That
+    identical-statistics result across different inputs points at the render
+    backend itself, not per-image content. Rejected candidates saved at
+    `projects/coloring-book/sets/monster-recast/generated/bw/rejected/mechanical/
+    mr-016-bw-20260911T003011Z.webp` and `mr-020-bw-20260911T003019Z.webp`.
+
+    This resembles `ai-art-academy/t-079` ("Kontext LoRA arm renders pure corrupted
+    noise instead of a real image", still `needs-human`/unresolved) -- same `kontext`
+    engine family, same "every render comes back as uniform noise regardless of
+    input" symptom -- but is NOT confirmed to be the identical bug: t-079's request
+    body sets `loraName`/`loraStrength` (implicating the LoRA branch specifically),
+    while this book's BW-derivation body has no LoRA fields at all, just a plain
+    kontext image-to-image call. So either (a) the LoRA branch and the plain kontext
+    branch share a broken component (e.g. a VAEDecode step, per t-079's own
+    hypothesis), or (b) this is a second, separate kontext-engine defect. Both
+    need the same backend/relay-side investigation this sandbox cannot do directly
+    (no access to the ComfyUI node graph or relay process) -- compare the plain
+    kontext workflow graph this book's BW derivation emits against a known-working
+    kontext call (e.g. this same script's `accept-color`/mechanical-check path,
+    which only downloads an already-rendered image and never calls enqueue) to see
+    whether the corruption is upstream of both branches or specific to each.
+
+    FOR SILAS: two systemic corrupted-noise signals now exist across two projects
+    on the same `kontext` engine family (ai-art-academy/t-079 and this task). Worth
+    having whoever has backend/relay access (ComfyUI workflow graph, or the relay's
+    `buildKontextWorkflow`) look at both together rather than separately, since a
+    shared root cause would explain both with one fix. TO APPROVE: no roadmap
+    action needed from Silas to unblock other work -- this is a soft gate (agents
+    keep working elsewhere; coloring-book's `t-022` is simply not re-attempting any
+    `generate-bw` calls until this clears). What unblocks when it's fixed: `t-022`
+    can resume BW derivation for mr-016, mr-020, and the other in-progress Monster
+    Recast accepts.
+  owner: null
+  claimed_by: null
+  claimed_at: null

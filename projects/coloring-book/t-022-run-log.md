@@ -1326,3 +1326,92 @@ touched, no re-renders requested for the 13 rejected slots).
    either creative review pass.
 
 Re-arming to `ready` (recurring), releasing the claim.
+
+---
+
+## 2026-09-11 (scheduled Conductor session)
+
+**BW mechanical failure (systemic, likely known bug):** attempted `generate-bw` for
+the two Monster Recast accepts left in-flight last pass (mr-016, mr-020; jobs 21667,
+21668 had finished server-side). Both landed as pure corrupted color noise -- not
+line art, not even a bad rendering of the source scene -- and both were mechanically
+rejected with byte-identical statistics (mean_saturation=0.17, colorful_fraction=0.35,
+white_fraction=0.00), which is itself suspicious (two different source images
+producing statistically identical garbage suggests the render backend, not the
+per-image content, is at fault). `manage_coloring_book_production.py` always calls
+this book's BW derivation via `"engine": "kontext"` -- the same render engine family
+flagged broken in `ai-art-academy/t-079` ("Kontext LoRA arm renders pure corrupted
+noise instead of a real image", 5/5 styles, still `needs-human`/`soft_gate`, unresolved
+as of this session). Did not retry further or burn additional passes chasing what
+looks like the same backend defect from a different project; both proposals are left
+at `bw_status: needs_review` with the rejected candidates saved for reference. **Not
+re-enqueuing BW derivation for any slot in this book until ai-art-academy/t-079 (or an
+equivalent kontext-engine fix) is confirmed resolved** -- doing so now would likely
+just burn more render jobs on the same broken path. Added a cross-reference note to
+ai-art-academy/t-079 pointing back here as a second sighting.
+
+**Hollywood Recast creative review, slice 1 (hwr-001 through hwr-010):** this book has
+no `homage-concepts.yaml`/`source_lineage` structure like Monster Recast -- each
+prompt is full descriptive text with its own explicit constraints (no actor/franchise
+likeness, no readable text, and a specific casting/identity descriptor per slot that
+reads as a deliberate representation choice across the whole book -- plus-size,
+wheelchair-using, trans, nonbinary, Deaf, elderly, disabled characters are named
+directly in nearly every prompt). Reviewed all 10 rendered color candidates against
+their prompts:
+
+**Accepted (7), `accept-color` run live for each:**
+- **hwr-001 (Starlight Mechanic)** -- older Black woman rocket mechanic, welding torch,
+  white glove tucked in belt, retro spaceship scale conveyed by tiny crew/scaffolds;
+  matches the brief closely.
+- **hwr-003 (Desert Wheel Queen)** -- wheelchair-using stunt driver correctly shown
+  integrated into a racing-chair cockpit vehicle, goggles, visible scars, drone chase;
+  strong match.
+- **hwr-004 (Rain on the Backlot)** -- elderly East Asian man dancing with umbrella,
+  tiny maintenance robots secretly controlling puddles/streetlamp/thunder; matches.
+- **hwr-006 (Temple of the Sun Engine)** -- Latina archaeologist rotating an original
+  stone-and-gear sun engine, dusty and delighted rather than posed as a pinup, no
+  copied idol; matches.
+- **hwr-007 (The Silver Swashbuckler)** -- mature pirate captain, silver braid, ornate
+  prosthetic lower leg, yardarm duel at sunset; rendered with one opponent instead of
+  the prompt's three masked tax collectors, judged an acceptable compositional
+  simplification since every named identity marker (age, braid, prosthetic, no actor
+  likeness) is present and correct.
+- **hwr-009 (Ballroom Double Take)** -- two women in matching white tuxedos escorted by
+  differently-dressed glamorous partners, symmetrical composition, orchestra, champagne
+  arcing; matches, "diverse ages" partially read via hair color variation.
+- **hwr-010 (Rooftop Sign Song)** -- rooftop romance, dancer with expressive raised
+  hand, technician operating portable lights, warm intimate color, no text; matches.
+
+**Not accepted (3), reasoning recorded on each proposal's `notes:` in
+`sets/hollywood-recast/proposals.yaml`:**
+- **hwr-002 (The Grand Staircase)** -- the woman shown is conventionally slender, not
+  plus-size as explicitly cast in the prompt; everything else about the scene matches.
+- **hwr-005 (Midnight Detective)** -- a large, fully legible neon "HOTEL" marquee fills
+  the top third of the frame, directly violating this book's blanket "no readable
+  lettering" rule (the prompt's own "flickering hotel sign" should read as an
+  abstracted sign shape, not spelled-out text); the detective/cane/service-dog staging
+  otherwise matches well.
+- **hwr-008 (Laboratory Tenor)** -- the singer is a conventional young man with no
+  visible scars and no indication of a mature body, missing the prompt's one named
+  casting requirement ("a trans man tenor... His scars and mature body are visible with
+  dignity"); the lab and stitched-creature choir staging otherwise matches.
+
+Verification: `validate_roadmaps.py` clean; `coloring_proposal_status.py` before/after
+(Hollywood Recast accepted color/BW 0/0 -> 7/0, other two books unchanged);
+`coloring_queue_status.py --book hollywood-recast` shows `queue_integrity_safe: true`,
+`recommended_action: complete`, 0 duplicate job/entry ids; `git diff --stat` reviewed
+before committing (`color-art-jobs.yaml` queue-state text, `hollywood-recast/proposals.yaml`
+notes/accepted-path fields, plus the two rejected BW noise images saved for reference --
+no other binaries touched, no re-renders requested for the 3 rejected slots).
+
+**For the next pass:**
+1. Do not resume `generate-bw` on this project until `ai-art-academy/t-079`'s Kontext
+   engine corruption bug is confirmed fixed -- re-check that task's status first.
+2. Continue Hollywood Recast creative review from hwr-011 onward (26 slots remain
+   unreviewed); re-review hwr-002/hwr-005/hwr-008 once fresh renders exist.
+3. Kind Robots (36 slots) still entirely untouched by creative review.
+4. Monster Recast: 20 previously-rejected slots still await re-review once fresh
+   renders exist (see 2026-09-10 entry above); mr-016/mr-020 now also need BW
+   re-derivation once the Kontext engine issue is resolved.
+
+Re-arming to `ready` (recurring), releasing the claim.
