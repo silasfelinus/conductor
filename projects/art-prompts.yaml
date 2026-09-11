@@ -1,754 +1,144 @@
+# art-prompts.yaml — Image queue for Conductor project assets and Kind Robots missing-image requests
+#
+# Project assets use `images:` and are pruned automatically when matching files
+# exist in this repo's projects/images/ folder.
+#
+# Inspiration images use `inspirations:`. Pruned automatically when matching files
+# exist in the kind_robots repo at ../kind_robots/public/images/artcollections/.
+#
+# Site-wide missing-image reports use `requests:`. Kind Robots writes those
+# requests here when an admin sees a missing image. Requests should be removed
+# once the image has been generated and committed to the target repo.
+#
+# Project image variants:
+#   icon  — square 1:1 (256×256 min). Used in nav, sidebar, card headers, favicons.
+#   card  — portrait 2:3 (512×768 min). Shown on the workspace project card.
+#   hero  — landscape 16:9 (1280×720 min). Shown as a banner/header in project view.
+#
+# Prompt standard:
+#   Write for modern OpenAI image generation, not legacy flat placeholders.
+#   Kind Robots represents a consortium of projects aimed at multi-genre,
+#   cross-dimensional experiences. When a scene includes people, characters,
+#   teams, families, players, operators, or companions, represent a diverse array
+#   across genders, races, ages, body sizes, body shapes, presentation styles,
+#   and species. Mix humans, robots, animal-like beings, fantasy creatures, and
+#   original nonhuman companions when it fits the asset.
+#   Do this naturally and respectfully, without tokenism or stereotypes.
+#   Icons should read instantly at small sizes: premium app-icon polish, strong silhouette.
+#   Cards should feel like professional portrait key art for a polished product.
+#   Heroes should feel like studio-quality game/product illustration with cinematic depth.
+#   Always avoid readable text, logos, watermarks, contact sheets, and collages.
+#
+# Workflow:
+#   1. Copy the generator prompt from ART-PROMPTS.md into ChatGPT.
+#   2. Paste one batch of up to ten entries from this file.
+#   3. Generate exactly one unique image per entry with the listed aspect ratio.
+#   4. Export as .webp at the minimum size listed.
+#   5. Save to the image_path listed below.
+#   6. Run `python scripts/build_workspace.py` to refresh the workspace.
+#
+# Status values: pending
 
-
+images: []
 requests:
-- id: "conductor-rainbow-butterflies-icon-98926963-mtjpuerb"
+- id: conductor-rainbow-butterflies-icon-98926963-mtjpuerb
   last_art_job_id: 18429
-  source: "kind-robots-missing-image"
-  status: "pending"
-  target_repo: "silasfelinus/conductor"
-  image_path: "projects/images/rainbow-butterflies-icon.webp"
-  source_url: "https://raw.githubusercontent.com/silasfelinus/conductor/main/projects/images/rainbow-butterflies-icon.webp"
-  page_url: "https://kindrobots.org/"
-  variant: "icon"
-  engine: "krea2"
-  size: "256x256"
-  label: "rainbow-butterflies"
-  prompt: >
-    A vibrant, square icon featuring a single, striking silhouette of a rainbow butterfly in mid-flight, its wings spread wide to showcase an array of colors—red, orange, yellow, green, blue, and violet—blending seamlessly into each other. The background is a soft, gradient blue that enhances the butterfly's vivid hues, while subtle highlights create a glistening effect on its wings. The overall composition is clean and minimalistic, emphasizing the butterfly as a symbol of creativity and transformation, rendered in a smooth vector style. no readable text, no logo, no watermark, no collage.
-- id: "conductor-mandarin-tutor-hero-0dcd7d9a-mtjlboed"
+  source: kind-robots-missing-image
+  status: pending
+  target_repo: silasfelinus/conductor
+  image_path: projects/images/rainbow-butterflies-icon.webp
+  source_url: https://raw.githubusercontent.com/silasfelinus/conductor/main/projects/images/rainbow-butterflies-icon.webp
+  page_url: https://kindrobots.org/
+  variant: icon
+  engine: krea2
+  size: 256x256
+  label: rainbow-butterflies
+  prompt: 'A vibrant, square icon featuring a single, striking silhouette of a rainbow butterfly
+    in mid-flight, its wings spread wide to showcase an array of colors—red, orange, yellow,
+    green, blue, and violet—blending seamlessly into each other. The background is a soft,
+    gradient blue that enhances the butterfly''s vivid hues, while subtle highlights create
+    a glistening effect on its wings. The overall composition is clean and minimalistic, emphasizing
+    the butterfly as a symbol of creativity and transformation, rendered in a smooth vector
+    style. no readable text, no logo, no watermark, no collage.
+
+    '
+- id: conductor-mandarin-tutor-hero-0dcd7d9a-mtjlboed
   last_art_job_id: 18426
-  source: "kind-robots-missing-image"
-  status: "pending"
-  target_repo: "silasfelinus/conductor"
-  image_path: "projects/images/mandarin-tutor-hero.webp"
-  source_url: "https://raw.githubusercontent.com/silasfelinus/conductor/main/projects/images/mandarin-tutor-hero.webp"
-  page_url: "https://kindrobots.org/conductor"
-  variant: "hero"
-  engine: "krea2"
-  size: "1280x720"
-  label: "mandarin-tutor"
-  prompt: >
-    In a vibrant, educational landscape, depict a serene classroom setting where a large, beautifully illustrated flashcard floats in the center, showcasing simplified Hanzi characters in vivid colors. To the left, a cozy reading nook with shelves filled with books about Mandarin language and culture invites exploration, while the right side features a digital interface on a sleek tablet displaying pronunciation and translation options. Sunlight streams through large windows, casting gentle shadows and creating a warm, welcoming atmosphere. The palette combines soft yellows and greens, suggesting growth and learning, with textures of paper and wood adding a tactile quality. In the background, a world map highlights Mandarin-speaking regions, reinforcing the global significance of the language. The overall mood is inspiring and inviting, encouraging users to engage with the learning process actively. no readable text, no logo, no watermark, no collage.
-- id: "conductor-rainbow-butterflies-hero-14246173-mtjlbrwq"
+  source: kind-robots-missing-image
+  status: pending
+  target_repo: silasfelinus/conductor
+  image_path: projects/images/mandarin-tutor-hero.webp
+  source_url: https://raw.githubusercontent.com/silasfelinus/conductor/main/projects/images/mandarin-tutor-hero.webp
+  page_url: https://kindrobots.org/conductor
+  variant: hero
+  engine: krea2
+  size: 1280x720
+  label: mandarin-tutor
+  prompt: 'In a vibrant, educational landscape, depict a serene classroom setting where a
+    large, beautifully illustrated flashcard floats in the center, showcasing simplified Hanzi
+    characters in vivid colors. To the left, a cozy reading nook with shelves filled with
+    books about Mandarin language and culture invites exploration, while the right side features
+    a digital interface on a sleek tablet displaying pronunciation and translation options.
+    Sunlight streams through large windows, casting gentle shadows and creating a warm, welcoming
+    atmosphere. The palette combines soft yellows and greens, suggesting growth and learning,
+    with textures of paper and wood adding a tactile quality. In the background, a world map
+    highlights Mandarin-speaking regions, reinforcing the global significance of the language.
+    The overall mood is inspiring and inviting, encouraging users to engage with the learning
+    process actively. no readable text, no logo, no watermark, no collage.
+
+    '
+- id: conductor-rainbow-butterflies-hero-14246173-mtjlbrwq
   last_art_job_id: 18427
-  source: "kind-robots-missing-image"
-  status: "pending"
-  target_repo: "silasfelinus/conductor"
-  image_path: "projects/images/rainbow-butterflies-hero.webp"
-  source_url: "https://raw.githubusercontent.com/silasfelinus/conductor/main/projects/images/rainbow-butterflies-hero.webp"
-  page_url: "https://kindrobots.org/conductor"
-  variant: "hero"
-  engine: "krea2"
-  size: "1280x720"
-  label: "rainbow-butterflies Hero"
-  prompt: >
-    A vibrant, enchanted forest serves as the backdrop, filled with lush, oversized foliage in shades of emerald and teal, creating a magical atmosphere. In the foreground, a swirling cascade of rainbow-colored butterflies flutters gracefully from left to right, their delicate wings catching the sunlight and casting playful shadows on the forest floor. The butterflies are intricately detailed, showcasing a spectrum of colors that harmonize with the warm golden light filtering through the leaves above. Soft, dappled shadows enhance the depth of the scene, while the texture of the tree trunks and foliage contrasts with the ethereal quality of the butterflies. The mood is whimsical and inviting, inspiring a sense of wonder and discovery. The composition utilizes negative space on the right to create balance and draw the viewer's eye along the flow of butterflies, emphasizing their journey through this magical realm. no readable text, no logo, no watermark, no collage.
-- id: "conductor-rainbow-butterflies-card-c6d10d43-mtjlbt3d"
+  source: kind-robots-missing-image
+  status: pending
+  target_repo: silasfelinus/conductor
+  image_path: projects/images/rainbow-butterflies-hero.webp
+  source_url: https://raw.githubusercontent.com/silasfelinus/conductor/main/projects/images/rainbow-butterflies-hero.webp
+  page_url: https://kindrobots.org/conductor
+  variant: hero
+  engine: krea2
+  size: 1280x720
+  label: rainbow-butterflies Hero
+  prompt: 'A vibrant, enchanted forest serves as the backdrop, filled with lush, oversized
+    foliage in shades of emerald and teal, creating a magical atmosphere. In the foreground,
+    a swirling cascade of rainbow-colored butterflies flutters gracefully from left to right,
+    their delicate wings catching the sunlight and casting playful shadows on the forest floor.
+    The butterflies are intricately detailed, showcasing a spectrum of colors that harmonize
+    with the warm golden light filtering through the leaves above. Soft, dappled shadows enhance
+    the depth of the scene, while the texture of the tree trunks and foliage contrasts with
+    the ethereal quality of the butterflies. The mood is whimsical and inviting, inspiring
+    a sense of wonder and discovery. The composition utilizes negative space on the right
+    to create balance and draw the viewer''s eye along the flow of butterflies, emphasizing
+    their journey through this magical realm. no readable text, no logo, no watermark, no
+    collage.
+
+    '
+- id: conductor-rainbow-butterflies-card-c6d10d43-mtjlbt3d
   last_art_job_id: 18428
-  source: "kind-robots-missing-image"
-  status: "pending"
-  target_repo: "silasfelinus/conductor"
-  image_path: "projects/images/rainbow-butterflies-card.webp"
-  source_url: "https://raw.githubusercontent.com/silasfelinus/conductor/main/projects/images/rainbow-butterflies-card.webp"
-  page_url: "https://kindrobots.org/conductor"
-  variant: "card"
-  engine: "krea2"
-  size: "512x768"
-  label: "Card"
-  prompt: >
-    Depict a vibrant gallery card showcasing a visually appealing representation of the Card project. In the foreground, feature a large, colorful butterfly with intricate wings that glisten in various shades of blue, purple, and green, symbolizing transformation and progress. Surround it with smaller butterflies, each in unique colors, fluttering around, representing ideas and tasks in motion. The midground should present abstract shapes or outlines of a roadmap, softly illuminated, hinting at the project's progress and structure. In the atmospheric background, a soft gradient of pastel colors merges from yellow to pink, creating a sense of warmth and optimism. The directional lighting should highlight the butterflies, casting delicate shadows that add depth. Use a glossy texture for the butterflies to enhance their ethereal quality, while the overall mood is uplifting and inspiring, encapsulating the essence of growth and collaboration within the Card project. no readable text, no logo, no watermark, no collage.
-- id: dream-cycle-hollow-harvest-hollow-harvest
-  last_art_job_id: 18430
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/hollow-harvest/hollow-harvest-card.webp
-  source_url: /images/dreams/hollow-harvest/hollow-harvest-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Hollow Harvest'
-  prompt: 'establishing key art for The Hollow Harvest, Terraced cliffside fields at dusk, wheat stubble gold under drifting fog, tangled black root-tips breaking the surface in knots that stop dead at each round dark puffin burrow, one knot glowing faint white from a buried bone-glass shard, the defining image of a place where every crop here grows to feed something that was never hungry for food, vertical 2:3 portrait composition, wide establishing view with a strong foreground anchor, clear middle ground, and deep atmospheric background, the setting is the subject; any figures present are incidental to the place, tactile stop-motion miniature aesthetic, sculpted clay and felt surfaces, handmade imperfections, practical miniature lighting, shallow depth of field, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5724
-  entity_field: imagePath
-- id: dream-cycle-hollow-harvest-puffin-terraces
-  last_art_job_id: 18431
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/hollow-harvest/puffin-terraces-card.webp
-  source_url: /images/dreams/hollow-harvest/puffin-terraces-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Puffin Terraces'
-  prompt: 'Green turf terraces stepping down a grey sea cliff, drystone walls slick with mist, black root-tips breaching the soil in tangled knots that stop dead at the ring of each round puffin burrow — The Puffin Terraces, known for: Stone-walled wheat terraces cut into the sea cliffs, where six tenant families plant beside puffin burrows because the black roots below have never once grown through nesting ground, staged at its most telling moment: A wrangler kneels at a burrow mouth at midnight and hears the ground beyond it humming back a stranger''s whispered regret, set in the world of The Hollow Harvest, where every crop here grows to feed something that was never hungry for food, vertical 2:3 portrait composition, architectural establishing shot, the environment is the subject and any figures present are small and incidental, included only for scale, tactile stop-motion miniature aesthetic, sculpted clay and felt surfaces, handmade imperfections, practical miniature lighting, shallow depth of field, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5725
-  entity_field: imagePath
-- id: dream-cycle-hollow-harvest-petra-iskra
-  last_art_job_id: 18432
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/hollow-harvest/petra-iskra-card.webp
-  source_url: /images/dreams/hollow-harvest/petra-iskra-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Petra Iskra'
-  prompt: 'character portrait of Petra Iskra, Weather-cracked hands stained banana-sap yellow, a canvas apron hung with tin scoops, close-cropped grey hair, a single puffin feather tucked behind one ear, visibly carrying: A scavenged soil-resonance rod in a dented tin casing, one puffin feather bound to its grip with tarred twine, the bearing of someone driven by this: She herds the manor''s forced-ripening hothouse banana vines and has learned to read the roots'' faint hum for trouble long before the vines show any sign of it, set in the world of The Hollow Harvest, where every crop here grows to feed something that was never hungry for food, vertical 2:3 portrait composition, single figure, three-quarter view from the waist up, filling most of the frame, sharply separated from a simple world-specific background, tactile stop-motion miniature aesthetic, sculpted clay and felt surfaces, handmade imperfections, practical miniature lighting, shallow depth of field, unmarked surfaces, free of text'
-  entity_type: character
-  entity_id: 3323
-  entity_field: imagePath
-- id: dream-cycle-hollow-harvest-domovoi-bead
-  last_art_job_id: 18433
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/hollow-harvest/domovoi-bead-card.webp
-  source_url: /images/dreams/hollow-harvest/domovoi-bead-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Domovoi Bead'
-  prompt: 'The Domovoi Bead, one object alone in frame, A thumb-sized bead of cloudy bone glass threaded on knotted red wool, its surface etched with a tiny worn house-mark, its purpose readable in its shape: It fogs to milky white whenever the ground nearby has been fed something it shouldn''t have been fed, set in the world of The Hollow Harvest, where every crop here grows to feed something that was never hungry for food, vertical 2:3 portrait composition, museum-like object study, the object centered and filling the frame, resting on a bare surface or floating against a simple ground, close enough to read material and wear, an unpeopled frame, the subject stands alone with no bystanders, no onlookers, and no crowd, rendered with the reverence given a uncommon artifact, tactile stop-motion miniature aesthetic, sculpted clay and felt surfaces, handmade imperfections, practical miniature lighting, shallow depth of field, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2906
-  entity_field: imagePath
-- id: dream-cycle-hollow-harvest-root-chant-reading
-  last_art_job_id: 18434
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/hollow-harvest/root-chant-reading-card.webp
-  source_url: /images/dreams/hollow-harvest/root-chant-reading-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Root-Chant Reading'
-  prompt: 'Root-Chant Reading, a single practiced technique caught mid-use, A tin rod''s needle tracing slow amber light in the air above damp soil, tracking the shape of a chant hummed low and rough, the effect itself is the subject: It lets the user tune a resonance rod by humming an old harvest chant, drawing the shape of whatever is buried nearby out of the hum, set in the world of The Hollow Harvest, where every crop here grows to feed something that was never hungry for food, vertical 2:3 portrait composition, tight centered composition on the effect, at most one pair of hands entering frame at the edge to work it, no full figure, no faces, no onlookers, rendered with the weight given a rare ability, tactile stop-motion miniature aesthetic, sculpted clay and felt surfaces, handmade imperfections, practical miniature lighting, shallow depth of field, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2907
-  entity_field: imagePath
-- id: dream-cycle-hollow-harvest-what-the-roots-heard-scenario
-  last_art_job_id: 18435
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/hollow-harvest/what-the-roots-heard-scenario-card.webp
-  source_url: /images/dreams/hollow-harvest/what-the-roots-heard-scenario-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'What the Roots Heard'
-  prompt: 'establishing scene art for the moment titled What the Roots Heard, In The Hollow Harvest at The Puffin Terraces, Petra Iskra hums the root-chant beside a burrow the night the tenant families finally refuse to whisper another regret into the soil, staged at The Puffin Terraces, set in the world of The Hollow Harvest, where every crop here grows to feed something that was never hungry for food, vertical 2:3 portrait composition, a single decisive moment with one clear focal action, foreground figures reacting, uncluttered staging so the event reads at a glance, cast the figures who appear naturally across many species, ages, body sizes, body shapes, and gender presentations, tactile stop-motion miniature aesthetic, sculpted clay and felt surfaces, handmade imperfections, practical miniature lighting, shallow depth of field, unmarked surfaces, free of text'
-  entity_type: scenario
-  entity_id: 2204
-  entity_field: imagePath
-- id: dream-cycle-structural-mourning-structural-mourning
-  last_art_job_id: 18440
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/structural-mourning/structural-mourning-card.webp
-  source_url: /images/dreams/structural-mourning/structural-mourning-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Structural Mourning'
-  prompt: 'establishing key art for Structural Mourning, A canted tenement block held aloft by taut mourning-ribbons instead of steel beams, long noir shadows pooling in the sag, the defining image of a place where stop grieving and the ceiling remembers you didn''t, vertical 2:3 portrait composition, wide establishing view with a strong foreground anchor, clear middle ground, and deep atmospheric background, the setting is the subject; any figures present are incidental to the place, scratchboard engraving aesthetic, dense crosshatching and carved white lines, near-monochrome values, one restrained luminous accent, dramatic texture, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5726
-  entity_field: imagePath
-- id: dream-cycle-structural-mourning-the-underprop
-  last_art_job_id: 18441
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/structural-mourning/the-underprop-card.webp
-  source_url: /images/dreams/structural-mourning/the-underprop-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Underprop'
-  prompt: 'a low concrete gallery of fused hollow-steel conduits overhead, faint blue condensation beading where the grief runs hottest, one long crack leaking a darker black than the tunnel around it — The Underprop, known for: A subterranean gallery of hollow steel conduits that carry mourners'' scheduled grief downward like current, keeping the district''s walls standing, staged at its most telling moment: A junior tech traces a conduit gone cold to its splice and finds the steel warm from the inside, pulsing at a rate no clock in the room keeps, set in the world of Structural Mourning, where stop grieving and the ceiling remembers you didn''t, vertical 2:3 portrait composition, architectural establishing shot, the environment is the subject and any figures present are small and incidental, included only for scale, scratchboard engraving aesthetic, dense crosshatching and carved white lines, near-monochrome values, one restrained luminous accent, dramatic texture, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5727
-  entity_field: imagePath
-- id: dream-cycle-structural-mourning-ilsabet-cray
-  last_art_job_id: 18442
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/structural-mourning/ilsabet-cray-card.webp
-  source_url: /images/dreams/structural-mourning/ilsabet-cray-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Ilsabet Cray'
-  prompt: 'character portrait of Ilsabet Cray, a noir mourner in a rain-dark coat cut like a draftsman''s, brass theodolite slung across one hip, cartoon-long shadow pooling a full step behind her actual feet, visibly carrying: A fold-out brass theodolite calibrated to grief-load instead of angles, its sighting glass permanently fogged at the edges, the bearing of someone driven by this: She''s trying to certify a new load-bearing mourner for the Ashgate tenement before her own decade-old grief — the one that''s held it up till now — finally runs its course, set in the world of Structural Mourning, where stop grieving and the ceiling remembers you didn''t, vertical 2:3 portrait composition, single figure, three-quarter view from the waist up, filling most of the frame, sharply separated from a simple world-specific background, scratchboard engraving aesthetic, dense crosshatching and carved white lines, near-monochrome values, one restrained luminous accent, dramatic texture, unmarked surfaces, free of text'
-  entity_type: character
-  entity_id: 3324
-  entity_field: imagePath
-- id: dream-cycle-structural-mourning-undertow-ledger
-  last_art_job_id: 18443
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/structural-mourning/undertow-ledger-card.webp
-  source_url: /images/dreams/structural-mourning/undertow-ledger-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Undertow Ledger'
-  prompt: 'The Undertow Ledger, one object alone in frame, a slim hollow-steel ledger the size of a hymnal, pages that ripple like standing water when opened, ink that pools and drifts in slow aquatic currents instead of drying flat, its purpose readable in its shape: It tallies exactly how much grief a person still owes before their debt to a building is paid, set in the world of Structural Mourning, where stop grieving and the ceiling remembers you didn''t, vertical 2:3 portrait composition, museum-like object study, the object centered and filling the frame, resting on a bare surface or floating against a simple ground, close enough to read material and wear, an unpeopled frame, the subject stands alone with no bystanders, no onlookers, and no crowd, rendered with the reverence given a rare artifact, scratchboard engraving aesthetic, dense crosshatching and carved white lines, near-monochrome values, one restrained luminous accent, dramatic texture, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2908
-  entity_field: imagePath
-- id: dream-cycle-structural-mourning-structural-confession
-  last_art_job_id: 18444
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/structural-mourning/structural-confession-card.webp
-  source_url: /images/dreams/structural-mourning/structural-confession-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Structural Confession'
-  prompt: 'Structural Confession, a single practiced technique caught mid-use, a hairline crack spidering up plaster in the unmistakable shape of cursive handwriting, faint noir-blue light bleeding from inside the wall along its path, the effect itself is the subject: Speaking a grief aloud, precisely and completely, temporarily transfers its load-bearing weight into the nearest wall instead of the mourner''s own frame, set in the world of Structural Mourning, where stop grieving and the ceiling remembers you didn''t, vertical 2:3 portrait composition, tight centered composition on the effect, at most one pair of hands entering frame at the edge to work it, no full figure, no faces, no onlookers, rendered with the weight given a uncommon ability, scratchboard engraving aesthetic, dense crosshatching and carved white lines, near-monochrome values, one restrained luminous accent, dramatic texture, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2909
-  entity_field: imagePath
-- id: dream-cycle-structural-mourning-ashgate-vacancy-scenario
-  last_art_job_id: 18445
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/structural-mourning/ashgate-vacancy-scenario-card.webp
-  source_url: /images/dreams/structural-mourning/ashgate-vacancy-scenario-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Ashgate Vacancy'
-  prompt: 'establishing scene art for the moment titled The Ashgate Vacancy, In The Load-Bearing District at The Underprop, Ilsabet Cray has three days to certify a new load-bearing mourner for Ashgate before her own decade of scheduled grief runs dry and whatever the conduits have been feeding rises to collect the difference — and the circus that just pitched its tents in the vacant lot next door keeps drawing candidates who grieve too loudly, too publicly, to ever pass inspection, staged at The Underprop, set in the world of Structural Mourning, where stop grieving and the ceiling remembers you didn''t, vertical 2:3 portrait composition, a single decisive moment with one clear focal action, foreground figures reacting, uncluttered staging so the event reads at a glance, cast the figures who appear naturally across many species, ages, body sizes, body shapes, and gender presentations, scratchboard engraving aesthetic, dense crosshatching and carved white lines, near-monochrome values, one restrained luminous accent, dramatic texture, unmarked surfaces, free of text'
-  entity_type: scenario
-  entity_id: 2205
-  entity_field: imagePath
-- id: creation-burst-the-wardrobe-tide-marisol-keel
-  last_art_job_id: 18446
-  source: creation-burst
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/creation-burst/the-wardrobe-tide/marisol-keel-card.webp
-  source_url: /images/creation-burst/the-wardrobe-tide/marisol-keel-card.webp
-  page_url: https://kindrobots.org
+  source: kind-robots-missing-image
+  status: pending
+  target_repo: silasfelinus/conductor
+  image_path: projects/images/rainbow-butterflies-card.webp
+  source_url: https://raw.githubusercontent.com/silasfelinus/conductor/main/projects/images/rainbow-butterflies-card.webp
+  page_url: https://kindrobots.org/conductor
   variant: card
   engine: krea2
   size: 512x768
-  label: 'Marisol Keel'
-  prompt: 'character portrait of Marisol Keel, a broad-shouldered woman whose skin drifts slowly between teal and rose like a cuttlefish settling, cropped hair currently a stubborn marigold, forearms stained to the elbow in six overlapping dye colours, a canvas apron heavy with pinned sea-glass combs, visibly carrying: a bucket of rinse water that never quite clears, and a marigold comb she will not use on herself, the bearing of someone driven by this: to find the one coat that washed ashore carrying her mother''s last morning, before the salon next door dyes it by mistake and seals that morning away for good, set in the world of The Wardrobe Tide, where every dawn the sea returns clothing, and every garment still remembers its last morning, vertical 2:3 portrait composition, single figure, three-quarter view from the waist up, filling most of the frame, sharply separated from a simple world-specific background, luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
-  entity_type: character
-  entity_id: 3325
-  entity_field: imagePath
-- id: creation-burst-the-wardrobe-tide-the-coat-that-would-not-take-dye-scenario
-  last_art_job_id: 18447
-  source: creation-burst
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/creation-burst/the-wardrobe-tide/the-coat-that-would-not-take-dye-scenario-card.webp
-  source_url: /images/creation-burst/the-wardrobe-tide/the-coat-that-would-not-take-dye-scenario-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  engine: krea2
-  size: 512x768
-  label: 'The Coat That Would Not Take Dye'
-  prompt: 'establishing scene art for the moment titled The Coat That Would Not Take Dye, Three mornings before the Tide Festival, an oilskin coat washes into the Rinse Basins at the harbour and rejects every pigment Marisol Keel tries on it. A garment only refuses dye while its last wearer is still alive, which means somebody in town walked out of the sea this week and has not said so. The salon next door wants the coat for the festival window. Marisol wants one more rinse before it stops remembering at all, staged at The Rinse Basins at Keel Harbour, set in the world of The Wardrobe Tide, where every dawn the sea returns clothing, and every garment still remembers its last morning, vertical 2:3 portrait composition, a single decisive moment with one clear focal action, foreground figures reacting, uncluttered staging so the event reads at a glance, cast the figures who appear naturally across many species, ages, body sizes, body shapes, and gender presentations, luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
-  entity_type: scenario
-  entity_id: 2206
-  entity_field: imagePath
-- id: creation-burst-the-wardrobe-tide-the-rinse-bell-comb
-  last_art_job_id: 18448
-  source: creation-burst
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/creation-burst/the-wardrobe-tide/the-rinse-bell-comb-card.webp
-  source_url: /images/creation-burst/the-wardrobe-tide/the-rinse-bell-comb-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  engine: krea2
-  size: 512x768
-  label: 'The Rinse-Bell Comb'
-  prompt: 'The Rinse-Bell Comb, one object alone in frame, a wide-toothed comb whose teeth are slivers of frosted green sea-glass set in a driftwood spine, each tooth a slightly different length, the whole thing beaded with rinse water that refuses to dry, its purpose readable in its shape: Drawn once through freshly dyed hair or cloth, it rings one clear note for every memory the dye has just released, so the wearer knows exactly how much of the past has actually let go, set in the world of The Wardrobe Tide, where every dawn the sea returns clothing, and every garment still remembers its last morning, vertical 2:3 portrait composition, museum-like object study, the object centered and filling the frame, resting on a bare surface or floating against a simple ground, close enough to read material and wear, an unpeopled frame, the subject stands alone with no bystanders, no onlookers, and no crowd, rendered with the reverence given a rare artifact, luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2910
-  entity_field: imagePath
-- id: creation-burst-the-wardrobe-tide-colourfast-listening
-  last_art_job_id: 18449
-  source: creation-burst
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/creation-burst/the-wardrobe-tide/colourfast-listening-card.webp
-  source_url: /images/creation-burst/the-wardrobe-tide/colourfast-listening-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  engine: krea2
-  size: 512x768
-  label: 'Colourfast Listening'
-  prompt: 'Colourfast Listening, a single practiced technique caught mid-use, a single thread of dye unspooling through clear rinse water in a glass basin, the colour bending into the shape of a doorway, a kitchen window, a shoreline, as a pair of stained hands hold the cloth still beneath the surface, the effect itself is the subject: By watching how a dye takes to a garment, the listener can read the last morning of the person who wore it: where they stood, what the light was doing, whether they meant to come back, set in the world of The Wardrobe Tide, where every dawn the sea returns clothing, and every garment still remembers its last morning, vertical 2:3 portrait composition, tight centered composition on the effect, at most one pair of hands entering frame at the edge to work it, no full figure, no faces, no onlookers, rendered with the weight given a uncommon ability, luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2911
-  entity_field: imagePath
-- id: creation-burst-the-gravity-circus-odalys-ferrante-quill
-  last_art_job_id: 18450
-  source: creation-burst
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/creation-burst/the-gravity-circus/odalys-ferrante-quill-card.webp
-  source_url: /images/creation-burst/the-gravity-circus/odalys-ferrante-quill-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  engine: krea2
-  size: 512x768
-  label: 'Odalys Ferrante-Quill'
-  prompt: 'character portrait of Odalys Ferrante-Quill, a wiry hollow-boned figure with a russet kestrel crest instead of hair, bare feet resting easily on a bed of broken bottle glass, chalked hands, a patched velvet leotard the colour of old brass, a spirit level strapped to one forearm like a watch, visibly carrying: a coil of frayed catching rope and a spirit level that has never once read true, the bearing of someone driven by this: to walk the Lean Line on the night gravity turns fully sideways, the one crossing no performer in the circus''s history has finished standing up, set in the world of The Gravity Circus, where gravity in the Lean Valley tilts a few degrees every night, and the circus is the only thing that keeps up, vertical 2:3 portrait composition, single figure, three-quarter view from the waist up, filling most of the frame, sharply separated from a simple world-specific background, tactile stop-motion miniature aesthetic, sculpted clay and felt surfaces, handmade imperfections, practical miniature lighting, shallow depth of field, unmarked surfaces, free of text'
-  entity_type: character
-  entity_id: 3326
-  entity_field: imagePath
-- id: creation-burst-the-gravity-circus-the-night-the-big-top-slid-scenario
-  last_art_job_id: 18451
-  source: creation-burst
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/creation-burst/the-gravity-circus/the-night-the-big-top-slid-scenario-card.webp
-  source_url: /images/creation-burst/the-gravity-circus/the-night-the-big-top-slid-scenario-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  engine: krea2
-  size: 512x768
-  label: 'The Night the Big Top Slid'
-  prompt: 'establishing scene art for the moment titled The Night the Big Top Slid, Halfway through the closing show the valley leans past every mark on the tent''s uphill pole, and the stakes let go. The big top begins to slide downslope with two hundred people inside it and the ring turning into a wall. Odalys Ferrante-Quill is already on the Lean Line, forty feet up, holding the only rope that still runs uphill. The audience has to be walked out along the ridgepole, in the dark, in fours, staged at the big top at the bottom of the Lean Valley, set in the world of The Gravity Circus, where gravity in the Lean Valley tilts a few degrees every night, and the circus is the only thing that keeps up, vertical 2:3 portrait composition, a single decisive moment with one clear focal action, foreground figures reacting, uncluttered staging so the event reads at a glance, cast the figures who appear naturally across many species, ages, body sizes, body shapes, and gender presentations, tactile stop-motion miniature aesthetic, sculpted clay and felt surfaces, handmade imperfections, practical miniature lighting, shallow depth of field, unmarked surfaces, free of text'
-  entity_type: scenario
-  entity_id: 2207
-  entity_field: imagePath
-- id: creation-burst-the-gravity-circus-the-plumb-bob-lantern
-  last_art_job_id: 18452
-  source: creation-burst
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/creation-burst/the-gravity-circus/the-plumb-bob-lantern-card.webp
-  source_url: /images/creation-burst/the-gravity-circus/the-plumb-bob-lantern-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  engine: krea2
-  size: 512x768
-  label: 'The Plumb-Bob Lantern'
-  prompt: 'The Plumb-Bob Lantern, one object alone in frame, a small brass lantern hanging from a heavy chain, its flame burning steadily inside scratched amber glass, the whole lantern hanging at a visible tilt from the hook it is clipped to, the chain taut in a direction the floor beneath it does not agree with, its purpose readable in its shape: The lantern always hangs toward tomorrow night''s gravity rather than tonight''s, so whoever carries it knows a full day early which way the world is about to lean, set in the world of The Gravity Circus, where gravity in the Lean Valley tilts a few degrees every night, and the circus is the only thing that keeps up, vertical 2:3 portrait composition, museum-like object study, the object centered and filling the frame, resting on a bare surface or floating against a simple ground, close enough to read material and wear, an unpeopled frame, the subject stands alone with no bystanders, no onlookers, and no crowd, rendered with the reverence given a rare artifact, tactile stop-motion miniature aesthetic, sculpted clay and felt surfaces, handmade imperfections, practical miniature lighting, shallow depth of field, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2912
-  entity_field: imagePath
-- id: creation-burst-the-gravity-circus-counterlean
-  last_art_job_id: 18453
-  source: creation-burst
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/creation-burst/the-gravity-circus/counterlean-card.webp
-  source_url: /images/creation-burst/the-gravity-circus/counterlean-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  engine: krea2
-  size: 512x768
-  label: 'Counterlean'
-  prompt: 'Counterlean, a single practiced technique caught mid-use, a tilted tent interior seen from the ringside, rows of felt benches and hanging trapeze bars all slumped to one side, and in the centre of frame a single pair of chalked bare feet planted at a different angle from everything else, casting the only upright shadow in the ring, the effect itself is the subject: The practitioner leans against a gravity that has not arrived yet, standing at tomorrow''s angle so that when the valley tilts mid-performance they are the only steady thing in a sliding crowd, set in the world of The Gravity Circus, where gravity in the Lean Valley tilts a few degrees every night, and the circus is the only thing that keeps up, vertical 2:3 portrait composition, tight centered composition on the effect, at most one pair of hands entering frame at the edge to work it, no full figure, no faces, no onlookers, rendered with the weight given a uncommon ability, tactile stop-motion miniature aesthetic, sculpted clay and felt surfaces, handmade imperfections, practical miniature lighting, shallow depth of field, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2913
-  entity_field: imagePath
-- id: creation-burst-dust-choir-tamsin-okonkwo-reyes
-  last_art_job_id: 18454
-  source: creation-burst
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/creation-burst/dust-choir/tamsin-okonkwo-reyes-card.webp
-  source_url: /images/creation-burst/dust-choir/tamsin-okonkwo-reyes-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  engine: krea2
-  size: 512x768
-  label: 'Tamsin Okonkwo-Reyes'
-  prompt: 'character portrait of Tamsin Okonkwo-Reyes, a lean dust-caked person with a shaved head and brass goggles pushed up on their brow, a long tuning fork worn through one earlobe, a canvas coat sewn with dozens of small reeds that flutter in any breeze, one hand resting on a half-built organ pipe taller than they are, visibly carrying: a roll of reed blanks, a bow-saw, and a pitch pipe that plays the one note the city has never made, the bearing of someone driven by this: to tune the city so precisely that this year''s final chord resolves for the first time in forty years, before the burn takes the evidence with it, set in the world of Dust Choir, where once a year a city is built out of instruments in the desert, and when the wind blows the city plays itself, vertical 2:3 portrait composition, single figure, three-quarter view from the waist up, filling most of the frame, sharply separated from a simple world-specific background, high-contrast risograph aesthetic, limited spot-color layers, coarse paper grain, slight registration offsets, bold graphic silhouettes, unmarked surfaces, free of text'
-  entity_type: character
-  entity_id: 3327
-  entity_field: imagePath
-- id: creation-burst-dust-choir-the-unresolved-chord-scenario
-  last_art_job_id: 18455
-  source: creation-burst
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/creation-burst/dust-choir/the-unresolved-chord-scenario-card.webp
-  source_url: /images/creation-burst/dust-choir/the-unresolved-chord-scenario-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  engine: krea2
-  size: 512x768
-  label: 'The Unresolved Chord'
-  prompt: 'establishing scene art for the moment titled The Unresolved Chord, An hour before the burn, the wind dies completely. Nine days of tuning and a city of instruments stand silent under a windless sky, and the chord that has never resolved is not going to sound at all. Tamsin Okonkwo-Reyes climbs the tallest pipe with a bow-saw and a plan to play the city by hand, and every luthier on the lakebed has to decide whether to hand-pump a street, bow a fence, or sing, staged at the tallest organ tower on the dry lakebed, set in the world of Dust Choir, where once a year a city is built out of instruments in the desert, and when the wind blows the city plays itself, vertical 2:3 portrait composition, a single decisive moment with one clear focal action, foreground figures reacting, uncluttered staging so the event reads at a glance, cast the figures who appear naturally across many species, ages, body sizes, body shapes, and gender presentations, high-contrast risograph aesthetic, limited spot-color layers, coarse paper grain, slight registration offsets, bold graphic silhouettes, unmarked surfaces, free of text'
-  entity_type: scenario
-  entity_id: 2208
-  entity_field: imagePath
-- id: creation-burst-dust-choir-the-reed-of-third-wind
-  last_art_job_id: 18456
-  source: creation-burst
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/creation-burst/dust-choir/the-reed-of-third-wind-card.webp
-  source_url: /images/creation-burst/dust-choir/the-reed-of-third-wind-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  engine: krea2
-  size: 512x768
-  label: 'The Reed of Third Wind'
-  prompt: 'The Reed of Third Wind, one object alone in frame, a single dark cane reed the length of a forearm, split at one end into a fine vibrating tongue, mounted in a scratched brass socket on a weathered post, a thin trail of lifted dust curling off its tip as though it has just sounded, its purpose readable in its shape: The reed stays silent through the first gust and the second, and sounds only in the third wind, the one after the one you were waiting for, giving its holder a note that arrives exactly when they have given up, set in the world of Dust Choir, where once a year a city is built out of instruments in the desert, and when the wind blows the city plays itself, vertical 2:3 portrait composition, museum-like object study, the object centered and filling the frame, resting on a bare surface or floating against a simple ground, close enough to read material and wear, an unpeopled frame, the subject stands alone with no bystanders, no onlookers, and no crowd, rendered with the reverence given a rare artifact, high-contrast risograph aesthetic, limited spot-color layers, coarse paper grain, slight registration offsets, bold graphic silhouettes, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2914
-  entity_field: imagePath
-- id: creation-burst-dust-choir-dust-harmony
-  last_art_job_id: 18457
-  source: creation-burst
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/creation-burst/dust-choir/dust-harmony-card.webp
-  source_url: /images/creation-burst/dust-choir/dust-harmony-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  engine: krea2
-  size: 512x768
-  label: 'Dust Harmony'
-  prompt: 'Dust Harmony, a single practiced technique caught mid-use, a half-built framework of organ pipes and reed lattice on a cracked white lakebed, the air around the unfinished structure visibly shimmering into thin bands of colour, as though the note it will sing is already hanging in the space it will fill, the effect itself is the subject: The listener hears the note a structure will sing before it is built, so a street of reeds can be tuned while it is still a sketch in the dust, set in the world of Dust Choir, where once a year a city is built out of instruments in the desert, and when the wind blows the city plays itself, vertical 2:3 portrait composition, tight centered composition on the effect, at most one pair of hands entering frame at the edge to work it, no full figure, no faces, no onlookers, rendered with the weight given a uncommon ability, high-contrast risograph aesthetic, limited spot-color layers, coarse paper grain, slight registration offsets, bold graphic silhouettes, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2915
-  entity_field: imagePath
-- id: creation-burst-the-borrowed-weather-pell-hawthorne-sike
-  last_art_job_id: 18458
-  source: creation-burst
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/creation-burst/the-borrowed-weather/pell-hawthorne-sike-card.webp
-  source_url: /images/creation-burst/the-borrowed-weather/pell-hawthorne-sike-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  engine: krea2
-  size: 512x768
-  label: 'Pell Hawthorne-Sike'
-  prompt: 'character portrait of Pell Hawthorne-Sike, a wind-burned fourteen-year-old in a broker''s coat two sizes too big, six sealed clay jars strapped across her chest in a leather harness, each jar sweating a different weather at its seams, a wisp of borrowed fog leaking from one cracked lid, snow on her boots and orchard blossom caught in her hair at the same time, visibly carrying: a jar-harness, a lid-wax stick, and a ledger of which valley is owed what, the bearing of someone driven by this: to haul a whole day''s weather up the pass in one run, unbroken, the way her mother could, before the town council gives the family route to the brokers from the low road, set in the world of The Borrowed Weather, where a mountain town rents its weather from the valleys below by the hour, and the bill always comes due, vertical 2:3 portrait composition, single figure, three-quarter view from the waist up, filling most of the frame, sharply separated from a simple world-specific background, layered paper-cut collage, visible paper fibers, simplified cut shapes, physical layer shadows, tactile depth, hand-cut irregular edges, unmarked surfaces, free of text'
-  entity_type: character
-  entity_id: 3328
-  entity_field: imagePath
-- id: creation-burst-the-borrowed-weather-the-blizzard-nobody-ordered-scenario
-  last_art_job_id: 18459
-  source: creation-burst
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/creation-burst/the-borrowed-weather/the-blizzard-nobody-ordered-scenario-card.webp
-  source_url: /images/creation-burst/the-borrowed-weather/the-blizzard-nobody-ordered-scenario-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  engine: krea2
-  size: 512x768
-  label: 'The Blizzard Nobody Ordered'
-  prompt: 'establishing scene art for the moment titled The Blizzard Nobody Ordered, On the morning of Skarrow''s harvest fair a blizzard arrives that no broker sold, no jar carried and no valley admits to lending. It is the wrong season, the wrong altitude and the wrong colour of snow. Pell Hawthorne-Sike recognises it: it is the sum of every last inch she kept back, returned all at once, and it is falling on the one day the whole town is outdoors. She has six empty jars and a barometer that reads nothing, because this weather belongs to her, staged at the harvest fair on Skarrow''s high meadow, set in the world of The Borrowed Weather, where a mountain town rents its weather from the valleys below by the hour, and the bill always comes due, vertical 2:3 portrait composition, a single decisive moment with one clear focal action, foreground figures reacting, uncluttered staging so the event reads at a glance, cast the figures who appear naturally across many species, ages, body sizes, body shapes, and gender presentations, layered paper-cut collage, visible paper fibers, simplified cut shapes, physical layer shadows, tactile depth, hand-cut irregular edges, unmarked surfaces, free of text'
-  entity_type: scenario
-  entity_id: 2209
-  entity_field: imagePath
-- id: creation-burst-the-borrowed-weather-the-hourglass-barometer
-  last_art_job_id: 18460
-  source: creation-burst
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/creation-burst/the-borrowed-weather/the-hourglass-barometer-card.webp
-  source_url: /images/creation-burst/the-borrowed-weather/the-hourglass-barometer-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  engine: krea2
-  size: 512x768
-  label: 'The Hourglass Barometer'
-  prompt: 'The Hourglass Barometer, one object alone in frame, a squat brass hourglass whose two glass bulbs hold miniature weather instead of sand, a slow blizzard in the top bulb sifting down into a tiny sunlit meadow in the bottom, the brass frame engraved with worn valley names, a leather strap for hanging it from a harness, its purpose readable in its shape: Turned over, it shows exactly how many minutes of a borrowed weather remain before it drains back down the pass to its owner, so a broker can promise an honest hour, set in the world of The Borrowed Weather, where a mountain town rents its weather from the valleys below by the hour, and the bill always comes due, vertical 2:3 portrait composition, museum-like object study, the object centered and filling the frame, resting on a bare surface or floating against a simple ground, close enough to read material and wear, an unpeopled frame, the subject stands alone with no bystanders, no onlookers, and no crowd, rendered with the reverence given a rare artifact, layered paper-cut collage, visible paper fibers, simplified cut shapes, physical layer shadows, tactile depth, hand-cut irregular edges, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2916
-  entity_field: imagePath
-- id: creation-burst-the-borrowed-weather-cloud-credit
-  last_art_job_id: 18461
-  source: creation-burst
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/creation-burst/the-borrowed-weather/cloud-credit-card.webp
-  source_url: /images/creation-burst/the-borrowed-weather/cloud-credit-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  engine: krea2
-  size: 512x768
-  label: 'Cloud Credit'
-  prompt: 'Cloud Credit, a single practiced technique caught mid-use, a sealed clay jar held up against a bare blue sky, and from its mouth a single cut-paper cloud unfolding into the empty air, the cloud''s shadow already falling on the mountain path below before the cloud itself has fully formed, the effect itself is the subject: The practitioner can release a weather she has not yet paid for, on credit against a future haul, buying a town an hour of rain it needs today, set in the world of The Borrowed Weather, where a mountain town rents its weather from the valleys below by the hour, and the bill always comes due, vertical 2:3 portrait composition, tight centered composition on the effect, at most one pair of hands entering frame at the edge to work it, no full figure, no faces, no onlookers, rendered with the weight given a uncommon ability, layered paper-cut collage, visible paper fibers, simplified cut shapes, physical layer shadows, tactile depth, hand-cut irregular edges, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2917
-  entity_field: imagePath
-- id: creation-burst-ferrywake-ambrose-quillfeather
-  last_art_job_id: 18462
-  source: creation-burst
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/creation-burst/ferrywake/ambrose-quillfeather-card.webp
-  source_url: /images/creation-burst/ferrywake/ambrose-quillfeather-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  engine: krea2
-  size: 512x768
-  label: 'Ambrose Quillfeather'
-  prompt: 'character portrait of Ambrose Quillfeather, a tall grey heron-folk man with a long feathered neck and a patient yellow eye, standing at the stern of a flat river ferry with a long oar worn pale as bone, a patched oilcloth cloak pinned with dozens of small brass story-tokens, river mist curling at knee height and the far bank glowing behind him in fractured coloured light, visibly carrying: a bone-pale oar and a pouch of brass story-tokens, one per crossing survived, the bearing of someone driven by this: to finish the one story he has been telling across the Wake for eleven years, a crossing so long the passengers who began it have grandchildren, before the river decides it has heard enough and lets the boat stop, set in the world of Ferrywake, where every crossing of the Wake takes exactly as long as the story told aboard, and the far bank waits, vertical 2:3 portrait composition, single figure, three-quarter view from the waist up, filling most of the frame, sharply separated from a simple world-specific background, stained-glass mosaic aesthetic, strong leaded contours, jewel-tone translucent panes, fractured colored light, geometric shape language, unmarked surfaces, free of text'
-  entity_type: character
-  entity_id: 3329
-  entity_field: imagePath
-- id: creation-burst-ferrywake-the-crossing-with-no-ending-scenario
-  last_art_job_id: 18463
-  source: creation-burst
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/creation-burst/ferrywake/the-crossing-with-no-ending-scenario-card.webp
-  source_url: /images/creation-burst/ferrywake/the-crossing-with-no-ending-scenario-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  engine: krea2
-  size: 512x768
-  label: 'The Crossing With No Ending'
-  prompt: 'establishing scene art for the moment titled The Crossing With No Ending, A passenger boards Ambrose Quillfeather''s ferry and begins a story with no ending at all, one that circles back to its own first line, and the Wake takes it seriously: the far bank stops approaching and starts, very slowly, to recede. The other passengers realise the crossing will last exactly as long as this story does, which is forever, and that the only way off is to interrupt a stranger''s tale with a better one before the lantern oil runs out, staged at mid-river on the Wake, just past the point of no return, set in the world of Ferrywake, where every crossing of the Wake takes exactly as long as the story told aboard, and the far bank waits, vertical 2:3 portrait composition, a single decisive moment with one clear focal action, foreground figures reacting, uncluttered staging so the event reads at a glance, cast the figures who appear naturally across many species, ages, body sizes, body shapes, and gender presentations, stained-glass mosaic aesthetic, strong leaded contours, jewel-tone translucent panes, fractured colored light, geometric shape language, unmarked surfaces, free of text'
-  entity_type: scenario
-  entity_id: 2210
-  entity_field: imagePath
-- id: creation-burst-ferrywake-the-short-story-oar
-  last_art_job_id: 18464
-  source: creation-burst
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/creation-burst/ferrywake/the-short-story-oar-card.webp
-  source_url: /images/creation-burst/ferrywake/the-short-story-oar-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  engine: krea2
-  size: 512x768
-  label: 'The Short-Story Oar'
-  prompt: 'The Short-Story Oar, one object alone in frame, a single long ferry oar of pale weathered ash, its blade carved with a spiral of tiny scenes that read like a page when the light catches them, the grip wrapped in river-stained red cord, resting across two mooring posts above dark still water, its purpose readable in its shape: Each pull of this oar tells one complete tiny story on the teller''s behalf, so a crossing can be finished in a dozen strokes when nobody aboard has a word left, set in the world of Ferrywake, where every crossing of the Wake takes exactly as long as the story told aboard, and the far bank waits, vertical 2:3 portrait composition, museum-like object study, the object centered and filling the frame, resting on a bare surface or floating against a simple ground, close enough to read material and wear, an unpeopled frame, the subject stands alone with no bystanders, no onlookers, and no crowd, rendered with the reverence given a rare artifact, stained-glass mosaic aesthetic, strong leaded contours, jewel-tone translucent panes, fractured colored light, geometric shape language, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2918
-  entity_field: imagePath
-- id: creation-burst-ferrywake-cliffhanger-mooring
-  last_art_job_id: 18465
-  source: creation-burst
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/creation-burst/ferrywake/cliffhanger-mooring-card.webp
-  source_url: /images/creation-burst/ferrywake/cliffhanger-mooring-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  engine: krea2
-  size: 512x768
-  label: 'Cliffhanger Mooring'
-  prompt: 'Cliffhanger Mooring, a single practiced technique caught mid-use, a flat river ferry held motionless in the exact middle of a wide dark river, mist on both sides, a mooring rope stretched taut from the bow into open water and tied to nothing visible, the far bank a thin bright line of coloured glass, the effect itself is the subject: By ending a sentence at exactly the right unfinished moment, the practitioner can hold the ferry still in mid-river until the next sentence arrives, safe from both banks, set in the world of Ferrywake, where every crossing of the Wake takes exactly as long as the story told aboard, and the far bank waits, vertical 2:3 portrait composition, tight centered composition on the effect, at most one pair of hands entering frame at the edge to work it, no full figure, no faces, no onlookers, rendered with the weight given a uncommon ability, stained-glass mosaic aesthetic, strong leaded contours, jewel-tone translucent panes, fractured colored light, geometric shape language, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2919
-  entity_field: imagePath
-- id: dream-cycle-long-blue-docket-long-blue-docket
-  last_art_job_id: 18466
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/long-blue-docket/long-blue-docket-card.webp
-  source_url: /images/dreams/long-blue-docket/long-blue-docket-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Long Blue Docket'
-  prompt: 'establishing key art for The Long Blue Docket, An endless indigo ocean-sky where thousands of folded paper boats drift under a horizon-spanning brass stamp hanging like a second moon, the defining image of a place where every prayer is a paper boat, and the tide never truly answers to anyone but the clerks, vertical 2:3 portrait composition, wide establishing view with a strong foreground anchor, clear middle ground, and deep atmospheric background, the setting is the subject; any figures present are incidental to the place, high-contrast risograph aesthetic, limited spot-color layers, coarse paper grain, slight registration offsets, bold graphic silhouettes, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5728
-  entity_field: imagePath
-- id: dream-cycle-long-blue-docket-far-window-customs
-  last_art_job_id: 18467
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/long-blue-docket/far-window-customs-card.webp
-  source_url: /images/dreams/long-blue-docket/far-window-customs-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Far Window Customs'
-  prompt: 'A low customs booth built from reclaimed ship timber and pulse-metal piping that visibly throbs with faint light, facing an open horizon of deep blue water under a paper-boat sky — the Far Window Customs, known for: It is the only intake post built on the outer edge of the Long Blue Docket, where the tide occasionally delivers a petition from outside the pantheon''s own paperwork entirely, staged at its most telling moment: A silver squid-shaped emissary surfaces through the floor with a petition nobody in the office can read, and the entire counter staff argues about whether that counts as First Contact or just bad filing, set in the world of The Long Blue Docket, where every prayer is a paper boat, and the tide never truly answers to anyone but the clerks, vertical 2:3 portrait composition, architectural establishing shot, the environment is the subject and any figures present are small and incidental, included only for scale, high-contrast risograph aesthetic, limited spot-color layers, coarse paper grain, slight registration offsets, bold graphic silhouettes, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5729
-  entity_field: imagePath
-- id: dream-cycle-long-blue-docket-prue-ashdown
-  last_art_job_id: 18468
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/long-blue-docket/prue-ashdown-card.webp
-  source_url: /images/dreams/long-blue-docket/prue-ashdown-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Prue Ashdown'
-  prompt: 'character portrait of Prue Ashdown, A stocky woman in a patched customs coat with pulse-metal cuffs that flicker faintly, a small black-footed cat perched on her shoulder with its ears pinned flat, visibly carrying: A black-footed cat rides in the crook of her arm, ears swiveled toward the counter, its claws already extended over any petition it decides is a lie, the bearing of someone driven by this: She trains every new clerk who washes ashore at Far Window, the same way she once led the first six petitioners into an empty red dust-realm nobody else wanted to claim, set in the world of The Long Blue Docket, where every prayer is a paper boat, and the tide never truly answers to anyone but the clerks, vertical 2:3 portrait composition, single figure, three-quarter view from the waist up, filling most of the frame, sharply separated from a simple world-specific background, high-contrast risograph aesthetic, limited spot-color layers, coarse paper grain, slight registration offsets, bold graphic silhouettes, unmarked surfaces, free of text'
-  entity_type: character
-  entity_id: 3330
-  entity_field: imagePath
-- id: dream-cycle-long-blue-docket-spite-bright-seal
-  last_art_job_id: 18469
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/long-blue-docket/spite-bright-seal-card.webp
-  source_url: /images/dreams/long-blue-docket/spite-bright-seal-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Spite-Bright Seal'
-  prompt: 'The Spite-Bright Seal, one object alone in frame, A bog-iron stamp inlaid with a sliver of pulse-metal that pulses brighter with every petty complaint pressed into it, its handle wrapped in tarnished ribbon like a faded pageant sash, its purpose readable in its shape: It approves any petition the holder can honestly call unfair to themselves, no matter how small the unfairness, set in the world of The Long Blue Docket, where every prayer is a paper boat, and the tide never truly answers to anyone but the clerks, vertical 2:3 portrait composition, museum-like object study, the object centered and filling the frame, resting on a bare surface or floating against a simple ground, close enough to read material and wear, an unpeopled frame, the subject stands alone with no bystanders, no onlookers, and no crowd, rendered with the reverence given a rare artifact, high-contrast risograph aesthetic, limited spot-color layers, coarse paper grain, slight registration offsets, bold graphic silhouettes, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2920
-  entity_field: imagePath
-- id: dream-cycle-long-blue-docket-datestamp-sense
-  last_art_job_id: 18470
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/long-blue-docket/datestamp-sense-card.webp
-  source_url: /images/dreams/long-blue-docket/datestamp-sense-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Datestamp Sense'
-  prompt: 'Datestamp Sense, a single practiced technique caught mid-use, A faint marginal shimmer that creeps across the edges of a document, aging or de-aging in real time until it settles on the truth, the effect itself is the subject: It lets the user feel exactly which decade, era, or pantheon a petition''s phrasing actually belongs to, whatever era it claims, set in the world of The Long Blue Docket, where every prayer is a paper boat, and the tide never truly answers to anyone but the clerks, vertical 2:3 portrait composition, tight centered composition on the effect, at most one pair of hands entering frame at the edge to work it, no full figure, no faces, no onlookers, rendered with the weight given a uncommon ability, high-contrast risograph aesthetic, limited spot-color layers, coarse paper grain, slight registration offsets, bold graphic silhouettes, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2921
-  entity_field: imagePath
-- id: dream-cycle-long-blue-docket-ex-empress-s-grudge-scenario
-  last_art_job_id: 18471
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/long-blue-docket/ex-empress-s-grudge-scenario-card.webp
-  source_url: /images/dreams/long-blue-docket/ex-empress-s-grudge-scenario-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Ex-Empress''s Grudge'
-  prompt: 'establishing scene art for the moment titled The Ex-Empress''s Grudge, In The Long Blue Docket at Far Window Customs, Prue Ashdown must process a glamorously undead ex-empress''s petition to have her own funeral re-catered, four centuries late and dressed for an audience that no longer exists, staged at Far Window Customs, set in the world of The Long Blue Docket, where every prayer is a paper boat, and the tide never truly answers to anyone but the clerks, vertical 2:3 portrait composition, a single decisive moment with one clear focal action, foreground figures reacting, uncluttered staging so the event reads at a glance, cast the figures who appear naturally across many species, ages, body sizes, body shapes, and gender presentations, high-contrast risograph aesthetic, limited spot-color layers, coarse paper grain, slight registration offsets, bold graphic silhouettes, unmarked surfaces, free of text'
-  entity_type: scenario
-  entity_id: 2211
-  entity_field: imagePath
-- id: "kind-robots-channel-image-1417f151-mtoattdp"
-  last_art_job_id: 18472
-  source: "kind-robots-missing-image"
-  status: done
-  target_repo: "silasfelinus/kind_robots"
-  image_path: "public/images/channels/sanctuary/channel.webp"
-  source_url: "/images/channels/sanctuary/channel.webp"
-  page_url: "https://kindrobots.org/navigation-health"
-  variant: "image"
-  label: "Sanctuary"
-  prompt: >
-    A serene and inviting sanctuary setting, featuring a lush, vibrant garden filled with diverse plants, flowers, and trees, symbolizing community and growth. In the foreground, a rustic wooden bench invites contemplation, surrounded by softly glowing lanterns that emit a warm, golden light, enhancing the tranquil atmosphere. The background showcases a gently flowing stream, reflecting the soft hues of a sunset palette—pinks, oranges, and purples blending seamlessly. Textures of the natural elements are rich and detailed, from the smooth surface of the water to the rough bark of the trees. The overall mood is peaceful and hopeful, rendered in a high-quality digital painting style that emphasizes warmth and connection to nature. no readable text, no logo, no watermark, no collage.
-- id: dream-cycle-the-slow-squall-slow-squall
-  last_art_job_id: 18474
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-slow-squall/slow-squall-card.webp
-  source_url: /images/dreams/the-slow-squall/slow-squall-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Slow Squall'
-  prompt: 'establishing key art for The Slow Squall, A barrel-bodied manatee pilot hauling a battered tugboat through a drifting reef of glowing void-crystal shards, lightning forking silently overhead, the defining image of a place where a single fraying towline outruns the storm it wakes every time, vertical 2:3 portrait composition, wide establishing view with a strong foreground anchor, clear middle ground, and deep atmospheric background, the setting is the subject; any figures present are incidental to the place, luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5730
-  entity_field: imagePath
-- id: dream-cycle-the-slow-squall-drift-reef
-  last_art_job_id: 18475
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-slow-squall/drift-reef-card.webp
-  source_url: /images/dreams/the-slow-squall/drift-reef-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Drift Reef'
-  prompt: 'A sprawling reef of jagged void-crystal spires jutting from black water, wrecked hulls half-swallowed between the glowing shards — The Drift Reef, known for: Ships that stop moving here get folded gently into the reef''s own drifting crystal formations, staged at its most telling moment: A grounded freighter drifts free at last as the crystal beneath it hums itself back to sleep, set in the world of The Slow Squall, where a single fraying towline outruns the storm it wakes every time, vertical 2:3 portrait composition, architectural establishing shot, the environment is the subject and any figures present are small and incidental, included only for scale, luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5731
-  entity_field: imagePath
-- id: dream-cycle-the-slow-squall-denner-cole
-  last_art_job_id: 18476
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-slow-squall/denner-cole-card.webp
-  source_url: /images/dreams/the-slow-squall/denner-cole-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Denner Cole'
-  prompt: 'character portrait of Denner Cole, A broad, barrel-bodied figure with slate-grey manatee hide, a patched diving coat slung over one shoulder, knuckles scarred from towline burns, visibly carrying: A cracked brass compass, its needle frozen mid-spin, hangs from a cord around his neck, the bearing of someone driven by this: He tows every stranded hull back to safety alone, refusing all offers of a second engine, set in the world of The Slow Squall, where a single fraying towline outruns the storm it wakes every time, vertical 2:3 portrait composition, single figure, three-quarter view from the waist up, filling most of the frame, sharply separated from a simple world-specific background, luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
-  entity_type: character
-  entity_id: 3331
-  entity_field: imagePath
-- id: dream-cycle-the-slow-squall-driftline-anchor
-  last_art_job_id: 18477
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-slow-squall/driftline-anchor-card.webp
-  source_url: /images/dreams/the-slow-squall/driftline-anchor-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Driftline Anchor'
-  prompt: 'a single Driftline Anchor, one object alone in frame, A coiled length of void-crystal cable veined with faint violet light, one end fused into a barbed anchor head streaked with rust, its purpose readable in its shape: A taut length of glowing cable locks onto the nearest drifting hull the instant it is thrown, set in the world of The Slow Squall, where a single fraying towline outruns the storm it wakes every time, vertical 2:3 portrait composition, museum-like object study, the object centered and filling the frame, resting on a bare surface or floating against a simple ground, close enough to read material and wear, an unpeopled frame, the subject stands alone with no bystanders, no onlookers, and no crowd, rendered with the reverence given a rare artifact, luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2922
-  entity_field: imagePath
-- id: dream-cycle-the-slow-squall-squall-call
-  last_art_job_id: 18478
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-slow-squall/squall-call-card.webp
-  source_url: /images/dreams/the-slow-squall/squall-call-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Squall Call'
-  prompt: 'Squall Call, a single practiced technique caught mid-use, A tight grey cyclone spinning above an open palm, rain already darkening the sleeve beneath it, the effect itself is the subject: A short, localized downpour gathers directly overhead within seconds of being summoned, set in the world of The Slow Squall, where a single fraying towline outruns the storm it wakes every time, vertical 2:3 portrait composition, tight centered composition on the effect, at most one pair of hands entering frame at the edge to work it, no full figure, no faces, no onlookers, rendered with the weight given a uncommon ability, luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2923
-  entity_field: imagePath
-- id: dream-cycle-the-slow-squall-weight-beneath-the-reef-scenario
-  last_art_job_id: 18479
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-slow-squall/weight-beneath-the-reef-scenario-card.webp
-  source_url: /images/dreams/the-slow-squall/weight-beneath-the-reef-scenario-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Weight Beneath the Reef'
-  prompt: 'establishing scene art for the moment titled The Weight Beneath the Reef, In The Slow Squall, Denner Cole tows a grounded freighter free of The Drift Reef before the storm he summoned reaches the caverns below, staged at The Drift Reef, set in the world of The Slow Squall, where a single fraying towline outruns the storm it wakes every time, vertical 2:3 portrait composition, a single decisive moment with one clear focal action, foreground figures reacting, uncluttered staging so the event reads at a glance, cast the figures who appear naturally across many species, ages, body sizes, body shapes, and gender presentations, luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
-  entity_type: scenario
-  entity_id: 2212
-  entity_field: imagePath
+  label: Card
+  prompt: 'Depict a vibrant gallery card showcasing a visually appealing representation of
+    the Card project. In the foreground, feature a large, colorful butterfly with intricate
+    wings that glisten in various shades of blue, purple, and green, symbolizing transformation
+    and progress. Surround it with smaller butterflies, each in unique colors, fluttering
+    around, representing ideas and tasks in motion. The midground should present abstract
+    shapes or outlines of a roadmap, softly illuminated, hinting at the project''s progress
+    and structure. In the atmospheric background, a soft gradient of pastel colors merges
+    from yellow to pink, creating a sense of warmth and optimism. The directional lighting
+    should highlight the butterflies, casting delicate shadows that add depth. Use a glossy
+    texture for the butterflies to enhance their ethereal quality, while the overall mood
+    is uplifting and inspiring, encapsulating the essence of growth and collaboration within
+    the Card project. no readable text, no logo, no watermark, no collage.
+
+    '
 - id: creation-burst-tom-tomtum-the-monastery-of-the-long-quiet
   last_art_job_id: 21617
   source: creation-burst
@@ -760,8 +150,20 @@ requests:
   variant: card
   engine: krea2
   size: 512x768
-  label: 'The Monastery of the Long Quiet'
-  prompt: 'a mountain monastery of pale stone terraces stacked up a hazy slope, a wide meditation terrace with rows of worn cushions, a single bronze bell under a wooden roof, prayer banners hanging still in windless air — The Monastery of the Long Quiet, known for: The Monastery of the Long Quiet is known for keeping sixteen hours of silence every day and for measuring a novice''s progress in stillness rather than in years, staged at its most telling moment: Fifty years of quiet ended in a single night when pillagers came up the terrace steps and a small gnome ran screaming down them with a sickle in his hand, set in the world of Tom Tomtum and the Long Quiet, where a rock gnome monk who learned more in one loud night than in fifty quiet years finally goes out to see the world, vertical 2:3 portrait composition, architectural establishing shot, the environment is the subject and any figures present are small and incidental, included only for scale, luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
+  label: The Monastery of the Long Quiet
+  prompt: 'a mountain monastery of pale stone terraces stacked up a hazy slope, a wide meditation
+    terrace with rows of worn cushions, a single bronze bell under a wooden roof, prayer banners
+    hanging still in windless air — The Monastery of the Long Quiet, known for: The Monastery
+    of the Long Quiet is known for keeping sixteen hours of silence every day and for measuring
+    a novice''s progress in stillness rather than in years, staged at its most telling moment:
+    Fifty years of quiet ended in a single night when pillagers came up the terrace steps
+    and a small gnome ran screaming down them with a sickle in his hand, set in the world
+    of Tom Tomtum and the Long Quiet, where a rock gnome monk who learned more in one loud
+    night than in fifty quiet years finally goes out to see the world, vertical 2:3 portrait
+    composition, architectural establishing shot, the environment is the subject and any figures
+    present are small and incidental, included only for scale, luminous gouache storybook
+    painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted
+    texture, unmarked surfaces, free of text'
   entity_type: dream
   entity_id: 5732
   entity_field: imagePath
@@ -776,8 +178,17 @@ requests:
   variant: card
   engine: krea2
   size: 512x768
-  label: 'Tom Tomtum'
-  prompt: 'a small rock gnome man in his fifties with round brass spectacles and a threadbare monastery robe, sitting cross-legged in an attempted meditation pose on the broad mossy shell of a very old giant turtle, his eyes open and his whole head turned to follow a single bright butterfly fluttering just above him, a kama sickle at his belt and a pan flute on a cord around his neck, the turtle''s ancient patient face looking straight ahead, a sunlit monastery terrace and mountain haze behind them, set in the world of Tom Tomtum and the Long Quiet, where a rock gnome monk who learned more in one loud night than in fifty quiet years finally goes out to see the world, vertical 2:3 portrait composition, luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
+  label: Tom Tomtum
+  prompt: a small rock gnome man in his fifties with round brass spectacles and a threadbare
+    monastery robe, sitting cross-legged in an attempted meditation pose on the broad mossy
+    shell of a very old giant turtle, his eyes open and his whole head turned to follow a
+    single bright butterfly fluttering just above him, a kama sickle at his belt and a pan
+    flute on a cord around his neck, the turtle's ancient patient face looking straight ahead,
+    a sunlit monastery terrace and mountain haze behind them, set in the world of Tom Tomtum
+    and the Long Quiet, where a rock gnome monk who learned more in one loud night than in
+    fifty quiet years finally goes out to see the world, vertical 2:3 portrait composition,
+    luminous gouache storybook painting, matte pigment, simplified confident shapes, soft
+    edge variation, layered hand-painted texture, unmarked surfaces, free of text
   entity_type: character
   entity_id: 3332
   entity_field: imagePath
@@ -792,8 +203,18 @@ requests:
   variant: card
   engine: krea2
   size: 512x768
-  label: 'DeeDum'
-  prompt: 'character portrait of DeeDum, an enormous very old turtle with a high moss-greened domed shell, deep growth rings on every scute, a wrinkled leathery neck and calm dark eyes, resting on a sunlit stone terrace with mountain haze behind her, visibly carrying: Tom Tomtum, mostly, and the patience of several centuries, the bearing of someone driven by this: to carry Tom Tomtum wherever he is going, at exactly the pace he needs and never the pace he wants, set in the world of Tom Tomtum and the Long Quiet, where a rock gnome monk who learned more in one loud night than in fifty quiet years finally goes out to see the world, vertical 2:3 portrait composition, single figure, three-quarter view from the waist up, filling most of the frame, sharply separated from a simple world-specific background, luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
+  label: DeeDum
+  prompt: 'character portrait of DeeDum, an enormous very old turtle with a high moss-greened
+    domed shell, deep growth rings on every scute, a wrinkled leathery neck and calm dark
+    eyes, resting on a sunlit stone terrace with mountain haze behind her, visibly carrying:
+    Tom Tomtum, mostly, and the patience of several centuries, the bearing of someone driven
+    by this: to carry Tom Tomtum wherever he is going, at exactly the pace he needs and never
+    the pace he wants, set in the world of Tom Tomtum and the Long Quiet, where a rock gnome
+    monk who learned more in one loud night than in fifty quiet years finally goes out to
+    see the world, vertical 2:3 portrait composition, single figure, three-quarter view from
+    the waist up, filling most of the frame, sharply separated from a simple world-specific
+    background, luminous gouache storybook painting, matte pigment, simplified confident shapes,
+    soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
   entity_type: character
   entity_id: 3333
   entity_field: imagePath
@@ -808,8 +229,22 @@ requests:
   variant: card
   engine: krea2
   size: 512x768
-  label: 'The Screaming Kama'
-  prompt: 'The Screaming Kama, one object alone in frame, a short-handled monk''s kama sickle with a curved dark iron blade and a worn ash handle wrapped in faded blue cord, one small nick in the blade''s edge, resting on a pale stone terrace step beside a pair of round brass spectacles and a wooden pan flute, morning light and mountain haze behind, its purpose readable in its shape: The bearer of this kama fights best after they have stopped thinking about fighting, and the first strike made while shouting something unplanned lands with the weight of a much larger warrior, set in the world of Tom Tomtum and the Long Quiet, where a rock gnome monk who learned more in one loud night than in fifty quiet years finally goes out to see the world, vertical 2:3 portrait composition, museum-like object study, the object centered and filling the frame, resting on a bare surface or floating against a simple ground, close enough to read material and wear, an unpeopled frame, the subject stands alone with no bystanders, no onlookers, and no crowd, rendered with the reverence given a uncommon artifact, luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
+  label: The Screaming Kama
+  prompt: 'The Screaming Kama, one object alone in frame, a short-handled monk''s kama sickle
+    with a curved dark iron blade and a worn ash handle wrapped in faded blue cord, one small
+    nick in the blade''s edge, resting on a pale stone terrace step beside a pair of round
+    brass spectacles and a wooden pan flute, morning light and mountain haze behind, its purpose
+    readable in its shape: The bearer of this kama fights best after they have stopped thinking
+    about fighting, and the first strike made while shouting something unplanned lands with
+    the weight of a much larger warrior, set in the world of Tom Tomtum and the Long Quiet,
+    where a rock gnome monk who learned more in one loud night than in fifty quiet years finally
+    goes out to see the world, vertical 2:3 portrait composition, museum-like object study,
+    the object centered and filling the frame, resting on a bare surface or floating against
+    a simple ground, close enough to read material and wear, an unpeopled frame, the subject
+    stands alone with no bystanders, no onlookers, and no crowd, rendered with the reverence
+    given a uncommon artifact, luminous gouache storybook painting, matte pigment, simplified
+    confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces,
+    free of text'
   entity_type: reward
   entity_id: 2924
   entity_field: imagePath
@@ -824,8 +259,20 @@ requests:
   variant: card
   engine: krea2
   size: 512x768
-  label: 'Screaming Charge'
-  prompt: 'Screaming Charge, a single practiced technique caught mid-use, a small robed gnome sprinting down a long flight of pale monastery steps at night with a sickle raised over his head and his mouth wide open mid-shout, swinging lanterns throwing warm light up the stairs behind him, a startled brigand recoiling at the bottom step, the effect itself is the subject: Once in a fight the practitioner may abandon every plan, every stance and every breathing exercise and simply run at the problem screaming, which steadies every ally who sees it and costs every enemy a beat, set in the world of Tom Tomtum and the Long Quiet, where a rock gnome monk who learned more in one loud night than in fifty quiet years finally goes out to see the world, vertical 2:3 portrait composition, tight centered composition on the effect, at most one pair of hands entering frame at the edge to work it, no full figure, no faces, no onlookers, rendered with the weight given a rare ability, luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
+  label: Screaming Charge
+  prompt: 'Screaming Charge, a single practiced technique caught mid-use, a small robed gnome
+    sprinting down a long flight of pale monastery steps at night with a sickle raised over
+    his head and his mouth wide open mid-shout, swinging lanterns throwing warm light up the
+    stairs behind him, a startled brigand recoiling at the bottom step, the effect itself
+    is the subject: Once in a fight the practitioner may abandon every plan, every stance
+    and every breathing exercise and simply run at the problem screaming, which steadies every
+    ally who sees it and costs every enemy a beat, set in the world of Tom Tomtum and the
+    Long Quiet, where a rock gnome monk who learned more in one loud night than in fifty quiet
+    years finally goes out to see the world, vertical 2:3 portrait composition, tight centered
+    composition on the effect, at most one pair of hands entering frame at the edge to work
+    it, no full figure, no faces, no onlookers, rendered with the weight given a rare ability,
+    luminous gouache storybook painting, matte pigment, simplified confident shapes, soft
+    edge variation, layered hand-painted texture, unmarked surfaces, free of text'
   entity_type: reward
   entity_id: 2925
   entity_field: imagePath
@@ -840,8 +287,18 @@ requests:
   variant: card
   engine: krea2
   size: 512x768
-  label: 'The Shellback Reaches'
-  prompt: 'establishing key art for The Shellback Reaches, a wide highland valley of stacked stone terraces in morning haze, a pale monastery built onto the shoulder of the mountain with a bronze bell under a wooden roof, a switchback road below carrying three enormous moss-backed tortoises walking single file, distant peaks fading into layered mist, the defining image of a place where every order in the reaches keeps its silence to hear the tortoises speak, and the only novice who ever heard one answer could never sit still for a minute, vertical 2:3 portrait composition, wide establishing view with a strong foreground anchor, clear middle ground, and deep atmospheric background, the setting is the subject; any figures present are incidental to the place, luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
+  label: The Shellback Reaches
+  prompt: establishing key art for The Shellback Reaches, a wide highland valley of stacked
+    stone terraces in morning haze, a pale monastery built onto the shoulder of the mountain
+    with a bronze bell under a wooden roof, a switchback road below carrying three enormous
+    moss-backed tortoises walking single file, distant peaks fading into layered mist, the
+    defining image of a place where every order in the reaches keeps its silence to hear the
+    tortoises speak, and the only novice who ever heard one answer could never sit still for
+    a minute, vertical 2:3 portrait composition, wide establishing view with a strong foreground
+    anchor, clear middle ground, and deep atmospheric background, the setting is the subject;
+    any figures present are incidental to the place, luminous gouache storybook painting,
+    matte pigment, simplified confident shapes, soft edge variation, layered hand-painted
+    texture, unmarked surfaces, free of text
   entity_type: dream
   entity_id: 5733
   entity_field: imagePath
@@ -856,627 +313,134 @@ requests:
   variant: card
   engine: krea2
   size: 512x768
-  label: 'The Night the Long Quiet Broke'
-  prompt: 'a mountain monastery at night seen from above its terrace steps, a line of brigands with torches climbing the switchback below, a bronze bell under a wooden roof catching the torchlight, an enormous moss-backed tortoise planted across the top of the stair like a boulder, one small robed gnome silhouetted mid-stride coming down to meet them with a sickle raised, deep blue night and warm scattered firelight, set in the world of The Shellback Reaches, where every order in the Reaches keeps its silence to hear the tortoises speak, and the only novice who ever heard one answer could never sit still for a minute, vertical 2:3 portrait composition, luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
+  label: The Night the Long Quiet Broke
+  prompt: a mountain monastery at night seen from above its terrace steps, a line of brigands
+    with torches climbing the switchback below, a bronze bell under a wooden roof catching
+    the torchlight, an enormous moss-backed tortoise planted across the top of the stair like
+    a boulder, one small robed gnome silhouetted mid-stride coming down to meet them with
+    a sickle raised, deep blue night and warm scattered firelight, set in the world of The
+    Shellback Reaches, where every order in the Reaches keeps its silence to hear the tortoises
+    speak, and the only novice who ever heard one answer could never sit still for a minute,
+    vertical 2:3 portrait composition, luminous gouache storybook painting, matte pigment,
+    simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked
+    surfaces, free of text
   entity_type: scenario
   entity_id: 2213
   entity_field: imagePath
-- id: dream-cycle-low-tide-armada-low-tide-armada
-  last_art_job_id: 21624
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/low-tide-armada/low-tide-armada-card.webp
-  source_url: /images/dreams/low-tide-armada/low-tide-armada-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Low Tide Armada'
-  prompt: 'establishing key art for Low Tide Armada, A loose flotilla of patched, sun-sailed hulls drifting low over grey water at dusk, running lights dimmed, otters moving between them without a sound, the defining image of a place where nobody notices a fleet that never announces itself, vertical 2:3 portrait composition, wide establishing view with a strong foreground anchor, clear middle ground, and deep atmospheric background, the setting is the subject; any figures present are incidental to the place, stained-glass mosaic aesthetic, strong leaded contours, jewel-tone translucent panes, fractured colored light, geometric shape language, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5734
-  entity_field: imagePath
-- id: dream-cycle-low-tide-armada-low-water-hulk
-  last_art_job_id: 21625
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/low-tide-armada/low-water-hulk-card.webp
-  source_url: /images/dreams/low-tide-armada/low-water-hulk-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Low-Water Hulk'
-  prompt: 'A colossal grounded ship-hull tilted at the shoreline, solar-sail canvas patched over torn steel, bio-metal ribs fused pale and bone-like along the breach, otters working the tideline in dim gold light — The Low-Water Hulk, known for: A grounded human generation-ship, hull cracked open at the waterline, now patched with solar-sail canvas and otter-built locks; officially a gravesite, unofficially a market, staged at its most telling moment: The tide comes in through the old crew quarters at dusk, and every otter aboard goes quiet at once, out of a habit nobody younger than the wreck can explain, set in the world of Low Tide Armada, where nobody notices a fleet that never announces itself, vertical 2:3 portrait composition, architectural establishing shot, the environment is the subject and any figures present are small and incidental, included only for scale, stained-glass mosaic aesthetic, strong leaded contours, jewel-tone translucent panes, fractured colored light, geometric shape language, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5735
-  entity_field: imagePath
-- id: dream-cycle-low-tide-armada-marl
-  last_art_job_id: 21626
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/low-tide-armada/marl-card.webp
-  source_url: /images/dreams/low-tide-armada/marl-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Marl'
-  prompt: 'character portrait of Marl, A lean otter in a patched vac-suit, a graft of fused bio-metal scarring one shoulder like healed-over stitches, one brass earring and one bone one, moving without wasted motion, visibly carrying: A patchwork diving satchel stitched with graft-plates of pale bio-metal, one mismatched earring salvaged from the wreck''s dead and one bought new, worn to confuse whichever spirits keep tallying her debts, the bearing of someone driven by this: She''s quietly moving a stolen shipment of bio-metal off the Hulk before the guild that''s owed it works out where she''s hiding, set in the world of Low Tide Armada, where nobody notices a fleet that never announces itself, vertical 2:3 portrait composition, single figure, three-quarter view from the waist up, filling most of the frame, sharply separated from a simple world-specific background, stained-glass mosaic aesthetic, strong leaded contours, jewel-tone translucent panes, fractured colored light, geometric shape language, unmarked surfaces, free of text'
-  entity_type: character
-  entity_id: 3334
-  entity_field: imagePath
-- id: dream-cycle-low-tide-armada-diver-s-tally-plate
-  last_art_job_id: 21627
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/low-tide-armada/diver-s-tally-plate-card.webp
-  source_url: /images/dreams/low-tide-armada/diver-s-tally-plate-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Diver''s Tally Plate'
-  prompt: 'a single Diver''s Tally Plate, one object alone in frame, A palm-sized bio-metal plate scored with overlapping tally-marks that shift and reorder themselves, edges worn smooth from being handled face-down, its purpose readable in its shape: It marks exactly how much salvage its bearer still owes, and to whom, without needing to ask, set in the world of Low Tide Armada, where nobody notices a fleet that never announces itself, vertical 2:3 portrait composition, museum-like object study, the object centered and filling the frame, resting on a bare surface or floating against a simple ground, close enough to read material and wear, an unpeopled frame, the subject stands alone with no bystanders, no onlookers, and no crowd, rendered with the reverence given a uncommon artifact, stained-glass mosaic aesthetic, strong leaded contours, jewel-tone translucent panes, fractured colored light, geometric shape language, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2926
-  entity_field: imagePath
-- id: dream-cycle-low-tide-armada-quiet-salvage
-  last_art_job_id: 21628
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/low-tide-armada/quiet-salvage-card.webp
-  source_url: /images/dreams/low-tide-armada/quiet-salvage-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Quiet Salvage'
-  prompt: 'Quiet Salvage, a single practiced technique caught mid-use, A diver''s hands moving without a single wasted motion, bio-metal tools leaving no scuff, no sound, no wake in the water, the effect itself is the subject: It lets its user strip a wreck of everything valuable without the ship ever registering that it was boarded, set in the world of Low Tide Armada, where nobody notices a fleet that never announces itself, vertical 2:3 portrait composition, tight centered composition on the effect, at most one pair of hands entering frame at the edge to work it, no full figure, no faces, no onlookers, rendered with the weight given a rare ability, stained-glass mosaic aesthetic, strong leaded contours, jewel-tone translucent panes, fractured colored light, geometric shape language, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2927
-  entity_field: imagePath
-- id: dream-cycle-low-tide-armada-tally-comes-due-scenario
-  last_art_job_id: 21629
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/low-tide-armada/tally-comes-due-scenario-card.webp
-  source_url: /images/dreams/low-tide-armada/tally-comes-due-scenario-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Tally Comes Due'
-  prompt: 'establishing scene art for the moment titled The Tally Comes Due, In The Low Tide Armada at The Low-Water Hulk, Marl has one solar-sail tide to move her stolen bio-metal before the debt the wreck itself seems to remember comes looking for her, staged at The Low-Water Hulk, set in the world of Low Tide Armada, where nobody notices a fleet that never announces itself, vertical 2:3 portrait composition, a single decisive moment with one clear focal action, foreground figures reacting, uncluttered staging so the event reads at a glance, cast the figures who appear naturally across many species, ages, body sizes, body shapes, and gender presentations, stained-glass mosaic aesthetic, strong leaded contours, jewel-tone translucent panes, fractured colored light, geometric shape language, unmarked surfaces, free of text'
-  entity_type: scenario
-  entity_id: 2214
-  entity_field: imagePath
-- id: dream-cycle-the-undertow-verse-undertow-verse
-  last_art_job_id: 21632
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-undertow-verse/undertow-verse-card.webp
-  source_url: /images/dreams/the-undertow-verse/undertow-verse-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Undertow Verse'
-  prompt: 'establishing key art for The Undertow Verse, A broad hammerhead shark gliding under a canopy of drifting kelp-charms strung with bone beads, its hammer-shaped head haloed by a marbled swirl of poured, layered bioluminescent light, the defining image of a place where every charm that keeps the deep asleep must be finished precisely as it started, or something down there notices the gap, vertical 2:3 portrait composition, wide establishing view with a strong foreground anchor, clear middle ground, and deep atmospheric background, the setting is the subject; any figures present are incidental to the place, watercolor-and-ink naturalist illustration, transparent washes, dry-brush texture, expressive line variation, visible paper tooth, selective fine detail, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5736
-  entity_field: imagePath
-- id: dream-cycle-the-undertow-verse-verse-reef
-  last_art_job_id: 21633
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-undertow-verse/verse-reef-card.webp
-  source_url: /images/dreams/the-undertow-verse/verse-reef-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Verse Reef'
-  prompt: 'A crashed satellite hull fused into living coral, its solar panels replaced by sheets of pale calcified coral etched with looping charm-script, a dull red ember glowing faintly from a crack near its core — The Verse Reef, known for: A reef of coral-grown warning charms wound around the drowned hull of an old relay satellite, where reciting any carved verse only partway is said to wake what sleeps in the trench below, staged at its most telling moment: The reef''s charm-script lights fully end to end for the first time in memory, every line finished at once, set in the world of The Undertow Verse, where every charm that keeps the deep asleep must be finished precisely as it started, or something down there notices the gap, vertical 2:3 portrait composition, architectural establishing shot, the environment is the subject and any figures present are small and incidental, included only for scale, watercolor-and-ink naturalist illustration, transparent washes, dry-brush texture, expressive line variation, visible paper tooth, selective fine detail, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5737
-  entity_field: imagePath
-- id: dream-cycle-the-undertow-verse-coda
-  last_art_job_id: 21634
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-undertow-verse/coda-card.webp
-  source_url: /images/dreams/the-undertow-verse/coda-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Coda'
-  prompt: 'character portrait of Coda, A wide hammerhead shark with a marbled swirl of grey-and-rust scarring layered across her hammer like poured, pooled paint, one bead-strung charm cord snagged permanently around her left cephalofoil wing, visibly carrying: A single loop of bone-and-glass beads knotted into her fin, each bead etched with one syllable of a verse she has never once said all the way through on purpose, the bearing of someone driven by this: She was marked at birth to finish the reef''s warding verse every generation, and every attempt to swim away from that duty circles her straight back to it, set in the world of The Undertow Verse, where every charm that keeps the deep asleep must be finished precisely as it started, or something down there notices the gap, vertical 2:3 portrait composition, single figure, three-quarter view from the waist up, filling most of the frame, sharply separated from a simple world-specific background, watercolor-and-ink naturalist illustration, transparent washes, dry-brush texture, expressive line variation, visible paper tooth, selective fine detail, unmarked surfaces, free of text'
-  entity_type: character
-  entity_id: 3335
-  entity_field: imagePath
-- id: dream-cycle-the-undertow-verse-ember-seal
-  last_art_job_id: 21635
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-undertow-verse/ember-seal-card.webp
-  source_url: /images/dreams/the-undertow-verse/ember-seal-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Ember Seal'
-  prompt: 'a single Ember Seal, one object alone in frame, A single curled phoenix feather sealed inside a chipped glass vial, its cork capped with dribbled black wax shaped like a small closed eye, its purpose readable in its shape: Lit once, the feather flares bright red for one held breath, then goes dark until struck again — but never truly burns out, set in the world of The Undertow Verse, where every charm that keeps the deep asleep must be finished precisely as it started, or something down there notices the gap, vertical 2:3 portrait composition, museum-like object study, the object centered and filling the frame, resting on a bare surface or floating against a simple ground, close enough to read material and wear, an unpeopled frame, the subject stands alone with no bystanders, no onlookers, and no crowd, rendered with the reverence given a rare artifact, watercolor-and-ink naturalist illustration, transparent washes, dry-brush texture, expressive line variation, visible paper tooth, selective fine detail, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2928
-  entity_field: imagePath
-- id: dream-cycle-the-undertow-verse-borrowed-ending
-  last_art_job_id: 21636
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-undertow-verse/borrowed-ending-card.webp
-  source_url: /images/dreams/the-undertow-verse/borrowed-ending-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Borrowed Ending'
-  prompt: 'Borrowed Ending, a single practiced technique caught mid-use, A faint second shadow of moving lips overlaid translucent against the user''s own mouth, mouthing the last words a beat before they are spoken aloud, the effect itself is the subject: Lets the user finish any warding verse someone else left incomplete, sealing it shut as if they had spoken every word themselves, set in the world of The Undertow Verse, where every charm that keeps the deep asleep must be finished precisely as it started, or something down there notices the gap, vertical 2:3 portrait composition, tight centered composition on the effect, at most one pair of hands entering frame at the edge to work it, no full figure, no faces, no onlookers, rendered with the weight given a uncommon ability, watercolor-and-ink naturalist illustration, transparent washes, dry-brush texture, expressive line variation, visible paper tooth, selective fine detail, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2929
-  entity_field: imagePath
-- id: dream-cycle-the-undertow-verse-half-finished-ward-scenario
-  last_art_job_id: 21637
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-undertow-verse/half-finished-ward-scenario-card.webp
-  source_url: /images/dreams/the-undertow-verse/half-finished-ward-scenario-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Half-Finished Ward'
-  prompt: 'establishing scene art for the moment titled The Half-Finished Ward, In The Undertow Verse at The Verse Reef, Coda has one tide to finish the warding verse the reef-folk keep driving her off before she can complete, after the old satellite ember at its core flares once, unlogged, for the first time in years, staged at The Verse Reef, set in the world of The Undertow Verse, where every charm that keeps the deep asleep must be finished precisely as it started, or something down there notices the gap, vertical 2:3 portrait composition, a single decisive moment with one clear focal action, foreground figures reacting, uncluttered staging so the event reads at a glance, cast the figures who appear naturally across many species, ages, body sizes, body shapes, and gender presentations, watercolor-and-ink naturalist illustration, transparent washes, dry-brush texture, expressive line variation, visible paper tooth, selective fine detail, unmarked surfaces, free of text'
-  entity_type: scenario
-  entity_id: 2215
-  entity_field: imagePath
-- id: "kind-robots-for-you-image-a950e7b8-mtsjotn4"
-  last_art_job_id: 21653
-  source: "kind-robots-missing-image"
-  status: done
-  target_repo: "silasfelinus/kind_robots"
-  image_path: "public/images/channels/admin/for-you.webp"
-  source_url: "/images/channels/admin/for-you.webp"
-  page_url: "https://kindrobots.org/admin/forum-moderation"
-  variant: "image"
-  label: "For You"
-  prompt: >
-    A vibrant and inviting gallery image showcasing a futuristic digital interface that embodies the concept of personalized notifications and engagement. The composition features an abstract representation of human gates, with glowing pathways leading to various pitch proposals and notifications, all interconnected through luminous lines. The environment is a sleek, modern workspace filled with soft, ambient light that creates a warm and welcoming atmosphere. The color palette consists of soft blues, greens, and hints of gold, evoking a sense of innovation and connection. Textures are smooth and high-tech, emphasizing the advanced nature of the communication tools. Rendered in a clean, digital art style, the image conveys a sense of accessibility and importance in the realm of personal follow-ups and attention needed. no readable text, no logo, no watermark, no collage.
-- id: "kind-robots-ruler-hooked-image-0ac61f33-mtskkyj9"
-  last_art_job_id: 21654
-  source: "kind-robots-missing-image"
-  status: done
-  target_repo: "silasfelinus/kind_robots"
-  image_path: "public/images/channels/plan/ruler-hooked.webp"
-  source_url: "/images/channels/plan/ruler-hooked.webp"
-  page_url: "https://kindrobots.org/artjob"
-  variant: "image"
-  label: "The Ruler Is Hooked"
-  prompt: >
-    A vibrant and whimsical illustration depicting a stylized fishing kingdom, where a large, ornate ruler's throne is prominently hooked on the edge of a shimmering shoreline. The throne is adorned with fishing gear and sea-themed decorations, symbolizing the blend of authority and fishing. In the background, a lively coastal village bustles with fishermen and townsfolk, while colorful boats float in the water, suggesting a harmonious relationship between the kingdom and the sea. The composition features a dynamic perspective, with the throne as the focal point, set against a bright, sunny sky that radiates warmth and adventure. The color palette includes rich blues, greens, and golds, conveying a sense of prosperity and vibrancy. The texture of the scene combines the smoothness of water with the rustic charm of the village, creating a playful yet regal atmosphere. Rendered in a detailed digital art style that captures the fantasy and charm of the game. no readable text, no logo, no watermark, no collage.
-- id: "kind-robots-aquarium-image-766e1218-mtskl250"
-  source: "kind-robots-missing-image"
-  status: done
-  target_repo: "silasfelinus/kind_robots"
-  image_path: "public/images/channels/plan/aquarium.webp"
-  source_url: "/images/channels/plan/aquarium.webp"
-  page_url: "https://kindrobots.org/artjob"
-  variant: "image"
-  label: "Cthulhuquarium"
-  prompt: >
-    Create a vibrant and whimsical underwater scene depicting a fantastical aquarium filled with various creatively designed sea monsters, including a large, tentacled Cthulhu-like creature at the center. Surround it with smaller, quirky aquatic beings, each showcasing unique characteristics that add humor and charm. The setting should be illuminated by bioluminescent plants and colorful coral, casting a playful glow across the scene. Use a rich color palette of deep blues, greens, and pops of bright colors to evoke a sense of wonder and mischief. The texture of the water should appear fluid and dynamic, reflecting light in a way that adds depth and movement. The overall mood should be light-hearted yet slightly eerie, capturing the essence of a darkly funny idle aquarium. Render this in a high-resolution digital medium to enhance the intricate details and vibrant colors. no readable text, no logo, no watermark, no collage.
-- id: dream-cycle-the-villains-molt-villains-molt
-  last_art_job_id: 21657
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-villains-molt/villains-molt-card.webp
-  source_url: /images/dreams/the-villains-molt/villains-molt-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Villain''s Molt'
-  prompt: 'establishing key art for The Villain''s Molt, A fairy mid-molt, an old translucent wing-husk peeling away in a papery shell behind her, the new wings underneath laced with faint amber circuitry-veins, the defining image of a place where every year she sheds the version of herself that still asked for permission, vertical 2:3 portrait composition, wide establishing view with a strong foreground anchor, clear middle ground, and deep atmospheric background, the setting is the subject; any figures present are incidental to the place, scratchboard engraving aesthetic, dense crosshatching and carved white lines, near-monochrome values, one restrained luminous accent, dramatic texture, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5738
-  entity_field: imagePath
-- id: dream-cycle-the-villains-molt-unlicensed-chrysalis
-  last_art_job_id: 21658
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-villains-molt/unlicensed-chrysalis-card.webp
-  source_url: /images/dreams/the-villains-molt/unlicensed-chrysalis-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Unlicensed Chrysalis'
-  prompt: 'A biopunk chrysalis-shaped structure grown from radiant silk in a fairy-tale forest clearing, its walls glowing faint amber, old scanning grafts fused into the outer membrane like insect husks — The Unlicensed Chrysalis, known for: A living chrysalis that fairies flee into once their own scanning grafts have marked them for capture; whoever crosses the threshold has the graft physically dissolved by the chrysalis''s own silk, staged at its most telling moment: A newcomer''s scanning graft flares white-hot and then liquefies mid-arm, and by morning the chrysalis wall has grown a faint amber vein where it absorbed the metal, set in the world of The Villain''s Molt, where every year she sheds the version of herself that still asked for permission, vertical 2:3 portrait composition, architectural establishing shot, the environment is the subject and any figures present are small and incidental, included only for scale, scratchboard engraving aesthetic, dense crosshatching and carved white lines, near-monochrome values, one restrained luminous accent, dramatic texture, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5739
-  entity_field: imagePath
-- id: dream-cycle-the-villains-molt-talis-okoro
-  last_art_job_id: 21659
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-villains-molt/talis-okoro-card.webp
-  source_url: /images/dreams/the-villains-molt/talis-okoro-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Talis Okoro'
-  prompt: 'character portrait of Talis Okoro, A small fairy with wings scarred by close-range scanner burns, a cut-down uniform jacket with the insignia torn free, an illegal jump-route map tattooed up one forearm in slow-fading bioluminescent ink, visibly carrying: A biopunk scanning graft fused into her palm, its lens cracked down the middle from the day it first read her own signal instead of someone else''s, the bearing of someone driven by this: She used to scan every fairy that crossed the border for illegal forbidden-power grafts, until the same graft took root inside her own body and her own unit turned their scanners on her, set in the world of The Villain''s Molt, where every year she sheds the version of herself that still asked for permission, vertical 2:3 portrait composition, single figure, three-quarter view from the waist up, filling most of the frame, sharply separated from a simple world-specific background, scratchboard engraving aesthetic, dense crosshatching and carved white lines, near-monochrome values, one restrained luminous accent, dramatic texture, unmarked surfaces, free of text'
-  entity_type: character
-  entity_id: 3336
-  entity_field: imagePath
-- id: dream-cycle-the-villains-molt-wireroot-cocoon
-  last_art_job_id: 21660
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-villains-molt/wireroot-cocoon-card.webp
-  source_url: /images/dreams/the-villains-molt/wireroot-cocoon-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Wireroot Cocoon'
-  prompt: 'a single Wireroot Cocoon, one object alone in frame, A fist-sized cocoon of woven radiant silk grown wild at a chrysalis threshold, one end split open to show amber wireroot filament threading out like exposed nerve fiber, faintly warm to the touch, its purpose readable in its shape: It regrows a single severed connection — nerve, wire, or graft — as living wireroot filament, splicing back exactly what was cut, set in the world of The Villain''s Molt, where every year she sheds the version of herself that still asked for permission, vertical 2:3 portrait composition, museum-like object study, the object centered and filling the frame, resting on a bare surface or floating against a simple ground, close enough to read material and wear, an unpeopled frame, the subject stands alone with no bystanders, no onlookers, and no crowd, rendered with the reverence given a rare artifact, scratchboard engraving aesthetic, dense crosshatching and carved white lines, near-monochrome values, one restrained luminous accent, dramatic texture, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2930
-  entity_field: imagePath
-- id: dream-cycle-the-villains-molt-second-molt
-  last_art_job_id: 21661
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-villains-molt/second-molt-card.webp
-  source_url: /images/dreams/the-villains-molt/second-molt-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Second Molt'
-  prompt: 'Second Molt, a single practiced technique caught mid-use, A papery, wing-shaped husk translucent enough to see through, its inner surface still faintly pulsing amber where a scanning graft used to sit, the effect itself is the subject: It sheds the user''s outward self in one motion, leaving behind a hollow, wing-shaped husk that still carries the shed scanning signal, set in the world of The Villain''s Molt, where every year she sheds the version of herself that still asked for permission, vertical 2:3 portrait composition, tight centered composition on the effect, at most one pair of hands entering frame at the edge to work it, no full figure, no faces, no onlookers, rendered with the weight given a uncommon ability, scratchboard engraving aesthetic, dense crosshatching and carved white lines, near-monochrome values, one restrained luminous accent, dramatic texture, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2931
-  entity_field: imagePath
-- id: dream-cycle-the-villains-molt-last-scan-scenario
-  last_art_job_id: 21662
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-villains-molt/last-scan-scenario-card.webp
-  source_url: /images/dreams/the-villains-molt/last-scan-scenario-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Last Scan'
-  prompt: 'establishing scene art for the moment titled The Last Scan, In The Villain''s Molt at The Unlicensed Chrysalis, Talis Okoro races her own former unit''s hunter-drones to the threshold, one wireroot-grafted fairy already dissolving her tracking graft ahead of her, staged at The Unlicensed Chrysalis, set in the world of The Villain''s Molt, where every year she sheds the version of herself that still asked for permission, vertical 2:3 portrait composition, a single decisive moment with one clear focal action, foreground figures reacting, uncluttered staging so the event reads at a glance, cast the figures who appear naturally across many species, ages, body sizes, body shapes, and gender presentations, scratchboard engraving aesthetic, dense crosshatching and carved white lines, near-monochrome values, one restrained luminous accent, dramatic texture, unmarked surfaces, free of text'
-  entity_type: scenario
-  entity_id: 2216
-  entity_field: imagePath
-- id: "kind-robots-mandarin-image-61ae9b4a-mttnuwqb"
-  last_art_job_id: 21663
-  source: "kind-robots-missing-image"
-  status: done
-  target_repo: "silasfelinus/kind_robots"
-  image_path: "public/images/channels/plan/mandarin.webp"
-  source_url: "/images/channels/plan/mandarin.webp"
-  page_url: "https://kindrobots.org/about"
-  variant: "image"
-  label: "Mandarin Tutor"
-  prompt: >
-    Create a vibrant and engaging scene showcasing a Mandarin Tutor workspace filled with colorful image-ready flashcards featuring Mandarin characters, pronunciation guides, and themed decks. The setting is a cozy study room with wooden shelves lined with books and educational materials, a large table scattered with flashcards, and a welcoming atmosphere. Soft, natural light streams through a window, casting gentle shadows and highlighting the textures of the cards and materials. Use a warm color palette of oranges, yellows, and greens to evoke a sense of enthusiasm for learning. The composition should focus on the flashcards prominently displayed on the table, with the study room's inviting elements subtly supporting the educational theme. no readable text, no logo, no watermark, no collage.
-- id: "kind-robots-video-generator-image-14a422c8-mttnuypb"
-  source: "kind-robots-missing-image"
-  status: done
-  target_repo: "silasfelinus/kind_robots"
-  image_path: "public/images/channels/plan/video-generator.webp"
-  source_url: "/images/channels/plan/video-generator.webp"
-  page_url: "https://kindrobots.org/about"
-  variant: "image"
-  label: "Video Generator"
-  prompt: >
-    Create a vibrant and dynamic gallery artwork showcasing a high-tech video generator interface. The focal subject is a sleek, modern video generation machine with a futuristic design, featuring interactive controls and a holographic display that illustrates the transformation of a still image into a looping video clip. Surround this machine with visual elements representing LTX and WAN technologies, such as glowing data streams and animated graphics, to emphasize its capabilities. The setting is a bright, creative workspace filled with abstract shapes and colors, creating a sense of innovation and community. Use a color palette of electric blues, vivid purples, and soft whites to evoke a sense of energy and creativity, with soft lighting that highlights the machine's intricate details. The composition should be balanced, ensuring the video generator is central while allowing for peripheral elements that suggest collaboration and socialization. Render this scene in a digital art style that conveys depth and texture, making the technology feel approachable yet advanced. no readable text, no logo, no watermark, no collage.
-- id: "kind-robots-music-mentor-image-60107edb-mttnv0aq"
-  source: "kind-robots-missing-image"
-  status: done
-  target_repo: "silasfelinus/kind_robots"
-  image_path: "public/images/channels/plan/music-mentor.webp"
-  source_url: "/images/channels/plan/music-mentor.webp"
-  page_url: "https://kindrobots.org/about"
-  variant: "image"
-  label: "Music Mentor"
-  prompt: >
-    Create an engaging gallery artwork depicting a vibrant and inviting virtual music studio environment, filled with various musical instruments such as guitars, keyboards, and microphones. The focal point should be a sleek, modern interface displaying a digital waveform and feedback metrics, symbolizing the Music Mentor service. Use warm, inviting lighting to create a welcoming atmosphere, with a color palette of soft blues and greens to evoke creativity and calm. Include textured wooden surfaces and metallic accents on instruments for a realistic touch. The composition should lead the viewer's eye towards the interface, with a sense of depth that invites exploration, capturing the essence of community and collaboration in music. Render this scene with a digital art style that emphasizes clarity and detail, presenting a harmonious blend of technology and artistry. no readable text, no logo, no watermark, no collage.
-- id: dream-cycle-the-voidwalkers-toll-voidwalkers-toll
-  last_art_job_id: 21669
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-voidwalkers-toll/voidwalkers-toll-card.webp
-  source_url: /images/dreams/the-voidwalkers-toll/voidwalkers-toll-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Voidwalker''s Toll'
-  prompt: 'establishing key art for The Voidwalker''s Toll, A sunken desert bazaar strung with resin-lanterns under a starless sky, a sand cat pacing the boundary where the lantern light gives out, the defining image of a place where everyone worth trusting at the bazaar has crossed into the dark and come back changed — and every one of them charges for what they learned there, vertical 2:3 portrait composition, wide establishing view with a strong foreground anchor, clear middle ground, and deep atmospheric background, the setting is the subject; any figures present are incidental to the place, bold four-color superhero-comic aesthetic, muscular ink contours, saturated cel color, halftone texture, dramatic foreshortening, crisp graphic shadows, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5740
-  entity_field: imagePath
-- id: dream-cycle-the-voidwalkers-toll-amber-almac-n
-  last_art_job_id: 21670
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-voidwalkers-toll/amber-almac-n-card.webp
-  source_url: /images/dreams/the-voidwalkers-toll/amber-almac-n-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Amber Almacén'
-  prompt: 'A candlelit underground market of stacked amber resin jars, ceiling strung with drying peppers and copper wire, walls sweating amber condensation — The Amber Almacén, known for: A sunken warehouse market where Echo Brokers auction jars of temporal resin holding other people''s stolen moments, guarded by half-feral sand cats that answer to no one, staged at its most telling moment: A jar cracks open mid-auction, flooding the room with someone''s dying breath from forty years ago, and every sand cat in the warehouse goes still at once, set in the world of The Voidwalker''s Toll, where everyone worth trusting at the bazaar has crossed into the dark and come back changed — and every one of them charges for what they learned there, vertical 2:3 portrait composition, architectural establishing shot, the environment is the subject and any figures present are small and incidental, included only for scale, bold four-color superhero-comic aesthetic, muscular ink contours, saturated cel color, halftone texture, dramatic foreshortening, crisp graphic shadows, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5741
-  entity_field: imagePath
-- id: dream-cycle-the-voidwalkers-toll-suyai-marsh
-  last_art_job_id: 21671
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-voidwalkers-toll/suyai-marsh-card.webp
-  source_url: /images/dreams/the-voidwalkers-toll/suyai-marsh-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Suyai Marsh'
-  prompt: 'character portrait of Suyai Marsh, A sun-cracked woman with a voidwalker''s grey-shot eyes, a desert coat patched with old spacer canvas, a sand cat''s claw-scar down one forearm, visibly carrying: A sand-cat-fur pouch of resin shavings she skims off every deal, saving them toward a memory she can''t yet afford, the bearing of someone driven by this: She is trying to buy back the one memory she sold to keep her crew alive after a void-run went wrong, set in the world of The Voidwalker''s Toll, where everyone worth trusting at the bazaar has crossed into the dark and come back changed — and every one of them charges for what they learned there, vertical 2:3 portrait composition, single figure, three-quarter view from the waist up, filling most of the frame, sharply separated from a simple world-specific background, bold four-color superhero-comic aesthetic, muscular ink contours, saturated cel color, halftone texture, dramatic foreshortening, crisp graphic shadows, unmarked surfaces, free of text'
-  entity_type: character
-  entity_id: 3337
-  entity_field: imagePath
-- id: dream-cycle-the-voidwalkers-toll-choir-husk
-  last_art_job_id: 21672
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-voidwalkers-toll/choir-husk-card.webp
-  source_url: /images/dreams/the-voidwalkers-toll/choir-husk-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Choir Husk'
-  prompt: 'a single Choir Husk, one object alone in frame, A translucent, rib-shaped shell the length of a hand, veined with faint blue light, warm to the touch and faintly ticking, its purpose readable in its shape: It hums a warning half a breath before anything approaches that means you harm, set in the world of The Voidwalker''s Toll, where everyone worth trusting at the bazaar has crossed into the dark and come back changed — and every one of them charges for what they learned there, vertical 2:3 portrait composition, museum-like object study, the object centered and filling the frame, resting on a bare surface or floating against a simple ground, close enough to read material and wear, an unpeopled frame, the subject stands alone with no bystanders, no onlookers, and no crowd, rendered with the reverence given a rare artifact, bold four-color superhero-comic aesthetic, muscular ink contours, saturated cel color, halftone texture, dramatic foreshortening, crisp graphic shadows, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2932
-  entity_field: imagePath
-- id: dream-cycle-the-voidwalkers-toll-debt-sight
-  last_art_job_id: 21673
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-voidwalkers-toll/debt-sight-card.webp
-  source_url: /images/dreams/the-voidwalkers-toll/debt-sight-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Debt Sight'
-  prompt: 'Debt Sight, a single practiced technique caught mid-use, A faint double-shadow trailing a half-step behind the user''s own, flickering with tally-marks only the skilled can read, the effect itself is the subject: It lets the user see exactly what a person owes, and to whom, written across their shadow, set in the world of The Voidwalker''s Toll, where everyone worth trusting at the bazaar has crossed into the dark and come back changed — and every one of them charges for what they learned there, vertical 2:3 portrait composition, tight centered composition on the effect, at most one pair of hands entering frame at the edge to work it, no full figure, no faces, no onlookers, rendered with the weight given a uncommon ability, bold four-color superhero-comic aesthetic, muscular ink contours, saturated cel color, halftone texture, dramatic foreshortening, crisp graphic shadows, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2933
-  entity_field: imagePath
-- id: dream-cycle-the-voidwalkers-toll-unpaid-echo-scenario
-  last_art_job_id: 21674
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-voidwalkers-toll/unpaid-echo-scenario-card.webp
-  source_url: /images/dreams/the-voidwalkers-toll/unpaid-echo-scenario-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Unpaid Echo'
-  prompt: 'establishing scene art for the moment titled The Unpaid Echo, In The Voidwalker''s Toll at The Amber Almacén, Suyai Marsh has one night to buy back her crew''s memory before a nest of Hollow Choir wakes and tells the whole market who''s been skimming the vault, staged at The Amber Almacén, set in the world of The Voidwalker''s Toll, where everyone worth trusting at the bazaar has crossed into the dark and come back changed — and every one of them charges for what they learned there, vertical 2:3 portrait composition, a single decisive moment with one clear focal action, foreground figures reacting, uncluttered staging so the event reads at a glance, cast the figures who appear naturally across many species, ages, body sizes, body shapes, and gender presentations, bold four-color superhero-comic aesthetic, muscular ink contours, saturated cel color, halftone texture, dramatic foreshortening, crisp graphic shadows, unmarked surfaces, free of text'
-  entity_type: scenario
-  entity_id: 2217
-  entity_field: imagePath
-- id: "conductor-scene-animator-card-d4f16714-mtvf8e3v"
+- id: conductor-scene-animator-card-d4f16714-mtvf8e3v
   last_art_job_id: 21675
-  source: "kind-robots-missing-image"
-  status: "pending"
-  target_repo: "silasfelinus/conductor"
-  image_path: "projects/images/scene-animator-card.webp"
-  source_url: "https://raw.githubusercontent.com/silasfelinus/conductor/main/projects/images/scene-animator-card.webp"
-  page_url: "https://kindrobots.org/conductor"
-  variant: "card"
-  engine: "krea2"
-  size: "512x768"
-  label: "scene-animator"
-  prompt: >
-    Create artwork for scene-animator. Visible subject and scene context: scene-animator. Project progress, pitch voting, task gates, roadmap state, and Portos setup.. Active NORMAL scene-animator Give the tool a folder of still images and make each scene alive without writing a unique motion prompt for every image. Reuse Kind Robots' general video generation infrastructure and presets. The operator chooses the source folder, desired clip duration, and maturity setting; the system remembe…. 2:3 portrait key-art composition with a clear foreground subject and layered depth detailed mature western animation with multidimensional worldbuilding, expressive anatomy and faces, confident ink-like linework, dimensional shapes, rich controlled color, cinematic lighting, tactile environments, and clear readable silhouettes an unpeopled frame — the subject stands alone with no bystanders, onlookers, or crowd no readable text, no logos, no watermark, no collage
-- id: dream-cycle-the-drowned-compact-drowned-compact
-  last_art_job_id: 21676
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-drowned-compact/drowned-compact-card.webp
-  source_url: /images/dreams/the-drowned-compact/drowned-compact-card.webp
-  page_url: https://kindrobots.org
+  source: kind-robots-missing-image
+  status: pending
+  target_repo: silasfelinus/conductor
+  image_path: projects/images/scene-animator-card.webp
+  source_url: https://raw.githubusercontent.com/silasfelinus/conductor/main/projects/images/scene-animator-card.webp
+  page_url: https://kindrobots.org/conductor
   variant: card
+  engine: krea2
   size: 512x768
-  label: 'The Drowned Compact'
-  prompt: 'establishing key art for The Drowned Compact, A council chamber built half below the waterline, robed petitioners kneeling before a submerged dais lit by carved runestones, a mantis shrimp drifting through a shaft of fractured light overhead, the defining image of a place where every political treaty in the compact is only as real as the color no ordinary eye can read, vertical 2:3 portrait composition, wide establishing view with a strong foreground anchor, clear middle ground, and deep atmospheric background, the setting is the subject; any figures present are incidental to the place, charcoal-and-chalk cosmic-horror drawing, rough paper grain, crushed blacks, pale luminous accents, smeared edges, unsettling shifts of scale, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5742
-  entity_field: imagePath
-- id: dream-cycle-the-drowned-compact-ebb-chancery
-  last_art_job_id: 21677
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-drowned-compact/ebb-chancery-card.webp
-  source_url: /images/dreams/the-drowned-compact/ebb-chancery-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Ebb Chancery'
-  prompt: 'A half-drowned stone hall, waterline chest-high at high tide, carved oath-stones stacked along dry upper shelves, a glass tank of mantis shrimp glowing faintly at the chamber''s center — The Ebb Chancery, known for: A half-submerged chancery where Tide Notaries press runestones to petitioners'' palms to seal treaties with the sea, open only during the two hours a day the water allows entry, staged at its most telling moment: A runestone cracks mid-ceremony, and the mantis shrimp kept in the chancery''s central tank scatter toward the one witness whose oath it never fully accepted, set in the world of The Drowned Compact, where every political treaty in the compact is only as real as the color no ordinary eye can read, vertical 2:3 portrait composition, architectural establishing shot, the environment is the subject and any figures present are small and incidental, included only for scale, charcoal-and-chalk cosmic-horror drawing, rough paper grain, crushed blacks, pale luminous accents, smeared edges, unsettling shifts of scale, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5743
-  entity_field: imagePath
-- id: dream-cycle-the-drowned-compact-isa-vey
-  last_art_job_id: 21678
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-drowned-compact/isa-vey-card.webp
-  source_url: /images/dreams/the-drowned-compact/isa-vey-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Isa Vey'
-  prompt: 'character portrait of Isa Vey, A tide-worn woman in a salt-stiffened notary''s coat, oath-cord scars circling one wrist, head tilted in permanent listening posture, watching throats instead of faces, visibly carrying: A dry ledger of every hiccup she''s ever predicted mid-hearing, a private tally she uses to time when a nervous witness is about to slip, the bearing of someone driven by this: She is trying to reopen a treaty her own signature helped seal, one that will erase her flooded home village from the compact within the week, set in the world of The Drowned Compact, where every political treaty in the compact is only as real as the color no ordinary eye can read, vertical 2:3 portrait composition, single figure, three-quarter view from the waist up, filling most of the frame, sharply separated from a simple world-specific background, charcoal-and-chalk cosmic-horror drawing, rough paper grain, crushed blacks, pale luminous accents, smeared edges, unsettling shifts of scale, unmarked surfaces, free of text'
-  entity_type: character
-  entity_id: 3338
-  entity_field: imagePath
-- id: dream-cycle-the-drowned-compact-split-vow
-  last_art_job_id: 21681
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-drowned-compact/split-vow-card.webp
-  source_url: /images/dreams/the-drowned-compact/split-vow-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Split Vow'
-  prompt: 'a single Split Vow, one object alone in frame, A palm-sized grey stone split cleanly in half, each half warm and faintly damp, the two halves pressed together with a hairline vein of blue light glowing along the fracture where they meet, its purpose readable in its shape: It marks the exact moment a promise between two people becomes legally binding within Floodline Precinct''s shifting jurisdiction, set in the world of The Drowned Compact, where every political treaty in the compact is only as real as the color no ordinary eye can read, vertical 2:3 portrait composition, museum-like object study, the object centered and filling the frame, resting on a bare surface or floating against a simple ground, close enough to read material and wear, an unpeopled frame, the subject stands alone with no bystanders, no onlookers, and no crowd, rendered with the reverence given a rare artifact, charcoal-and-chalk cosmic-horror drawing, rough paper grain, crushed blacks, pale luminous accents, smeared edges, unsettling shifts of scale, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2934
-  entity_field: imagePath
-- id: dream-cycle-the-drowned-compact-threshold-hum
-  last_art_job_id: 21679
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-drowned-compact/threshold-hum-card.webp
-  source_url: /images/dreams/the-drowned-compact/threshold-hum-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Threshold Hum'
-  prompt: 'Threshold Hum, a single practiced technique caught mid-use, A faint vibration visible only as a ripple across the surface of any nearby standing water, syncing with the user''s own held breath, the effect itself is the subject: It lets the wearer feel, as a low hum behind the teeth, whether a room''s occupants currently mean anyone inside harm, set in the world of The Drowned Compact, where every political treaty in the compact is only as real as the color no ordinary eye can read, vertical 2:3 portrait composition, tight centered composition on the effect, at most one pair of hands entering frame at the edge to work it, no full figure, no faces, no onlookers, rendered with the weight given a uncommon ability, charcoal-and-chalk cosmic-horror drawing, rough paper grain, crushed blacks, pale luminous accents, smeared edges, unsettling shifts of scale, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2935
-  entity_field: imagePath
-- id: dream-cycle-the-drowned-compact-before-the-tide-turns-scenario
-  last_art_job_id: 21680
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/the-drowned-compact/before-the-tide-turns-scenario-card.webp
-  source_url: /images/dreams/the-drowned-compact/before-the-tide-turns-scenario-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Before the Tide Turns'
-  prompt: 'establishing scene art for the moment titled Before the Tide Turns, In The Drowned Compact at The Ebb Chancery, Isa Vey has until the tide turns to reopen the treaty that will erase her village, inside Floodline Precinct, where the law itself changes with the water, staged at The Ebb Chancery, set in the world of The Drowned Compact, where every political treaty in the compact is only as real as the color no ordinary eye can read, vertical 2:3 portrait composition, a single decisive moment with one clear focal action, foreground figures reacting, uncluttered staging so the event reads at a glance, cast the figures who appear naturally across many species, ages, body sizes, body shapes, and gender presentations, charcoal-and-chalk cosmic-horror drawing, rough paper grain, crushed blacks, pale luminous accents, smeared edges, unsettling shifts of scale, unmarked surfaces, free of text'
-  entity_type: scenario
-  entity_id: 2218
-  entity_field: imagePath
-- id: "conductor-mandarin-tutor-card-927e4e3b-mtwoxow4"
+  label: scene-animator
+  prompt: 'Create artwork for scene-animator. Visible subject and scene context: scene-animator.
+    Project progress, pitch voting, task gates, roadmap state, and Portos setup.. Active NORMAL
+    scene-animator Give the tool a folder of still images and make each scene alive without
+    writing a unique motion prompt for every image. Reuse Kind Robots'' general video generation
+    infrastructure and presets. The operator chooses the source folder, desired clip duration,
+    and maturity setting; the system remembe…. 2:3 portrait key-art composition with a clear
+    foreground subject and layered depth detailed mature western animation with multidimensional
+    worldbuilding, expressive anatomy and faces, confident ink-like linework, dimensional
+    shapes, rich controlled color, cinematic lighting, tactile environments, and clear readable
+    silhouettes an unpeopled frame — the subject stands alone with no bystanders, onlookers,
+    or crowd no readable text, no logos, no watermark, no collage
+
+    '
+- id: conductor-mandarin-tutor-card-927e4e3b-mtwoxow4
   last_art_job_id: 21682
-  source: "kind-robots-missing-image"
-  status: "pending"
-  target_repo: "silasfelinus/conductor"
-  image_path: "projects/images/mandarin-tutor-card.webp"
-  source_url: "https://raw.githubusercontent.com/silasfelinus/conductor/main/projects/images/mandarin-tutor-card.webp"
-  page_url: "https://kindrobots.org/conductor"
-  variant: "card"
-  engine: "krea2"
-  size: "512x768"
-  label: "mandarin-tutor"
-  prompt: >
-    In a vibrant, educational setting, the foreground features a beautifully illustrated set of flashcards displaying simplified Hanzi characters, with each card slightly tilted for depth. The midground includes an open book with notes and sketches of character components, showcasing the breakdown of Mandarin words. The background presents a softly blurred classroom environment, filled with colorful posters of Mandarin phrases and cultural elements, creating an inviting atmosphere. Warm, directional lighting casts gentle highlights on the flashcards and book, emphasizing their textures and colors, which range from deep reds and greens to soft yellows. This palette evokes a sense of creativity and engagement, reflecting the project’s purpose of making Mandarin learning accessible and enjoyable. The overall mood is one of curiosity and inspiration, inviting learners to explore the beauty of the language. no readable text, no logo, no watermark, no collage.
-- id: "conductor-mr-016-bw-image-f119642c-mtwsb5c9"
+  source: kind-robots-missing-image
+  status: pending
+  target_repo: silasfelinus/conductor
+  image_path: projects/images/mandarin-tutor-card.webp
+  source_url: https://raw.githubusercontent.com/silasfelinus/conductor/main/projects/images/mandarin-tutor-card.webp
+  page_url: https://kindrobots.org/conductor
+  variant: card
+  engine: krea2
+  size: 512x768
+  label: mandarin-tutor
+  prompt: 'In a vibrant, educational setting, the foreground features a beautifully illustrated
+    set of flashcards displaying simplified Hanzi characters, with each card slightly tilted
+    for depth. The midground includes an open book with notes and sketches of character components,
+    showcasing the breakdown of Mandarin words. The background presents a softly blurred classroom
+    environment, filled with colorful posters of Mandarin phrases and cultural elements, creating
+    an inviting atmosphere. Warm, directional lighting casts gentle highlights on the flashcards
+    and book, emphasizing their textures and colors, which range from deep reds and greens
+    to soft yellows. This palette evokes a sense of creativity and engagement, reflecting
+    the project’s purpose of making Mandarin learning accessible and enjoyable. The overall
+    mood is one of curiosity and inspiration, inviting learners to explore the beauty of the
+    language. no readable text, no logo, no watermark, no collage.
+
+    '
+- id: conductor-mr-016-bw-image-f119642c-mtwsb5c9
   last_art_job_id: 21683
-  source: "kind-robots-missing-image"
-  status: "pending"
-  target_repo: "silasfelinus/conductor"
-  image_path: "projects/coloring-book/sets/monster-recast/generated/bw/mr-016-bw.webp"
-  source_url: "https://raw.githubusercontent.com/silasfelinus/conductor/main/projects/coloring-book/sets/monster-recast/generated/bw/mr-016-bw.webp"
-  page_url: "https://kindrobots.org/coloring"
-  variant: "image"
-  label: "mr-016 black and white candidate"
-  prompt: >
-    Depict the mr-016 black and white candidate as a detailed grayscale illustration, showcasing its intricate features and unique characteristics in a coloring book style. The subject should be centered in the composition, surrounded by various abstract shapes and patterns that invite interaction, emphasizing its purpose as a canvas for coloring. Use a soft, diffused lighting to highlight the textures of the lines and shapes, creating a sense of depth. The overall mood should be playful and creative, with a clean white background that enhances the black and white artwork. Render this as a high-resolution digital image, ensuring it is suitable for gallery display, emphasizing its identity within the context of a coloring book. no readable text, no logo, no watermark, no collage.
-- id: "conductor-mr-020-bw-image-00a35cf7-mtwsbiuu"
+  source: kind-robots-missing-image
+  status: pending
+  target_repo: silasfelinus/conductor
+  image_path: projects/coloring-book/sets/monster-recast/generated/bw/mr-016-bw.webp
+  source_url: https://raw.githubusercontent.com/silasfelinus/conductor/main/projects/coloring-book/sets/monster-recast/generated/bw/mr-016-bw.webp
+  page_url: https://kindrobots.org/coloring
+  variant: image
+  label: mr-016 black and white candidate
+  prompt: 'Depict the mr-016 black and white candidate as a detailed grayscale illustration,
+    showcasing its intricate features and unique characteristics in a coloring book style.
+    The subject should be centered in the composition, surrounded by various abstract shapes
+    and patterns that invite interaction, emphasizing its purpose as a canvas for coloring.
+    Use a soft, diffused lighting to highlight the textures of the lines and shapes, creating
+    a sense of depth. The overall mood should be playful and creative, with a clean white
+    background that enhances the black and white artwork. Render this as a high-resolution
+    digital image, ensuring it is suitable for gallery display, emphasizing its identity within
+    the context of a coloring book. no readable text, no logo, no watermark, no collage.
+
+    '
+- id: conductor-mr-020-bw-image-00a35cf7-mtwsbiuu
   last_art_job_id: 21688
-  source: "kind-robots-missing-image"
-  status: "pending"
-  target_repo: "silasfelinus/conductor"
-  image_path: "projects/coloring-book/sets/monster-recast/generated/bw/mr-020-bw.webp"
-  source_url: "https://raw.githubusercontent.com/silasfelinus/conductor/main/projects/coloring-book/sets/monster-recast/generated/bw/mr-020-bw.webp"
-  page_url: "https://kindrobots.org/coloring"
-  variant: "image"
-  label: "mr-020 black and white candidate"
-  prompt: >
-    A monochromatic gallery artwork featuring the character mr-020, depicted as a stylized black and white creature with intricate line work and bold shapes, set against a minimalistic white background that enhances its details. The composition centers on mr-020, showcasing its unique features such as exaggerated limbs and playful proportions, while incorporating dynamic swirls and patterns that suggest movement and creativity. Soft shadows create depth, and the overall texture is smooth with sharp contrasts, evoking a whimsical yet sophisticated mood. The grayscale palette emphasizes the character's design and purpose within the coloring book context, inviting viewers to engage with the art. Rendered in a high-resolution digital format, focusing solely on the character without any distractions. no readable text, no logo, no watermark, no collage.
-- id: "kind-robots-ruler-king-osric-image-7560f581-mtwt2hxz"
-  last_art_job_id: 21689
-  source: "kind-robots-missing-image"
-  status: done
-  target_repo: "silasfelinus/kind_robots"
-  image_path: "public/images/ruler-hooked/ruler-king-osric.webp"
-  source_url: "/images/ruler-hooked/ruler-king-osric.webp"
-  page_url: "https://kindrobots.org/plan/projects/ruler-hooked"
-  variant: "image"
-  label: "King king-osric"
-  prompt: >
-    A regal fishing scene featuring King King-Osric, a robust figure adorned in a richly detailed royal robe with fishing motifs, standing proudly at the helm of a grand fishing vessel. The background depicts a majestic kingdom by the sea, with rolling waves and a setting sun casting a warm golden glow across the water. The king holds a fishing rod in one hand, with a crown slightly askew on his head, symbolizing his dual role as a ruler and fisherman. The composition emphasizes a harmonious blend of royal and maritime elements, using a vibrant palette of deep blues, rich golds, and earthy greens. The texture of the robe is intricate, conveying opulence, while the ship's wooden details contrast with the shimmering water. The mood is one of adventure and authority, inviting viewers into the unique world of "Ruler Hooked." no readable text, no logo, no watermark, no collage.
-- id: "kind-robots-ruler-little-monarch-pip-image-c6e895ae-mtwt2j3w"
-  last_art_job_id: 21690
-  source: "kind-robots-missing-image"
-  status: done
-  target_repo: "silasfelinus/kind_robots"
-  image_path: "public/images/ruler-hooked/ruler-little-monarch-pip.webp"
-  source_url: "/images/ruler-hooked/ruler-little-monarch-pip.webp"
-  page_url: "https://kindrobots.org/plan/projects/ruler-hooked"
-  variant: "image"
-  label: "Monarch little-monarch-pip"
-  prompt: >
-    Create a visually striking square gallery artwork featuring the Monarch little-monarch-pip, a small, regal character with a crown, holding a fishing rod, set against a whimsical backdrop of a serene fishing landscape. The scene should depict gentle tides rippling across a sparkling water surface, with hints of a lush kingdom in the background, showcasing trees and a castle silhouette. The character should exhibit a playful yet authoritative demeanor, dressed in vibrant hues of royal blue and gold, reflecting the theme of kingdom management. Soft, warm lighting should illuminate the scene, creating a cheerful and inviting atmosphere, while the textures of the water and foliage should be rich and detailed. The overall palette should be a blend of warm earth tones and bright aquatic colors, emphasizing the fusion of fishing and royalty. Render this in a smooth, digital painting style that enhances the whimsical nature of the project. no readable text, no logo, no watermark, no collage.
-- id: "kind-robots-near-bank-grassy-day-image-e56de683-mtwt2lil"
-  last_art_job_id: 21691
-  source: "kind-robots-missing-image"
-  status: done
-  target_repo: "silasfelinus/kind_robots"
-  image_path: "public/images/ruler-hooked/near_bank-grassy-day.webp"
-  source_url: "/images/ruler-hooked/near_bank-grassy-day.webp"
-  page_url: "https://kindrobots.org/plan/projects/ruler-hooked"
-  variant: "image"
-  label: "Near Bank Grassy Day"
-  prompt: >
-    A serene lakeside setting under a bright blue sky, showcasing a tranquil scene where a regal fishing rod is propped against a lush green bank, hinting at the kingdom management aspect of the game. In the background, a majestic castle looms, surrounded by vibrant trees and flowers that suggest a thriving environment. The lighting is warm and inviting, casting gentle reflections on the water's surface, while the color palette features rich greens, soft blues, and earthy browns, evoking a sense of harmony between nature and royalty. Textures of the grass, water, and castle stone are detailed, creating a realistic feel. The overall mood is peaceful yet slightly whimsical, suggesting the balance between leisure and responsibility. Rendered in a digital painting style for a polished finish. no readable text, no logo, no watermark, no collage.
-- id: "kind-robots-ruler-fishing-day-image-0766489a-mtwt2n4y"
+  source: kind-robots-missing-image
+  status: pending
+  target_repo: silasfelinus/conductor
+  image_path: projects/coloring-book/sets/monster-recast/generated/bw/mr-020-bw.webp
+  source_url: https://raw.githubusercontent.com/silasfelinus/conductor/main/projects/coloring-book/sets/monster-recast/generated/bw/mr-020-bw.webp
+  page_url: https://kindrobots.org/coloring
+  variant: image
+  label: mr-020 black and white candidate
+  prompt: 'A monochromatic gallery artwork featuring the character mr-020, depicted as a stylized
+    black and white creature with intricate line work and bold shapes, set against a minimalistic
+    white background that enhances its details. The composition centers on mr-020, showcasing
+    its unique features such as exaggerated limbs and playful proportions, while incorporating
+    dynamic swirls and patterns that suggest movement and creativity. Soft shadows create
+    depth, and the overall texture is smooth with sharp contrasts, evoking a whimsical yet
+    sophisticated mood. The grayscale palette emphasizes the character''s design and purpose
+    within the coloring book context, inviting viewers to engage with the art. Rendered in
+    a high-resolution digital format, focusing solely on the character without any distractions.
+    no readable text, no logo, no watermark, no collage.
+
+    '
+- id: kind-robots-ruler-fishing-day-image-0766489a-mtwt2n4y
   last_art_job_id: 21692
-  source: "kind-robots-missing-image"
-  status: "pending"
-  target_repo: "silasfelinus/kind_robots"
-  image_path: "public/images/ruler-hooked/ruler-fishing-day.webp"
-  source_url: "/images/ruler-hooked/ruler-fishing-day.webp"
-  page_url: "https://kindrobots.org/plan/projects/ruler-hooked"
-  variant: "image"
-  label: "Ruler Fishing Day"
-  prompt: >
-    A serene lakeside scene captures the essence of "Ruler Hooked," where a regal figure, dressed in casual fishing attire adorned with subtle royal elements, stands by the water's edge, casting a fishing line into the shimmering lake. In the background, a majestic castle looms, hinting at the kingdom's responsibilities, while lush trees frame the scene, their leaves rustling gently in the breeze. The sky transitions from a warm golden hue to a cool blue, reflecting the tranquility of the setting. Textured ripples on the water surface create a sense of motion, while the overall mood conveys a balance between leisure and duty. The composition is wide, showcasing the lake's expanse, with the castle and surrounding nature harmoniously integrated. Rendered in a vibrant, painterly style that emphasizes both the beauty of the landscape and the whimsical nature of the game, this image invites viewers into the world of fishing and kingdom management. no readable text, no logo, no watermark, no collage.
+  source: kind-robots-missing-image
+  status: pending
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/ruler-hooked/ruler-fishing-day.webp
+  source_url: /images/ruler-hooked/ruler-fishing-day.webp
+  page_url: https://kindrobots.org/plan/projects/ruler-hooked
+  variant: image
+  label: Ruler Fishing Day
+  prompt: 'A serene lakeside scene captures the essence of "Ruler Hooked," where a regal figure,
+    dressed in casual fishing attire adorned with subtle royal elements, stands by the water''s
+    edge, casting a fishing line into the shimmering lake. In the background, a majestic castle
+    looms, hinting at the kingdom''s responsibilities, while lush trees frame the scene, their
+    leaves rustling gently in the breeze. The sky transitions from a warm golden hue to a
+    cool blue, reflecting the tranquility of the setting. Textured ripples on the water surface
+    create a sense of motion, while the overall mood conveys a balance between leisure and
+    duty. The composition is wide, showcasing the lake''s expanse, with the castle and surrounding
+    nature harmoniously integrated. Rendered in a vibrant, painterly style that emphasizes
+    both the beauty of the landscape and the whimsical nature of the game, this image invites
+    viewers into the world of fishing and kingdom management. no readable text, no logo, no
+    watermark, no collage.
+
+    '
