@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3297,7 +3297,7 @@ tasks:
     Slice 234 merged as silasfelinus/kind_robots#2635 (squash ea4c0aa063b87cca6bb85b8b673c3598a7c568b2). Added .kr-input-xs (input input-xs, 11 occurrences/2 files) and .kr-select-muted (select w-full bg-base-200, 10 occurrences/8 files); both drop the dead legacy v4 daisyUI *-bordered class the same way .kr-input-sm already does. No color/behavior/API/schema/route/geometry change. All 48 kind_robots PR checks green.
 
     Return the recurring consistency umbrella to ready for the next bounded slice. Kaizen for the next slice: both DaisyUI form-control candidates from slice 233 are now closed; a fresh full-repo class-frequency survey (outside kr-container/kr-icon-*/kr-img-cover/kr-input-*/kr-select-*/kr-checkbox-*/kr-textarea-*) is needed to find the next target. Keep this note short going forward -- append future slice history to T104-HISTORY.md, not here.
-  updated: '2026-09-11T23:39:11Z'
+  updated: '2026-09-11T23:43:12Z'
   implementation_pr: 'silasfelinus/kind_robots#2642'
   retry_context: ''
   owner: worker
