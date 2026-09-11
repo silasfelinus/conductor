@@ -3180,7 +3180,7 @@ tasks:
 - id: t-074
   milestone: m3
   title: Wire the two buildable remaining milestones; scope-decide the other two
-  status: claimed
+  status: review
   gate_human: false
   soft_gate: true
   owner: worker
@@ -3197,9 +3197,19 @@ tasks:
     fire a tracked event (partially exists via t-029/t-058, verify), the latter needs the
     rivalry subsystem in t-075 to exist at all. Depends on t-075 for the rivalry-gated
     landmark only; the tank/spotless pair can land independently and does not need to wait.
-  updated: '2026-09-11T16:32:48Z'
+
+    PROGRESS: wired first_full_tank and first_spotless_tank per this session. See
+    kind_robots#2630 (open, CI running) for the full implementation -- pure decision
+    functions in aquariumEconomy.ts, additive Aquarium.debrisEverHigh migration, wired at
+    every capacity-growth call site (species purchase, egg purchase, breed) and at
+    cleanTankForUser, surfaced through the existing firedMilestones toast queue.
+    first_evolution/first_rivalry_resolved remain unwired per this task's own note (rivalry
+    subsystem is cthulhuquarium/t-075, actively claimed by another session as of this run --
+    not touched here).
+  updated: '2026-09-11T16:46:09Z'
   claimed_by: 2026-09-11T162830Z-cthulhuquarium-t074-milestones
   claimed_at: '2026-09-11T16:32:48Z'
+  implementation_pr: 'silasfelinus/kind_robots#2630'
 
 - id: t-075
   milestone: m3
