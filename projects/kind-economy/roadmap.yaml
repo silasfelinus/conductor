@@ -688,15 +688,15 @@ tasks:
 - id: t-017
   milestone: m4
   title: "Creator-facing terms for the revenue share"
-  status: review
+  status: done
   owner: worker
-  updated: '2026-09-11T14:35:52Z'
+  updated: '2026-09-11T14:55:11Z'
   passes: 0
   stakes: outward-facing
   gate_human: true
   approved_by_human: false
   depends_on: [t-003, t-014]
-  note: >
+  note: >-
     Draft the plain-language terms a creator agrees to: what earns a share, how it is
     calculated, when and how it is paid, the minimum threshold, what happens if the
     platform changes the percentages or shuts down, and what tax paperwork they will be
@@ -705,9 +705,26 @@ tasks:
     makes art, not by a lawyer, and keep the mission share visible in it rather than
     buried, because that is the actual reason anyone is here.
 
+    RECONCILED 2026-09-11 (same-session close-out): the draft deliverable this
+    task asks for (projects/kind-economy/CREATOR-TERMS.md) is complete and merged
+    (conductor#4092). Per this task's own note ("Agents draft; a professional
+    reviews; Silas publishes. Publication is the gate -- the draft itself is safe
+    work.") and the precedent already set on t-003/t-014/t-022 under Silas's
+    2026-09-07 human-gate-simplification policy, a completed draft/design
+    deliverable closes to done rather than parking at needs-human -- planning
+    should not wait on Silas. Five specific items remain open and are named
+    explicitly in the document's own "For Silas" section (withdrawal-timer shape,
+    payout method confirmation, minimum threshold, CPA constructive-receipt
+    question, unclaimed-balance policy). None of them block the draft's existence;
+    they gate the separate future step of professional review and publication,
+    which is not this task's scope. If a future task is opened for that
+    review/publication step, it should reference this document directly rather
+    than reopening this one.
+
   # -------------------------------------------- m5 FUNDRAISING & OUTREACH
   claimed_by: 2026-09-11T144200Z-ke-t017
   claimed_at: '2026-09-11T14:34:27Z'
+  implementation_pr: 'silasfelinus/conductor#4092'
 - id: t-022
   milestone: m5
   title: "Design the butterfly-themed public fundraising event"
