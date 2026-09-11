@@ -17,7 +17,16 @@
 
 overrides:
   - slug: kapowarr
-    status: active # added 2026-08-15 by Silas — personal fork evolution project
+    status: finished # flipped 2026-09-11 — 71/71 tasks, 9/9 milestones, and Silas confirmed the
+    # one gate no sandbox could ever close: "Kapowarr has had successful Sab downloads, pretty
+    # sure torrents as well. Confirmed." (t-024). NOT a task-count flip: t-024 needed his real
+    # indexer and his real SABnzbd, and the project's goal — a polished comic manager with
+    # reliable discovery, metadata, imports, downloads and automation — is met and live-verified.
+    # Flipped rather than left active because tests/test_current_project_lifecycle.py correctly
+    # refuses an active project with zero open tasks: an active project with nothing to do is a
+    # lie about the queue. This is a personal fork Silas keeps evolving, so REOPENING IS EXPECTED
+    # and cheap when he wants more — davinci and ruler-hooked both came back the same way. Added
+    # 2026-08-15 as a personal fork evolution project.
     priority: high
     kind: software
 
@@ -184,7 +193,18 @@ overrides:
     tabKey: giftshop
 
   - slug: ai-art-academy
-    status: active
+    status: finished # flipped 2026-09-11 by Silas, in session: "Ai art academy is actually an
+    # outdated project to test things. It has gone as far as it needs, I don't see it becoming
+    # an app, it should be considered finished and closed as is." A deliberate scope end, not a
+    # task-count flip and not a failure: the Academy did its job as a testbed for the Kontext
+    # remix path and the art-history teaching surface, and the web surface stays live at
+    # /academy. The five open tasks were closed as out of scope rather than deferred — t-062/
+    # t-063 (Android/iOS builds), t-064 (cross-platform QA), t-065 (his acceptance of all three
+    # builds) all presupposed a mobile app he has now ruled out; t-061's PWA-first choice had
+    # left native "unless Silas asks for a store listing", and this answers that in the negative.
+    # t-079 (the Kontext corrupted-noise investigation) was closed BY REFERENCE to
+    # coloring-book/t-039, which owns the same root cause and stays live — the finding is not
+    # lost with this project.
     priority: low
     kind: software
     # Frontend placement — synced to the kind_robots Project row by
@@ -354,7 +374,14 @@ overrides:
     tabKey: voice-lab
 
   - slug: mermaids-of-venice
-    status: active # reopened 2026-08-03 by Silas — edition 3 revision is in progress; keep editorial support and progress-gated character reviews moving
+    status: paused # paused 2026-09-11 by Silas, in session: "Mermaids of Venice, pause the
+    # project". Its three open gates were all work only he can do — t-002 (the personal note
+    # for the landing page), t-007 (working through the ~140-item typo list in his own hand),
+    # t-009 (the parked mermaidsofvenice.com plan) — so the project could not move without him
+    # and was generating gate noise every sweep while he was not working on it. Pausing stops
+    # that: audit_human_gates.py excludes non-active projects by default. Nothing is abandoned
+    # — editorial/VERY-IMPORTANT.md, the site plan, and the edition-3 support all stay as they
+    # are. Previously: reopened 2026-08-03 for the edition 3 revision.
     priority: normal
     kind: content
 

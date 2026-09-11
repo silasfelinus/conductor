@@ -1,49 +1,45 @@
 # Roadmap Audit
 
-Generated: `2026-09-11T10:24:10.591949+00:00`
+Generated: `2026-09-11T11:26:58.805697+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **52** roadmaps, **26** active + **2** continuous projects, **1409** tasks
-- **35 ready**, **57 waiting**, **37 needs-human**, **0 claimed/review**, **1263 done**
-- Findings: **0 errors**, **2 warnings**, **12 informational**
+- **52** roadmaps, **23** active + **2** continuous projects, **1409** tasks
+- **36 ready**, **54 waiting**, **28 needs-human**, **0 claimed/review**, **1274 done**
+- Findings: **0 errors**, **2 warnings**, **18 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `cthulhuquarium` | active | software | 4 | 1 | 1 | 0 | 63 / 69 |
-| 2 | `kapowarr` | active | software | 0 | 0 | 1 | 0 | 70 / 71 |
-| 3 | `kind-economy` | active | software | 0 | 3 | 5 | 0 | 19 / 27 |
-| 4 | `interface-vision` | active | software | 1 | 1 | 1 | 0 | 123 / 127 |
-| 5 | `ai-art-academy` | active | software | 0 | 2 | 3 | 0 | 74 / 79 |
-| 6 | `coloring-book` | active | software | 1 | 9 | 2 | 0 | 27 / 39 |
-| 7 | `humboldt-scoop-cms` | active | software | 0 | 0 | 4 | 0 | 35 / 39 |
-| 8 | `digital-storefront` | active | software | 0 | 2 | 2 | 0 | 40 / 44 |
-| 9 | `mermaids-of-venice` | active | content | 1 | 0 | 3 | 0 | 9 / 13 |
-| 10 | `kind-robots` | active | software | 4 | 0 | 0 | 0 | 91 / 95 |
-| 11 | `rainbow-butterflies` | active | software | 0 | 0 | 4 | 0 | 48 / 52 |
-| 12 | `scene-animator` | active | software | 0 | 1 | 1 | 0 | 4 / 6 |
-| 13 | `text-generation` | active | software | 1 | 0 | 0 | 0 | 7 / 8 |
-| 14 | `kindrobots-unraid` | active | software | 1 | 6 | 0 | 0 | 9 / 16 |
-| 15 | `model-builder` | active | software | 2 | 0 | 0 | 0 | 43 / 45 |
-| 16 | `lora-ingestion` | active | infrastructure | 1 | 0 | 0 | 0 | 7 / 8 |
-| 17 | `conductor` | active | software | 2 | 0 | 0 | 0 | 147 / 149 |
-| 18 | `taskmaster` | active | software | 1 | 0 | 0 | 0 | 3 / 4 |
-| 19 | `storybook` | active | software | 3 | 1 | 0 | 0 | 22 / 26 |
-| 20 | `davinci` | active | software | 1 | 2 | 0 | 0 | 23 / 26 |
-| 21 | `mural-design` | active | content | 1 | 2 | 0 | 0 | 4 / 7 |
-| 22 | `coat-dance` | active | content | 2 | 0 | 0 | 0 | 2 / 10 |
-| 23 | `conductor-app` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
-| 24 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
-| 25 | `media-watchlist` | active | software | 1 | 1 | 0 | 0 | 17 / 19 |
-| 26 | `wishmaster` | retired | software | 0 | 0 | 1 | 0 | 2 / 4 |
-| 27 | `ruler-hooked` | active | software | 1 | 0 | 0 | 0 | 21 / 22 |
-| 28 | `music-mentor` | finished | software | 0 | 0 | 0 | 0 | 8 / 9 |
-| 29 | `animation-manager` | continuous | software | 2 | 0 | 0 | 0 | 15 / 17 |
-| 30 | `dream-cycle` | continuous | software | 3 | 0 | 0 | 0 | 25 / 28 |
+| 2 | `kind-economy` | active | software | 1 | 2 | 4 | 0 | 20 / 27 |
+| 3 | `interface-vision` | active | software | 1 | 1 | 0 | 0 | 124 / 127 |
+| 4 | `coloring-book` | active | software | 1 | 9 | 1 | 0 | 28 / 39 |
+| 5 | `humboldt-scoop-cms` | active | software | 0 | 0 | 4 | 0 | 35 / 39 |
+| 6 | `digital-storefront` | active | software | 0 | 2 | 2 | 0 | 40 / 44 |
+| 7 | `kind-robots` | active | software | 4 | 0 | 0 | 0 | 91 / 95 |
+| 8 | `rainbow-butterflies` | active | software | 0 | 0 | 3 | 0 | 49 / 52 |
+| 9 | `scene-animator` | active | software | 0 | 1 | 1 | 0 | 4 / 6 |
+| 10 | `text-generation` | active | software | 1 | 0 | 0 | 0 | 7 / 8 |
+| 11 | `kindrobots-unraid` | active | software | 1 | 6 | 0 | 0 | 9 / 16 |
+| 12 | `model-builder` | active | software | 2 | 0 | 0 | 0 | 43 / 45 |
+| 13 | `lora-ingestion` | active | infrastructure | 1 | 0 | 0 | 0 | 7 / 8 |
+| 14 | `conductor` | active | software | 2 | 0 | 0 | 0 | 147 / 149 |
+| 15 | `taskmaster` | active | software | 1 | 0 | 0 | 0 | 3 / 4 |
+| 16 | `storybook` | active | software | 3 | 1 | 0 | 0 | 22 / 26 |
+| 17 | `davinci` | active | software | 1 | 2 | 0 | 0 | 23 / 26 |
+| 18 | `mural-design` | active | content | 1 | 2 | 0 | 0 | 4 / 7 |
+| 19 | `coat-dance` | active | content | 2 | 0 | 0 | 0 | 2 / 10 |
+| 20 | `conductor-app` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
+| 21 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
+| 22 | `media-watchlist` | active | software | 1 | 1 | 0 | 0 | 17 / 19 |
+| 23 | `ruler-hooked` | active | software | 1 | 0 | 0 | 0 | 21 / 22 |
+| 24 | `animation-manager` | continuous | software | 2 | 0 | 0 | 0 | 15 / 17 |
+| 25 | `dream-cycle` | continuous | software | 3 | 0 | 0 | 0 | 25 / 28 |
+| — | `ai-art-academy` | finished | software | 0 | 0 | 0 | 0 | 79 / 79 |
 | — | `alexa-integration` | paused | software | 0 | 0 | 1 | 0 | 21 / 22 |
 | — | `animation-studio` | retired | software | 0 | 3 | 0 | 0 | 4 / 8 |
 | — | `approval-portal` | retired | software | 0 | 0 | 0 | 0 | 3 / 5 |
@@ -56,8 +52,11 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | — | `global-ui` | finished | software | 0 | 0 | 0 | 0 | 26 / 26 |
 | — | `humboldt-impropriety-calendar` | retired | brainstorm | 0 | 5 | 0 | 0 | 0 / 6 |
 | — | `humboldt-scoop` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
+| — | `kapowarr` | finished | software | 0 | 0 | 0 | 0 | 71 / 71 |
 | — | `mandarin-tutor` | finished | software | 0 | 0 | 0 | 0 | 21 / 21 |
+| — | `mermaids-of-venice` | paused | content | 1 | 0 | 3 | 0 | 9 / 13 |
 | — | `mona-salai` | paused | software | 0 | 10 | 0 | 0 | 1 / 13 |
+| — | `music-mentor` | finished | software | 0 | 0 | 0 | 0 | 8 / 9 |
 | — | `newsfeed` | finished | software | 0 | 0 | 0 | 0 | 22 / 22 |
 | — | `packmaker` | finished | software | 0 | 0 | 0 | 0 | 10 / 10 |
 | — | `pinball-hero` | retired | content | 0 | 2 | 2 | 0 | 2 / 6 |
@@ -66,6 +65,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | — | `sketchy` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |
 | — | `superkate-hairstyle-ai` | paused | software | 0 | 0 | 1 | 0 | 19 / 21 |
 | — | `superkate-services-calculator` | finished | software | 0 | 0 | 0 | 0 | 37 / 37 |
+| — | `wishmaster` | retired | software | 0 | 0 | 0 | 0 | 3 / 4 |
 
 ## Findings by severity
 
@@ -78,11 +78,16 @@ _None._
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-014`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-015`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 
-### Info (12)
+### Info (18)
 
+- **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-064`: approved_by_human is set on a task that is not human-gated.
+- **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-079`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `appmaker` / `t-014`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `coat-dance` / `t-003`: approved_by_human is set on a task that is not human-gated.
+- **APPROVAL_WITHOUT_GATE** — `coloring-book` / `t-034`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `interface-vision` / `t-123`: approved_by_human is set on a task that is not human-gated.
+- **APPROVAL_WITHOUT_GATE** — `interface-vision` / `t-124`: approved_by_human is set on a task that is not human-gated.
+- **APPROVAL_WITHOUT_GATE** — `kapowarr` / `t-024`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `kapowarr` / `t-058`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `kind-economy` / `t-021`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `kind-robots` / `t-078`: approved_by_human is set on a task that is not human-gated.
@@ -90,6 +95,7 @@ _None._
 - **APPROVAL_WITHOUT_GATE** — `kindrobots-unraid` / `t-012`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `mandarin-tutor` / `t-021`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `media-watchlist` / `t-017`: approved_by_human is set on a task that is not human-gated.
+- **INACTIVE_PROJECT_HAS_READY_TASKS** — `mermaids-of-venice`: Inactive project retains 1 ready task(s); harmless but misleading in generated status.
 - **APPROVAL_WITHOUT_GATE** — `mural-design` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **NEEDS_HUMAN_NOTE_FORMAT** — `rainbow-butterflies` / `t-014`: needs-human note does not use the AGENTS.md FOR SILAS action format.
 

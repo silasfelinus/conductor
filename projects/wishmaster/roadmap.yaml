@@ -135,15 +135,15 @@ tasks:
 - id: t-004
   milestone: m2
   title: "Decide whether to retire Wishmaster as a live project surface"
-  status: needs-human
+  status: done
   owner:
   passes: 0
   stakes: outward-facing
   gate_human: true
   soft_gate: false
-  approved_by_human: false
-  updated: '2026-08-09T21:35:00Z'
-  note: >
+  approved_by_human: true
+  updated: '2026-09-11T11:09:43Z'
+  note: >-
     FOR SILAS: an agent session opened kind_robots PR #1683 ("Add real error fallback and
     retire Wishmaster surface") and conductor PR #1988 ("Retire Wishmaster project") arguing
     Wishmaster "duplicated project creation without enough distinct infrastructure to justify
@@ -178,5 +178,13 @@ tasks:
     mechanism forcing the merge to wait on or even see the gate.
     What unblocks: whether to leave /wishmaster retired or revert, and whether t-003
     (front-end polish) is still worth pursuing.
+
+    CONFIRMED BY SILAS, 2026-09-11 (in session): "Yes on disappearing wish master." The
+    project was already `retired` in project-overrides.yaml since 2026-08-09; this task
+    existed only to have him ratify that lifecycle change, which is why audit_human_gates.py
+    kept surfacing it as an orphaned hard gate against an otherwise-inactive project.
+    Ratified and closed. Wishmaster stays retired, its roadmap and research preserved as
+    history per the animation-studio convention. It should stop appearing in gate reports
+    entirely now.
 goal: Let users express a natural-language wish and turn it into a transparent, costed, structured plan or project 
   without hiding consent, cost, or execution state.

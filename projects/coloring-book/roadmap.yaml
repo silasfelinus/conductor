@@ -570,19 +570,34 @@ tasks:
 - id: t-034
   milestone: m6
   title: Wire print-package.yaml layout fields once Silas picks a printer/trim/binding
-  status: needs-human
+  status: done
   owner:
   passes: 0
   stakes: reversible
   soft_gate: true
-  updated: '2026-07-28T12:05:00Z'
-  note: 'FOR SILAS: scripts/coloring_book_package_status.py (conductor PR #1322) tracks per-book print layout as explicit
-    null fields in projects/coloring-book/print-package.yaml (trim_width_inches, trim_height_inches, bleed_inches, binding,
-    paper, interior_color_mode, cover_color_mode, printer_template, page_count_includes_blanks, inside_cover_printing, barcode_area_reserved).
-    TO APPROVE: pick a printer/POD vendor and fill in those fields for at least Monster Recast (order 1) — once source assets
-    are also complete (t-022), the status script will report exports-needed with the exact next action. What unblocks: t-025
-    (package and register Monster Recast book 1) can then generate the ordered interior PDF, cover-wrap PDF, and source archive
-    against real values instead of guessing a trim size.'
+  updated: '2026-09-11T11:09:49Z'
+  note: >-
+    FOR SILAS: scripts/coloring_book_package_status.py (conductor PR #1322) tracks per-book print layout as explicit null fields in projects/coloring-book/print-package.yaml (trim_width_inches, trim_height_inches, bleed_inches, binding, paper, interior_color_mode, cover_color_mode, printer_template, page_count_includes_blanks, inside_cover_printing, barcode_area_reserved). TO APPROVE: pick a printer/POD vendor and fill in those fields for at least Monster Recast (order 1) — once source assets are also complete (t-022), the status script will report exports-needed with the exact next action. What unblocks: t-025 (package and register Monster Recast book 1) can then generate the ordered interior PDF, cover-wrap PDF, and source archive against real values instead of guessing a trim size.
+
+    DECIDED BY SILAS, 2026-09-11 (in session): "When it comes time for printing, we'll use
+    amazons print services, same as I did with my novel, no future decisions about that
+    needed." print-package.yaml's eleven null layout fields are now filled for all three
+    books. The values were NOT invented for this decision -- they are transcribed from this
+    project's own KDP-verified spec in docs/generation-pipeline.md section 4, checked
+    against KDP help topics G201834340 / GVBQ3CMEQW3W2VL6, which settled on 8.5x11 no-bleed
+    interiors long before a printer was chosen. Picking Amazon ratifies that spec rather
+    than reopening it. Filled: 8.5x11 trim, 0 bleed (no-bleed interiors -- coloring art
+    running off the page edge is actively worse for the user, and it avoids looser trim
+    tolerances and the 8.625x11.25 layout), perfect-bound, white paper, bw interiors, color
+    cover, printer_template kdp-paperback-8.5x11, page_count_includes_blanks true (KDP
+    counts every interior page and the count drives spine width, so blanks must be real
+    pages in the file), inside_cover_printing false (KDP does not print paperback inside
+    covers), barcode_area_reserved true (KDP places the ISBN barcode bottom-right on the
+    back cover). Per his 'no future decisions needed', no later task should re-ask any of
+    this; a genuine change of printer would be a new decision, not a reopening of this one.
+    WHAT UNBLOCKS: t-025 can package and register Monster Recast book 1 once t-022's 36
+    final color/BW pairs are complete.
+  approved_by_human: true
 
 - id: t-035
   milestone: m4
@@ -766,6 +781,25 @@ tasks:
     `generate-bw` calls until this clears). What unblocks when it's fixed: `t-022`
     can resume BW derivation for mr-016, mr-020, and the other in-progress Monster
     Recast accepts.
+
+    REPRODUCED 2026-09-11 BY DIRECT TEST, and the result rules out the leading hypothesis. Silas gave a session admin art-job access ("You have the ability to create art job requests through the admin key, make the Kontext test yourself"), so this no longer needed to wait on him.
+
+    THE TEST: ArtJob 21693, enqueued through POST /api/art/enqueue with `"engine": "kontext"` and NO LoRA fields of any kind -- the same plain image-to-image branch `manage_coloring_book_production.py`'s `generate-bw` uses. Source was a known-good 1024x1024 plate (cthulhuquarium-fish-lamplight-angler.webp, a clean Victorian trade-card illustration), prompt asked for black and white line art on a pure white background, steps 20, guidance 2.5, denoise 1. The job took roughly 25 minutes, completed DONE with no error, and produced ArtImage 23785: a valid, well-formed 1024x1024 PNG of PURE MULTICOLOURED STATIC. No line art, no recognisable subject, no white background -- the identical failure mr-016 and mr-020 showed.
+
+    WHAT THIS RULES OUT. ai-art-academy/t-079's leading hypothesis was GGUF + LoraLoaderModelOnly: that the corruption lived in the LoRA branch specifically. This run had no LoRA node at all and still produced noise, so the fault is UPSTREAM OF THE LORA BRANCH and shared by every kontext call. t-079's own note had already flagged this possibility from the coloring-book sighting; this test confirms it rather than leaving it as an inference from two projects' anecdotes.
+
+    THE EXACT MODEL CHAIN, read from job 21693's stored payload so the next session does not have to re-derive it:
+      unet_name:  flux1-kontext-dev-Q5_K_M.gguf     <- GGUF-quantised Kontext dev
+      vae_name:   ae.safetensors
+      clip_name1: t5-v1_1-xxl-encoder-Q5_K_S.gguf   <- GGUF-quantised T5 text encoder
+      clip_name2: clip_l.safetensors
+      type:       flux
+    Two separately GGUF-quantised components in one graph (the UNet and the T5 encoder). The remaining suspects, in the order worth testing: (1) the Q5_K_M Kontext UNet itself being a bad or mismatched quant, (2) a VAE mismatch -- ae.safetensors decoding latents the quantised UNet did not produce in the expected space, (3) the ComfyUI/GGUF-node version on the relay having regressed against these files. The decisive next test remains the one t-079 proposed and this run did not perform: enqueue the same plain kontext call against a NON-GGUF Kontext checkpoint. If that renders correctly, the quantised UNet is the fault; if it also renders noise, look at the VAE and the relay's node versions. That test needs a non-GGUF checkpoint present on the relay, which is why it is not done here.
+
+    SECOND, INDEPENDENT BUG FOUND -- THE QUALITY GUARD IS BLIND TO THIS. `art_quality.assess_file(path, "color")` returned ok=True with reasons=[] on the noise image: mean_saturation 0.2202, colorful_fraction 0.4868, white_fraction 0.0, luma_std 0.1153. Static is saturated and busy, so it reads as a perfectly healthy colour image by these statistics. The earlier coloring-book rejections happened under the `bw` variant, whose thresholds caught it by accident -- white_fraction 0.00 fails a line-art check but means nothing for colour work. CONSEQUENCE: any colour art generated through a broken kontext path can pass the mechanical gate and be accepted as good. That is a wider exposure than this task, and it should be fixed whether or not the kontext corruption is: a noise detector (spatial autocorrelation, or a high-frequency-energy threshold -- static has almost no low-frequency structure) belongs in art_quality.py for every variant, not just bw.
+
+    STATUS: this task stays needs-human ONLY for relay access to run the non-GGUF comparison. Everything that could be established from an agent session now has been. coloring-book/t-022's `generate-bw` should continue to hold rather than burn more jobs on a path proven broken today.
   owner: null
   claimed_by: null
   claimed_at: null
+  updated: '2026-09-11T11:26:03Z'

@@ -16,14 +16,17 @@ happened. Don't edit it; edit here.
 reversible until the first clean cycle is done. Nothing publishes, deploys, or spends
 money without my explicit approval (set `approved_by_human: true` on the gated task).
 
-**Priority order this week:** cthulhuquarium → kapowarr → kind-economy →
-interface-vision → ai-art-academy → coloring-book → humboldt-scoop-cms → digital-storefront.
+**Priority order this week:** cthulhuquarium → kind-economy → interface-vision → coloring-book →
+humboldt-scoop-cms → digital-storefront → kind-robots → rainbow-butterflies.
 
-<!-- Updated 2026-09-11: mandarin-tutor dropped off the band because Silas accepted it and it
-is now `finished`; Cthulhuquarium inherits the lead, which is where he already pinned it on
-2026-08-25. This band must stay in sync with the head of projects/priority.yaml --
+<!-- Updated 2026-09-11. Four projects left the band in one sweep, all on Silas's own calls:
+mandarin-tutor and kapowarr accepted/confirmed and now `finished`, ai-art-academy closed as-is
+("an outdated project to test things"), mermaids-of-venice paused. Cthulhuquarium inherits the
+lead and kind-economy second place -- both are where he had already pinned them, so no agent
+invented an ordering. This band must stay in sync with the head of projects/priority.yaml:
 audit_roadmaps.py raises CONTROL_PRIORITY_DRIFT as an ERROR when they disagree, and it did
-exactly that after the mandarin close-out changed priority.yaml and left this line stale. -->
+exactly that TWICE today, each time because a close-out changed priority.yaml and left this
+line stale. If you move one, move the other in the same commit. -->
 
 
 **Continuous fallback order:** animation-manager, then dream-cycle. Finite `active` work
