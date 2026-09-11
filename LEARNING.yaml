@@ -13104,3 +13104,21 @@ records:
     on an otherwise-green PR should check whether it's actually required
     before treating it as a hard blocker, and a runner-health spot-check is
     worth doing if this recurs.
+- date: '2026-09-11'
+  project: cthulhuquarium
+  task: t-066
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Root cause was in a shared wrapper (components/conductor/project-front-page.vue),
+    not the page that surfaced the symptom (aquarium): its view.description
+    computed preferred the live Conductor-synced Project.description field
+    over the page's own authored fallback, and that live field is seeded
+    once from notesFromSilas (raw internal dictation) and never refreshed.
+    Checking every other caller of the shared component before changing its
+    default precedence (all of them already supplied their own description,
+    so the fix was a safe no-op everywhere else) turned a single-page bug
+    report into a fix for the whole class, at no extra risk.

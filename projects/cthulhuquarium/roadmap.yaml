@@ -2891,9 +2891,9 @@ tasks:
 - id: t-066
   milestone: m3
   title: Stop rendering the project pitch as player-facing page copy
-  status: review
+  status: done
   gate_human: false
-  owner: worker
+  owner: null
   stakes: reversible
   passes: 0
   note: >-
@@ -2926,9 +2926,19 @@ tasks:
     fallback.description wins whenever one exists (every current caller already supplies
     one), falling back to the live value only for a future page that hasn't written one yet.
     kind_robots PR opening next.
-  updated: '2026-09-11T11:43:52Z'
+
+    Merged silasfelinus/kind_robots#2623 (46/46 checks green, mergeable_state: clean):
+    components/conductor/project-front-page.vue's view.description now prefers the page's
+    authored fallback.description over the live (and permanently stale/raw)
+    Project.description field. /play/aquarium and every other conductor/*-page.vue front
+    page now render their own authored copy instead of risking Conductor's internal
+    notesFromSilas dictation. Verified vue-tsc/eslint clean pre-merge; every current caller
+    of project-front-page.vue already supplies its own description so this is a no-op for
+    all of them except removing the leak risk.
+  updated: '2026-09-11T11:49:09Z'
   claimed_by: claude-blissful-curie-s0dmr5-20260911T114500Z-cq-t066
   claimed_at: '2026-09-11T11:43:03Z'
+  implementation_pr: 'silasfelinus/kind_robots#2623'
 - id: t-067
   milestone: m3
   title: Fix the collapsed one-word-per-line layout in the sets row
