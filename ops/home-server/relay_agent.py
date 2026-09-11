@@ -114,6 +114,39 @@ ENGINE_PROBE_SECONDS = float(os.environ.get("KR_ENGINE_PROBE_SECONDS", "15") or 
 ENGINE_PROBE_TIMEOUT = float(os.environ.get("KR_ENGINE_PROBE_TIMEOUT", "10") or 10)
 ENGINE_PROBE_PATH = "/system_stats"
 
+# Three answers, not two. The gate above was written for an ABSENT engine and
+# treats every probe failure as that, which is wrong for the most common one.
+#
+# ComfyUI serves /system_stats from the same process that loads models and
+# decodes latents, and those hold the GIL for long stretches: staging
+# wan2.2_ti2v_5B_fp16 (9.4 GB) into VRAM stalls its event loop for minutes at a
+# time. The socket stays bound and the connection is accepted, so the probe
+# neither connects-refused nor answers -- it times out at
+# ENGINE_PROBE_TIMEOUT and the relay calls a working engine dead.
+#
+# 2026-09-11, Silas: "comfy is listed as down, even though it just made that
+# image." comfyui.err.log shows the other half of it -- a burst of
+# `ConnectionResetError: [WinError 10054]` at 15:30:34, which is this probe (and
+# the heartbeat's) hanging up on ComfyUI mid-load, 33 seconds before
+# `Model WanVAE prepared` and 3 minutes before `Model WAN22 prepared`. The same
+# stall is already documented in warm_object_info_async() below ("a box whose
+# ComfyUI was mid-render ... ~3 minutes").
+#
+# So distinguish them. A refused connection still means down instantly -- that
+# is the 2026-09-02 crash-loop this gate exists for, and nothing about it is
+# slow. A TIMEOUT means listening-but-stalled, which is what a busy render box
+# looks like, and only counts as down once it has persisted past the grace
+# below. 300s clears the observed model-load stall with room to spare and still
+# lands inside check_engine_heartbeat.py's 10-minute DOWN alarm, so a genuinely
+# wedged engine is not hidden -- only a working one stops being libelled.
+ENGINE_BUSY_GRACE_SECONDS = float(
+    os.environ.get("KR_ENGINE_BUSY_GRACE_SECONDS", "300") or 300
+)
+
+ENGINE_OK = "ok"
+ENGINE_BUSY = "busy"
+ENGINE_DOWN = "down"
+
 
 def detect_relay_build():
     """Identify the code actually running, without needing anyone to set an env var.
@@ -296,24 +329,19 @@ def http_json(method, url, body=None, bearer=None, timeout=60):
         return error.code, payload
 
 
-def check_engine(base_url, health_path):
-    started = time.time()
-    try:
-        request = urllib.request.Request(f"{base_url}{health_path}", method="GET")
-        with urllib.request.urlopen(request, timeout=10) as response:
-            ok = 200 <= response.status < 300
-            response.read(1)
-    except Exception:  # noqa: BLE001 - any failure means down
-        return False, None
-    return ok, int((time.time() - started) * 1000)
-
-
-def post_heartbeat(engine, ok, latency_ms):
+def post_heartbeat(engine, ok, latency_ms, note=None):
+    body = {"engine": engine, "ok": ok, "latencyMs": latency_ms}
+    if note:
+        # The endpoint stores this on the ServerHealthCheck row, which is the
+        # only place "up, but it was mid-render when we asked" can be read back
+        # from later. Without it a busy beat is indistinguishable from an idle
+        # one on the dashboard.
+        body["note"] = note
     try:
         http_json(
             "POST",
             f"{KR_BASE_URL}/api/server/heartbeat",
-            {"engine": engine, "ok": ok, "latencyMs": latency_ms},
+            body,
             bearer=KR_RELAY_TOKEN,
             timeout=15,
         )
@@ -343,14 +371,44 @@ def resolve_seconds(url):
     return time.monotonic() - started
 
 
+_heartbeat_engine_state = {"busy_since": None}
+
+
 def send_heartbeats():
-    comfy_ok, comfy_ms = check_engine(COMFY_URL, "/system_stats")
+    """Report whether ComfyUI can render, not whether it answered in 10s.
+
+    These are different questions during a video render, and conflating them is
+    what put "COMFY down" on the dashboard while the box was busy producing the
+    image Silas was looking at (2026-09-11). A probe that TIMES OUT against a
+    bound socket says the engine is loading a model or decoding, which is the
+    engine working; only a refusal, or a stall that outlasts
+    ENGINE_BUSY_GRACE_SECONDS, is worth calling down.
+    """
+    status, detail, comfy_ms = probe_engine_status(COMFY_URL)
+    comfy_ok, busy_for = busy_verdict(
+        _heartbeat_engine_state, status, time.monotonic()
+    )
+
+    note = None
+    if status == ENGINE_BUSY:
+        note = (
+            f"busy: no answer within {ENGINE_PROBE_TIMEOUT:g}s for {busy_for:.0f}s "
+            f"({detail})"
+        )
+        if not comfy_ok:
+            note = (
+                f"{note}; past the {ENGINE_BUSY_GRACE_SECONDS:g}s busy grace, "
+                "reporting down"
+            )
+    elif status == ENGINE_DOWN:
+        note = detail or None
+
     # Timed separately so a slow cycle names its own culprit. COMFY_URL is
     # 127.0.0.1 and needs no resolver; KR_BASE_URL is the one that leaves the
     # house.
     dns_seconds = resolve_seconds(KR_BASE_URL)
     post_started = time.monotonic()
-    post_heartbeat("COMFY", comfy_ok, comfy_ms)
+    post_heartbeat("COMFY", comfy_ok, comfy_ms, note=note)
     return dns_seconds, time.monotonic() - post_started
 
 
@@ -1171,30 +1229,93 @@ def share_available(now=None):
     return ok
 
 
-_engine_state = {"checked_at": 0.0, "ok": True, "detail": "", "reported": None}
+_engine_state = {
+    "checked_at": 0.0,
+    "ok": True,
+    "detail": "",
+    "reported": None,
+    "busy_since": None,
+    "busy_reported": False,
+}
 
 
-def probe_engine(base_url=None):
-    """GET the engine's health endpoint. Return (ok, detail).
+def classify_probe_failure(error):
+    """ENGINE_BUSY for a timeout, ENGINE_DOWN for everything else.
 
-    check_engine() already answers the same question for the heartbeat, but it
-    throws the reason away -- and the reason is most of the diagnosis here.
+    A timeout is the one failure that does NOT mean absent: the socket was
+    bound and the connection accepted, and nobody came back in time. On this
+    box that is overwhelmingly a model load or a VAE decode holding the GIL,
+    not a dead process.
+
+    Everything else names an engine that genuinely cannot serve: a refused
+    connection (crash-looping or never started -- the 2026-09-02 shape), a
+    resolver failure, or an HTTP status that is not a success. Those are
+    reported down immediately, exactly as before.
+
+    urllib wraps socket errors in URLError with the original on `.reason`, so
+    check both. socket.timeout has been an alias of TimeoutError since 3.10.
+    """
+    if isinstance(error, urllib.error.HTTPError):
+        return ENGINE_DOWN
+    for candidate in (error, getattr(error, "reason", None)):
+        if isinstance(candidate, (socket.timeout, TimeoutError)):
+            return ENGINE_BUSY
+    return ENGINE_DOWN
+
+
+def probe_engine_status(base_url=None):
+    """GET the engine's health endpoint. Return (status, detail, latency_ms).
+
+    The heartbeat asks the same question and used to throw the reason away --
+    and the reason is most of the diagnosis here.
     "ConnectionRefusedError" (not listening: crash-looping, or never started)
     reads very differently from a timeout (listening, but wedged), and the
-    operator does something different about each.
+    operator does something different about each. So does the relay now: see
+    ENGINE_BUSY_GRACE_SECONDS.
     """
     url = (base_url or COMFY_URL).rstrip("/")
+    started = time.time()
     try:
         request = urllib.request.Request(
             f"{url}{ENGINE_PROBE_PATH}", method="GET"
         )
         with urllib.request.urlopen(request, timeout=ENGINE_PROBE_TIMEOUT) as response:
             if not 200 <= response.status < 300:
-                return False, f"HTTP {response.status}"
+                return ENGINE_DOWN, f"HTTP {response.status}", None
             response.read(1)
-    except Exception as error:  # noqa: BLE001 - any failure means down
-        return False, f"{type(error).__name__}: {error}"
-    return True, ""
+    except Exception as error:  # noqa: BLE001 - classify, never raise
+        return (
+            classify_probe_failure(error),
+            f"{type(error).__name__}: {error}",
+            None,
+        )
+    return ENGINE_OK, "", int((time.time() - started) * 1000)
+
+
+def probe_engine(base_url=None):
+    """(ok, detail), where only ENGINE_OK is ok.
+
+    Kept for callers that want the raw verdict without the busy grace applied.
+    """
+    status, detail, _ = probe_engine_status(base_url)
+    return status == ENGINE_OK, detail
+
+
+def busy_verdict(state, status, moment):
+    """Is `status` still 'up' given how long it has been ENGINE_BUSY?
+
+    Returns (up, busy_for_seconds). `state` is a plain dict carrying
+    "busy_since" -- the gate and the heartbeat run on independent clocks
+    (different threads, different cadences) and each tracks its own window.
+    """
+    if status != ENGINE_BUSY:
+        state["busy_since"] = None
+        return status == ENGINE_OK, 0.0
+
+    if state.get("busy_since") is None:
+        state["busy_since"] = moment
+    busy_for = max(0.0, moment - state["busy_since"])
+    return busy_for < ENGINE_BUSY_GRACE_SECONDS, busy_for
 
 
 def engine_available(now=None):
@@ -1213,7 +1334,31 @@ def engine_available(now=None):
     if moment - _engine_state["checked_at"] < ENGINE_PROBE_SECONDS:
         return _engine_state["ok"]
 
-    ok, detail = probe_engine()
+    status, detail, _ = probe_engine_status()
+    ok, busy_for = busy_verdict(_engine_state, status, moment)
+
+    # A stalled engine inside its grace is up, but silence about it would make
+    # a real wedge look like a healthy box for five minutes. Say it once, on
+    # the edge, the same way every other state change here is reported.
+    if status == ENGINE_BUSY and ok:
+        if not _engine_state["busy_reported"]:
+            log(
+                f"{WARN} ComfyUI at {COMFY_URL}{ENGINE_PROBE_PATH} is not "
+                f"answering within {ENGINE_PROBE_TIMEOUT:g}s ({detail}), but "
+                "the connection was accepted -- treating it as BUSY (a model "
+                "load or decode holding the event loop), not down. Claims "
+                f"continue for up to {ENGINE_BUSY_GRACE_SECONDS:g}s."
+            )
+            _engine_state["busy_reported"] = True
+    elif status != ENGINE_BUSY:
+        _engine_state["busy_reported"] = False
+
+    if status == ENGINE_BUSY and not ok:
+        detail = (
+            f"{detail}; unanswered for {busy_for:.0f}s, past the "
+            f"{ENGINE_BUSY_GRACE_SECONDS:g}s busy grace"
+        )
+
     _engine_state["checked_at"] = moment
     _engine_state["ok"] = ok
     _engine_state["detail"] = detail
@@ -1541,7 +1686,8 @@ def main():
     if KR_ENGINE_GATE:
         log(
             f"engine gate armed on {COMFY_URL}{ENGINE_PROBE_PATH} "
-            f"(re-probed every {ENGINE_PROBE_SECONDS:g}s)"
+            f"(re-probed every {ENGINE_PROBE_SECONDS:g}s; a timeout counts as "
+            f"busy for up to {ENGINE_BUSY_GRACE_SECONDS:g}s)"
         )
     else:
         log(

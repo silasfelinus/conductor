@@ -255,3 +255,50 @@ tasks:
       was filed, since `source` already reports which tier answered and that was the distinction that
       actually mattered when the mount was missing.
     updated: '2026-09-11T12:30:00Z'
+
+  - id: t-008
+    milestone: m3
+    title: "Scene Animator clips were flattened to a still by the ArtImage offload"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-09-11: "looks like we have the first animation back from scene animator, and it
+      didn't make any actual animation, just returned a static image. perhaps a failure of the loop
+      request?"
+
+      NOT the loop request, and not ComfyUI. The render was correct end to end; the frames were
+      destroyed afterwards, inside Kind Robots, by the ArtImage offload.
+
+      Chain: engine 'wan' defaults to the wan-startup-webp preset, so every Scene Animator job has
+      outputFormat 'webp'. buildVideoOutputNodes() saves that through ComfyUI's SaveAnimatedWEBP,
+      which emits a real multi-frame WebP (the 2026-09-11 15:31-15:33 comfyui.err.log lines show
+      WanVAE + WAN22 TI2V-5B loading and a 20-step sample, which is the animation being made). The
+      relay downloads it and stamps the ArtImage fileType 'webp'. Then offloadArtImageBytes()
+      classified clips by extension against VIDEO_TYPES = {mp4, webm, mov, mkv}. 'webp' is not in
+      that set -- it is also the project's default STILL format -- so an animated clip took the
+      transcode branch, and `sharp(buffer)` defaults to `pages: 1`: it decodes frame 0, silently
+      discards the rest, writes that single frame to the share, and nulls imageData, which was the
+      only animated copy left. Measured on a synthetic 8-frame clip: 7390 bytes/8 pages in,
+      652 bytes/1 page out, no error raised.
+
+      FIX: resolveOffloadEncoding() (extracted from offloadArtImageBytes so it can be tested
+      directly) now asks sharp for the frame count instead of guessing from the extension. A
+      webp/gif with pages > 1 is written verbatim under its own extension and keeps its stored
+      fileType; a genuine still, including a one-frame webp, still transcodes exactly as before, so
+      the storage growth the offload exists to stop is unaffected. Video containers are untouched.
+
+      The UI needed no change -- pages/admin/scene-animator.vue already branches <video> vs <img>
+      and animated WebP plays in an <img>. It was faithfully showing a flattened file.
+
+      Regression coverage: utils/scripts/verifyAnimatedArtOffload.test.ts builds a real animated
+      WebP and asserts frames survive (verified to FAIL against the pre-fix classification), wired
+      into contract-tests.yml; plus a source-contract check in verifyArtImageOffload.ts that the
+      helper reads metadata().pages BEFORE re-encoding.
+
+      NOT FIXED, deliberately, and worth a look if it ever bites: relay_agent.py's encode_webp()
+      has the same shape (PIL save without save_all=True), but it is only reached for
+      media.is_video == False, so no clip passes through it today.
+    updated: '2026-09-11T23:55:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#2641'
