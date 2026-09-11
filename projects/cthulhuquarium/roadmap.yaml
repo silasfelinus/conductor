@@ -2864,30 +2864,21 @@ tasks:
 - id: t-065
   milestone: m3
   title: Deliver the 136 stranded Cthulhuquarium art files to the live game
-  status: claimed
+  status: needs-human
   gate_human: false
-  owner: worker
   stakes: reversible
   passes: 0
-  note: >-
-    THE reason Cthulhuquarium failed Silas's 2026-09-11 audit. projects/cthulhuquarium/art/ holds 138 authored, on-style plates (119 fish, 7 sets, 6 eggs, 2 screens, 2 characters -- Charlotte the Fishmonger and Wilbur Stint -- 1 ichthyonomicon, 1 parlour background; 24MB total). EXACTLY TWO of them have ever reached kind_robots: screen-finale.webp and set-last-aquarium.webp. The other 136 have never been seen by a player or by Silas.
-    Root cause is already documented in cthulhuquarium-game.vue:1206-1214 -- distribute_images.py's media-share pipeline is a manual step on Silas's home network that no CI or agent session can write to, and most of these plates have no Monster/Reward row to hang an ArtImage off. A prior session hit that wall, FOUND A WORKING FIX (bundle as ordinary Vite assets under assets/images/cthulhuquarium/, committed to git, built into fingerprinted _nuxt/ URLs, no infra dependency), and then applied it only to the two files its own task needed. Nobody generalised it and nothing reported the gap, so the roadmap read 63/64 done while the game rendered styleless.
-    DO: apply the same bundling pattern to the remaining 136. Wire each fish plate to its bestiary species, the eggs to their rarity tiers, the characters to Charlotte's and Wilbur's shop rows, the parlour background to the tank, and the ichthyonomicon plate to the codex header. Check file sizes first and downscale for web before committing -- 24MB unprocessed is too large to bundle naively, and the fish plates are 1024x1024 square cards that almost certainly do not need full resolution at their rendered size. Prefer a build-time or scripted transform over hand-editing 136 files.
-    Do not treat this as done until a signed-out visit to /play/aquarium visibly shows real fish art, real egg art, and the parlour background.
-
+  note: |-
+    THE reason Cthulhuquarium failed Silas's 2026-09-11 audit. projects/cthulhuquarium/art/ holds 138 authored, on-style plates (119 fish, 7 sets, 6 eggs, 2 screens, 2 characters -- Charlotte the Fishmonger and Wilbur Stint -- 1 ichthyonomicon, 1 parlour background; 24MB total). EXACTLY TWO of them have ever reached kind_robots: screen-finale.webp and set-last-aquarium.webp. The other 136 have never been seen by a player or by Silas. Root cause is already documented in cthulhuquarium-game.vue:1206-1214 -- distribute_images.py's media-share pipeline is a manual step on Silas's home network that no CI or agent session can write to, and most of these plates have no Monster/Reward row to hang an ArtImage off. A prior session hit that wall, FOUND A WORKING FIX (bundle as ordinary Vite assets under assets/images/cthulhuquarium/, committed to git, built into fingerprinted _nuxt/ URLs, no infra dependency), and then applied it only to the two files its own task needed. Nobody generalised it and nothing reported the gap, so the roadmap read 63/64 done while the game rendered styleless. DO: apply the same bundling pattern to the remaining 136. Wire each fish plate to its bestiary species, the eggs to their rarity tiers, the characters to Charlotte's and Wilbur's shop rows, the parlour background to the tank, and the ichthyonomicon plate to the codex header. Check file sizes first and downscale for web before committing -- 24MB unprocessed is too large to bundle naively, and the fish plates are 1024x1024 square cards that almost certainly do not need full resolution at their rendered size. Prefer a build-time or scripted transform over hand-editing 136 files. Do not treat this as done until a signed-out visit to /play/aquarium visibly shows real fish art, real egg art, and the parlour background.
     First bounded delivery slice: added a deterministic Sharp-based importer that requires the exact 136 still-stranded plates, applies category-aware web sizing, writes a manifest, and refuses to silently ship a partial source set. This removes the manual image-editing step but does not yet deliver the generated assets; keep t-065 open after this slice merges.
+    Reviewer merged silasfelinus/kind_robots#2622 (importCthulhuquariumArt.mjs, 45/45 checks green): a deterministic Sharp-based importer that requires exactly the 136 stranded plates, resizes by asset role, recompresses WebP q82, and writes a manifest. This is the bounded enabling slice only -- it does not run in CI or commit the generated assets, and /play/aquarium still does not show the new art. Returning to ready for the next slice: run the importer, wire each output to its bestiary/shop/codex/tank target, and verify a signed-out /play/aquarium visit before this reaches done.
 
-    Reviewer merged silasfelinus/kind_robots#2622 (importCthulhuquariumArt.mjs, 45/45 checks
-    green): a deterministic Sharp-based importer that requires exactly the 136 stranded
-    plates, resizes by asset role, recompresses WebP q82, and writes a manifest. This is the
-    bounded enabling slice only -- it does not run in CI or commit the generated assets, and
-    /play/aquarium still does not show the new art. Returning to ready for the next slice:
-    run the importer, wire each output to its bestiary/shop/codex/tank target, and verify a
-    signed-out /play/aquarium visit before this reaches done.
-  updated: '2026-09-11T12:17:11Z'
+    FOR SILAS: The actual 136-plate delivery is already merged in kind_robots PR #2620: 138 bundled Vite assets total, downscaled from 22.8MB to 5.1MB, with species/egg/parlour/codex wiring in utils/cthulhuquariumArt.ts and cthulhuquarium-game.vue. Full nuxi build passed and emitted the fingerprinted assets. This session reconciled the stale claim after discovering that concurrent work had already completed the implementation. The remaining acceptance condition in this task is explicitly a signed-out live /play/aquarium visit showing real fish art, egg art, and the parlour background. Kind Robots no longer auto-deploys on merge; AGENTS.md says the self-hosted Unraid container only receives merged commits after Silas performs Force Update, which is a human/outward-facing deployment gate. This runtime also cannot currently resolve kindrobots.org, so it cannot truthfully certify the post-deploy signed-out view. TO APPROVE: after the next normal Kind Robots Force Update, visit /play/aquarium signed out and confirm fish art, egg art, and the parlour background are visibly present; then set approved_by_human: true and status: done (or leave a note describing any visible failure). This closes the delivery gate; t-068/t-069 continue the wider full-game audit/re-acceptance separately.
+  updated: '2026-09-11T13:19:48Z'
   claimed_by: 2026-09-11T121711Z-cthulhuquarium-t-065-r8v2
   claimed_at: '2026-09-11T12:17:11Z'
   implementation_pr: 'silasfelinus/kind_robots#2622'
+  soft_gate: false
 - id: t-066
   milestone: m3
   title: Stop rendering the project pitch as player-facing page copy
