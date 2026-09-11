@@ -3038,7 +3038,7 @@ tasks:
 - id: t-071
   milestone: m3
   title: Reconcile the click-collectible and food/upgrade mechanics with the pitch, or amend the brief
-  status: ready
+  status: needs-human
   gate_human: false
   soft_gate: true
   owner: null
@@ -3056,7 +3056,13 @@ tasks:
     (no literal click-income, no food tiers) is an acceptable simplification -- if so, update
     DESIGN-BRIEF.md to say so explicitly; if not, this becomes a real build task for the
     literal mechanics. Soft gate: other cthulhuquarium work may continue in parallel.
-  updated: '2026-09-11T13:29:00Z'
+
+    AGENT REVIEW 2026-09-11: This is Silas's own literal MVP bar (DESIGN-BRIEF.md "MVP
+    scope" #2 and #4, quoted verbatim from him), so an agent should not unilaterally water
+    it down by amending the brief. Leaving at needs-human rather than ready so tooling stops
+    surfacing it as pickable work until Silas actually decides; t-072/t-073 and other
+    cthulhuquarium tasks are unaffected and continue in parallel.
+  updated: '2026-09-11T14:31:56Z'
 
 - id: t-072
   milestone: m3
