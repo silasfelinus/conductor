@@ -3061,7 +3061,7 @@ tasks:
 - id: t-072
   milestone: m3
   title: Delete the dead importCthulhuquariumArt.mjs script (Monster art DB linking split to t-076)
-  status: claimed
+  status: done
   gate_human: false
   owner: worker
   stakes: reversible
@@ -3098,9 +3098,15 @@ tasks:
     docs/runbooks/migration-credential-boundary.md). Split out as t-076 so this task can
     close on its own actually-completed half rather than stay open on work no sandbox
     session can finish end-to-end.
-  updated: '2026-09-11T14:06:49Z'
+
+    RESOLVED: kind_robots#2627 merged 2026-09-11 -- deleted
+    utils/scripts/importCthulhuquariumArt.mjs (91 lines), the narrowed scope after splitting
+    the DB-linking half to t-076. 45/45 CI checks green (eslint clean, no new errors; grep
+    confirms zero remaining references to the deleted file; vue-tsc --noEmit clean).
+  updated: '2026-09-11T14:15:20Z'
   claimed_by: 20260911T-cq-t072
   claimed_at: '2026-09-11T14:06:49Z'
+  implementation_pr: 'silasfelinus/kind_robots#2627'
 
 - id: t-076
   milestone: m3
