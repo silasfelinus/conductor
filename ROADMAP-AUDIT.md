@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-09-10T14:29:58.812567+00:00`
+Generated: `2026-09-11T06:24:40.318431+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **52** roadmaps, **29** active + **2** continuous projects, **1399** tasks
-- **30 ready**, **54 waiting**, **37 needs-human**, **0 claimed/review**, **1261 done**
+- **52** roadmaps, **29** active + **2** continuous projects, **1401** tasks
+- **31 ready**, **54 waiting**, **38 needs-human**, **0 claimed/review**, **1261 done**
 - Findings: **0 errors**, **2 warnings**, **11 informational**
 
 ## Project inventory
@@ -20,7 +20,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 4 | `kind-economy` | active | software | 0 | 3 | 5 | 0 | 19 / 27 |
 | 5 | `interface-vision` | active | software | 1 | 1 | 1 | 0 | 123 / 127 |
 | 6 | `ai-art-academy` | active | software | 0 | 2 | 3 | 0 | 74 / 79 |
-| 7 | `coloring-book` | active | software | 1 | 9 | 1 | 0 | 27 / 38 |
+| 7 | `coloring-book` | active | software | 1 | 9 | 2 | 0 | 27 / 39 |
 | 8 | `humboldt-scoop-cms` | active | software | 0 | 0 | 4 | 0 | 35 / 39 |
 | 9 | `digital-storefront` | active | software | 0 | 2 | 2 | 0 | 40 / 44 |
 | 10 | `mermaids-of-venice` | active | content | 1 | 0 | 3 | 0 | 9 / 13 |
@@ -46,7 +46,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 30 | `ruler-hooked` | active | software | 1 | 0 | 0 | 0 | 21 / 22 |
 | 31 | `music-mentor` | finished | software | 0 | 0 | 0 | 0 | 8 / 9 |
 | 32 | `animation-manager` | continuous | software | 2 | 0 | 0 | 0 | 15 / 17 |
-| 33 | `dream-cycle` | continuous | software | 2 | 0 | 0 | 0 | 25 / 27 |
+| 33 | `dream-cycle` | continuous | software | 3 | 0 | 0 | 0 | 25 / 28 |
 | — | `animation-studio` | retired | software | 0 | 3 | 0 | 0 | 4 / 8 |
 | — | `approval-portal` | retired | software | 0 | 0 | 0 | 0 | 3 / 5 |
 | — | `art-generator-connect` | finished | software | 0 | 0 | 0 | 0 | 22 / 22 |
