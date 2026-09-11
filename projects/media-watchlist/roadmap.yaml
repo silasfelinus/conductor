@@ -473,7 +473,7 @@ tasks:
 - id: t-019
   milestone: m4
   title: Fix the Media Watchlist failing to load, and stop masking the real cause
-  status: claimed
+  status: review
   gate_human: false
   owner: worker
   stakes: reversible
@@ -502,9 +502,10 @@ tasks:
     Worth checking whether the 200-with-success-false shape is this endpoint's own convention or a
     house pattern across the API, because if it is the latter then every consumer written against it
     has this same blindness and that is a wider finding than this task.
-  updated: '2026-09-11T14:44:17Z'
+  updated: '2026-09-11T14:46:41Z'
   claimed_by: 2026-09-11T145500Z-mw-t019
   claimed_at: '2026-09-11T14:44:17Z'
+  implementation_pr: 'silasfelinus/kind_robots#2628'
 
 goal: Provide a useful media watchlist that makes it easy to save, understand, revisit, and act on things the user wants
   to watch.
