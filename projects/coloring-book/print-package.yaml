@@ -19,17 +19,34 @@ books:
   cover_queue_path: projects/coloring-book/cover-art-jobs.yaml
   package_directory: projects/coloring-book/packages/monster-recast
   layout:
-    trim_width_inches: null
-    trim_height_inches: null
-    bleed_inches: null
-    binding: null
-    paper: null
-    interior_color_mode: null
-    cover_color_mode: null
-    printer_template: null
-    page_count_includes_blanks: null
-    inside_cover_printing: null
-    barcode_area_reserved: null
+    # Filled 2026-09-11 from Silas's decision: "when it comes time for printing,
+    # we'll use amazons print services, same as I did with my novel, no future
+    # decisions about that needed." Values are NOT invented here -- they are
+    # transcribed from this project's own KDP-verified spec in
+    # docs/generation-pipeline.md section 4 (checked against KDP help topics
+    # G201834340 / GVBQ3CMEQW3W2VL6), which settled on 8.5x11 no-bleed interiors
+    # long before a printer was chosen. Choosing Amazon ratifies that spec.
+    trim_width_inches: 8.5
+    trim_height_inches: 11.0
+    # No-bleed interiors: coloring art running off the page edge is actively
+    # worse for the user, and no-bleed avoids the looser trim tolerances and the
+    # 8.625x11.25 layout. Art box ~7.5x9.75in centred with >=0.5in margins on a
+    # 2550x3300 canvas at 300 DPI.
+    bleed_inches: 0.0
+    binding: perfect-bound
+    paper: white
+    interior_color_mode: bw
+    cover_color_mode: color
+    printer_template: kdp-paperback-8.5x11
+    # KDP counts every page in the interior PDF, blanks included, and the count
+    # drives spine width on the cover wrap -- so blanks must be present in the
+    # file rather than implied.
+    page_count_includes_blanks: true
+    # KDP does not print on the inside of paperback covers.
+    inside_cover_printing: false
+    # KDP places the ISBN barcode bottom-right on the back cover; the cover wrap
+    # must leave that area clear of art that matters.
+    barcode_area_reserved: true
   exports:
     ordered_interior_manifest: projects/coloring-book/packages/monster-recast/interiors.yaml
     interior_pdf: null
@@ -42,17 +59,34 @@ books:
   cover_queue_path: projects/coloring-book/cover-art-jobs.yaml
   package_directory: projects/coloring-book/packages/hollywood-recast
   layout:
-    trim_width_inches: null
-    trim_height_inches: null
-    bleed_inches: null
-    binding: null
-    paper: null
-    interior_color_mode: null
-    cover_color_mode: null
-    printer_template: null
-    page_count_includes_blanks: null
-    inside_cover_printing: null
-    barcode_area_reserved: null
+    # Filled 2026-09-11 from Silas's decision: "when it comes time for printing,
+    # we'll use amazons print services, same as I did with my novel, no future
+    # decisions about that needed." Values are NOT invented here -- they are
+    # transcribed from this project's own KDP-verified spec in
+    # docs/generation-pipeline.md section 4 (checked against KDP help topics
+    # G201834340 / GVBQ3CMEQW3W2VL6), which settled on 8.5x11 no-bleed interiors
+    # long before a printer was chosen. Choosing Amazon ratifies that spec.
+    trim_width_inches: 8.5
+    trim_height_inches: 11.0
+    # No-bleed interiors: coloring art running off the page edge is actively
+    # worse for the user, and no-bleed avoids the looser trim tolerances and the
+    # 8.625x11.25 layout. Art box ~7.5x9.75in centred with >=0.5in margins on a
+    # 2550x3300 canvas at 300 DPI.
+    bleed_inches: 0.0
+    binding: perfect-bound
+    paper: white
+    interior_color_mode: bw
+    cover_color_mode: color
+    printer_template: kdp-paperback-8.5x11
+    # KDP counts every page in the interior PDF, blanks included, and the count
+    # drives spine width on the cover wrap -- so blanks must be present in the
+    # file rather than implied.
+    page_count_includes_blanks: true
+    # KDP does not print on the inside of paperback covers.
+    inside_cover_printing: false
+    # KDP places the ISBN barcode bottom-right on the back cover; the cover wrap
+    # must leave that area clear of art that matters.
+    barcode_area_reserved: true
   exports:
     ordered_interior_manifest: projects/coloring-book/packages/hollywood-recast/interiors.yaml
     interior_pdf: null
@@ -65,17 +99,34 @@ books:
   cover_queue_path: projects/coloring-book/cover-art-jobs.yaml
   package_directory: projects/coloring-book/packages/kind-robots
   layout:
-    trim_width_inches: null
-    trim_height_inches: null
-    bleed_inches: null
-    binding: null
-    paper: null
-    interior_color_mode: null
-    cover_color_mode: null
-    printer_template: null
-    page_count_includes_blanks: null
-    inside_cover_printing: null
-    barcode_area_reserved: null
+    # Filled 2026-09-11 from Silas's decision: "when it comes time for printing,
+    # we'll use amazons print services, same as I did with my novel, no future
+    # decisions about that needed." Values are NOT invented here -- they are
+    # transcribed from this project's own KDP-verified spec in
+    # docs/generation-pipeline.md section 4 (checked against KDP help topics
+    # G201834340 / GVBQ3CMEQW3W2VL6), which settled on 8.5x11 no-bleed interiors
+    # long before a printer was chosen. Choosing Amazon ratifies that spec.
+    trim_width_inches: 8.5
+    trim_height_inches: 11.0
+    # No-bleed interiors: coloring art running off the page edge is actively
+    # worse for the user, and no-bleed avoids the looser trim tolerances and the
+    # 8.625x11.25 layout. Art box ~7.5x9.75in centred with >=0.5in margins on a
+    # 2550x3300 canvas at 300 DPI.
+    bleed_inches: 0.0
+    binding: perfect-bound
+    paper: white
+    interior_color_mode: bw
+    cover_color_mode: color
+    printer_template: kdp-paperback-8.5x11
+    # KDP counts every page in the interior PDF, blanks included, and the count
+    # drives spine width on the cover wrap -- so blanks must be present in the
+    # file rather than implied.
+    page_count_includes_blanks: true
+    # KDP does not print on the inside of paperback covers.
+    inside_cover_printing: false
+    # KDP places the ISBN barcode bottom-right on the back cover; the cover wrap
+    # must leave that area clear of art that matters.
+    barcode_area_reserved: true
   exports:
     ordered_interior_manifest: projects/coloring-book/packages/kind-robots/interiors.yaml
     interior_pdf: null

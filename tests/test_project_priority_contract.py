@@ -23,6 +23,13 @@ def test_lead_projects_are_the_ones_silas_named():
     the same 2026-08-25 call; no agent invented a new ordering. Kapowarr stays directly
     behind it, also unchanged from his decision.
 
+    Updated again 2026-09-11, same sweep, same rule. Silas confirmed Kapowarr's last gate
+    from his own environment -- "Kapowarr has had successful Sab downloads, pretty sure
+    torrents as well. Confirmed." -- taking it to 71/71 and `finished`; and closed
+    AI Art Academy as-is ("an outdated project to test things ... I don't see it becoming
+    an app"). Both leave the selectable queue. Kind Economy inherits second place, which is
+    where it already sat behind Kapowarr, so again no agent invented an ordering.
+
     The point of this test is unchanged: an agent tidying priority.yaml must not quietly
     reorder the top, and changing it means editing this test with a named human decision
     in the docstring.
@@ -32,8 +39,9 @@ def test_lead_projects_are_the_ones_silas_named():
 
     assert len(order) >= 2
     assert order[0] == "cthulhuquarium"
-    assert order[1] == "kapowarr"
-    assert "mandarin-tutor" not in order
+    assert order[1] == "kind-economy"
+    for finished in ("mandarin-tutor", "kapowarr", "ai-art-academy"):
+        assert finished not in order
 
 
 def test_dream_cycle_ordinary_maintenance_remains_fallback():
