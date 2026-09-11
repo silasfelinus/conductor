@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-11T13:46:24Z
+Generated: 2026-09-11T13:49:56Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **907**
-- Outcomes: blocked: 16, cancelled: 1, done: 890
+- Closed tasks recorded: **908**
+- Outcomes: blocked: 16, cancelled: 1, done: 891
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 95 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 45 | 98% |
+| cthulhuquarium | 46 | 98% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 23 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 16 | 44% |
-| software | 891 | 99% |
+| software | 892 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-11 `cthulhuquarium/t-068` — A roadmap can read 63-68/68 done while the game still fails the owner's own look, because "done" tracked whether a task closed, not whether its output reached the player -- t-065's art shipped as a client-side fallback into the bestiary/catalog/reveal panels only, leaving the one thing continuously on screen (the swim-canvas fish) exactly as primitive as before. A gap audit that reads the actual rendering code path, not just the task list, is what surfaces that kind of drift; filed as t-070, the highest-priority follow-up. Also: a live curl against the production host can independently confirm a delivery PR actually reached the deployed build (fingerprinted asset URLs serving 200) without needing a signed-out visual check -- useful evidence to attach to a needs-human task even when the subjective "does it look right" call still has to wait for the human.
 - 2026-09-11 `cthulhuquarium/t-067` — kr-art-plate's shape="plate" aspect box always carries an internal w-full class, so a consumer's own size-* class loses the width cascade at equal specificity -- kr-entity-card-body.vue already hit and documented this exact bug for /characters icons (2026-08-05); grep for shape="plate"/"card"/etc. plus an external size-*/w-*/h-* class on any kr-art-plate call site before assuming a new report is a new bug.
 - 2026-09-11 `cthulhuquarium/t-066` — Root cause was in a shared wrapper (components/conductor/project-front-page.vue), not the page that surfaced the symptom (aquarium): its view.description computed preferred the live Conductor-synced Project.description field over the page's own authored fallback, and that live field is seeded once from notesFromSilas (raw internal dictation) and never refreshed. Checking every other caller of the shared component before changing its default precedence (all of them already supplied their own description, so the fix was a safe no-op everywhere else) turned a single-page bug report into a fix for the whole class, at no extra risk.
 - 2026-09-10 `interface-vision/t-104` — Slice 214 (kind_robots#2598)'s "Build production image" Docker check hung well past its normal duration -- comparable recent slice PRs with a near-identical mechanical diff completed the same job in ~8 minutes (21:37:43-21:45:59 and 21:47:25-21:55:40), but this run's single "Build and publish" step showed zero progress for 60+ minutes while every other check (including a ~340-step Contract verifiers job) passed normally. cancel_workflow_run did not take effect promptly either. Confirmed this workflow only logs in to GHCR on push (not pull_request), so it cannot be gating this repo's actual deploy image on a PR -- merged directly once every other check was green rather than waiting indefinitely on a stuck runner. Future sessions hitting an isolated stuck/non-progressing check on an otherwise-green PR should check whether it's actually required before treating it as a hard blocker, and a runner-health spot-check is worth doing if this recurs.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-09 `interface-vision/t-125` — Threaded the `navigation` frontmatter field through `ResolvedTab` (kind_robots#2570), replacing t-104's hand-maintained `NAVIGATION_HIDDEN_TABS` set in channelTabGroups.ts with a frontmatter-carried boolean, mirroring the existing `visible !== false` pattern. The one non-obvious spot: a regression script (verifyNavigationConsolidation.ts) builds synthetic ResolvedTab fixtures by hand rather than through resolveTabItem(), so switching the production check to read `tab.navigation` required updating those fixtures too, or the same six nested tabs it was meant to keep pinned would have silently reported navigable. When retiring a hardcoded lookup table in favor of a data-carried field, grep for every place a type's shape is hand-constructed (test fixtures, fallback objects) -- vue-tsc's required-field error caught one instance (workspace-header.vue's fallbackTab) for free, but the fixture-based regression script's *values* wouldn't have been caught by the typechecker, only by actually running it.
 - 2026-09-09 `interface-vision/t-104` — A prior session's slice 189 close-out (kind_robots#2569, conductor#3985) sat fully green and unmerged for ~20 minutes with the conductor task stuck at status:claimed -- the originating session appears to have ended before merging its own already-green PRs. A later scheduled sweep found both PRs via GitHub MCP (select_role.py's own reachability probe had 403'd on an unrelated repo and silently reported 0 candidate PRs, so the live MCP check was what actually caught this), confirmed CI green and mergeable_state clean on the exact head SHA, merged both, and landed the ready+implementation_pr transition on the same close-out branch per the recurring-task convention. Lesson: select_role.py's GitHub-reachability signal is per-probe, not global -- a 403 on one repo in its scan list can silently zero out candidate_reviewable_prs for every repo it checks, so a session should independently confirm 0-open-PRs via a working transport (GitHub MCP here) before trusting that field, not just when the script already flags github_api_unreachable at the top level.
 - 2026-09-09 `interface-vision/t-104` — The prior record's lesson (slice 171: one subset-match codemod silently absorbed a dead `label-text` token into `kr-text-bold-xs`) generalized immediately on inspection -- slice 172 found the identical leftover trailing `label-text` behind six more already-shipped `kr-*` primitives (`kr-text-eyebrow`, `kr-text-eyebrow-bold`, `kr-text-dim-xs`, `kr-text-dim-xs-55`, `kr-text-dim-xs-70`, `kr-text-bold-sm`), 22 more occurrences across 10 files, via the same mechanism repeated seven times independently. When a systemic bug is found in one instance of a repeated pattern (here: N similar codemods sharing one convention), the efficient next step is a fresh full-repo grep for the general shape of the bug (any `kr-*` token + `label-text`) before assuming it was scoped to the one primitive first discovered -- writing a general-purpose cleanup codemod once (`kr_dead_label_text_cleanup_codemod.py`) beat writing six more single-primitive ones.
-- 2026-09-09 `interface-vision/t-104` — A subset-match codemod's BASE_TOKENS check matches any class string containing that pair regardless of what else rides along -- slice 170's kr_text_bold_xs_codemod.py ({"font-bold","text-xs"}) silently absorbed the entire `label-text text-xs font-bold` family (25 occurrences) that both its own docstring and kr_label_bold_codemod.py's had explicitly flagged as "left for a future slice." The result wasn't wrong (kr-text-bold-xs correctly carries font-bold+text-xs), just incomplete: the dead `label-text` token got preserved as a harmless-looking "extra" token instead of recognized as markup this project's other codemods already knew was inert. Before treating a kaizen note's "still open" family as untouched, grep the current class strings for the just-shipped primitive already combined with that family's extra tokens -- a broad subset-match sibling from the same slice may have already swept it in incompletely.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-11T13:46:24Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-11T13:49:56Z_
