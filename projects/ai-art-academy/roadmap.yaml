@@ -2310,16 +2310,29 @@ tasks:
 - id: t-064
   milestone: m7
   title: "Accessibility and cross-platform visual QA for Academy web/iOS/Android"
-  status: waiting
+  status: done
   owner:
   passes: 0
   stakes: reversible
   depends_on: [t-062, t-063]
-  note: >
+  note: >-
     Verify keyboard/screen-reader semantics where applicable, touch target sizing, reduced motion,
     image alt/provenance presentation, error/loading states, and the complete lesson/remix flow.
     Include phone/tablet/desktop web plus representative iOS/Android device sizes. Fix findings;
     do not close from source inspection alone.
+
+    CLOSED AS OUT OF SCOPE, 2026-09-11, by Silas in session: "Ai art academy is actually an
+    outdated project to test things. It has gone as far as it needs, I don't see it becoming
+    an app, it should be considered finished and closed as is." The Academy served its
+    purpose as a testbed for the Kontext remix path and the art-history teaching surface; it
+    is not becoming a mobile app, so the native/app-shaped work below is retired rather than
+    deferred. Not a failure and not a task-count flip -- a deliberate scope end.
+    Specifically: the cross-platform accessibility/visual QA pass this task described
+    covered web, iOS and Android together. With both native arms retired, the remaining web
+    surface has already had its accessibility and maturity rules verified through the m5/m6
+    work, and no further combined pass is warranted for a project being closed as-is.
+  updated: '2026-09-11T11:11:02Z'
+  approved_by_human: true
 
 - id: t-065
   milestone: m7
