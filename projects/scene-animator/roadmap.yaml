@@ -29,7 +29,7 @@ milestones:
   - id: m3
     title: "POLISH & SHIP — gallery, recovery, and operator UX"
     weight: 30
-    status: done
+    status: in-progress
 
 tasks:
   - id: t-001
@@ -104,10 +104,10 @@ tasks:
 
   - id: t-005
     title: "FOR SILAS: confirm the admin Scene Animator surface to close out this finished project"
-    status: needs-human
+    status: waiting
     passes: 0
     stakes: reversible
-    note: |-
+    note: >-
       FOR SILAS: all 4 roadmap tasks across all three milestones (shape, build, polish/
       ship) are done -- nothing agent-actionable remains in the queue. Reconciled
       2026-09-07 (scheduled Agent sweep) per AGENTS.md's rule that a user-facing
@@ -135,7 +135,49 @@ tasks:
       Root cause confirmed: the Scene Animator application expects /app/animate, but the deployment definition mounted only the public image tree. The implementation branch adds the missing dedicated read-only animate bind, documents the DockerMan production mapping, and adds a source-level deployment contract verifier. Production remains blocked on applying the equivalent saved Unraid template mount before the acceptance test can pass.
 
       FOR SILAS: The repository-side Scene Animator fix is merged as silasfelinus/kind_robots#2546 (squash ef8397343d8cd74344399469acf75270ffa74a74). Root cause was the production container contract: the app resolves /app/animate, but only the public image tree was mounted. The repo now declares ANIMATE_PATH=/app/animate plus a dedicated read-only host bind from /mnt/user/pc/kindrobots/animate, documents the mapping, and includes a deployment-contract verifier. All exact-head PR workflows completed successfully, including TypeScript, Layout, Schema Migration Parity, and Contract Tests. TO APPROVE / COMPLETE: on Alexandria, add the equivalent saved DockerMan template path mapping Host /mnt/user/pc/kindrobots/animate -> Container /app/animate as Read Only, then recreate/update KindRobots through the normal guarded deployment path and re-test /admin/scene-animator. This is a physical-host configuration gate; no further GitHub code change can make the currently running container see an unmounted host directory. Once the health endpoint reports the source available and one real batch works, this acceptance task can close and the scene-animator project can be marked finished.
+
+      BLOCKED 2026-09-11: Silas attempted this confirmation and could not -- /admin/scene-
+      animator reports "Scene Animator source root is unavailable: /app/animate", so the
+      surface cannot be visually confirmed while the feature cannot run at all. This is
+      environment/deployment, not code: sceneAnimator.ts resolves its root from ANIMATE_PATH
+      (or an IMAGES_PATH-derived fallback) and 503s when that path is not mounted in the
+      container. Filed t-006 for that, and this task now waits on it. Do not re-present this
+      for confirmation until Scene Animator actually lists folders in production -- presenting
+      a broken surface for acceptance is what wasted his time this round.
     updated: '2026-09-09T06:05:00Z'
     claimed_by: 2026-09-09T055100Z-scene-animator-t-005-gpt56sol-navfix
     claimed_at: '2026-09-09T05:51:00Z'
     soft_gate: true
+    depends_on: t-006
+  - id: t-006
+    milestone: m3
+    title: Make Scene Animator's source root reachable in production, or fail legibly
+    status: needs-human
+    gate_human: true
+    owner: worker
+    stakes: reversible
+    passes: 0
+    note: >-
+      FOR SILAS: found by you on 2026-09-11 attempting the t-005 confirmation pass. /admin/scene-animator
+      loads but reports "Scene Animator source root is unavailable: /app/animate", so the surface cannot
+      be confirmed and the project cannot close.
+
+      This is environment/deployment, not code. server/utils/sceneAnimator.ts resolves its source root
+      from ANIMATE_PATH, falling back to an IMAGES_PATH-derived path, and returns a 503 the moment that
+      path is missing or unreadable inside the container. The value it is resolving to, /app/animate,
+      does not exist in the running Kind Robots container -- so either ANIMATE_PATH is unset and the
+      derived fallback is wrong, or it is set to a directory that was never mounted.
+
+      TO UNBLOCK, one of: (a) mount the real scene-source directory into the Kind Robots container and
+      point ANIMATE_PATH at it -- this is the Unraid/compose side, so kindrobots-unraid may be the right
+      home for the actual change; or (b) tell us the path you want it to use and we will wire and
+      document it. Either way the env var belongs in the deployment's documented configuration, since
+      nothing in the repo currently records that Scene Animator needs a mounted volume at all -- which
+      is why this shipped "done" without anyone noticing it could never work in production.
+
+      AGENT-ACTIONABLE HALF, do not wait on Silas for it: the failure is currently a bare red string on
+      an otherwise-empty admin page. Make it legible -- name the variable (ANIMATE_PATH), say that it
+      must point at a directory mounted into the container, and distinguish "unset" from "set but
+      missing" from "present but unreadable", which sceneAnimator.ts already tracks internally and then
+      flattens into one message. An admin who sees this should know what to fix.
+    updated: '2026-09-11T10:30:00Z'

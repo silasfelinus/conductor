@@ -333,7 +333,14 @@ overrides:
     tabKey: conductor-app
 
   - slug: alexa-integration
-    status: active
+    status: paused # paused 2026-09-11 by Silas, in session: "alexa integration should be paused.
+    # it's not an active project." Was sitting at 21/22 with t-022 (his cross-width visual
+    # acceptance) as the only open item, which made it look one glance away from finished --
+    # it was actually work he no longer wants. Roadmap and the completed voice/relay research
+    # are kept as a historical record, not deleted, same convention as mona-salai and
+    # superkate-hairstyle-ai. Removed from projects/priority.yaml, and t-022 is no longer a
+    # live gate: audit_human_gates.py excludes non-active projects by default, so it will stop
+    # being reported as something only Silas can unblock.
     priority: normal
     kind: software
     # Frontend placement — synced to the kind_robots Project row by

@@ -25,7 +25,7 @@ milestones:
 - id: m4
   title: External enrichment integrations
   weight: 20
-  status: complete
+  status: in-progress
 tasks:
 - id: t-001
   milestone: m1
@@ -443,7 +443,7 @@ tasks:
 
 - id: t-018
   title: "FOR SILAS: visually accept the Media Watchlist at phone/tablet/desktop widths to close the project out"
-  status: needs-human
+  status: waiting
   passes: 0
   stakes: reversible
   soft_gate: true
@@ -469,6 +469,40 @@ tasks:
     own closing step, and it also clears a currently-failing CI assertion
     (`test_current_project_lifecycle.py`) that flags any `active` project sitting with
     zero open tasks.
+  depends_on: t-019
+- id: t-019
+  milestone: m4
+  title: Fix the Media Watchlist failing to load, and stop masking the real cause
+  status: ready
+  gate_human: false
+  owner: worker
+  stakes: reversible
+  passes: 0
+  note: >-
+    Found by Silas on 2026-09-11, attempting the t-018 acceptance pass: /plan/watchlist renders its
+    filters, its "Browse the log" and "See the patterns" cards, and then a red "Failed to load the
+    watchlist." banner where the entries should be. The project could not be vetted at all.
+
+    Two separate problems, and the second is the more important one.
+
+    (1) THE LOAD FAILS. watchlist-browse.vue's loadEntries() calls GET /api/media-entries. Reproduce
+    it as a signed-in user and find out why it returns unsuccessfully for Silas specifically --
+    anonymous requests return "Invalid or expired token", so a stale or mis-scoped browser session is
+    the first hypothesis to rule out, but it must be confirmed rather than assumed. Check the same
+    for /api/media-entries/stats, which the patterns view uses.
+
+    (2) THE ERROR LIES. /api/media-entries answers an auth failure with HTTP 200 and a body of
+    {"success": false, "message": "Invalid or expired token.", "statusCode": 401}. Because the status
+    is 200, $fetch resolves normally, loadEntries() falls to its `if (!res?.success)` branch, and
+    throws the hardcoded string 'Failed to load the watchlist.' -- discarding the real message that
+    was right there in the response. Every distinguishable backend failure renders as one
+    indistinguishable banner. Surface res.message when it exists, and keep the generic string only as
+    a fallback for a genuinely empty error. A user who needs to sign in again should be told that.
+
+    Worth checking whether the 200-with-success-false shape is this endpoint's own convention or a
+    house pattern across the API, because if it is the latter then every consumer written against it
+    has this same blindness and that is a wider finding than this task.
+  updated: '2026-09-11T10:30:00Z'
 
 goal: Provide a useful media watchlist that makes it easy to save, understand, revisit, and act on things the user wants
   to watch.

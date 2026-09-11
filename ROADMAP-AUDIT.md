@@ -1,20 +1,20 @@
 # Roadmap Audit
 
-Generated: `2026-09-11T09:56:32.383800+00:00`
+Generated: `2026-09-11T10:24:10.591949+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **52** roadmaps, **27** active + **2** continuous projects, **1402** tasks
-- **30 ready**, **54 waiting**, **38 needs-human**, **0 claimed/review**, **1263 done**
-- Findings: **1 errors**, **2 warnings**, **12 informational**
+- **52** roadmaps, **26** active + **2** continuous projects, **1409** tasks
+- **35 ready**, **57 waiting**, **37 needs-human**, **0 claimed/review**, **1263 done**
+- Findings: **0 errors**, **2 warnings**, **12 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `cthulhuquarium` | active | software | 0 | 0 | 1 | 0 | 63 / 64 |
+| 1 | `cthulhuquarium` | active | software | 4 | 1 | 1 | 0 | 63 / 69 |
 | 2 | `kapowarr` | active | software | 0 | 0 | 1 | 0 | 70 / 71 |
 | 3 | `kind-economy` | active | software | 0 | 3 | 5 | 0 | 19 / 27 |
 | 4 | `interface-vision` | active | software | 1 | 1 | 1 | 0 | 123 / 127 |
@@ -25,7 +25,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 9 | `mermaids-of-venice` | active | content | 1 | 0 | 3 | 0 | 9 / 13 |
 | 10 | `kind-robots` | active | software | 4 | 0 | 0 | 0 | 91 / 95 |
 | 11 | `rainbow-butterflies` | active | software | 0 | 0 | 4 | 0 | 48 / 52 |
-| 12 | `scene-animator` | active | software | 0 | 0 | 1 | 0 | 4 / 5 |
+| 12 | `scene-animator` | active | software | 0 | 1 | 1 | 0 | 4 / 6 |
 | 13 | `text-generation` | active | software | 1 | 0 | 0 | 0 | 7 / 8 |
 | 14 | `kindrobots-unraid` | active | software | 1 | 6 | 0 | 0 | 9 / 16 |
 | 15 | `model-builder` | active | software | 2 | 0 | 0 | 0 | 43 / 45 |
@@ -36,15 +36,15 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 20 | `davinci` | active | software | 1 | 2 | 0 | 0 | 23 / 26 |
 | 21 | `mural-design` | active | content | 1 | 2 | 0 | 0 | 4 / 7 |
 | 22 | `coat-dance` | active | content | 2 | 0 | 0 | 0 | 2 / 10 |
-| 23 | `alexa-integration` | active | software | 0 | 0 | 1 | 0 | 21 / 22 |
-| 24 | `conductor-app` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
-| 25 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
-| 26 | `media-watchlist` | active | software | 0 | 0 | 1 | 0 | 17 / 18 |
-| 27 | `wishmaster` | retired | software | 0 | 0 | 1 | 0 | 2 / 4 |
-| 28 | `ruler-hooked` | active | software | 1 | 0 | 0 | 0 | 21 / 22 |
-| 29 | `music-mentor` | finished | software | 0 | 0 | 0 | 0 | 8 / 9 |
-| 30 | `animation-manager` | continuous | software | 2 | 0 | 0 | 0 | 15 / 17 |
-| 31 | `dream-cycle` | continuous | software | 3 | 0 | 0 | 0 | 25 / 28 |
+| 23 | `conductor-app` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
+| 24 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
+| 25 | `media-watchlist` | active | software | 1 | 1 | 0 | 0 | 17 / 19 |
+| 26 | `wishmaster` | retired | software | 0 | 0 | 1 | 0 | 2 / 4 |
+| 27 | `ruler-hooked` | active | software | 1 | 0 | 0 | 0 | 21 / 22 |
+| 28 | `music-mentor` | finished | software | 0 | 0 | 0 | 0 | 8 / 9 |
+| 29 | `animation-manager` | continuous | software | 2 | 0 | 0 | 0 | 15 / 17 |
+| 30 | `dream-cycle` | continuous | software | 3 | 0 | 0 | 0 | 25 / 28 |
+| — | `alexa-integration` | paused | software | 0 | 0 | 1 | 0 | 21 / 22 |
 | — | `animation-studio` | retired | software | 0 | 3 | 0 | 0 | 4 / 8 |
 | — | `approval-portal` | retired | software | 0 | 0 | 0 | 0 | 3 / 5 |
 | — | `art-generator-connect` | finished | software | 0 | 0 | 0 | 0 | 22 / 22 |
@@ -69,9 +69,9 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 ## Findings by severity
 
-### Error (1)
+### Error (0)
 
-- **CONTROL_PRIORITY_DRIFT** — `_global`: CONTROL.md priority band ['mandarin-tutor', 'cthulhuquarium', 'kapowarr', 'kind-economy', 'interface-vision', 'ai-art-academy', 'coloring-book', 'humboldt-scoop-cms'] does not match priority.yaml prefix ['cthulhuquarium', 'kapowarr', 'kind-economy', 'interface-vision', 'ai-art-academy', 'coloring-book', 'humboldt-scoop-cms', 'digital-storefront'].
+_None._
 
 ### Warning (2)
 
