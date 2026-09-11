@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   recurring: true
@@ -3370,9 +3370,12 @@ tasks:
     Slice 224 migrates animation-layer.vue's h-5 w-5 text-secondary glyph to the shared kr-icon-5 size primitive composed with the existing semantic text-secondary utility, following slice 221's recorded rule for colored glyphs. Geometry, color, and behavior are unchanged.
 
     Slice 224 merged kind_robots PR #2607 (06ef35c86eb1706803b3b32351f08b846105bf84): components/screenfx/animation-layer.vue now composes kr-icon-5 with its existing shrink-0 text-secondary utilities instead of hand-rolled h-5 w-5 sizing. This applies slice 221's semantic-color composition rule in a live component without adding a combined size+color primitive. Exact head 95dde709e60e80b6529958e76c086e53b4316c76 completed all pull-request workflows successfully, including TypeScript and Contract Tests. Next bounded slice: continue the remaining live colored-glyph pool by composing existing kr-icon-* sizing with semantic text-* utilities where geometry is equivalent; do not add combined color-size primitives absent a repeated semantic family.
-  updated: '2026-09-11T05:27:00Z'
+  updated: '2026-09-11T05:34:35Z'
   implementation_pr: 'silasfelinus/kind_robots#2606'
   retry_context: ''
+  owner: worker
+  claimed_by: claude-scheduled-20260911T053434Z-iv-t104-size4
+  claimed_at: '2026-09-11T05:34:35Z'
 
 - id: t-123
   milestone: m5
