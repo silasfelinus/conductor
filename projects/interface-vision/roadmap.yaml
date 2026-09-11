@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3419,8 +3419,29 @@ tasks:
     fully closed for every size interface-vision has touched (4/5/6/7/8/10/12 sizeless, plus
     5/6/primary-4/5/6/7/10/12 colored); run a fresh full-repo class-frequency survey outside
     all now-closed families to find the next target.
-  updated: '2026-09-11T19:33:42Z'
-  implementation_pr: 'silasfelinus/kind_robots#2632'
+
+    Slice 233 merged as silasfelinus/kind_robots#2634 (squash
+    faaff0cf6aa3b2df72616fda676a4b7155c00b7b) from exact head
+    a55db0c761a4680e44b406716c9889b718f3cecd. Per slice 232's kaizen note (the bare
+    colored/sizeless h-N w-N icon-glyph pool is now fully closed), ran a fresh full-repo
+    class-frequency survey across components/** and pages/** for the next composition target
+    outside that closed family. Opened .kr-img-cover (h-full w-full object-cover) -- 40
+    exact, verbatim occurrences across 30 files, an <img>/<video> fill-container pattern
+    with the same zero-color/zero-behavior shape as kr-container/kr-icon-*. Migrated all 40
+    occurrences (only exact-string matches touched; no rounded-*/shrink-0/other-modifier
+    variants altered). No color, behavior, API, schema, store, route, or layout geometry
+    change at any site. Verified vue-tsc --noEmit clean, eslint on all 30 changed files
+    showing only the same 7 pre-existing findings before/after (confirmed via git stash),
+    prettier --check flagging the same 20-file pre-existing drift before/after (git-stash-
+    confirmed), test:layout-contract holding with 0 new violations, test:lint-ratchet
+    holding at 334/-58 (no rule regression). All 50 kind_robots PR checks green,
+    mergeable_state clean at merge time. Return the recurring consistency umbrella to ready
+    for the next bounded slice. Kaizen for the next slice: from the same survey, input
+    input-bordered input-xs (11 exact occurrences) and select select-bordered w-full bg-
+    base-200 (10 exact occurrences) are the next DaisyUI form-control size/variant
+    candidates of the same shape.
+  updated: '2026-09-11T19:50:17Z'
+  implementation_pr: 'silasfelinus/kind_robots#2634'
   retry_context: ''
   owner: worker
   claimed_by: claude-scheduled-20260911T195500Z-iv-t104-s233
