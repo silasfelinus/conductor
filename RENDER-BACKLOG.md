@@ -565,3 +565,6 @@ queueDepth: RUNNING=1, DONE=5070, FAILED=448, CANCELLED=3188 (all-time). oldestP
 
 ## 2026-08-26T22:11:37Z | ruler-hooked/t-016 | draining
 queueDepth: PENDING=39, RUNNING=1, DONE=5376, CANCELLED=3698 (all-time). oldestPending: id=9911, age=1156s (~0.3h), engine=COMFY. windowThroughput (24h): PENDING=39, RUNNING=1, DONE=59, CANCELLED=337. recentFailed: none.
+
+## 2026-09-11T22:26:44Z | cthulhuquarium/t-073 | draining
+queueDepth: PENDING=29, DONE=10339, CANCELLED=10567 (all-time). oldestPending: id=21741, age=11804s (~3.3h), engine=COMFY. windowThroughput (24h): PENDING=29, DONE=60. recentFailed: none.
