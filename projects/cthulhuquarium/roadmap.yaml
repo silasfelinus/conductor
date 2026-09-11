@@ -3289,7 +3289,7 @@ tasks:
 - id: t-077
   milestone: m3
   title: Wire the rivalry evaluator into tick settlement and fire first_rivalry_resolved
-  status: review
+  status: done
   gate_human: false
   owner: worker
   stakes: reversible
@@ -3322,9 +3322,14 @@ tasks:
     now actually suppresses rivalry. New settleTick test covers rivalry reducing production,
     peace_ward restoring it, and traitless backward compatibility. Full aquarium test suite
     + vue-tsc typecheck + eslint all pass. Left status: review pending PR #2640 CI/merge.
+
+    DONE (2026-09-11): PR #2640 merged (all 51 checks green). Rivalry now actually reduces
+    production in tick settlement, Aquarium.rivalryObserved persists observed state, and
+    first_rivalry_resolved fires via the standard milestone-toast pattern. Remaining scope
+    from this task's original note is fully delivered.
   claimed_by: 2026-09-11T222954Z-cthulhuquarium-t-077-sched
   claimed_at: '2026-09-11T22:29:54Z'
-  updated: '2026-09-11T22:44:48Z'
+  updated: '2026-09-11T22:54:12Z'
   implementation_pr: 'silasfelinus/kind_robots#2640'
 
 - id: t-069
