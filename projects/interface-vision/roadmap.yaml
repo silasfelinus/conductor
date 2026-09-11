@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3365,12 +3365,11 @@ tasks:
     RAN 2026-09-10 slice 216: merged kind_robots PR #2600. Repo-wide sweep of the last 28 bare h-4 w-4 icon-glyph occurrences (14 files: app.vue, brainstorm-manager.vue, add- model.vue, kr-narrator-stage.vue, project-placement-manager.vue, resource-gallery.vue, reward-encounter.vue, animation-interact.vue, animation-selector.vue, performer- creator.vue, stage-message.vue, theme-gallery.vue, reactable-card.vue, reaction- card.vue) via utils/scripts/codemods/kr_icon_4_codemod.py --root . --write, closing out the h-4 w-4 bare-glyph family entirely (dry run now reports 0 remaining candidates repo- wide). Verified: vue-tsc clean; eslint 333/327/6 matches baseline; test:layout-contract holds; test:lint-ratchet holds at 333/-59; prettier --check flagged the same 7 pre- existing-drift files before/after (confirmed via git stash). All 52 exact-head CI checks passed, mergeable_state clean, squash-merged a35984d. Kaizen for the next slice: h-4 w-4 family is fully migrated -- move to the next-most-common hand-rolled shape per interface-vision's adoption-tracking script.
 
     Bounded consistency slice: migrate the remaining model-builder source-list 16px glyph from h-4 w-4 to geometry-equivalent kr-icon-4; implementation branch worker/interface-vision-t-104-20260911T001850Z-g3p7.
-  updated: '2026-09-11T00:22:50Z'
+
+    Slice merged as silasfelinus/kind_robots#2601 (squash a2401c29716c396ee064d53a12df97d7dc2c8501) from exact head ae21bc448d2478e8a1e4adfb0083d54f5b30cd04. components/model-builder/model-builder-source-picker.vue's list-view fallback glyph now uses kr-icon-4 instead of hand-rolled h-4 w-4 while preserving text-base-content/30; one file, +1/-1, no geometry or behavior change. All 45 pull-request workflow runs completed successfully, including TypeScript Type Check, Layout Contract, Art Prompt + Icon Safety, Schema Migration Parity, Generated Client Parity, Contract Tests, and the Storybook/Narrative contract suite. Return the recurring consistency umbrella to ready for the next bounded slice.
+  updated: '2026-09-11T00:26:50Z'
   implementation_pr: 'silasfelinus/kind_robots#2600'
   retry_context: ''
-  owner: worker
-  claimed_by: 2026-09-11T001850Z-interface-vision-t-104-g3p7
-  claimed_at: '2026-09-11T00:18:50Z'
 
 - id: t-123
   milestone: m5
