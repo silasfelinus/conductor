@@ -3217,18 +3217,49 @@ tasks:
 - id: t-075
   milestone: m3
   title: Build the rivalry subsystem, or explicitly cut it from v1 scope
-  status: review
+  status: done
   gate_human: false
   owner: worker
   stakes: reversible
   passes: 0
-  note: |-
+  note: >-
     Filed by t-068's FULL-GAME-GAP-AUDIT.md (2026-09-11). Monster.dietRole/schoolRole (schema.prisma ~lines 2573-2581) and the peace_ward set piece (aquariumEconomy.ts ~lines 311-319, an explicit no-op today) both exist purely as forward-compatible scaffolding for economy.yaml's rivalry.emergent_rules -- nothing computes rivalry at runtime. This is a real, non-trivial feature (emergent tag-based rules per SYSTEMS.md's t-025 resolution: predator/prey, school/anchor, plus an optional authored rivals: override), not a bug fix, and it's the prerequisite for t-074's first_rivalry_resolved milestone and the "first_rivalry_resolved" leaderboard-adjacent landmark. FOR SILAS: confirm this is still wanted for v1 polish (milestone m3) rather than deferred past ship -- if deferred, close this as won't-do with a note and drop the first_rivalry_resolved half of t-074 rather than leaving it open indefinitely. Soft gate: other cthulhuquarium work may continue in parallel while this is decided.
 
     First rivalry subsystem slice implemented: pure emergent/authored/same-species rivalry evaluator with Peace Ward suppression and focused tests. Runtime tick wiring and rivalry-resolved milestone remain continuation work.
-  updated: '2026-09-11T17:17:07Z'
+
+    PR #2631 merged 2026-09-11 (46/46 checks green, mergeable_state clean) -- pure
+    emergent/authored/same-species rivalry evaluator with Peace Ward suppression, focused
+    node:test coverage. Marking this task done for the bounded slice it explicitly scoped
+    itself to; continuation work (wiring into tick settlement, firing
+    first_rivalry_resolved) filed as t-077.
+  updated: '2026-09-11T17:30:10Z'
   claimed_by: 2026-09-11T162044Z-cthulhuquarium-t-075-k9r3
   claimed_at: '2026-09-11T16:20:44Z'
+  implementation_pr: 'silasfelinus/kind_robots#2631'
+
+- id: t-077
+  milestone: m3
+  title: Wire the rivalry evaluator into tick settlement and fire first_rivalry_resolved
+  status: ready
+  gate_human: false
+  soft_gate: true
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Continuation of t-075 (done, silasfelinus/kind_robots#2631): the pure rivalry
+    evaluator (`server/utils/aquariumRivalry.ts`, `evaluateRivalry()`) exists and is
+    tested but is not yet called from anywhere. Wire it into the tick-settlement path
+    (aquariumEconomy.ts/aquarium.ts, same call sites t-074 used for the
+    first_full_tank/first_spotless_tank milestones) so an active rivalry actually
+    reduces production, and fire the first_rivalry_resolved milestone (t-074's
+    firedMilestones toast queue) the first time a rivalry pair's penalty is applied
+    and then clears. FOR SILAS: t-075's original note asked you to confirm the
+    rivalry subsystem is still wanted for v1 polish (milestone m3) rather than
+    deferred past ship -- that question is still open and applies to this wiring
+    step too. Soft gate: other cthulhuquarium work may continue in parallel while
+    this is decided; if you decide against it, close this as won't-do and drop the
+    first_rivalry_resolved half of t-074 rather than leaving it open indefinitely.
 
 - id: t-069
   milestone: m3
