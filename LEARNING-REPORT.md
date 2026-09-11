@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-11T22:48:06Z
+Generated: 2026-09-11T22:57:36Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **914**
-- Outcomes: blocked: 16, cancelled: 1, done: 897
+- Closed tasks recorded: **915**
+- Outcomes: blocked: 16, cancelled: 1, done: 898
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 95 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 50 | 98% |
+| cthulhuquarium | 51 | 98% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 23 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 897 | 99% |
+| software | 898 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-11 `cthulhuquarium/t-077` — Wiring a pure evaluator (t-075's evaluateRivalry) into a tick-settlement loop is cheapest done ONCE per settlement outside the per-tick inner loop, not once per (tick x fish): composition (which fish, their traits) is loop-invariant even though the production amount it multiplies varies every tick via hunger/debris. Same discipline as debrisEverHigh's sticky-flag pattern applied a second time (rivalryObserved) -- a landmark milestone that can go active/inactive repeatedly still only needs ONE persisted 'ever observed' flag plus the existing AquariumEvent-log idempotency check, not a second column for 'already resolved'.
 - 2026-09-11 `cthulhuquarium/t-075` — A soft-gated feature task (Silas hasn't confirmed it's still wanted for v1) can still land a bounded, reversible first slice while the gate is open in parallel -- the pure rivalry evaluator shipped and tested clean, with runtime wiring split into a new task (t-077) rather than either blocking on the gate or scope-creeping the wiring into the same PR.
 - 2026-09-11 `cthulhuquarium/t-074` — economy.yaml's first_full_tank/first_spotless_tank triggers looked pre-decided but weren't fully -- economy.yaml predates t-032's two-pool capacity split, and aquariumEconomy.ts's own comment flagged the "full" semantics as an unresolved ambiguity. Reading the actual trigger strings closely (economy.yaml still has "debris reaches 0 after having been >= 80" verbatim, and DEBRIS_BANDS' own worst-band threshold is that same 80) resolved both without needing a Silas round-trip: "every owned slot" maps to the weighed fish pool (currentReservedSize vs effectiveSizeCap), not setSlotsCap, since t-032's own comment says setSlotsCap is exclusively for set pieces. The debris trigger needed a small additive migration (Aquarium.debrisEverHigh) because a player can clean an 80+ debris level down to 0 across several separate requests, so "having been >= 80" can't be read off one request's before/after pair alone. Next task touching an old economy.yaml trigger: read the literal trigger string plus any nearby "this predates X" comment before guessing at intent -- the spec is usually more precise than the roadmap task summarizing it.
 - 2026-09-11 `kind-economy/t-017` — Its own dependencies (t-003, t-014) had both just closed the same day (t-003 literally that morning, from a live Silas decision recorded in the roadmap note), which is why `next_ready_task.py` never surfaced this task before now despite it sitting `status: ready` for weeks. Drafting it was straightforward once the two upstream design docs (DESIGN-BRIEF.md, PAYOUT-MECHANISM-DESIGN.md) were read in full -- every number and policy in the draft traces to an already-decided default or explicit recommendation in those docs, with genuinely undecided items marked `[OPEN]` rather than guessed at. Closed to `done` (not `needs-human`) matching the same-project precedent on t-003/t-014/t-022: a complete draft under Silas's 2026-09-07 human-gate-simplification policy doesn't wait on him, only its eventual publication does.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-11 `cthulhuquarium/t-068` — A roadmap can read 63-68/68 done while the game still fails the owner's own look, because "done" tracked whether a task closed, not whether its output reached the player -- t-065's art shipped as a client-side fallback into the bestiary/catalog/reveal panels only, leaving the one thing continuously on screen (the swim-canvas fish) exactly as primitive as before. A gap audit that reads the actual rendering code path, not just the task list, is what surfaces that kind of drift; filed as t-070, the highest-priority follow-up. Also: a live curl against the production host can independently confirm a delivery PR actually reached the deployed build (fingerprinted asset URLs serving 200) without needing a signed-out visual check -- useful evidence to attach to a needs-human task even when the subjective "does it look right" call still has to wait for the human.
 - 2026-09-11 `cthulhuquarium/t-067` — kr-art-plate's shape="plate" aspect box always carries an internal w-full class, so a consumer's own size-* class loses the width cascade at equal specificity -- kr-entity-card-body.vue already hit and documented this exact bug for /characters icons (2026-08-05); grep for shape="plate"/"card"/etc. plus an external size-*/w-*/h-* class on any kr-art-plate call site before assuming a new report is a new bug.
 - 2026-09-11 `cthulhuquarium/t-066` — Root cause was in a shared wrapper (components/conductor/project-front-page.vue), not the page that surfaced the symptom (aquarium): its view.description computed preferred the live Conductor-synced Project.description field over the page's own authored fallback, and that live field is seeded once from notesFromSilas (raw internal dictation) and never refreshed. Checking every other caller of the shared component before changing its default precedence (all of them already supplied their own description, so the fix was a safe no-op everywhere else) turned a single-page bug report into a fix for the whole class, at no extra risk.
-- 2026-09-10 `interface-vision/t-104` — Slice 214 (kind_robots#2598)'s "Build production image" Docker check hung well past its normal duration -- comparable recent slice PRs with a near-identical mechanical diff completed the same job in ~8 minutes (21:37:43-21:45:59 and 21:47:25-21:55:40), but this run's single "Build and publish" step showed zero progress for 60+ minutes while every other check (including a ~340-step Contract verifiers job) passed normally. cancel_workflow_run did not take effect promptly either. Confirmed this workflow only logs in to GHCR on push (not pull_request), so it cannot be gating this repo's actual deploy image on a PR -- merged directly once every other check was green rather than waiting indefinitely on a stuck runner. Future sessions hitting an isolated stuck/non-progressing check on an otherwise-green PR should check whether it's actually required before treating it as a hard blocker, and a runner-health spot-check is worth doing if this recurs.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-11T22:48:06Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-11T22:57:36Z_
