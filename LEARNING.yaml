@@ -13177,3 +13177,32 @@ records:
     confirmation was possible from this sandbox, which is an honest gap worth
     a human spot-check on kindrobots.org next time the tank is opened, same
     caveat t-068 already flagged for the bestiary fix.
+- date: 2026-09-11
+  project: cthulhuquarium
+  task: t-072
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Investigated both halves of the task before touching code, and that
+    investigation changed the plan: the roadmap note offered "fix the path or
+    delete" the dead importCthulhuquariumArt.mjs script as two equally valid
+    options, but reading the actual delivered assets showed the script's
+    per-prefix resize scheme (1280/960/640/512px by filename prefix) doesn't
+    match what the real delivery (kind_robots#2620) actually shipped (uniform
+    512px-long-edge) -- "fixing" the path would have silently overwritten
+    already-correct committed assets with differently-sized ones. Deletion was
+    the only safe choice once that was known, not a coin flip. Separately, the
+    task's other half (bulk-creating real ArtImage DB records and linking them
+    to Monster rows) was real, well-precedented, buildable work -- but this
+    sandbox has zero path to any live database (confirmed: no .env, dummy-only
+    DATABASE_URL in the provisioning script, no reachable DB port) -- so
+    attempting it here would have produced an unverifiable script at best.
+    Split it into its own task (t-076) with the investigation's findings
+    attached, rather than either skipping it silently or attempting
+    unverifiable DB work. Pattern worth repeating: when a roadmap task bundles
+    a quick fix with something that needs infrastructure this sandbox doesn't
+    have, do the quick part, investigate the rest thoroughly enough to leave a
+    real trail, and split rather than stall.
