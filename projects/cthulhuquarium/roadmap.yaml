@@ -3217,25 +3217,16 @@ tasks:
 - id: t-075
   milestone: m3
   title: Build the rivalry subsystem, or explicitly cut it from v1 scope
-  status: claimed
+  status: review
   gate_human: false
   owner: worker
   stakes: reversible
   passes: 0
-  note: >-
-    Filed by t-068's FULL-GAME-GAP-AUDIT.md (2026-09-11). Monster.dietRole/schoolRole
-    (schema.prisma ~lines 2573-2581) and the peace_ward set piece (aquariumEconomy.ts
-    ~lines 311-319, an explicit no-op today) both exist purely as forward-compatible
-    scaffolding for economy.yaml's rivalry.emergent_rules -- nothing computes rivalry at
-    runtime. This is a real, non-trivial feature (emergent tag-based rules per
-    SYSTEMS.md's t-025 resolution: predator/prey, school/anchor, plus an optional authored
-    rivals: override), not a bug fix, and it's the prerequisite for t-074's
-    first_rivalry_resolved milestone and the "first_rivalry_resolved" leaderboard-adjacent
-    landmark. FOR SILAS: confirm this is still wanted for v1 polish (milestone m3) rather
-    than deferred past ship -- if deferred, close this as won't-do with a note and drop the
-    first_rivalry_resolved half of t-074 rather than leaving it open indefinitely. Soft
-    gate: other cthulhuquarium work may continue in parallel while this is decided.
-  updated: '2026-09-11T16:20:44Z'
+  note: |-
+    Filed by t-068's FULL-GAME-GAP-AUDIT.md (2026-09-11). Monster.dietRole/schoolRole (schema.prisma ~lines 2573-2581) and the peace_ward set piece (aquariumEconomy.ts ~lines 311-319, an explicit no-op today) both exist purely as forward-compatible scaffolding for economy.yaml's rivalry.emergent_rules -- nothing computes rivalry at runtime. This is a real, non-trivial feature (emergent tag-based rules per SYSTEMS.md's t-025 resolution: predator/prey, school/anchor, plus an optional authored rivals: override), not a bug fix, and it's the prerequisite for t-074's first_rivalry_resolved milestone and the "first_rivalry_resolved" leaderboard-adjacent landmark. FOR SILAS: confirm this is still wanted for v1 polish (milestone m3) rather than deferred past ship -- if deferred, close this as won't-do with a note and drop the first_rivalry_resolved half of t-074 rather than leaving it open indefinitely. Soft gate: other cthulhuquarium work may continue in parallel while this is decided.
+
+    First rivalry subsystem slice implemented: pure emergent/authored/same-species rivalry evaluator with Peace Ward suppression and focused tests. Runtime tick wiring and rivalry-resolved milestone remain continuation work.
+  updated: '2026-09-11T17:17:07Z'
   claimed_by: 2026-09-11T162044Z-cthulhuquarium-t-075-k9r3
   claimed_at: '2026-09-11T16:20:44Z'
 
