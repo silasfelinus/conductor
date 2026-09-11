@@ -1415,3 +1415,92 @@ no other binaries touched, no re-renders requested for the 3 rejected slots).
    re-derivation once the Kontext engine issue is resolved.
 
 Re-arming to `ready` (recurring), releasing the claim.
+
+---
+
+## 2026-09-11 (scheduled Conductor session, cycle 2)
+
+**Kontext engine check:** re-checked `ai-art-academy/t-079` before touching any BW path
+-- still `status: needs-human`/`soft_gate: true`, `updated: 2026-09-09`, unresolved. Not
+attempting `generate-bw` on this book this pass either.
+
+**Hollywood Recast creative review, slice 2 (hwr-011 through hwr-028, 18 slots):**
+reviewed all 18 rendered color candidates against their prompts.
+
+**Accepted (9), `accept-color` run live for each:**
+- **hwr-011 (The Gentle Giant Visitor)** -- colossal weathered robot kneeling between
+  apartment buildings, one finger supporting the kite string, balconies of onlookers,
+  tiny police cars arriving late; matches.
+- **hwr-013 (High Noon Marshal)** -- Indigenous woman marshal, calm stance, tool belt,
+  braids and silver jewelry, clockwork bull with a clock-face head and brass sparks,
+  distinct bystander silhouettes; matches.
+- **hwr-015 (Prince of the Deep)** -- powerful merman prince, fin crown, beard, manta-
+  ray/lionfish tail, choir of sea creatures in a drowned theater, cobalt/coral/gold
+  palette; matches.
+- **hwr-016 (The Verdict)** -- wheelchair-using attorney in a vivid tailored suit holding
+  a small mechanical device, holographic reconstruction filling the ceiling, layered
+  courtroom reactions; matches.
+- **hwr-018 (Nebula Crooner)** -- four-armed orchid-mantis alien crooner, floating
+  musicians, purple/amber/turquoise cabaret palette; matches (patrons read as human
+  rather than "many species," a minor miss against the dominant creative element).
+- **hwr-019 (The House on Marigold Hill)** -- Black woman heiress with a natural silver
+  afro, lantern, decaying marigold-covered mansion, boots beneath an heirloom gown,
+  bolt-cutter-equivalent tool; matches.
+- **hwr-020 (Director of Monsters)** -- tiny furious older woman director in a safari
+  vest commanding a city-sized rubber monster by megaphone, crew tugging visible cables,
+  collapsing miniature buildings; matches.
+- **hwr-024 (The Stunt Swordmaster)** -- elderly Japanese woman stunt coordinator, calm
+  and centered, sword catching a sunrise glint, backlot rooftop chaos; matches.
+- **hwr-026 (Champion in the Mirror)** -- older woman heavyweight with taped hands and
+  boxing gear, dressing-room mirror reflection already standing in the ring; matches.
+
+**Not accepted (9), reasoning recorded on each proposal's `notes:` in
+`sets/hollywood-recast/proposals.yaml`:**
+- **hwr-012 (Last Train, First Kiss)** -- shows a handshake, not the prompt's central
+  "finally kiss" hook.
+- **hwr-014 (Chrome Thunder)** -- rider is conventionally slender, not "fat...broad body"
+  as explicitly cast; same pattern as hwr-002.
+- **hwr-017 (Casino Grandmother)** -- woman shown reads as white/Caucasian, not the
+  prompt's explicit East Asian casting.
+- **hwr-021 (The Silent Mechanic)** -- mechanic stands beside the car rather than hanging
+  from underneath it, reads as a man rather than "stocky woman," palette doesn't match
+  the called-for sepia/teal/red accents.
+- **hwr-022 (Disco Exorcist)** -- woman shown reads as young/toned, not "broad, middle-
+  aged" as explicitly cast; same pattern as hwr-002/hwr-014.
+- **hwr-023 (Whiteout Expedition)** -- rope-anchor climber reads as a conventional man,
+  not the prompt's explicit "bearded woman" casting.
+- **hwr-025 (Escape from Center Ring)** -- the two aerialists are shown as fully separate
+  individuals with no physical connection, missing the conjoined-twin premise entirely.
+- **hwr-027 (The Peacock Prince)** -- prince isn't soft/round-bodied or jeweled-bearded,
+  isn't lounging sideways, and the key recipient isn't disguised as a gardener -- several
+  of the prompt's named casting/staging choices are missing at once.
+- **hwr-028 (End-of-the-World Road Trip)** -- car holds one older woman, a robot, and a
+  bearded man driving, not the prompt's explicit "older lesbian couple" plus their robot
+  mechanic.
+
+Full reasoning per slot in `sets/hollywood-recast/proposals.yaml`.
+
+**Process note:** `manage_coloring_book_production.py --operation accept-color` required
+`pip3 install Pillow` again this session (mechanical_check's PIL import) -- the same
+recurring, non-persistent sandbox gap logged on every prior pass.
+
+Verification: `validate_roadmaps.py` clean; `coloring_proposal_status.py` before/after
+(Hollywood Recast accepted color/BW 7/0 -> 16/0, other two books unchanged);
+`coloring_queue_status.py --book hollywood-recast` shows `queue_integrity_safe: true`,
+`recommended_action: complete`, 0 duplicate job/entry ids; `git diff --stat` reviewed
+before committing (`color-art-jobs.yaml` queue-state text, `hollywood-recast/proposals.yaml`
+notes/accepted-path fields only -- no binaries touched, no re-renders requested for the
+9 rejected slots).
+
+**For the next pass:**
+1. Do not resume `generate-bw` on this project until `ai-art-academy/t-079`'s Kontext
+   engine corruption bug is confirmed fixed -- re-check that task's status first.
+2. Continue Hollywood Recast creative review from hwr-029 onward (8 slots remain
+   unreviewed); re-review the 12 rejected slots (3 from slice 1, 9 from slice 2) once
+   fresh renders exist.
+3. Kind Robots (36 slots) still entirely untouched by creative review.
+4. Monster Recast: 20 previously-rejected slots still await re-review once fresh
+   renders exist; mr-016/mr-020 need BW re-derivation once the Kontext engine issue is
+   resolved.
+
+Re-arming to `ready` (recurring), releasing the claim.
