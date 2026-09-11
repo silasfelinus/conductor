@@ -3774,3 +3774,52 @@ tasks:
   claimed_at: '2026-09-09T15:06:34Z'
   updated: '2026-09-09T15:17:37Z'
   implementation_pr: 'silasfelinus/kind_robots#2561'
+- id: t-127
+  milestone: m6
+  title: Widen the one-header rule to catch title blocks that avoid <h1>, then work the five pages
+  status: ready
+  gate_human: false
+  owner: worker
+  stakes: reversible
+  passes: 0
+  note: >-
+    Filed 2026-09-11 from a real miss Silas caught by eye. Looking at /admin/scene-animator for the
+    first time (its source mount had been unconfigured, so the page had only ever 503'd) he reported:
+    "lacking a background container, the title and description if almost impossible to read."
+
+    The cause was not a missing container. The page was rendering its own title block -- an "Admin
+    production" eyebrow, a `text-3xl font-black` "Scene Animator", and a two-line description -- on
+    top of the shell header that already renders title and subtitle from
+    content/channels/admin/scene-animator.md frontmatter. A triplicate. It was placed in a
+    `.kr-toolbar`, which is a bare flex row with no surface of its own, so three lines of duplicated
+    copy landed directly on the page's background art. Fixed in kind_robots#2638 by deleting the
+    block, which is what THE HEADER RULE in tailwind.css has said to do since t-004.
+
+    THE ACTUAL DEFECT IS IN THE RULE'S ENFORCEMENT. verifyLayoutContract.ts's `one-header` check
+    matches a literal `<h1>` (its own title string says so: "page components rendering their own
+    <h1>"). Scene Animator's block was built from `<p class="text-3xl font-black">`, so it did
+    precisely what the rule forbids while passing the check clean. The rule is enforcing its letter
+    and missing its intent, which is exactly the class of gap this project exists to close -- a
+    consistency rule that reports green while the surface it governs drifts.
+
+    DO: widen `one-header` to recognise a page-level title block regardless of tag. A page component
+    rendering a large-type, heavy-weight heading line (the `text-2xl`/`text-3xl` + `font-black`
+    shape, plus an eyebrow/description stack beneath it) is a duplicate shell title whether it uses
+    `<h1>`, `<p>`, or a `<div>`. Take care to distinguish that from a GENUINE in-page heading -- a
+    section title inside a panel, a card headline, a dialog title -- which is legitimate and must
+    keep passing. If the distinction cannot be drawn reliably from markup alone, prefer flagging
+    only blocks that sit in the page component's FIRST header/toolbar element, which is where a
+    duplicated shell title actually appears, over a broad type-size sweep that would bury the signal
+    in false positives. Ratchet the rule like the others so existing violations are recorded rather
+    than blocking, then burn them down.
+
+    THE FIVE KNOWN PAGES, found by grepping `text-3xl font-black`/`text-2xl font-black` under
+    pages/ -- 5 of 15 page files: pages/admin/scene-animator.vue (ALREADY FIXED in kind_robots#2638,
+    keep as the worked example), pages/users/[id].vue, pages/email-confirmation.vue,
+    pages/play/challenges/leaderboard.vue, pages/play/challenges/[slug].vue. Each needs its own look
+    before editing: check whether the page's own content frontmatter already supplies a title and
+    subtitle, and only remove the in-page block where it genuinely duplicates the shell. A page whose
+    heading says something the shell does not is not a violation, it is a case the widened rule must
+    be written not to flag. That grep is a starting set, not the contract -- the widened rule is,
+    and it may find more.
+  updated: '2026-09-11T13:00:00Z'
