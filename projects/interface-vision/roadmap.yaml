@@ -3716,11 +3716,11 @@ tasks:
 - id: t-124
   milestone: m5
   title: "Decide: name the p-5/p-4 no-shadow rounded-3xl surface as a kr-* primitive, or leave it hand-rolled"
-  status: needs-human
+  status: done
   soft_gate: true
   passes: 0
   stakes: reversible
-  note: |-
+  note: >-
     FOR SILAS: t-104 slice 34 (kind_robots#2328) migrated the shadow-sm variant of the
     rounded-3xl page-section shape to the new kr-panel-section primitive (t-123). While
     doing that it found a second, distinct repeated shape: `rounded-3xl border
@@ -3743,6 +3743,21 @@ tasks:
     (c) propose a different name/shape. Either way, set approved_by_human: true and
     status: done with your choice recorded in this note.
     Kaizen suggestion filed from t-104 slice 34 (kind_robots#2328).
+
+    DECIDED BY SILAS, 2026-09-11 (in session): "that interface vision question should be handled. make it a primitive, I think that's what you are asking but it's a silly hangup. it should have been cleared a long time ago."
+
+    He is right, and more right than he knew: THE WORK WAS ALREADY DONE. This gate has been asking him to decide something that had already been decided and executed. Verified against kind_robots main at close time:
+
+    - `.kr-panel-section-flat` exists in assets/css/tailwind.css (`rounded-3xl border border-base-300 bg-base-100 p-4`), added by interface-vision/t-104 slice 131 with a comment explaining it as a deliberate sibling of `.kr-panel-section` rather than a drifting duplicate.
+    - It is used in exactly the ten occurrences across the five files this task named: watchlist-browse.vue x4, coloring-book-package-readiness.vue x2, coloring-book-cover-studio.vue, coloring-book-studio.vue x2, coloring-book-readiness.vue.
+    - ZERO hand-rolled occurrences of either `rounded-3xl border border-base-300 bg-base-100 p-4` or the `p-5` no-shadow variant remain anywhere in the repo.
+    - The `p-5` half of the original question turned out not to need its own name: every surviving rounded-3xl/p-5 surface is a materially different shape (white/25 glass on login-page, primary/30 on shopping-cart, warning/40 on packmaker-admin-panel, borderless on watchlist-entry-detail and project-front-page), not the base-300/base-100 family this task was about. Naming a primitive for it would have invented a shared abstraction over things that are not the same shape.
+
+    So the answer to "name it or leave it hand-rolled" is: named, adopted, and nothing is hand-rolled. No code change was needed to close this. `.kr-panel-section` (42 uses) and `.kr-panel-section-flat` (10 uses) are both live primitives.
+
+    STALE-GATE LESSON, the fourth of this class found on 2026-09-11: a decision gate whose subject gets resolved by ordinary work elsewhere has nothing watching it. t-104's slice 131 named the primitive and migrated every call site, and this task kept asking Silas to choose. audit_human_gates.py reports gates but never re-checks whether a gate's premise still holds. Worth folding into conductor/t-149's scope or a sibling check -- the same shape as rainbow-butterflies/t-027 (blocker resolved by an outage passing), scene-animator/t-005 and media-watchlist/t-018 (presented for acceptance while broken), and the brainstorm-generation-contract regex left stale by PR #2507.
+  updated: '2026-09-11T10:47:20Z'
+  approved_by_human: true
 
 - id: t-125
   milestone: m5
