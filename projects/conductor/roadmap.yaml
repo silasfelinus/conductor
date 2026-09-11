@@ -5449,5 +5449,34 @@ tasks:
     `audit_human_gates.py` cannot produce on its own (it reports gates flat, with no priority context).
   updated: '2026-09-11T08:35:00Z'
   owner: worker
+
+- id: t-150
+  milestone: m2
+  title: Extend check_pr_merged_drift.py to name an unmerged worker/* branch when a claimed/review task has no PR at all
+  status: ready
+  stakes: reversible
+  passes: 0
+  note: >-
+    Filed 2026-09-11 (conductor scheduled Agent run) from cthulhuquarium/t-076. A prior session set
+    `status: review` on t-076 with a note describing a script it had written, but the actual commit was
+    left sitting on an un-PR'd branch (`worker/cthulhuquarium-t-076-20260911T141847Z-r4m9` in
+    kind_robots) -- no PR ever opened, so the work was invisible to review. `check_pr_merged_drift.py`
+    correctly flagged the task as unverifiable (its GitHub title-text search found nothing, since there
+    was genuinely no PR to find), which is exactly why this session went looking by hand and found the
+    stranded branch and opened kind_robots#2629 from it.
+
+    TO BUILD: when a claimed/review task's implementing PR search comes back empty, have the script take
+    one more step before reporting "could not verify" -- list open branches in the relevant repo(s)
+    matching `worker/<project>-<task-id>-*` or `<project>-<task-id>` and, if one exists with no open PR
+    against it, name it explicitly in the finding (e.g. "no PR found, but branch X has unmerged commits
+    and no open PR -- likely an un-PR'd close-out"). This turns a generic "could not verify, check by
+    hand" into a specific, actionable pointer, the same way this session's manual
+    `list_branches`/`list_commits` detour worked, without requiring a human or agent to repeat that
+    detour every time. Advisory only -- never auto-opens a PR itself, since that decision (is the branch
+    real, safe, on-task) still needs judgment; it only needs to surface the candidate. kind_robots is
+    already checked via the GitHub API by this script's existing repo-scanning code path, so reuse that
+    rather than adding a new transport.
+  updated: '2026-09-11T16:00:00Z'
+  owner: null
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
