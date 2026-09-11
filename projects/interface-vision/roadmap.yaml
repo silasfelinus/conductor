@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3371,8 +3371,20 @@ tasks:
     Bounded slice: migrate the two bare h-4 w-4 glyphs in sample/sample-interact.vue.txt
     (scaffold template, out of the *.vue codemod's scope) to the geometry-equivalent kr-
     icon-4 primitive, per slice 221's flagged follow-up. No behavior or geometry change.
-  updated: '2026-09-11T02:31:45Z'
-  implementation_pr: 'silasfelinus/kind_robots#2603'
+
+    Slice 222 merged as silasfelinus/kind_robots#2605 (squash 6de5a97). Migrated the two
+    remaining bare h-4 w-4 glyphs in sample/sample-interact.vue.txt (arrow-left back-button,
+    copy-button) to the geometry-equivalent kr-icon-4 primitive -- this .vue.txt scaffold
+    template sat outside kr_icon_4_codemod.py's *.vue-only scope, flagged as a separate
+    bounded follow-up by slice 221's audit. One file, +2/-2, no geometry or behavior change.
+    All 44 kind_robots PR checks green (Contract verifiers job, ~333 named steps, took
+    several minutes), mergeable_state clean at merge time. Return the recurring consistency
+    umbrella to ready for the next bounded slice. Kaizen for next slice: the .kr-icon-4 doc
+    comment in assets/css/tailwind.css is stale (still says '13 files / 29 occurrences
+    remain' predating slices 214-220 which closed the family for live *.vue files) -- a
+    future slice should refresh it.
+  updated: '2026-09-11T02:36:54Z'
+  implementation_pr: 'silasfelinus/kind_robots#2605'
   retry_context: ''
   owner: worker
   claimed_by: 2026-09-11T023100-scaffold-txt-glyph
