@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -3390,8 +3390,13 @@ tasks:
     at 2026-09-11T02:36:29Z -- confirmed via check_pr_merged_drift.py. No new work was found
     in progress for a further slice. Returning the recurring consistency umbrella to ready
     and clearing the stale claim so the next session can pick up slice 223.
-  updated: '2026-09-11T03:36:54Z'
-  implementation_pr: 'silasfelinus/kind_robots#2605'
+
+    Slice 223: refreshed the stale .kr-icon-4 doc comment in assets/css/tailwind.css (said
+    '13 files / 29 occurrences remain', predating slices 215-222 which fully closed the
+    family). Re-ran kr_icon_4_codemod.py: 0 remaining candidates. Doc-only change, no
+    product code touched. Opened silasfelinus/kind_robots#2606.
+  updated: '2026-09-11T03:42:49Z'
+  implementation_pr: 'silasfelinus/kind_robots#2606'
   retry_context: ''
   owner: worker
   claimed_by: 2026-09-11T034700Z-interface-vision-t-104-slice223
