@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3373,12 +3373,25 @@ tasks:
     Reconciling per the umbrella's own established convention: returning the recurring
     consistency sweep to ready for the next bounded slice, clearing the stale claim. No code
     change; bookkeeping only.
-  updated: '2026-09-11T09:42:23Z'
+
+    Slice 230 merged as silasfelinus/kind_robots#2616 (squash
+    28ef8b24653d44d13a5bb5bfb7631befcdf86222) from exact head
+    fa32305c2b653ea9e7e5f3d8aa4f46060aa8a28b. components/model-builder/model-builder-source-
+    picker.vue's three fallback-icon glyphs (empty-state h-6 w-6, gallery-view h-7 w-7,
+    grid-view h-5 w-5, all text-base-content/25 or /30) now compose the shared kr-icon-6/kr-
+    icon-7/kr-icon-5 size primitives with their existing semantic color utility, same
+    composition-only rule as slices 225-229. No color, behavior, geometry, or icon-name
+    change. Verified vue-tsc --noEmit clean, eslint on the changed file clean, prettier
+    --check flagging the same pre-existing drift before/after (confirmed via git stash), and
+    test:layout-contract holding with 0 new violations. All 46 kind_robots PR checks passed,
+    mergeable_state: clean at merge time. Return the recurring consistency umbrella to ready
+    for the next bounded slice.
+  updated: '2026-09-11T09:46:04Z'
   implementation_pr: 'silasfelinus/kind_robots#2616'
   retry_context: ''
-  owner: worker
-  claimed_by: 20260911T093800Z-iv-t104-slice230
-  claimed_at: '2026-09-11T09:37:05Z'
+  owner: null
+  claimed_by: null
+  claimed_at: null
 
 - id: t-123
   milestone: m5
