@@ -5478,5 +5478,46 @@ tasks:
     rather than adding a new transport.
   updated: '2026-09-11T16:00:00Z'
   owner: null
+- id: t-151
+  milestone: m2
+  title: Guard against recurring-task note fields growing large enough to blow the Kind-Robots projection payload limit
+  status: ready
+  stakes: reversible
+  passes: 0
+  note: >-
+    Filed 2026-09-11 (conductor scheduled Agent run) from interface-vision/t-104 slice 234's close-out.
+    That task's `note:` field had grown to ~395KB across 234 appended slice-history paragraphs and was
+    the single dominant contributor pushing the whole Kind-Robots projection snapshot
+    (`scripts/sync_kind_robots_projection.py`) to 4,000,134 bytes against its 4,000,000-byte
+    `MAX_PAYLOAD_BYTES` transport limit, failing `tests/test_sync_kind_robots_projection.py` and
+    `scripts/sync_projects.py` in CI on conductor PR #4117. Fixed in that PR by archiving the full
+    history to `projects/interface-vision/T104-HISTORY.md` and trimming the live note to a short
+    pointer (see that PR and file for the pattern).
+
+    This is not an isolated case: a repo-wide sweep of every `projects/*/roadmap.yaml` for
+    `note:` fields over 20,000 characters found several other large ones on similarly recurring
+    tasks, measured 2026-09-11 -- model-builder/t-029 (~118KB), storybook/t-010 (~63KB),
+    dream-cycle/t-006 (~38KB), animation-manager/t-006 (~29KB), ai-art-academy/t-044 (~27KB),
+    kind-robots/t-022 (~23KB), interface-vision/t-105 (~23KB), rainbow-butterflies/t-027 (~22KB),
+    kind-robots/t-011 (~21KB). None of these individually threaten the 4MB ceiling today (the total
+    snapshot is back down to ~3.6MB after the t-104 trim), but the growth pattern is the same on
+    every one: a `recurring: true` task whose Worker/Reviewer close-out convention appends full
+    prose history to the live roadmap `note:` field every cycle, forever. The next one to cross a
+    few hundred KB will trip the same CI failure with no advance warning -- exactly what happened to
+    t-104 with zero warning before the limit was hit.
+
+    TO BUILD: add a lightweight guard, either (a) a fast CI/pre-merge check (candidate home:
+    alongside `validate_roadmaps.py` or a new script in the same "Static checks"/"Validate roadmap
+    YAML" CI job) that warns -- not blocks -- when a task's `note:` field crosses a size threshold
+    (suggest 50-100KB) so a session sees it well before the aggregate snapshot is at risk, or (b) a
+    periodic sweep (could ride the existing `check_milestone_status_drift.py`-style advisory-exit-1
+    pattern) that reports every roadmap task over the threshold the way this note's own ad hoc
+    Python sweep just did, so a human/session can proactively archive it the same way t-104 was
+    archived here. Either should point whoever hits the warning at this task's T104-HISTORY.md
+    pattern (archive file + short pointer note) as the fix, not just flag the symptom. Advisory
+    only -- never auto-truncates a note itself, since deciding what's safe to move to an archive
+    file needs the same judgment this session applied to t-104.
+  updated: '2026-09-11T21:05:00Z'
+  owner: null
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
