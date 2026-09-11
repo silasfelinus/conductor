@@ -3160,7 +3160,20 @@ tasks:
     with the client-side fallback active. Use the same authoring/generation process and the
     same delivery pattern (bundled Vite assets under assets/images/cthulhuquarium/, matched
     by cthulhuquarium-fish-<slug> filename) as the other 119.
-  updated: '2026-09-11T15:38:45Z'
+
+    PROGRESS (2026-09-11, same session): committed a 32-entry art-generate.yaml queue
+    (silasfelinus/conductor#4101, merged) with prompts read verbatim from the cthulhuquarium
+    fish bible for these exact 32 species. Dispatched auto-art-generate.yml manually (run
+    https://github.com/silasfelinus/conductor/actions/runs/34617777502) to drain it rather
+    than waiting for the next 6h cron tick -- same precedent as t-044. NEXT: once that run
+    completes, verify the 32 renders landed on-style (spot check a couple against the bible
+    art_prompt tone), confirm distribute_images.py routed them to
+    projects/cthulhuquarium/art/cthulhuquarium-fish-<slug>.webp, then deliver into
+    kind_robots (bundled Vite assets under assets/images/cthulhuquarium/, same pattern as
+    kind_robots#2620) and wire into utils/cthulhuquariumArt.ts. Left status: claimed (not
+    done) -- rendering is async and this session cannot block on a 150-minute-timeout
+    workflow.
+  updated: '2026-09-11T15:43:38Z'
   claimed_by: 2026-09-11T163000Z-cq-t073-agent
   claimed_at: '2026-09-11T15:38:45Z'
 
