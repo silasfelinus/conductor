@@ -1,0 +1,8 @@
+version: 1
+project: dream-cycle
+task: t-006
+operation: review
+session: 2026-09-11T202700Z-dream-cycle-t006-creativity-c7e4
+updated: '2026-09-11T20:39:00Z'
+note: >-
+  Audited Daily Dream creativity enforcement after The Drowned Compact surfaced. Root cause: buffered proposals authored before the September 7 creative-entropy pass could still build because version-gated proposal validation grandfathered their old seed plan. Implementation branch worker/dream-cycle-t006-creativity-20260911-c7e4 bumps the entropy contract, rejects stale queued steering proposals at consumption, cools Facets that request recently saturated letter/missive/contract machinery, and hard-rejects the overused three-word The X Y title silhouette, with focused regression coverage.
