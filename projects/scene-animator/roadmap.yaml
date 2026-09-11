@@ -104,7 +104,7 @@ tasks:
 
   - id: t-005
     title: "FOR SILAS: confirm the admin Scene Animator surface to close out this finished project"
-    status: waiting
+    status: needs-human
     passes: 0
     stakes: reversible
     note: >-
@@ -144,6 +144,18 @@ tasks:
       container. Filed t-006 for that, and this task now waits on it. Do not re-present this
       for confirmation until Scene Animator actually lists folders in production -- presenting
       a broken surface for acceptance is what wasted his time this round.
+
+      UNBLOCKED 2026-09-11: t-006 is resolved. Silas recreated the container with ANIMATE_PATH
+      and the read-only animate bind, and /api/scene-animator/health now reports "source root
+      is reachable" with source: ANIMATE_PATH. The surface no longer errors, so this
+      confirmation is actually performable again. FOR SILAS: the tree is currently EMPTY (0
+      folders, 0 images), which is expected rather than broken --
+      /mnt/user/pc/kindrobots/animate has no scene subfolders yet. You can confirm the admin
+      surface now and see an empty picker, or drop one folder of stills (.png .jpg .jpeg .webp
+      .gif) in first and confirm against real content, which is the more useful check since it
+      exercises the folder listing and the preset/enqueue path rather than just the empty
+      state. Either way this is the last open item for the project apart from t-007's fallback
+      hardening.
     updated: '2026-09-09T06:05:00Z'
     claimed_by: 2026-09-09T055100Z-scene-animator-t-005-gpt56sol-navfix
     claimed_at: '2026-09-09T05:51:00Z'
@@ -152,7 +164,7 @@ tasks:
   - id: t-006
     milestone: m3
     title: Make Scene Animator's source root reachable in production, or fail legibly
-    status: needs-human
+    status: done
     gate_human: true
     owner: worker
     stakes: reversible
@@ -180,4 +192,66 @@ tasks:
       must point at a directory mounted into the container, and distinguish "unset" from "set but
       missing" from "present but unreadable", which sceneAnimator.ts already tracks internally and then
       flattens into one message. An admin who sees this should know what to fix.
-    updated: '2026-09-11T10:30:00Z'
+
+      RESOLVED BY SILAS, 2026-09-11, in session. He recreated the Kind Robots container on Alexandria with the two settings this task was asking for, and the health endpoint now confirms it live:
+
+        GET /api/scene-animator/health ->
+        "Scene Animator source root is reachable (0 folders, 0 images)"
+        root: /app/animate   source: ANIMATE_PATH   latencyMs: 0
+
+      ROOT CAUSE, for the record. This was never a code defect and never a missing feature. docker-compose.yml already had the right shape -- ANIMATE_PATH=/app/animate plus a read-only bind of the host animate tree, with verifySceneAnimatorDeploymentContract.ts asserting both and explicitly forbidding an :rw mount. The running container simply predated that: Silas's Unraid DockerMan template carried neither the animate bind nor the variable, so getSceneAnimatorRoot() fell through both configured tiers to its last-resort fallback, path.resolve(process.cwd(), 'animate') = /app/animate, which did not exist. The 503 was accurate; the deployment had drifted from the compose file that documents it.
+
+      The same template was also missing IMAGES_PATH as a VARIABLE (it had only the volume bind). That was provable from the error text rather than guessed: with IMAGES_PATH set, the second tier would have resolved to /app/.output/public/animate, not /app/animate. Silas set both variables in the same pass.
+
+      WHAT HE RAN (kept here because the Unraid template is not version-controlled -- it lives in DockerMan on the host, which is exactly how it drifted from compose in the first place):
+        -e 'ANIMATE_PATH'='/app/animate'
+        -e 'IMAGES_PATH'='/app/.output/public/images'
+        -v '/mnt/user/pc/kindrobots/animate/':'/app/animate':'ro'
+
+      SILAS'S ARCHITECTURAL REQUIREMENT IS SATISFIED, and was already the design. He raised it directly: "due to the sensitive mature nature of some animation production, it shouldn't be a part of the kind robots directory, but rather part of comfy, or the media folders." /app/animate is only a mount point inside the container; the files live on the media share at /mnt/user/pc/kindrobots/animate, mounted READ-ONLY, so nothing mature is ever in the repo, the image, or writable by the app. Pointing it at a Comfy tree instead is a one-field change to the host path with no code involvement.
+
+      CURRENT STATE: reachable, 0 folders / 0 images -- the mount works and the tree is simply empty. Scene Animator expects one subfolder per scene containing stills (.png .jpg .jpeg .webp .gif); loose images at the root register as a single unnamed folder. Dropping content in makes folders appear in the picker with no further configuration.
+
+      The agent-actionable half of this task -- making the failure legible by naming ANIMATE_PATH and distinguishing unset / set-but-missing / present-but-unreadable -- is now LOWER VALUE than when it was filed, because `source` already reports which tier answered and that is the distinction that mattered here. Worth keeping as a small improvement, not as a gate. One genuine latent trap remains and is deliberately NOT fixed in this close-out: the third-tier fallback silently resolves inside the application working directory, which for mature content is the worst possible default -- if anyone ever created /app/animate in the image it would work and quietly store that content there. Unreachable under this compose, but it should fail loudly naming ANIMATE_PATH instead. Filed as its own concern rather than reopening this task.
+    updated: '2026-09-11T21:15:26Z'
+    approved_by_human: true
+  - id: t-007
+    milestone: m3
+    title: Fail loudly when ANIMATE_PATH is unset instead of resolving inside the app directory
+    status: ready
+    gate_human: false
+    owner: worker
+    stakes: reversible
+    passes: 0
+    note: >-
+      Filed 2026-09-11 out of t-006's close-out, deliberately as its own task rather than folded
+      into that fix. getSceneAnimatorRoot() resolves in three tiers: ANIMATE_PATH, then an
+      IMAGES_PATH-derived sibling, then path.resolve(process.cwd(), 'animate') -- which inside the
+      container is /app/animate, a path in the APPLICATION WORKING DIRECTORY.
+
+      That last tier is the wrong default for this feature specifically. Silas's stated requirement
+      (2026-09-11): "due to the sensitive mature nature of some animation production, it shouldn't
+      be a part of the kind robots directory, but rather part of comfy, or the media folders." The
+      fallback quietly points at exactly the place he does not want it. Today it is harmless because
+      nothing exists at that path and the deployment binds a read-only host tree over it -- but if
+      anyone ever created /app/animate inside the image, Scene Animator would silently start working
+      and quietly store or read mature content from inside the app directory. A default that fails
+      is much better here than a default that succeeds in the wrong place.
+
+      DO: drop the cwd fallback. When neither ANIMATE_PATH nor IMAGES_PATH is set, throw the same
+      503 shape the missing-mount case already produces, with a message naming ANIMATE_PATH and
+      saying it must point at a directory mounted into the container. Keep the ANIMATE_PATH and
+      IMAGES_PATH-derived tiers exactly as they are.
+
+      Note verifySceneAnimatorHealth.test.ts currently asserts that with neither env var set the
+      source reports 'fallback' -- that assertion encodes the behaviour being removed and must be
+      updated in the same change, not worked around. The SceneAnimatorRootSource union should lose
+      its 'fallback' member with it.
+
+      Lower-priority companion, from t-006's original agent-actionable half: readSceneAnimatorRootStatus
+      flattens three distinguishable conditions into one string -- unset, set-but-missing, and
+      present-but-unreadable. It already tracks enough to tell them apart. Worth separating so an
+      admin reading the surface knows which one they have. This is smaller than it looked when t-006
+      was filed, since `source` already reports which tier answered and that was the distinction that
+      actually mattered when the mount was missing.
+    updated: '2026-09-11T12:30:00Z'
