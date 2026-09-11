@@ -37,6 +37,29 @@ def _frontmatter_value(text: str, key: str) -> str:
     return match.group(1).strip() if match else ""
 
 
+def _entropy_version_error(proposal: dict) -> str | None:
+    """Require queued steering proposals to have been seeded under today's entropy rules.
+
+    Built history remains immutable evidence, but an unbuilt proposal is still steering input.
+    Letting an old unversioned docket item build under a newer contract defeats seed cooldowns:
+    the prose validator sees the already-chosen Facets and cannot retroactively undraw them.
+    """
+    seeds = proposal.get("seed_facets")
+    raw = seeds.get("creative_entropy_version") if isinstance(seeds, dict) else None
+    try:
+        version = int(raw or 0)
+    except (TypeError, ValueError):
+        version = 0
+    current = proposals.CREATIVE_ENTROPY_VERSION
+    if version >= current:
+        return None
+    return (
+        f"proposal creative entropy version {version} predates current version {current}; "
+        "re-author it from the current brief so aquatic, semantic-family, Facet, title, and "
+        "structural cooldowns are applied before any live records are built"
+    )
+
+
 def validate_path(path: Path) -> list[str]:
     if not path.exists() or path.suffix != ".md" or path.name.startswith("_"):
         return []
@@ -52,6 +75,10 @@ def validate_path(path: Path) -> list[str]:
         return ["missing proposal date or proposal-data block"]
 
     errors = proposals.validate_proposal(proposal)
+    entropy_error = _entropy_version_error(proposal)
+    if entropy_error:
+        errors.append(entropy_error)
+
     premise_history = author.recent_premise_history(day)
     name_history = author.recent_name_history(day)
     errors.extend(

@@ -5,6 +5,7 @@ import copy
 import json
 
 import scripts.build_dream_proposal as bdp
+import scripts.check_dream_creative_contract as creative_contract
 from scripts import dream_creative_entropy as entropy
 
 
@@ -92,6 +93,7 @@ def test_seed_plan_avoids_recent_exact_facets_when_each_pool_has_room():
         catalog=catalog,
         cooldowns=set(),
         spent_facets=spent,
+        saturated_story_families=set(),
     )
     drawn = [
         facet
@@ -137,6 +139,31 @@ def test_debt_family_only_blocks_after_recent_saturation_and_without_a_drawn_req
     assert entropy.story_family_complaints(candidate, recent, explicit) == []
 
 
+def test_correspondence_contract_family_cools_after_one_recent_world():
+    recent = [
+        "A notary witnesses a treaty, and every oath becomes a contract when the signer leaves."
+    ]
+    candidate = _proposal(
+        "A missive contains the missing treaty, and a second contract changes who may sign it."
+    )
+
+    complaints = entropy.story_family_complaints(candidate, recent, candidate["seed_facets"])
+
+    assert any("letters / missives / contracts" in complaint for complaint in complaints)
+
+
+def test_semantic_seed_cooldown_avoids_facets_that_request_a_saturated_family():
+    contract = _facet("Contract Notary", "OCCUPATION")
+    fresh = _facet("Roof Acrobat", "OCCUPATION")
+
+    assert entropy.apply_semantic_family_cooldown(
+        [contract, fresh], {"correspondence-contract"}
+    ) == [fresh]
+    assert entropy.apply_semantic_family_cooldown(
+        [contract], {"correspondence-contract"}
+    ) == [contract]
+
+
 def test_grief_family_detects_different_nouns_for_the_same_emotional_engine():
     recent = [
         "A grief clerk maps every sorrow and every mourner leaves a grief-shaped fold.",
@@ -176,6 +203,13 @@ def test_deadline_facets_can_request_time_pressure_on_purpose():
     candidate = _proposal("A racer has one hour before the final gate closes.", seeds=seeds)
 
     assert entropy.structural_repetition_complaints(candidate, recent, seeds) == []
+
+
+def test_the_x_y_title_shape_is_a_hard_creative_guard():
+    assert entropy.title_shape_complaints(_proposal("Anything", title="The Drowned Compact"))
+    assert entropy.title_shape_complaints(_proposal("Anything", title="The Kindest Bite"))
+    assert entropy.title_shape_complaints(_proposal("Anything", title="Feed of the Devouring Choir")) == []
+    assert entropy.title_shape_complaints(_proposal("Anything", title="Amberglass")) == []
 
 
 def test_invented_facets_do_not_persist_a_recent_semantic_rut():
@@ -221,6 +255,17 @@ def test_new_contract_validation_is_opt_in_so_historical_bundles_do_not_retroact
     assert bdp.validate_inventions(legacy) == []
 
 
+def test_consumption_contract_rejects_unversioned_queued_proposals():
+    stale = {"seed_facets": {}}
+    current = {"seed_facets": {"creative_entropy_version": entropy.ENTROPY_VERSION}}
+
+    error = creative_contract._entropy_version_error(stale)
+
+    assert error is not None
+    assert "re-author" in error
+    assert creative_contract._entropy_version_error(current) is None
+
+
 def test_build_brief_carries_structural_title_visual_and_invention_contrast():
     brief = bdp.build_brief("2026-10-01", catalog=_catalog())
     joined = "\n".join(brief["instructions"])
@@ -230,6 +275,8 @@ def test_build_brief_carries_structural_title_visual_and_invention_contrast():
     assert "STRUCTURAL CONTRAST FOR TODAY:" in joined
     assert "TITLE CONSTRUCTION FOR TODAY:" in joined
     assert "VISUAL CONTRAST FOR TODAY:" in joined
+    assert "TITLE SHAPE IS ENFORCED" in joined
+    assert "Letters, missives, contracts" in joined
     assert "seeds for FUTURE worlds" in joined
 
 
