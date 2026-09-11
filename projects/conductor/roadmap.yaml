@@ -5519,5 +5519,54 @@ tasks:
     file needs the same judgment this session applied to t-104.
   updated: '2026-09-11T21:05:00Z'
   owner: null
+- id: t-152
+  milestone: m2
+  title: "Relay reported a busy ComfyUI as down: every probe failure was classified as absent"
+  status: done
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  note: |-
+    Silas, 2026-09-11: "also, comfy is listed as down, even though it just made that image."
+
+    Correct observation, real bug. ComfyUI serves /system_stats from the same process that loads
+    models and decodes latents, and those hold the GIL for minutes at a time -- staging
+    wan2.2_ti2v_5B_fp16 (9.4 GB) is the case in the attached log. The socket stays bound and the
+    connection is accepted, so the probe neither gets refused nor gets an answer: it times out at
+    ENGINE_PROBE_TIMEOUT (10s). Both probe_engine() and check_engine() collapsed every exception to
+    the same verdict, so a working engine mid-render was reported down on the heartbeat AND blocked
+    from being claimed against.
+
+    The attached comfyui.err.log shows both halves of it: a burst of
+    `ConnectionResetError: [WinError 10054]` at 2026-09-11T15:30:34 -- those are the probe and the
+    heartbeat hanging up on ComfyUI after their own timeouts -- then `Model WanVAE prepared` 33
+    seconds later and `Model WAN22 prepared` at 15:33:28. The same stall was already documented in
+    warm_object_info_async() ("a box whose ComfyUI was mid-render ... ~3 minutes") without anyone
+    connecting it to the health verdict.
+
+    FIX (ops/home-server/relay_agent.py): classify_probe_failure() splits a TIMEOUT (listening but
+    stalled -> ENGINE_BUSY) from everything else (refused connection, resolver failure, non-2xx ->
+    ENGINE_DOWN, reported immediately exactly as before -- that is the 2026-09-02 crash-loop the
+    gate exists for and nothing about it is slow). busy_verdict() holds ENGINE_BUSY as "up" for
+    KR_ENGINE_BUSY_GRACE_SECONDS (default 300s), after which it becomes down, so a genuine wedge is
+    still caught. The gate and the heartbeat track independent busy windows because they run on
+    different threads and cadences. check_engine() is gone; send_heartbeats() now uses the same
+    classifier and passes a `note` ("busy: no answer within 10s for Ns") that the heartbeat endpoint
+    already accepted and nobody was sending, so a busy beat is distinguishable from an idle one on
+    the dashboard afterwards.
+
+    300s was chosen to clear the observed ~3-minute model-load stall with margin while staying
+    inside check_engine_heartbeat.py's 10-minute DOWN alarm: a truly wedged engine is still reported
+    within the alarm window, only a working one stops being libelled.
+
+    Coverage: tests/test_relay_engine_gate.py gains BusyEngineTests, which uses a bound socket with
+    no accept loop as the real stalled-engine shape (not a mock) -- timeout classified busy, refusal
+    and 503 still down immediately, claims continue inside the grace and stop after it, the busy
+    edge logged once rather than per-poll, a recovery clearing the window so two separate stalls
+    cannot add up, and the three heartbeat verdicts. The pre-existing caching test now patches
+    probe_engine_status(); probe_engine() is kept as a 2-tuple wrapper so the original probe
+    contract tests are unchanged.
+  updated: '2026-09-11T23:55:00Z'
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'

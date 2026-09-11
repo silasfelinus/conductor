@@ -62,6 +62,25 @@ def closed_port_url():
 
 
 @contextlib.contextmanager
+def stalled_engine():
+    """A bound socket that accepts connections and never answers.
+
+    This is what ComfyUI looks like while it stages a 9.4 GB unet into VRAM:
+    the listener is up (so nothing is refused) and the event loop is not
+    running (so nothing is served). A plain listening socket with no accept
+    loop reproduces it exactly, and it is the case the probe used to call
+    "down".
+    """
+    listener = socket.socket()
+    listener.bind(("127.0.0.1", 0))
+    listener.listen(8)
+    try:
+        yield f"http://127.0.0.1:{listener.getsockname()[1]}"
+    finally:
+        listener.close()
+
+
+@contextlib.contextmanager
 def fake_engine(status=200):
     """A localhost HTTP server standing in for ComfyUI's /system_stats."""
 
@@ -114,6 +133,149 @@ class EngineProbeTests(unittest.TestCase):
     def test_probe_uses_system_stats(self):
         relay = load_relay()
         self.assertEqual(relay.ENGINE_PROBE_PATH, "/system_stats")
+
+
+class BusyEngineTests(unittest.TestCase):
+    """A render box mid-model-load is busy, not down.
+
+    2026-09-11 — Silas: "comfy is listed as down, even though it just made that
+    image." ComfyUI serves /system_stats from the process that also loads
+    models, and staging wan2.2_ti2v_5B_fp16 (9.4 GB) holds its event loop for
+    minutes. The probe's 10s timeout expired against a perfectly healthy engine
+    and every failure was classified the same way, so the dashboard and the
+    claim gate both called it dead. comfyui.err.log carries the other side of
+    it: a burst of `ConnectionResetError: [WinError 10054]` at 15:30:34 — the
+    probe hanging up — 33 seconds before `Model WanVAE prepared`.
+
+    A refused connection still means down immediately; that is the 2026-09-02
+    crash-loop the gate above exists for, and nothing about it is slow.
+    """
+
+    SHORT_TIMEOUT = "0.25"
+
+    def test_a_timeout_is_classified_busy_not_down(self):
+        with stalled_engine() as url:
+            relay = load_relay(
+                COMFY_URL=url, KR_ENGINE_PROBE_TIMEOUT=self.SHORT_TIMEOUT
+            )
+            status, detail, latency = relay.probe_engine_status()
+        self.assertEqual(status, relay.ENGINE_BUSY, detail)
+        self.assertIsNone(latency)
+
+    def test_a_refused_connection_is_still_down_immediately(self):
+        relay = load_relay(COMFY_URL=closed_port_url())
+        status, _, _ = relay.probe_engine_status()
+        self.assertEqual(status, relay.ENGINE_DOWN)
+
+    def test_a_non_2xx_is_still_down_immediately(self):
+        """Answering 503 is not being busy — it answered, and cannot render."""
+        with fake_engine(status=503) as url:
+            relay = load_relay(COMFY_URL=url)
+            status, _, _ = relay.probe_engine_status()
+        self.assertEqual(status, relay.ENGINE_DOWN)
+
+    def test_busy_engine_keeps_claiming_inside_the_grace(self):
+        with stalled_engine() as url:
+            relay = load_relay(
+                COMFY_URL=url,
+                KR_ENGINE_PROBE_TIMEOUT=self.SHORT_TIMEOUT,
+                KR_ENGINE_PROBE_SECONDS="0",
+                KR_ENGINE_BUSY_GRACE_SECONDS="300",
+            )
+            self.assertTrue(relay.engine_available(now=1000.0))
+            self.assertTrue(relay.engine_available(now=1200.0))
+
+    def test_busy_engine_is_reported_down_once_the_grace_expires(self):
+        """A genuine wedge must not hide behind the grace forever."""
+        with stalled_engine() as url:
+            relay = load_relay(
+                COMFY_URL=url,
+                KR_ENGINE_PROBE_TIMEOUT=self.SHORT_TIMEOUT,
+                KR_ENGINE_PROBE_SECONDS="0",
+                KR_ENGINE_BUSY_GRACE_SECONDS="300",
+            )
+            self.assertTrue(relay.engine_available(now=1000.0))
+            self.assertFalse(relay.engine_available(now=1301.0))
+        self.assertTrue(
+            any("NOT claiming" in line for line in relay.logged), relay.logged
+        )
+
+    def test_busy_is_announced_once_not_every_poll(self):
+        with stalled_engine() as url:
+            relay = load_relay(
+                COMFY_URL=url,
+                KR_ENGINE_PROBE_TIMEOUT=self.SHORT_TIMEOUT,
+                KR_ENGINE_PROBE_SECONDS="0",
+                KR_ENGINE_BUSY_GRACE_SECONDS="300",
+            )
+            for tick in range(0, 200, 20):
+                relay.engine_available(now=1000.0 + tick)
+        busy_lines = [line for line in relay.logged if "BUSY" in line]
+        self.assertEqual(len(busy_lines), 1, relay.logged)
+
+    def test_recovery_clears_the_busy_window(self):
+        """Two separate stalls must not add up into a false wedge."""
+        relay = load_relay(
+            KR_ENGINE_PROBE_TIMEOUT=self.SHORT_TIMEOUT,
+            KR_ENGINE_PROBE_SECONDS="0",
+            KR_ENGINE_BUSY_GRACE_SECONDS="300",
+        )
+        with stalled_engine() as stalled:
+            relay.COMFY_URL = stalled
+            self.assertTrue(relay.engine_available(now=1000.0))
+        with fake_engine() as live:
+            relay.COMFY_URL = live
+            self.assertTrue(relay.engine_available(now=1200.0))
+        with stalled_engine() as stalled:
+            relay.COMFY_URL = stalled
+            # 400s after the FIRST stall, but only 1s into this one.
+            self.assertTrue(relay.engine_available(now=1400.0))
+
+    def test_heartbeat_reports_a_busy_engine_as_up(self):
+        """This is the line Silas actually reads on the dashboard."""
+        with stalled_engine() as url:
+            relay = load_relay(
+                COMFY_URL=url, KR_ENGINE_PROBE_TIMEOUT=self.SHORT_TIMEOUT
+            )
+            posted = []
+            relay.post_heartbeat = lambda *args, **kwargs: posted.append(
+                (args, kwargs)
+            )
+            relay.resolve_seconds = lambda _url: 0.0
+            relay.send_heartbeats()
+
+        self.assertEqual(len(posted), 1)
+        (engine, ok, _latency), kwargs = posted[0]
+        self.assertEqual(engine, "COMFY")
+        self.assertTrue(ok, "a busy engine must not be heartbeat as down")
+        self.assertIn("busy", (kwargs.get("note") or "").lower())
+
+    def test_heartbeat_still_reports_a_refused_engine_as_down(self):
+        relay = load_relay(COMFY_URL=closed_port_url())
+        posted = []
+        relay.post_heartbeat = lambda *args, **kwargs: posted.append(
+            (args, kwargs)
+        )
+        relay.resolve_seconds = lambda _url: 0.0
+        relay.send_heartbeats()
+
+        (_engine, ok, _latency), _kwargs = posted[0]
+        self.assertFalse(ok)
+
+    def test_heartbeat_reports_a_live_engine_as_up_with_no_note(self):
+        with fake_engine() as url:
+            relay = load_relay(COMFY_URL=url)
+            posted = []
+            relay.post_heartbeat = lambda *args, **kwargs: posted.append(
+                (args, kwargs)
+            )
+            relay.resolve_seconds = lambda _url: 0.0
+            relay.send_heartbeats()
+
+        (_engine, ok, latency), kwargs = posted[0]
+        self.assertTrue(ok)
+        self.assertIsInstance(latency, int)
+        self.assertIsNone(kwargs.get("note"))
 
 
 class EngineGateTests(unittest.TestCase):
@@ -175,8 +337,8 @@ class EngineGateTests(unittest.TestCase):
         with fake_engine() as url:
             relay = load_relay(COMFY_URL=url, KR_ENGINE_PROBE_SECONDS="15")
             calls = []
-            real = relay.probe_engine
-            relay.probe_engine = lambda *a, **k: (calls.append(1), real())[1]
+            real = relay.probe_engine_status
+            relay.probe_engine_status = lambda *a, **k: (calls.append(1), real())[1]
 
             relay.engine_available(now=1000.0)
             relay.engine_available(now=1005.0)
