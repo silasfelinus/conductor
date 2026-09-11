@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3440,7 +3440,30 @@ tasks:
     input-bordered input-xs (11 exact occurrences) and select select-bordered w-full bg-
     base-200 (10 exact occurrences) are the next DaisyUI form-control size/variant
     candidates of the same shape.
-  updated: '2026-09-11T20:38:26Z'
+
+    Slice 234 merged as silasfelinus/kind_robots#2635 (squash
+    ea4c0aa063b87cca6bb85b8b673c3598a7c568b2). Per slice 233's kaizen note, ran the next
+    full-repo class-frequency survey for the remaining DaisyUI form-control candidates.
+    Added .kr-input-xs (input input-xs) -- compact sibling of .kr-input-sm, previously hand-
+    rolled as input input-bordered input-xs (input-bordered is the same dead legacy v4 class
+    .kr-input-sm already drops); migrated all 11 exact occurrences across 2 files (build-
+    bench.vue, stylist-client-gallery.vue). Added .kr-select-muted (select w-full bg-
+    base-200) -- select counterpart of .kr-input-muted, previously hand-rolled as select
+    select-bordered w-full bg-base-200 (select-bordered dropped the same way); migrated all
+    10 exact occurrences across 8 files. Only exact-string class matches touched; 13 near-
+    miss sites with extra riding classes left out of scope. No color, behavior, API, schema,
+    store, route, or layout geometry change at any of the 21 sites. Verified vue-tsc
+    --noEmit clean, eslint on all 11 changed files showing the same 7 pre-existing findings
+    before/after (git-stash-confirmed), prettier --check showing the same 7-file pre-
+    existing drift before/after (one incidental reformat in add-checkpoint.vue applied via
+    prettier --write), test:layout-contract holding with 0 new violations, test:lint-ratchet
+    holding at 334/-58. All 48 kind_robots PR checks green, mergeable_state clean at merge
+    time. Return the recurring consistency umbrella to ready for the next bounded slice.
+    Kaizen for the next slice: both DaisyUI form-control candidates named in slice 233's
+    kaizen note are now closed; a fresh full-repo class-frequency survey (outside kr-
+    container/kr-icon-*/kr-img-cover/kr-input-*/kr-select-*/kr-checkbox-*/kr-textarea-*) is
+    needed to find the next target.
+  updated: '2026-09-11T20:50:23Z'
   implementation_pr: 'silasfelinus/kind_robots#2635'
   retry_context: ''
   owner: worker
