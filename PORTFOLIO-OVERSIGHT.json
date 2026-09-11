@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-09-11T11:31:21.323276+00:00",
+  "generated_at": "2026-09-11T16:35:56.935917+00:00",
   "summary": {
     "status": "action-needed",
     "roadmap_errors": 0,
-    "roadmap_warnings": 2,
+    "roadmap_warnings": 4,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -13,7 +13,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-09-10T09:34:43+00:00",
-    "hours_since": 25.94,
+    "hours_since": 31.02,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "OpenAI commit activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit."
@@ -30,23 +30,37 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-09-11T11:31:21.323282+00:00",
+    "generated_at": "2026-09-11T16:35:56.935924+00:00",
     "summary": {
       "roadmaps": 52,
-      "active_projects": 26,
+      "active_projects": 23,
       "continuous_projects": 2,
-      "tasks": 1409,
-      "ready": 34,
-      "waiting": 57,
-      "needs_human": 36,
-      "in_progress": 1,
-      "done": 1264,
+      "tasks": 1418,
+      "ready": 33,
+      "waiting": 53,
+      "needs_human": 31,
+      "in_progress": 3,
+      "done": 1281,
       "errors": 0,
-      "warnings": 2,
-      "info": 13
+      "warnings": 4,
+      "info": 18
     },
     "errors": [],
     "warnings": [
+      {
+        "severity": "warning",
+        "code": "SOFT_NEEDS_HUMAN",
+        "project": "cthulhuquarium",
+        "task": "t-065",
+        "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
+      },
+      {
+        "severity": "warning",
+        "code": "GATED_DONE_WITHOUT_APPROVAL",
+        "project": "kind-economy",
+        "task": "t-017",
+        "message": "Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect."
+      },
       {
         "severity": "warning",
         "code": "GATED_DONE_WITHOUT_APPROVAL",
