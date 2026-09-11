@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3383,12 +3383,19 @@ tasks:
     comment in assets/css/tailwind.css is stale (still says '13 files / 29 occurrences
     remain' predating slices 214-220 which closed the family for live *.vue files) -- a
     future slice should refresh it.
-  updated: '2026-09-11T03:19:00Z'
+
+    RECONCILED (conductor sweep, 2026-09-11): task was left at status: claimed (session
+    q6n4, claimed_at 2026-09-11T03:19:00Z) while its recorded implementation_pr
+    silasfelinus/kind_robots#2605 (slice 222, sample scaffold glyph fix) had already merged
+    at 2026-09-11T02:36:29Z -- confirmed via check_pr_merged_drift.py. No new work was found
+    in progress for a further slice. Returning the recurring consistency umbrella to ready
+    and clearing the stale claim so the next session can pick up slice 223.
+  updated: '2026-09-11T03:32:09Z'
   implementation_pr: 'silasfelinus/kind_robots#2605'
   retry_context: ''
-  owner: worker
-  claimed_by: 2026-09-11T031900Z-interface-vision-t-104-q6n4
-  claimed_at: '2026-09-11T03:19:00Z'
+  owner: null
+  claimed_by: null
+  claimed_at: null
 
 - id: t-123
   milestone: m5
