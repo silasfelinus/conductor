@@ -13122,3 +13122,12 @@ records:
     default precedence (all of them already supplied their own description,
     so the fix was a safe no-op everywhere else) turned a single-page bug
     report into a fix for the whole class, at no extra risk.
+- date: 2026-09-11
+  project: cthulhuquarium
+  task: t-067
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "kr-art-plate's shape=\"plate\" aspect box always carries an internal w-full class, so a consumer's own size-* class loses the width cascade at equal specificity -- kr-entity-card-body.vue already hit and documented this exact bug for /characters icons (2026-08-05); grep for shape=\"plate\"/\"card\"/etc. plus an external size-*/w-*/h-* class on any kr-art-plate call site before assuming a new report is a new bug."

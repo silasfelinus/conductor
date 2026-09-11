@@ -2942,7 +2942,7 @@ tasks:
 - id: t-067
   milestone: m3
   title: Fix the collapsed one-word-per-line layout in the sets row
-  status: review
+  status: done
   gate_human: false
   owner: worker
   stakes: reversible
@@ -2961,9 +2961,24 @@ tasks:
     whereas patching this one row with a wrapper div hides a shared bug. The interface-vision
     project owns kr-* primitives, so coordinate rather than fork the component if the fix belongs
     inside it.
-  updated: '2026-09-11T12:43:49Z'
+
+    RESOLVED: kr-art-plate's shape="plate" aspect box always carries an internal w-full
+    class, which fights an externally passed size-* class for the width property at equal
+    specificity and wins -- confirmed the same root cause kr-entity-card-body.vue already
+    hit and fixed for /characters icons (2026-08-05). Applied the same wrapper-at-call-site
+    convention to all 5 icon-row kr-art-plate usages in cthulhuquarium-game.vue (fish list,
+    ichthyonomicon cover, bestiary list, egg list, and the reported Last Aquarium row):
+    size+border now live on an outer wrapper div, plate itself gets frame="none" and
+    shape="square" (matching this file's own documented intent for icon shapes). Did not
+    touch kr-art-plate.vue itself, per the established convention. Left the 4 reveal-dialog
+    kr-art-plate usages untouched (same latent bug, different visible symptom, out of
+    scope). eslint/vue-tsc/prettier clean, test:layout-contract/test:gallery-
+    adoption/test:narrative-kit all pass. 46/46 checks green, merged
+    silasfelinus/kind_robots#2625.
+  updated: '2026-09-11T12:48:43Z'
   claimed_by: 20260911T123359Z-cthulhuquarium-t-067-a4v3
   claimed_at: '2026-09-11T12:34:00Z'
+  implementation_pr: 'silasfelinus/kind_robots#2625'
 - id: t-068
   milestone: m3
   title: Write FULL-GAME-GAP-AUDIT.md for Cthulhuquarium
