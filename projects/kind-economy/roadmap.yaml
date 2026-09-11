@@ -126,15 +126,15 @@ tasks:
 - id: t-003
   milestone: m1
   title: "DECISION: which entity receives the money"
-  status: needs-human
+  status: done
   owner:
-  updated: '2026-08-19T00:00:00Z'
+  updated: '2026-09-11T11:09:46Z'
   passes: 0
   stakes: irreversible
   gate_human: true
-  approved_by_human: false
+  approved_by_human: true
   depends_on: [t-001]
-  note: >
+  note: >-
     FOR SILAS: FOR SILAS — this is the one decision that gates m4 and m5, and it is genuinely yours (and a CPA's). DESIGN-BRIEF.md
     lays out three shapes: (A) for-profit Kind Robots donating a share; (B) nonprofit receives everything; (C) hybrid — platform
     is for-profit, mission share is donated either straight to the Against Malaria Foundation (C1) or through a revived Save
@@ -143,6 +143,23 @@ tasks:
     if you decide you want tax-deductible donations flowing to your own charity, grant eligibility, or institutional permanence
     for the mission. NOT legal or tax advice. Confirm with a CPA or nonprofit attorney before acting. TO RESOLVE: record your
     choice in the note here, set approved_by_human: true, and m4/m5 unblock against that choice.
+
+    DECIDED BY SILAS, 2026-09-11 (in session): "I'm not going to hire a cpa. The plan is the
+    plan. It is as we talked about." This settles the entity question as SHAPE C1, which is
+    what DESIGN-BRIEF.md already recommended and what this project's notes_from_silas
+    already describes: the platform operates for-profit, and the mission share is donated
+    directly to the Against Malaria Foundation. No new entity, no revival of Save One Human
+    (dissolved, name retired), and explicitly no CPA engagement -- he has declined that, so
+    no task may re-raise 'confirm with a CPA' as a blocker. The nonprofit question stays
+    where his standing direction already put it: not a current concern until the platform is
+    legitimately taking in money as an entity, with m6 weighted behind t-013 and triggered
+    by revenue rather than a date. WHAT THIS UNBLOCKS: m4 and m5 now proceed against shape
+    C1. The remaining kind-economy gates are operational, not structural -- t-011 needs
+    TEST-mode Stripe credentials, t-013/t-015/t-026 are real-money and outward-facing and
+    stay his alone. NOTE FOR FUTURE SESSIONS: the earlier note here said 'NOT legal or tax
+    advice. Confirm with a CPA or nonprofit attorney before acting.' That caveat stands as a
+    description of what this project's output is -- it is not advice -- but Silas has made
+    his decision knowing that, and it is not an open action item.
 
 - id: t-004
   milestone: m1
