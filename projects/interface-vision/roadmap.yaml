@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3378,7 +3378,19 @@ tasks:
     h-5 w-5 text-* glyph pool (text-accent, text-success, text-warning, text-info, text-
     error, text-base-content variants) in bounded composition-only slices; do not add
     combined color-size primitives absent a repeated semantic family.
-  updated: '2026-09-11T06:54:03Z'
+
+    Slice 227 merged as silasfelinus/kind_robots#2611 (squash
+    1a7bdaa9c801a6fcaf526ef435e2fe374868dbc7) from exact head
+    9d92d09ea4a4c19b14542af92ef2e6c351efd72c. components/navigation/navigation-health.vue
+    now composes kr-icon-5 with its existing text-secondary utility instead of hand-rolled
+    h-5 w-5 sizing for the shared-route groups header icon. All 46 pull-request checks
+    passed, including TypeScript, Contract verifiers, and Layout Contract; prettier flagged
+    pre-existing drift unrelated to this change (confirmed via git stash). Continue the
+    remaining live colored h-5 w-5 text-* glyph pool (user-dashboard.vue has 4 more: text-
+    accent, text-success, text-warning, text-info; plus text-error, text-base-content
+    variants, text-primary-content) in bounded composition-only slices; do not add combined
+    color-size primitives absent a repeated semantic family.
+  updated: '2026-09-11T06:57:52Z'
   implementation_pr: 'silasfelinus/kind_robots#2611'
   retry_context: ''
   owner: worker
