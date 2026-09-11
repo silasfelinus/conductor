@@ -2261,14 +2261,14 @@ tasks:
 - id: t-063
   milestone: m7
   title: "Ship an installable/testable iOS Academy app build"
-  status: needs-human
+  status: done
   gate_human: true
   soft_gate: true
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: [t-061, t-066]
-  note: >
+  note: >-
     Same PWA-first sequencing as t-062, for iOS: once t-066 lands, verify the installable PWA
     via Safari's "Add to Home Screen" on a real iOS device -- standalone display, the same
     Academy flow, and that auth/maturity/accessibility rules hold outside the browser chrome.
@@ -2292,10 +2292,20 @@ tasks:
     work outside browser chrome) needs a physical iOS device no sandboxed agent session
     has. TO APPROVE: once verified on a real device, set status: done (or leave
     needs-human with a note if it doesn't install/launch correctly).
+
+    CLOSED AS OUT OF SCOPE, 2026-09-11, by Silas in session: "Ai art academy is actually an
+    outdated project to test things. It has gone as far as it needs, I don't see it becoming
+    an app, it should be considered finished and closed as is." The Academy served its
+    purpose as a testbed for the Kontext remix path and the art-history teaching surface; it
+    is not becoming a mobile app, so the native/app-shaped work below is retired rather than
+    deferred. Not a failure and not a task-count flip -- a deliberate scope end.
+    Specifically: no iOS build. Same reasoning as t-062 -- the Apple Developer Program
+    enrolment, app record, and TestFlight track this task described are all costs against a
+    product direction Silas has now closed.
   claimed_by: 2026-08-08T204125Z-aaa-t063-pwa
   claimed_at: '2026-08-08T20:49:12Z'
-  updated: '2026-08-08T20:49:12Z'
-  approved_by_human: false
+  updated: '2026-09-11T11:10:58Z'
+  approved_by_human: true
 
 - id: t-064
   milestone: m7
