@@ -3061,9 +3061,9 @@ tasks:
 - id: t-072
   milestone: m3
   title: Fix or delete the dead importCthulhuquariumArt.mjs script; link real Monster art DB records
-  status: ready
+  status: claimed
   gate_human: false
-  owner: null
+  owner: worker
   stakes: reversible
   passes: 0
   note: >-
@@ -3080,7 +3080,9 @@ tasks:
     fallback in utils/cthulhuquariumArt.ts -- that module already yields to real DB values
     automatically once set, so populating them (real ArtImage records) turns a permanent
     workaround into real data without touching the fallback code.
-  updated: '2026-09-11T13:29:00Z'
+  updated: '2026-09-11T14:06:49Z'
+  claimed_by: 20260911T-cq-t072
+  claimed_at: '2026-09-11T14:06:49Z'
 
 - id: t-073
   milestone: m3
