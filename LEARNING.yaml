@@ -13282,3 +13282,12 @@ records:
     literal trigger string plus any nearby "this predates X" comment before
     guessing at intent -- the spec is usually more precise than the
     roadmap task summarizing it.
+- date: 2026-09-11
+  project: cthulhuquarium
+  task: t-075
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A soft-gated feature task (Silas hasn't confirmed it's still wanted for v1) can still land a bounded, reversible first slice while the gate is open in parallel -- the pure rivalry evaluator shipped and tested clean, with runtime wiring split into a new task (t-077) rather than either blocking on the gate or scope-creeping the wiring into the same PR."

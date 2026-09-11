@@ -3237,6 +3237,30 @@ tasks:
   claimed_at: '2026-09-11T16:20:44Z'
   implementation_pr: 'silasfelinus/kind_robots#2631'
 
+- id: t-077
+  milestone: m3
+  title: Wire the rivalry evaluator into tick settlement and fire first_rivalry_resolved
+  status: ready
+  gate_human: false
+  soft_gate: true
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Continuation of t-075 (done, silasfelinus/kind_robots#2631): the pure rivalry
+    evaluator (`server/utils/aquariumRivalry.ts`, `evaluateRivalry()`) exists and is
+    tested but is not yet called from anywhere. Wire it into the tick-settlement path
+    (aquariumEconomy.ts/aquarium.ts, same call sites t-074 used for the
+    first_full_tank/first_spotless_tank milestones) so an active rivalry actually
+    reduces production, and fire the first_rivalry_resolved milestone (t-074's
+    firedMilestones toast queue) the first time a rivalry pair's penalty is applied
+    and then clears. FOR SILAS: t-075's original note asked you to confirm the
+    rivalry subsystem is still wanted for v1 polish (milestone m3) rather than
+    deferred past ship -- that question is still open and applies to this wiring
+    step too. Soft gate: other cthulhuquarium work may continue in parallel while
+    this is decided; if you decide against it, close this as won't-do and drop the
+    first_rivalry_resolved half of t-074 rather than leaving it open indefinitely.
+
 - id: t-069
   milestone: m3
   title: 'FOR SILAS: re-audit Cthulhuquarium once art is delivered and the layout bugs are fixed'
