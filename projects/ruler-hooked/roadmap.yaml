@@ -2,7 +2,7 @@ project: ruler-hooked
 kind: software
 
 goal: >
-  A full offline-playable slideshow fishing/kingdom-management game. The PROOF OF
+  REOPENED FOR THE GAME HALF, 2026-09-11, after Silas played it: "we still have ruler is done at 85% and 21/22 done on projects, which is ABSURD". He was right, and the cause was structural rather than anyone overclaiming. FULL-GAME-GAP-AUDIT.md (2026-08-26) recommended two new milestones -- m4 full-game vertical slice and m5 art production. m5 was created; m4 was deliberately not filed, with a roadmap comment explaining the sequencing. The effect was that the whole game half sat outside the denominator, so 21 of 22 tasks done described a PoC while reporting a finished product. m4 is filed now (t-023..t-032) and carries Silas's specific 2026-09-11 findings: no ruler portraits, a text-menu fishing panel where a timing minigame belongs, a scrolled document instead of one screen, conductor scaffold chrome shown to players, no catch art, no advisor or opening, no shop or treasures, no visible kingdom or populace, and a 15-fish roster surfaced to the player as if it were the catalog. USE THE AUDIT'S COMPLETION LANGUAGE: "PoC complete" is true; "full game mostly developed" is not, and must not be reported until t-032 passes. A full offline-playable slideshow fishing/kingdom-management game. The PROOF OF
   CONCEPT half is complete (m1–m3, 2026-08-18): fish at the lake while kingdom
   event-cards prompt choices that move kingdom-health sliders and visibly
   recomposite the landscape, with multiple named save slots, shipped as an
@@ -41,11 +41,17 @@ milestones:
   title: "POLISH & SHIP — content depth, app packaging, Steam/Unreal research"
   weight: 25
   status: done
-  # m4 (full-game vertical slice: fishing domain model, Fishopedia, character
-  # parity, encounter authoring pipeline, progression/economy) is specified in
-  # FULL-GAME-GAP-AUDIT.md and deliberately not filed as tasks yet — the audit's
-  # own recommendation is to prove the loop before scaling production. m5 is open
-  # first because Silas asked for art on 2026-08-26 and the render box was idle.
+  # m4 WAS FILED 2026-09-11. The comment that used to sit here said it was
+  # "deliberately not filed as tasks yet". That deferral was a defensible
+  # sequencing call and a misleading one: with the entire game half unfiled, the
+  # task list read 21/22 and the portfolio showed ~85%, describing a finished
+  # product. Silas, playing it for the first time on 2026-09-11: "we still have
+  # ruler is done at 85% and 21/22 done on projects, which is ABSURD". A
+  # milestone you have decided not to start is still part of the denominator.
+- id: m4
+  title: "FULL-GAME VERTICAL SLICE — make the loop real before scaling production"
+  weight: 120
+  status: in-progress
 - id: m5
   title: "ART & CONTENT PRODUCTION — pin the look, then render the asset matrix"
   weight: 50
@@ -949,3 +955,320 @@ tasks:
   claimed_by: 2026-08-26T23-claude-ruler-hooked-art
   claimed_at: '2026-08-26T23:00:00Z'
   updated: '2026-08-27T06:16:02Z'
+- id: t-023
+  milestone: m4
+  title: Strip conductor project-scaffold chrome out of the product surfaces
+  status: ready
+  gate_human: false
+  owner: worker
+  stakes: reversible
+  passes: 0
+  note: >-
+    Silas, playing Ruler Hooked 2026-09-11: "I don't need the install/not now section, we should just
+    be showing the experience... Cast and catch and rule the realm sections seem like instructions
+    and should just be a part of a tutorial icon link. Deliverables and status does not belong,
+    that's more of a project info section that should be redundant."
+
+    THIS IS SYSTEMIC, NOT RULER-HOOKED'S. The "DELIVERABLES & STATUS / What 100% looks like /
+    Shipped / Up next" block is components/conductor/project-deliverables-panel.vue, rendered by
+    components/conductor/project-front-page.vue -- a SHARED wrapper mounted by at least four product
+    pages: ruler-hooked-page.vue, aquarium-page.vue (Cthulhuquarium), coloring-book-page.vue and
+    scoop-cms-page.vue. Conductor's internal roadmap state is being shown to players on every one of
+    them. cthulhuquarium/t-066 was filed as an aquarium-specific version of this same complaint
+    ("stop rendering the project pitch as player-facing copy") and should be closed by reference to
+    this task rather than fixed twice; its own note already flagged the possibility that the leak
+    was in a shared wrapper.
+
+    DO: (1) Stop rendering the deliverables/status panel on player-facing product surfaces.
+    project-front-page is genuinely useful as a shared shell -- do not delete it; give it a way to
+    omit the project-info chrome, and have the product pages use that. Whether it stays visible on
+    an admin/conductor view is a separate question and fine to keep. (2) Remove the PWA
+    "Install ... to play offline / Not now" banner from ruler-hooked-page.vue's top; installability
+    can live behind a menu item rather than a banner ahead of the game. (3) Move the "Cast & catch"
+    and "Rule the realm" explainer cards out of the page body and behind a tutorial affordance --
+    a help icon opening an overlay, not two cards competing with the game for the first screen.
+
+    Check the other three surfaces while in here: what reads as harmless boilerplate on an admin CMS
+    page reads as scaffolding left on the set when it is the first thing a player sees.
+
+    CROSS-REFERENCE CHECKED 2026-09-11, after this task was written: cthulhuquarium/t-066
+    already closed a DIFFERENT leak through this same wrapper and must not be re-done here.
+    kind_robots#2623 fixed view.description preferring the live Project.description field
+    (frozen to Silas's raw pitch dictation at scaffold time) over each page's authored
+    fallback. That is handled and verified. What remains, and what this task owns, is the
+    separate project-deliverables-panel.vue block rendered at project-front-page.vue:163 --
+    confirmed still present on kind_robots main after #2623 merged. Read #2623's diff before
+    starting: it establishes the precedent that the right fix is to change what the shared
+    wrapper CHOOSES to render rather than to delete the wrapper or fork per-page copies of
+    it.
+  updated: '2026-09-11T13:30:00Z'
+- id: t-024
+  milestone: m4
+  title: Make Ruler Hooked one navigable screen instead of a scrolled document
+  status: ready
+  gate_human: false
+  owner: worker
+  stakes: reversible
+  passes: 0
+  note: >-
+    Silas, 2026-09-11: "Things should work within a single window, not a scrolled webpage... It
+    should all be one navigable screen. the introduction could be on a centered window, but we need
+    a background. basically, start with the game experience ready to go."
+
+    Today the page is a long vertical document: description blurb, install banner, save slots, ruler
+    picker, two explainer cards, deliverables panel, then eventually the actual scene and the
+    fishing panel, then the Fishopedia. A player scrolls past project furniture to reach the game.
+
+    DO: rebuild the surface as a single-viewport experience that opens READY TO PLAY -- the scene
+    holds the frame, the game's own panels are placed within it rather than stacked below it, and
+    setup (new reign, ruler choice) arrives as a centered modal over a background rather than as the
+    first rows of a document. The shell already gives a viewport-height stage; the layout contract's
+    `one-scroll`/`no-viewport` rules and the kr-surface/kr-stage primitives are the right tools, so
+    coordinate with interface-vision rather than inventing a parallel layout system.
+
+    Depends on t-023 in practice: most of what makes this a scrolling document is the chrome that
+    task removes, so do that first and re-judge how much restructuring is genuinely left.
+  updated: '2026-09-11T13:30:00Z'
+- id: t-025
+  milestone: m4
+  title: Give the ruler presets real portraits, and stop cropping the ruler art
+  status: ready
+  gate_human: false
+  owner: worker
+  stakes: reversible
+  passes: 0
+  note: >-
+    Silas, 2026-09-11: "I should see images for the various rulers, right now most are just names so
+    i can't see what kind of ruler I'm picking" and separately "ruler image is cut off."
+
+    VERIFIED CAUSE, so nobody hunts for missing files: utils/rulerHooked/rulerPresets.ts defines 12
+    presets carrying only `id`, `title` and `look` (a text description). There is NO image field on
+    the type at all. The picker is not failing to load art -- there is no art to load, and no place
+    to put it. Two tiles in Silas's screenshot do show pictures, which come from elsewhere
+    (user-supplied/Character art), which is why the grid reads as broken rather than as uniformly
+    text.
+
+    DO: (1) Add a portrait slot to the preset type and produce one plate per preset, in a single
+    consistent style -- these are a choose-your-character grid, so they must read as a set. The
+    12 `look` strings are already written art direction; use them. Deliver through whatever route
+    cthulhuquarium/t-065 settled on (bundled Vite assets under assets/images/, keyed by preset id)
+    unless a real ArtImage pipeline exists by then. (2) Fix the cropping on the large ruler portrait
+    in the play view -- Silas's screenshot shows the King's head cut off entirely, leaving a torso
+    and a ship's wheel. Check the aspect/object-fit against the actual plate dimensions rather than
+    assuming a square.
+  updated: '2026-09-11T13:30:00Z'
+- id: t-026
+  milestone: m4
+  title: Replace the text-button fishing panel with a real timing minigame
+  status: ready
+  gate_human: false
+  owner: worker
+  stakes: reversible
+  passes: 0
+  note: >-
+    Silas, 2026-09-11, twice: "The fishing game aspect should be a sliding animation that requires
+    stopping in the green for optimal percentage chance. These things should be visual, not text
+    based" and "as mentioned, on the line section should be visual experience."
+
+    Today "ON THE LINE" is a text panel: species name, rarity line, a prose cue, two labelled
+    progress bars (Landing progress, Line tension), and three buttons -- Reel / Give slack / Wait --
+    with a footnote explaining that "Fishing is beat-based, not twitch-based." That footnote is the
+    design decision he is overruling. He wants an actual skill moment.
+
+    DO: build a sliding-marker timing bar with a target band -- the player stops it, and where it
+    lands sets the outcome chance. Visual first: the bar, the band, the marker and the result should
+    be legible without reading a word. Keep what is good underneath: the existing encounter model
+    already has tension, progress and per-species behaviour, and the deterministic seeded resolution
+    is worth preserving -- record the player's stop positions as the input sequence so a replay of
+    the same seed and the same stops reproduces the same encounter. Difficulty should come from band
+    width and marker speed, varied per species and rarity, so the 15-fish roster's `catchBehavior`
+    strings become mechanics rather than flavour text.
+
+    Do not simply animate the existing buttons. The complaint is that the mechanic is a menu, not
+    that the menu lacks motion.
+  updated: '2026-09-11T13:30:00Z'
+- id: t-027
+  milestone: m4
+  title: Show the fish — catch reveal art and an image-first Fishopedia
+  status: ready
+  gate_human: false
+  owner: worker
+  stakes: reversible
+  passes: 0
+  note: >-
+    Silas, 2026-09-11: "Where is the fish picture when we catch them?"
+
+    The Fishopedia reads "0/15 discovered" over tiles labelled "Unknown specimen" with placeholder
+    circles, and landing a catch produces no image at all. A collection game whose collection has no
+    pictures has no collection.
+
+    DO: (1) A catch-reveal moment that shows the species plate when it lands -- this is the payoff
+    the whole encounter builds to and it currently does not exist. (2) Make the Fishopedia
+    image-first: discovered entries show the specimen, undiscovered ones show a deliberate silhouette
+    or sealed card rather than a grey circle, so the grid itself communicates progress.
+
+    Art dependency, and it is the real blocker: there are no fish plates in kind_robots for this
+    game. t-019 (generate species designs for the 15-fish roster) is the open m5 task that produces
+    them; this task consumes them. Note that conductor's cthulhuquarium art directory holds 18
+    species tagged `games: [cthulhuquarium, ruler-hooked]` under the shared bestiary -- check
+    utils/rulerHooked/fish.ts's cross-game entries against what cthulhuquarium/t-065 delivered
+    before commissioning anything new, since some of this roster may already be drawn.
+  updated: '2026-09-11T13:30:00Z'
+- id: t-028
+  milestone: m4
+  title: Build the advisor and the opening — someone to meet, a reason to be here
+  status: ready
+  gate_human: false
+  owner: worker
+  stakes: reversible
+  passes: 0
+  note: >-
+    Silas, 2026-09-11: "IS there an option to deal with ruler stuff? where is our advisor? We should
+    have an introduction."
+
+    You name a ruler, pick a look, and are dropped at a fishing rod. Nothing establishes who you
+    are, what the realm is, what is at stake, or who is talking to you. FULL-GAME-GAP-AUDIT.md's
+    "Characters are content references, not a finished character system" is the same finding from
+    the engineering side.
+
+    DO: (1) An opening that frames the reign -- short, skippable, image-led, shown once per new
+    reign in the centered setup window t-024 introduces. Not a wall of text; the premise, the realm,
+    and the first thing that needs doing. (2) A standing advisor character who is actually present
+    during play: portrait, voice, and reactions to what the player does, so kingdom decisions arrive
+    from someone rather than from a system. The advisor is the natural narrator for the
+    decision prompts in t-030 and the obvious place to put tutorial guidance so it never becomes the
+    explainer cards t-023 is removing. (3) Whatever "ruler stuff" means concretely -- at minimum the
+    player should be able to look at their own reign: who they are, how the realm regards them, what
+    their choices have done so far.
+
+    Build on the audit's character-parity item rather than inventing a parallel system: seed real
+    Character entities, map the existing content slugs, and define portrait/expression requirements
+    so the art has a schema to target.
+  updated: '2026-09-11T13:30:00Z'
+- id: t-029
+  milestone: m4
+  title: Fishing rewards, treasures, and a shop worth spending them in
+  status: ready
+  gate_human: false
+  owner: worker
+  stakes: reversible
+  passes: 0
+  note: >-
+    Silas, 2026-09-11: "no shop to purchase upgrades to finishing or to upgrade the kingdom, no
+    ability to catch treasures when fishing that might be spent at said shop on gear or the kingdom."
+
+    This is FULL-GAME-GAP-AUDIT.md's progression/economy item, which that audit already called the
+    reason catches need "to matter beyond an integer counter." Right now a catch increments a
+    number. There is nothing to want and nothing to spend on.
+
+    DO: (1) Treasures and haul value as a fishing outcome alongside the species itself, so a cast can
+    produce something other than a fish and rare pulls feel different from common ones. (2) A shop
+    with two spend directions, because Silas named both: GEAR that changes fishing (rods, lures,
+    line -- these should visibly alter t-026's timing minigame: band width, marker speed, a second
+    chance) and KINGDOM investment that changes the realm's state and its art. (3) Wire it to the
+    existing kingdom-health model rather than a parallel currency: spending should move the sliders
+    the PoC already recomposites the landscape from.
+
+    Design before building: ECONOMY-shaped decisions (what currencies exist, what a rare catch is
+    worth, whether gear is permanent) are cheap to change on paper and expensive to change in a
+    save format. Cthulhuquarium's data/economy.yaml + simulate_economy.py pattern -- tunable
+    constants plus a simulation proving the curve -- is the house precedent and worth copying here.
+  updated: '2026-09-11T13:30:00Z'
+- id: t-030
+  milestone: m4
+  title: Make the kingdom visible and its decisions image-led
+  status: ready
+  gate_human: false
+  owner: worker
+  stakes: reversible
+  passes: 0
+  note: >-
+    Silas, 2026-09-11: "I see no visuals of the kingdom, no interactions with populous, no ability to
+    see text based prompts with an image that asks me to decide important things."
+
+    The PoC does recomposite a landscape from kingdom-health sliders, so a kingdom view is not
+    starting from nothing -- but the player never meets it. Half the title is "rule the realm" and
+    the realm is currently a set of numbers behind a fishing screen.
+
+    DO: (1) A kingdom view the player can actually go to and read: the realm's state, what changed
+    since last turn, what is going badly. Reuse the existing composited landscape as its centrepiece
+    rather than drawing a second representation of the same state. (2) Decision encounters that
+    arrive as an IMAGE plus a situation plus real choices with consequences -- the card shape the
+    design brief describes and the audit's encounter-authoring item covers. The image is not
+    decoration here; Silas is explicit that the prompt should be visual and ask him to decide
+    something important. (3) Populace presence: the realm should contain people who want things and
+    react, so decisions have someone on the other side of them.
+
+    Sequence note: the encounter AUTHORING pipeline (generation/import/validation, duplicate and
+    dead-trigger checks) is the audit's item 5 and is what makes this scale past a handful of
+    hand-written cards. Build enough cards by hand to prove the shape, then build the pipeline
+    before writing the full deck.
+  updated: '2026-09-11T13:30:00Z'
+- id: t-031
+  milestone: m4
+  title: Grow the fish roster past the 15-species vertical slice
+  status: ready
+  gate_human: false
+  owner: worker
+  stakes: reversible
+  passes: 0
+  note: >-
+    Silas, 2026-09-11: "only fifteen fishes?"
+
+    Verified: utils/rulerHooked/fish.ts holds exactly 15 species, and the Fishopedia's "0/15
+    discovered" surfaces that number directly to the player. FULL-GAME-GAP-AUDIT.md set 12-20 as a
+    deliberate VERTICAL SLICE target -- "deliberately smaller than the final catalog" -- so 15 is
+    the plan working as intended, not an oversight. What went wrong is that the slice number reached
+    the player as if it were the game.
+
+    DO: (1) Decide the real catalog target for a shipped game and record it, so "how many fish" stops
+    being an open question every time someone looks at the Fishopedia. (2) Expand the roster toward
+    it, in style-consistent batches with art (t-027) rather than as name-only rows -- 15 species with
+    plates beats 60 without. (3) While the roster is small, stop displaying the raw slice count as a
+    completion denominator; a Fishopedia that says 0/15 invites exactly the reaction Silas had.
+
+    Cross-check before adding: 18 species in the shared bestiary are tagged for both this game and
+    Cthulhuquarium, and cthulhuquarium/t-065 delivered 119 fish plates. Some of the roster this task
+    would commission may already be drawn, and the two games are supposed to share a bestiary --
+    cthulhuquarium/t-022 is the open handshake task.
+  updated: '2026-09-11T13:30:00Z'
+- id: t-032
+  milestone: m4
+  title: 'FOR SILAS: re-audit Ruler Hooked once the vertical slice is real'
+  status: waiting
+  gate_human: true
+  owner: worker
+  stakes: reversible
+  passes: 0
+  depends_on:
+    - t-023
+    - t-024
+    - t-025
+    - t-026
+    - t-027
+    - t-028
+    - t-029
+    - t-030
+  note: >-
+    FOR SILAS: this is the exit gate for the m4 vertical slice, and it exists because the last
+    completion number this project reported was wrong in a way that cost you an evening.
+
+    Your 2026-09-11 verdict, kept verbatim so it is not softened by later summaries: "we still have
+    ruler is done at 85% and 21/22 done on projects, which is ABSURD unless there is a lot of
+    background stuff that we again haven't worked into the front end. I see no visuals of the
+    kingdom, no interactions with populous, no ability to see text based prompts with an image that
+    asks me to decide important things, no shop to purchase upgrades to finishing or to upgrade the
+    kingdom, no ability to catch treasures when fishing that might be spent at said shop on gear or
+    the kingdom, etc. The roadmap needs a serious overhaul, the interface needs serious upgrades,
+    more art needs to be submitted and integrated, scenarios need to be written, shop needs to be
+    planned, more fish need to be added, kingdom sections need to be built."
+
+    TO APPROVE: after t-023 through t-030 land, play it again and say whether the loop is worth
+    scaling -- that is the question m4 exists to answer, per the audit's own framing ("enough fish,
+    characters, encounters, art, and endings to judge whether the core loop is genuinely fun before
+    scaling production"). If it is not, that is a useful answer and should redirect m5's production
+    rather than be treated as failure. What unblocks: m5's full art and content production, which
+    should not scale until the slice proves the systems.
+
+    Ruler Hooked must not be described as finished, nor reported near-complete, before this.
+  updated: '2026-09-11T13:30:00Z'

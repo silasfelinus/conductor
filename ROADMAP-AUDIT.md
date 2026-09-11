@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-09-11T21:33:06.982764+00:00`
+Generated: `2026-09-11T21:56:15.995720+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **52** roadmaps, **23** active + **2** continuous projects, **1422** tasks
-- **37 ready**, **52 waiting**, **31 needs-human**, **2 claimed/review**, **1284 done**
+- **52** roadmaps, **23** active + **2** continuous projects, **1432** tasks
+- **46 ready**, **53 waiting**, **31 needs-human**, **2 claimed/review**, **1284 done**
 - Findings: **0 errors**, **4 warnings**, **18 informational**
 
 ## Project inventory
@@ -36,7 +36,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 20 | `conductor-app` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
 | 21 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
 | 22 | `media-watchlist` | active | software | 1 | 0 | 0 | 0 | 18 / 19 |
-| 23 | `ruler-hooked` | active | software | 1 | 0 | 0 | 0 | 21 / 22 |
+| 23 | `ruler-hooked` | active | software | 10 | 1 | 0 | 0 | 21 / 32 |
 | 24 | `animation-manager` | continuous | software | 2 | 0 | 0 | 0 | 15 / 17 |
 | 25 | `dream-cycle` | continuous | software | 3 | 0 | 0 | 0 | 25 / 28 |
 | — | `ai-art-academy` | finished | software | 0 | 0 | 0 | 0 | 79 / 79 |
