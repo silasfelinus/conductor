@@ -16,13 +16,14 @@ import hashlib
 import re
 from typing import Any, Iterable
 
-ENTROPY_VERSION = 1
+ENTROPY_VERSION = 2
 RECENT_FACET_LOOKBACK = 5
 RECENT_STRUCTURE_LOOKBACK = 5
 RECENT_INVENTION_LOOKBACK = 8
 
 _WORD = re.compile(r"[a-z]+")
 _DISTINCTIVE = re.compile(r"[a-z]{5,}")
+_THE_X_Y_TITLE = re.compile(r"^the\s+[^\s]+\s+[^\s]+$", re.IGNORECASE)
 
 STOPWORDS = {
     "about", "after", "again", "against", "along", "another", "around", "because",
@@ -49,6 +50,28 @@ SEMANTIC_FAMILIES: dict[str, dict[str, object]] = {
         "facet_markers": {
             "debt", "debtor", "creditor", "obligation", "accounting", "accountant",
             "tally", "bargain", "contract",
+        },
+    },
+    "correspondence-contract": {
+        "label": "letters / missives / contracts as story machinery",
+        # One recent world is enough to cool this family. It is a very specific carrier
+        # of plot information, and the catalog had learned to reach for it far more often
+        # than its narrative usefulness justified.
+        "minimum_sources": 1,
+        "markers": {
+            "letter", "letters", "missive", "missives", "correspondence", "contract",
+            "contracts", "treaty", "treaties", "covenant", "covenants", "oath", "oaths",
+            "vow", "vows", "notary", "notaries", "notarized", "signature", "signatures",
+            "signer", "signers", "writ", "writs", "charter", "charters",
+        },
+        "anchors": {
+            "letter", "letters", "missive", "missives", "correspondence", "contract",
+            "contracts", "treaty", "treaties", "covenant", "covenants", "oath", "oaths",
+            "notary", "notaries", "notarized", "signature", "signatures", "writ", "writs",
+        },
+        "facet_markers": {
+            "letter", "missive", "correspondence", "contract", "treaty", "covenant", "oath",
+            "vow", "notary", "signature", "writ", "charter",
         },
     },
     "grief-memory": {
@@ -144,6 +167,43 @@ def apply_recent_facet_cooldown(
     return filtered if len(filtered) >= minimum else pool
 
 
+def _facet_family_words(facet: object) -> set[str]:
+    if not isinstance(facet, dict):
+        return set()
+    return set(
+        _words(
+            " ".join(
+                str(facet.get(key) or "")
+                for key in ("title", "slug", "canonicalValue", "description")
+            )
+        )
+    )
+
+
+def facet_requests_family(facet: object, family: str) -> bool:
+    """Whether one seed Facet itself points into a saturated semantic story family."""
+    markers = SEMANTIC_FAMILIES[family]["facet_markers"]
+    return bool(_facet_family_words(facet) & markers)  # type: ignore[arg-type]
+
+
+def apply_semantic_family_cooldown(
+    pool: list[dict[str, Any]],
+    saturated: Iterable[str],
+    *,
+    minimum: int = 1,
+) -> list[dict[str, Any]]:
+    """Prefer seed Facets that do not re-request a recently saturated story engine."""
+    active = {family for family in saturated if family in SEMANTIC_FAMILIES}
+    if not active:
+        return pool
+    filtered = [
+        facet
+        for facet in pool
+        if not any(facet_requests_family(facet, family) for family in active)
+    ]
+    return filtered if len(filtered) >= minimum else pool
+
+
 def story_core_text(proposal: object) -> str:
     """Flatten story-bearing fields while excluding Rewards, art prose, and seed metadata.
 
@@ -204,7 +264,11 @@ def saturated_families(
     for text in texts:
         for family in families_in_text(text, minimum_hits=minimum_hits):
             counts[family] += 1
-    return {family for family, count in counts.items() if count >= minimum_sources}
+    return {
+        family
+        for family, count in counts.items()
+        if count >= int(SEMANTIC_FAMILIES[family].get("minimum_sources", minimum_sources))
+    }
 
 
 def _drawn_facet_text(seed_facets: object) -> str:
@@ -257,6 +321,20 @@ def story_family_complaints(
             "than renaming the same economy"
         )
     return complaints
+
+
+def title_shape_complaints(proposal: object) -> list[str]:
+    """Reject the catalog's overused three-word ``The X Y`` title silhouette."""
+    if not isinstance(proposal, dict):
+        return []
+    title = str(proposal.get("title") or "").strip().rstrip(".!?")
+    if not _THE_X_Y_TITLE.fullmatch(title):
+        return []
+    return [
+        f"dream title {title!r} uses the over-repeated 'The X Y' silhouette; choose a different "
+        "construction such as a proper name, active phrase, clause, relationship, sensory image, "
+        "or strong single word rather than another 'The [modifier] [noun]' title"
+    ]
 
 
 def is_deadline_story(text: object) -> bool:
