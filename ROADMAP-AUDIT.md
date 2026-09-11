@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-09-11T11:19:02.210609+00:00`
+Generated: `2026-09-11T11:26:58.805697+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **52** roadmaps, **23** active + **2** continuous projects, **1409** tasks
-- **36 ready**, **54 waiting**, **29 needs-human**, **0 claimed/review**, **1273 done**
-- Findings: **0 errors**, **2 warnings**, **17 informational**
+- **36 ready**, **54 waiting**, **28 needs-human**, **0 claimed/review**, **1274 done**
+- Findings: **0 errors**, **2 warnings**, **18 informational**
 
 ## Project inventory
 
@@ -39,7 +39,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 23 | `ruler-hooked` | active | software | 1 | 0 | 0 | 0 | 21 / 22 |
 | 24 | `animation-manager` | continuous | software | 2 | 0 | 0 | 0 | 15 / 17 |
 | 25 | `dream-cycle` | continuous | software | 3 | 0 | 0 | 0 | 25 / 28 |
-| — | `ai-art-academy` | finished | software | 0 | 0 | 1 | 0 | 78 / 79 |
+| — | `ai-art-academy` | finished | software | 0 | 0 | 0 | 0 | 79 / 79 |
 | — | `alexa-integration` | paused | software | 0 | 0 | 1 | 0 | 21 / 22 |
 | — | `animation-studio` | retired | software | 0 | 3 | 0 | 0 | 4 / 8 |
 | — | `approval-portal` | retired | software | 0 | 0 | 0 | 0 | 3 / 5 |
@@ -78,9 +78,10 @@ _None._
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-014`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-015`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 
-### Info (17)
+### Info (18)
 
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-064`: approved_by_human is set on a task that is not human-gated.
+- **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-079`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `appmaker` / `t-014`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `coat-dance` / `t-003`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `coloring-book` / `t-034`: approved_by_human is set on a task that is not human-gated.

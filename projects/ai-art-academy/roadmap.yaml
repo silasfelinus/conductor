@@ -29,7 +29,7 @@ milestones:
 - id: m2
   title: Style registry and LoRA/knowledge evaluation
   weight: 20
-  status: in-progress
+  status: done
 - id: m3
   title: Curriculum content (movements, styles, artists)
   weight: 20
@@ -3118,7 +3118,7 @@ tasks:
 
     The exact model chain is recorded on coloring-book/t-039: flux1-kontext-dev-Q5_K_M.gguf UNet, ae.safetensors VAE, t5-v1_1-xxl-encoder-Q5_K_S.gguf + clip_l.safetensors encoders. Two separately GGUF-quantised components in one graph. The decisive remaining test -- the same plain call against a NON-GGUF Kontext checkpoint -- needs that checkpoint present on the relay and is tracked there.
 
-    Also recorded there, and worth more than this task was: art_quality.assess_file returned ok=True with no reasons on the noise image under the  variant. The mechanical guard cannot see this corruption; the earlier coloring-book rejections only caught it because the  variant's white_fraction check fails on static by coincidence. Any colour art from a broken kontext path can currently pass the quality gate.
+    Also recorded there, and worth more than this task was: art_quality.assess_file returned ok=True with no reasons on the noise image under the COLOR variant. The mechanical guard cannot see this corruption; the earlier coloring-book rejections only caught it because the BW variant's white_fraction check fails on static by coincidence. Any colour art from a broken kontext path can currently pass the quality gate.
 
     No further AI Art Academy work follows from this. t-045's five corrupted LoRA renders stay as they are -- the project is closed as-is and will not be re-running them.
   updated: '2026-09-11T11:26:23Z'
