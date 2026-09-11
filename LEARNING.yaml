@@ -13256,3 +13256,29 @@ records:
     matching the same-project precedent on t-003/t-014/t-022: a complete
     draft under Silas's 2026-09-07 human-gate-simplification policy doesn't
     wait on him, only its eventual publication does.
+- date: 2026-09-11
+  project: cthulhuquarium
+  task: t-074
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    economy.yaml's first_full_tank/first_spotless_tank triggers looked
+    pre-decided but weren't fully -- economy.yaml predates t-032's two-pool
+    capacity split, and aquariumEconomy.ts's own comment flagged the "full"
+    semantics as an unresolved ambiguity. Reading the actual trigger
+    strings closely (economy.yaml still has "debris reaches 0 after having
+    been >= 80" verbatim, and DEBRIS_BANDS' own worst-band threshold is
+    that same 80) resolved both without needing a Silas round-trip: "every
+    owned slot" maps to the weighed fish pool (currentReservedSize vs
+    effectiveSizeCap), not setSlotsCap, since t-032's own comment says
+    setSlotsCap is exclusively for set pieces. The debris trigger needed a
+    small additive migration (Aquarium.debrisEverHigh) because a player can
+    clean an 80+ debris level down to 0 across several separate requests,
+    so "having been >= 80" can't be read off one request's before/after
+    pair alone. Next task touching an old economy.yaml trigger: read the
+    literal trigger string plus any nearby "this predates X" comment before
+    guessing at intent -- the spec is usually more precise than the
+    roadmap task summarizing it.
