@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-11T16:59:53Z
+Generated: 2026-09-11T17:03:43Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **912**
-- Outcomes: blocked: 16, cancelled: 1, done: 895
+- Closed tasks recorded: **913**
+- Outcomes: blocked: 16, cancelled: 1, done: 896
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | coloring-book | 25 | 100% |
 | conductor | 95 | 100% |
 | conductor-app | 4 | 100% |
-| cthulhuquarium | 48 | 98% |
+| cthulhuquarium | 49 | 98% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
 | dream-cycle | 23 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 895 | 99% |
+| software | 896 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-11 `cthulhuquarium/t-074` — economy.yaml's first_full_tank/first_spotless_tank triggers looked pre-decided but weren't fully -- economy.yaml predates t-032's two-pool capacity split, and aquariumEconomy.ts's own comment flagged the "full" semantics as an unresolved ambiguity. Reading the actual trigger strings closely (economy.yaml still has "debris reaches 0 after having been >= 80" verbatim, and DEBRIS_BANDS' own worst-band threshold is that same 80) resolved both without needing a Silas round-trip: "every owned slot" maps to the weighed fish pool (currentReservedSize vs effectiveSizeCap), not setSlotsCap, since t-032's own comment says setSlotsCap is exclusively for set pieces. The debris trigger needed a small additive migration (Aquarium.debrisEverHigh) because a player can clean an 80+ debris level down to 0 across several separate requests, so "having been >= 80" can't be read off one request's before/after pair alone. Next task touching an old economy.yaml trigger: read the literal trigger string plus any nearby "this predates X" comment before guessing at intent -- the spec is usually more precise than the roadmap task summarizing it.
 - 2026-09-11 `kind-economy/t-017` — Its own dependencies (t-003, t-014) had both just closed the same day (t-003 literally that morning, from a live Silas decision recorded in the roadmap note), which is why `next_ready_task.py` never surfaced this task before now despite it sitting `status: ready` for weeks. Drafting it was straightforward once the two upstream design docs (DESIGN-BRIEF.md, PAYOUT-MECHANISM-DESIGN.md) were read in full -- every number and policy in the draft traces to an already-decided default or explicit recommendation in those docs, with genuinely undecided items marked `[OPEN]` rather than guessed at. Closed to `done` (not `needs-human`) matching the same-project precedent on t-003/t-014/t-022: a complete draft under Silas's 2026-09-07 human-gate-simplification policy doesn't wait on him, only its eventual publication does.
 - 2026-09-11 `media-watchlist/t-019` — The reported symptom ("failed to load, error message masked") had two independent root causes, and reading the actual auth flow rather than trusting the task's own working hypothesis found the more important one: the task guessed a stale/mis-scoped session, but grepping the component for Authorization-header attachment found there wasn't one at all -- every $fetch call in the feature was effectively anonymous, so every request failed the admin gate regardless of who was signed in. Cross-checked against the working `Authorization: Bearer` pattern already used elsewhere in the codebase (stores/artStore.ts, stylist-clients.vue) confirmed it wasn't a one-off omission but a gap specific to this feature's components. Separately, fixing the error-masking half (errorHandler() never calling setResponseStatus) surfaced a much larger house-wide pattern (432 call sites, only 8 already correct) -- filed as its own task (kind-robots/t-096) rather than attempted as a drive-by fix, since a mechanical change at that scale needs its own audit and codemod. Pattern worth repeating: when a task's own note proposes a hypothesis for "why does X fail," verify it against the actual code path before assuming it's the answer -- the real cause here was two frames of causation deeper (missing auth headers, not stale session state) and code reading found it in minutes.
 - 2026-09-11 `cthulhuquarium/t-072` — Investigated both halves of the task before touching code, and that investigation changed the plan: the roadmap note offered "fix the path or delete" the dead importCthulhuquariumArt.mjs script as two equally valid options, but reading the actual delivered assets showed the script's per-prefix resize scheme (1280/960/640/512px by filename prefix) doesn't match what the real delivery (kind_robots#2620) actually shipped (uniform 512px-long-edge) -- "fixing" the path would have silently overwritten already-correct committed assets with differently-sized ones. Deletion was the only safe choice once that was known, not a coin flip. Separately, the task's other half (bulk-creating real ArtImage DB records and linking them to Monster rows) was real, well-precedented, buildable work -- but this sandbox has zero path to any live database (confirmed: no .env, dummy-only DATABASE_URL in the provisioning script, no reachable DB port) -- so attempting it here would have produced an unverifiable script at best. Split it into its own task (t-076) with the investigation's findings attached, rather than either skipping it silently or attempting unverifiable DB work. Pattern worth repeating: when a roadmap task bundles a quick fix with something that needs infrastructure this sandbox doesn't have, do the quick part, investigate the rest thoroughly enough to leave a real trail, and split rather than stall.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-11 `cthulhuquarium/t-066` — Root cause was in a shared wrapper (components/conductor/project-front-page.vue), not the page that surfaced the symptom (aquarium): its view.description computed preferred the live Conductor-synced Project.description field over the page's own authored fallback, and that live field is seeded once from notesFromSilas (raw internal dictation) and never refreshed. Checking every other caller of the shared component before changing its default precedence (all of them already supplied their own description, so the fix was a safe no-op everywhere else) turned a single-page bug report into a fix for the whole class, at no extra risk.
 - 2026-09-10 `interface-vision/t-104` — Slice 214 (kind_robots#2598)'s "Build production image" Docker check hung well past its normal duration -- comparable recent slice PRs with a near-identical mechanical diff completed the same job in ~8 minutes (21:37:43-21:45:59 and 21:47:25-21:55:40), but this run's single "Build and publish" step showed zero progress for 60+ minutes while every other check (including a ~340-step Contract verifiers job) passed normally. cancel_workflow_run did not take effect promptly either. Confirmed this workflow only logs in to GHCR on push (not pull_request), so it cannot be gating this repo's actual deploy image on a PR -- merged directly once every other check was green rather than waiting indefinitely on a stuck runner. Future sessions hitting an isolated stuck/non-progressing check on an otherwise-green PR should check whether it's actually required before treating it as a hard blocker, and a runner-health spot-check is worth doing if this recurs.
 - 2026-09-10 `interface-vision/t-104` — Slice 212 (kind_robots#2594) touched assets/css/tailwind.css (the .kr-icon-4 doc comment) in addition to the usual .vue files. That path is in publish-container.yml's pull_request path filter, so this PR's CI included a ~10-minute "Build production image" Docker job on top of the usual ~50 contract/unit checks -- prior slices in this same series that only touched .vue files never triggered it and finished CI in ~2-3 minutes. Any future task/kaizen note estimating CI wall-clock for this recurring migration should account for whether the slice's doc-comment update to tailwind.css is included, not assume the faster .vue-only baseline. Also confirms components/pages was the last directory large enough to bound a slice by directory; the ~124 remaining occurrences (35 files) are thin enough that the next slice needs an occurrence-count-band strategy instead.
-- 2026-09-10 `interface-vision/t-104` — Slice 196 (kind_robots#2577): a prior connector-only Worker session attempted this exact slice and correctly re-armed the task rather than risk corrupting assets/css/tailwind.css, because the GitHub Contents API returned a truncated response for that file and its protocol forbids reconstructing/replacing a large file from an abbreviated response. A shell-capable session with a local git checkout has no such limit and landed the identical scoped change safely on the next cycle. This is not a failure to route around -- it is the connector-only protocol working as intended (docs/github-connector-worker.md): large shared files like tailwind.css should be treated as a standing signal to prefer a shell-capable cycle for this recurring task's CSS-edit step specifically, rather than retrying the same Contents API edit repeatedly.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-11T16:59:53Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-11T17:03:43Z_
