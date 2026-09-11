@@ -1504,3 +1504,121 @@ notes/accepted-path fields only -- no binaries touched, no re-renders requested 
    resolved.
 
 Re-arming to `ready` (recurring), releasing the claim.
+
+## 2026-09-11 (scheduled Conductor session, cycle 3)
+
+**Kontext engine check:** re-checked `ai-art-academy/t-079` before touching any BW path
+-- still `status: needs-human`/`soft_gate: true`, `updated: 2026-09-09`, unresolved. Not
+attempting `generate-bw` on either book this pass either.
+
+**Hollywood Recast creative review, slice 3 (hwr-029 through hwr-036, 8 slots -- book
+now fully reviewed):** reviewed all 8 remaining rendered color candidates against their
+prompts.
+
+**Accepted (4), `accept-color` run live for each:**
+- **hwr-029 (Matinee Time Machine)** -- teenage projectionist and grandfather at the
+  projector, beam full of costumed figures/vintage cars/one creature, strong central
+  beam, layered rainbow color; matches.
+- **hwr-033 (The Last Projectionist)** -- elderly Black projectionist alone in the vast
+  cinema, tiny luminous film-creatures pouring from the projector, wrench held like a
+  conductor's baton, deep red seats, amber beam; matches closely.
+- **hwr-035 (Awards Night Stampede)** -- diverse nominees in original formalwear
+  sprinting toward the stage while miniature monsters race the opposite way carrying a
+  trophy and shoes; strong diagonal motion, no branding/text; matches well.
+- **hwr-036 (The Recast Marquee)** -- blank art-deco marquee, ensemble including the
+  astronaut mechanic, pirate captain, detective, mermaid performer, and alien figures
+  without duplicated poses; matches.
+
+**Not accepted (4), reasoning recorded on each proposal's `notes:` in
+`sets/hollywood-recast/proposals.yaml`:**
+- **hwr-030 (Mermaid on Lot Seven)** -- mermaid has long hair, not the prompt's explicit
+  "shaved head" casting; same pattern as hwr-014/017/022/023.
+- **hwr-031 (Alien at the Premiere)** -- alien shows two ordinary hands, not "six
+  graceful hands"; the "tiny translator bot managing the chaos" is absent.
+- **hwr-032 (Comedy Troupe Catastrophe)** -- all six performers read as young/slim/
+  conventionally glamorous, not the prompt's explicit "diverse ages and bodies"; the
+  "armor" costume from the named wardrobe list is also missing.
+- **hwr-034 (Creature Feature Sweethearts)** -- the amphibious creature reads as
+  ungendered, not the prompt's explicit "amphibious woman"; the "frogs and fireflies
+  form a heart-shaped swirl" composition beat is absent (frogs/fireflies present but
+  scattered).
+
+Hollywood Recast color-review stage is now fully drained: 36/36 slots reviewed
+(20 accepted, 16 rejected across all three slices). Next actionable stage for this book
+is `generate-bw`, blocked on `ai-art-academy/t-079`.
+
+**Kind Robots creative review, slice 1 (kr-001 through kr-010, first 10 of 36 slots):**
+reviewed the first 10 rendered color candidates against their prompts -- this book's
+color-review stage had been entirely untouched until this cycle.
+
+**Accepted (7), `accept-color` run live for each:**
+- **kr-001 (The Logo Workshop)** -- rainbow robot mascot (round antenna-ball head,
+  smiling face) reimagined as a workshop scene with tiny helper bots, gears,
+  paintbrushes, stars, butterflies; bold clean contours, no readable words; matches.
+  (No local copy of `kind_robots/public/images/kindtitle.webp` was available in this
+  sandbox to diff pixel-for-pixel against the canonical logo; judged against the
+  well-established Kind Robots rainbow-robot visual identity instead.)
+- **kr-002 (Ami Over the Redwoods)** -- swirling tornado of individually-crisp rainbow
+  butterflies forming a smiling guardian silhouette over misty redwoods, hikers and two
+  tiny robots looking up from a fern trail, never rendered as a human woman; matches
+  closely.
+- **kr-003 (Sunrise Robot Café)** -- copper multi-armed barista bot, nurse, bearded
+  older patron, teen, steam curling into small ghost-creature shapes, warm amber/mint/
+  coral palette, no text; matches (arm count and "fisherman"/"artist" reads are
+  approximate, not exact).
+- **kr-004 (Botcat Rescue)** -- boxy rescue robot lowering a basket cat from a rooftop,
+  full neighborhood of silhouetted humans/robots plus crows offering advice below,
+  strong vertical composition; matches (cat isn't exaggeratedly large, a minor miss).
+- **kr-008 (Granny Gearworks)** -- wild-silver-haired grandmother mechanic in enormous
+  goggles repairing a line of nervous household robots, one bot offering a drink, a dog
+  asleep in a parts bin; matches (interior rather than outdoor workbench, and no visible
+  bruises/bandages, are minor misses against the dominant character/scene concept).
+- **kr-009 (The Accessible Greenhouse)** -- wheelchair-using botanist and a tall green
+  gardening robot in a domed greenhouse, spiral ramp, lantern flowers, spotted orchids,
+  a butterfly, inclusive design visible but natural, emerald/gold palette, no text;
+  matches closely.
+- **kr-010 (Deep-Sea Repair Crew)** -- pressure-suit diver-robot, giant orange octopus
+  mechanic holding tools in its tentacles, human diver welding a glowing cable, coral
+  city in the background, deep blue/turquoise/orange palette; matches (not every octopus
+  arm shows a distinct tool and the fish aren't visibly carrying bolts, minor misses).
+
+**Not accepted (3), reasoning recorded on each proposal's `notes:` in
+`sets/kind-robots/proposals.yaml`:**
+- **kr-005 (Serendipity Space Bar)** -- bartender robot has ordinary shoulders, not the
+  prompt's explicit "glowing bottle-shaped shoulders"; the butterfly figure is a person
+  with one attached wing, not "one butterfly swarm occupying its own stool." (The
+  lemon-slice moon and starships are excellent, exact matches, but the two missing
+  distinguishing design elements are dealbreakers.)
+- **kr-006 (Net Delivery Flight)** -- readable signage ("BLENI CLENIC") is visible on the
+  clinic building, directly violating the prompt's explicit "no text."
+- **kr-007 (Ukulele Under the Redwoods)** -- readable music-note glyphs appear on the
+  floating sheet-music pages, violating the prompt's explicit "no readable notes"; the
+  prompt's "sleepy repair crew" is also entirely absent (only the robot and three cats
+  are shown).
+
+**Process note:** `manage_coloring_book_production.py --operation accept-color`
+required `pip3 install Pillow` again this session (mechanical_check's PIL import) --
+the same recurring, non-persistent sandbox gap logged on every prior pass.
+
+Verification: `validate_roadmaps.py` clean; `coloring_proposal_status.py` before/after
+(Hollywood Recast accepted color 16 -> 20, Kind Robots accepted color 0 -> 7, Monster
+Recast unchanged); `coloring_queue_status.py --book hollywood-recast` and
+`--book kind-robots` both show `queue_integrity_safe: true`, `recommended_action:
+complete`, 0 duplicate job/entry ids; `git diff --stat` reviewed before committing
+(`color-art-jobs.yaml` queue-state text plus the two books' `proposals.yaml`
+notes/accepted-path fields only -- no binaries touched, no re-renders requested for any
+rejected slot).
+
+**For the next pass:**
+1. Do not resume `generate-bw` on either book until `ai-art-academy/t-079`'s Kontext
+   engine corruption bug is confirmed fixed -- re-check that task's status first.
+2. Hollywood Recast: color-review stage is fully drained (36/36). Move straight to
+   `generate-bw` once t-079 clears; 16 rejected slots may also warrant fresh renders
+   before then.
+3. Kind Robots: continue creative review from kr-011 onward (26 of 36 slots remain
+   unreviewed).
+4. Monster Recast: 20 previously-rejected slots still await re-review once fresh
+   renders exist; mr-016/mr-020 need BW re-derivation once the Kontext engine issue is
+   resolved.
+
+Re-arming to `ready` (recurring), releasing the claim.
