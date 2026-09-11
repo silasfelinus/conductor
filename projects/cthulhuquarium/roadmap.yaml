@@ -2874,7 +2874,9 @@ tasks:
     Reviewer merged silasfelinus/kind_robots#2622 (importCthulhuquariumArt.mjs, 45/45 checks green): a deterministic Sharp-based importer that requires exactly the 136 stranded plates, resizes by asset role, recompresses WebP q82, and writes a manifest. This is the bounded enabling slice only -- it does not run in CI or commit the generated assets, and /play/aquarium still does not show the new art. Returning to ready for the next slice: run the importer, wire each output to its bestiary/shop/codex/tank target, and verify a signed-out /play/aquarium visit before this reaches done.
 
     FOR SILAS: The actual 136-plate delivery is already merged in kind_robots PR #2620: 138 bundled Vite assets total, downscaled from 22.8MB to 5.1MB, with species/egg/parlour/codex wiring in utils/cthulhuquariumArt.ts and cthulhuquarium-game.vue. Full nuxi build passed and emitted the fingerprinted assets. This session reconciled the stale claim after discovering that concurrent work had already completed the implementation. The remaining acceptance condition in this task is explicitly a signed-out live /play/aquarium visit showing real fish art, egg art, and the parlour background. Kind Robots no longer auto-deploys on merge; AGENTS.md says the self-hosted Unraid container only receives merged commits after Silas performs Force Update, which is a human/outward-facing deployment gate. This runtime also cannot currently resolve kindrobots.org, so it cannot truthfully certify the post-deploy signed-out view. TO APPROVE: after the next normal Kind Robots Force Update, visit /play/aquarium signed out and confirm fish art, egg art, and the parlour background are visibly present; then set approved_by_human: true and status: done (or leave a note describing any visible failure). This closes the delivery gate; t-068/t-069 continue the wider full-game audit/re-acceptance separately.
-  updated: '2026-09-11T13:19:48Z'
+
+    UPDATE (t-068's audit session, 2026-09-11, later): this runtime CAN reach kindrobots.org (the prior note's claim otherwise no longer holds, or didn't hold for this session). A direct curl of https://kindrobots.org/play/aquarium already returns <link rel="prefetch"> tags for the exact fingerprinted asset URLs named above (bailiff-eel, bg-parlour, char-charlotte-fishmonger, char-wilbur-stint, all six egg tiers, screen-finale, set-last-aquarium), and fetching one of those URLs directly returns HTTP 200 with a real ~17KB WebP file. That confirms the PR #2620 delivery has already reached the production build -- the code-level acceptance condition is met without waiting on a further Force Update. What this check CANNOT confirm is what the hydrated game canvas itself looks like to a live visitor (this route is client-rendered; SSR markup only proves the asset references exist in the build, not the rendered scene) -- see FULL-GAME-GAP-AUDIT.md sec.3 for the full caveat, and note sec.1's finding that the swim-canvas fish are still hand-drawn shapes regardless (tracked separately as t-070). TO APPROVE still stands as written above: a signed-out visual look is the remaining step, it should just be materially faster now that a Force Update may not even be required.
+  updated: '2026-09-11T14:05:00Z'
   claimed_by: 2026-09-11T121711Z-cthulhuquarium-t-065-r8v2
   claimed_at: '2026-09-11T12:17:11Z'
   implementation_pr: 'silasfelinus/kind_robots#2622'
@@ -2973,7 +2975,7 @@ tasks:
 - id: t-068
   milestone: m3
   title: Write FULL-GAME-GAP-AUDIT.md for Cthulhuquarium
-  status: claimed
+  status: review
   gate_human: false
   owner: worker
   stakes: reversible
@@ -3000,6 +3002,136 @@ tasks:
   updated: '2026-09-11T13:29:00Z'
   claimed_by: 20260911T-cq-t068
   claimed_at: '2026-09-11T13:29:00Z'
+- id: t-070
+  milestone: m3
+  title: Wire real fish art into the swim-canvas renderer, not just the bestiary/catalog panels
+  status: ready
+  gate_human: false
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Filed by t-068's FULL-GAME-GAP-AUDIT.md (2026-09-11). Even after t-065's art delivery
+    (kind_robots#2620), the fish a player actually watches swimming in the tank are still
+    hand-drawn canvas primitives (components/cthulhuquarium/cthulhuquarium-game.vue's
+    drawFish(), ~lines 1664-1710) -- the art-delivery fallback in utils/cthulhuquariumArt.ts
+    only reached the bestiary/catalog/reveal-dialog kr-art-plate calls, not the render loop.
+    This is very likely the single biggest driver of Silas's 2026-09-11 "barest of bones"
+    verdict, since it's the one thing continuously on screen. Wire the same
+    withCthulhuquariumArt()/artForEggTier() fallback (or real per-species art) into the swim
+    renderer in place of the hand-drawn shapes. Prioritize this over t-071 through t-075.
+  updated: '2026-09-11T13:29:00Z'
+
+- id: t-071
+  milestone: m3
+  title: Reconcile the click-collectible and food/upgrade mechanics with the pitch, or amend the brief
+  status: ready
+  gate_human: false
+  soft_gate: true
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Filed by t-068's FULL-GAME-GAP-AUDIT.md (2026-09-11). Two documented-in-code deviations
+    from DESIGN-BRIEF.md's MVP scope: (1) clicking a drifting collectible earns nothing --
+    income is entirely server-tick-settled and the mote click just dismisses a cosmetic
+    reveal of coins already credited (cthulhuquarium-game.vue header comment, ~lines 9-16);
+    (2) there is no food-tier or drop-speed upgrade system anywhere in aquariumEconomy.ts,
+    only a single flat feed-cost formula, versus the brief's "spend coins on food... upgrades
+    (better food, faster drops, more tank slots)". Neither deviation was ever surfaced to
+    Silas as a scope change. FOR SILAS: confirm whether the shipped tick-settled economy
+    (no literal click-income, no food tiers) is an acceptable simplification -- if so, update
+    DESIGN-BRIEF.md to say so explicitly; if not, this becomes a real build task for the
+    literal mechanics. Soft gate: other cthulhuquarium work may continue in parallel.
+  updated: '2026-09-11T13:29:00Z'
+
+- id: t-072
+  milestone: m3
+  title: Fix or delete the dead importCthulhuquariumArt.mjs script; link real Monster art DB records
+  status: ready
+  gate_human: false
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Filed by t-068's FULL-GAME-GAP-AUDIT.md (2026-09-11). utils/scripts/importCthulhuquariumArt.mjs
+    (kind_robots#2622, commit efb93e2) writes resized plates to
+    assets/images/cthulhuquarium/generated/, a directory that does not exist -- the actual
+    art delivery (kind_robots#2620, commit 05d227c) landed flat in
+    assets/images/cthulhuquarium/ via a different, manual commit. utils/cthulhuquariumArt.ts's
+    import.meta.glob only reads the top-level directory, not generated/**, so running this
+    script today silently produces files the app never picks up. Either fix its target path
+    to match what actually ships and use it as the real pipeline going forward, or delete it
+    so a future session doesn't trust it. Separately: Monster.iconPath/cardPath/artImageId
+    are still null in the database for all 119 species that now have art via the client-side
+    fallback in utils/cthulhuquariumArt.ts -- that module already yields to real DB values
+    automatically once set, so populating them (real ArtImage records) turns a permanent
+    workaround into real data without touching the fallback code.
+  updated: '2026-09-11T13:29:00Z'
+
+- id: t-073
+  milestone: m3
+  title: Author and deliver art for the remaining 32 species with no plate
+  status: ready
+  gate_human: false
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Filed by t-068's FULL-GAME-GAP-AUDIT.md (2026-09-11). 119 of 151 species have a delivered
+    art plate as of t-065 (kind_robots#2620); the remaining 32 (mostly *-common starters,
+    per utils/cthulhuquariumArt.ts's own comment) fall through to a placeholder icon even
+    with the client-side fallback active. Use the same authoring/generation process and the
+    same delivery pattern (bundled Vite assets under assets/images/cthulhuquarium/, matched
+    by cthulhuquarium-fish-<slug> filename) as the other 119.
+  updated: '2026-09-11T13:29:00Z'
+
+- id: t-074
+  milestone: m3
+  title: Wire the two buildable remaining milestones; scope-decide the other two
+  status: ready
+  gate_human: false
+  soft_gate: true
+  owner: null
+  stakes: reversible
+  passes: 0
+  depends_on: t-075
+  note: >-
+    Filed by t-068's FULL-GAME-GAP-AUDIT.md (2026-09-11). Only 4 of the 8 v1 milestone
+    landmarks named in economy.yaml/aquariumEconomy.ts (the bestiary-count breakpoints) are
+    wired (aquariumEconomy.ts ~lines 995-1020, comment names the other 4 explicitly).
+    first_full_tank and first_spotless_tank are detectable from existing Aquarium/AquariumStock
+    state today and can be wired without new subsystems. first_evolution and
+    first_rivalry_resolved are blocked -- the former needs the breeding-evolution path to
+    fire a tracked event (partially exists via t-029/t-058, verify), the latter needs the
+    rivalry subsystem in t-075 to exist at all. Depends on t-075 for the rivalry-gated
+    landmark only; the tank/spotless pair can land independently and does not need to wait.
+  updated: '2026-09-11T13:29:00Z'
+
+- id: t-075
+  milestone: m3
+  title: Build the rivalry subsystem, or explicitly cut it from v1 scope
+  status: ready
+  gate_human: false
+  soft_gate: true
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Filed by t-068's FULL-GAME-GAP-AUDIT.md (2026-09-11). Monster.dietRole/schoolRole
+    (schema.prisma ~lines 2573-2581) and the peace_ward set piece (aquariumEconomy.ts
+    ~lines 311-319, an explicit no-op today) both exist purely as forward-compatible
+    scaffolding for economy.yaml's rivalry.emergent_rules -- nothing computes rivalry at
+    runtime. This is a real, non-trivial feature (emergent tag-based rules per
+    SYSTEMS.md's t-025 resolution: predator/prey, school/anchor, plus an optional authored
+    rivals: override), not a bug fix, and it's the prerequisite for t-074's
+    first_rivalry_resolved milestone and the "first_rivalry_resolved" leaderboard-adjacent
+    landmark. FOR SILAS: confirm this is still wanted for v1 polish (milestone m3) rather
+    than deferred past ship -- if deferred, close this as won't-do with a note and drop the
+    first_rivalry_resolved half of t-074 rather than leaving it open indefinitely. Soft
+    gate: other cthulhuquarium work may continue in parallel while this is decided.
+  updated: '2026-09-11T13:29:00Z'
+
 - id: t-069
   milestone: m3
   title: 'FOR SILAS: re-audit Cthulhuquarium once art is delivered and the layout bugs are fixed'
