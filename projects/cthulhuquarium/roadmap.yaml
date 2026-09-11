@@ -3006,7 +3006,7 @@ tasks:
 - id: t-070
   milestone: m3
   title: Wire real fish art into the swim-canvas renderer, not just the bestiary/catalog panels
-  status: review
+  status: done
   gate_human: false
   owner: worker
   stakes: reversible
@@ -3021,9 +3021,19 @@ tasks:
     verdict, since it's the one thing continuously on screen. Wire the same
     withCthulhuquariumArt()/artForEggTier() fallback (or real per-species art) into the swim
     renderer in place of the hand-drawn shapes. Prioritize this over t-071 through t-075.
-  updated: '2026-09-11T13:56:23Z'
+
+    RESOLVED: kind_robots#2626 merged 2026-09-11 -- 46/46 CI checks green (eslint, vue-tsc
+    --noEmit, prettier all clean pre-push; full 46-check monorepo suite green on the PR
+    itself, including 'Contract verifiers' and TypeScript). drawFish() in cthulhuquarium-
+    game.vue now renders real per-slug art via a lazy image cache with fallback to the
+    original primitive silhouette, matching the same hunger-based desaturation/dimming and
+    facing-flip behavior as before. No browser/visual screenshot confirmation was possible
+    from this sandbox; production visual confirmation is a good candidate for a human spot-
+    check next time kindrobots.org/cthulhuquarium is opened.
+  updated: '2026-09-11T14:01:23Z'
   claimed_by: 20260911T-cq-t070
   claimed_at: '2026-09-11T13:49:37Z'
+  implementation_pr: 'silasfelinus/kind_robots#2626'
 
 - id: t-071
   milestone: m3
