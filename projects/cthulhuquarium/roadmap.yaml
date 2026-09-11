@@ -3180,10 +3180,10 @@ tasks:
 - id: t-074
   milestone: m3
   title: Wire the two buildable remaining milestones; scope-decide the other two
-  status: ready
+  status: claimed
   gate_human: false
   soft_gate: true
-  owner: null
+  owner: worker
   stakes: reversible
   passes: 0
   depends_on: t-075
@@ -3197,7 +3197,9 @@ tasks:
     fire a tracked event (partially exists via t-029/t-058, verify), the latter needs the
     rivalry subsystem in t-075 to exist at all. Depends on t-075 for the rivalry-gated
     landmark only; the tank/spotless pair can land independently and does not need to wait.
-  updated: '2026-09-11T13:29:00Z'
+  updated: '2026-09-11T16:32:48Z'
+  claimed_by: 2026-09-11T162830Z-cthulhuquarium-t074-milestones
+  claimed_at: '2026-09-11T16:32:48Z'
 
 - id: t-075
   milestone: m3
