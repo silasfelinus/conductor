@@ -2861,4 +2861,147 @@ tasks:
   claimed_by: claude-20260830T022829Z-cq-t064
   claimed_at: '2026-08-30T02:28:30Z'
   updated: '2026-08-30T02:28:56Z'
+- id: t-065
+  milestone: m3
+  title: Deliver the 136 stranded Cthulhuquarium art files to the live game
+  status: ready
+  gate_human: false
+  owner: worker
+  stakes: reversible
+  passes: 0
+  note: >-
+    THE reason Cthulhuquarium failed Silas's 2026-09-11 audit. projects/cthulhuquarium/art/ holds
+    138 authored, on-style plates (119 fish, 7 sets, 6 eggs, 2 screens, 2 characters -- Charlotte
+    the Fishmonger and Wilbur Stint -- 1 ichthyonomicon, 1 parlour background; 24MB total). EXACTLY
+    TWO of them have ever reached kind_robots: screen-finale.webp and set-last-aquarium.webp. The
+    other 136 have never been seen by a player or by Silas.
+
+    Root cause is already documented in cthulhuquarium-game.vue:1206-1214 -- distribute_images.py's
+    media-share pipeline is a manual step on Silas's home network that no CI or agent session can
+    write to, and most of these plates have no Monster/Reward row to hang an ArtImage off. A prior
+    session hit that wall, FOUND A WORKING FIX (bundle as ordinary Vite assets under
+    assets/images/cthulhuquarium/, committed to git, built into fingerprinted _nuxt/ URLs, no infra
+    dependency), and then applied it only to the two files its own task needed. Nobody generalised
+    it and nothing reported the gap, so the roadmap read 63/64 done while the game rendered
+    styleless.
+
+    DO: apply the same bundling pattern to the remaining 136. Wire each fish plate to its bestiary
+    species, the eggs to their rarity tiers, the characters to Charlotte's and Wilbur's shop rows,
+    the parlour background to the tank, and the ichthyonomicon plate to the codex header. Check
+    file sizes first and downscale for web before committing -- 24MB unprocessed is too large to
+    bundle naively, and the fish plates are 1024x1024 square cards that almost certainly do not
+    need full resolution at their rendered size. Prefer a build-time or scripted transform over
+    hand-editing 136 files.
+
+    Do not treat this as done until a signed-out visit to /play/aquarium visibly shows real fish
+    art, real egg art, and the parlour background.
+  updated: '2026-09-11T10:30:00Z'
+- id: t-066
+  milestone: m3
+  title: Stop rendering the project pitch as player-facing page copy
+  status: ready
+  gate_human: false
+  owner: worker
+  stakes: reversible
+  passes: 0
+  note: >-
+    Found in Silas's 2026-09-11 audit: "the entire text at the beginning is unnecessary." The
+    /play/aquarium page renders his original project pitch to the player -- the full "Long time
+    silly project planned that I've never made happen. my inspiration is the absolutely excellent
+    mobile game insaniquarium..." paragraph, including internal planning language about agents,
+    comfy access, tiers of evolution, and what should be part of the workflow.
+
+    That text is a brief written FOR the build, not copy written for a player. It should not be on
+    the product surface at all. Find where it is sourced (project notes_from_silas / description
+    surfaced through the conductor project row, or the channel content file) and stop rendering it
+    in the game view. If the surface genuinely needs an intro, it gets one short authored line in
+    the game's own voice -- content/play/aquarium.md already has a good one ("A darkly funny idle
+    aquarium -- click for coins, buy food, keep the monsters fed, and find out what else is down
+    there.").
+
+    Worth a quick check of the other play/ surfaces while in here: if this is a shared wrapper
+    behaviour rather than something specific to aquarium.vue, the same pitch text may be leaking
+    into other projects' pages too, and that is a wider fix than this task.
+  updated: '2026-09-11T10:30:00Z'
+- id: t-067
+  milestone: m3
+  title: Fix the collapsed one-word-per-line layout in the sets row
+  status: ready
+  gate_human: false
+  owner: worker
+  stakes: reversible
+  passes: 0
+  note: >-
+    From Silas's 2026-09-11 audit screenshots. "The Last Aquarium" row renders its art plate at
+    roughly full row width while its title and description are squeezed into a ~60px column, one
+    word per line, for about twenty lines. It is the most visibly broken thing on the page.
+
+    cthulhuquarium-game.vue:732-760 looks correct on its face -- the kr-art-plate carries
+    `class="size-12 shrink-0"` and the text block carries `min-w-0 flex-1` -- so the likely cause
+    is that kr-art-plate does not honour an externally-passed size class for this
+    variant/shape/fit combination (variant="icon" shape="plate" frame="thin" fit="cover") and
+    grows to fill instead. Verify that before changing the call site: if kr-art-plate is
+    overriding consumer sizing, fixing it there is the real fix and every other consumer benefits,
+    whereas patching this one row with a wrapper div hides a shared bug. The interface-vision
+    project owns kr-* primitives, so coordinate rather than fork the component if the fix belongs
+    inside it.
+  updated: '2026-09-11T10:30:00Z'
+- id: t-068
+  milestone: m3
+  title: Write FULL-GAME-GAP-AUDIT.md for Cthulhuquarium
+  status: ready
+  gate_human: false
+  owner: worker
+  stakes: reversible
+  passes: 0
+  note: >-
+    Cthulhuquarium sat at 63/64 tasks done while failing its owner's first real look. That is the
+    same failure shape global-ui and ruler-hooked hit, and ruler-hooked's answer -- a written audit
+    comparing the PITCH against what a player can actually reach -- is what made its remaining work
+    honest again. Do the same here.
+
+    The pitch (projects/cthulhuquarium/DESIGN-BRIEF.md, and Silas's original text) asks for:
+    aquarium backgrounds, varied monster fish, tappable collectibles, random rare experiences,
+    memory, leaderboard, browsable public aquariums, user decoration, a coin/feed/upgrade loop, and
+    idle-game pickups that accrue while away. Against that, record what actually exists and what a
+    signed-in player can actually see and do today. Be specific and be honest in both directions --
+    the backend is genuinely substantial (7,294 lines across aquarium.ts, aquariumEconomy.ts, the
+    tank store and the game component, 16 API routes, 7 Prisma models), and that work should be
+    credited rather than erased, but 151 declared species with 0 observed and an empty tank is what
+    the owner sees.
+
+    Output: projects/cthulhuquarium/FULL-GAME-GAP-AUDIT.md, plus whatever new roadmap tasks the gaps
+    justify. Do not mark this project finished, and do not let a future session flip it on task
+    count, until that audit exists and its named gaps are closed or explicitly deferred by Silas.
+  updated: '2026-09-11T10:30:00Z'
+- id: t-069
+  milestone: m3
+  title: 'FOR SILAS: re-audit Cthulhuquarium once art is delivered and the layout bugs are fixed'
+  status: waiting
+  gate_human: true
+  owner: worker
+  stakes: reversible
+  passes: 0
+  depends_on:
+    - t-065
+    - t-066
+    - t-067
+  note: >-
+    FOR SILAS: Cthulhuquarium failed your 2026-09-11 audit, and your verdict stands: "this is
+    nothing like the pitched experience except in the barest of bones", "we need a much better
+    design of everything", "there was no real style in the pics for our characters."
+
+    The style half of that has a specific cause worth knowing before you re-look: the styled art
+    exists and was never delivered. 136 of 138 authored plates -- the Victorian trade-card fish,
+    Charlotte, Wilbur, the parlour, the ichthyonomicon -- have been sitting in the conductor repo
+    unseen. You were judging fallback rendering, not the art that was made for this game. t-065
+    delivers it, t-066 removes the pitch text you flagged, t-067 fixes the collapsed sets row.
+
+    TO APPROVE: after those three land, look again and say whether the style is right. If the real
+    plates still are not what you want, that is a genuine art-direction rejection and should open a
+    redesign task with your specific direction -- but it is worth judging the real thing first. If
+    the game is still hollow beyond the art, t-068's gap audit is the place that gets recorded.
+    What unblocks: nothing else is gated on this; it is the honest exit gate for the project, and
+    Cthulhuquarium must not be marked finished before it.
+  updated: '2026-09-11T10:30:00Z'
 
