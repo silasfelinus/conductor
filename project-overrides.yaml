@@ -211,7 +211,18 @@ overrides:
     kind: brainstorm
 
   - slug: brainstorm
-    status: active
+    status: finished # flipped 2026-09-11 by Silas, in session: "I'm going to accept brainstorm
+    # as acceptable and cleared. Project can be marked completed." 32/32 tasks and 7/7 milestones
+    # done. NOT a task-count flip: t-023 is a real playtest gate that FAILED once (2026-09-07,
+    # paragraph drift and recycled example content), was fixed by kind_robots#2507, retested by
+    # Silas on 2026-09-11, failed again on three new defects (lens selection treated as a floor
+    # rather than an allow-list; no new-pitch control; candidate cards not sharing a baseline),
+    # and only accepted after kind_robots#2615 fixed all three. See t-023's note for the full
+    # record, including one documented residual accepted as-is: the FOCUSED batch shape still
+    # badges a per-candidate lens identically to an ASSORTMENT quota, so a focused batch can look
+    # varied at a glance. If that becomes annoying in use, file a fresh task rather than reopening
+    # this project -- the interface-vision precedent is that reopening is for unmet goals, not for
+    # polish someone thought of later.
     priority: normal
     # Frontend placement — synced to the kind_robots Project row by
     # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry

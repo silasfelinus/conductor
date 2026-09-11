@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-09-11T08:31:07.445161+00:00`
+Generated: `2026-09-11T09:50:30.721119+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **52** roadmaps, **29** active + **2** continuous projects, **1402** tasks
-- **31 ready**, **54 waiting**, **38 needs-human**, **1 claimed/review**, **1261 done**
+- **52** roadmaps, **28** active + **2** continuous projects, **1402** tasks
+- **30 ready**, **54 waiting**, **39 needs-human**, **0 claimed/review**, **1262 done**
 - Findings: **0 errors**, **2 warnings**, **11 informational**
 
 ## Project inventory
@@ -18,14 +18,14 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 2 | `cthulhuquarium` | active | software | 0 | 0 | 1 | 0 | 63 / 64 |
 | 3 | `kapowarr` | active | software | 0 | 0 | 1 | 0 | 70 / 71 |
 | 4 | `kind-economy` | active | software | 0 | 3 | 5 | 0 | 19 / 27 |
-| 5 | `interface-vision` | active | software | 0 | 1 | 1 | 1 | 123 / 127 |
+| 5 | `interface-vision` | active | software | 1 | 1 | 1 | 0 | 123 / 127 |
 | 6 | `ai-art-academy` | active | software | 0 | 2 | 3 | 0 | 74 / 79 |
 | 7 | `coloring-book` | active | software | 1 | 9 | 2 | 0 | 27 / 39 |
 | 8 | `humboldt-scoop-cms` | active | software | 0 | 0 | 4 | 0 | 35 / 39 |
 | 9 | `digital-storefront` | active | software | 0 | 2 | 2 | 0 | 40 / 44 |
 | 10 | `mermaids-of-venice` | active | content | 1 | 0 | 3 | 0 | 9 / 13 |
 | 11 | `kind-robots` | active | software | 4 | 0 | 0 | 0 | 91 / 95 |
-| 12 | `rainbow-butterflies` | active | software | 1 | 0 | 3 | 0 | 48 / 52 |
+| 12 | `rainbow-butterflies` | active | software | 0 | 0 | 4 | 0 | 48 / 52 |
 | 13 | `scene-animator` | active | software | 0 | 0 | 1 | 0 | 4 / 5 |
 | 14 | `text-generation` | active | software | 1 | 0 | 0 | 0 | 7 / 8 |
 | 15 | `kindrobots-unraid` | active | software | 1 | 6 | 0 | 0 | 9 / 16 |
@@ -41,15 +41,15 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 25 | `conductor-app` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
 | 26 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
 | 27 | `media-watchlist` | active | software | 0 | 0 | 1 | 0 | 17 / 18 |
-| 28 | `brainstorm` | active | software | 1 | 0 | 0 | 0 | 31 / 32 |
-| 29 | `wishmaster` | retired | software | 0 | 0 | 1 | 0 | 2 / 4 |
-| 30 | `ruler-hooked` | active | software | 1 | 0 | 0 | 0 | 21 / 22 |
-| 31 | `music-mentor` | finished | software | 0 | 0 | 0 | 0 | 8 / 9 |
-| 32 | `animation-manager` | continuous | software | 2 | 0 | 0 | 0 | 15 / 17 |
-| 33 | `dream-cycle` | continuous | software | 3 | 0 | 0 | 0 | 25 / 28 |
+| 28 | `wishmaster` | retired | software | 0 | 0 | 1 | 0 | 2 / 4 |
+| 29 | `ruler-hooked` | active | software | 1 | 0 | 0 | 0 | 21 / 22 |
+| 30 | `music-mentor` | finished | software | 0 | 0 | 0 | 0 | 8 / 9 |
+| 31 | `animation-manager` | continuous | software | 2 | 0 | 0 | 0 | 15 / 17 |
+| 32 | `dream-cycle` | continuous | software | 3 | 0 | 0 | 0 | 25 / 28 |
 | — | `animation-studio` | retired | software | 0 | 3 | 0 | 0 | 4 / 8 |
 | — | `approval-portal` | retired | software | 0 | 0 | 0 | 0 | 3 / 5 |
 | — | `art-generator-connect` | finished | software | 0 | 0 | 0 | 0 | 22 / 22 |
+| — | `brainstorm` | finished | software | 0 | 0 | 0 | 0 | 32 / 32 |
 | — | `career-transition` | retired | content | 0 | 4 | 3 | 0 | 1 / 8 |
 | — | `challenge-center` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
 | — | `ecosystem-map` | finished | software | 0 | 0 | 0 | 0 | 8 / 8 |

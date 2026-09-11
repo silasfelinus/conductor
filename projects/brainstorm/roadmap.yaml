@@ -59,7 +59,7 @@ milestones:
   - id: m6
     title: Preview verification and release readiness
     weight: 5
-    status: in-progress
+    status: done
 
 tasks:
   - id: t-001
@@ -590,18 +590,33 @@ tasks:
   - id: t-023
     milestone: m6
     title: Silas playtest and finite-project exit reconciliation
-    status: ready
+    status: done
     depends_on: t-022
-    updated: '2026-09-08T02:32:18+00:00'
+    updated: '2026-09-11T09:49:20Z'
     passes: 0
     stakes: reversible
     gate_human: true
-    note: |-
+    note: >-
       FOR SILAS: Play with the restored Brainstorm at the preview/live route after t-022 and confirm that the pitch -> many ideas -> keep/edit/regenerate/save loop feels like the Brainstorm you cared about, not merely a technically functional generator. Try both a practical prompt and something absurd/dark-comedy. TO APPROVE: if the product has regained the right utility and personality, set `approved_by_human: true` and `status: done`; if not, leave concrete notes and return the project to active refinement. This gate controls only declaring the finite revival project finished, not routine reversible development.
       STATUS CORRECTED (conductor scheduled sweep, 2026-08-26): this task carries gate_human: true and its note is a complete FOR SILAS playtest gate with no further agent-actionable work -- it should never sit at status: ready (which implies agent pickup) once its dependency t-022 clears. t-022 completed today (2026-08-26T09:28:38Z) and resolve_deps.py correctly flipped this task's status from waiting to ready, but a gate_human:true task with no agent work component belongs at needs-human from the moment it unblocks, not ready. Moving it there now so it surfaces in audit_human_gates.py's report. No content change to the FOR SILAS instructions themselves.
 
       Human acceptance test failed on 2026-09-07. Brainstorm was given the premise "Tell me things about Vanderbuilt Lacrosse" plus four terse one-sentence examples about an absurdly rich, comically out-of-touch character. Both Open Field and Darker/Funnier returned paragraph-length mini-scenes instead of matching the one-sentence pattern; one candidate directly recycled the pony example; and ordinary whimsical material such as gourmet-flavored lacrosse balls was tagged as dark humor. Expected output is fresh, compact facts/jokes in the same formal shape as the examples, e.g. "Vanderbuilt Lacrosse has the trademark on the concept of vampires" or "Every time someone sings Happy Birthday, Spotify pays Vanderbuilt Lacrosse 5 cents." Kind Robots PR #2507 fixes the prompt contract so examples define output form while their content becomes excluded territory, and tightens the dark-humor contract. Return this task to the agent queue; after the fix is deployed, request one focused human retest rather than treating the prior run as accepted.
+
+      ACCEPTED BY SILAS, 2026-09-11 (in session): "I'm going to accept brainstorm as acceptable and cleared. Project can be marked completed." This closes the focused retest this task asked for after the 2026-09-07 failure, and closes the finite Brainstorm revival project.
+
+      WHAT THE RETEST FOUND, AND WHAT SHIPPED. Silas ran two real pitches (rejected ice cream flavors, then Vanderbuilt Lacrosse) and reported the first went well with genuinely good suggestions. Three defects surfaced, all fixed in kind_robots#2615 (squash 7db4090, merged by Silas):
+      (1) LENS SELECTION WAS A FLOOR, NOT AN ALLOW-LIST -- the real bug. Selecting only Dark humor on Auto and asking for 20 ideas returned one dark-humor candidate and nineteen unselected lenses. assortmentInstructions() computed wildcardSlots = count - (pinnedTotal + automatic.length) and then told the model those slots "may use an Auto lens again or another valid response lens" -- with one Auto lens and 20 ideas, 19 slots explicitly opened to lenses the user did not pick. The model was obeying instructions. Selected lenses now claim every slot, with an explicit "do not introduce unselected response lenses"; the escape hatch survives only where every selected lens is pinned to an exact quota that cannot fill the batch alone, since a pinned count is a ceiling as well as a floor. Regression tests cover the single-Auto-lens case (including assert.doesNotMatch on "another valid response lens") and the all-pinned-underfilled case.
+      (2) NO WAY TO START A NEW PITCH. brainstormStore.clearSession() had existed and been exported all along with ZERO call sites anywhere in the app, so the UI offered no clear affordance; because the store deep-watches its state into persistence, changing the premise left the prior pitch's batches and kept ideas in place (Silas saw the ice cream batch still sitting as batch 1 with "Kept ideas 8/8" from an unrelated premise). A "Start a new pitch" control is now wired, shown only when there is work to discard and confirming first since clearing throws away kept ideas. The workbench contract now pins both the control and the clearSession call so it cannot silently become uncalled again.
+      (3) CANDIDATE CARDS DID NOT SHARE A BASELINE. The card root was already flex/min-h-64/flex-col with a flex-1 body built to pin its actions to the bottom, but the grid container set items-start, which sizes each cell to its own content and defeated it; shorter cards floated their action rows above their neighbours'. Now items-stretch.
+      Silas also asked for the composer to be condensed: the "Human taste stays in charge" aside, the Brainbot persona tagline line, and the restated intro paragraph were removed.
+
+      #2507 IS VALIDATED. The 2026-09-07 rejection was caused by paragraph-length mini-scenes instead of one-sentence output, a candidate recycling the pony example, and whimsical material mis-tagged as dark humor. All three are gone: every candidate in the retest came back as a terse one-sentence assertion matching the user's examples, with no example-content reuse.
+
+      INCIDENTAL REPAIR, worth knowing for other projects: the brainstorm-generation-contract workflow had been RED ON MAIN independently of this work. PR #2507 added "or merely whimsical weirdness" to CREATIVE_DIRECTION_INSTRUCTIONS['darker-funnier'] without updating verifyBrainstormGeneration.ts's regex. Confirmed pre-existing by stashing against clean main, and fixed in the same PR.
+
+      DOCUMENTED RESIDUAL, accepted as-is rather than left as hidden scope: in FOCUSED batch shape, brainstormPrompt.ts still instructs "Assign each candidate the closest returnType lens", and brainstorm-candidate-card.vue badges that lens identically to a user-selected ASSORTMENT quota -- so a coherent focused batch can still look varied at a glance even when its content is tightly grouped. This is presentation, not plumbing (mode and batchShape both reach the server correctly), and it matters less now that assortment genuinely honors the selection. Silas accepted the product with this known; if it becomes annoying in use, the cheap fix is to mute or drop the lens badge in focused mode, and that should be filed as a fresh task rather than reopening this one.
     approved_by_human: true
+    implementation_pr: 'silasfelinus/kind_robots#2615'
 
   - id: t-024
     milestone: m5
