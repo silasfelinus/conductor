@@ -454,7 +454,7 @@ tasks:
 - id: t-027
   milestone: m2
   title: "Get final human visual acceptance of the Rainbow Butterflies MVP"
-  status: ready
+  status: needs-human
   passes: 0
   stakes: outward-facing
   gate_human: true
@@ -505,7 +505,15 @@ tasks:
     narrows this to the callback/exchange path rather than configuration. No code change
     made and no status change: this is verification evidence only, and the remaining
     PRODUCT-V2 acceptance lanes are untouched.
-  updated: '2026-09-11T08:29:09Z'
+
+    SEND-BACK RESOLVED -- THE REPORTED DEFECT NEVER EXISTED (Silas, in session 2026-09-11). The Google sign-in failure that caused the previous SENT BACK was a transient outage, not an implementation or deployment defect: Kind Robots was briefly down for an update, and Silas confirms he signed in to https://rainbowbutterflies.org successfully minutes later. That is the disconfirming evidence no agent sandbox could obtain. Rainbow's server/api/auth/google/start.get.ts wraps its kindRobotsGet() config call in a try/catch whose only fallback is a redirect to /login?error=google-service-unavailable, so a momentarily unreachable Kind Robots produces exactly the "Google sign-in is temporarily unavailable" message Silas saw, from correct code over correct configuration. The prior note's request to verify KIND_ROBOTS_BASE_URL / NUXT_PUBLIC_SITE_URL / FIRST_PARTY_SSO_CLIENTS_JSON / GOOGLE_ID is answered: all four are correct in production, as that note's probe evidence records, and GOOGLE_SECRET is set as well. No code change was needed and none was made.
+
+    The send-back's own stated bar -- "a real production Google sign-in reaches Google, returns through the Rainbow callback, and establishes the shared account session successfully" -- is therefore MET, and has been met since the day it was written. It simply was never recorded as met, which left this task parked on a blocker that had already cleared. LESSON FOR FUTURE SEND-BACKS: a rejection caused by a dependency outage looks permanent from the roadmap end, because nothing in the system re-tests a stated blocker after the outage passes. When a send-back names a symptom rather than a reproduction, re-verify the symptom before treating it as scope.
+
+    Current health re-verified 2026-09-11 from outside: all 14 acceptance-list routes return 200 with real rendered content (/, /login, /agents, /agents/providers, /agents/messaging, /dashboard, /community, /messages, /build, /generate, /servers, /mission, /economy, /notifications), and GET /api/auth/google/start?returnTo=/ still 302s to accounts.google.com carrying the correct client_id, redirect_uri, scope, S256 code_challenge and state. Signed-in states were not exercised by that external probe, but Silas re-confirmed in session on 2026-09-11 that he can log in to Rainbow successfully right now -- so the authenticated path is verified current, not merely working on the day of the outage. That closes the last open question the send-back raised.
+
+    FOR SILAS: Rainbow Butterflies v2 is complete per PRODUCT-V2.md lanes 1-5 (lanes 2-5 landed 2026-09-04 as Rainbow PRs #35/#36/#37 plus the #38 cross-width defect fixes; lane 1 as kind_robots#2343) and is back in front of you for the acceptance this task exists to capture -- the same ask as the 2026-09-04 note, now with its one stated blocker retired. Please look at https://rainbowbutterflies.org at phone, tablet and desktop: the home gateway, sign-in, /agents (AgentProfile onboarding), /agents/providers, /agents/messaging, /dashboard, /community and a profile, /messages, /build, /generate, /servers, /mission, /economy, /notifications, and the fundraiser treatment. One caveat worth your judgement: the cross-width verification behind this is from 2026-09-04 and predates the Kind Robots update that caused the outage; nothing probed today looks broken, but if you want that pass re-run against current main before you accept, say so and it will be redone rather than assumed. TO APPROVE: set approved_by_human: true and status: done on this task, or leave a note naming the concrete visual changes you want. WHAT UNBLOCKS: t-009 (onboard AMI to the first approved agent-native communities) and t-010 (the first approved human-network outreach pilot) become eligible for their own separate per-platform approvals -- acceptance here is not itself permission to create accounts, accept platform terms, or publish anything.
+  updated: '2026-09-11T08:57:09Z'
 
 - id: t-028
   milestone: m3
