@@ -3060,7 +3060,7 @@ tasks:
 
 - id: t-072
   milestone: m3
-  title: Fix or delete the dead importCthulhuquariumArt.mjs script; link real Monster art DB records
+  title: Delete the dead importCthulhuquariumArt.mjs script (Monster art DB linking split to t-076)
   status: claimed
   gate_human: false
   owner: worker
@@ -3080,9 +3080,63 @@ tasks:
     fallback in utils/cthulhuquariumArt.ts -- that module already yields to real DB values
     automatically once set, so populating them (real ArtImage records) turns a permanent
     workaround into real data without touching the fallback code.
+
+    SCOPE SPLIT (2026-09-11): investigated both halves before starting. Deleting the
+    script (not fixing its path) is correct, not just easier -- its per-prefix resize
+    scheme (bg-/screen-/char-/ichthyonomicon at 1280/960/640px) doesn't match what
+    kind_robots#2620 actually shipped (uniform 512px-long-edge), so pointing it at the
+    real directory would silently overwrite already-correct committed assets with
+    differently-sized ones. It was also never wired to anything (not in package.json
+    scripts, CI, or imported anywhere). Deletion lands as kind_robots#2627. The DB-
+    linking half is real, separate work -- a bulk ArtImage-creation + Monster-slug-
+    linking script (scripts/seed_kr_logo_art_image.ts + scripts/seed_bestiary.ts's
+    two-pass idiom are directly adaptable precedent, and server/api/monsters/[id].patch.ts
+    already accepts artImageId/iconPath/cardPath with FK validation) -- but it needs an
+    actual --write run against a live DATABASE_URL to create real rows and verify them,
+    which no agent sandbox session has (confirmed: no .env, dummy-only DATABASE_URL,
+    no reachable DB port; production credentials live only on the Alexandria host per
+    docs/runbooks/migration-credential-boundary.md). Split out as t-076 so this task can
+    close on its own actually-completed half rather than stay open on work no sandbox
+    session can finish end-to-end.
   updated: '2026-09-11T14:06:49Z'
   claimed_by: 20260911T-cq-t072
   claimed_at: '2026-09-11T14:06:49Z'
+
+- id: t-076
+  milestone: m3
+  title: Bulk-create real ArtImage records and link them to the 119 Monster rows that have art
+  status: ready
+  gate_human: false
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Split from t-072 (2026-09-11) -- see that task's note for the full scope
+    investigation. Monster.iconPath/cardPath/artImageId are still null for all 119
+    species that already have a delivered plate (client-side fallback only, via
+    utils/cthulhuquariumArt.ts's withCthulhuquariumArt -- that helper already yields to
+    real DB values automatically once set, so this closes a permanent workaround
+    without touching the fallback code).
+
+    Requires: (1) a bulk script creating one ArtImage row per fish, adapting
+    scripts/seed_kr_logo_art_image.ts's dry-run-by-default/--write-gated,
+    idempotent-by-fileName pattern; (2) linking each to its Monster row by slug,
+    adapting scripts/seed_bestiary.ts's two-pass upsert idiom and mirroring
+    server/api/monsters/[id].patch.ts's FK-existence validation for artImageId; (3) a
+    decision on where the 119 static files get a stable public URL for ArtImage.imagePath
+    -- utils/artImageSrc.ts renders that field verbatim as an <img src>, not through
+    Vite asset resolution, so the current assets/images/cthulhuquarium/ Vite-src
+    location (fingerprinted per-build _nuxt/... URLs) won't work as-is; duplicating the
+    119 files into public/images/cthulhuquarium/ for stable /images/... URLs is the
+    realistic in-repo option, since the real home-network media-share pipeline is
+    explicitly unreachable from any CI/agent session (see utils/cthulhuquariumArt.ts's
+    own header comment). REQUIRES A SESSION WITH LIVE DATABASE_URL ACCESS: this cannot
+    be run or verified from a generic sandbox checkout (confirmed 2026-09-11 -- no
+    .env, dummy-only DATABASE_URL in the provisioning script, no reachable DB port; see
+    docs/runbooks/migration-credential-boundary.md for where real credentials actually
+    live). The script itself can be drafted/reviewed in a sandbox as prep work, but
+    should not attempt --write there.
+  updated: '2026-09-11T14:06:49Z'
 
 - id: t-073
   milestone: m3
