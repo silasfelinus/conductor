@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-09-11T06:24:40.318431+00:00`
+Generated: `2026-09-11T08:31:07.445161+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **52** roadmaps, **29** active + **2** continuous projects, **1401** tasks
-- **31 ready**, **54 waiting**, **38 needs-human**, **0 claimed/review**, **1261 done**
+- **52** roadmaps, **29** active + **2** continuous projects, **1402** tasks
+- **31 ready**, **54 waiting**, **38 needs-human**, **1 claimed/review**, **1261 done**
 - Findings: **0 errors**, **2 warnings**, **11 informational**
 
 ## Project inventory
@@ -18,7 +18,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 2 | `cthulhuquarium` | active | software | 0 | 0 | 1 | 0 | 63 / 64 |
 | 3 | `kapowarr` | active | software | 0 | 0 | 1 | 0 | 70 / 71 |
 | 4 | `kind-economy` | active | software | 0 | 3 | 5 | 0 | 19 / 27 |
-| 5 | `interface-vision` | active | software | 1 | 1 | 1 | 0 | 123 / 127 |
+| 5 | `interface-vision` | active | software | 0 | 1 | 1 | 1 | 123 / 127 |
 | 6 | `ai-art-academy` | active | software | 0 | 2 | 3 | 0 | 74 / 79 |
 | 7 | `coloring-book` | active | software | 1 | 9 | 2 | 0 | 27 / 39 |
 | 8 | `humboldt-scoop-cms` | active | software | 0 | 0 | 4 | 0 | 35 / 39 |
@@ -31,7 +31,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 15 | `kindrobots-unraid` | active | software | 1 | 6 | 0 | 0 | 9 / 16 |
 | 16 | `model-builder` | active | software | 2 | 0 | 0 | 0 | 43 / 45 |
 | 17 | `lora-ingestion` | active | infrastructure | 1 | 0 | 0 | 0 | 7 / 8 |
-| 18 | `conductor` | active | software | 1 | 0 | 0 | 0 | 147 / 148 |
+| 18 | `conductor` | active | software | 2 | 0 | 0 | 0 | 147 / 149 |
 | 19 | `taskmaster` | active | software | 1 | 0 | 0 | 0 | 3 / 4 |
 | 20 | `storybook` | active | software | 3 | 1 | 0 | 0 | 22 / 26 |
 | 21 | `davinci` | active | software | 1 | 2 | 0 | 0 | 23 / 26 |
