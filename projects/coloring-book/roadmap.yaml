@@ -570,19 +570,34 @@ tasks:
 - id: t-034
   milestone: m6
   title: Wire print-package.yaml layout fields once Silas picks a printer/trim/binding
-  status: needs-human
+  status: done
   owner:
   passes: 0
   stakes: reversible
   soft_gate: true
-  updated: '2026-07-28T12:05:00Z'
-  note: 'FOR SILAS: scripts/coloring_book_package_status.py (conductor PR #1322) tracks per-book print layout as explicit
-    null fields in projects/coloring-book/print-package.yaml (trim_width_inches, trim_height_inches, bleed_inches, binding,
-    paper, interior_color_mode, cover_color_mode, printer_template, page_count_includes_blanks, inside_cover_printing, barcode_area_reserved).
-    TO APPROVE: pick a printer/POD vendor and fill in those fields for at least Monster Recast (order 1) — once source assets
-    are also complete (t-022), the status script will report exports-needed with the exact next action. What unblocks: t-025
-    (package and register Monster Recast book 1) can then generate the ordered interior PDF, cover-wrap PDF, and source archive
-    against real values instead of guessing a trim size.'
+  updated: '2026-09-11T11:09:49Z'
+  note: >-
+    FOR SILAS: scripts/coloring_book_package_status.py (conductor PR #1322) tracks per-book print layout as explicit null fields in projects/coloring-book/print-package.yaml (trim_width_inches, trim_height_inches, bleed_inches, binding, paper, interior_color_mode, cover_color_mode, printer_template, page_count_includes_blanks, inside_cover_printing, barcode_area_reserved). TO APPROVE: pick a printer/POD vendor and fill in those fields for at least Monster Recast (order 1) — once source assets are also complete (t-022), the status script will report exports-needed with the exact next action. What unblocks: t-025 (package and register Monster Recast book 1) can then generate the ordered interior PDF, cover-wrap PDF, and source archive against real values instead of guessing a trim size.
+
+    DECIDED BY SILAS, 2026-09-11 (in session): "When it comes time for printing, we'll use
+    amazons print services, same as I did with my novel, no future decisions about that
+    needed." print-package.yaml's eleven null layout fields are now filled for all three
+    books. The values were NOT invented for this decision -- they are transcribed from this
+    project's own KDP-verified spec in docs/generation-pipeline.md section 4, checked
+    against KDP help topics G201834340 / GVBQ3CMEQW3W2VL6, which settled on 8.5x11 no-bleed
+    interiors long before a printer was chosen. Picking Amazon ratifies that spec rather
+    than reopening it. Filled: 8.5x11 trim, 0 bleed (no-bleed interiors -- coloring art
+    running off the page edge is actively worse for the user, and it avoids looser trim
+    tolerances and the 8.625x11.25 layout), perfect-bound, white paper, bw interiors, color
+    cover, printer_template kdp-paperback-8.5x11, page_count_includes_blanks true (KDP
+    counts every interior page and the count drives spine width, so blanks must be real
+    pages in the file), inside_cover_printing false (KDP does not print paperback inside
+    covers), barcode_area_reserved true (KDP places the ISBN barcode bottom-right on the
+    back cover). Per his 'no future decisions needed', no later task should re-ask any of
+    this; a genuine change of printer would be a new decision, not a reopening of this one.
+    WHAT UNBLOCKS: t-025 can package and register Monster Recast book 1 once t-022's 36
+    final color/BW pairs are complete.
+  approved_by_human: true
 
 - id: t-035
   milestone: m4
