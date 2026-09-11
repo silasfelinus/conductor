@@ -2928,6 +2928,38 @@ tasks:
     notesFromSilas dictation. Verified vue-tsc/eslint clean pre-merge; every current caller
     of project-front-page.vue already supplies its own description so this is a no-op for
     all of them except removing the leak risk.
+
+    SCOPE CORRECTED 2026-09-11: this is NOT aquarium-specific. This task's own note hedged
+    that "if this is a shared wrapper behaviour rather than something specific to
+    aquarium.vue, the same pitch text may be leaking into other projects' pages too" -- that
+    hedge was right. Silas hit the same thing playing Ruler Hooked and called it out
+    independently: "Deliverables and status does not belong, that's more of a project info
+    section that should be redundant." The block is components/conductor/project-
+    deliverables-panel.vue, rendered by the SHARED components/conductor/project-front-
+    page.vue wrapper, which is mounted by aquarium-page.vue, ruler-hooked-page.vue,
+    coloring-book-page.vue and scoop-cms-page.vue. Conductor's internal roadmap state is
+    being shown to players on all four. ruler-hooked/t-023 now owns the shared fix (drop the
+    project-info chrome from player-facing surfaces without deleting the useful shell).
+    CLOSE THIS BY REFERENCE once that lands rather than fixing the same wrapper twice -- but
+    verify the aquarium surface specifically afterwards, since the long pitch paragraph
+    Silas saw there may come from a different field than the deliverables panel and could
+    survive the shared fix.
+
+    CORRECTION to the SCOPE CORRECTED paragraph immediately above, written minutes later in
+    the same session after actually reading this task's own completion note instead of
+    inferring from the symptom. This task was closed CORRECTLY and is NOT superseded by
+    ruler-hooked/t-023. There are TWO separate leaks through the same project-front-page.vue
+    wrapper, and each needed its own fix: (1) THIS TASK, fixed in kind_robots#2623 --
+    view.description preferred the live Project.description field, which
+    createProjectWithScaffoldTodo had permanently frozen to Silas's raw pitch dictation,
+    over the page's authored fallback. That is the long "Long time silly project planned
+    that I've never made happen..." paragraph he saw on /play/aquarium, and flipping the
+    precedence fixed it for every caller. (2) ruler-hooked/t-023 -- the separate
+    "DELIVERABLES & STATUS / What 100% looks like / Shipped / Up next" block, which is
+    components/conductor/project-deliverables-panel.vue rendered at project-front-
+    page.vue:163. That element is untouched by #2623 and still renders on main; Silas hit it
+    on Ruler Hooked after this task had closed. Do NOT reopen this task: its leak is fixed
+    and verified. The earlier paragraph's instruction to "close this by reference" is void.
   updated: '2026-09-11T11:49:09Z'
   claimed_by: claude-blissful-curie-s0dmr5-20260911T114500Z-cq-t066
   claimed_at: '2026-09-11T11:43:03Z'
