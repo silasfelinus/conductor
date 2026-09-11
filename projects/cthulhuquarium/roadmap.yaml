@@ -3173,7 +3173,24 @@ tasks:
     kind_robots#2620) and wire into utils/cthulhuquariumArt.ts. Left status: claimed (not
     done) -- rendering is async and this session cannot block on a 150-minute-timeout
     workflow.
-  updated: '2026-09-11T15:43:38Z'
+
+    PROGRESS (2026-09-11, later same day): the dispatched Auto Art Generate run (workflow
+    run 34617777502) hit the workflows own 150-minute budget and was cancelled -- every one
+    of the 32 queued fish jobs individually timed out after its own 300s poll window ("still
+    queued/running"), so 0/32 delivered this run. This is not a failure of the render box:
+    scripts/check_render_box.py now reports UP with a healthy Comfy heartbeat (0.9 min old)
+    and 32 renders completed in the last 6h, and scripts/recheck_render_queue.py shows
+    PENDING=19, RUNNING=1, oldestPending age ~1.5h, 24h windowThroughput DONE=45,
+    recentFailed=none -- the queue is draining, just slower than the running workflow could
+    wait for. auto-art-generate.yml already runs on cron (0 */6 * * *) independent of this
+    session, so the remaining species will keep draining without another manual dispatch; a
+    manual re-dispatch would just hit the same 150-min timeout again given current
+    throughput. NEXT for whichever session picks this back up: re-run
+    scripts/recheck_render_queue.py --task cthulhuquarium/t-073, and once PENDING for these
+    32 jobs reaches 0, verify renders landed on-style and deliver into kind_robots per the
+    original plan. Left status: claimed (stale claim, safe to reclaim) -- no code work to do
+    until the queue finishes draining.
+  updated: '2026-09-11T19:32:11Z'
   claimed_by: 2026-09-11T163000Z-cq-t073-agent
   claimed_at: '2026-09-11T15:38:45Z'
 
