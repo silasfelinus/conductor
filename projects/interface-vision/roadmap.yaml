@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3396,8 +3396,31 @@ tasks:
     layout geometry change. All 46 kind_robots PR checks passed, mergeable_state: clean at
     merge time. Return the recurring consistency umbrella to ready for the next bounded
     slice.
-  updated: '2026-09-11T18:38:34Z'
-  implementation_pr: 'silasfelinus/kind_robots#2618'
+
+    Slice 232 merged as silasfelinus/kind_robots#2632 (squash
+    14974138edd3b574c46181d126d333bda88d02fe) from exact head
+    8bd0742ed87a458aa4759cecb9bfb05c5bd623fc. Migrated the last 5 hand-rolled h-5 w-5 icon-
+    glyph occurrences repo-wide to compose the shared kr-icon-5 size primitive with each
+    glyphs existing semantic color utility (text-base-100/drop-shadow, text-base-content/20,
+    text-secondary, text-primary-content/drop-shadow x2 in components/navigation/navigation-
+    trimmed.vue, components/stages/performer-creator.vue, components/art/art-interact.vue,
+    and components/art/art-styler.vue); no color, behavior, API, schema, store, route, or
+    layout geometry change. art-interact.vue needed one prettier --write pass after the
+    class swap pushed its line past print width. Verified vue-tsc --noEmit clean, eslint 0
+    errors on changed files (2 pre-existing unrelated warnings in performer-creator.vue),
+    prettier --check flags only the same pre-existing performer-creator.vue drift
+    before/after (git-stash-confirmed), test:layout-contract holds with 0 new violations,
+    test:lint-ratchet holds at 334/-58 (no rule regression). A repo-wide grep for h-5 w-5
+    text- now returns nothing outside sample/ scaffold templates (out of the vue-only
+    codemod scope, same precedent as kr-icon-4). All 47 kind_robots PR checks green,
+    mergeable_state clean at merge time, additions/deletions (8/-5, 4 files) matched intent
+    exactly, squash-merged. Return the recurring consistency umbrella to ready for the next
+    bounded slice. Kaizen for the next slice: the bare colored h-N w-N glyph pool is now
+    fully closed for every size interface-vision has touched (4/5/6/7/8/10/12 sizeless, plus
+    5/6/primary-4/5/6/7/10/12 colored); run a fresh full-repo class-frequency survey outside
+    all now-closed families to find the next target.
+  updated: '2026-09-11T18:50:25Z'
+  implementation_pr: 'silasfelinus/kind_robots#2632'
   retry_context: ''
   owner: worker
   claimed_by: claude-scheduled-20260911T183900Z-iv-t104
