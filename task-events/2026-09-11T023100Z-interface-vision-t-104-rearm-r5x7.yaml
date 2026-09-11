@@ -1,8 +1,0 @@
-version: 1
-project: interface-vision
-task: t-104
-operation: rearm
-session: 2026-09-11T021910Z-interface-vision-t-104-r5x7
-updated: '2026-09-11T02:31:00Z'
-note: >-
-  Slice 221 completed as a bounded consistency audit/decision with no product-code mutation. After slice 220 closed the bare kr-icon-* family for live *.vue candidates, a fresh GitHub code search of h-4 w-4 text-* showed the remaining colored glyphs are fragmented across semantic colors/opacities (examples include text-secondary, text-accent, text-base-content/20, text-primary/60, text-primary/70, and text-base-100 drop-shadow), with no exact size+color pair large enough to justify another combined primitive. Decision: do not create kr-icon-<color>-* variants for these fragmented cases. Future consistency slices should compose the existing size primitive with the existing semantic color utility, e.g. kr-icon-4 text-secondary, preserving any shrink/transition/drop-shadow tokens. This keeps size vocabulary shared without exploding the primitive namespace by color and directly answers slice 220's kaizen question. The same search also found sample/sample-interact.vue.txt still carries two bare h-4 w-4 glyphs because the icon codemods intentionally walk *.vue only; treat scaffold *.vue.txt templates as a separate bounded follow-up rather than weakening the live-component codemod's closed-family claim. Return the recurring consistency umbrella to ready for the next bounded implementation slice.
