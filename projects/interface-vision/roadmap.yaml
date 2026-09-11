@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   recurring: true
@@ -3367,9 +3367,12 @@ tasks:
     RAN 2026-09-11 slice 219: merged Kind Robots PR #2603 (squash 9336f97). New .kr-input-sm primitive (@apply input input-sm; -- input-bordered is a dead legacy daisyUI v4 class, dropped same as .kr-input) and sibling codemod utils/scripts/codemods/kr_input_sm_codemod.py migrated 54 hand-rolled 'input input- bordered input-sm' occurrences across 25 files, subset-match extras preserved verbatim. Dry run after write confirms 0 remaining candidates repo-wide. Verified: vue-tsc clean; eslint 333/327/6 matches baseline; test:layout-contract holds, 0 new violations; test:lint-ratchet holds at 333/-59; prettier --check flags the same 18 pre-existing- drift files before/after (each touched file diffed against its origin/main version), no new drift. All 58 kind_robots PR checks green, mergeable_state clean, additions/deletions (167/-54, 27 files) matched intent exactly. Kaizen for the next slice: the bare kr-icon-* family (sizes 3/3.5/4/5/6/7/8) is now fully closed repo-wide (all codemods report 0 candidates); the colored icon-glyph variants (h-N w-N text-{color}) are too fragmented to bound the same way (max 7 occurrences per exact size+color pair) -- next slice should pick a different shape or make a deliberate grouping decision for colored icons before attempting that family. Return the recurring consistency umbrella to ready for the next bounded slice.
 
     Slice 221 completed as a bounded consistency audit/decision with no product-code mutation. After slice 220 closed the bare kr-icon-* family for live *.vue candidates, a fresh GitHub code search of h-4 w-4 text-* showed the remaining colored glyphs are fragmented across semantic colors/opacities (examples include text-secondary, text-accent, text-base-content/20, text-primary/60, text-primary/70, and text-base-100 drop-shadow), with no exact size+color pair large enough to justify another combined primitive. Decision: do not create kr-icon-<color>-* variants for these fragmented cases. Future consistency slices should compose the existing size primitive with the existing semantic color utility, e.g. kr-icon-4 text-secondary, preserving any shrink/transition/drop-shadow tokens. This keeps size vocabulary shared without exploding the primitive namespace by color and directly answers slice 220's kaizen question. The same search also found sample/sample-interact.vue.txt still carries two bare h-4 w-4 glyphs because the icon codemods intentionally walk *.vue only; treat scaffold *.vue.txt templates as a separate bounded follow-up rather than weakening the live-component codemod's closed-family claim. Return the recurring consistency umbrella to ready for the next bounded implementation slice.
-  updated: '2026-09-11T02:31:00Z'
+  updated: '2026-09-11T02:31:01Z'
   implementation_pr: 'silasfelinus/kind_robots#2603'
   retry_context: ''
+  owner: worker
+  claimed_by: 2026-09-11T023100-scaffold-txt-glyph
+  claimed_at: '2026-09-11T02:31:01Z'
 
 - id: t-123
   milestone: m5
