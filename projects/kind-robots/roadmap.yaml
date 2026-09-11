@@ -4132,5 +4132,53 @@ tasks:
     `builder-manager.vue`) need their owning roadmap task's note corrected to reflect
     the new reality.
 
+- id: t-096
+  milestone: m1
+  title: "server/utils/error.ts's errorHandler() never sets the HTTP response status -- every API failure across the app answers 200 OK"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Filed 2026-09-11 from media-watchlist/t-019's investigation. `errorHandler()`
+    (`server/utils/error.ts`) computes a correct `statusCode` (401 for auth failures,
+    403, 404, 400, 409, 503, ...) but only returns it as a field on the JSON body --
+    it never calls h3's `setResponseStatus`. Every route that does
+    `catch (error) { return errorHandler(error) }` therefore answers with a literal
+    HTTP 200, regardless of what actually went wrong. `grep -rc "return errorHandler(error)" server/api`
+    finds 432 call sites; only 8 files in `server/api` already call `setResponseStatus`
+    at all (`achievements/index.get.ts`, `brainstorm/generate.post.ts`,
+    `chats/user/human/[id].get.ts`, and a handful of routes that skip errorHandler
+    entirely and set status inline). Every other consumer -- 400+ routes -- has the
+    same blindness media-watchlist/t-019 found: `$fetch`/`ofetch` resolves normally
+    instead of throwing, so any caller written against "check `res.success`" can only
+    ever show a generic fallback message, never the real one, and any caller that
+    assumes a non-2xx status will throw (a reasonable assumption almost anywhere else)
+    silently gets the wrong control flow instead.
+
+    Fixed locally for the 5 media-entries routes in t-019's PR
+    (`silasfelinus/kind_robots#<see t-019 implementation_pr>`) by adding
+    `setResponseStatus(event, result.statusCode || 500)` right after `errorHandler(error)`
+    in each catch block -- matching the convention the 8 already-correct files use.
+    That is a real, scoped fix for one feature, not a fix for the underlying utility.
+
+    THE ROOT FIX: change `errorHandler` to accept the `H3Event` and call
+    `setResponseStatus` itself (e.g. `errorHandler(error, event)`), so every one of the
+    432 call sites is corrected by construction instead of needing the same two-line
+    patch copy-pasted 432 times. This is a real, mechanical, and almost certainly
+    codemod-able change (the call sites already have `event` in scope, being inside
+    `defineEventHandler(async (event) => { ... })`), but it touches roughly 400 files
+    and needs: (1) confirming no caller anywhere relies on the current always-200
+    behavior (a quick audit of frontend `.success` checks vs `try/catch` around
+    `$fetch` first, since fixing this at the root will change control flow for any
+    caller that never expected `$fetch` to throw), (2) a codemod or careful
+    find-and-replace across `server/api/**`, (3) full `vue-tsc`/`eslint`/Cypress
+    suite green, and (4) spot-checking a sample of routes by hand since a mechanical
+    edit at this scale is exactly the kind of change a single subtle miss (e.g. a
+    route that already sets its own status conditionally) turns into a regression.
+    Large enough to warrant its own dedicated task/PR rather than folding into any
+    other work -- do not attempt as a drive-by.
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
+
