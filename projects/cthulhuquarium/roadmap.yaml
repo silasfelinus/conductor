@@ -3289,7 +3289,7 @@ tasks:
 - id: t-077
   milestone: m3
   title: Wire the rivalry evaluator into tick settlement and fire first_rivalry_resolved
-  status: claimed
+  status: review
   gate_human: false
   owner: worker
   stakes: reversible
@@ -3312,10 +3312,20 @@ tasks:
     observed/resolved state per-Aquarium, and fire first_rivalry_resolved via the
     firedMilestones toast queue. Left status: ready (not done) -- task explicitly scopes
     tick-production wiring into this same task.
+
+    PROGRESS (2026-09-11, PR #2640 open): wired evaluateRivalry() + rivalryMilestoneState()
+    + the per-fish rivalry multiplier into settleTick's tick-settlement math
+    (server/utils/aquariumEconomy.ts), added Aquarium.rivalryObserved (additive migration)
+    to persist observed state across settle calls, and fired first_rivalry_resolved via the
+    firedMilestones toast pattern in settleTickForUser/the tank store, guarded by the same
+    AquariumEvent-log idempotency check as first_full_tank/first_spotless_tank. peace_ward
+    now actually suppresses rivalry. New settleTick test covers rivalry reducing production,
+    peace_ward restoring it, and traitless backward compatibility. Full aquarium test suite
+    + vue-tsc typecheck + eslint all pass. Left status: review pending PR #2640 CI/merge.
   claimed_by: 2026-09-11T222954Z-cthulhuquarium-t-077-sched
   claimed_at: '2026-09-11T22:29:54Z'
-  updated: '2026-09-11T22:29:54Z'
-  implementation_pr: 'silasfelinus/kind_robots#2637'
+  updated: '2026-09-11T22:44:48Z'
+  implementation_pr: 'silasfelinus/kind_robots#2640'
 
 - id: t-069
   milestone: m3
