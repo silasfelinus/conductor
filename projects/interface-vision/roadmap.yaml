@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   recurring: true
@@ -3368,9 +3368,12 @@ tasks:
     Slice 225 migrates login-page.vue's password lock glyph from h-5 w-5 text-secondary to the geometry-equivalent kr-icon-5 composed with the existing text-secondary and shrink-0 utilities. No behavior or color change.
 
     Slice 225 merged as silasfelinus/kind_robots#2609 (squash f5ffaa61dce561664dd8a7f99390746a4ebba4f7) from exact head bc924c1a11136af24b32dfe2dcf6a78444c3ce56. components/user/login-page.vue now composes kr-icon-5 with its existing shrink-0 text-secondary utilities instead of hand-rolled h-5 w-5 sizing for the password lock glyph. All exact-head pull-request workflows completed successfully, including TypeScript, Layout Contract, Art Prompt + Icon Safety, First-Party SSO Contract, and Contract Tests. Continue the remaining live colored h-5 w-5 text-* glyph pool in bounded composition-only slices; do not add combined color-size primitives absent a repeated semantic family.
-  updated: '2026-09-11T06:29:00Z'
+  updated: '2026-09-11T06:33:58Z'
   implementation_pr: 'silasfelinus/kind_robots#2608'
   retry_context: ''
+  owner: worker
+  claimed_by: 20260911T063354Z-iv-t104-slice226
+  claimed_at: '2026-09-11T06:33:58Z'
 
 - id: t-123
   milestone: m5
