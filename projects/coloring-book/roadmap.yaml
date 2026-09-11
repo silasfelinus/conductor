@@ -781,6 +781,25 @@ tasks:
     `generate-bw` calls until this clears). What unblocks when it's fixed: `t-022`
     can resume BW derivation for mr-016, mr-020, and the other in-progress Monster
     Recast accepts.
+
+    REPRODUCED 2026-09-11 BY DIRECT TEST, and the result rules out the leading hypothesis. Silas gave a session admin art-job access ("You have the ability to create art job requests through the admin key, make the Kontext test yourself"), so this no longer needed to wait on him.
+
+    THE TEST: ArtJob 21693, enqueued through POST /api/art/enqueue with `"engine": "kontext"` and NO LoRA fields of any kind -- the same plain image-to-image branch `manage_coloring_book_production.py`'s `generate-bw` uses. Source was a known-good 1024x1024 plate (cthulhuquarium-fish-lamplight-angler.webp, a clean Victorian trade-card illustration), prompt asked for black and white line art on a pure white background, steps 20, guidance 2.5, denoise 1. The job took roughly 25 minutes, completed DONE with no error, and produced ArtImage 23785: a valid, well-formed 1024x1024 PNG of PURE MULTICOLOURED STATIC. No line art, no recognisable subject, no white background -- the identical failure mr-016 and mr-020 showed.
+
+    WHAT THIS RULES OUT. ai-art-academy/t-079's leading hypothesis was GGUF + LoraLoaderModelOnly: that the corruption lived in the LoRA branch specifically. This run had no LoRA node at all and still produced noise, so the fault is UPSTREAM OF THE LORA BRANCH and shared by every kontext call. t-079's own note had already flagged this possibility from the coloring-book sighting; this test confirms it rather than leaving it as an inference from two projects' anecdotes.
+
+    THE EXACT MODEL CHAIN, read from job 21693's stored payload so the next session does not have to re-derive it:
+      unet_name:  flux1-kontext-dev-Q5_K_M.gguf     <- GGUF-quantised Kontext dev
+      vae_name:   ae.safetensors
+      clip_name1: t5-v1_1-xxl-encoder-Q5_K_S.gguf   <- GGUF-quantised T5 text encoder
+      clip_name2: clip_l.safetensors
+      type:       flux
+    Two separately GGUF-quantised components in one graph (the UNet and the T5 encoder). The remaining suspects, in the order worth testing: (1) the Q5_K_M Kontext UNet itself being a bad or mismatched quant, (2) a VAE mismatch -- ae.safetensors decoding latents the quantised UNet did not produce in the expected space, (3) the ComfyUI/GGUF-node version on the relay having regressed against these files. The decisive next test remains the one t-079 proposed and this run did not perform: enqueue the same plain kontext call against a NON-GGUF Kontext checkpoint. If that renders correctly, the quantised UNet is the fault; if it also renders noise, look at the VAE and the relay's node versions. That test needs a non-GGUF checkpoint present on the relay, which is why it is not done here.
+
+    SECOND, INDEPENDENT BUG FOUND -- THE QUALITY GUARD IS BLIND TO THIS. `art_quality.assess_file(path, "color")` returned ok=True with reasons=[] on the noise image: mean_saturation 0.2202, colorful_fraction 0.4868, white_fraction 0.0, luma_std 0.1153. Static is saturated and busy, so it reads as a perfectly healthy colour image by these statistics. The earlier coloring-book rejections happened under the `bw` variant, whose thresholds caught it by accident -- white_fraction 0.00 fails a line-art check but means nothing for colour work. CONSEQUENCE: any colour art generated through a broken kontext path can pass the mechanical gate and be accepted as good. That is a wider exposure than this task, and it should be fixed whether or not the kontext corruption is: a noise detector (spatial autocorrelation, or a high-frequency-energy threshold -- static has almost no low-frequency structure) belongs in art_quality.py for every variant, not just bw.
+
+    STATUS: this task stays needs-human ONLY for relay access to run the non-GGUF comparison. Everything that could be established from an agent session now has been. coloring-book/t-022's `generate-bw` should continue to hold rather than burn more jobs on a path proven broken today.
   owner: null
   claimed_by: null
   claimed_at: null
+  updated: '2026-09-11T11:26:03Z'
