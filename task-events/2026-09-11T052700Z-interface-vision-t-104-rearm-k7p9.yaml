@@ -1,0 +1,8 @@
+version: 1
+project: interface-vision
+task: t-104
+operation: rearm
+session: 2026-09-11T041603Z-interface-vision-t-104-k7p9
+updated: '2026-09-11T05:27:00Z'
+note: >-
+  Slice 224 merged kind_robots PR #2607 (06ef35c86eb1706803b3b32351f08b846105bf84): components/screenfx/animation-layer.vue now composes kr-icon-5 with its existing shrink-0 text-secondary utilities instead of hand-rolled h-5 w-5 sizing. This applies slice 221's semantic-color composition rule in a live component without adding a combined size+color primitive. Exact head 95dde709e60e80b6529958e76c086e53b4316c76 completed all pull-request workflows successfully, including TypeScript and Contract Tests. Next bounded slice: continue the remaining live colored-glyph pool by composing existing kr-icon-* sizing with semantic text-* utilities where geometry is equivalent; do not add combined color-size primitives absent a repeated semantic family.
