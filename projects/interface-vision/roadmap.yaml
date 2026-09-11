@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3375,7 +3375,11 @@ tasks:
     (kr_icon_4_size_shorthand_codemod.py, new) to kr-icon-4 in components/conductor and
     components/pages (10 files) -- CSS-identical to h-4 w-4, which kr-icon-4 already covers.
     PR: silasfelinus/kind_robots#2608 (open, CI pending at close-out time).
-  updated: '2026-09-11T05:40:32Z'
+
+    Merged: kind_robots#2608 squashed as 5481a609. All 50 kind_robots PR checks passed
+    (TypeScript, layout-contract, contract verifiers, GitGuardian, etc.); mergeable_state
+    clean. Re-arming for the next slice.
+  updated: '2026-09-11T05:46:08Z'
   implementation_pr: 'silasfelinus/kind_robots#2608'
   retry_context: ''
   owner: worker
