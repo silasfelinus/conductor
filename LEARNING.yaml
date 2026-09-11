@@ -13206,3 +13206,53 @@ records:
     a quick fix with something that needs infrastructure this sandbox doesn't
     have, do the quick part, investigate the rest thoroughly enough to leave a
     real trail, and split rather than stall.
+- date: 2026-09-11
+  project: media-watchlist
+  task: t-019
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    The reported symptom ("failed to load, error message masked") had two
+    independent root causes, and reading the actual auth flow rather than
+    trusting the task's own working hypothesis found the more important one:
+    the task guessed a stale/mis-scoped session, but grepping the component
+    for Authorization-header attachment found there wasn't one at all -- every
+    $fetch call in the feature was effectively anonymous, so every request
+    failed the admin gate regardless of who was signed in. Cross-checked
+    against the working `Authorization: Bearer` pattern already used
+    elsewhere in the codebase (stores/artStore.ts, stylist-clients.vue)
+    confirmed it wasn't a one-off omission but a gap specific to this
+    feature's components. Separately, fixing the error-masking half
+    (errorHandler() never calling setResponseStatus) surfaced a much larger
+    house-wide pattern (432 call sites, only 8 already correct) -- filed as
+    its own task (kind-robots/t-096) rather than attempted as a drive-by fix,
+    since a mechanical change at that scale needs its own audit and codemod.
+    Pattern worth repeating: when a task's own note proposes a hypothesis for
+    "why does X fail," verify it against the actual code path before assuming
+    it's the answer -- the real cause here was two frames of causation deeper
+    (missing auth headers, not stale session state) and code reading found it
+    in minutes.
+- date: 2026-09-11
+  project: kind-economy
+  task: t-017
+  kind: content
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Its own dependencies (t-003, t-014) had both just closed the same day
+    (t-003 literally that morning, from a live Silas decision recorded in
+    the roadmap note), which is why `next_ready_task.py` never surfaced this
+    task before now despite it sitting `status: ready` for weeks. Drafting it
+    was straightforward once the two upstream design docs (DESIGN-BRIEF.md,
+    PAYOUT-MECHANISM-DESIGN.md) were read in full -- every number and policy
+    in the draft traces to an already-decided default or explicit
+    recommendation in those docs, with genuinely undecided items marked
+    `[OPEN]` rather than guessed at. Closed to `done` (not `needs-human`)
+    matching the same-project precedent on t-003/t-014/t-022: a complete
+    draft under Silas's 2026-09-07 human-gate-simplification policy doesn't
+    wait on him, only its eventual publication does.
