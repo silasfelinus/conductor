@@ -119,14 +119,18 @@ def _eligible_pool(
     pool: list[dict[str, Any]],
     active_theme_cooldowns: set[str],
     spent_facets: set[str],
+    saturated_story_families: set[str],
     *,
     minimum: int,
 ) -> list[dict[str, Any]]:
     themed = theme_diversity.apply_seed_cooldowns(
         pool, active_theme_cooldowns, minimum=minimum
     )
-    return creative_entropy.apply_recent_facet_cooldown(
+    fresh = creative_entropy.apply_recent_facet_cooldown(
         themed, spent_facets, minimum=minimum
+    )
+    return creative_entropy.apply_semantic_family_cooldown(
+        fresh, saturated_story_families, minimum=minimum
     )
 
 
@@ -135,6 +139,7 @@ def facet_seed_plan(
     catalog: dict[str, list[dict[str, Any]]] | None = None,
     cooldowns: set[str] | None = None,
     spent_facets: set[str] | None = None,
+    saturated_story_families: set[str] | None = None,
 ) -> dict[str, Any]:
     """Build today's deterministic plan from pools that remember the recent sequence."""
     source = "provided"
@@ -142,6 +147,14 @@ def facet_seed_plan(
         catalog, source = fetch_facet_catalog()
     active_cooldowns = recent_theme_cooldowns(day) if cooldowns is None else set(cooldowns)
     recent_spent = recent_facet_slugs(day) if spent_facets is None else set(spent_facets)
+    recent_story = recent_story_texts(day)
+    saturated = (
+        creative_entropy.saturated_families(
+            recent_story[-creative_entropy.RECENT_STRUCTURE_LOOKBACK:]
+        )
+        if saturated_story_families is None
+        else set(saturated_story_families)
+    )
 
     seed = int.from_bytes(
         hashlib.sha256(f"daily-dream-v2:{day}".encode()).digest()[:8], "big"
@@ -149,7 +162,7 @@ def facet_seed_plan(
     rng = random.Random(seed)
 
     genre_pool = _eligible_pool(
-        catalog["GENRE"], active_cooldowns, recent_spent, minimum=7
+        catalog["GENRE"], active_cooldowns, recent_spent, saturated, minimum=7
     )
     genres = _draw(rng, genre_pool, 7)
 
@@ -169,25 +182,28 @@ def facet_seed_plan(
     creature = _draw(
         rng,
         _eligible_pool(
-            catalog[creature_tax], active_cooldowns, recent_spent, minimum=1
+            catalog[creature_tax], active_cooldowns, recent_spent, saturated, minimum=1
         ),
     )[0]
     occupation = _draw(
         rng,
         _eligible_pool(
-            catalog[flavour_taxes[0]], active_cooldowns, recent_spent, minimum=1
+            catalog[flavour_taxes[0]], active_cooldowns, recent_spent, saturated, minimum=1
         ),
     )[0]
     personality = _draw(
         rng,
         _eligible_pool(
-            catalog[flavour_taxes[1]], active_cooldowns, recent_spent, minimum=1
+            catalog[flavour_taxes[1]], active_cooldowns, recent_spent, saturated, minimum=1
         ),
     )[0]
+    material_pool = creative_entropy.apply_recent_facet_cooldown(
+        catalog["MATERIAL"], recent_spent, minimum=1
+    )
     material = _draw(
         rng,
-        creative_entropy.apply_recent_facet_cooldown(
-            catalog["MATERIAL"], recent_spent, minimum=1
+        creative_entropy.apply_semantic_family_cooldown(
+            material_pool, saturated, minimum=1
         ),
     )[0]
 
@@ -243,9 +259,9 @@ def _invention_instructions(seeds: dict[str, Any]) -> list[str]:
         "Facet opens several unrelated premises; it does not merely name today's debt, grief, "
         "bureaucratic procedure, job title, deadline, or signature object.",
         "Do not crystallize recent Daily Dream habits into the Facet catalog. If the recent "
-        "worlds have been preoccupied with obligation/tallies, grief/memory, civic procedure, "
-        "specialist maintenance, or another repeated engine, invent sideways into genuinely "
-        "different conceptual territory even when today's story touches that material.",
+        "worlds have been preoccupied with obligation/tallies, grief/memory, letters/contracts, "
+        "civic procedure, specialist maintenance, or another repeated engine, invent sideways "
+        "into genuinely different conceptual territory even when today's story touches it.",
     ]
     for index, line in enumerate(lines):
         if line.startswith("PHASE 3"):
@@ -265,6 +281,12 @@ def build_brief(day: str | None = None, catalog=None) -> dict[str, Any]:
             "Do not default to 'has one night', 'one tide', 'three days', 'before dawn', "
             "'before X arrives', or another clock unless today's Facets specifically make timing "
             "the interesting idea. Deadlines are one story shape, not the definition of stakes.",
+            "Letters, missives, contracts, treaties, vows, signatures, and similar documents are "
+            "also a demonstrated rut. Do not use them as the automatic carrier of mystery, stakes, "
+            "or world rules; when that family is recent, the seed planner cools Facets that would "
+            "pull the story back into it.",
+            "TITLE SHAPE IS ENFORCED: do not use the three-word 'The X Y' silhouette. It has "
+            "appeared too often in the catalog and will fail validation even if the nouns are new.",
             f"STRUCTURAL CONTRAST FOR TODAY: {creative_entropy.structural_direction(proposal_day)}",
             f"TITLE CONSTRUCTION FOR TODAY: {creative_entropy.title_direction(proposal_day)}",
             f"VISUAL CONTRAST FOR TODAY: {creative_entropy.visual_direction(proposal_day)}",
@@ -305,6 +327,7 @@ def validate_proposal(proposal: Any) -> list[str]:
     recent = recent_story_texts(day)
     bad.extend(creative_entropy.story_family_complaints(proposal, recent, seeds))
     bad.extend(creative_entropy.structural_repetition_complaints(proposal, recent, seeds))
+    bad.extend(creative_entropy.title_shape_complaints(proposal))
     return bad
 
 
