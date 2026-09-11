@@ -18,10 +18,17 @@
 # Rainbow Butterflies was added 2026-08-28 at Silas's requested middle priority: important
 # mission work, but intentionally behind the current top build queue and Kind Robots core.
 order:
-  # Human priority decision, 2026-08-25: Mandarin Tutor and Cthulhuquarium are the
-  # two top non-continuous projects. Earlier Cthulhuquarium/Kapowarr ordering is
-  # intentionally superseded here; Kapowarr stays directly behind the new top pair.
-  - mandarin-tutor
+  # Human priority decision, 2026-08-25: Mandarin Tutor and Cthulhuquarium were the
+  # two top non-continuous projects, Mandarin Tutor leading. Earlier Cthulhuquarium/
+  # Kapowarr ordering was intentionally superseded then; Kapowarr stays directly
+  # behind the top.
+  #
+  # UPDATED 2026-09-11: Mandarin Tutor removed — Silas accepted it in session
+  # ("mandarin is acceptable. layout confirmed good.") and it is now `finished`,
+  # so it is a historical record rather than pickable work. Cthulhuquarium, which
+  # he pinned immediately behind it in the same 2026-08-25 call, inherits the lead;
+  # no new ordering judgement was invented here. tests/test_project_priority_contract.py
+  # updated to match, per its own rule that the top only moves on a named human decision.
   - cthulhuquarium
   - kapowarr
   - kind-economy

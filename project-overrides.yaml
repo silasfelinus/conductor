@@ -558,7 +558,15 @@ overrides:
     kind: software
 
   - slug: mandarin-tutor
-    status: active # added 2026-08-24 by Silas — visual linguistics-forward Mandarin learning tool
+    status: finished # flipped 2026-09-11 by Silas, in session: "mandarin is acceptable. layout
+    # confirmed good." That is the cross-width human visual acceptance t-021 was holding for --
+    # AGENTS.md does not let a user-facing software project flip on task count alone, and the
+    # sandbox could only confirm the route returned real SSR markup, never how it looked.
+    # 21/21 tasks, 4/4 milestones. Added 2026-08-24 by Silas as a visual linguistics-forward
+    # Mandarin learning tool; was order[0] in projects/priority.yaml per his 2026-08-25 lead-project
+    # decision, and is removed from that queue here — see tests/test_project_priority_contract.py,
+    # whose pinned lead moves to Cthulhuquarium (the project he named immediately behind it in the
+    # same call).
     priority: normal
     kind: software
 
