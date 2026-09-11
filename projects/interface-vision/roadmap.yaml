@@ -3330,7 +3330,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: "Polish every reachable Kind Robots surface page-by-page"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3349,11 +3349,10 @@ tasks:
     Completed the screenshot-directed dashboard color polish slice in kind_robots PR #2636, squash-merged to main as ce7f76410b16ea761c1c1480ce159bedb4df4603. Preserved dashboard layout, content, navigation, and data behavior; added stable primary/secondary/accent theme-token gradients to the six homepage gallery shelves and subtle category/source-derived tints to news cards. The exact PR head 5af352c00b0adf3d8f654245701c6137602c782a completed every associated GitHub Actions workflow successfully, including TypeScript Type Check, Layout Contract, and the full Contract Tests suite. No Vercel preview exists under the current deployment policy, so no rendered pre-merge preview was claimed. Production deployment was not triggered or claimed. Head branch auto-deleted after merge. Re-arming t-105 for the next visual-polish slice.
 
     Second dashboard color pass after Silas showed the deployed first pass and reported no visible difference. The first pass used very low-opacity variations inside the intentionally muted Storybook palette. This revision makes the distinction structural and obvious: each home gallery shelf gets a curated built-in daisyUI theme plus a stronger primary/secondary surface wash, while news cards use a stable category/source-derived set of curated light daisyUI themes. Layout, content, data flow, and navigation remain unchanged.
-  updated: '2026-09-11T21:41:00Z'
+
+    Merged silasfelinus/kind_robots#2639 as be14f13e2739a04e51ee80c0d9830ea957bcc674 after every exact-head PR workflow completed successfully. This second dashboard color pass responds to Silas's deployed screenshots showing that #2636's low-opacity Storybook-palette tints were effectively invisible. Home gallery shelves now use distinct curated built-in daisyUI themes with stronger primary/secondary washes and borders; News cards use stable category/source-derived curated light daisyUI themes. Layout, content, navigation, and data behavior are unchanged. Production deployment remains separate/self-hosted and was not triggered by this merge.
+  updated: '2026-09-11T21:50:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2194'
-  owner: worker
-  claimed_by: 2026-09-11T212000Z-interface-vision-t105-visiblecolor-9f3b
-  claimed_at: '2026-09-11T21:20:00Z'
 
 - id: t-106
   milestone: m6
