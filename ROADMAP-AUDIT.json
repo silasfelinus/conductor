@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-11T11:26:58.805697+00:00",
+  "generated_at": "2026-09-11T14:28:53.613367+00:00",
   "summary": {
     "roadmaps": 52,
     "active_projects": 23,
     "continuous_projects": 2,
-    "tasks": 1409,
+    "tasks": 1416,
     "ready": 36,
     "waiting": 54,
-    "needs_human": 28,
-    "in_progress": 0,
-    "done": 1274,
-    "errors": 0,
-    "warnings": 2,
+    "needs_human": 29,
+    "in_progress": 1,
+    "done": 1279,
+    "errors": 1,
+    "warnings": 3,
     "info": 18
   },
   "projects": [
@@ -21,20 +21,21 @@
       "override_status": "active",
       "priority_index": 1,
       "autonomous": false,
-      "task_count": 69,
+      "task_count": 76,
       "counts": {
-        "done": 63,
-        "needs-human": 1,
+        "claimed": 1,
+        "done": 68,
+        "needs-human": 2,
         "ready": 4,
         "waiting": 1
       },
-      "open_count": 6,
-      "human_attention": 1,
+      "open_count": 8,
+      "human_attention": 2,
       "ready": 4,
       "waiting": 1,
-      "claimed": 0,
+      "claimed": 1,
       "review": 0,
-      "done": 63
+      "done": 68
     },
     {
       "slug": "kind-economy",
@@ -1013,6 +1014,20 @@
     }
   ],
   "findings": [
+    {
+      "severity": "error",
+      "code": "READY_WITH_UNMET_DEPS",
+      "project": "cthulhuquarium",
+      "task": "t-074",
+      "message": "Ready task has unmet dependencies: t-075."
+    },
+    {
+      "severity": "warning",
+      "code": "SOFT_NEEDS_HUMAN",
+      "project": "cthulhuquarium",
+      "task": "t-065",
+      "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
+    },
     {
       "severity": "warning",
       "code": "GATED_DONE_WITHOUT_APPROVAL",

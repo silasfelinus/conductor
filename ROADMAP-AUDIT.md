@@ -1,20 +1,20 @@
 # Roadmap Audit
 
-Generated: `2026-09-11T11:26:58.805697+00:00`
+Generated: `2026-09-11T14:28:53.613367+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **52** roadmaps, **23** active + **2** continuous projects, **1409** tasks
-- **36 ready**, **54 waiting**, **28 needs-human**, **0 claimed/review**, **1274 done**
-- Findings: **0 errors**, **2 warnings**, **18 informational**
+- **52** roadmaps, **23** active + **2** continuous projects, **1416** tasks
+- **36 ready**, **54 waiting**, **29 needs-human**, **1 claimed/review**, **1279 done**
+- Findings: **1 errors**, **3 warnings**, **18 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `cthulhuquarium` | active | software | 4 | 1 | 1 | 0 | 63 / 69 |
+| 1 | `cthulhuquarium` | active | software | 4 | 1 | 2 | 1 | 68 / 76 |
 | 2 | `kind-economy` | active | software | 1 | 2 | 4 | 0 | 20 / 27 |
 | 3 | `interface-vision` | active | software | 1 | 1 | 0 | 0 | 124 / 127 |
 | 4 | `coloring-book` | active | software | 1 | 9 | 1 | 0 | 28 / 39 |
@@ -69,12 +69,13 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 ## Findings by severity
 
-### Error (0)
+### Error (1)
 
-_None._
+- **READY_WITH_UNMET_DEPS** — `cthulhuquarium` / `t-074`: Ready task has unmet dependencies: t-075.
 
-### Warning (2)
+### Warning (3)
 
+- **SOFT_NEEDS_HUMAN** — `cthulhuquarium` / `t-065`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-014`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-015`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 
