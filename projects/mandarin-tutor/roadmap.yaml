@@ -582,11 +582,11 @@ tasks:
 
   - id: t-021
     title: "FOR SILAS: visually accept Mandarin Tutor at phone/tablet/desktop widths to close the project out"
-    status: needs-human
+    status: done
     passes: 0
     stakes: reversible
     soft_gate: true
-    note: |-
+    note: >-
       FOR SILAS: all 20 roadmap tasks across all four milestones (foundation, depth,
       curriculum, expansion) are done -- nothing agent-actionable remains in the queue.
       Reconciled 2026-09-07 (scheduled Agent sweep) per AGENTS.md's rule that a
@@ -607,3 +607,13 @@ tasks:
       own closing step, and it also clears a currently-failing CI assertion
       (`test_current_project_lifecycle.py`) that flags any `active` project sitting with
       zero open tasks.
+
+      ACCEPTED BY SILAS, 2026-09-11 (in session): "mandarin is acceptable. layout confirmed good." This is the cross-width visual acceptance this task was holding for, and it closes the project.
+
+      What this gate was waiting on, per the 2026-09-07 reconciliation above: a human to look at the live front end at phone, tablet and desktop widths, because AGENTS.md does not let a user-facing software project flip to finished on task count alone. The sandbox could confirm only that https://kindrobots.org/mandarin-tutor returned 200 with real SSR markup rather than a bare SPA shell; it could not judge layout, spacing, or whether the thing is pleasant to use. Silas has now done that and confirmed the layout is good.
+
+      Project state at acceptance: 21/21 tasks done across all four milestones (foundation, depth, curriculum, expansion), nothing agent-actionable left in the queue. project-overrides.yaml flips mandarin-tutor to `finished` in the same change, and priority.yaml drops it from the selectable worker queue, since finished projects are historical records rather than pickable work.
+
+      NOTE ON THE PRIORITY QUEUE: mandarin-tutor was order[0] in projects/priority.yaml -- Silas's own 2026-08-25 decision to make it the lead project, pinned by tests/test_project_priority_contract.py. Removing it required editing that test, which the test's own docstring says may only be done alongside a named human decision. That decision is this acceptance. Cthulhuquarium, which Silas pinned immediately behind Mandarin Tutor in the same 2026-08-25 call, now leads.
+    updated: '2026-09-11T09:55:48Z'
+    approved_by_human: true
