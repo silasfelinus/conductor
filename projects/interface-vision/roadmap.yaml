@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   recurring: true
@@ -3299,9 +3299,12 @@ tasks:
     Slice 246 (this session): ran the survey slice 245 called for. Added a new kr_class_frequency_survey.py tool (excludes pure-layout combos -- flex/gap/items/ justify/etc -- since those risk the geometry changes this umbrella avoids) and used it to find the largest well-bounded pool outside every closed family: the sizeless colored DaisyUI toggle shape (`toggle toggle-<color>`, no size modifier). Opened .kr-toggle-warning/-primary/-success/-accent/-secondary/-error and migrated 32 occurrences across 17 files via a new kr_toggle_codemod.py. No color/behavior/API/ schema/route/geometry change. eslint (3 pre-existing unrelated errors confirmed via git stash), vue-tsc, layout-contract, and prettier all checked clean/unaffected. Merged silasfelinus/kind_robots#2676, all 50 PR checks green, mergeable_state clean before merge. Return the recurring consistency umbrella to ready for the next bounded slice. Kaizen for the next slice (filed as interface-vision/t-134): the toggle-sm/toggle-xs sized+colored combinations (~15 occurrences observed) remain open, same pattern as kr-badge-ghost/kr-badge-outline being opened after their own sized siblings.
 
     Reviewed and merged silasfelinus/kind_robots#2678 at exact head 82e92324cd9c5a51c431d6d6049465c6fb072e5e after all exact-head workflow runs completed successfully. Slice 247 opened kr-form-field and migrated 43 form-control gap-1 wrappers; a follow-up removed the dead daisyUI v4 form-control token from @apply after the production build correctly caught it. Return the recurring consistency umbrella to ready for the next bounded class-frequency slice.
-  updated: '2026-09-12T17:18:57Z'
+  updated: '2026-09-12T17:30:10Z'
   implementation_pr: 'silasfelinus/kind_robots#2676'
   retry_context: ''
+  owner: worker
+  claimed_by: 20260912T173006Z-interface-vision-t-104-claude
+  claimed_at: '2026-09-12T17:30:10Z'
 
 - id: t-123
   milestone: m5
