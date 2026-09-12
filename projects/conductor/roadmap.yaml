@@ -5748,10 +5748,10 @@ tasks:
 - id: t-155
   milestone: m2
   title: Sort audit_human_gates.py's report by priority.yaml rank
-  status: ready
+  status: claimed
   stakes: reversible
   passes: 0
-  owner: null
+  owner: worker
   note: >-
     Kaizen from conductor/t-149's close-out (silasfelinus/conductor#4197,
     2026-09-12): check_priority_queue_starvation.py now names which gate blocks
@@ -5764,7 +5764,9 @@ tasks:
     already share -- so "what only Silas can unblock" reads in the order it
     actually frees agent work, rather than alphabetically/by discovery order.
     Advisory-only tooling change; no behavior change to what counts as a gate.
-  updated: '2026-09-12T19:50:00Z'
+  updated: '2026-09-12T21:31:59Z'
+  claimed_by: claude-20260912T2140Z-cd-t155
+  claimed_at: '2026-09-12T21:31:59Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
