@@ -1,9 +1,0 @@
-version: 1
-project: interface-vision
-task: t-128
-operation: review
-owner: worker
-session: 2026-09-12T051543Z-interface-vision-t-128-k7p4
-updated: '2026-09-12T05:20:00Z'
-note: >-
-  Implemented a warning-only CI audit for test-prefixed commits: it accepts commits that touch an executable *.test.*/*.spec.* file or add assert(...)/expect(...) calls, and emits a GitHub annotation otherwise. Added full-history checkout so the PR commit range is inspectable.
