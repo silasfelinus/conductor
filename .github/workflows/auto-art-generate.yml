@@ -204,10 +204,13 @@ jobs:
         run: |
           git config user.name "conductor-bot"
           git config user.email "conductor-bot@users.noreply.github.com"
-          git add projects/images/ projects/process/ projects/art-generate.yaml projects/art-prompts.yaml ops/home-server/RENDER-BOX-STATUS
-          if [ -f projects/mandarin-tutor/art-manifest.json ]; then
-            git add projects/mandarin-tutor/art-manifest.json
-          fi
+          # `git add projects/` (not a hand-picked subset of paths) so any
+          # per-project destination distribute_images.py actually writes to
+          # -- e.g. projects/<slug>/art/<file>.webp -- gets committed too.
+          # A prior hardcoded list here missed exactly that class of
+          # destination: see distribute-images.yml's matching fix and
+          # cthulhuquarium/t-073 (2026-09-12) for the incident this closes.
+          git add projects/ ops/home-server/RENDER-BOX-STATUS
           if git diff --staged --quiet; then
             echo "No conductor-side changes."
           else

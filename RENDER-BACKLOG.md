@@ -568,3 +568,6 @@ queueDepth: PENDING=39, RUNNING=1, DONE=5376, CANCELLED=3698 (all-time). oldestP
 
 ## 2026-09-11T22:26:44Z | cthulhuquarium/t-073 | draining
 queueDepth: PENDING=29, DONE=10339, CANCELLED=10567 (all-time). oldestPending: id=21741, age=11804s (~3.3h), engine=COMFY. windowThroughput (24h): PENDING=29, DONE=60. recentFailed: none.
+
+## 2026-09-12T07:33:04Z | cthulhuquarium/t-073 | healthy
+queueDepth: DONE=10371, FAILED=1, CANCELLED=10569 (all-time). oldestPending: none. windowThroughput (24h): DONE=92, FAILED=1, CANCELLED=2. recentFailed (last 1): 1/1 = Stale claim reaped: relay stopped responding after 3 attempts. [scene-animator=1].
