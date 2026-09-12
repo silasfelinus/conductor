@@ -5411,7 +5411,7 @@ tasks:
 - id: t-149
   milestone: m2
   title: Flag priority-queue starvation when the top of priority.yaml has no ready work
-  status: claimed
+  status: review
   stakes: reversible
   passes: 0
   note: >-
@@ -5447,7 +5447,22 @@ tasks:
     WHICH gate is blocking each skipped project, since that turns the output directly into the
     "here is what only you can unblock, ranked by how much agent work it frees" list that
     `audit_human_gates.py` cannot produce on its own (it reports gates flat, with no priority context).
-  updated: '2026-09-12T19:36:05Z'
+
+    Implemented scripts/check_priority_queue_starvation.py (+
+    tests/test_check_priority_queue_starvation.py, 12 tests) per this task's own spec:
+    reuses roadmap_claims.task_is_claimable, roadmap_deps.dependency_satisfied,
+    daily_gate.already_recorded_today, and project_lifecycle.ordered_workable_slugs (the
+    exact modules next_ready_task.py uses) so the two scripts can never disagree about what
+    counts as ready. Walks projects/priority.yaml in order, reports the rank of the first
+    project with claimable work, and names each skipped project's reason (gated-at-needs-
+    human, naming the blocking task id/title per this task's own kaizen note; all-waiting-
+    blocked; all-claimed; all-done). Exit 1 only past --threshold (default 3) or when
+    nothing in the whole order has claimable work. Verified against the live repo:
+    cthulhuquarium lands at rank 1 today (a stale >90min claim on t-073 correctly counts as
+    claimable, matching next_ready_task.py's own rule). Wired into CLAUDE.md's session-
+    startup sweep (step 5, plus a new startup-report bullet) as the task requested. Full
+    local test suite (1827 tests) still green.
+  updated: '2026-09-12T19:43:10Z'
   owner: worker
   claimed_by: 2026-09-12T193600Z-conductor-t149-cldcond
   claimed_at: '2026-09-12T19:36:05Z'
