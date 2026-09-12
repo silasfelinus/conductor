@@ -720,7 +720,7 @@ tasks:
 
     Done by kind_robots#2662. Collection reuses the existing award chain rather than adding a second unlock table: LifeAchievement ENDING plus LifeAchievementUnlock, with Achievement triggerCode storybook-ending-{deckKey}-{outcomeKey} (life keeps davinci-ending-*, so the life-run UI's filter is untouched). GET /api/storybook/endings?deckKey= returns found endings in full and unfound ones as silhouettes -- id, slug, victory type and icon only, because spoiling the list turns a collection into a checklist. resolveStoryRunEnding awards a deck's COLLECTION achievement when every ending in it is found.
 
-    Gating is built and dormant: EndingDeck.unlockAchievementId plus server/utils/storybookGating.ts. assertDeckPlayable only refuses when STORYBOOK_ENFORCE_DECK_GATES is true, while GET /api/storybook/decks already reports  honestly, so the hand can be built and checked against real data before a reader is ever turned away. A gate the UI cannot explain is a dead end, not a goal -- t-038 flips it once the hand renders a lock.
+    Gating is built and dormant: EndingDeck.unlockAchievementId plus server/utils/storybookGating.ts. assertDeckPlayable only refuses when STORYBOOK_ENFORCE_DECK_GATES is true, while GET /api/storybook/decks already reports each deck's unlocked state honestly, so the hand can be built and checked against real data before a reader is ever turned away. A gate the UI cannot explain is a dead end, not a goal -- t-038 flips it once the hand renders a lock.
   updated: '2026-09-12T11:46:54Z'
   implementation_pr: 'silasfelinus/kind_robots#2662'
 - id: t-034
