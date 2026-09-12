@@ -877,11 +877,11 @@ tasks:
 - id: t-040
   milestone: m8
   title: "Engine: open-ended mode -- no turn budget, resolve on demand"
-  status: waiting
+  status: review
   passes: 0
   stakes: reversible
   depends_on: t-039
-  note: >
+  note: >-
     The one mode that stretches the engine: every other mode resolves when its budget is
     spent, and this one has no budget. LifeRun.turnBudget already allows NULL, and
     resolveStoryRunEnding''s turn gate already binds only runs with a budget, so the shape of
@@ -890,7 +890,17 @@ tasks:
     genre''s deck whenever the reader calls it, so it is never a dead end in the Collection.
     The turn route must stop advertising a final turn when there is no budget, and the
     narrator must not be told a turn is the last one.
-  updated: '2026-09-12T14:00:00Z'
+
+    2026-09-12: implemented in kind_robots#2686, awaiting merge. turnBudget NULL now MEANS
+    endless for a run this engine opened: the narrator is never told a turn is the last one,
+    a scene is always waiting, and readyToResolve turns true once the deck's floor is
+    passed. Not a free pass -- resolveStoryRunEnding still enforces minTurnsBeforeResolve,
+    so 'bring this to an end' cannot collect an ending on turn one. A pre-deck life run also
+    has NULL there for its own reason and is told apart by deckId, so its ungated resolve is
+    untouched. verifyStorybookPlayLoop.ts plays an endless run past the old budget and
+    resolves it on demand against a real database.
+  updated: '2026-09-12T23:03:01Z'
+  implementation_pr: 'silasfelinus/kind_robots#2686'
 - id: t-041
   milestone: m8
   title: "Engine: length is a setting, not a mode"
