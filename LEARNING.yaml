@@ -13480,3 +13480,12 @@ records:
   outcome: done
   failure_category: actionable
   lesson: "A task can sit at status: review with a fully-implemented, pushed branch and never actually be reviewable, because no PR was ever opened from it -- observed for worker/interface-vision-t-131-20260912T151712Z-oai11 (real, scoped, single-line commit matching the task exactly). AGENTS.md's step 7 assumes 'set status: review before opening the PR' happens as one atomic sequence, but a session can crash or end between the roadmap edit and the actual gh pr create/GitHub MCP create_pull_request call, leaving status: review with nothing behind it -- indistinguishable from a genuinely in-review PR without checking GitHub directly. A later session (this one) found it by checking kind_robots' branch list against its open+closed PR list for a task at status: review and finding neither. Worth a lightweight check in whatever surfaces 'reviewable work' (select_role.py's reviewer signal, or a dedicated staleness check): a status: review task whose implementation branch has no open OR merged PR after some age is the same class of gap check_pr_merged_drift.py already covers in the other direction (a merged PR the roadmap doesn't know about)."
+- date: 2026-09-12
+  project: conductor
+  task: t-149
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "check_priority_queue_starvation.py was straightforward to build correctly on the first pass by reusing the exact shared modules (roadmap_claims, roadmap_deps, daily_gate, project_lifecycle) next_ready_task.py already uses, rather than reimplementing claim/staleness/dependency logic -- the two scripts structurally cannot disagree about what counts as claimable ready work. Worth defaulting to this pattern (grep for the existing shared module before writing new roadmap-walking logic) for any future roadmap-reading tool."
