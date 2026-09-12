@@ -1,0 +1,111 @@
+# The Romance deck.
+#
+# Three axes, eight endings. Not eight grades of one ending: an honest parting
+# is a better ending than a dishonest pairing, and the deck says so.
+#
+# BIT ORDER IS A DATA CONTRACT: outcomeKey[i] is axes[i]. honesty, courage, timing.
+
+key: genre-romance
+title: Romance
+description: >-
+  What you were willing to say, when you were willing to say it, and whether
+  the moment was still there.
+ownerKind: GENRE_FACET
+facetSlug: romance
+passValue: 1
+turnBudget: 8
+minTurnsBeforeResolve: null
+turnBudgetByShape:
+  short-story: 5
+  chaptered: 8
+  episodic: 12
+axes:
+  - key: honesty
+    label: Honesty
+    description: Whether the protagonist said the true thing rather than the easy one.
+    passLabel: said it plainly
+    failLabel: kept it back
+  - key: courage
+    label: Courage
+    description: Whether they risked something that could actually be lost.
+    passLabel: risked it
+    failLabel: played it safe
+  - key: timing
+    label: Timing
+    description: Whether they moved while the moment was still open.
+    passLabel: in time
+    failLabel: too late
+endings:
+  - outcomeKey: '111'
+    title: Said in Time
+    slug: romance-said-in-time
+    summary: >-
+      You told the truth, it cost you something, and you told it while it still
+      mattered. Everything after this is ordinary, which is the point.
+    victoryType: VICTORY
+    artPrompt: >-
+      Two people on a train platform, one bag between them, neither leaving
+  - outcomeKey: '110'
+    title: The Long Way Back
+    slug: romance-the-long-way-back
+    summary: >-
+      You said it all, and you meant it, and you said it a season late. There is
+      a way back from here, and you are both willing to walk it.
+    victoryType: MIXED
+    artPrompt: >-
+      A person walking up a long garden path toward a lit house in late autumn
+  - outcomeKey: '101'
+    title: Brave and Unspoken
+    slug: romance-brave-and-unspoken
+    summary: >-
+      You crossed the room, changed your life, moved cities. You never actually
+      said the sentence, and they are still waiting to hear it.
+    victoryType: MIXED
+    artPrompt: >-
+      Boxes half unpacked in a new apartment, two cups on the counter, one
+      untouched
+  - outcomeKey: '100'
+    title: Almost, and Silent
+    slug: romance-almost-and-silent
+    summary: >-
+      You did the brave thing after the moment closed, without ever putting it
+      into words. They understood anyway, and understanding is not enough.
+    victoryType: FAILURE
+    artPrompt: >-
+      A doorway with a bouquet left on the step, the light inside already off
+  - outcomeKey: '011'
+    title: Honest and Early
+    slug: romance-honest-and-early
+    summary: >-
+      You told the truth before you were sure of it, and you told it safely,
+      from a distance you could retreat to. They came closer anyway.
+    victoryType: VICTORY
+    artPrompt: >-
+      Two people on opposite ends of a park bench, one of them shifting nearer
+  - outcomeKey: '010'
+    title: The Careful Letter
+    slug: romance-the-careful-letter
+    summary: >-
+      You wrote it down instead of saying it, and you sent it after they had
+      stopped checking. It was true, and it was late, and it was kind.
+    victoryType: MIXED
+    artPrompt: >-
+      An opened letter on a kitchen table beside cold tea, morning light
+  - outcomeKey: '001'
+    title: Right Moment, Wrong Words
+    slug: romance-right-moment-wrong-words
+    summary: >-
+      You were there exactly when it counted and said something safe and untrue.
+      They took it at face value. You are the only one who knows.
+    victoryType: FAILURE
+    artPrompt: >-
+      Two people laughing at a party, one of them looking slightly past the other
+  - outcomeKey: '000'
+    title: The Version Where Nothing Happens
+    slug: romance-the-version-where-nothing-happens
+    summary: >-
+      Neither of you says it. It goes on being nearly true for years, and then
+      it is simply a thing you both remember differently.
+    victoryType: FAILURE
+    artPrompt: >-
+      Two coats on separate hooks in an empty hallway, dust in the light

@@ -1,0 +1,77 @@
+# The life deck: Storybook's "A whole life" shape, formerly the Da Vinci product.
+#
+# AXES ONLY. This deck's 1,024 endings are generated, not authored by hand --
+# scripts/generate_davinci_endings.py produces them from
+# ../../../davinci/data/ending-dimensions.yaml, and kind_robots imports them with
+# `npm run seed:davinci`. The axes are repeated here so every deck's bit order
+# lives in one directory and seedStorybookDecks.ts can keep the deck row's
+# turn budgets in step without a second source of truth.
+#
+# BIT ORDER IS A DATA CONTRACT. outcomeKey[i] is axes[i]; reordering renames all
+# 1,024 endings. This order matches ending-dimensions.yaml, kind_robots'
+# server/utils/endingDeckMath.ts LIFE_DECK, and every seeded row. Do not change it.
+
+key: life
+title: A whole life
+description: >-
+  One life told in chapters, weighed across ten dimensions, and resolved into one
+  of 1,024 endings.
+ownerKind: LIFE
+passValue: 1
+turnBudget: 12
+minTurnsBeforeResolve: 6
+turnBudgetByShape:
+  life: 12
+axes:
+  - key: legacy
+    label: Legacy
+    description: What the life leaves behind once it is over.
+    passLabel: remembered
+    failLabel: forgotten
+  - key: wealth
+    label: Wealth
+    description: Whether material needs are met and resources can be directed.
+    passLabel: prosperous
+    failLabel: wanting
+  - key: love
+    label: Love
+    description: Bonds of affection, trust, and chosen family.
+    passLabel: beloved
+    failLabel: alone
+  - key: wisdom
+    label: Wisdom
+    description: Whether experience turns into discernment rather than certainty.
+    passLabel: wise
+    failLabel: foolish
+  - key: health
+    label: Health
+    description: What the body and mind can still carry.
+    passLabel: vital
+    failLabel: diminished
+  - key: freedom
+    label: Freedom
+    description: How much of the path the protagonist still chooses.
+    passLabel: free
+    failLabel: bound
+  - key: fame
+    label: Fame
+    description: How widely the name, work, or myth is known.
+    passLabel: renowned
+    failLabel: obscure
+  - key: creation
+    label: Creation
+    description: What the protagonist actually made and finished.
+    passLabel: creator
+    failLabel: barren
+  - key: community
+    label: Community
+    description: Belonging to a shared place, practice, movement, or network.
+    passLabel: rooted
+    failLabel: exiled
+  - key: mystery
+    label: Mystery
+    description: Contact with the strange, sacred, uncanny, or unknowable.
+    passLabel: awakened
+    failLabel: mundane
+
+# endings: generated. See scripts/generate_davinci_endings.py.
