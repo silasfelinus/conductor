@@ -1,0 +1,113 @@
+# The Heist deck.
+#
+# Three axes, eight endings. Getting the score is not the only way to win here,
+# and losing the crew is not survivable by getting it.
+#
+# BIT ORDER IS A DATA CONTRACT: outcomeKey[i] is axes[i]. plan, loyalty, nerve.
+
+key: genre-heist
+title: Heist
+description: >-
+  The plan you made, the people you made it with, and whether you held when it
+  went sideways.
+ownerKind: GENRE_FACET
+facetSlug: heist
+passValue: 1
+turnBudget: 8
+minTurnsBeforeResolve: null
+turnBudgetByShape:
+  short-story: 5
+  chaptered: 8
+  episodic: 12
+axes:
+  - key: plan
+    label: Plan
+    description: Whether the job went the way it was drawn up.
+    passLabel: the plan held
+    failLabel: the plan broke
+  - key: loyalty
+    label: Loyalty
+    description: Whether the crew is still a crew afterwards.
+    passLabel: crew intact
+    failLabel: crew broken
+  - key: nerve
+    label: Nerve
+    description: Whether the protagonist held their nerve at the moment it mattered.
+    passLabel: held
+    failLabel: cracked
+endings:
+  - outcomeKey: '111'
+    title: Clean Work
+    slug: heist-clean-work
+    summary: >-
+      In, out, nobody hurt, nobody named. You split it in a car park at dawn and
+      go your separate ways knowing you could do it again.
+    victoryType: VICTORY
+    artPrompt: >-
+      Four people in a dawn car park, a duffel open on a boot lid, handshakes
+  - outcomeKey: '110'
+    title: The Freeze
+    slug: heist-the-freeze
+    summary: >-
+      The job ran exactly as drawn, right up to the ninety seconds where you
+      could not move. Someone else covered it. Nobody has said so out loud.
+    victoryType: MIXED
+    artPrompt: >-
+      A person sitting on a kerb with their head down, three others loading a
+      van behind them
+  - outcomeKey: '101'
+    title: Every Man for Himself
+    slug: heist-every-man-for-himself
+    summary: >-
+      The plan worked. You held. Two of them are not answering their phones and
+      you know exactly which decision of yours is the reason.
+    victoryType: MIXED
+    artPrompt: >-
+      A single figure counting money alone in a motel room, two phones dark on
+      the bed
+  - outcomeKey: '100'
+    title: The Score and the Silence
+    slug: heist-the-score-and-the-silence
+    summary: >-
+      You have the money. You froze, and the crew watched you freeze, and none
+      of them will work with you again. The plan was perfect.
+    victoryType: MIXED
+    artPrompt: >-
+      A locked case on a bare table in an empty flat, one chair
+  - outcomeKey: '011'
+    title: Improvised, Together
+    slug: heist-improvised-together
+    summary: >-
+      Nothing went the way it was drawn and every one of you adjusted in the
+      same direction. You lost the take and kept the crew, which is the harder half.
+    victoryType: MIXED
+    artPrompt: >-
+      Five people crowded into a stairwell, out of breath, one of them grinning
+  - outcomeKey: '010'
+    title: Carried Out
+    slug: heist-carried-out
+    summary: >-
+      It fell apart, you fell apart with it, and they got you out anyway. You
+      owe every one of them and every one of them knows you are good for it.
+    victoryType: MIXED
+    artPrompt: >-
+      Two people supporting a third between them down a rainy side street
+  - outcomeKey: '001'
+    title: Last One Standing
+    slug: heist-last-one-standing
+    summary: >-
+      The job broke, the crew broke, and you were the one who stayed in the
+      building until it was finished. There is no one left to tell about it.
+    victoryType: FAILURE
+    artPrompt: >-
+      A lone figure walking out of a smoke-hazed service corridor, alarm lights
+      turning
+  - outcomeKey: '000'
+    title: A Bad Night for Everyone
+    slug: heist-a-bad-night-for-everyone
+    summary: >-
+      The plan broke, you broke, and the crew scattered blaming each other. The
+      only thing anyone got out of it was a story they will not tell.
+    victoryType: FAILURE
+    artPrompt: >-
+      An abandoned van with both doors open on an empty road at night

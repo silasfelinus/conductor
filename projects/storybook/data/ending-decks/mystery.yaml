@@ -1,0 +1,115 @@
+# The Mystery deck.
+#
+# Three axes, eight endings. Every combination is authored: a reader who solves
+# the case but burns every ally deserves a different ending than one who solves
+# it clean, and an unsolved case is not automatically a loss.
+#
+# BIT ORDER IS A DATA CONTRACT: outcomeKey[i] is axes[i]. truth, trust, nerve.
+
+key: genre-mystery
+title: Mystery
+description: >-
+  A case, the people it costs you, and what you can stand to look at.
+ownerKind: GENRE_FACET
+facetSlug: mystery
+passValue: 1
+turnBudget: 8
+minTurnsBeforeResolve: null
+turnBudgetByShape:
+  short-story: 5
+  chaptered: 8
+  episodic: 12
+axes:
+  - key: truth
+    label: Truth
+    description: How much of what actually happened the protagonist works out.
+    passLabel: the case is solved
+    failLabel: the case stays open
+  - key: trust
+    label: Trust
+    description: Whether the people who helped are still willing to.
+    passLabel: allies kept
+    failLabel: allies spent
+  - key: nerve
+    label: Nerve
+    description: Whether the protagonist held steady when it counted.
+    passLabel: held steady
+    failLabel: flinched
+endings:
+  - outcomeKey: '111'
+    title: The Whole Truth
+    slug: mystery-the-whole-truth
+    summary: >-
+      You name what happened, and the people who helped you are still in the
+      room when you say it. Nobody has to be protected from the answer.
+    victoryType: VICTORY
+    artPrompt: >-
+      A lit room at dawn, three people around a table covered in notes, one of
+      them speaking, the others listening
+  - outcomeKey: '110'
+    title: Solved, Shaken
+    slug: mystery-solved-shaken
+    summary: >-
+      The answer holds and your allies stand by it. You are the only one who
+      knows how close you came to walking away.
+    victoryType: VICTORY
+    artPrompt: >-
+      A person alone on a stairwell landing after a long night, hands unsteady,
+      warm light through a door behind them
+  - outcomeKey: '101'
+    title: Right and Alone
+    slug: mystery-right-and-alone
+    summary: >-
+      You were right, and you proved it, and the people who got you there are
+      not speaking to you. The truth cost exactly what you agreed to pay.
+    victoryType: MIXED
+    artPrompt: >-
+      An empty office at night, one desk lamp on, two coats gone from the rack
+  - outcomeKey: '100'
+    title: The Answer Nobody Wanted
+    slug: mystery-the-answer-nobody-wanted
+    summary: >-
+      You have the whole shape of it and no one left who will stand beside you
+      while you say it out loud. You say it anyway, badly, to a closed door.
+    victoryType: MIXED
+    artPrompt: >-
+      A figure speaking to a shut door in a dim hallway, papers under one arm
+  - outcomeKey: '011'
+    title: Wrong Man, Right Friends
+    slug: mystery-wrong-man-right-friends
+    summary: >-
+      The case does not close. The people who worked it with you are already
+      talking about the next one, and they still want you on it.
+    victoryType: MIXED
+    artPrompt: >-
+      Three people in a diner booth at 2am, case folder pushed aside, coffee
+      being poured
+  - outcomeKey: '010'
+    title: The Kindness You Kept
+    slug: mystery-the-kindness-you-kept
+    summary: >-
+      You never find out who did it. You do find out who you were willing to
+      protect, and they know it now.
+    victoryType: MIXED
+    artPrompt: >-
+      Two people on a porch step at dusk, one holding the other's coat
+  - outcomeKey: '001'
+    title: Nerve to Spare
+    slug: mystery-nerve-to-spare
+    summary: >-
+      You walked into every room you were told to stay out of, and walked out
+      of all of them with nothing. You are still standing, and still asking.
+    victoryType: MIXED
+    artPrompt: >-
+      A lone figure at the mouth of an alley in hard rain, notebook open,
+      unhurried
+  - outcomeKey: '000'
+    title: Cold Case
+    slug: mystery-cold-case
+    summary: >-
+      The file goes in the drawer. You stopped asking before anyone made you,
+      and the people who trusted you noticed which came first.
+    victoryType: FAILURE
+    artPrompt: >-
+      A drawer of unlabeled files closing in a grey archive room, one hand
+      pulling away
