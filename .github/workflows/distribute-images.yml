@@ -61,7 +61,19 @@ jobs:
         run: |
           git config user.name "conductor-bot"
           git config user.email "conductor-bot@users.noreply.github.com"
-          git add projects/images/ projects/process/ projects/art-generate.yaml projects/art-prompts.yaml
+          # `git add projects/` (not a hand-picked subset of paths) so any
+          # per-project destination distribute_images.py actually writes to
+          # -- e.g. projects/<slug>/art/<file>.webp -- gets committed too.
+          # A prior hardcoded list here (images/, process/, the two art
+          # yaml files) missed exactly that class of destination: the
+          # script would successfully move a rendered file out of
+          # projects/process/ into projects/<slug>/art/, but this step
+          # never staged the new path, so the move showed up as a bare
+          # deletion with the moved file never landing anywhere -- silently
+          # losing already-rendered images once the ephemeral runner's
+          # workspace was torn down (cthulhuquarium/t-073, 2026-09-12: 31
+          # rendered fish-species plates lost this way in a single run).
+          git add projects/
           if git diff --staged --quiet; then
             echo "No conductor-side changes."
           else

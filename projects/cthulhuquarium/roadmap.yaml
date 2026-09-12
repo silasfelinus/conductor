@@ -3222,6 +3222,40 @@ tasks:
     32 jobs reaches 0, verify renders landed on-style and deliver into kind_robots per the
     original plan. Left status: claimed (stale claim, safe to reclaim) -- no code work to do
     until the queue finishes draining.
+
+    PROGRESS (2026-09-12, root cause found): re-ran scripts/recheck_render_queue.py --task
+    cthulhuquarium/t-073 -- healthy, oldestPending: none, queue fully drained. But none of the
+    32 fish plates exist in projects/cthulhuquarium/art/ or anywhere else in the repo (checked
+    origin/main's tree directly). Root-caused via GitHub MCP actions_list/get_job_logs across
+    the intervening Auto Art Generate runs: the renders DID succeed and distribute_images.py
+    DID move each file out of projects/process/ into its real destination
+    (projects/cthulhuquarium/art/cthulhuquarium-fish-<slug>.webp) on the CI runner's disk --
+    confirmed via commit d9a956e ("chore: distribute images from projects/process", 2026-09-11
+    16:30 UTC, distribute-images.yml's scheduled run), whose diff shows all 31 (of 32; one
+    presumably landed in an earlier partial run) fish files deleted from projects/process/ with
+    NO corresponding addition anywhere in the same commit. Cause: both
+    auto-art-generate.yml's and distribute-images.yml's "Commit conductor results" steps ran
+    `git add` against a hardcoded list of paths (projects/images/, projects/process/, the two
+    art yaml files, +mandarin-tutor/art-manifest.json) that never included
+    projects/<slug>/art/ -- any per-project delivery destination distribute_images.py writes
+    to outside that list gets moved on disk but never staged, so it's silently discarded when
+    the ephemeral runner's workspace is torn down after the job. The move looked like delivery
+    in the job logs ("34 files changed... 1690 deletions") but nothing was ever added to
+    replace what was deleted. This is a repo-wide bug, not specific to these 32 fish -- any
+    future project-scoped art destination outside the hardcoded list would silently vanish the
+    same way.
+
+    FIXED: both workflows now `git add projects/` instead of the hardcoded subset (this PR).
+    RE-QUEUED: recovered the original 32-entry batch verbatim from conductor#4101's own diff
+    (silasfelinus/conductor@39ca1050, still reachable) and re-wrote projects/art-generate.yaml
+    with the same 32 entries (same image_path destinations, same prompts) plus a note
+    explaining the requeue. auto-art-generate.yml's next cron tick (0 */6 * * *) or a manual
+    workflow_dispatch will drain it for real this time, and the fixed commit step means
+    whatever it delivers will actually land in git. Left status: claimed -- rendering is async
+    and this session cannot block on it; NEXT for whichever session picks this back up: verify
+    all 32 files now exist under projects/cthulhuquarium/art/ (check origin/main's tree
+    directly, not just that the queue drained -- that's exactly what looked fine last time),
+    spot-check on-style, then deliver into kind_robots per the original plan.
   updated: '2026-09-12T07:39:54Z'
   claimed_by: claude-20260912T073000Z-cq-t073-rootcause
   claimed_at: '2026-09-12T07:39:54Z'
