@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3321,12 +3321,28 @@ tasks:
     families (kr-text-black-*/kr-text-bold-*/kr-text-dim-*/kr-text-eyebrow-*/kr-label-xs*/
     kr-text-error-xs/kr-text-faded-*/kr-icon-primary-*/kr-icon-3 through kr-icon-12/kr-input-*/
     kr-btn-*/kr-badge-*/kr-label-row) -- not a re-survey of an already-closed one.
-  updated: '2026-09-12T15:30:36Z'
-  implementation_pr: 'silasfelinus/kind_robots#2675'
+
+    Slice 246 (this session): ran the survey slice 245 called for. Added a new
+    kr_class_frequency_survey.py tool (excludes pure-layout combos -- flex/gap/items/
+    justify/etc -- since those risk the geometry changes this umbrella avoids) and used
+    it to find the largest well-bounded pool outside every closed family: the sizeless
+    colored DaisyUI toggle shape (`toggle toggle-<color>`, no size modifier). Opened
+    .kr-toggle-warning/-primary/-success/-accent/-secondary/-error and migrated 32
+    occurrences across 17 files via a new kr_toggle_codemod.py. No color/behavior/API/
+    schema/route/geometry change. eslint (3 pre-existing unrelated errors confirmed via
+    git stash), vue-tsc, layout-contract, and prettier all checked clean/unaffected.
+    Merged silasfelinus/kind_robots#2676, all 50 PR checks green, mergeable_state clean
+    before merge. Return the recurring consistency umbrella to ready for the next
+    bounded slice. Kaizen for the next slice (filed as interface-vision/t-134): the
+    toggle-sm/toggle-xs sized+colored combinations (~15 occurrences observed) remain
+    open, same pattern as kr-badge-ghost/kr-badge-outline being opened after their own
+    sized siblings.
+  updated: '2026-09-12T15:51:33Z'
+  implementation_pr: 'silasfelinus/kind_robots#2676'
   retry_context: ''
   owner: worker
-  claimed_by: claude-scheduled-20260912T153035Z-iv-t104-s246
-  claimed_at: '2026-09-12T15:30:36Z'
+  claimed_by: null
+  claimed_at: null
 
 - id: t-123
   milestone: m5
@@ -3990,3 +4006,28 @@ tasks:
     filtering, or a second invocation scoped to only the promoted codes) while
     leaving the rest warning-only -- do not flip the whole pass to hard-failing
     at once.
+
+- id: t-134
+  milestone: m5
+  title: "Kaizen: migrate the toggle-sm/toggle-xs sized+colored toggle combinations onto matching kr-toggle-*-sm/-xs primitives"
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  owner: null
+  recurring: false
+  note: >-
+    Kaizen from t-104 slice 246 (kind_robots#2676, 2026-09-12): that slice opened
+    the sizeless kr-toggle-{warning,primary,success,accent,secondary,error}
+    primitives (32 bare `toggle toggle-<color>` occurrences across 17 files), but
+    deliberately left the sized+colored combinations out of scope -- `toggle
+    toggle-sm toggle-warning`, `toggle toggle-xs toggle-primary`, etc. (~15
+    occurrences observed at slice-246 time via a full-repo class-frequency survey,
+    utils/scripts/codemods/kr_class_frequency_survey.py). DO: survey the current
+    exact counts per color/size combination, add matching `kr-toggle-<color>-sm`/
+    `-xs` primitives to assets/css/tailwind.css (plain `@apply toggle toggle-sm
+    toggle-<color>` etc.), and extend utils/scripts/codemods/kr_toggle_codemod.py
+    (or a sibling script) to migrate them -- same subset-match/BOUNDED_EXTRAS
+    convention the badge and toggle codemods already use. Order the FAMILIES list
+    most-specific-first so a sized entry is tried before any sizeless one whose
+    base token set is a strict subset.
