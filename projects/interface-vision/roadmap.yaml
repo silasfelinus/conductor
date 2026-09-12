@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   recurring: true
@@ -3303,9 +3303,12 @@ tasks:
 
     Slice 241 merged as silasfelinus/kind_robots#2655 (squash 21678e1). Added kr_icon_6_size_shorthand_codemod.py, kr_icon_7_size_shorthand_codemod.py, and kr_icon_8_size_shorthand_codemod.py and migrated 29 size-6/size-7/size-8 shorthand occurrences across 22 Vue files onto existing kr-icon-6/7/8 primitives. Reviewer inspected the complete diff, reviews/threads, mergeability, and exact-head Actions evidence; all 53 returned PR workflow runs completed successfully. Return the recurring consistency umbrella to ready for the next bounded slice.
     Slice 242 merged as silasfelinus/kind_robots#2661 (squash). Opened .kr-icon-9 (next bare sizeless/colorless icon-glyph sibling after kr-icon-8) via kr_icon_9_codemod.py and kr_icon_9_size_shorthand_codemod.py, migrating 11 h-9 w-9 occurrences across 9 files and 2 size-9 occurrences across 2 files. No color/behavior/API/schema/route/geometry change. All 50 kind_robots PR checks green, mergeable_state clean before merge. Return the recurring consistency umbrella to ready for the next bounded slice. Kaizen for the next slice: h-10 w-10 (14 files, 15 occurrences) and h-12 w-12 (9 files, 10 occurrences) remain open as the next well-bounded siblings in this family.
-  updated: '2026-09-12T12:05:00Z'
+  updated: '2026-09-12T12:19:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2661'
   retry_context: ''
+  owner: worker
+  claimed_by: openai-scheduled-2026-09-12T121900Z-interface-vision-t-104-oai11
+  claimed_at: '2026-09-12T12:19:00Z'
 
 - id: t-123
   milestone: m5
