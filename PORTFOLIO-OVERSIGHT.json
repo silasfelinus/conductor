@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-09-12T04:43:02.965599+00:00",
+  "generated_at": "2026-09-12T10:55:55.687312+00:00",
   "summary": {
     "status": "action-needed",
-    "roadmap_errors": 0,
-    "roadmap_warnings": 4,
+    "roadmap_errors": 1,
+    "roadmap_warnings": 5,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -13,7 +13,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-09-10T09:34:43+00:00",
-    "hours_since": 43.14,
+    "hours_since": 49.35,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "OpenAI commit activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit."
@@ -30,22 +30,30 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-09-12T04:43:02.965606+00:00",
+    "generated_at": "2026-09-12T10:55:55.687317+00:00",
     "summary": {
       "roadmaps": 52,
-      "active_projects": 23,
+      "active_projects": 22,
       "continuous_projects": 2,
-      "tasks": 1437,
-      "ready": 47,
-      "waiting": 53,
+      "tasks": 1457,
+      "ready": 48,
+      "waiting": 57,
       "needs_human": 31,
-      "in_progress": 1,
-      "done": 1289,
-      "errors": 0,
-      "warnings": 4,
+      "in_progress": 2,
+      "done": 1300,
+      "errors": 1,
+      "warnings": 5,
       "info": 18
     },
-    "errors": [],
+    "errors": [
+      {
+        "severity": "error",
+        "code": "READY_WITH_UNMET_DEPS",
+        "project": "storybook",
+        "task": "t-031",
+        "message": "Ready task has unmet dependencies: t-025."
+      }
+    ],
     "warnings": [
       {
         "severity": "warning",
@@ -53,6 +61,13 @@
         "project": "cthulhuquarium",
         "task": "t-065",
         "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
+      },
+      {
+        "severity": "warning",
+        "code": "GATED_DONE_WITHOUT_APPROVAL",
+        "project": "davinci",
+        "task": "t-022",
+        "message": "Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect."
       },
       {
         "severity": "warning",
