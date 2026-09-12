@@ -13426,3 +13426,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Same DB-backed-verifier-catches-what-the-sandbox-cannot pattern as t-029, different write path: a character-sheet play created its LifeChoice row with rewardId null then patched it in a second update, so the persisted row ended up correct but the API response returned null for the played card on the very turn it was played. A two-step create-then-patch can be internally consistent in the database while still returning a wrong response for that one request -- resolve foreign keys before the transaction and write them on the initial create when the response of that same call needs to reflect them."
+- date: 2026-09-12
+  project: interface-vision
+  task: t-132
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A CI-config kaizen (adding a warning-only shellcheck pass to an existing bash -n step) is safest when it reuses the same changed-file discovery already computed in that step rather than re-running git diff -- one mapfile call, then bash -n and shellcheck back to back with `|| true` on the new one, so the existing hard-failing check's behavior is provably untouched. Installing the tool locally (apt-get install shellcheck) to confirm a real finding logs but doesn't propagate a nonzero exit was worth the minute it took -- cheaper than trusting `|| true` semantics from memory."
