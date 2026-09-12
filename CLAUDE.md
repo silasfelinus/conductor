@@ -57,6 +57,17 @@ At the start of every session, before responding to any task, run a conductor sw
      said so; its log just ends, ~37 hours before Silas noticed). A MISSING digest is exit 0 with a
      "not configured yet" note, so this stays quiet until the User Script is scheduled and the
      digest is published off the host. No network/token needed for a local digest path.
+   - `python scripts/check_priority_queue_starvation.py` — `projects/priority.yaml` is the
+     deterministic worker pickup order, but nothing else reports how deep a session had to walk
+     it before finding a `status: ready` task (conductor/t-149, filed 2026-09-11: the first six
+     entries all had zero ready tasks that day, and "I picked the top-ranked available task" and
+     "I walked past six gate-blocked projects to get here" read identically from the session
+     end). Names each skipped project's reason (gated at needs-human — with the blocking task
+     id/title named, so this doubles as a priority-ordered version of `audit_human_gates.py` —
+     all waiting-blocked, or all claimed) and where the queue actually landed. Advisory only;
+     exit 1 only past a threshold depth (default 3) so ordinary one/two-project fall-through
+     stays quiet, or if literally nothing in the whole order has claimable work. No network/token
+     needed.
    Treat exit 1 (or 3) from any of these as a reconciliation prompt, not permission to bypass a genuine gate. The
    four roadmap-reading commands intentionally exclude paused, retired, and finished projects unless
    `--include-inactive` is supplied; `check_live_facet_coverage.py` reads live records rather than roadmaps and
@@ -113,6 +124,8 @@ Then report:
 - **Branch** and whether the working tree is clean
 - **Open PRs** (if any Worker PRs are waiting for review)
 - **Ready tasks** (what the Worker should pick up next, in priority order)
+- **Priority-queue depth** (only when `check_priority_queue_starvation.py` exits non-zero): how many
+  projects the queue walked past before landing on real work, and why each was skipped
 - **Needs-human gates** from active projects only (what only Silas can unblock, grouped by project)
 - **State reconciliation** findings (merged-PR drift, stale-gate signals, or milestone/task mismatches)
 - **Container log triage** (Alexandria): new/spiking/newly-quiet log signatures, or a stale
