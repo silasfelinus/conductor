@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Build the Daily Dream digest with two deliberately different output sections.
+"""Build the Daily Dream digest around the morning's creative handoff.
 
-The older completed bundle is art-rich because its six renders have had a full cycle
-to finish. The bundle built this morning is text/facet-forward and never reserves
-blank image rectangles for art that was only just submitted. Today's freshly authored
-proposal is steering input for tomorrow and is not shown as a third near-duplicate.
+The bundle built this morning is text/facet-forward and leads the email. Operational
+health follows it, so failures stay visible without making the digest open on bad news.
+Today's freshly authored proposal is then shown as a compact preview of tomorrow's
+build. The older completed bundle remains art-rich because its six renders have had a
+full cycle to finish.
 """
 
 from __future__ import annotations
@@ -255,6 +256,33 @@ def proposal_section(
     )
 
 
+def next_pitch_section(proposal: dict[str, Any] | None) -> str:
+    """Render tomorrow's authored proposal as a compact promise, not a fake build."""
+    if not proposal:
+        return ""
+    title = esc(proposal.get("title"))
+    idea = esc(proposal.get("idea"))
+    proposal_date = str(proposal.get("proposal_date") or "").strip()
+    date_line = (
+        f'<p style="color:#64748b;font-size:12px;margin:2px 0 6px">Authored {esc(proposal_date)}</p>'
+        if proposal_date else ""
+    )
+    link = str(proposal.get("edit_link") or "").strip()
+    button = (
+        f'<p>{legacy._button(link, "🔮 Read tomorrow’s pitch", color="#7e22ce")}</p>'
+        if link else ""
+    )
+    return (
+        '<div style="background:#faf5ff;border:1px solid #e9d5ff;border-radius:10px;'
+        'padding:12px 14px;margin:14px 0 18px;max-width:660px">'
+        '<h2 style="margin:0 0 4px">🔮 Tomorrow’s pitch</h2>'
+        f'{date_line}'
+        f'<p style="font-size:1.08em;color:#581c87;margin:3px 0"><strong>{title}</strong></p>'
+        f'<p style="color:#444;line-height:1.5;margin:5px 0">{idea}</p>'
+        f'{button}</div>'
+    )
+
+
 ENGINE_BANNER_THEME = {
     "ok": ("#065f46", "#ecfdf5", "#10b981", "✅"),
     "down": ("#7f1d1d", "#fef2f2", "#ef4444", "⚠️"),
@@ -332,14 +360,7 @@ def container_log_banner(digest: dict[str, Any]) -> str:
 
 
 def engine_banner(digest: dict[str, Any]) -> str:
-    """One line at the top of the digest saying whether the box can render.
-
-    The digest carried nothing about render health until 2026-09-02, when
-    ComfyUI was down for 24 hours and at least one digest went out during it
-    without a hint. A green line every day is the point as much as a red one:
-    it makes the absence of a red line mean something, instead of leaving
-    silence to mean both "fine" and "nobody checked".
-    """
+    """One line reporting whether the render box can render."""
     health = digest.get("render_engine")
     if not isinstance(health, dict):
         return ""
@@ -360,18 +381,26 @@ def engine_banner(digest: dict[str, Any]) -> str:
 
 
 def build_payload(digest: dict[str, Any]) -> dict[str, Any]:
-    # Reuse the legacy project/activity shell, but feed its two Daily Dream slots
-    # the new roles in the order Silas expects: older art-rich output first, then
-    # the bundle just built this cycle. proposal_section ignores the legacy labels
-    # and renders from display_mode instead.
+    # Reuse the legacy project/activity shell, but make the morning's completed
+    # bundle its first creative section. The prior art-rich output can still
+    # follow later as visual history.
     legacy.proposal_section = proposal_section
     legacy_digest = dict(digest)
-    legacy_digest["tomorrow_proposal"] = digest.get("previous_dream_output")
-    legacy_digest["yesterday_output"] = digest.get("current_dream_output")
+    legacy_digest["tomorrow_proposal"] = digest.get("current_dream_output")
+    legacy_digest["yesterday_output"] = digest.get("previous_dream_output")
+
+    # The legacy shell used to put the written container review before the
+    # digest title. Suppress that copy here and reinsert it with the rest of the
+    # operational health immediately after the just-built dream.
+    container_logs = digest.get("container_logs")
+    if isinstance(container_logs, dict):
+        legacy_logs = dict(container_logs)
+        legacy_logs.pop("review", None)
+        legacy_digest["container_logs"] = legacy_logs
     payload = legacy.build_payload(legacy_digest)
 
-    # Old history is intentionally suppressed. The digest is a two-beat handoff,
-    # not an archive dump.
+    # Old history is intentionally suppressed. The digest is a handoff, not an
+    # archive dump.
     status = str(digest.get("daily_dream_output_status") or "")
     if status and not digest.get("previous_dream_output"):
         marker = '<h2 style="margin-bottom:2px">✨ Just built this cycle</h2>'
@@ -382,13 +411,31 @@ def build_payload(digest: dict[str, Any]) -> dict[str, Any]:
         if marker in payload["htmlContent"]:
             payload["htmlContent"] = payload["htmlContent"].replace(marker, note + marker, 1)
 
-    # Render health leads the email. It is the one fact that invalidates every
-    # other section: a beautiful dream bundle whose art never rendered is not
-    # good news, and reading three screens before finding that out is how a
-    # 24-hour outage goes unnoticed.
-    payload["htmlContent"] = (
-        engine_banner(digest) + container_log_banner(digest) + payload["htmlContent"]
+    review_renderer = getattr(legacy, "container_log_review_section", None)
+    review_html = review_renderer(digest) if callable(review_renderer) else ""
+    operational_html = engine_banner(digest) + container_log_banner(digest) + review_html
+    pitch_html = next_pitch_section(digest.get("next_dream_proposal"))
+    middle = operational_html + pitch_html
+
+    # Place health and tomorrow's pitch directly after the fresh creative output.
+    # If a build failed so there is no fresh output, put them immediately after
+    # the digest title rather than silently dropping either section.
+    current = digest.get("current_dream_output")
+    current_html = proposal_section(
+        "🌙 Tomorrow's dream",
+        current if isinstance(current, dict) else None,
+        cta=True,
+        page_link=str(digest.get("daily_dream_page") or ""),
     )
+    if middle and current_html and current_html in payload["htmlContent"]:
+        payload["htmlContent"] = payload["htmlContent"].replace(
+            current_html, current_html + middle, 1
+        )
+    elif middle:
+        title_end = "</h1>"
+        payload["htmlContent"] = payload["htmlContent"].replace(
+            title_end, title_end + middle, 1
+        )
     return payload
 
 
