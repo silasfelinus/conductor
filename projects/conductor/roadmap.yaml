@@ -5411,7 +5411,7 @@ tasks:
 - id: t-149
   milestone: m2
   title: Flag priority-queue starvation when the top of priority.yaml has no ready work
-  status: review
+  status: done
   stakes: reversible
   passes: 0
   note: >-
@@ -5462,10 +5462,11 @@ tasks:
     claimable, matching next_ready_task.py's own rule). Wired into CLAUDE.md's session-
     startup sweep (step 5, plus a new startup-report bullet) as the task requested. Full
     local test suite (1827 tests) still green.
-  updated: '2026-09-12T19:43:10Z'
+  updated: '2026-09-12T19:46:21Z'
   owner: worker
   claimed_by: 2026-09-12T193600Z-conductor-t149-cldcond
   claimed_at: '2026-09-12T19:36:05Z'
+  implementation_pr: 'silasfelinus/conductor#4197'
 
 - id: t-150
   milestone: m2
