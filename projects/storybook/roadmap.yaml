@@ -910,10 +910,10 @@ tasks:
 - id: t-043
   milestone: m9
   title: "Rewrite the Storybook/Taskmaster boundary doc as superseded"
-  status: claimed
+  status: done
   passes: 0
   stakes: reversible
-  note: >
+  note: >-
     kind_robots docs/products/storybook-taskmaster-boundary.md opens "This boundary is
     intentional and permanent" and lists permanent implementation invariants (Taskmaster owns
     its own Pinia store, session types, persistence key, and product identity). Silas,
@@ -924,10 +924,22 @@ tasks:
     reader applies them, the real objective stays visible beside the fiction, and Conductor
     roadmap YAML is never written by a story answer. Do this FIRST in m9, so the repo never
     has a doc calling permanent a split the roadmap is dismantling.
-  updated: '2026-09-12T22:30:32Z'
+
+    2026-09-12: closed. docs/products/storybook-taskmaster-boundary.md rewritten in place
+    (path kept, so the two sentences verifySerendipityRouteCutover.mjs pins survive). The
+    permanence framing and the 'store and state machine remain separate' invariant are gone,
+    replaced by a dated supersession header, a was/is table for the four modes, and the
+    statement that Taskmaster's three CI guards are rewritten rather than deleted. The four
+    safety rules that were never about product separation -- a story answer is a proposal
+    until the reader applies it, the objective stays visible beside the fiction, Conductor
+    roadmap YAML is never written by a story answer, and a story must never look like it
+    silently edited a task list -- are restated as binding the Taskmaster MODE, and are
+    t-045's acceptance criteria.
+  updated: '2026-09-12T22:48:02Z'
   owner: worker
   claimed_by: 2026-09-12T23-boundary-doc-t043
   claimed_at: '2026-09-12T22:30:32Z'
+  implementation_pr: 'silasfelinus/kind_robots#2684'
 - id: t-044
   milestone: m9
   title: "Engine: Taskmaster mode -- objective, real work cards, server-side run"
