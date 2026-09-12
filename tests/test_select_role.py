@@ -480,6 +480,83 @@ def _fake_gh_request(routes):
     return _request
 
 
+# --- commit_combined_state: check-runs based combined CI state (conductor/t-154) --
+
+
+def test_commit_combined_state_success_when_every_run_completed_clean():
+    routes = {
+        "/commits/sha1/check-runs": {
+            "check_runs": [
+                {"status": "completed", "conclusion": "success"},
+                {"status": "completed", "conclusion": "skipped"},
+                {"status": "completed", "conclusion": "neutral"},
+            ]
+        },
+    }
+    with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
+        assert select_role.commit_combined_state("silasfelinus/conductor", "sha1", "tok") == "success"
+
+
+def test_commit_combined_state_pending_when_any_run_incomplete():
+    routes = {
+        "/commits/sha2/check-runs": {
+            "check_runs": [
+                {"status": "completed", "conclusion": "success"},
+                {"status": "in_progress", "conclusion": None},
+            ]
+        },
+    }
+    with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
+        assert select_role.commit_combined_state("silasfelinus/conductor", "sha2", "tok") == "pending"
+
+
+def test_commit_combined_state_pending_when_no_check_runs_at_all():
+    routes = {"/commits/sha3/check-runs": {"check_runs": []}}
+    with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
+        assert select_role.commit_combined_state("silasfelinus/conductor", "sha3", "tok") == "pending"
+
+
+def test_commit_combined_state_failure_on_bad_conclusion():
+    routes = {
+        "/commits/sha4/check-runs": {
+            "check_runs": [
+                {"status": "completed", "conclusion": "success"},
+                {"status": "completed", "conclusion": "failure"},
+            ]
+        },
+    }
+    with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
+        assert select_role.commit_combined_state("silasfelinus/conductor", "sha4", "tok") == "failure"
+
+
+def test_commit_combined_state_returns_none_on_request_failure():
+    with mock.patch.object(select_role, "_gh_request", return_value=None):
+        assert select_role.commit_combined_state("silasfelinus/conductor", "sha5", "tok") is None
+
+
+def test_commit_combined_state_paginates_check_runs():
+    page1 = {"check_runs": [{"status": "completed", "conclusion": "success"}] * 100}
+    page2 = {"check_runs": [{"status": "completed", "conclusion": "failure"}]}
+    calls: list[str] = []
+
+    def fake_request(url, token):
+        calls.append(url)
+        # Note: "per_page=100" itself contains "page=1" as a substring, so
+        # matching must anchor on "&page=" (the pagination param), not just
+        # "page=1" / "page=2" bare.
+        if "&page=1" in url:
+            return page1
+        if "&page=2" in url:
+            return page2
+        return {"check_runs": []}
+
+    with mock.patch.object(select_role, "_gh_request", side_effect=fake_request):
+        state = select_role.commit_combined_state("silasfelinus/conductor", "sha6", "tok")
+
+    assert state == "failure"  # the 101st run, on page 2, is the deciding one
+    assert len(calls) == 2
+
+
 def test_find_red_stale_prs_flags_failing_and_old_enough():
     now = datetime(2026, 7, 26, 12, 0, 0, tzinfo=timezone.utc)
     pr = {
@@ -491,7 +568,9 @@ def test_find_red_stale_prs_flags_failing_and_old_enough():
     }
     routes = {
         "/pulls?state=open": [pr],
-        "/commits/deadbeef/status": {"state": "failure"},
+        "/commits/deadbeef/check-runs": {
+            "check_runs": [{"status": "completed", "conclusion": "failure"}]
+        },
     }
     with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
         flagged = select_role.find_red_stale_prs_in_repo(
@@ -508,7 +587,9 @@ def test_find_red_stale_prs_ignores_fresh_failures_still_being_iterated():
     pr = {"number": 8, "head": {"sha": "cafef00d"}, "updated_at": "2026-07-26T11:00:00Z"}  # 1 hour old
     routes = {
         "/pulls?state=open": [pr],
-        "/commits/cafef00d/status": {"state": "failure"},
+        "/commits/cafef00d/check-runs": {
+            "check_runs": [{"status": "completed", "conclusion": "failure"}]
+        },
     }
     with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
         flagged = select_role.find_red_stale_prs_in_repo(
@@ -523,7 +604,9 @@ def test_find_red_stale_prs_ignores_passing_ci():
     pr = {"number": 9, "head": {"sha": "abc123"}, "updated_at": "2026-07-26T05:00:00Z"}
     routes = {
         "/pulls?state=open": [pr],
-        "/commits/abc123/status": {"state": "success"},
+        "/commits/abc123/check-runs": {
+            "check_runs": [{"status": "completed", "conclusion": "success"}]
+        },
     }
     with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
         flagged = select_role.find_red_stale_prs_in_repo(
@@ -734,7 +817,9 @@ def test_find_reviewable_claude_prs_flags_green_pr_past_grace_period():
     }
     routes = {
         "/pulls?state=open": [pr],
-        "/commits/feedface/status": {"state": "success"},
+        "/commits/feedface/check-runs": {
+            "check_runs": [{"status": "completed", "conclusion": "success"}]
+        },
     }
     with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
         flagged = select_role.find_reviewable_claude_prs(
@@ -758,7 +843,9 @@ def test_find_reviewable_claude_prs_ignores_worker_branches():
     }
     routes = {
         "/pulls?state=open": [pr],
-        "/commits/abc111/status": {"state": "success"},
+        "/commits/abc111/check-runs": {
+            "check_runs": [{"status": "completed", "conclusion": "success"}]
+        },
     }
     with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
         flagged = select_role.find_reviewable_claude_prs(
@@ -777,7 +864,9 @@ def test_find_reviewable_claude_prs_ignores_non_green_ci():
     }
     routes = {
         "/pulls?state=open": [pr],
-        "/commits/bbb222/status": {"state": "pending"},
+        "/commits/bbb222/check-runs": {
+            "check_runs": [{"status": "in_progress", "conclusion": None}]
+        },
     }
     with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
         flagged = select_role.find_reviewable_claude_prs(
@@ -798,7 +887,9 @@ def test_find_reviewable_claude_prs_ignores_fresh_pr_still_pushing():
     }
     routes = {
         "/pulls?state=open": [pr],
-        "/commits/ccc333/status": {"state": "success"},
+        "/commits/ccc333/check-runs": {
+            "check_runs": [{"status": "completed", "conclusion": "success"}]
+        },
     }
     with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
         flagged = select_role.find_reviewable_claude_prs(

@@ -5647,5 +5647,78 @@ tasks:
   claimed_at: '2026-09-12T09:36:42Z'
   implementation_pr: 'silasfelinus/conductor#4159'
 
+- id: t-154
+  milestone: m2
+  title: "select_role.py's commit_combined_state() reads the legacy Status API, which this repo's GitHub-Actions-only CI never posts to -- it always returns 'pending', so pr-medic and the claude/* reviewer signal never fire"
+  status: review
+  owner: worker
+  claimed_by: claude-20260912T095736-conductor-t154
+  claimed_at: '2026-09-12T09:57:36Z'
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  note: >-
+    Filed 2026-09-12 (scheduled conductor Agent run, same session as t-153) while writing
+    that task's TALKBACK entry: this session's own opening sweep merged conductor PR #4156
+    (a fully-green, `close/*`-branch PR) that `select_role.py` had NOT flagged as
+    reviewable via `find_reviewable_claude_prs`, despite it being ~50+ minutes past the
+    5-minute `--pr-grace-minutes` default at the time this session checked.
+
+    ROOT CAUSE, confirmed by direct reproduction: `commit_combined_state()`
+    (scripts/select_role.py) calls `GET /repos/{owner}/{repo}/commits/{sha}/status` -- the
+    classic/legacy "commit status" API, which only reflects statuses posted by legacy
+    status-API integrations (e.g. some third-party services). This repo's CI is entirely
+    GitHub Actions check-runs, which post to the separate, newer Checks API
+    (`/commits/{sha}/check-runs`), NOT the legacy status endpoint. Verified directly:
+    `curl -H "Authorization: token $GITHUB_TOKEN"
+    https://api.github.com/repos/silasfelinus/conductor/commits/<sha>/status` returned
+    `{"state": "pending", "total_count": 0}` for a commit whose real GitHub Actions checks
+    (visible via `get_check_runs`/the Checks API) were 24/24 green.
+
+    This is NOT the "sessions are bound to their configured repositories" 403 t-153 fixed
+    -- it's a different bug: the call SUCCEEDS (200), it just always reports `pending`
+    because there is nothing for it to find, regardless of the commit's actual CI outcome.
+
+    Practical effect, both call sites of `commit_combined_state()`: `find_reviewable_claude_prs()`
+    only fires on `state == 'success'` -- never happens, so the `reviewer` role is NEVER
+    recommended for a `claude/*`/other-non-`worker/*`-branch PR, no matter how green or how
+    old, in this repo. `find_red_stale_prs_in_repo()` (pr-medic) only fires on `state in
+    ('failure', 'error')` -- also never happens, so `pr-medic` can never fire either. Both
+    signals have been silently dead for every session that has ever run this script against
+    a repo whose CI is 100% GitHub Actions (i.e. every repo `select_role.py` currently
+    checks). The `worker/*`-branch reviewer path (`run_reviewer.remote_worker_branches()`,
+    local git, no API) is unaffected -- this only breaks the two GitHub-API-backed CI-state
+    checks.
+
+    DO: replace `commit_combined_state()`'s implementation to compute combined state from
+    `GET /repos/{owner}/{repo}/commits/{sha}/check-runs` (paginated, `per_page=100`) instead
+    of the legacy `/status` endpoint: 'pending' if any check run's `status != 'completed'`
+    or there are zero check runs at all (same conservative default as the old empty-status
+    case); 'failure' if every run is `completed` and at least one `conclusion` is in
+    `{'failure', 'timed_out', 'cancelled', 'action_required'}`; 'success' otherwise (every
+    run completed with no bad conclusion -- `skipped`/`neutral` don't count as bad, matching
+    how a path-filtered matrix entry legitimately skips). Preserve the "return None only on
+    a request failure" contract the old implementation had. Update
+    `tests/test_select_role.py`'s `/commits/.../status` route fixtures (8 call sites as of
+    this filing) to the new `/commits/.../check-runs` shape, and add direct
+    `commit_combined_state()` unit tests (success/pending/no-runs/failure/request-failure/
+    pagination) since none existed before -- only indirect coverage through the two callers.
+
+    Verify against live data after the fix: `commit_combined_state()` on a commit with known
+    real green CI (e.g. a just-merged PR's head sha, while its check-runs are still queryable)
+    should return 'success', not 'pending'.
+
+    PROGRESS (2026-09-12, same session): implemented as prescribed --
+    `commit_combined_state()` now paginates `/commits/{sha}/check-runs` and folds every run's
+    status/conclusion into pending/failure/success per the DO above. Updated all 8
+    `/commits/.../status` route fixtures in `tests/test_select_role.py` to the new
+    `/commits/.../check-runs` shape and added 6 direct unit tests for
+    `commit_combined_state()` (success, pending-incomplete, pending-no-runs, failure,
+    request-failure, pagination). Full suite: 1815 passed (was 1809), 1 skipped, 35
+    subtests. Verified live: `commit_combined_state('silasfelinus/conductor',
+    'a487de0b80be1da03972f43182eb6e6123133c6f', GITHUB_TOKEN)` (conductor PR #4159's head
+    sha, whose real CI was 22/22 green) now returns `'success'`, not `'pending'`.
+  updated: '2026-09-12T09:58:00Z'
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
