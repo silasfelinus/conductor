@@ -841,10 +841,10 @@ tasks:
 - id: t-039
   milestone: m8
   title: "Engine: replace the four story shapes with the four story modes"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
-  note: >
+  note: >-
     Silas, 2026-09-12: stories are selected as open-ended, episodic, structured or
     taskmaster. The shipped StoryShape enum is SHORT_STORY/CHAPTERED/EPISODIC/LIFE, so this
     is a real migration, not a relabel: OPEN_ENDED, EPISODIC, STRUCTURED, TASKMASTER, with
@@ -855,18 +855,33 @@ tasks:
     stores/storybookStore.ts and the deck YAMLs'' turnBudgetByShape keys all move together.
     Every in-flight run keeps resolving; a run created before this migration must not change
     mode under the reader.
-  updated: '2026-09-12T22:42:45Z'
+
+    2026-09-12: implemented in kind_robots#2686, awaiting merge. StoryShape gained
+    OPEN_ENDED/STRUCTURED/TASKMASTER and KEPT the legacy values so the deploy handoff is
+    safe; rows backfilled (LIFE->STRUCTURED, SHORT_STORY and CHAPTERED->OPEN_ENDED) and the
+    column default moved to STRUCTURED so an old-build insert that omits shape still means
+    what it meant. MODE_BY_ENUM maps the legacy values defensively, so an in-flight run
+    never changes mode under the reader. Deck YAMLs keyed by mode in conductor#4209
+    (merged), with the old keys kept as a fallback. NOT converted: STORYBOOK_STRUCTURES in
+    stores/storybookStore.ts -- its four structures drive the client beat loop's own
+    scheduling (short-story ends after four beats), which is the behaviour the length dial
+    replaces, and t-037 deletes that loop wholesale; converting it now would rewrite a loop
+    scheduled for deletion. A legacy client posting short-story still opens an open-ended
+    run via LEGACY_MODE_ALIASES. Dropping the legacy enum values is a follow-up once no
+    deployed build emits them.
+  updated: '2026-09-12T23:02:58Z'
   owner: worker
   claimed_by: 2026-09-12T23-mode-taxonomy-t039
   claimed_at: '2026-09-12T22:42:45Z'
+  implementation_pr: 'silasfelinus/kind_robots#2686'
 - id: t-040
   milestone: m8
   title: "Engine: open-ended mode -- no turn budget, resolve on demand"
-  status: waiting
+  status: review
   passes: 0
   stakes: reversible
   depends_on: t-039
-  note: >
+  note: >-
     The one mode that stretches the engine: every other mode resolves when its budget is
     spent, and this one has no budget. LifeRun.turnBudget already allows NULL, and
     resolveStoryRunEnding''s turn gate already binds only runs with a budget, so the shape of
@@ -875,27 +890,45 @@ tasks:
     genre''s deck whenever the reader calls it, so it is never a dead end in the Collection.
     The turn route must stop advertising a final turn when there is no budget, and the
     narrator must not be told a turn is the last one.
-  updated: '2026-09-12T14:00:00Z'
+
+    2026-09-12: implemented in kind_robots#2686, awaiting merge. turnBudget NULL now MEANS
+    endless for a run this engine opened: the narrator is never told a turn is the last one,
+    a scene is always waiting, and readyToResolve turns true once the deck's floor is
+    passed. Not a free pass -- resolveStoryRunEnding still enforces minTurnsBeforeResolve,
+    so 'bring this to an end' cannot collect an ending on turn one. A pre-deck life run also
+    has NULL there for its own reason and is told apart by deckId, so its ungated resolve is
+    untouched. verifyStorybookPlayLoop.ts plays an endless run past the old budget and
+    resolves it on demand against a real database.
+  updated: '2026-09-12T23:03:01Z'
+  implementation_pr: 'silasfelinus/kind_robots#2686'
 - id: t-041
   milestone: m8
   title: "Engine: length is a setting, not a mode"
-  status: waiting
+  status: review
   passes: 0
   stakes: reversible
   depends_on: t-039
-  note: >
+  note: >-
     Short story and Chaptered tale stop being identities. Open-ended and Episodic take a
     length dial that sets the run''s turn budget (and, for open-ended, may leave it unset).
     The deck''s turnBudgetByShape stays the default the dial starts from. Per Silas''s
     clarification this is a SETTING, not a card -- it must not appear in the hand.
-  updated: '2026-09-12T14:00:00Z'
+
+    2026-09-12: implemented in kind_robots#2686, awaiting merge. StoryBoardInput.turnBudget
+    is the dial: 3..40, defaulting to the deck's budget for the mode, explicit null only in
+    open-ended. It is a SETTING, not a card, and stays out of every hand-facing payload. The
+    prose bands moved with it -- a scene is not longer because the story it belongs to is,
+    so the old short-story and chaptered bands collapsed into one open-ended band;
+    structured keeps the 20-400 life band its live runs were written against.
+  updated: '2026-09-12T23:03:04Z'
+  implementation_pr: 'silasfelinus/kind_robots#2686'
 - id: t-042
   milestone: m8
   title: "Engine: the narrator is a Bot card plus a delivery dial"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
-  note: >
+  note: >-
     Silas, 2026-09-12: narrators exist as Bots and supply the general voice; how they deliver
     it is still adjustable. The run already carries both halves (botId and narratorStyle) and
     loadRunNarrator already reads a Bot''s personality/narrativeVoice/prompt into the system
@@ -903,10 +936,21 @@ tasks:
     payload, list narrator Bots for the hand to deal (/api/narrators/[type] exists), and
     confirm the five NARRATOR_STYLE_DIRECTIVES read as modulating the chosen Bot rather than
     replacing it. The prompt must not end up with two competing voices.
-  updated: '2026-09-12T22:46:26Z'
+
+    2026-09-12: implemented in kind_robots#2686, awaiting merge. GET /api/narrators lists
+    the narrator Bots for the hand (card-face fields only -- the prompt text stays server-
+    side). createStoryRun now refuses a botId that is not an active NARRATOR: nothing failed
+    before, loadRunNarrator would read any Bot into the prompt, so the slot quietly narrated
+    in a voice never written to narrate. The style block is reframed as DELIVERY and says
+    out loud that it modulates the voice established above rather than replacing it, so the
+    prompt never carries two competing narrators; the five directives are unchanged.
+    verifyStorybookNarration.ts pins the framing and that the Bot's identity precedes the
+    dial.
+  updated: '2026-09-12T23:03:07Z'
   owner: worker
   claimed_by: 2026-09-12T23-narrator-bot-t042
   claimed_at: '2026-09-12T22:46:26Z'
+  implementation_pr: 'silasfelinus/kind_robots#2686'
 - id: t-043
   milestone: m9
   title: "Rewrite the Storybook/Taskmaster boundary doc as superseded"
