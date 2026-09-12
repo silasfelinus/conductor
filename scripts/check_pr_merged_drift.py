@@ -52,8 +52,11 @@ Usage:
   python scripts/check_pr_merged_drift.py --include-inactive
 
 Requires: GITHUB_TOKEN env var (recommended; avoids rate limits, required for
-private repos, and the search API in particular has a much tighter
-unauthenticated rate limit than the REST PR-lookup endpoint).
+private repos). The authoritative pass (1, below) is a repo-scoped list-and-
+filter (conductor/t-153) rather than the cross-repo Search API — some
+sandboxed sessions' outbound proxy 403s the Search API unconditionally
+("sessions are bound to their configured repositories") even with a token
+set, while repo-scoped endpoints work fine there.
 
 conductor/t-108 adds a fourth, network-free pass: a claimed/review task whose
 `remaining_scope_task` field points (directly or through a chain, same
@@ -362,58 +365,110 @@ def gh_pr(repo: str, number: int, token: str | None) -> dict | None:
         return None
 
 
-def _repo_from_repository_url(url: str | None) -> str | None:
-    m = re.match(r"^https://api\.github\.com/repos/(.+)$", url or "")
-    return m.group(1) if m else None
+def gh_list_repo_prs(
+    repo: str,
+    token: str | None,
+    *,
+    state: str = "closed",
+    max_pages: int = 30,
+) -> list[dict[str, Any]] | None:
+    """Fetch one repo's PRs (paginated, newest first) via the repo-scoped
+    list endpoint. `state="closed"` covers every PR that could possibly have
+    `merged_at` set (open PRs never do) while roughly halving the volume
+    fetched compared to `state="all"`.
+
+    Used by `gh_search_task_prs` as its repo-scoped search fallback
+    (conductor/t-153) — returns None if any page's fetch fails, same
+    "network/API error, not merely empty" contract as `gh_pr`/the old
+    Search-API call.
+    """
+    results: list[dict[str, Any]] = []
+    page = 1
+    while page <= max_pages:
+        url = f"https://api.github.com/repos/{repo}/pulls?" + urllib.parse.urlencode(
+            {"state": state, "per_page": 100, "page": page, "sort": "created", "direction": "desc"}
+        )
+        req = urllib.request.Request(
+            url,
+            headers={
+                "Accept": "application/vnd.github.v3+json",
+                "User-Agent": "conductor-check-pr-merged-drift/1.0",
+                **({"Authorization": f"Bearer {token}"} if token else {}),
+            },
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                batch = json.loads(resp.read())
+        except urllib.error.HTTPError as e:
+            print(f"  [gh-list] {repo} page {page}: HTTP {e.code}", file=sys.stderr)
+            return None
+        except Exception as e:  # noqa: BLE001 — best-effort network call, never fatal
+            print(f"  [gh-list] {repo} page {page}: {e}", file=sys.stderr)
+            return None
+        if not isinstance(batch, list) or not batch:
+            break
+        results.extend(batch)
+        if len(batch) < 100:
+            break
+        page += 1
+    return results
 
 
 def gh_search_task_prs(
-    repos: list[str], project: str, task_id: str, token: str | None
+    repos: list[str],
+    project: str,
+    task_id: str,
+    token: str | None,
+    *,
+    repo_pr_cache: dict[str, list[dict[str, Any]] | None] | None = None,
 ) -> list[dict[str, Any]] | None:
-    """Search the given repos for a merged PR whose TITLE names this exact
+    """Find merged PRs across the given repos whose TITLE names this exact
     "<project>/<task-id>" (the convention close-out PRs already follow, e.g.
     "ai-art-academy/t-010: add role=group..."). Returns a list of
     {"repo": owner/name, "number": int} candidates (title match only — the
-    caller confirms merge state via `gh_pr`), or None if the search call
-    itself failed (network/API error — distinct from "found nothing").
+    caller confirms merge state via `gh_pr`), or None if a lookup itself
+    failed (network/API error — distinct from "found nothing").
 
     This is the authoritative pass (conductor/t-098): a title the implementing
     session itself wrote about its own work is much stronger evidence than a
     PR merely quoted somewhere in the task's note history.
+
+    conductor/t-153: this used to be one cross-repo GitHub Search API call
+    (`/search/issues?q="<project>/<task-id>" in:title is:pr is:merged
+    repo:...`). Confirmed by direct reproduction that this sandbox's outbound
+    proxy 403s that endpoint unconditionally ("sessions are bound to their
+    configured repositories") while repo-scoped endpoints like
+    `/repos/{owner}/{repo}/pulls` work fine. Replaced with a repo-scoped
+    list-and-filter (`gh_list_repo_prs` per repo, client-side title/merged
+    filtering) that stays within that restriction while preserving the exact
+    same match semantics: a merged PR whose title contains the literal
+    "<project>/<task-id>" substring.
+
+    `repo_pr_cache`, when passed, is a per-run cache keyed by repo shared
+    across every task check_drift() checks in one run — avoids re-paginating
+    the same repo's full PR list once per task. Optional; direct/test callers
+    that omit it get an ephemeral cache scoped to the single call.
     """
     if not repos or not project or not task_id:
         return []
-    phrase = f'"{project}/{task_id}"'
-    query = " ".join(
-        [phrase, "in:title", "is:pr", "is:merged"] + [f"repo:{r}" for r in repos]
-    )
-    url = "https://api.github.com/search/issues?" + urllib.parse.urlencode(
-        {"q": query, "per_page": 10}
-    )
-    req = urllib.request.Request(
-        url,
-        headers={
-            "Accept": "application/vnd.github.v3+json",
-            "User-Agent": "conductor-check-pr-merged-drift/1.0",
-            **({"Authorization": f"Bearer {token}"} if token else {}),
-        },
-    )
-    try:
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            data = json.loads(resp.read())
-    except urllib.error.HTTPError as e:
-        print(f"  [gh-search] {project}/{task_id}: HTTP {e.code}", file=sys.stderr)
-        return None
-    except Exception as e:  # noqa: BLE001 — best-effort network call, never fatal
-        print(f"  [gh-search] {project}/{task_id}: {e}", file=sys.stderr)
-        return None
-
-    results = []
-    for item in data.get("items", []) or []:
-        repo = _repo_from_repository_url(item.get("repository_url"))
-        number = item.get("number")
-        if repo and number:
-            results.append({"repo": repo, "number": number})
+    cache = repo_pr_cache if repo_pr_cache is not None else {}
+    needle = f"{project}/{task_id}"
+    results: list[dict[str, Any]] = []
+    for repo in repos:
+        if repo not in cache:
+            cache[repo] = gh_list_repo_prs(repo, token)
+        prs = cache[repo]
+        if prs is None:
+            print(
+                f"  [gh-search] {project}/{task_id}: repo-scoped list failed for {repo}",
+                file=sys.stderr,
+            )
+            return None
+        for pr in prs:
+            if needle in (pr.get("title") or "") and pr.get("merged_at"):
+                number = pr.get("number")
+                if number:
+                    results.append({"repo": repo, "number": number})
     return results
 
 
@@ -594,12 +649,19 @@ def check_drift(
     field_possibly_stale = find_field_stale_findings(field_findings, token)
 
     # Pass 1 (authoritative title search): only for tasks with no usable
-    # implementation_pr field.
+    # implementation_pr field. `repo_pr_cache` is shared across every task
+    # checked below so each tracked repo's PR list is paginated at most once
+    # per run (conductor/t-153), not once per task.
     search_candidates = []
     search_failed_tasks = []
+    repo_pr_cache: dict[str, list[dict[str, Any]] | None] = {}
     for task in search_tasks:
         results = gh_search_task_prs(
-            ALL_TRACKED_REPOS, task["project"], task["task_id"], token
+            ALL_TRACKED_REPOS,
+            task["project"],
+            task["task_id"],
+            token,
+            repo_pr_cache=repo_pr_cache,
         )
         if results is None:
             search_failed_tasks.append(task)
@@ -695,9 +757,10 @@ def render(
     if unresolved:
         lines.append(
             f"⚠  {len(unresolved)}/{total} candidate(s) could NOT be verified (API lookup failed — "
-            f"see stderr for HTTP codes). This is common in sandboxed sessions that only have "
-            f"GitHub MCP tools, not direct API/token access — a raw urllib call to api.github.com "
-            f"will 403 there even with GITHUB_TOKEN set. Do not treat this run as a clean audit; "
+            f"see stderr for HTTP codes). As of conductor/t-153 both passes use repo-scoped "
+            f"endpoints, which work in every sandbox this script has run in so far — a lingering "
+            f"failure here is more likely a real outage, rate limit, or an out-of-scope repo than "
+            f"the old cross-repo Search API restriction. Do not treat this run as a clean audit; "
             f"re-check the unresolved task(s) via the GitHub connector instead:"
         )
         for candidate in unresolved:

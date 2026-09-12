@@ -7,6 +7,7 @@ no real project files touched.
 
 import io
 import json
+import re
 import urllib.error
 from unittest.mock import patch
 
@@ -29,6 +30,32 @@ class FakeResponse:
 
 def http_error(code, body=b""):
     return urllib.error.HTTPError("http://x", code, "err", {}, io.BytesIO(body))
+
+
+def repo_pulls_router(list_bodies=None, get_bodies=None, default_list=b"[]"):
+    """Fake urlopen router for the repo-scoped PR endpoints check_pr_merged_drift.py's
+    `gh_list_repo_prs` (list `/repos/{repo}/pulls?...`) and `gh_pr` (single
+    `/repos/{repo}/pulls/{number}`) use (conductor/t-153's repo-scoped search
+    fallback). `list_bodies`/`get_bodies` are keyed by repo / (repo, number);
+    any repo not in `list_bodies` gets `default_list` (empty by default)."""
+    list_bodies = list_bodies or {}
+    get_bodies = get_bodies or {}
+
+    def fake_urlopen(req, timeout=10):
+        url = req.full_url if hasattr(req, "full_url") else req
+        m_single = re.search(r"/repos/([^/]+/[^/]+)/pulls/(\d+)", url)
+        if m_single:
+            key = (m_single.group(1), int(m_single.group(2)))
+            if key not in get_bodies:
+                raise AssertionError(f"unexpected single-PR lookup: {key}")
+            return FakeResponse(get_bodies[key])
+        m_list = re.search(r"/repos/([^/]+/[^/]+)/pulls\?", url)
+        if m_list:
+            repo = m_list.group(1)
+            return FakeResponse(list_bodies.get(repo, default_list))
+        raise AssertionError(f"unexpected URL: {url}")
+
+    return fake_urlopen
 
 
 def write_roadmap(root, slug, tasks):
@@ -501,22 +528,57 @@ def test_scan_in_progress_tasks_includes_tasks_with_no_pr_reference(tmp_path):
 # --------------------------------------------------------------------------- #
 
 
-def test_gh_search_task_prs_parses_repository_url():
-    body = json.dumps({
-        "items": [
-            {
-                "number": 1464,
-                "repository_url": "https://api.github.com/repos/silasfelinus/kind_robots",
-            }
-        ]
-    }).encode()
+def test_gh_search_task_prs_parses_repo_scoped_list():
+    # conductor/t-153: the authoritative pass is now a repo-scoped
+    # list-and-filter (`/repos/{repo}/pulls`), not the cross-repo Search API.
+    list_body = json.dumps([
+        {
+            "number": 1464,
+            "title": "interface-vision/t-081: facet create affordance",
+            "merged_at": "2026-08-01T00:00:00Z",
+        }
+    ]).encode()
 
-    with patch("urllib.request.urlopen", return_value=FakeResponse(body)):
+    with patch("urllib.request.urlopen", return_value=FakeResponse(list_body)):
         results = dr.gh_search_task_prs(
             ["silasfelinus/kind_robots"], "interface-vision", "t-081", token=None
         )
 
     assert results == [{"repo": "silasfelinus/kind_robots", "number": 1464}]
+
+
+def test_gh_search_task_prs_filters_unmerged_and_nonmatching_titles():
+    list_body = json.dumps([
+        {"number": 10, "title": "interface-vision/t-081: real fix", "merged_at": "2026-08-01T00:00:00Z"},
+        {"number": 11, "title": "interface-vision/t-081: still open", "merged_at": None},
+        {"number": 12, "title": "unrelated task, no match", "merged_at": "2026-08-01T00:00:00Z"},
+    ]).encode()
+
+    with patch("urllib.request.urlopen", return_value=FakeResponse(list_body)):
+        results = dr.gh_search_task_prs(
+            ["silasfelinus/kind_robots"], "interface-vision", "t-081", token=None
+        )
+
+    assert results == [{"repo": "silasfelinus/kind_robots", "number": 10}]
+
+
+def test_gh_search_task_prs_reuses_shared_cache_across_calls():
+    list_body = json.dumps([
+        {"number": 10, "title": "interface-vision/t-081: real fix", "merged_at": "2026-08-01T00:00:00Z"},
+    ]).encode()
+    cache: dict = {}
+
+    with patch("urllib.request.urlopen", return_value=FakeResponse(list_body)) as mock_urlopen:
+        dr.gh_search_task_prs(
+            ["silasfelinus/kind_robots"], "interface-vision", "t-081", token=None, repo_pr_cache=cache
+        )
+        assert mock_urlopen.call_count == 1
+        # A second task's search against the same repo must reuse the cached
+        # list rather than re-paginating it.
+        dr.gh_search_task_prs(
+            ["silasfelinus/kind_robots"], "interface-vision", "t-082", token=None, repo_pr_cache=cache
+        )
+        assert mock_urlopen.call_count == 1
 
 
 def test_gh_search_task_prs_returns_none_on_api_failure():
@@ -558,25 +620,23 @@ def test_check_drift_prefers_task_id_search_over_note_reference(tmp_path):
         ],
     )
 
-    search_body = json.dumps({
-        "items": [
-            {
-                "number": 1464,
-                "repository_url": "https://api.github.com/repos/silasfelinus/kind_robots",
-            }
-        ]
-    }).encode()
     pr_1464_body = json.dumps({
         "merged": True,
         "merged_at": "2026-08-01T00:00:00Z",
         "title": "interface-vision/t-081: facet create affordance",
     }).encode()
+    list_body = json.dumps([
+        {
+            "number": 1464,
+            "title": "interface-vision/t-081: facet create affordance",
+            "merged_at": "2026-08-01T00:00:00Z",
+        }
+    ]).encode()
 
-    def fake_urlopen(req, timeout=10):
-        url = req.full_url if hasattr(req, "full_url") else req
-        if "search/issues" in url:
-            return FakeResponse(search_body)
-        return FakeResponse(pr_1464_body)
+    fake_urlopen = repo_pulls_router(
+        list_bodies={"silasfelinus/kind_robots": list_body},
+        get_bodies={("silasfelinus/kind_robots", 1464): pr_1464_body},
+    )
 
     with patch("urllib.request.urlopen", side_effect=fake_urlopen):
         result = dr.check_drift(tmp_path / "projects", token=None)
@@ -602,18 +662,17 @@ def test_check_drift_falls_back_to_note_reference_when_no_task_id_match(tmp_path
         ],
     )
 
-    empty_search_body = json.dumps({"items": []}).encode()
     pr_517_body = json.dumps({
         "merged": True,
         "merged_at": "2026-07-19T16:16:31Z",
         "title": "newsfeed/t-020: fix",
     }).encode()
 
-    def fake_urlopen(req, timeout=10):
-        url = req.full_url if hasattr(req, "full_url") else req
-        if "search/issues" in url:
-            return FakeResponse(empty_search_body)
-        return FakeResponse(pr_517_body)
+    # Every repo's title-search list comes back empty (no task-id match), so
+    # the weak note-reference pass falls back to a direct PR lookup on #517.
+    fake_urlopen = repo_pulls_router(
+        get_bodies={("silasfelinus/kind_robots", 517): pr_517_body},
+    )
 
     with patch("urllib.request.urlopen", side_effect=fake_urlopen):
         result = dr.check_drift(tmp_path / "projects", token=None)
@@ -877,25 +936,19 @@ def test_check_drift_field_absent_still_uses_title_search(tmp_path):
         [{"id": "t-020", "status": "claimed", "title": "x"}],
     )
 
-    search_body = json.dumps({
-        "items": [
-            {
-                "number": 1464,
-                "repository_url": "https://api.github.com/repos/silasfelinus/kind_robots",
-            }
-        ]
-    }).encode()
     pr_body = json.dumps({
         "merged": True,
         "merged_at": "2026-08-01T00:00:00Z",
         "title": "newsfeed/t-020: fix",
     }).encode()
+    list_body = json.dumps([
+        {"number": 1464, "title": "newsfeed/t-020: fix", "merged_at": "2026-08-01T00:00:00Z"}
+    ]).encode()
 
-    def fake_urlopen(req, timeout=10):
-        url = req.full_url if hasattr(req, "full_url") else req
-        if "search/issues" in url:
-            return FakeResponse(search_body)
-        return FakeResponse(pr_body)
+    fake_urlopen = repo_pulls_router(
+        list_bodies={"silasfelinus/kind_robots": list_body},
+        get_bodies={("silasfelinus/kind_robots", 1464): pr_body},
+    )
 
     with patch("urllib.request.urlopen", side_effect=fake_urlopen):
         result = dr.check_drift(tmp_path / "projects", token=None)
