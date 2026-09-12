@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-12T16:43:39Z
+Generated: 2026-09-12T16:51:37Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **931**
-- Outcomes: blocked: 16, cancelled: 1, done: 914
+- Closed tasks recorded: **932**
+- Outcomes: blocked: 16, cancelled: 1, done: 915
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
-| interface-vision | 127 | 100% |
+| interface-vision | 128 | 100% |
 | kapowarr | 52 | 100% |
 | kind-economy | 10 | 100% |
 | kind-robots | 55 | 98% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 914 | 99% |
+| software | 915 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-12 `interface-vision/t-134` — When a sized primitive (kr-toggle-<color>-sm) is added after its sizeless sibling (kr-toggle-<color>) already exists in the same codemod, FAMILIES ordering is a correctness requirement, not just style: the sizeless base token set is a strict subset of the sized one's, so trying the sizeless family first would silently swallow the size token as an unrecognized 'extra' and skip the more specific primitive. Listing every sized family before any sizeless one (verified by re-running the dry run to 0 remaining candidates) avoided that regardless of what BOUNDED_EXTRAS happened to allow.
 - 2026-09-12 `interface-vision/t-104` — Slice 246: when a recurring umbrella's kaizen note calls for 'a fresh full-repo class-frequency survey outside all now-closed families' rather than naming the next target directly, build the survey as a small reusable script (kr_class_frequency_survey.py) rather than a one-off grep -- it excludes pure-layout combos (flex/gap/items/justify/etc) up front, since those risk the geometry changes this umbrella explicitly disclaims, and surfaces genuine component-color-variant candidates (DaisyUI toggle colors) instead. The same script is available for the next slice's survey too.
 - 2026-09-12 `interface-vision/t-132` — A CI-config kaizen (adding a warning-only shellcheck pass to an existing bash -n step) is safest when it reuses the same changed-file discovery already computed in that step rather than re-running git diff -- one mapfile call, then bash -n and shellcheck back to back with `|| true` on the new one, so the existing hard-failing check's behavior is provably untouched. Installing the tool locally (apt-get install shellcheck) to confirm a real finding logs but doesn't propagate a nonzero exit was worth the minute it took -- cheaper than trusting `|| true` semantics from memory.
 - 2026-09-12 `storybook/t-032` — Same DB-backed-verifier-catches-what-the-sandbox-cannot pattern as t-029, different write path: a character-sheet play created its LifeChoice row with rewardId null then patched it in a second update, so the persisted row ended up correct but the API response returned null for the played card on the very turn it was played. A two-step create-then-patch can be internally consistent in the database while still returning a wrong response for that one request -- resolve foreign keys before the transaction and write them on the initial create when the response of that same call needs to reflect them.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-12 `conductor/t-153` — check_pr_merged_drift.py's cross-repo GitHub Search API call (/search/issues?q=...) 403s unconditionally in this sandbox ('sessions are bound to their configured repositories'), even with GITHUB_TOKEN set, while repo-scoped endpoints (/repos/{owner}/{repo}/pulls, /repos/{owner}/{repo}/pulls/{number}) work fine. Any script that needs to find a PR by title/content across multiple repos should list-and-filter per repo rather than use the Search API, and should cache each repo's listing across multiple lookups in the same run rather than re-paginating per candidate. A residual per-repo 403 after this kind of fix is more likely an out-of-scope repo for the session's credentials (see AGENTS.md's Repository Scope) than the Search-API restriction -- check which case it is before assuming the fix didn't work.
 - 2026-09-12 `interface-vision/t-104` — Mechanical size shorthand migrations are safe when the codemod is restricted to static class attributes and excludes text-/stroke-/fill-colored shapes; exact-head CI plus full diff review caught no behavioral or geometry change (slice 241, silasfelinus/kind_robots#2655).
 - 2026-09-12 `interface-vision/t-130` — A kaizen task sourced directly from a real CI-escaping bug (t-128's inline-regex bash syntax error) landed clean first pass because the fix's own verification loop closed the gap it was fixing: the new bash -n step's PR ran inside the same layout-contract job it modifies, so a syntax error in the new step itself would have failed loudly rather than merging silently. Prefer this shape (the fix's CI run exercises the fix) over a purely textual review for any CI-workflow-editing task.
-- 2026-09-12 `interface-vision/t-104` — Running a blanket `prettier --write` across every file a codemod touched (to tidy the one or two multi-line class attributes the codemod's edit legitimately shortened) also reformats unrelated pre-existing 80-col drift throughout each file -- drift kind_robots never enforces via a CI prettier check, so it silently accumulates. That incidental reflow broke two hardcoded literal-string contract scripts (verifyTaskmasterCheckpointEngine.mjs, verifyDailyDreamArchiveWorkbench.ts) that assume specific substrings stay on one line/one call. Caught by CI before merge (self-triaged and fixed in the same PR, no Reviewer round needed), but the fix was to stop running `prettier --write` at all rather than chase each incidental reflow -- this repo has no CI-enforced prettier check, so nothing requires it, and a pure mechanical 1:1 token substitution (no line-structure change) is both safer and a smaller diff. Future size/shorthand codemod slices should skip blanket prettier passes; if a specific line genuinely needs reformatting, target only that line/file, not `prettier --write <whole-changed-file-list>`.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-12T16:43:39Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-12T16:51:37Z_
