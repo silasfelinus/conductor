@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   recurring: true
@@ -3298,9 +3298,12 @@ tasks:
     Slice 250 (this session): opened .kr-text-semibold-sm (font-semibold text-sm), the next bounded text-weight family after kr-text-bold-*/kr-text-black-*, surveyed and named discovery-only in slice 249. Enabled --write in kr_text_semibold_sm_codemod.py and migrated the 13 exact-only occurrences across 9 files (components/art/artjob-editor.vue, artjob-failed-page-requeue.vue, artjob-feedback-manager.vue, artjob-queue-browser.vue x3, artjob-slideshow.vue, components/pages/conductor-project-gallery-page.vue, serendipity-page.vue, pages/play/mandarin.vue x1, pages/play/video-generator.vue x3). No color/behavior/API/schema/route/geometry change. eslint, vue-tsc --noEmit, and npm run test:layout-contract all clean (0 new violations; a pre-existing baseline improvement on animation-manager.vue/ruler-hooked-health.vue observed and left untouched, out of scope); prettier --check flags pre-existing drift on 5 files confirmed via git stash to predate this change, left alone. Merged silasfelinus/kind_robots#2682 (squash 5c43862), all required PR checks green (TypeScript, Contract verifiers, layout-contract, facet- catalog, GitGuardian, full Storybook/Narrative contract suite); the non-required Build production image check was still running at merge time per its own documented non- blocking convention. Return the recurring consistency umbrella to ready for the next bounded slice. Kaizen for the next slice: migrate the remaining ~63 subset-match font- semibold text-sm occurrences (run the codemod without --exact-only), preserving each site's extra tokens per the established convention.
 
     Closeout repair after slice 250 merged as silasfelinus/kind_robots#2682: return the recurring consistency umbrella to ready for the next bounded slice. Next recorded target is the remaining subset-match font-semibold text-sm pool, preserving each site's extra tokens.
-  updated: '2026-09-12T20:15:21Z'
+  updated: '2026-09-12T21:18:10Z'
   implementation_pr: 'silasfelinus/kind_robots#2682'
   retry_context: ''
+  owner: worker
+  claimed_by: openai-scheduled-2026-09-12T211810Z-interface-vision-t104-a1
+  claimed_at: '2026-09-12T21:18:10Z'
 
 - id: t-123
   milestone: m5
