@@ -3938,28 +3938,18 @@ tasks:
 - id: t-131
   milestone: m6
   title: Continue the viewport-grid burn-down (slice 2 onward)
-  status: claimed
+  status: review
   gate_human: false
   stakes: reversible
   passes: 0
-  note: >-
-    Continuation of interface-vision/t-129 (kind_robots#2652, 2026-09-12): slice 1
-    migrated 5 unique viewport-breakpoint grid-cols tokens (3 files) onto auto-fit/
-    minmax fluid grids, ratcheting the viewport-grid baseline 205 -> 200. ~200
-    occurrences remain, the largest of the nine layout-contract buckets. DO: run
-    `npx tsx utils/scripts/verifyLayoutContract.ts --report` to list current
-    viewport-grid entries, survey the next-highest-traffic files (components/art/*
-    and components/academy/* still had the heaviest concentration as of 2026-09-12),
-    and migrate a bounded slice (a handful of files) onto
-    `grid-cols-[repeat(auto-fit,minmax(min(100%,Nrem),1fr))]`. Skip genuinely
-    non-repeating layouts (e.g. a fixed two-panel side-by-side split) -- scope to
-    actual repeating card/tile lists, per t-129's own note on what it deliberately
-    left untouched. Update the baseline with `--update` after the slice lands, and
-    re-file this same continuation pattern (next free task id) if occurrences remain.
+  note: |-
+    Continuation of interface-vision/t-129 (kind_robots#2652, 2026-09-12): slice 1 migrated 5 unique viewport-breakpoint grid-cols tokens (3 files) onto auto-fit/ minmax fluid grids, ratcheting the viewport-grid baseline 205 -> 200. ~200 occurrences remain, the largest of the nine layout-contract buckets. DO: run `npx tsx utils/scripts/verifyLayoutContract.ts --report` to list current viewport-grid entries, survey the next-highest-traffic files (components/art/* and components/academy/* still had the heaviest concentration as of 2026-09-12), and migrate a bounded slice (a handful of files) onto `grid-cols-[repeat(auto-fit,minmax(min(100%,Nrem),1fr))]`. Skip genuinely non-repeating layouts (e.g. a fixed two-panel side-by-side split) -- scope to actual repeating card/tile lists, per t-129's own note on what it deliberately left untouched. Update the baseline with `--update` after the slice lands, and re-file this same continuation pattern (next free task id) if occurrences remain.
+
+    Implemented a bounded viewport-grid burn-down slice by converting the repeating kingdom-health meter grid from a viewport breakpoint to a container-responsive auto-fit/minmax grid. Implementation branch is worker/interface-vision-t-131-20260912T151712Z-oai11.
   owner: worker
   claimed_by: 2026-09-12T151712Z-interface-vision-t-131-oai11
   claimed_at: '2026-09-12T15:17:12Z'
-  updated: '2026-09-12T15:17:12Z'
+  updated: '2026-09-12T16:17:30Z'
 - id: t-132
   milestone: m6
   title: Add a non-blocking shellcheck pass alongside the new bash -n syntax check
