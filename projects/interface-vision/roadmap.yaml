@@ -3921,7 +3921,7 @@ tasks:
 - id: t-130
   milestone: m6
   title: Require a bash -n syntax check on any .sh file a PR adds or modifies
-  status: ready
+  status: claimed
   gate_human: false
   stakes: reversible
   passes: 0
@@ -3939,6 +3939,10 @@ tasks:
     rate is a concern) over every `*.sh` file changed in the PR's diff, failing loud on
     a real syntax error like this one. Scope to a bounded, reversible CI-only addition;
     no need to retroactively re-audit every existing script in one pass.
+  owner: worker
+  claimed_by: 2026-09-12T061811Z-interface-vision-t-130-x9c4
+  claimed_at: '2026-09-12T06:18:11Z'
+  updated: '2026-09-12T06:18:11Z'
 - id: t-131
   milestone: m6
   title: Continue the viewport-grid burn-down (slice 2 onward)
