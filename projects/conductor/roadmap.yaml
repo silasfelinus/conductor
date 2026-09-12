@@ -5572,7 +5572,7 @@ tasks:
 - id: t-153
   milestone: m2
   title: "check_pr_merged_drift.py's authoritative gh_search_task_prs() pass always 403s in this sandbox -- swap in a repo-scoped list-and-filter fallback"
-  status: ready
+  status: claimed
   gate_human: false
   stakes: reversible
   passes: 0
@@ -5632,7 +5632,10 @@ tasks:
     credentials are legitimately restricted to a smaller repo set. Do not conflate the two
     403 shapes when investigating -- confirm which one a given failure is (unscoped search
     endpoint vs. out-of-scope repo) before attempting a fix.
-  updated: '2026-09-12T02:55:00Z'
+  updated: '2026-09-12T09:36:42Z'
+  owner: worker
+  claimed_by: claude-20260912T093641-conductor-t153
+  claimed_at: '2026-09-12T09:36:42Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
