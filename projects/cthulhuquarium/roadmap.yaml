@@ -3180,7 +3180,7 @@ tasks:
 - id: t-073
   milestone: m3
   title: Author and deliver art for the remaining 32 species with no plate
-  status: claimed
+  status: needs-human
   gate_human: false
   owner: worker
   stakes: reversible
@@ -3256,9 +3256,30 @@ tasks:
     all 32 files now exist under projects/cthulhuquarium/art/ (check origin/main's tree
     directly, not just that the queue drained -- that's exactly what looked fine last time),
     spot-check on-style, then deliver into kind_robots per the original plan.
-  updated: '2026-09-12T07:39:54Z'
-  claimed_by: claude-20260912T073000Z-cq-t073-rootcause
+
+    PROGRESS (2026-09-12, later sweep): root cause of the still-empty render queue found --
+    not a rendering problem. auto-art-generate.yml gates its "Submit + wait + verify
+    project-art results" step (the one that would actually dispatch this 32-fish queue to
+    the render box) on the Kind Robots API health check, and
+    https://kindrobots.org/api/health/database has been returning 503 ("schema is not
+    current for this build", 1 pending + 1 failed migration) continuously since ~11:45 UTC
+    today -- every scheduled auto-art-generate.yml run since (10:31, 15:23, 20:26 UTC)
+    skipped the submission step entirely because of this, which is why the render queue
+    shows idle/oldestPending:none despite the 32-entry queue still sitting in projects/art-
+    generate.yaml. This is a genuine production incident, not anything wrong with this task
+    or the requeue fix -- filed as kindrobots-unraid/t-017 (hard needs-human, production DB
+    access required, outside this or any sandbox sessions reach). Left status: needs-human
+    (soft -- this task itself needs no further code work) rather than re-claiming: once
+    t-017 resolves and the Kind Robots API health check passes again, auto-art-generate.ymls
+    next scheduled tick (every 6h) will submit and drain this queue automatically with zero
+    intervention. NEXT for whichever session picks this back up: confirm kindrobots-
+    unraid/t-017 is resolved (or check https://kindrobots.org/api/health/database directly),
+    then verify all 32 files exist under projects/cthulhuquarium/art/, spot-check on-style,
+    and deliver into kind_robots per the original plan.
+  updated: '2026-09-12T20:35:44Z'
+  claimed_by: claude-20260912t2035z-cq-t073-blk
   claimed_at: '2026-09-12T07:39:54Z'
+  soft_gate: true
 
 - id: t-074
   milestone: m3
