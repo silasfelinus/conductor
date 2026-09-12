@@ -37,18 +37,59 @@ per-deck album that shows unfound endings as silhouettes. Design against those r
 rather than around them.
 
 Two things the mockups should decide, because the engine deliberately does not:
-how a locked card reads in the hand (Part B5 -- the lock exists in data and is
-switched off), and how much of the Life ledger stays visible now that genre decks
-show none of theirs (Part B2).
+how a locked card reads in the hand (B8 -- the lock exists in data and is switched
+off), and how much of the Structured ledger stays visible now that every other mode
+shows none of theirs (B5).
+
+## Round 1 of the mockups (2026-09-12) and what it changed
+
+The first mockups kept the existing form and added a card row underneath it: a title
+and premise input stack at the top, then a radio row of narrator voices, then a radio
+row of story shapes. Silas: *"a little underwhelmed ... it's a start"*. Three notes
+came back with it, and they are why Part B below has been rewritten rather than
+amended:
+
+1. **Narrators are real Bots.** They supply the voice; how they deliver it is
+   adjustable on top. Not five abstract style presets. See B2.
+2. **Four modes, not four lengths**: open-ended (endless), episodic (scenario
+   based), structured (the Da Vinci engine), and **taskmaster** -- which means
+   absorbing the separate Taskmaster product and retiring its route. See B3, B4.
+3. **Creative choices are cards**, including mode and narrator -- but settings,
+   typed input and actions stay ordinary controls. See B0 for exactly where that
+   line falls.
+
+Notes 2 and 3 reach past the mockup: the mode change is a migration of a shipped
+enum (m8) and the Taskmaster absorption is its own milestone (m9).
 
 ## Part B — The product (the mockup brief)
 
 Vocabulary: **the Table** (setup), **the Reading** (play), **the Ending**, **the Collection**.
 All cards use real entity art via `resolveEntityArtwork` (`utils/artImageSrc.ts`) in the
 `card` 2:3 shape from `utils/galleryVocabulary.ts`, rendered by `narrative-ingredient-card.vue`
-(art, scrim, rarity/type badge top-left, check top-right) — this is the "Common favor / Common
-pet" card already on screen. House themes `storybook` / `storybook-dark`
-(`assets/css/tailwind.css`) stay the reading modes.
+(art, scrim, rarity/type badge top-left, check top-right). House themes `storybook` /
+`storybook-dark` (`assets/css/tailwind.css`) stay the reading modes.
+
+### B0. What is a card, and what is not
+
+Silas, 2026-09-12, after round 1 of the mockups came back as a form with card thumbnails
+bolted underneath: *"All selections before the story begins should be card hand based"*, then
+clarified: *"that doesn't count reasonable settings, start story, etc. I just meant all the
+flavor bits, including mode select, narrator, etc."*
+
+So the rule is about creative choice, not about the whole screen.
+
+**A card, drawn from the hand and placed in a slot** — anything that is a choice of what the
+story is MADE OF: Genre, Place, Hero, Company, **Narrator**, **Mode**, Thread, Treasures,
+Tone. Narrator and Mode are the two that were radio rows in round 1 and must stop being so.
+
+**Not a card** — and should stay an ordinary, well-designed control:
+- **Typed input**: working title, premise, and the Objective in Taskmaster mode. The reader
+  writes these; they are not a pick from a deck. They stay fields, placed modestly beside the
+  board instead of dominating the top of the page.
+- **Settings**: the length dial (B3), reading mode, and anything similar.
+- **Actions**: "Open this story", "Clear the table", save, navigation.
+
+Selecting, swapping and clearing must feel identical across every card slot.
 
 ### B1. The Table (setup) — one open surface, no steps
 
@@ -61,78 +102,140 @@ pet" card already on screen. House themes `storybook` / `storybook-dark`
   | Place | Dream LOCATION | yes | 1 |
   | Hero | Character (protagonist) | yes | 1 |
   | Company | Character (supporting cast, roles via `narrative-role-assigner`) | no | 0–2 |
-  | Narrator | 5 voice cards (Cinematic, Playful, Storybook, Mysterious, Intimate) + narrator Bots | default Storybook | 1 |
-  | Shape | Short tale · Chaptered tale · Serial · A whole life | default Short | 1 |
+  | Narrator | narrator Bots, as cards — see B2 | default narrator | 1 |
+  | Mode | the four story modes — see B3 | default Open-ended | 1 |
   | Thread | Scenario (a plot thread; also its own ending deck when one exists) | no | 0–1 |
   | Treasures | Reward (what the fiction may hand out) | no | 0–3 |
-  | Spark | typed premise (card-shaped text well) | no | 0–1 |
+  | Tone | Facet MOOD/THEME/STYLE, secondary row | no | 0–3 |
 
-  Choosing "A whole life" swaps the Genre slot's deck to the Life deck (genre stays as flavor).
+  Plus the Spark: working title and premise as text, per B0. In Taskmaster mode the Spark
+  becomes the Objective and the Thread slot deals real work cards (B4).
+
 - **The hand** (bottom of page, the existing workspace hand taken over on `/storybook`): fans
   the deck for the **active slot**. Tap a slot → the hand re-deals that deck (flip animation
   already in `workspace-hand.vue`); tap a card → it flies into the slot and the next empty
   required slot becomes active. Cards already on the board show face-down in the hand. Search
   and "show all" live in the hand's edge. Drag from hand to slot on desktop (mechanics exist in
   `narrative-cast-card.vue` / `narrative-role-assigner.vue`).
-- **Board lights up** when Genre + Place + Hero are filled: the "Open this story" button (sticky
-  footer, unchanged) enables and the board gets its glow. "Clear the table" stays.
+- **Board lights up** when Genre + Place + Hero are filled: "Open this story" enables.
 - Deep links (`?character=`, `?location=`, `?facet=`, `?reward=`, `?scenario=`) pre-place cards.
-- Mood/Theme/Style Facets stop being a picker; they ride along as optional "Tone" cards
-  in a secondary row (max 3) — keep them off the required path.
-- **Hand takeover mechanism** (for t-034, after mockups): `content/storybook.md` front matter
-  `cards: navCards` is what fills the hand today (`stores/pageStore.ts` `cardsKey` → the deck
-  registry in `stores/helpers/modelCards.ts`). Add a `storybookCards` key resolved from the
-  new run store's active-slot deck (same path `builderCards` uses for the builder), so
-  `workspace-hand.vue` keeps its sizing/flip/scroll code untouched and only the card source
-  changes. Nav cards come back on any other page automatically.
+- **Hand takeover mechanism** (t-034): `content/storybook.md` front matter `cards: navCards`
+  is what fills the hand today (`stores/pageStore.ts` `cardsKey` → the deck registry in
+  `stores/helpers/modelCards.ts`). Add a `storybookCards` key resolved from the run store's
+  active-slot deck (the same path `builderCards` uses), so `workspace-hand.vue` keeps its
+  sizing/flip/scroll code untouched and only the card source changes.
 
-### B2. The Reading (play)
+### B2. The narrator is a character, not a style preset
 
-- **Stage**: scene art plate (`kr-art-plate`, hero 16:9) with the prose below it. Prose is
-  short and direct (word budget per shape, Part C). No chat bubbles; each turn is a page.
-- **Tableau strip** at the top: hero, company, place, narrator as small cards; turn pips
-  "Turn 3 of 8" as a row of small card backs flipping face-up as turns pass.
+Silas, 2026-09-12: *"since the narrators actually exist as bot Narrators, they provide the
+general voice, but how they deliver it can still be adjusted."*
+
+Two things, in this order:
+
+1. **Who narrates** is a card. The Narrator slot deals narrator **Bots** with their real
+   portrait, name and personality (`/api/narrators/[type]`, `LifeRun.botId`, resolved by
+   `loadRunNarrator` in `server/utils/storybookRuns.ts`). That Bot supplies the voice —
+   its `personality`, `narrativeVoice` and `prompt` already reach the system prompt.
+2. **How they deliver it** is a dial on the placed card, not a competing row before it. The
+   five delivery settings are the existing `NARRATOR_STYLE_DIRECTIVES` (cinematic, playful,
+   storybook, mysterious, intimate) in `server/utils/storybookNarration.ts`, and they modulate
+   the chosen Bot rather than replacing it.
+
+The engine already carries both (`botId` + `narratorStyle` on the run), so this is a Table
+and prompt-assembly change, not a schema one.
+
+### B3. Modes replace "shape of the tale"
+
+Silas, 2026-09-12: *"Stories should be able to be selected as open-ended (endless mode),
+episodic (scenario based), structured (da Vinci mode), and taskmaster."* One Mode card slot,
+four cards:
+
+| Mode | What it is | Turn budget | Resolves |
+|---|---|---|---|
+| **Open-ended** | An endless story that keeps going | none | when the reader plays "bring this to an end", any time |
+| **Episodic** | Built on a Scenario, self-contained episodes, returning cast | per length dial | at the end of an episode |
+| **Structured** | One whole life across ten hidden dimensions | fixed, deep | into one of 1,024 endings |
+| **Taskmaster** | Real work framed as a story — see B4 | per objective | when the objective is met or abandoned |
+
+**Length is no longer a mode.** Short story and Chaptered tale are gone as identities; how long
+an Open-ended or Episodic stretch runs is a settings dial (B0), not a card. This is a real
+change to the shipped `StoryShape` enum (`SHORT_STORY`/`CHAPTERED`/`EPISODIC`/`LIFE`) and needs
+a migration — m8.
+
+Open-ended is the one that stretches the engine: every other mode resolves when its turn budget
+is spent, and this one has no budget. It still produces a collectible ending, on demand, so an
+endless story is never a dead end in the Collection.
+
+### B4. Taskmaster becomes a mode
+
+Silas, 2026-09-12: *"we should work taskmaster into this project as well, removing the
+taskmaster route when done."* This supersedes `kind_robots
+docs/products/storybook-taskmaster-boundary.md`, which called the split permanent — that doc is
+rewritten in place (t-043), the same way the Da Vinci boundary doc was, so nothing linking to
+it lands on a dead page.
+
+Scope of the merge, decided with Silas: **Taskmaster becomes a mode on the Table and `/taskmaster`
+retires. Its safety rules survive unchanged.** Specifically:
+
+- On the Table: the Spark becomes an **Objective** (the real thing to get done, in the reader's
+  words) and the Thread slot deals **real work cards** — the reader's projects and todos — in
+  place of fictional threads. Genre, Place, Hero, Company and Narrator still apply; it is still
+  a story.
+- In the Reading: the **real objective stays on screen beside the fiction at all times**, and
+  anything the story proposes about real work is a **proposal the reader explicitly accepts**
+  before it counts. A story must never look like it silently edited a task list. Conductor
+  roadmap YAML is still never written by a story answer.
+- The three Taskmaster CI guards (`verifyTaskmasterCheckpointEngine.mjs`,
+  `verifyTaskmasterSampleTasks.mjs`, `verifyTaskmasterSessionStorageRecoveryGuard.mjs`) are
+  **rewritten against the new surface, not deleted** — they pin exactly the behaviour above.
+
+### B5. The Reading (play)
+
+- **Stage**: scene art plate (`kr-art-plate`, hero 16:9) with the prose below it. Each turn is
+  a page, not a chat log.
+- **Tableau strip** at the top: hero, company, place, narrator as small cards; turn pips as a
+  row of small card backs flipping face-up as turns pass. Open-ended mode has no "of N" — show
+  progress without an end count.
 - **The move** (three ways, always visible together):
-  1. **Options**: 2–4 option cards (text on card-backs, a small icon), the `kr-choice-list`
-     stack restyled as cards.
-  2. **Write your own**: one line input ("You ...") — the existing composer.
-  3. **Character sheet**: the bottom hand now fans the **hero's Skill/Item cards** (the
-     Character's starting loadout `Character.Rewards` + inventory gained in play). Playing one
-     is the turn ("You use the Cousin Who Knows a Guy"). Items may be spent; skills stay.
-- **Axes stay hidden** (they are the deck's secret). Life keeps its ten pills behind a
-  "show the ledger" toggle; genre decks show only prose consequences.
+  1. **Options**: 2–4 option cards, the `kr-choice-list` stack restyled as cards.
+  2. **Write your own**: one line input ("You ...").
+  3. **Character sheet**: the bottom hand fans the hero's Skill/Item cards (`Character.Rewards`
+     plus inventory gained in play). Playing one is the turn. Items are spent; skills stay.
+- **Axes stay hidden.** Structured mode keeps its ten pills behind a "show the ledger" toggle;
+  every other mode shows only prose consequences.
+- Open-ended mode also offers **"bring this to an end"**, which resolves into the genre's deck.
 - Inventory/consequences panel (`storybook-state-panel.vue`) becomes a drawer, not a column.
 
-### B3. The Ending
+### B6. The Ending
 
-- On the last turn the "See your ending" card appears; resolution flips a large ending card
-  (ending art hero, title, victory type badge, summary) — the `kr-card-flip` gesture.
-- "Added to your collection · 3 of 12 Mystery endings" with the deck's album row beneath
+- The ending card flips large (ending art hero, title, victory type badge, summary) — the
+  `kr-card-flip` gesture.
+- "Added to your collection · 3 of 8 Mystery endings" with the deck's album row beneath
   (found face-up, unfound face-down silhouettes).
 - "Play again with this table" (same board, new run) · "New table".
 
-### B4. The Collection
+### B7. The Collection
 
 - Replaces the localStorage "Recent stories" drawer. Per-account: **Adventures** (server runs,
-  resume/replay/export) and **Endings** albums per deck. Life's existing "Endings on record"
-  (Achievement `davinci-ending-*`) folds in as the Life album.
+  resume/replay/export) and **Endings** albums per deck. Structured mode's album holds 1,024,
+  so the layout has to survive that alongside eight-ending genre albums.
 
-### B5. Gating (later, design only now)
+### B8. Gating (built, dormant)
 
 - Locked genre/character/narrator cards appear face-down in the hand with a lock and an
-  unlock hint ("Finish any Mystery"). Unlock condition lives on the deck/card record and is
-  awarded by the same resolution transaction that credits the ending.
+  unlock hint ("Finish any Mystery"). The condition lives on the deck/card record and is
+  awarded by the same transaction that credits the ending. Enforcement is behind
+  `STORYBOOK_ENFORCE_DECK_GATES` until t-038.
 
-### B6. Prose
+### B9. Prose
 
-- Direct prose is the default contract for every narrator: concrete, second person, present
-  tense, one image per beat, no stacked adjectives or similes, no throat-clearing, end on the
-  brink of the decision without listing the options. Word budget per shape (Short 60–120,
-  Chaptered 90–160, Serial 90–160, Life 90–180 per turn).
-- The narrator voice modulates within that: Cinematic (cuts, momentum, wide-to-close),
-  Playful (light, quick, delighted), Storybook (warm, read-aloud cadence, still plain), Mysterious
-  (withholding, sensory, questions unanswered), Intimate (close third-person noticing, small
-  gestures). Exact directive text is in Part C.
+- Direct prose is the contract for every narrator: concrete, second person, present tense, one
+  image per beat, no stacked adjectives or similes, end on the brink of the decision without
+  listing the options. Enforced word bounds live in `PROSE_BOUNDS_BY_SHAPE`
+  (`server/utils/storybookNarration.ts`); as shipped, 50–130 for the shortest setting and
+  70–190 for the longer ones.
+- The narrator Bot supplies voice; the delivery dial (B2) modulates it. Neither relaxes the
+  prose contract.
 
 ---
 
