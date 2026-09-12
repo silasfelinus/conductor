@@ -13489,3 +13489,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "check_priority_queue_starvation.py was straightforward to build correctly on the first pass by reusing the exact shared modules (roadmap_claims, roadmap_deps, daily_gate, project_lifecycle) next_ready_task.py already uses, rather than reimplementing claim/staleness/dependency logic -- the two scripts structurally cannot disagree about what counts as claimable ready work. Worth defaulting to this pattern (grep for the existing shared module before writing new roadmap-walking logic) for any future roadmap-reading tool."
+- date: 2026-09-12
+  project: conductor
+  task: t-155
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Reused project_lifecycle.ordered_workable_slugs (the same helper check_priority_queue_starvation.py and next_ready_task.py already use) to sort audit_human_gates.py's report by priority-queue rank instead of writing new roadmap-walking logic -- confirms t-149's lesson generalizes: grep for the existing shared module before writing a new roadmap-ordering tool, and a report can be re-ordered by reusing pickup-order logic without touching what it detects."
