@@ -3922,7 +3922,7 @@ tasks:
 - id: t-131
   milestone: m6
   title: Continue the viewport-grid burn-down (slice 2 onward)
-  status: ready
+  status: claimed
   gate_human: false
   stakes: reversible
   passes: 0
@@ -3940,6 +3940,10 @@ tasks:
     actual repeating card/tile lists, per t-129's own note on what it deliberately
     left untouched. Update the baseline with `--update` after the slice lands, and
     re-file this same continuation pattern (next free task id) if occurrences remain.
+  owner: worker
+  claimed_by: 2026-09-12T151712Z-interface-vision-t-131-oai11
+  claimed_at: '2026-09-12T15:17:12Z'
+  updated: '2026-09-12T15:17:12Z'
 - id: t-132
   milestone: m6
   title: Add a non-blocking shellcheck pass alongside the new bash -n syntax check
