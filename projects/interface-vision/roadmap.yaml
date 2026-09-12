@@ -3837,3 +3837,25 @@ tasks:
   claimed_by: null
   claimed_at: null
   implementation_pr: 'silasfelinus/kind_robots#2648'
+- id: t-128
+  milestone: m6
+  title: Add a CI/lint guard that a test(...)-prefixed commit's diff actually contains an assertion
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  note: >-
+    Kaizen from reviewing/merging kind_robots#2648 (t-127 slice, 2026-09-12): the prior
+    commit on that branch was titled "test(layout): pin duplicate title detector cases"
+    but its diff added only a prose README describing six fixture cases, no executable
+    test -- hasShallowDuplicateTitleBlock() sat unverified at status: review with no
+    assertion anywhere actually exercising it, and nothing caught the gap before it
+    reached review. DO: add a lightweight repo check (a pre-merge CI step, or a
+    Python/Node script under scripts/ or utils/scripts/ run in CI) that flags a
+    `test(...)`- or `test:`-prefixed commit message whose diff does not touch at least
+    one file matching `*.test.*` (or an equivalent existing test-file convention for that
+    part of the repo) and does not itself add a recognizable assertion call (`assert`,
+    `expect(`, etc.). Scope to a warning/annotation first if a hard CI failure risks false
+    positives on legitimate test-infra-only commits (fixture data, test helpers, CI wiring
+    for an existing test) -- the goal is surfacing the gap for human/agent review, not
+    blocking every commit that happens to start with "test".
