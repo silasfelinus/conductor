@@ -504,13 +504,13 @@ tasks:
 - id: t-025
   milestone: m5
   title: Unify narration prompt assembly across the beat shapes and the life shape
-  status: ready
+  status: done
   owner: worker
   stakes: reversible
   passes: 0
-  updated: '2026-09-09T00:00:00Z'
+  updated: '2026-09-12T11:25:48Z'
   depends_on: t-024
-  note: >
+  note: >-
     The one piece of real duplication the merge exposed rather than removed.
     Both shapes build the same thing -- (narrator config + seed objects + state
     snapshot + recent history) -> a structured response -- in two places:
@@ -530,6 +530,18 @@ tasks:
     cost, but both work today and the merge did not make either worse. Do it
     when a session has room to do it properly, and keep every existing
     narration guard passing.
+
+    Done by kind_robots#2660. The open question this task named -- whether narration
+    assembly moves to the server or becomes a pure function both sides import -- is
+    answered: it runs on the SERVER, in server/utils/storybookNarration.ts, for all four
+    shapes. Only the server can hold the offered choices between turns, and a client that
+    authors its own stat deltas can author its own ending. davinciNarration.ts is now a thin
+    adapter over it that keeps every exported name, bound and error string, so
+    utils/scripts/verifyDaVinciNarration.ts passes untouched. Shared transport was extracted
+    to server/utils/structuredCompletion.ts (three call sites had hand-rolled the same
+    OpenAI json_schema request). See also t-031, which carries the direct-prose contract the
+    same PR introduced.
+  implementation_pr: 'silasfelinus/kind_robots#2660'
 - id: t-026
   milestone: m5
   title: Rename the /api/davinci/* namespace and davinci-* storage keys, migrating runs in flight
