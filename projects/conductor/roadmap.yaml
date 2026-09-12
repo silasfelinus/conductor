@@ -5411,7 +5411,7 @@ tasks:
 - id: t-149
   milestone: m2
   title: Flag priority-queue starvation when the top of priority.yaml has no ready work
-  status: ready
+  status: claimed
   stakes: reversible
   passes: 0
   note: >-
@@ -5447,8 +5447,10 @@ tasks:
     WHICH gate is blocking each skipped project, since that turns the output directly into the
     "here is what only you can unblock, ranked by how much agent work it frees" list that
     `audit_human_gates.py` cannot produce on its own (it reports gates flat, with no priority context).
-  updated: '2026-09-11T08:35:00Z'
+  updated: '2026-09-12T19:36:05Z'
   owner: worker
+  claimed_by: 2026-09-12T193600Z-conductor-t149-cldcond
+  claimed_at: '2026-09-12T19:36:05Z'
 
 - id: t-150
   milestone: m2
