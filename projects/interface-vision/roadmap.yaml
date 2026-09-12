@@ -3863,18 +3863,32 @@ tasks:
 - id: t-128
   milestone: m6
   title: Add a CI/lint guard that a test(...)-prefixed commit's diff actually contains an assertion
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
   passes: 0
-  note: |-
+  note: >-
     Kaizen from reviewing/merging kind_robots#2648 (t-127 slice, 2026-09-12): the prior commit on that branch was titled "test(layout): pin duplicate title detector cases" but its diff added only a prose README describing six fixture cases, no executable test -- hasShallowDuplicateTitleBlock() sat unverified at status: review with no assertion anywhere actually exercising it, and nothing caught the gap before it reached review. DO: add a lightweight repo check (a pre-merge CI step, or a Python/Node script under scripts/ or utils/scripts/ run in CI) that flags a `test(...)`- or `test:`-prefixed commit message whose diff does not touch at least one file matching `*.test.*` (or an equivalent existing test-file convention for that part of the repo) and does not itself add a recognizable assertion call (`assert`, `expect(`, etc.). Scope to a warning/annotation first if a hard CI failure risks false positives on legitimate test-infra-only commits (fixture data, test helpers, CI wiring for an existing test) -- the goal is surfacing the gap for human/agent review, not blocking every commit that happens to start with "test".
 
     Implemented a warning-only CI audit for test-prefixed commits: it accepts commits that touch an executable *.test.*/*.spec.* file or add assert(...)/expect(...) calls, and emits a GitHub annotation otherwise. Added full-history checkout so the PR commit range is inspectable.
+
+    PROGRESS (2026-09-12): the branch pushed for this task (kind_robots worker/interface-
+    vision-t-128-20260912T051543Z-k7p4, PR #2651) opened with a real bug: check-test-commit-
+    assertions.sh line 14 used an inline bash [[ =~ ]] regex with unescaped/nested parens
+    (`^test(\([^)]*\))?:[[:space:]]`), which bash mis-tokenizes as subshell grouping inside
+    the conditional, producing "syntax error in conditional expression: unexpected token )"
+    and failing the layout-contract CI job outright (opposite of "warning-only"). Fixed by
+    moving the pattern into a variable (`test_prefix_re=...; [[ ... =~ $test_prefix_re ]]`),
+    the standard workaround for parens in [[ =~ ]]. Verified locally: bash -n syntax check
+    passes, the script runs clean (exit 0) against this PR own commit range, and a synthetic
+    repo test confirms it still correctly warns on an assertionless test(...) commit while
+    passing one with a real assert(...) call. Pushed fix to the existing branch, all 45 CI
+    checks green (mergeable_state clean), merged as kind_robots#2651.
   owner: worker
   claimed_by: 2026-09-12T051543Z-interface-vision-t-128-k7p4
   claimed_at: '2026-09-12T05:15:43Z'
-  updated: '2026-09-12T05:20:00Z'
+  updated: '2026-09-12T05:34:22Z'
+  implementation_pr: 'silasfelinus/kind_robots#2651'
 - id: t-129
   milestone: m6
   title: Survey and migrate the highest-traffic viewport-grid offenders onto container-width grids
