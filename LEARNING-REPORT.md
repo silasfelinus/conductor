@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-12T05:38:38Z
+Generated: 2026-09-12T05:46:13Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **919**
-- Outcomes: blocked: 16, cancelled: 1, done: 902
+- Closed tasks recorded: **920**
+- Outcomes: blocked: 16, cancelled: 1, done: 903
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
-| interface-vision | 120 | 100% |
+| interface-vision | 121 | 100% |
 | kapowarr | 52 | 100% |
 | kind-economy | 10 | 100% |
 | kind-robots | 55 | 98% |
@@ -69,13 +69,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 902 | 99% |
+| software | 903 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
-| quality | 17 |
+| quality | 18 |
 | transient | 15 |
 | actionable | 13 |
 | scope | 3 |
@@ -84,13 +84,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - project `coat-dance` — 11% success over 9 closed tasks; aim the next kaizen task here
 - kind `content` — 47% success over 17 closed tasks; aim the next kaizen task here
-- failure category `quality` — 17 occurrences; look for the shared cause across its records
+- failure category `quality` — 18 occurrences; look for the shared cause across its records
 - failure category `transient` — 15 occurrences; look for the shared cause across its records
 - failure category `actionable` — 13 occurrences; look for the shared cause across its records
 - failure category `scope` — 3 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-09-12 `interface-vision/t-128` — A CI script implementing a 'test-commit assertion' guard was itself untested at the shell level -- an inline bash [[ =~ ]] regex with unescaped/nested parens (`^test(\([^)]*\))?:[[:space:]]`) is a real syntax trap: bash's [[ ]] tokenizer can mis-parse literal parens inside the regex operand as subshell grouping, producing 'syntax error in conditional expression' and failing the job outright rather than the intended warning-only behavior. `bash -n <file>` before merge would have caught this immediately; the fix (move the pattern into a variable, match against that) is the standard workaround. Filed as interface-vision/t-130: add a bash -n check on any .sh file a PR touches, so this class of failure fails fast in CI instead of on the PR that introduces the check meant to catch other gaps.
 - 2026-09-12 `interface-vision/t-104` — Before writing a new codemod for a freshly-surveyed class pattern, check utils/scripts/codemods/ for one that already exists -- kr_icon_4_size_shorthand_codemod.py had already been written and partially run (42/124 occurrences, two directories) in a prior slice, and simply re-running it unmodified with --write across the whole repo finished the migration in one pass instead of re-deriving its exclusion rules (colored icons stay out of scope) from scratch.
 - 2026-09-12 `interface-vision/t-127` — A structural non-<h1> title detector built and unit-pinned against hand-built nodes is not yet wired into anything -- verifyLayoutContract.ts's own parseTemplate() returns the <template> tag as its own top-level node, one level above the page's real root the detector expects as nodes[0], so a naive wire-up would have silently returned false for every real page. Pin the actual integration path (real template strings through the real parser) with its own fixture, not just the isolated helper's hand-built-node tests. Separately: a structural (not text-comparing) title detector will flag legitimate hero/CTA copy that differs from the shell's own title -- exclude blocks that carry their own link/button or standalone media rather than trying to string-match against frontmatter.
 - 2026-09-12 `interface-vision/t-104` — A .kr-input*-family primitive whose base @apply drops a dead legacy class (input-bordered) doesn't fully close the family just because every DaisyUI size variant is named -- a separate axis (an explicit rounded-xl/rounded-2xl radius override coexisting with the same dead class) can carry 60+ occurrences unnoticed until a fresh full-repo survey checks for extra utility tokens riding alongside the base set, not just the base set's size suffixes alone.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-11 `cthulhuquarium/t-074` — economy.yaml's first_full_tank/first_spotless_tank triggers looked pre-decided but weren't fully -- economy.yaml predates t-032's two-pool capacity split, and aquariumEconomy.ts's own comment flagged the "full" semantics as an unresolved ambiguity. Reading the actual trigger strings closely (economy.yaml still has "debris reaches 0 after having been >= 80" verbatim, and DEBRIS_BANDS' own worst-band threshold is that same 80) resolved both without needing a Silas round-trip: "every owned slot" maps to the weighed fish pool (currentReservedSize vs effectiveSizeCap), not setSlotsCap, since t-032's own comment says setSlotsCap is exclusively for set pieces. The debris trigger needed a small additive migration (Aquarium.debrisEverHigh) because a player can clean an 80+ debris level down to 0 across several separate requests, so "having been >= 80" can't be read off one request's before/after pair alone. Next task touching an old economy.yaml trigger: read the literal trigger string plus any nearby "this predates X" comment before guessing at intent -- the spec is usually more precise than the roadmap task summarizing it.
 - 2026-09-11 `kind-economy/t-017` — Its own dependencies (t-003, t-014) had both just closed the same day (t-003 literally that morning, from a live Silas decision recorded in the roadmap note), which is why `next_ready_task.py` never surfaced this task before now despite it sitting `status: ready` for weeks. Drafting it was straightforward once the two upstream design docs (DESIGN-BRIEF.md, PAYOUT-MECHANISM-DESIGN.md) were read in full -- every number and policy in the draft traces to an already-decided default or explicit recommendation in those docs, with genuinely undecided items marked `[OPEN]` rather than guessed at. Closed to `done` (not `needs-human`) matching the same-project precedent on t-003/t-014/t-022: a complete draft under Silas's 2026-09-07 human-gate-simplification policy doesn't wait on him, only its eventual publication does.
 - 2026-09-11 `media-watchlist/t-019` — The reported symptom ("failed to load, error message masked") had two independent root causes, and reading the actual auth flow rather than trusting the task's own working hypothesis found the more important one: the task guessed a stale/mis-scoped session, but grepping the component for Authorization-header attachment found there wasn't one at all -- every $fetch call in the feature was effectively anonymous, so every request failed the admin gate regardless of who was signed in. Cross-checked against the working `Authorization: Bearer` pattern already used elsewhere in the codebase (stores/artStore.ts, stylist-clients.vue) confirmed it wasn't a one-off omission but a gap specific to this feature's components. Separately, fixing the error-masking half (errorHandler() never calling setResponseStatus) surfaced a much larger house-wide pattern (432 call sites, only 8 already correct) -- filed as its own task (kind-robots/t-096) rather than attempted as a drive-by fix, since a mechanical change at that scale needs its own audit and codemod. Pattern worth repeating: when a task's own note proposes a hypothesis for "why does X fail," verify it against the actual code path before assuming it's the answer -- the real cause here was two frames of causation deeper (missing auth headers, not stale session state) and code reading found it in minutes.
-- 2026-09-11 `cthulhuquarium/t-072` — Investigated both halves of the task before touching code, and that investigation changed the plan: the roadmap note offered "fix the path or delete" the dead importCthulhuquariumArt.mjs script as two equally valid options, but reading the actual delivered assets showed the script's per-prefix resize scheme (1280/960/640/512px by filename prefix) doesn't match what the real delivery (kind_robots#2620) actually shipped (uniform 512px-long-edge) -- "fixing" the path would have silently overwritten already-correct committed assets with differently-sized ones. Deletion was the only safe choice once that was known, not a coin flip. Separately, the task's other half (bulk-creating real ArtImage DB records and linking them to Monster rows) was real, well-precedented, buildable work -- but this sandbox has zero path to any live database (confirmed: no .env, dummy-only DATABASE_URL in the provisioning script, no reachable DB port) -- so attempting it here would have produced an unverifiable script at best. Split it into its own task (t-076) with the investigation's findings attached, rather than either skipping it silently or attempting unverifiable DB work. Pattern worth repeating: when a roadmap task bundles a quick fix with something that needs infrastructure this sandbox doesn't have, do the quick part, investigate the rest thoroughly enough to leave a real trail, and split rather than stall.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-12T05:38:38Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-12T05:46:13Z_
