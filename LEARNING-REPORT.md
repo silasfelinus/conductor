@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-12T17:00:35Z
+Generated: 2026-09-12T17:25:40Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **932**
-- Outcomes: blocked: 16, cancelled: 1, done: 915
+- Closed tasks recorded: **933**
+- Outcomes: blocked: 16, cancelled: 1, done: 916
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
-| interface-vision | 128 | 100% |
+| interface-vision | 129 | 100% |
 | kapowarr | 52 | 100% |
 | kind-economy | 10 | 100% |
 | kind-robots | 55 | 98% |
@@ -69,13 +69,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 915 | 99% |
+| software | 916 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
-| quality | 19 |
+| quality | 20 |
 | transient | 15 |
 | actionable | 13 |
 | scope | 3 |
@@ -84,13 +84,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - project `coat-dance` — 11% success over 9 closed tasks; aim the next kaizen task here
 - kind `content` — 47% success over 17 closed tasks; aim the next kaizen task here
-- failure category `quality` — 19 occurrences; look for the shared cause across its records
+- failure category `quality` — 20 occurrences; look for the shared cause across its records
 - failure category `transient` — 15 occurrences; look for the shared cause across its records
 - failure category `actionable` — 13 occurrences; look for the shared cause across its records
 - failure category `scope` — 3 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-09-12 `interface-vision/t-104` — Slice 247: before writing @apply <bare-word> in tailwind.css for a new kr-* primitive, grep node_modules/daisyui and node_modules/tailwindcss for that exact token first -- a class that is still hand-rolled correctly in HTML (silently inert if unrecognized) is not proof the same token is @apply-able, since Tailwind's @apply requires every token to resolve to a real registered utility and errors the production build otherwise. `form-control` was removed from daisyUI in the v4->v5 upgrade but never swept from ~43 call sites across the repo, so it read as a normal hand-rolled component class right up until the build step. Caught by the CI "Build production image" job (the only one of ~50 checks that actually runs a real production build rather than vue-tsc/eslint/unit-level checks), not by any local verification step run before the first push -- worth treating a brand-new bare-word @apply target as needing this grep check up front, the same way BOUNDED_EXTRAS already gets checked before trusting an estimate.
 - 2026-09-12 `interface-vision/t-134` — When a sized primitive (kr-toggle-<color>-sm) is added after its sizeless sibling (kr-toggle-<color>) already exists in the same codemod, FAMILIES ordering is a correctness requirement, not just style: the sizeless base token set is a strict subset of the sized one's, so trying the sizeless family first would silently swallow the size token as an unrecognized 'extra' and skip the more specific primitive. Listing every sized family before any sizeless one (verified by re-running the dry run to 0 remaining candidates) avoided that regardless of what BOUNDED_EXTRAS happened to allow.
 - 2026-09-12 `interface-vision/t-104` — Slice 246: when a recurring umbrella's kaizen note calls for 'a fresh full-repo class-frequency survey outside all now-closed families' rather than naming the next target directly, build the survey as a small reusable script (kr_class_frequency_survey.py) rather than a one-off grep -- it excludes pure-layout combos (flex/gap/items/justify/etc) up front, since those risk the geometry changes this umbrella explicitly disclaims, and surfaces genuine component-color-variant candidates (DaisyUI toggle colors) instead. The same script is available for the next slice's survey too.
 - 2026-09-12 `interface-vision/t-132` — A CI-config kaizen (adding a warning-only shellcheck pass to an existing bash -n step) is safest when it reuses the same changed-file discovery already computed in that step rather than re-running git diff -- one mapfile call, then bash -n and shellcheck back to back with `|| true` on the new one, so the existing hard-failing check's behavior is provably untouched. Installing the tool locally (apt-get install shellcheck) to confirm a real finding logs but doesn't propagate a nonzero exit was worth the minute it took -- cheaper than trusting `|| true` semantics from memory.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-12 `conductor/t-154` — select_role.py's commit_combined_state() called GET /repos/{owner}/{repo}/commits/{sha}/status (the legacy commit-status API), which only reflects legacy status-API integrations -- this repo's CI is entirely GitHub Actions check-runs, which post to the separate /commits/{sha}/check-runs endpoint instead, so the legacy call always returned {'state': 'pending', 'total_count': 0} regardless of real CI outcome. Both of its callers (find_reviewable_claude_prs, requiring 'success', and find_red_stale_prs_in_repo/pr-medic, requiring 'failure'/'error') were silently dead for every repo this script has ever checked. When computing a commit's combined CI state for a repo whose CI is GitHub-Actions-based, use the Checks API (/commits/{sha}/check-runs, paginated) and fold status/conclusion into pending/failure/success client-side -- never assume the legacy Status API reflects Actions-based check runs, even though both are commonly described as 'the commit's CI status'.
 - 2026-09-12 `conductor/t-153` — check_pr_merged_drift.py's cross-repo GitHub Search API call (/search/issues?q=...) 403s unconditionally in this sandbox ('sessions are bound to their configured repositories'), even with GITHUB_TOKEN set, while repo-scoped endpoints (/repos/{owner}/{repo}/pulls, /repos/{owner}/{repo}/pulls/{number}) work fine. Any script that needs to find a PR by title/content across multiple repos should list-and-filter per repo rather than use the Search API, and should cache each repo's listing across multiple lookups in the same run rather than re-paginating per candidate. A residual per-repo 403 after this kind of fix is more likely an out-of-scope repo for the session's credentials (see AGENTS.md's Repository Scope) than the Search-API restriction -- check which case it is before assuming the fix didn't work.
 - 2026-09-12 `interface-vision/t-104` — Mechanical size shorthand migrations are safe when the codemod is restricted to static class attributes and excludes text-/stroke-/fill-colored shapes; exact-head CI plus full diff review caught no behavioral or geometry change (slice 241, silasfelinus/kind_robots#2655).
-- 2026-09-12 `interface-vision/t-130` — A kaizen task sourced directly from a real CI-escaping bug (t-128's inline-regex bash syntax error) landed clean first pass because the fix's own verification loop closed the gap it was fixing: the new bash -n step's PR ran inside the same layout-contract job it modifies, so a syntax error in the new step itself would have failed loudly rather than merging silently. Prefer this shape (the fix's CI run exercises the fix) over a purely textual review for any CI-workflow-editing task.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-12T17:00:35Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-12T17:25:40Z_
