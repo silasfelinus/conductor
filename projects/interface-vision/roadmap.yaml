@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3310,7 +3310,14 @@ tasks:
     sm rounded-xl) remain unclaimed per the prior note -- confirm still true with a fresh
     class-frequency survey before claiming, since several slices have landed since that note
     was written.
-  updated: '2026-09-12T22:16:00Z'
+
+    Reconciliation (scheduled conductor sweep): check_pr_merged_drift.py found this
+    recurring umbrella still at status: claimed while silasfelinus/kind_robots#2683 (slice
+    migrating the last two font-semibold text-sm subset occurrences onto kr-text-semibold-
+    sm) had already merged. Returning the recurring consistency umbrella to ready for the
+    next bounded slice per the recurring-task convention -- the prior claiming session
+    (oai11) evidently merged its PR but never flipped status back.
+  updated: '2026-09-12T22:29:01Z'
   implementation_pr: 'silasfelinus/kind_robots#2683'
   retry_context: ''
   owner: worker
