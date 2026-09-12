@@ -3977,11 +3977,11 @@ tasks:
 - id: t-133
   milestone: m6
   title: "Kaizen: promote high-confidence shellcheck rules (e.g. SC2086) to blocking once real PR traffic shows their false-positive rate"
-  status: ready
+  status: claimed
   gate_human: false
   stakes: reversible
   passes: 0
-  owner: null
+  owner: worker
   note: >-
     Kaizen from t-132 (kind_robots#2674, 2026-09-12): the new shellcheck pass in
     layout-contract.yml is entirely warning-only (`|| true`) since its
@@ -3994,6 +3994,9 @@ tasks:
     filtering, or a second invocation scoped to only the promoted codes) while
     leaving the rest warning-only -- do not flip the whole pass to hard-failing
     at once.
+  claimed_by: openai-scheduled-2026-09-12T231912Z-interface-vision-t104-a11
+  claimed_at: '2026-09-12T23:19:12Z'
+  updated: '2026-09-12T23:19:12Z'
 
 - id: t-134
   milestone: m5
