@@ -606,10 +606,10 @@ tasks:
 - id: t-029
   milestone: m6
   title: "Engine: server-side story runs for every shape (create, resume, list, turn)"
-  status: ready
+  status: done
   passes: 0
   stakes: reversible
-  note: >
+  note: >-
     Part C1/C3 of projects/storybook/docs/storymaker-redesign.md. Generalize the Life engine
     rather than fork it: additive columns on LifeRun/LifeChoice/LifeEnding plus a new
     EndingDeck model (Life becomes the deck with key `life`); new routes under
@@ -619,7 +619,16 @@ tasks:
     client) and CUSTOM/SHEET effects from the narrator's clamped moveEffects. /api/davinci/*
     keeps working untouched so life runs in flight survive. Schema-affecting; migrations must
     stay additive and backward-compatible with the running build.
-  updated: '2026-09-12T12:00:00Z'
+
+    Done by kind_robots#2662. Every shape is a server-side run now. New EndingDeck plus additive columns on LifeRun/LifeChoice/LifeEnding (migration 20260912120000), server/utils/storybookRuns.ts, and routes under /api/storybook/{decks,runs,runs/:id,runs/:id/turn,runs/:id/resolve,endings}. /api/davinci/* is untouched and shares one narrator lookup instead of holding a second copy.
+
+    THE SERVER HOLDS THE OFFERED CHOICES. A turn records the move and narrates the next scene in one call; an option's effects come from LifeRun.pendingTurn, never the request body, and a written or card move is scored by the narrator then clamped server-side. Nothing is written unless narration succeeds, and replaying a recorded turn returns it rather than advancing twice. A genre deck's axis values never reach the client at all.
+
+    The turn gate binds only runs this engine created (turnBudget non-null), so a life run already in flight resolves exactly as it did before.
+
+    utils/scripts/verifyStorybookPlayLoop.ts found two real bugs on its first run against a database and both were fixed before merge: the +-2 clamp lived only in the narration validator rather than at the write (LifeStat accepts any key by design), and a character-sheet play returned a stale row with rewardId null because it patched after insert.
+  updated: '2026-09-12T11:46:20Z'
+  implementation_pr: 'silasfelinus/kind_robots#2662'
 - id: t-030
   milestone: m6
   title: "Engine: ending decks with hidden axes, and the first three genre decks seeded"
