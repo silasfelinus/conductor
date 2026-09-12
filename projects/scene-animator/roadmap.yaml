@@ -302,3 +302,48 @@ tasks:
       media.is_video == False, so no clip passes through it today.
     updated: '2026-09-11T23:55:00Z'
     implementation_pr: 'silasfelinus/kind_robots#2641'
+
+  - id: t-009
+    milestone: m3
+    title: "Re-render a finished scene from the admin surface"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-09-11, looking at four Done cards holding flattened stills: "We should be
+      able to resubmit from the scene-animator window."
+
+      He was right, and there was no way to. The enqueue dedupe treats PENDING, RUNNING and
+      DONE alike as reusable, and that check runs BEFORE `retryFailed` is consulted -- so
+      `retryFailed` only ever rescued FAILED/CANCELLED, and a finished scene was unreachable
+      from any request the admin UI could send. The per-card "Retry this scene" button only
+      renders for failed/cancelled cards for exactly that reason.
+
+      That is correct behaviour while a finished render IS the render you wanted. t-008 made
+      it wrong: every completed clip was a flattened still, all DONE, all visibly wrong, none
+      re-queueable. Worth noting the earlier advice in that session -- "just re-queue with
+      retryFailed" -- was itself wrong for the same reason, and the screenshot is what caught
+      it.
+
+      FIX: a `force` flag, kept narrow because it is a hole in a guard that exists for good
+      reasons. It re-queues DONE (and FAILED, so one control serves both); it NEVER duplicates
+      PENDING/RUNNING -- isActiveStatus is split out of isReusableStatus and checked first,
+      since the relay renders one clip at a time and a duplicate does not arrive sooner, it
+      only jumps the queue; it applies to one named sourceFile only, because a folder-wide
+      force would re-render every finished scene in a batch off a single click; and it
+      re-reads the live job first, being the one path that enqueues over a job it already saw.
+      The listing already resolves the newest job per dedupeKey, so a re-submitted job slots
+      into its card with no listing change. UI: "Re-render this scene" on DONE cards, plus
+      store.rerenderSource(); a forced request that queues nothing now reports why rather than
+      leaving the card on its old Done badge looking inert.
+
+      Coverage: utils/scripts/verifySceneAnimatorResubmit.test.ts, wired into
+      contract-tests.yml, pinning both the gate and the wiring. Verified against four
+      mutations run individually (guard order reversed, force unscoped, live recheck dropped,
+      UI control unwired). One contract check initially passed mutation 2 -- a multiline regex
+      matched an unrelated later `requestedSourceFile` -- and was tightened to the statement
+      before all four were re-confirmed failing. Without that mutation pass the suite would
+      have shipped a check that did not check.
+    updated: '2026-09-12T00:10:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#2643'
