@@ -6,7 +6,7 @@ goal: >
   option, a custom action, or a play from the hero's character sheet, deterministic resolution
   into per-deck ending sets (genre decks alongside the 1,024-ending Life deck), and a per-account
   collection of adventures and endings -- visually accepted on phone/tablet/desktop.
-notes_from_silas: 'Build the collaborative storytelling experience layer on top of the existing Kind Robots models. Support guided adventure and limited-visibility collaboration modes with async-first play, branching choices, custom inputs, rewards, inventory, and reusable story state. 2026-09-09, superseding the Da Vinci separation clause that stood here from 2026-07-02: "merge the projects, and kill any reference that says we should separate them. we care about having a solid *single* interface that is a stylish and effective storymaker with many endings. Whatever has been done should be merged." Da Vinci is now the `life` shape of Storybook (kind_robots PR #2549) — one route, one setup screen, one library. Nothing forbids a shared session table or a column on a Life* model any more; judge such a change on its merits like any other.'
+notes_from_silas: 'Build the collaborative storytelling experience layer on top of the existing Kind Robots models. Support guided adventure and limited-visibility collaboration modes with async-first play, branching choices, custom inputs, rewards, inventory, and reusable story state. 2026-09-09, superseding the Da Vinci separation clause that stood here from 2026-07-02: "merge the projects, and kill any reference that says we should separate them. we care about having a solid *single* interface that is a stylish and effective storymaker with many endings. Whatever has been done should be merged." Da Vinci is now the `life` shape of Storybook (kind_robots PR #2549) — one route, one setup screen, one library. Nothing forbids a shared session table or a column on a Life* model any more; judge such a change on its merits like any other. 2026-09-12, after round 1 of the storymaker mockups: "since the narrators actually exist as bot Narrators, they provide the general voice, but how they deliver it can still be adjusted"; "Stories should be able to be selected as open-ended (endless mode), episodic (scenario based), structured (da Vinci mode), and taskmaster (we should work taskmaster into this project as well, removing the taskmaster route when done)"; "All selections before the story begins should be card hand based" -- clarified as "that doesn''t count reasonable settings, start story, etc. I just meant all the flavor bits, including mode select, narrator, etc." So: mode and narrator become cards, typed input and settings and actions stay ordinary controls, the four modes replace the four shapes with length demoted to a dial, and Taskmaster is absorbed as the fourth mode. Full spec in docs/storymaker-redesign.md Part B; the Storybook/Taskmaster boundary doc that called the split permanent is superseded (t-043).'
 milestones:
 - id: m1
   title: Session model and boundaries
@@ -34,6 +34,14 @@ milestones:
   status: in-progress
 - id: m7
   title: The Table, the Reading, the Ending (card-driven redesign)
+  weight: 30
+  status: not-started
+- id: m8
+  title: Story modes (open-ended, episodic, structured, taskmaster)
+  weight: 25
+  status: not-started
+- id: m9
+  title: Taskmaster absorbed as a mode
   weight: 30
   status: not-started
 tasks:
@@ -273,6 +281,8 @@ tasks:
     Kind Robots implementation is underway on fix/storybook-art-first-setup. Do not ask Silas to re-review until that redesign has merged and deployed.
 
     2026-09-12: davinci/t-022 ("FOR SILAS: visually accept the finished Da Vinci experience") is folded into this gate when davinci was retired into storybook -- the life shape is one of the shapes on the same screen, so one acceptance covers both. The redesign this gate now waits on is the card-driven Table/Reading/Ending spec in projects/storybook/docs/storymaker-redesign.md (t-034..t-036), which supersedes the fix/storybook-art-first-setup branch mentioned above; the mockups Silas is commissioning from that spec come first.
+
+    2026-09-12: this gate now covers four modes, not four shapes -- open-ended, episodic, structured and taskmaster -- on one Table with one hand. Taskmaster's own route is retired by then (t-047), so accepting this screen is also accepting that its work still feels safe: the real objective visible beside the fiction, and nothing written to a real task without an explicit accept.
   updated: '2026-09-12T12:00:00Z'
 - id: t-017
   milestone: m4
@@ -766,6 +776,8 @@ tasks:
     (stores/pageStore.ts cardsKey -> stores/helpers/modelCards.ts), so workspace-hand.vue's
     sizing/flip/scroll code is untouched. Board lights up when the required slots are filled.
     Unblock by setting status: ready once the mockups are in hand.
+
+    2026-09-12, after mockup round 1: the spec this waits on has been rewritten (docs/storymaker-redesign.md B0-B4). Two slots changed shape. NARRATOR is now a card dealt from real narrator Bots with a delivery dial on the placed card, not a radio row of five voices (t-042). SHAPE is now MODE -- open-ended, episodic, structured, taskmaster -- also a card, with length demoted to a settings dial (t-039, t-041). And B0 now draws the line Silas drew: creative choices are cards, while typed input (title, premise, objective), settings and actions stay ordinary controls. Round 1 failed by keeping the form and adding cards underneath it; the board and the hand are the page.
   updated: '2026-09-12T12:00:00Z'
 - id: t-035
   milestone: m7
@@ -779,6 +791,8 @@ tasks:
     turn pips; the three moves always visible together (option cards, "You ..." composer, the
     hero's Skill/Item cards fanned in the bottom hand). Axes stay hidden for genre decks; the
     Life ledger sits behind a toggle. Built on stores/storybookRunStore.ts, not the old beat loop.
+
+    2026-09-12: open-ended mode has no turn budget, so the turn pips cannot read "3 of 8" in every mode -- show progress without an end count, and offer "bring this to an end" as the reader's own move (t-040). Structured mode is the only one that may show its ledger; every other mode shows prose consequences only.
   updated: '2026-09-12T12:00:00Z'
 - id: t-036
   milestone: m7
@@ -792,6 +806,8 @@ tasks:
     collection · n of N" with the deck's album row (found face-up, unfound face-down), play
     again / new table. The Collection replaces the localStorage "Recent stories" drawer with
     per-account Adventures and per-deck Endings albums; Life's "Endings on record" folds in.
+
+    2026-09-12: the Collection has to hold a 1,024-ending album beside eight-ending genre albums without either looking wrong, and an open-ended story that the reader chose to end lands in the same album as any other (t-040).
   updated: '2026-09-12T12:00:00Z'
 - id: t-037
   milestone: m7
@@ -822,3 +838,148 @@ tasks:
     matching column on Character) and is awarded in the same resolution transaction that
     credits the ending. Flip STORYBOOK_ENFORCE_DECK_GATES on once the hand renders locks.
   updated: '2026-09-12T12:00:00Z'
+- id: t-039
+  milestone: m8
+  title: "Engine: replace the four story shapes with the four story modes"
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: >
+    Silas, 2026-09-12: stories are selected as open-ended, episodic, structured or
+    taskmaster. The shipped StoryShape enum is SHORT_STORY/CHAPTERED/EPISODIC/LIFE, so this
+    is a real migration, not a relabel: OPEN_ENDED, EPISODIC, STRUCTURED, TASKMASTER, with
+    LIFE mapping to STRUCTURED and both SHORT_STORY and CHAPTERED mapping to OPEN_ENDED
+    (length becomes a dial, t-041). Additive first -- add the new values, backfill, and only
+    drop the old ones once nothing reads them. PROSE_BOUNDS_BY_SHAPE, SHAPE_BY_WIRE/
+    WIRE_BY_SHAPE in server/utils/storybookRuns.ts, STORYBOOK_STRUCTURES in
+    stores/storybookStore.ts and the deck YAMLs'' turnBudgetByShape keys all move together.
+    Every in-flight run keeps resolving; a run created before this migration must not change
+    mode under the reader.
+  updated: '2026-09-12T14:00:00Z'
+- id: t-040
+  milestone: m8
+  title: "Engine: open-ended mode -- no turn budget, resolve on demand"
+  status: waiting
+  passes: 0
+  stakes: reversible
+  depends_on: t-039
+  note: >
+    The one mode that stretches the engine: every other mode resolves when its budget is
+    spent, and this one has no budget. LifeRun.turnBudget already allows NULL, and
+    resolveStoryRunEnding''s turn gate already binds only runs with a budget, so the shape of
+    the change is a reader-initiated resolve ("bring this to an end") rather than a new
+    ending path. Decided with Silas: an endless story IS collectible -- it resolves into the
+    genre''s deck whenever the reader calls it, so it is never a dead end in the Collection.
+    The turn route must stop advertising a final turn when there is no budget, and the
+    narrator must not be told a turn is the last one.
+  updated: '2026-09-12T14:00:00Z'
+- id: t-041
+  milestone: m8
+  title: "Engine: length is a setting, not a mode"
+  status: waiting
+  passes: 0
+  stakes: reversible
+  depends_on: t-039
+  note: >
+    Short story and Chaptered tale stop being identities. Open-ended and Episodic take a
+    length dial that sets the run''s turn budget (and, for open-ended, may leave it unset).
+    The deck''s turnBudgetByShape stays the default the dial starts from. Per Silas''s
+    clarification this is a SETTING, not a card -- it must not appear in the hand.
+  updated: '2026-09-12T14:00:00Z'
+- id: t-042
+  milestone: m8
+  title: "Engine: the narrator is a Bot card plus a delivery dial"
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: >
+    Silas, 2026-09-12: narrators exist as Bots and supply the general voice; how they deliver
+    it is still adjustable. The run already carries both halves (botId and narratorStyle) and
+    loadRunNarrator already reads a Bot''s personality/narrativeVoice/prompt into the system
+    prompt, so the engine work is small: make the narrator Bot selectable from the board
+    payload, list narrator Bots for the hand to deal (/api/narrators/[type] exists), and
+    confirm the five NARRATOR_STYLE_DIRECTIVES read as modulating the chosen Bot rather than
+    replacing it. The prompt must not end up with two competing voices.
+  updated: '2026-09-12T14:00:00Z'
+- id: t-043
+  milestone: m9
+  title: "Rewrite the Storybook/Taskmaster boundary doc as superseded"
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: >
+    kind_robots docs/products/storybook-taskmaster-boundary.md opens "This boundary is
+    intentional and permanent" and lists permanent implementation invariants (Taskmaster owns
+    its own Pinia store, session types, persistence key, and product identity). Silas,
+    2026-09-12, overrides that: Taskmaster becomes a mode of Storybook and its route retires.
+    Rewrite the doc IN PLACE, keeping its path so nothing linking to it dies -- the same
+    treatment davinci/docs/storybook-boundary-comparison.md got. What survives the rewrite is
+    the part that was never about product separation: task answers are proposals until the
+    reader applies them, the real objective stays visible beside the fiction, and Conductor
+    roadmap YAML is never written by a story answer. Do this FIRST in m9, so the repo never
+    has a doc calling permanent a split the roadmap is dismantling.
+  updated: '2026-09-12T14:00:00Z'
+- id: t-044
+  milestone: m9
+  title: "Engine: Taskmaster mode -- objective, real work cards, server-side run"
+  status: waiting
+  passes: 0
+  stakes: reversible
+  depends_on: [t-039, t-043]
+  note: >
+    stores/taskmasterStore.ts is a 1,070-line client-side beat loop with its own localStorage
+    session, checkpoint plan, and "real hooks" (projects and todos) -- the same architecture
+    Storybook just moved to the server. Absorb it the same way: a story run in TASKMASTER
+    mode whose Spark is an Objective and whose Thread deck deals the reader''s real projects
+    and todos. Checkpoints become turns; hooks become the deck. Keep the fiction and the real
+    work visibly distinct in the payload, because B4 requires the objective on screen beside
+    the story at all times.
+  updated: '2026-09-12T14:00:00Z'
+- id: t-045
+  milestone: m9
+  title: "Engine: carry the write-back proposal rules onto the story turn"
+  status: waiting
+  passes: 0
+  stakes: reversible
+  depends_on: t-044
+  note: >
+    The half of the boundary doc that survives. taskmasterStore''s pendingWriteBacks /
+    applyWriteBack must become part of the turn payload: a story may PROPOSE a change to a
+    real project or todo, and nothing lands until the reader explicitly applies it. A story
+    must never look like it silently edited a task list, and Conductor roadmap YAML is still
+    never written by a story answer. This is the task where the safety rules either survive
+    the merge intact or quietly do not -- treat a regression here as a correctness bug, not a
+    UX nit.
+  updated: '2026-09-12T14:00:00Z'
+- id: t-046
+  milestone: m9
+  title: "UI: Taskmaster mode on the Table and in the Reading"
+  status: blocked
+  passes: 0
+  stakes: reversible
+  depends_on: [t-034, t-035, t-044, t-045]
+  note: >
+    Blocked on the mockups with the rest of m7. The Table in this mode swaps the Spark for an
+    Objective field and deals real work cards into the Thread slot; the Reading keeps the
+    objective on screen beside the fiction and puts an explicit accept step on any proposal.
+    Everything else -- hand, slots, turn loop, character sheet -- is the same screen as every
+    other mode, which is the point of absorbing it rather than porting it.
+  updated: '2026-09-12T14:00:00Z'
+- id: t-047
+  milestone: m9
+  title: "Retire /taskmaster: route, content, placement, store, and rewrite its three guards"
+  status: waiting
+  passes: 0
+  stakes: reversible
+  depends_on: [t-045, t-046]
+  note: >
+    The closing move Silas asked for ("removing the taskmaster route when done"). Retire
+    content/taskmaster.md and content/channels/plan/taskmaster.md, the taskmaster entry in
+    utils/projectPlacements.ts, components/pages/taskmaster-page.vue, components/taskmaster/*
+    and stores/taskmasterStore.ts, and redirect /taskmaster to /storybook the way
+    /play/davinci redirects. Its three CI guards -- verifyTaskmasterCheckpointEngine.mjs,
+    verifyTaskmasterSampleTasks.mjs, verifyTaskmasterSessionStorageRecoveryGuard.mjs -- are
+    REWRITTEN against the new surface, never deleted: they pin the checkpoint engine, the
+    sample tasks and the storage recovery path, and the merge has to keep all three true.
+    Do not start this until t-046 is deployed and the mode is genuinely usable.
+  updated: '2026-09-12T14:00:00Z'
