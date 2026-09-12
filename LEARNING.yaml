@@ -13327,3 +13327,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A structural non-<h1> title detector built and unit-pinned against hand-built nodes is not yet wired into anything -- verifyLayoutContract.ts's own parseTemplate() returns the <template> tag as its own top-level node, one level above the page's real root the detector expects as nodes[0], so a naive wire-up would have silently returned false for every real page. Pin the actual integration path (real template strings through the real parser) with its own fixture, not just the isolated helper's hand-built-node tests. Separately: a structural (not text-comparing) title detector will flag legitimate hero/CTA copy that differs from the shell's own title -- exclude blocks that carry their own link/button or standalone media rather than trying to string-match against frontmatter."
+- date: 2026-09-12
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Before writing a new codemod for a freshly-surveyed class pattern, check utils/scripts/codemods/ for one that already exists -- kr_icon_4_size_shorthand_codemod.py had already been written and partially run (42/124 occurrences, two directories) in a prior slice, and simply re-running it unmodified with --write across the whole repo finished the migration in one pass instead of re-deriving its exclusion rules (colored icons stay out of scope) from scratch."
