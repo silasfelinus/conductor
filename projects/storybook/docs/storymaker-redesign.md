@@ -19,6 +19,28 @@ Silas is commissioning from Part B while the engine groundwork (Part C) ships fi
 Roadmap: storybook m6 (t-027..t-033, engine) and m7 (t-034..t-038, screens). The Da Vinci
 merge record is `davinci-merge.md` beside this file.
 
+## What has shipped (2026-09-12)
+
+Part C's engine is built and merged; Part B's screens are what the mockups are for.
+
+| Slice | Where |
+|---|---|
+| One direct-prose narration contract for every shape and deck | kind_robots#2660 (t-025, t-031) |
+| Ending decks, server-side story runs, the turn loop, character-sheet plays, the ending collection, the deck importer | kind_robots#2662 (t-029, t-030, t-032, t-033) |
+| The three authored genre decks | conductor#4168 (t-030) |
+
+So the engine already answers the questions a mockup will raise: a story has a fixed
+turn budget it cannot end early; a turn is an offered option, a written action, or a
+card played from the sheet; an ITEM is spent when played and a SKILL is not; the deck's
+axes are hidden from the reader and from the client; and an ending is credited to a
+per-deck album that shows unfound endings as silhouettes. Design against those rules
+rather than around them.
+
+Two things the mockups should decide, because the engine deliberately does not:
+how a locked card reads in the hand (Part B5 -- the lock exists in data and is
+switched off), and how much of the Life ledger stays visible now that genre decks
+show none of theirs (Part B2).
+
 ## Part B — The product (the mockup brief)
 
 Vocabulary: **the Table** (setup), **the Reading** (play), **the Ending**, **the Collection**.
