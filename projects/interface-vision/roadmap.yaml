@@ -3944,18 +3944,23 @@ tasks:
 - id: t-130
   milestone: m6
   title: Require a bash -n syntax check on any .sh file a PR adds or modifies
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
   passes: 0
-  note: |-
+  note: >-
     Kaizen from reviewing/merging kind_robots#2651 (t-128, 2026-09-12): the new scripts/check-test-commit-assertions.sh shipped with a bash syntax error (`^test(\([^)]*\))?:[[:space:]]` written inline inside a `[[ =~ ]]` conditional, which bash mis-tokenizes as subshell grouping) that failed the layout-contract CI job outright on the very first PR that ran it -- caught only because that job happened to run in the same PR, not by any dedicated check. No step in this repo's CI verifies that a newly added/modified shell script is even syntactically valid before merge. DO: add a lightweight CI step (or extend an existing lint/verify job) that runs `bash -n <file>` (and ideally `shellcheck` if already available in the runner image, non-blocking/warning-only to start if shellcheck's own false-positive rate is a concern) over every `*.sh` file changed in the PR's diff, failing loud on a real syntax error like this one. Scope to a bounded, reversible CI-only addition; no need to retroactively re-audit every existing script in one pass.
 
     Implemented a blocking PR CI step that discovers added/modified/renamed *.sh files with a NUL-safe git diff and runs bash -n on each before the existing assertion audit.
+
+    RESOLVED: merged kind_robots#2654 (all 44 checks green, squash-merged). CI now runs a
+    blocking bash -n syntax check over every added/modified/renamed *.sh file in a PR diff
+    before the existing assertion-audit step.
   owner: worker
   claimed_by: 2026-09-12T061811Z-interface-vision-t-130-x9c4
   claimed_at: '2026-09-12T06:18:11Z'
-  updated: '2026-09-12T07:27:00Z'
+  updated: '2026-09-12T07:30:10Z'
+  implementation_pr: 'silasfelinus/kind_robots#2654'
 - id: t-131
   milestone: m6
   title: Continue the viewport-grid burn-down (slice 2 onward)
@@ -3977,3 +3982,24 @@ tasks:
     actual repeating card/tile lists, per t-129's own note on what it deliberately
     left untouched. Update the baseline with `--update` after the slice lands, and
     re-file this same continuation pattern (next free task id) if occurrences remain.
+- id: t-132
+  milestone: m6
+  title: Add a non-blocking shellcheck pass alongside the new bash -n syntax check
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  note: >-
+    Kaizen from reviewing/merging kind_robots#2654 (t-130, 2026-09-12): the new
+    layout-contract CI step only catches syntax errors (`bash -n`), not the wider
+    class of real shell bugs shellcheck flags (unquoted expansions, unsafe globbing,
+    etc.) -- t-130's own originating note called this out as a follow-on ("ideally
+    shellcheck if already available in the runner image, non-blocking/warning-only
+    to start if shellcheck's own false-positive rate is a concern"). DO: check
+    whether `shellcheck` is preinstalled on the `ubuntu-latest` GitHub Actions
+    runner image (it is, as of recent images) and add a warning-only step (do not
+    fail the job) that runs `shellcheck` over the same NUL-delimited changed-file
+    set t-130 already computes, reusing that discovery logic rather than
+    duplicating it. Keep it non-blocking initially; revisit making it blocking
+    once false-positive rate is known from real PR traffic.
+  owner: null
