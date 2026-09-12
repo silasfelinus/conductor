@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3297,12 +3297,25 @@ tasks:
     Slice 236 merged as silasfelinus/kind_robots#2644. Named .kr-input-rounded-xl/.kr-input-rounded-2xl (the rounded-xl/rounded-2xl override shapes on the .kr-input family that .kr-input/.kr-input-sm/.kr-input-xs don't cover), dropping the dead input-bordered class; migrated 68 occurrences across 25 files via two new codemods (kr_input_rounded_xl_codemod.py, kr_input_rounded_2xl_codemod.py). No color/behavior/API/schema/route/geometry change. All kind_robots PR checks green.
 
     Return the recurring consistency umbrella to ready for the next bounded slice. Kaizen for the next slice: the btn/badge combos flagged by slice 235 (btn btn-primary btn-sm rounded-2xl, badge badge-sm rounded-xl) remain unclaimed -- a fresh full-repo class-frequency survey outside every closed family (now also kr-input-rounded-xl/-2xl) is the starting point. Keep this note short going forward -- append future slice history to T104-HISTORY.md, not here.
-  updated: '2026-09-12T01:32:24Z'
-  implementation_pr: ''
+
+    Slice 237 merged as silasfelinus/kind_robots#2646. Named .kr-btn-primary-2xl
+    (rounded-2xl sibling of .kr-btn-primary) and migrated 13 btn btn-primary btn-sm
+    rounded-2xl occurrences across 12 files; migrated 13 badge badge-sm rounded-xl
+    occurrences across 9 files onto the existing radius-less .kr-badge-sm primitive. No
+    color/behavior/API/schema/route/geometry change. All 52 kind_robots PR checks green,
+    mergeable_state clean before merge. Return the recurring consistency umbrella to ready
+    for the next bounded slice. Kaizen for the next slice: no further exact-match btn-
+    primary-sm-rounded-2xl or badge-sm-rounded-xl occurrences remain; the wider (still hand-
+    rolled) badge badge-sm pool has other radius/utility variants (rounded-lg, shrink-0,
+    absolute positioning -- see conductor/coat-dance-page.vue, storybook/storybook-life-
+    run.vue) that a future slice could survey individually, similar to how .kr-badge-xs
+    treated its more varied pool.
+  updated: '2026-09-12T02:30:22Z'
+  implementation_pr: 'silasfelinus/kind_robots#2646'
   retry_context: ''
   owner: worker
-  claimed_by: 20260912T013223Z-interface-vision-t-104-slice237
-  claimed_at: '2026-09-12T01:32:24Z'
+  claimed_by: ''
+  claimed_at: ''
 
 - id: t-123
   milestone: m5
