@@ -3889,7 +3889,7 @@ tasks:
 - id: t-129
   milestone: m6
   title: Survey and migrate the highest-traffic viewport-grid offenders onto container-width grids
-  status: claimed
+  status: done
   gate_human: false
   stakes: reversible
   passes: 0
@@ -3908,10 +3908,16 @@ tasks:
     Scope to one bounded slice (a handful of files) rather than attempting all 205 at
     once, matching the recurring-umbrella pattern t-104 already uses. Update the
     baseline with `--update` after each slice lands.
-  owner: worker
-  claimed_by: 2026-09-12T060500Z-interface-vision-t-129-viewport-grid
-  claimed_at: '2026-09-12T05:45:59Z'
-  updated: '2026-09-12T05:45:59Z'
+
+    Slice 1 (kind_robots#2652): migrated 5 unique viewport-breakpoint grid-cols tokens
+    across 3 files (components/art/collection-picker.vue, components/academy/academy-
+    style-detail.vue x2, components/art/artjob-queue-browser.vue x3, one dedup) onto
+    auto-fit/minmax fluid grids. Baseline ratcheted 205 -> 200. Deliberately left
+    artjob-queue-browser.vue's xl:grid-cols-2 (a two-panel side-by-side layout, not a
+    repeating card list) untouched -- scoped to genuinely repeating card/tile lists.
+    ~200 occurrences remain; continued as interface-vision/t-131.
+  updated: '2026-09-12T05:52:43Z'
+  implementation_pr: 'silasfelinus/kind_robots#2652'
 - id: t-130
   milestone: m6
   title: Require a bash -n syntax check on any .sh file a PR adds or modifies
@@ -3933,3 +3939,24 @@ tasks:
     rate is a concern) over every `*.sh` file changed in the PR's diff, failing loud on
     a real syntax error like this one. Scope to a bounded, reversible CI-only addition;
     no need to retroactively re-audit every existing script in one pass.
+- id: t-131
+  milestone: m6
+  title: Continue the viewport-grid burn-down (slice 2 onward)
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  note: >-
+    Continuation of interface-vision/t-129 (kind_robots#2652, 2026-09-12): slice 1
+    migrated 5 unique viewport-breakpoint grid-cols tokens (3 files) onto auto-fit/
+    minmax fluid grids, ratcheting the viewport-grid baseline 205 -> 200. ~200
+    occurrences remain, the largest of the nine layout-contract buckets. DO: run
+    `npx tsx utils/scripts/verifyLayoutContract.ts --report` to list current
+    viewport-grid entries, survey the next-highest-traffic files (components/art/*
+    and components/academy/* still had the heaviest concentration as of 2026-09-12),
+    and migrate a bounded slice (a handful of files) onto
+    `grid-cols-[repeat(auto-fit,minmax(min(100%,Nrem),1fr))]`. Skip genuinely
+    non-repeating layouts (e.g. a fixed two-panel side-by-side split) -- scope to
+    actual repeating card/tile lists, per t-129's own note on what it deliberately
+    left untouched. Update the baseline with `--update` after the slice lands, and
+    re-file this same continuation pattern (next free task id) if occurrences remain.

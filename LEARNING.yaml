@@ -13345,3 +13345,12 @@ records:
   outcome: done
   failure_category: quality
   lesson: "A CI script implementing a 'test-commit assertion' guard was itself untested at the shell level -- an inline bash [[ =~ ]] regex with unescaped/nested parens (`^test(\\([^)]*\\))?:[[:space:]]`) is a real syntax trap: bash's [[ ]] tokenizer can mis-parse literal parens inside the regex operand as subshell grouping, producing 'syntax error in conditional expression' and failing the job outright rather than the intended warning-only behavior. `bash -n <file>` before merge would have caught this immediately; the fix (move the pattern into a variable, match against that) is the standard workaround. Filed as interface-vision/t-130: add a bash -n check on any .sh file a PR touches, so this class of failure fails fast in CI instead of on the PR that introduces the check meant to catch other gaps."
+- date: 2026-09-12
+  project: interface-vision
+  task: t-129
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The viewport-grid layout-contract report dedups by (file, token) pair, not by raw occurrence count -- two lines in the same file carrying the identical breakpoint token (e.g. two 'sm:grid-cols-2' divs) show up as a single baseline entry, so the baseline count delta after a slice doesn't map 1:1 to 'lines touched'. Check the actual diff, not just the before/after baseline number, to confirm a slice's real scope."
