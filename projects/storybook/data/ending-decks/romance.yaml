@@ -16,9 +16,17 @@ passValue: 1
 turnBudget: 8
 minTurnsBeforeResolve: null
 turnBudgetByShape:
+  # Keyed by MODE since storybook/t-039. Short story and chaptered tale stopped
+  # being identities when length became a dial (t-041), so the open-ended
+  # default sits where the chaptered budget used to; a reader who wants the
+  # five-turn version turns the dial down. The old keys stay as a fallback the
+  # importer and deckTurnBudget both still read, for a database seeded before
+  # the rename.
+  open-ended: 8
+  episodic: 12
+  taskmaster: 6
   short-story: 5
   chaptered: 8
-  episodic: 12
 axes:
   - key: honesty
     label: Honesty
