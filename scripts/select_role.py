@@ -304,11 +304,59 @@ def list_open_prs(repo: str, token: str) -> list[dict]:
     return data if isinstance(data, list) else []
 
 
+# Conclusions that mean a completed check run is red. Deliberately excludes
+# 'skipped'/'neutral' (routinely-skipped jobs, e.g. a matrix entry gated on a
+# path filter, must not make an otherwise-green commit look failed).
+_BAD_CHECK_CONCLUSIONS = {'failure', 'timed_out', 'cancelled', 'action_required'}
+
+
 def commit_combined_state(repo: str, sha: str, token: str) -> str | None:
-    data = _gh_request(f'{GITHUB_API}/repos/{repo}/commits/{sha}/status', token)
-    if not isinstance(data, dict):
-        return None
-    return data.get('state')
+    """Combined CI state for a commit's GitHub Actions check runs.
+
+    conductor/t-154: this used to read the classic `/commits/{sha}/status`
+    endpoint, which only reflects legacy "status" API providers. This repo's
+    CI is entirely GitHub Actions check-runs, which never post to that
+    endpoint -- confirmed by direct reproduction, every commit checked
+    returned `{"state": "pending", "total_count": 0}` regardless of its
+    actual, real check-run outcome. That silently broke both callers of this
+    function: `find_red_stale_prs_in_repo` (only fires on 'failure'/'error')
+    and `find_reviewable_claude_prs` (only fires on 'success') each always
+    saw 'pending' and could never fire, for any PR, in this repo, ever.
+
+    Paginates `/commits/{sha}/check-runs` instead and folds every run's
+    status/conclusion into one of:
+      - 'pending' — any run not yet `completed`, or no runs reported at all
+        (the same conservative default the old empty-status case had).
+      - 'failure' — every run is `completed` and at least one concluded
+        something in `_BAD_CHECK_CONCLUSIONS`.
+      - 'success' — every run is `completed` with no bad conclusion.
+    Returns None only on a request failure (network/API error) — the same
+    "don't know, not merely empty" contract the old implementation had.
+    """
+    check_runs: list[dict] = []
+    page = 1
+    while page <= 10:  # 1000 check runs is far past any real PR's count
+        data = _gh_request(
+            f'{GITHUB_API}/repos/{repo}/commits/{sha}/check-runs?per_page=100&page={page}',
+            token,
+        )
+        if not isinstance(data, dict):
+            return None
+        batch = data.get('check_runs')
+        if not isinstance(batch, list):
+            return None
+        check_runs.extend(batch)
+        if len(batch) < 100:
+            break
+        page += 1
+
+    if not check_runs:
+        return 'pending'
+    if any(run.get('status') != 'completed' for run in check_runs):
+        return 'pending'
+    if any(run.get('conclusion') in _BAD_CHECK_CONCLUSIONS for run in check_runs):
+        return 'failure'
+    return 'success'
 
 
 def find_red_stale_prs_in_repo(
