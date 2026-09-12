@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   recurring: true
@@ -3303,12 +3303,12 @@ tasks:
     Slice 248 (this session): fresh full-repo class-frequency survey (kr_class_frequency_survey.py, excluding all now-closed families) turned up object-cover size-full as the largest well-bounded pool -- the size-full Tailwind shorthand spelling of the exact object-fit shape .kr-img-cover already covers (opened in an earlier slice, already in use at 30 sites). Added kr_img_cover_size_full_shorthand_codemod.py and migrated 19 occurrences across 14 files onto the existing primitive, preserving extra tokens (absolute/inset-0, transition/hover/motion-reduce, grayscale) verbatim. No color/behavior/API/schema/route/geometry change. CI caught a real regression the first push didn't: verifyStorybookStudio.mjs asserted the literal string 'object-cover' inside narrative-ingredient-card.vue, which the codemod correctly replaced with kr-img-cover (byte-identical rendering, different source spelling) -- a new class of contract fragility for this umbrella (a hand-authored checker doing raw string matching on a class token, distinct from the layout-contract/build-pipeline checks slice 247 hit). Fixed by adding an includesAllOrAlternatives() helper to that verifier accepting kr-img-cover as an equivalent spelling, and re-ran every other verify* script referencing any of the 14 touched files locally to confirm no other stale literal-class assertions existed. eslint/vue-tsc/prettier/layout-contract/npm run build all verified. Merged silasfelinus/kind_robots#2680, all 55 CI checks green, mergeable_state clean before merge. Return the recurring consistency umbrella to ready for the next bounded slice. Kaizen for the next slice: font-semibold text-sm (9 files/13 occurrences) and size-5 text-primary (9 files/11 occurrences) are the next candidates from the same survey.
 
     Also this session: found interface-vision/t-131 stranded at status: review with its branch (worker/interface-vision-t-131-20260912T151712Z-oai11) pushed but no PR ever opened in kind_robots. Opened kind_robots#2679 from the existing single-line commit, verified all 47 CI checks green, squash-merged, and closed t-131 as done (kind_robots#2679) in a separate conductor PR.
-  updated: '2026-09-12T17:52:57Z'
+  updated: '2026-09-12T18:15:25Z'
   implementation_pr: 'silasfelinus/kind_robots#2680'
   retry_context: ''
   owner: worker
-  claimed_by: 20260912T173006Z-interface-vision-t-104-claude
-  claimed_at: '2026-09-12T17:30:10Z'
+  claimed_by: 2026-09-12T181525Z-interface-vision-t-104-a11
+  claimed_at: '2026-09-12T18:15:25Z'
 
 - id: t-123
   milestone: m5
