@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3321,12 +3321,21 @@ tasks:
     color/behavior/API/schema/route/geometry change. eslint (5 pre-existing unrelated errors
     confirmed via git stash), vue-tsc, layout-contract, and prettier all checked
     clean/unaffected. Opened silasfelinus/kind_robots#2673; awaiting CI.
-  updated: '2026-09-12T12:41:35Z'
+
+    Merged silasfelinus/kind_robots#2673 (squash 9e20c613). Opened .kr-icon-10 (h-10 w-10)
+    and migrated all 29 discovered occurrences (15 h-10 w-10 across 14 files, 14 size-10
+    across 12 files) across kr_icon_10_codemod.py and the new
+    kr_icon_10_size_shorthand_codemod.py; both report 0 remaining candidates after --write.
+    All 51 kind_robots PR checks green (including the slower Build production image job),
+    mergeable_state clean before merge. Return the recurring consistency umbrella to ready
+    for the next bounded slice. Kaizen for the next slice: h-12 w-12 (9 files, 10
+    occurrences per slice 242 survey) is the next well-bounded sibling.
+  updated: '2026-09-12T12:50:02Z'
   implementation_pr: 'silasfelinus/kind_robots#2673'
   retry_context: ''
   owner: worker
-  claimed_by: claude-scheduled-20260912T1240Z-iv-t104-slice244
-  claimed_at: '2026-09-12T12:34:58Z'
+  claimed_by: null
+  claimed_at: null
 
 - id: t-123
   milestone: m5
