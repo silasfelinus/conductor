@@ -841,7 +841,7 @@ tasks:
 - id: t-039
   milestone: m8
   title: "Engine: replace the four story shapes with the four story modes"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   note: >
@@ -855,7 +855,10 @@ tasks:
     stores/storybookStore.ts and the deck YAMLs'' turnBudgetByShape keys all move together.
     Every in-flight run keeps resolving; a run created before this migration must not change
     mode under the reader.
-  updated: '2026-09-12T14:00:00Z'
+  updated: '2026-09-12T22:42:45Z'
+  owner: worker
+  claimed_by: 2026-09-12T23-mode-taxonomy-t039
+  claimed_at: '2026-09-12T22:42:45Z'
 - id: t-040
   milestone: m8
   title: "Engine: open-ended mode -- no turn budget, resolve on demand"
