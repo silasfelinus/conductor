@@ -13399,3 +13399,30 @@ records:
   outcome: done
   failure_category: null
   lesson: "select_role.py's commit_combined_state() called GET /repos/{owner}/{repo}/commits/{sha}/status (the legacy commit-status API), which only reflects legacy status-API integrations -- this repo's CI is entirely GitHub Actions check-runs, which post to the separate /commits/{sha}/check-runs endpoint instead, so the legacy call always returned {'state': 'pending', 'total_count': 0} regardless of real CI outcome. Both of its callers (find_reviewable_claude_prs, requiring 'success', and find_red_stale_prs_in_repo/pr-medic, requiring 'failure'/'error') were silently dead for every repo this script has ever checked. When computing a commit's combined CI state for a repo whose CI is GitHub-Actions-based, use the Checks API (/commits/{sha}/check-runs, paginated) and fold status/conclusion into pending/failure/success client-side -- never assume the legacy Status API reflects Actions-based check runs, even though both are commonly described as 'the commit's CI status'."
+- date: 2026-09-12
+  project: storybook
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "kind_robots#2662's own DB-backed verifyStorybookPlayLoop.ts caught a real write-boundary bug the authoring sandbox (no database, no docker daemon) could not have found: the +-2 moveEffects clamp existed only inside the narration validator, one layer above where submitStoryTurn actually wrote LifeStat rows, so any caller that bypassed the validator could move an axis by 9 or write an axis the deck does not declare. Fixed by adding a clampEffectsToDeck() at the write boundary itself. When a schema-affecting engine PR's own body flags 'this DB-backed job is the one to watch, I could not run it locally' -- take that literally: wait for the real CI run and read its actual failure output before assuming a design-reviewed diff is safe to merge, even when every DB-free suite passed."
+- date: 2026-09-12
+  project: storybook
+  task: t-030
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Roadmap state can drift from reality even without a Reviewer rejection: kind_robots#2662 (implementing t-029/t-030/t-032/t-033) merged clean, but the four conductor tasks it closed were never flipped to done because this slice was never run through claim_task.py -- there was no queued task-events close-out to catch it. State-reconciliation after a cross-repo merge needs an explicit roadmap sweep, not just trust that a close-out event exists somewhere."
+- date: 2026-09-12
+  project: storybook
+  task: t-032
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Same DB-backed-verifier-catches-what-the-sandbox-cannot pattern as t-029, different write path: a character-sheet play created its LifeChoice row with rewardId null then patched it in a second update, so the persisted row ended up correct but the API response returned null for the played card on the very turn it was played. A two-step create-then-patch can be internally consistent in the database while still returning a wrong response for that one request -- resolve foreign keys before the transaction and write them on the initial create when the response of that same call needs to reflect them."
