@@ -300,32 +300,31 @@ overrides:
     # Frontend placement — synced to the kind_robots Project row by
     # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry for
     # 'storybook' in kind_robots utils/projectPlacements.ts (channelKey: 'play',
-    # tabKey: 'storybook', route: '/storybook') — conductor/storybook t-010.
+    # tabKey: 'storybook', route: '/storybook') — conductor/storybook t-010;
+    # channelKey corrected play -> plan 2026-09-12 (the play channel was dissolved 2026-07-28).
     liveUrl: /storybook
-    channelKey: play
+    channelKey: plan
     tabKey: storybook
 
   - slug: davinci
-    status: active # reopened 2026-07-31 (Silas-directed session: "making da Vinci
-    # work start to finish"). Was flipped `finished` 2026-07-26 on the reading that
-    # all 15 tasks were done with nothing open -- true of the task list, but t-015
-    # closed by writing the AI-narration spec and explicitly declining to file the
-    # build task ("left for Silas/next cycle to scope as its own task rather than
-    # bundling a large implementation into this spec-only pass"). The project was
-    # therefore marked finished with its central gap unfiled: a play-loop API and
-    # 1024 seeded endings with nothing generating the prose a player reads. t-016
-    # files and closes that build.
+    status: retired # retired 2026-09-12 (Silas-directed session) — merged INTO storybook.
+    # Silas, 2026-09-09: "merge the projects, and kill any reference that says we should
+    # separate them. we care about having a solid *single* interface that is a stylish and
+    # effective storymaker with many endings. Whatever has been done should be merged."
+    # The code merge shipped as kind_robots PR #2549 (Da Vinci is Storybook's `life` shape;
+    # /play/davinci is a 301 to /storybook; davinci-page.vue became
+    # components/storybook/storybook-life-run.vue), but this registry was never touched, so
+    # the Kind Robots Projects page kept showing two Active projects for one product
+    # (Silas, 2026-09-12). `retired` rather than `finished`: the product is not done (the
+    # 1,024-ending art coverage is still open), it was superseded — the same reading
+    # animation-studio and serendipity used. The three tasks still open here moved to
+    # storybook: t-018 -> storybook/t-027, t-019 -> storybook/t-028, and the visual gate
+    # t-022 folded into storybook/t-016 (one gate for one screen). roadmap.yaml kept as
+    # historical record, not deleted. Placement mirror lines dropped: /play/davinci is a
+    # redirect and the `play` channel was dissolved 2026-07-28; kind_robots
+    # utils/projectPlacements.ts (CI-enforced) already sends the slug to /storybook.
     priority: normal
     kind: software
-    # Frontend placement — synced to the kind_robots Project row by
-    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
-    # for 'davinci' in kind_robots utils/projectPlacements.ts.
-    # Corrected 2026-08-14 (conductor/coat-dance t-010 cycle) — the 'lab' channel
-    # was dissolved 2026-07-28 (kind_robots commit 6cd42c2); this doc-only field
-    # never followed. projectPlacements.ts is CI-enforced and was already correct.
-    liveUrl: /play/davinci
-    channelKey: play
-    tabKey: davinci
 
   - slug: media-watchlist
     status: active

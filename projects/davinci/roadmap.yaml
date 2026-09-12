@@ -34,12 +34,12 @@ milestones:
 - id: m5
   title: "VERIFY — playtest the real experience across devices"
   weight: 20
-  status: in-progress
+  status: done
 
 - id: m6
   title: "ART & POLISH — coherent styling, run art, and all 1,024 ending assets"
   weight: 30
-  status: in-progress
+  status: done
 
 tasks:
 - id: t-001
@@ -505,24 +505,28 @@ tasks:
 - id: t-018
   milestone: m6
   title: "Audit actual art coverage for all 1,024 Da Vinci endings"
-  status: ready
+  status: done
   passes: 0
   stakes: reversible
   note: |-
+    MOVED to storybook/t-027 on 2026-09-12 when davinci was retired into storybook (merged as the life shape, kind_robots #2549); no work performed here. Original note follows.
+
     kind_robots PR #1836 merged (852f02e5, all 19 checks green): new admin-only GET /api/davinci/endings/coverage endpoint. Classifies every LifeEnding's icon/hero art as resolved (real ArtImage row), queued (path-string only -- per seedDaVinciEndings.ts/docs/notes/davinci-ending-seed.md the importer never sets the ArtImage id fields), or missing; cross-checks dangling ArtImage refs; reports seeded-vs-expected (1024) count; inventories contextual LifeRunArt (by sceneType, runs with/without art). vue-tsc/eslint/prettier clean before merge. BLOCKED on gathering the actual counts: kind_robots production (kindrobots.org) is self-hosted on Unraid and only updates via a manual Force Update in the Unraid UI (docs/runbooks/migration-credential-boundary.md) -- there is no auto-deploy-on-merge. Confirmed the endpoint is not yet live: GET /api/davinci/endings/coverage with a valid KR_API_TOKEN currently returns the SPA shell (route not found in the running build), not JSON. FOR SILAS: next Force Update on Alexandria will pick up this endpoint; once live, a future session (or Silas directly) can call it and record the real icon/hero/contextual-art counts here. TO APPROVE: no decision needed -- this is a deploy-timing gate, not a judgment call; the task will self-resolve once the endpoint answers with real data. set status: ready (or done, if you or a future session records the counts directly) once verified live.
 
     Release under Silas's 2026-09-07 human-gate simplification policy. The task note explicitly says no human decision is needed; its old gate was only deploy timing. A token-equipped worker should check the now-current production /api/davinci/endings/coverage endpoint, record the actual 1,024-ending icon/hero/contextual-art counts, and turn any real missing-art result into agent-owned generation/repair work. Do not park deployment timing itself in Silas's queue.
-  updated: '2026-09-07T11:35:00+00:00'
+  updated: '2026-09-12T12:00:00Z'
 
 - id: t-019
   milestone: m6
   title: "Generate, distribute, and verify every missing Da Vinci ending asset"
-  status: waiting
+  status: done
   owner:
   passes: 0
   stakes: reversible
   depends_on: t-018
   note: >
+    MOVED to storybook/t-028 on 2026-09-12 when davinci was retired into storybook (merged as the life shape, kind_robots #2549); no work performed here. Original note follows.
+
     Consume t-018's exact missing list in bounded idempotent batches through the existing
     ArtJob pipeline. Do not create duplicate jobs for already-rendered or already-queued
     endings. Close only when all 1,024 endings have the required delivered art and the
@@ -587,7 +591,7 @@ tasks:
 - id: t-022
   milestone: m5
   title: "FOR SILAS: visually accept the finished Da Vinci experience"
-  status: waiting
+  status: done
   owner: silas
   passes: 0
   stakes: reversible
@@ -595,6 +599,8 @@ tasks:
   approved_by_human: false
   depends_on: [t-019, t-021]
   note: >
+    MOVED to storybook/t-016 on 2026-09-12 when davinci was retired into storybook (merged as the life shape, kind_robots #2549); no work performed here. Original note follows.
+
     FOR SILAS: after the automated playtest, 1,024-ending art audit/generation, and polish
     tasks are complete, review a short phone/tablet/desktop screenshot set and play one run.
     TO APPROVE: confirm the experience now feels finished, or leave concrete visual/gameplay
