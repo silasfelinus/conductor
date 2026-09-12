@@ -841,10 +841,10 @@ tasks:
 - id: t-039
   milestone: m8
   title: "Engine: replace the four story shapes with the four story modes"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
-  note: >
+  note: >-
     Silas, 2026-09-12: stories are selected as open-ended, episodic, structured or
     taskmaster. The shipped StoryShape enum is SHORT_STORY/CHAPTERED/EPISODIC/LIFE, so this
     is a real migration, not a relabel: OPEN_ENDED, EPISODIC, STRUCTURED, TASKMASTER, with
@@ -855,10 +855,25 @@ tasks:
     stores/storybookStore.ts and the deck YAMLs'' turnBudgetByShape keys all move together.
     Every in-flight run keeps resolving; a run created before this migration must not change
     mode under the reader.
-  updated: '2026-09-12T22:42:45Z'
+
+    2026-09-12: implemented in kind_robots#2686, awaiting merge. StoryShape gained
+    OPEN_ENDED/STRUCTURED/TASKMASTER and KEPT the legacy values so the deploy handoff is
+    safe; rows backfilled (LIFE->STRUCTURED, SHORT_STORY and CHAPTERED->OPEN_ENDED) and the
+    column default moved to STRUCTURED so an old-build insert that omits shape still means
+    what it meant. MODE_BY_ENUM maps the legacy values defensively, so an in-flight run
+    never changes mode under the reader. Deck YAMLs keyed by mode in conductor#4209
+    (merged), with the old keys kept as a fallback. NOT converted: STORYBOOK_STRUCTURES in
+    stores/storybookStore.ts -- its four structures drive the client beat loop's own
+    scheduling (short-story ends after four beats), which is the behaviour the length dial
+    replaces, and t-037 deletes that loop wholesale; converting it now would rewrite a loop
+    scheduled for deletion. A legacy client posting short-story still opens an open-ended
+    run via LEGACY_MODE_ALIASES. Dropping the legacy enum values is a follow-up once no
+    deployed build emits them.
+  updated: '2026-09-12T23:02:58Z'
   owner: worker
   claimed_by: 2026-09-12T23-mode-taxonomy-t039
   claimed_at: '2026-09-12T22:42:45Z'
+  implementation_pr: 'silasfelinus/kind_robots#2686'
 - id: t-040
   milestone: m8
   title: "Engine: open-ended mode -- no turn budget, resolve on demand"
