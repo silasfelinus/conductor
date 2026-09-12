@@ -347,3 +347,102 @@ tasks:
       have shipped a check that did not check.
     updated: '2026-09-12T00:10:00Z'
     implementation_pr: 'silasfelinus/kind_robots#2643'
+
+  - id: t-010
+    milestone: m3
+    title: "Motion prompt asked for restraint and got it; previews cropped the frame"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-09-11, on the first batch that actually animated: "the animations are pretty
+      lackluster ... the others have minimal movement, or something completely left field, like
+      a miniature figure on a segway riding in front of the dog logo for hss". Plus: "I can't
+      see the entire image on the display."
+
+      THREE THINGS.
+
+      1. The prompt was five hedges in one sentence -- "subtle coherent motion ... only
+      plausible ambient movement, gentle secondary motion, and stable cinematic camera
+      behavior". Every one a vote against movement, and WAN obliged. Rewritten to ask for
+      deliberate motion and, per Silas ("if there is a figure, they should be animated, wink,
+      smile, laugh"), to NAME the performance: blink, smile, wink, laugh, head turn, hands with
+      intent. Subject integrity deliberately untouched -- the Segway rider is what that clause
+      prevents, and it is the obvious casualty of a "make it more dynamic" retune, so the test
+      pins both halves together and fails if either goes.
+
+      2. negativePrompt shipped as ''. Now carries terms for both observed failure modes:
+      stillness, and invented subjects.
+
+      3. Cards paired a square source against a square clip inside an aspect-video box using
+      object-cover, so both lost their top and bottom. object-contain letterboxes instead.
+
+      TRAP FOUND EN ROUTE: pages/admin/scene-animator.vue had the entire prompt re-typed as
+      literal HTML in its "Automatic motion direction" panel. Nothing connected the copies, so
+      tuning the prompt would have left the operator reading the old direction while a different
+      one was sent -- both halves working, quietly disagreeing. Constants moved to
+      utils/sceneAnimatorPrompt.ts; the page interpolates them and the test refuses any inlined
+      copy, including a re-paste of the current text.
+
+      Coverage: utils/scripts/verifySceneAnimatorPrompt.test.ts, verified against four
+      regressions run individually. One initially reported a false pass because the mutation's
+      anchor did not match the file -- re-run with the right anchor before trusting a mutation
+      result.
+    updated: '2026-09-12T10:20:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#2656'
+
+  - id: t-011
+    milestone: m3
+    title: "Per-image motion direction, editable before re-render"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas, 2026-09-12: "I should also be able to edit the individual prompts for each image,
+      and edit them before resubmitting."
+
+      A collapsed Motion direction panel per card, badged custom/default: edit, Save prompt,
+      then Re-render (t-009's button). Use default clears it. Saving deliberately does NOT
+      enqueue -- an edit is free, a render is minutes of GPU on a box that does one at a time.
+
+      THE DELICATE PART WAS THE DEDUPE KEY, not the editor. Every job ever rendered stores a
+      configKey and dedupeKey from sceneAnimatorConfigKey(). A custom prompt must produce a
+      DIFFERENT key or an edited prompt collides with the result it was written to replace; a
+      source without one must produce the EXACT key it always had, or every finished render is
+      orphaned at once, every card flips to missing, and the next batch redoes the folder. So
+      the fingerprint is appended and only when custom. The default key is pinned to a literal
+      in the test and was verified byte-identical to what the pre-change implementation on main
+      produces -- by extracting and running the old function, not by checking the new code
+      agrees with itself.
+
+      Overrides live in a new SceneAnimatorPrompt table keyed by source SHA-256, so one follows
+      its image through a rename. prompt.put.ts derives that hash by READING THE FILE and never
+      accepts one from the body: the hash is the primary key, so a supplied one would retarget
+      another operator's prompt and skip path containment.
+
+      TWO CI FAILURES, both mine, both worth remembering:
+
+      (a) The new test imported sceneAnimatorPromptStore.ts -> prisma, which throws at module
+      scope without DATABASE_URL, so it died on import in the DB-free Contract Tests job. This
+      was the SECOND occurrence -- verifyAnimatedArtOffload.test.ts did the same thing the day
+      before (t-008). Both passed locally because the provisioned sandbox exports a dummy
+      DATABASE_URL, so the local run was never the CI run. Fixed by splitting
+      sceneAnimatorPromptResolve.ts, and by adding `npm run test:contracts-db-free`, which runs
+      all 323 contract scripts with the variable stripped. That is the pre-push command; use it.
+      (A first attempt at a static import-graph guard was deleted after two false positives in
+      one minute -- a deliberate lazy await import(), and an `import prisma` inside a
+      template-literal fixture.)
+
+      (b) @@index([sourceFolder, sourceFile]) over two utf8mb4 VARCHAR(512) columns is 4096
+      bytes of key against InnoDB's 3072 limit, so the table could not be created at all -- this
+      would have failed the PRODUCTION migration, not just the nightly job. Caught by Da Vinci
+      Seed Verify, which runs on prisma/schema.prisma changes. The index also indexed nothing
+      anybody queries. Removed, with the byte math recorded at both sites. Could not be
+      reproduced locally (docker client, no daemon), so CI was the confirmation.
+
+      DEPLOY NOTE: this carries a Prisma migration. Unlike the rest of this cycle it needs
+      `prisma migrate deploy`, or saving a prompt 500s on a missing table.
+    updated: '2026-09-12T10:20:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#2657'
