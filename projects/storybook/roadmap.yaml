@@ -904,16 +904,24 @@ tasks:
 - id: t-041
   milestone: m8
   title: "Engine: length is a setting, not a mode"
-  status: waiting
+  status: review
   passes: 0
   stakes: reversible
   depends_on: t-039
-  note: >
+  note: >-
     Short story and Chaptered tale stop being identities. Open-ended and Episodic take a
     length dial that sets the run''s turn budget (and, for open-ended, may leave it unset).
     The deck''s turnBudgetByShape stays the default the dial starts from. Per Silas''s
     clarification this is a SETTING, not a card -- it must not appear in the hand.
-  updated: '2026-09-12T14:00:00Z'
+
+    2026-09-12: implemented in kind_robots#2686, awaiting merge. StoryBoardInput.turnBudget
+    is the dial: 3..40, defaulting to the deck's budget for the mode, explicit null only in
+    open-ended. It is a SETTING, not a card, and stays out of every hand-facing payload. The
+    prose bands moved with it -- a scene is not longer because the story it belongs to is,
+    so the old short-story and chaptered bands collapsed into one open-ended band;
+    structured keeps the 20-400 life band its live runs were written against.
+  updated: '2026-09-12T23:03:04Z'
+  implementation_pr: 'silasfelinus/kind_robots#2686'
 - id: t-042
   milestone: m8
   title: "Engine: the narrator is a Bot card plus a delivery dial"
