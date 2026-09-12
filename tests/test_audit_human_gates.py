@@ -39,6 +39,13 @@ def write_overrides(root, entries):
     )
 
 
+def write_priority(root, order):
+    lines = ["order:"] + [f"  - {slug}" for slug in order]
+    (root / "projects" / "priority.yaml").write_text(
+        "\n".join(lines) + "\n", encoding="utf-8"
+    )
+
+
 def test_scan_lists_active_human_gate_without_calling_it_stale(tmp_path):
     write_roadmap(
         tmp_path,
@@ -315,3 +322,77 @@ def test_scan_sorts_answered_gates_first(tmp_path):
 
     gates = audit.scan(tmp_path / "projects", include_inactive=False)
     assert [gate["task_id"] for gate in gates] == ["t-002", "t-001"]
+
+
+def test_scan_orders_gates_by_priority_queue_rank(tmp_path):
+    write_roadmap(
+        tmp_path,
+        "alpha",
+        [{"id": "t-001", "status": "needs-human", "title": "Alpha gate"}],
+    )
+    write_roadmap(
+        tmp_path,
+        "beta",
+        [{"id": "t-001", "status": "needs-human", "title": "Beta gate"}],
+    )
+    write_overrides(tmp_path, [("alpha", "active"), ("beta", "active")])
+    # beta leads the queue despite sorting after alpha alphabetically.
+    write_priority(tmp_path, ["beta", "alpha"])
+
+    gates = audit.scan(tmp_path / "projects")
+    assert [gate["project"] for gate in gates] == ["beta", "alpha"]
+    assert [gate["priority_rank"] for gate in gates] == [0, 1]
+
+
+def test_scan_reports_none_priority_rank_outside_workable_walk(tmp_path):
+    write_roadmap(
+        tmp_path,
+        "tabled",
+        [
+            {
+                "id": "t-001",
+                "status": "needs-human",
+                "title": "Decide whether to retire Tabled as a live project surface",
+                "gate_human": True,
+            }
+        ],
+    )
+    write_overrides(tmp_path, [("tabled", "retired")])
+    write_priority(tmp_path, ["tabled"])
+
+    gates = audit.scan(tmp_path / "projects")
+    assert len(gates) == 1
+    # Not in the active/continuous pickup walk, even though it's in priority.yaml.
+    assert gates[0]["priority_rank"] is None
+
+
+def test_render_annotates_priority_rank(tmp_path):
+    write_roadmap(
+        tmp_path,
+        "alpha",
+        [{"id": "t-001", "status": "needs-human", "title": "Alpha gate"}],
+    )
+    write_overrides(tmp_path, [("alpha", "active")])
+    write_priority(tmp_path, ["alpha"])
+
+    gates = audit.scan(tmp_path / "projects")
+    output = audit.render(gates)
+    assert "[hard, rank 1]" in output
+
+
+def test_scan_priority_rank_defaults_to_alphabetical_without_priority_file(tmp_path):
+    write_roadmap(
+        tmp_path,
+        "alpha",
+        [{"id": "t-001", "status": "needs-human", "title": "Alpha gate"}],
+    )
+    write_roadmap(
+        tmp_path,
+        "beta",
+        [{"id": "t-001", "status": "needs-human", "title": "Beta gate"}],
+    )
+    write_overrides(tmp_path, [("alpha", "active"), ("beta", "active")])
+    # No projects/priority.yaml written at all -- must not crash.
+
+    gates = audit.scan(tmp_path / "projects")
+    assert [gate["project"] for gate in gates] == ["alpha", "beta"]

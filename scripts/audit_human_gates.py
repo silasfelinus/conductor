@@ -5,6 +5,13 @@ The report lists every `status: needs-human` task in active projects and flags
 only strong contradictions or explicit resolved-language. It is read-only and
 never treats a suggestion as permission to bypass a genuine human gate.
 
+Within each human-answer/soft-hard tier, gates are ordered by their project's
+rank in `projects/priority.yaml` (via `project_lifecycle.ordered_workable_slugs`,
+the same walk `check_priority_queue_starvation.py` and `next_ready_task.py` use)
+so "what only Silas can unblock" reads in the order clearing it actually frees
+agent work, rather than alphabetically. A project outside the active/continuous
+pickup queue (paused/retired/finished) is reported "unranked" and sorts last.
+
 Paused, retired, and finished projects are excluded by default according to
 project-overrides.yaml. Use --include-inactive for an intentional archive
 sweep.
@@ -28,7 +35,11 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 PROJECTS = ROOT / "projects"
 OVERRIDES = ROOT / "project-overrides.yaml"
+PRIORITY_FILE = ROOT / "projects" / "priority.yaml"
 ACTIVE_STATUS = "active"
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from project_lifecycle import load_project_overrides, ordered_workable_slugs  # noqa: E402
 
 # These phrases describe completed state, not merely a future condition. Keep
 # this deliberately narrow: a false negative is preferable to nagging Silas
@@ -72,6 +83,32 @@ RESOLVED_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
 def load_yaml(path: Path) -> dict[str, Any]:
     data = yaml.safe_load(path.read_text(encoding="utf-8"))
     return data if isinstance(data, dict) else {}
+
+
+def load_priority_order(path: Path) -> list[str]:
+    if not path.exists():
+        return []
+    raw = load_yaml(path)
+    order = raw.get("order", [])
+    return [slug for slug in order if isinstance(slug, str)]
+
+
+def priority_ranks(
+    overrides_path: Path, priority_path: Path
+) -> dict[str, int]:
+    """Map each workable (active/continuous) project slug to its queue rank.
+
+    Reuses `project_lifecycle.ordered_workable_slugs` -- the same walk
+    `check_priority_queue_starvation.py` and `next_ready_task.py` use to decide
+    what a session picks up next -- so a gate list ordered by this rank reads in
+    the order clearing it would actually free agent work, and can never drift
+    from what the real pickup path considers workable.
+    """
+    overrides = load_project_overrides(overrides_path)
+    order = load_priority_order(priority_path)
+    return {
+        slug: rank for rank, slug in enumerate(ordered_workable_slugs(order, overrides))
+    }
 
 
 def load_project_statuses(path: Path) -> dict[str, str]:
@@ -182,9 +219,12 @@ def scan(
     projects_dir: Path = PROJECTS,
     overrides_path: Path | None = None,
     include_inactive: bool = False,
+    priority_path: Path | None = None,
 ) -> list[dict[str, Any]]:
     lifecycle_path = overrides_path or projects_dir.parent / "project-overrides.yaml"
     project_statuses = load_project_statuses(lifecycle_path)
+    ranks = priority_ranks(lifecycle_path, priority_path or projects_dir / "priority.yaml")
+    unranked = len(ranks)  # projects outside the workable walk sort after every ranked one
     gates: list[dict[str, Any]] = []
 
     for roadmap_path in sorted(projects_dir.glob("*/roadmap.yaml")):
@@ -224,6 +264,12 @@ def scan(
                     "human_answer": human_answer_unread(task),
                     "stale_reasons": stale_reasons(task),
                     "orphaned_by_lifecycle_change": orphaned,
+                    # None for a project outside the workable (active/continuous)
+                    # walk -- e.g. an orphaned lifecycle-dispute gate on a project
+                    # that just went paused/retired/finished. Reported as-is
+                    # rather than coerced to a number so callers can distinguish
+                    # "ranked last" from "not in the queue at all".
+                    "priority_rank": ranks.get(project_slug),
                 }
             )
 
@@ -235,6 +281,11 @@ def scan(
             # other way round.
             not gate.get("human_answer"),
             gate["soft_gate"],
+            # Priority-queue rank next: within the same human-answer/soft-hard
+            # tier, a gate on a project closer to the front of the pickup order
+            # blocks more agent work sooner. Unranked projects (not in the
+            # active/continuous walk) sort after every ranked one.
+            ranks.get(gate["project"], unranked),
             gate["project"],
             str(gate["task_id"]),
         ),
@@ -258,11 +309,16 @@ def render(gates: list[dict[str, Any]]) -> str:
     ]
     for gate in core:
         flavor = "soft" if gate["soft_gate"] else "hard"
+        rank = gate.get("priority_rank")
+        # unranked: the project isn't in the active/continuous pickup walk at
+        # all (e.g. an orphaned lifecycle-dispute gate) -- distinct from a real
+        # rank, which is 0-indexed so it's bumped by one for a 1-indexed display.
+        rank_label = f"rank {rank + 1}" if rank is not None else "unranked"
         suffix = ""
         if gate["stale_reasons"]:
             suffix = f"  REVIEW: {', '.join(gate['stale_reasons'])}"
         lines.append(
-            f"- {gate['project']}/{gate['task_id']} [{flavor}] "
+            f"- {gate['project']}/{gate['task_id']} [{flavor}, {rank_label}] "
             f"{gate['title']}{suffix}"
         )
         # The note itself, not just the flag. The point of surfacing an unread
