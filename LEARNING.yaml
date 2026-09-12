@@ -13309,3 +13309,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "The kr-text-black-* family's sizes (-lg/-xl/-sm/-xs/-2xl) were named as they were surveyed, not against a known-finite set -- so 'family closed' claims in a prior slice's note undercounted: text-base, the Tailwind default size, went unnamed for 69 slices until a plain 'diff the family's suffixes against Tailwind's own text-size scale' check would have surfaced it immediately. Next time a kr-text-* (or any Tailwind-scale-keyed) family claims to be closed, check its suffixes against the underlying scale's full enumeration before trusting the claim."
+- date: 2026-09-12
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A .kr-input*-family primitive whose base @apply drops a dead legacy class (input-bordered) doesn't fully close the family just because every DaisyUI size variant is named -- a separate axis (an explicit rounded-xl/rounded-2xl radius override coexisting with the same dead class) can carry 60+ occurrences unnoticed until a fresh full-repo survey checks for extra utility tokens riding alongside the base set, not just the base set's size suffixes alone."

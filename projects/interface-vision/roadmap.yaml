@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3294,13 +3294,11 @@ tasks:
   note: >-
     Recurring kr-* consistency umbrella (interface-vision). Full slice 1-234 history (395KB) archived to projects/interface-vision/T104-HISTORY.md -- see that file for the full archive pointer and what's established.
 
-    Slice 235 merged as silasfelinus/kind_robots#2642. Named .kr-text-black-base (font-black text-base) closing out the kr-text-black-* family completely (-xs/-sm/-base/-lg/-xl/-2xl, every Tailwind text size xs-2xl now named); migrated 53 occurrences across 41 files via a new kr_text_black_base_codemod.py. No color/behavior/API/schema/route/geometry change. All kind_robots PR checks green.
+    Slice 236 merged as silasfelinus/kind_robots#2644. Named .kr-input-rounded-xl/.kr-input-rounded-2xl (the rounded-xl/rounded-2xl override shapes on the .kr-input family that .kr-input/.kr-input-sm/.kr-input-xs don't cover), dropping the dead input-bordered class; migrated 68 occurrences across 25 files via two new codemods (kr_input_rounded_xl_codemod.py, kr_input_rounded_2xl_codemod.py). No color/behavior/API/schema/route/geometry change. All kind_robots PR checks green.
 
-    Return the recurring consistency umbrella to ready for the next bounded slice. Kaizen for the next slice: kr-text-black-* is now fully closed. A fresh full-repo class-frequency survey (outside every closed family -- kr-container/kr-icon-*/kr-img-cover/kr-input-*/kr-select-*/kr-checkbox-*/kr-textarea-*/kr-panel*/kr-text-black-*/kr-text-dim-*/kr-text-bold-*/kr-text-eyebrow*/kr-text-faded-*/kr-label-*/kr-btn-ghost-*/kr-note*) is needed to find the next target -- a first pass surfaced btn/badge/input-bordered combos (e.g. btn btn-primary btn-sm rounded-2xl, badge badge-sm rounded-xl) as promising. Keep this note short going forward -- append future slice history to T104-HISTORY.md, not here.
-
-    Slice 236 (PR silasfelinus/kind_robots#2644, open): a fresh full-repo class-frequency survey outside every closed family found two sizable pools on the .kr-input family that weren't yet named -- input input-bordered rounded-xl (35 occurrences/13 files) and input input-bordered rounded-2xl (33 occurrences/16 files), both explicit radius overrides that .kr-input/.kr-input-sm/.kr-input-xs don't cover. Named .kr-input-rounded-xl and .kr-input-rounded-2xl (dropping the dead input-bordered class), migrated all 68 occurrences across 25 files via two new codemods (kr_input_rounded_xl_codemod.py, kr_input_rounded_2xl_codemod.py). vue-tsc clean, eslint shows only 5 pre-existing issues (confirmed unchanged via git stash), layout contract holds. No color/behavior/API/schema/route/geometry change. Will flip back to ready once #2644 merges. Kaizen for the next slice: the btn/badge combos flagged by slice 235 (btn btn-primary btn-sm rounded-2xl, badge badge-sm rounded-xl) remain unclaimed.
-  updated: '2026-09-12T00:40:55Z'
-  implementation_pr: 'silasfelinus/kind_robots#2644'
+    Return the recurring consistency umbrella to ready for the next bounded slice. Kaizen for the next slice: the btn/badge combos flagged by slice 235 (btn btn-primary btn-sm rounded-2xl, badge badge-sm rounded-xl) remain unclaimed -- a fresh full-repo class-frequency survey outside every closed family (now also kr-input-rounded-xl/-2xl) is the starting point. Keep this note short going forward -- append future slice history to T104-HISTORY.md, not here.
+  updated: '2026-09-12T00:51:35Z'
+  implementation_pr: ''
   retry_context: ''
   owner: worker
   claimed_by: 20260912T003124Z-interface-vision-t-104-slice236
