@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   recurring: true
@@ -3297,12 +3297,12 @@ tasks:
     Slice 236 merged as silasfelinus/kind_robots#2644. Named .kr-input-rounded-xl/.kr-input-rounded-2xl (the rounded-xl/rounded-2xl override shapes on the .kr-input family that .kr-input/.kr-input-sm/.kr-input-xs don't cover), dropping the dead input-bordered class; migrated 68 occurrences across 25 files via two new codemods (kr_input_rounded_xl_codemod.py, kr_input_rounded_2xl_codemod.py). No color/behavior/API/schema/route/geometry change. All kind_robots PR checks green.
 
     Return the recurring consistency umbrella to ready for the next bounded slice. Kaizen for the next slice: the btn/badge combos flagged by slice 235 (btn btn-primary btn-sm rounded-2xl, badge badge-sm rounded-xl) remain unclaimed -- a fresh full-repo class-frequency survey outside every closed family (now also kr-input-rounded-xl/-2xl) is the starting point. Keep this note short going forward -- append future slice history to T104-HISTORY.md, not here.
-  updated: '2026-09-12T00:51:35Z'
+  updated: '2026-09-12T01:32:24Z'
   implementation_pr: ''
   retry_context: ''
   owner: worker
-  claimed_by: 20260912T003124Z-interface-vision-t-104-slice236
-  claimed_at: '2026-09-12T00:36:28Z'
+  claimed_by: 20260912T013223Z-interface-vision-t-104-slice237
+  claimed_at: '2026-09-12T01:32:24Z'
 
 - id: t-123
   milestone: m5
