@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -3302,8 +3302,8 @@ tasks:
     Slice 240 merged as silasfelinus/kind_robots#2653. Added three sibling codemods to kr_icon_4_size_shorthand_codemod.py (kr_icon_3_size_shorthand_codemod.py, kr_icon_3_5_size_shorthand_codemod.py, kr_icon_5_size_shorthand_codemod.py) and migrated the size-3/size-3.5/size-5 Tailwind shorthand utilities onto their existing kr- icon-3/kr-icon-3-5/kr-icon-5 primitives: 45 occurrences across 24 files (size-3), 72 across 32 files (size-3.5), 49 across 27 files (size-5). Purely mechanical 1:1 token substitution, no line-structure changes -- an earlier revision of this same commit ran a blanket prettier --write across every touched file, which reformatted unrelated pre- existing 80-col drift and broke two hardcoded literal-string contract checks (verifyTaskmasterCheckpointEngine.mjs, verifyDailyDreamArchiveWorkbench.ts) by reflowing text those checks depend on staying contiguous; caught by CI, root-caused, and fixed by reverting to a clean mechanical diff (no prettier --write at all, since this repo has no CI-enforced prettier check) before force-pushing the corrected commit. All 55 kind_robots PR checks green, mergeable_state clean before merge. Return the recurring consistency umbrella to ready for the next bounded slice. Kaizen for the next slice: (1) the remaining size-6/size-7/size-8 shorthand siblings (mirroring the kr-icon-6/-7/-8 primitives that already exist) and the still-open one-off badge badge-sm <extra> shapes from slice 238's kaizen note; (2) a repo-wide prettier --write is currently unsafe to run blind because a handful of verify*.{ts,mjs} scripts hardcode literal multi-line- sensitive substrings against files that are not themselves prettier-clean on main -- worth bringing those specific files to prettier-clean once, or auditing verify* scripts for substring checks that assume a specific line-wrapping.
 
     Slice 241 merged as silasfelinus/kind_robots#2655 (squash 21678e1). Added kr_icon_6_size_shorthand_codemod.py, kr_icon_7_size_shorthand_codemod.py, and kr_icon_8_size_shorthand_codemod.py and migrated 29 size-6/size-7/size-8 shorthand occurrences across 22 Vue files onto existing kr-icon-6/7/8 primitives. Reviewer inspected the complete diff, reviews/threads, mergeability, and exact-head Actions evidence; all 53 returned PR workflow runs completed successfully. Return the recurring consistency umbrella to ready for the next bounded slice.
-  updated: '2026-09-12T10:33:44Z'
-  implementation_pr: 'silasfelinus/kind_robots#2653'
+  updated: '2026-09-12T10:41:43Z'
+  implementation_pr: 'silasfelinus/kind_robots#2661'
   retry_context: ''
   owner: worker
   claimed_by: conductor-agent-20260912T103500Z-t104
