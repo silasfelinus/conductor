@@ -423,7 +423,23 @@ tasks:
     set `approved_by_human: true` and `status: done` here (or note the real root
     cause if it differs from the guess above) -- t-016 stays `ready` as the
     follow-on so the next occurrence doesn't need a lucky sweep either.
-  updated: '2026-09-12T20:27:00Z'
+
+    Escalation update (scheduled conductor sweep, ~2026-09-12T23:30 UTC): the outage has gotten
+    worse than the 503/schema-drift state described above. Both this session's own direct curl
+    against https://kindrobots.org/api/health/database and https://kindrobots.org/ (repeated
+    retries) now get a TLS-level connection reset (agent-proxy: "ws_closed_mid_exchange", 7
+    consecutive failures) rather than any HTTP response at all -- not a 503, no response at all.
+    Independently corroborated by kind_robots#2686's own CI run (unrelated PR, still open) failing
+    verifyPopulationDraftQuality.ts with a raw TypeError: fetch failed / ECONNREFUSED
+    75.111.66.70:443 at 2026-09-12T23:02:35Z, and verifyAcademyStarterManifest.ts failing the
+    same way at 23:03:48Z -- ECONNREFUSED means the port actively refused the connection, not a
+    timeout, so the service itself (or the box it is on) looks down, not merely degraded. Ruled
+    out a sandbox-wide network problem: https://github.com and https://example.com both returned
+    normally from the same shell in the same minute. This is now ~11-12 hours since the first 503
+    at ~11:45 UTC and the state has regressed rather than self-cleared. Not independently
+    reconciled with Alexandria (no access from this sandbox) -- recorded here as corroborating
+    evidence for whoever next has hands-on access, per t-016's still-open kaizen.
+  updated: '2026-09-12T23:37:36Z'
 
 goal: Run Kind Robots reliably on the Unraid/home infrastructure, with deployment, storage, networking, GPU services,
   and recovery procedures kept reproducible.
