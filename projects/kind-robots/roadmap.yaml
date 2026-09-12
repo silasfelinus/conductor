@@ -4179,6 +4179,48 @@ tasks:
     Large enough to warrant its own dedicated task/PR rather than folding into any
     other work -- do not attempt as a drive-by.
 
+- id: t-097
+  milestone: m6
+  title: ArtJob dashboard showed two jobs RUNNING on the one-slot relay -- an abandoned claim stayed RUNNING beside the live one
+  status: done
+  owner: claude
+  passes: 0
+  stakes: reversible
+  approved_by_human: false
+  updated: '2026-09-12T11:30:00Z'
+  implementation_pr: silasfelinus/kind_robots#2659
+  note: |
+    Filed and fixed 2026-09-12 from Silas's report ("still getting an error with two
+    different jobs shown as running, when it shouldn't be possible"): the /artjob queue
+    browser showed COMFY #21803 (attempt 1, priority 100, claimed 02:44) RUNNING next to
+    #21788 (attempt 2, priority 0, claimed 01:41, still carrying its attempt-1 "timed out"
+    error) -- 63 minutes side by side on a box with one render slot.
+
+    ROOT CAUSE: the relay (conductor ops/home-server/relay_agent.py) is a single slot --
+    claim, render, report, poll again. When a job's outcome report never lands (relay
+    restart between claim and complete, a lost /complete POST, a crash in process() whose
+    failure report also failed), the row stays RUNNING. claim.post.ts only flips a stale
+    RUNNING row to FAILED once attempts >= 3; below that it is merely re-claimable after
+    STALE_CLAIM_MINUTES (15), and because candidates are ordered priority-desc a low-priority
+    abandoned row waits behind every priority-100 job, RUNNING the whole time. The relay's
+    own shutdown handler (release_in_flight_claim -> requeue resetAttempts=false) only covers
+    a clean SIGTERM, not a lost report.
+
+    FIX (kind_robots#2659): a claim poll from an agent that still holds RUNNING rows is proof
+    those rows were abandoned. New server/utils/artJobRelaySlot.ts releaseAbandonedRelayClaims()
+    runs at the top of claim.post.ts -- before the paused check and the idle fast path -- and
+    hands back every RUNNING row with that claimedBy: PENDING with attempts intact, FAILED once
+    the budget is spent, prior error text kept behind the release reason, each update guarded on
+    the claimedAt that was read so a completion landing in between wins. Body field `singleSlot`
+    (default true) opts a genuinely multi-slot relay out; responses carry data.released. The
+    queue card labels an error on a RUNNING/PENDING row "Earlier attempt" so a live job no
+    longer reads as currently failing. Contract verifier
+    utils/scripts/verifyArtQueueRelaySlotRelease.ts wired into entity-art-manager-contract.yml.
+    No relay change needed -- the existing relay gets the behaviour on its next poll.
+
+    NOT COVERED, by design: a relay that dies outright and never polls again. Nothing claims
+    in that state anyway, and GET /api/art/queue/stats already reports it under staleRunning.
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
 
