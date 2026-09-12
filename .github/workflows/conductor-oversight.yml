@@ -75,8 +75,21 @@ jobs:
             done
           fi
 
-      - name: Surface oversight action
+      # An actionable sensor result is not a workflow crash. Send the actual
+      # reason through the same Brevo path as the digest instead of deliberately
+      # turning the job red and making GitHub email only "Run failed".
+      - name: Email explained oversight action
         if: ${{ steps.oversight.outputs.exit_code != '0' }}
+        shell: bash
+        env:
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+          DIGEST_TO: ${{ secrets.DIGEST_TO }}
+          DIGEST_TO_NAME: ${{ secrets.DIGEST_TO_NAME }}
+          DIGEST_FROM: ${{ secrets.DIGEST_FROM }}
+          DIGEST_FROM_NAME: ${{ secrets.DIGEST_FROM_NAME }}
         run: |
-          echo "::error::Portfolio oversight requires agent attention. See PORTFOLIO-OVERSIGHT.md artifact/report."
-          exit "${{ steps.oversight.outputs.exit_code }}"
+          subject="$(python scripts/render_portfolio_oversight_alert.py PORTFOLIO-OVERSIGHT.json --subject)"
+          run_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          python scripts/render_portfolio_oversight_alert.py PORTFOLIO-OVERSIGHT.json --run-url "$run_url" \
+            | python scripts/send_alert_brevo.py --subject "$subject" --body -
+          echo "::notice::Portfolio oversight needs attention; sent an email explaining the triggering sensor(s)."
