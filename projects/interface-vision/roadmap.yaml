@@ -3952,7 +3952,7 @@ tasks:
 - id: t-132
   milestone: m6
   title: Add a non-blocking shellcheck pass alongside the new bash -n syntax check
-  status: ready
+  status: claimed
   gate_human: false
   stakes: reversible
   passes: 0
@@ -3969,4 +3969,7 @@ tasks:
     set t-130 already computes, reusing that discovery logic rather than
     duplicating it. Keep it non-blocking initially; revisit making it blocking
     once false-positive rate is known from real PR traffic.
-  owner: null
+  owner: worker
+  claimed_by: claude-scheduled-20260912T1327Z-iv-t132
+  claimed_at: '2026-09-12T13:28:00Z'
+  updated: '2026-09-12T13:28:00Z'
