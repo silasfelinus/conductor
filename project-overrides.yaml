@@ -232,7 +232,7 @@ overrides:
 
   - slug: brainstorm
     status: finished # flipped 2026-09-11 by Silas, in session: "I'm going to accept brainstorm
-    # as acceptable and cleared. Project can be marked completed." 32/32 tasks and 7/7 milestones
+    # as acceptable and cleared." 32/32 tasks and 7/7 milestones
     # done. NOT a task-count flip: t-023 is a real playtest gate that FAILED once (2026-09-07,
     # paragraph drift and recycled example content), was fixed by kind_robots#2507, retested by
     # Silas on 2026-09-11, failed again on three new defects (lens selection treated as a floor
@@ -281,7 +281,10 @@ overrides:
     tabKey: artjob
 
   - slug: mural-design
-    status: active
+    status: paused # paused 2026-09-12 by Silas — retire the current Mural Studio direction;
+    # it does not work the way he wants, so preserve the roadmap for a possible rethink but
+    # stop agents from claiming it now. This supersedes the older CONTROL.md note saying
+    # "mural-design keeps working." Kind Robots issue #2668 owns removal of the current UI.
     priority: low
     # Frontend placement — synced to the kind_robots Project row by
     # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
