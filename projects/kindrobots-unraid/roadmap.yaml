@@ -358,5 +358,72 @@ tasks:
     a sweep's luck.
   updated: '2026-09-08T05:53:03Z'
 
+- id: t-017
+  milestone: m2
+  title: 'PRODUCTION INCIDENT: kindrobots.org running with 1 failed + 1 unapplied migration since ~2026-09-12T11:45 UTC'
+  status: needs-human
+  gate_human: true
+  owner: null
+  passes: 0
+  stakes: irreversible
+  soft_gate: false
+  note: >-
+    FOR SILAS: `https://kindrobots.org/api/health/database` has returned HTTP 503
+    (`"Database is reachable but the schema is not current for this build."`,
+    `pendingMigrations: 1, failedMigrations: 1`) continuously from at least
+    2026-09-12T12:45 UTC through this sweep at 2026-09-12T20:27 UTC (8+ hours,
+    still ongoing as of this note). First surfaced by
+    `check_container_log_drift.py` reading today's Alexandria digest (a brand-new
+    `[migration-drift]` signature on the `KindRobots` container, generated_at
+    2026-09-12T14:00 UTC) and independently confirmed by curling the health
+    endpoint directly. t-016 (still `ready`, unclaimed) would have caught this the
+    moment it started instead of it sitting undetected for 8+ hours -- worth
+    prioritizing now that a third occurrence has happened, this time not
+    self-clearing.
+
+    Likely cause: kind_robots#2662 ("storybook: server-side story runs on ending
+    decks, for every shape", merged 2026-09-12T11:45:40Z) ships two migrations in
+    one deploy -- `20260912120000` (additive) and `20260912123000`, which the PR's
+    own description calls out as "the ONE non-additive step": it drops the global
+    unique constraint on `LifeEnding.outcomeKey` in favor of a composite
+    `(deckId, outcomeKey)` unique and makes `deckId` NOT NULL. If any existing
+    `LifeEnding` row had a null `deckId` or the composite-unique backfill hit a
+    real collision, that migration would fail exactly like this while the
+    additive one either also failed or never got the chance to apply -- matching
+    "1 failed, 1 pending." `docs/runbooks/migration-credential-boundary.md`
+    (kind_robots) says the canonical `scripts/deploy-unraid.sh` path is supposed
+    to leave the OLD container running if migration fails, so either that guard
+    didn't hold here or the container was updated via a different path after a
+    partial manual migration attempt -- worth checking Alexandria's Unraid User
+    Scripts log for the actual deploy sequence around 11:45-12:45 UTC.
+
+    Effects observed this session: `auto-art-generate.yml`'s Kind Robots API
+    health check has failed on every scheduled run since (10:31, 15:23, 20:26
+    UTC), which skips ArtJob repair, missing-project-art refresh, Mandarin Tutor
+    corpus submission, and BOTH art-request/project-art-queue consumption steps
+    every single run -- this is why cthulhuquarium/t-073's re-queued 32-fish art
+    batch has sat un-submitted all day (separately noted on that task). Any other
+    DB-backed API route on the live site is presumably degraded or erroring too,
+    not just the art pipeline; this note only speaks to what this session could
+    observe from outside.
+
+    TO APPROVE / TO FIX: this needs direct Alexandria access this sandbox does
+    not have (no `MIGRATION_DATABASE_URL`, no Alexandria shell). From Alexandria,
+    per the credential-boundary runbook: run
+    `cd /mnt/user/appdata/kind_robots && bash scripts/deploy-unraid.sh` (the
+    guarded path -- pulls latest, applies pending migrations via the protected
+    migration lane, only then updates the container) rather than a bare Force
+    Update. If `20260912123000` is genuinely failing on a data conflict (a
+    pre-existing null `deckId` or duplicate `outcomeKey` under the new composite
+    key), that needs a one-off data-repair `prisma db execute` under
+    `MIGRATION_DATABASE_URL` before `migrate deploy` will succeed -- read the
+    actual Prisma error first (the runbook's "Reading what is pending" section
+    has the `_prisma_migrations` diagnostic query) rather than guessing further
+    from here. Once the health endpoint returns 200 with `schemaCurrent: true`,
+    set `approved_by_human: true` and `status: done` here (or note the real root
+    cause if it differs from the guess above) -- t-016 stays `ready` as the
+    follow-on so the next occurrence doesn't need a lucky sweep either.
+  updated: '2026-09-12T20:27:00Z'
+
 goal: Run Kind Robots reliably on the Unraid/home infrastructure, with deployment, storage, networking, GPU services,
   and recovery procedures kept reproducible.
