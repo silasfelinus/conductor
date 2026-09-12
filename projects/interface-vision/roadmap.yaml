@@ -3812,7 +3812,7 @@ tasks:
 - id: t-127
   milestone: m6
   title: Widen the one-header rule to catch title blocks that avoid <h1>, then work the five pages
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
   passes: 0
@@ -3832,11 +3832,22 @@ tasks:
     checks green, mergeable_state clean. Wiring hasShallowDuplicateTitleBlock() into
     verifyLayoutContract.ts's one-header rule remains open follow-on work -- returning to
     ready for that slice.
-  updated: '2026-09-12T04:36:32Z'
+
+    Wired hasShallowDuplicateTitleBlock() into verifyLayoutContract.ts's one-header rule
+    (kind_robots#2649, all 45 CI checks green, one-header baseline unchanged at 0). Ran the
+    widened rule against the whole repo: the four pages the prior docs audit called
+    legitimate (users/[id].vue, email-confirmation.vue, leaderboard.vue,
+    challenges/[slug].vue) stayed quiet. Found one real new hit, components/pages/giving-
+    page.vue's hero/CTA block (different copy from the shell's own title, alongside a donate
+    icon and button) -- refined the detector (shallowTitleStack now excludes blocks carrying
+    their own link/button or standalone media) rather than editing the page, per the design
+    brief's own rule that a heading saying something the shell does not is not a violation.
+    Task scope (widen rule + work the five pages) is complete.
+  updated: '2026-09-12T04:41:32Z'
   owner: worker
   claimed_by: 2026-09-12T041705Z-interface-vision-t-127-r11k
   claimed_at: '2026-09-12T04:17:05Z'
-  implementation_pr: 'silasfelinus/kind_robots#2648'
+  implementation_pr: 'silasfelinus/kind_robots#2649'
 - id: t-128
   milestone: m6
   title: Add a CI/lint guard that a test(...)-prefixed commit's diff actually contains an assertion
