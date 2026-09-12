@@ -13363,3 +13363,12 @@ records:
   outcome: done
   failure_category: quality
   lesson: "Running a blanket `prettier --write` across every file a codemod touched (to tidy the one or two multi-line class attributes the codemod's edit legitimately shortened) also reformats unrelated pre-existing 80-col drift throughout each file -- drift kind_robots never enforces via a CI prettier check, so it silently accumulates. That incidental reflow broke two hardcoded literal-string contract scripts (verifyTaskmasterCheckpointEngine.mjs, verifyDailyDreamArchiveWorkbench.ts) that assume specific substrings stay on one line/one call. Caught by CI before merge (self-triaged and fixed in the same PR, no Reviewer round needed), but the fix was to stop running `prettier --write` at all rather than chase each incidental reflow -- this repo has no CI-enforced prettier check, so nothing requires it, and a pure mechanical 1:1 token substitution (no line-structure change) is both safer and a smaller diff. Future size/shorthand codemod slices should skip blanket prettier passes; if a specific line genuinely needs reformatting, target only that line/file, not `prettier --write <whole-changed-file-list>`."
+- date: 2026-09-12
+  project: interface-vision
+  task: t-130
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A kaizen task sourced directly from a real CI-escaping bug (t-128's inline-regex bash syntax error) landed clean first pass because the fix's own verification loop closed the gap it was fixing: the new bash -n step's PR ran inside the same layout-contract job it modifies, so a syntax error in the new step itself would have failed loudly rather than merging silently. Prefer this shape (the fix's CI run exercises the fix) over a purely textual review for any CI-workflow-editing task."

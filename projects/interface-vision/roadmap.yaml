@@ -3982,3 +3982,24 @@ tasks:
     actual repeating card/tile lists, per t-129's own note on what it deliberately
     left untouched. Update the baseline with `--update` after the slice lands, and
     re-file this same continuation pattern (next free task id) if occurrences remain.
+- id: t-132
+  milestone: m6
+  title: Add a non-blocking shellcheck pass alongside the new bash -n syntax check
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  note: >-
+    Kaizen from reviewing/merging kind_robots#2654 (t-130, 2026-09-12): the new
+    layout-contract CI step only catches syntax errors (`bash -n`), not the wider
+    class of real shell bugs shellcheck flags (unquoted expansions, unsafe globbing,
+    etc.) -- t-130's own originating note called this out as a follow-on ("ideally
+    shellcheck if already available in the runner image, non-blocking/warning-only
+    to start if shellcheck's own false-positive rate is a concern"). DO: check
+    whether `shellcheck` is preinstalled on the `ubuntu-latest` GitHub Actions
+    runner image (it is, as of recent images) and add a warning-only step (do not
+    fail the job) that runs `shellcheck` over the same NUL-delimited changed-file
+    set t-130 already computes, reusing that discovery logic rather than
+    duplicating it. Keep it non-blocking initially; revisit making it blocking
+    once false-positive rate is known from real PR traffic.
+  owner: null
