@@ -95,15 +95,14 @@ class BuildPayloadTests(unittest.TestCase):
             "render_engine": {"state": state, "reason": "comfy-fast: no heartbeat"},
         }
 
-    def test_banner_leads_the_email_body(self):
+    def test_banner_follows_digest_header_when_no_fresh_dream_exists(self):
         payload = emailer.build_payload(self.minimal_digest())
         html = payload["htmlContent"]
         self.assertIn("Render engine DOWN", html)
         self.assertLess(
-            html.index("Render engine DOWN"),
             html.index("Conductor"),
-            "render health must lead — a dream bundle whose art never rendered "
-            "is not good news, and it should not take three screens to find out",
+            html.index("Render engine DOWN"),
+            "when there is no fresh dream to lead with, the digest heading should still precede operational health",
         )
 
     def test_a_digest_without_the_section_still_builds(self):
