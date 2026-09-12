@@ -5572,7 +5572,7 @@ tasks:
 - id: t-153
   milestone: m2
   title: "check_pr_merged_drift.py's authoritative gh_search_task_prs() pass always 403s in this sandbox -- swap in a repo-scoped list-and-filter fallback"
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
   passes: 0
@@ -5632,10 +5632,20 @@ tasks:
     credentials are legitimately restricted to a smaller repo set. Do not conflate the two
     403 shapes when investigating -- confirm which one a given failure is (unscoped search
     endpoint vs. out-of-scope repo) before attempting a fix.
-  updated: '2026-09-12T09:44:43Z'
+
+    DONE: silasfelinus/conductor#4159 merged (all CI green, including the full 1809-test
+    pytest suite). gh_search_task_prs() now uses a repo-scoped list-and-filter
+    (gh_list_repo_prs against /repos/{owner}/{repo}/pulls) instead of the cross-repo Search
+    API, with a shared repo_pr_cache so each tracked repo's PR list is paginated at most
+    once per run. Verified against live GitHub data: the search pass succeeded for every
+    repo this session's credentials cover and only 403'd on silasfelinus/PortOS, an out-of-
+    scope repo for this session -- a separate, already-understood limitation this task
+    explicitly did not attempt to fix.
+  updated: '2026-09-12T09:48:02Z'
   owner: worker
   claimed_by: claude-20260912T093641-conductor-t153
   claimed_at: '2026-09-12T09:36:42Z'
+  implementation_pr: 'silasfelinus/conductor#4159'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
