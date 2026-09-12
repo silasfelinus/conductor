@@ -632,11 +632,11 @@ tasks:
 - id: t-030
   milestone: m6
   title: "Engine: ending decks with hidden axes, and the first three genre decks seeded"
-  status: waiting
+  status: done
   passes: 0
   stakes: reversible
   depends_on: t-029
-  note: >
+  note: >-
     Part C7. Deck YAMLs are authored in this repo under projects/storybook/data/ending-decks/
     (life.yaml = axes only, pointing at scripts/generate_davinci_endings.py; mystery.yaml,
     romance.yaml, heist.yaml = 3 axes x 8 endings each, budgets short-story 5 / chaptered 8 /
@@ -644,7 +644,14 @@ tasks:
     seedDaVinciEndings.ts) with verifyStorybookDecks.ts in davinci-seed-verify.yml. Ships
     with the one staged migration: dropping the global unique on LifeEnding.outcomeKey in
     favour of (deckId, outcomeKey), which must not be deployed before t-029's resolver is live.
-  updated: '2026-09-12T12:00:00Z'
+
+    Done by conductor#4168 (authoring) and kind_robots#2662 (import). Mystery, Romance and Heist are live: three axes and all eight endings each, budgets short-story 5 / chaptered 8 / episodic 12. utils/scripts/seedStorybookDecks.ts imports a deck file or directory and refuses a deck whose endings do not exactly cover 2^axes, because a missing outcomeKey is a 404 the reader only meets after playing the whole story.
+
+    Migration 20260912123000 dropped the global unique on LifeEnding.outcomeKey in favour of (deckId, outcomeKey) and made deckId NOT NULL -- required, since every three-axis deck produces '000'..'111' and the second one imported would otherwise overwrite the first. It shipped in the same PR and therefore the same deploy as the additive migration and the deck-aware resolver, in name order, which is what makes the non-additive step safe.
+
+    The nightly davinci-seed-verify job now seeds all three decks into one database, which is the only place a same-bit-width collision between decks would surface.
+  updated: '2026-09-12T11:46:48Z'
+  implementation_pr: 'silasfelinus/kind_robots#2662'
 - id: t-031
   milestone: m6
   title: "Engine: one direct-prose narration contract for every shape and narrator voice"
