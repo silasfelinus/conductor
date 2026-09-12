@@ -687,17 +687,22 @@ tasks:
 - id: t-032
   milestone: m6
   title: "Engine: character-sheet plays (Skill/Item cards as a move) and run inventory"
-  status: waiting
+  status: done
   passes: 0
   stakes: reversible
   depends_on: t-029
-  note: >
+  note: >-
     Part C4. A run's inventory is seeded from the protagonist Character's Rewards loadout plus
     the board's treasures and grows via stateDelta.inventoryAdd. Playing a card is a turn with
     source SHEET: ITEM cards are spent, SKILL/POWER/MAGIC/FAVOR/PET persist but cannot be
     played on consecutive turns; the narrator shows the card genuinely used (rarity sets how
     decisively) and proposes moveEffects, which the app clamps.
-  updated: '2026-09-12T12:00:00Z'
+
+    Done by kind_robots#2662. A run's inventory is seeded from the protagonist Character's Rewards at creation, so the character sheet is playable from turn one rather than being a profile. Playing a card is a turn with source SHEET: an ITEM is spent (consumedAtTurn), every other type persists but cannot be played on consecutive turns, so a strong Skill changes a scene instead of replacing the choosing. The narrator is told the card, its rarity and whether it is spent, and proposes moveEffects the app clamps.
+
+    verifyStorybookPlayLoop.ts covers all of it against a real database: the play, the spend, the refusal to replay a spent card, and the refusal of a card the sheet never held.
+  updated: '2026-09-12T11:46:51Z'
+  implementation_pr: 'silasfelinus/kind_robots#2662'
 - id: t-033
   milestone: m6
   title: "Engine: ending collection API and the (dormant) gating hook"
