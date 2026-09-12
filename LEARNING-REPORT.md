@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-12T00:47:23Z
+Generated: 2026-09-12T00:57:43Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **916**
-- Outcomes: blocked: 16, cancelled: 1, done: 899
+- Closed tasks recorded: **917**
+- Outcomes: blocked: 16, cancelled: 1, done: 900
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
-| interface-vision | 117 | 100% |
+| interface-vision | 118 | 100% |
 | kapowarr | 52 | 100% |
 | kind-economy | 10 | 100% |
 | kind-robots | 55 | 98% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 899 | 99% |
+| software | 900 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-12 `interface-vision/t-104` — A .kr-input*-family primitive whose base @apply drops a dead legacy class (input-bordered) doesn't fully close the family just because every DaisyUI size variant is named -- a separate axis (an explicit rounded-xl/rounded-2xl radius override coexisting with the same dead class) can carry 60+ occurrences unnoticed until a fresh full-repo survey checks for extra utility tokens riding alongside the base set, not just the base set's size suffixes alone.
 - 2026-09-11 `interface-vision/t-104` — The kr-text-black-* family's sizes (-lg/-xl/-sm/-xs/-2xl) were named as they were surveyed, not against a known-finite set -- so 'family closed' claims in a prior slice's note undercounted: text-base, the Tailwind default size, went unnamed for 69 slices until a plain 'diff the family's suffixes against Tailwind's own text-size scale' check would have surfaced it immediately. Next time a kr-text-* (or any Tailwind-scale-keyed) family claims to be closed, check its suffixes against the underlying scale's full enumeration before trusting the claim.
 - 2026-09-11 `cthulhuquarium/t-077` — Wiring a pure evaluator (t-075's evaluateRivalry) into a tick-settlement loop is cheapest done ONCE per settlement outside the per-tick inner loop, not once per (tick x fish): composition (which fish, their traits) is loop-invariant even though the production amount it multiplies varies every tick via hunger/debris. Same discipline as debrisEverHigh's sticky-flag pattern applied a second time (rivalryObserved) -- a landmark milestone that can go active/inactive repeatedly still only needs ONE persisted 'ever observed' flag plus the existing AquariumEvent-log idempotency check, not a second column for 'already resolved'.
 - 2026-09-11 `cthulhuquarium/t-075` — A soft-gated feature task (Silas hasn't confirmed it's still wanted for v1) can still land a bounded, reversible first slice while the gate is open in parallel -- the pure rivalry evaluator shipped and tested clean, with runtime wiring split into a new task (t-077) rather than either blocking on the gate or scope-creeping the wiring into the same PR.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-11 `cthulhuquarium/t-072` — Investigated both halves of the task before touching code, and that investigation changed the plan: the roadmap note offered "fix the path or delete" the dead importCthulhuquariumArt.mjs script as two equally valid options, but reading the actual delivered assets showed the script's per-prefix resize scheme (1280/960/640/512px by filename prefix) doesn't match what the real delivery (kind_robots#2620) actually shipped (uniform 512px-long-edge) -- "fixing" the path would have silently overwritten already-correct committed assets with differently-sized ones. Deletion was the only safe choice once that was known, not a coin flip. Separately, the task's other half (bulk-creating real ArtImage DB records and linking them to Monster rows) was real, well-precedented, buildable work -- but this sandbox has zero path to any live database (confirmed: no .env, dummy-only DATABASE_URL in the provisioning script, no reachable DB port) -- so attempting it here would have produced an unverifiable script at best. Split it into its own task (t-076) with the investigation's findings attached, rather than either skipping it silently or attempting unverifiable DB work. Pattern worth repeating: when a roadmap task bundles a quick fix with something that needs infrastructure this sandbox doesn't have, do the quick part, investigate the rest thoroughly enough to leave a real trail, and split rather than stall.
 - 2026-09-11 `cthulhuquarium/t-070` — Filed directly by t-068's FULL-GAME-GAP-AUDIT.md as the highest-priority follow-up: t-065's earlier art-delivery fix only reached kr-art-plate calls in the bestiary/catalog/reveal-dialog panels, never the swim-canvas render loop (drawFish() in cthulhuquarium-game.vue), which is the one thing a player watches continuously. Fixed with a minimal, backward-compatible change -- a lazy per-slug HTMLImageElement cache feeding context.drawImage(), falling back to the original primitive silhouette when no art is cached yet or fails to load -- rather than a riskier rewrite of the render loop. Kept the existing hunger-based saturate()/globalAlpha desaturation and context.scale(facing, 1) flip behavior identical on both paths so the change is additive, not a redesign. Verified via eslint, vue-tsc --noEmit, prettier --check, and the full 46-check kind_robots CI suite (all green, including Contract verifiers and TypeScript) -- no visual/browser confirmation was possible from this sandbox, which is an honest gap worth a human spot-check on kindrobots.org next time the tank is opened, same caveat t-068 already flagged for the bestiary fix.
 - 2026-09-11 `cthulhuquarium/t-068` — A roadmap can read 63-68/68 done while the game still fails the owner's own look, because "done" tracked whether a task closed, not whether its output reached the player -- t-065's art shipped as a client-side fallback into the bestiary/catalog/reveal panels only, leaving the one thing continuously on screen (the swim-canvas fish) exactly as primitive as before. A gap audit that reads the actual rendering code path, not just the task list, is what surfaces that kind of drift; filed as t-070, the highest-priority follow-up. Also: a live curl against the production host can independently confirm a delivery PR actually reached the deployed build (fingerprinted asset URLs serving 200) without needing a signed-out visual check -- useful evidence to attach to a needs-human task even when the subjective "does it look right" call still has to wait for the human.
-- 2026-09-11 `cthulhuquarium/t-067` — kr-art-plate's shape="plate" aspect box always carries an internal w-full class, so a consumer's own size-* class loses the width cascade at equal specificity -- kr-entity-card-body.vue already hit and documented this exact bug for /characters icons (2026-08-05); grep for shape="plate"/"card"/etc. plus an external size-*/w-*/h-* class on any kr-art-plate call site before assuming a new report is a new bug.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-12T00:47:23Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-12T00:57:43Z_
