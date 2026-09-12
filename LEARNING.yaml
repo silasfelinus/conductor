@@ -13462,3 +13462,21 @@ records:
   outcome: done
   failure_category: quality
   lesson: "Slice 247: before writing @apply <bare-word> in tailwind.css for a new kr-* primitive, grep node_modules/daisyui and node_modules/tailwindcss for that exact token first -- a class that is still hand-rolled correctly in HTML (silently inert if unrecognized) is not proof the same token is @apply-able, since Tailwind's @apply requires every token to resolve to a real registered utility and errors the production build otherwise. `form-control` was removed from daisyUI in the v4->v5 upgrade but never swept from ~43 call sites across the repo, so it read as a normal hand-rolled component class right up until the build step. Caught by the CI \"Build production image\" job (the only one of ~50 checks that actually runs a real production build rather than vue-tsc/eslint/unit-level checks), not by any local verification step run before the first push -- worth treating a brand-new bare-word @apply target as needing this grep check up front, the same way BOUNDED_EXTRAS already gets checked before trusting an estimate."
+- date: 2026-09-12
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: quality
+  lesson: "Slice 248 (kr-img-cover/size-full shorthand): a kr-* class-token codemod can break a hand-authored contract checker that does raw string matching on the literal source text of the class it migrates -- distinct from every failure class this umbrella has hit so far (layout-contract geometry checks, the tailwind @apply build-pipeline check from slice 247). verifyStorybookStudio.mjs asserted the bare string 'object-cover' inside narrative-ingredient-card.vue; the codemod correctly replaced it with .kr-img-cover (CSS-identical rendering, h-full w-full object-cover under @apply), so the intent the contract actually cared about (aspect-ratio + object-fit-cover + gradient overlay markup present) still held, but the literal substring no longer did. Caught by CI's dedicated contract-check job, not by eslint/vue-tsc/prettier/layout-contract/npm run build (none of which inspect for a specific class token's literal presence). Fixed by adding an includesAllOrAlternatives() helper so a contract entry can list acceptable alternate spellings of the same rendered shape. Before a future kr-* slice migrates a file, grep the repo's verify*.{mjs,ts} scripts for that file's basename AND for the specific class tokens being migrated -- a hardcoded string-literal assertion on a class name is a distinct risk class from the geometry/build-pipeline ones already documented, and grepping for the file alone (as this slice partly did before pushing) is not sufficient without also checking whether any hit asserts the literal token text."
+- date: 2026-09-12
+  project: interface-vision
+  task: t-131
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: actionable
+  lesson: "A task can sit at status: review with a fully-implemented, pushed branch and never actually be reviewable, because no PR was ever opened from it -- observed for worker/interface-vision-t-131-20260912T151712Z-oai11 (real, scoped, single-line commit matching the task exactly). AGENTS.md's step 7 assumes 'set status: review before opening the PR' happens as one atomic sequence, but a session can crash or end between the roadmap edit and the actual gh pr create/GitHub MCP create_pull_request call, leaving status: review with nothing behind it -- indistinguishable from a genuinely in-review PR without checking GitHub directly. A later session (this one) found it by checking kind_robots' branch list against its open+closed PR list for a task at status: review and finding neither. Worth a lightweight check in whatever surfaces 'reviewable work' (select_role.py's reviewer signal, or a dedicated staleness check): a status: review task whose implementation branch has no open OR merged PR after some age is the same class of gap check_pr_merged_drift.py already covers in the other direction (a merged PR the roadmap doesn't know about)."
