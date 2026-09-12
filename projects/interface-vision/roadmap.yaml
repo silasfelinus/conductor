@@ -3889,7 +3889,7 @@ tasks:
 - id: t-129
   milestone: m6
   title: Survey and migrate the highest-traffic viewport-grid offenders onto container-width grids
-  status: ready
+  status: claimed
   gate_human: false
   stakes: reversible
   passes: 0
@@ -3908,6 +3908,10 @@ tasks:
     Scope to one bounded slice (a handful of files) rather than attempting all 205 at
     once, matching the recurring-umbrella pattern t-104 already uses. Update the
     baseline with `--update` after each slice lands.
+  owner: worker
+  claimed_by: 2026-09-12T060500Z-interface-vision-t-129-viewport-grid
+  claimed_at: '2026-09-12T05:45:59Z'
+  updated: '2026-09-12T05:45:59Z'
 - id: t-130
   milestone: m6
   title: Require a bash -n syntax check on any .sh file a PR adds or modifies
