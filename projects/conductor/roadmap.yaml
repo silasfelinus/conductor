@@ -5569,5 +5569,70 @@ tasks:
   updated: '2026-09-11T23:55:00Z'
   implementation_pr: 'silasfelinus/conductor#4129'
 
+- id: t-153
+  milestone: m2
+  title: "check_pr_merged_drift.py's authoritative gh_search_task_prs() pass always 403s in this sandbox -- swap in a repo-scoped list-and-filter fallback"
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  note: >-
+    Filed 2026-09-12 (scheduled conductor Agent run, interface-vision/t-104 slices
+    237-238 cycle) from directly reproducing the failure this session's `check_pr_merged_drift.py`
+    run hit on cthulhuquarium/t-073 and interface-vision/t-127.
+
+    ROOT CAUSE, confirmed by direct reproduction: this sandbox's outbound proxy enforces
+    "sessions are bound to their configured repositories" on the GitHub REST API. A
+    repo-scoped endpoint works fine -- `curl -H "Authorization: Bearer $GITHUB_TOKEN"
+    https://api.github.com/repos/silasfelinus/kind_robots/pulls/2647` returned 200 in this
+    session -- but the cross-repo Search API does not: `curl ...
+    https://api.github.com/search/issues?q=...` returned 403 with body `{"message":"This
+    GitHub API path is not available: sessions are bound to their configured repositories.
+    Use repository-scoped endpoints (repos/{owner}/{repo}/...).", "documentation_url":
+    "https://docs.anthropic.com/en/docs/claude-code/github-actions"}`.
+
+    This refines (does not contradict) the existing "a raw urllib call to api.github.com
+    will 403 there even with GITHUB_TOKEN set" note already baked into
+    `check_pr_merged_drift.py`'s own stderr message, AGENTS.md's cross-repo notes, and
+    several TALKBACK entries: the blanket claim is one API surface too broad. `gh_pr()`
+    (direct `repos/{owner}/{repo}/pulls/{number}` fetch, used once a candidate PR number is
+    already known) is repo-scoped and works. `gh_search_task_prs()` (the "authoritative
+    pass" the script's own docstring says callers should prefer, invoked via
+    `/search/issues?q=...` to find a PR by task-id title when no PR number is already
+    recorded) is NOT repo-scoped and always 403s here -- guaranteed, not intermittent,
+    confirmed via direct reproduction outside the script too.
+
+    Practical effect: every session's `check_pr_merged_drift.py` run reports "N candidate(s)
+    could NOT be verified" for any in-progress task whose note doesn't already quote an
+    explicit `owner/repo#number`, forcing a manual GitHub-MCP fallback check every single
+    time (see this session's own TALKBACK entry, and at least half a dozen prior sessions'
+    entries logging the identical "usual API-403-unverifiable candidates" pattern). The
+    audit is not actually broken -- the fallback catches every case -- but it never gets
+    to report clean, so a real drift signal could get lost in the noise of an
+    always-present false "unresolved" line.
+
+    DO: `gh_search_task_prs()` already receives the candidate `repos` list (conductor +
+    kind_robots by default, per its `--repos` argument). Replace its Search-API call with a
+    repo-scoped fallback per repo in that list: `GET /repos/{owner}/{repo}/pulls?state=all&per_page=100`
+    (paginated) filtered client-side for a title containing `<project>/<task-id>`, matching
+    the same close-out PR title convention the Search-API query already targets. This stays
+    within the proxy's repo-scoping restriction (confirmed working above) while preserving
+    the exact same match semantics. Add a `tests/test_check_pr_merged_drift.py` case (or
+    extend the existing one, if present) asserting the new repo-scoped path returns the same
+    candidates the old query-string search would have for a known fixture.
+
+    Cross-check `scripts/select_role.py` too -- its own stderr output this session showed
+    the identical `GitHub API unreachable ... HTTP Error 403: Forbidden` shape for
+    `.../cthulhuquarium/pulls?state=open` and `.../cthulhuquarium/branches?per_page=100`,
+    but those two ARE already repo-scoped endpoints and still 403'd. That is a DIFFERENT
+    cause (this session's repo-scope allowlist does not include `cthulhuquarium` -- see the
+    "Repository Scope" list in this session's own system prompt, silasfelinus/kind_robots,
+    conductor, Kapowarr, humboldtscoopsolutions only) and is out of scope for this task: no
+    fix here can make an out-of-scope repo's endpoints reachable from a session whose
+    credentials are legitimately restricted to a smaller repo set. Do not conflate the two
+    403 shapes when investigating -- confirm which one a given failure is (unscoped search
+    endpoint vs. out-of-scope repo) before attempting a fix.
+  updated: '2026-09-12T02:55:00Z'
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
