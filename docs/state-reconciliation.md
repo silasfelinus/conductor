@@ -48,7 +48,12 @@ Reconciliation includes all relevant fields, not only `status`:
 - owner and claim fields when the transition should clear them;
 - milestone status when every task in that milestone is complete;
 - dependency resolution;
-- a concise completion or decision note.
+- a concise completion or decision note;
+- when one project has been absorbed by another (a product merge like davinci -> storybook on
+  2026-09-09), the registry too: `project-overrides.yaml` lifecycle, `projects/priority.yaml`
+  membership, and the absorbed project's still-open tasks moved or folded. The code merge alone
+  left two Active cards on the Kind Robots Projects page for three days (storybook TALKBACK,
+  2026-09-12).
 
 Use `task-events` or the documented close-out helper rather than hand-editing history casually. Verify that the processor applied the event. Creation of an event is not completion.
 

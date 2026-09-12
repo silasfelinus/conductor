@@ -1,9 +1,11 @@
 project: storybook
 kind: software
 goal: >
-  Ship the collaborative Storybook experience as a polished story-first product: guided and
-  limited-visibility play, reusable story state/artifacts, the in-progress casting/setup
-  redesign, and a responsive front end that has been visually accepted on phone/tablet/desktop.
+  Ship Storybook as one stylish, card-driven storymaker with many endings: element cards
+  chosen from a hand onto a storyboard, a bounded turn loop where each move is an offered
+  option, a custom action, or a play from the hero's character sheet, deterministic resolution
+  into per-deck ending sets (genre decks alongside the 1,024-ending Life deck), and a per-account
+  collection of adventures and endings -- visually accepted on phone/tablet/desktop.
 notes_from_silas: 'Build the collaborative storytelling experience layer on top of the existing Kind Robots models. Support guided adventure and limited-visibility collaboration modes with async-first play, branching choices, custom inputs, rewards, inventory, and reusable story state. 2026-09-09, superseding the Da Vinci separation clause that stood here from 2026-07-02: "merge the projects, and kill any reference that says we should separate them. we care about having a solid *single* interface that is a stylish and effective storymaker with many endings. Whatever has been done should be merged." Da Vinci is now the `life` shape of Storybook (kind_robots PR #2549) — one route, one setup screen, one library. Nothing forbids a shared session table or a column on a Life* model any more; judge such a change on its merits like any other.'
 milestones:
 - id: m1
@@ -26,6 +28,14 @@ milestones:
   title: Da Vinci convergence
   weight: 25
   status: in-progress
+- id: m6
+  title: Ending decks and the collection
+  weight: 30
+  status: in-progress
+- id: m7
+  title: The Table, the Reading, the Ending (card-driven redesign)
+  weight: 30
+  status: not-started
 tasks:
 - id: t-001
   milestone: m1
@@ -165,7 +175,9 @@ tasks:
     State reconciliation (conductor session sweep, 2026-09-05T06:27Z): stale claim (openai- scheduled-20260905T031428Z-storybook-t010-oai6f2, claimed_at 2026-09-05T03:14:28Z) sat past the 90-minute claim TTL. implementation_pr silasfelinus/kind_robots#2403 confirmed merged 2026-09-05T02:45:29Z via direct PR lookup (check_pr_merged_drift.py's own GitHub API calls 403 in this sandbox). Released the stale claim and re-armed to ready per recurring-task convention.
 
     Cycle 51 found a concrete narrative storage-recovery sibling defect. Taskmaster's restoreFromLocalStorage catches a throwing getItem/parse but then calls localStorage.removeItem(STORAGE_KEY) unguarded inside that catch, so storage implementations that reject access can throw again out of the recovery path and onMounted. Storybook's equivalent recovery already nests cleanup in a second try/catch and its session-storage recovery guard documents this exact class. Filed kind_robots issue #2413 with the narrow fix and regression-test scope. No implementation was attempted connector-side because the affected store is a large file and the connector protocol forbids replacement from an abbreviated response; task remains ready for the focused store + contract slice.
-  updated: '2026-09-05T09:16:20Z'
+
+    2026-09-12 (Silas-directed session): polish cycles PAUSE on storybook-visual-setup.vue, conductor/storybook-page.vue and storybook-library-page.vue until t-034/t-035/t-036 land -- those screens are being replaced by the card-driven redesign (projects/storybook/docs/storymaker-redesign.md), so a bug hunt there is polishing a screen that is going away. Cycles may still target storybook-life-run.vue, the shared narrative primitives, and the new server engine (server/utils/storybookNarration.ts, storybookRuns.ts) once they merge.
+  updated: '2026-09-12T12:00:00Z'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
@@ -259,7 +271,9 @@ tasks:
     Required redesign: replace the four-step/tab-like setup with one open selection surface. Story ingredients should be image-led, placeable/choosable cards with a tarot-deck/tableau feeling; entity choices must use their real Character/Dream/Scenario/Facet/Reward artwork when available. Narrator/style/structure choices should also be visually represented rather than plain button rows. Keep the existing story engine and persistence behavior; this is a front-end architecture and art-direction rejection, not a request to rebuild the narrative backend.
 
     Kind Robots implementation is underway on fix/storybook-art-first-setup. Do not ask Silas to re-review until that redesign has merged and deployed.
-  updated: '2026-09-08 02:40:00+00:00'
+
+    2026-09-12: davinci/t-022 ("FOR SILAS: visually accept the finished Da Vinci experience") is folded into this gate when davinci was retired into storybook -- the life shape is one of the shapes on the same screen, so one acceptance covers both. The redesign this gate now waits on is the card-driven Table/Reading/Ending spec in projects/storybook/docs/storymaker-redesign.md (t-034..t-036), which supersedes the fix/storybook-art-first-setup branch mentioned above; the mockups Silas is commissioning from that spec come first.
+  updated: '2026-09-12T12:00:00Z'
 - id: t-017
   milestone: m4
   title: Add a contract for Storybook object-entry links
@@ -544,3 +558,188 @@ tasks:
     touch, so doing the rename first means doing it twice. It is also cosmetic,
     and should not be picked up ahead of anything that changes what the
     storymaker can actually do.
+
+    2026-09-12: the engine groundwork (t-029..t-033) is born under /api/storybook/* and
+    stores/storybookRunStore.ts, so this task shrinks to retiring the old /api/davinci/*
+    routes (thin re-exports first) and the davinci-* localStorage keys once life runs in
+    flight have drained. Still sequenced behind t-025/t-031.
+
+- id: t-027
+  milestone: m6
+  title: "Audit actual art coverage for all 1,024 Life endings"
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: |-
+    Moved from davinci/t-018 on 2026-09-12 when davinci was retired into storybook (the life shape). Original note follows.
+
+    kind_robots PR #1836 merged (852f02e5, all 19 checks green): new admin-only GET /api/davinci/endings/coverage endpoint. Classifies every LifeEnding's icon/hero art as resolved (real ArtImage row), queued (path-string only -- per seedDaVinciEndings.ts/docs/notes/davinci-ending-seed.md the importer never sets the ArtImage id fields), or missing; cross-checks dangling ArtImage refs; reports seeded-vs-expected (1024) count; inventories contextual LifeRunArt (by sceneType, runs with/without art).
+
+    Released under Silas's 2026-09-07 human-gate simplification policy: no human decision is needed; the old gate was only deploy timing. A token-equipped worker should call the production /api/davinci/endings/coverage endpoint, record the actual 1,024-ending icon/hero/contextual-art counts here, and turn any real missing-art result into t-028. Do not park deployment timing in Silas's queue. After t-030 lands, the same audit should cover the genre decks' endings (24 rows across mystery/romance/heist) -- extend the coverage endpoint to take ?deckKey= rather than writing a second one.
+  updated: '2026-09-12T12:00:00Z'
+- id: t-028
+  milestone: m6
+  title: "Generate, distribute, and verify every missing Life ending asset"
+  status: waiting
+  passes: 0
+  stakes: reversible
+  depends_on: t-027
+  note: >
+    Moved from davinci/t-019 on 2026-09-12. Consume t-027's exact missing list in bounded
+    idempotent batches through the existing ArtJob pipeline. Do not create duplicate jobs for
+    already-rendered or already-queued endings. Close only when all 1,024 Life endings (and,
+    once seeded, every genre-deck ending) have the required delivered art and the verifier
+    reports zero gaps.
+  updated: '2026-09-12T12:00:00Z'
+- id: t-029
+  milestone: m6
+  title: "Engine: server-side story runs for every shape (create, resume, list, turn)"
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: >
+    Part C1/C3 of projects/storybook/docs/storymaker-redesign.md. Generalize the Life engine
+    rather than fork it: additive columns on LifeRun/LifeChoice/LifeEnding plus a new
+    EndingDeck model (Life becomes the deck with key `life`); new routes under
+    /api/storybook/{decks,runs,runs/:id,runs/:id/turn,runs/:id/resolve,endings} with the logic
+    in server/utils/storybookRuns.ts. The turn route records the move AND narrates the next
+    turn in one call, taking OPTION effects from the server-held pendingTurn (never the
+    client) and CUSTOM/SHEET effects from the narrator's clamped moveEffects. /api/davinci/*
+    keeps working untouched so life runs in flight survive. Schema-affecting; migrations must
+    stay additive and backward-compatible with the running build.
+  updated: '2026-09-12T12:00:00Z'
+- id: t-030
+  milestone: m6
+  title: "Engine: ending decks with hidden axes, and the first three genre decks seeded"
+  status: waiting
+  passes: 0
+  stakes: reversible
+  depends_on: t-029
+  note: >
+    Part C7. Deck YAMLs are authored in this repo under projects/storybook/data/ending-decks/
+    (life.yaml = axes only, pointing at scripts/generate_davinci_endings.py; mystery.yaml,
+    romance.yaml, heist.yaml = 3 axes x 8 endings each, budgets short-story 5 / chaptered 8 /
+    episodic 12) and imported by kind_robots utils/scripts/seedStorybookDecks.ts (modeled on
+    seedDaVinciEndings.ts) with verifyStorybookDecks.ts in davinci-seed-verify.yml. Ships
+    with the one staged migration: dropping the global unique on LifeEnding.outcomeKey in
+    favour of (deckId, outcomeKey), which must not be deployed before t-029's resolver is live.
+  updated: '2026-09-12T12:00:00Z'
+- id: t-031
+  milestone: m6
+  title: "Engine: one direct-prose narration contract for every shape and narrator voice"
+  status: ready
+  passes: 0
+  stakes: reversible
+  depends_on: t-025
+  note: >
+    Part C2; this is where t-025 gets done ("where it runs" = the server). New DB-free
+    server/utils/endingDeckMath.ts and server/utils/storybookNarration.ts (request carries
+    shape, deck axes, narratorStyle, the board bible, turn index/budget, inventory, recent
+    turns and the reader's move; response is narrativeText under the PROSE CONTRACT, 2-4
+    choices with per-axis effects, moveEffects, stateDelta, artPrompt, endingHint), a shared
+    server/utils/structuredCompletion.ts JSON-schema caller, and davinciNarration.ts reduced
+    to an adapter that keeps every exported name so verifyDaVinciNarration.ts stays green.
+    The prose contract and the five narrator-style directives are quoted verbatim in the
+    design doc; Silas's rule is "direct, not verbose with purple prose", the narrator
+    modulates within that.
+  updated: '2026-09-12T12:00:00Z'
+- id: t-032
+  milestone: m6
+  title: "Engine: character-sheet plays (Skill/Item cards as a move) and run inventory"
+  status: waiting
+  passes: 0
+  stakes: reversible
+  depends_on: t-029
+  note: >
+    Part C4. A run's inventory is seeded from the protagonist Character's Rewards loadout plus
+    the board's treasures and grows via stateDelta.inventoryAdd. Playing a card is a turn with
+    source SHEET: ITEM cards are spent, SKILL/POWER/MAGIC/FAVOR/PET persist but cannot be
+    played on consecutive turns; the narrator shows the card genuinely used (rarity sets how
+    decisively) and proposes moveEffects, which the app clamps.
+  updated: '2026-09-12T12:00:00Z'
+- id: t-033
+  milestone: m6
+  title: "Engine: ending collection API and the (dormant) gating hook"
+  status: waiting
+  passes: 0
+  stakes: reversible
+  depends_on: t-029
+  note: >
+    Part C5. Reuse LifeAchievement ENDING + LifeAchievementUnlock + Achievement triggerCode
+    storybook-ending-{deckKey}-{outcomeKey} (life keeps davinci-ending-*); one COLLECTION
+    LifeAchievement per deck awarded when every ending in the deck is found;
+    GET /api/storybook/endings?deckKey= returns unlocked endings in full and locked ones as
+    silhouettes. Gating: EndingDeck.unlockAchievementId + server/utils/storybookGating.ts
+    assertDeckPlayable, enforced only behind STORYBOOK_ENFORCE_DECK_GATES=true until t-038.
+  updated: '2026-09-12T12:00:00Z'
+- id: t-034
+  milestone: m7
+  title: "UI: the Table -- storyboard slots, and the workspace hand taken over on /storybook"
+  status: blocked
+  passes: 0
+  stakes: reversible
+  depends_on: [t-029, t-030]
+  note: >
+    Part B1. Blocked on the ChatGPT mockups Silas is commissioning from
+    projects/storybook/docs/storymaker-redesign.md. Slots: Genre, Place, Hero (required);
+    Company, Narrator, Shape, Thread, Treasures, Spark (optional/defaulted). The bottom
+    workspace hand fans the deck for the active slot via a new `storybookCards` page-cards key
+    (stores/pageStore.ts cardsKey -> stores/helpers/modelCards.ts), so workspace-hand.vue's
+    sizing/flip/scroll code is untouched. Board lights up when the required slots are filled.
+    Unblock by setting status: ready once the mockups are in hand.
+  updated: '2026-09-12T12:00:00Z'
+- id: t-035
+  milestone: m7
+  title: "UI: the Reading -- one page per turn with options, a custom action, and the hero's cards in the hand"
+  status: blocked
+  passes: 0
+  stakes: reversible
+  depends_on: [t-034, t-032]
+  note: >
+    Part B2. Blocked on the mockups. Scene art plate + short direct prose; tableau strip and
+    turn pips; the three moves always visible together (option cards, "You ..." composer, the
+    hero's Skill/Item cards fanned in the bottom hand). Axes stay hidden for genre decks; the
+    Life ledger sits behind a toggle. Built on stores/storybookRunStore.ts, not the old beat loop.
+  updated: '2026-09-12T12:00:00Z'
+- id: t-036
+  milestone: m7
+  title: "UI: the Ending reveal and the Collection album"
+  status: blocked
+  passes: 0
+  stakes: reversible
+  depends_on: [t-035, t-033]
+  note: >
+    Part B3/B4. Blocked on the mockups. Ending card flip (kr-card-flip gesture), "added to your
+    collection · n of N" with the deck's album row (found face-up, unfound face-down), play
+    again / new table. The Collection replaces the localStorage "Recent stories" drawer with
+    per-account Adventures and per-deck Endings albums; Life's "Endings on record" folds in.
+  updated: '2026-09-12T12:00:00Z'
+- id: t-037
+  milestone: m7
+  title: "Retire the client-side beat loop and the localStorage library; rewrite the guards that pin them"
+  status: waiting
+  passes: 0
+  stakes: reversible
+  depends_on: [t-034, t-035, t-036]
+  note: >
+    Part C6's second half. Once the new screens run every shape on storybookRunStore, delete
+    the beat loop in stores/storybookStore.ts, storybookLibraryHelper.ts, conductor/storybook-
+    page.vue and storybook-visual-setup.vue, migrate any saved localStorage sessions into
+    server adventures (or export them), and rewrite the ~25 verifyStorybook*Guard.mjs, the 13
+    verifyDaVinci*Guard.ts, and their storybook-*-contract.yml workflows -- the design doc
+    lists every one. Never skip or quarantine a guard to get green; rewrite it against the
+    new surface.
+  updated: '2026-09-12T12:00:00Z'
+- id: t-038
+  milestone: m7
+  title: "Gate genres, characters and narrators; award them on completion"
+  status: waiting
+  passes: 0
+  stakes: reversible
+  depends_on: [t-033, t-036]
+  note: >
+    Part B5. Locked cards appear face-down in the hand with a lock and an unlock hint; the
+    unlock condition lives on the deck/card record (EndingDeck.unlockAchievementId, and a
+    matching column on Character) and is awarded in the same resolution transaction that
+    credits the ending. Flip STORYBOOK_ENFORCE_DECK_GATES on once the hand renders locks.
+  updated: '2026-09-12T12:00:00Z'
