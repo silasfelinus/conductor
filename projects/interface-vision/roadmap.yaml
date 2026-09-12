@@ -3286,12 +3286,12 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
   depends_on: t-103
-  note: |-
+  note: >-
     Recurring kr-* consistency umbrella (interface-vision). Full slice 1-234 history (395KB) archived to projects/interface-vision/T104-HISTORY.md -- see that file for the full archive pointer and what's established.
     Slice 236 merged as silasfelinus/kind_robots#2644. Named .kr-input-rounded-xl/.kr-input-rounded-2xl (the rounded-xl/rounded-2xl override shapes on the .kr-input family that .kr-input/.kr-input-sm/.kr-input-xs don't cover), dropping the dead input-bordered class; migrated 68 occurrences across 25 files via two new codemods (kr_input_rounded_xl_codemod.py, kr_input_rounded_2xl_codemod.py). No color/behavior/API/schema/route/geometry change. All kind_robots PR checks green.
     Return the recurring consistency umbrella to ready for the next bounded slice. Kaizen for the next slice: the btn/badge combos flagged by slice 235 (btn btn-primary btn-sm rounded-2xl, badge badge-sm rounded-xl) remain unclaimed -- a fresh full-repo class-frequency survey outside every closed family (now also kr-input-rounded-xl/-2xl) is the starting point. Keep this note short going forward -- append future slice history to T104-HISTORY.md, not here.
@@ -3305,12 +3305,21 @@ tasks:
     Slice 242 merged as silasfelinus/kind_robots#2661 (squash). Opened .kr-icon-9 (next bare sizeless/colorless icon-glyph sibling after kr-icon-8) via kr_icon_9_codemod.py and kr_icon_9_size_shorthand_codemod.py, migrating 11 h-9 w-9 occurrences across 9 files and 2 size-9 occurrences across 2 files. No color/behavior/API/schema/route/geometry change. All 50 kind_robots PR checks green, mergeable_state clean before merge. Return the recurring consistency umbrella to ready for the next bounded slice. Kaizen for the next slice: h-10 w-10 (14 files, 15 occurrences) and h-12 w-12 (9 files, 10 occurrences) remain open as the next well-bounded siblings in this family.
 
     Slice 243: add a self-testing kr-icon-10 candidate/migration codemod, bounded from the slice-242 kaizen. Runtime migration is intentionally not performed until the primitive exists.
-  updated: '2026-09-12T12:21:00Z'
-  implementation_pr: 'silasfelinus/kind_robots#2661'
+
+    Slice 243 merged as silasfelinus/kind_robots#2672 (squash). Added kr_icon_10_codemod.py
+    (dry-run discovery + self-test only -- no runtime migration yet, since the kr-icon-10
+    CSS primitive does not exist). No color/behavior/API/schema/route/geometry change. All
+    45 kind_robots PR checks green, mergeable_state clean before merge. Return the recurring
+    consistency umbrella to ready for the next bounded slice. Kaizen for the next slice:
+    open the kr-icon-10 primitive itself (mirroring how slice 242 opened kr-icon-9) and
+    migrate the h-10 w-10/size-10 occurrences this codemod already discovers; h-12 w-12
+    remains queued behind it per slice 242 kaizen.
+  updated: '2026-09-12T12:31:21Z'
+  implementation_pr: 'silasfelinus/kind_robots#2672'
   retry_context: ''
   owner: worker
-  claimed_by: openai-scheduled-2026-09-12T121900Z-interface-vision-t-104-oai11
-  claimed_at: '2026-09-12T12:19:00Z'
+  claimed_by: null
+  claimed_at: null
 
 - id: t-123
   milestone: m5
