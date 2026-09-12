@@ -639,11 +639,11 @@ tasks:
 - id: t-031
   milestone: m6
   title: "Engine: one direct-prose narration contract for every shape and narrator voice"
-  status: ready
+  status: done
   passes: 0
   stakes: reversible
   depends_on: t-025
-  note: >
+  note: >-
     Part C2; this is where t-025 gets done ("where it runs" = the server). New DB-free
     server/utils/endingDeckMath.ts and server/utils/storybookNarration.ts (request carries
     shape, deck axes, narratorStyle, the board bible, turn index/budget, inventory, recent
@@ -654,7 +654,20 @@ tasks:
     The prose contract and the five narrator-style directives are quoted verbatim in the
     design doc; Silas's rule is "direct, not verbose with purple prose", the narrator
     modulates within that.
-  updated: '2026-09-12T12:00:00Z'
+
+    Done by kind_robots#2660. server/utils/storybookNarration.ts is the one narration layer
+    for all four shapes, plus DB-free server/utils/endingDeckMath.ts for the deck-generic
+    outcome math (davinciDimensions.resolveOutcomeKey delegates to it, proven identical over
+    500 random stat maps, which is the regression that would silently re-key 1,024 seeded
+    endings). The PROSE CONTRACT is the house rule -- concrete scene, second person, present
+    tense, plain nouns and strong verbs, no similes or stacked descriptors, end on the brink
+    of a decision without listing the options -- and the five narrator styles modulate voice
+    inside it rather than relaxing it. Word bounds are per shape. The life shape keeps its
+    20-400 band and its uncapped effects map deliberately: narrowing a live game's tuning is
+    a design change, not a refactor. New contract suites verifyEndingDeckMath.ts and
+    verifyStorybookNarration.ts run in contract-tests.yml.
+  updated: '2026-09-12T11:25:59Z'
+  implementation_pr: 'silasfelinus/kind_robots#2660'
 - id: t-032
   milestone: m6
   title: "Engine: character-sheet plays (Skill/Item cards as a move) and run inventory"
