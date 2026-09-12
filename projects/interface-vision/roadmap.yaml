@@ -3812,7 +3812,7 @@ tasks:
 - id: t-127
   milestone: m6
   title: Widen the one-header rule to catch title blocks that avoid <h1>, then work the five pages
-  status: claimed
+  status: review
   gate_human: false
   stakes: reversible
   passes: 0
@@ -3822,7 +3822,9 @@ tasks:
     Reviewed and merged kind_robots#2645 (docs-only audit slice, all CI green, mergeable_state clean). Verifier implementation for t-127 remains as follow-on work.
 
     Correct bookkeeping drift after the docs-only audit slice merged: the task note explicitly says verifier implementation remains. Return t-127 to ready so the widened one-header contract can actually be implemented.
-  updated: '2026-09-12T02:21:45Z'
+
+    Implemented the conservative shallow duplicate-title detector as a reusable helper, preserving the audited false-positive boundary. Wiring into verifyLayoutContract.ts remains after this scoped slice lands.
+  updated: '2026-09-12T03:17:27Z'
   owner: worker
   claimed_by: 2026-09-12T022145Z-interface-vision-t-127-b6d2
   claimed_at: '2026-09-12T02:21:45Z'
