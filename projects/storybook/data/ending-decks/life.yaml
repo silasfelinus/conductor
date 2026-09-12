@@ -21,6 +21,9 @@ passValue: 1
 turnBudget: 12
 minTurnsBeforeResolve: 6
 turnBudgetByShape:
+  # The life shape became the STRUCTURED mode (storybook/t-039). The old key
+  # stays as a fallback for a database seeded before the rename.
+  structured: 12
   life: 12
 axes:
   - key: legacy
