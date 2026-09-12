@@ -3889,7 +3889,7 @@ tasks:
 - id: t-129
   milestone: m6
   title: Survey and migrate the highest-traffic viewport-grid offenders onto container-width grids
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
   passes: 0
@@ -3916,10 +3916,8 @@ tasks:
     artjob-queue-browser.vue's xl:grid-cols-2 (a two-panel side-by-side layout, not a
     repeating card list) untouched -- scoped to genuinely repeating card/tile lists.
     ~200 occurrences remain; continued as interface-vision/t-131.
-  owner: worker
-  claimed_by: 2026-09-12T060500Z-interface-vision-t-129-viewport-grid
-  claimed_at: '2026-09-12T05:45:59Z'
-  updated: '2026-09-12T05:47:59Z'
+  updated: '2026-09-12T05:52:43Z'
+  implementation_pr: 'silasfelinus/kind_robots#2652'
 - id: t-130
   milestone: m6
   title: Require a bash -n syntax check on any .sh file a PR adds or modifies
