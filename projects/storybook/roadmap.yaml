@@ -43,7 +43,7 @@ milestones:
 - id: m9
   title: Taskmaster absorbed as a mode
   weight: 30
-  status: not-started
+  status: in-progress
 tasks:
 - id: t-001
   milestone: m1
@@ -1048,3 +1048,20 @@ tasks:
     sample tasks and the storage recovery path, and the merge has to keep all three true.
     Do not start this until t-046 is deployed and the mode is genuinely usable.
   updated: '2026-09-12T14:00:00Z'
+
+- id: t-048
+  milestone: m8
+  title: "Give verifyAcademyStarterManifest.ts and verifyPopulationDraftQuality.ts a reachability guard for Alexandria"
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from the m8 close-out (conductor#4211, kind_robots#2686): both checks fetch
+    Alexandria live and went red on `main` itself (not just the PR) within minutes of each
+    other with `fetch failed` / `ECONNREFUSED 75.111.66.70:443` -- a home machine rebooting
+    fails CI on every unrelated PR. Add a reachability probe (short timeout) at the top of
+    each: on an unreachable host, skip with a warning instead of failing, so the check still
+    catches a genuine regression in its own assertions when Alexandria is up, but a transient
+    home-network blip stops teaching sessions to discount red CI as routine.
+  updated: '2026-09-12T23:34:00Z'
+  owner: null
