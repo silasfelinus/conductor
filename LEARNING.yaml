@@ -13318,3 +13318,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A .kr-input*-family primitive whose base @apply drops a dead legacy class (input-bordered) doesn't fully close the family just because every DaisyUI size variant is named -- a separate axis (an explicit rounded-xl/rounded-2xl radius override coexisting with the same dead class) can carry 60+ occurrences unnoticed until a fresh full-repo survey checks for extra utility tokens riding alongside the base set, not just the base set's size suffixes alone."
+- date: 2026-09-12
+  project: interface-vision
+  task: t-127
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A structural non-<h1> title detector built and unit-pinned against hand-built nodes is not yet wired into anything -- verifyLayoutContract.ts's own parseTemplate() returns the <template> tag as its own top-level node, one level above the page's real root the detector expects as nodes[0], so a naive wire-up would have silently returned false for every real page. Pin the actual integration path (real template strings through the real parser) with its own fixture, not just the isolated helper's hand-built-node tests. Separately: a structural (not text-comparing) title detector will flag legitimate hero/CTA copy that differs from the shell's own title -- exclude blocks that carry their own link/button or standalone media rather than trying to string-match against frontmatter."
