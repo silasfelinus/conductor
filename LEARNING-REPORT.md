@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-12T09:32:35Z
+Generated: 2026-09-12T09:34:53Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **923**
-- Outcomes: blocked: 16, cancelled: 1, done: 906
+- Closed tasks recorded: **924**
+- Outcomes: blocked: 16, cancelled: 1, done: 907
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -37,7 +37,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
-| interface-vision | 124 | 100% |
+| interface-vision | 125 | 100% |
 | kapowarr | 52 | 100% |
 | kind-economy | 10 | 100% |
 | kind-robots | 55 | 98% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 906 | 99% |
+| software | 907 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-12 `interface-vision/t-104` — Mechanical size shorthand migrations are safe when the codemod is restricted to static class attributes and excludes text-/stroke-/fill-colored shapes; exact-head CI plus full diff review caught no behavioral or geometry change (slice 241, silasfelinus/kind_robots#2655).
 - 2026-09-12 `interface-vision/t-130` — A kaizen task sourced directly from a real CI-escaping bug (t-128's inline-regex bash syntax error) landed clean first pass because the fix's own verification loop closed the gap it was fixing: the new bash -n step's PR ran inside the same layout-contract job it modifies, so a syntax error in the new step itself would have failed loudly rather than merging silently. Prefer this shape (the fix's CI run exercises the fix) over a purely textual review for any CI-workflow-editing task.
 - 2026-09-12 `interface-vision/t-104` — Running a blanket `prettier --write` across every file a codemod touched (to tidy the one or two multi-line class attributes the codemod's edit legitimately shortened) also reformats unrelated pre-existing 80-col drift throughout each file -- drift kind_robots never enforces via a CI prettier check, so it silently accumulates. That incidental reflow broke two hardcoded literal-string contract scripts (verifyTaskmasterCheckpointEngine.mjs, verifyDailyDreamArchiveWorkbench.ts) that assume specific substrings stay on one line/one call. Caught by CI before merge (self-triaged and fixed in the same PR, no Reviewer round needed), but the fix was to stop running `prettier --write` at all rather than chase each incidental reflow -- this repo has no CI-enforced prettier check, so nothing requires it, and a pure mechanical 1:1 token substitution (no line-structure change) is both safer and a smaller diff. Future size/shorthand codemod slices should skip blanket prettier passes; if a specific line genuinely needs reformatting, target only that line/file, not `prettier --write <whole-changed-file-list>`.
 - 2026-09-12 `interface-vision/t-129` — The viewport-grid layout-contract report dedups by (file, token) pair, not by raw occurrence count -- two lines in the same file carrying the identical breakpoint token (e.g. two 'sm:grid-cols-2' divs) show up as a single baseline entry, so the baseline count delta after a slice doesn't map 1:1 to 'lines touched'. Check the actual diff, not just the before/after baseline number, to confirm a slice's real scope.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-12 `interface-vision/t-104` — A .kr-input*-family primitive whose base @apply drops a dead legacy class (input-bordered) doesn't fully close the family just because every DaisyUI size variant is named -- a separate axis (an explicit rounded-xl/rounded-2xl radius override coexisting with the same dead class) can carry 60+ occurrences unnoticed until a fresh full-repo survey checks for extra utility tokens riding alongside the base set, not just the base set's size suffixes alone.
 - 2026-09-11 `interface-vision/t-104` — The kr-text-black-* family's sizes (-lg/-xl/-sm/-xs/-2xl) were named as they were surveyed, not against a known-finite set -- so 'family closed' claims in a prior slice's note undercounted: text-base, the Tailwind default size, went unnamed for 69 slices until a plain 'diff the family's suffixes against Tailwind's own text-size scale' check would have surfaced it immediately. Next time a kr-text-* (or any Tailwind-scale-keyed) family claims to be closed, check its suffixes against the underlying scale's full enumeration before trusting the claim.
 - 2026-09-11 `cthulhuquarium/t-077` — Wiring a pure evaluator (t-075's evaluateRivalry) into a tick-settlement loop is cheapest done ONCE per settlement outside the per-tick inner loop, not once per (tick x fish): composition (which fish, their traits) is loop-invariant even though the production amount it multiplies varies every tick via hunger/debris. Same discipline as debrisEverHigh's sticky-flag pattern applied a second time (rivalryObserved) -- a landmark milestone that can go active/inactive repeatedly still only needs ONE persisted 'ever observed' flag plus the existing AquariumEvent-log idempotency check, not a second column for 'already resolved'.
-- 2026-09-11 `cthulhuquarium/t-075` — A soft-gated feature task (Silas hasn't confirmed it's still wanted for v1) can still land a bounded, reversible first slice while the gate is open in parallel -- the pure rivalry evaluator shipped and tested clean, with runtime wiring split into a new task (t-077) rather than either blocking on the gate or scope-creeping the wiring into the same PR.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-12T09:32:35Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-12T09:34:53Z_
