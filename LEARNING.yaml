@@ -13390,3 +13390,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "check_pr_merged_drift.py's cross-repo GitHub Search API call (/search/issues?q=...) 403s unconditionally in this sandbox ('sessions are bound to their configured repositories'), even with GITHUB_TOKEN set, while repo-scoped endpoints (/repos/{owner}/{repo}/pulls, /repos/{owner}/{repo}/pulls/{number}) work fine. Any script that needs to find a PR by title/content across multiple repos should list-and-filter per repo rather than use the Search API, and should cache each repo's listing across multiple lookups in the same run rather than re-paginating per candidate. A residual per-repo 403 after this kind of fix is more likely an out-of-scope repo for the session's credentials (see AGENTS.md's Repository Scope) than the Search-API restriction -- check which case it is before assuming the fix didn't work."
+- date: 2026-09-12
+  project: conductor
+  task: t-154
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "select_role.py's commit_combined_state() called GET /repos/{owner}/{repo}/commits/{sha}/status (the legacy commit-status API), which only reflects legacy status-API integrations -- this repo's CI is entirely GitHub Actions check-runs, which post to the separate /commits/{sha}/check-runs endpoint instead, so the legacy call always returned {'state': 'pending', 'total_count': 0} regardless of real CI outcome. Both of its callers (find_reviewable_claude_prs, requiring 'success', and find_red_stale_prs_in_repo/pr-medic, requiring 'failure'/'error') were silently dead for every repo this script has ever checked. When computing a commit's combined CI state for a repo whose CI is GitHub-Actions-based, use the Checks API (/commits/{sha}/check-runs, paginated) and fold status/conclusion into pending/failure/success client-side -- never assume the legacy Status API reflects Actions-based check runs, even though both are commonly described as 'the commit's CI status'."

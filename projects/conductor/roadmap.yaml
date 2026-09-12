@@ -5650,7 +5650,7 @@ tasks:
 - id: t-154
   milestone: m2
   title: "select_role.py's commit_combined_state() reads the legacy Status API, which this repo's GitHub-Actions-only CI never posts to -- it always returns 'pending', so pr-medic and the claude/* reviewer signal never fire"
-  status: review
+  status: done
   owner: worker
   claimed_by: claude-20260912T095736-conductor-t154
   claimed_at: '2026-09-12T09:57:36Z'
@@ -5718,7 +5718,14 @@ tasks:
     subtests. Verified live: `commit_combined_state('silasfelinus/conductor',
     'a487de0b80be1da03972f43182eb6e6123133c6f', GITHUB_TOKEN)` (conductor PR #4159's head
     sha, whose real CI was 22/22 green) now returns `'success'`, not `'pending'`.
-  updated: '2026-09-12T09:58:00Z'
+
+    DONE: silasfelinus/conductor#4161 merged (24/24 checks green, including the full
+    1815-test pytest suite). commit_combined_state() now paginates /commits/{sha}/check-runs
+    and folds status/conclusion into pending/failure/success, replacing the legacy
+    /commits/{sha}/status call that always returned pending in this repo. Verified live
+    against a known-green commit.
+  updated: '2026-09-12T10:03:09Z'
+  implementation_pr: 'silasfelinus/conductor#4161'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
