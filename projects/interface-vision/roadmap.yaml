@@ -3870,3 +3870,25 @@ tasks:
     positives on legitimate test-infra-only commits (fixture data, test helpers, CI wiring
     for an existing test) -- the goal is surfacing the gap for human/agent review, not
     blocking every commit that happens to start with "test".
+- id: t-129
+  milestone: m6
+  title: Survey and migrate the highest-traffic viewport-grid offenders onto container-width grids
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  note: >-
+    Kaizen from reviewing/merging kind_robots#2649 (t-127 verifier-wiring slice,
+    2026-09-12): the viewport-grid rule's baseline sits at 205 occurrences, by far the
+    largest of the nine layout-contract buckets, and has never had a dedicated
+    burn-down slice the way kr-input/kr-btn/kr-badge consistency work has had. DO:
+    run `npm run test:layout-contract -- --report` to list current viewport-grid
+    entries, survey which shared (non-page) components carry the most occurrences
+    (components/art/* and components/academy/* had the heaviest concentration as of
+    2026-09-12), and migrate a bounded slice of the highest-traffic offenders onto a
+    container-width-following grid pattern (e.g.
+    `grid-cols-[repeat(auto-fit,minmax(min(100%,20rem),1fr))]`) instead of a
+    viewport-breakpoint one, per interface-vision t-112/t-113's documented rationale.
+    Scope to one bounded slice (a handful of files) rather than attempting all 205 at
+    once, matching the recurring-umbrella pattern t-104 already uses. Update the
+    baseline with `--update` after each slice lands.
