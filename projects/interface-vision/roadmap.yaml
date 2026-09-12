@@ -3863,7 +3863,7 @@ tasks:
 - id: t-128
   milestone: m6
   title: Add a CI/lint guard that a test(...)-prefixed commit's diff actually contains an assertion
-  status: ready
+  status: claimed
   gate_human: false
   stakes: reversible
   passes: 0
@@ -3882,6 +3882,10 @@ tasks:
     positives on legitimate test-infra-only commits (fixture data, test helpers, CI wiring
     for an existing test) -- the goal is surfacing the gap for human/agent review, not
     blocking every commit that happens to start with "test".
+  owner: worker
+  claimed_by: 2026-09-12T051543Z-interface-vision-t-128-k7p4
+  claimed_at: '2026-09-12T05:15:43Z'
+  updated: '2026-09-12T05:15:43Z'
 - id: t-129
   milestone: m6
   title: Survey and migrate the highest-traffic viewport-grid offenders onto container-width grids
