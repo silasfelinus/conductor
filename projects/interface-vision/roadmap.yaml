@@ -3944,28 +3944,18 @@ tasks:
 - id: t-130
   milestone: m6
   title: Require a bash -n syntax check on any .sh file a PR adds or modifies
-  status: claimed
+  status: review
   gate_human: false
   stakes: reversible
   passes: 0
-  note: >-
-    Kaizen from reviewing/merging kind_robots#2651 (t-128, 2026-09-12): the new
-    scripts/check-test-commit-assertions.sh shipped with a bash syntax error
-    (`^test(\([^)]*\))?:[[:space:]]` written inline inside a `[[ =~ ]]` conditional,
-    which bash mis-tokenizes as subshell grouping) that failed the layout-contract CI
-    job outright on the very first PR that ran it -- caught only because that job
-    happened to run in the same PR, not by any dedicated check. No step in this repo's
-    CI verifies that a newly added/modified shell script is even syntactically valid
-    before merge. DO: add a lightweight CI step (or extend an existing lint/verify job)
-    that runs `bash -n <file>` (and ideally `shellcheck` if already available in the
-    runner image, non-blocking/warning-only to start if shellcheck's own false-positive
-    rate is a concern) over every `*.sh` file changed in the PR's diff, failing loud on
-    a real syntax error like this one. Scope to a bounded, reversible CI-only addition;
-    no need to retroactively re-audit every existing script in one pass.
+  note: |-
+    Kaizen from reviewing/merging kind_robots#2651 (t-128, 2026-09-12): the new scripts/check-test-commit-assertions.sh shipped with a bash syntax error (`^test(\([^)]*\))?:[[:space:]]` written inline inside a `[[ =~ ]]` conditional, which bash mis-tokenizes as subshell grouping) that failed the layout-contract CI job outright on the very first PR that ran it -- caught only because that job happened to run in the same PR, not by any dedicated check. No step in this repo's CI verifies that a newly added/modified shell script is even syntactically valid before merge. DO: add a lightweight CI step (or extend an existing lint/verify job) that runs `bash -n <file>` (and ideally `shellcheck` if already available in the runner image, non-blocking/warning-only to start if shellcheck's own false-positive rate is a concern) over every `*.sh` file changed in the PR's diff, failing loud on a real syntax error like this one. Scope to a bounded, reversible CI-only addition; no need to retroactively re-audit every existing script in one pass.
+
+    Implemented a blocking PR CI step that discovers added/modified/renamed *.sh files with a NUL-safe git diff and runs bash -n on each before the existing assertion audit.
   owner: worker
   claimed_by: 2026-09-12T061811Z-interface-vision-t-130-x9c4
   claimed_at: '2026-09-12T06:18:11Z'
-  updated: '2026-09-12T06:18:11Z'
+  updated: '2026-09-12T07:27:00Z'
 - id: t-131
   milestone: m6
   title: Continue the viewport-grid burn-down (slice 2 onward)
