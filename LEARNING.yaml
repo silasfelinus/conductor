@@ -13336,3 +13336,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Before writing a new codemod for a freshly-surveyed class pattern, check utils/scripts/codemods/ for one that already exists -- kr_icon_4_size_shorthand_codemod.py had already been written and partially run (42/124 occurrences, two directories) in a prior slice, and simply re-running it unmodified with --write across the whole repo finished the migration in one pass instead of re-deriving its exclusion rules (colored icons stay out of scope) from scratch."
+- date: 2026-09-12
+  project: interface-vision
+  task: t-128
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: quality
+  lesson: "A CI script implementing a 'test-commit assertion' guard was itself untested at the shell level -- an inline bash [[ =~ ]] regex with unescaped/nested parens (`^test(\\([^)]*\\))?:[[:space:]]`) is a real syntax trap: bash's [[ ]] tokenizer can mis-parse literal parens inside the regex operand as subshell grouping, producing 'syntax error in conditional expression' and failing the job outright rather than the intended warning-only behavior. `bash -n <file>` before merge would have caught this immediately; the fix (move the pattern into a variable, match against that) is the standard workaround. Filed as interface-vision/t-130: add a bash -n check on any .sh file a PR touches, so this class of failure fails fast in CI instead of on the PR that introduces the check meant to catch other gaps."
