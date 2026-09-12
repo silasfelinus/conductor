@@ -620,6 +620,15 @@ tasks:
     keeps working untouched so life runs in flight survive. Schema-affecting; migrations must
     stay additive and backward-compatible with the running build.
 
+    Done by kind_robots#2662. server/utils/storybookRuns.ts creates/resumes/lists runs and
+    handles the turn route exactly as specced: an option's effects come from the server-held
+    LifeRun.pendingTurn (never the request body), and a written/card-play move is scored by
+    the narrator then clamped server-side (a real bug here -- the +-2 clamp existed only in
+    the narration validator, one layer above the write -- was caught by CI's DB-backed
+    verifyStorybookPlayLoop.ts and fixed in the same PR before merge). Two additive migrations
+    (20260912120000, 20260912123000) ship with it; audited line-by-line, no DROP of
+    tables/columns/data. All CI green, mergeable_state clean before merge.
+
     Done by kind_robots#2662. Every shape is a server-side run now. New EndingDeck plus additive columns on LifeRun/LifeChoice/LifeEnding (migration 20260912120000), server/utils/storybookRuns.ts, and routes under /api/storybook/{decks,runs,runs/:id,runs/:id/turn,runs/:id/resolve,endings}. /api/davinci/* is untouched and shares one narrator lookup instead of holding a second copy.
 
     THE SERVER HOLDS THE OFFERED CHOICES. A turn records the move and narrates the next scene in one call; an option's effects come from LifeRun.pendingTurn, never the request body, and a written or card move is scored by the narrator then clamped server-side. Nothing is written unless narration succeeds, and replaying a recorded turn returns it rather than advancing twice. A genre deck's axis values never reach the client at all.
@@ -627,7 +636,7 @@ tasks:
     The turn gate binds only runs this engine created (turnBudget non-null), so a life run already in flight resolves exactly as it did before.
 
     utils/scripts/verifyStorybookPlayLoop.ts found two real bugs on its first run against a database and both were fixed before merge: the +-2 clamp lived only in the narration validator rather than at the write (LifeStat accepts any key by design), and a character-sheet play returned a stale row with rewardId null because it patched after insert.
-  updated: '2026-09-12T11:46:20Z'
+  updated: '2026-09-12T13:15:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2662'
 - id: t-030
   milestone: m6
@@ -645,12 +654,17 @@ tasks:
     with the one staged migration: dropping the global unique on LifeEnding.outcomeKey in
     favour of (deckId, outcomeKey), which must not be deployed before t-029's resolver is live.
 
+    Done by kind_robots#2662 (importer + the staged migration, landed together with t-029's
+    resolver per this note's own ordering requirement) and conductor#4168 (the three authored
+    genre decks: mystery, romance, heist). verifyStorybookDecks.ts validates the real
+    conductor deck files when checked out side by side, as davinci-seed-verify.yml does.
+
     Done by conductor#4168 (authoring) and kind_robots#2662 (import). Mystery, Romance and Heist are live: three axes and all eight endings each, budgets short-story 5 / chaptered 8 / episodic 12. utils/scripts/seedStorybookDecks.ts imports a deck file or directory and refuses a deck whose endings do not exactly cover 2^axes, because a missing outcomeKey is a 404 the reader only meets after playing the whole story.
 
     Migration 20260912123000 dropped the global unique on LifeEnding.outcomeKey in favour of (deckId, outcomeKey) and made deckId NOT NULL -- required, since every three-axis deck produces '000'..'111' and the second one imported would otherwise overwrite the first. It shipped in the same PR and therefore the same deploy as the additive migration and the deck-aware resolver, in name order, which is what makes the non-additive step safe.
 
     The nightly davinci-seed-verify job now seeds all three decks into one database, which is the only place a same-bit-width collision between decks would surface.
-  updated: '2026-09-12T11:46:48Z'
+  updated: '2026-09-12T13:15:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2662'
 - id: t-031
   milestone: m6
@@ -698,10 +712,17 @@ tasks:
     played on consecutive turns; the narrator shows the card genuinely used (rarity sets how
     decisively) and proposes moveEffects, which the app clamps.
 
+    Done by kind_robots#2662. Character-sheet plays work exactly as specced: an ITEM is spent
+    when played, other card types persist but cannot be played on consecutive turns. One real
+    bug caught by CI's DB-backed play-loop verifier and fixed before merge: a SHEET-sourced
+    play created its LifeChoice row with rewardId null then patched it in a second update, so
+    the row ended up right but the API response returned null for the played card -- the
+    reward id is now resolved before the transaction and written on the create.
+
     Done by kind_robots#2662. A run's inventory is seeded from the protagonist Character's Rewards at creation, so the character sheet is playable from turn one rather than being a profile. Playing a card is a turn with source SHEET: an ITEM is spent (consumedAtTurn), every other type persists but cannot be played on consecutive turns, so a strong Skill changes a scene instead of replacing the choosing. The narrator is told the card, its rarity and whether it is spent, and proposes moveEffects the app clamps.
 
     verifyStorybookPlayLoop.ts covers all of it against a real database: the play, the spend, the refusal to replay a spent card, and the refusal of a card the sheet never held.
-  updated: '2026-09-12T11:46:51Z'
+  updated: '2026-09-12T13:15:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2662'
 - id: t-033
   milestone: m6
@@ -718,10 +739,17 @@ tasks:
     silhouettes. Gating: EndingDeck.unlockAchievementId + server/utils/storybookGating.ts
     assertDeckPlayable, enforced only behind STORYBOOK_ENFORCE_DECK_GATES=true until t-038.
 
+    Done by kind_robots#2662. resolveStoryRunEnding (deck-generic successor to
+    resolveLifeRunEnding, old name kept as a delegate) awards a deck's COLLECTION achievement
+    once every ending in that deck is found; GET /api/storybook/endings?deckKey= returns found
+    endings in full and unfound ones as silhouettes, verified in the DB-backed play-loop suite.
+    The gating hook (EndingDeck.unlockAchievementId + storybookGating.ts) ships dormant behind
+    STORYBOOK_ENFORCE_DECK_GATES=true, as specced -- t-038 turns it on.
+
     Done by kind_robots#2662. Collection reuses the existing award chain rather than adding a second unlock table: LifeAchievement ENDING plus LifeAchievementUnlock, with Achievement triggerCode storybook-ending-{deckKey}-{outcomeKey} (life keeps davinci-ending-*, so the life-run UI's filter is untouched). GET /api/storybook/endings?deckKey= returns found endings in full and unfound ones as silhouettes -- id, slug, victory type and icon only, because spoiling the list turns a collection into a checklist. resolveStoryRunEnding awards a deck's COLLECTION achievement when every ending in it is found.
 
     Gating is built and dormant: EndingDeck.unlockAchievementId plus server/utils/storybookGating.ts. assertDeckPlayable only refuses when STORYBOOK_ENFORCE_DECK_GATES is true, while GET /api/storybook/decks already reports each deck's unlocked state honestly, so the hand can be built and checked against real data before a reader is ever turned away. A gate the UI cannot explain is a dead end, not a goal -- t-038 flips it once the hand renders a lock.
-  updated: '2026-09-12T11:46:54Z'
+  updated: '2026-09-12T13:15:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2662'
 - id: t-034
   milestone: m7
