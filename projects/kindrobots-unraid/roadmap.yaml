@@ -361,7 +361,7 @@ tasks:
 - id: t-017
   milestone: m2
   title: 'PRODUCTION INCIDENT: kindrobots.org running with 1 failed + 1 unapplied migration since ~2026-09-12T11:45 UTC'
-  status: needs-human
+  status: done
   gate_human: true
   owner: null
   passes: 0
@@ -439,7 +439,29 @@ tasks:
     at ~11:45 UTC and the state has regressed rather than self-cleared. Not independently
     reconciled with Alexandria (no access from this sandbox) -- recorded here as corroborating
     evidence for whoever next has hands-on access, per t-016's still-open kaizen.
-  updated: '2026-09-12T23:37:36Z'
+
+    Recovery confirmed (scheduled conductor sweep, 2026-09-13):
+    https://kindrobots.org/api/health/database now returns 200
+    {"success":true,"message":"Database is reachable and the schema is current for this
+    build.","schemaCurrent":true,"databaseAheadMigrations":0} (checked 3x, ~2s apart, all
+    200). https://kindrobots.org/ also returns 200 with real SSR markup -- no TLS
+    reset/ECONNREFUSED like the 2026-09-12T23:37Z escalation note described. Root cause
+    confirmed (not just guessed): Silas merged silasfelinus/kind_robots@5ebaa76 ("fix(db):
+    repair failed Storybook ending-deck migration", 2026-09-12T22:56:50Z) directly to main
+    -- prepares LifeEnding's deck FK for the required-deck migration, adds the deck-scoped
+    uniqueness constraint safely, repairs the already-failed migration, reorders the deploy
+    to run migration-repair before deploy, adds a regression test for this exact failed-
+    migration-recovery path, and replays real migration history against MariaDB in CI. This
+    matches this task's original guess (kind_robots#2662's non-additive
+    LifeEnding.outcomeKey/deckId migration) closely enough to count as confirmed, not
+    speculative. Closing per docs/state-reconciliation.md's 'Closing human gates safely'
+    criteria (Silas directly merged the fix; the task's own recovery bar -- 200 +
+    schemaCurrent:true -- is met and verified) and CLAUDE.md's session-end rule against
+    leaving a recovered incident open pending root-cause paperwork. approved_by_human
+    intentionally left false, matching t-014/t-015 precedent for this incident class. t-016
+    (external health probe/alert) stays ready as the standing prevention follow-on -- third
+    occurrence of this outage class, so worth prioritizing.
+  updated: '2026-09-13T00:32:59Z'
 
 goal: Run Kind Robots reliably on the Unraid/home infrastructure, with deployment, storage, networking, GPU services,
   and recovery procedures kept reproducible.
