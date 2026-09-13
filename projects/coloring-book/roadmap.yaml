@@ -821,12 +821,12 @@ tasks:
 - id: t-040
   milestone: m4
   title: manage_coloring_book_production.py should surface the Pillow-missing fix inline instead of a bare ImportError
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  owner: null
-  claimed_by: null
-  claimed_at: null
+  owner: worker
+  claimed_by: claude-scheduled-2026-09-13T133000Z-cb-t040
+  claimed_at: '2026-09-13T13:32:10Z'
   note: |-
     Kaizen from t-022's kr-021..kr-030 review pass (2026-09-13, cycle 5): the
     sandbox's Pillow install does not persist across sessions, so
@@ -842,4 +842,4 @@ tasks:
     path) inline rather than relying on a session having read a TALKBACK entry
     first. Scope: this script only -- do not touch the image-guard's actual
     validation logic, just make the missing-dependency failure self-diagnosing.
-  updated: '2026-09-13T04:34:00Z'
+  updated: '2026-09-13T13:32:10Z'
