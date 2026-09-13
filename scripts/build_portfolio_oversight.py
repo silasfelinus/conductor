@@ -93,30 +93,47 @@ def intent_review_status(
     }
 
 
-def _scheduled_git_log() -> str:
-    """Return newest commit date carrying the OpenAI scheduled-session marker.
-
-    The OpenAI automation is configured to generate session IDs beginning with
-    ``openai-scheduled-`` and preserve that id in claim/task-event/review markers.
-    Claude uses different session identifiers, so Claude activity cannot satisfy
-    this heartbeat by accident.
-    """
+def _git_log_date(*filters: str) -> str:
     result = subprocess.run(
-        [
-            "git",
-            "log",
-            "--all",
-            "-1",
-            "--regexp-ignore-case",
-            f"--grep={OPENAI_SESSION_MARKER}",
-            "--format=%cI",
-        ],
+        ["git", "log", "--all", "-1", "--format=%cI", *filters],
         cwd=ROOT,
         check=False,
         capture_output=True,
         text=True,
     )
     return result.stdout.strip() if result.returncode == 0 else ""
+
+
+def _scheduled_git_log() -> str:
+    """Return newest git activity carrying the OpenAI scheduled-session marker.
+
+    Modern connector-only workers preserve their ``openai-scheduled-`` session id
+    inside ``task-events/*.yaml`` and project roadmap state, while the commits that
+    carry those files intentionally use generic subjects such as ``claim: ...`` or
+    ``chore: process task events``.  Search coordination-file diffs with ``-G`` so
+    those sessions count even when their commit subjects do not repeat the marker.
+
+    Keep the commit-message search as a compatibility fallback for older scheduled
+    workers that embedded the session id directly in the commit subject. Claude uses
+    different session identifiers, so Claude activity cannot satisfy either lookup.
+    """
+    content_date = _git_log_date(
+        f"-G{OPENAI_SESSION_MARKER}",
+        "--",
+        "task-events",
+        "projects",
+    )
+    message_date = _git_log_date(
+        "--regexp-ignore-case",
+        f"--grep={OPENAI_SESSION_MARKER}",
+    )
+
+    candidates: list[tuple[datetime, str]] = []
+    for raw in (content_date, message_date):
+        parsed = _parse_iso_datetime(raw)
+        if parsed is not None:
+            candidates.append((parsed, raw))
+    return max(candidates, key=lambda item: item[0])[1] if candidates else ""
 
 
 def scheduled_agent_status(
@@ -135,7 +152,7 @@ def scheduled_agent_status(
             "hours_since": None,
             "stale_hours": stale_hours,
             "marker": OPENAI_SESSION_MARKER,
-            "note": "No OpenAI scheduled-Agent heartbeat commit was found in available git history. Claude activity does not satisfy this check.",
+            "note": "No OpenAI scheduled-Agent heartbeat activity was found in available git history. Claude activity does not satisfy this check.",
         }
     hours_since = max(0.0, (now - last).total_seconds() / 3600.0)
     return {
@@ -144,7 +161,7 @@ def scheduled_agent_status(
         "hours_since": round(hours_since, 2),
         "stale_hours": stale_hours,
         "marker": OPENAI_SESSION_MARKER,
-        "note": "OpenAI commit activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit.",
+        "note": "OpenAI coordination activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit.",
     }
 
 
@@ -268,7 +285,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         )
     else:
         lines.append(
-            f"- No commit containing `{heartbeat['marker']}` was found in available history. Claude scheduled activity does not count."
+            f"- No git activity carrying `{heartbeat['marker']}` was found in available history. Claude scheduled activity does not count."
         )
     lines.append(f"- Overdue: **{str(bool(heartbeat['overdue'])).lower()}**")
     lines.append(f"- Note: {heartbeat['note']}")
