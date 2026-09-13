@@ -1,8 +1,0 @@
-version: 1
-project: dream-cycle
-task: t-006
-operation: rearm
-session: chatgpt-dream-digest-20260913T203500Z-7f2c
-updated: '2026-09-13T20:52:00Z'
-note: >-
-  RAN 2026-09-13 (ChatGPT connector session). Root-caused the stale Daily Dream digest and creative-variety stall: entropy v2 correctly rejected the pre-v2 buffered proposals, but five obsolete unbuilt files still counted as a full five-day docket and blocked fresh authoring; digest enrichment also assumed the newest completed bundle was always just-built and hid its art. Merged PR #4282 at 172104edff8cc4937edc30e6ef01decf03e1b30f. Obsolete authored proposals now remain as audit history without counting as active runway or owning their stale dates, allowing current-contract replacements; stale latest completed output is labeled truthfully and renders/probes its art. Final-head checks passed: Worker PR CI including 1854 tests, Daily Dream Contract, Daily Dream Creative Contract, Security Audit, task-event processing, roadmap validation, syntax, and dream-cycle backlog guards. Re-arming recurring maintenance.
