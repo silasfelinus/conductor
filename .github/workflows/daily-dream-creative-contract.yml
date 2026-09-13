@@ -74,7 +74,7 @@ jobs:
       # briefs; it lets the connector-only migration use the same live Facet planner
       # that normal authoring uses instead of forging entropy-v2 metadata by hand.
       - name: Emit current brief for oldest stale proposal
-        run: python scripts/build_dream_proposal.py --brief --date 2026-09-14
+        run: python scripts/build_dream_proposal.py --brief --date 2026-09-15
 
       - name: Check entire open steering buffer
         run: python scripts/check_dream_creative_contract.py --all-open
