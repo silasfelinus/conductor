@@ -822,6 +822,8 @@ tasks:
     SECOND, INDEPENDENT BUG FOUND -- THE QUALITY GUARD IS BLIND TO THIS. `art_quality.assess_file(path, "color")` returned ok=True with reasons=[] on the noise image: mean_saturation 0.2202, colorful_fraction 0.4868, white_fraction 0.0, luma_std 0.1153. Static is saturated and busy, so it reads as a perfectly healthy colour image by these statistics. The earlier coloring-book rejections happened under the `bw` variant, whose thresholds caught it by accident -- white_fraction 0.00 fails a line-art check but means nothing for colour work. CONSEQUENCE: any colour art generated through a broken kontext path can pass the mechanical gate and be accepted as good. That is a wider exposure than this task, and it should be fixed whether or not the kontext corruption is: a noise detector (spatial autocorrelation, or a high-frequency-energy threshold -- static has almost no low-frequency structure) belongs in art_quality.py for every variant, not just bw.
 
     STATUS: this task stays needs-human ONLY for relay access to run the non-GGUF comparison. Everything that could be established from an agent session now has been. coloring-book/t-022's `generate-bw` should continue to hold rather than burn more jobs on a path proven broken today.
+
+    UPDATE 2026-09-13 (scheduled Conductor session): the second, independent bug -- the quality guard being blind to saturated/busy noise on the "color" variant -- is fixed and does not need to wait on relay access. See coloring-book/t-043 (silasfelinus/conductor#TBD): art_quality.py now computes a spatial-autocorrelation ratio (hf_energy_ratio) from adjacent-pixel luma differences and rejects any variant whose frame has none, regardless of saturation/white-fraction. Verified against real Pillow-rendered iid random noise (hf_ratio 0.98, correctly rejected) and a smooth gradient plus Gaussian-blurred texture (hf_ratio 0.0001 and 0.047, correctly not flagged as noise). This task's remaining scope is only the relay-access non-GGUF comparison test named above.
   owner: null
   claimed_by: null
   claimed_at: null
@@ -908,3 +910,53 @@ tasks:
   claimed_by: claude-scheduled-2026-09-13T163000Z-cb-t042
   claimed_at: '2026-09-13T16:32:54Z'
   implementation_pr: 'silasfelinus/conductor#4269'
+- id: t-043
+  milestone: m4
+  title: "Add a spatial-autocorrelation noise/static detector to art_quality.py's color-variant gate"
+  status: done
+  stakes: reversible
+  owner: worker
+  note: >-
+    From t-039's second, independent finding (2026-09-11): `art_quality.assess_file(path,
+    "color")` returned ok=True with reasons=[] on a genuinely corrupted Kontext render
+    (mean_saturation 0.2202, colorful_fraction 0.4868, white_fraction 0.0, luma_std
+    0.1153) because static is saturated and busy, and every existing check for the
+    "color" variant only enforces the not-blank/not-degenerate floor. The `bw` variant's
+    rejection of that same image was accidental (white_fraction 0.00 fails a line-art
+    check that has nothing to do with noise).
+
+    DONE: added `hf_energy_ratio()` -- the ratio of mean squared adjacent-horizontal-pixel
+    luma difference to total luma variance, computed directly from the sampled PIL
+    pixel buffer (row-major, so adjacency is real, not an artifact of flat-list ordering).
+    Real imagery has strong positive spatial autocorrelation (a pixel's luma predicts
+    its neighbor's), so the ratio stays well below 1.0; spatially-independent noise
+    has none, so for iid pixel values the ratio approaches 1.0 (Var(X-Y) == 2*Var(X)
+    when X, Y are independent). `assess()` now takes an optional `hf_ratio` and rejects
+    any variant, not just `bw`, when it clears NOISE_MIN_HF_RATIO (0.55, chosen with
+    wide margin on both sides -- see verification below). `assess_file()`/`load_stats()`
+    wire this through automatically; existing callers (`adopt_coloring_book_asset.py`,
+    `consume_coloring_book_color_art.py`, `manage_coloring_book_cover.py`,
+    `manage_coloring_book_production.py`) are unaffected since `assess_file(path,
+    variant) -> (ok, reasons, info)` keeps its exact signature and return shape (info
+    gains one new `hf_ratio` key). `load_stats()` has no external callers.
+
+    Verification: `art_quality.py --selftest` extended with two new pure-math checks
+    (deterministic checkerboard noise correctly rejected, smooth gradient correctly
+    not flagged) -- 11/11 pass. Cross-checked against real Pillow-rendered images:
+    true iid random noise (160x120, seeded) scores hf_ratio 0.98 and is correctly
+    rejected on the color variant; a smooth two-axis gradient scores 0.0001 and a
+    Gaussian-blurred random texture (simulating real painterly grain) scores 0.047,
+    neither flagged as noise. Full existing suite green: `pytest tests/ -q` --
+    1851 passed, 1 skipped, 35 subtests passed (no regressions); `test_coloring_book_production.py`
+    green in isolation (its `assess_file` monkeypatching is signature-compatible).
+
+    Kaizen for the next slice: this only guards the mechanical gate at ingest/promotion
+    time (`assess_file` callers). It does not retroactively re-scan already-accepted
+    color-proposal or approved/ assets for the same corruption signature -- worth a
+    one-off audit pass across all three coloring-book sets' existing accepted color
+    art if the Kontext corruption (t-039) turns out to have been live for a while
+    before mr-016/mr-020 surfaced it.
+  updated: '2026-09-13T20:45:00Z'
+  claimed_by: claude-scheduled-20260913T204500Z-cb-t043
+  claimed_at: '2026-09-13T20:45:00Z'
+  implementation_pr: 'silasfelinus/conductor#TBD'
