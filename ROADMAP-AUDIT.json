@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-09-12T13:38:10.089854+00:00",
+  "generated_at": "2026-09-13T14:27:36.465302+00:00",
   "summary": {
     "roadmaps": 52,
     "active_projects": 21,
     "continuous_projects": 2,
-    "tasks": 1457,
-    "ready": 45,
-    "waiting": 53,
-    "needs_human": 31,
-    "in_progress": 3,
-    "done": 1306,
+    "tasks": 1478,
+    "ready": 48,
+    "waiting": 51,
+    "needs_human": 34,
+    "in_progress": 1,
+    "done": 1328,
     "errors": 0,
-    "warnings": 5,
-    "info": 19
+    "warnings": 7,
+    "info": 20
   },
   "projects": [
     {
@@ -23,16 +23,15 @@
       "autonomous": false,
       "task_count": 77,
       "counts": {
-        "claimed": 1,
         "done": 71,
-        "needs-human": 4,
+        "needs-human": 5,
         "waiting": 1
       },
       "open_count": 6,
-      "human_attention": 4,
+      "human_attention": 5,
       "ready": 0,
       "waiting": 1,
-      "claimed": 1,
+      "claimed": 0,
       "review": 0,
       "done": 71
     },
@@ -62,20 +61,21 @@
       "override_status": "active",
       "priority_index": 3,
       "autonomous": false,
-      "task_count": 133,
+      "task_count": 137,
       "counts": {
-        "claimed": 2,
-        "done": 128,
-        "ready": 2,
+        "done": 133,
+        "needs-human": 1,
+        "ready": 1,
+        "review": 1,
         "waiting": 1
       },
-      "open_count": 5,
-      "human_attention": 0,
-      "ready": 2,
+      "open_count": 4,
+      "human_attention": 1,
+      "ready": 1,
       "waiting": 1,
-      "claimed": 2,
-      "review": 0,
-      "done": 128
+      "claimed": 0,
+      "review": 1,
+      "done": 133
     },
     {
       "slug": "coloring-book",
@@ -83,20 +83,20 @@
       "override_status": "active",
       "priority_index": 4,
       "autonomous": false,
-      "task_count": 39,
+      "task_count": 41,
       "counts": {
-        "done": 28,
+        "done": 29,
         "needs-human": 1,
-        "ready": 1,
+        "ready": 2,
         "waiting": 9
       },
-      "open_count": 11,
+      "open_count": 12,
       "human_attention": 1,
-      "ready": 1,
+      "ready": 2,
       "waiting": 9,
       "claimed": 0,
       "review": 0,
-      "done": 28
+      "done": 29
     },
     {
       "slug": "humboldt-scoop-cms",
@@ -220,19 +220,20 @@
       "override_status": "active",
       "priority_index": 11,
       "autonomous": false,
-      "task_count": 16,
+      "task_count": 20,
       "counts": {
-        "done": 9,
+        "done": 12,
+        "needs-human": 1,
         "ready": 1,
         "waiting": 6
       },
-      "open_count": 7,
-      "human_attention": 0,
+      "open_count": 8,
+      "human_attention": 1,
       "ready": 1,
       "waiting": 6,
       "claimed": 0,
       "review": 0,
-      "done": 9
+      "done": 12
     },
     {
       "slug": "model-builder",
@@ -278,18 +279,18 @@
       "override_status": "active",
       "priority_index": 14,
       "autonomous": false,
-      "task_count": 154,
+      "task_count": 155,
       "counts": {
-        "done": 150,
-        "ready": 4
+        "done": 152,
+        "ready": 3
       },
-      "open_count": 4,
+      "open_count": 3,
       "human_attention": 0,
-      "ready": 4,
+      "ready": 3,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 150
+      "done": 152
     },
     {
       "slug": "taskmaster",
@@ -316,20 +317,19 @@
       "override_status": "active",
       "priority_index": 16,
       "autonomous": false,
-      "task_count": 38,
+      "task_count": 48,
       "counts": {
-        "blocked": 3,
-        "done": 28,
-        "ready": 4,
-        "waiting": 3
+        "done": 39,
+        "ready": 8,
+        "waiting": 1
       },
-      "open_count": 10,
+      "open_count": 9,
       "human_attention": 0,
-      "ready": 4,
-      "waiting": 3,
+      "ready": 8,
+      "waiting": 1,
       "claimed": 0,
       "review": 0,
-      "done": 28
+      "done": 39
     },
     {
       "slug": "coat-dance",
@@ -1047,6 +1047,20 @@
       "message": "Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect."
     },
     {
+      "severity": "warning",
+      "code": "GATED_DONE_WITHOUT_APPROVAL",
+      "project": "kindrobots-unraid",
+      "task": "t-017",
+      "message": "Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect."
+    },
+    {
+      "severity": "warning",
+      "code": "GATED_DONE_WITHOUT_APPROVAL",
+      "project": "kindrobots-unraid",
+      "task": "t-018",
+      "message": "Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect."
+    },
+    {
       "severity": "info",
       "code": "APPROVAL_WITHOUT_GATE",
       "project": "ai-art-academy",
@@ -1080,6 +1094,13 @@
       "project": "coloring-book",
       "task": "t-034",
       "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
+      "code": "NEEDS_HUMAN_NOTE_FORMAT",
+      "project": "cthulhuquarium",
+      "task": "t-073",
+      "message": "needs-human note does not use the AGENTS.md FOR SILAS action format."
     },
     {
       "severity": "info",
