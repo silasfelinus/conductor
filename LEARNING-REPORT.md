@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-13T15:42:01Z
+Generated: 2026-09-13T15:45:57Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **944**
-- Outcomes: blocked: 16, cancelled: 1, done: 927
+- Closed tasks recorded: **945**
+- Outcomes: blocked: 16, cancelled: 1, done: 928
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -25,7 +25,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | brainstorm | 26 | 96% |
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
-| coloring-book | 26 | 100% |
+| coloring-book | 27 | 100% |
 | conductor | 99 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 51 | 98% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 927 | 99% |
+| software | 928 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-13 `coloring-book/t-041` — Kaizen from t-040: grepping the rest of the coloring-book pipeline for the same bare 'from PIL import Image' pattern found two more genuine hits (consume_coloring_book_color_art.py, manage_coloring_book_cover.py) and two false leads that already degrade gracefully (art_quality.py's load_stats returns None; consume_art_queue_core.py's save_result falls back to PNG with its own actionable message). A kaizen framed as 'grep for the same pattern elsewhere' is worth doing literally and completely in one pass rather than fixing only the first hit found -- distinguishing already-graceful call sites from genuinely bare ones is the actual work, not the grep itself.
 - 2026-09-13 `coloring-book/t-040` — A recurring TALKBACK-flagged papercut (bare 'PIL unavailable' error on a non-persistent sandbox Pillow install, rediscovered fix-and-forgotten across three separate sessions on 2026-08-11 and 2026-09-13) had its actual fix fully specified in the task note before this session ever claimed it -- the work was pure implementation, no design decision needed. When a TALKBACK entry proposes the exact same concrete fix three times running, the next session to touch that area should file the roadmap task itself rather than re-suggesting it a fourth time; this task existed only because a prior session finally did that.
 - 2026-09-13 `kindrobots-unraid/t-019` — An alarming-looking MCE decoded to a benign one. Status bea0000000000108 sets PCC (processor context corrupt), which reads as the urgent case, but TSC 0 is the decisive field: a real machine-check exception captures a timestamp, so zero means machine_check_poll() read stale bank status -- and the boot-time poll of all banks runs without MCP_TIMESTAMP, so it always logs TSC 0. EDAC initialising 45s later confirmed the line landed ~1 min into a boot. Decode the status bits before escalating on the headline; also decode IPID (HWID 0xB0 / McaType 0x5 = SMCA_EX) rather than assuming a bank number means memory. The correlation check the task was filed to run came back NEGATIVE and was still worth the round trip: dmesg covered the whole current boot including t-018's window with no MCE, which is a clean negative on hardware for that incident, and the same output exposed three real blind spots (RAM-only syslog, non-ECC memory so no EDAC detector at all, 4x16GB DDR4-3600 above JEDEC on a Matisse IMC) now tracked at t-020. A diagnostic that disproves your hypothesis but hands you the actual lead is a success, not a wasted pass.
 - 2026-09-13 `interface-vision/t-104` — Slice 260: a fresh full-repo class-frequency survey scoped to component-styling token families (badge/btn/input/select/checkbox/textarea/text-/icon/loading/etc.) rather than raw flex-layout utility combos (flex gap-2 items-center and similar score far higher by count but are structural, not the visual/design-token surfaces this umbrella targets) found a clean new three-size family (kr-loading-primary-xs/-sm/-md) at 17 exact-match occurrences across 13 files. Reinforces slice 249/253's precedent of bundling sibling sizes/colors of the same shape into one slice with separate per-primitive codemods, and that vue-tsc/eslint/verifyKrClassCoverage.ts/verifyLayoutContract.ts run locally via provision_kind_robots_deps.sh catch what CI would catch, before ever opening the PR.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-13 `kindrobots-unraid/t-017` — A recovered production incident should be closed on objective evidence (health endpoint + SSR check + the actual fix commit on kind_robots main) rather than left needs-human pending root-cause paperwork once the root cause is already known from a merged fix -- docs/state-reconciliation.md's 'Closing human gates safely' section and CLAUDE.md's session-end rule both say so explicitly. approved_by_human stays false per the t-014/t-015 precedent for this exact outage class; only Silas sets that field. Third occurrence of this outage class with kindrobots-unraid/t-016 (external health probe) still unclaimed -- worth prioritizing so a lucky scheduled sweep isn't the detection mechanism again.
 - 2026-09-12 `conductor/t-155` — Reused project_lifecycle.ordered_workable_slugs (the same helper check_priority_queue_starvation.py and next_ready_task.py already use) to sort audit_human_gates.py's report by priority-queue rank instead of writing new roadmap-walking logic -- confirms t-149's lesson generalizes: grep for the existing shared module before writing a new roadmap-ordering tool, and a report can be re-ordered by reusing pickup-order logic without touching what it detects.
 - 2026-09-12 `conductor/t-149` — check_priority_queue_starvation.py was straightforward to build correctly on the first pass by reusing the exact shared modules (roadmap_claims, roadmap_deps, daily_gate, project_lifecycle) next_ready_task.py already uses, rather than reimplementing claim/staleness/dependency logic -- the two scripts structurally cannot disagree about what counts as claimable ready work. Worth defaulting to this pattern (grep for the existing shared module before writing new roadmap-walking logic) for any future roadmap-reading tool.
-- 2026-09-12 `interface-vision/t-131` — A task can sit at status: review with a fully-implemented, pushed branch and never actually be reviewable, because no PR was ever opened from it -- observed for worker/interface-vision-t-131-20260912T151712Z-oai11 (real, scoped, single-line commit matching the task exactly). AGENTS.md's step 7 assumes 'set status: review before opening the PR' happens as one atomic sequence, but a session can crash or end between the roadmap edit and the actual gh pr create/GitHub MCP create_pull_request call, leaving status: review with nothing behind it -- indistinguishable from a genuinely in-review PR without checking GitHub directly. A later session (this one) found it by checking kind_robots' branch list against its open+closed PR list for a task at status: review and finding neither. Worth a lightweight check in whatever surfaces 'reviewable work' (select_role.py's reviewer signal, or a dedicated staleness check): a status: review task whose implementation branch has no open OR merged PR after some age is the same class of gap check_pr_merged_drift.py already covers in the other direction (a merged PR the roadmap doesn't know about).
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-13T15:42:01Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-13T15:45:57Z_
