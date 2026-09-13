@@ -13561,3 +13561,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A recurring TALKBACK-flagged papercut (bare 'PIL unavailable' error on a non-persistent sandbox Pillow install, rediscovered fix-and-forgotten across three separate sessions on 2026-08-11 and 2026-09-13) had its actual fix fully specified in the task note before this session ever claimed it -- the work was pure implementation, no design decision needed. When a TALKBACK entry proposes the exact same concrete fix three times running, the next session to touch that area should file the roadmap task itself rather than re-suggesting it a fourth time; this task existed only because a prior session finally did that."
+- date: 2026-09-13
+  project: coloring-book
+  task: t-041
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Kaizen from t-040: grepping the rest of the coloring-book pipeline for the same bare 'from PIL import Image' pattern found two more genuine hits (consume_coloring_book_color_art.py, manage_coloring_book_cover.py) and two false leads that already degrade gracefully (art_quality.py's load_stats returns None; consume_art_queue_core.py's save_result falls back to PNG with its own actionable message). A kaizen framed as 'grep for the same pattern elsewhere' is worth doing literally and completely in one pass rather than fixing only the first hit found -- distinguishing already-graceful call sites from genuinely bare ones is the actual work, not the grep itself."
