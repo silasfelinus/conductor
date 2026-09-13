@@ -4089,7 +4089,7 @@ tasks:
 - id: t-135
   milestone: m5
   title: "Bug fix: define the missing kr-badge-accent-sm CSS primitive"
-  status: claimed
+  status: done
   passes: 0
   stakes: reversible
   note: >-
@@ -4103,7 +4103,18 @@ tasks:
     passed on any of those four PRs (TypeScript, eslint, layout-contract,
     Storybook/Narrative contracts) catch an undefined Tailwind @apply target,
     which is why this slipped through four separate review passes.
+
+    Merged as silasfelinus/kind_robots#2695 (squash-free merge 8e44625). Added .kr-badge-
+    accent-sm { @apply badge badge-accent badge-sm; } alongside its sibling -sm badge
+    primitives. All 45 kind_robots PR checks passed (TypeScript, Contract verifiers, layout-
+    contract, facet-catalog, GitGuardian, full Storybook/Narrative contract suite, Build
+    production image). npx prettier --check flagged pre-existing drift on tailwind.css
+    confirmed via git stash to predate this change. npm run test:layout-contract held with
+    zero new violations. All 4 previously-broken call sites (ruler-hooked-card.vue, video-
+    lora-picker.vue, user-dashboard.vue, video-generator.vue) now resolve to a real DaisyUI
+    accent badge instead of unstyled text.
   owner: worker
   claimed_by: claude-conductor-agent-2026-09-13T0835Z-iv-t135
   claimed_at: '2026-09-13T08:49:58Z'
-  updated: '2026-09-13T08:49:58Z'
+  updated: '2026-09-13T08:50:07Z'
+  implementation_pr: 'silasfelinus/kind_robots#2695'
