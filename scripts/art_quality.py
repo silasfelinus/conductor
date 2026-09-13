@@ -160,12 +160,24 @@ def assess(stats: Stats, variant: str, size: Optional[tuple[int, int]] = None,
 # PIL-backed image loading (optional dependency)
 # ---------------------------------------------------------------------------
 
+_pil_missing_warned = False
+
+
 def load_stats(path: Path) -> Optional[tuple[Stats, tuple[int, int]]]:
     """Sample an image file into Stats + (width, height). Returns None if PIL is
     unavailable (caller decides whether that's fatal)."""
+    global _pil_missing_warned
     try:
         from PIL import Image
     except ImportError:
+        if not _pil_missing_warned:
+            _pil_missing_warned = True
+            print(
+                "art_quality.py: Pillow is not installed in this environment — "
+                "image guards will be skipped for every file until it's added "
+                "(pip3 install Pillow).",
+                file=sys.stderr,
+            )
         return None
     with Image.open(path) as im:
         size = im.size
