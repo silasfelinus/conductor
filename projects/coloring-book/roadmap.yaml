@@ -878,7 +878,7 @@ tasks:
 - id: t-042
   milestone: m4
   title: "Kaizen: make art_quality.py's load_stats() log once when Pillow is unavailable, instead of silently returning None"
-  status: claimed
+  status: review
   stakes: reversible
   owner: worker
   note: >-
@@ -896,6 +896,6 @@ tasks:
     ones that happen to string-match "PIL unavailable" in their own error
     handling. Do not change load_stats()'s return contract (still None on
     ImportError) or add a hard dependency on Pillow.
-  updated: '2026-09-13T16:32:54Z'
+  updated: '2026-09-13T16:34:18Z'
   claimed_by: claude-scheduled-2026-09-13T163000Z-cb-t042
   claimed_at: '2026-09-13T16:32:54Z'
