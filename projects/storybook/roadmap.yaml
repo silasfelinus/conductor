@@ -1011,11 +1011,11 @@ tasks:
 - id: t-044
   milestone: m9
   title: "Engine: Taskmaster mode -- objective, real work cards, server-side run"
-  status: claimed
+  status: done
   passes: 0
   stakes: reversible
   depends_on: [t-039, t-043]
-  note: >
+  note: >-
     stores/taskmasterStore.ts is a 1,070-line client-side beat loop with its own localStorage
     session, checkpoint plan, and "real hooks" (projects and todos) -- the same architecture
     Storybook just moved to the server. Absorb it the same way: a story run in TASKMASTER
@@ -1023,10 +1023,26 @@ tasks:
     and todos. Checkpoints become turns; hooks become the deck. Keep the fiction and the real
     work visibly distinct in the payload, because B4 requires the objective on screen beside
     the story at all times.
-  updated: '2026-09-13T02:29:42Z'
+
+    2026-09-13: merged (kind_robots#2689, all 53 checks green, including Replay migrations
+    on MariaDB and the DB-backed Generator + importer regression). A quest opens from an
+    Objective in the Spark slot plus a project, and the server deals the real work into
+    checkpoints -- the objective, the project open HONEYDO todos, its conductor tasks at
+    needs-human, capped at five. availableHooks() and buildCheckpointPlan() ported off
+    stores/taskmasterStore.ts, reading the stored conductor projection rather than a Pinia
+    store. Schema: LifeRun.questLedger and a TASKMASTER value on EndingDeckOwnerKind, both
+    additive. Silas decided two things on 2026-09-13: the quest resolves into its own deck
+    (conductor#4221, three axes about the WORK -- momentum, clarity, follow_through) so real
+    work is collected like any other adventure, and the Thread slot deals ONE project's
+    work, as today, because a quest that sweeps up every loose to-do stops having an
+    objective. A quest may also close early once every checkpoint is worked (canClose()
+    ported). stores/taskmasterStore.ts and the /taskmaster route are untouched and still
+    work -- t-047 retires them after t-046 deploys.
+  updated: '2026-09-13T02:53:58Z'
   owner: worker
   claimed_by: 2026-09-13T01-taskmaster-mode-t044
   claimed_at: '2026-09-13T02:29:42Z'
+  implementation_pr: 'silasfelinus/kind_robots#2689'
 - id: t-045
   milestone: m9
   title: "Engine: carry the write-back proposal rules onto the story turn"
