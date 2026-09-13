@@ -883,7 +883,7 @@ tasks:
 - id: t-040
   milestone: m8
   title: "Engine: open-ended mode -- no turn budget, resolve on demand"
-  status: review
+  status: done
   passes: 0
   stakes: reversible
   depends_on: t-039
@@ -905,7 +905,13 @@ tasks:
     has NULL there for its own reason and is told apart by deckId, so its ungated resolve is
     untouched. verifyStorybookPlayLoop.ts plays an endless run past the old budget and
     resolves it on demand against a real database.
-  updated: '2026-09-12T23:03:01Z'
+
+    2026-09-13: merged (kind_robots#2686, all 53 checks green). The two red guards were the
+    Alexandria outage, not this change -- verifyAcademyStarterManifest.ts and
+    verifyPopulationDraftQuality.ts fetch kindrobots.org live and were red on main too; both
+    passed on re-run once the host answered again. Merged != deployed: the enum widening and
+    the new routes need the Alexandria deploy before they are live.
+  updated: '2026-09-13T00:42:57Z'
   implementation_pr: 'silasfelinus/kind_robots#2686'
 - id: t-041
   milestone: m8
