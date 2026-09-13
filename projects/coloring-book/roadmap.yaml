@@ -818,3 +818,28 @@ tasks:
   claimed_by: null
   claimed_at: null
   updated: '2026-09-11T11:26:03Z'
+- id: t-040
+  milestone: m4
+  title: manage_coloring_book_production.py should surface the Pillow-missing fix inline instead of a bare ImportError
+  status: ready
+  passes: 0
+  stakes: reversible
+  owner: null
+  claimed_by: null
+  claimed_at: null
+  note: |-
+    Kaizen from t-022's kr-021..kr-030 review pass (2026-09-13, cycle 5): the
+    sandbox's Pillow install does not persist across sessions, so
+    `manage_coloring_book_production.py --operation accept-color` has now failed
+    on a bare "PIL unavailable -- image guard skipped" (or equivalent ImportError)
+    at least three separate times across three separate sessions (2026-08-11,
+    2026-09-13 slice 2, 2026-09-13 slice 3/this task), each time fixed the same
+    way (`pip3 install Pillow`) and each time flagged in TALKBACK with the same
+    suggested action that nobody has yet implemented: wrap the PIL import in the
+    script's mechanical image-guard path in a try/except that, on failure, prints
+    the exact fix (`pip3 install Pillow`, or a pointer to
+    `scripts/provision_kind_robots_deps.sh` if that's the preferred canonical
+    path) inline rather than relying on a session having read a TALKBACK entry
+    first. Scope: this script only -- do not touch the image-guard's actual
+    validation logic, just make the missing-dependency failure self-diagnosing.
+  updated: '2026-09-13T04:34:00Z'
