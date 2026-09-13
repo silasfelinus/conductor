@@ -1,22 +1,22 @@
 {
-  "generated_at": "2026-09-13T04:56:31.655267+00:00",
+  "generated_at": "2026-09-13T12:00:53.139292+00:00",
   "summary": {
     "status": "action-needed",
-    "roadmap_errors": 0,
-    "roadmap_warnings": 6,
+    "roadmap_errors": 2,
+    "roadmap_warnings": 7,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
-    "openai_scheduled_agent_overdue": true,
+    "openai_scheduled_agent_overdue": false,
     "intent_review_due": true
   },
   "openai_scheduled_agent": {
-    "overdue": true,
-    "last_activity": "2026-09-10T09:34:43+00:00",
-    "hours_since": 67.36,
+    "overdue": false,
+    "last_activity": "2026-09-13T11:32:32+00:00",
+    "hours_since": 0.47,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
-    "note": "OpenAI commit activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit."
+    "note": "OpenAI coordination activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit."
   },
   "intent_review": {
     "due": true,
@@ -30,22 +30,37 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-09-13T04:56:31.655273+00:00",
+    "generated_at": "2026-09-13T12:00:53.139298+00:00",
     "summary": {
       "roadmaps": 52,
       "active_projects": 21,
       "continuous_projects": 2,
-      "tasks": 1472,
-      "ready": 44,
-      "waiting": 54,
-      "needs_human": 32,
-      "in_progress": 3,
-      "done": 1319,
-      "errors": 0,
-      "warnings": 6,
+      "tasks": 1476,
+      "ready": 48,
+      "waiting": 55,
+      "needs_human": 34,
+      "in_progress": 1,
+      "done": 1322,
+      "errors": 2,
+      "warnings": 7,
       "info": 20
     },
-    "errors": [],
+    "errors": [
+      {
+        "severity": "error",
+        "code": "READY_WITH_UNMET_DEPS",
+        "project": "storybook",
+        "task": "t-035",
+        "message": "Ready task has unmet dependencies: t-034."
+      },
+      {
+        "severity": "error",
+        "code": "READY_WITH_UNMET_DEPS",
+        "project": "storybook",
+        "task": "t-036",
+        "message": "Ready task has unmet dependencies: t-035."
+      }
+    ],
     "warnings": [
       {
         "severity": "warning",
@@ -87,6 +102,13 @@
         "code": "GATED_DONE_WITHOUT_APPROVAL",
         "project": "kindrobots-unraid",
         "task": "t-017",
+        "message": "Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect."
+      },
+      {
+        "severity": "warning",
+        "code": "GATED_DONE_WITHOUT_APPROVAL",
+        "project": "kindrobots-unraid",
+        "task": "t-018",
         "message": "Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect."
       }
     ]
