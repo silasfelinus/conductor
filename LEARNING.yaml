@@ -13570,3 +13570,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Kaizen from t-040: grepping the rest of the coloring-book pipeline for the same bare 'from PIL import Image' pattern found two more genuine hits (consume_coloring_book_color_art.py, manage_coloring_book_cover.py) and two false leads that already degrade gracefully (art_quality.py's load_stats returns None; consume_art_queue_core.py's save_result falls back to PNG with its own actionable message). A kaizen framed as 'grep for the same pattern elsewhere' is worth doing literally and completely in one pass rather than fixing only the first hit found -- distinguishing already-graceful call sites from genuinely bare ones is the actual work, not the grep itself."
+- date: 2026-09-13
+  project: coloring-book
+  task: t-042
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Kaizen from t-041: load_stats() now warns once (module-level flag, printed to stderr) the first time it hits Pillow's ImportError in a process, instead of only ever returning None. Verified against a real missing-Pillow sandbox rather than a mock. A tiny, fully-specified kaizen note from the prior session's close-out needed no design judgement -- just implement, verify against the real failure condition it names, and close."
