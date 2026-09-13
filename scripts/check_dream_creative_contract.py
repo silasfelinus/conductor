@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Validate changed, unbuilt Daily Dream proposals against the creative-diversity contract.
+"""Validate unbuilt Daily Dream proposals against the creative-diversity contract.
 
-This is intentionally separate from the LLM author. Manual/backstop proposals must clear the
-same history-aware story and naming checks before they can become tomorrow's steering input.
-Built historical files are ignored because later art/evidence bookkeeping must not retroactively
-invalidate old worlds.
+Built historical files are immutable evidence and are ignored. Open steering proposals are
+live input, so a creative-contract change applies to the entire buffered runway, not merely
+the newest or files touched by the same pull request. ``--all-open`` is the migration gate:
+a contract/version bump cannot merge while any queued proposal still carries the old rules.
 """
 from __future__ import annotations
 
@@ -19,6 +19,8 @@ import author_dream_proposal as author  # noqa: E402
 import build_dream_proposal as proposals  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
+BACKLOG = ROOT / "projects" / "dream-cycle" / "backlog"
+OPEN_STATUSES = {"outline", "ready", "retry"}
 
 
 def _proposal_data(text: str) -> dict | None:
@@ -37,13 +39,18 @@ def _frontmatter_value(text: str, key: str) -> str:
     return match.group(1).strip() if match else ""
 
 
-def _entropy_version_error(proposal: dict) -> str | None:
-    """Require queued steering proposals to have been seeded under today's entropy rules.
+def _is_open_steering(text: str) -> bool:
+    """Whether a file is still capable of steering a future live build."""
+    if _frontmatter_value(text, "proposal").casefold() not in {"true", "yes"}:
+        return False
+    status = (_frontmatter_value(text, "status") or "outline").casefold()
+    if status not in OPEN_STATUSES:
+        return False
+    return re.search(r"<!--\s*built-data", text) is None
 
-    Built history remains immutable evidence, but an unbuilt proposal is still steering input.
-    Letting an old unversioned docket item build under a newer contract defeats seed cooldowns:
-    the prose validator sees the already-chosen Facets and cannot retroactively undraw them.
-    """
+
+def _entropy_version_error(proposal: dict) -> str | None:
+    """Require queued steering proposals to have been seeded under today's entropy rules."""
     seeds = proposal.get("seed_facets")
     raw = seeds.get("creative_entropy_version") if isinstance(seeds, dict) else None
     try:
@@ -64,10 +71,7 @@ def validate_path(path: Path) -> list[str]:
     if not path.exists() or path.suffix != ".md" or path.name.startswith("_"):
         return []
     text = path.read_text(encoding="utf-8")
-    if _frontmatter_value(text, "proposal").casefold() not in {"true", "yes"}:
-        return []
-    status = (_frontmatter_value(text, "status") or "outline").casefold()
-    if status not in {"outline", "ready", "retry"}:
+    if not _is_open_steering(text):
         return []
     day = _frontmatter_value(text, "proposal_date") or _frontmatter_value(text, "created")
     proposal = _proposal_data(text)
@@ -100,20 +104,34 @@ def validate_path(path: Path) -> list[str]:
 
 
 def main(argv: list[str] | None = None) -> int:
-    paths = [Path(value) for value in (argv if argv is not None else sys.argv[1:])]
+    values = list(argv if argv is not None else sys.argv[1:])
+    all_open = "--all-open" in values
+    paths = [Path(value) for value in values if value != "--all-open"]
+    if all_open:
+        paths.extend(sorted(BACKLOG.glob("*.md")))
+
+    # Keep command-line order for useful CI output while avoiding duplicate work when a
+    # changed proposal also belongs to the whole-buffer scan.
+    unique: list[Path] = []
+    seen: set[str] = set()
+    for path in paths:
+        key = path.as_posix()
+        if key not in seen:
+            seen.add(key)
+            unique.append(path)
+
     failures = 0
     checked = 0
-    for path in paths:
-        if "projects/dream-cycle/backlog" not in path.as_posix():
+    for path in unique:
+        if "projects/dream-cycle/backlog" not in path.as_posix() and not all_open:
             continue
-        errors = validate_path(path)
         if not path.exists():
             continue
         text = path.read_text(encoding="utf-8")
-        status = (_frontmatter_value(text, "status") or "outline").casefold()
-        if status not in {"outline", "ready", "retry"}:
+        if not _is_open_steering(text):
             continue
         checked += 1
+        errors = validate_path(path)
         if errors:
             failures += 1
             print(f"{path}: creative contract failed", file=sys.stderr)
@@ -121,7 +139,7 @@ def main(argv: list[str] | None = None) -> int:
                 print(f"  - {error}", file=sys.stderr)
         else:
             print(f"{path}: creative contract passed")
-    print(f"Daily Dream creative contract: {checked} steering proposal(s) checked, {failures} failed.")
+    print(f"Daily Dream creative contract: {checked} open steering proposal(s) checked, {failures} failed.")
     return 1 if failures else 0
 
 
