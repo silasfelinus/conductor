@@ -110,3 +110,100 @@ Set `t-019` to `done` once the MCE class is identified (which part, correctable 
 and either the part is replaced/scheduled or the event is confirmed as a benign one-off.
 If the timestamps do correlate with the incident windows above, say so in the note — that
 finding should feed straight back into `t-016` and the still-open root-cause question.
+
+---
+
+# RESULT — 2026-09-13
+
+Silas ran steps 1–2 on Alexandria. The MCE is **benign**, and the interesting finding is
+what the same output revealed about the host's blind spots.
+
+## The event
+
+```
+[Sat Sep 12 15:44:38 2026] mce: [Hardware Error]: CPU 10: Machine Check: 0 Bank 5: bea0000000000108
+[Sat Sep 12 15:44:38 2026] mce: [Hardware Error]: TSC 0 ADDR 1ffff810e36c6 MISC d012000100000000 SYND 4d000000
+[Sat Sep 12 15:44:38 2026] mce: [Hardware Error]: PROCESSOR 2:870f10 TIME 1789253077 SOCKET 0 APIC b microcode 8701034
+[Sat Sep 12 15:45:23 2026] EDAC MC: Ver: 3.0.0
+```
+
+One event. Not repeating.
+
+**CPU:** `PROCESSOR 2:870f10` — vendor 2 is AMD; CPUID `0x870F10` decodes to family `0x17`,
+model `0x71` — Zen 2 "Matisse", i.e. a Ryzen 3000-series desktop part.
+
+**Bank 5:** `IPID 500b000000000` gives HardwareID `0xB0`, McaType `0x5`, which is
+`SMCA_EX` — the **Execution Unit**, not the memory controller. No DIMM is implicated.
+
+**Status `bea0000000000108`** decodes to Val=1, UC=1, En=1, MiscV=1, AddrV=1, **PCC=1**,
+TCC=1, Scrub=1, error code `0x108` (generic cache-hierarchy error). PCC — processor
+context corrupt — reads alarming, and on its own it would be the urgent row of the table
+above.
+
+## Why it is benign anyway
+
+**`TSC 0` is the tell.** A real machine-check *exception* captures a timestamp counter
+value. Zero means this was logged by `machine_check_poll()` reading the MCA banks, not by
+a live fault — and the boot-time poll of all banks runs without `MCP_TIMESTAMP`, so it
+always records `TSC 0`. Corroborating that: EDAC initialises 45 seconds *after* the event,
+so the log line lands about a minute into a boot. A genuine uncorrected PCC error would
+have panicked the machine, not been quietly logged and survived.
+
+So: stale status sitting in bank 5, read out and printed during boot. The specific
+signature — Bank 5, `bea0000000000108`, once at boot, on a Ryzen desktop part — is very
+widely reported on Zen 2/Zen 3 systems and is the known-spurious one. (Reported pattern,
+not a citation to a numbered erratum.)
+
+## The correlation check: negative
+
+MCE at **Sat 2026-09-12 15:44:38 PDT**. Against the windows in step 4:
+
+| Incident | Local (PDT) | Gap from MCE |
+|---|---|---|
+| healthcheck stop | 09-01 02:26 | 11 days before |
+| t-014 | 09-04 06:25 | 8 days before |
+| t-015 | 09-07 19:56 | 5 days before |
+| t-017 | 09-12 ~04:45 | ~11 h before |
+| t-018 | 09-13 ~02:29 | ~11 h after |
+
+Nothing lands inside an incident window. The nearest, t-017's failed migration, is eleven
+hours earlier — and on a *previous boot*, since this MCE was logged during a boot that
+started ~15:43 on the 12th.
+
+Stronger still: `dmesg` covers the current boot only, which began ~15:43 on 09-12 and
+therefore **contains t-018 in full**. No MCE was logged anywhere near 09-13 02:29.
+That is a clean negative result: hardware machine checks did not cause t-018.
+
+For t-014, t-015, t-017 and the healthcheck stop, the evidence is simply gone — see below.
+
+## What this actually exposed
+
+Three things matter more than the MCE did.
+
+**1. `/var/log` is RAM-only, so every incident before the last reboot has no evidence.**
+`/var/log/mcelog` does not exist and `dmesg` starts at the current boot. Four incidents
+have now been investigated after the fact with nothing to read. Fix: *Settings → Syslog
+Server → Mirror syslog to flash*. It is a toggle, and it is the single highest-value
+action on this host.
+
+**2. Alexandria has no memory error detection at all.**
+`/sys/devices/system/edac/mc/*/dimm*/` does not exist — EDAC core loaded, but no memory
+controller driver bound, because the RAM is non-ECC: 4 × 16 GB **TEAMGROUP UD4-3600**
+UDIMMs across P0 CHANNEL A DIMM 0/1 and CHANNEL B DIMM 0/1. There will never be a
+`ce_count` to read. This is not "no errors found" — it is *no detector installed*. A host
+serving production with no ECC cannot distinguish a healthy DIMM from a failing one; bad
+memory just corrupts silently.
+
+**3. That memory configuration is aggressive for this CPU.**
+DDR4-3600 is above JEDEC and requires XMP/DOCP. Four UDIMMs at 3600 on a Matisse memory
+controller is a well-known marginal configuration — many 4-DIMM AM4 builds are not stable
+above 3200, and the Infinity Fabric clock is the usual limiter. Marginal memory on a
+non-ECC host produces exactly the observed symptom set: containers dying at random, a
+schema write failing mid-flight (t-017), no hardware error logged anywhere.
+
+**4. An unexplained reboot.** Alexandria booted ~15:43 PDT on 09-12, between t-017 and
+t-018. Worth knowing whether that was planned.
+
+Follow-on work is tracked at `t-020`. `t-019` closes here: the MCE class is identified
+(spurious boot-time poll of a stale Execution Unit status, not memory, not repeating) and
+confirmed a benign one-off, which is this task's stated close-out condition.
