@@ -821,11 +821,11 @@ tasks:
 - id: t-040
   milestone: m4
   title: manage_coloring_book_production.py should surface the Pillow-missing fix inline instead of a bare ImportError
-  status: review
+  status: done
   passes: 0
   stakes: reversible
-  owner: worker
-  claimed_by: claude-scheduled-2026-09-13T133000Z-cb-t040
+  owner: null
+  claimed_by: null
   claimed_at: '2026-09-13T13:32:10Z'
   note: |-
     Kaizen from t-022's kr-021..kr-030 review pass (2026-09-13, cycle 5): the
@@ -842,4 +842,22 @@ tasks:
     path) inline rather than relying on a session having read a TALKBACK entry
     first. Scope: this script only -- do not touch the image-guard's actual
     validation logic, just make the missing-dependency failure self-diagnosing.
-  updated: '2026-09-13T13:36:33Z'
+  updated: '2026-09-13T13:40:14Z'
+  implementation_pr: 'silasfelinus/conductor#4257'
+
+- id: t-041
+  milestone: m4
+  title: "Grep the coloring-book pipeline for other unguarded 'from PIL import Image' call sites (kaizen from t-040)"
+  status: ready
+  stakes: reversible
+  owner: null
+  note: >-
+    Kaizen from t-040 (2026-09-13, silasfelinus/conductor#4257): that task fixed
+    manage_coloring_book_production.py's two PIL-import call sites (mechanical_check
+    via art_quality.assess_file, and save_image's WebP encode) to surface an
+    actionable "pip3 install Pillow" fix instead of a bare error. Other coloring-book
+    pipeline scripts (consume_art_requests.py, consume_monster_recast_art.py, and
+    any other script that touches image bytes) may have the same unguarded
+    `from PIL import Image` pattern. DO: grep the coloring-book pipeline scripts for
+    other bare PIL imports and apply the same actionable-fix wrapping where found;
+    if none are found, close as done with that finding noted.
