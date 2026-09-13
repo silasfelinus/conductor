@@ -848,7 +848,7 @@ tasks:
 - id: t-041
   milestone: m4
   title: "Grep the coloring-book pipeline for other unguarded 'from PIL import Image' call sites (kaizen from t-040)"
-  status: claimed
+  status: review
   stakes: reversible
   owner: worker
   note: >-
@@ -861,6 +861,15 @@ tasks:
     `from PIL import Image` pattern. DO: grep the coloring-book pipeline scripts for
     other bare PIL imports and apply the same actionable-fix wrapping where found;
     if none are found, close as done with that finding noted.
+
+    Grepped every coloring-book pipeline `from PIL import Image` call site.
+    art_quality.py::load_stats and consume_art_queue_core.py::save_result already degrade
+    gracefully (return None / fall back to PNG with an inline actionable message) -- no fix
+    needed there. consume_coloring_book_color_art.py::save_result and
+    manage_coloring_book_cover.py::save_image both raised a bare RuntimeError with no fix
+    instructions, same bug pattern as t-040 -- fixed both the same way (append pip3 install
+    Pillow / provision_kind_robots_deps.sh guidance), added direct unit tests for each. Full
+    python test suite (1842 passed, 1 skipped) and validate_roadmaps.py both clean.
   claimed_by: claude-web-20260913T1630Z-cb-t041
   claimed_at: '2026-09-13T15:34:55Z'
-  updated: '2026-09-13T15:34:55Z'
+  updated: '2026-09-13T15:38:40Z'
