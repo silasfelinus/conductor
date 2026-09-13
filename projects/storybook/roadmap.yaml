@@ -6,7 +6,7 @@ goal: >
   option, a custom action, or a play from the hero's character sheet, deterministic resolution
   into per-deck ending sets (genre decks alongside the 1,024-ending Life deck), and a per-account
   collection of adventures and endings -- visually accepted on phone/tablet/desktop.
-notes_from_silas: 'Build the collaborative storytelling experience layer on top of the existing Kind Robots models. Support guided adventure and limited-visibility collaboration modes with async-first play, branching choices, custom inputs, rewards, inventory, and reusable story state. 2026-09-09, superseding the Da Vinci separation clause that stood here from 2026-07-02: "merge the projects, and kill any reference that says we should separate them. we care about having a solid *single* interface that is a stylish and effective storymaker with many endings. Whatever has been done should be merged." Da Vinci is now the `life` shape of Storybook (kind_robots PR #2549) — one route, one setup screen, one library. Nothing forbids a shared session table or a column on a Life* model any more; judge such a change on its merits like any other. 2026-09-12, after round 1 of the storymaker mockups: "since the narrators actually exist as bot Narrators, they provide the general voice, but how they deliver it can still be adjusted"; "Stories should be able to be selected as open-ended (endless mode), episodic (scenario based), structured (da Vinci mode), and taskmaster (we should work taskmaster into this project as well, removing the taskmaster route when done)"; "All selections before the story begins should be card hand based" -- clarified as "that doesn''t count reasonable settings, start story, etc. I just meant all the flavor bits, including mode select, narrator, etc." So: mode and narrator become cards, typed input and settings and actions stay ordinary controls, the four modes replace the four shapes with length demoted to a dial, and Taskmaster is absorbed as the fourth mode. Full spec in docs/storymaker-redesign.md Part B; the Storybook/Taskmaster boundary doc that called the split permanent is superseded (t-043).'
+notes_from_silas: 'Build the collaborative storytelling experience layer on top of the existing Kind Robots models. Support guided adventure and limited-visibility collaboration modes with async-first play, branching choices, custom inputs, rewards, inventory, and reusable story state. 2026-09-09, superseding the Da Vinci separation clause that stood here from 2026-07-02: "merge the projects, and kill any reference that says we should separate them. we care about having a solid *single* interface that is a stylish and effective storymaker with many endings. Whatever has been done should be merged." Da Vinci is now the `life` shape of Storybook (kind_robots PR #2549) — one route, one setup screen, one library. Nothing forbids a shared session table or a column on a Life* model any more; judge such a change on its merits like any other. 2026-09-12, after round 1 of the storymaker mockups: "since the narrators actually exist as bot Narrators, they provide the general voice, but how they deliver it can still be adjusted"; "Stories should be able to be selected as open-ended (endless mode), episodic (scenario based), structured (da Vinci mode), and taskmaster (we should work taskmaster into this project as well, removing the taskmaster route when done)"; "All selections before the story begins should be card hand based" -- clarified as "that doesn''t count reasonable settings, start story, etc. I just meant all the flavor bits, including mode select, narrator, etc." So: mode and narrator become cards, typed input and settings and actions stay ordinary controls, the four modes replace the four shapes with length demoted to a dial, and Taskmaster is absorbed as the fourth mode. Full spec in docs/storymaker-redesign.md Part B; the Storybook/Taskmaster boundary doc that called the split permanent is superseded (t-043). 2026-09-13, STANDING: "I don''t know why anything is waiting on mockups. That was supposed to be a one-off to give some general direction, not a permanent requirement to lead to anything. we just want things functional at this point. we can tweak what it looks like afterwards. We should not be waiting for mockups (which you were already given) to complete anything moving forward on roadmaps." A mockup, a screenshot or a design pass is DIRECTION, never a dependency. No task in this project -- or any project -- may be filed blocked on one. Screens ship functional on the engine that exists and are polished in place afterwards.'
 milestones:
 - id: m1
   title: Session model and boundaries
@@ -184,7 +184,7 @@ tasks:
 
     Cycle 51 found a concrete narrative storage-recovery sibling defect. Taskmaster's restoreFromLocalStorage catches a throwing getItem/parse but then calls localStorage.removeItem(STORAGE_KEY) unguarded inside that catch, so storage implementations that reject access can throw again out of the recovery path and onMounted. Storybook's equivalent recovery already nests cleanup in a second try/catch and its session-storage recovery guard documents this exact class. Filed kind_robots issue #2413 with the narrow fix and regression-test scope. No implementation was attempted connector-side because the affected store is a large file and the connector protocol forbids replacement from an abbreviated response; task remains ready for the focused store + contract slice.
 
-    2026-09-12 (Silas-directed session): polish cycles PAUSE on storybook-visual-setup.vue, conductor/storybook-page.vue and storybook-library-page.vue until t-034/t-035/t-036 land -- those screens are being replaced by the card-driven redesign (projects/storybook/docs/storymaker-redesign.md), so a bug hunt there is polishing a screen that is going away. Cycles may still target storybook-life-run.vue, the shared narrative primitives, and the new server engine (server/utils/storybookNarration.ts, storybookRuns.ts) once they merge.
+    2026-09-12 (Silas-directed session): polish cycles PAUSE on storybook-visual-setup.vue, conductor/storybook-page.vue and storybook-library-page.vue until t-034/t-035/t-036 land -- those screens are being replaced by the card-driven redesign (projects/storybook/docs/storymaker-redesign.md), so a bug hunt there is polishing a screen that is going away. Cycles may still target storybook-life-run.vue, the shared narrative primitives, and the new server engine (server/utils/storybookNarration.ts, storybookRuns.ts) once they merge. 2026-09-13: that pause is about not polishing a screen being replaced -- landing t-034/t-035/t-036 is not gated on anything external, and never was.
   updated: '2026-09-12T12:00:00Z'
 - id: t-011
   milestone: m4
@@ -280,7 +280,7 @@ tasks:
 
     Kind Robots implementation is underway on fix/storybook-art-first-setup. Do not ask Silas to re-review until that redesign has merged and deployed.
 
-    2026-09-12: davinci/t-022 ("FOR SILAS: visually accept the finished Da Vinci experience") is folded into this gate when davinci was retired into storybook -- the life shape is one of the shapes on the same screen, so one acceptance covers both. The redesign this gate now waits on is the card-driven Table/Reading/Ending spec in projects/storybook/docs/storymaker-redesign.md (t-034..t-036), which supersedes the fix/storybook-art-first-setup branch mentioned above; the mockups Silas is commissioning from that spec come first.
+    2026-09-12: davinci/t-022 ("FOR SILAS: visually accept the finished Da Vinci experience") is folded into this gate when davinci was retired into storybook -- the life shape is one of the shapes on the same screen, so one acceptance covers both. The redesign this gate now waits on is the card-driven Table/Reading/Ending spec in projects/storybook/docs/storymaker-redesign.md (t-034..t-036), which supersedes the fix/storybook-art-first-setup branch mentioned above. 2026-09-13: this gate is Silas's acceptance of the finished screens and it blocks nothing -- the earlier clause saying mockups "come first" is withdrawn. Build t-034..t-036 functionally, then ask him to look.
 
     2026-09-12: this gate now covers four modes, not four shapes -- open-ended, episodic, structured and taskmaster -- on one Table with one hand. Taskmaster's own route is retired by then (t-047), so accepting this screen is also accepting that its work still feels safe: the real objective visible beside the fiction, and nothing written to a real task without an explicit accept.
   updated: '2026-09-12T12:00:00Z'
@@ -764,50 +764,54 @@ tasks:
 - id: t-034
   milestone: m7
   title: "UI: the Table -- storyboard slots, and the workspace hand taken over on /storybook"
-  status: blocked
+  status: ready
   passes: 0
   stakes: reversible
   depends_on: [t-029, t-030]
   note: >
-    Part B1. Blocked on the ChatGPT mockups Silas is commissioning from
-    projects/storybook/docs/storymaker-redesign.md. Slots: Genre, Place, Hero (required);
+    Part B1. Slots: Genre, Place, Hero (required);
     Company, Narrator, Shape, Thread, Treasures, Spark (optional/defaulted). The bottom
     workspace hand fans the deck for the active slot via a new `storybookCards` page-cards key
     (stores/pageStore.ts cardsKey -> stores/helpers/modelCards.ts), so workspace-hand.vue's
     sizing/flip/scroll code is untouched. Board lights up when the required slots are filled.
-    Unblock by setting status: ready once the mockups are in hand.
 
     2026-09-12, after mockup round 1: the spec this waits on has been rewritten (docs/storymaker-redesign.md B0-B4). Two slots changed shape. NARRATOR is now a card dealt from real narrator Bots with a delivery dial on the placed card, not a radio row of five voices (t-042). SHAPE is now MODE -- open-ended, episodic, structured, taskmaster -- also a card, with length demoted to a settings dial (t-039, t-041). And B0 now draws the line Silas drew: creative choices are cards, while typed input (title, premise, objective), settings and actions stay ordinary controls. Round 1 failed by keeping the form and adding cards underneath it; the board and the hand are the page.
+
+    2026-09-13, Silas: "I don''t know why anything is waiting on mockups. That was supposed to be a one-off to give some general direction, not a permanent requirement to lead to anything. we just want things functional at this point. we can tweak what it looks like afterwards. We should not be waiting for mockups (which you were already given) to complete anything moving forward on roadmaps." The gate this note carried was invented when m7 was filed and is removed. A mockup is DIRECTION, never a dependency: build the screen functionally on the engine that exists, and polish it in place afterwards. Everything above about slots, moves and albums is still the spec -- only the waiting was wrong.
   updated: '2026-09-12T12:00:00Z'
 - id: t-035
   milestone: m7
   title: "UI: the Reading -- one page per turn with options, a custom action, and the hero's cards in the hand"
-  status: blocked
+  status: ready
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-032]
   note: >
-    Part B2. Blocked on the mockups. Scene art plate + short direct prose; tableau strip and
+    Part B2. Scene art plate + short direct prose; tableau strip and
     turn pips; the three moves always visible together (option cards, "You ..." composer, the
     hero's Skill/Item cards fanned in the bottom hand). Axes stay hidden for genre decks; the
     Life ledger sits behind a toggle. Built on stores/storybookRunStore.ts, not the old beat loop.
 
     2026-09-12: open-ended mode has no turn budget, so the turn pips cannot read "3 of 8" in every mode -- show progress without an end count, and offer "bring this to an end" as the reader's own move (t-040). Structured mode is the only one that may show its ledger; every other mode shows prose consequences only.
+
+    2026-09-13, Silas: "I don''t know why anything is waiting on mockups. That was supposed to be a one-off to give some general direction, not a permanent requirement to lead to anything. we just want things functional at this point. we can tweak what it looks like afterwards. We should not be waiting for mockups (which you were already given) to complete anything moving forward on roadmaps." The gate this note carried was invented when m7 was filed and is removed. A mockup is DIRECTION, never a dependency: build the screen functionally on the engine that exists, and polish it in place afterwards. Everything above about slots, moves and albums is still the spec -- only the waiting was wrong.
   updated: '2026-09-12T12:00:00Z'
 - id: t-036
   milestone: m7
   title: "UI: the Ending reveal and the Collection album"
-  status: blocked
+  status: ready
   passes: 0
   stakes: reversible
   depends_on: [t-035, t-033]
   note: >
-    Part B3/B4. Blocked on the mockups. Ending card flip (kr-card-flip gesture), "added to your
+    Part B3/B4. Ending card flip (kr-card-flip gesture), "added to your
     collection · n of N" with the deck's album row (found face-up, unfound face-down), play
     again / new table. The Collection replaces the localStorage "Recent stories" drawer with
     per-account Adventures and per-deck Endings albums; Life's "Endings on record" folds in.
 
     2026-09-12: the Collection has to hold a 1,024-ending album beside eight-ending genre albums without either looking wrong, and an open-ended story that the reader chose to end lands in the same album as any other (t-040).
+
+    2026-09-13, Silas: "I don''t know why anything is waiting on mockups. That was supposed to be a one-off to give some general direction, not a permanent requirement to lead to anything. we just want things functional at this point. we can tweak what it looks like afterwards. We should not be waiting for mockups (which you were already given) to complete anything moving forward on roadmaps." The gate this note carried was invented when m7 was filed and is removed. A mockup is DIRECTION, never a dependency: build the screen functionally on the engine that exists, and polish it in place afterwards. Everything above about slots, moves and albums is still the spec -- only the waiting was wrong.
   updated: '2026-09-12T12:00:00Z'
 - id: t-037
   milestone: m7
@@ -1079,16 +1083,18 @@ tasks:
 - id: t-046
   milestone: m9
   title: "UI: Taskmaster mode on the Table and in the Reading"
-  status: blocked
+  status: waiting
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-044, t-045]
   note: >
-    Blocked on the mockups with the rest of m7. The Table in this mode swaps the Spark for an
+    The Table in this mode swaps the Spark for an
     Objective field and deals real work cards into the Thread slot; the Reading keeps the
     objective on screen beside the fiction and puts an explicit accept step on any proposal.
     Everything else -- hand, slots, turn loop, character sheet -- is the same screen as every
     other mode, which is the point of absorbing it rather than porting it.
+
+    2026-09-13, Silas: "I don''t know why anything is waiting on mockups. That was supposed to be a one-off to give some general direction, not a permanent requirement to lead to anything. we just want things functional at this point. we can tweak what it looks like afterwards. We should not be waiting for mockups (which you were already given) to complete anything moving forward on roadmaps." The gate this note carried was invented when m7 was filed and is removed. A mockup is DIRECTION, never a dependency: build the screen functionally on the engine that exists, and polish it in place afterwards. Everything above about slots, moves and albums is still the spec -- only the waiting was wrong.
   updated: '2026-09-12T14:00:00Z'
 - id: t-047
   milestone: m9
