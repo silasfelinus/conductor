@@ -3340,7 +3340,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: "Polish every reachable Kind Robots surface page-by-page"
-  status: claimed
+  status: needs-human
   passes: 0
   stakes: reversible
   recurring: true
@@ -3382,11 +3382,60 @@ tasks:
     actual latest merged PR (#2639) and re-arming status: ready per the recurring-task
     convention, matching what the note already said. No new work performed this cycle --
     purely a bookkeeping catch-up.
-  updated: '2026-09-13T08:35:02Z'
+
+    FOR SILAS: Recurring visual-polish task interface-vision/t-105 has run its
+    mechanical survey (grep for bare-bold page titles without an icon badge, and
+    for hardcoded/theme-bypassing colors) four times now (2026-08-27, 2026-08-29,
+    2026-09-12, 2026-09-13) with zero new candidates each time -- every remaining
+    hit is either already-fixed, an in-game HUD element, decorative content, or a
+    deliberately-designed richer hero (giving-page.vue, mermaids-page.vue,
+    users/[id].vue) that a mechanical icon-badge swap would downgrade rather than
+    improve. TO APPROVE / DECIDE: either (a) tell this task which specific
+    page(s) you want redesigned and how (screenshots or direction), since this
+    sandbox cannot render kindrobots.org pre-merge to self-direct further design
+    calls (no reachable DB, no PR-preview infra), or (b) confirm the mechanical
+    phase is done and let t-105 sit idle until you have new visual direction,
+    rather than have sessions keep re-running the same exhausted grep. Setting
+    soft_gate so other projects' work continues in parallel; this does not block
+    anything else.
+
+    Slice attempt (2026-09-13, scheduled conductor sweep): re-ran both established
+    survey categories against current kind_robots main (96f64af). Icon-badge-header
+    grep (text-2xl|3xl font-bold|black, components/pages + pages): new hits vs the
+    2026-09-12 slice were pages/admin/scene-animator.vue (a code COMMENT describing
+    an already-removed header, not live markup), pages/play/challenges/[slug].vue
+    ("VS" matchup badge -- in-game HUD element, same exclusion category as
+    memory-dungeon.vue/rebel-button.vue-predecessor), pages/play/mandarin.vue
+    (flashcard content text, not page chrome), and pages/users/[id].vue (a
+    deliberately-designed profile hero -- eyebrow + avatar + name -- same
+    "richer intentional hero" exclusion category as giving-page.vue/mermaids-page.vue).
+    None is a genuine bare-text-no-hierarchy page-title gap. Hardcoded-color-bypass
+    grep (bg-white/text-blue-NNN/bg-red-NNN/bg-green-NNN): new hits vs the prior
+    11-file list were coloring-canvas.vue (literal white paper backdrop for
+    line-art, same exclusion as its coloring-book-manager/production-toolbar
+    siblings) and components/screenfx/{animation-interact,rain-effect,
+    startup-animation}.vue (intentional white-on-dark overlay controls for
+    full-screen animation/rain effects, not a light-only-modal-bypassing-an-
+    alternative-pattern defect). No genuine new candidate found. No diff.
+
+    This is the fourth consecutive cycle (2026-08-27, 2026-08-29, 2026-09-12,
+    2026-09-13) to confirm the mechanical icon-badge-header and hardcoded-color-
+    bypass sweeps are exhausted -- the 2026-08-29 slice first recommended pivoting
+    to either (a) a deliberate redesign pass on the remaining subjective
+    candidates (giving-page.vue, mermaids-page.vue) driven by real screenshots, or
+    (b) treating the mechanical phase as complete and scoping any further work as
+    Silas-directed redesign rather than another grep pass. Neither has been acted
+    on in over two weeks of repeated re-confirmation, and (a) remains blocked in
+    this sandbox regardless (no reachable database, no PR-preview infra since the
+    Vercel migration -- AGENTS.md's "Visually verifying a front-end change"
+    section). Escalating rather than re-arming to `ready` for a fifth identical
+    no-op cycle.
+  updated: '2026-09-13T08:35:37Z'
   implementation_pr: 'silasfelinus/kind_robots#2639'
   owner: worker
   claimed_by: claude-conductor-agent-2026-09-13T0835Z-iv-t105
   claimed_at: '2026-09-13T08:35:02Z'
+  soft_gate: true
 
 - id: t-106
   milestone: m6
