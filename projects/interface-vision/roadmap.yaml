@@ -4020,11 +4020,11 @@ tasks:
 - id: t-133
   milestone: m6
   title: "Kaizen: promote high-confidence shellcheck rules (e.g. SC2086) to blocking once real PR traffic shows their false-positive rate"
-  status: claimed
+  status: ready
   gate_human: false
   stakes: reversible
   passes: 0
-  owner: worker
+  owner: null
   note: >-
     Kaizen from t-132 (kind_robots#2674, 2026-09-12): the new shellcheck pass in
     layout-contract.yml is entirely warning-only (`|| true`) since its
@@ -4037,9 +4037,13 @@ tasks:
     filtering, or a second invocation scoped to only the promoted codes) while
     leaving the rest warning-only -- do not flip the whole pass to hard-failing
     at once.
+
+    PROGRESS 2026-09-13: checked real PR traffic since the shellcheck step landed (kind_robots#2674). Enumerated all 12 *.sh files in the repo and queried commit history on each since 2026-09-12 -- only one PR since the step existed actually touched a shell script: kind_robots#2698 (scripts/deploy-unraid.sh, merged 2026-09-13T11:17:29Z). Its layout-contract job log (run 34753864621, job 103714825820) shows `shellcheck scripts/deploy-unraid.sh` executed and printed zero findings -- no output at all between the command and the next step. (scripts/check-test-commit-assertions.sh also changed, in kind_robots#2651, but that merged 2026-09-12T05:34:13Z, before #2674 added the shellcheck step, so its CI run predates the check and is not real evidence.)
+
+    One clean PR is not "a handful" and gives no evidence either way about which SC rule classes are safe to promote to blocking -- a 0-finding sample cannot show a false-positive rate for any specific code (SC2086 or otherwise). Promoting rules now would be a guess, not a data-backed decision, so leaving the step warning-only per this task's own DO condition rather than force a promotion. Returning to ready, unclaimed -- pick this back up once several more *.sh-touching PRs have landed and produced real shellcheck output to review. No roadmap/CI change made this pass; passes not incremented (precondition not yet met, not a failed attempt).
   claimed_by: claude-scheduled-2026-09-13T130000Z-iv-t133
   claimed_at: '2026-09-13T12:29:35Z'
-  updated: '2026-09-13T12:29:35Z'
+  updated: '2026-09-13T12:31:05Z'
 
 - id: t-134
   milestone: m5
