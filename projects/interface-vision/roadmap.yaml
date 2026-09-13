@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3305,7 +3305,18 @@ tasks:
     no color/behavior/API/schema/route/geometry change. art-styler.vue's remaining
     occurrence carries a text-primary-content color modifier, out of scope for the colorless
     kr-spinner-sm primitive; left for a future slice.
-  updated: '2026-09-13T21:42:04Z'
+
+    Slice 267 (silasfelinus/kind_robots#2710) merged clean -- migrated entity-art-
+    manager.vue loadingResources spinner onto kr-spinner-sm, preserving self-end/mb-1. One
+    file, +1/-1, no color/behavior/API/schema/route/geometry change. All 47 kind_robots PR
+    checks green (including the Contract verifiers required check) before merge. Returning
+    the recurring consistency umbrella to ready. Kaizen for the next slice: the only
+    remaining exact-match candidate repo-wide, components/art/art-styler.vue, carries a
+    text-primary-content color modifier and is out of scope for the colorless kr-spinner-sm
+    primitive -- the next slice should run a fresh full-repo class-frequency survey for the
+    next bounded family, or scope a colored kr-spinner-sm variant if Silas wants that family
+    covered.
+  updated: '2026-09-13T21:45:52Z'
   implementation_pr: 'silasfelinus/kind_robots#2710'
   retry_context: ''
   owner: reviewer
