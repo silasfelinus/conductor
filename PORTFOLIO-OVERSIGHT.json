@@ -1,27 +1,27 @@
 {
-  "generated_at": "2026-09-12T20:39:14.614597+00:00",
+  "generated_at": "2026-09-13T04:56:31.655267+00:00",
   "summary": {
     "status": "action-needed",
     "roadmap_errors": 0,
-    "roadmap_warnings": 5,
+    "roadmap_warnings": 6,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
     "openai_scheduled_agent_overdue": true,
-    "intent_review_due": false
+    "intent_review_due": true
   },
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-09-10T09:34:43+00:00",
-    "hours_since": 59.08,
+    "hours_since": 67.36,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "OpenAI commit activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit."
   },
   "intent_review": {
-    "due": false,
+    "due": true,
     "last_report": "INTENT-AUDIT-2026-09-10.md",
-    "days_since": 2,
+    "days_since": 3,
     "stale_days": 3.0
   },
   "project_parity": {
@@ -30,19 +30,19 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-09-12T20:39:14.614605+00:00",
+    "generated_at": "2026-09-13T04:56:31.655273+00:00",
     "summary": {
       "roadmaps": 52,
       "active_projects": 21,
       "continuous_projects": 2,
-      "tasks": 1461,
-      "ready": 46,
-      "waiting": 53,
-      "needs_human": 33,
-      "in_progress": 0,
-      "done": 1310,
+      "tasks": 1472,
+      "ready": 44,
+      "waiting": 54,
+      "needs_human": 32,
+      "in_progress": 3,
+      "done": 1319,
       "errors": 0,
-      "warnings": 5,
+      "warnings": 6,
       "info": 20
     },
     "errors": [],
@@ -80,6 +80,13 @@
         "code": "GATED_DONE_WITHOUT_APPROVAL",
         "project": "kindrobots-unraid",
         "task": "t-015",
+        "message": "Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect."
+      },
+      {
+        "severity": "warning",
+        "code": "GATED_DONE_WITHOUT_APPROVAL",
+        "project": "kindrobots-unraid",
+        "task": "t-017",
         "message": "Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect."
       }
     ]
