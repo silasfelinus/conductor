@@ -6,7 +6,7 @@ from scripts.check_hostbuf_failure import hostbuf_failure_count
 WORKFLOW = Path(".github/workflows/render-hostbuf-sentinel.yml")
 
 
-def test_hostbuf_failure_count_prefers_api_signature_groups():
+def test_hostbuf_failure_count_prefers_api_signature_groups_without_window_metadata():
     data = {
         "recentFailed": [{"error": "unrelated"}],
         "failuresBySignature": [
@@ -23,6 +23,47 @@ def test_hostbuf_failure_count_falls_back_to_raw_recent_failures():
             {"error": "Workflow error: hostbuf_file_reader_read failed", "projectSlug": "x"},
             {"error": "some other failure", "projectSlug": "y"},
         ]
+    }
+    assert hostbuf_failure_count(data) == 1
+
+
+def test_hostbuf_failure_count_ignores_stale_failures_even_if_api_group_contains_them():
+    data = {
+        "since": "2026-09-13T20:00:00Z",
+        "recentFailed": [
+            {
+                "error": "Workflow error: hostbuf_file_reader_read failed",
+                "projectSlug": "x",
+                "updatedAt": "2026-09-13T18:30:00Z",
+            },
+            {
+                "error": "some other failure",
+                "projectSlug": "y",
+                "updatedAt": "2026-09-13T21:00:00Z",
+            },
+        ],
+        "failuresBySignature": [
+            {"signature": "hostbuf-file-reader-read", "count": 1},
+        ],
+    }
+    assert hostbuf_failure_count(data) == 0
+
+
+def test_hostbuf_failure_count_keeps_fresh_failures_inside_requested_window():
+    data = {
+        "since": "2026-09-13T20:00:00Z",
+        "recentFailed": [
+            {
+                "error": "Workflow error: hostbuf_file_reader_read failed",
+                "projectSlug": "x",
+                "updatedAt": "2026-09-13T20:30:00Z",
+            },
+            {
+                "error": "Workflow error: hostbuf_file_reader_read failed",
+                "projectSlug": "x",
+                "updatedAt": "2026-09-13T19:59:59Z",
+            },
+        ],
     }
     assert hostbuf_failure_count(data) == 1
 
