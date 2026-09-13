@@ -4135,8 +4135,8 @@ tasks:
 - id: t-096
   milestone: m1
   title: "server/utils/error.ts's errorHandler() never sets the HTTP response status -- every API failure across the app answers 200 OK"
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >-
@@ -4178,6 +4178,9 @@ tasks:
     route that already sets its own status conditionally) turns into a regression.
     Large enough to warrant its own dedicated task/PR rather than folding into any
     other work -- do not attempt as a drive-by.
+  claimed_by: claude-20260913T233000Z-kr-t096
+  claimed_at: '2026-09-13T23:35:44Z'
+  updated: '2026-09-13T23:35:44Z'
 
 - id: t-097
   milestone: m6
