@@ -466,7 +466,7 @@ tasks:
 - id: t-018
   milestone: m2
   title: 'PRODUCTION INCIDENT: kindrobots.org returning 502 Bad Gateway as of ~09:29 UTC on 2026-09-13'
-  status: needs-human
+  status: done
   gate_human: true
   owner: null
   passes: 0
@@ -496,7 +496,15 @@ tasks:
     `ready`/unclaimed) remains the standing prevention follow-on; this is its fourth
     unrelated occurrence (t-014, t-015, t-017, this one) sitting undetected until a
     scheduled sweep happened to notice, worth prioritizing.
-  updated: '2026-09-13T09:31:00Z'
+
+    RECOVERED: confirmed by this session at 2026-09-13T11:27:53Z UTC --
+    https://kindrobots.org/ and /api/health/database returned sustained healthy 200s (8
+    consecutive checks over ~20s, schemaCurrent: true, latencyMs 3-4) after the earlier 502
+    outage. approved_by_human left false per t-014/t-015 recovery-only precedent (no live
+    policy decision made). Root-cause prevention remains tracked separately at t-016
+    (external health probe/alert, still ready/unclaimed) -- this is its fourth unrelated
+    occurrence.
+  updated: '2026-09-13T11:27:54Z'
 
 goal: Run Kind Robots reliably on the Unraid/home infrastructure, with deployment, storage, networking, GPU services,
   and recovery procedures kept reproducible.
