@@ -94,6 +94,62 @@ class ColoringBookProductionTests(unittest.TestCase):
             "generated/bw/kr-001-bw.webp",
         )
 
+    def test_mechanical_check_surfaces_pillow_fix_when_pil_unavailable(self) -> None:
+        original_assess_file = MODULE.art_quality.assess_file
+        MODULE.art_quality.assess_file = (
+            lambda _path, _variant: (None, ["PIL unavailable — image guard skipped"], {})
+        )
+        try:
+            with self.assertRaises(RuntimeError) as ctx:
+                MODULE.mechanical_check(self.root / "candidate.webp", "bw")
+        finally:
+            MODULE.art_quality.assess_file = original_assess_file
+
+        message = str(ctx.exception)
+        self.assertIn("PIL unavailable", message)
+        self.assertIn("pip3 install Pillow", message)
+        self.assertIn("provision_kind_robots_deps.sh", message)
+
+    def test_mechanical_check_still_raises_plain_reason_when_not_pil(self) -> None:
+        original_assess_file = MODULE.art_quality.assess_file
+        MODULE.art_quality.assess_file = (
+            lambda _path, _variant: (None, ["image quality gate unavailable"], {})
+        )
+        try:
+            with self.assertRaises(RuntimeError) as ctx:
+                MODULE.mechanical_check(self.root / "candidate.webp", "bw")
+        finally:
+            MODULE.art_quality.assess_file = original_assess_file
+
+        message = str(ctx.exception)
+        self.assertEqual(message, "image quality gate unavailable")
+        self.assertNotIn("pip3 install Pillow", message)
+
+    def test_save_image_surfaces_pillow_fix_when_pil_unavailable(self) -> None:
+        import builtins
+
+        real_import = builtins.__import__
+
+        def fake_import(name, *args, **kwargs):
+            if name == "PIL" or name.startswith("PIL."):
+                raise ImportError("No module named 'PIL'")
+            return real_import(name, *args, **kwargs)
+
+        image_b64 = MODULE.base64.b64encode(b"not-a-real-image").decode()
+        target = self.root / "candidate.webp"
+
+        builtins.__import__ = fake_import
+        try:
+            with self.assertRaises(RuntimeError) as ctx:
+                MODULE.save_image(target, image_b64)
+        finally:
+            builtins.__import__ = real_import
+
+        message = str(ctx.exception)
+        self.assertIn("Pillow is required for WebP output", message)
+        self.assertIn("pip3 install Pillow", message)
+        self.assertIn("provision_kind_robots_deps.sh", message)
+
 
 if __name__ == "__main__":
     unittest.main()

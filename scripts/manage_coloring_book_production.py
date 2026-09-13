@@ -201,7 +201,15 @@ def ensure_pair(proposal: dict[str, Any], key: str) -> dict[str, Any]:
 def mechanical_check(path: Path, variant: str) -> None:
     ok, reasons, _info = art_quality.assess_file(path, variant)
     if ok is None:
-        raise RuntimeError(reasons[0] if reasons else "image quality gate unavailable")
+        reason = reasons[0] if reasons else "image quality gate unavailable"
+        if "PIL unavailable" in reason:
+            raise RuntimeError(
+                f"{reason} -- Pillow is not installed in this environment. "
+                "Fix: run `pip3 install Pillow` (or `source "
+                "scripts/provision_kind_robots_deps.sh` for the full kind_robots "
+                "toolchain), then retry this operation."
+            )
+        raise RuntimeError(reason)
     if not ok:
         raise RuntimeError("; ".join(reasons) or f"{variant} image failed quality gate")
 
@@ -224,7 +232,12 @@ def save_image(path: Path, image_b64: str) -> None:
         try:
             from PIL import Image
         except ImportError as error:
-            raise RuntimeError("Pillow is required for WebP output") from error
+            raise RuntimeError(
+                "Pillow is required for WebP output -- Pillow is not installed in "
+                "this environment. Fix: run `pip3 install Pillow` (or `source "
+                "scripts/provision_kind_robots_deps.sh` for the full kind_robots "
+                "toolchain), then retry this operation."
+            ) from error
         with Image.open(io.BytesIO(raw)) as image:
             image.convert("RGB").save(path, "WEBP", quality=94, method=6)
         return
