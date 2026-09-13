@@ -943,7 +943,7 @@ tasks:
 - id: t-042
   milestone: m8
   title: "Engine: the narrator is a Bot card plus a delivery dial"
-  status: review
+  status: done
   passes: 0
   stakes: reversible
   note: >-
@@ -964,7 +964,13 @@ tasks:
     prompt never carries two competing narrators; the five directives are unchanged.
     verifyStorybookNarration.ts pins the framing and that the Bot's identity precedes the
     dial.
-  updated: '2026-09-12T23:03:07Z'
+
+    2026-09-13: merged (kind_robots#2686, all 53 checks green). The two red guards were the
+    Alexandria outage, not this change -- verifyAcademyStarterManifest.ts and
+    verifyPopulationDraftQuality.ts fetch kindrobots.org live and were red on main too; both
+    passed on re-run once the host answered again. Merged != deployed: the enum widening and
+    the new routes need the Alexandria deploy before they are live.
+  updated: '2026-09-13T00:43:03Z'
   owner: worker
   claimed_by: 2026-09-12T23-narrator-bot-t042
   claimed_at: '2026-09-12T22:46:26Z'
