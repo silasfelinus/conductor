@@ -4118,3 +4118,26 @@ tasks:
   claimed_at: '2026-09-13T08:49:58Z'
   updated: '2026-09-13T08:50:07Z'
   implementation_pr: 'silasfelinus/kind_robots#2695'
+
+- id: t-136
+  milestone: m6
+  title: "Kaizen: CI check that every kr-* class used in templates has a matching tailwind.css rule"
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from t-135 (silasfelinus/kind_robots#2695): `kr-badge-accent-sm` was
+    referenced in 4 files across 4 merged PRs (#2691-#2694) before anyone
+    noticed it was never defined in assets/css/tailwind.css -- none of
+    TypeScript, eslint, layout-contract, or the Storybook/Narrative contract
+    suite catch an undefined Tailwind `@apply` target. DO: write a script
+    (e.g. utils/scripts/verifyKrClassCoverage.ts, mirroring
+    verifyLayoutContract.ts's shape) that extracts every `kr-*` token from
+    static `class="..."` attributes across components/+pages/ (reuse
+    utils/scripts/codemods/_class_attr.py's CLASS_ATTR guard's TS
+    equivalent if one exists, or the same static-attribute-only rule) and
+    asserts each has a matching `.kr-*` selector in assets/css/tailwind.css.
+    Wire it into package.json as a fast `npm run test:kr-class-coverage`
+    script and into the existing CI workflow (ci.yml or
+    layout-contract.yml) so a future missing-primitive slice fails fast
+    instead of shipping unstyled markup silently.
