@@ -244,7 +244,12 @@ def save_result(entry: dict[str, Any], image_b64: str) -> Path:
         try:
             from PIL import Image
         except ImportError as error:
-            raise RuntimeError("Pillow is required for WebP output.") from error
+            raise RuntimeError(
+                "Pillow is required for WebP output -- Pillow is not installed in "
+                "this environment. Fix: run `pip3 install Pillow` (or `source "
+                "scripts/provision_kind_robots_deps.sh` for the full kind_robots "
+                "toolchain), then retry this operation."
+            ) from error
         image = Image.open(io.BytesIO(image_bytes))
         image.save(destination, "WEBP", quality=92, method=6)
         return destination

@@ -28,6 +28,33 @@ def test_referenced_job_id_returns_none_without_a_job_reference():
     assert mod.referenced_job_id(entry(render_gate_error="enqueue failed: HTTP 503 ...")) is None
 
 
+def test_save_result_surfaces_pillow_fix_when_pil_unavailable(tmp_path, monkeypatch):
+    import builtins
+
+    real_import = builtins.__import__
+
+    def fake_import(name, *args, **kwargs):
+        if name == "PIL" or name.startswith("PIL."):
+            raise ImportError("No module named 'PIL'")
+        return real_import(name, *args, **kwargs)
+
+    target = tmp_path / "candidate.webp"
+    monkeypatch.setattr(mod, "target_path", lambda entry: target)
+    image_b64 = mod.base64.b64encode(b"not-a-real-image").decode()
+
+    monkeypatch.setattr(builtins, "__import__", fake_import)
+    try:
+        with pytest.raises(RuntimeError) as excinfo:
+            mod.save_result(entry(), image_b64)
+    finally:
+        monkeypatch.setattr(builtins, "__import__", real_import)
+
+    message = str(excinfo.value)
+    assert "Pillow is required for WebP output" in message
+    assert "pip3 install Pillow" in message
+    assert "provision_kind_robots_deps.sh" in message
+
+
 def test_referenced_job_id_returns_none_without_any_error():
     assert mod.referenced_job_id(entry(render_gate_error=None)) is None
 
