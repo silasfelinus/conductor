@@ -13543,3 +13543,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Slice 260: a fresh full-repo class-frequency survey scoped to component-styling token families (badge/btn/input/select/checkbox/textarea/text-/icon/loading/etc.) rather than raw flex-layout utility combos (flex gap-2 items-center and similar score far higher by count but are structural, not the visual/design-token surfaces this umbrella targets) found a clean new three-size family (kr-loading-primary-xs/-sm/-md) at 17 exact-match occurrences across 13 files. Reinforces slice 249/253's precedent of bundling sibling sizes/colors of the same shape into one slice with separate per-primitive codemods, and that vue-tsc/eslint/verifyKrClassCoverage.ts/verifyLayoutContract.ts run locally via provision_kind_robots_deps.sh catch what CI would catch, before ever opening the PR."
+- date: 2026-09-13
+  project: kindrobots-unraid
+  task: t-019
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "An alarming-looking MCE decoded to a benign one. Status bea0000000000108 sets PCC (processor context corrupt), which reads as the urgent case, but TSC 0 is the decisive field: a real machine-check exception captures a timestamp, so zero means machine_check_poll() read stale bank status -- and the boot-time poll of all banks runs without MCP_TIMESTAMP, so it always logs TSC 0. EDAC initialising 45s later confirmed the line landed ~1 min into a boot. Decode the status bits before escalating on the headline; also decode IPID (HWID 0xB0 / McaType 0x5 = SMCA_EX) rather than assuming a bank number means memory. The correlation check the task was filed to run came back NEGATIVE and was still worth the round trip: dmesg covered the whole current boot including t-018's window with no MCE, which is a clean negative on hardware for that incident, and the same output exposed three real blind spots (RAM-only syslog, non-ECC memory so no EDAC detector at all, 4x16GB DDR4-3600 above JEDEC on a Matisse IMC) now tracked at t-020. A diagnostic that disproves your hypothesis but hands you the actual lead is a success, not a wasted pass."

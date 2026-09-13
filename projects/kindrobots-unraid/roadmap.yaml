@@ -509,8 +509,7 @@ tasks:
 - id: t-019
   milestone: m1
   title: 'HARDWARE: Alexandria reported Machine Check Events (mcelog) -- identify the failing part and check it against the four unexplained outages'
-  status: needs-human
-  soft_gate: true
+  status: done
   owner: null
   passes: 0
   stakes: reversible
@@ -548,7 +547,82 @@ tasks:
     gate, other work continues. Set status: done once the part is identified and either
     replaced/scheduled or confirmed a benign one-off, and record in this note whether the
     timestamps correlated (that answer feeds t-016 and the open root-cause question).
-  updated: '2026-09-13T12:00:00Z'
+
+    RESOLVED 2026-09-13, same session -- Silas ran the diagnostics and the MCE is benign.
+    Full decode in projects/kindrobots-unraid/docs/t-019-mce-triage.md (RESULT section).
+    Summary: one event, Sat 2026-09-12 15:44:38 PDT, Bank 5 = SMCA_EX (Execution Unit, not
+    memory -- IPID 500b000000000 gives HWID 0xB0 / McaType 0x5). Status bea0000000000108
+    sets PCC, but TSC 0 means it was read out by the boot-time machine_check_poll() of all
+    banks rather than raised as a live exception, and EDAC initialises 45s after it, placing
+    it ~1 min into a boot. A genuine uncorrected PCC error would have panicked the box. This
+    is the widely-reported spurious Zen 2/Zen 3 boot signature. CPU decodes as AMD family
+    0x17 model 0x71 (Matisse / Ryzen 3000).
+
+    CORRELATION: NEGATIVE. Nothing lands in an incident window; nearest is t-017 at ~11h
+    earlier on a previous boot. Stronger: dmesg covers the current boot (started ~15:43 on
+    09-12) and therefore contains t-018 in full, with no MCE anywhere near 09-13 02:29 PDT.
+    Machine checks did not cause t-018. For t-014, t-015, t-017 and the 09-01 healthcheck
+    stop the evidence is unrecoverable (see t-020).
+
+    The container-recreate-without-restart theory is NOT confirmed by this -- it is just no
+    longer competing with a hardware-MCE explanation. What the diagnostics did expose is
+    three real blind spots, now tracked at t-020.
+  updated: '2026-09-13T12:30:00Z'
+
+- id: t-020
+  milestone: m1
+  title: 'Close Alexandria''s observability blind spots: no ECC/EDAC memory detection and an unvalidated 4-DIMM DDR4-3600 profile (syslog-to-flash done 2026-09-13)'
+  status: needs-human
+  soft_gate: true
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    FOR SILAS: t-019's diagnostics cleared the Machine Check Event but exposed why four
+    production incidents in nine days have all closed with root cause unconfirmed --
+    Alexandria currently cannot produce the evidence. Three items, cheapest first. Full
+    reasoning in projects/kindrobots-unraid/docs/t-019-mce-triage.md.
+
+    (1) MIRROR SYSLOG TO FLASH -- Settings > Syslog Server > "Mirror syslog to flash". A
+    toggle, 30 seconds, and the single highest-value action here. /var/log is RAM-only
+    today, so /var/log/mcelog does not exist and dmesg begins at the current boot. t-014,
+    t-015, t-017 and the 2026-09-01 healthcheck stop were all investigated after the fact
+    with nothing left to read. Until this is on, the next incident will be unexplainable
+    too. (Caveat worth knowing: this writes to the USB boot device continuously, which does
+    wear it -- keep the flash backup current.)
+
+    (1) IS DONE -- Silas enabled syslog mirroring to flash on 2026-09-13, in the same session
+    this task was filed. Alexandria now retains logs across reboots. NOTE THE BOUNDARY: it
+    captures from that moment forward only, so t-014/t-015/t-017 and the 09-01 healthcheck
+    stop stay unrecoverable, and the current boot's dmesg (from ~15:43 PDT on 09-12) is still
+    the oldest kernel evidence available. The next incident is the first one that will have a
+    readable log; mirrored output lands under /boot/logs/ on the flash device. If USB wear
+    becomes a concern, Unraid's syslog server can mirror to a share or a remote collector
+    instead -- same benefit, no flash writes.
+
+    (2) VALIDATE THE MEMORY -- /sys/devices/system/edac/mc/*/dimm*/ does not exist because
+    the RAM is non-ECC: 4x16GB TEAMGROUP UD4-3600 across P0 CHANNEL A DIMM 0/1 and CHANNEL
+    B DIMM 0/1. That is not "no memory errors found", it is no detector installed. Run
+    MemTest86 from the Unraid boot menu (a full pass takes hours, so schedule it) and check
+    in BIOS what the sticks are actually running at. DDR4-3600 is above JEDEC and needs
+    XMP/DOCP; four UDIMMs at 3600 on a Matisse IMC is a well-known marginal configuration,
+    with the Infinity Fabric clock usually the limiter. Marginal non-ECC memory produces
+    exactly the observed symptom set -- containers dying at random, a schema write failing
+    mid-flight (t-017), and nothing logged anywhere. If MemTest is clean but incidents
+    continue, dropping to 3200 (or JEDEC 2666) for a week is a cheap, fully reversible
+    diagnostic.
+
+    (3) ACCOUNT FOR THE 2026-09-12 ~15:43 PDT REBOOT -- it sits between t-017 and t-018.
+    If it was planned, note that here and move on. If it was not, it is a fifth anomaly and
+    it is the one that destroyed the earlier logs.
+
+    Soft gate: the remaining steps need physical/BIOS/UI access to Alexandria, which no agent
+    session has. Other work continues. Relationship to t-016 (external health probe/alert,
+    still ready/unclaimed): t-016 catches the next outage in real time, this task makes the
+    host able to say what happened -- they are complements, and item (1) is worth doing
+    first because it is free -- and it is now done. Set status: done when MemTest has run at
+    least one full pass and the 09-12 reboot is accounted for.
+  updated: '2026-09-13T13:00:00Z'
 
 goal: Run Kind Robots reliably on the Unraid/home infrastructure, with deployment, storage, networking, GPU services,
   and recovery procedures kept reproducible.
