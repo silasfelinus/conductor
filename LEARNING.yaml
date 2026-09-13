@@ -13534,3 +13534,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Fourth occurrence of the 502/503 outage class (t-014, t-015, t-017, t-018), again caught only because a scheduled sweep happened to notice rather than any alerting. Closed on objective recovery evidence alone (8 consecutive healthy curls against / and /api/health/database over ~20s, schemaCurrent: true) per docs/state-reconciliation.md -- no Unraid/Alexandria access was needed or used, since the sandbox's unrestricted HTTPS egress to kindrobots.org is sufficient to confirm the task's own stated close-out criterion. approved_by_human stays false per the t-014/t-015/t-017 precedent. kindrobots-unraid/t-016 (external health probe/alert) is still ready/unclaimed after four occurrences -- this is the actual fix for the detection gap, not another manual sweep catching it by luck."
+- date: 2026-09-13
+  project: interface-vision
+  task: t-104
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Slice 260: a fresh full-repo class-frequency survey scoped to component-styling token families (badge/btn/input/select/checkbox/textarea/text-/icon/loading/etc.) rather than raw flex-layout utility combos (flex gap-2 items-center and similar score far higher by count but are structural, not the visual/design-token surfaces this umbrella targets) found a clean new three-size family (kr-loading-primary-xs/-sm/-md) at 17 exact-match occurrences across 13 files. Reinforces slice 249/253's precedent of bundling sibling sizes/colors of the same shape into one slice with separate per-primitive codemods, and that vue-tsc/eslint/verifyKrClassCoverage.ts/verifyLayoutContract.ts run locally via provision_kind_robots_deps.sh catch what CI would catch, before ever opening the PR."
