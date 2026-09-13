@@ -3341,7 +3341,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: "Polish every reachable Kind Robots surface page-by-page"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3370,8 +3370,21 @@ tasks:
     dungeon.vue/rebel-button.vue-predecessor exclusion) -- confirmed via direct inspection
     of its matched lines. No new candidate found; mechanical phase remains exhausted as the
     2026-08-29 slice concluded. No diff. Re-arming to ready.
-  updated: '2026-09-13T00:20:35Z'
-  implementation_pr: 'silasfelinus/kind_robots#2194'
+
+    Reconciliation (scheduled conductor sweep): check_pr_merged_drift.py found this
+    recurring page-polish umbrella still at status: claimed (claim openai-
+    scheduled-2026-09-13T002035Z-interface-vision-t105-a11, claimed_at 2026-09-13T00:20:35Z,
+    now well past CLAIM_TTL_MINUTES) with a stale implementation_pr (#2194, from the Rebel
+    Button slice on 2026-08-29) even though several further slices had merged under the same
+    claim since then (#2636 dashboard color pass, #2639 second dashboard color pass
+    responding to Silas's screenshot feedback) and the task's own most recent note ('re-ran
+    the established icon-badge-header grep ... No new candidate found ... Re-arming to
+    ready.') already stated the intent to return to ready. Setting implementation_pr to the
+    actual latest merged PR (#2639) and re-arming status: ready per the recurring-task
+    convention, matching what the note already said. No new work performed this cycle --
+    purely a bookkeeping catch-up.
+  updated: '2026-09-13T06:34:27Z'
+  implementation_pr: 'silasfelinus/kind_robots#2639'
   owner: worker
   claimed_by: openai-scheduled-2026-09-13T002035Z-interface-vision-t105-a11
   claimed_at: '2026-09-13T00:20:35Z'
