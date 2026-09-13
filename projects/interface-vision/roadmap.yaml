@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3316,7 +3316,15 @@ tasks:
     primitive -- the next slice should run a fresh full-repo class-frequency survey for the
     next bounded family, or scope a colored kr-spinner-sm variant if Silas wants that family
     covered.
-  updated: '2026-09-13T22:17:55Z'
+
+    Slice 267 merged as silasfelinus/kind_robots#2710 (migrate entity-art-manager loading
+    spinner onto kr-spinner-sm). Reconciled by scheduled Agent session on 2026-09-13:
+    implementation_pr had drifted stale across slices 254-267 (12 merges, per
+    check_pr_merged_drift.py) while status sat at claimed. Corrected implementation_pr to
+    #2710 and returned recurring umbrella to ready. Kaizen for the next slice: run a fresh
+    full-repo class-frequency survey for the next bounded family, or scope a kr-spinner-sm-
+    primary colored variant.
+  updated: '2026-09-13T22:29:17Z'
   implementation_pr: 'silasfelinus/kind_robots#2710'
   retry_context: ''
   owner: worker
