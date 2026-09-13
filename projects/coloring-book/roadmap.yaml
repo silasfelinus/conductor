@@ -823,7 +823,7 @@ tasks:
 
     STATUS: this task stays needs-human ONLY for relay access to run the non-GGUF comparison. Everything that could be established from an agent session now has been. coloring-book/t-022's `generate-bw` should continue to hold rather than burn more jobs on a path proven broken today.
 
-    UPDATE 2026-09-13 (scheduled Conductor session): the second, independent bug -- the quality guard being blind to saturated/busy noise on the "color" variant -- is fixed and does not need to wait on relay access. See coloring-book/t-043 (silasfelinus/conductor#TBD): art_quality.py now computes a spatial-autocorrelation ratio (hf_energy_ratio) from adjacent-pixel luma differences and rejects any variant whose frame has none, regardless of saturation/white-fraction. Verified against real Pillow-rendered iid random noise (hf_ratio 0.98, correctly rejected) and a smooth gradient plus Gaussian-blurred texture (hf_ratio 0.0001 and 0.047, correctly not flagged as noise). This task's remaining scope is only the relay-access non-GGUF comparison test named above.
+    UPDATE 2026-09-13 (scheduled Conductor session): the second, independent bug -- the quality guard being blind to saturated/busy noise on the "color" variant -- is fixed and does not need to wait on relay access. See coloring-book/t-043 (silasfelinus/conductor#4281): art_quality.py now computes a spatial-autocorrelation ratio (hf_energy_ratio) from adjacent-pixel luma differences and rejects any variant whose frame has none, regardless of saturation/white-fraction. Verified against real Pillow-rendered iid random noise (hf_ratio 0.98, correctly rejected) and a smooth gradient plus Gaussian-blurred texture (hf_ratio 0.0001 and 0.047, correctly not flagged as noise). This task's remaining scope is only the relay-access non-GGUF comparison test named above.
   owner: null
   claimed_by: null
   claimed_at: null
@@ -959,4 +959,4 @@ tasks:
   updated: '2026-09-13T20:45:00Z'
   claimed_by: claude-scheduled-20260913T204500Z-cb-t043
   claimed_at: '2026-09-13T20:45:00Z'
-  implementation_pr: 'silasfelinus/conductor#TBD'
+  implementation_pr: 'silasfelinus/conductor#4281'
