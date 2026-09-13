@@ -13525,3 +13525,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Kaizen from t-135 closed the gap outright: verifyKrClassCoverage.ts (kind_robots#2696) asserts every static kr-* class token used in a components/+pages/ template has a matching .kr-* rule, no ratchet/baseline since an undefined kr-* reference is never intentional. The PR's own comment-migration-contract check was red at review time from an unrelated live kindrobots.org 502 (kindrobots-unraid/t-018, confirmed via direct curl and one re-run reproducing the identical error) -- correctly triaged as not-this-PR's failure and merged anyway once every check touching the actual diff was green."
+- date: 2026-09-13
+  project: kindrobots-unraid
+  task: t-018
+  kind: software
+  stakes: irreversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Fourth occurrence of the 502/503 outage class (t-014, t-015, t-017, t-018), again caught only because a scheduled sweep happened to notice rather than any alerting. Closed on objective recovery evidence alone (8 consecutive healthy curls against / and /api/health/database over ~20s, schemaCurrent: true) per docs/state-reconciliation.md -- no Unraid/Alexandria access was needed or used, since the sandbox's unrestricted HTTPS egress to kindrobots.org is sufficient to confirm the task's own stated close-out criterion. approved_by_human stays false per the t-014/t-015/t-017 precedent. kindrobots-unraid/t-016 (external health probe/alert) is still ready/unclaimed after four occurrences -- this is the actual fix for the detection gap, not another manual sweep catching it by luck."
