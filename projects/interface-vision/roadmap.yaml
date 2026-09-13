@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   recurring: true
@@ -3299,9 +3299,12 @@ tasks:
     Slice 266 (silasfelinus/kind_robots#2708) merged clean -- migrated storybook-table.vue isOpening spinner ("Open this story" button) onto kr-spinner-sm. One file, +1/-1, no behavior/color/geometry change. Also deleted a stray duplicate OpenAI Worker branch (worker/interface-vision-t-104-openai-scheduled-2026-09-13T181844Z-...) via branch- janitor force_delete_branches -- its only diff against main was a cosmetic one-line-vs- multiline reformat of the same slice-265 fix already merged. Returning the recurring consistency umbrella to ready. Kaizen for the next slice: two exact-match kr-spinner-sm candidates remain repo-wide -- components/art/art-styler.vue, components/art/entity-art- manager.vue -- each its own bounded next slice.
 
     Connector write recovery: no product change landed. A malformed full-file write on the worker branch was immediately neutralized with a forward commit restoring the exact current main tree; PR #2709 has zero changed files. Return the recurring umbrella to ready so a later worker can take the art-styler spinner slice normally.
-  updated: '2026-09-13T21:24:19Z'
+  updated: '2026-09-13T21:38:12Z'
   implementation_pr: 'silasfelinus/kind_robots#2708'
   retry_context: ''
+  owner: reviewer
+  claimed_by: scheduled-2026-09-13T213300Z-interface-vision-t104-slice267
+  claimed_at: '2026-09-13T21:38:12Z'
 
 - id: t-123
   milestone: m5
