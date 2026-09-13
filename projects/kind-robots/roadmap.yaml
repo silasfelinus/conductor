@@ -4183,6 +4183,31 @@ tasks:
   updated: '2026-09-13T23:52:11Z'
   implementation_pr: 'silasfelinus/kind_robots#2711'
 
+- id: t-098
+  milestone: m1
+  title: "Kaizen from t-096: add a repo-text guard flagging errorHandler(error) catch blocks with no matching status-set call"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from t-096 (kind_robots#2711, 2026-09-13): t-096 fixed 19 route handlers
+    where a `catch` block called `errorHandler(error)` but never propagated the
+    resulting `statusCode` to the actual HTTP response (`event.node.res.statusCode =`,
+    `setResponseStatus(`, or a `createError(`-based rethrow). Nothing currently stops a
+    new route from reintroducing this class of bug. Add a lightweight, source-text
+    verification script (matching the existing `utils/scripts/verifyXyz.ts` pattern,
+    e.g. `verifyAppmakerScaffoldCollisionGuard.ts`) that scans `server/api/**/*.ts`
+    for a function containing `errorHandler(` inside a `catch` block with no
+    `event.node.res.statusCode`, `setResponseStatus(`, or `createError(` anywhere in
+    the same function body, and fails CI if one is found. Exempt the known non-route
+    helper modules that use `errorHandler()` without ever handling an HTTP response
+    themselves (`server/api/auth/index.ts`, `server/api/users/index.ts`,
+    `server/api/scenarios/create.ts`, `server/api/reactions/index.ts` as of t-096 --
+    re-check this list, since more may exist). Wire it into the same CI job that runs
+    the other `verifyXyz.ts` guards.
+  claimed_by: null
+
 - id: t-097
   milestone: m6
   title: ArtJob dashboard showed two jobs RUNNING on the one-slot relay -- an abandoned claim stayed RUNNING beside the live one
