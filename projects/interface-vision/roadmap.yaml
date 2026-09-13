@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3317,10 +3317,24 @@ tasks:
     sm) had already merged. Returning the recurring consistency umbrella to ready for the
     next bounded slice per the recurring-task convention -- the prior claiming session
     (oai11) evidently merged its PR but never flipped status back.
-  updated: '2026-09-13T01:37:05Z'
-  implementation_pr: 'silasfelinus/kind_robots#2683'
+
+    Slice 252 merged as silasfelinus/kind_robots#2687 (squash 0a7224e). Added
+    kr_icon_primary_5_size_shorthand_codemod.py and migrated all 11 discovered size-5 text-
+    primary occurrences across 9 files onto the existing kr-icon-primary-5 primitive. No
+    color/behavior/API/schema/route/geometry change. Picked via a fresh full-repo class-
+    frequency survey (kr_class_frequency_survey.py); eslint, vue-tsc --noEmit, and npm run
+    test:layout-contract all clean/unaffected (0 new violations; the same pre-existing
+    viewport-grid baseline improvement on animation-manager.vue/ruler-hooked-health.vue
+    observed by prior slices was observed again and left untouched, out of scope); prettier
+    --check flags pre-existing drift on 3 files confirmed via git stash to predate this
+    change, left alone. All 49 kind_robots PR checks green, mergeable_state clean before
+    merge. Return the recurring consistency umbrella to ready for the next bounded slice.
+    Kaizen for the next slice: font-bold text-base-content (7 files/9 occurrences) and font-
+    black text-primary (7 files/8 occurrences) are the next candidates from the same survey.
+  updated: '2026-09-13T01:41:17Z'
+  implementation_pr: 'silasfelinus/kind_robots#2687'
   retry_context: ''
-  owner: worker
+  owner: null
   claimed_by: claude-scheduled-20260913T013040Z-iv-t104
   claimed_at: '2026-09-13T01:30:41Z'
 
