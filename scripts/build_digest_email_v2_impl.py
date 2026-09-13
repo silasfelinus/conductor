@@ -1,0 +1,456 @@
+#!/usr/bin/env python3
+"""Build the Daily Dream digest around the morning's creative handoff.
+
+The bundle built this morning is text/facet-forward and leads the email. Operational
+health follows it, so failures stay visible without making the digest open on bad news.
+Today's freshly authored proposal is then shown as a compact preview of tomorrow's
+build. The older completed bundle remains art-rich because its six renders have had a
+full cycle to finish.
+"""
+
+from __future__ import annotations
+
+import html
+import json
+import sys
+from pathlib import Path
+from typing import Any
+
+import build_digest_email as legacy
+
+TYPE_THEME = {
+    "vibe": ("#7e22ce", "#faf5ff", "🌙"),
+    "location": ("#1d4ed8", "#eff6ff", "📍"),
+    "character": ("#be185d", "#fdf2f8", "👤"),
+    "reward_item": ("#b45309", "#fffbeb", "🎁"),
+    "reward_skill": ("#047857", "#ecfdf5", "✨"),
+    "scenario": ("#0f766e", "#f0fdfa", "🎭"),
+}
+
+
+def esc(value: Any) -> str:
+    return html.escape(str(value or ""), quote=True)
+
+
+def _facet_chips(values: list[str]) -> str:
+    return "".join(
+        f'<span style="display:inline-block;border:1px solid #d8d8e5;background:#fff;'
+        f'border-radius:999px;padding:4px 8px;margin:3px 3px 0 0;font-size:10px;'
+        f'line-height:1.25;color:#3f3f55">{esc(value)}</span>'
+        for value in values
+    )
+
+
+def _facet_target_rows(targets: list[dict[str, Any]]) -> str:
+    """The Facets actually attached, per record, as one compact line each.
+
+    The per-asset chips further down are the proposal's SEED Facets -- what the
+    bundle was authored to be. These are what the live records ended up carrying.
+    They agree on a healthy build, and when they do not, that gap is the thing
+    worth seeing.
+    """
+    if not targets:
+        return ""
+
+    rows: list[str] = []
+    for target in targets:
+        if not isinstance(target, dict):
+            continue
+        keys = [str(key) for key in (target.get("facet_keys") or [])]
+        count = len(target.get("facet_ids") or [])
+        element = str(target.get("element") or "record").replace("_", " ")
+        body = ", ".join(keys) if keys else "none requested"
+        tone = "#3f3f55" if count else "#b45309"
+        mark = f"{count}" if count else "0"
+        rows.append(
+            f'<div style="font-size:11px;line-height:1.4;color:{tone};margin:2px 0">'
+            f'<strong>{esc(element)}</strong> · {esc(mark)} attached · {esc(body)}</div>'
+        )
+
+    return (
+        '<div style="background:#fbfbfe;border:1px solid #e6e6f0;border-radius:8px;'
+        'padding:8px 12px;margin:0 0 8px;max-width:660px">' + "".join(rows) + "</div>"
+    )
+
+
+def asset_card(asset: dict[str, Any], *, show_art: bool) -> str:
+    key = str(asset.get("key") or "vibe")
+    accent, paper, icon = TYPE_THEME.get(key, TYPE_THEME["vibe"])
+    title = esc(asset.get("title"))
+    label = esc(asset.get("label"))
+    summary = esc(asset.get("summary"))
+    image_url = str(asset.get("image_url") or "")
+    status = str(asset.get("art_status") or "not queued")
+
+    visual = ""
+    if show_art:
+        if image_url:
+            visual = (
+                f'<img src="{esc(image_url)}" alt="{title}" width="300" height="190" '
+                f'style="display:block;width:100%;height:190px;object-fit:cover;border-radius:9px;'
+                f'border:1px solid {accent}44;margin:0 0 10px">'
+            )
+        else:
+            visual = (
+                f'<div style="height:188px;border-radius:9px;border:1px dashed {accent};'
+                f'background:#ffffffaa;display:table;width:100%;margin-bottom:10px">'
+                f'<div style="display:table-cell;vertical-align:middle;text-align:center;color:{accent};'
+                f'font-size:13px;padding:12px">🖼️ Art {esc(status)}</div></div>'
+            )
+
+    facets = asset.get("facets") if isinstance(asset.get("facets"), list) else []
+    request = ""
+    if show_art and asset.get("request_id"):
+        job_id = asset.get("art_job_id")
+        queue_text = f"ArtJob {job_id}" if job_id else str(asset.get("request_id"))
+        request = f'<div style="font-size:9px;color:#777;margin-top:7px">Queue: {esc(queue_text)}</div>'
+
+    min_height = "410px" if show_art else "220px"
+    no_facets_html = '<span style="font-size:11px;color:#777">Legacy proposal, no structured Facets recorded.</span>'
+    facet_chips_html = _facet_chips([str(value) for value in facets]) or no_facets_html
+    return (
+        f'<div style="width:300px;min-height:{min_height};border:1px solid {accent};border-radius:12px;'
+        f'background:{paper};padding:12px;font-family:Arial,sans-serif;box-sizing:border-box">'
+        f'{visual}'
+        f'<div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:{accent};font-weight:700">'
+        f'{icon} {label}</div>'
+        f'<div style="font-family:Georgia,serif;font-size:19px;line-height:1.15;color:#242033;'
+        f'font-weight:700;margin:5px 0 7px">{title}</div>'
+        f'<div style="font-size:13px;line-height:1.45;color:#454052">{summary}</div>'
+        f'<div style="border-top:1px dashed {accent}66;margin-top:10px;padding-top:7px">'
+        f'<div style="font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:{accent};font-weight:700">Seed Facets</div>'
+        f'{facet_chips_html}'
+        f'{request}</div></div>'
+    )
+
+
+def asset_grid(assets: list[dict[str, Any]], *, show_art: bool) -> str:
+    rows: list[str] = []
+    for index in range(0, len(assets), 2):
+        pair = assets[index:index + 2]
+        cells = "".join(
+            f'<td width="50%" valign="top" style="padding:6px">{asset_card(asset, show_art=show_art)}</td>'
+            for asset in pair
+        )
+        if len(pair) == 1:
+            cells += '<td width="50%" style="padding:6px"></td>'
+        rows.append(f"<tr>{cells}</tr>")
+    return (
+        '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" '
+        'style="max-width:660px">' + "".join(rows) + "</table>"
+    )
+
+
+def proposal_section(
+    _heading: str,
+    proposal: dict[str, Any] | None,
+    cta: bool = False,
+    images: list[dict[str, Any]] | None = None,
+    page_link: str = "",
+) -> str:
+    del cta, images
+    if not proposal:
+        return ""
+
+    mode = str(proposal.get("display_mode") or "art-rich")
+    show_art = mode == "art-rich"
+    heading = "🖼️ Previous completed output" if show_art else "✨ Just built this cycle"
+    title = esc(proposal.get("title"))
+    idea = esc(proposal.get("idea"))
+    assets = proposal.get("assets") if isinstance(proposal.get("assets"), list) else []
+
+    target_page = proposal.get("page") or page_link
+    buttons = ""
+    if target_page:
+        buttons = f'<p>{legacy._button(target_page, "🌙 View the Daily Dream page", color="#1d4ed8")}</p>'
+
+    calendar_label = str(proposal.get("calendar_label") or "")
+    calendar_line = (
+        f'<p style="color:#475569;font-size:12px;margin:3px 0 8px">{esc(calendar_label)}</p>'
+        if calendar_label else ""
+    )
+
+    assignment = proposal.get("facet_assignments")
+    facet_line = ""
+    if isinstance(assignment, dict):
+        # WHAT LANDED, NOT JUST THAT SOMETHING DID. This printed the bare word
+        # "complete" and nothing else, so a bundle that attached no Facets at all
+        # to its Character read exactly like one that attached six -- for 36
+        # bundles running. Silas, 2026-09-02: "I just don't get the facets added
+        # as part of my daily digest, so there is a discrepancy ... mostly I want
+        # parity between what is being made and what is being reported."
+        #
+        # The counts come from `targets`, which the applier has always written;
+        # nothing new is collected, it was simply never shown. The applier now
+        # also refuses to call a target applied when the API attached nothing, so
+        # a zero here is a real zero rather than an unverified success.
+        status = str(assignment.get("status", "unknown"))
+        targets = assignment.get("targets") if isinstance(assignment.get("targets"), list) else []
+        attached = sum(len(t.get("facet_ids") or []) for t in targets if isinstance(t, dict))
+        blank = [
+            str(t.get("element"))
+            for t in targets
+            if isinstance(t, dict) and not t.get("facet_ids")
+        ]
+        errors = assignment.get("errors") if isinstance(assignment.get("errors"), list) else []
+
+        healthy = status == "complete" and not blank and not errors
+        ink, paper, rule = (
+            ("#166534", "#f0fdf4", "#16a34a") if healthy else ("#92400e", "#fffbeb", "#f59e0b")
+        )
+        detail = f"{attached} Facet link(s) across {len(targets)} record(s)"
+        if blank:
+            detail += f"; nothing attached to {', '.join(blank)}"
+        if errors:
+            detail += f"; {len(errors)} error(s)"
+
+        # What the CATALOG gained today, called out separately from what the
+        # records were tagged with. Silas, 2026-09-02: "I would like each dream
+        # to include 1-2 new facets ... it would be nice if we could use that to
+        # improve the creativity of the pitches". A new Facet that lands with no
+        # announcement is indistinguishable from one that was already there.
+        invented = assignment.get("invented") if isinstance(assignment.get("invented"), list) else []
+        created = [row for row in invented if isinstance(row, dict) and row.get("created")]
+        new_line = ""
+        if created:
+            chips = _facet_chips([
+                f"{row.get('taxonomy') or 'FACET'}: {row.get('slug')}" for row in created
+            ])
+            new_line = (
+                f'<p style="color:#5b21b6;background:#faf5ff;border-left:4px solid #7e22ce;'
+                f'padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px;margin-bottom:2px">'
+                f'✨ New to the catalog: {len(created)} Facet(s) invented for this dream</p>'
+                f'<div style="margin:0 0 8px">{chips}</div>'
+            )
+
+        facet_line = (
+            f'<p style="color:{ink};background:{paper};border-left:4px solid {rule};'
+            f'padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px">'
+            f'🧩 Record Facets: {esc(status)} — {esc(detail)}</p>'
+            + new_line
+            + _facet_target_rows(targets)
+        )
+
+    if show_art:
+        ready = sum(asset.get("art_status") == "ready" for asset in assets)
+        art_line = (
+            f'<p style="color:#334155;background:#f8fafc;border-left:4px solid #64748b;'
+            f'padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px">'
+            f'🖼️ {ready}/{len(assets)} asset images ready; this is the art-bearing output from the prior cycle.</p>'
+        ) if assets else ""
+    else:
+        submitted = sum(bool(asset.get("art_job_id")) for asset in assets)
+        art_line = (
+            f'<p style="color:#334155;background:#f8fafc;border-left:4px solid #64748b;'
+            f'padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px">'
+            f'🎨 {submitted}/{len(assets)} ArtJobs submitted. No image space is reserved here; '
+            f'these renders belong in the next cycle’s art-rich section.</p>'
+        ) if assets else ""
+
+    return (
+        f'<h2 style="margin-bottom:2px">{heading}</h2>'
+        f'<p style="font-size:1.15em;color:#2e1065;margin:2px 0"><strong>{title}</strong></p>'
+        f'<p style="color:#444;line-height:1.5;margin-top:4px;max-width:660px">{idea}</p>'
+        f'{calendar_line}{art_line}{facet_line}{buttons}'
+        f'{asset_grid(assets, show_art=show_art)}'
+    )
+
+
+def next_pitch_section(proposal: dict[str, Any] | None) -> str:
+    """Render tomorrow's authored proposal as a compact promise, not a fake build."""
+    if not proposal:
+        return ""
+    title = esc(proposal.get("title"))
+    idea = esc(proposal.get("idea"))
+    proposal_date = str(proposal.get("proposal_date") or "").strip()
+    date_line = (
+        f'<p style="color:#64748b;font-size:12px;margin:2px 0 6px">Authored {esc(proposal_date)}</p>'
+        if proposal_date else ""
+    )
+    link = str(proposal.get("edit_link") or "").strip()
+    button = (
+        f'<p>{legacy._button(link, "🔮 Read tomorrow’s pitch", color="#7e22ce")}</p>'
+        if link else ""
+    )
+    return (
+        '<div style="background:#faf5ff;border:1px solid #e9d5ff;border-radius:10px;'
+        'padding:12px 14px;margin:14px 0 18px;max-width:660px">'
+        '<h2 style="margin:0 0 4px">🔮 Tomorrow’s pitch</h2>'
+        f'{date_line}'
+        f'<p style="font-size:1.08em;color:#581c87;margin:3px 0"><strong>{title}</strong></p>'
+        f'<p style="color:#444;line-height:1.5;margin:5px 0">{idea}</p>'
+        f'{button}</div>'
+    )
+
+
+ENGINE_BANNER_THEME = {
+    "ok": ("#065f46", "#ecfdf5", "#10b981", "✅"),
+    "down": ("#7f1d1d", "#fef2f2", "#ef4444", "⚠️"),
+    "silent": ("#7f1d1d", "#fef2f2", "#ef4444", "🔇"),
+    "unresolved": ("#78350f", "#fffbeb", "#f59e0b", "❔"),
+}
+
+ENGINE_HEADLINE = {
+    "ok": "Render engine healthy",
+    "down": "Render engine DOWN — the art queue is not draining",
+    "silent": "Render engine SILENT — no heartbeat from the box",
+    "unresolved": "Render engine status unknown",
+}
+
+
+CONTAINER_LOG_THEME = {
+    "clean": ("#065f46", "#ecfdf5", "#10b981", "\u2705"),
+    "findings": ("#78350f", "#fffbeb", "#f59e0b", "\U0001f50e"),
+    "stale": ("#7f1d1d", "#fef2f2", "#ef4444", "\u26a0\ufe0f"),
+    "unresolved": ("#78350f", "#fffbeb", "#f59e0b", "\u2754"),
+}
+
+
+def container_log_banner(digest: dict[str, Any]) -> str:
+    """One line on what changed in ~50 containers' logs overnight.
+
+    Renders nothing at all when the pipeline is not set up yet: an empty line
+    is better than nagging about a User Script that was never scheduled. Once
+    it IS publishing, the clean state still prints -- same argument as the
+    engine banner, that a green line every day is what makes the absence of a
+    red one mean something.
+    """
+    health = digest.get("container_logs")
+    if not isinstance(health, dict):
+        return ""
+    state = str(health.get("state") or "unresolved").lower()
+    if state == "not-configured":
+        return ""
+
+    colour, paper, rule, icon = CONTAINER_LOG_THEME.get(
+        state, CONTAINER_LOG_THEME["unresolved"]
+    )
+    if state == "clean":
+        headline = "Container logs quiet"
+    elif state == "stale":
+        headline = "Container log triage STALE — the daily User Script may have stopped"
+    elif state == "findings":
+        bits = []
+        for label, key in (("new", "new"), ("spiking", "spiking"), ("newly quiet", "quiet")):
+            count = health.get(key) or 0
+            if count:
+                bits.append(f"{count} {label}")
+        headline = "Container logs: " + (", ".join(bits) or "something changed")
+    else:
+        headline = "Container log triage status unknown"
+
+    lines = [f'<span style="font-size:12px;opacity:.85">{esc(health.get("reason") or "")}</span>']
+    # When a written review follows, it covers these same signatures with a
+    # diagnosis and a fix. Printing the raw samples above it as well says the
+    # same thing twice and buries the part worth reading.
+    findings = [] if isinstance(health.get("review"), dict) else (health.get("findings") or [])
+    for item in findings[:5]:
+        sample = esc(str(item.get("sample") or "")[:140])
+        lines.append(
+            f'<span style="font-size:12px;opacity:.8">'
+            f'<code>{esc(str(item.get("container") or "?"))}</code> — {sample}</span>'
+        )
+    detail = "<br>".join(line for line in lines if line)
+
+    return (
+        f'<p style="color:{colour};background:{paper};border-left:4px solid {rule};'
+        f'padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px;margin:0 0 12px">'
+        f'{icon} <strong>{esc(headline)}</strong><br>{detail}</p>'
+    )
+
+
+def engine_banner(digest: dict[str, Any]) -> str:
+    """One line reporting whether the render box can render."""
+    health = digest.get("render_engine")
+    if not isinstance(health, dict):
+        return ""
+    state = str(health.get("state") or "unresolved").lower()
+    colour, paper, rule, icon = ENGINE_BANNER_THEME.get(
+        state, ENGINE_BANNER_THEME["unresolved"]
+    )
+    headline = ENGINE_HEADLINE.get(state, ENGINE_HEADLINE["unresolved"])
+    reason = esc(health.get("reason") or "")
+    detail = (
+        f'<br><span style="font-size:12px;opacity:.85">{reason}</span>' if reason else ""
+    )
+    return (
+        f'<p style="color:{colour};background:{paper};border-left:4px solid {rule};'
+        f'padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px;margin:0 0 12px">'
+        f'{icon} <strong>{esc(headline)}</strong>{detail}</p>'
+    )
+
+
+def build_payload(digest: dict[str, Any]) -> dict[str, Any]:
+    # Reuse the legacy project/activity shell, but make the morning's completed
+    # bundle its first creative section. The prior art-rich output can still
+    # follow later as visual history.
+    legacy.proposal_section = proposal_section
+    legacy_digest = dict(digest)
+    legacy_digest["tomorrow_proposal"] = digest.get("current_dream_output")
+    legacy_digest["yesterday_output"] = digest.get("previous_dream_output")
+
+    # The legacy shell used to put the written container review before the
+    # digest title. Suppress that copy here and reinsert it with the rest of the
+    # operational health immediately after the just-built dream.
+    container_logs = digest.get("container_logs")
+    if isinstance(container_logs, dict):
+        legacy_logs = dict(container_logs)
+        legacy_logs.pop("review", None)
+        legacy_digest["container_logs"] = legacy_logs
+    payload = legacy.build_payload(legacy_digest)
+
+    # Old history is intentionally suppressed. The digest is a handoff, not an
+    # archive dump.
+    status = str(digest.get("daily_dream_output_status") or "")
+    if status and not digest.get("previous_dream_output"):
+        marker = '<h2 style="margin-bottom:2px">✨ Just built this cycle</h2>'
+        note = (
+            f'<p style="color:#92400e;background:#fffbeb;padding:8px 12px;'
+            f'border-left:4px solid #f59e0b">{esc(status)}</p>'
+        )
+        if marker in payload["htmlContent"]:
+            payload["htmlContent"] = payload["htmlContent"].replace(marker, note + marker, 1)
+
+    review_renderer = getattr(legacy, "container_log_review_section", None)
+    review_html = review_renderer(digest) if callable(review_renderer) else ""
+    operational_html = engine_banner(digest) + container_log_banner(digest) + review_html
+    pitch_html = next_pitch_section(digest.get("next_dream_proposal"))
+    middle = operational_html + pitch_html
+
+    # Place health and tomorrow's pitch directly after the fresh creative output.
+    # If a build failed so there is no fresh output, put them immediately after
+    # the digest title rather than silently dropping either section.
+    current = digest.get("current_dream_output")
+    current_html = proposal_section(
+        "🌙 Tomorrow's dream",
+        current if isinstance(current, dict) else None,
+        cta=True,
+        page_link=str(digest.get("daily_dream_page") or ""),
+    )
+    if middle and current_html and current_html in payload["htmlContent"]:
+        payload["htmlContent"] = payload["htmlContent"].replace(
+            current_html, current_html + middle, 1
+        )
+    elif middle:
+        title_end = "</h1>"
+        payload["htmlContent"] = payload["htmlContent"].replace(
+            title_end, title_end + middle, 1
+        )
+    return payload
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = list(argv if argv is not None else sys.argv[1:])
+    input_path = Path(args[0] if args else "digest.json")
+    output_path = Path(args[1] if len(args) > 1 else "digest-email.json")
+    digest = json.loads(input_path.read_text(encoding="utf-8"))
+    output_path.write_text(
+        json.dumps(build_payload(digest), indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+    print(f"Built {output_path}.")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
