@@ -506,5 +506,49 @@ tasks:
     occurrence.
   updated: '2026-09-13T11:27:54Z'
 
+- id: t-019
+  milestone: m1
+  title: 'HARDWARE: Alexandria reported Machine Check Events (mcelog) -- identify the failing part and check it against the four unexplained outages'
+  status: needs-human
+  soft_gate: true
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    FOR SILAS: Unraid notified you that Alexandria detected Machine Check Events and logged
+    mcelog output. A triage runbook is at
+    projects/kindrobots-unraid/docs/t-019-mce-triage.md -- it has the exact commands to run
+    (none of them print a credential), a table for reading the result, and the one comparison
+    worth doing first.
+
+    WHY THIS IS NOT ROUTINE: an MCE is the CPU reporting a hardware fault -- bad RAM, a
+    failing memory controller, or a CPU/bus error. This host has closed FOUR production
+    incidents in nine days with root cause unconfirmed (t-014 2026-09-04 502, t-015
+    2026-09-08 502, t-017 2026-09-12 failed migration, t-018 2026-09-13 502), plus
+    healthcheck.ps1 stopping silently on 2026-09-01. Until now the only theory was
+    container-recreate-without-restart, never verified. A failing DIMM would explain all of
+    it, and would explain a mid-flight schema write failing (t-017) better than the container
+    theory does.
+
+    TO ACT: (1) capture the evidence BEFORE any reboot -- Unraid keeps /var/log in RAM unless
+    syslog mirroring to flash is on, so a restart erases the record; (2) run the step 1-2
+    commands in the runbook to get the MCE class and which DIMM slot; (3) compare the MCE
+    timestamps (local PDT) against the incident windows in the runbook's step 4 table (UTC).
+    Correlation there means the recurring-502 mystery is hardware, and t-016's external probe
+    drops from lead to nice-to-have; no correlation rules hardware out, which is also worth
+    knowing.
+
+    DO NOT post the Unraid diagnostics zip to the forums as the notification suggests without
+    opening it first -- the bundle carries your dockerMan template XMLs, which hold container
+    env VALUES (MariaDB credentials, KR_API_TOKEN). The forum only needs the mcelog/dmesg
+    lines, the per-DIMM counters, and your CPU/board model; runbook step 5 lists exactly what
+    is safe to paste.
+
+    Blocked here only because no agent session has shell or UI access to Alexandria -- soft
+    gate, other work continues. Set status: done once the part is identified and either
+    replaced/scheduled or confirmed a benign one-off, and record in this note whether the
+    timestamps correlated (that answer feeds t-016 and the open root-cause question).
+  updated: '2026-09-13T12:00:00Z'
+
 goal: Run Kind Robots reliably on the Unraid/home infrastructure, with deployment, storage, networking, GPU services,
   and recovery procedures kept reproducible.
