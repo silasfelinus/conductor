@@ -183,3 +183,28 @@ cover:
         self.assertNotIn("accepted_path", queue["covers"][0])
         replace.assert_not_called()
         write.assert_called_once()
+
+    def test_save_image_surfaces_pillow_fix_when_pil_unavailable(self) -> None:
+        import builtins
+
+        real_import = builtins.__import__
+
+        def fake_import(name, *args, **kwargs):
+            if name == "PIL" or name.startswith("PIL."):
+                raise ImportError("No module named 'PIL'")
+            return real_import(name, *args, **kwargs)
+
+        image_b64 = MODULE.base64.b64encode(b"not-a-real-image").decode()
+        target = self.root / "kind-robots" / "generated" / "cover" / "candidate.webp"
+
+        builtins.__import__ = fake_import
+        try:
+            with self.assertRaises(RuntimeError) as ctx:
+                MODULE.save_image(target, image_b64)
+        finally:
+            builtins.__import__ = real_import
+
+        message = str(ctx.exception)
+        self.assertIn("Pillow is required for WebP cover output", message)
+        self.assertIn("pip3 install Pillow", message)
+        self.assertIn("provision_kind_robots_deps.sh", message)
