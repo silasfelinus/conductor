@@ -10,6 +10,7 @@ on:
       - "scripts/apply_dream_revision.py"
       - "scripts/preflight_dream_revisions.py"
       - "scripts/check_dream_creative_contract.py"
+      - ".github/workflows/daily-dream-creative-contract.yml"
   push:
     branches:
       - main
@@ -21,6 +22,7 @@ on:
       - "scripts/apply_dream_revision.py"
       - "scripts/preflight_dream_revisions.py"
       - "scripts/check_dream_creative_contract.py"
+      - ".github/workflows/daily-dream-creative-contract.yml"
   workflow_dispatch:
 
 permissions:
@@ -66,6 +68,16 @@ jobs:
           else
             python scripts/check_dream_creative_contract.py "${files[@]}"
           fi
+
+      # Temporary migration evidence for the current five-day runway. This step is
+      # removed after the stale proposals have been re-authored from these current
+      # briefs; it lets the connector-only migration use the same live Facet planner
+      # that normal authoring uses instead of forging entropy-v2 metadata by hand.
+      - name: Emit current brief for oldest stale proposal
+        run: python scripts/build_dream_proposal.py --brief --date 2026-09-11
+
+      - name: Check entire open steering buffer
+        run: python scripts/check_dream_creative_contract.py --all-open
 
       - name: Preflight changed creative-reset requests
         shell: bash
