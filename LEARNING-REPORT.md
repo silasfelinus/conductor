@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-13T23:51:23Z
+Generated: 2026-09-13T23:56:17Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **948**
-- Outcomes: blocked: 16, cancelled: 1, done: 931
+- Closed tasks recorded: **949**
+- Outcomes: blocked: 16, cancelled: 1, done: 932
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -40,7 +40,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | interface-vision | 134 | 100% |
 | kapowarr | 52 | 100% |
 | kind-economy | 10 | 100% |
-| kind-robots | 55 | 98% |
+| kind-robots | 56 | 98% |
 | kindrobots-unraid | 9 | 100% |
 | lora-ingestion | 1 | 100% |
 | mandarin-tutor | 11 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 931 | 99% |
+| software | 932 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-13 `kind-robots/t-096` — The task's original filing (grep of 'return errorHandler(error)') undercounted the real call-site pattern -- most of the codebase actually writes 'const handled = errorHandler(error)' then a separate status line, so the literal grep matched only 19 of 470 real call sites and the filing concluded almost nothing was fixed (8/432) when in fact 429/470 already were. Re-derive the live count with a broader pattern (any errorHandler( call, cross-referenced against status-setting patterns) before trusting a stale filing's scope estimate, especially for a task that's sat open a couple of days -- the codebase moves. Also found and fixed a second, coupled bug while auditing: several routes called errorHandler() with a wrapper object ({error, context, statusCode}) instead of the actual Error, which errorHandler() doesn't recognize, silently discarding the intended status and message even in the JSON body -- worth checking call-site *shape*, not just call-site *presence*, when fixing a suspected systemic misuse.
 - 2026-09-13 `coloring-book/t-043` — t-039's second finding (quality guard blind to noise on the color variant) sat unaddressed in a task note for two days because it was independent of the hard relay-access gate blocking the rest of that task -- worth scanning needs-human/soft_gate notes for an already-specified, self-contained fix like this rather than treating the whole task as blocked. The fix itself needed no new dependency: a spatial-autocorrelation ratio computed from pixels PIL already samples, verified against real random noise (hf_ratio 0.98) and real structured images (gradient 0.0001, blurred texture 0.047) before picking the threshold, not just the selftest's synthetic blocks.
 - 2026-09-13 `conductor/t-151` — Built the advisory periodic-sweep guard (option (b)) the filing task itself proposed, mirroring check_milestone_status_drift.py's structure exactly (same overrides-filtering, --json/--include-inactive flags, exit-1-on-findings-only contract) rather than inventing a new shape. Running it against the live repo immediately validated the fix: both findings (model-builder/t-029, storybook/t-010) were already known from the filing session's ad hoc sweep, and interface-vision/t-104 -- the task whose 395KB note prompted this -- no longer appears, confirming its T104-HISTORY.md archive trim is still holding months later.
 - 2026-09-13 `coloring-book/t-042` — Kaizen from t-041: load_stats() now warns once (module-level flag, printed to stderr) the first time it hits Pillow's ImportError in a process, instead of only ever returning None. Verified against a real missing-Pillow sandbox rather than a mock. A tiny, fully-specified kaizen note from the prior session's close-out needed no design judgement -- just implement, verify against the real failure condition it names, and close.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-13 `interface-vision/t-104` — Slice 260: a fresh full-repo class-frequency survey scoped to component-styling token families (badge/btn/input/select/checkbox/textarea/text-/icon/loading/etc.) rather than raw flex-layout utility combos (flex gap-2 items-center and similar score far higher by count but are structural, not the visual/design-token surfaces this umbrella targets) found a clean new three-size family (kr-loading-primary-xs/-sm/-md) at 17 exact-match occurrences across 13 files. Reinforces slice 249/253's precedent of bundling sibling sizes/colors of the same shape into one slice with separate per-primitive codemods, and that vue-tsc/eslint/verifyKrClassCoverage.ts/verifyLayoutContract.ts run locally via provision_kind_robots_deps.sh catch what CI would catch, before ever opening the PR.
 - 2026-09-13 `kindrobots-unraid/t-018` — Fourth occurrence of the 502/503 outage class (t-014, t-015, t-017, t-018), again caught only because a scheduled sweep happened to notice rather than any alerting. Closed on objective recovery evidence alone (8 consecutive healthy curls against / and /api/health/database over ~20s, schemaCurrent: true) per docs/state-reconciliation.md -- no Unraid/Alexandria access was needed or used, since the sandbox's unrestricted HTTPS egress to kindrobots.org is sufficient to confirm the task's own stated close-out criterion. approved_by_human stays false per the t-014/t-015/t-017 precedent. kindrobots-unraid/t-016 (external health probe/alert) is still ready/unclaimed after four occurrences -- this is the actual fix for the detection gap, not another manual sweep catching it by luck.
 - 2026-09-13 `interface-vision/t-136` — Kaizen from t-135 closed the gap outright: verifyKrClassCoverage.ts (kind_robots#2696) asserts every static kr-* class token used in a components/+pages/ template has a matching .kr-* rule, no ratchet/baseline since an undefined kr-* reference is never intentional. The PR's own comment-migration-contract check was red at review time from an unrelated live kindrobots.org 502 (kindrobots-unraid/t-018, confirmed via direct curl and one re-run reproducing the identical error) -- correctly triaged as not-this-PR's failure and merged anyway once every check touching the actual diff was green.
-- 2026-09-13 `interface-vision/t-135` — Four consecutive t-104 badge-migration slices (#2691-#2694, three different sessions) introduced and reused a CSS class name (kr-badge-accent-sm) that was never defined, because every check that passed on those PRs (TypeScript, eslint, layout-contract, the full Storybook/Narrative contract suite) type-checks templates and structure but never asserts that a referenced kr-* @apply target actually exists in tailwind.css -- so four real visual regressions (unstyled plain text instead of a badge) shipped to production invisibly. Caught only because a Reviewer pass grepped the CSS file directly instead of trusting green CI. Kaizen filed on the fix PR: add a cheap repo-wide check asserting every kr-* class token used in a class="..." attribute has a matching rule in tailwind.css, so the next missing-primitive slice fails fast in CI.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-13T23:51:23Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-13T23:56:17Z_
