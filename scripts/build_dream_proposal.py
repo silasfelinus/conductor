@@ -28,10 +28,10 @@ def _frontmatter_from_text(text: str) -> dict[str, Any]:
 
 def _proposal_is_current_contract(text: str) -> bool:
     proposal = _proposal_data(text)
-    if not isinstance(proposal, dict):
-        # Preserve the long-standing frontmatter-only docket semantics used by
-        # lightweight tooling and fixtures. Real authored steering proposals carry
-        # proposal-data, which is where entropy-version recovery is enforceable.
+    if not proposal:
+        # Preserve the long-standing frontmatter-only/lightweight-fixture docket
+        # semantics. Real authored steering proposals contain a non-empty
+        # proposal-data block, which is where entropy-version recovery applies.
         return True
     seeds = proposal.get("seed_facets")
     raw_version = seeds.get("creative_entropy_version") if isinstance(seeds, dict) else 0
@@ -64,10 +64,10 @@ def unbuilt_backlog() -> list[str]:
     """Current-contract proposal dates authored but not built, oldest first.
 
     The pre-2026-09-11 implementation counted every unbuilt markdown file toward the
-    five-day buffer.  After entropy v2 intentionally invalidated the v0/v1 queue, those
-    five stale files still made the docket look full, so agent sessions stopped authoring
-    while the daily builder rejected every candidate.  Count only proposals that can
-    actually build under today's creative policy.
+    five-day buffer. After entropy v2 intentionally invalidated the v0/v1 queue, those
+    stale files still made the docket look full, so agent sessions stopped authoring
+    while the daily builder rejected every candidate. Count only authored proposals that
+    can actually build under today's creative policy.
     """
     days: list[str] = []
     for path in _files():
@@ -86,8 +86,8 @@ def unbuilt_backlog() -> list[str]:
 def proposal_exists_for(day: str) -> bool:
     """Treat a stale unbuilt same-day proposal as replaceable, not a duplicate.
 
-    Built history still owns its date.  A current-contract unbuilt proposal also owns its
-    date.  An obsolete steering proposal remains on disk for audit/history but must not
+    Built history still owns its date. A current-contract unbuilt proposal also owns its
+    date. An obsolete steering proposal remains on disk for audit/history but must not
     prevent the current entropy policy from authoring a replacement alongside it.
     """
     for path in _files():
