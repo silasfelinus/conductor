@@ -4085,3 +4085,21 @@ tasks:
   claimed_at: '2026-09-12T16:32:40Z'
   updated: '2026-09-12T16:47:21Z'
   implementation_pr: 'silasfelinus/kind_robots#2677'
+
+- id: t-135
+  milestone: m5
+  title: "Bug fix: define the missing kr-badge-accent-sm CSS primitive"
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: >-
+    Found during Reviewer pass on interface-vision/t-104 slice 258
+    (silasfelinus/kind_robots#2694): `kr-badge-accent-sm` has been referenced in
+    four files (ruler-hooked-card.vue since #2691, then video-lora-picker.vue
+    #2692, user-dashboard.vue #2693, video-generator.vue #2694) but was never
+    defined in assets/css/tailwind.css -- only `.kr-badge-accent-xs` exists.
+    All four call sites have been rendering as unstyled plain text instead of
+    a DaisyUI accent badge since #2691 merged. None of the CI checks that
+    passed on any of those four PRs (TypeScript, eslint, layout-contract,
+    Storybook/Narrative contracts) catch an undefined Tailwind @apply target,
+    which is why this slipped through four separate review passes.
