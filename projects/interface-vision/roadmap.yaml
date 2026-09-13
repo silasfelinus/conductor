@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3331,8 +3331,22 @@ tasks:
     merge. Return the recurring consistency umbrella to ready for the next bounded slice.
     Kaizen for the next slice: font-bold text-base-content (7 files/9 occurrences) and font-
     black text-primary (7 files/8 occurrences) are the next candidates from the same survey.
-  updated: '2026-09-13T02:28:38Z'
-  implementation_pr: 'silasfelinus/kind_robots#2687'
+
+    Slice 253 merged as silasfelinus/kind_robots#2688 (squash 6f61fbd). Added .kr-text-bold-
+    content (font-bold text-base-content) and .kr-text-black-primary (font-black text-
+    primary) -- a new weight+color sibling shape distinct from the existing kr-text-
+    bold-*/kr-text-black-* size families. Migrated 16 occurrences across 13 files onto kr-
+    text-bold-content and 22 occurrences across 16 files onto kr-text-black-primary (full
+    subset-match, extra tokens preserved). No color/behavior/API/schema/route/geometry
+    change. eslint/vue-tsc/test:layout-contract/prettier all verified clean against pre-
+    existing baselines (git-stash confirmed); one incidental prettier reflow on creator-
+    earnings-page.vue with no rendered-output change. All 60 kind_robots PR checks green,
+    mergeable_state clean before merge. Return the recurring consistency umbrella to ready
+    for the next bounded slice. Kaizen for the next slice: run a fresh full-repo class-
+    frequency survey outside all now-closed families (including these two new ones) to pick
+    slice 254's target.
+  updated: '2026-09-13T02:45:45Z'
+  implementation_pr: 'silasfelinus/kind_robots#2688'
   retry_context: ''
   owner: worker
   claimed_by: claude-scheduled-20260913T022747Z-iv-t104-slice253
