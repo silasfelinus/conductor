@@ -1792,3 +1792,90 @@ touched, no re-renders requested for either rejected slot).
    renders exist; mr-016/mr-020 need BW re-derivation once t-039 clears.
 
 Re-arming to `ready` (recurring), releasing the claim.
+
+## Slice 4 (2026-09-13, scheduled Conductor session, cycle 6)
+
+Kind Robots creative review completed: reviewed the final 6 slots (kr-031 through
+kr-036), closing out the book's color-proposal review stage at 36/36.
+
+**Accepted (5):** `manage_coloring_book_production.py --live --operation accept-color`
+
+- **kr-031 (Desert Solar Garden)** -- at full resolution the sunflower "petals" are
+  rendered as distinct flat rectangular panels with a single highlight line and small
+  gray mounting-bracket tabs at the hub, a legitimate stylized read of "solar panel
+  petals rotate like giant sunflowers" (a lower-resolution first look mistook these
+  for ordinary flowers and nearly produced a false reject -- worth flagging as a
+  precedent: verify a close crop before rejecting a central-conceit miss). Robot,
+  two farmers, children, water channels, and napping lizards all present; amber/
+  turquoise/green/violet palette matches.
+- **kr-032 (Community Mural)** -- humans and robots painting from ladders and rolling
+  platforms onto a colorful fantastical cityscape, butterflies present, two wheelchair
+  users in active painting roles, varied ages/cultures; no readable text visible.
+- **kr-033 (Storytime Circuit)** -- excellent match: elderly storyteller under a giant
+  tree, children and two robots and cats in circles, a glowing butterfly-dragon
+  projected from the open book, warm sunset palette.
+- **kr-034 (Toy Hospital)** -- strong match: red-cross-badged repair robot and a child
+  at a worktable of tools and spare parts, surrounded by patiently waiting stuffed
+  animals, dolls, wind-up toys, and wooden trains.
+- **kr-036 (Constellation of Care)** -- redwoods, small robots and rainbow butterflies
+  linked into a constellation-like network across a night sky, deep blue palette with
+  rainbow-lit connections; explicit ground elements (farms/clinics/homes/workshops)
+  aren't individually legible beneath the canopy, tolerated as background-specificity
+  approximation per the standard prior slices applied to similar misses.
+
+**Not accepted (1), reasoning recorded on the proposal's `notes:` in
+`sets/kind-robots/proposals.yaml`:**
+
+- **kr-035 (Kind Robots Parade)** -- a shop awning in the upper-left renders as
+  legible storefront-sign lettering (confirmed via a cropped/upscaled close read, not
+  just the thumbnail), violating the prompt's explicit "no banners or readable text"
+  constraint. Same defect class as hwr-005's rejected "HOTEL" signage, which this
+  project's prior review passes treated as a hard reject rather than a tolerated
+  flourish, so held to the same line here. The crowd composition otherwise matches
+  well (Ami's butterfly swarm, aliens, a robot, a mermaid, cats, lanterns/ribbons,
+  radiant rainbow palette via hue-banding across the crowd). Not re-enqueued this
+  session; a clean re-render need only avoid readable signage.
+
+Kind Robots creative review is now **36/36 reviewed** (28 accepted color, 8
+not-accepted across all slices to date -- kr-005/006/007 and one more from slice 1,
+kr-011/kr-014 from slice 2, kr-025/kr-028 from slice 3, kr-035 this slice). Matches
+`coloring_queue_status.py --book kind-robots`, which is authoritative: 28 `approved`,
+8 still `done` (the not-accepted slots, still carrying their original `done` render).
+This is the same shape the color-review stage reached for Monster Recast and
+Hollywood Recast earlier -- all three books' color-proposal review stages are now
+fully drained.
+
+**Process note:** `manage_coloring_book_production.py --operation accept-color`
+required `pip3 install Pillow` again this session (mechanical_check's PIL import) --
+the same recurring, non-persistent sandbox gap logged on every prior pass. Also: a
+first, naive `yaml.safe_dump()` re-serialization of the full `proposals.yaml` (to add
+the kr-035 rejection note) reformatted ~200 unrelated lines of quoting/line-wrap
+style across the whole file; reverted and redid it as a targeted text edit instead
+(matching the existing block's format), the same way
+`manage_coloring_book_production.py`'s own `replace_ledger_pair_value()` does a
+regex-scoped in-place edit rather than a full re-dump. Worth calling out for any
+future pass that needs to hand-edit this ledger: never round-trip the whole file
+through `yaml.safe_dump()`.
+
+Verification: `coloring_proposal_status.py --check` clean (kind-robots accepted
+color/BW 28/0); `coloring_queue_status.py --book kind-robots` shows
+`queue_integrity_safe: true`, `recommended_action: "complete"`, 0 duplicate
+job/entry ids; `validate_roadmaps.py` clean; `git diff --stat` reviewed before
+committing (`color-art-jobs.yaml` queue-state fields and
+`kind-robots/proposals.yaml` accepted-color paths/notes only -- no binaries
+touched, no re-renders requested for the rejected slot).
+
+**For the next pass:**
+1. Do not resume `generate-bw` on any book until `coloring-book/t-039` is confirmed
+   resolved (needs Alexandria relay access) -- re-check that task's status first.
+2. Kind Robots: color-review stage fully drained (36/36); next stage is
+   `generate-bw`, blocked on t-039, same as Hollywood Recast.
+3. Hollywood Recast: color-review stage fully drained (36/36); next stage is
+   `generate-bw`, blocked on t-039.
+4. Monster Recast: 20 previously-rejected slots still await re-review once fresh
+   renders exist; mr-016/mr-020 need BW re-derivation once t-039 clears.
+5. All three books' color-proposal review stages are now complete -- the project's
+   next actionable step for any book is either t-039 clearing (unblocks generate-bw
+   everywhere) or the Monster Recast re-review backlog.
+
+Re-arming to `ready` (recurring), releasing the claim.
