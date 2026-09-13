@@ -41,6 +41,7 @@ COLORFUL_PIXEL_SATURATION = 0.20   # a pixel counts as "colorful" past this
 BLANK_WHITE_FRACTION = 0.985       # near-all-white == blank
 DEGENERATE_MAX_LUMA_STD = 0.02     # near-zero contrast == flat/dead frame
 SAMPLE_EDGE = 160                  # downsample longest edge before sampling
+NOISE_MIN_HF_RATIO = 0.55          # spatially-uncorrelated static, any variant
 
 
 class Stats:
@@ -106,6 +107,48 @@ def stats_from_pixels(pixels: Iterable[tuple[int, int, int]]) -> Stats:
     return s
 
 
+def hf_energy_ratio(pixels: list[tuple[int, int, int]], width: int) -> float:
+    """Ratio of adjacent-pixel luma variance to total luma variance, in
+    [0, row-major] order over a `width`-wide image.
+
+    Real imagery — line art, flat color, gradients, painted detail — has
+    strong positive correlation between neighboring pixels: a pixel's luma is
+    a good predictor of the one next to it, so the mean squared horizontal
+    difference is small relative to the image's overall luma variance.
+    Spatially-uncorrelated static has none of that structure: each pixel is
+    effectively independent of its neighbor, so for iid values
+    Var(X - Y) == 2*Var(X), making this ratio approach 1.0. A ratio near or
+    above 1.0 means the frame has no discernible spatial structure at all —
+    exactly the Kontext-corruption noise signature `coloring-book/t-039`
+    found slipping past every saturation/white-fraction check, since static
+    can be arbitrarily saturated and busy while still being pure garbage.
+
+    Returns 0.0 (i.e. "not noise") when there isn't enough signal to judge —
+    too few rows, or near-zero variance (a blank/flat frame, already caught
+    by `is_blank_or_degenerate`).
+    """
+    n = len(pixels)
+    if width <= 1 or n < width * 2:
+        return 0.0
+    lumas = [0.2126 * r / 255.0 + 0.7152 * g / 255.0 + 0.0722 * b / 255.0
+              for r, g, b in pixels]
+    mean = sum(lumas) / n
+    variance = sum((l - mean) ** 2 for l in lumas) / n
+    if variance <= 1e-9:
+        return 0.0
+    diff_sq_sum = 0.0
+    diff_count = 0
+    for row_start in range(0, n - width + 1, width):
+        row = lumas[row_start:row_start + width]
+        for i in range(len(row) - 1):
+            d = row[i + 1] - row[i]
+            diff_sq_sum += d * d
+            diff_count += 1
+    if diff_count == 0:
+        return 0.0
+    return (diff_sq_sum / diff_count) / (2.0 * variance)
+
+
 def is_blank_or_degenerate(stats: Stats) -> bool:
     """Blank page or a flat/dead frame with no real content."""
     if stats.count == 0:
@@ -126,11 +169,15 @@ def is_line_art(stats: Stats) -> bool:
 
 
 def assess(stats: Stats, variant: str, size: Optional[tuple[int, int]] = None,
-           expect_portrait: bool = True) -> tuple[bool, list[str]]:
+           expect_portrait: bool = True,
+           hf_ratio: Optional[float] = None) -> tuple[bool, list[str]]:
     """Return (ok, reasons). `reasons` explains every failure; empty on pass.
 
     variant: 'bw' enforces line-art; anything else ('color') only enforces the
     not-blank / not-degenerate floor. Aspect is checked when size is provided.
+    `hf_ratio` (from `hf_energy_ratio`) is optional — callers that only have
+    aggregate Stats with no pixel positions (e.g. the pure self-test blocks)
+    simply skip the noise/static check by leaving it None.
     """
     reasons: list[str] = []
 
@@ -138,6 +185,14 @@ def assess(stats: Stats, variant: str, size: Optional[tuple[int, int]] = None,
         reasons.append(
             f"blank/degenerate frame (white={stats.white_fraction:.2f}, "
             f"contrast_std={stats.luma_std:.3f})"
+        )
+
+    if hf_ratio is not None and hf_ratio >= NOISE_MIN_HF_RATIO:
+        reasons.append(
+            "spatially-uncorrelated noise/static — no discernible image "
+            f"structure (hf_ratio={hf_ratio:.2f}); this can pass the "
+            "saturation/white-fraction checks for either variant while "
+            "being pure garbage (coloring-book/t-039)"
         )
 
     if variant == "bw" and not is_line_art(stats):
@@ -163,9 +218,10 @@ def assess(stats: Stats, variant: str, size: Optional[tuple[int, int]] = None,
 _pil_missing_warned = False
 
 
-def load_stats(path: Path) -> Optional[tuple[Stats, tuple[int, int]]]:
-    """Sample an image file into Stats + (width, height). Returns None if PIL is
-    unavailable (caller decides whether that's fatal)."""
+def load_stats(path: Path) -> Optional[tuple[Stats, tuple[int, int], float]]:
+    """Sample an image file into Stats + (width, height) + hf_ratio (see
+    `hf_energy_ratio`). Returns None if PIL is unavailable (caller decides
+    whether that's fatal)."""
     global _pil_missing_warned
     try:
         from PIL import Image
@@ -187,8 +243,10 @@ def load_stats(path: Path) -> Optional[tuple[Stats, tuple[int, int]]]:
             scale = SAMPLE_EDGE / longest
             im = im.resize((max(1, int(im.width * scale)),
                             max(1, int(im.height * scale))))
-        stats = stats_from_pixels(im.getdata())
-    return stats, size
+        sampled_pixels = list(im.getdata())
+        stats = stats_from_pixels(sampled_pixels)
+        hf_ratio = hf_energy_ratio(sampled_pixels, im.width)
+    return stats, size, hf_ratio
 
 
 def assess_file(path: Path, variant: str) -> tuple[Optional[bool], list[str], dict]:
@@ -196,10 +254,11 @@ def assess_file(path: Path, variant: str) -> tuple[Optional[bool], list[str], di
     loaded = load_stats(path)
     if loaded is None:
         return None, ["PIL unavailable — image guard skipped"], {}
-    stats, size = loaded
-    ok, reasons = assess(stats, variant, size=size)
+    stats, size, hf_ratio = loaded
+    ok, reasons = assess(stats, variant, size=size, hf_ratio=hf_ratio)
     info = stats.as_dict()
     info["size"] = f"{size[0]}x{size[1]}"
+    info["hf_ratio"] = round(hf_ratio, 4)
     return ok, reasons, info
 
 
@@ -277,6 +336,36 @@ def _selftest() -> int:
     ok, r = assess(line_art, "color", size=(1024, 700)); checks.append(("landscape flagged when portrait expected", any("landscape" in x for x in r)))
     checks.append(("is_line_art(line_art)", is_line_art(line_art) is True))
     checks.append(("not is_line_art(color)", is_line_art(color_master) is False))
+
+    # 5. Spatially-uncorrelated static (coloring-book/t-039): saturated and
+    #    busy per-pixel, so it clears every existing check for the "color"
+    #    variant, but adjacent pixels carry no information about each other.
+    #    Deterministic checkerboard alternation is enough to prove the math —
+    #    real noise just makes the failure mode less visually obvious, not
+    #    less spatially uncorrelated.
+    noise_width = 40
+    noise_pixels = [
+        (220, 40, 200) if (i % noise_width + i // noise_width) % 2 == 0 else (30, 210, 60)
+        for i in range(noise_width * 40)
+    ]
+    noise_stats = stats_from_pixels(noise_pixels)
+    noise_hf = hf_energy_ratio(noise_pixels, noise_width)
+    checks.append(("noise/static hf_ratio is high", noise_hf >= NOISE_MIN_HF_RATIO))
+    ok, r = assess(noise_stats, "color", hf_ratio=noise_hf)
+    checks.append(("noise/static is REJECTED for color variant", ok is False and any("noise/static" in x for x in r)))
+
+    # A real, structured illustration (smooth horizontal gradient — strong
+    # pixel-to-pixel correlation) must NOT trip the same check.
+    grad_width = 40
+    grad_pixels = [
+        (int(255 * ((i % grad_width) / (grad_width - 1))), 60, 160)
+        for i in range(grad_width * 40)
+    ]
+    grad_stats = stats_from_pixels(grad_pixels)
+    grad_hf = hf_energy_ratio(grad_pixels, grad_width)
+    checks.append(("smooth gradient hf_ratio stays low", grad_hf < NOISE_MIN_HF_RATIO))
+    ok, r = assess(grad_stats, "color", hf_ratio=grad_hf)
+    checks.append(("smooth gradient is NOT rejected as noise", ok is True))
 
     failed = 0
     for name, passed in checks:
