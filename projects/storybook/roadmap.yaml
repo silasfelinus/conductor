@@ -841,7 +841,7 @@ tasks:
 - id: t-039
   milestone: m8
   title: "Engine: replace the four story shapes with the four story modes"
-  status: review
+  status: done
   passes: 0
   stakes: reversible
   note: >-
@@ -869,7 +869,13 @@ tasks:
     scheduled for deletion. A legacy client posting short-story still opens an open-ended
     run via LEGACY_MODE_ALIASES. Dropping the legacy enum values is a follow-up once no
     deployed build emits them.
-  updated: '2026-09-12T23:02:58Z'
+
+    2026-09-13: merged (kind_robots#2686, all 53 checks green). The two red guards were the
+    Alexandria outage, not this change -- verifyAcademyStarterManifest.ts and
+    verifyPopulationDraftQuality.ts fetch kindrobots.org live and were red on main too; both
+    passed on re-run once the host answered again. Merged != deployed: the enum widening and
+    the new routes need the Alexandria deploy before they are live.
+  updated: '2026-09-13T00:42:53Z'
   owner: worker
   claimed_by: 2026-09-12T23-mode-taxonomy-t039
   claimed_at: '2026-09-12T22:42:45Z'
