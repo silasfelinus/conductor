@@ -571,7 +571,7 @@ tasks:
 
 - id: t-020
   milestone: m1
-  title: 'Close Alexandria''s three observability blind spots: RAM-only syslog, no ECC/EDAC memory detection, and an unvalidated 4-DIMM DDR4-3600 profile'
+  title: 'Close Alexandria''s observability blind spots: no ECC/EDAC memory detection and an unvalidated 4-DIMM DDR4-3600 profile (syslog-to-flash done 2026-09-13)'
   status: needs-human
   soft_gate: true
   owner: null
@@ -591,6 +591,15 @@ tasks:
     too. (Caveat worth knowing: this writes to the USB boot device continuously, which does
     wear it -- keep the flash backup current.)
 
+    (1) IS DONE -- Silas enabled syslog mirroring to flash on 2026-09-13, in the same session
+    this task was filed. Alexandria now retains logs across reboots. NOTE THE BOUNDARY: it
+    captures from that moment forward only, so t-014/t-015/t-017 and the 09-01 healthcheck
+    stop stay unrecoverable, and the current boot's dmesg (from ~15:43 PDT on 09-12) is still
+    the oldest kernel evidence available. The next incident is the first one that will have a
+    readable log; mirrored output lands under /boot/logs/ on the flash device. If USB wear
+    becomes a concern, Unraid's syslog server can mirror to a share or a remote collector
+    instead -- same benefit, no flash writes.
+
     (2) VALIDATE THE MEMORY -- /sys/devices/system/edac/mc/*/dimm*/ does not exist because
     the RAM is non-ECC: 4x16GB TEAMGROUP UD4-3600 across P0 CHANNEL A DIMM 0/1 and CHANNEL
     B DIMM 0/1. That is not "no memory errors found", it is no detector installed. Run
@@ -607,13 +616,13 @@ tasks:
     If it was planned, note that here and move on. If it was not, it is a fifth anomaly and
     it is the one that destroyed the earlier logs.
 
-    Soft gate: every step needs physical/BIOS/UI access to Alexandria, which no agent
+    Soft gate: the remaining steps need physical/BIOS/UI access to Alexandria, which no agent
     session has. Other work continues. Relationship to t-016 (external health probe/alert,
     still ready/unclaimed): t-016 catches the next outage in real time, this task makes the
     host able to say what happened -- they are complements, and item (1) is worth doing
-    first because it is free. Set status: done when the syslog toggle is on, MemTest has
-    run at least one full pass, and the reboot is accounted for.
-  updated: '2026-09-13T12:30:00Z'
+    first because it is free -- and it is now done. Set status: done when MemTest has run at
+    least one full pass and the 09-12 reboot is accounted for.
+  updated: '2026-09-13T13:00:00Z'
 
 goal: Run Kind Robots reliably on the Unraid/home infrastructure, with deployment, storage, networking, GPU services,
   and recovery procedures kept reproducible.
