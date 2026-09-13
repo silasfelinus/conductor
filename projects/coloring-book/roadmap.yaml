@@ -848,9 +848,9 @@ tasks:
 - id: t-041
   milestone: m4
   title: "Grep the coloring-book pipeline for other unguarded 'from PIL import Image' call sites (kaizen from t-040)"
-  status: ready
+  status: claimed
   stakes: reversible
-  owner: null
+  owner: worker
   note: >-
     Kaizen from t-040 (2026-09-13, silasfelinus/conductor#4257): that task fixed
     manage_coloring_book_production.py's two PIL-import call sites (mechanical_check
@@ -861,3 +861,6 @@ tasks:
     `from PIL import Image` pattern. DO: grep the coloring-book pipeline scripts for
     other bare PIL imports and apply the same actionable-fix wrapping where found;
     if none are found, close as done with that finding noted.
+  claimed_by: claude-web-20260913T1630Z-cb-t041
+  claimed_at: '2026-09-13T15:34:55Z'
+  updated: '2026-09-13T15:34:55Z'
