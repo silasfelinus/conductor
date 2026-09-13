@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3298,11 +3298,11 @@ tasks:
     Slice 260 merged as silasfelinus/kind_robots#2700. Named .kr-loading-primary-xs/-sm/-md (DaisyUI loading spinner, primary-tinted, at three sizes -- color-then-size suffix matching .kr-icon-primary-* convention); migrated 17 exact-match occurrences across 13 files via three new codemods (kr_loading_primary_{xs,sm,md}_codemod.py). No color/behavior/API/schema/route/geometry change. vue-tsc, eslint, verifyKrClassCoverage.ts, and verifyLayoutContract.ts all clean locally; all 50 kind_robots PR checks green, mergeable_state clean before merge. Return the recurring consistency umbrella to ready for the next bounded slice. Kaizen for the next slice: loading loading-sm loading-spinner motion-reduce:hidden (4 narrative/* files, no color token, distinct shape), the loading-dots/loading-ring variants of the primary tint (one occurrence each, not yet exact-match-pool scale), and the -xs subset-match pool (home- art-shelf.vue shrink-0 occurrence).
 
     Slice 261: migrated narrative-art-status.vue's exact loading loading-spinner loading-sm motion-reduce:hidden shape to existing kr-spinner-sm while preserving motion-reduce:hidden. One file, no behavior/API/schema/route/geometry change. Three exact siblings remain for later bounded slices.
-  updated: '2026-09-13T12:25:00Z'
-  implementation_pr: 'silasfelinus/kind_robots#2700'
+  updated: '2026-09-13T13:30:05Z'
+  implementation_pr: 'silasfelinus/kind_robots#2703'
   retry_context: ''
-  owner: worker
-  claimed_by: openai-scheduled-2026-09-13T121837Z-interface-vision-t104-a17
+  owner: null
+  claimed_by: null
   claimed_at: '2026-09-13T12:18:37Z'
 
 - id: t-123
