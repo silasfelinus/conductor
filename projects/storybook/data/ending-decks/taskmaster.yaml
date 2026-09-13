@@ -1,0 +1,138 @@
+# The Taskmaster deck (storybook/t-044).
+#
+# Silas, 2026-09-12: "we should work taskmaster into this project as well."
+# Taskmaster is the fourth MODE of one engine, so a quest resolves and is
+# collected exactly like a Mystery or a whole life -- real work earns the same
+# credit as fiction, rather than trailing off in a list nobody looks at again.
+#
+# The three axes are about the WORK, not the story. A quest that produced a
+# beautiful scene and moved nothing is a failure here, and one that moved a
+# real thing while the prose stayed plain is a win. That asymmetry is the
+# point: this deck is the one place in Storybook where the fiction is in
+# service of something outside itself.
+#
+# BIT ORDER IS A DATA CONTRACT: outcomeKey[i] is axes[i]. momentum, clarity,
+# follow_through. Axis keys are snake_case (AXIS_KEY_PATTERN in
+# server/utils/endingDeckMath.ts); the hyphen lives in the label only.
+
+key: taskmaster
+title: Taskmaster
+description: >-
+  A real objective, the work it actually took, and what you were left holding
+  when the quest ended.
+ownerKind: TASKMASTER
+passValue: 1
+turnBudget: 6
+# A quest may resolve once three checkpoints have been worked, even if the
+# reader keeps going. Real work does not always need six scenes.
+minTurnsBeforeResolve: 3
+turnBudgetByShape:
+  taskmaster: 6
+axes:
+  - key: momentum
+    label: Momentum
+    description: >-
+      Whether real work actually moved during the quest, rather than being
+      described as moving.
+    passLabel: the work moved
+    failLabel: the work stayed put
+  - key: clarity
+    label: Clarity
+    description: >-
+      Whether the next concrete action is knowable when the quest ends, or the
+      objective is still a fog.
+    passLabel: the next move is obvious
+    failLabel: the next move is still fog
+  - key: follow_through
+    label: Follow-through
+    description: >-
+      Whether the quest's proposals were accepted and applied, or left hanging
+      for a later self to sort out.
+    passLabel: proposals accepted
+    failLabel: proposals left hanging
+endings:
+  - outcomeKey: '111'
+    title: Done and Dusted
+    slug: taskmaster-done-and-dusted
+    summary: >-
+      The work moved, the next step is obvious, and everything the quest
+      proposed has been accepted. You close the ledger with nothing owed to
+      your future self.
+    victoryType: VICTORY
+    artPrompt: >-
+      A cleared workbench at the end of the day, tools hung up, one finished
+      object sitting in the light
+  - outcomeKey: '110'
+    title: Moved and Mapped
+    slug: taskmaster-moved-and-mapped
+    summary: >-
+      Real work got done and you know exactly what comes next, but the quest's
+      proposals are still sitting unapplied. The ledger is honest; it is just
+      not closed.
+    victoryType: VICTORY
+    artPrompt: >-
+      A workbench mid-project, a clear diagram pinned above it, a small stack of
+      unsigned notes at the edge
+  - outcomeKey: '101'
+    title: Shipped in the Fog
+    slug: taskmaster-shipped-in-the-fog
+    summary: >-
+      You moved the work and accepted what the quest proposed, and you still
+      cannot say what the next step is. It counted. It just did not point
+      anywhere.
+    victoryType: MIXED
+    artPrompt: >-
+      A finished crate on a dock at night, the water beyond it dark, no sign
+      naming where it goes next
+  - outcomeKey: '100'
+    title: One Good Push
+    slug: taskmaster-one-good-push
+    summary: >-
+      Something real moved, and that is the whole of it. The next step is
+      unclear and nothing was written down. Take the push; it was a genuine
+      one.
+    victoryType: MIXED
+    artPrompt: >-
+      A heavy stone shifted a few feet in soft ground, the drag mark behind it
+      clear, the path ahead untrodden
+  - outcomeKey: '011'
+    title: The Plan Is the Work
+    slug: taskmaster-the-plan-is-the-work
+    summary: >-
+      Nothing moved yet, but you know precisely what to do and you signed off on
+      every proposal. Some quests are for deciding, and this one decided.
+    victoryType: MIXED
+    artPrompt: >-
+      A table covered in a single clean plan, drawn and annotated, the materials
+      for it still stacked unopened in the corner
+  - outcomeKey: '010'
+    title: Clear Eyes, Full Queue
+    slug: taskmaster-clear-eyes-full-queue
+    summary: >-
+      You came away understanding the objective and did nothing about it. The
+      proposals wait, the queue is longer than when you started, and you are not
+      confused anymore.
+    victoryType: MIXED
+    artPrompt: >-
+      A well-lit desk with a long, legible list on it and an untouched inbox
+      tray beside it
+  - outcomeKey: '001'
+    title: Paperwork, Perfected
+    slug: taskmaster-paperwork-perfected
+    summary: >-
+      Every proposal was applied and nothing real changed. The record is
+      immaculate and the objective is exactly where you left it.
+    victoryType: FAILURE
+    artPrompt: >-
+      A row of neatly filed folders in a cabinet, each one labeled, the workroom
+      behind them dark and unused
+  - outcomeKey: '000'
+    title: A Story About Working
+    slug: taskmaster-a-story-about-working
+    summary: >-
+      The quest was good company and it was not work. Nothing moved, nothing
+      clarified, nothing was accepted. Start again when you actually mean to.
+    victoryType: FAILURE
+    artPrompt: >-
+      A cold cup of coffee beside a closed notebook, evening light gone from the
+      window
