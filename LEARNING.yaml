@@ -13516,3 +13516,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Four consecutive t-104 badge-migration slices (#2691-#2694, three different sessions) introduced and reused a CSS class name (kr-badge-accent-sm) that was never defined, because every check that passed on those PRs (TypeScript, eslint, layout-contract, the full Storybook/Narrative contract suite) type-checks templates and structure but never asserts that a referenced kr-* @apply target actually exists in tailwind.css -- so four real visual regressions (unstyled plain text instead of a badge) shipped to production invisibly. Caught only because a Reviewer pass grepped the CSS file directly instead of trusting green CI. Kaizen filed on the fix PR: add a cheap repo-wide check asserting every kr-* class token used in a class=\"...\" attribute has a matching rule in tailwind.css, so the next missing-primitive slice fails fast in CI."
+- date: 2026-09-13
+  project: interface-vision
+  task: t-136
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Kaizen from t-135 closed the gap outright: verifyKrClassCoverage.ts (kind_robots#2696) asserts every static kr-* class token used in a components/+pages/ template has a matching .kr-* rule, no ratchet/baseline since an undefined kr-* reference is never intentional. The PR's own comment-migration-contract check was red at review time from an unrelated live kindrobots.org 502 (kindrobots-unraid/t-018, confirmed via direct curl and one re-run reproducing the identical error) -- correctly triaged as not-this-PR's failure and merged anyway once every check touching the actual diff was green."
