@@ -5499,7 +5499,7 @@ tasks:
 - id: t-151
   milestone: m2
   title: Guard against recurring-task note fields growing large enough to blow the Kind-Robots projection payload limit
-  status: ready
+  status: claimed
   stakes: reversible
   passes: 0
   note: >-
@@ -5535,8 +5535,10 @@ tasks:
     pattern (archive file + short pointer note) as the fix, not just flag the symptom. Advisory
     only -- never auto-truncates a note itself, since deciding what's safe to move to an archive
     file needs the same judgment this session applied to t-104.
-  updated: '2026-09-11T21:05:00Z'
-  owner: null
+  updated: '2026-09-13T18:43:24Z'
+  owner: worker
+  claimed_by: claude-scheduled-20260913T184323Z-conductor-t151
+  claimed_at: '2026-09-13T18:43:24Z'
 - id: t-152
   milestone: m2
   title: "Relay reported a busy ComfyUI as down: every probe failure was classified as absent"
