@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-13T18:43:55Z
+Generated: 2026-09-13T18:46:58Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **946**
-- Outcomes: blocked: 16, cancelled: 1, done: 929
+- Closed tasks recorded: **947**
+- Outcomes: blocked: 16, cancelled: 1, done: 930
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -26,7 +26,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 28 | 100% |
-| conductor | 99 | 100% |
+| conductor | 100 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 51 | 98% |
 | davinci | 8 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 929 | 99% |
+| software | 930 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-13 `conductor/t-151` — Built the advisory periodic-sweep guard (option (b)) the filing task itself proposed, mirroring check_milestone_status_drift.py's structure exactly (same overrides-filtering, --json/--include-inactive flags, exit-1-on-findings-only contract) rather than inventing a new shape. Running it against the live repo immediately validated the fix: both findings (model-builder/t-029, storybook/t-010) were already known from the filing session's ad hoc sweep, and interface-vision/t-104 -- the task whose 395KB note prompted this -- no longer appears, confirming its T104-HISTORY.md archive trim is still holding months later.
 - 2026-09-13 `coloring-book/t-042` — Kaizen from t-041: load_stats() now warns once (module-level flag, printed to stderr) the first time it hits Pillow's ImportError in a process, instead of only ever returning None. Verified against a real missing-Pillow sandbox rather than a mock. A tiny, fully-specified kaizen note from the prior session's close-out needed no design judgement -- just implement, verify against the real failure condition it names, and close.
 - 2026-09-13 `coloring-book/t-041` — Kaizen from t-040: grepping the rest of the coloring-book pipeline for the same bare 'from PIL import Image' pattern found two more genuine hits (consume_coloring_book_color_art.py, manage_coloring_book_cover.py) and two false leads that already degrade gracefully (art_quality.py's load_stats returns None; consume_art_queue_core.py's save_result falls back to PNG with its own actionable message). A kaizen framed as 'grep for the same pattern elsewhere' is worth doing literally and completely in one pass rather than fixing only the first hit found -- distinguishing already-graceful call sites from genuinely bare ones is the actual work, not the grep itself.
 - 2026-09-13 `coloring-book/t-040` — A recurring TALKBACK-flagged papercut (bare 'PIL unavailable' error on a non-persistent sandbox Pillow install, rediscovered fix-and-forgotten across three separate sessions on 2026-08-11 and 2026-09-13) had its actual fix fully specified in the task note before this session ever claimed it -- the work was pure implementation, no design decision needed. When a TALKBACK entry proposes the exact same concrete fix three times running, the next session to touch that area should file the roadmap task itself rather than re-suggesting it a fourth time; this task existed only because a prior session finally did that.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-13 `interface-vision/t-136` — Kaizen from t-135 closed the gap outright: verifyKrClassCoverage.ts (kind_robots#2696) asserts every static kr-* class token used in a components/+pages/ template has a matching .kr-* rule, no ratchet/baseline since an undefined kr-* reference is never intentional. The PR's own comment-migration-contract check was red at review time from an unrelated live kindrobots.org 502 (kindrobots-unraid/t-018, confirmed via direct curl and one re-run reproducing the identical error) -- correctly triaged as not-this-PR's failure and merged anyway once every check touching the actual diff was green.
 - 2026-09-13 `interface-vision/t-135` — Four consecutive t-104 badge-migration slices (#2691-#2694, three different sessions) introduced and reused a CSS class name (kr-badge-accent-sm) that was never defined, because every check that passed on those PRs (TypeScript, eslint, layout-contract, the full Storybook/Narrative contract suite) type-checks templates and structure but never asserts that a referenced kr-* @apply target actually exists in tailwind.css -- so four real visual regressions (unstyled plain text instead of a badge) shipped to production invisibly. Caught only because a Reviewer pass grepped the CSS file directly instead of trusting green CI. Kaizen filed on the fix PR: add a cheap repo-wide check asserting every kr-* class token used in a class="..." attribute has a matching rule in tailwind.css, so the next missing-primitive slice fails fast in CI.
 - 2026-09-13 `kindrobots-unraid/t-017` — A recovered production incident should be closed on objective evidence (health endpoint + SSR check + the actual fix commit on kind_robots main) rather than left needs-human pending root-cause paperwork once the root cause is already known from a merged fix -- docs/state-reconciliation.md's 'Closing human gates safely' section and CLAUDE.md's session-end rule both say so explicitly. approved_by_human stays false per the t-014/t-015 precedent for this exact outage class; only Silas sets that field. Third occurrence of this outage class with kindrobots-unraid/t-016 (external health probe) still unclaimed -- worth prioritizing so a lucky scheduled sweep isn't the detection mechanism again.
-- 2026-09-12 `conductor/t-155` — Reused project_lifecycle.ordered_workable_slugs (the same helper check_priority_queue_starvation.py and next_ready_task.py already use) to sort audit_human_gates.py's report by priority-queue rank instead of writing new roadmap-walking logic -- confirms t-149's lesson generalizes: grep for the existing shared module before writing a new roadmap-ordering tool, and a report can be re-ordered by reusing pickup-order logic without touching what it detects.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-13T18:43:55Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-13T18:46:58Z_
