@@ -4112,7 +4112,7 @@ tasks:
 - id: t-136
   milestone: m6
   title: "Kaizen: CI check that every kr-* class used in templates has a matching tailwind.css rule"
-  status: review
+  status: done
   passes: 0
   stakes: reversible
   note: >-
@@ -4131,8 +4131,15 @@ tasks:
     script and into the existing CI workflow (ci.yml or
     layout-contract.yml) so a future missing-primitive slice fails fast
     instead of shipping unstyled markup silently.
+
+    Closeout: kind_robots#2696 merged (squash aee9765). comment-contract check was red on
+    this PR but is the kindrobots.org production 502 outage tracked at kindrobots-
+    unraid/t-018 (live API GET /api/bots -> 502), unrelated to this diff -- confirmed via
+    curl against kindrobots.org directly and a re-run of the failed job with the identical
+    error. All checks touching the actual change (TypeScript, layout-contract, GitGuardian,
+    full Storybook/Narrative contract suite) were green; merged squash.
   owner: worker
   claimed_by: claude-scheduled-2026-09-13T093200Z-iv-t136
   claimed_at: '2026-09-13T09:33:32Z'
-  updated: '2026-09-13T09:44:52Z'
+  updated: '2026-09-13T10:32:32Z'
   implementation_pr: 'silasfelinus/kind_robots#2696'
