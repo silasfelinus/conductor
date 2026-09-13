@@ -764,11 +764,11 @@ tasks:
 - id: t-034
   milestone: m7
   title: "UI: the Table -- storyboard slots, and the workspace hand taken over on /storybook"
-  status: ready
+  status: done
   passes: 0
   stakes: reversible
   depends_on: [t-029, t-030]
-  note: >
+  note: >-
     Part B1. Slots: Genre, Place, Hero (required);
     Company, Narrator, Shape, Thread, Treasures, Spark (optional/defaulted). The bottom
     workspace hand fans the deck for the active slot via a new `storybookCards` page-cards key
@@ -778,15 +778,30 @@ tasks:
     2026-09-12, after mockup round 1: the spec this waits on has been rewritten (docs/storymaker-redesign.md B0-B4). Two slots changed shape. NARRATOR is now a card dealt from real narrator Bots with a delivery dial on the placed card, not a radio row of five voices (t-042). SHAPE is now MODE -- open-ended, episodic, structured, taskmaster -- also a card, with length demoted to a settings dial (t-039, t-041). And B0 now draws the line Silas drew: creative choices are cards, while typed input (title, premise, objective), settings and actions stay ordinary controls. Round 1 failed by keeping the form and adding cards underneath it; the board and the hand are the page.
 
     2026-09-13, Silas: "I don''t know why anything is waiting on mockups. That was supposed to be a one-off to give some general direction, not a permanent requirement to lead to anything. we just want things functional at this point. we can tweak what it looks like afterwards. We should not be waiting for mockups (which you were already given) to complete anything moving forward on roadmaps." The gate this note carried was invented when m7 was filed and is removed. A mockup is DIRECTION, never a dependency: build the screen functionally on the engine that exists, and polish it in place afterwards. Everything above about slots, moves and albums is still the spec -- only the waiting was wrong.
-  updated: '2026-09-12T12:00:00Z'
+
+    2026-09-13: merged. components/storybook/storybook-table.vue -- eight slots (mode,
+    genre, place, hero, company, narrator, thread, treasures), each a 2:3 well that fills
+    with the chosen card's real artwork, and an in-page hand dealing the deck for the active
+    slot. Genre, place and hero are the only required cards. Cards are the flavour bits
+    only: title, spark/objective and the length dial are ordinary controls, and endless is a
+    length choice rather than a mode card. Narrator cards come from GET /api/narrators with
+    the delivery dial on the placed card. Decks are mapping functions in
+    utils/storybookTableDecks.ts rather than components, because narrative-ingredient-
+    card.vue already draws a NarrativeIngredientOption with its art. SCOPE CALL: the hand
+    renders in the page rather than taking over the global workspace hand -- that takeover
+    needs stores/helpers/modelCards.ts decks to carry live entity art, which they do not,
+    and it buys nothing functional. Filed as polish, not allowed to delay a working Table.
+    Guard: utils/scripts/verifyStorybookTable.mjs.
+  updated: '2026-09-13T11:58:28Z'
+  implementation_pr: 'silasfelinus/kind_robots#2699'
 - id: t-035
   milestone: m7
   title: "UI: the Reading -- one page per turn with options, a custom action, and the hero's cards in the hand"
-  status: ready
+  status: done
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-032]
-  note: >
+  note: >-
     Part B2. Scene art plate + short direct prose; tableau strip and
     turn pips; the three moves always visible together (option cards, "You ..." composer, the
     hero's Skill/Item cards fanned in the bottom hand). Axes stay hidden for genre decks; the
@@ -795,7 +810,20 @@ tasks:
     2026-09-12: open-ended mode has no turn budget, so the turn pips cannot read "3 of 8" in every mode -- show progress without an end count, and offer "bring this to an end" as the reader's own move (t-040). Structured mode is the only one that may show its ledger; every other mode shows prose consequences only.
 
     2026-09-13, Silas: "I don''t know why anything is waiting on mockups. That was supposed to be a one-off to give some general direction, not a permanent requirement to lead to anything. we just want things functional at this point. we can tweak what it looks like afterwards. We should not be waiting for mockups (which you were already given) to complete anything moving forward on roadmaps." The gate this note carried was invented when m7 was filed and is removed. A mockup is DIRECTION, never a dependency: build the screen functionally on the engine that exists, and polish it in place afterwards. Everything above about slots, moves and albums is still the spec -- only the waiting was wrong.
-  updated: '2026-09-12T12:00:00Z'
+
+    2026-09-13: merged with t-034 in the same PR -- a Table that opens a story with nowhere
+    to read it is not functional, which is what Silas asked for.
+    components/storybook/storybook-reading.vue: one page per turn with all three moves
+    visible together (option cards, a written move, the hero's Skill/Item cards), on
+    stores/storybookRunStore.ts. The turn pips only count toward a budget when there is one
+    -- an open-ended run shows progress with no end count and is offered 'bring this to an
+    end', gated on the server's readyToResolve rather than a local guess. The ledger renders
+    only where the server sent stats at all, which is structured mode alone. Taskmaster's
+    objective rides as its own field beside the prose, ready for t-046's accept step. The
+    store gained quest, art and applyProposal. TRANSITIONAL: the outgoing beat loop is
+    reachable at ?legacy=1 until t-037 deletes it and rewrites the guards that pin it.
+  updated: '2026-09-13T11:58:31Z'
+  implementation_pr: 'silasfelinus/kind_robots#2699'
 - id: t-036
   milestone: m7
   title: "UI: the Ending reveal and the Collection album"
