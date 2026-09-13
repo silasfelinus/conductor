@@ -874,3 +874,26 @@ tasks:
   claimed_at: '2026-09-13T15:34:55Z'
   updated: '2026-09-13T15:41:31Z'
   implementation_pr: 'silasfelinus/conductor#4264'
+
+- id: t-042
+  milestone: m4
+  title: "Kaizen: make art_quality.py's load_stats() log once when Pillow is unavailable, instead of silently returning None"
+  status: ready
+  stakes: reversible
+  owner: null
+  note: >-
+    Kaizen from t-041 (2026-09-13, silasfelinus/conductor#4264): load_stats() in
+    art_quality.py catches ImportError on `from PIL import Image` and returns None
+    with no side effect, which is the correct optional-dependency pattern for a
+    library function -- but it means a missing-Pillow sandbox is only discoverable
+    downstream, through whatever reason string the caller happens to construct
+    from a None result (e.g. mechanical_check()'s "PIL unavailable" string, which
+    t-040 had to special-case to add the actionable pip3 install Pillow fix). DO:
+    have load_stats() log a single warning (once per process, e.g. via a module-
+    level flag so a batch run doesn't spam it) the first time it hits this
+    ImportError, so a missing-Pillow environment is obvious from the first
+    mechanical-check failure in any coloring-book pipeline script, not just the
+    ones that happen to string-match "PIL unavailable" in their own error
+    handling. Do not change load_stats()'s return contract (still None on
+    ImportError) or add a hard dependency on Pillow.
+  updated: '2026-09-13T15:50:00Z'
