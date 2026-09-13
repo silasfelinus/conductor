@@ -5499,7 +5499,7 @@ tasks:
 - id: t-151
   milestone: m2
   title: Guard against recurring-task note fields growing large enough to blow the Kind-Robots projection payload limit
-  status: claimed
+  status: done
   stakes: reversible
   passes: 0
   note: >-
@@ -5535,6 +5535,26 @@ tasks:
     pattern (archive file + short pointer note) as the fix, not just flag the symptom. Advisory
     only -- never auto-truncates a note itself, since deciding what's safe to move to an archive
     file needs the same judgment this session applied to t-104.
+
+    DONE 2026-09-13 (scheduled Conductor session): built option (b), the periodic-sweep shape
+    this note itself proposed as an alternative to a CI/pre-merge check. `scripts/check_roadmap_note_size.py`
+    mirrors `check_milestone_status_drift.py`'s structure exactly (same project-overrides.yaml
+    active-project filtering, same --json/--include-inactive flags, same advisory exit-1-on-findings
+    contract -- never blocks a merge or a task claim, never auto-truncates a note). Default threshold
+    50,000 bytes (the low end of this note's own 50-100KB suggestion), configurable via
+    --threshold-bytes. Findings are sorted largest-first and each points at this task's own
+    T104-HISTORY.md archive-file + short-pointer-note pattern as the fix, not just the symptom.
+    Ran against the live repo: 2 findings today (model-builder/t-029 at 118,467 bytes,
+    storybook/t-010 at 63,878 bytes) -- both already known from this note's own filing-time sweep,
+    neither new. interface-vision/t-104 itself no longer appears, confirming its PR #4117 archive
+    trim is still holding. 9 new unit tests in tests/test_check_roadmap_note_size.py (byte-counting
+    across string/list/None note shapes including non-ASCII, over/under-threshold, custom threshold,
+    sort order, paused-project exclusion + --include-inactive override, unparseable-roadmap handling,
+    render() output). Full pytest suite green (1851 passed, 1 skipped, unrelated to this change).
+    Not wired into any CI workflow -- matching every other check_*_drift.py-style script in this
+    repo (check_milestone_status_drift.py, check_priority_queue_starvation.py, etc.), none of which
+    are CI-invoked; they're run by sessions as part of the documented CLAUDE.md sweep. Added to that
+    sweep is a follow-up a future session/Silas can make, not scoped into this task.
   updated: '2026-09-13T18:43:24Z'
   owner: worker
   claimed_by: claude-scheduled-20260913T184323Z-conductor-t151
