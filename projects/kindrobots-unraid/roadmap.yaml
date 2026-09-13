@@ -463,5 +463,40 @@ tasks:
     occurrence of this outage class, so worth prioritizing.
   updated: '2026-09-13T00:32:59Z'
 
+- id: t-018
+  milestone: m2
+  title: 'PRODUCTION INCIDENT: kindrobots.org returning 502 Bad Gateway as of ~09:29 UTC on 2026-09-13'
+  status: needs-human
+  gate_human: true
+  owner: null
+  passes: 0
+  stakes: irreversible
+  soft_gate: false
+  note: >-
+    FOR SILAS: `https://kindrobots.org/` and `https://kindrobots.org/api/health/database`
+    both returned a plain `HTTP/2 502` ("Bad Gateway", 11-byte body, no JSON) at this
+    session's sweep, confirmed on 6 separate curls spread over roughly 90 seconds
+    (09:29:53 UTC through the final recheck) -- a sustained outage, not a single blip.
+    This is the 502-Bad-Gateway signature (matching t-014 2026-09-04 and t-015 2026-09-08),
+    NOT the 503-schema-drift signature t-017 just closed as recovered earlier today
+    (2026-09-13T00:32 UTC) -- so this is a fresh, fourth occurrence of the outage class,
+    not a recurrence of t-017's migration issue. `check_project_scaffold_drift.py` and
+    `check_live_facet_coverage.py` both failed outright on the same 502 this session
+    (every Kind Robots API read attempted came back 502).
+
+    TO APPROVE / TO FIX: this needs direct Alexandria/Unraid access this sandbox does not
+    have. Per the t-014/t-015 precedent, the leading (still unconfirmed) theory is a
+    container-recreate-without-restart on auto-deploy; check the Unraid User Scripts log
+    and `docker ps` for the KindRobots container's actual state, and use
+    `cd /mnt/user/appdata/kind_robots && bash scripts/deploy-unraid.sh` (the guarded
+    migration-safe path) rather than a bare Force Update if a restart is needed. Once
+    `https://kindrobots.org/api/health/database` returns 200 again, set `status: done`
+    here (`approved_by_human` may stay `false` per the t-014/t-015 recovery-only precedent
+    if no live policy decision was made) -- t-016 (external health probe/alert, still
+    `ready`/unclaimed) remains the standing prevention follow-on; this is its fourth
+    unrelated occurrence (t-014, t-015, t-017, this one) sitting undetected until a
+    scheduled sweep happened to notice, worth prioritizing.
+  updated: '2026-09-13T09:31:00Z'
+
 goal: Run Kind Robots reliably on the Unraid/home infrastructure, with deployment, storage, networking, GPU services,
   and recovery procedures kept reproducible.
