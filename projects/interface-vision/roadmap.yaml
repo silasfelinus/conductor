@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -3345,8 +3345,20 @@ tasks:
     for the next bounded slice. Kaizen for the next slice: run a fresh full-repo class-
     frequency survey outside all now-closed families (including these two new ones) to pick
     slice 254's target.
-  updated: '2026-09-13T03:30:23Z'
-  implementation_pr: 'silasfelinus/kind_robots#2688'
+
+    Slice 254 (this session): fresh full-repo class-frequency survey turned up the sizeless
+    `badge badge-warning`/`badge badge-secondary` (no size modifier) as the next well-
+    bounded pool -- both already have -sm/-xs sized siblings. Added .kr-badge-warning/.kr-
+    badge-secondary to tailwind.css and extended kr_badge_codemod.py, migrating 9 kr-badge-
+    warning occurrences across 8 files and 7 kr-badge-secondary occurrences across 7 files
+    (exact-match only, same first-pass convention kr-badge-ghost/kr-badge-outline used).
+    Left components/ui/ui-gallery.vue's showcase row untouched per precedent. Incidentally
+    caught two newly-drifted badge-primary-sm/-xs occurrences under already-established
+    primitives. eslint/vue-tsc/layout-contract/prettier all verified clean against pre-
+    existing baselines (git-stash confirmed). Opened silasfelinus/kind_robots#2690; awaiting
+    CI.
+  updated: '2026-09-13T03:38:11Z'
+  implementation_pr: 'silasfelinus/kind_robots#2690'
   retry_context: ''
   owner: worker
   claimed_by: claude-scheduled-20260913T033022Z-iv-t104-slice254
