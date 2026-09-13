@@ -4112,7 +4112,7 @@ tasks:
 - id: t-136
   milestone: m6
   title: "Kaizen: CI check that every kr-* class used in templates has a matching tailwind.css rule"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   note: >-
@@ -4131,7 +4131,8 @@ tasks:
     script and into the existing CI workflow (ci.yml or
     layout-contract.yml) so a future missing-primitive slice fails fast
     instead of shipping unstyled markup silently.
-  owner: reviewer
+  owner: worker
   claimed_by: claude-scheduled-2026-09-13T093200Z-iv-t136
   claimed_at: '2026-09-13T09:33:32Z'
-  updated: '2026-09-13T09:33:32Z'
+  updated: '2026-09-13T09:44:52Z'
+  implementation_pr: 'silasfelinus/kind_robots#2696'
