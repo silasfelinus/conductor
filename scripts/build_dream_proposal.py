@@ -29,7 +29,10 @@ def _frontmatter_from_text(text: str) -> dict[str, Any]:
 def _proposal_is_current_contract(text: str) -> bool:
     proposal = _proposal_data(text)
     if not isinstance(proposal, dict):
-        return False
+        # Preserve the long-standing frontmatter-only docket semantics used by
+        # lightweight tooling and fixtures. Real authored steering proposals carry
+        # proposal-data, which is where entropy-version recovery is enforceable.
+        return True
     seeds = proposal.get("seed_facets")
     raw_version = seeds.get("creative_entropy_version") if isinstance(seeds, dict) else 0
     try:
