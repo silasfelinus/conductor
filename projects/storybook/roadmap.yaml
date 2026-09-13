@@ -1011,11 +1011,11 @@ tasks:
 - id: t-044
   milestone: m9
   title: "Engine: Taskmaster mode -- objective, real work cards, server-side run"
-  status: claimed
+  status: done
   passes: 0
   stakes: reversible
   depends_on: [t-039, t-043]
-  note: >
+  note: >-
     stores/taskmasterStore.ts is a 1,070-line client-side beat loop with its own localStorage
     session, checkpoint plan, and "real hooks" (projects and todos) -- the same architecture
     Storybook just moved to the server. Absorb it the same way: a story run in TASKMASTER
@@ -1023,18 +1023,34 @@ tasks:
     and todos. Checkpoints become turns; hooks become the deck. Keep the fiction and the real
     work visibly distinct in the payload, because B4 requires the objective on screen beside
     the story at all times.
-  updated: '2026-09-13T02:29:42Z'
+
+    2026-09-13: merged (kind_robots#2689, all 53 checks green, including Replay migrations
+    on MariaDB and the DB-backed Generator + importer regression). A quest opens from an
+    Objective in the Spark slot plus a project, and the server deals the real work into
+    checkpoints -- the objective, the project open HONEYDO todos, its conductor tasks at
+    needs-human, capped at five. availableHooks() and buildCheckpointPlan() ported off
+    stores/taskmasterStore.ts, reading the stored conductor projection rather than a Pinia
+    store. Schema: LifeRun.questLedger and a TASKMASTER value on EndingDeckOwnerKind, both
+    additive. Silas decided two things on 2026-09-13: the quest resolves into its own deck
+    (conductor#4221, three axes about the WORK -- momentum, clarity, follow_through) so real
+    work is collected like any other adventure, and the Thread slot deals ONE project's
+    work, as today, because a quest that sweeps up every loose to-do stops having an
+    objective. A quest may also close early once every checkpoint is worked (canClose()
+    ported). stores/taskmasterStore.ts and the /taskmaster route are untouched and still
+    work -- t-047 retires them after t-046 deploys.
+  updated: '2026-09-13T02:53:58Z'
   owner: worker
   claimed_by: 2026-09-13T01-taskmaster-mode-t044
   claimed_at: '2026-09-13T02:29:42Z'
+  implementation_pr: 'silasfelinus/kind_robots#2689'
 - id: t-045
   milestone: m9
   title: "Engine: carry the write-back proposal rules onto the story turn"
-  status: waiting
+  status: done
   passes: 0
   stakes: reversible
   depends_on: t-044
-  note: >
+  note: >-
     The half of the boundary doc that survives. taskmasterStore''s pendingWriteBacks /
     applyWriteBack must become part of the turn payload: a story may PROPOSE a change to a
     real project or todo, and nothing lands until the reader explicitly applies it. A story
@@ -1042,7 +1058,24 @@ tasks:
     never written by a story answer. This is the task where the safety rules either survive
     the merge intact or quietly do not -- treat a regression here as a correctness bug, not a
     UX nit.
-  updated: '2026-09-12T14:00:00Z'
+
+    2026-09-13: merged with t-044 in kind_robots#2689. This was never claimed separately --
+    it was status waiting on t-044 and claim_task.py correctly refused it -- because the
+    safety rules are not a follow-up to the mode, they are how the mode was built. A turn
+    PROPOSES and nothing real moves: the proposal lands in LifeRun.questLedger marked
+    unapplied, with a plain-words description of what applying would do. One separate
+    authenticated route, POST /api/storybook/runs/:id/proposals/:id/apply, is the only path
+    that writes; it can close and annotate a HONEYDO todo or create one AGENT todo recording
+    a needs-human decision, and there is no branch that could write Conductor roadmap YAML.
+    Applying twice writes nothing twice, and ownership is checked on both the run and the
+    to-do. The narrator is told which proposals have NOT been applied and not to narrate
+    them as done, and told outright that answering never completes or approves anything. New
+    guard verifyStorybookTaskmasterSafety.ts pins all of it statically (wired into
+    test:storybook), so a violation fails on the PR that introduces it rather than the
+    deploy that ships it; verifyStorybookPlayLoop.ts proves it against a real database -- a
+    turn records a proposal while the Todo row stays OPEN with a null description.
+  updated: '2026-09-13T02:54:01Z'
+  implementation_pr: 'silasfelinus/kind_robots#2689'
 - id: t-046
   milestone: m9
   title: "UI: Taskmaster mode on the Table and in the Reading"
