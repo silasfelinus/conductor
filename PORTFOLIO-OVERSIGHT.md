@@ -1,14 +1,14 @@
 # Conductor Portfolio Oversight
 
-Generated: `2026-09-13T12:00:53.139292+00:00`
+Generated: `2026-09-13T16:26:41.740308+00:00`
 
-Overall status: **action-needed**
+Overall status: **semantic-review-due**
 
 This is a deterministic sensor. For semantic roadmap/progress intent review, follow `projects/conductor/OVERSIGHT-AGENT.md`.
 
 ## OpenAI scheduled-agent heartbeat
 
-- Latest visible OpenAI scheduled-Agent activity: `2026-09-13T11:32:32+00:00` (0.47h ago; overdue at 6.0h).
+- Latest visible OpenAI scheduled-Agent activity: `2026-09-13T16:22:01+00:00` (0.08h ago; overdue at 6.0h).
 - Overdue: **false**
 - Note: OpenAI coordination activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit.
 
@@ -19,10 +19,8 @@ This is a deterministic sensor. For semantic roadmap/progress intent review, fol
 
 ## Roadmap/CONTROL structural audit
 
-- Errors: **2**
+- Errors: **0**
 - Warnings: **7**
-  - **READY_WITH_UNMET_DEPS** — `storybook` / `t-035`: Ready task has unmet dependencies: t-034.
-  - **READY_WITH_UNMET_DEPS** — `storybook` / `t-036`: Ready task has unmet dependencies: t-035.
 - Warning details remain in `ROADMAP-AUDIT.md`; errors above take precedence for this sensor.
 
 ## Semantic intent review
