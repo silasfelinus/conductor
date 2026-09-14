@@ -4212,3 +4212,55 @@ tasks:
   claimed_at: '2026-09-13T09:33:32Z'
   updated: '2026-09-13T10:32:32Z'
   implementation_pr: 'silasfelinus/kind_robots#2696'
+
+- id: t-137
+  milestone: m5
+  title: Ratchet Prettier formatting onto the front end instead of one repo-wide reformat
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  recurring: true
+  note: >-
+    Silas, 2026-09-14, on being offered a repo-wide format pass as its own PR: "this strikes
+    me as something that can do double duty ... this feels like something that should be
+    wrapped into that agent task list." Filed here rather than run as a one-off, because
+    measuring it first showed a one-off is the wrong shape.
+
+    THE MEASUREMENT (2026-09-14): `npx prettier --check .` reports 1178 files, not the
+    ~33 a single task touches -- 789 .ts, 168 .vue, 123 .json, 44 .mjs, 42 .md, concentrated
+    in server/ (288), utils/ (277), components/ (159), prisma/ (119), config/ (116). A single
+    reformat PR would be a 1178-file diff that conflicts with every in-flight branch, and
+    t-104 alone is grinding 270+ slices right now. It would also be unreviewable: a real
+    behaviour change hidden in it would be invisible.
+
+    FIRST MOVE, INDEPENDENTLY WORTH DOING: there is no `.prettierignore` at all, so
+    `prettier --check .` is scanning machine-generated and data files nobody should ever
+    hand-format -- prisma/generated (118 files, the checked-in Prisma client) and config/
+    (116 files, art-coverage and comment-draft JSON batches). That is ~20% of the count and
+    pure noise. Add a `.prettierignore` covering generated clients, data batches, and any
+    vendored tree, then re-measure. The remaining number is the real backlog.
+
+    THEN RATCHET IT, the way this project already does everything else. utils/scripts/
+    ratchetBaseline.ts exists precisely for this and already has four consumers
+    (verifyLayoutContract, verifyLintRatchet, verifyComponentReachability,
+    verifyRouteGalleryContract) -- this is the fifth, not new machinery. Bucket by directory
+    or by extension rather than one total, for the same reason verifyLintRatchet buckets by
+    rule: with a single number, formatting twenty files silently pays for twenty newly
+    unformatted ones. A bucket may only ever shrink. Wire it as `test:prettier-ratchet`
+    beside the existing ratchets.
+
+    HOW THE BACKLOG DRAINS: not as its own grind. Every other slice in this project already
+    edits files; each one formats the files it was already touching and re-records the
+    baseline downward. That is why this is `recurring: true` and why it costs almost nothing
+    -- the work rides along with work already happening, and the ratchet makes the direction
+    one-way. Do NOT bulk-format untouched files to make the number move faster; a formatting
+    diff on a file no task is otherwise editing is exactly the review-hostile change this
+    task exists to avoid.
+
+    WHY IT MATTERS BEYOND TIDINESS: package.json already defines `lint:prettier`
+    (`prettier --check .`) as half of `npm run lint`, but no workflow runs it, so the script
+    is decorative and the drift is unbounded. This makes the declared standard enforceable
+    without a flag day. Never add `--write` to CI, and never let the ratchet bypass a genuine
+    formatting regression by re-recording upward.
+  claimed_by: null
