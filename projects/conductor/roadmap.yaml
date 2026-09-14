@@ -5856,10 +5856,10 @@ tasks:
 - id: t-158
   milestone: m2
   title: Offload done-task notes to per-project HISTORY.md and enforce the size ceiling
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  owner: null
+  owner: worker
   note: >-
     Filed 2026-09-14 at Silas's direction after a portfolio size assessment. URGENT: this has a
     deadline, not just a cost.
@@ -5943,7 +5943,9 @@ tasks:
     pytest tests/test_sync_kind_robots_projection.py ; and measure the payload before and after
     with: python3 -c "import json,pathlib; print(len(json.dumps({'roadmaps':{p.parent.name:
     p.read_text() for p in pathlib.Path('projects').glob('*/roadmap.yaml')}})))"
-  updated: '2026-09-14T10:30:00Z'
+  updated: '2026-09-14T11:43:27Z'
+  claimed_by: claude-20260914T1030Z-cd-t158
+  claimed_at: '2026-09-14T11:43:27Z'
 - id: t-159
   milestone: m2
   title: Rotate root TALKBACK.md into monthly archives
