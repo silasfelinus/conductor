@@ -674,3 +674,78 @@ def test_fetch_image_b64_raises_when_image_path_fallback_is_also_empty(monkeypat
 
     with pytest.raises(RuntimeError, match="imagePath fallback was empty"):
         consumer.fetch_image_b64(23966)
+
+
+def test_delivery_identity_reads_repo_and_path():
+    assert consumer.delivery_identity(
+        {"targetRepo": "silasfelinus/Conductor", "imagePath": "projects\\a\\b.webp"}
+    ) == ("silasfelinus/conductor", "projects/a/b.webp")
+
+
+def test_delivery_identity_none_without_a_static_destination():
+    """An in-app render lands nowhere on disk, so it can never be a duplicate
+    delivery and must not be collapsed with one."""
+    assert consumer.delivery_identity({}) is None
+    assert consumer.delivery_identity({"targetRepo": "silasfelinus/conductor"}) is None
+    assert consumer.delivery_identity({"imagePath": "projects/a.webp"}) is None
+
+
+def test_in_flight_delivery_targets_collects_pending_and_running(monkeypatch):
+    """conductor/t-162: the guard that stops a batch being re-queued every run."""
+    monkeypatch.setattr(consumer, "KR_API_TOKEN", "test-token")
+    pages = {
+        "PENDING": [{"id": 1, "payload": {"targetRepo": "r", "imagePath": "a.webp"}}],
+        "RUNNING": [{"id": 2, "payload": {"targetRepo": "r", "imagePath": "b.webp"}}],
+    }
+
+    def fake_http_json(method, url, body=None, timeout=60):
+        status = "RUNNING" if "status=RUNNING" in url else "PENDING"
+        return 200, {
+            "success": True,
+            "data": {"jobs": pages[status], "pagination": {"hasNextPage": False}},
+        }
+
+    monkeypatch.setattr(consumer, "http_json", fake_http_json)
+    assert consumer.in_flight_delivery_targets() == {("r", "a.webp"): 1, ("r", "b.webp"): 2}
+
+
+def test_in_flight_delivery_targets_follows_pagination(monkeypatch):
+    """A single page must not be mistaken for the whole queue -- the real backlog
+    that triggered this was 78 jobs deep behind a 200-row page size."""
+    monkeypatch.setattr(consumer, "KR_API_TOKEN", "test-token")
+    seen_pages = []
+
+    def fake_http_json(method, url, body=None, timeout=60):
+        if "status=RUNNING" in url:
+            return 200, {"success": True, "data": {"jobs": [], "pagination": {}}}
+        page = int(url.split("page=")[1])
+        seen_pages.append(page)
+        return 200, {
+            "success": True,
+            "data": {
+                "jobs": [{"id": page, "payload": {"targetRepo": "r", "imagePath": f"{page}.webp"}}],
+                "pagination": {"hasNextPage": page < 3},
+            },
+        }
+
+    monkeypatch.setattr(consumer, "http_json", fake_http_json)
+    targets = consumer.in_flight_delivery_targets()
+    assert seen_pages == [1, 2, 3]
+    assert targets == {("r", "1.webp"): 1, ("r", "2.webp"): 2, ("r", "3.webp"): 3}
+
+
+def test_in_flight_delivery_targets_returns_none_when_unreadable(monkeypatch):
+    """Fail open: a hiccup must fall back to enqueueing, never to skipping work."""
+    monkeypatch.setattr(consumer, "KR_API_TOKEN", "test-token")
+
+    def boom(*a, **k):
+        raise RuntimeError("connection reset")
+
+    monkeypatch.setattr(consumer, "http_json", boom)
+    assert consumer.in_flight_delivery_targets() is None
+
+    monkeypatch.setattr(consumer, "http_json", lambda *a, **k: (500, {"success": False}))
+    assert consumer.in_flight_delivery_targets() is None
+
+    monkeypatch.setattr(consumer, "KR_API_TOKEN", "")
+    assert consumer.in_flight_delivery_targets() is None
