@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-14T14:56:51Z
+Generated: 2026-09-14T15:00:57Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **956**
-- Outcomes: blocked: 16, cancelled: 1, done: 939
+- Closed tasks recorded: **957**
+- Outcomes: blocked: 16, cancelled: 1, done: 940
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -40,7 +40,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | interface-vision | 135 | 100% |
 | kapowarr | 52 | 100% |
 | kind-economy | 10 | 100% |
-| kind-robots | 59 | 98% |
+| kind-robots | 60 | 98% |
 | kindrobots-unraid | 9 | 100% |
 | lora-ingestion | 1 | 100% |
 | mandarin-tutor | 11 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 939 | 99% |
+| software | 940 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-14 `kind-robots/t-098` — Session-end reconciliation caught this: implementation PR kind_robots#2727 merged over 2 hours before this sweep ran, but the roadmap task was left at status: review with a malformed implementation_pr field (a raw https:// URL instead of the owner/repo#N format check_pr_merged_drift.py's authoritative pass expects) -- so the drift check's title-text fallback caught it instead. Whatever closed the implementing PR didn't finish the roadmap close-out step in the same run. Reconciling promptly (same session that ran the drift check, not deferred) keeps status: review tasks from accumulating as false 'awaiting review' signals for a PR that already landed.
 - 2026-09-14 `coloring-book/t-044` — art_quality.py's 'color' variant gate checked blank/degenerate, noise, and aspect but had no saturation floor at all -- a structurally valid, non-blank, non-noise render that came back essentially monochrome (mean_saturation ~0.01-0.02) silently passed every time, and had already been caught by hand three separate times across two sessions (mr-006/mr-008 on 2026-09-07, mr-025 on 2026-09-09) before mr-008 hit it a fourth time this cycle. Each prior catch documented the defect in a proposals.yaml note but nobody closed the loop by asking whether the mechanical gate itself should catch it -- the same shape as t-039's noise-detector gap, just for a different failure mode. When a defect gets manually caught 2+ times on the same objective, mechanically-measurable signal, that's the trigger to add a gate for it rather than keep relying on creative review to notice again; calibrating the threshold against the full existing corpus (115 real files, not just the one bad example) before picking a number is what kept it from being a guess.
 - 2026-09-14 `text-generation/t-006` — A month-old design brief's file list (BRIEF.md's five confirmed chatStore.streamResponse consumers) had already drifted from the current tree -- one named file no longer existed, and two of the remaining four already had the exact fix this task was scoped to add, done incidentally by earlier unrelated work. A subagent sweep of current source (not the brief's own memory) caught both before writing any diff. Also: 'wire provider selection into the product surfaces' sounds like it could mean migrating chat UI onto the new unified /api/generate/text endpoint (the more impressive-looking fix) -- the brief's own 'explicitly out of scope' section said otherwise, and trusting that over the more expansive-sounding task title avoided a real scope violation.
 - 2026-09-14 `kind-robots/t-078` — A remaining-polish list of 4 items had 2 already resolved by earlier, unrelated commits (home-dream-hero.vue's cast-row chevrons; Send-to-agent already answers-and-releases) -- checking each item against the CURRENT codebase before implementing anything caught this and avoided duplicate/no-op work on two of the four. The real bug in the other two (home-attention.vue's submission receipt) was a timing bug invisible from reading the template alone: the confirmation message and the row it needed to survive were removed from the DOM on the exact same reactive tick, so it only surfaces by tracing submitTaskAction's optimistic store update against the v-if that gates the whole message. The one item that didn't fit the task's own scope (whether the home showcase should server-render) was split into kind-robots/t-102 rather than attempted blind -- it touches the whole page's data flow, not one component, and carries hydration-mismatch risk this sandbox has no way to visually verify pre-merge; deciding NOT to convert it now, and recording why, is itself the 'normal technical decision' the task's own note granted latitude for.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-14 `interface-vision/t-133` — Real PR traffic touching *.sh files was too sparse to answer the task's own question from CI history alone (only one recent PR had an actual .sh diff, and it produced zero shellcheck findings) -- ran shellcheck directly against the full current *.sh corpus (12 scripts) as a stand-in evidence base instead of waiting indefinitely for more PR traffic. Only SC2086 had multiple true-positive hits with zero false positives; the other codes seen (SC2207/SC2010/SC2209/SC1003) each had a single occurrence and one (SC2209) was a confirmed false positive on this repo's TOOL=name assignment style, confirming the task's own caution against flipping the whole pass to blocking at once.
 - 2026-09-13 `kind-robots/t-096` — The task's original filing (grep of 'return errorHandler(error)') undercounted the real call-site pattern -- most of the codebase actually writes 'const handled = errorHandler(error)' then a separate status line, so the literal grep matched only 19 of 470 real call sites and the filing concluded almost nothing was fixed (8/432) when in fact 429/470 already were. Re-derive the live count with a broader pattern (any errorHandler( call, cross-referenced against status-setting patterns) before trusting a stale filing's scope estimate, especially for a task that's sat open a couple of days -- the codebase moves. Also found and fixed a second, coupled bug while auditing: several routes called errorHandler() with a wrapper object ({error, context, statusCode}) instead of the actual Error, which errorHandler() doesn't recognize, silently discarding the intended status and message even in the JSON body -- worth checking call-site *shape*, not just call-site *presence*, when fixing a suspected systemic misuse.
 - 2026-09-13 `coloring-book/t-043` — t-039's second finding (quality guard blind to noise on the color variant) sat unaddressed in a task note for two days because it was independent of the hard relay-access gate blocking the rest of that task -- worth scanning needs-human/soft_gate notes for an already-specified, self-contained fix like this rather than treating the whole task as blocked. The fix itself needed no new dependency: a spatial-autocorrelation ratio computed from pixels PIL already samples, verified against real random noise (hf_ratio 0.98) and real structured images (gradient 0.0001, blurred texture 0.047) before picking the threshold, not just the selftest's synthetic blocks.
-- 2026-09-13 `conductor/t-151` — Built the advisory periodic-sweep guard (option (b)) the filing task itself proposed, mirroring check_milestone_status_drift.py's structure exactly (same overrides-filtering, --json/--include-inactive flags, exit-1-on-findings-only contract) rather than inventing a new shape. Running it against the live repo immediately validated the fix: both findings (model-builder/t-029, storybook/t-010) were already known from the filing session's ad hoc sweep, and interface-vision/t-104 -- the task whose 395KB note prompted this -- no longer appears, confirming its T104-HISTORY.md archive trim is still holding months later.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-14T14:56:51Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-14T15:00:57Z_
