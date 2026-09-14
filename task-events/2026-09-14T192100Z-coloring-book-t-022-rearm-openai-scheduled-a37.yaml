@@ -1,0 +1,8 @@
+version: 1
+project: coloring-book
+task: t-022
+operation: rearm
+session: openai-scheduled-2026-09-14T191530Z-coloring-book-t022-a37
+updated: '2026-09-14T19:21:00Z'
+note: >-
+  PROGRESS (OpenAI scheduled connector-only production triage, 2026-09-14): after verifying the current claim and the cycle-8 boundary, audited the first two rejected Hollywood Recast slots rather than blindly submitting renders without KR runtime access. hwr-002 is not a prompt-authoring gap: its canonical prompt already explicitly says "plus-size South Asian screen diva", so its prior slender render is a rendering-fidelity miss and should be retried when a runtime-capable cycle can submit/review it. hwr-005 does contain an actionable prompt contradiction: it asks for a "flickering hotel sign" while also requiring "no readable lettering"; the rejected render predictably produced a large readable HOTEL marquee. Next runtime/file-edit-capable production slice should rewrite that scene anchor as an abstract unlettered neon lodging sign before rerendering, then continue through the remaining Hollywood Recast rejection backlog. No ArtJobs were submitted and no duplicate generation was created in this connector-only cycle.
