@@ -627,7 +627,7 @@ tasks:
 - id: t-021
   milestone: m4
   title: 'ComfyUI render box down again: CLIPTextEncode "hostbuf_file_reader_read failed" across every project'
-  status: needs-human
+  status: done
   soft_gate: true
   owner: null
   passes: 0
@@ -685,7 +685,22 @@ tasks:
     truly recovered incident (a render completed after the last hostbuf failure) from one that
     merely aged out of the old 2h alert window, so the hourly sentinel will stop going quiet on
     an incident that never actually resolved.
-  updated: '2026-09-14T08:30:52Z'
+
+    RECOVERED (scheduled Conductor session, 2026-09-14T10:29Z): render box confirmed back up
+    -- check_render_box.py exit 0 ("render box UP ... Engine heartbeat: Comfy healthy 0.8
+    minutes ago"), and check_hostbuf_failure.py independently confirmed genuine recovery (a
+    real DONE render at 2026-09-14T10:28:49Z landed after the latest hostbuf failure at
+    2026-09-14T08:35:46Z, not just an aged-out alert window). Closing per this task's own
+    stated recovery bar ("confirm with check_render_box.py, should exit 0") and the state-
+    reconciliation policy that an unknown root cause does not keep a recovered incident
+    open. Root cause is NOT confirmed fixed -- this is the third recurrence of the same
+    disk13/cable hostbuf signature (ai-art-academy/t-067/t-068 first fixed it, t-077/t-078
+    caught two recurrences ~24h apart each) and the possible ComfyUI local-path software
+    contributor documented in this note (Ferngrotto extra_model_paths.yaml) has not been
+    confirmed applied or ruled out either. If it recurs again, re-open a fresh task rather
+    than reusing this one, and check both the physical disk13/cable path and the Ferngrotto
+    path-mapping fix before assuming hardware alone.
+  updated: '2026-09-14T10:29:54Z'
 
 goal: Run Kind Robots reliably on the Unraid/home infrastructure, with deployment, storage, networking, GPU services,
   and recovery procedures kept reproducible.
