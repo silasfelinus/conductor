@@ -1962,3 +1962,47 @@ project finished; looks like it was never implemented.
    fixes it.
 
 Re-arming to `ready` (recurring), releasing the claim.
+
+---
+
+## 2026-09-14 (scheduled Conductor session, cycle 3) — rejected-slot audit across all three books
+
+Verified render box status again (`check_render_box.py`): still DOWN (`kindrobots-unraid/t-021`
+unchanged, hardware fault). No live renders possible this cycle. Did not request or re-request
+anything.
+
+Before picking another prompt-revision slice (the natural next step per cycle 2's notes), audited
+every remaining rejected slot's *current* prompt text across all three books against its own
+rejection reasoning, to check whether cycle 2's "prompt tweak" fix actually generalizes:
+
+- **Monster Recast** (10 remaining: mr-017, mr-019, mr-021, mr-026, mr-027, mr-028, mr-030,
+  mr-031, mr-032, mr-group-001) — in every case, `art-modeler-request.yaml`'s current prompt
+  *already* states the missing element explicitly and often with a CRITICAL/REQUIRED marker
+  (mr-017's mandibles, mr-019's ratlike/skeletal body, mr-021's literal invisibility, mr-026's
+  shadow-vs-body contrast, etc.). Unlike mr-001/mr-013/mr-023 (genuinely underspecified prompts
+  where sharper language was the real fix), these renders failed to follow language that was
+  already unambiguous.
+- **Hollywood Recast** (16 rejected slots, hwr-002 through hwr-034) — same pattern: casting/body
+  requirements ("plus-size", "fat figure", "six graceful hands", "shaved head", "diverse ages and
+  bodies") are already named explicitly in each prompt; the renders substituted generic/glamorous
+  defaults instead.
+- **Kind Robots** (8 rejected slots) — same pattern, plus a distinct "no text" sub-case (kr-006,
+  kr-007, kr-035: readable signage/music-note glyphs rendering despite an explicit "no text"
+  instruction) — a well-known diffusion failure mode that prompt wording alone rarely fixes
+  reliably either.
+
+**Conclusion:** the easy slice is done (cycle 2). The remaining ~34 rejected slots across all
+three books are not a prompt-authoring gap — they're a rendering-fidelity problem: the model is
+not reliably following already-explicit, already-specific instructions for casting/body-type/
+composition details. Rewriting these prompts again without a different lever (regional/inpainted
+conditioning, a stronger model, breaking the composition into fewer simultaneous demands, or
+accepting a simpler alternate concept for the hardest slots) would be guessing, not a verified
+fix — and with the render box down there's no way to test a guess this cycle regardless. Not
+touching these prompts this session. Re-arming `ready` (recurring), releasing the claim.
+
+**For the next pass:** once `kindrobots-unraid/t-021` clears, the actionable step is still to
+fire the three already-revised Monster Recast renders (mr-001, mr-013, mr-023) and re-review —
+that's verified, non-speculative work. Beyond that, the remaining rejected-slot backlog across
+all three books needs a judgment call above a routine prompt-revision slice (a different
+generation approach, or accepting simpler concepts for the hardest few) rather than more blind
+prompt edits — worth a note to Silas if it recurs unresolved for several more cycles.
