@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-13T14:27:36.465302+00:00",
+  "generated_at": "2026-09-14T08:22:27.811879+00:00",
   "summary": {
     "roadmaps": 52,
-    "active_projects": 21,
+    "active_projects": 20,
     "continuous_projects": 2,
-    "tasks": 1478,
-    "ready": 48,
+    "tasks": 1485,
+    "ready": 44,
     "waiting": 51,
-    "needs_human": 34,
+    "needs_human": 35,
     "in_progress": 1,
-    "done": 1328,
+    "done": 1338,
     "errors": 0,
-    "warnings": 7,
+    "warnings": 6,
     "info": 20
   },
   "projects": [
@@ -63,19 +63,18 @@
       "autonomous": false,
       "task_count": 137,
       "counts": {
-        "done": 133,
+        "claimed": 1,
+        "done": 134,
         "needs-human": 1,
-        "ready": 1,
-        "review": 1,
         "waiting": 1
       },
-      "open_count": 4,
+      "open_count": 3,
       "human_attention": 1,
-      "ready": 1,
+      "ready": 0,
       "waiting": 1,
-      "claimed": 0,
-      "review": 1,
-      "done": 133
+      "claimed": 1,
+      "review": 0,
+      "done": 134
     },
     {
       "slug": "coloring-book",
@@ -83,20 +82,20 @@
       "override_status": "active",
       "priority_index": 4,
       "autonomous": false,
-      "task_count": 41,
+      "task_count": 43,
       "counts": {
-        "done": 29,
+        "done": 32,
         "needs-human": 1,
-        "ready": 2,
+        "ready": 1,
         "waiting": 9
       },
-      "open_count": 12,
+      "open_count": 11,
       "human_attention": 1,
-      "ready": 2,
+      "ready": 1,
       "waiting": 9,
       "claimed": 0,
       "review": 0,
-      "done": 29
+      "done": 32
     },
     {
       "slug": "humboldt-scoop-cms",
@@ -143,18 +142,18 @@
       "override_status": "active",
       "priority_index": 7,
       "autonomous": false,
-      "task_count": 97,
+      "task_count": 100,
       "counts": {
-        "done": 92,
-        "ready": 5
+        "done": 94,
+        "ready": 6
       },
-      "open_count": 5,
+      "open_count": 6,
       "human_attention": 0,
-      "ready": 5,
+      "ready": 6,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 92
+      "done": 94
     },
     {
       "slug": "rainbow-butterflies",
@@ -220,15 +219,15 @@
       "override_status": "active",
       "priority_index": 11,
       "autonomous": false,
-      "task_count": 20,
+      "task_count": 21,
       "counts": {
         "done": 12,
-        "needs-human": 1,
+        "needs-human": 2,
         "ready": 1,
         "waiting": 6
       },
-      "open_count": 8,
-      "human_attention": 1,
+      "open_count": 9,
+      "human_attention": 2,
       "ready": 1,
       "waiting": 6,
       "claimed": 0,
@@ -279,37 +278,36 @@
       "override_status": "active",
       "priority_index": 14,
       "autonomous": false,
-      "task_count": 155,
+      "task_count": 156,
       "counts": {
-        "done": 152,
-        "ready": 3
+        "done": 154,
+        "ready": 2
       },
-      "open_count": 3,
+      "open_count": 2,
       "human_attention": 0,
-      "ready": 3,
+      "ready": 2,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 152
+      "done": 154
     },
     {
       "slug": "taskmaster",
       "kind": "software",
-      "override_status": "active",
+      "override_status": "retired",
       "priority_index": 15,
       "autonomous": false,
       "task_count": 4,
       "counts": {
-        "done": 3,
-        "ready": 1
+        "done": 4
       },
-      "open_count": 1,
+      "open_count": 0,
       "human_attention": 0,
-      "ready": 1,
+      "ready": 0,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 3
+      "done": 4
     },
     {
       "slug": "storybook",
@@ -319,17 +317,17 @@
       "autonomous": false,
       "task_count": 48,
       "counts": {
-        "done": 39,
-        "ready": 8,
+        "done": 40,
+        "ready": 7,
         "waiting": 1
       },
-      "open_count": 9,
+      "open_count": 8,
       "human_attention": 0,
-      "ready": 8,
+      "ready": 7,
       "waiting": 1,
       "claimed": 0,
       "review": 0,
-      "done": 39
+      "done": 40
     },
     {
       "slug": "coat-dance",
@@ -1017,13 +1015,6 @@
       "project": "cthulhuquarium",
       "task": "t-065",
       "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
-    },
-    {
-      "severity": "warning",
-      "code": "GATED_DONE_WITHOUT_APPROVAL",
-      "project": "davinci",
-      "task": "t-022",
-      "message": "Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect."
     },
     {
       "severity": "warning",

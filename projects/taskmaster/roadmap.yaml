@@ -57,7 +57,7 @@ milestones:
   - id: m3
     title: "Audit, polish, and dedicated art for the Taskmaster surface"
     weight: 25
-    status: in-progress
+    status: done
 
 tasks:
   - id: t-001
@@ -182,10 +182,10 @@ tasks:
   - id: t-004
     milestone: m3
     title: "Audit other dashboard-tab/tutorial image paths for silently-wrong assets"
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
-    note: |-
+    note: >-
       FOR SILAS: taskmaster/t-004 audited every dashboard-tab and tutorial image path in kind_robots (140 unique paths across dashboardHelper.ts and tutorialCards.ts) by HEAD-checking each against the live media origin. Findings and the queued fix live in projects/art-prompts.yaml (source: taskmaster-t-004-tutorial-audit) and conductor PR (this branch commit e786f45).
 
       What it contains: all dashboard-tab images are healthy (200). 15 tutorial-card images 404d -- 1 (scenario/storybook.webp) is already worked around in kind_robots storybook-page.vue per interface-vision/t-111, so nothing to do there. The other 14 (Animation Manager, Dream Brainstorm, Community Broadcasts, Mana Purse, Model Builder, AppMaker, Conductor App, Packmaker, WonderLab, Screen FX, Da Vinci, Media Watchlist, Ruler Hooked, Voice Lab) were genuinely missing with no prior tracking. Added targeted regeneration requests and queued all 14 as ArtJobs (ids 8234-8247).
@@ -195,4 +195,13 @@ tasks:
       TO APPROVE: no decision needed from you -- this is process, not content. When the render backlog drains (or someone pushes these 14 specific job ids), a future session should poll job ids 8234-8247 directly (GET /api/art/queue/{id}) rather than re-running consume_art_requests_to_media.py, which would resubmit duplicates for any still-pending entry. Once all 14 land and are verified 200, close t-004 to done. What unblocks: nothing downstream depends on this task; it can sit soft-gated until the backlog clears.
 
       Release under Silas's 2026-09-07 human-gate simplification policy. The task note explicitly says no human decision is needed. A worker should reconcile ArtJobs 8234-8247 against current queue/media state, avoid duplicate submissions, repair or requeue only missing outputs, verify the targeted tutorial assets return 200, and close when complete. Render backlog/capacity is technical process state, not a Silas gate.
-    updated: '2026-09-07T11:33:49+00:00'
+
+      MOVED to kind-robots/t-100 on 2026-09-14 when taskmaster was wound down into storybook's
+      fourth mode; no further work performed here. Closed as done on this roadmap because the
+      record moved, NOT because the 14 queued ArtJobs (8234-8247) landed -- they had not when
+      this was written, and kind-robots/t-100 is where that delivery is now tracked. Rehomed
+      rather than carried along because this was never Taskmaster work: it is a portfolio-wide
+      Kind Robots tutorial/dashboard asset audit that only landed here because
+      taskmaster/t-003 turned up the first broken path. Leaving it in a retired project would
+      have taken 14 live render jobs out of every future scan.
+    updated: '2026-09-14T07:50:41Z'

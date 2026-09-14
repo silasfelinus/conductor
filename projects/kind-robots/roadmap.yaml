@@ -4295,6 +4295,50 @@ tasks:
     even after this lands (harmless duplication), or be retired once the new
     surface covers it.
   claimed_by: null
+- id: t-100
+  milestone: m6
+  title: "Deliver the 14 missing tutorial-card images found by the portfolio-wide asset audit"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    MOVED from taskmaster/t-004 on 2026-09-14, when taskmaster was wound down into
+    storybook's fourth mode (storybook/t-047). The task was never Taskmaster work --
+    it is a portfolio-wide Kind Robots asset audit that happened to be filed under
+    taskmaster because taskmaster/t-003 turned up the first broken path. Rehomed here
+    so it keeps being scanned after taskmaster retires, rather than going dark inside
+    a retired project with 14 live ArtJobs still queued. Original note follows.
+
+    taskmaster/t-004 audited every dashboard-tab and tutorial image path in kind_robots
+    (140 unique paths across dashboardHelper.ts and tutorialCards.ts) by HEAD-checking
+    each against the live media origin. All dashboard-tab images are healthy (200). 15
+    tutorial-card images 404d -- 1 (scenario/storybook.webp) is already worked around in
+    kind_robots storybook-page.vue per interface-vision/t-111, so nothing to do there.
+    The other 14 (Animation Manager, Dream Brainstorm, Community Broadcasts, Mana Purse,
+    Model Builder, AppMaker, Conductor App, Packmaker, WonderLab, Screen FX, Da Vinci,
+    Media Watchlist, Ruler Hooked, Voice Lab) were genuinely missing with no prior
+    tracking. Targeted regeneration requests were added and all 14 queued as ArtJobs
+    ids 8234-8247.
+
+    WHAT IS LEFT: the render queue was backlogged when this was filed (PENDING=1077,
+    oldest pending ~147h, 44/24h throughput) -- the same infra wait tracked for
+    ai-art-academy/t-044 and model-builder/t-031 -- so none of the 14 rendered. A worker
+    should poll job ids 8234-8247 directly (GET /api/art/queue/{id}) rather than re-running
+    consume_art_requests_to_media.py, which would resubmit duplicates for any still-pending
+    entry. Reconcile those ArtJobs against current queue/media state, repair or requeue only
+    missing outputs, verify the 14 targeted tutorial assets return 200, then close to done.
+
+    Two of the 14 are now historical names rather than live surfaces: "Da Vinci" retired
+    into storybook on 2026-09-12 (/play/davinci is a 301) and WonderLab was retired
+    2026-08-11. Check tutorialCards.ts for whether those two cards still render at all
+    before spending render capacity on their art -- a 404 on a card nobody can reach is a
+    delete, not a regeneration.
+
+    No human decision is needed: this is process, not content (released under Silas's
+    2026-09-07 human-gate simplification policy). Nothing downstream depends on it.
+  claimed_by: null
+
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
