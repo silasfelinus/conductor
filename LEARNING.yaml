@@ -13722,3 +13722,27 @@ records:
     caught both in one sitting instead of one crash at a time; filed as this cycle''s kaizen
     suggestion rather than done inline to keep the cycle''s diff scoped to the crash actually
     hit.'
+- date: 2026-09-14
+  project: coloring-book
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: quality
+  lesson: 'A documented safety guard that is never actually wired into the code that runs
+    is worse than no guard, because it reads as coverage that does not exist:
+    monster-recast/art-modeler-request.yaml documented a content-safety negative_prompt
+    (no explicit genitals/nipples/etc.) for months, but build_entries() only ever read a
+    per-entry override that no entry in any of the 108 slots across all three books had
+    ever set -- every render, Monster Recast included, only got the purely technical
+    DEFAULT_NEGATIVE_PROMPT. Caught live when a routine re-render (not a targeted safety
+    audit) came back with unrequested exposed nudity, and the pre-existing already-committed
+    candidate for that same slot turned out to have the identical defect. The fix (bake the
+    content-safety terms into every entry by default) was small, but finding it required
+    actually tracing the negative_prompt value from the documented YAML through to the
+    submitted payload rather than trusting that a file named art-modeler-request.yaml next
+    to the render queue meant its contents were in effect. Worth a standing habit: when a
+    generation pipeline documents a safety constraint in a config/request file, verify by
+    reading the actual code path that consumes it, not by the file''s existence or its
+    prose.'
