@@ -48,10 +48,11 @@ confirmed via git stash), test:layout-contract (0 new violations), test:kr-class
 (OK), a full production build, and prettier drift on 11 files confirmed pre-existing via
 git stash -- all clean before opening the kind_robots PR.
 
-Slice 270 opened as silasfelinus/kind_robots#2716 (text-error text-sm -> kr-text-error-sm),
-CI in progress at session pause. Kaizen for the next slice: run a fresh full-repo
-class-frequency survey (`kr_class_frequency_survey.py`) outside every now-closed family
-to pick the next target -- no specific candidate queued.
+Slice 270 merged as silasfelinus/kind_robots#2716 (text-error text-sm -> kr-text-error-sm),
+all 51 kind_robots PR checks green before merging. Return the recurring consistency
+umbrella to ready for the next bounded slice. Kaizen for the next slice: run a fresh
+full-repo class-frequency survey (`kr_class_frequency_survey.py`) outside every now-closed
+family to pick the next target -- no specific candidate queued.
 
 ## For future slices: keep the live note short
 
