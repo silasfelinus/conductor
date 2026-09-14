@@ -218,11 +218,22 @@ jobs:
             | cut -d/ -f1-2 \
             | sort -u)
 
+          # A package.json alone is not enough: the build step uses `npm ci`,
+          # which refuses to run without a lockfile (EUSAGE). projects/approval-portal
+          # has a package.json and no package-lock.json, so any PR touching that
+          # directory failed this job for a reason unrelated to its own diff --
+          # latent until conductor/t-158's archival pass touched every project dir
+          # at once. Skip such a project loudly rather than hard-failing the job.
           PROJECTS=""
           for dir in $CHANGED_DIRS; do
-            if [ -f "$dir/package.json" ]; then
-              PROJECTS="$PROJECTS $dir"
+            if [ ! -f "$dir/package.json" ]; then
+              continue
             fi
+            if [ ! -f "$dir/package-lock.json" ] && [ ! -f "$dir/npm-shrinkwrap.json" ]; then
+              echo "SKIP: $dir has package.json but no lockfile — npm ci cannot run there"
+              continue
+            fi
+            PROJECTS="$PROJECTS $dir"
           done
           PROJECTS="${PROJECTS# }"  # trim leading space
           echo "projects=$PROJECTS" >> "$GITHUB_OUTPUT"
@@ -240,7 +251,10 @@ jobs:
           for dir in ${{ steps.changed.outputs.projects }}; do
             echo "=== Building $dir ==="
             cd "$dir"
-            npm ci --prefer-offline --silent
+            # Not --silent: when this failed on conductor/t-158's PR the log showed
+            # only a bare "exit code 1" with no reason, and the cause (a missing
+            # lockfile) had to be reproduced locally to find.
+            npm ci --prefer-offline --no-audit --no-fund
             npm run build --if-present || echo "No build script in $dir"
             npm run lint --if-present || echo "No lint script in $dir"
             cd - > /dev/null
