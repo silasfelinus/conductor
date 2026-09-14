@@ -3082,15 +3082,19 @@ tasks:
 - id: t-078
   milestone: m6
   title: "Home page visual iteration with Silas"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
-  updated: '2026-09-14T11:29:37Z'
+  updated: '2026-09-14T11:41:29Z'
   depends_on: [t-077, t-080, t-081, t-082, t-083, t-084, t-088]
   note: |-
     The back-and-forth t-077 shipped a first draft for. Silas, 2026-08-28: "this part may take some back and forth, I want it to look great ... this is going to be the first thing people see when the site loads, so I want it to be special." needs-human because the remaining question is aesthetic judgement, and only Silas can supply it. REWRITTEN AFTER EACH PASS -- t-080 through t-084, now t-088 -- because a needs-human note describing a version no longer on main invites a decision about something that does not exist. What is live now, MEASURED at 1920x1080 rather than estimated (see t-084 for why that distinction earned its own task): TOP BAND, one definite height, all columns filling it: dream card 384px (20.0% of screen, stated as 20vw clamped to [14rem,26rem]); the cast as one horizontally scrolling row of full-height 239x358 portrait cards filling the middle at 833px; Needs-you 629px (32.8%, a third at xl and a half at lg) as a single vertically scrolling column. NEEDS YOU is a composer, not a list of links. Each gate expands in place to a textarea and three actions. "Send to agent" writes the note AND releases the task to `ready`, so conductor's next Worker cycle picks it up carrying the answer. "Note only" keeps it parked and conductor's audit surfaces it. "Approve" closes it. SHELVES are one horizontally scrolling row: seven shelves, four visible, three a chevron away. Headers are a single icon plus a count. The art shelf toggles between finished art and the live ArtJob queue with a status filter. CLICKING AN OBJECT opens an interstitial with its description, attributes and reviews; clicking outside returns. Tiles are plain anchors, so middle-click and cmd-click still navigate. PROJECTS: title, one-letter priority, progress joined to conductor's own figure. NEWSFEED: bounded scroller; compact cards are picture, then a three-line headline, then one provenance line, with no summary; topic chips, controls, heading and lab link all on one row. NAV: brand line plus the page's tabMessage, or its subtitle where none is authored. Page height 865px: well inside his "not larger than two screens". OPEN FOR HIM, in rough order of how much it would change: (1) Whether the band's three-way split now feels right. Every number in it has been moved at his request at least once, and this is the first version where all three were satisfied simultaneously rather than traded off, so it is worth a fresh look rather than assuming it has converged. (2) Whether "Send to agent" should be able to close a gate outright, or whether releasing to `ready` with the answer attached is the right ceiling for a one-click action on the coordination system of record. (3) Whether the hero should server-render. It loads client-side in home-page.vue's onMounted, so the first paint of the front page is a skeleton. (4) The cast row has no visible scrollbar and no chevrons -- the partial card at the right edge is the only affordance, on the same argument home-rail.vue makes. The shelves below DO have chevrons, so the two rows are inconsistent on purpose; if that reads as an oversight rather than a choice, the shelves' chevrons are one prop away.
 
     Silas's 2026-09-07 standing instruction is to take reasonable reversible recommendations as the decision instead of manufacturing human gates. Accept the current measured home-page three-way composition as the baseline. Remaining work is agent-owned polish: preserve Send to agent as answer + ready rather than one-click closure, add a durable submission receipt that survives the gate row disappearing, present concise actionable question/action + recommendation text, and handle SSR/scroll affordance as normal technical UX decisions without another Silas gate unless a genuinely subjective conflict remains.
+
+    PROGRESS (scheduled Conductor session, 2026-09-14): worked the remaining-polish list item by item rather than guessing which still applied. (1) band split -- left alone, no fresh complaint since it converged. (2) Send to agent already answers-and-releases rather than closing outright -- confirmed against submitTaskAction, no change needed. (4) already resolved in the current code: home-dream-hero.vue's cast row already has a `.no-scrollbar` track plus overlay chevrons (castCanScroll/scrollCast) -- the note's "no visible scrollbar and no chevrons" describes a version this doesn't match any more; git blame puts that landing before this session. That left two real gaps, both in home-attention.vue: the "Queued for conductor..." receipt lived inside the same row `answer`/`approve` had just removed from `humanGates`, so it never actually painted; and the note preview `line-clamp-4`'d the raw `note` field, which on a recurring task's accumulated history just showed the oldest paragraph rather than anything actionable. Fixed both -- receipts are now a section-level list independent of any one row (self-clearing, dismissible), and the preview extracts the `FOR SILAS:`/`TO APPROVE:` spans the needs-human note template already asks for instead of a blind clamp. Verified vue-tsc/eslint/prettier/test:layout-contract all clean, 0 new layout-contract violations. kind_robots#2725.
+
+    Item (3) -- whether the hero should server-render -- is real and NOT done here: `homeShowcaseStore.load()` is one call for the whole showcase (hero + all six rails + the projects strip), so this is an architecture change to the page's data flow, not a one-component tweak, and it carries real hydration-mismatch risk I have no way to visually verify pre-merge in this sandbox (no PR preview exists for this repo; see conductor AGENTS.md's kind_robots verification section). Converting it blind isn't the safer choice just because this task grants latitude to decide without another Silas gate -- filed kind-robots/t-102 to carry it as its own scoped, testable slice instead. This task's own scope (the remaining-polish list) is otherwise complete: closing to done once kind_robots#2725 merges, with t-102 carrying the one item that didn't fit in it.
   approved_by_human: true
   owner: worker
   claimed_by: claude-scheduled-20260914T112936Z-kr-t078
@@ -4385,6 +4389,37 @@ tasks:
     Once the field exists, conductor's side can report queue age; that reporting is not part of
     this task.
   updated: '2026-09-14T10:30:00Z'
+
+- id: t-102
+  milestone: m6
+  title: "Decide and implement whether the home showcase should server-render"
+  status: ready
+  passes: 0
+  stakes: reversible
+  owner: null
+  note: >-
+    Split off t-078's remaining-work item 3, which didn't fit that task's scope. Right now
+    home-page.vue fetches the whole home showcase (hero + all six rails + the projects strip)
+    from a single homeShowcaseStore.load() call inside onMounted, so the front page's first
+    paint is always a skeleton -- there is no SSR path for any of it.
+
+
+    Scope: decide whether to move that fetch to run during SSR (e.g. via useAsyncData wrapping
+    homeShowcaseStore.load, or an equivalent), and implement it if so. performFetch already
+    resolves relative URLs to absolute ones under import.meta.server (see stores/utils.ts's
+    resolveRequestUrl), which suggests the store is not fundamentally hostile to SSR, but this
+    has not been exercised for this endpoint and the whole page's layout depends on the same
+    fetch, so a naive change risks a hydration mismatch (stale skeleton state briefly disagreeing
+    with server-rendered markup) across every rail, not just the hero.
+
+
+    Verification should cover: vue-tsc/eslint clean as usual, but also an actual check for
+    hydration warnings (dev server console, or a component test that mounts server then
+    hydrates client) rather than relying on vue-tsc/eslint alone -- neither catches a hydration
+    mismatch. If SSR genuinely isn't worth the risk for this page, it is also a legitimate
+    outcome to record that decision and its reasoning here and close the task without a code
+    change; either way, do not leave this open on "should" without concluding it.
+  updated: '2026-09-14T11:41:29Z'
 
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
