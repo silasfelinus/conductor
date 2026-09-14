@@ -64,12 +64,10 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    note: >
-      Write projects/model-builder/SPEC.md. Define SourceModel, Recipe, BuildRun, BuildItem,
-      BuildStage, BuildArtifact, revision/provenance, usage, and final commit boundaries.
-      Specify PITCH, FIELDS_AND_PROMPTS, GENERATE_ASSETS, and COMMIT; stale-stage invalidation;
-      reruns; cancellation; retries; partial failure; resume; DEFERRED and DRAFT_EARLY creation.
-      The orchestrator must not duplicate durable fields owned by canonical domain models.
+    note: >-
+      Write projects/model-builder/SPEC.md.
+
+      Full history: projects/model-builder/HISTORY.md#t-001
 
   - id: t-002
     milestone: m1
@@ -78,12 +76,10 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    note: >
-      Produce projects/model-builder/API-INVENTORY.md grounded in the current kind_robots schema
-      and routes. Cover Project, Character, Bot, Facet, Dream, Reward, Scenario, ArtImage,
-      ArtCollection, ExpressionMedia, relationship writes, batch dry-runs, image generation,
-      LTX video, and /api/comfy/hunyuan3d. Record exact methods, payloads, auth, idempotency,
-      missing routes, and the gap between generated model files and verified STL export.
+    note: >-
+      Produce projects/model-builder/API-INVENTORY.md grounded in the current kind_robots schema and routes.
+
+      Full history: projects/model-builder/HISTORY.md#t-002
 
   - id: t-003
     milestone: m1
@@ -308,23 +304,10 @@ tasks:
     passes: 0
     stakes: reversible
     gate_human: false
-    note: >
-      Marketing Deck reference run produced as a full autonomous example set at
-      projects/model-builder/reference-runs/hss-marketing-deck.md — humboldt-scoop source +
-      humboldt-scoop-cms reliability angle, all 13 marketing-deck outputs (copy + art specs)
-      grounded in Silas's real data (logo_clean.jpg, pricing, service area, the mandatory
-      "Professional Pet Waste Removal" descriptor, billed the 1st), also folded into the
-      CONTENT-BRIEF. The image pieces are specified for Flux (which renders text) at
-      print/platform-correct shapes in reference-runs/hss-marketing-deck.generate.yaml —
-      full text-bearing marketing pieces, ready to generate when Silas decides to spend
-      (~$5k total op budget; shapes are the deliverable, not spend). The real logo is
-      composited into a reserved corner (no rebrand); logo sheet + site/app mockups are
-      assembled from real assets. (Marketing does NOT gatekeep text — Flux handles it.)
-      Gate note (Silas, 2026-07-12): the four gates are OPTIONAL front-end pauses a user can
-      place on a request — not a backend block that waits on a repo file. Default backend
-      behavior is to create full objects. This corrects the earlier over-cautious
-      needs-human framing. Live spend/print/posting/real-customer-contact remain out of
-      scope for an internal set, but nothing here waits on approval.
+    note: >-
+      Marketing Deck reference run produced as a full autonomous example set at projects/model-builder/reference-runs/hss-marketing-deck.md — humboldt-scoop source + humboldt-scoop-cms reliability angle, all 13 marketing-deck outputs (copy + art specs) grounded in Silas's real data (lo
+
+      Full history: projects/model-builder/HISTORY.md#t-016
 
   - id: t-017
     milestone: m5
@@ -334,15 +317,10 @@ tasks:
     passes: 0
     stakes: reversible
     gate_human: false
-    note: >
-      Autonomous Character Deck run for the flagship Bot AMIb0t at
-      reference-runs/character-deck-amibot.md (+ .generate.yaml). Every gate decided with
-      reasonable defaults, no human input: identity pitch + field proposal, canonical
-      NEUTRAL avatar (identity anchor generated first, seed/checkpoint locked and reused),
-      icon/card/hero, a 5-key expression subset (joyful/loving/surprised/cheering/thinking,
-      Bot-owned, proven before any full 20-key set), model sheet, provenance; 3D deferred.
-      Assets specified for Flux/Comfy; COMMIT column is exactly what the executor writes
-      (Bot art promotion + ExpressionMedia rows, no destructive replacement).
+    note: >-
+      Autonomous Character Deck run for the flagship Bot AMIb0t at reference-runs/character-deck-amibot.md (+ .generate.yaml).
+
+      Full history: projects/model-builder/HISTORY.md#t-017
 
   - id: t-018
     milestone: m5
@@ -352,15 +330,10 @@ tasks:
     passes: 0
     stakes: reversible
     gate_human: false
-    note: >
-      Autonomous Dream expansion at reference-runs/dream-expansion-lantern-greenhouse.md
-      (+ .generate.yaml): the real "Lantern Greenhouse" LOCATION dream (id 37) -> exactly
-      three fitting Characters (Cogswaithe the robot philosopher, Zippa Emberwing the
-      hyperactive butterfly, Elder Vellum the wise moth), each a full field set + portrait.
-      Demonstrates the t-018 proof points against the executor: independent items, unique
-      slugs, ownership (userId 10, private/inactive draft-early), Dream links via Characters
-      m2m, partial-failure isolation (a failed child releases its idempotencyKey), and no
-      duplicate creation on COMMIT replay (idempotencyKey claim).
+    note: >-
+      Autonomous Dream expansion at reference-runs/dream-expansion-lantern-greenhouse.md (+ .generate.yaml): the real "Lantern Greenhouse" LOCATION dream (id 37) -> exactly three fitting Characters (Cogswaithe the robot philosopher, Zippa Emberwing the hyperactive butterfly, Elder Vell
+
+      Full history: projects/model-builder/HISTORY.md#t-018
 
   - id: t-019
     milestone: m5
@@ -371,16 +344,10 @@ tasks:
     stakes: reversible
     depends_on:
       - t-014
-    note: >
-      Identity via the canonical sync path (scripts/sync_projects.py -> POST/PATCH
-      /api/projects, keyed on conductorSlug): added model-builder to project-overrides.yaml
-      (active/high) so it syncs at all, added goal + waypoints to this roadmap's top matter,
-      and extended build_project_payload to transmit goal (text) and waypoints (serialized
-      pipe-delimited, KR's format) only when present — no clobbering. Slug model-builder is
-      the single identity (no model-generator, no conflicting record). Navigation: appended
-      a Model Builder directory SmartIcon (link /model-builder) to kind_robots
-      stores/seeds/smartIcons.json — the fallback nav navStore imports; the content page
-      already qualifies for the generatesmart path. kind_robots nav PR + conductor sync PR.
+    note: >-
+      Identity via the canonical sync path (scripts/sync_projects.py -> POST/PATCH /api/projects, keyed on conductorSlug): added model-builder to project-overrides.yaml (active/high) so it syncs at all, added goal + waypoints to this roadmap's top matter, and extended build_project_pay
+
+      Full history: projects/model-builder/HISTORY.md#t-019
 
   - id: t-020
     milestone: m3
@@ -389,14 +356,10 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    note: >
-      Registered server/utils/suggest/sheets/modelBuilderSuggest.ts (builder
-      'model-builder') with a Model-Builder system prompt, per-field prompts for
-      pitch/fields/artPrompt, and a buildContext that surfaces the source record's canon
-      (type, recipe, output, action + a name/class/personality/backstory/pitch digest).
-      Also fixed the store: draftText was force-sending extra.instruction, which overrode
-      any sheet fieldPrompt — now it only sends one when explicitly passed, so the sheet
-      drives. No more adventure-sheet fallback. kind_robots PR #193.
+    note: >-
+      Registered server/utils/suggest/sheets/modelBuilderSuggest.ts (builder 'model-builder') with a Model-Builder system prompt, per-field prompts for pitch/fields/artPrompt, and a buildContext that surfaces the source record's canon (type, recipe, output, action + a name/class/person
+
+      Full history: projects/model-builder/HISTORY.md#t-020
 
   - id: t-021
     milestone: m2
@@ -405,13 +368,10 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from durable persistence (PR #188): runs now persist via
-      /api/model-builder/runs, but the UI only surfaces the single active run. Add a
-      history panel that lists the user's recent runs (GET /api/model-builder/runs) with
-      source, recipe, and committed/total progress, and lets them reopen one into the
-      progress matrix or cancel it. Front-end only; reuse modelBuilderStore. No schema.
-      DONE — kind_robots PR #189.
+    note: >-
+      Kaizen from durable persistence (PR #188): runs now persist via /api/model-builder/runs, but the UI only surfaces the single active run.
+
+      Full history: projects/model-builder/HISTORY.md#t-021
 
   - id: t-022
     milestone: m5
@@ -420,52 +380,10 @@ tasks:
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      RAN 2026-07-25 (~21:10-21:15 UTC, claude-conductor-scheduled-20260725T2110Z-mb-t022,
-      scheduled agent run): live-tested the COMMIT executor (server/api/model-builder/
-      items/[id]/commit.post.ts) against kind-robots.vercel.app prod using the
-      BETA_ADMIN_TOKEN (KR_API_TOKEN, sent as x-api-key). Both required flows pass clean —
-      no bug found, no fix task filed.
+    note: >-
+      RAN 2026-07-25 (~21:10-21:15 UTC, claude-conductor-scheduled-20260725T2110Z-mb-t022, scheduled agent run): live-tested the COMMIT executor (server/api/model-builder/ items/[id]/commit.post.ts) against kind-robots.vercel.app prod using the BETA_ADMIN_TOKEN (KR_API_TOKEN, sent as x
 
-      CREATE (Dream -> 3 Characters): created a private/inactive throwaway Dream (id 3821),
-      then POST /api/model-builder/runs with sourceType=Dream/sourceId=3821 and 3 items
-      (outputKey=expand-characters, action=CREATE). Dry-ran item 6's commit first (plan
-      correctly showed action=CREATE, targetType=Character) then committed all 3 items for
-      real: each returned `target.created=true, target.linked=true` with new Character ids
-      1895/1896/1897. Verified via GET /api/characters/{id} and GET /api/dreams/3821 that
-      all three Characters were created with isPublic=false/isActive=false (the `priv`
-      override in commit.post.ts's createRecord, not just a schema default) and that
-      Dream.Characters contained exactly the 3 new ids — no more, no fewer. Re-POSTed
-      commit on item 6 with no dryRun: got `alreadyCommitted: true` with the same target
-      id 1895 and no new Character was created — idempotencyKey guard confirmed.
-
-      ASSET_ONLY (promote a Character hero): built a second run with sourceType=Character/
-      sourceId=1896 (one of the freshly created test characters) and one ASSET_ONLY item,
-      PATCHed a real public ArtImage id (12198) onto it, dry-ran (plan correctly showed
-      field=artImageId/value=12198/targetId=1896), then committed for real — response
-      confirmed `target.created=false, target.id=1896`, and GET /api/characters/1896 showed
-      artImageId=12198 with isPublic/isActive still false. Re-POSTed the same commit and got
-      `alreadyCommitted: true` — no double-write.
-
-      One correction to how this task was scoped: ASSET_ONLY promotes onto the *run's
-      source record* (whatever sourceType/sourceId the run was created against), not
-      implicitly "whichever Character a CREATE step produced" — so a literal "promote a
-      Character hero" test needs its own Character-sourced run, which is what this cycle
-      did (using one of the CREATE step's own output characters as the target, to stay
-      fully self-contained). Also worth noting for future callers: GET /api/characters
-      does NOT filter by a `?id=` query string (it silently returns the full unfiltered
-      list) — the working lookup is the path param route GET /api/characters/{id}. Not
-      filing a fix task for this since it isn't part of the COMMIT executor under test and
-      didn't block verification, but flagging here in case another live-smoke task hits
-      the same surprise.
-
-      Cleanup: deleted all throwaway records afterward (DELETE /api/dreams/3821, then
-      DELETE /api/characters/1895, 1896, 1897) — both endpoints returned clean 200s: no
-      residue left in prod.
-
-      Conclusion: the COMMIT executor's CREATE, ASSET_ONLY, and idempotency-guard paths
-      all work correctly against a live deployment, matching PR #190's CI-only claims.
-      This is the live proof behind the gated reference runs t-016/t-017/t-018.
+      Full history: projects/model-builder/HISTORY.md#t-022
     claimed_by: claude-conductor-scheduled-20260725T2110Z-mb-t022
     claimed_at: '2026-07-25T21:06:46Z'
     updated: '2026-07-25T21:15:00Z'
@@ -490,15 +408,10 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    note: >
-      From live testing (Silas): FIELDS_AND_PROMPTS should populate automatically — we know
-      each model type and what it needs — and the AI draft for a Reward came back as a bland
-      "enhance the project" sentence instead of a real reward. Reuse the single source of
-      per-model field truth (stores/registerBuilderStore.ts + stores/helpers/*Cards.ts:
-      defaultSheet, required/optional card keys, choice pools) to auto-fill the required
-      fields per source/target model and only surface optional toggles. Feed that same
-      per-model schema + choice pools into the suggest sheet so drafts produce a full,
-      specific record (a Reward gets name/rewardType/rarity/effect/flavor), not filler.
+    note: >-
+      From live testing (Silas): FIELDS_AND_PROMPTS should populate automatically — we know each model type and what it needs — and the AI draft for a Reward came back as a bland "enhance the project" sentence instead of a real reward.
+
+      Full history: projects/model-builder/HISTORY.md#t-024
 
   - id: t-025
     milestone: m6
@@ -507,14 +420,10 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    note: >
-      From live testing (Silas): the normal path is create the object, then send the prompt
-      to ArtJob (async) and handle it when done — synchronous generate is the interactive
-      special case. Add an async path: enqueue via POST /api/art/enqueue (returns jobId),
-      store the jobId on the build item, poll GET /api/art/queue/:id (~5s) until DONE, then
-      promote the resulting artImageId onto the item/target. Reuse artStore.enqueueAndRender
-      pattern. Show queued/rendering/done state per item. Keep sync generate as the "art
-      first, interactively" option.
+    note: >-
+      From live testing (Silas): the normal path is create the object, then send the prompt to ArtJob (async) and handle it when done — synchronous generate is the interactive special case.
+
+      Full history: projects/model-builder/HISTORY.md#t-025
     claimed_by: claude-conductor-burst-20260719T1259Z
     claimed_at: '2026-07-19T13:07:21Z'
     updated: '2026-07-19T13:07:21Z'
@@ -526,13 +435,10 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    note: >
-      From live testing (Silas): a user who chooses a run should be able to just create the
-      art/objects directly without walking every gate. Add an "auto-build" action that runs
-      a build to completion with defaults — auto-draft fields (t-024), queue art (t-025) or
-      skip it, and commit — for minimal-interaction production, while the gated flow stays
-      available. Include a relationship-expansion "generate art for the created records?"
-      toggle (create text-only records vs create + queue art).
+    note: >-
+      From live testing (Silas): a user who chooses a run should be able to just create the art/objects directly without walking every gate.
+
+      Full history: projects/model-builder/HISTORY.md#t-026
 
   - id: t-027
     milestone: m6
@@ -542,25 +448,10 @@ tasks:
     passes: 0
     stakes: reversible
     updated: '2026-07-17T11:00:00Z'
-    note: >
-      From live testing (Silas): batch generations should be edited together, not one item
-      at a time. For a quantity output (e.g. 10 rewards), give a batch editor that sets which
-      fields to automate vs fine-tune across all N items at once, with per-item overrides for
-      the ones you want to hand-tune. Builds on the model-aware fields (t-024).
+    note: >-
+      From live testing (Silas): batch generations should be edited together, not one item at a time.
 
-      Done 2026-07-17 (Silas-directed session, kind_robots PR #353 squash 4878064a): added
-      components/model-builder/model-builder-batch-editor.vue, shown above the single-item
-      panel whenever the selected item belongs to a quantity/expansion group (items sharing
-      an outputKey). It (a) automates a stage across all N (batch-draft pitch/fields/art-prompt
-      with an only-empty guard, approve FIELDS, or auto-build the group), (b) sets one model
-      field to the same value on all N (choice fields render as dropdowns, e.g. rarity=RARE
-      across 10 rewards), and (c) delegates per-item fine-tuning to the existing item panel via
-      a select-item event. New store surface: itemGroups computed +
-      batchDraftField/batchSetField/batchApproveStage/batchAutoBuild looping the existing
-      per-item primitives; parse/read/setFieldLine helpers for the FIELDS key:value blob.
-      vue-tsc 0 errors; all 3 CI checks green. The AI-draft/auto-build paths call /api/suggest
-      + art/commit, so they were type-checked but not exercised live (DB-less sandbox); they
-      reuse the already-shipped, already-exercised per-item primitives.
+      Full history: projects/model-builder/HISTORY.md#t-027
 
   - id: t-028
     milestone: m6
@@ -569,7 +460,10 @@ tasks:
     owner: Reviewer
     passes: 0
     stakes: reversible
-    note: 'Done via kind_robots PR #250 (merged, squash sha 53f0d1be): commit executor now parses the FIELDS-draft key:value lines and applies known, typed, choice-validated columns per model on CREATE/UPDATE (Character/Bot/Reward/Dream/Scenario/Project/Facet); added Facet.kind choices to modelBuilderFields.ts. Also fixed a pre-existing, unrelated TS2531 null-check bug in artjob-manager.vue that was blocking main''s required TypeScript check for every PR.'
+    note: >-
+      Done via kind_robots PR #250 (merged, squash sha 53f0d1be): commit executor now parses the FIELDS-draft key:value lines and applies known, typed, choice-validated columns per model on CREATE/UPDATE (Character/Bot/Reward/Dream/Scenario/Project/Facet); added Facet.kind choices to m
+
+      Full history: projects/model-builder/HISTORY.md#t-028
     updated: '2026-07-14T13:33:57Z'
 
   - id: t-029
@@ -742,14 +636,10 @@ tasks:
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-027 (kind_robots PR #353, 2026-07-17). The new batch editor and autoBuildRun
-      loop the existing single-item PATCH (/api/model-builder/items/:id) once per item, so a
-      batch-set or batch-draft across N items fires N requests. Add a batch endpoint (e.g.
-      PATCH /api/model-builder/items/batch accepting [{ id, ...fields, stageStatuses }]) and a
-      store batchPushItems helper so a whole group edit persists in one round-trip, recording the
-      same revision/stage metadata the per-item PATCH does. Front-end + one server route; no schema
-      change. Keep the per-item PATCH for single edits.
+    note: >-
+      Kaizen from t-027 (kind_robots PR #353, 2026-07-17).
+
+      Full history: projects/model-builder/HISTORY.md#t-030
     claimed_by: claude-conductor-scheduled-20260718T1730Z
     claimed_at: '2026-07-18T11:06:30Z'
     updated: '2026-07-18T11:06:30Z'
@@ -789,20 +679,10 @@ tasks:
     stakes: reversible
     owner: worker
     updated: '2026-07-28T06:12:07Z'
-    note: >
-      Kaizen from t-029 (kind_robots PR #1079, 2026-07-28, Character->Scenario link gap;
-      same shape as PR #1005's earlier Dream->Bot gap). server/api/model-builder/items/[id]/commit.post.ts's
-      linkSourceToTarget is a hand-maintained switch over (sourceType, targetType) pairs with
-      no structural guarantee it covers every CREATE_TARGETS entry in stores/helpers/modelBuilderFields.ts
-      that corresponds to a real bidirectional Prisma relation -- two such gaps have now been
-      found by manual read-through across separate cycles. Add a small dev-time check (unit
-      test or a boot-time assertion) that walks CREATE_TARGETS, and for each (sourceType,
-      targetType) pair where prisma/schema.prisma defines a relation between the two models,
-      asserts linkSourceToTarget has a matching case. Also worth a look while there: two
-      lower-confidence sibling gaps noticed during t-029's 2026-07-28 cycle but not verified --
-      Reward -> Character (Character -> Reward and Reward.Characters both exist) and other
-      CREATE_TARGETS pairs (Project/Facet/Reward -> Scenario, etc.) whose matching relations
-      weren't confirmed. Front-end/test-only change; no schema change expected.
+    note: >-
+      Kaizen from t-029 (kind_robots PR #1079, 2026-07-28, Character->Scenario link gap; same shape as PR #1005's earlier Dream->Bot gap).
+
+      Full history: projects/model-builder/HISTORY.md#t-032
     claimed_by: claude-conductor-burst-20260728T061206-mb-t032
     claimed_at: '2026-07-28T06:12:07Z'
 
@@ -813,48 +693,10 @@ tasks:
     passes: 0
     stakes: reversible
     owner: worker
-    note: >
-      Kaizen from t-032 (kind_robots PR #1081, 2026-07-28). The relationship-expansion
-      recipe's OUTPUT_CATALOG (stores/helpers/modelBuilderRecipes.ts) does not currently
-      restrict which expand-* outputs are shown per source type -- RECIPES['relationship-
-      expansion'].sourceTypes just lists every eligible source model generically, so
-      nothing in the UI stops e.g. a Reward source from picking "Manager bot" or
-      "Narrator bot" (targetType Bot), which have no Prisma relation to Reward and would
-      create an orphaned, unlinked Bot on commit. Add a per-output source-type
-      restriction (e.g. a `sourceTypes?: SourceTypeKey[]` field on BuildOutputConfig,
-      populated from the same relation graph t-032's verifyModelBuilderLinkCoverage.ts
-      already derives from prisma/schema.prisma) so the picker only ever offers
-      expand-* outputs a source type actually has a relation for. Front-end/store change;
-      no schema change expected.
+    note: >-
+      Kaizen from t-032 (kind_robots PR #1081, 2026-07-28).
 
-      IMPLEMENTED 2026-07-28 (burst-20260728-mb-t033-relexpand): kind_robots PR #1100.
-      Added `sourceTypes?: SourceTypeKey[]` to `BuildOutputConfig`
-      (stores/helpers/modelBuilderRecipes.ts), populated per expand-* output from the
-      actual (sourceType, targetType) pairs `linkSourceToTarget` handles in
-      server/api/model-builder/items/[id]/commit.post.ts: expand-characters ->
-      [Dream, Reward, Scenario], expand-rewards -> [Dream, Character], expand-scenarios
-      -> [Dream, Character], expand-narrator-bot -> [Dream] (links via
-      Dream.narratorId), expand-manager-bot -> [Project] (links via
-      Project.managerBotId), expand-signature-rewards -> [Character].
-      `getOutputsForRecipe(recipeKey, sourceType?)` now filters by this list when
-      present; `modelBuilderStore.ts`'s `recipeOutputs` computed and `selectRecipe()`
-      both pass `state.sourceType` through, so the existing recipe-selector component
-      picks this up with no template change. Verified
-      `npx tsx utils/scripts/verifyModelBuilderLinkCoverage.ts` still passes (this
-      change doesn't touch commit.post.ts or the schema). Could not run the full
-      vue-tsc typecheck locally (no node_modules in this sandbox) -- PR CI's
-      TypeScript check is the verification gate.
-
-      KAIZEN FOUND: Facet is still listed in SOURCE_TYPES.recipes as eligible for
-      relationship-expansion, but has zero linkSourceToTarget cases at all -- so after
-      this fix, a Facet source now sees 0 available expand-* outputs for that recipe
-      (previously it saw all 6, all of which would have orphaned on commit). Strict
-      improvement, but the recipe is effectively non-functional for Facet until real
-      link cases exist. Filed as t-034.
-
-      DONE 2026-07-28: kind_robots PR #1100 merged (CI green). conductor PR #1317
-      (roadmap/TALKBACK bookkeeping) merged (Worker PR CI, Roadmap Audit, Security
-      Audit, Process task events all green).
+      Full history: projects/model-builder/HISTORY.md#t-033
     claimed_by: burst-20260728-mb-t033-relexpand
     claimed_at: '2026-07-28T11:12:17Z'
     updated: '2026-07-28T11:23:34Z'
@@ -866,37 +708,10 @@ tasks:
     passes: 0
     stakes: reversible
     owner: worker
-    note: >
-      Kaizen from t-033 (kind_robots PR #1100, 2026-07-28). SOURCE_TYPES['Facet'].recipes
-      in stores/helpers/modelBuilderRecipes.ts still lists 'relationship-expansion' as
-      eligible, but server/api/model-builder/items/[id]/commit.post.ts's
-      linkSourceToTarget has zero `sourceType === 'Facet'` cases -- no real Prisma
-      relation from Facet to Character, Reward, Scenario, or Bot exists to link a
-      created record back to it. Before t-033, a Facet source silently showed all 6
-      expand-* outputs, every one of which would orphan on commit (create a record
-      with no link back to the source Facet). t-033's per-output sourceTypes filter now
-      hides all of them for Facet instead (0 outputs shown), which is strictly safer
-      but leaves the recipe chip visibly selectable and functionally empty for Facet.
-      Either (a) add real relation(s) from Facet to one or more of Character/Reward/
-      Scenario/Bot in prisma/schema.prisma plus matching linkSourceToTarget case(s) and
-      matching expand-* sourceTypes entries, if such a relation makes product sense, or
-      (b) remove 'relationship-expansion' from Facet's SOURCE_TYPES.recipes entirely if
-      it doesn't. Decide by checking whether Facets are meant to spawn related
-      Characters/Rewards/Scenarios/Bots at all in the product design -- this task does
-      not assume the answer.
+    note: >-
+      Kaizen from t-033 (kind_robots PR #1100, 2026-07-28).
 
-      DECIDED (b): removed 'relationship-expansion' from Facet's SOURCE_TYPES.recipes
-      (and 'Facet' from relationship-expansion's own sourceTypes list). Facet's only
-      real Prisma relations to Dream/Scenario are DreamFacet/ScenarioFacet -- explicit
-      tag-attachment join tables that attach a Facet to an *existing* Dream/Scenario
-      (server/api/{dreams,scenarios}/[id]/facets.put.ts, scenarioGenreFacetSync.ts),
-      the same shape used for genre/mood/theme tagging. That's structurally different
-      from every linkSourceToTarget case, which all link a newly-created child record
-      back to its parent -- there is no such parent->child relation from Facet to
-      Character, Reward, Scenario, Dream, or Bot. Facet keeps art-upgrade only.
-      Verified via eslint, verifyModelBuilderLinkCoverage.ts (still passes, unaffected),
-      and `npm test` (vue-tsc --noEmit, clean). kind_robots PR #1108 merged (CI green,
-      7/7 checks passed).
+      Full history: projects/model-builder/HISTORY.md#t-034
     claimed_by: conductor-scheduled-20260728T1614Z-mb-t034-burst
     claimed_at: '2026-07-28T16:15:00Z'
     updated: '2026-07-28T17:05:00Z'
@@ -908,40 +723,10 @@ tasks:
     passes: 0
     stakes: reversible
     owner: reviewer
-    note: >
-      Kaizen from t-034 (kind_robots PR #1108, 2026-07-28). It took three cycles
-      (t-032 built the coverage guard, t-033 found Facet had zero real
-      linkSourceToTarget cases despite listing relationship-expansion as eligible,
-      t-034 finally removed it) to fully resolve one bad SOURCE_TYPES.recipes entry,
-      because verifyModelBuilderLinkCoverage.ts only matches direct-typed Prisma
-      relation fields (the shape most CREATE_TARGETS pairs use) and has no way to
-      flag a source type whose only relations to a candidate target are join-table
-      tag-attachments (Facet's DreamFacet/ScenarioFacet) rather than a parent->child
-      creation link. Extend the guard to also detect this case -- e.g. when a source
-      type lists a recipe/output eligible for a target type, but the only
-      prisma/schema.prisma relation between them is via an explicit join model (no
-      direct FK either direction), flag it the same way an entirely-missing relation
-      is flagged today. This would have caught Facet's bad relationship-expansion
-      entry at t-032 time instead of needing a dedicated t-033/t-034 investigation.
-      Front-end/test-only change; no schema change expected.
+    note: >-
+      Kaizen from t-034 (kind_robots PR #1108, 2026-07-28).
 
-
-      DONE 2026-07-28 (conductor scheduled Agent run, claude-conductor-scheduled-20260728T181326Z-mb-t035):
-      kind_robots PR #1109 (squash b5cc4026) merged green. Added extractCreateTargetMap,
-      extractOutputCatalogEntries, schemaHasJoinTableRelation (requires the @@id([...])
-      composite-key shape every real join table in this schema uses, to avoid
-      false-positiving on broad hub models like ArtImage that hold list-type
-      back-references to dozens of unrelated models), and
-      findJoinTableOnlyEligibilityPairs to verifyModelBuilderLinkCoverage.ts. Verified
-      via tsx run (clean on current config), a simulated regression (re-added Facet to
-      expand-scenarios's sourceTypes -- correctly failed, naming ScenarioFacet as the
-      join model), full vue-tsc (clean), and eslint (clean). First CI attempt failed
-      Contract verifiers: a repo-wide capture-group-guard heuristic linter
-      (verifyCaptureGroupGuards.ts, distinct from vue-tsc's real type narrowing) didn't
-      recognize a combined `if (!a || !b) continue` as guarding each variable, nor
-      `match[1]!` as guarding `match` before indexing. Fixed by splitting into two
-      single-variable guards and switching to `match?.[1] ?? null`; re-verified
-      unchanged behavior, second CI run green on all 6 checks.
+      Full history: projects/model-builder/HISTORY.md#t-035
     claimed_by: claude-conductor-scheduled-20260728T181326Z-mb-t035
     claimed_at: '2026-07-28T18:13:26Z'
     updated: '2026-07-28T18:13:26Z'
@@ -953,54 +738,10 @@ tasks:
     passes: 0
     stakes: reversible
     owner: worker
-    note: >
-      Kaizen from t-029 (kind_robots PR #1114, 2026-07-28): a GENERATE_ASSETS render
-      completion handler (generateItemAsset/pollAsyncArtJob/generateItemAssetAsync)
-      held only its original item reference and unconditionally overwrote the stage
-      status on completion, silently clobbering a concurrent upstream reopen's
-      'stale' marker. Fixed ad hoc with finishGenerateAssets(item, next), which only
-      writes if the stage is still 'in-progress'. This is now the third distinct
-      "review/re-review gate silently bypassed" bug class found by manual read-through
-      in modelBuilderStore.ts (after canApproveAssets and the batch-editor
-      stage-approval-gate fixes) -- each one only caught because a cycle happened to
-      read that exact code path. Add a repo-side static check (mirroring
-      verifyModelBuilderLinkCoverage.ts's approach from t-032/t-035) that walks every
-      async completion/write site touching a stage-status field in
-      modelBuilderStore.ts and flags any that don't gate on the stage's current status
-      before writing -- so this bug class is caught mechanically instead of requiring
-      a full manual store re-read every burst cycle. Front-end/test-only change; no
-      schema change expected.
+    note: >-
+      Kaizen from t-029 (kind_robots PR #1114, 2026-07-28): a GENERATE_ASSETS render completion handler (generateItemAsset/pollAsyncArtJob/generateItemAssetAsync) held only its original item reference and unconditionally overwrote the stage status on completion, silently clobbering a c
 
-      Provenance note: this task idea originated in a concurrent session's PR
-      (conductor PR #1360) that collided with this session's own t-029 close-out
-      (conductor PR #1362, merged first) -- both sessions independently reviewed the
-      same kind_robots PR #1114 within the same minute. PR #1360's roadmap/pitch edits
-      were superseded and closed unmerged, but this specific kaizen idea was salvaged
-      here since it's a genuinely good, independent suggestion distinct from anything
-      this session's own review proposed.
-
-      PROGRESS 2026-07-28 (conductor scheduled Agent run, claude-conductor-agentrun-20260728T220700-mb-t036):
-      implemented on kind_robots branch claude/confident-bardeen-oevtq7, kind_robots PR
-      #1122 (open, CI running). Added utils/scripts/verifyModelBuilderCompletionGate.ts,
-      mirroring verifyModelBuilderLinkCoverage.ts's regex-extraction approach: walks
-      every async function in modelBuilderStore.ts, finds any item.stages.<KEY> = write
-      after that function's own first await, and fails if it isn't wrapped (directly or
-      via a named helper like finishGenerateAssets) in an
-      if (item.stages.<KEY>.status === '...') guard for the same key. Added a self-test
-      (verifyModelBuilderCompletionGate.test.ts) against a synthetic fixture, wired both
-      into package.json and contract-tests.yml. Ran the checker against the store BEFORE
-      writing any fix and it immediately found a real, previously-unfixed instance of the
-      same bug class in commitItem(): the COMMIT stage write after the commit POST
-      resolves was unconditional, so a concurrent upstream edit landing mid-request would
-      silently overwrite a markDownstreamStale-set 'stale' marker back to 'approved'.
-      Fixed with finishCommit (mirrors finishGenerateAssets exactly), marking COMMIT
-      'in-progress' for the request duration and resetting it on failure via the same
-      gate. Verified: self-test passes; the checker also independently confirmed via
-      git-stash re-run against the pre-fix file that it correctly flags exactly that one
-      violation. eslint clean (2 pre-existing no-empty errors in modelBuilderStore.ts
-      confirmed pre-existing via git-stash). prettier --check clean. Full-project
-      vue-tsc --noEmit exit 0. DONE 2026-07-28 (conductor scheduled Agent run):
-      kind_robots PR #1122 merged (all 13 checks green, squash 5b97ffd).
+      Full history: projects/model-builder/HISTORY.md#t-036
     claimed_by: claude-conductor-agentrun-20260728T220700-mb-t036
     claimed_at: '2026-07-28T22:06:58Z'
     updated: '2026-07-28T22:06:58Z'
@@ -1012,7 +753,10 @@ tasks:
     passes: 0
     stakes: reversible
     owner: null
-    note: 'RAN 2026-08-01T01:37Z (conductor Agent run, session claude-quirky-curie-20260801T0130Z-mb-t037): implemented the outcome distinction in kind_robots. autoBuildItem() now returns a three-way outcome (''committed'' | ''skipped'' | ''failed'') instead of a boolean -- the same-item reentrancy guard (PR #1223) and manual-action-in-flight guard (PR #1224) both now return ''skipped'', a failed draft/generate/commit returns ''failed'', and completing (or already complete) returns ''committed''. batchAutoBuild and autoBuildRun tally skipped separately and append a "(N skipped -- manual action in progress, retry after it finishes)" note to their status message when nonzero, so a stalled batch item now reads as busy rather than silently looking identical to a real failure. Did not add automatic re-queuing of skipped items: the task note flagged it as optional to investigate, and re-queuing from inside the same loop risks re-racing the same still-in-flight manual action if the loop reaches the item again before it resolves. Extended verifyModelBuilderAutoBuildDraftGate.ts''s textual checks and self-test fixtures to require the new ''skipped''/''failed'' literals at the same anchor points the prior ''return false'' checks used. Verified: npx eslint/npx prettier --check clean on touched files (2 pre-existing no-empty errors and pre-existing prettier drift in the store confirmed unrelated via git stash); npx vue-tsc --noEmit -p tsconfig.json exit 0 full project; both draft-gate npm test scripts pass. kind_robots PR #1225: all 12 CI checks green, merged (0fa5b70). Kaizen suggestion: batchAutoBuild/autoBuildRun''s own triggering buttons have no pre-run ''N items busy'' advisory before starting, unlike the single-item Auto button''s isManualActionInFlight disable -- filed as t-038.'
+    note: >-
+      RAN 2026-08-01T01:37Z (conductor Agent run, session claude-quirky-curie-20260801T0130Z-mb-t037): implemented the outcome distinction in kind_robots.
+
+      Full history: projects/model-builder/HISTORY.md#t-037
     claimed_by: claude-quirky-curie-20260801T0130Z-mb-t037
     claimed_at: '2026-08-01T01:28:25Z'
     updated: '2026-08-01T01:40:32Z'
@@ -1024,7 +768,10 @@ tasks:
     passes: 0
     stakes: reversible
     owner: worker
-    note: 'Merged kind_robots PR #1226: promoted the per-item manual-action check (model-builder-item-panel.vue''s isManualActionInFlight) into modelBuilderStore.ts as isItemManualActionInFlight(itemId), and added a busyCount badge + tooltip to the batch editor''s ''Auto-build group'' and the progress matrix''s ''Auto-build all'' buttons. Advisory only, no hard block. Verified vue-tsc + eslint + prettier clean on all touched lines.'
+    note: >-
+      Merged kind_robots PR #1226: promoted the per-item manual-action check (model-builder-item-panel.vue's isManualActionInFlight) into modelBuilderStore.ts as isItemManualActionInFlight(itemId), and added a busyCount badge + tooltip to the batch editor's 'Auto-build group' and the p
+
+      Full history: projects/model-builder/HISTORY.md#t-038
     claimed_by: claude-scheduled-20260801T042657Z-mb-t038
     claimed_at: '2026-08-01T04:47:09Z'
     updated: '2026-08-01T05:04:33Z'
@@ -1037,21 +784,9 @@ tasks:
     stakes: reversible
     owner: null
     note: >-
-      Kaizen from t-029 (kind_robots PR #1239, 2026-08-01): assertRunWritable(run) was
-      added in server/api/model-builder/runs/index.ts and is called from all four
-      write-capable item routes (items/[id].patch.ts, items/batch.patch.ts,
-      items/[id]/artifacts.post.ts, items/[id]/commit.post.ts) to refuse writes once
-      ModelBuildRun.status is CANCELLED. Unlike the sibling client-side
-      cancelledRunIds checks, this one has no dedicated textual regression guard --
-      a future refactor could silently drop the assertRunWritable() call from one of
-      the four routes with nothing failing except a live end-to-end test this
-      sandbox can't run. Add
-      utils/scripts/verifyModelBuilderRunWritableGuard.ts (+ .test.ts) following
-      verifyModelBuilderItemPatchStageGuard.ts's narrow-textual-checker convention --
-      assert each of the four routes calls assertRunWritable(...) after
-      assertRunAccess(...) and before its first write -- and wire it into
-      package.json + .github/workflows/contract-tests.yml alongside the other Model
-      Builder guard steps.
+      Kaizen from t-029 (kind_robots PR #1239, 2026-08-01): assertRunWritable(run) was added in server/api/model-builder/runs/index.ts and is called from all four write-capable item routes (items/[id].patch.ts, items/batch.patch.ts, items/[id]/artifacts.post.ts, items/[id]/commit.post.
+
+      Full history: projects/model-builder/HISTORY.md#t-039
     claimed_by: null
     claimed_at: null
     updated: '2026-08-01T12:40:33Z'
@@ -1062,12 +797,10 @@ tasks:
     status: done
     passes: 0
     stakes: reversible
-    note: |-
-      Kaizen from t-029 (kind_robots PR #1729, 2026-08-10): commit.post.ts's final stageStatuses write now re-reads the current DB value immediately before merging in COMMIT, so a stage reopened mid-commit (PATCH /items/:id) can no longer be silently clobbered back to 'approved' -- but the race window itself is still open on the client: model-builder-item-panel.vue's isCommitting only disables the Commit button, not the Edit buttons on the item's other already-approved stages. Add the same isCommitting (or a commit-in-flight-for-this-item) guard to those Edit buttons so reopening a stage mid-commit is prevented at the source instead of only being made safe to lose server-side.
+    note: >-
+      Kaizen from t-029 (kind_robots PR #1729, 2026-08-10): commit.post.ts's final stageStatuses write now re-reads the current DB value immediately before merging in COMMIT, so a stage reopened mid-commit (PATCH /items/:id) can no longer be silently clobbered back to 'approved' -- but
 
-      Added commit-in-flight guards to all approved-stage Edit buttons so a user cannot reopen PITCH, FIELDS_AND_PROMPTS, or GENERATE_ASSETS while that item is committing.
-
-      Merged silasfelinus/kind_robots#1730 as 011dc10ef8b15b012ae469ec062ea4dea44a7607. All three approved-stage Edit buttons now disable while commitItem() is in flight for the same item, preventing PITCH, FIELDS_AND_PROMPTS, or GENERATE_ASSETS from being reopened mid-commit.
+      Full history: projects/model-builder/HISTORY.md#t-040
     claimed_by: 20260810T221406Z-modelbuilder-t040-srqbk
     claimed_at: '2026-08-10T22:14:06Z'
     updated: '2026-08-10T22:23:49Z'
@@ -1079,28 +812,10 @@ tasks:
     passes: 0
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#1829'
-    note: >
-      Kaizen from t-029 (kind_robots PR #1825, 2026-08-12, run-history cancellation-race
-      fix). The batch editor's background pushItem/batchPushItems calls already run-gate
-      their `{success:false}` response path, but the raw network-exception (rejection)
-      path still falls through to the global handleError -- so a request that throws
-      (rather than resolving with success:false) can still surface an error toast/state
-      for a run the user has since cancelled or moved away from, the same class of
-      "action still fires after the user's context changed" issue t-029's history-panel
-      fix addressed for the synchronous UI path. Find the pushItem/batchPushItems
-      catch blocks in modelBuilderStore.ts and gate the exception-path handling the same
-      way the success:false path already is (skip/no-op if the run is stale/cancelled),
-      rather than unconditionally calling handleError. Front-end/store change only; no
-      schema change expected.
+    note: >-
+      Kaizen from t-029 (kind_robots PR #1825, 2026-08-12, run-history cancellation-race fix).
 
-      IMPLEMENTED (2026-08-12T23:xxZ, this session): both catch blocks now mirror the
-      `.then` success:false branch -- gate on `if (runId)` and route through
-      `setStatusForRun(runId, 'error', ...)` instead of calling the unscoped global
-      `handleError()`. Added utils/scripts/verifyModelBuilderPushItemErrorScopeGuard.ts
-      (+ .test.ts self-test) as a static regression guard, following the same convention
-      as verifyModelBuilderCancelRunPollGuard.ts from t-029. Verified: vue-tsc clean,
-      test:lint-ratchet holds (339/24, -53, no rule worse), new guard passes against the
-      fix and fails against the pre-fix source. PR: kind_robots#1829, awaiting CI.
+      Full history: projects/model-builder/HISTORY.md#t-041
     claimed_by: 20260812T232745Z-agent-mb041
     claimed_at: '2026-08-12T23:29:05Z'
     owner: worker
@@ -1113,37 +828,10 @@ tasks:
     passes: 0
     stakes: reversible
     owner: null
-    note: >
-      Kaizen from t-029 (kind_robots PR #1859, 2026-08-13, batchSetField
-      confirmed-success fix). This is the third t-029 cycle in a row to find the same
-      shape of bug in stores/modelBuilderStore.ts: an async store action toasting
-      success/failure before (or without) actually awaiting/gating on the real server
-      outcome (see also PR #1838's draftText() run-scoping fix and PR #1829's
-      pushItem/batchPushItems exception-path scoping). Each cycle has so far added one
-      narrow verifyModelBuilder*Guard.ts per fixed function rather than a single guard
-      that audits the whole file's action surface at once. Build one meta-guard that
-      enumerates every exported/store action in modelBuilderStore.ts which calls a
-      toast/status function, and asserts each such action either (a) is not async and
-      has no server round-trip, or (b) awaits its async work and branches its
-      toast/status call on the confirmed result -- so the next new batch/draft/push-style
-      action added to the store gets this property checked automatically instead of
-      needing its own bespoke guard discovered a cycle later. Front-end/tooling change
-      only; no schema change expected.
+    note: >-
+      Kaizen from t-029 (kind_robots PR #1859, 2026-08-13, batchSetField confirmed-success fix).
 
-      DONE (conductor scheduled Agent run, 2026-08-13): implemented as
-      verifyModelBuilderConfirmedOutcomeGuard.ts. Computes the store's own
-      Promise-returning helpers directly from each function's signature (async, or
-      an explicit `: Promise<...>` return type -- pushItem's plain `void` return
-      correctly excludes it, matching the store's established fire-and-forget
-      convention) and flags any function with a 'success'-toned toast that also
-      contains a bare, unhandled call to one of those helpers ahead of it. New
-      self-test covers the buggy shape, the fixed shape, the `void`-marked
-      intentional fire-and-forget shape, and the established "fire a void-returning
-      helper, then toast on separately-confirmed work" pattern (verified this does
-      NOT false-positive against generateItemAsset). Guard passes clean against the
-      real store; all 24 pre-existing verifyModelBuilder* guards pass; eslint/
-      prettier clean; vue-tsc --noEmit clean. kind_robots PR #1860 merged squash
-      976ce28.
+      Full history: projects/model-builder/HISTORY.md#t-042
     claimed_by: null
     claimed_at: null
     updated: '2026-08-13T20:33:02Z'
@@ -1168,7 +856,10 @@ tasks:
     status: done
     passes: 0
     stakes: reversible
-    note: 'Coverage guard shipped: verifyModelBuilderAsyncFetchStalenessCoverage.ts (+ self-test) enumerates every performFetch( call site in modelBuilderStore.ts and requires each to carry a recorded staleness-guard classification, failing CI on a new unaudited call site. Audit found 6 distinct valid staleness idioms already in use (ticket-counter, capture-compare, cancelled-run-check, identity-check, serialized-lock, write-only), documented per-function with rationale -- does not blanket-require the ticket-counter shape. All 67 existing test:model-builder-* scripts pass, eslint/prettier/vue-tsc clean. Merged silasfelinus/kind_robots#1884.'
+    note: >-
+      Coverage guard shipped: verifyModelBuilderAsyncFetchStalenessCoverage.ts (+ self-test) enumerates every performFetch( call site in modelBuilderStore.ts and requires each to carry a recorded staleness-guard classification, failing CI on a new unaudited call site.
+
+      Full history: projects/model-builder/HISTORY.md#t-044
     owner: worker
     claimed_by: conductor-sweep-20260814T0703-mb-t044
     claimed_at: '2026-08-14T07:16:53Z'
@@ -1181,7 +872,10 @@ tasks:
     status: done
     passes: 0
     stakes: reversible
-    note: 'Done — implemented via a worktree-isolated background agent (foreground stayed in conductor throughout, per AGENTS.md hard safety rule 12). draftText() (autoBuildItem''s first step: PITCH, then FIELDS_AND_PROMPTS) was the one item.error-persistence gap left out of t-029 cycle 7 (kind_robots#1908) — its catch block only ever surfaced a transient setStatusForRun toast, so an empty/failed AI draft left no trace once the toast dismissed. Fix: draftText()''s catch block now sets+pushes item.error like the other four functions (its two mid-flight discard branches — edited/approved while drafting — deliberately do not, mirroring the existing "already approved" race guards elsewhere). Also resolved the deferred decision from cycle 7: updatePitch/updateFields/updatePrompt now clear item.error on a successful edit (manual or AI-drafted alike), avoiding the asymmetry where only an AI redraft cleared the banner. Extended the existing verifyModelBuilderErrorPersistenceGuard.ts guard (TARGET_FUNCTIONS + self-test) rather than adding a new guard file — no CI workflow changes needed. Verified: all 81 test:model-builder-* npm scripts pass, vue-tsc clean, eslint/prettier clean on touched files (2 pre-existing unrelated findings confirmed present on main before this change). kind_robots PR #1909, all checks green, squash-merged fce76a2.'
+    note: >-
+      Done — implemented via a worktree-isolated background agent (foreground stayed in conductor throughout, per AGENTS.md hard safety rule 12).
+
+      Full history: projects/model-builder/HISTORY.md#t-045
     owner: worker
     claimed_by: 20260816T112800Z-mb-t045
     claimed_at: '2026-08-16T11:28:21Z'

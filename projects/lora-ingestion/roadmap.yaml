@@ -49,15 +49,10 @@ tasks:
   status: done
   owner: claude
   stakes: reversible
-  note: 'conductor/ops/home-server/lora_import_agent.py — stdlib poller; on a
-    stable drop it runs kind_robots scan_loras.py (--organize move) then
-    import_catalog.py --upsert. Runs embedded as a daemon thread inside kr-relay
-    (relay_media_agent.start_lora_watcher) — one process/token/log, watcher and
-    render loop cannot stall each other. Host: the pm2 render box (alexandria is
-    a locked-down NAS; SMB is case-insensitive so Windows moves are safe post
-    case_merge). Verified live 2026-07-28 with ume_classic_impressionist
-    (detected Flux, moved, Resource created:1); Civitai flagged it nsfw so it
-    sorted NSFW — override to SFW via scan --overrides if wrong.'
+  note: >-
+    conductor/ops/home-server/lora_import_agent.py — stdlib poller; on a stable drop it runs kind_robots scan_loras.py (--organize move) then import_catalog.py --upsert.
+
+    Full history: projects/lora-ingestion/HISTORY.md#t-002
 - id: t-003
   milestone: m2
   title: "Reconcile later Resource-backed generation evidence; run one current smoke only if proof is still missing"
@@ -102,10 +97,10 @@ tasks:
   title: Add civitaiModelId/civitaiModelVersionId + fix resourceMutationSelect
   status: done
   stakes: reversible
-  note: |-
-    Landed on kind_robots branch claude/lora-organization-catalog-coyhav (commit f1a9585). Migration 20260728120000 adds civitaiModelId + civitaiModelVersionId (Int?, indexed, ADD COLUMN IF NOT EXISTS); create.ts validates/emits them and allows them through the field guard; batch.post.ts carries them in the upsert update; resourceMutationSelect now also echoes triggerWords/defaultTrigger/hash/previewImageUrl + the two new columns; scan_loras.py captures modelId/modelVersionId (Civitai + CivArchive) and emits them from to_resource(); prisma client regenerated. Needs: a PR opened + merged to kind_robots main, then migrate deploy on kindblank_fresh.
+  note: >-
+    Landed on kind_robots branch claude/lora-organization-catalog-coyhav (commit f1a9585).
 
-    Reconciled during the open-roadmap drift audit. Kind Robots PR #1124 merged the Civitai model/version columns, migration, mutation-select fields, and catalog import support described by this task. The implementation is on main, so review is complete.
+    Full history: projects/lora-ingestion/HISTORY.md#t-004
   updated: '2026-08-03T07:15:03Z'
 - id: t-005
   milestone: m4
@@ -113,12 +108,10 @@ tasks:
   status: done
   stakes: reversible
   depends_on: [t-004]
-  note: |-
-    Landed on kind_robots branch claude/lora-organization-catalog-coyhav (commit c4bdb60). pages/lora.vue (My Library + Discover-stub tabs) + components/lora/{lora-card,add-lora,lora-gallery}.vue built on reactable-card; resourceStore.visibleLoras adds LORA/LYCORIS + maturity gating. Search + base-model + maturity + sort filters, client-side pagination, add/edit via updateResource (PATCH) / batch upsert. All SFCs compile clean. Ships with t-004 in the same PR.
+  note: >-
+    Landed on kind_robots branch claude/lora-organization-catalog-coyhav (commit c4bdb60).
 
-    Reconciled during the open-roadmap drift audit. Kind Robots PR #1124 merged the My Library LoRA browser, filtering, maturity handling, pagination, and add/edit surfaces described by this task. The implementation is on main, so review is complete.
-
-    CORRECTION (2026-08-16, lora-ingestion/t-007): the file paths above are stale. The front end was later rebuilt content-driven and none of `pages/lora.vue`, `components/lora/lora-card.vue`, or `components/lora/lora-gallery.vue` exist on current kind_robots main. The actual shipped surface is `content/resources.md` (route `/resources`, channelKey `play`, tabKey `resources`) mounting `components/resources/resource-manager.vue`, which embeds the Library/Discover tabs, backed by `components/resources/resource-gallery.vue` and `components/resources/resource-card.vue`. `components/lora/add-lora.vue` and `components/lora/lora-discover.vue` still exist and match. Functionally equivalent rename/rebuild, not a regression.
+    Full history: projects/lora-ingestion/HISTORY.md#t-005
   updated: '2026-08-16T05:29:00Z'
 - id: t-006
   milestone: m5
@@ -126,10 +119,10 @@ tasks:
   status: done
   stakes: outward-facing
   depends_on: [t-005]
-  note: |-
-    Landed + gaps closed. kind_robots (PR #1124): DownloadRequest model + migration 20260728133000; /api/lora/download-request (dedupes owned + in-flight), /download/claim (atomic claim + reaper), /download/[id]/complete; browse.get.ts is source-aware — Civitai keyword search AND CivArchive by-id/URL lookup (recovers removed models), owned-flag + updatable (own-a-different-version) + maturity clamp; lora-discover.vue with source toggle + Update action + Discover tab. conductor (088ebfdc): lora_import_agent.py download loop (claim -> fetch, Civitai token redacted, .part atomic write -> complete; direct URLs cover CivArchive downloads). Verified: npm run test (vue-tsc) clean + resource-ownership contract passes; gallery/mutation selects echo the new columns. Remaining nicety: resourceId back-link on complete is best-effort null (owned-detection reads Resource.civitaiModelVersionId set by the catalog).
+  note: >-
+    Landed + gaps closed.
 
-    Reconciled during the open-roadmap drift audit. Kind Robots PR #1124 merged the Discover browser and DownloadRequest queue, while the Conductor import agent landed the matching claim/download/complete loop. The task note already records the implementation and verification; review is complete. End-to-end relay verification remains separately and correctly tracked by t-003.
+    Full history: projects/lora-ingestion/HISTORY.md#t-006
   updated: '2026-08-03T07:15:05Z'
 
 - id: t-007
@@ -139,28 +132,10 @@ tasks:
   owner: reviewer
   passes: 0
   stakes: reversible
-  note: >
-    Kaizen from the 2026-08-16 weekly site audit. t-005/t-006 (both done)
-    describe the front end as `pages/lora.vue` (My Library + Discover tabs)
-    plus `components/lora/{lora-card,lora-gallery}.vue`. None of those three
-    exact files exist on current kind_robots main. The actual shipped
-    surface is content-driven: `content/resources.md` (route `/resources`,
-    channelKey `play`, tabKey `resources`) mounting
-    `components/resources/resource-manager.vue`, which itself embeds the
-    Library/Discover tabs, backed by `resource-gallery.vue` and
-    `resource-card.vue` (`components/lora/add-lora.vue` and
-    `components/lora/lora-discover.vue` do still exist and match). This is a
-    live, functionally-equivalent rename/rebuild with no correction note
-    anywhere recording it -- unlike ruler-hooked/t-013 or alexa-
-    integration/t-019, which self-corrected the same class of drift. Add a
-    short dated note to t-005 and/or t-006 recording the actual current
-    file paths.
+  note: >-
+    Kaizen from the 2026-08-16 weekly site audit.
 
-    DONE (2026-08-16): added a dated correction note directly to t-005
-    recording the actual current file paths (content/resources.md +
-    components/resources/{resource-manager,resource-gallery,resource-card}.vue).
-    Conductor-repo-only doc fix; no kind_robots implementation needed since
-    the front end already matches reality, only the roadmap note was stale.
+    Full history: projects/lora-ingestion/HISTORY.md#t-007
   claimed_by: sched-conductor-lora-t007-20260816T052922Z
   claimed_at: '2026-08-16T05:29:23Z'
   updated: '2026-08-16T05:35:00Z'
@@ -171,13 +146,10 @@ tasks:
   status: done
   passes: 0
   stakes: reversible
-  note: |-
-    Silas-directed 2026-08-24 cleanup tool. Add a disposable Kind Robots admin page that loads canonical LoRA/LyCORIS Resource records, stages SFW/NSFW classifications in localStorage, supports batch classification and hiding already-confirmed rows, and saves only changed Resource.isMature values through the existing Resource update API. Keep the implementation self-contained so the page/store can be deleted after the catalog cleanup is complete.
+  note: >-
+    Silas-directed 2026-08-24 cleanup tool.
 
-
-    Implemented the temporary Kind Robots /admin/lora-triage page and dedicated localStorage-backed Pinia store on the worker branch. The page batch-stages SFW/NSFW decisions, hides confirmed rows, paginates the catalog, and saves only changed Resource.isMature values through the existing Resource PATCH path.
-
-    Merged Kind Robots PR #2077. Added temporary /admin/lora-triage and a dedicated localStorage-backed triage store; batch SFW/NSFW decisions, hide-confirmed progress, filtering/pagination, and changed-only Resource.isMature saves now use the existing PATCH path. Final PR head passed TypeScript, Layout Contract, Contract Tests, architecture/scroll/API/facet and all other PR workflows.
+    Full history: projects/lora-ingestion/HISTORY.md#t-008
   claimed_by: 2026-08-25T003700Z-lora-ingestion-t-008-9c71
   claimed_at: '2026-08-25T00:37:00Z'
   updated: '2026-08-25T00:55:00Z'

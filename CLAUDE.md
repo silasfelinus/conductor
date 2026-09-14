@@ -57,6 +57,19 @@ At the start of every session, before responding to any task, run a conductor sw
      said so; its log just ends, ~37 hours before Silas noticed). A MISSING digest is exit 0 with a
      "not configured yet" note, so this stays quiet until the User Script is scheduled and the
      digest is published off the host. No network/token needed for a local digest path.
+   - `python scripts/check_roadmap_note_size.py` — watches the one hard ceiling in this repo.
+     `scripts/sync_kind_robots_projection.py` POSTs the raw text of every roadmap under
+     `MAX_PAYLOAD_BYTES = 4_000_000`; crossing it fails `tests/test_sync_kind_robots_projection.py`
+     and stops the Kind Robots board syncing. That happened on 2026-09-11 at 4,000,134 bytes with
+     **no prior warning**, and three days later the payload was back to 93.4% — because t-151's fix
+     only watched a *single* note over 50KB, while the real shape was 154 medium notes summing to
+     411KB in one file (conductor/t-158, 2026-09-14). It now reports three things: oversized single
+     notes, oversized roadmap *files*, and the actual projection headroom. **Report the headroom
+     line every session** — `--payload-only` prints just that line. Exit 1 past any threshold or
+     80% of the limit; advisory, never a gate. The fix is
+     `python scripts/archive_done_task_notes.py --all`, which moves done-task notes into
+     `projects/<slug>/HISTORY.md` verified byte-for-byte under AGENTS.md's archival carve-out. No
+     network/token needed.
    - `python scripts/check_priority_queue_starvation.py` — `projects/priority.yaml` is the
      deterministic worker pickup order, but nothing else reports how deep a session had to walk
      it before finding a `status: ready` task (conductor/t-149, filed 2026-09-11: the first six
@@ -128,6 +141,9 @@ Then report:
   projects the queue walked past before landing on real work, and why each was skipped
 - **Needs-human gates** from active projects only (what only Silas can unblock, grouped by project)
 - **State reconciliation** findings (merged-PR drift, stale-gate signals, or milestone/task mismatches)
+- **Projection headroom**: the `check_roadmap_note_size.py` payload line (bytes used against the
+  4,000,000 limit, and headroom). Report it every session — it is the repo's only hard ceiling, and
+  when it broke on 2026-09-11 nothing had warned that it was close
 - **Container log triage** (Alexandria): new/spiking/newly-quiet log signatures, or a stale
   digest meaning the daily User Script stopped running — omit entirely when not configured yet
 - **Any unresolved escalations** from TALKBACK

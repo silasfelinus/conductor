@@ -201,3 +201,93 @@ def test_render_names_project_task_and_size_and_archive_pattern():
     assert "[recurring]" in text
     assert "395,000 bytes" in text
     assert "T104-HISTORY.md" in text
+
+
+# --------------------------------------------------------------------------- #
+# conductor/t-158: the per-file and whole-payload checks. The per-note threshold
+# above never saw the shape that actually refilled the payload three days after
+# t-104 was archived -- many medium notes in one file, none individually large.
+
+
+def test_file_findings_flags_a_large_roadmap_with_no_single_large_note(tmp_path):
+    """The t-158 failure mode: 40 x 5KB notes trip nothing per-note, but the file
+    is large and the payload is what actually has a ceiling."""
+    tasks = "\n".join(
+        f"- id: t-{i:03d}\n  status: done\n  title: x\n  note: {'y' * 5000}" for i in range(40)
+    )
+    write_roadmap(tmp_path, "bulky", f"tasks:\n{tasks}\n")
+    write_overrides(tmp_path, [("bulky", "active")])
+
+    notes = note_size.scan(
+        projects_dir=tmp_path / "projects",
+        overrides_path=tmp_path / "project-overrides.yaml",
+        check_payload=False,
+    )
+    assert notes["findings"] == [], "no single note should exceed the per-note threshold"
+
+    files = note_size.file_findings(
+        projects_dir=tmp_path / "projects",
+        overrides_path=tmp_path / "project-overrides.yaml",
+        file_threshold_bytes=100_000,
+    )
+    assert [f["project"] for f in files] == ["bulky"]
+    assert files[0]["file_bytes"] > 100_000
+
+
+def test_file_findings_includes_inactive_projects_by_default(tmp_path):
+    """roadmap_map() ships every roadmap regardless of project status, so a
+    retired project's file counts against the ceiling exactly as much."""
+    write_roadmap(tmp_path, "retired-but-big", f"tasks:\n- id: t-001\n  note: {'z' * 60000}\n")
+    write_overrides(tmp_path, [("retired-but-big", "retired")])
+
+    files = note_size.file_findings(
+        projects_dir=tmp_path / "projects",
+        overrides_path=tmp_path / "project-overrides.yaml",
+        file_threshold_bytes=10_000,
+    )
+    assert [f["project"] for f in files] == ["retired-but-big"]
+
+
+def test_payload_line_reports_headroom_and_warns_past_the_ratio():
+    ok = note_size.render_payload_line(
+        {
+            "measured": True,
+            "payload_bytes": 1_600_000,
+            "limit_bytes": 4_000_000,
+            "headroom_bytes": 2_400_000,
+            "ratio": 0.4,
+            "over_warn": False,
+        }
+    )
+    assert "1,600,000 / 4,000,000" in ok
+    assert "40.0%" in ok
+    assert "headroom 2,400,000" in ok
+
+    text = note_size.render(
+        {
+            "findings": [],
+            "threshold_bytes": 50_000,
+            "file_findings": [],
+            "file_threshold_bytes": 150_000,
+            "payload": {
+                "measured": True,
+                "payload_bytes": 3_900_000,
+                "limit_bytes": 4_000_000,
+                "headroom_bytes": 100_000,
+                "ratio": 0.975,
+                "over_warn": True,
+            },
+        }
+    )
+    assert "archive_done_task_notes.py" in text
+    assert "4,000,134" in text, "the warning should name the time it actually broke"
+
+
+def test_payload_line_degrades_gracefully_when_unmeasurable():
+    assert "not measured" in note_size.render_payload_line({"measured": False})
+
+
+def test_render_still_works_without_the_t158_keys():
+    """render() is called by older callers with only the per-note keys."""
+    text = note_size.render({"findings": [], "threshold_bytes": 50_000})
+    assert "No oversized roadmap note" in text

@@ -80,15 +80,10 @@ tasks:
     updated: "2026-07-13T23:03:00-07:00"
     passes: 0
     stakes: reversible
-    note: >
-      Shipped through kind_robots PR #237, squash commit
-      afb88af80c2ae3816c6698830e13169e1b805ebf. stores/animationCatalog.ts is now the
-      single metadata registry; effect ids are derived from it and Nuxt lazy components are
-      resolved by filename convention in Screen FX and startup-animation. Added
-      components/screenfx/bioluminescent-tide.vue: a passive, generationSafe wallpaper eligible
-      for random startup selection, with cursor wake and click ripples that do not capture input,
-      reduced-motion behavior, capped DPR, ResizeObserver sizing, and full listener/RAF cleanup.
-      TypeScript Type Check and Contract Tests passed before merge.
+    note: >-
+      Shipped through kind_robots PR #237, squash commit afb88af80c2ae3816c6698830e13169e1b805ebf.
+
+      Full history: projects/animation-manager/HISTORY.md#t-003
 
   - id: t-004
     milestone: m3
@@ -98,42 +93,10 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: t-003
-    note: >
-      Use the existing Component model exactly for its stated museum-of-development-attempts
-      purpose; no schema change. Define one Component row per animation build using folderName
-      screenfx, a stable componentName such as bioluminescent-tide@v1, title, working/broken/
-      construction flags, and structured notes with animation slug, build number, commit/PR,
-      technique, quality checklist, and supersedes/supersededBy links. Reactions already support
-      reactionCategory COMPONENT and componentId. Add store helpers and API-backed list/create/
-      update/reaction flows without front-end components calling routes directly.
+    note: >-
+      Use the existing Component model exactly for its stated museum-of-development-attempts purpose; no schema change.
 
-      IMPLEMENTED 2026-07-19 (conductor-burst session, kind_robots PR #564): found the
-      Component/Reaction CRUD infra (componentStore.ts, componentHelper.ts, reactionStore.ts)
-      already fully built and unused by any caller -- reactionCategory COMPONENT was already
-      wired end-to-end. The actual gap was the animation-specific naming/tag convention, so
-      added stores/helpers/animationComponentHelper.ts (componentName "<slug>@v<build>",
-      folderName screenfx, listAnimationAttempts/getLatestAnimationAttempt/nextBuildNumber)
-      plus componentStore.ts's recordAnimationAttempt/linkSupersededAnimationAttempt actions.
-      Two deviations from this note's literal wording, both documented in SPEC.md's Attempt
-      records section: (1) "working/broken/construction flags" map to the existing ComponentStatus
-      enum (WORKING/UNDER_CONSTRUCTION/BROKEN/...) -- the boolean fields were already retired
-      from the live schema before this task started; (2) the structured ledger (slug, build,
-      commit/PR, technique, quality checklist, supersedes/supersededBy) lives in the `tags` JSON
-      column, not `notes` -- `notes` is an uncapped VARCHAR(191) with no app-layer length limit,
-      real risk of silent truncation for a growing JSON blob. `tags` existed on the model already
-      (component_canonical_expand migration) but no route exposed it; added support to both
-      server/api/components/index.post.ts and [id].patch.ts (also widened the PATCH componentName
-      regex to allow "@"). Added utils/scripts/verifyAnimationComponentAttempts.ts (npm run
-      test:animation-component-attempts, wired into contract-tests.yml) covering every one of
-      the 30 catalog slugs against the real server-side componentName validation, plus
-      listing/supersession logic. Verified clean: the new contract test, the existing
-      verifyNoPrismaJsonCast.ts guard (confirmed the new `tags` cast doesn't trip the
-      InputJsonValue ban -- it's a legitimate native-Json-column cast, kind-robots/t-033
-      territory), full vue-tsc typecheck, and eslint on every touched file. No live DB in this
-      sandbox, so did not attempt to backfill historical builds (bioluminescent-tide@v1,
-      gravity-garden@v1) or exercise the new store actions end-to-end -- left as a follow-up
-      once someone has DB access; t-007 (which depends on this task) will create the first
-      real attempt record on its next build regardless.
+      Full history: projects/animation-manager/HISTORY.md#t-004
     claimed_by: claude-conductor-burst-20260719T2100Z
     claimed_at: '2026-07-19T21:04:59Z'
     updated: '2026-07-19T21:25:18Z'
@@ -146,41 +109,10 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: t-004
-    note: >
-      Add a Kind Robots Animation Manager surface linked from Screen FX. Show catalog effects,
-      conductor pitch status, Component build history, aggregate Reaction/rating signals,
-      working/construction/broken state, version lineage, and actions to preview, compare,
-      promote, polish, or retire. Use an animationManagerStore for API and local state. Do not
-      create a second effect registry; the UI reads stores/animationCatalog.ts.
+    note: >-
+      Add a Kind Robots Animation Manager surface linked from Screen FX.
 
-      DONE 2026-07-20 (conductor-burst session, kind_robots PR #590, squash ad145742): shipped
-      a new /animation-manager tab in the wonder dashboard, linked from Screen FX's header
-      ("Manage builds"). stores/animationManagerStore.ts is a thin view-model composing the
-      existing componentStore (t-004's recordAnimationAttempt convention) + animationStore
-      (live preview trigger) + animationCatalog.ts -- no duplicate CRUD layer, no second
-      registry. components/animation/animation-manager.vue reuses components/wonderlab/
-      component-card.vue (already wired to Reaction ratings) for the gallery grid, a detail
-      sidebar with full version history, and a two-up compare view. Actions: Preview (triggers
-      the effect live), Compare, Promote (-> WORKING), Polish (-> UNDER_CONSTRUCTION), Retire
-      (-> RETIRED), all as Component status transitions on the attempt row.
-
-      Two deviations from the note's literal wording, both flagged for Reviewer in the PR: (1)
-      "conductor pitch status" is not deeply wired -- no kind_robots API exposes this project's
-      PITCHES.yaml (it lives only in this conductor repo), so rather than fabricate a second
-      source of truth the UI links out to the existing /conductor page instead; (2) promote
-      doesn't yet auto-supersede a prior WORKING build of the same effect (componentStore's
-      linkSupersededAnimationAttempt exists but wasn't wired in -- left as the kaizen task).
-
-      CI caught a real gap on first push: content/animation-manager.md declared channelKey lab
-      / tabKey animation-manager but nothing registered that tab, so verifyChannelContent.ts
-      failed with "references unknown tab lab/animation-manager". Fixed by adding
-      content/channels/lab/animation-manager.md (mirrors screen-fx.md's shape). Verified: npm
-      run test (vue-tsc, clean), eslint (clean), and every relevant test:* contract script
-      (channel-content, channel-resolver, tutorial-channel-resolver, wonderlab-*,
-      animation-catalog, animation-component-attempts) all green before and after the fix. No
-      live DB in this sandbox, so promote/polish/retire and initialize() were not exercised
-      against real data -- left as a live-smoke follow-up once DB/Vercel-preview access is
-      available in a session (same limitation t-004 hit).
+      Full history: projects/animation-manager/HISTORY.md#t-005
     claimed_by: claude-conductor-burst-20260720T000606Z
     claimed_at: '2026-07-20T00:06:06Z'
     updated: '2026-07-20T00:29:00Z'
@@ -264,7 +196,10 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: t-003
-    note: 'Done via kind_robots PR #251 (merged, squash sha 683dd2e3): added utils/scripts/verifyAnimationCatalog.ts (npm run test:animation-catalog) and docs/architecture/animation-catalog-smoke-matrix.md. Script checks unique catalog ids, filename-to-lazy-component resolution (handles dotted filenames), valid preferredSurface values, a generationSafe/blocksInput invariant, and no stale preference/fallback ids (DEFAULT_PREFERENCES.startupEffect, pickRandomEffect''s fallback literal, every narratorAnimationAliases target). Follow-up t-010 filed for an unrelated stale ''bubble-effect'' id found in displayStore''s legacy (pre-t-003) EffectId system.'
+    note: >-
+      Done via kind_robots PR #251 (merged, squash sha 683dd2e3): added utils/scripts/verifyAnimationCatalog.ts (npm run test:animation-catalog) and docs/architecture/animation-catalog-smoke-matrix.md.
+
+      Full history: projects/animation-manager/HISTORY.md#t-008
     updated: '2026-07-14T14:02:41Z'
 
   - id: t-009
@@ -274,7 +209,10 @@ tasks:
     owner: worker
     passes: 0
     stakes: reversible
-    note: 'Merged: conductor PR #836. scripts/check_animation_novelty.py ships the Jaccard keyword-overlap novelty check (technique+surprise, --pitch/--threshold/--json/--strict), advisory by default per SPEC.md''s not-an-auto-reject intent. Also fixed a latent YAML syntax bug in PITCHES.yaml (unquoted colon in tiny-weather-front''s surprise field) that had made the file unparseable to any loader -- caught only because this task''s script was the first thing to ever read it. 13 new tests, full suite green (374 passed, 1 skipped).'
+    note: >-
+      Merged: conductor PR #836.
+
+      Full history: projects/animation-manager/HISTORY.md#t-009
     claimed_by: claude-conductor-burst-20260719-rotation-animation-manager
     claimed_at: '2026-07-19T07:10:26Z'
     updated: '2026-07-19T08:12:54Z'
@@ -286,28 +224,10 @@ tasks:
     owner: worker
     passes: 1
     stakes: reversible
-    note: >
-      Found while building t-008's verification script (kind_robots PR #251). kind_robots
-      stores/displayStore.ts's EffectId type and animationOptions array (a separate,
-      pre-centralization debug-only system used only by components/screenfx/animation-tester.vue
-      and components/admin/screen-debug.vue) include the id 'bubble-effect', which does not
-      exist in stores/animationCatalog.ts — the single source of truth since t-003. There is an
-      orphaned components/screenfx/bubble-effect.vue file, never registered in the catalog.
-      Options: (a) register bubble-effect properly in animationCatalog.ts if the effect is worth
-      keeping, or (b) retire displayStore's whole legacy EffectId/animationOptions/currentAnimation
-      path (and animation-tester.vue) in favor of the centralized animationStore, if it's fully
-      superseded. Out of scope for t-008 since it's a different, non-catalog system; scoped here
-      as its own task. Not registered against verifyAnimationCatalog.ts since that script
-      intentionally only covers the animationCatalog.ts-based system.
+    note: >-
+      Found while building t-008's verification script (kind_robots PR #251).
 
-      RESOLVED 2026-07-18 (conductor-burst session): went with option (a) — registered
-      bubble-effect in stores/animationCatalog.ts (kind_robots PR #390, merged). Confirmed
-      bubble-effect.vue is a real, visually distinct effect (colorful per-bubble-color SVG
-      circles with a pop-on-leave animation) worth keeping, not a duplicate of fizzy-bubbles
-      (white glowing bubbles), and that animation-loader.vue's effectMap was already fully
-      wired to render it — it was purely a missing catalog registration, not orphaned code.
-      Verified with npm run test:animation-catalog (30 effects, unique ids, all screenfx
-      components resolved) and npm run test (vue-tsc --noEmit), both clean.
+      Full history: projects/animation-manager/HISTORY.md#t-010
     claimed_by: claude-conductor-burst-20260718T081118Z-838175
     claimed_at: '2026-07-18T08:11:21Z'
     updated: '2026-07-18T08:11:21Z'
@@ -319,29 +239,10 @@ tasks:
     owner: reviewer
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from Reviewer's t-009 review (conductor PR #836): the novelty check exists but
-      is manual-invocation-only, so a near-duplicate pitch can still land silently if nobody
-      remembers to run it. Add a CI step (advisory, non-blocking — do not pass --strict) that
-      runs scripts/check_animation_novelty.py whenever PITCHES.yaml changes and surfaces any
-      flagged pairs in the job output/PR, matching the "not an auto-reject" intent already in
-      the script and its originating task.
+    note: >-
+      Kaizen from Reviewer's t-009 review (conductor PR #836): the novelty check exists but is manual-invocation-only, so a near-duplicate pitch can still land silently if nobody remembers to run it.
 
-
-      DONE 2026-07-19 (conductor-burst rotation, claude-conductor-burst-20260719T1400Z): added
-      .github/workflows/animation-novelty-check.yml, triggered on `pull_request` when
-      projects/animation-manager/PITCHES.yaml or scripts/check_animation_novelty.py changes.
-      Runs `python scripts/check_animation_novelty.py` (no `--strict`), matching the script's
-      existing advisory intent — the job always exits 0 and any flagged pairs print straight
-      into the check's log output for a reviewer to see, without failing the PR. Modeled on
-      roadmap-audit.yml's path-triggered pattern already used elsewhere in this repo. Verified
-      the workflow YAML parses (`yaml.safe_load`) and the existing 13-test
-      tests/test_check_animation_novelty.py suite still passes unchanged (no script logic
-      touched). No new test added for the workflow file itself — GitHub Actions workflows
-      aren't unit-testable from this sandbox; correctness was checked by YAML validation plus
-      matching the exact CLI invocation (`python scripts/check_animation_novelty.py`, no args)
-      already covered by the script's own tests and its documented advisory default. Merged
-      conductor PR #856 (squash edba0494), all 23 checks green, no review comments.
+      Full history: projects/animation-manager/HISTORY.md#t-011
     claimed_by: claude-conductor-burst-20260719T1400Z
     claimed_at: '2026-07-19T14:08:14Z'
     updated: '2026-07-19T14:16:41Z'
@@ -353,30 +254,10 @@ tasks:
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-005's review (kind_robots PR #590): stores/animationManagerStore.ts's
-      promoteAttempt() sets the chosen build's status to WORKING but does not call
-      componentStore's existing linkSupersededAnimationAttempt() against the effect's
-      previous WORKING build (if any), so "promote" can leave more than one WORKING attempt
-      for the same catalog effect. Wire promoteAttempt() to look up the prior WORKING attempt
-      for that slug (componentStore.allComponents filtered via listAnimationAttempts, status
-      WORKING, excluding the one being promoted) and call linkSupersededAnimationAttempt on it
-      before/after setting the new status, so promoting always leaves exactly one WORKING
-      attempt per effect. Verify with a focused addition to
-      utils/scripts/verifyAnimationComponentAttempts.ts or a small new store-level test if one
-      exists; full vue-tsc + eslint as usual.
+    note: >-
+      Kaizen from t-005's review (kind_robots PR #590): stores/animationManagerStore.ts's promoteAttempt() sets the chosen build's status to WORKING but does not call componentStore's existing linkSupersededAnimationAttempt() against the effect's previous WORKING build (if any), so "pr
 
-
-      DONE 2026-07-20 (conductor burst cycle claude-conductor-burst-20260720T0500Z):
-      extracted the lookup as a pure findAttemptToSupersede() helper in
-      stores/helpers/animationComponentHelper.ts (finds the other WORKING attempt for the
-      same slug, excluding the one being promoted, or null if unparseable/none found) and
-      wired promoteAttempt() to call componentStore.linkSupersededAnimationAttempt() on it
-      before setting the promoted attempt's own status. Covered slug-matching,
-      self-exclusion, no-prior-WORKING, and unparseable-componentName cases in
-      verifyAnimationComponentAttempts.ts. Verified via npm run test:animation-component-attempts,
-      full npm test (vue-tsc, clean), and eslint on all changed files (clean). kind_robots
-      PR #613, squash f276662.
+      Full history: projects/animation-manager/HISTORY.md#t-012
     claimed_by: claude-conductor-burst-20260720T0500Z
     claimed_at: '2026-07-20T04:05:35Z'
     updated: '2026-07-20T04:05:35Z'
@@ -388,65 +269,10 @@ tasks:
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-007 (Reviewer, kind_robots PR #887, 2026-07-22): four consecutive
-      animation-manager builds -- paper-lantern-weather (PR #627), magnetic-sand-garden
-      (PR #785), stained-glass-rain (PR #838), and clockwork-greenhouse (PR #887) -- all
-      carry the identical deferred item in PITCHES.yaml's builds: record: "Live browser
-      smoke test (docs/architecture/animation-catalog-smoke-matrix.md) -- no reachable
-      DATABASE_URL in the sandbox; server/utils/prisma.ts throws on every SSR request"
-      plus the matching deferred Component attempt record (SPEC.md "Attempt records").
-      Four repeats of the same paragraph is the threshold this file's own convention
-      uses to promote a recurring note into a real task instead of a fifth PR carrying
-      the same caveat.
+    note: >-
+      Kaizen from t-007 (Reviewer, kind_robots PR #887, 2026-07-22): four consecutive animation-manager builds -- paper-lantern-weather (PR #627), magnetic-sand-garden (PR #785), stained-glass-rain (PR #838), and clockwork-greenhouse (PR #887) -- all carry the identical deferred item i
 
-      Two ways to close this out, either is acceptable:
-      (a) A session with real DATABASE_URL/Vercel preview access (see AGENTS.md's
-      "Visually verifying a front-end change" section for the Vercel MCP path) runs the
-      smoke matrix against all four candidates on a live deployment, creates each
-      effect's Component attempt record, and promotes each PITCHES.yaml builds: entry
-      from candidate to shipped.
-      (b) If no such access materializes for a while, investigate whether a throwaway
-      SQLite or local Postgres the sandbox *can* reach would let server/utils/prisma.ts
-      not throw on SSR for just enough of a smoke pass to satisfy the matrix, without
-      touching any real database -- and if that's not practical either, fold "deferred,
-      same sandbox limitation" into this task's own formal acceptance bar so future PRs
-      stop re-explaining it per diff.
-
-      RESOLVED 2026-07-26 (burst-mode cycle, path (b)): re-verified both blockers before
-      falling back to the formal-acceptance-bar route. (1) Local DB workaround: no Docker
-      daemon is reachable in this sandbox (`docker info` fails, no `/var/run/docker.sock`),
-      so a throwaway local MySQL is not practical here; kind_robots'
-      `provision_kind_robots_deps.sh` dummy `DATABASE_URL` only unblocks `vue-tsc`/`prisma
-      generate`, never a running server, confirming the note above. (2) Vercel path:
-      confirmed Vercel MCP access works (`list_teams`/`list_projects`/`list_deployments`,
-      production `READY`) and its `web_fetch_vercel_url` can fetch the live homepage's
-      SSR markup server-side, but it is a one-shot static fetch -- no click/resize/
-      `prefers-reduced-motion` emulation -- so it cannot drive the smoke matrix's
-      interactive rows. Also tried a real headless Chromium (the sandbox's pre-installed
-      browser) through the sandbox's own egress proxy: `ERR_CONNECTION_RESET` on direct
-      HTTPS to `kind-robots.vercel.app` (and to a plain `example.com` control case),
-      confirming the egress policy -- not a cert/config bug -- blocks arbitrary
-      interactive browser sessions to the live site from here.
-      Formalized the fix per option (b): added a "Sandbox verification gap" section to
-      SPEC.md documenting both findings once and defining a standing acceptance-bar
-      exception -- a candidate that passes CI (TypeScript, contract tests,
-      test:animation-catalog, test:animation-component-attempts) and satisfies the
-      Non-negotiable experience contract by code review may ship with its live smoke
-      test and Component attempt record tracked under one stable tag
-      (`sandbox-access-gap`) instead of a fresh explanation per PR. Ran both verification
-      scripts fresh against current kind_robots main (via
-      provision_kind_robots_deps.sh) -- both pass. Applied the exception to all five
-      builds that had accumulated the identical deferred note (paper-lantern-weather,
-      magnetic-sand-garden, stained-glass-rain, clockwork-greenhouse, and a fifth that
-      landed since this task was filed, moth-constellation #1010) plus cloud-city-drift
-      (#949, same blocker, same fix, otherwise would have re-triggered this same kaizen
-      next cycle) -- promoted PITCHES.yaml status: candidate -> shipped and normalized
-      each `deferred:` list to the one-line tag. Component attempt records themselves
-      remain genuinely un-created (still require live DB write access) -- that
-      backfill work is tracked by the `sandbox-access-gap` tag on each build per the new
-      SPEC.md section, to be cleared by whichever future session has real DB/interactive
-      browser access, oldest first.
+      Full history: projects/animation-manager/HISTORY.md#t-013
     updated: '2026-07-26T17:16:00Z'
     claimed_by: claude-conductor-burst-20260726T180000Z-am-t013
     claimed_at: '2026-07-26T17:06:28Z'
@@ -457,13 +283,10 @@ tasks:
     status: done
     passes: 0
     stakes: reversible
-    note: |-
-      Kaizen from t-007 (Reviewer, kind_robots PR #949, 2026-07-25): while building cloud-city-drift this cycle, found utils/scripts/verifyAnimationCatalog.ts had been throwing on current kind_robots main for three days (since commit b3d75ab, 2026-07-22) -- DEFAULT_PREFERENCES.startupEffect legitimately resolves to the 'random' sentinel, but the script asserted it must always be a literal catalog id. Fixed in PR #949, but it only surfaced because this session happened to run the script locally while verifying: .github/workflows/contract-tests.yml only runs test:animation-component-attempts, never test:animation-catalog, so the regression was invisible to CI the whole time. Add a "Animation catalog contract" step running `npm run test:animation-catalog` alongside the existing animation-component-attempts step in contract-tests.yml, so a future regression in catalog/id/surface/generationSafe invariants fails CI immediately instead of waiting for a session to notice locally.
+    note: >-
+      Kaizen from t-007 (Reviewer, kind_robots PR #949, 2026-07-25): while building cloud-city-drift this cycle, found utils/scripts/verifyAnimationCatalog.ts had been throwing on current kind_robots main for three days (since commit b3d75ab, 2026-07-22) -- DEFAULT_PREFERENCES.startupE
 
-
-      Added the animation catalog contract to kind_robots contract-tests.yml so catalog regressions fail CI alongside animation attempt conventions.
-
-      DONE 2026-07-25: kind_robots PR #965 merged as squash c12401e9aaaa8ec789f388f56c82d936e96e6108. Added `npm run test:animation-catalog` to `.github/workflows/contract-tests.yml` beside the animation attempt contract. Contract Tests, TypeScript Type Check, and Facet Catalog Contract all passed; the new Animation catalog contract step itself completed successfully. Diff was CI-only: 3 additions, no runtime or production changes.
+      Full history: projects/animation-manager/HISTORY.md#t-014
     updated: '2026-07-25T20:25:00Z'
     claimed_by: 2026-07-25T201035Z-animation-manager-t-014-7c4e
     claimed_at: '2026-07-25T20:10:35Z'
@@ -475,23 +298,10 @@ tasks:
     owner: reviewer
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-007 (Worker, kind_robots PR #1069, 2026-07-27): impossible-terrarium's
-      catalog entry had to fall back to icon kind-icon:cube since assets/icons/ has no
-      terrarium/jar/glass-box icon, a loosely-fitting match. Flagged as worth a dedicated
-      icon-request pass rather than each future pitch picking the nearest existing icon
-      ad hoc. Generate (or otherwise source) a terrarium/jar/glass-box icon, add it to
-      assets/icons/, and swap impossible-terrarium's catalog entry (and any other pending
-      candidate that reuses cube/box as a placeholder) to reference it.
+    note: >-
+      Kaizen from t-007 (Worker, kind_robots PR #1069, 2026-07-27): impossible-terrarium's catalog entry had to fall back to icon kind-icon:cube since assets/icons/ has no terrarium/jar/glass-box icon, a loosely-fitting match.
 
-      IMPLEMENTED 2026-07-28 (conductor burst-mode cycle): added a hand-drawn line-art
-      assets/icons/terrarium.svg matching the existing kind-icon style (24x24, currentColor
-      stroke), swapped impossible-terrarium's stores/animationCatalog.ts entry from
-      kind-icon:cube to kind-icon:terrarium (confirmed it was the only catalog entry
-      reusing cube/box as a placeholder), and regenerated stores/seeds/validIcons.ts via
-      the existing utils/scripts/updateKindIcons.js.
-
-      DONE 2026-07-28T08:05Z: kind_robots PR #1086 merged. Closing out.
+      Full history: projects/animation-manager/HISTORY.md#t-015
     updated: '2026-07-28T08:05:33Z'
     claimed_by: claude-conductor-burst-20260728T0800Z-am-t015
     claimed_at: '2026-07-28T07:16:45Z'
@@ -502,12 +312,10 @@ tasks:
     status: done
     passes: 0
     stakes: reversible
-    note: |-
-      IN REVIEW 2026-07-28 (session 2026-07-28T12-25-00Z-am-t016-placeholder-icon): added a GENERIC_PLACEHOLDER_ICONS check (kind-icon:cube, kind-icon:box) to utils/scripts/verifyAnimationCatalog.ts (already wired into contract-tests.yml as test:animation-catalog) -- fails with a message pointing at the terrarium.svg precedent (assets/icons/, node utils/scripts/updateKindIcons.js) if a future ANIMATION_EFFECTS entry reuses a placeholder icon. Verified: npm run test:animation-catalog passes against the current 38-entry catalog; manually confirmed the check fails with a clear message when temporarily forced to kind-icon:cube (reverted before commit); eslint clean; prettier clean; vue-tsc --noEmit exit 0. kind_robots PR #1104 open.
-      Original spec follows: Kaizen from t-015 (Reviewer, kind_robots PR #1086, 2026-07-28): t-015 existed only because t-007 happened to notice impossible-terrarium was reusing kind-icon:cube as a loosely-fitting placeholder. Add a lightweight structural check (e.g. a small addition to utils/scripts/updateKindIcons.js or a standalone script run in CI) that flags any stores/animationCatalog.ts entry whose icon is a generic placeholder (kind-icon:cube, kind-icon:box, or similar) so a dedicated-icon request surfaces on its own the next time this happens, instead of depending on a future kaizen note to catch it by chance.
+    note: >-
+      IN REVIEW 2026-07-28 (session 2026-07-28T12-25-00Z-am-t016-placeholder-icon): added a GENERIC_PLACEHOLDER_ICONS check (kind-icon:cube, kind-icon:box) to utils/scripts/verifyAnimationCatalog.ts (already wired into contract-tests.yml as test:animation-catalog) -- fails with a messa
 
-
-      Merged kind_robots PR #1104 as e710f91437cdd503a9ffb47ea70b09010991babb and Conductor PR #1325 as 9d9a479397ca0ccd96aae8b45f7f8d489b6b45fd. The animation catalog contract now rejects generic cube and box placeholder icons and directs contributors to add and regenerate a dedicated icon.
+      Full history: projects/animation-manager/HISTORY.md#t-016
     updated: '2026-07-28T13:11:42Z'
     claimed_by: 2026-07-28T12-25-00Z-am-t016-placeholder-icon
     claimed_at: '2026-07-28T12:27:06Z'
@@ -522,26 +330,7 @@ tasks:
     claimed_by: claude-conductor-scheduled-20260729T200653Z-am-t017
     claimed_at: '2026-07-29T20:06:54Z'
     updated: '2026-07-29T21:00:43Z'
-    note: >
-      Kaizen from t-006 (Reviewer, conductor PR #1449, 2026-07-29): the session's
-      isolated `pytest` tool (installed via `uv tool install`) had no `yaml`
-      dependency, so `pytest` failed to collect any test touching PyYAML-based
-      scripts (consume_animation_pitches, check_animation_novelty) even though the
-      system `python3` interpreter the scripts themselves use has yaml installed
-      fine. Fixed locally that cycle via `uv tool install pytest --with pyyaml
-      --force`, but nothing records this for the next session that hits the same
-      unexplained `ModuleNotFoundError: yaml` under plain `pytest` (distinct from
-      `python3 -m pytest`'s own separate "no pytest module" failure). Add a short
-      note to AGENTS.md's cross-repo/tooling section (or a scripts/README) so
-      future sessions recognize the symptom and apply the fix immediately instead
-      of re-deriving it.
+    note: >-
+      Kaizen from t-006 (Reviewer, conductor PR #1449, 2026-07-29): the session's isolated `pytest` tool (installed via `uv tool install`) had no `yaml` dependency, so `pytest` failed to collect any test touching PyYAML-based scripts (consume_animation_pitches, check_animation_novelty)
 
-      RESOLVED 2026-07-29T20:06:54Z (conductor scheduled burst-mode rotation,
-      claude-conductor-scheduled-20260729T200653Z-am-t017): added a "Sandbox
-      `pytest` is missing PyYAML" subsection to AGENTS.md, right after the
-      Cross-repo tasks section, documenting the `ModuleNotFoundError: yaml`
-      symptom under bare `pytest`, how it differs from `python3 -m pytest`'s
-      separate missing-module failure, and the fix (`uv tool install pytest
-      --with pyyaml --force`). Re-ran that exact command in this session to
-      confirm it still resolves the gap (pytest 9.1.1 + pyyaml 6.0.3 installed
-      cleanly). No script/roadmap-tooling changes needed beyond the doc note.
+      Full history: projects/animation-manager/HISTORY.md#t-017

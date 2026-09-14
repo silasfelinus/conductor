@@ -97,7 +97,10 @@ tasks:
   depends_on:
   - t-002
   - t-003
-  note: 'Written and merged in PR #106: projects/storybook/docs/first-ux-flow.md. Covers session start, narrator and seed choice, turn screens, artifact review, resume states, component boundaries, and MVP/deferred scope. Spec only — no schema, API, live data, deploy, or publishing changes. The needs-human status the Worker left this at was a soft escalation (connector could not merge), not a content gate — Reviewer merged and closed it out.'
+  note: >-
+    Written and merged in PR #106: projects/storybook/docs/first-ux-flow.md.
+
+    Full history: projects/storybook/HISTORY.md#t-005
 - id: t-007
   milestone: m4
   title: Add a script that prints the first unblocked ready task across roadmaps
@@ -106,7 +109,10 @@ tasks:
   updated: '2026-07-03T09:00:00-07:00'
   passes: 0
   stakes: reversible
-  note: 'Merged in PR #110: scripts/next_ready_task.py. The needs-human the Worker left this at was a soft escalation (connector could not run shell to verify) not a content gate, matching the t-005 pattern. Reviewer tested it in two local worktrees against real roadmap state (PR branch and pre-merge main) and confirmed it correctly applies priority order, project-overrides.yaml active-status filtering, and depends_on/gate_human resolution before merging.'
+  note: >-
+    Merged in PR #110: scripts/next_ready_task.py.
+
+    Full history: projects/storybook/HISTORY.md#t-007
 - id: t-008
   milestone: m4
   title: Add unit tests for scripts/next_ready_task.py covering dependency chains, paused/retired projects, and gate_human tasks
@@ -132,31 +138,10 @@ tasks:
   owner: worker
   passes: 0
   stakes: reversible
-  note: >
-    Kaizen from davinci/t-007: read and reference
-    projects/davinci/docs/storybook-boundary-comparison.md in the Storybook
-    session-schema work. Add a short "boundaries with Da Vinci" section to the
-    session data model doc (or a pointer in notes_from_silas) so schema design
-    respects: no shared run/session tables, no columns added to Life* models,
-    shared behavior only via existing KR models or extracted pure utilities.
-    DONE: no standalone "session data model doc" file exists (t-001's model was
-    approved via its roadmap note only, no doc artifact), so used the task's own
-    fallback — added a "Boundaries with Da Vinci" pointer to this roadmap's
-    notes_from_silas, summarizing the concrete rules from
-    projects/davinci/docs/storybook-boundary-comparison.md's "Concrete boundary
-    rules" section: no shared run/session tables, no columns on Life* models,
-    shared behavior only via existing KR models or extracted pure utilities.
-    Any future session-schema design task will read notes_from_silas first per
-    AGENTS.md's picking-order rules, so this is in the right place to actually
-    be seen before schema work starts.
+  note: >-
+    Kaizen from davinci/t-007: read and reference projects/davinci/docs/storybook-boundary-comparison.md in the Storybook session-schema work.
 
-    SUPERSEDED 2026-09-09. The rule this task installed in notes_from_silas --
-    no shared run/session tables, no columns on Life* models -- is gone. Silas
-    merged the two projects ("kill any reference that says we should separate
-    them"), Da Vinci is now Storybook's `life` shape, and notes_from_silas
-    carries the reversal instead. The task itself is left done and unedited
-    above: it did what it was asked to do, and the record of that is worth more
-    than a tidy note. Nothing should act on the rule it describes.
+    Full history: projects/storybook/HISTORY.md#t-009
   claimed_by: claude-conductor-scheduled-20260720T0511Z
   claimed_at: '2026-07-20T05:13:44Z'
   updated: '2026-07-20T05:21:14Z'
@@ -214,10 +199,10 @@ tasks:
   status: done
   passes: 0
   stakes: reversible
-  note: |-
-    components/narrative/narrative-role-assigner.vue is a card board as of kind_robots 2026-08-06 (character art at 2:3 through kr-art-plate, the assigned part worn as a badge, parts offered as pressable chips), but the cards sit in a uniform auto-fill grid so POSITION CARRIES NO MEANING. Silas: "I'm imagining a layout that lets the user feel like they are selecting cards and creating a playboard that turns into a story." A real playboard arranges BY role -- protagonist given prominence, antagonist set opposite, ensemble ranked behind -- rather than in reading order. This is a layout design question rather than a mechanical one and wants Silas's eye on the arrangement before it is built. The cast is capped at five, which bounds the problem usefully.
+  note: >-
+    components/narrative/narrative-role-assigner.vue is a card board as of kind_robots 2026-08-06 (character art at 2:3 through kr-art-plate, the assigned part worn as a badge, parts offered as pressable chips), but the cards sit in a uniform auto-fill grid so POSITION CARRIES NO MEA
 
-    Reviewed and merged silasfelinus/kind_robots#1727 as 5beb132da03f516d8e673e73b6ad0332c03d3db1. The casting board now arranges protagonist/antagonist leads opposite each other, supporting roles in a middle tier, and ensemble/unassigned cast in a receded back tier while retaining pressable role chips as the accessible fallback. Exact-head TypeScript, Contract Tests, Layout Contract, Narrative Accessibility Acceptance, and attached Storybook/Narrative workflows completed successfully.
+    Full history: projects/storybook/HISTORY.md#t-011
   claimed_by: 20260810T192800Z-storybook-t011-9f3a
   claimed_at: '2026-08-10T19:29:41Z'
   updated: '2026-08-10T20:15:20Z'
@@ -229,13 +214,10 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-011
-  note: |-
-    Casting is currently a chip press -- fast, accessible, keyboard-friendly, and not very playful. Dragging a card onto a role slot is the interaction that would actually feel like a playboard. Depends on t-011, since slots only exist once the board has an arrangement. Two constraints: keep the chip path as the accessible fallback rather than replacing it, and support touch properly -- a drag that only works with a mouse is worse than the chips it replaced.
-    t-011 (kind_robots PR #1727, merged 2026-08-10) landed the lead/support/back tier grouping this task's drop slots should target -- protagonist/antagonist in the lead row, everyone else in support/back. Now formally unblocked (depends_on was prose-only before; encoded here since t-011 is done).
+  note: >-
+    Casting is currently a chip press -- fast, accessible, keyboard-friendly, and not very playful.
 
-    Implementation is complete on worker/storybook-t-012-20260811-bqbl06: role drop zones plus mouse drag and Pointer Events touch/pen drag, while retaining the existing role-chip fallback. Existing narrative cast-tier contract was extended to guard the interaction wiring.
-
-    Merged Kind Robots PR #1736 as 7b6eb3bc0fb4a2467d8841690bc27b2b0721fd30. The casting board now exposes role drop zones; cast artwork supports native mouse drag and Pointer Events touch/pen drag with pointer capture and role-slot hit testing, while the existing role chips remain the keyboard/accessibility fallback. Exact head 1376ad322389cb26f9cfe90ccc89704b8da668c6 completed all 15 attached workflows successfully, including TypeScript, Contract Tests, Layout Contract, Narrative Accessibility Acceptance, and Storybook contracts.
+    Full history: projects/storybook/HISTORY.md#t-012
   claimed_by: 20260811T012235Z-auto-bqbl06
   claimed_at: '2026-08-11T01:26:20Z'
   updated: '2026-08-11T01:34:30Z'
@@ -245,7 +227,10 @@ tasks:
   status: done
   passes: 0
   stakes: reversible
-  note: 'The casting board sits inside a four-step wizard whose other steps -- premise, world/flavor, review -- read as a form when this task began; all four setup steps and the review step now share the kr-panel-flat board-card language. PROGRESS: PR #1740 (premise), #1741 (plot thread/setting art), #1745 (cast/facets/rewards art), #1748 (wrapped the last remaining plain field, extra story direction, in a kr-panel-flat card). Closing scope as complete -- every field across the wizard now carries the card language. The design question of one board vs. distinct steps sharing card language resolved in practice: the wizard kept its four distinct steps, extended with shared card styling throughout, rather than merging into a single board.'
+  note: >-
+    The casting board sits inside a four-step wizard whose other steps -- premise, world/flavor, review -- read as a form when this task began; all four setup steps and the review step now share the kr-panel-flat board-card language.
+
+    Full history: projects/storybook/HISTORY.md#t-013
   claimed_by: 20260811T072800Z-storybookt013-c9f1a2
   claimed_at: '2026-08-11T07:28:50Z'
   updated: '2026-08-11T07:36:06Z'
@@ -257,10 +242,10 @@ tasks:
   status: done
   passes: 0
   stakes: reversible
-  note: |-
-    Storybook now seeds its setup draft from ?scenario= / ?character= / ?facet= / ?reward= / ?location= (kind_robots 2026-08-06) -- seeding on top of the restored draft so a link never destroys a story in progress, and clearing the query so a reload cannot re-add an ingredient the author removed. NOTHING LINKS TO IT YET: the consuming half shipped without the entry points, so the feature is currently unreachable by a user. Silas: "what we should do is have links to these elements that start the process to tell a storybook story with that element as part of it" -- explicitly INSTEAD of giving Facets and Rewards conversations of their own, since both are tools that feed other interactions rather than things you talk to. Facets and Rewards are the priority; each now has exactly one detail pane to host the affordance.
+  note: >-
+    Storybook now seeds its setup draft from ?scenario= / ?character= / ?facet= / ?reward= / ?location= (kind_robots 2026-08-06) -- seeding on top of the restored draft so a link never destroys a story in progress, and clearing the query so a reload cannot re-add an ingredient the au
 
-    Reviewed and merged kind_robots PR #1706 as squash 8a457281cd6f0e03c341786f8b1ddb71827c2381. The Facet and Reward detail surfaces now link into Storybook with their object slug. Review repaired two contract failures on the existing branch: kept facet-interact as a thin router by extracting facet-profile, and made the extracted profile grid container-width responsive without carrying forward the temporary layout-baseline mutation. Exact head 000f87f5e940bb4355e9125dccc5027360beac98 passed all 13 observed workflows, including Layout Contract #31366156627, Contract Tests #31366156525, and TypeScript #31366156531.
+    Full history: projects/storybook/HISTORY.md#t-014
   claimed_by: 20260810T063100Z-story-t014
   claimed_at: '2026-08-10T06:44:48Z'
   updated: '2026-08-10T07:34:46Z'
@@ -272,13 +257,10 @@ tasks:
   stakes: reversible
   gate_human: true
   approved_by_human: true
-  note: |-
+  note: >-
     FOR SILAS: this is a subjective product-boundary decision, not an agent tooling block.
-    TO APPROVE: decide whether Stage presets become Storybook frames sharing narrative roles, or stay a separate system; record the choice here.
 
-    Two role systems now exist. stores/helpers/stageCards.ts holds the older one -- min/max cardinality, badge art, promptDescriptor, and assignCharacter() already resolving real Character records -- with a per-format vocabulary describing a SHOW (host, bailiff, goblin-investor, musical-guest). utils/narrativeRoles.ts is the new one, borrowing that shape with a story vocabulary that holds across premises (protagonist, antagonist, love-interest, mentor, foil, ally, wildcard, ensemble). They were kept separate deliberately: merging before either was integrated would have invented a third thing neither side asked for. A stage preset is arguably a story frame with its cast pre-filled, so convergence is plausible -- but whether the Stage system becomes a Storybook frame or stays its own thing is Silas's call, not an agent's.
-
-    Decision accepted under Silas's 2026-09-07 default-recommendation policy: keep Stage roles and Narrative roles separate for now. They serve different vocabularies and cardinality/presentation needs; do not invent a shared abstraction until a concrete cross-surface use case demonstrates duplication worth extracting. A small adapter may be added later if Stage presets genuinely need to seed Storybook frames.
+    Full history: projects/storybook/HISTORY.md#t-015
   updated: '2026-09-07T11:34:20+00:00'
 
 - id: t-016
@@ -314,7 +296,10 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-014
-  note: 'Merged kind_robots PR #1721 (squash 74f9e6c). Added utils/scripts/verifyStorybookObjectEntryLinks.mjs + .github/workflows/storybook-object-entry-links-contract.yml, asserting facet-profile.vue and reward-encounter.vue navigate to /storybook with the object''s slug in ?facet=/?reward=, and that storybook-page.vue''s seedFromQuery() still consumes both into facetSlugs/rewardSlugs -- without asserting button markup. Contract check passed on the PR (green CI) and stays green on main.'
+  note: >-
+    Merged kind_robots PR #1721 (squash 74f9e6c).
+
+    Full history: projects/storybook/HISTORY.md#t-017
   claimed_by: 20260810T143624-conductor-agent-run
   claimed_at: '2026-08-10T14:36:25Z'
   updated: '2026-08-10T14:52:24Z'
@@ -325,12 +310,10 @@ tasks:
   status: done
   passes: 0
   stakes: reversible
-  note: |-
-    Kaizen from t-017 (kind_robots PR #1721): storybook-page.vue's seedFromQuery() already reads ?scenario=, ?location=, and ?character= (in addition to ?facet=/?reward=) and seeds the setup draft's scenarioSlug/locationSlug/castSlugs accordingly, but only the Facet and Reward detail surfaces (facet-profile.vue, reward-encounter.vue) actually have a CTA that navigates there -- a quick grep of components/characters/character-manager.vue and components/scenarios/scenario-manager.vue found no outgoing "Start a story with this" link, only unrelated matches. Add the equivalent CTA to the Scenario and Character (and Location, if it has an analogous detail surface) working views, mirroring startStoryWithFacet/startStoryWithReward exactly (navigateTo /storybook with the right query key, no assumptions about button markup), then extend utils/scripts/verifyStorybookObjectEntryLinks.mjs to cover the new handlers the same narrow way.
+  note: >-
+    Kaizen from t-017 (kind_robots PR #1721): storybook-page.vue's seedFromQuery() already reads ?scenario=, ?location=, and ?character= (in addition to ?facet=/?reward=) and seeds the setup draft's scenarioSlug/locationSlug/castSlugs accordingly, but only the Facet and Reward detail
 
-    Implemented Storybook entry CTAs for selected Character and Scenario working surfaces and extended the object-entry contract; no analogous standalone Location manager surface was found.
-
-    Merged kind_robots PR #1726 as 52393a6fa4d1f56c93460d0dbb766ad510756211. Character and Scenario selected-object surfaces now start Storybook with ?character= or ?scenario=; the required object-entry contract covers both. No analogous standalone Location surface exists, so no speculative route or manager was added.
+    Full history: projects/storybook/HISTORY.md#t-018
   claimed_by: 20260810T182152Z-91159b
   claimed_at: '2026-08-10T18:21:52Z'
   updated: '2026-08-10T18:36:40Z'
@@ -340,16 +323,10 @@ tasks:
   status: done
   passes: 0
   stakes: reversible
-  note: |-
-    Kaizen from t-011 (kind_robots PR #1727): narrative-role-assigner.vue now groups cast members
-    into three tiers purely from their assigned role -- protagonist/antagonist into the lead row,
-    love-interest/mentor/foil/ally/wildcard into support, ensemble and unassigned into back -- but
-    nothing asserts that grouping in CI. eslint/vue-tsc/verifyNarrativeRoles.ts all pass without
-    ever checking tier placement, so a future edit could silently move a role to the wrong tier (or
-    drop the branching entirely, collapsing back to one flat grid) and nothing would fail. Add a
-    source-level contract (same narrow style as verifyStorybookObjectEntryLinks.mjs -- assert the
-    grouping logic, not button markup or CSS classes) that feeds a synthetic member of each role
-    through the component's tier-selection logic and checks it lands in the expected row.
+  note: >-
+    Kaizen from t-011 (kind_robots PR #1727): narrative-role-assigner.vue now groups cast members into three tiers purely from their assigned role -- protagonist/antagonist into the lead row, love-interest/mentor/foil/ally/wildcard into support, ensemble and unassigned into back -- b
+
+    Full history: projects/storybook/HISTORY.md#t-019
   owner: worker
   claimed_by: 20260811T003009Z-storybook-t019
   claimed_at: '2026-08-11T00:30:09Z'
@@ -361,18 +338,10 @@ tasks:
   status: done
   passes: 0
   stakes: reversible
-  note: |-
-    Kaizen from t-010 (kind_robots PR #1846, answer-input-preservation fix). answerCurrentBeat's
-    early guard (`!active || !beat || beat.answer || !clean || isWeaving.value`) returns false
-    silently with no user-facing signal at all -- distinct from #1846's scope, which only covers a
-    real weaveBeat failure (signaled via store.errorMessage). Check whether any of those branches
-    are actually reachable through the UI (e.g. a rapid double-submit while isWeaving is still
-    true, or a whitespace-only answer slipping past the composer's own validation) in a way that
-    leaves the reader with no feedback -- the composer looks like nothing happened rather than
-    showing why the submission was rejected. If reachable, surface a short inline message; if not
-    reachable through normal UI flow, close this out with that finding recorded.
+  note: >-
+    Kaizen from t-010 (kind_robots PR #1846, answer-input-preservation fix).
 
-    FINDING (conductor scheduled Agent run, 2026-08-13): traced every branch of the guard (!active || !beat || beat.answer || !clean || isWeaving.value) against narrative-response-composer.vue and storybookStore.ts. None are reachable through normal UI flow: !active/!beat can't occur while the composer is visible and enabled (composer is v-if="store.session && !store.isComplete", and session/first-beat creation happens in the same synchronous span as isWeaving flipping true); !clean can't occur because the composer's own submit() already trims and rejects empty/whitespace-only input before ever emitting submit; beat.answer/isWeaving.value (double-submit) can't occur because both flip inside the same synchronous block that starts weaveBeat before any await, and the composer's disabled/loading props mirror those same flags -- the HTML spec drains Vue's microtask render queue before a second click/keydown task can run submit() again. No code behavior change; left a comment on the guard in kind_robots recording this analysis and the condition that would make it reachable again (moving session/beat creation off the synchronous path, or a new caller that skips the composer). Verified: eslint clean on touched lines (2 pre-existing unrelated errors confirmed via git stash to predate this change), prettier clean on touched lines (pre-existing STORYBOOK_MODES formatting drift confirmed via git stash to predate this change and left untouched), vue-tsc --noEmit repo-wide exit 0, both existing answer-guard self-tests (verifyStorybookAnswerInputPreservationGuard, verifyStorybookAnswerRollbackGuard) still pass. silasfelinus/kind_robots#1850 merged.
+    Full history: projects/storybook/HISTORY.md#t-020
   owner: reviewer
   claimed_by: 20260813T144700Z-sched-conductor-storybook-t020
   claimed_at: '2026-08-13T14:47:05Z'
@@ -385,18 +354,10 @@ tasks:
   passes: 0
   stakes: reversible
   owner: worker
-  note: |-
-    CLOSED (conductor scheduled Agent run, session sched-conductor-sb-t021-20260815T062827Z): implemented as specified. Added utils/scripts/verifyStorybookRestartInputCompletenessGuard.mjs -- extracts every `input.<field>` read inside buildBible() (stores/storybookStore.ts) and every top-level key of the object restartInput() returns (stores/helpers/storybookLibraryHelper.ts), asserts the latter is a superset of the former, so the next optional bible field forgotten in restartInput() fails CI instead of silently repeating the scenario bug. New CI workflow storybook-restart-input-completeness-contract.yml matches the existing 8 verifyStorybook* contracts' shape. Verified: fail/pass round-trip via git-stash (removed scenario from restartInput()'s return, guard failed with a clear message naming the missing field; restored, guard passed), all 8 pre-existing verifyStorybook* guards still pass (no regression), eslint clean, prettier clean, vue-tsc --noEmit repo-wide clean, git status showed exactly the 2 intended files. kind_robots PR #1893, 22/22 checks green, merged squash 49b9b9f1.
+  note: >-
+    CLOSED (conductor scheduled Agent run, session sched-conductor-sb-t021-20260815T062827Z): implemented as specified.
 
-    Kaizen from t-010 (kind_robots PR #1892, restart-scenario-frame fix). restartInput() and
-    duplicateStory()'s cloneSession() both independently need to agree on "every StorybookBible
-    field that should survive a session-derived transform" -- restartInput() silently dropped
-    scenario until #1892 fixed that one field, but nothing in CI would catch the next optional
-    bible field added to StorybookBible/StorybookStartInput and forgotten in restartInput() the
-    same way. Add a source-level contract (same narrow style as the other verifyStorybook*
-    guards -- assert the actual key set, not UI behavior) that checks restartInput()'s returned
-    object's keys are a superset of every StorybookStartInput field buildBible() actually reads,
-    so a future optional-field addition can't silently repeat this exact bug class.
+    Full history: projects/storybook/HISTORY.md#t-021
   claimed_by: sched-conductor-sb-t021-20260815T062827Z
   claimed_at: '2026-08-15T06:28:31Z'
   updated: '2026-08-15T06:28:31Z'
@@ -408,7 +369,10 @@ tasks:
   passes: 0
   stakes: reversible
   owner: reviewer
-  note: 'Kaizen from t-021 (kind_robots PR #1893). Factored the repeated brace-matching extractFunctionBody helper (each of verifyStorybookAnswerInputPreservationGuard, verifyStorybookRestartScenarioFrameGuard, and verifyStorybookRestartInputCompletenessGuard hand-rolled its own identical copy) into utils/scripts/lib/extractTsFunctionBody.mjs, with a signature regex covering both the plain `\function name('' and `\async function name('' shapes seen across the guards (plus optional leading indentation). Verified all 9 verifyStorybook*.mjs guards still pass, and each of the three touched guards still fails correctly on its own documented regression case via a git-stash round-trip. eslint/prettier clean, vue-tsc --noEmit clean repo-wide. kind_robots PR #1894, 21/21 CI checks green, squash-merged 2f17c34.'
+  note: >-
+    Kaizen from t-021 (kind_robots PR #1893).
+
+    Full history: projects/storybook/HISTORY.md#t-022
   claimed_by: claude-scheduled-20260815T072700Z-storybook-t022
   claimed_at: '2026-08-15T07:32:56Z'
   updated: '2026-08-15T07:49:33Z'
@@ -420,23 +384,10 @@ tasks:
   passes: 0
   stakes: reversible
   owner: worker
-  note: >
-    Kaizen from t-010 cycle 36 (kind_robots PR #2059). That cycle guarded the WRITE path --
-    taskmasterStore.ts's saveToLocalStorage() was the one unguarded localStorage writer in the
-    narrative family -- and added a lockstep assertion so neither store's writer can drift back.
-    The READ path was left un-audited and still differs between the two stores in two concrete
-    ways: (1) storybookStore.restoreFromLocalStorage() reads getItem INSIDE its try, while
-    taskmasterStore.restoreFromLocalStorage() reads it outside, so a throwing getItem escapes
-    into taskmaster-page.vue's onMounted; (2) Storybook carries a restoredFromStorage one-time
-    flag (added in cycle 28 for a real parent/child double-mount overwrite, covered by
-    verifyStorybookRestoreIdempotencyGuard), while Taskmaster guards on session.value instead --
-    sufficient for its single mount site today, but not the same invariant, and it would not
-    survive a second component mounting the page the way storybook-library-page.vue wraps
-    storybook-page.vue. Scope: determine whether Taskmaster actually has a reachable mount-order
-    race (do not assume from the asymmetry alone -- cycle 36's own lesson is that a parity gap
-    is only a bug when the two sides are genuinely the same kind of moment); move the getItem
-    inside the try regardless, since that one is unambiguous; and extend the contract assertion
-    to cover the read path if a real invariant is established. Small, reversible, self-contained.
+  note: >-
+    Kaizen from t-010 cycle 36 (kind_robots PR #2059).
+
+    Full history: projects/storybook/HISTORY.md#t-023
   claimed_by: claude-scheduled-20260824-storybook-t023
   claimed_at: '2026-08-24T06:29:36Z'
   updated: '2026-08-24T06:40:39Z'
@@ -452,87 +403,10 @@ tasks:
   updated: '2026-09-09T00:00:00Z'
   passes: 0
   implementation_pr: 'silasfelinus/kind_robots#2549'
-  note: >
-    CLOSED 2026-09-09, same session it was filed. This task existed to bring a
-    merge design back to Silas before any code moved. He answered it directly
-    instead: "merge the projects, and kill any reference that says we should
-    separate them. we care about having a solid *single* interface that is a
-    stylish and effective storymaker with many endings. Whatever has been done
-    should be merged." That answers every open question the deliverable below
-    was meant to raise, so the design pass collapsed into the build.
+  note: >-
+    CLOSED 2026-09-09, same session it was filed.
 
-    SHIPPED (kind_robots PR #2549). One product at /storybook: one route, one
-    setup screen, one story library, four shapes. The fourth shape, "A whole
-    life", is the endings engine. /play/davinci is a permanent 301.
-    components/conductor/davinci-page.vue moved to
-    components/storybook/storybook-life-run.vue with its play loop intact --
-    run creation, resume, AI narration with the curated fallback pool, the ten
-    dimensions, chapter and ending art, resolution into one of the 1,024 seeded
-    LifeEndings, and every focus/stale-response/art-attribution guard the
-    davinci/t-021 slices added. It lost exactly two things: the
-    project-front-page landing card and its own start form.
-
-    NO MIGRATION WAS NEEDED, which is the part worth remembering. LifeRun has
-    carried characterId, dreamId, botId and artCollectionId since it was built
-    -- the same ingredients the storymaker's setup screen already collects --
-    so seeding a life from a chosen Character and LOCATION Dream is a body on
-    an existing POST. The four objections in the 2026-07-05 boundary doc were
-    about tables; the actual problem was two front doors.
-
-    A RUN IN FLIGHT SURVIVES. The engine's localStorage keys are unchanged and
-    the store treats an active-run key with no seed as a pre-merge run,
-    synthesizing a placeholder seed so it resumes inside the storymaker instead
-    of being stranded behind a setup screen it could never get past.
-
-    REFERENCES KILLED: notes_from_silas above (the separation clause is
-    replaced by the reversal), projects/davinci/docs/storybook-boundary-
-    comparison.md (rewritten in place, same path so no link anywhere dangles),
-    narration-layer-spec.md's "per the boundary doc's standing rule" section,
-    the boundary note in kind_robots docs/notes/davinci-play-loop-api.md, and
-    the "per the Storybook boundary doc" comment in server/utils/davinci.ts.
-    t-009's note is marked superseded rather than edited. Left deliberately in
-    place: davinciNarration.ts's BOUNDARY comment, which is about narration
-    never owning durable state -- a different boundary, and still true.
-
-    Remaining unification is filed as t-025 and t-026. Neither blocks anything.
-
-    ORIGINAL BRIEF, for the record:
-    Silas, 2026-09-09, reviewing the Storybook setup screen: "this should also be merged 100%
-    with da vinci." That is a direct reversal of standing architecture, so it gets a design pass
-    before any code moves.
-
-    What it reverses. projects/davinci/docs/storybook-boundary-comparison.md (davinci/t-007,
-    2026-07-05) recommended keeping the two separate through "Da Vinci's play-loop MVP and
-    Storybook's first schema milestone", sharing only through existing Kind Robots models and
-    later through extracted utilities -- never a merged session table. This project's
-    notes_from_silas still carries that boundary as a constraint ("no shared run/session tables,
-    no columns added to Life* models"). The doc set its own expiry: "Revisit after BOTH of those
-    milestones land, not before." Both have landed -- Storybook m1-m3 are done and Da Vinci's
-    engine, play loop, and endings are shipped -- so this is the revisit the doc asked for, not
-    a violation of it. The four reasons it gave against merging (opposite outcome geometry, 1024
-    deterministic endings vs open-ended collaboration; single-owner vs multi-actor turn custody;
-    maturity asymmetry; different unlock invariants) are the specific things a merge design has
-    to answer, and three of them are now weaker than they were: Storybook has a real schema, and
-    the asymmetry argument has expired.
-
-    Deliverable. A merge design doc that replaces storybook-boundary-comparison.md as the
-    standing guidance, covering at minimum: (a) what "100%" means concretely -- one route, one
-    engine, one session table, or some subset; (b) what happens to LifeRun/LifeChoice/LifeStat/
-    LifeEnding/LifeAchievement/LifeAchievementUnlock/LifeRunArt and the 1,024 seeded endings,
-    which are live data with a shipped achievement economy behind them; (c) whether Da Vinci's
-    deterministic 10-bit outcome resolution survives as a mode of the merged engine or as a
-    Scenario/Facet-shaped configuration of it; (d) turn custody for a single-player game inside
-    a multi-actor engine; (e) a migration order that never leaves Da Vinci unplayable on main,
-    since Silas tests there. Name the pieces that genuinely duplicate today -- narration prompt
-    assembly, art-scene hooks, session-resume UX, choice interpretation -- and say which merge
-    first, because those are landable ahead of any schema decision and are worth doing even if
-    the full merge is later scoped down.
-
-    Gate. The doc goes to Silas before any schema or route change. Execution tasks get filed
-    from the approved plan; do not open a schema PR off this task. The UI complaints from the
-    same review (oversized setup header, "Your spread", borrowed tutorial banner art, and the
-    setup surface not scrolling at all) were fixed separately in kind_robots PR #2547 and are
-    not part of this task.
+    Full history: projects/storybook/HISTORY.md#t-024
 - id: t-025
   milestone: m5
   title: Unify narration prompt assembly across the beat shapes and the life shape
@@ -544,35 +418,8 @@ tasks:
   depends_on: t-024
   note: >-
     The one piece of real duplication the merge exposed rather than removed.
-    Both shapes build the same thing -- (narrator config + seed objects + state
-    snapshot + recent history) -> a structured response -- in two places:
-    stores/storybookStore.ts builds it client-side for the beat shapes, and
-    server/utils/davinciNarration.ts builds it server-side for the life shape.
 
-    That client/server split is the actual obstacle, not any policy, and it is
-    the first thing to decide: whether the beat loop's assembly moves to the
-    server, or the shared piece is a pure function both sides import. The
-    davinciNarration.ts contract was deliberately written extraction-ready
-    (plain values in the request, no LifeRun-specific fields; the
-    DaVinciDimension-keyed effects map becomes a generic Record<string, number>
-    with each caller supplying its own allowed-keys validator), so the shape of
-    the utility is already settled -- only where it runs is open.
-
-    Not urgent. Two implementations of one idea inside one product is a real
-    cost, but both work today and the merge did not make either worse. Do it
-    when a session has room to do it properly, and keep every existing
-    narration guard passing.
-
-    Done by kind_robots#2660. The open question this task named -- whether narration
-    assembly moves to the server or becomes a pure function both sides import -- is
-    answered: it runs on the SERVER, in server/utils/storybookNarration.ts, for all four
-    shapes. Only the server can hold the offered choices between turns, and a client that
-    authors its own stat deltas can author its own ending. davinciNarration.ts is now a thin
-    adapter over it that keeps every exported name, bound and error string, so
-    utils/scripts/verifyDaVinciNarration.ts passes untouched. Shared transport was extracted
-    to server/utils/structuredCompletion.ts (three call sites had hand-rolled the same
-    OpenAI json_schema request). See also t-031, which carries the direct-prose contract the
-    same PR introduced.
+    Full history: projects/storybook/HISTORY.md#t-025
   implementation_pr: 'silasfelinus/kind_robots#2660'
 - id: t-026
   milestone: m5
@@ -642,32 +489,9 @@ tasks:
   passes: 0
   stakes: reversible
   note: >-
-    Part C1/C3 of projects/storybook/docs/storymaker-redesign.md. Generalize the Life engine
-    rather than fork it: additive columns on LifeRun/LifeChoice/LifeEnding plus a new
-    EndingDeck model (Life becomes the deck with key `life`); new routes under
-    /api/storybook/{decks,runs,runs/:id,runs/:id/turn,runs/:id/resolve,endings} with the logic
-    in server/utils/storybookRuns.ts. The turn route records the move AND narrates the next
-    turn in one call, taking OPTION effects from the server-held pendingTurn (never the
-    client) and CUSTOM/SHEET effects from the narrator's clamped moveEffects. /api/davinci/*
-    keeps working untouched so life runs in flight survive. Schema-affecting; migrations must
-    stay additive and backward-compatible with the running build.
+    Part C1/C3 of projects/storybook/docs/storymaker-redesign.md.
 
-    Done by kind_robots#2662. server/utils/storybookRuns.ts creates/resumes/lists runs and
-    handles the turn route exactly as specced: an option's effects come from the server-held
-    LifeRun.pendingTurn (never the request body), and a written/card-play move is scored by
-    the narrator then clamped server-side (a real bug here -- the +-2 clamp existed only in
-    the narration validator, one layer above the write -- was caught by CI's DB-backed
-    verifyStorybookPlayLoop.ts and fixed in the same PR before merge). Two additive migrations
-    (20260912120000, 20260912123000) ship with it; audited line-by-line, no DROP of
-    tables/columns/data. All CI green, mergeable_state clean before merge.
-
-    Done by kind_robots#2662. Every shape is a server-side run now. New EndingDeck plus additive columns on LifeRun/LifeChoice/LifeEnding (migration 20260912120000), server/utils/storybookRuns.ts, and routes under /api/storybook/{decks,runs,runs/:id,runs/:id/turn,runs/:id/resolve,endings}. /api/davinci/* is untouched and shares one narrator lookup instead of holding a second copy.
-
-    THE SERVER HOLDS THE OFFERED CHOICES. A turn records the move and narrates the next scene in one call; an option's effects come from LifeRun.pendingTurn, never the request body, and a written or card move is scored by the narrator then clamped server-side. Nothing is written unless narration succeeds, and replaying a recorded turn returns it rather than advancing twice. A genre deck's axis values never reach the client at all.
-
-    The turn gate binds only runs this engine created (turnBudget non-null), so a life run already in flight resolves exactly as it did before.
-
-    utils/scripts/verifyStorybookPlayLoop.ts found two real bugs on its first run against a database and both were fixed before merge: the +-2 clamp lived only in the narration validator rather than at the write (LifeStat accepts any key by design), and a character-sheet play returned a stale row with rewardId null because it patched after insert.
+    Full history: projects/storybook/HISTORY.md#t-029
   updated: '2026-09-12T13:15:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2662'
 - id: t-030
@@ -678,24 +502,9 @@ tasks:
   stakes: reversible
   depends_on: t-029
   note: >-
-    Part C7. Deck YAMLs are authored in this repo under projects/storybook/data/ending-decks/
-    (life.yaml = axes only, pointing at scripts/generate_davinci_endings.py; mystery.yaml,
-    romance.yaml, heist.yaml = 3 axes x 8 endings each, budgets short-story 5 / chaptered 8 /
-    episodic 12) and imported by kind_robots utils/scripts/seedStorybookDecks.ts (modeled on
-    seedDaVinciEndings.ts) with verifyStorybookDecks.ts in davinci-seed-verify.yml. Ships
-    with the one staged migration: dropping the global unique on LifeEnding.outcomeKey in
-    favour of (deckId, outcomeKey), which must not be deployed before t-029's resolver is live.
+    Part C7.
 
-    Done by kind_robots#2662 (importer + the staged migration, landed together with t-029's
-    resolver per this note's own ordering requirement) and conductor#4168 (the three authored
-    genre decks: mystery, romance, heist). verifyStorybookDecks.ts validates the real
-    conductor deck files when checked out side by side, as davinci-seed-verify.yml does.
-
-    Done by conductor#4168 (authoring) and kind_robots#2662 (import). Mystery, Romance and Heist are live: three axes and all eight endings each, budgets short-story 5 / chaptered 8 / episodic 12. utils/scripts/seedStorybookDecks.ts imports a deck file or directory and refuses a deck whose endings do not exactly cover 2^axes, because a missing outcomeKey is a 404 the reader only meets after playing the whole story.
-
-    Migration 20260912123000 dropped the global unique on LifeEnding.outcomeKey in favour of (deckId, outcomeKey) and made deckId NOT NULL -- required, since every three-axis deck produces '000'..'111' and the second one imported would otherwise overwrite the first. It shipped in the same PR and therefore the same deploy as the additive migration and the deck-aware resolver, in name order, which is what makes the non-additive step safe.
-
-    The nightly davinci-seed-verify job now seeds all three decks into one database, which is the only place a same-bit-width collision between decks would surface.
+    Full history: projects/storybook/HISTORY.md#t-030
   updated: '2026-09-12T13:15:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2662'
 - id: t-031
@@ -706,28 +515,9 @@ tasks:
   stakes: reversible
   depends_on: t-025
   note: >-
-    Part C2; this is where t-025 gets done ("where it runs" = the server). New DB-free
-    server/utils/endingDeckMath.ts and server/utils/storybookNarration.ts (request carries
-    shape, deck axes, narratorStyle, the board bible, turn index/budget, inventory, recent
-    turns and the reader's move; response is narrativeText under the PROSE CONTRACT, 2-4
-    choices with per-axis effects, moveEffects, stateDelta, artPrompt, endingHint), a shared
-    server/utils/structuredCompletion.ts JSON-schema caller, and davinciNarration.ts reduced
-    to an adapter that keeps every exported name so verifyDaVinciNarration.ts stays green.
-    The prose contract and the five narrator-style directives are quoted verbatim in the
-    design doc; Silas's rule is "direct, not verbose with purple prose", the narrator
-    modulates within that.
+    Part C2; this is where t-025 gets done ("where it runs" = the server).
 
-    Done by kind_robots#2660. server/utils/storybookNarration.ts is the one narration layer
-    for all four shapes, plus DB-free server/utils/endingDeckMath.ts for the deck-generic
-    outcome math (davinciDimensions.resolveOutcomeKey delegates to it, proven identical over
-    500 random stat maps, which is the regression that would silently re-key 1,024 seeded
-    endings). The PROSE CONTRACT is the house rule -- concrete scene, second person, present
-    tense, plain nouns and strong verbs, no similes or stacked descriptors, end on the brink
-    of a decision without listing the options -- and the five narrator styles modulate voice
-    inside it rather than relaxing it. Word bounds are per shape. The life shape keeps its
-    20-400 band and its uncapped effects map deliberately: narrowing a live game's tuning is
-    a design change, not a refactor. New contract suites verifyEndingDeckMath.ts and
-    verifyStorybookNarration.ts run in contract-tests.yml.
+    Full history: projects/storybook/HISTORY.md#t-031
   updated: '2026-09-12T11:25:59Z'
   implementation_pr: 'silasfelinus/kind_robots#2660'
 - id: t-032
@@ -738,22 +528,9 @@ tasks:
   stakes: reversible
   depends_on: t-029
   note: >-
-    Part C4. A run's inventory is seeded from the protagonist Character's Rewards loadout plus
-    the board's treasures and grows via stateDelta.inventoryAdd. Playing a card is a turn with
-    source SHEET: ITEM cards are spent, SKILL/POWER/MAGIC/FAVOR/PET persist but cannot be
-    played on consecutive turns; the narrator shows the card genuinely used (rarity sets how
-    decisively) and proposes moveEffects, which the app clamps.
+    Part C4.
 
-    Done by kind_robots#2662. Character-sheet plays work exactly as specced: an ITEM is spent
-    when played, other card types persist but cannot be played on consecutive turns. One real
-    bug caught by CI's DB-backed play-loop verifier and fixed before merge: a SHEET-sourced
-    play created its LifeChoice row with rewardId null then patched it in a second update, so
-    the row ended up right but the API response returned null for the played card -- the
-    reward id is now resolved before the transaction and written on the create.
-
-    Done by kind_robots#2662. A run's inventory is seeded from the protagonist Character's Rewards at creation, so the character sheet is playable from turn one rather than being a profile. Playing a card is a turn with source SHEET: an ITEM is spent (consumedAtTurn), every other type persists but cannot be played on consecutive turns, so a strong Skill changes a scene instead of replacing the choosing. The narrator is told the card, its rarity and whether it is spent, and proposes moveEffects the app clamps.
-
-    verifyStorybookPlayLoop.ts covers all of it against a real database: the play, the spend, the refusal to replay a spent card, and the refusal of a card the sheet never held.
+    Full history: projects/storybook/HISTORY.md#t-032
   updated: '2026-09-12T13:15:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2662'
 - id: t-033
@@ -764,23 +541,9 @@ tasks:
   stakes: reversible
   depends_on: t-029
   note: >-
-    Part C5. Reuse LifeAchievement ENDING + LifeAchievementUnlock + Achievement triggerCode
-    storybook-ending-{deckKey}-{outcomeKey} (life keeps davinci-ending-*); one COLLECTION
-    LifeAchievement per deck awarded when every ending in the deck is found;
-    GET /api/storybook/endings?deckKey= returns unlocked endings in full and locked ones as
-    silhouettes. Gating: EndingDeck.unlockAchievementId + server/utils/storybookGating.ts
-    assertDeckPlayable, enforced only behind STORYBOOK_ENFORCE_DECK_GATES=true until t-038.
+    Part C5.
 
-    Done by kind_robots#2662. resolveStoryRunEnding (deck-generic successor to
-    resolveLifeRunEnding, old name kept as a delegate) awards a deck's COLLECTION achievement
-    once every ending in that deck is found; GET /api/storybook/endings?deckKey= returns found
-    endings in full and unfound ones as silhouettes, verified in the DB-backed play-loop suite.
-    The gating hook (EndingDeck.unlockAchievementId + storybookGating.ts) ships dormant behind
-    STORYBOOK_ENFORCE_DECK_GATES=true, as specced -- t-038 turns it on.
-
-    Done by kind_robots#2662. Collection reuses the existing award chain rather than adding a second unlock table: LifeAchievement ENDING plus LifeAchievementUnlock, with Achievement triggerCode storybook-ending-{deckKey}-{outcomeKey} (life keeps davinci-ending-*, so the life-run UI's filter is untouched). GET /api/storybook/endings?deckKey= returns found endings in full and unfound ones as silhouettes -- id, slug, victory type and icon only, because spoiling the list turns a collection into a checklist. resolveStoryRunEnding awards a deck's COLLECTION achievement when every ending in it is found.
-
-    Gating is built and dormant: EndingDeck.unlockAchievementId plus server/utils/storybookGating.ts. assertDeckPlayable only refuses when STORYBOOK_ENFORCE_DECK_GATES is true, while GET /api/storybook/decks already reports each deck's unlocked state honestly, so the hand can be built and checked against real data before a reader is ever turned away. A gate the UI cannot explain is a dead end, not a goal -- t-038 flips it once the hand renders a lock.
+    Full history: projects/storybook/HISTORY.md#t-033
   updated: '2026-09-12T13:15:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2662'
 - id: t-034
@@ -791,29 +554,9 @@ tasks:
   stakes: reversible
   depends_on: [t-029, t-030]
   note: >-
-    Part B1. Slots: Genre, Place, Hero (required);
-    Company, Narrator, Shape, Thread, Treasures, Spark (optional/defaulted). The bottom
-    workspace hand fans the deck for the active slot via a new `storybookCards` page-cards key
-    (stores/pageStore.ts cardsKey -> stores/helpers/modelCards.ts), so workspace-hand.vue's
-    sizing/flip/scroll code is untouched. Board lights up when the required slots are filled.
+    Part B1.
 
-    2026-09-12, after mockup round 1: the spec this waits on has been rewritten (docs/storymaker-redesign.md B0-B4). Two slots changed shape. NARRATOR is now a card dealt from real narrator Bots with a delivery dial on the placed card, not a radio row of five voices (t-042). SHAPE is now MODE -- open-ended, episodic, structured, taskmaster -- also a card, with length demoted to a settings dial (t-039, t-041). And B0 now draws the line Silas drew: creative choices are cards, while typed input (title, premise, objective), settings and actions stay ordinary controls. Round 1 failed by keeping the form and adding cards underneath it; the board and the hand are the page.
-
-    2026-09-13, Silas: "I don''t know why anything is waiting on mockups. That was supposed to be a one-off to give some general direction, not a permanent requirement to lead to anything. we just want things functional at this point. we can tweak what it looks like afterwards. We should not be waiting for mockups (which you were already given) to complete anything moving forward on roadmaps." The gate this note carried was invented when m7 was filed and is removed. A mockup is DIRECTION, never a dependency: build the screen functionally on the engine that exists, and polish it in place afterwards. Everything above about slots, moves and albums is still the spec -- only the waiting was wrong.
-
-    2026-09-13: merged. components/storybook/storybook-table.vue -- eight slots (mode,
-    genre, place, hero, company, narrator, thread, treasures), each a 2:3 well that fills
-    with the chosen card's real artwork, and an in-page hand dealing the deck for the active
-    slot. Genre, place and hero are the only required cards. Cards are the flavour bits
-    only: title, spark/objective and the length dial are ordinary controls, and endless is a
-    length choice rather than a mode card. Narrator cards come from GET /api/narrators with
-    the delivery dial on the placed card. Decks are mapping functions in
-    utils/storybookTableDecks.ts rather than components, because narrative-ingredient-
-    card.vue already draws a NarrativeIngredientOption with its art. SCOPE CALL: the hand
-    renders in the page rather than taking over the global workspace hand -- that takeover
-    needs stores/helpers/modelCards.ts decks to carry live entity art, which they do not,
-    and it buys nothing functional. Filed as polish, not allowed to delay a working Table.
-    Guard: utils/scripts/verifyStorybookTable.mjs.
+    Full history: projects/storybook/HISTORY.md#t-034
   updated: '2026-09-13T11:58:28Z'
   implementation_pr: 'silasfelinus/kind_robots#2699'
 - id: t-035
@@ -824,26 +567,9 @@ tasks:
   stakes: reversible
   depends_on: [t-034, t-032]
   note: >-
-    Part B2. Scene art plate + short direct prose; tableau strip and
-    turn pips; the three moves always visible together (option cards, "You ..." composer, the
-    hero's Skill/Item cards fanned in the bottom hand). Axes stay hidden for genre decks; the
-    Life ledger sits behind a toggle. Built on stores/storybookRunStore.ts, not the old beat loop.
+    Part B2.
 
-    2026-09-12: open-ended mode has no turn budget, so the turn pips cannot read "3 of 8" in every mode -- show progress without an end count, and offer "bring this to an end" as the reader's own move (t-040). Structured mode is the only one that may show its ledger; every other mode shows prose consequences only.
-
-    2026-09-13, Silas: "I don''t know why anything is waiting on mockups. That was supposed to be a one-off to give some general direction, not a permanent requirement to lead to anything. we just want things functional at this point. we can tweak what it looks like afterwards. We should not be waiting for mockups (which you were already given) to complete anything moving forward on roadmaps." The gate this note carried was invented when m7 was filed and is removed. A mockup is DIRECTION, never a dependency: build the screen functionally on the engine that exists, and polish it in place afterwards. Everything above about slots, moves and albums is still the spec -- only the waiting was wrong.
-
-    2026-09-13: merged with t-034 in the same PR -- a Table that opens a story with nowhere
-    to read it is not functional, which is what Silas asked for.
-    components/storybook/storybook-reading.vue: one page per turn with all three moves
-    visible together (option cards, a written move, the hero's Skill/Item cards), on
-    stores/storybookRunStore.ts. The turn pips only count toward a budget when there is one
-    -- an open-ended run shows progress with no end count and is offered 'bring this to an
-    end', gated on the server's readyToResolve rather than a local guess. The ledger renders
-    only where the server sent stats at all, which is structured mode alone. Taskmaster's
-    objective rides as its own field beside the prose, ready for t-046's accept step. The
-    store gained quest, art and applyProposal. TRANSITIONAL: the outgoing beat loop is
-    reachable at ?legacy=1 until t-037 deletes it and rewrites the guards that pin it.
+    Full history: projects/storybook/HISTORY.md#t-035
   updated: '2026-09-13T11:58:31Z'
   implementation_pr: 'silasfelinus/kind_robots#2699'
 - id: t-036
@@ -854,26 +580,9 @@ tasks:
   stakes: reversible
   depends_on: [t-035, t-033]
   note: >-
-    Part B3/B4. Ending card flip (kr-card-flip gesture), "added to your
-    collection · n of N" with the deck's album row (found face-up, unfound face-down), play
-    again / new table. The Collection replaces the localStorage "Recent stories" drawer with
-    per-account Adventures and per-deck Endings albums; Life's "Endings on record" folds in.
+    Part B3/B4.
 
-    2026-09-12: the Collection has to hold a 1,024-ending album beside eight-ending genre albums without either looking wrong, and an open-ended story that the reader chose to end lands in the same album as any other (t-040).
-
-    2026-09-13, Silas: "I don''t know why anything is waiting on mockups. That was supposed to be a one-off to give some general direction, not a permanent requirement to lead to anything. we just want things functional at this point. we can tweak what it looks like afterwards. We should not be waiting for mockups (which you were already given) to complete anything moving forward on roadmaps." The gate this note carried was invented when m7 was filed and is removed. A mockup is DIRECTION, never a dependency: build the screen functionally on the engine that exists, and polish it in place afterwards. Everything above about slots, moves and albums is still the spec -- only the waiting was wrong.
-
-    2026-09-13: merged. storybook-ending.vue shows the ending you got and, immediately under
-    it, how many of that deck you now hold and which are still dark. Unfound endings are
-    silhouettes with no title and no summary -- the server never sends them, so there is
-    nothing here to leak even by accident. The 1,024-ending life album and an eight-ending
-    genre album share one row: found endings draw first (three of a thousand shows your
-    three, not the first thousandth of the dark) and the row caps at 60 tiles because past
-    that the number is the interesting part. 'Play again with this table' returns to the
-    Table with the board still dealt rather than silently opening a second run and spending
-    a narration nobody asked for. storybook-collection.vue replaces the localStorage 'Recent
-    stories' drawer with per-account adventures and per-deck albums, so the list is the same
-    on every device. Guard coverage in utils/scripts/verifyStorybookTable.mjs.
+    Full history: projects/storybook/HISTORY.md#t-036
   updated: '2026-09-13T12:15:52Z'
   implementation_pr: 'silasfelinus/kind_robots#2701'
 - id: t-037
@@ -912,36 +621,9 @@ tasks:
   passes: 0
   stakes: reversible
   note: >-
-    Silas, 2026-09-12: stories are selected as open-ended, episodic, structured or
-    taskmaster. The shipped StoryShape enum is SHORT_STORY/CHAPTERED/EPISODIC/LIFE, so this
-    is a real migration, not a relabel: OPEN_ENDED, EPISODIC, STRUCTURED, TASKMASTER, with
-    LIFE mapping to STRUCTURED and both SHORT_STORY and CHAPTERED mapping to OPEN_ENDED
-    (length becomes a dial, t-041). Additive first -- add the new values, backfill, and only
-    drop the old ones once nothing reads them. PROSE_BOUNDS_BY_SHAPE, SHAPE_BY_WIRE/
-    WIRE_BY_SHAPE in server/utils/storybookRuns.ts, STORYBOOK_STRUCTURES in
-    stores/storybookStore.ts and the deck YAMLs'' turnBudgetByShape keys all move together.
-    Every in-flight run keeps resolving; a run created before this migration must not change
-    mode under the reader.
+    Silas, 2026-09-12: stories are selected as open-ended, episodic, structured or taskmaster.
 
-    2026-09-12: implemented in kind_robots#2686, awaiting merge. StoryShape gained
-    OPEN_ENDED/STRUCTURED/TASKMASTER and KEPT the legacy values so the deploy handoff is
-    safe; rows backfilled (LIFE->STRUCTURED, SHORT_STORY and CHAPTERED->OPEN_ENDED) and the
-    column default moved to STRUCTURED so an old-build insert that omits shape still means
-    what it meant. MODE_BY_ENUM maps the legacy values defensively, so an in-flight run
-    never changes mode under the reader. Deck YAMLs keyed by mode in conductor#4209
-    (merged), with the old keys kept as a fallback. NOT converted: STORYBOOK_STRUCTURES in
-    stores/storybookStore.ts -- its four structures drive the client beat loop's own
-    scheduling (short-story ends after four beats), which is the behaviour the length dial
-    replaces, and t-037 deletes that loop wholesale; converting it now would rewrite a loop
-    scheduled for deletion. A legacy client posting short-story still opens an open-ended
-    run via LEGACY_MODE_ALIASES. Dropping the legacy enum values is a follow-up once no
-    deployed build emits them.
-
-    2026-09-13: merged (kind_robots#2686, all 53 checks green). The two red guards were the
-    Alexandria outage, not this change -- verifyAcademyStarterManifest.ts and
-    verifyPopulationDraftQuality.ts fetch kindrobots.org live and were red on main too; both
-    passed on re-run once the host answered again. Merged != deployed: the enum widening and
-    the new routes need the Alexandria deploy before they are live.
+    Full history: projects/storybook/HISTORY.md#t-039
   updated: '2026-09-13T00:42:53Z'
   owner: worker
   claimed_by: 2026-09-12T23-mode-taxonomy-t039
@@ -955,29 +637,9 @@ tasks:
   stakes: reversible
   depends_on: t-039
   note: >-
-    The one mode that stretches the engine: every other mode resolves when its budget is
-    spent, and this one has no budget. LifeRun.turnBudget already allows NULL, and
-    resolveStoryRunEnding''s turn gate already binds only runs with a budget, so the shape of
-    the change is a reader-initiated resolve ("bring this to an end") rather than a new
-    ending path. Decided with Silas: an endless story IS collectible -- it resolves into the
-    genre''s deck whenever the reader calls it, so it is never a dead end in the Collection.
-    The turn route must stop advertising a final turn when there is no budget, and the
-    narrator must not be told a turn is the last one.
+    The one mode that stretches the engine: every other mode resolves when its budget is spent, and this one has no budget.
 
-    2026-09-12: implemented in kind_robots#2686, awaiting merge. turnBudget NULL now MEANS
-    endless for a run this engine opened: the narrator is never told a turn is the last one,
-    a scene is always waiting, and readyToResolve turns true once the deck's floor is
-    passed. Not a free pass -- resolveStoryRunEnding still enforces minTurnsBeforeResolve,
-    so 'bring this to an end' cannot collect an ending on turn one. A pre-deck life run also
-    has NULL there for its own reason and is told apart by deckId, so its ungated resolve is
-    untouched. verifyStorybookPlayLoop.ts plays an endless run past the old budget and
-    resolves it on demand against a real database.
-
-    2026-09-13: merged (kind_robots#2686, all 53 checks green). The two red guards were the
-    Alexandria outage, not this change -- verifyAcademyStarterManifest.ts and
-    verifyPopulationDraftQuality.ts fetch kindrobots.org live and were red on main too; both
-    passed on re-run once the host answered again. Merged != deployed: the enum widening and
-    the new routes need the Alexandria deploy before they are live.
+    Full history: projects/storybook/HISTORY.md#t-040
   updated: '2026-09-13T00:42:57Z'
   implementation_pr: 'silasfelinus/kind_robots#2686'
 - id: t-041
@@ -988,23 +650,9 @@ tasks:
   stakes: reversible
   depends_on: t-039
   note: >-
-    Short story and Chaptered tale stop being identities. Open-ended and Episodic take a
-    length dial that sets the run''s turn budget (and, for open-ended, may leave it unset).
-    The deck''s turnBudgetByShape stays the default the dial starts from. Per Silas''s
-    clarification this is a SETTING, not a card -- it must not appear in the hand.
+    Short story and Chaptered tale stop being identities.
 
-    2026-09-12: implemented in kind_robots#2686, awaiting merge. StoryBoardInput.turnBudget
-    is the dial: 3..40, defaulting to the deck's budget for the mode, explicit null only in
-    open-ended. It is a SETTING, not a card, and stays out of every hand-facing payload. The
-    prose bands moved with it -- a scene is not longer because the story it belongs to is,
-    so the old short-story and chaptered bands collapsed into one open-ended band;
-    structured keeps the 20-400 life band its live runs were written against.
-
-    2026-09-13: merged (kind_robots#2686, all 53 checks green). The two red guards were the
-    Alexandria outage, not this change -- verifyAcademyStarterManifest.ts and
-    verifyPopulationDraftQuality.ts fetch kindrobots.org live and were red on main too; both
-    passed on re-run once the host answered again. Merged != deployed: the enum widening and
-    the new routes need the Alexandria deploy before they are live.
+    Full history: projects/storybook/HISTORY.md#t-041
   updated: '2026-09-13T00:43:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2686'
 - id: t-042
@@ -1014,29 +662,9 @@ tasks:
   passes: 0
   stakes: reversible
   note: >-
-    Silas, 2026-09-12: narrators exist as Bots and supply the general voice; how they deliver
-    it is still adjustable. The run already carries both halves (botId and narratorStyle) and
-    loadRunNarrator already reads a Bot''s personality/narrativeVoice/prompt into the system
-    prompt, so the engine work is small: make the narrator Bot selectable from the board
-    payload, list narrator Bots for the hand to deal (/api/narrators/[type] exists), and
-    confirm the five NARRATOR_STYLE_DIRECTIVES read as modulating the chosen Bot rather than
-    replacing it. The prompt must not end up with two competing voices.
+    Silas, 2026-09-12: narrators exist as Bots and supply the general voice; how they deliver it is still adjustable.
 
-    2026-09-12: implemented in kind_robots#2686, awaiting merge. GET /api/narrators lists
-    the narrator Bots for the hand (card-face fields only -- the prompt text stays server-
-    side). createStoryRun now refuses a botId that is not an active NARRATOR: nothing failed
-    before, loadRunNarrator would read any Bot into the prompt, so the slot quietly narrated
-    in a voice never written to narrate. The style block is reframed as DELIVERY and says
-    out loud that it modulates the voice established above rather than replacing it, so the
-    prompt never carries two competing narrators; the five directives are unchanged.
-    verifyStorybookNarration.ts pins the framing and that the Bot's identity precedes the
-    dial.
-
-    2026-09-13: merged (kind_robots#2686, all 53 checks green). The two red guards were the
-    Alexandria outage, not this change -- verifyAcademyStarterManifest.ts and
-    verifyPopulationDraftQuality.ts fetch kindrobots.org live and were red on main too; both
-    passed on re-run once the host answered again. Merged != deployed: the enum widening and
-    the new routes need the Alexandria deploy before they are live.
+    Full history: projects/storybook/HISTORY.md#t-042
   updated: '2026-09-13T00:43:03Z'
   owner: worker
   claimed_by: 2026-09-12T23-narrator-bot-t042
@@ -1049,27 +677,9 @@ tasks:
   passes: 0
   stakes: reversible
   note: >-
-    kind_robots docs/products/storybook-taskmaster-boundary.md opens "This boundary is
-    intentional and permanent" and lists permanent implementation invariants (Taskmaster owns
-    its own Pinia store, session types, persistence key, and product identity). Silas,
-    2026-09-12, overrides that: Taskmaster becomes a mode of Storybook and its route retires.
-    Rewrite the doc IN PLACE, keeping its path so nothing linking to it dies -- the same
-    treatment davinci/docs/storybook-boundary-comparison.md got. What survives the rewrite is
-    the part that was never about product separation: task answers are proposals until the
-    reader applies them, the real objective stays visible beside the fiction, and Conductor
-    roadmap YAML is never written by a story answer. Do this FIRST in m9, so the repo never
-    has a doc calling permanent a split the roadmap is dismantling.
+    kind_robots docs/products/storybook-taskmaster-boundary.md opens "This boundary is intentional and permanent" and lists permanent implementation invariants (Taskmaster owns its own Pinia store, session types, persistence key, and product identity).
 
-    2026-09-12: closed. docs/products/storybook-taskmaster-boundary.md rewritten in place
-    (path kept, so the two sentences verifySerendipityRouteCutover.mjs pins survive). The
-    permanence framing and the 'store and state machine remain separate' invariant are gone,
-    replaced by a dated supersession header, a was/is table for the four modes, and the
-    statement that Taskmaster's three CI guards are rewritten rather than deleted. The four
-    safety rules that were never about product separation -- a story answer is a proposal
-    until the reader applies it, the objective stays visible beside the fiction, Conductor
-    roadmap YAML is never written by a story answer, and a story must never look like it
-    silently edited a task list -- are restated as binding the Taskmaster MODE, and are
-    t-045's acceptance criteria.
+    Full history: projects/storybook/HISTORY.md#t-043
   updated: '2026-09-12T22:48:02Z'
   owner: worker
   claimed_by: 2026-09-12T23-boundary-doc-t043
@@ -1083,28 +693,9 @@ tasks:
   stakes: reversible
   depends_on: [t-039, t-043]
   note: >-
-    stores/taskmasterStore.ts is a 1,070-line client-side beat loop with its own localStorage
-    session, checkpoint plan, and "real hooks" (projects and todos) -- the same architecture
-    Storybook just moved to the server. Absorb it the same way: a story run in TASKMASTER
-    mode whose Spark is an Objective and whose Thread deck deals the reader''s real projects
-    and todos. Checkpoints become turns; hooks become the deck. Keep the fiction and the real
-    work visibly distinct in the payload, because B4 requires the objective on screen beside
-    the story at all times.
+    stores/taskmasterStore.ts is a 1,070-line client-side beat loop with its own localStorage session, checkpoint plan, and "real hooks" (projects and todos) -- the same architecture Storybook just moved to the server.
 
-    2026-09-13: merged (kind_robots#2689, all 53 checks green, including Replay migrations
-    on MariaDB and the DB-backed Generator + importer regression). A quest opens from an
-    Objective in the Spark slot plus a project, and the server deals the real work into
-    checkpoints -- the objective, the project open HONEYDO todos, its conductor tasks at
-    needs-human, capped at five. availableHooks() and buildCheckpointPlan() ported off
-    stores/taskmasterStore.ts, reading the stored conductor projection rather than a Pinia
-    store. Schema: LifeRun.questLedger and a TASKMASTER value on EndingDeckOwnerKind, both
-    additive. Silas decided two things on 2026-09-13: the quest resolves into its own deck
-    (conductor#4221, three axes about the WORK -- momentum, clarity, follow_through) so real
-    work is collected like any other adventure, and the Thread slot deals ONE project's
-    work, as today, because a quest that sweeps up every loose to-do stops having an
-    objective. A quest may also close early once every checkpoint is worked (canClose()
-    ported). stores/taskmasterStore.ts and the /taskmaster route are untouched and still
-    work -- t-047 retires them after t-046 deploys.
+    Full history: projects/storybook/HISTORY.md#t-044
   updated: '2026-09-13T02:53:58Z'
   owner: worker
   claimed_by: 2026-09-13T01-taskmaster-mode-t044
@@ -1118,29 +709,9 @@ tasks:
   stakes: reversible
   depends_on: t-044
   note: >-
-    The half of the boundary doc that survives. taskmasterStore''s pendingWriteBacks /
-    applyWriteBack must become part of the turn payload: a story may PROPOSE a change to a
-    real project or todo, and nothing lands until the reader explicitly applies it. A story
-    must never look like it silently edited a task list, and Conductor roadmap YAML is still
-    never written by a story answer. This is the task where the safety rules either survive
-    the merge intact or quietly do not -- treat a regression here as a correctness bug, not a
-    UX nit.
+    The half of the boundary doc that survives.
 
-    2026-09-13: merged with t-044 in kind_robots#2689. This was never claimed separately --
-    it was status waiting on t-044 and claim_task.py correctly refused it -- because the
-    safety rules are not a follow-up to the mode, they are how the mode was built. A turn
-    PROPOSES and nothing real moves: the proposal lands in LifeRun.questLedger marked
-    unapplied, with a plain-words description of what applying would do. One separate
-    authenticated route, POST /api/storybook/runs/:id/proposals/:id/apply, is the only path
-    that writes; it can close and annotate a HONEYDO todo or create one AGENT todo recording
-    a needs-human decision, and there is no branch that could write Conductor roadmap YAML.
-    Applying twice writes nothing twice, and ownership is checked on both the run and the
-    to-do. The narrator is told which proposals have NOT been applied and not to narrate
-    them as done, and told outright that answering never completes or approves anything. New
-    guard verifyStorybookTaskmasterSafety.ts pins all of it statically (wired into
-    test:storybook), so a violation fails on the PR that introduces it rather than the
-    deploy that ships it; verifyStorybookPlayLoop.ts proves it against a real database -- a
-    turn records a proposal while the Todo row stays OPEN with a null description.
+    Full history: projects/storybook/HISTORY.md#t-045
   updated: '2026-09-13T02:54:01Z'
   implementation_pr: 'silasfelinus/kind_robots#2689'
 - id: t-046
@@ -1151,25 +722,9 @@ tasks:
   stakes: reversible
   depends_on: [t-034, t-035, t-044, t-045]
   note: >-
-    The Table in this mode swaps the Spark for an
-    Objective field and deals real work cards into the Thread slot; the Reading keeps the
-    objective on screen beside the fiction and puts an explicit accept step on any proposal.
-    Everything else -- hand, slots, turn loop, character sheet -- is the same screen as every
-    other mode, which is the point of absorbing it rather than porting it.
+    The Table in this mode swaps the Spark for an Objective field and deals real work cards into the Thread slot; the Reading keeps the objective on screen beside the fiction and puts an explicit accept step on any proposal. Everything else -- hand, slots, turn loop, character sheet .
 
-    2026-09-13, Silas: "I don''t know why anything is waiting on mockups. That was supposed to be a one-off to give some general direction, not a permanent requirement to lead to anything. we just want things functional at this point. we can tweak what it looks like afterwards. We should not be waiting for mockups (which you were already given) to complete anything moving forward on roadmaps." The gate this note carried was invented when m7 was filed and is removed. A mockup is DIRECTION, never a dependency: build the screen functionally on the engine that exists, and polish it in place afterwards. Everything above about slots, moves and albums is still the spec -- only the waiting was wrong.
-
-    2026-09-13: merged. The Thread slot changes job in taskmaster mode rather than the board
-    growing a ninth well -- it reads 'Project', deals the reader's own conductor-backed
-    projects (conductorSlug only, since that is what the server deals checkpoints from), and
-    stops being optional. The Spark control already relabels itself as the Objective, and a
-    quest refuses to open without both, said on the Table rather than left to a round trip.
-    In the Reading the objective now carries the open checkpoints and, under them, THE
-    ACCEPT STEP: each proposal shows what applying would do before it is applied, an
-    unapplied one is labelled 'Not applied -- nothing has changed yet', and Accept is a
-    button the reader presses. verifyStorybookTable.mjs pins that applyProposal is called
-    from the Reading and from nowhere on the Table, so accepting can never become a side
-    effect of playing a turn.
+    Full history: projects/storybook/HISTORY.md#t-046
   updated: '2026-09-13T12:21:37Z'
   implementation_pr: 'silasfelinus/kind_robots#2702'
 - id: t-047
@@ -1180,25 +735,9 @@ tasks:
   stakes: reversible
   depends_on: [t-045, t-046]
   note: >-
-    The closing move Silas asked for ("removing the taskmaster route when done"). Retire
-    content/taskmaster.md and content/channels/plan/taskmaster.md, the taskmaster entry in
-    utils/projectPlacements.ts, components/pages/taskmaster-page.vue, components/taskmaster/*
-    and stores/taskmasterStore.ts, and redirect /taskmaster to /storybook the way
-    /play/davinci redirects. Its three CI guards -- verifyTaskmasterCheckpointEngine.mjs,
-    verifyTaskmasterSampleTasks.mjs, verifyTaskmasterSessionStorageRecoveryGuard.mjs -- are
-    REWRITTEN against the new surface, never deleted: they pin the checkpoint engine, the
-    sample tasks and the storage recovery path, and the merge has to keep all three true.
-    Do not start this until t-046 is deployed and the mode is genuinely usable.
+    The closing move Silas asked for ("removing the taskmaster route when done").
 
-    2026-09-14: merged (kind_robots#2718, squash 21e9d9a, all 52 checks green). /taskmaster is a permanent 301 to /storybook alongside /play/davinci. Deleted: taskmaster-page.vue, components/taskmaster/* (3), stores/taskmasterStore.ts, content/taskmaster.md and content/channels/plan/taskmaster.md. The projectPlacements slug stays but resolves to /storybook with tabKey 'storybook' -- the davinci treatment, so the projects board still has somewhere to send a reader. Dashboard tab and tutorial card removed (the Storybook tab sits directly above and covers them); the Storybook tutorial card now names all four MODES, replacing copy that still described the four retired shapes.
-
-    THE THREE GUARDS WERE REWRITTEN, NOT DELETED, as this task required. Each keeps its truth and drops only the dead file paths. verifyTaskmasterCheckpointEngine now reads storybookQuest.ts, storybookRuns.ts and the Table/Reading, and its sharpest assertion survives intact -- a proposed but unapplied write-back must never block finishing a quest, which the old store expressed by banning 'proposed-complete' from its blocking set and the new engine expresses by keeping 'proposed' out of activeCheckpoint(). verifyTaskmasterSampleTasks lost its four canned objectives and now pins what they stood for: quests built from the reader's own conductor-backed projects, conductorSlug required, approval flags never touched. verifyTaskmasterSessionStorageRecoveryGuard's localStorage hazard is GONE rather than fixed, so it asserts the quest stays a server-side row and no client taskmaster session may return. All three were mutation-tested: re-adding 'proposed', dropping the conductorSlug filter, and re-creating taskmasterStore.ts each fail their guard, so none went vacuous.
-
-    Collateral guards updated to stop READING the deleted files, never to stop checking: narrative primitives, art persistence, art milestones, streaming-text isolation, narrative kit, page backdrop, API client follow-ups, and facet taxonomy authority -- whose Facet-consumer slot moved to storybook-visual-setup.vue, the direct successor. Plus the layout/mdc baselines and the responsive-audit route list. The orphaned taskmaster backdrop art seed was removed; verifyPageBackdrop had correctly read it as art queued to render nowhere.
-
-    One CI round: verifyWorkflowPaths.ts reads bare lowercase slash-joined tokens in a `run:` step as repo paths, so a project-qualified task id in an inline script comment failed as a missing directory. Fixed by naming the task without a slash and leaving a note saying why.
-
-    Left deliberately: the narrative-milestone-art plugin keeps its Storybook half -- that is the last client beat loop and belongs to t-037, not here. taskmaster is now retired in project-overrides.yaml (its route is gone, so the lifecycle validator's 'active project has no open tasks' is resolved at the root rather than papered over).
+    Full history: projects/storybook/HISTORY.md#t-047
   updated: '2026-09-14T08:22:12Z'
   owner: worker
   claimed_by: claude-20260914T075055Z-sb-t047

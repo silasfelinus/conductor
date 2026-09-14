@@ -32,47 +32,10 @@ tasks:
   owner: reviewer
   passes: 0
   stakes: reversible
-  note: >
-    DONE 2026-07-15 (conductor-hourly-20260715-1449): wrote SPEC.md. Maps pack
-    item types onto existing models (locations -> Dream dreamType:LOCATION,
-    genres -> Facet kind:GENRE, characters -> Dream dreamType:CHARACTER or the
-    richer standalone Character model, rewards -> the existing Reward model
-    and its Dream<->Reward relation) rather than inventing new item schemas;
-    the pack container itself stays a YAML manifest in packs/ for now (no
-    Pack Prisma model proposed -- deferred to t-004 as an open question).
-    Generation reuses existing kind_robots chat/art/dream endpoints
-    (server/api/chats/*, server/api/art/generate.post.ts +
-    art/queue/*, server/api/dreams/index.post.ts) per BOUNDARY.md's
-    read-only-shared-backend rule. Admin view = manifest-driven generator
-    (t-004); user view reuses the already-shipped /packs scaffold
-    (packmaker-page.vue -> ProjectFrontPage, t-005) via its empty
-    #interactive slot. Ownership/privacy: confirmed kind-robots t-008
-    (SHARING-SPEC.md) is still status:ready, not written -- so this brief
-    does NOT invent a parallel ACL model. Interim state uses the
-    isPublic/isMature/isActive triad already on Dream/Facet/Character
-    (all-or-nothing release); DLC per-purchaser visibility stays blocked on
-    t-008 by design. Storefront mapping: digital-storefront's SPEC.md
-    (t-009) already designed a generic Product/Entitlement model that
-    explicitly covers packmaker DLC packs as one of its shapes -- this brief
-    builds on that instead of re-designing entitlements, and only needs
-    t-008 for the per-item visibility half. Raised two soft needs-human
-    open questions (Character vs Dream shape for pack characters; whether a
-    real Pack Prisma model is ever needed) rather than blocking on them.
-    No code, schema, or generation changes -- design doc only, per this
-    project's own 2026-07-05 TALKBACK review ("the design brief should stay
-    a brief").
-    Original spec follows:
-    SPEC.md covering: what a "pack" is (a manifest of generated website items —
-    locations, genres, characters, rewards — mapped to existing kind_robots models
-    like Dreams and Rewards); how generation reuses the existing kind_robots
-    pipelines (chat/art/dream APIs — shared backend is read-only per BOUNDARY.md,
-    backend changes become pitches); admin view (create/generate/review/publish a
-    pack) vs user view (browse/preview/own unlocked packs); ownership and privacy
-    (packs tied to Silas, private until released — coordinate with kind-robots
-    t-008 sharing/ACL design, do NOT invent a parallel permission system); and how
-    the digital-storefront purchases map to pack entitlements (storefront t-017).
-    Per the 2026-07-04 soft-scope rule: start immediately, raise scope confirmation
-    to Silas as a soft needs-human in parallel.
+  note: >-
+    DONE 2026-07-15 (conductor-hourly-20260715-1449): wrote SPEC.md.
+
+    Full history: projects/packmaker/HISTORY.md#t-001
   claimed_by: conductor-hourly-20260715-1449
   claimed_at: '2026-07-15T14:50:29Z'
   updated: '2026-07-15T15:10:00Z'
@@ -84,21 +47,10 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-001
-  note: >
-    DONE 2026-07-15 (conductor-hourly-20260715-1550): schema written as
-    projects/packmaker/packs/SCHEMA.md (schemaVersion 1) — top-level pack
-    fields (id/title/description/owner/visibility/price) plus a per-item
-    schema (type/itemShape/refId/draftPayload/notes). Resolves SPEC.md §7's
-    open question at the item level: itemShape lets a character-type entry
-    choose dream (lore-only) or character (stat-block) per item rather than
-    hardcoding one for the whole pack. price.hook (free|one-time|dlc) maps
-    onto digital-storefront's Product/Entitlement design (SPEC §5);
-    visibility (draft|released) encodes the interim all-or-nothing isPublic
-    rule (SPEC §4) pending kind-robots t-008. Worked example:
-    packs/example-starter-pack.yaml, a 4-item draft pack (one location,
-    genre, character, reward), validated with a YAML parse check (python
-    yaml.safe_load). No generation, API calls, or DB writes performed —
-    manifest-only per this task's scope.
+  note: >-
+    DONE 2026-07-15 (conductor-hourly-20260715-1550): schema written as projects/packmaker/packs/SCHEMA.md (schemaVersion 1) — top-level pack fields (id/title/description/owner/visibility/price) plus a per-item schema (type/itemShape/refId/draftPayload/notes).
+
+    Full history: projects/packmaker/HISTORY.md#t-002
   claimed_by: conductor-hourly-20260715-1550
   claimed_at: '2026-07-15T15:51:48Z'
   updated: '2026-07-15T16:05:00Z'
@@ -115,39 +67,10 @@ tasks:
   approved_by_human: true
   claimed_by: claude-burst-20260715-2306
   updated: '2026-07-17T19:30:00Z'
-  note: >
-    FOR SILAS: Both launch-pack manifests are drafted, validated against the
-    t-002 schema, and committed at projects/packmaker/packs/uncanny-valor.yaml
-    and projects/packmaker/packs/arcane-whimsy.yaml. Nothing was generated,
-    published, or written to the live database — these are plain YAML drafts.
+  note: >-
+    FOR SILAS: Both launch-pack manifests are drafted, validated against the t-002 schema, and committed at projects/packmaker/packs/uncanny-valor.yaml and projects/packmaker/packs/arcane-whimsy.yaml.
 
-    Uncanny Valor (super-powers, price hook: dlc) — 11 items: 2 locations
-    (Ironclad Skyport, a scrappy airship-dock HQ; Sublevel Nine, a converted
-    subway containment wing), 2 genres (Grounded Heroics, Bombastic
-    Showdown), 4 characters as full Character-shape stat-block entries per
-    SPEC.md §7's recommendation (Volta Ferrin — living lightning conduit;
-    Greyline — intangible ex-cop; Bastion Ruk — invulnerable gentle giant;
-    Echo Vance — sound-manipulating ex-musician), 3 rewards each tied to one
-    character (Ferrin Coil, Greyline's Badge, Bastion's Core Fragment).
-
-    Arcane Whimsy (magic-powers, price hook: dlc) — 11 items: 2 locations
-    (The Bramblewick Market, a hidden fog-only bazaar; Hollow Moon
-    Observatory, a cliffside academy whose telescope shows somewhere else),
-    2 genres (Cozy Conjuring, Wyrd Peril), 4 characters as Character-shape
-    entries (Marigold Thistlewick — hedge witch; Corvid Nightshade —
-    raven-bonded illusionist; Pell Wickstone — clumsy apprentice enchanter;
-    The Hollow Warden — ancient moss golem), 3 rewards each tied to one
-    character (Thistlewick's Ledger, Nightshade Feather, Warden's Lichen
-    Cloak).
-
-    TO APPROVE: read both YAML files (or the PR diff) and either (a) approve
-    as-is, or (b) leave notes on what to rename/reshape — you may rename
-    either pack per the original brief. Once happy, set
-    `approved_by_human: true` and `status: done` here (or note specific
-    edits you want made first). This unblocks t-004 (the admin generator
-    view, cross-repo in kind_robots) and, downstream, digital-storefront's
-    DLC catalog work — no generation, Product rows, or Stripe activity
-    happens until t-004 is built and you separately approve going live.
+    Full history: projects/packmaker/HISTORY.md#t-003
   outcome_note: >
     No code changes; conductor-only PR (this is a design-brief project per
     AGENTS.md's software/content/proposal distinction — packmaker's own
@@ -173,12 +96,10 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-003
-  note: 'Completed. kind_robots PR #369 merged (squash 5a5d383): packmaker-admin-panel.vue (admin-only, gated on userStore.isAdmin)
-    + packStore.ts + packManifests.ts seed data. Loads a pack manifest, creates/regenerates each item via existing dreams/facets/characters/rewards
-    + art endpoints, shows per-item status, batch-creates remaining items, and a local ''mark ready'' toggle. All created
-    items forced isPublic:false/isMature:false pending kind-robots t-008 (ACL) -- no live/public release wired, correctly
-    deferred per the original note. Reviewed by Reviewer session (CI green: TypeScript/Contract verifiers/GitGuardian, scoped
-    4-file diff, no migrations/secrets/DNS/billing) and merged directly, no rejection pass.'
+  note: >-
+    Completed.
+
+    Full history: projects/packmaker/HISTORY.md#t-004
   claimed_by: claude-worker-packmaker-xuup66
   claimed_at: '2026-07-17T19:24:38Z'
   updated: '2026-07-17T20:15:00Z'
@@ -203,40 +124,10 @@ tasks:
   owner: worker
   passes: 0
   stakes: reversible
-  note: >
-    DONE 2026-07-16 (conductor-hourly cycle): kind_robots PR #306 shipped step
-    (2) — registered a NEW top-level ExtraTutorialKey channel keyed by 'packs'
-    (route /packs, matching content/channels/build/packs.md) in
-    stores/helpers/tutorialCards.ts, marked underConstruction since no
-    dashboard-tab/tutorial art exists for it yet. eslint/prettier/vue-tsc all
-    clean. Closing this task on that scope rather than leaving it perpetually
-    `ready`: (1) art generation needs the live generation backend
-    (KR_API_TOKEN), confirmed absent from this environment same as
-    ai-art-academy/t-004 and t-009 — file a fresh small task if/when a
-    token-bearing session is available rather than reopening this one; (3)
-    admin Placements verification is an admin-UI action outside agent access;
-    (4) "evolve into the full interactive experience" is intentionally
-    dropped from this task's scope — it duplicates packmaker/t-004 (Build the
-    pack generator admin view), which correctly stays `waiting` on t-003
-    (launch-pack manifests) until Silas approves them. Building it here would
-    have preempted a deliberately human-gated task.
-    Original spec follows (steps 1/3/4 not completed here, see above):
-    CORRECTED 2026-07-15 (conductor/t-044): fixed stale tutorialChannels phrasing
-    below per the code-confirmed convention (challenge-center/t-019,
-    coloring-book/t-019, humboldt-scoop/t-008, humboldt-scoop-cms/t-011) — step (2)
-    now says to add a NEW top-level ExtraTutorialKey channel keyed by 'packs' (the
-    project's own tab key, per kind_robots/utils/projectPlacements.ts), not a nested
-    section under an existing dashboard-tab-group channel. UI polish + upgrade for
-    the packmaker front end now that the scaffold page is
-    live at /packs. Steps: (1) generate final dashboard-tab art at
-    public/images/dashboard-tabs/builder/packs.webp and tutorial art at
-    public/images/tutorials/packs/packs.webp; (2) add a NEW top-level
-    ExtraTutorialKey channel keyed by 'packs' (NOT a nested section under
-    tutorialChannels.builder.sections) in
-    kind_robots/stores/helpers/tutorialCards.ts; (3) verify the PROJECT Dream
-    liveUrl points at /packs (admin can run the Conductor 'Placements' button to
-    backfill channelKey/tabKey/liveUrl); (4) evolve the placeholder scaffold page
-    into the full interactive experience for this project.
+  note: >-
+    DONE 2026-07-16 (conductor-hourly cycle): kind_robots PR #306 shipped step (2) — registered a NEW top-level ExtraTutorialKey channel keyed by 'packs' (route /packs, matching content/channels/build/packs.md) in stores/helpers/tutorialCards.ts, marked underConstruction since no das
+
+    Full history: projects/packmaker/HISTORY.md#t-006
   claimed_by: claude-conductor-hourly-20260716-0248
   updated: '2026-07-16T03:00:00Z'
   claimed_at: '2026-07-16T02:52:43Z'
@@ -247,20 +138,10 @@ tasks:
   owner: worker
   passes: 0
   stakes: reversible
-  note: >
-    Kaizen from t-002's implementation (2026-07-15): SCHEMA.md (schemaVersion 1)
-    defines required top-level fields (id/title/description/owner/visibility/price)
-    and per-item fields (type/itemShape/refId-or-draftPayload), but nothing
-    checks a pack YAML against it besides manual review. Add a small
-    scripts/validate_pack_manifest.py (or extend an existing roadmap-validation
-    script if one already covers non-roadmap YAML) that loads a
-    projects/packmaker/packs/*.yaml file, checks the required fields/enums per
-    SCHEMA.md, and exits non-zero with a clear message on violation. Run it
-    against example-starter-pack.yaml as the first regression case. This gives
-    t-003 (drafting the two real launch packs) and t-004 (admin generator)
-    fast feedback instead of relying on manual review. Small, reversible,
-    conductor-repo-only change; no kind_robots or generation-backend
-    involvement.
+  note: >-
+    Kaizen from t-002's implementation (2026-07-15): SCHEMA.md (schemaVersion 1) defines required top-level fields (id/title/description/owner/visibility/price) and per-item fields (type/itemShape/refId-or-draftPayload), but nothing checks a pack YAML against it besides manual review
+
+    Full history: projects/packmaker/HISTORY.md#t-007
   claimed_by: claude-burst-2026-07-15-1723
   claimed_at: '2026-07-15T16:50:41Z'
   updated: '2026-07-15T16:54:27Z'
@@ -270,13 +151,10 @@ tasks:
   status: done
   passes: 0
   stakes: reversible
-  note: |-
-    Kaizen from t-004's implementation (2026-07-17, kind_robots PR #369): the admin pack generator panel's packStore.ts validates an imported manifest against the schema-v1 shape (validatePackManifest), but the PR that added it shipped without a test for that function, despite the PR's own kaizen suggestion naming it. It's a pure function (no store/network dependency), so a focused unit test covering valid manifests, missing required fields, and bad item shapes should be cheap. kind_robots-repo change (near packStore.ts / packmaker-admin-panel.vue).
+  note: >-
+    Kaizen from t-004's implementation (2026-07-17, kind_robots PR #369): the admin pack generator panel's packStore.ts validates an imported manifest against the schema-v1 shape (validatePackManifest), but the PR that added it shipped without a test for that function, despite the PR
 
-
-    Connector-backed Worker claim after scanning current priority queue and skipping active or hard-gated higher-priority tasks.
-
-    kind_robots PR
+    Full history: projects/packmaker/HISTORY.md#t-008
   updated: '2026-07-17 21:26:00+00:00'
 - id: t-009
   milestone: m3
@@ -286,27 +164,10 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-004
-  note: >
-    Silas direction (2026-07-17, in-session): the admin generator (t-004)
-    should also let him (1) rename a pack (he reserved renaming rights on the
-    launch packs from the start), (2) build a NEW pack by hand-setting some or
-    all entries in an editor, and (3) give just a general prompt and have an
-    LLM generate an appropriate manifest scaffold to review/edit before
-    saving. Cross-repo (kind_robots). Scaffold generation should reuse the
-    existing /api/suggest pipeline via a registered packmaker suggest sheet
-    (the established per-builder extension point), not new generation
-    surface; providers currently hardcode max_tokens 512 even though the
-    endpoint accepts maxTokens — wire that through as part of this task so a
-    full manifest fits. Saved packs stay local draft manifests feeding the
-    existing t-004 generator flow; nothing publishes.
-    DONE 2026-07-17 (conductor hourly cycle, claude-conductor-hourly-20260717d): kind_robots
-    PR #375 merged after all 3 checks passed. New packmaker-pack-editor.vue component
-    (hand-build fields + LLM scaffold via a new registered 'packmaker' suggest sheet),
-    packStore.ts gained savePackManifest/renamePack/uniquePackId/generatePackScaffold, and
-    the /api/suggest maxTokens plumbing fix (providers previously hardcoded 512 regardless
-    of the caller's requested budget) landed as part of this task, benefiting all suggest
-    callers. Everything here writes only to the local draft manifest store — no DB writes,
-    nothing publishes.
+  note: >-
+    Silas direction (2026-07-17, in-session): the admin generator (t-004) should also let him (1) rename a pack (he reserved renaming rights on the launch packs from the start), (2) build a NEW pack by hand-setting some or all entries in an editor, and (3) give just a general prompt .
+
+    Full history: projects/packmaker/HISTORY.md#t-009
   claimed_by: claude-worker-packmaker-xuup66
   claimed_at: '2026-07-17T21:38:12Z'
   updated: '2026-07-17T22:05:00Z'
@@ -317,18 +178,10 @@ tasks:
   status: done
   passes: 0
   stakes: reversible
-  note: >
-    Kaizen from t-009's merge (kind_robots PR #375): generatePackScaffold's response-parsing
-    logic (stripping markdown fences, locating the JSON object via brace slicing, and the
-    distinct invalid-JSON vs schema-validation-failure error messages) is pure logic with no
-    store/network dependency once the raw LLM string is in hand — a good fit for the existing
-    npm run test:pack-manifest contract-test suite (t-008's precedent). kind_robots-repo change
-    (near stores/packStore.ts).
-    DONE 2026-07-17 (conductor-hourly, claude-conductor-hourly-20260717d): kind_robots PR #376
-    (branch claude/admiring-mayer-z4r0vo) merged after all 4 checks (GitGuardian, TypeScript,
-    Contract verifiers, facet-alias-smoke) passed — new verifyPackScaffoldExtraction.test.ts
-    mirrors verifyPackManifest.test.ts's hermetic-TypeScript-VM pattern exactly (slices the real
-    source, no mocking, no copied logic), wired into package.json and contract-tests.yml.
+  note: >-
+    Kaizen from t-009's merge (kind_robots PR #375): generatePackScaffold's response-parsing logic (stripping markdown fences, locating the JSON object via brace slicing, and the distinct invalid-JSON vs schema-validation-failure error messages) is pure logic with no store/network de
+
+    Full history: projects/packmaker/HISTORY.md#t-010
   owner: reviewer
   claimed_by: claude-conductor-hourly-20260717d
   claimed_at: '2026-07-17T21:55:09Z'
