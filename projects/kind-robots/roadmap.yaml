@@ -1783,6 +1783,54 @@ tasks:
   claimed_by: claude-20260914T134500Z-kr-t102-conductor
   claimed_at: '2026-09-14T13:29:40Z'
 
+- id: t-103
+  milestone: m1
+  title: "character-flip-card.vue is orphaned duplicate code silently rendered inside character-chat.vue via an auto-import name collision"
+  status: ready
+  gate_human: false
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Found 2026-09-14 while wiring text-provider-server visibility into character-chat.vue and
+    character-flip-card.vue for text-generation/t-006 (out of that task's scope, filed separately
+    per AGENTS.md's scope-discipline rule).
+
+    character-chat.vue (the real, current split-out chat cockpit -- see its own header comment)
+    renders `<CharacterFlipCard :character="..." :show-stats="true" image-fit="contain" />` inside
+    a small sidebar slot, evidently expecting a lightweight visual display card. Nuxt's component
+    auto-import here uses `pathPrefix: false` (nuxt.config.ts), so that tag resolves purely by
+    PascalCase filename -- and the only file on disk matching `CharacterFlipCard` is
+    components/characters/character-flip-card.vue, an 880-line file whose own header comment
+    reads "/components/content/characters/character-interact.vue" and which has NO defineProps at
+    all (confirmed: `grep -n defineProps components/characters/character-flip-card.vue` returns
+    nothing). It is, byte for byte in structure, the pre-split character-interact.vue (923 lines,
+    "482 of template and 440 of script") that character-chat.vue's own comment says was fully
+    replaced: "It used to be 923 lines... All of it moved to character-chat.vue unchanged" (verbatim
+    from the CURRENT, real components/characters/character-interact.vue, which is 55 lines and
+    correctly does `<character-gallery v-if="!isInteractMode" /> <character-chat v-else />`).
+
+    So today: character-chat.vue's sidebar renders the ENTIRE duplicate old cockpit (its own
+    "Character Interact" header, mode tabs, full independent chat form with its own send button and
+    Escape-key-shaped state) nested inside character-chat.vue's own aside panel, silently dropping
+    the three props character-chat.vue passes it (character/show-stats/image-fit are just inert
+    attrs on whatever root element the duplicate file renders, since there's no defineProps to
+    receive them). This is very likely visibly broken/confusing in production (a full duplicate
+    "Character Interact" screen crammed into a sidebar box) -- not verified visually in this
+    sandbox (no reachable browser/preview; see AGENTS.md's kind_robots verification section) but
+    confirmed structurally via direct file inspection, not inference.
+
+    Also referenced (as `<CharacterFlipCard>`) from components/bots/bot-gallery.vue's own comment
+    only, not an actual usage -- character-chat.vue is the one live call site.
+
+    DO: figure out what `<CharacterFlipCard>` was actually meant to be (grep art/design docs or
+    ask Silas if unclear), then either (a) build the real small flip-card display component under
+    that name and delete character-flip-card.vue's current duplicate content, or (b) if no such
+    card was ever built and character-chat.vue's own inline character summary already covers the
+    need, drop the `<CharacterFlipCard>` usage from character-chat.vue entirely and delete this
+    file. Either way: delete the dead duplicate content. Do NOT delete it blind without checking
+    whether any other in-flight branch/PR still references it.
+  updated: '2026-09-14T13:45:00Z'
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
