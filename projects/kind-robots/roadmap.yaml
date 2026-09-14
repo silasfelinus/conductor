@@ -1692,7 +1692,7 @@ tasks:
 - id: t-101
   milestone: m6
   title: Add requested_at to Conductor art-request entries
-  status: review
+  status: done
   passes: 0
   stakes: reversible
   owner: worker
@@ -1727,7 +1727,15 @@ tasks:
 
     Once the field exists, conductor's side can report queue age; that reporting is not part of
     this task.
-  updated: '2026-09-14T13:20:56Z'
+
+    RESOLVED (kind_robots PR #2729, merged): added requested_at (ISO-8601 UTC) to
+    ArtQueueEntry and renderRequestEntry(), set once in buildEntry() via new
+    Date().toISOString(). Confirmed conductor's consume_art_requests_to_media.py tolerates
+    the new key (dict.get) and appendRequest()'s dedup (keyed on id/image_path) is
+    unaffected. verifyArtRequestYaml.ts updated alongside with a new assertion that
+    requested_at is always present. Conductor-side queue-age reporting from this field
+    remains a separate task.
+  updated: '2026-09-14T13:26:01Z'
   claimed_by: claude-20260914T131700Z-kr-t101-conductor
   claimed_at: '2026-09-14T13:14:21Z'
   implementation_pr: https://github.com/silasfelinus/kind_robots/pull/2729
