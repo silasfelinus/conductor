@@ -2446,7 +2446,7 @@ tasks:
 - id: t-062
   milestone: m4
   title: "PITCH GATE: Grant CRUD API + canView() route integration + minimal share UI"
-  status: review
+  status: done
   gate_human: true
   passes: 0
   stakes: reversible
@@ -2466,8 +2466,15 @@ tasks:
     /resources/[id]/share pages, since no existing owner-facing Project/Resource edit
     surface exists to embed a share widget into). vue-tsc, eslint, prettier, and
     test:layout-contract all clean. PR open, CI running: silasfelinus/kind_robots#2715.
+
+    Merged: silasfelinus/kind_robots#2715 (canView()/existsActiveGrant() route integration
+    on projects/[id].get.ts and resources/[id].get.ts/.patch.ts, plus grantStore, share-
+    manager, shared-with-me, and standalone /projects/[id]/share + /resources/[id]/share
+    pages). All 50 kind_robots checks green (layout-contract, TypeScript, kr-class-coverage
+    among them) before merge; mergeable_state clean. This closes t-062 fully -- no further
+    follow-on scope from the pitch remains open.
   approved_by_human: true
-  updated: '2026-09-14T03:49:12Z'
+  updated: '2026-09-14T04:00:32Z'
   owner: worker
   claimed_by: claude-scheduled-20260914T032747Z-kr-t062
   claimed_at: '2026-09-14T03:49:01Z'
