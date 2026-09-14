@@ -1557,8 +1557,8 @@ tasks:
 - id: t-098
   milestone: m1
   title: "Kaizen from t-096: add a repo-text guard flagging errorHandler(error) catch blocks with no matching status-set call"
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >-
@@ -1577,7 +1577,9 @@ tasks:
     `server/api/scenarios/create.ts`, `server/api/reactions/index.ts` as of t-096 --
     re-check this list, since more may exist). Wire it into the same CI job that runs
     the other `verifyXyz.ts` guards.
-  claimed_by: null
+  claimed_by: claude-20260914T123046Z-kr-t098-conductor
+  claimed_at: '2026-09-14T12:31:12Z'
+  updated: '2026-09-14T12:31:12Z'
 
 - id: t-097
   milestone: m6
