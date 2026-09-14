@@ -595,16 +595,29 @@ tasks:
   owner: silas
   passes: 0
   stakes: reversible
-  gate_human: true
+  gate_human: false
   approved_by_human: false
   depends_on: [t-019, t-021]
-  note: >
+  note: >-
     MOVED to storybook/t-016 on 2026-09-12 when davinci was retired into storybook (merged as the life shape, kind_robots #2549); no work performed here. Original note follows.
 
     FOR SILAS: after the automated playtest, 1,024-ending art audit/generation, and polish
     tasks are complete, review a short phone/tablet/desktop screenshot set and play one run.
     TO APPROVE: confirm the experience now feels finished, or leave concrete visual/gameplay
     notes. This is the product-completion gate; 16/16 historical tasks was not one.
+
+    GATE SUPERSEDED, not skipped (2026-09-14). gate_human flipped true -> false on this
+    record because the visual-acceptance gate it carried now lives at storybook/t-016 ("FOR
+    SILAS: visually accept the redesigned Storybook setup and reading experience"), which is
+    still status: ready, still gate_human: true, still approved_by_human: false, and already
+    carries Silas's send-back from the ChatGPT acceptance review. One gate for one screen,
+    exactly as the 2026-09-12 davinci retirement intended. Leaving gate_human: true on a
+    done task made scripts/audit_roadmaps.py re-raise GATED_DONE_WITHOUT_APPROVAL on every
+    run -- the audit reads retired projects too, so retiring davinci never silenced it --
+    and Silas received that warning on 2026-09-14 as an apparently-live Da Vinci gate. This
+    edit removes the false signal ONLY: it grants no approval and closes no gate.
+    approved_by_human stays false because no human approved THIS record; storybook/t-016 is
+    where the approval belongs.
 
 - id: t-023
   milestone: m5
