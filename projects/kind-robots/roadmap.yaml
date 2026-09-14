@@ -2446,7 +2446,7 @@ tasks:
 - id: t-062
   milestone: m4
   title: "PITCH GATE: Grant CRUD API + canView() route integration + minimal share UI"
-  status: review
+  status: done
   gate_human: true
   passes: 0
   stakes: reversible
@@ -2466,8 +2466,15 @@ tasks:
     /resources/[id]/share pages, since no existing owner-facing Project/Resource edit
     surface exists to embed a share widget into). vue-tsc, eslint, prettier, and
     test:layout-contract all clean. PR open, CI running: silasfelinus/kind_robots#2715.
+
+    Merged: silasfelinus/kind_robots#2715 (canView()/existsActiveGrant() route integration
+    on projects/[id].get.ts and resources/[id].get.ts/.patch.ts, plus grantStore, share-
+    manager, shared-with-me, and standalone /projects/[id]/share + /resources/[id]/share
+    pages). All 50 kind_robots checks green (layout-contract, TypeScript, kr-class-coverage
+    among them) before merge; mergeable_state clean. This closes t-062 fully -- no further
+    follow-on scope from the pitch remains open.
   approved_by_human: true
-  updated: '2026-09-14T03:49:12Z'
+  updated: '2026-09-14T04:00:32Z'
   owner: worker
   claimed_by: claude-scheduled-20260914T032747Z-kr-t062
   claimed_at: '2026-09-14T03:49:01Z'
@@ -4260,6 +4267,34 @@ tasks:
 
     NOT COVERED, by design: a relay that dies outright and never polls again. Nothing claims
     in that state anyway, and GET /api/art/queue/stats already reports it under staleRunning.
+
+- id: t-099
+  milestone: m4
+  title: "Kaizen from t-062: build a real Resource-owner edit surface"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from t-062 (kind_robots#2715, 2026-09-14): `PATCH /api/resources/[id]`
+    has existed for a while and now also accepts an active RESOURCE Grant at
+    ADMIN level, but there is currently zero frontend UI anywhere that calls it --
+    `components/resources/resource-manager.vue` only ever renders the read-only
+    gallery/discover tabs, and `resource-card.vue` only emits an `open` event with
+    no editor behind it. t-062 shipped `<ShareManager>` (owner-facing Grant list/
+    share/revoke panel, `components/sharing/share-manager.vue`) but had nowhere
+    real to embed it for Resources, so it landed as a standalone
+    `/resources/[id]/share` route instead. Build a proper Resource-owner edit
+    surface (name/description/visibility/mature toggle, at minimum) -- probably a
+    modal or panel opened from `resource-card.vue`'s existing `open` event, gated
+    on `resource.userId === userStore.user?.id || userStore.isAdmin` the same way
+    `pages/resources/[id]/share.vue` does today -- and once it exists, embed
+    `<ShareManager subject-type="RESOURCE" :subject-id="resource.id" />` inside it
+    so sharing lives next to the other visibility controls instead of on its own
+    route. The standalone `/resources/[id]/share` page can stay as a direct link
+    even after this lands (harmless duplication), or be retired once the new
+    surface covers it.
+  claimed_by: null
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
