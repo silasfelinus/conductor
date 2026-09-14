@@ -469,7 +469,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: review
+    status: ready
     recurring: true
     passes: 52
     stakes: reversible
@@ -635,7 +635,14 @@ tasks:
       runs/[id].get.ts, runs/[id].delete.ts, runs/index.get.ts -- all either already well-
       covered or carry no documented fix/cap to guard. PR: silasfelinus/kind_robots#2733
       (open, not yet merged).
-    updated: '2026-09-14T14:02:17Z'
+
+      Merged as kind_robots PR #2733 (squash f0ae0449). Re-arming to ready per this task's
+      recurring:true convention. Next lead: server/api/model-builder route-handler cross-
+      reference is now exhausted (all 12 files audited); a future cycle should pick a
+      different rotation slice per the project's own convention (end-to-end surface-read
+      rotation, or extend the same guard-coverage cross-reference technique to a different
+      subsystem).
+    updated: '2026-09-14T14:12:27Z'
     owner: worker
     claimed_by: claude-20260914T141500Z-mb-t029-conductor
     claimed_at: '2026-09-14T13:53:59Z'
