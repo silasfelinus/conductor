@@ -1557,7 +1557,7 @@ tasks:
 - id: t-098
   milestone: m1
   title: "Kaizen from t-096: add a repo-text guard flagging errorHandler(error) catch blocks with no matching status-set call"
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -1577,10 +1577,18 @@ tasks:
     `server/api/scenarios/create.ts`, `server/api/reactions/index.ts` as of t-096 --
     re-check this list, since more may exist). Wire it into the same CI job that runs
     the other `verifyXyz.ts` guards.
+
+    Reconciled (scheduled Conductor session, 2026-09-14): PR kind_robots#2727 merged
+    2026-09-14T13:02:19Z but the roadmap task was left at status: review with a malformed
+    implementation_pr field (a raw URL instead of owner/repo#N). Verified the PR directly:
+    adds utils/scripts/verifyErrorHandlerStatusPropagation.ts + selftest, wires it into
+    contract-tests.yml, fixes one genuine live regression it found
+    (server/api/art/sd/currentModel.get.ts), 585 server/api files scanned with 0 offences
+    after the fix. Closing to done and correcting implementation_pr.
   claimed_by: claude-20260914T123046Z-kr-t098-conductor
   claimed_at: '2026-09-14T12:31:12Z'
-  updated: '2026-09-14T12:41:44Z'
-  implementation_pr: https://github.com/silasfelinus/kind_robots/pull/2727
+  updated: '2026-09-14T14:57:23Z'
+  implementation_pr: 'silasfelinus/kind_robots#2727'
 
 - id: t-097
   milestone: m6
