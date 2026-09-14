@@ -2344,3 +2344,53 @@ else touched).
 level not prompt-level). hwr-005 needs a sign-free rework, not another "no text" wording.
 ~12 other not-yet-accepted Monster Recast slots, 15 Hollywood Recast, and 8 Kind Robots
 remain untouched this cycle.
+
+## Cycle 11 (2026-09-14, scheduled Conductor session) -- fixed the finalize-pair NameError crash, landed the first 3 final pairs across any book
+
+### Bug: `finalize-pair` crashed on every live invocation, so no book had ever produced a final pair
+
+All three books had dozens of slots with both accepted color and accepted BW (17 in
+Monster Recast, 21 in Hollywood Recast, 28 in Kind Robots) yet `final pairs 0/36` across
+the board. `manage_coloring_book_production.py`'s `finalize_pair()` referenced a local
+variable `semantic` that is never assigned anywhere in the function or module (a leftover
+from `consume_coloring_book_studio_request.py`'s similarly-named local, which this file
+does not define) -- `--operation finalize-pair --live` therefore raised `NameError: name
+'semantic' is not defined` on every call, unconditionally, for any book/slot. This has
+apparently never been caught because no test ever exercised `finalize_pair` at all.
+
+Fixed by reading the pair's semantic score from `queue_entry["bw_semantic_score"]` instead
+(the field name already used elsewhere in this same file, e.g. the `--force` revision-
+history snapshot at line ~393, and the natural source for a BW-vs-color semantic score --
+though nothing currently populates it, so it degrades to `null`, same net effect as before
+minus the crash). Added `tests/test_coloring_book_production.py::
+test_finalize_pair_sets_semantic_score_from_queue_entry`, verified it reproduces the exact
+NameError against the pre-fix code (`git stash` the fix, confirm the test fails with that
+traceback, restore) before confirming it passes against the fix.
+
+### Landed: mr-002, mr-003, mr-004 finalized (first final pairs in any book)
+
+With the crash fixed, ran `--operation finalize-pair --book monster-recast --proposal-id
+mr-002 --proposal-id mr-003 --proposal-id mr-004 --live` against the three slots that
+already had both an accepted color and accepted BW file (the legacy pre-approved pairs
+from the 2026-07-12 snapshot). Hit and fixed the documented sandbox Pillow gap first
+(`pip3 install Pillow`), then all three finalized cleanly. Monster Recast final pairs:
+0/36 -> 3/36.
+
+Verification: `python scripts/coloring_proposal_status.py --check` -> clean, Monster
+Recast now reports `final color/BW 3/3 | final pairs 3/36`. `python
+scripts/coloring_queue_status.py --book monster-recast` -> `queue_integrity_safe: true`,
+`recovery_safe: true`, `retry_safe: true`, 0 duplicate job/entry ids. `python
+scripts/validate_roadmaps.py` -> clean. Full pytest suite green (1906 passed, 30 skipped,
+35 subtests, after `uv tool install pytest --with pyyaml --force`, the documented sandbox
+PyYAML gap). `git diff --stat` reviewed before committing (the `manage_coloring_book_
+production.py` fix + its new test, `color-art-jobs.yaml` pair-finalization state for
+mr-002/003/004, `proposals.yaml`'s `final:` fields for the same three slots -- nothing
+else touched).
+
+**Next actionable step:** the remaining slots with an accepted color+BW pair but no
+finalization yet: none right now (only mr-002/003/004 had both sides accepted; every
+other ready-for-generate-bw slot still needs `generate-bw` + `accept-bw` first). 17
+Monster Recast, 21 Hollywood Recast, and 28 Kind Robots slots have accepted color and are
+ready for `generate-bw`. mr-008 still needs a human call (retry budget exhausted,
+engine-level not prompt-level). hwr-005 needs a sign-free rework, not another "no text"
+wording.
