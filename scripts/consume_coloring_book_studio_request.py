@@ -85,18 +85,34 @@ def queue_sources(queue: dict[str, Any], book_slug: str) -> dict[str, dict[str, 
 
 
 def prepare_requested_entries(
-    book_slug: str, proposal_ids: list[str], force: bool
-) -> list[tuple[str, str]]:
+    book_slug: str, proposal_ids: list[str], force: bool, live: bool = False
+) -> tuple[list[tuple[str, str]], list[str]]:
     """Reset any requested proposal that needs a fresh render back to pending.
 
-    Returns the subset of `proposal_ids` (as `(id, status)` pairs) that were
-    already resolved (status other than "pending") and, since `force` was not
-    given, were left alone rather than reset. A caller-supplied id list is
-    often a static snapshot (e.g. a preserved recovery event) that can go
-    stale between retries as some of its entries complete on their own --
-    skipping those rather than raising lets the remaining still-pending ids
-    in the same request proceed instead of the whole batch being blocked by a
-    subset that already finished (coloring-book/t-022, 2026-08-01).
+    Returns `(already_resolved, would_force)`:
+    - `already_resolved` is the subset of `proposal_ids` (as `(id, status)`
+      pairs) that were already resolved (status other than "pending") and,
+      since `force` was not given, were left alone rather than reset. A
+      caller-supplied id list is often a static snapshot (e.g. a preserved
+      recovery event) that can go stale between retries as some of its
+      entries complete on their own -- skipping those rather than raising
+      lets the remaining still-pending ids in the same request proceed
+      instead of the whole batch being blocked by a subset that already
+      finished (coloring-book/t-022, 2026-08-01).
+    - `would_force` is the subset that IS force-eligible (status other than
+      "pending", `force=True`) but was left untouched because `live` is
+      `False`.
+
+    Only a `live` run actually archives a proposal's rendered file and
+    rewrites the persisted queue state -- `force` alone, without `live`, is
+    a no-op preview. Before this, `--force` without `--live` still archived
+    the existing candidate image and reset the queue entry to `pending` on
+    disk even though the caller only asked for a dry-run preview, because
+    this function mutated state unconditionally on `force` alone before the
+    live/dry-run branch in `run_entries` ever ran (found and reverted live
+    during a coloring-book/t-022 session, 2026-09-14: a `--force` dry-run
+    probe for mr-001 archived its real accepted-review candidate and reset
+    its status before the mistake was caught and manually undone).
     """
     queue = coloring.load_yaml(coloring.QUEUE_FILE)
     sources = queue_sources(queue, book_slug)
@@ -106,6 +122,7 @@ def prepare_requested_entries(
 
     changed = False
     already_resolved: list[tuple[str, str]] = []
+    would_force: list[str] = []
 
     for proposal_id in proposal_ids:
         source = sources[proposal_id]
@@ -114,6 +131,9 @@ def prepare_requested_entries(
             continue
         if not force:
             already_resolved.append((proposal_id, status))
+            continue
+        if not live:
+            would_force.append(proposal_id)
             continue
 
         history = source.get("studio_revision_history")
@@ -140,7 +160,7 @@ def prepare_requested_entries(
 
     if changed:
         coloring.write_queue(queue)
-    return already_resolved
+    return already_resolved, would_force
 
 
 def selected_entries(book_slug: str, proposal_ids: list[str]) -> list[dict[str, Any]]:
@@ -277,14 +297,23 @@ def main() -> int:
         parser.error("--timeout must be between 30 and 900")
 
     try:
-        already_resolved = prepare_requested_entries(args.book, proposal_ids, args.force)
-        skipped_ids = {pid for pid, _status in already_resolved}
+        already_resolved, would_force = prepare_requested_entries(
+            args.book, proposal_ids, args.force, args.live
+        )
+        skipped_ids = {pid for pid, _status in already_resolved} | set(would_force)
         remaining_ids = [pid for pid in proposal_ids if pid not in skipped_ids]
         if already_resolved:
             summary = ", ".join(f"{pid} ({status})" for pid, status in already_resolved)
             print(
                 "Skipping already-resolved proposal(s) (use --force to request a "
                 f"new revision instead): {summary}",
+                file=sys.stderr,
+            )
+        if would_force:
+            print(
+                "DRY RUN: would reset the following already-resolved proposal(s) to "
+                "pending for a fresh revision -- rerun with --live to actually archive "
+                f"the existing candidate and request a new render: {', '.join(would_force)}",
                 file=sys.stderr,
             )
         if not remaining_ids:
