@@ -1600,7 +1600,7 @@ tasks:
 - id: t-099
   milestone: m4
   title: "Kaizen from t-062: build a real Resource-owner edit surface"
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -1623,9 +1623,21 @@ tasks:
     route. The standalone `/resources/[id]/share` page can stay as a direct link
     even after this lands (harmless duplication), or be retired once the new
     surface covers it.
+
+    RESOLVED (kind_robots PR #2728, merged): audited resource-gallery.vue and found the
+    CHECKPOINT/LORA/LYCORIS edit surface already existed (kr-card-back's #edit slot -> add-
+    model/add-lora), contradicting this task's original "zero frontend UI" premise -- that
+    surface predates PR #1611. The three real gaps were: (1) canEditInfoResource only
+    checked resourceType, not ownership -- fixed to match
+    entry.userId===userStore.userId||userStore.isAdmin, the same rule resource-share-
+    panel.vue already applies; (2) no Public/isPublic toggle in add-model.vue/add-lora.vue
+    despite the schema field and PATCH route already supporting it -- added, matching add-
+    reward.vue's convention; (3) <ShareManager subject-type="RESOURCE"> only lived on the
+    standalone /resources/[id]/share page -- embedded it in the edit panel too. Verified
+    eslint/vue-tsc/layout-contract/capture-group-guards clean; merged.
   claimed_by: claude-20260914T123046Z-kr-t099-conductor
   claimed_at: '2026-09-14T12:44:47Z'
-  updated: '2026-09-14T13:05:40Z'
+  updated: '2026-09-14T13:09:48Z'
   implementation_pr: https://github.com/silasfelinus/kind_robots/pull/2728
 - id: t-100
   milestone: m6
