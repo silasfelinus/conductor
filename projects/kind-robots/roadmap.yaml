@@ -2446,11 +2446,11 @@ tasks:
 - id: t-062
   milestone: m4
   title: "PITCH GATE: Grant CRUD API + canView() route integration + minimal share UI"
-  status: claimed
+  status: review
   gate_human: true
   passes: 0
   stakes: reversible
-  note: |-
+  note: >-
     FOR SILAS: Pitch written at pitches/2026-08-10-kind-robots-grant-sharing-api.md. SHARING-SPEC.md's Grant model and canView()/existsActiveGrant() helpers already exist (t-044/t-050) but SHARING-SPEC.md:138 explicitly labels the API surface "illustrative -- routes, not committed contracts", and there is currently zero way for anyone to create a Grant or for the projects/resources view routes to check one. The pitch proposes: POST/DELETE/GET /api/grants* (SHARING-SPEC.md:140-150's own illustrative shape), migrating projects/[id].get.ts and resources/[id].get.ts/.patch.ts onto canView(), and a minimal share/shared-with-me UI. No schema change -- the model is already migration-approved. TO APPROVE: read the pitch, set its `status:` to `approved` or `rejected`, and set this task's `approved_by_human: true` and `status: ready`. What unblocks: the four Grant routes, then the two route migrations, then the share UI, as sequential follow-up tasks once approved (pitch's own "Suggested first task" has the order).
 
 
@@ -2459,11 +2459,19 @@ tasks:
     First approved Grant-sharing backend slice is implemented in silasfelinus/kind_robots#2581: manual grant creation, subject grant listing, active shared-with-me listing, audit-preserving revocation, and shared owner/admin subject authorization for PROJECT/RESOURCE/PACK. Full PR diff inspected; exact-head CI is running. Remaining approved t-062 scope after this slice is the canView route integration and minimal Share/Shared-with-me UI.
 
     Merged the first approved Grant-sharing backend slice as silasfelinus/kind_robots#2581 (squash 00a3bc7adb5c6b796260ac9d3d8c88d3d2d1c7a1) after reviewing the full five-file diff and verifying all exact-head registered workflows completed successfully. Remaining approved scope is canView() route integration plus minimal Share / Shared-with-me UI, so return this non-recurring task to ready rather than marking it done.
+
+    Migrated projects/[id].get.ts and resources/[id].get.ts/.patch.ts onto
+    canView()/existsActiveGrant(), and shipped a minimal Share/Shared-with-me UI
+    (grantStore, share-manager, shared-with-me, and standalone /projects/[id]/share +
+    /resources/[id]/share pages, since no existing owner-facing Project/Resource edit
+    surface exists to embed a share widget into). vue-tsc, eslint, prettier, and
+    test:layout-contract all clean. PR open, CI running: silasfelinus/kind_robots#2715.
   approved_by_human: true
-  updated: '2026-09-14T03:49:01Z'
+  updated: '2026-09-14T03:49:12Z'
   owner: worker
   claimed_by: claude-scheduled-20260914T032747Z-kr-t062
   claimed_at: '2026-09-14T03:49:01Z'
+  implementation_pr: 'silasfelinus/kind_robots#2715'
 
 - id: t-063
   milestone: m3
