@@ -1692,10 +1692,10 @@ tasks:
 - id: t-101
   milestone: m6
   title: Add requested_at to Conductor art-request entries
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  owner: null
+  owner: worker
   note: >-
     Filed 2026-09-14 from Silas's art-pipeline assessment. Small, self-contained.
 
@@ -1727,7 +1727,9 @@ tasks:
 
     Once the field exists, conductor's side can report queue age; that reporting is not part of
     this task.
-  updated: '2026-09-14T10:30:00Z'
+  updated: '2026-09-14T13:14:21Z'
+  claimed_by: claude-20260914T131700Z-kr-t101-conductor
+  claimed_at: '2026-09-14T13:14:21Z'
 
 - id: t-102
   milestone: m6
