@@ -143,7 +143,7 @@ tasks:
 - id: t-006
   milestone: m3
   title: Wire text-provider selection into the product surfaces and document setup
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -158,13 +158,41 @@ tasks:
     OpenAI-compatible server, including network reachability expectations for the
     self-hosted Kind Robots deployment. Avoid exposing API keys or raw secret values
     to the browser.
-  acceptance: >-
-    The supported text-generation surfaces can select a configured provider/server,
-    setup documentation covers at least Ollama plus an OpenAI-compatible private
-    endpoint, and CI/type/lint/integration coverage is green.
+
+
+    PROGRESS (2026-09-14): read BRIEF.md's concrete implementation sequence, which
+    names the five confirmed chatStore.streamResponse consumers this task should wire:
+    conductor-project-chat.vue, bot-chat.vue, character-chat.vue, character-flip-card.vue,
+    reward-encounter.vue. conductor-project-chat.vue no longer exists in the current
+    tree; of the remaining four, bot-chat.vue and reward-encounter.vue already showed
+    the active text server and passed serverId explicitly (built during t-002..t-005's
+    store-level work). character-chat.vue and character-flip-card.vue did not -- both
+    now show a "Text Server" tile (matching the existing pattern) and pass serverId
+    explicitly into streamResponse. Also wrote docs/text-generation-self-hosted.md
+    (Ollama via the quick nav "Add Local" flow; an OpenAI-compatible CUSTOM endpoint
+    via the full /servers form with an auth key; network-reachability contract for
+    the self-hosted deployment). Confirmed via BRIEF.md's "Explicitly out of scope"
+    section that migrating chat UI onto the new unified /api/generate/text endpoint
+    is NOT this task's job -- the legacy per-provider routes stay as the literal
+    client-facing endpoints, so the fix was filling the provider-visibility gap on
+    the two under-wired consumers, not a wider migration.
+
+
+    Verified: eslint clean, prettier clean, vue-tsc --noEmit clean project-wide (ran
+    against the full provisioned kind_robots checkout, not by inspection).
+
+
+    Found but out of scope: character-flip-card.vue appears to be orphaned duplicate
+    content silently rendered inside character-chat.vue via a Nuxt auto-import
+    filename collision -- filed as kind-robots/t-103 rather than expanding this diff.
+
+
+    kind_robots PR: silasfelinus/kind_robots#2731 (open, CI pending at time of this
+    note).
+  implementation_pr: 'silasfelinus/kind_robots#2731'
   claimed_by: claude-20260914T133114Z-tg-t006-conductor
   claimed_at: '2026-09-14T13:31:16Z'
-  updated: '2026-09-14T13:31:16Z'
+  updated: '2026-09-14T14:00:00Z'
 
 - id: t-007
   milestone: m3
