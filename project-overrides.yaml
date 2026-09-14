@@ -107,12 +107,30 @@ overrides:
     kind: software
 
   - slug: interface-vision
-    status: active # opened 2026-08-01 (Silas) -- the release blocker for beta
+    status: continuous # flipped from `active` 2026-09-14 (Silas, in session): "interface
+    # vision should be a continuous project at this point, if not, it should be." Opened
+    # 2026-08-01 as the release blocker for beta.
+    #
+    # The shape had already become continuous in practice: 134 of 137 tasks are done, and
+    # BOTH remaining work items are `recurring: true` -- t-104 (the kr-* consistency
+    # grinder, 270+ slices and counting) and t-105 (page-by-page polish). Only t-106, the
+    # FOR SILAS beta-readiness gate, is a finite endpoint.
+    #
+    # KNOWN CONSEQUENCE, accepted deliberately rather than discovered later:
+    # project_lifecycle.ordered_workable_slugs() sorts every `active` project ahead of
+    # every `continuous` one REGARDLESS of projects/priority.yaml, so this flip moved the
+    # project from rank 3 to rank 20 of 22 -- fallback work beside animation-manager and
+    # dream-cycle. Silas was shown that exact before/after and chose it: the tentpole build
+    # queue (cthulhuquarium, kind-economy) leads outright, and the slice grind fills idle
+    # cycles. The trade is that t-106's beta acceptance now waits on idle time; raise it
+    # with him rather than quietly flipping this back if beta starts slipping on that.
+    #
     # Successor to global-ui, which was flipped `finished` at 25/25 tasks while the
     # design system it shipped sat at ~7% adoption (29 of ~421 component files use any
     # kr-* class; the hand-rolled equivalent appears 366 times across 145 files). This
     # project re-opens that work with numeric exit criteria enforced by a CI script
-    # whose allow-list only ever shrinks. Do not mark it finished on task count alone.
+    # whose allow-list only ever shrinks. Do not mark it finished on task count alone --
+    # that warning is the reason this is `continuous` and not `finished` now.
     priority: normal
     kind: software
 

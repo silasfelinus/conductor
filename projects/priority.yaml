@@ -17,6 +17,11 @@
 # tests/test_project_priority_contract.py so agents cannot silently reorder it.
 # Rainbow Butterflies was added 2026-08-28 at Silas's requested middle priority: important
 # mission work, but intentionally behind the current top build queue and Kind Robots core.
+#
+# 2026-09-14: taskmaster removed -- absorbed into storybook as its fourth mode and flipped
+# `retired` (storybook/t-047, kind_robots#2718), so it is a historical record rather than
+# pickable work. interface-vision moved to the continuous block the same day; see its own
+# note down there for why its position in this file no longer sets its rank.
 order:
   # Human priority decision, 2026-08-25: Mandarin Tutor and Cthulhuquarium were the
   # two top non-continuous projects, Mandarin Tutor leading. Earlier Cthulhuquarium/
@@ -37,7 +42,6 @@ order:
   # Kind Economy inherits second place, where it already sat.
   - cthulhuquarium
   - kind-economy
-  - interface-vision
   - coloring-book
   - humboldt-scoop-cms
   - digital-storefront
@@ -50,7 +54,6 @@ order:
   - model-builder
   - lora-ingestion
   - conductor
-  - taskmaster
   - storybook
   # davinci removed 2026-09-12 — retired; merged into storybook as the `life` shape
   # (kind_robots #2549). Retired projects are historical records, not pickable work.
@@ -68,5 +71,14 @@ order:
   # wishmaster removed 2026-09-11 — retired 2026-08-09; retirement ratified by Silas 2026-09-11.
   - ruler-hooked
   # music-mentor removed 2026-09-11 — finished; pre-existing drift, swept with the rest.
+  # interface-vision moved here from third place on 2026-09-14, when Silas flipped it
+  # to `continuous`: "interface vision should be a continuous project at this point, if
+  # not, it should be." Its position in this file is now only meaningful RELATIVE TO THE
+  # OTHER CONTINUOUS PROGRAMS -- project_lifecycle.ordered_workable_slugs() sorts every
+  # `active` project ahead of every `continuous` one regardless of this order, so the
+  # effective rank is 20 of 22 either way. Kept ahead of animation-manager and dream-cycle
+  # deliberately: of the three fallback programs it is the one with real release work
+  # behind it, so it should be the first thing an idle worker reaches for.
+  - interface-vision
   - animation-manager
   - dream-cycle
