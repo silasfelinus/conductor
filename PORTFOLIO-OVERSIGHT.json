@@ -1,27 +1,27 @@
 {
-  "generated_at": "2026-09-14T05:05:02.497611+00:00",
+  "generated_at": "2026-09-14T12:59:32.446557+00:00",
   "summary": {
-    "status": "semantic-review-due",
-    "roadmap_errors": 0,
-    "roadmap_warnings": 7,
+    "status": "action-needed",
+    "roadmap_errors": 1,
+    "roadmap_warnings": 6,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
     "openai_scheduled_agent_overdue": false,
-    "intent_review_due": true
+    "intent_review_due": false
   },
   "openai_scheduled_agent": {
     "overdue": false,
-    "last_activity": "2026-09-14T04:18:47+00:00",
-    "hours_since": 0.77,
+    "last_activity": "2026-09-14T12:26:54+00:00",
+    "hours_since": 0.54,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "OpenAI coordination activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit."
   },
   "intent_review": {
-    "due": true,
-    "last_report": "INTENT-AUDIT-2026-09-10.md",
-    "days_since": 4,
+    "due": false,
+    "last_report": "INTENT-AUDIT-2026-09-14.md",
+    "days_since": 0,
     "stale_days": 3.0
   },
   "project_parity": {
@@ -30,22 +30,30 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-09-14T05:05:02.497619+00:00",
+    "generated_at": "2026-09-14T12:59:32.446564+00:00",
     "summary": {
       "roadmaps": 52,
-      "active_projects": 21,
-      "continuous_projects": 2,
-      "tasks": 1482,
+      "active_projects": 19,
+      "continuous_projects": 3,
+      "tasks": 1494,
       "ready": 46,
       "waiting": 51,
       "needs_human": 34,
-      "in_progress": 0,
-      "done": 1335,
-      "errors": 0,
-      "warnings": 7,
+      "in_progress": 5,
+      "done": 1342,
+      "errors": 1,
+      "warnings": 6,
       "info": 20
     },
-    "errors": [],
+    "errors": [
+      {
+        "severity": "error",
+        "code": "CONTROL_PRIORITY_DRIFT",
+        "project": "_global",
+        "task": null,
+        "message": "CONTROL.md priority band ['cthulhuquarium', 'kind-economy', 'interface-vision', 'coloring-book', 'humboldt-scoop-cms', 'digital-storefront', 'kind-robots', 'rainbow-butterflies'] does not match priority.yaml prefix ['cthulhuquarium', 'kind-economy', 'coloring-book', 'humboldt-scoop-cms', 'digital-storefront', 'kind-robots', 'rainbow-butterflies', 'scene-animator']."
+      }
+    ],
     "warnings": [
       {
         "severity": "warning",
@@ -53,13 +61,6 @@
         "project": "cthulhuquarium",
         "task": "t-065",
         "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
-      },
-      {
-        "severity": "warning",
-        "code": "GATED_DONE_WITHOUT_APPROVAL",
-        "project": "davinci",
-        "task": "t-022",
-        "message": "Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect."
       },
       {
         "severity": "warning",

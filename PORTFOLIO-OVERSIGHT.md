@@ -1,14 +1,14 @@
 # Conductor Portfolio Oversight
 
-Generated: `2026-09-14T05:05:02.497611+00:00`
+Generated: `2026-09-14T12:59:32.446557+00:00`
 
-Overall status: **semantic-review-due**
+Overall status: **action-needed**
 
 This is a deterministic sensor. For semantic roadmap/progress intent review, follow `projects/conductor/OVERSIGHT-AGENT.md`.
 
 ## OpenAI scheduled-agent heartbeat
 
-- Latest visible OpenAI scheduled-Agent activity: `2026-09-14T04:18:47+00:00` (0.77h ago; overdue at 6.0h).
+- Latest visible OpenAI scheduled-Agent activity: `2026-09-14T12:26:54+00:00` (0.54h ago; overdue at 6.0h).
 - Overdue: **false**
 - Note: OpenAI coordination activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit.
 
@@ -19,14 +19,15 @@ This is a deterministic sensor. For semantic roadmap/progress intent review, fol
 
 ## Roadmap/CONTROL structural audit
 
-- Errors: **0**
-- Warnings: **7**
+- Errors: **1**
+- Warnings: **6**
+  - **CONTROL_PRIORITY_DRIFT** — `_global`: CONTROL.md priority band ['cthulhuquarium', 'kind-economy', 'interface-vision', 'coloring-book', 'humboldt-scoop-cms', 'digital-storefront', 'kind-robots', 'rainbow-butterflies'] does not match priority.yaml prefix ['cthulhuquarium', 'kind-economy', 'coloring-book', 'humboldt-scoop-cms', 'digital-storefront', 'kind-robots', 'rainbow-butterflies', 'scene-animator'].
 - Warning details remain in `ROADMAP-AUDIT.md`; errors above take precedence for this sensor.
 
 ## Semantic intent review
 
-- Latest: `INTENT-AUDIT-2026-09-10.md` (4 day(s) ago; due at 3.0 days).
-- Due: **true**
+- Latest: `INTENT-AUDIT-2026-09-14.md` (0 day(s) ago; due at 3.0 days).
+- Due: **false**
 
 ## Agent routing
 
