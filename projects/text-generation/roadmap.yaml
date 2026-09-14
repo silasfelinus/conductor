@@ -143,8 +143,8 @@ tasks:
 - id: t-006
   milestone: m3
   title: Wire text-provider selection into the product surfaces and document setup
-  status: ready
-  owner:
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   gate_human: false
@@ -162,6 +162,9 @@ tasks:
     The supported text-generation surfaces can select a configured provider/server,
     setup documentation covers at least Ollama plus an OpenAI-compatible private
     endpoint, and CI/type/lint/integration coverage is green.
+  claimed_by: claude-20260914T133114Z-tg-t006-conductor
+  claimed_at: '2026-09-14T13:31:16Z'
+  updated: '2026-09-14T13:31:16Z'
 
 - id: t-007
   milestone: m3
