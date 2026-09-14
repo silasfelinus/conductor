@@ -62,7 +62,7 @@ def load_color_queue() -> tuple[list[str], dict[str, dict[str, Any]], dict[str, 
         if not slug or not isinstance(entries, list):
             errors.append(f"color queue book missing slug or entries: {book!r}")
             continue
-        counts = {"pending": 0, "done": 0, "approved": 0}
+        counts = {"pending": 0, "done": 0, "approved": 0, "needs_review": 0}
         if len(entries) != 36:
             errors.append(f"{slug}: color queue expected 36 entries, found {len(entries)}")
         slots = [entry.get("slot") for entry in entries if isinstance(entry, dict)]
@@ -184,6 +184,7 @@ def validate_book(
         "jobs_pending": 0,
         "jobs_done": 0,
         "jobs_approved": 0,
+        "jobs_needs_review": 0,
     }
     first_next: tuple[int, str, str] | None = None
     needs_verification: list[tuple[str, str, str]] = []
@@ -276,8 +277,9 @@ def main() -> int:
             print(
                 "   "
                 f"prompts {counts['prompted']}/36 | "
-                f"color jobs pending/done/approved "
-                f"{counts['jobs_pending']}/{counts['jobs_done']}/{counts['jobs_approved']}"
+                f"color jobs pending/done/approved/needs_review "
+                f"{counts['jobs_pending']}/{counts['jobs_done']}/{counts['jobs_approved']}/"
+                f"{counts['jobs_needs_review']}"
             )
             print(
                 "   "

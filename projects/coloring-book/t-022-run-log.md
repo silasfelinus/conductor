@@ -2275,3 +2275,72 @@ paths, `color-art-jobs.yaml` queue state, `proposals.yaml` review note, the
 deliberate reworded-prompt experiment) -- its bounded retry budget was already exhausted
 in cycle 7. ~12 other not-yet-accepted Monster Recast slots remain untouched this cycle.
 Hollywood Recast (16) and Kind Robots (8) not-yet-accepted backlogs also remain untouched.
+
+## Cycle 9 (2026-09-14, scheduled Conductor session) -- fixed a false-positive structural error, accepted hwr-002, retried hwr-005 with a worse result
+
+### Bug: `coloring_proposal_status.py` false-flagged a legitimate queue status
+
+Starting sweep found a STRUCTURAL ERROR: `monster-recast/mr-008: invalid color queue
+status 'needs_review'`. `needs_review` is not a bug -- it's the status
+`consume_coloring_book_color_art.py`'s bounded-retry policy correctly sets once
+`render_attempts` hits `MAX_RENDER_ATTEMPTS` (see cycle 7: mr-008 hit 5/5 monochrome
+failures across two sessions and was deliberately parked there for a human call).
+`coloring_proposal_status.py`'s own status-count dictionaries (in both
+`load_color_queue()` and `validate_book()`) were never updated to include it as a valid
+bucket, so every session running the status script has been seeing a false structural
+error on any slot that reaches this state. Fixed both dictionaries and the printed
+summary line (now reports `pending/done/approved/needs_review`); added
+`tests/test_coloring_proposal_status.py` with a regression test asserting `needs_review`
+produces no structural error (and that a genuinely unknown status still does). Full
+suite green: 1903 passed, 30 skipped, 35 subtests (after `uv tool install pytest --with
+pyyaml --force`, the documented sandbox PyYAML gap).
+
+### hwr-002 -- accepted
+
+Per the OpenAI connector-only session's audit earlier this cycle window: hwr-002's
+canonical prompt already explicitly says "plus-size South Asian screen diva" and the
+2026-09-11 rejection was a rendering-fidelity miss, not a prompt gap. No prompt edit
+needed. `consume_coloring_book_studio_request.py --force` (dry run first, confirmed
+scope) then `--live` fired a fresh render (ArtImage 24056); the first attempt failed
+with "Pillow is required for WebP output" (the documented sandbox gap -- `pip3 install
+Pillow`), recovered cleanly via a second `--live` pass (no `--force`, already `pending`)
+which picked up the completed job. Visual review: a clearly plus-size figure in the
+geometric featherless gown, art-deco staircase, dancers/cameras/spotlights, no readable
+text anywhere -- matches the brief well. Promoted via `manage_coloring_book_production.py
+--operation accept-color --live`. Hollywood Recast now 21/36 accepted color (up from 20).
+
+### hwr-005 -- still not accepted, and the retry made it worse
+
+The 2026-09-11 rejection reason ("flickering hotel sign" + a blanket "no readable
+lettering" is an internal prompt contradiction -- the render predictably produced a
+legible HOTEL marquee) looked like a genuine prompt-authoring gap, so rewrote the sign
+phrase. First rewrite attempt ("...with no legible letters -- glyph-like neon tubing, not
+spelled-out text... no readable lettering anywhere in frame") tripped the art API's
+prompt-contract check outright (HTTP 422, "5 text exclusions" -- the contract's negative
+prompt is inert, so repeating text-exclusion phrasing multiple times just stacks it into
+positive conditioning). Trimmed to a single mention ("its neon tubing glowing in abstract
+glyph-like shapes" ... "no readable lettering") and resubmitted; this cleared the contract
+check and rendered (ArtImage 24057), but the result is worse than the original: two large,
+fully legible neon signs reading "LODDING HOUSE" and "SIARINE" (near-miss misspellings,
+not real words, but still crisp readable block lettering, not abstract shapes). Composition
+otherwise matches well (cane, service dog noticing the hidden figure first, trench coat,
+noir lighting, phone exchange). Recorded the full attempt history and reasoning in
+`proposals.yaml`; NOT ACCEPTED again. Not attempting a third live retry in the same
+session per the transient-failure triage rule -- two different wordings of "sign with no
+text" have both failed, so the next attempt should drop the sign as a described object
+entirely (an unlit/dark sign silhouette, or a different light source such as a bare
+streetlamp) rather than trying a third wording of the same idea.
+
+Verification: `python scripts/coloring_proposal_status.py --check` -> clean, no
+structural errors (confirms the cycle's own bug fix). `python scripts/validate_roadmaps.py`
+-> clean. `coloring_queue_status.py --book hollywood-recast` -> `queue_integrity_safe:
+true`, 0 duplicate job/entry ids. Full pytest suite green (1903 passed, 30 skipped, 35
+subtests). `git diff --stat` reviewed before committing (the `coloring_proposal_status.py`
+fix + its new test, `color-art-jobs.yaml` queue state, `proposals.yaml` review notes, 2
+fresh renders + 2 archived prior candidates under hollywood-recast's own paths -- nothing
+else touched).
+
+**Next actionable step:** mr-008 still needs a human call (retry budget exhausted, engine-
+level not prompt-level). hwr-005 needs a sign-free rework, not another "no text" wording.
+~12 other not-yet-accepted Monster Recast slots, 15 Hollywood Recast, and 8 Kind Robots
+remain untouched this cycle.
