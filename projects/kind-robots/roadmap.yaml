@@ -1743,10 +1743,10 @@ tasks:
 - id: t-102
   milestone: m6
   title: "Decide and implement whether the home showcase should server-render"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  owner: null
+  owner: worker
   note: >-
     Split off t-078's remaining-work item 3, which didn't fit that task's scope. Right now
     home-page.vue fetches the whole home showcase (hero + all six rails + the projects strip)
@@ -1769,7 +1769,9 @@ tasks:
     mismatch. If SSR genuinely isn't worth the risk for this page, it is also a legitimate
     outcome to record that decision and its reasoning here and close the task without a code
     change; either way, do not leave this open on "should" without concluding it.
-  updated: '2026-09-14T11:41:29Z'
+  updated: '2026-09-14T13:29:40Z'
+  claimed_by: claude-20260914T134500Z-kr-t102-conductor
+  claimed_at: '2026-09-14T13:29:40Z'
 
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
