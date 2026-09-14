@@ -237,6 +237,31 @@ tasks:
     actually shows the screws/sphere prop (not a prompt rewrite); mr-008 can be retried now
     that t-044's gate will catch a repeat monochrome result automatically. Hollywood Recast
     (16) and Kind Robots (8) backlogs untouched this cycle.
+
+    PROGRESS (scheduled Conductor session, cycle 7, 2026-09-14): render box reconfirmed UP
+    (check_render_box.py, 91 renders/6h, Comfy heartbeat healthy). mr-008 retried to its
+    full bounded budget (3 live attempts this cycle plus the job recovered at claim time,
+    seeds 1471245284/900245039/328435024) -- monochrome every time (mean_saturation
+    0.011/0.014/0.020), making it 5/5 across two sessions while every sibling slot in the
+    same batches rendered in full color. This no longer reads as engine-wide randomness;
+    escalated in proposals.yaml with the full attempt history and parked (render_retry.py's
+    bounded-retry policy auto-set queue status to needs_review) -- recommend a different
+    engine or a deliberate reworded-prompt experiment, not another blind retry.
+    mr-025 turned out to have a different, actionable root cause than previously assumed:
+    its stored prompt said "occult-poster portrait", and the art API's prompt-contract
+    vocabulary check rejects "poster" outright (HTTP 422) -- that is what was actually
+    blocking every prior attempt, not (only) the color-engine defect. Fixed the prompt
+    (art-modeler-request.yaml#mr-025) and re-rendered live; it now passes t-044's
+    saturation gate (mean_saturation=0.2812) but a pixel hue-histogram check found 80.7%
+    of the image concentrated in one narrow sepia/olive hue band -- a uniformly tinted
+    monochrome wash, not real multi-color, so NOT ACCEPTED again with full reasoning in
+    proposals.yaml. Filed coloring-book/t-045 (hue-diversity gate gap in art_quality.py,
+    calibration required, plus a note to sweep the other books' art-modeler-request.yaml
+    files for the same "poster" wording before it recurs -- mr-012 already has it, though
+    that slot is `approved` and not currently blocked). Full detail in
+    t-022-run-log.md cycle 7 entry. Re-arming to ready (recurring), releasing the claim.
+    Next actionable step: t-045's hue-diversity gate would let a future cycle retry mr-025
+    with real signal; Hollywood Recast (16) and Kind Robots (8) backlogs still untouched.
   run_log: projects/coloring-book/t-022-run-log.md
   recurring: true
   implementation_pr: 'silasfelinus/conductor#4347'
@@ -717,3 +742,44 @@ tasks:
   updated: '2026-09-14T14:45:00Z'
   claimed_by: claude-20260914T142917Z-cb-t022-conductor
   claimed_at: '2026-09-14T14:45:00Z'
+- id: t-045
+  milestone: m4
+  title: "art_quality.py's color-variant gate has no hue-diversity check -- a single-hue sepia wash can pass the t-044 saturation floor"
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: >-
+    Discovered during t-022 cycle 7 (2026-09-14): after fixing mr-025's prompt-contract
+    HTTP 422 (its source prompt said "occult-poster portrait", and "poster" alone trips
+    the art API's format-vocabulary check -- see the same cycle's mr-025 prompt fix in
+    art-modeler-request.yaml), the fresh render cleanly passed t-044's saturation gate
+    (mean_saturation=0.2812, colorful_fraction=0.3496 -- both inside the calibrated
+    real-color range of 0.20-0.60 / 0.43-0.95) yet is visually a single-hue sepia/olive
+    ink wash, not the house style's flat cel-shaded multi-color palette. A pixel hue
+    histogram (100x150 downsample, saturation>0.1 pixels, via colorsys.rgb_to_hsv)
+    confirmed it mechanically: 80.7% of sampled pixels cluster in a ~30-90 degree
+    yellow/olive/sepia band with no other hue family represented at all. t-044's
+    saturation/colorful_fraction pair measures "is there color", not "is there more
+    than one hue" -- so it cannot distinguish a real multi-color composition from a
+    uniformly tinted monochrome one, which is exactly the same fundamental defect
+    mr-025 was rejected for on 2026-09-09, just re-slipping past the newer gate under
+    a different statistical signature.
+
+    Scope: add a hue-diversity/dominant-hue-concentration signal to
+    art_quality.assess()'s "color" variant, calibrated the same way t-044 was --
+    against the full corpus of genuine color-stage files (approved/ +
+    generated/color-proposals-v1/ across all three books) to find a threshold that
+    rejects a uniform sepia/duotone wash without false-positivng on a legitimately
+    single-hue-dominant scene (e.g. a mostly-green forest or mostly-red room that is
+    still a real multi-color composition, just with one dominant family). This needs
+    real calibration data, not a guessed threshold -- same discipline t-044 used.
+
+    Also worth a companion pass while in this area: `art-modeler-request.yaml` has at
+    least one other prompt using the now-blocked word "poster" (mr-012, line ~175,
+    "Extreme close-up poster composition") -- mr-012 is already `approved` so nothing
+    is blocked today, but its stored prompt would hit the same HTTP 422 mr-025 hit if
+    a revision is ever requested. Worth a quick grep-and-fix across all three books'
+    art-modeler-request.yaml files for the same "poster" pattern before it surprises a
+    future cycle.
+  updated: '2026-09-14T15:45:00Z'

@@ -137,7 +137,7 @@ books:
     id: mr-008
     slug: game-mistress
     title: The Little Game Mistress
-    status: done
+    status: needs_review
     seed: 840008
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-008-game-mistress.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-008
@@ -149,13 +149,52 @@ books:
       semantic_score: null
       prompt_fingerprint: be6fd622c0d21c61b1c0b6ef91da2a72c153d9f93de2b2ffc0855596d90169d2
       archived_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/revisions/mr-008-game-mistress-20260914T143150Z.webp
-    studio_revision_requested_at: '2026-09-14T14:31:50Z'
-    rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-008-game-mistress.webp
-    art_image_id: 24032
-    render_seed: 566294786
-    render_engine: krea2
-    completed_at: '2026-09-14T14:36:39Z'
-    prompt_fingerprint: be6fd622c0d21c61b1c0b6ef91da2a72c153d9f93de2b2ffc0855596d90169d2
+    - requested_at: '2026-09-14T15:29:56Z'
+      previous_status: done
+      art_image_id: 24032
+      rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-008-game-mistress.webp
+      semantic_score: null
+      prompt_fingerprint: be6fd622c0d21c61b1c0b6ef91da2a72c153d9f93de2b2ffc0855596d90169d2
+      archived_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/revisions/mr-008-game-mistress-20260914T152956Z.webp
+    studio_revision_requested_at: '2026-09-14T15:29:56Z'
+    render_failures:
+    - attempt: 1
+      seed: 1471245284
+      engine: krea2
+      art_image_id: 24034
+      prompt_fingerprint: be6fd622c0d21c61b1c0b6ef91da2a72c153d9f93de2b2ffc0855596d90169d2
+      gate: mechanical
+      reasons:
+      - rendered essentially monochrome/desaturated for a color-stage master (mean_saturation=0.011, colorful_fraction=0.007)
+        — intermittent color-engine defect, coloring-book/t-044
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/render/rejected/mr-008-game-mistress-attempt-1-seed-1471245284.webp
+      checked_at: '2026-09-14T15:31:51Z'
+    - attempt: 2
+      seed: 900245039
+      engine: krea2
+      art_image_id: 24035
+      prompt_fingerprint: a294ccc9a5f15b3fa808b9ba6bd5961e342919927285413f12ba042041c9b86a
+      gate: mechanical
+      reasons:
+      - rendered essentially monochrome/desaturated for a color-stage master (mean_saturation=0.014, colorful_fraction=0.011)
+        — intermittent color-engine defect, coloring-book/t-044
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/render/rejected/mr-008-game-mistress-attempt-2-seed-900245039.webp
+      checked_at: '2026-09-14T15:33:33Z'
+    - attempt: 3
+      seed: 328435024
+      engine: krea2
+      art_image_id: 24036
+      prompt_fingerprint: 926b4243c995d5a53c8bd07f8f4115a560a8e5a441d6b5070e1777e53a1fde34
+      gate: mechanical
+      reasons: &id001
+      - rendered essentially monochrome/desaturated for a color-stage master (mean_saturation=0.020, colorful_fraction=0.012)
+        — intermittent color-engine defect, coloring-book/t-044
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/render/rejected/mr-008-game-mistress-attempt-3-seed-328435024.webp
+      checked_at: '2026-09-14T15:35:51Z'
+    render_attempts: 3
+    last_rejected_art_image_id: 24036
+    last_render_seed: 328435024
+    last_render_reasons: *id001
   - slot: 9
     id: mr-009
     slug: draculina-husbands
@@ -481,12 +520,21 @@ books:
     seed: 840025
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-025-little-miss-omen.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-025
+    studio_revision_history:
+    - requested_at: '2026-09-14T15:36:11Z'
+      previous_status: done
+      art_image_id: 13700
+      rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-025-little-miss-omen.webp
+      semantic_score: null
+      prompt_fingerprint: 2b6f56dd4a54532875965ad68e78fb502e66f0156df9e41aa0ae7f2b7da587bb
+      archived_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/revisions/mr-025-little-miss-omen-20260914T153611Z.webp
+    studio_revision_requested_at: '2026-09-14T15:36:11Z'
     rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-025-little-miss-omen.webp
-    art_image_id: 13700
-    render_seed: 604431883
+    art_image_id: 24037
+    render_seed: 1314999922
     render_engine: krea2
-    completed_at: '2026-08-01T05:27:56Z'
-    prompt_fingerprint: 2b6f56dd4a54532875965ad68e78fb502e66f0156df9e41aa0ae7f2b7da587bb
+    completed_at: '2026-09-14T15:38:36Z'
+    prompt_fingerprint: fa4853aa5fc4494e4c431249338742d70e3dd534a4f4b0806dd35e4ca6c92d08
   - slot: 26
     id: mr-026
     slug: madam-satan

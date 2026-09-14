@@ -2151,3 +2151,71 @@ t-044's new gate on the next attempt rather than needing manual catch -- worth a
 in a future cycle once there's a slice of session budget for it. Hollywood Recast and Kind Robots
 still have their own smaller not-yet-accepted backlogs (16 and 8 respectively) untouched this
 cycle.
+
+## Cycle 7 (2026-09-14, scheduled Conductor session) -- root-caused mr-025's real blocker, exhausted mr-008's retry budget and escalated it, found a gate gap and filed t-045
+
+Render box reconfirmed up via `check_render_box.py` (91 renders completed in the last 6h,
+Comfy heartbeat healthy 0.4 minutes ago) before doing any live work.
+
+### mr-008 -- exhausted the bounded retry budget, now a real escalation
+
+Recovered the job left mid-flight by claim (Pillow missing again in this fresh sandbox --
+`pip3 install Pillow`, documented gap, recovered ArtJob 22145 cleanly, no duplicate). It
+rejected as monochrome (mean_saturation 0.011). Ran the remaining two bounded attempts
+`render_retry.py` allows (`MAX_RENDER_ATTEMPTS=3`): attempt 2 (job 22146, seed 900245039,
+mean_saturation 0.014) and attempt 3 with the reinforced `retry_prompt()` guidance
+automatically applied (job 22147, seed 328435024, mean_saturation 0.020) -- both monochrome
+again. That is 5/5 monochrome renders on this exact slot across two sessions (2026-09-07,
+2026-09-14 cycle 6, and three more this cycle) and three different seeds, while every
+sibling slot in the same live batches (mr-001, mr-006, mr-010, mr-025) rendered in full
+color. `render_retry.py`'s bounded-retry policy auto-parked the queue entry at
+`needs_review` after the third failure -- the mechanism working as designed. Escalated with
+full attempt history in `proposals.yaml` rather than retrying a fourth time outside the
+bounded policy; recommended a different engine (this slot has only ever used `krea2`) or a
+deliberately reworded prompt as a human-directed experiment next, not another blind resubmit.
+
+### mr-025 -- found the real blocker, then found a second, different defect
+
+Attempted a live retry via `consume_coloring_book_studio_request.py --force --live` (the
+2026-09-09 rejection reason was "monochrome/sepia"). It failed immediately with HTTP 422:
+`[format-vocabulary] "poster" asks for a physical format...`. The stored prompt
+(`art-modeler-request.yaml#mr-025`) opens with "Vintage 1970s occult-poster portrait" --
+the word "poster" alone trips the art API's prompt-contract vocabulary check. This had
+apparently been blocking every submission attempt on this slot, which is a different (and
+more directly actionable) root cause than the color-engine explanation prior cycles
+assumed. Fixed the prompt (`occult-poster portrait` -> `occult illustration, vertical
+portrait composition`, preserving every other detail) and re-rendered live (ArtImage 24037).
+
+The new render passed `art_quality.py`'s t-044 saturation gate cleanly (mean_saturation
+0.2812, colorful_fraction 0.3496 -- both inside the calibrated real-color range). Visual
+review still called it wrong: the image reads as a black-ink-on-cream/sepia illustration,
+not the house style's flat cel-shaded multi-color palette. Checked this mechanically rather
+than trusting the eyeball call alone -- downsampled to 100x150, converted every
+saturation>0.1 pixel to HSV via `colorsys`, and histogrammed hue: 80.7% of sampled pixels
+(12,111/15,000) cluster in a ~30-90 degree yellow/olive/sepia band with no other hue family
+represented at all. That is a uniformly tinted monochrome wash, not real color diversity --
+t-044's saturation/colorful_fraction pair has no signal for "is there more than one hue,"
+so a uniform sepia tint with moderate saturation slips straight through it. NOT ACCEPTED
+again, full reasoning in `proposals.yaml`; not re-enqueued a third way this session.
+
+Filed **coloring-book/t-045**: add a hue-diversity/dominant-hue-concentration check to
+`art_quality.py`'s color-variant gate, calibrated the same rigorous way t-044 was (against
+the full 115+ file real-color corpus, watching for false positives on legitimately
+single-hue-dominant real scenes) rather than a guessed threshold. Also noted mr-012 uses
+the same "poster" wording in its stored prompt (currently harmless since it's already
+`approved` and not being resubmitted) as a quick companion check for a future cycle.
+
+Verification: `python scripts/art_quality.py --selftest` -> 14/14 (no changes to the module
+this cycle, confirming the existing gate still behaves). `python scripts/validate_roadmaps.py`
+clean. `coloring_queue_status.py --book monster-recast` -> queue_integrity_safe: true, 1
+pending (mr-008, `needs_review`), 0 duplicate job/entry ids. `git diff --stat` reviewed
+before committing (1 rendered file archived under `rejected/render/` per slot attempt, plus
+the successful mr-025 render, `color-art-jobs.yaml` queue state, `proposals.yaml` review
+notes, one prompt-text fix in `art-modeler-request.yaml`, the new t-045 roadmap task, and
+this run-log entry -- nothing else touched).
+
+**Next actionable step:** mr-008 needs a human call (different engine, or a deliberate
+reworded-prompt experiment) rather than another automatic retry. mr-025 needs t-045's
+hue-diversity gate (or a human color-diversity call) before spending another render budget
+on it. Hollywood Recast (16) and Kind Robots (8) not-yet-accepted backlogs remain untouched
+this cycle.
