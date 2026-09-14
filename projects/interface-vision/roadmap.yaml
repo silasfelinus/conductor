@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3331,7 +3331,12 @@ tasks:
     consistency umbrella to ready for the next bounded slice. Kaizen for the next slice: run
     a fresh full-repo class-frequency survey (kr_class_frequency_survey.py) outside every
     now-closed family to pick the next target -- no specific candidate queued.
-  updated: '2026-09-14T03:17:33Z'
+
+    Slice 269 merged as silasfelinus/kind_robots#2714 (loading-dots spinners onto kr-
+    spinner-*-dots). Reconciled by scheduled Conductor sweep (check_pr_merged_drift.py
+    flagged status: claimed with a stale implementation_pr while #2714 was already merged
+    and title-confirmed). Returning recurring umbrella to ready for the next slice.
+  updated: '2026-09-14T04:27:41Z'
   implementation_pr: 'silasfelinus/kind_robots#2714'
   retry_context: ''
   owner: worker
