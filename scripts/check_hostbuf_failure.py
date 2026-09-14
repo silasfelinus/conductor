@@ -1,21 +1,20 @@
 #!/usr/bin/env python3
-"""Fail loudly when the known ComfyUI host-buffer read fault is freshly recurring.
+"""Track the known ComfyUI host-buffer read fault through recovery.
 
-This is a narrow standing sentinel for the recurring
-``hostbuf_file_reader_read failed`` CLIPTextEncode failure. It deliberately
-uses the same queue/stats source and signature classifier as
-``recheck_render_queue.py`` so alerting and the render backlog cannot disagree
-about what constitutes the hardware-fault signature.
+The queue stats endpoint exposes the latest hostbuf failure and latest DONE
+completion timestamps. A hostbuf incident is only considered recovered when a
+successful render completed *after* that failure. This prevents an idle or
+still-broken renderer from becoming a false green merely because the original
+failure aged out of a time window.
 
-The queue stats endpoint returns the latest 25 failed jobs regardless of age,
-so this script must apply its own timestamp window before classifying failures.
-Otherwise a repaired outage can keep failing the hourly workflow indefinitely
-until 25 newer failures happen to displace the stale rows.
+For compatibility with an older Kind Robots deployment that does not expose the
+recovery timestamps yet, the sentinel falls back to the two-hour filtered
+recentFailed sample.
 
 Exit codes:
-  0: no fresh hostbuf failure is present
+  0: clear, recovered, or stale-but-unverified (warning only)
   1: queue stats could not be read
-  2: one or more fresh failures match the hostbuf signature
+  2: a fresh unresolved hostbuf failure is present
 """
 
 from __future__ import annotations
@@ -46,12 +45,7 @@ def _parse_iso8601(value: object) -> datetime | None:
 
 
 def _fresh_recent_failures(data: dict) -> list[dict]:
-    """Return recentFailed rows that fall inside the API's requested window.
-
-    The endpoint includes ``since`` in its response but does not currently use
-    that value to constrain ``recentFailed``. Rows with an unparseable timestamp
-    are retained conservatively so malformed metadata cannot hide a real fault.
-    """
+    """Return recentFailed rows that fall inside the API's requested window."""
     recent_failed = data.get("recentFailed") or []
     since = _parse_iso8601(data.get("since"))
     if since is None:
@@ -71,8 +65,6 @@ def hostbuf_failure_count(data: dict) -> int:
     if _parse_iso8601(data.get("since")) is not None:
         groups = group_failures_by_signature(_fresh_recent_failures(data))
     else:
-        # Preserve the old fallback for callers/tests that provide no window
-        # metadata. Live queue stats always include ``since``.
         groups = data.get("failuresBySignature") or group_failures_by_signature(recent_failed)
 
     return sum(
@@ -82,6 +74,31 @@ def hostbuf_failure_count(data: dict) -> int:
     )
 
 
+def hostbuf_state(data: dict, *, now: datetime | None = None) -> str:
+    """Return clear, recovered, fresh-failure, or unverified.
+
+    ``unverified`` means a hostbuf failure is known, it is older than the alert
+    window, and no successful render has completed after it. That state exits
+    successfully to avoid hourly duplicate mail, but is deliberately reported
+    as a warning rather than healthy.
+    """
+    failure_at = _parse_iso8601(data.get("latestHostbufFailureAt"))
+    done_at = _parse_iso8601(data.get("latestDoneAt"))
+
+    # Older Kind Robots deployments do not expose these additive fields yet.
+    if failure_at is None:
+        return "fresh-failure" if hostbuf_failure_count(data) else "clear"
+
+    if done_at is not None and done_at > failure_at:
+        return "recovered"
+
+    current = now or datetime.now(timezone.utc)
+    age_hours = max(0.0, (current - failure_at).total_seconds() / 3600)
+    if age_hours <= SENTINEL_WINDOW_HOURS:
+        return "fresh-failure"
+    return "unverified"
+
+
 def main() -> int:
     try:
         data = fetch_queue_stats(window_hours=SENTINEL_WINDOW_HOURS, timeout=20.0)
@@ -89,20 +106,42 @@ def main() -> int:
         print(f"ERROR: unable to read render queue stats: {exc}", file=sys.stderr)
         return 1
 
-    count = hostbuf_failure_count(data)
-    if count:
+    state = hostbuf_state(data)
+    failure_at = data.get("latestHostbufFailureAt")
+    done_at = data.get("latestDoneAt")
+
+    if state == "fresh-failure":
+        count = hostbuf_failure_count(data)
+        count_text = f"{count} fresh ArtJob failure(s)" if count else "a fresh hostbuf incident"
         print(
             "ERROR: recurring render-box hardware fault detected: "
-            f"{count} ArtJob failure(s) within the last {SENTINEL_WINDOW_HOURS}h "
-            "match hostbuf_file_reader_read failed. "
-            "Inspect the Alexandria/render-box storage path before retrying affected jobs.",
+            f"{count_text} match hostbuf_file_reader_read failed. "
+            f"Latest hostbuf failure: {failure_at or 'within the requested 2h sample'}. "
+            "A successful render has not completed after it. "
+            "Inspect the render-box model/storage path before retrying affected jobs.",
             file=sys.stderr,
         )
         return 2
 
+    if state == "unverified":
+        print(
+            "::warning::UNVERIFIED render recovery: the latest hostbuf failure "
+            f"({failure_at}) is older than {SENTINEL_WINDOW_HOURS}h, but no successful "
+            "render has completed after it. Suppressing duplicate hourly failure mail; "
+            "do not treat the renderer as healthy until a render completes."
+        )
+        return 0
+
+    if state == "recovered":
+        print(
+            "OK: render recovery verified. A successful render completed after the "
+            f"latest hostbuf failure ({failure_at}); latest DONE: {done_at}."
+        )
+        return 0
+
     print(
-        "OK: no fresh hostbuf_file_reader_read failures within the last "
-        f"{SENTINEL_WINDOW_HOURS}h."
+        "OK: no fresh hostbuf_file_reader_read failure is present in the available "
+        "queue diagnostics."
     )
     return 0
 
