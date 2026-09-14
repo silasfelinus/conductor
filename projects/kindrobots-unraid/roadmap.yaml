@@ -237,8 +237,8 @@ tasks:
 - id: t-016
   milestone: m1
   title: Add an external health probe/alert for kindrobots.org so outages are caught without waiting on a scheduled sweep
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >-
@@ -259,7 +259,9 @@ tasks:
     recovers. Does not require solving the container-recreate theory itself in this task;
     the immediate win is catching the next occurrence in real time rather than relying on
     a sweep's luck.
-  updated: '2026-09-08T05:53:03Z'
+  updated: '2026-09-14T13:48:46Z'
+  claimed_by: claude-20260914T140000Z-kru-t016-conductor
+  claimed_at: '2026-09-14T13:48:46Z'
 
 - id: t-017
   milestone: m2
