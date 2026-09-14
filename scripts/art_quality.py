@@ -6,9 +6,11 @@ Two jobs:
 
 1. **Guard** the automated pipeline: reject a render that structurally cannot be
    what was asked for — a "bw" coloring page that came back in full color, a
-   blank/degenerate frame, or the wrong aspect ratio. Called from
-   consume_monster_recast_art.py before a variant is marked done, so failures
-   stay pending instead of silently polluting the set (the mr-010/mr-013 bug).
+   "color" master that came back essentially monochrome (coloring-book/t-044),
+   spatially-uncorrelated noise/static (coloring-book/t-039), a blank/degenerate
+   frame, or the wrong aspect ratio. Called from consume_monster_recast_art.py
+   before a variant is marked done, so failures stay pending instead of
+   silently polluting the set (the mr-010/mr-013 bug).
 
 2. **Curate**: score a folder of candidates so an agent can shortlist the ones
    worth promoting toward `approved/`. This is the objective first layer of the
@@ -42,6 +44,18 @@ BLANK_WHITE_FRACTION = 0.985       # near-all-white == blank
 DEGENERATE_MAX_LUMA_STD = 0.02     # near-zero contrast == flat/dead frame
 SAMPLE_EDGE = 160                  # downsample longest edge before sampling
 NOISE_MIN_HF_RATIO = 0.55          # spatially-uncorrelated static, any variant
+# A genuine color-stage master in this pipeline runs 0.20-0.60 mean_saturation
+# and 0.43-0.95 colorful_fraction against the approved/ set (see
+# coloring-book/t-044). An intermittent color-engine defect instead produces a
+# structurally valid, non-blank, non-noise render with real contrast but almost
+# no color at all — mr-006 (2026-09-07), mr-008 (2026-09-07 and again
+# 2026-09-14), and mr-025 (2026-09-09) all measured mean_saturation ~0.01-0.02,
+# colorful_fraction ~0.01-0.02, and silently passed the "color" gate as-is
+# (only the blank/degenerate/noise/aspect checks applied to non-bw variants).
+# Thresholds are set with wide margin below every observed legitimate color
+# master so a real, if muted, illustration is never falsely rejected.
+COLOR_MIN_MEAN_SATURATION = 0.06
+COLOR_MIN_COLORFUL_FRACTION = 0.05
 
 
 class Stats:
@@ -203,6 +217,18 @@ def assess(stats: Stats, variant: str, size: Optional[tuple[int, int]] = None,
             f"white_fraction={stats.white_fraction:.2f})"
         )
 
+    if (
+        variant != "bw"
+        and stats.mean_saturation < COLOR_MIN_MEAN_SATURATION
+        and stats.colorful_fraction < COLOR_MIN_COLORFUL_FRACTION
+    ):
+        reasons.append(
+            "rendered essentially monochrome/desaturated for a color-stage "
+            f"master (mean_saturation={stats.mean_saturation:.3f}, "
+            f"colorful_fraction={stats.colorful_fraction:.3f}) — intermittent "
+            "color-engine defect, coloring-book/t-044"
+        )
+
     if size and expect_portrait:
         w, h = size
         if w > 0 and h > 0 and h < w:
@@ -265,9 +291,10 @@ def assess_file(path: Path, variant: str) -> tuple[Optional[bool], list[str], di
 def describe_gate() -> str:
     return (
         "Objective gate only: validates that a render is structurally what was "
-        "asked for (bw==line art, not blank, portrait). It does NOT judge "
-        "likeness, camp, or composition — that is a vision-model pass layered on "
-        "top before anything is promoted to approved/."
+        "asked for (bw==line art, color==actually has color, not blank, not "
+        "spatially-uncorrelated noise, portrait). It does NOT judge likeness, "
+        "camp, or composition — that is a vision-model pass layered on top "
+        "before anything is promoted to approved/."
     )
 
 
@@ -366,6 +393,24 @@ def _selftest() -> int:
     checks.append(("smooth gradient hf_ratio stays low", grad_hf < NOISE_MIN_HF_RATIO))
     ok, r = assess(grad_stats, "color", hf_ratio=grad_hf)
     checks.append(("smooth gradient is NOT rejected as noise", ok is True))
+
+    # 6. Intermittent color-engine defect (coloring-book/t-044): a structurally
+    #    valid, non-blank render with real contrast but almost no color at all —
+    #    mostly near-grey pixels with a little luma variation, nothing close to
+    #    a real color master's saturation. Must be REJECTED for "color" but
+    #    still cleanly PASS "bw" (a near-greyscale image is exactly what a bw
+    #    variant wants).
+    desaturated = stats_from_pixels(
+        block((235, 233, 230), 600) + block((90, 88, 86), 300) + block((150, 149, 147), 100)
+    )
+    ok, r = assess(desaturated, "color")
+    checks.append(("near-monochrome color-stage render is REJECTED", ok is False and any("monochrome" in x for x in r)))
+    ok, _ = assess(desaturated, "bw")
+    checks.append(("same near-monochrome pixels still pass the bw gate", ok is True))
+    # A real, muted-but-genuine color master (well above threshold, still far
+    # below the approved/ set's typical saturation) must not be caught by this.
+    ok, r = assess(color_master, "color")
+    checks.append(("real color_master is NOT rejected as desaturated", ok is True))
 
     failed = 0
     for name, passed in checks:

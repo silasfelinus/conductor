@@ -2079,3 +2079,75 @@ still needs a judgment call above a routine prompt-revision slice. Separately wo
 (Ferngrotto `extra_model_paths.yaml`) that has not been confirmed applied -- if the hostbuf
 signature recurs, check that before assuming hardware alone. Re-arming to `ready` (recurring),
 releasing the claim.
+
+## Cycle 6 (2026-09-14, scheduled Conductor session) -- reclaimed a stale claim, re-rendered 3 slots, filed and fixed the monochrome-render gap
+
+This session's `select_role.py`/`next_ready_task.py` check found t-022 sitting at `status:
+claimed` with `claimed_at` over 3 hours old (past `CLAIM_TTL_MINUTES`) and no PR activity since
+cycle 5's close-out (#4328) re-armed it -- an abandoned claim from an intervening session, not
+in-flight work. Reclaimed via `claim_task.py` per the documented stale-claim path.
+
+Fired live re-renders for `mr-006`, `mr-008`, `mr-010` -- cycle 3's audit already confirmed these
+three (among the ~31-slot backlog) have explicit, non-underspecified prompts, so no prompt edits
+this cycle, just a fresh roll against the render box (confirmed up: 99 renders completed in the
+last 6h). `mr-006`'s job (22142) hit the documented sandbox Pillow gap on save; installed Pillow
+(`pip3 install Pillow`) and recovered the completed job cleanly with no duplicate submission.
+`mr-008` (22143) and `mr-010` (22144) landed directly.
+
+Creative review against each slot's documented rejection reasoning and its `homage-concepts.yaml`
+brief:
+- **mr-010 (The Madam in the Hat) ACCEPTED.** The prior render's tall pointed hat and elongated
+  clawed fingers reproduced the Babadook's signature silhouette too closely; this render uses a
+  wide fan-shaped mourning hat (matches the brief's own `originalization_hook` language) and her
+  gloved hands at her sides read as ordinary proportions, not claws. The doorway-threshold framing
+  remains, but that's the brief's own explicit direction, not a copied signature element. Ran
+  `accept-color` live via `manage_coloring_book_production.py`.
+- **mr-006 (Screwhead) NOT ACCEPTED.** Color is now genuinely full (mean_saturation 0.23 via
+  `art_quality.py`), fixing the prior monochrome defect, but the render still doesn't depict the
+  concept: no screws entering skin anywhere on face or body, no held mechanical petaled sphere, no
+  scarred geometry -- reads as a generic gold-petal-headdress portrait. Needs a render that
+  actually includes the horror_engine content, not just petal-shaped ornamentation. Not
+  re-enqueued this session.
+- **mr-008 (The Little Game Mistress) NOT ACCEPTED, again.** Composition is solid (tuxedo
+  automaton, low hallway angle, toy car, doll-jointed hand) but the render came back monochrome a
+  second time on this exact slot (first caught 2026-09-07, now again 2026-09-14) --
+  mean_saturation 0.013, colorful_fraction 0.012, essentially zero color despite mr-006/mr-010
+  rendering in full color in the same live batch. Not a prompt problem; this is the third distinct
+  slot across two sessions to hit this exact "structurally valid but essentially colorless" defect
+  (mr-006 and mr-008 on 2026-09-07, mr-025 on 2026-09-09) -- and it was silently passing
+  `art_quality.py`'s "color" gate every time, since that gate only checked blank/degenerate, noise
+  (t-039), and aspect, with zero saturation floor.
+
+Filed and implemented **coloring-book/t-044**: added `COLOR_MIN_MEAN_SATURATION` (0.06) /
+`COLOR_MIN_COLORFUL_FRACTION` (0.05) thresholds to `art_quality.py`'s `assess()` for any non-`bw`
+variant. Calibrated against all 115 real color-stage files across all three books
+(`approved/*-color.webp` + `generated/color-proposals-v1/*.webp`, monster-recast +
+hollywood-recast + kind-robots): every genuine master sits at mean_saturation 0.20-0.60 /
+colorful_fraction 0.43-0.95, comfortably clear of the defect's ~0.01-0.02 on both signals
+simultaneously. Re-running the new gate against that same 115-file corpus flags only the
+already-known-bad `mr-008-game-mistress.webp` -- zero false positives. Added a new selftest case
+(synthetic near-monochrome pixels: rejected for `"color"`, still cleanly pass `"bw"`; a real
+`color_master` fixture confirmed NOT caught) alongside the existing t-039 noise-detector test.
+Updated the module docstring and `describe_gate()` to describe the new check.
+
+Verification: `python scripts/art_quality.py --selftest` -> 14/14. Sandbox `pytest` hit the
+documented missing-PyYAML gap (`ModuleNotFoundError: No module named 'yaml'` loading
+`tests/conftest.py` -> `consume_art_queue_core`); fixed with `uv tool install pytest --with
+pyyaml --force` per AGENTS.md. `PYTHONPATH=.:scripts pytest tests/test_coloring_book_production.py`
+-> 6/6. Full suite (`PYTHONPATH=.:scripts pytest`) -> 1895 passed, 1 skipped, 35 subtests, no
+regressions. `python scripts/validate_roadmaps.py` clean. `coloring_queue_status.py --book
+monster-recast` -> queue_integrity_safe: true, 0 pending, 0 duplicate job/entry ids.
+`git diff --stat` reviewed before committing (3 renders + 3 archived revisions, `color-art-jobs.yaml`
+queue state, `proposals.yaml` review notes, `art_quality.py` + its selftest, nothing else touched).
+
+Opened silasfelinus/conductor#4347; merging when green, then re-arming to `ready` (recurring) and
+releasing the claim in a follow-up close-out commit.
+
+**Next actionable step:** ~13 not-yet-accepted Monster Recast slots remain (was ~15 at cycle-6
+start, now 13 after this cycle's mr-010 accept and mr-006/mr-008 staying rejected). mr-006 needs
+a render that actually shows the screws/sphere-prop content, not a prompt rewrite (the prompt
+already asks for it correctly). mr-008's recurring monochrome defect is now caught mechanically by
+t-044's new gate on the next attempt rather than needing manual catch -- worth another live retry
+in a future cycle once there's a slice of session budget for it. Hollywood Recast and Kind Robots
+still have their own smaller not-yet-accepted backlogs (16 and 8 respectively) untouched this
+cycle.
