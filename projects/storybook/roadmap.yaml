@@ -1153,7 +1153,7 @@ tasks:
 - id: t-047
   milestone: m9
   title: "Retire /taskmaster: route, content, placement, store, and rewrite its three guards"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   depends_on: [t-045, t-046]
@@ -1167,7 +1167,10 @@ tasks:
     REWRITTEN against the new surface, never deleted: they pin the checkpoint engine, the
     sample tasks and the storage recovery path, and the merge has to keep all three true.
     Do not start this until t-046 is deployed and the mode is genuinely usable.
-  updated: '2026-09-12T14:00:00Z'
+  updated: '2026-09-14T07:50:56Z'
+  owner: worker
+  claimed_by: claude-20260914T075055Z-sb-t047
+  claimed_at: '2026-09-14T07:50:56Z'
 
 - id: t-048
   milestone: m8
