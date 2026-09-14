@@ -13746,3 +13746,23 @@ records:
     generation pipeline documents a safety constraint in a config/request file, verify by
     reading the actual code path that consumes it, not by the file''s existence or its
     prose.'
+- date: '2026-09-14'
+  project: coloring-book
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: quality
+  lesson: 'finalize-pair (manage_coloring_book_production.py) crashed with a NameError on
+    every live invocation -- it referenced an undefined `semantic` variable (a leftover
+    name from a different script''s local variable of the same purpose) instead of the
+    queue entry''s own `bw_semantic_score` field. This went unnoticed for weeks: all three
+    coloring books accumulated dozens of slots with both an accepted color and accepted
+    BW file (66 combined) while `final pairs` sat at 0/36 in every book, because nothing
+    had ever tested `finalize_pair` and every attempt to run it in production would have
+    failed loudly enough to be caught, yet apparently no prior cycle actually tried. Fixed
+    the reference and landed the first 3 final pairs (Monster Recast mr-002/003/004).
+    Worth a standing habit: an operation with zero successful invocations across many
+    eligible candidates is a stronger signal than "not yet gotten to" -- check whether it
+    has ever actually run, not just whether its inputs exist.'

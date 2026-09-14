@@ -85,6 +85,60 @@ class ColoringBookProductionTests(unittest.TestCase):
         self.assertIn('    color: "generated/color/kr-001.webp"', content)
         self.assertIn("    bw: null", content)
 
+    def test_finalize_pair_sets_semantic_score_from_queue_entry(self) -> None:
+        # Regression test for a NameError that made every live finalize-pair call
+        # crash (`semantic` was never defined in finalize_pair — a leftover
+        # reference from consume_coloring_book_studio_request.py's local
+        # `semantic` variable of the same name). The pair's semantic score is
+        # recorded on the BW queue entry as `bw_semantic_score`, so finalize_pair
+        # should read it from there instead of an undefined name.
+        self.ledger.write_text(
+            """proposals:
+- slot: 1
+  id: mr-002
+  accepted: {color: color.webp, bw: bw.webp}
+  final: {color: null, bw: null}
+  notes: []
+""",
+            encoding="utf-8",
+        )
+        color = self.root / "color.webp"
+        bw = self.root / "bw.webp"
+        color.write_bytes(b"color-bytes")
+        bw.write_bytes(b"bw-bytes")
+
+        original_absolute_set_path = MODULE.absolute_set_path
+        original_mechanical_check = MODULE.mechanical_check
+        original_write_yaml = MODULE.write_yaml
+        MODULE.absolute_set_path = (
+            lambda _book, value: color if "color" in value else bw
+        )
+        MODULE.mechanical_check = lambda _path, _variant: None
+        MODULE.write_yaml = lambda _path, _data: None
+        try:
+            queue_entry = {"id": "mr-002", "bw_semantic_score": 91}
+            queue = {"books": [{"slug": "monster-recast", "entries": [queue_entry]}]}
+            ledger = {
+                "proposals": [
+                    {
+                        "id": "mr-002",
+                        "accepted": {"color": "color.webp", "bw": "bw.webp"},
+                        "final": {"color": None, "bw": None},
+                    }
+                ]
+            }
+
+            MODULE.finalize_pair("monster-recast", "mr-002", queue, ledger)
+        finally:
+            MODULE.absolute_set_path = original_absolute_set_path
+            MODULE.mechanical_check = original_mechanical_check
+            MODULE.write_yaml = original_write_yaml
+
+        self.assertEqual(queue_entry["pair_status"], "final")
+        self.assertEqual(queue_entry["pair_semantic_score"], 91)
+        content = self.ledger.read_text(encoding="utf-8")
+        self.assertIn('final: {color: "color.webp", bw: "bw.webp"}', content)
+
     def test_relative_to_set_normalizes_repo_paths(self) -> None:
         self.assertEqual(
             MODULE.relative_to_set(

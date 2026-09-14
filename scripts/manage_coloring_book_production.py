@@ -520,7 +520,7 @@ def finalize_pair(
     final["color"] = final_color
     final["bw"] = final_bw
     queue_entry["pair_status"] = "final"
-    queue_entry["pair_semantic_score"] = semantic.get("score")
+    queue_entry["pair_semantic_score"] = queue_entry.get("bw_semantic_score")
     queue_entry["pair_finalized_at"] = now_iso()
     replace_ledger_pair_value(book_slug, proposal_id, "final", "color", final_color)
     replace_ledger_pair_value(book_slug, proposal_id, "final", "bw", final_bw)
