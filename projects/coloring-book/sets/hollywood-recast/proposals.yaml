@@ -36,7 +36,7 @@ proposals:
     ref: null
   inspirations: []
   accepted:
-    color: "generated/color-proposals-v1/hwr-001-starlight-mechanic.webp"
+    color: generated/color-proposals-v1/hwr-001-starlight-mechanic.webp
     bw: null
   final:
     color: null
@@ -54,13 +54,17 @@ proposals:
     ref: null
   inspirations: []
   accepted:
-    color: "generated/color-proposals-v1/hwr-002-the-grand-staircase.webp"
+    color: generated/color-proposals-v1/hwr-002-the-grand-staircase.webp
     bw: null
   final:
     color: null
     bw: null
   notes:
-  - "NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-002-the-grand-staircase.webp) does not depict a plus-size figure -- the prompt's explicit casting choice for this slot. The woman shown has a conventional slender hourglass build. Everything else (art-deco staircase, geometric featherless gown, dancers/cameras/spotlights, composed expression) matches well. Needs a fresh render that actually renders her as plus-size; not re-enqueued this session (render queue backlog)."
+  - 'NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-002-the-grand-staircase.webp)
+    does not depict a plus-size figure -- the prompt''s explicit casting choice for this slot. The woman shown has
+    a conventional slender hourglass build. Everything else (art-deco staircase, geometric featherless gown, dancers/cameras/spotlights,
+    composed expression) matches well. Needs a fresh render that actually renders her as plus-size; not re-enqueued
+    this session (render queue backlog).'
 - slot: 3
   id: hwr-003
   title: Desert Wheel Queen
@@ -72,7 +76,7 @@ proposals:
     ref: null
   inspirations: []
   accepted:
-    color: "generated/color-proposals-v1/hwr-003-desert-wheel-queen.webp"
+    color: generated/color-proposals-v1/hwr-003-desert-wheel-queen.webp
     bw: null
   final:
     color: null
@@ -89,7 +93,7 @@ proposals:
     ref: null
   inspirations: []
   accepted:
-    color: "generated/color-proposals-v1/hwr-004-rain-on-the-backlot.webp"
+    color: generated/color-proposals-v1/hwr-004-rain-on-the-backlot.webp
     bw: null
   final:
     color: null
@@ -100,10 +104,10 @@ proposals:
   title: Midnight Detective
   prompt:
     text: Hardboiled neon-noir portrait of a nonbinary detective with a cane and a patient service dog studying
-      a clue beneath a flickering lodging-house sign, its neon tubing glowing in abstract glyph-like shapes.
-      The detective wears a broad-shouldered trench coat, sharp undercut, tired eyes, and practical shoes; the
-      dog notices the hidden figure first. Deep perspective, wet pavement, saturated cyan-magenta-gold lighting,
-      original city and mystery, no readable lettering.
+      a clue beneath a flickering lodging-house sign, its neon tubing glowing in abstract glyph-like shapes. The
+      detective wears a broad-shouldered trench coat, sharp undercut, tired eyes, and practical shoes; the dog notices
+      the hidden figure first. Deep perspective, wet pavement, saturated cyan-magenta-gold lighting, original city
+      and mystery, no readable lettering.
     ref: null
   inspirations: []
   accepted:
@@ -113,8 +117,30 @@ proposals:
     color: null
     bw: null
   notes:
-  - "NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-005-midnight-detective.webp) violates this book's blanket 'no readable lettering' constraint with a large, fully legible neon HOTEL marquee filling the top third of the frame. The prompt does call for 'a flickering hotel sign' as a scene element, but that should read as an abstracted/illegible sign shape, not spelled-out text -- every other element (nonbinary detective, cane, service dog noticing the hidden figure first, trench coat, noir lighting) matches well. Needs a fresh render with the hotel sign re-prompted as illegible signage. Not re-enqueued this session (render queue backlog)."
-  - "NOT ACCEPTED 2026-09-14 (scheduled Conductor session, t-022 cycle 9): rewrote the sign phrase to 'a flickering lodging-house sign, its neon tubing glowing in abstract glyph-like shapes' (art-modeler prompt-contract check flagged the first rewrite attempt, which repeated text-exclusion wording five times across the full submitted prompt -- HTTP 422 -- before a render was even attempted; trimmed to a single 'no readable lettering' mention and re-submitted, which cleared the contract check). The resulting render (ArtImage 24057) is WORSE than the original: it renders two large, fully legible neon signs reading 'LODDING HOUSE' and 'SIARINE' (near-miss misspellings of 'LODGING HOUSE', not real words, but still rendered as crisp readable block lettering, not abstract shapes) filling the top third of the frame -- composition otherwise matches well (cane, service dog noticing the hidden figure first, trench coat, noir lighting, phone/gesture exchange). Describing the sign as 'glyph-like' did not stop the engine from rendering it as legible text; this reads as the same engine-level tendency other slots in this book have hit with signage (hwr-002's prior slender-build miss was a different defect, but the coloring-book/t-039-adjacent pattern of literal readable text appearing despite explicit avoidance wording is now confirmed on at least two attempts for this exact slot). Not re-attempting a third live retry in the same session per the transient-failure triage rule. Next attempt should drop the sign as a described object entirely (e.g. an unlit/dark sign silhouette, or replace it with a different light source such as a bare streetlamp) rather than trying another wording of 'sign with no text', since two distinct wordings of that idea have both failed."
+  - 'NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-005-midnight-detective.webp)
+    violates this book''s blanket ''no readable lettering'' constraint with a large, fully legible neon HOTEL marquee
+    filling the top third of the frame. The prompt does call for ''a flickering hotel sign'' as a scene element,
+    but that should read as an abstracted/illegible sign shape, not spelled-out text -- every other element (nonbinary
+    detective, cane, service dog noticing the hidden figure first, trench coat, noir lighting) matches well. Needs
+    a fresh render with the hotel sign re-prompted as illegible signage. Not re-enqueued this session (render queue
+    backlog).'
+  - 'NOT ACCEPTED 2026-09-14 (scheduled Conductor session, t-022 cycle 9): rewrote the sign phrase to ''a flickering
+    lodging-house sign, its neon tubing glowing in abstract glyph-like shapes'' (art-modeler prompt-contract check
+    flagged the first rewrite attempt, which repeated text-exclusion wording five times across the full submitted
+    prompt -- HTTP 422 -- before a render was even attempted; trimmed to a single ''no readable lettering'' mention
+    and re-submitted, which cleared the contract check). The resulting render (ArtImage 24057) is WORSE than the
+    original: it renders two large, fully legible neon signs reading ''LODDING HOUSE'' and ''SIARINE'' (near-miss
+    misspellings of ''LODGING HOUSE'', not real words, but still rendered as crisp readable block lettering, not
+    abstract shapes) filling the top third of the frame -- composition otherwise matches well (cane, service dog
+    noticing the hidden figure first, trench coat, noir lighting, phone/gesture exchange). Describing the sign as
+    ''glyph-like'' did not stop the engine from rendering it as legible text; this reads as the same engine-level
+    tendency other slots in this book have hit with signage (hwr-002''s prior slender-build miss was a different
+    defect, but the coloring-book/t-039-adjacent pattern of literal readable text appearing despite explicit avoidance
+    wording is now confirmed on at least two attempts for this exact slot). Not re-attempting a third live retry
+    in the same session per the transient-failure triage rule. Next attempt should drop the sign as a described
+    object entirely (e.g. an unlit/dark sign silhouette, or replace it with a different light source such as a bare
+    streetlamp) rather than trying another wording of ''sign with no text'', since two distinct wordings of that
+    idea have both failed.'
 - slot: 6
   id: hwr-006
   title: Temple of the Sun Engine
@@ -126,7 +152,7 @@ proposals:
     ref: null
   inspirations: []
   accepted:
-    color: "generated/color-proposals-v1/hwr-006-temple-of-the-sun-engine.webp"
+    color: generated/color-proposals-v1/hwr-006-temple-of-the-sun-engine.webp
     bw: null
   final:
     color: null
@@ -143,7 +169,7 @@ proposals:
     ref: null
   inspirations: []
   accepted:
-    color: "generated/color-proposals-v1/hwr-007-the-silver-swashbuckler.webp"
+    color: generated/color-proposals-v1/hwr-007-the-silver-swashbuckler.webp
     bw: null
   final:
     color: null
@@ -166,7 +192,20 @@ proposals:
     color: null
     bw: null
   notes:
-  - "NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-008-laboratory-tenor.webp) does not depict the prompt's core casting/identity requirement -- 'a trans man tenor... His scars and mature body are visible with dignity.' The singer shown is a conventional young man in formal stagewear with no visible scars and no indication of a mature body; the lab, stitched-creature choir, and spotlight staging otherwise match well. Needs a fresh render that actually shows the described scars/mature body. Not re-enqueued this session (render queue backlog)."
+  - 'NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-008-laboratory-tenor.webp)
+    does not depict the prompt''s core casting/identity requirement -- ''a trans man tenor... His scars and mature
+    body are visible with dignity.'' The singer shown is a conventional young man in formal stagewear with no visible
+    scars and no indication of a mature body; the lab, stitched-creature choir, and spotlight staging otherwise
+    match well. Needs a fresh render that actually shows the described scars/mature body. Not re-enqueued this session
+    (render queue backlog).'
+  - 'NOT ACCEPTED 2026-09-14 (scheduled Conductor session, t-022 cycle 10): fresh render (ArtImage 24064) reproduces
+    the exact same casting miss as the 2026-09-11 pass -- a conventional young man in formal stagewear, no visible
+    scars, no mature body, still not the prompt''s explicit ''a trans man tenor... His scars and mature body are
+    visible with dignity.'' Lab, stitched-creature choir, and spotlight staging otherwise match well. Two live attempts
+    across two sessions have now hit the identical defect on this exact slot; this reads as a genuine casting-rendering-fidelity
+    gap rather than an unlucky roll. Needs either a stronger casting anchor in the prompt (explicit visible scar
+    placement/description, not just ''scars visible'') or a different approach next pass rather than a third blind
+    retry.'
 - slot: 9
   id: hwr-009
   title: Ballroom Double Take
@@ -178,7 +217,7 @@ proposals:
     ref: null
   inspirations: []
   accepted:
-    color: "generated/color-proposals-v1/hwr-009-ballroom-double-take.webp"
+    color: generated/color-proposals-v1/hwr-009-ballroom-double-take.webp
     bw: null
   final:
     color: null
@@ -195,7 +234,7 @@ proposals:
     ref: null
   inspirations: []
   accepted:
-    color: "generated/color-proposals-v1/hwr-010-rooftop-sign-song.webp"
+    color: generated/color-proposals-v1/hwr-010-rooftop-sign-song.webp
     bw: null
   final:
     color: null
@@ -212,7 +251,7 @@ proposals:
     ref: null
   inspirations: []
   accepted:
-    color: "generated/color-proposals-v1/hwr-011-the-gentle-giant-visitor.webp"
+    color: generated/color-proposals-v1/hwr-011-the-gentle-giant-visitor.webp
     bw: null
   final:
     color: null
@@ -235,7 +274,17 @@ proposals:
     color: null
     bw: null
   notes:
-  - "NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-012-last-train-first-kiss.webp) does not depict the prompt's central visual hook -- the two women are shown shaking/holding hands on the platform, not kissing. Composition (steam-filled dawn station, conductor uniform, botanist's battered specimen case, visible age, cool-steel/warm-sunrise palette) otherwise matches well. Needs a fresh render that actually shows the kiss; not re-enqueued this session (render queue backlog)."
+  - 'NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-012-last-train-first-kiss.webp)
+    does not depict the prompt''s central visual hook -- the two women are shown shaking/holding hands on the platform,
+    not kissing. Composition (steam-filled dawn station, conductor uniform, botanist''s battered specimen case,
+    visible age, cool-steel/warm-sunrise palette) otherwise matches well. Needs a fresh render that actually shows
+    the kiss; not re-enqueued this session (render queue backlog).'
+  - 'NOT ACCEPTED 2026-09-14 (scheduled Conductor session, t-022 cycle 10): fresh render (ArtImage 24065) again
+    shows the two older women standing face to face near the train (one in conductor uniform, one holding a weathered
+    case) rather than kissing -- the prompt''s central visual hook still doesn''t land, same miss as the 2026-09-11
+    pass. Steam-filled dawn station, conductor uniform, weathered case, visible age, and cool-steel/warm-sunrise
+    palette otherwise match well. Needs a stronger, more explicit staging direction for the kiss itself (e.g. naming
+    the physical contact directly) rather than a third blind retry.'
 - slot: 13
   id: hwr-013
   title: High Noon Marshal
@@ -247,7 +296,7 @@ proposals:
     ref: null
   inspirations: []
   accepted:
-    color: "generated/color-proposals-v1/hwr-013-high-noon-marshal.webp"
+    color: generated/color-proposals-v1/hwr-013-high-noon-marshal.webp
     bw: null
   final:
     color: null
@@ -270,7 +319,12 @@ proposals:
     color: null
     bw: null
   notes:
-  - "NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-014-chrome-thunder.webp) does not depict a fat figure -- the prompt's explicit casting choice for this heroine ('fat, glamorous biker heroine... broad body planted confidently'). The rider shown has a conventional slender build, same casting-mismatch pattern as hwr-002. Night highway, chrome motorcycle, streaming hair, and trailing convoy of cars otherwise match. Needs a fresh render that actually renders her as fat/broad; not re-enqueued this session (render queue backlog)."
+  - 'NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-014-chrome-thunder.webp)
+    does not depict a fat figure -- the prompt''s explicit casting choice for this heroine (''fat, glamorous biker
+    heroine... broad body planted confidently''). The rider shown has a conventional slender build, same casting-mismatch
+    pattern as hwr-002. Night highway, chrome motorcycle, streaming hair, and trailing convoy of cars otherwise
+    match. Needs a fresh render that actually renders her as fat/broad; not re-enqueued this session (render queue
+    backlog).'
 - slot: 15
   id: hwr-015
   title: Prince of the Deep
@@ -282,7 +336,7 @@ proposals:
     ref: null
   inspirations: []
   accepted:
-    color: "generated/color-proposals-v1/hwr-015-prince-of-the-deep.webp"
+    color: generated/color-proposals-v1/hwr-015-prince-of-the-deep.webp
     bw: null
   final:
     color: null
@@ -299,7 +353,7 @@ proposals:
     ref: null
   inspirations: []
   accepted:
-    color: "generated/color-proposals-v1/hwr-016-the-verdict.webp"
+    color: generated/color-proposals-v1/hwr-016-the-verdict.webp
     bw: null
   final:
     color: null
@@ -322,7 +376,11 @@ proposals:
     color: null
     bw: null
   notes:
-  - "NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-017-casino-grandmother.webp) does not depict an East Asian grandmother -- the prompt's explicit casting choice. The woman shown reads as white/Caucasian. Roulette table, sculptural silver suit, concealed microfilm capsule, mirrored-column reflections, and frozen roulette ball otherwise match well. Needs a fresh render with the correct ethnicity; not re-enqueued this session (render queue backlog)."
+  - 'NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-017-casino-grandmother.webp)
+    does not depict an East Asian grandmother -- the prompt''s explicit casting choice. The woman shown reads as
+    white/Caucasian. Roulette table, sculptural silver suit, concealed microfilm capsule, mirrored-column reflections,
+    and frozen roulette ball otherwise match well. Needs a fresh render with the correct ethnicity; not re-enqueued
+    this session (render queue backlog).'
 - slot: 18
   id: hwr-018
   title: Nebula Crooner
@@ -334,7 +392,7 @@ proposals:
     ref: null
   inspirations: []
   accepted:
-    color: "generated/color-proposals-v1/hwr-018-nebula-crooner.webp"
+    color: generated/color-proposals-v1/hwr-018-nebula-crooner.webp
     bw: null
   final:
     color: null
@@ -351,7 +409,7 @@ proposals:
     ref: null
   inspirations: []
   accepted:
-    color: "generated/color-proposals-v1/hwr-019-the-house-on-marigold-hill.webp"
+    color: generated/color-proposals-v1/hwr-019-the-house-on-marigold-hill.webp
     bw: null
   final:
     color: null
@@ -368,7 +426,7 @@ proposals:
     ref: null
   inspirations: []
   accepted:
-    color: "generated/color-proposals-v1/hwr-020-director-of-monsters.webp"
+    color: generated/color-proposals-v1/hwr-020-director-of-monsters.webp
     bw: null
   final:
     color: null
@@ -391,7 +449,13 @@ proposals:
     color: null
     bw: null
   notes:
-  - "NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-021-the-silent-mechanic.webp) misses the prompt's central visual hook -- the mechanic is shown standing beside the elevated limousine rather than 'hanging from the underside' of it, and reads as a man rather than the prompt's 'stocky woman mechanic.' The camera is static on a tripod rather than a 'runaway film camera,' and the sepia/teal/red accent palette called for isn't really present (mostly cream/brown/tan). Gears, sprockets, and workshop detail otherwise match the 1920s silent-cinema mood. Needs a fresh render addressing the pose, casting, and palette; not re-enqueued this session (render queue backlog)."
+  - 'NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-021-the-silent-mechanic.webp)
+    misses the prompt''s central visual hook -- the mechanic is shown standing beside the elevated limousine rather
+    than ''hanging from the underside'' of it, and reads as a man rather than the prompt''s ''stocky woman mechanic.''
+    The camera is static on a tripod rather than a ''runaway film camera,'' and the sepia/teal/red accent palette
+    called for isn''t really present (mostly cream/brown/tan). Gears, sprockets, and workshop detail otherwise match
+    the 1920s silent-cinema mood. Needs a fresh render addressing the pose, casting, and palette; not re-enqueued
+    this session (render queue backlog).'
 - slot: 22
   id: hwr-022
   title: Disco Exorcist
@@ -409,7 +473,11 @@ proposals:
     color: null
     bw: null
   notes:
-  - "NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-022-disco-exorcist.webp) does not depict a broad, middle-aged figure -- the prompt's explicit casting choice. The woman shown reads as young and conventionally toned rather than broad/middle-aged, same casting-mismatch pattern as hwr-002/hwr-014. Disco staff raised at the chandelier, white jumpsuit, platform boots, and dancing crowd otherwise match. Needs a fresh render that actually renders her as broad/middle-aged; not re-enqueued this session (render queue backlog)."
+  - 'NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-022-disco-exorcist.webp)
+    does not depict a broad, middle-aged figure -- the prompt''s explicit casting choice. The woman shown reads
+    as young and conventionally toned rather than broad/middle-aged, same casting-mismatch pattern as hwr-002/hwr-014.
+    Disco staff raised at the chandelier, white jumpsuit, platform boots, and dancing crowd otherwise match. Needs
+    a fresh render that actually renders her as broad/middle-aged; not re-enqueued this session (render queue backlog).'
 - slot: 23
   id: hwr-023
   title: Whiteout Expedition
@@ -427,7 +495,11 @@ proposals:
     color: null
     bw: null
   notes:
-  - "NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-023-whiteout-expedition.webp) does not depict a bearded woman climber -- the prompt's explicit casting choice for the rope-anchor role. The bearded figure shown reads as a conventional man. Translucent ice creature, older man with heat lantern, young sled-bound director, and organized snow-shape palette otherwise match well. Needs a fresh render with the correct casting for the anchor climber; not re-enqueued this session (render queue backlog)."
+  - 'NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-023-whiteout-expedition.webp)
+    does not depict a bearded woman climber -- the prompt''s explicit casting choice for the rope-anchor role. The
+    bearded figure shown reads as a conventional man. Translucent ice creature, older man with heat lantern, young
+    sled-bound director, and organized snow-shape palette otherwise match well. Needs a fresh render with the correct
+    casting for the anchor climber; not re-enqueued this session (render queue backlog).'
 - slot: 24
   id: hwr-024
   title: The Stunt Swordmaster
@@ -439,7 +511,7 @@ proposals:
     ref: null
   inspirations: []
   accepted:
-    color: "generated/color-proposals-v1/hwr-024-the-stunt-swordmaster.webp"
+    color: generated/color-proposals-v1/hwr-024-the-stunt-swordmaster.webp
     bw: null
   final:
     color: null
@@ -462,7 +534,11 @@ proposals:
     color: null
     bw: null
   notes:
-  - "NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-025-escape-from-center-ring.webp) misses the prompt's central visual hook -- the two aerial performers are shown as separate individuals rather than a conjoined-twin duo sharing one winged harness; there is no physical connection between them at all. Circus jewel colors, mechanical animals leaping from broken cages, and coordinated heroic styling otherwise match. Needs a fresh render that actually depicts them as conjoined; not re-enqueued this session (render queue backlog)."
+  - 'NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-025-escape-from-center-ring.webp)
+    misses the prompt''s central visual hook -- the two aerial performers are shown as separate individuals rather
+    than a conjoined-twin duo sharing one winged harness; there is no physical connection between them at all. Circus
+    jewel colors, mechanical animals leaping from broken cages, and coordinated heroic styling otherwise match.
+    Needs a fresh render that actually depicts them as conjoined; not re-enqueued this session (render queue backlog).'
 - slot: 26
   id: hwr-026
   title: Champion in the Mirror
@@ -474,7 +550,7 @@ proposals:
     ref: null
   inspirations: []
   accepted:
-    color: "generated/color-proposals-v1/hwr-026-champion-in-the-mirror.webp"
+    color: generated/color-proposals-v1/hwr-026-champion-in-the-mirror.webp
     bw: null
   final:
     color: null
@@ -497,7 +573,13 @@ proposals:
     color: null
     bw: null
   notes:
-  - "NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-027-the-peacock-prince.webp) misses several of the prompt's named casting/staging choices -- the prince is not shown with a soft round body or a jeweled beard (plain black beard, average build), is not lounging sideways on the throne, and the key recipient is dressed identically to the other courtiers rather than as a 'disguised palace gardener,' so the covert-intrigue premise doesn't read. Peacock-inspired formalwear, jewel-toned palette, and fan-shaped courtier composition otherwise match. Needs a fresh render addressing body type, beard, pose, and the gardener disguise; not re-enqueued this session (render queue backlog)."
+  - 'NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-027-the-peacock-prince.webp)
+    misses several of the prompt''s named casting/staging choices -- the prince is not shown with a soft round body
+    or a jeweled beard (plain black beard, average build), is not lounging sideways on the throne, and the key recipient
+    is dressed identically to the other courtiers rather than as a ''disguised palace gardener,'' so the covert-intrigue
+    premise doesn''t read. Peacock-inspired formalwear, jewel-toned palette, and fan-shaped courtier composition
+    otherwise match. Needs a fresh render addressing body type, beard, pose, and the gardener disguise; not re-enqueued
+    this session (render queue backlog).'
 - slot: 28
   id: hwr-028
   title: End-of-the-World Road Trip
@@ -515,7 +597,12 @@ proposals:
     color: null
     bw: null
   notes:
-  - "NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-028-end-of-the-world-road-trip.webp) does not depict an older lesbian couple -- the prompt's explicit casting choice for two of the three travelers. The car holds one older woman, a robot, and a bearded man driving, reading as a mixed heterosexual-coded trio rather than a couple plus their anxious robot mechanic. Floating houses, upside-down waterfalls, and grazing animals otherwise match (animals shown as ordinary cows rather than giant, a minor miss). Needs a fresh render with the correct casting; not re-enqueued this session (render queue backlog)."
+  - 'NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-028-end-of-the-world-road-trip.webp)
+    does not depict an older lesbian couple -- the prompt''s explicit casting choice for two of the three travelers.
+    The car holds one older woman, a robot, and a bearded man driving, reading as a mixed heterosexual-coded trio
+    rather than a couple plus their anxious robot mechanic. Floating houses, upside-down waterfalls, and grazing
+    animals otherwise match (animals shown as ordinary cows rather than giant, a minor miss). Needs a fresh render
+    with the correct casting; not re-enqueued this session (render queue backlog).'
 - slot: 29
   id: hwr-029
   title: Matinee Time Machine
@@ -527,7 +614,7 @@ proposals:
     ref: null
   inspirations: []
   accepted:
-    color: "generated/color-proposals-v1/hwr-029-matinee-time-machine.webp"
+    color: generated/color-proposals-v1/hwr-029-matinee-time-machine.webp
     bw: null
   final:
     color: null
@@ -537,10 +624,12 @@ proposals:
   id: hwr-030
   title: Mermaid on Lot Seven
   prompt:
-    text: Golden-hour backlot scene where an adult mermaid performer with a powerful tail and shaved head takes
-      a lunch break in a practical water tank while electricians, makeup artists, and a curious raccoon gather nearby.
-      Her tail has original koi-and-dragonfly patterning and visible prosthetic rigging. Warm affectionate production
-      detail, no famous mermaid likeness, no text.
+    text: Golden-hour backlot scene where an adult mermaid performer with a powerful tail and a fully shaved head
+      takes a lunch break in a practical water tank while electricians, makeup artists, and a curious raccoon gather
+      nearby. She wears a fitted iridescent scaled bodice top as part of her costume, fully covering her chest --
+      modest practical production wardrobe, not swimwear. Her tail has original koi-and-dragonfly patterning and
+      visible prosthetic rigging. Warm affectionate production detail, no famous mermaid likeness, no text, no exposed
+      nipples, no bare chest.
     ref: null
   inspirations: []
   accepted:
@@ -550,7 +639,24 @@ proposals:
     color: null
     bw: null
   notes:
-  - "NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): mermaid performer is shown with long flowing hair, not the prompt's explicit 'shaved head' casting -- same pattern as hwr-014/017/022/023. Tail patterning and warm production detail otherwise match well. Needs a fresh render with the shaved-head casting honored; not re-enqueued this session (render queue backlog)."
+  - 'NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): mermaid performer is shown with
+    long flowing hair, not the prompt''s explicit ''shaved head'' casting -- same pattern as hwr-014/017/022/023.
+    Tail patterning and warm production detail otherwise match well. Needs a fresh render with the shaved-head casting
+    honored; not re-enqueued this session (render queue backlog).'
+  - 'NOT ACCEPTED 2026-09-14 (scheduled Conductor session, t-022 cycle 10), three live attempts: (1) fresh render
+    (ArtImage 24064->24066 recovery chain) reproduced the prior ''long flowing hair, not shaved head'' casting miss
+    AND rendered unrequested bare-chested nudity -- neither the prompt nor this book has ever had a negative-prompt
+    content-safety guard (fixed pipeline- wide in silasfelinus/conductor, see coloring-book/t-022 cycle 10 commit);
+    (2) same result (ArtImage 24067) with the new pipeline-wide safety floor applied -- nudity reduced but still
+    present, confirming this specific prompt needed its own explicit wardrobe direction, not just a negative-prompt
+    guard; (3) revised the prompt to explicitly require a fitted scaled bodice top (''modest practical production
+    wardrobe, not swimwear'') and re-rendered (ArtImage 24068) -- nudity is now fully resolved (scaled bodice top,
+    fully covered), but the hair is pulled back into a tight low bun/slicked style rather than a genuinely shaved
+    head, so the explicit casting requirement still isn''t met. Tail patterning, raccoon, and warm production detail
+    otherwise match well across all three attempts. Stopping at three live attempts on this slot per the bounded-retry
+    discipline; next pass should either accept the slicked-back styling as a reasonable interpretation of ''shaved
+    head'' or revise the prompt with an even more explicit ''completely bald, no hair at all, smooth scalp'' anchor
+    before trying again.'
 - slot: 31
   id: hwr-031
   title: Alien at the Premiere
@@ -568,7 +674,10 @@ proposals:
     color: null
     bw: null
   notes:
-  - "NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): alien shown with two ordinary hands, not the prompt's explicit 'six graceful hands'; the 'tiny translator bot managing the chaos' is absent entirely. Antlers, organic formalwear, and saturated flash photography otherwise match well. Needs a fresh render with both missing elements included; not re-enqueued this session (render queue backlog)."
+  - 'NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): alien shown with two ordinary
+    hands, not the prompt''s explicit ''six graceful hands''; the ''tiny translator bot managing the chaos'' is
+    absent entirely. Antlers, organic formalwear, and saturated flash photography otherwise match well. Needs a
+    fresh render with both missing elements included; not re-enqueued this session (render queue backlog).'
 - slot: 32
   id: hwr-032
   title: Comedy Troupe Catastrophe
@@ -586,7 +695,11 @@ proposals:
     color: null
     bw: null
   notes:
-  - "NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): all six performers read as young, slim, and conventionally glamorous, not the prompt's explicit 'diverse ages and bodies' -- same pattern as hwr-014/022. The 'armor' costume from the named wardrobe list is also missing. Feathers, spacesuit, ball gowns, and cowboy fringe otherwise match well. Needs a fresh render with diverse casting and the armor costume; not re-enqueued this session (render queue backlog)."
+  - 'NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): all six performers read as young,
+    slim, and conventionally glamorous, not the prompt''s explicit ''diverse ages and bodies'' -- same pattern as
+    hwr-014/022. The ''armor'' costume from the named wardrobe list is also missing. Feathers, spacesuit, ball gowns,
+    and cowboy fringe otherwise match well. Needs a fresh render with diverse casting and the armor costume; not
+    re-enqueued this session (render queue backlog).'
 - slot: 33
   id: hwr-033
   title: The Last Projectionist
@@ -598,7 +711,7 @@ proposals:
     ref: null
   inspirations: []
   accepted:
-    color: "generated/color-proposals-v1/hwr-033-the-last-projectionist.webp"
+    color: generated/color-proposals-v1/hwr-033-the-last-projectionist.webp
     bw: null
   final:
     color: null
@@ -621,7 +734,11 @@ proposals:
     color: null
     bw: null
   notes:
-  - "NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): the amphibious creature reads as ungendered, not the prompt's explicit 'amphibious woman'; the 'frogs and fireflies form a heart-shaped swirl' composition beat is also absent (frogs/fireflies present but scattered, no heart motif). Lakeside drive-in setting, popcorn, tiny car, and blank-moonlight screen otherwise match well. Needs a fresh render with both missing elements included; not re-enqueued this session (render queue backlog)."
+  - 'NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): the amphibious creature reads
+    as ungendered, not the prompt''s explicit ''amphibious woman''; the ''frogs and fireflies form a heart-shaped
+    swirl'' composition beat is also absent (frogs/fireflies present but scattered, no heart motif). Lakeside drive-in
+    setting, popcorn, tiny car, and blank-moonlight screen otherwise match well. Needs a fresh render with both
+    missing elements included; not re-enqueued this session (render queue backlog).'
 - slot: 35
   id: hwr-035
   title: Awards Night Stampede
@@ -633,7 +750,7 @@ proposals:
     ref: null
   inspirations: []
   accepted:
-    color: "generated/color-proposals-v1/hwr-035-awards-night-stampede.webp"
+    color: generated/color-proposals-v1/hwr-035-awards-night-stampede.webp
     bw: null
   final:
     color: null
@@ -651,7 +768,7 @@ proposals:
     ref: null
   inspirations: []
   accepted:
-    color: "generated/color-proposals-v1/hwr-036-the-recast-marquee.webp"
+    color: generated/color-proposals-v1/hwr-036-the-recast-marquee.webp
     bw: null
   final:
     color: null

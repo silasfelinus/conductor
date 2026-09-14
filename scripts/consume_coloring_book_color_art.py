@@ -31,6 +31,7 @@ import yaml
 sys.path.insert(0, str(Path(__file__).parent))
 import art_quality  # noqa: E402
 import consume_art_queue as consumer  # noqa: E402
+import consume_art_queue_core  # noqa: E402
 import render_retry  # noqa: E402
 
 ROOT = consumer.ROOT
@@ -64,6 +65,31 @@ LOGO_SUFFIX = (
     "this is the designated Kind Robots logo page, but include no readable words, letters, watermark, "
     "signature, border, comic panels, collage, contact sheet, soft airbrush haze, painterly blur, "
     "or photographic rendering."
+)
+
+# Content-safety floor for every coloring-book render, all three books. This was
+# previously documented only in monster-recast/art-modeler-request.yaml's own
+# `defaults.negative_prompt`, which read as the house style for the whole project
+# but was never actually wired into the submission path: build_entries() below
+# only ever read `negative_prompt` from a per-entry override on
+# color-art-jobs.yaml (there has never been one), and find_source_prompt() above
+# discards everything from the source file except title/prompt text, so that
+# documented guard was dead prose -- every render across all three books, Monster
+# Recast included, has only ever gotten consume_art_queue_core.DEFAULT_NEGATIVE_PROMPT
+# (a purely technical-quality list: blurry, bad anatomy, watermark, ... -- no
+# content terms at all). Caught live 2026-09-14 (coloring-book/t-022 cycle 10):
+# a live Hollywood Recast re-render (hwr-030, "adult mermaid performer... takes a
+# lunch break") came back with unrequested exposed nipples. Applied as a floor
+# baked into every entry's negative_prompt by default, same as the PG-13 ceiling
+# monster-recast/art-modeler-request.yaml already documents in its
+# `global_prompt_suffix`, so removing that file (or a book never having had one)
+# can't silently drop the guard again. A source entry that sets its own
+# `negative_prompt` still overrides this floor entirely rather than appending to
+# it -- deliberately: an explicit per-entry override is data a caller controls,
+# not an accident, and forcing an append would fight anyone who has a genuine
+# reason to write a different combined negative prompt for one slot.
+CONTENT_SAFETY_NEGATIVE = (
+    "explicit genitals, visible nipples, sexualized minor, graphic gore, exposed viscera"
 )
 
 
@@ -208,6 +234,15 @@ def build_entries(book_filter: str | None = None) -> tuple[dict[str, Any], list[
             for opt in ("lora", "lora_strength", "json_prompt", "sampler", "cfg", "negative_prompt"):
                 if source.get(opt) is not None:
                     entry[opt] = source[opt]
+            # Content-safety floor: a source entry that named its own
+            # negative_prompt above keeps it verbatim (an explicit override, not
+            # an omission); everything else gets the same technical baseline the
+            # submission path would have used anyway, plus CONTENT_SAFETY_NEGATIVE,
+            # so no coloring-book render is ever submitted without it.
+            if entry.get("negative_prompt") is None:
+                entry["negative_prompt"] = clean(
+                    f"{consume_art_queue_core.DEFAULT_NEGATIVE_PROMPT}, {CONTENT_SAFETY_NEGATIVE}"
+                )
             entries.append(entry)
 
     entries.sort(key=lambda item: (book_order(queue, str(item["set"])), slot_for(queue, str(item["queue_id"]))))
