@@ -170,7 +170,7 @@ tasks:
   - id: t-007
     milestone: m3
     title: Fail loudly when ANIMATE_PATH is unset instead of resolving inside the app directory
-    status: review
+    status: done
     gate_human: false
     owner: worker
     stakes: reversible
@@ -206,7 +206,17 @@ tasks:
       admin reading the surface knows which one they have. This is smaller than it looked when t-006
       was filed, since `source` already reports which tier answered and that was the distinction that
       actually mattered when the mount was missing.
-    updated: '2026-09-14T13:37:53Z'
+
+      RESOLVED (kind_robots PR #2730, merged): dropped the cwd fallback in
+      getSceneAnimatorRoot() -- it now throws a 503 naming ANIMATE_PATH when neither
+      ANIMATE_PATH nor IMAGES_PATH is set, instead of resolving to /app/animate inside the
+      container. SceneAnimatorRootSource's 'fallback' member replaced with 'unconfigured'.
+      readSceneAnimatorRootStatus() (documented non-throwing) catches the new throw and
+      reports it the same way it reports any other unavailable root.
+      verifySceneAnimatorHealth.test.ts updated in the same change with a new case covering
+      the unconfigured path. The lower-priority companion (splitting unset/missing/unreadable
+      further) was not done -- source already distinguishes enough for an operator.
+    updated: '2026-09-14T13:42:18Z'
     claimed_by: claude-20260914T134500Z-sa-t007-conductor
     claimed_at: '2026-09-14T13:30:53Z'
     implementation_pr: https://github.com/silasfelinus/kind_robots/pull/2730
