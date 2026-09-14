@@ -789,9 +789,9 @@ tasks:
 - id: t-046
   milestone: m4
   title: Pin a regression fixture for art_quality.py's calibrated thresholds against the real approved/ corpus
-  status: ready
+  status: claimed
   stakes: reversible
-  owner: null
+  owner: reviewer
   passes: 0
   note: >-
     Kaizen from t-045 (2026-09-14): t-045's tint-concentration check went through two
@@ -807,3 +807,6 @@ tasks:
     against real approved art (or silently stop catching a known-bad example) without a
     test failing. Reuse `art_quality.assess_file`/`load_stats` directly rather than
     reimplementing pixel math in the test.
+  claimed_by: claude-conductor-scheduled-20260914T173630Z-cb-t046
+  claimed_at: '2026-09-14T17:36:31Z'
+  updated: '2026-09-14T17:36:31Z'
