@@ -5794,10 +5794,10 @@ tasks:
 - id: t-156
   milestone: m2
   title: recheck_render_queue.py classifies a known-bad render-box failure signature as "healthy"
-  status: ready
+  status: claimed
   stakes: reversible
   passes: 0
-  owner: null
+  owner: worker
   note: >-
     Filed live (coloring-book/t-022 cycle, 2026-09-14): the render box was actually down --
     `scripts/check_render_box.py` correctly reported exit 1 ("36 render(s) failed and none
@@ -5825,7 +5825,9 @@ tasks:
     session's actual stats shape (queueDepth DONE=10435/FAILED=166/CANCELLED=10569,
     windowThroughput FAILED=132, recentFailed 25/25 hostbuf) asserting it no longer reads
     "healthy". Reversible, tooling-only change; no roadmap/gate semantics affected.
-  updated: '2026-09-14T05:50:00Z'
+  updated: '2026-09-14T06:32:48Z'
+  claimed_by: claude-scheduled-20260914T063248Z-cond-t156
+  claimed_at: '2026-09-14T06:32:48Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
