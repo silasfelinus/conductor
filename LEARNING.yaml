@@ -13705,3 +13705,20 @@ records:
     the threshold itself has. Visually inspecting the specific failing files (not just their stats) before
     touching the constant is what distinguished ''bad threshold'' from ''bad data'' -- same lesson as
     t-045''s masked-countess case, now generalized to a second threshold family.'
+- date: 2026-09-14
+  project: coloring-book
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: quality
+  lesson: 'consume_coloring_book_studio_request.py had two independent call sites referencing
+    coloring functions that were never actually defined (record_semantic_gate_error, fixed
+    cycle 2; record_semantic_rejection, fixed cycle 8, same day) -- both a mismatch between
+    this wrapper''s error handling and consume_coloring_book_color_art.py''s real public API,
+    each only discovered by hitting the exact code path live. A single pass grepping every
+    coloring.<name> call in the wrapper against the other module''s actual def list would have
+    caught both in one sitting instead of one crash at a time; filed as this cycle''s kaizen
+    suggestion rather than done inline to keep the cycle''s diff scoped to the crash actually
+    hit.'
