@@ -18,7 +18,7 @@ milestones:
 - id: m3
   title: Security, UX, and regression hardening
   weight: 25
-  status: in-progress
+  status: done
 
 tasks:
 - id: t-001
@@ -143,7 +143,7 @@ tasks:
 - id: t-006
   milestone: m3
   title: Wire text-provider selection into the product surfaces and document setup
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -187,12 +187,12 @@ tasks:
     filename collision -- filed as kind-robots/t-103 rather than expanding this diff.
 
 
-    kind_robots PR: silasfelinus/kind_robots#2731 (open, CI pending at time of this
-    note).
+    kind_robots PR: silasfelinus/kind_robots#2731 -- merged (all 46 CI checks green,
+    squash sha b251277).
   implementation_pr: 'silasfelinus/kind_robots#2731'
   claimed_by: claude-20260914T133114Z-tg-t006-conductor
   claimed_at: '2026-09-14T13:31:16Z'
-  updated: '2026-09-14T14:00:00Z'
+  updated: '2026-09-14T14:10:00Z'
 
 - id: t-007
   milestone: m3
@@ -237,5 +237,61 @@ tasks:
   claimed_at: '2026-08-17T07:38:50Z'
   updated: '2026-08-17T07:55:58Z'
   implementation_pr: 'silasfelinus/kind_robots#1925'
-goal: Provide a dependable shared text-generation capability for Kind Robots, with clear model routing, controls, costs,
-  and reusable output handling.
+
+- id: t-009
+  milestone: m3
+  title: "Confirm text-generation product surfaces and close the project"
+  status: needs-human
+  gate_human: true
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    FOR SILAS: All 8 roadmap tasks across all three milestones (provider contract/
+    design, unified generation + server integration, security/UX/regression
+    hardening) are done -- nothing agent-actionable remains in the queue.
+
+
+    What was built: a shared server-side text provider layer (message
+    normalization, auth, streaming, mana metering) backing the three existing
+    chat routes (OpenAI/Anthropic/Ollama) unchanged from a caller's perspective;
+    first-class trusted private-server profiles (any Server row with serverType
+    OPENAI/ANTHROPIC/OLLAMA/CUSTOM, the last being a generic OpenAI-compatible
+    endpoint); a new unified one-shot+streaming generation endpoint
+    (server/api/generate/text.post.ts) for non-chat callers; SSRF/timeout/
+    redirect/cancellation hardening on private-server networking (t-005,
+    already approved_by_human); and, closing today, visible provider/server
+    selection in every chat surface (bot-chat.vue, character-chat.vue,
+    character-flip-card.vue, reward-encounter.vue all show which text server
+    is active and let a user pick a different one via the global "Server
+    Connections" nav modal or the full /servers admin form) plus setup docs at
+    docs/text-generation-self-hosted.md covering both Ollama and an OpenAI-
+    compatible private endpoint.
+
+
+    What I could NOT verify from this sandbox: actual rendered layout/spacing
+    of the new "Text Server" tiles, or a live end-to-end generation call
+    against a real private server (no reachable browser or dev-server-plus-
+    browser path in this sandbox; see AGENTS.md's kind_robots verification
+    section). vue-tsc/eslint/prettier and all 46 CI checks on kind_robots#2731
+    passed clean, which confirms the code compiles/lints/type-checks and every
+    existing automated contract still holds -- it does not confirm the tiles
+    look right or that a real Ollama/CUSTOM server round-trips a real reply.
+
+
+    TO APPROVE: open the chat surfaces (Characters, Bots, Reward encounters) on
+    kindrobots.org, confirm the "Text Server" indicator looks right and that
+    picking a different server via Server Connections actually changes who
+    answers. If you have a real Ollama or OpenAI-compatible box handy,
+    following docs/text-generation-self-hosted.md end-to-end would be the
+    strongest confirmation. If it looks and works right, set
+    approved_by_human: true and status: done, and flip project-overrides.yaml's
+    text-generation entry to status: finished. If something needs fixing
+    first, note what and I'll file it as a fresh ready task.
+
+
+    What unblocks when you do: nothing else is waiting on this -- it's the
+    project's own closing step, and it also clears a currently-failing CI
+    assertion (test_current_project_lifecycle.py) that flags any active
+    project sitting with zero open tasks.
+  updated: '2026-09-14T14:10:00Z'
