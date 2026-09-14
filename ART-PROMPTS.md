@@ -30,6 +30,37 @@
 >    `scripts/build_cthulhuquarium_art_queue.py` both now reject any negation
 >    outright, and that guard is the model to copy for a new Krea 2 queue.
 >
+> 4. **Never write art-direction jargon — the words you'd use to COMMISSION a
+>    picture are not the words that describe one.** Added 2026-09-14. This is
+>    rule 3's sibling and it cost 204 renders. The Facet producer appended
+>    `Iconic scene, concrete focal subject, environment, action, strong
+>    atmosphere.` to every prompt, meaning "make the main thing specific and
+>    memorable". Krea painted it: **"concrete" becomes concrete, "iconic"
+>    becomes a monument, "focal subject" becomes a head placed centre-frame.**
+>    154 genre/theme cards came back as the same grey concrete bust in the same
+>    grey concrete room — Office Satire, Body Horror and Aging Protagonist are
+>    the same head. `unmistakable silhouette, workplace cues` turned 50
+>    occupation cards into literal black paper cut-outs on a desk.
+>
+>    Two things make this one hard to catch, and both generalize:
+>
+>    - **It only shows on the thin prompts.** A Facet with real prose diluted
+>      the clause and rendered fine; a Facet with only a title had the clause AS
+>      its prompt. So the bug hides in exactly the records nobody wrote copy
+>      for, and 60% of the catalog looked correct throughout.
+>    - **The word has to be judged by what it depicts, not what it means to
+>      you.** `concrete` is a material. `iconic` is a monument. `silhouette` is
+>      a black cut-out. `emblem` is a logo. `thumbnail` is a small picture of
+>      something else. If the word names a thing, the model will draw that
+>      thing, whatever you meant by it.
+>
+>    The test suite had certified the bad clause as passing — the fixture read
+>    *"the semantic Facet v4 prompt must pass"* — because it only checked for
+>    the *previous* generation's mistake (app/taxonomy wrappers). A green art
+>    contract means "the last bug is gone", never "this prompt is good".
+>    `server/utils/artPromptContract.ts` now rejects the evidenced offenders as
+>    `art-direction-jargon`, scoped to the caption-conditioned engines.
+
 > The daily-dream pipeline enforces the first two automatically in
 > `scripts/dream_art_prompts.py`. Hand-written prompts in this file should follow
 > the same shape. The inclusive-casting direction below still applies — but only
