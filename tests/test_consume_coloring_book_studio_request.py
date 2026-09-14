@@ -307,3 +307,57 @@ def test_run_entries_live_recovery_abandoned_drops_job_reference(monkeypatch, tm
     stderr = capsys.readouterr().err
     assert "RECOVERY UNVERIFIED" not in stderr
     assert "FAILED monster-recast/mr-001" in stderr
+
+
+def test_run_entries_live_gate_rejection_records_render_rejection(monkeypatch, tmp_path, capsys):
+    """Regression test (coloring-book/t-022, 2026-09-14 live incident): the
+    SEMANTIC-REJECT branch called a nonexistent `coloring.record_semantic_rejection`,
+    so ANY mechanical-gate rejection during a --live studio request (e.g. mr-025's
+    render failing art_quality.py's color-variant gate) raised AttributeError instead
+    of recording the rejection and rotating the queue entry to its next state. Hit for
+    real recovering mr-025's job 22165 after fixing its prompt-contract blocker: the
+    render was fetched fine, but the rejection bookkeeping crashed before landing any
+    reasons or advancing render_attempts, leaving the entry's job reference stranded.
+    validate_candidate()/recover_timed_out_job() only ever return the *mechanical* gate
+    result here (see consume_coloring_book_color_art.py's own docstring), so the correct
+    call is the same `record_render_rejection` the plain batch consumer already uses.
+    """
+    entry = {
+        "id": "mr-025",
+        "set": "monster-recast",
+        "concept_id": "mr-025",
+        "queue_id": "mr-025",
+        "image_path": "does/not/exist.webp",
+    }
+
+    monkeypatch.setattr(mod.queue_consumer, "KR_API_TOKEN", "fake-token")
+    monkeypatch.setattr(mod.coloring, "ROOT", tmp_path)
+    monkeypatch.setattr(mod.coloring, "target_path", lambda e: tmp_path / "missing.webp")
+    monkeypatch.setattr(mod.coloring, "referenced_job_id", lambda e: 22165)
+
+    gate_result = {"gate": "mechanical", "reasons": ["single-hue tint wash"], "stats": {}}
+    monkeypatch.setattr(mod.coloring, "recover_timed_out_job", lambda entry, job_id: (False, gate_result))
+    monkeypatch.setattr(
+        mod.coloring, "rejection_destination", lambda destination, entry, category: tmp_path / "rejected.webp"
+    )
+
+    calls = []
+
+    def fake_record_render_rejection(entry, mechanical, rejected):
+        calls.append((entry["id"], mechanical, rejected))
+        return "pending"
+
+    monkeypatch.setattr(mod.coloring, "record_render_rejection", fake_record_render_rejection)
+    # Guarantee the old, nonexistent name really is gone -- if the bug ever
+    # comes back (the call site reverted to it), this makes the failure loud
+    # (AttributeError) instead of quietly matching a stray attribute.
+    monkeypatch.delattr(mod.coloring, "record_semantic_rejection", raising=False)
+
+    exit_code = mod.run_entries([entry], live=True, timeout=30)
+
+    assert exit_code == 1
+    assert calls == [("mr-025", gate_result, tmp_path / "rejected.webp")]
+    stderr = capsys.readouterr().err
+    assert "SEMANTIC-REJECT monster-recast/mr-025" in stderr
+    assert "single-hue tint wash" in stderr
+    assert "(pending)" in stderr

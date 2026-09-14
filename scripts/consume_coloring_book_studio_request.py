@@ -236,7 +236,7 @@ def run_entries(entries: list[dict[str, Any]], *, live: bool, timeout: int) -> i
             )
             if not accepted:
                 rejected = coloring.rejection_destination(destination, entry, "rejected")
-                next_status = coloring.record_semantic_rejection(entry, semantic, rejected)
+                next_status = coloring.record_render_rejection(entry, semantic, rejected)
                 if next_status == "pending":
                     retryable_failures += 1
                 print(
