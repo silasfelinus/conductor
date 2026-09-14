@@ -148,7 +148,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: review
+  status: ready
   passes: 50
   stakes: reversible
   note: |-
@@ -159,11 +159,9 @@ tasks:
     Cycle closed 2026-09-14: kind_robots#2721 ("lay the table properly — top bar, velvet cloth, hand on the floor") merged directly by Silas after his own layout notes, all CI clean. Re-armed to ready per established de-facto-recurring precedent (see TALKBACK 2026-08-24 pattern note) rather than done. Next lead: t-037 already tracks removing the legacy `?legacy=1` band + storybookStore.ts together; mode-card art is its own filed task (t-049, in progress) rather than this one's scope.
 
     Screenshot-driven layout pass: the named Storybook rows were still fixed-width, left-justified flex strips, leaving most of the felt as accidental empty space on desktop. The branch centers each row in a bounded 2/3-column grid, lets slot wells grow to a readable width, and widens the horizontal hand so the shared 2:3 cards no longer render as 6.5rem-wide, 14rem-tall slivers. Added contract checks for the balanced spread and hand width. Diff reviewed: only storybook-table.vue and its Storybook contract verifier changed.
-  updated: '2026-09-14T12:01:02Z'
-  implementation_pr: 'silasfelinus/kind_robots#2721'
-  owner: worker
-  claimed_by: 2026-09-14T115608Z-storybook-t010-7f3c
-  claimed_at: '2026-09-14T11:56:08Z'
+
+    Merged kind_robots PR #2726 as squash commit 2c5c06b2020825e3d073a60681430315c3d9593c after every PR-head workflow run completed successfully. The screenshot-driven pass replaces fixed-width left-piled tableau rows with centered bounded grids and widens the bottom hand so the shared 2:3 card geometry is preserved. Added regression checks for both. No Vercel preview existed for the branch, so visual verification was limited to the supplied screenshot plus source/layout-contract verification. Re-arming this recurring polish task for future Storybook visual passes.
+  updated: '2026-09-14T12:08:45Z'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
