@@ -163,7 +163,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: review
+  status: ready
   passes: 50
   stakes: reversible
   note: >-
@@ -199,7 +199,14 @@ tasks:
     verifyStorybookTable.mjs now pins the ORDER (top bar, cloth, hand) rather than styling,
     because order is what a polish pass silently undoes. Mode cards are still icon-only by
     design; Silas asked for real art and that is t-049.
-  updated: '2026-09-14T08:59:38Z'
+
+    Cycle closed 2026-09-14: kind_robots#2721 ("lay the table properly — top bar, velvet
+    cloth, hand on the floor") merged directly by Silas after his own layout notes, all CI
+    clean. Re-armed to ready per established de-facto-recurring precedent (see TALKBACK
+    2026-08-24 pattern note) rather than done. Next lead: t-037 already tracks removing the
+    legacy `?legacy=1` band + storybookStore.ts together; mode-card art is its own filed
+    task (t-049, in progress) rather than this one's scope.
+  updated: '2026-09-14T09:30:59Z'
   implementation_pr: 'silasfelinus/kind_robots#2721'
 - id: t-011
   milestone: m4
