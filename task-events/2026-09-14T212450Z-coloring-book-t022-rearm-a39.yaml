@@ -1,0 +1,8 @@
+version: 1
+project: coloring-book
+task: t-022
+operation: rearm
+session: openai-scheduled-2026-09-14T211806Z-coloring-book-t022-a39
+updated: '2026-09-14T21:24:50Z'
+note: >-
+  PROGRESS (OpenAI scheduled connector-only production triage, 2026-09-14): verified the latest cycle-9 evidence before touching production. hwr-005 has now failed twice specifically because describing any lodging-house/hotel sign causes Krea2 to synthesize readable marquee lettering, even when the prompt calls the tubing abstract and retains only one no-lettering exclusion; the second render (ArtImage 24057) was worse, with two crisp pseudo-word signs. This is no longer a generic prompt-strength problem. Defined the next bounded revision as a sign-free composition: keep the nonbinary detective, cane, service dog noticing the hidden figure first, broad-shouldered trench coat, wet pavement, deep noir perspective, and cyan-magenta-gold palette, but replace the lodging-house sign entirely with a bare cyan streetlamp and reflected window glow. Do not mention sign, marquee, hotel, lodging house, glyphs, letters, or text in the positive scene description; retain the book's single trailing no-readable-lettering constraint only. This connector-only session has no Kind Robots runtime/API transport, so it did not enqueue a third render or mutate queue state. No duplicate ArtJob was created. Next runtime-capable t-022 cycle can apply that exact sign-free hwr-005 revision and run one bounded fresh render, then creative-review it before any further retry.
