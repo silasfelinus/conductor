@@ -5853,6 +5853,210 @@ tasks:
     path actually writes/returns that record, not just prints to stdout. Reversible,
     tooling-only change; no roadmap/gate semantics affected.
   updated: '2026-09-14T08:34:00Z'
+- id: t-158
+  milestone: m2
+  title: Offload done-task notes to per-project HISTORY.md and enforce the size ceiling
+  status: ready
+  passes: 0
+  stakes: reversible
+  owner: null
+  note: >-
+    Filed 2026-09-14 at Silas's direction after a portfolio size assessment. URGENT: this has a
+    deadline, not just a cost.
+
+
+    WHY NOW. `scripts/sync_kind_robots_projection.py` POSTs the raw text of every
+    projects/*/roadmap.yaml to https://kindrobots.org/api/conductor/sync under a hard
+    MAX_PAYLOAD_BYTES = 4_000_000. It blew that limit on 2026-09-11 at 4,000,134 bytes, failing
+    tests/test_sync_kind_robots_projection.py; conductor/t-151 fixed it by hand-archiving
+    interface-vision/t-104's ~395KB note to T104-HISTORY.md, dropping the snapshot to ~3.6MB.
+    Measured again 2026-09-14: 3,734,373 bytes, 93.4% of the limit, regrowing ~45KB/day. That is
+    roughly a week of headroom on a soft estimate. 66% of all roadmap text (2,421,423 bytes) is the
+    `note:` bodies of `status: done` tasks. Offloading them lands the payload near 33%.
+
+
+    Biggest contributors, done-note bytes: conductor 337,553; kind-robots 275,696;
+    interface-vision 251,239; ai-art-academy 201,831; cthulhuquarium 190,391; kapowarr 123,002;
+    rainbow-butterflies 97,382; digital-storefront 82,794. Work biggest-first.
+
+
+    DO THREE THINGS IN ONE PR.
+
+
+    (1) Add the archival carve-out to AGENTS.md's append-only rules. Silas authorized this
+    explicitly on 2026-09-14 in session. Today `Delete TALKBACK entries (the log is append-only)`
+    sits under "Neither agent -- EVER" and scripts/set_task_field.py:363 refuses to replace a
+    >300-char note with text that does not contain it (the t-129 guard, added after a session lost
+    199 lines of diagnostics on cthulhuquarium/t-033 and t-034). An offload script is
+    indistinguishable from those incidents without a stated rule, and a future agent will correctly
+    refuse the work. The carve-out: moving content VERBATIM into a named archive file is not
+    deletion, provided the script verifies a byte-for-byte round-trip and the PR names the
+    authorizing session. Rewriting, summarizing, or dropping an entry remains forbidden.
+
+
+    (2) Write scripts/archive_done_task_notes.py. It must write the HISTORY.md entry FIRST, verify
+    the recovered note equals the original byte-for-byte, and only then rewrite the roadmap. Never
+    call close_task.py --set note= ; use set_task_field_text(..., force=True, force_block='>-')
+    from inside the script.
+
+
+    (3) Run it across all projects, biggest first.
+
+
+    POINTER FORMAT -- NOT COSMETIC. Leave a one-sentence outcome summary followed by the pointer,
+    e.g. "Digest portfolio math now reads milestone weights directly. Full history:
+    projects/kind-robots/HISTORY.md#t-101". Two live consumers depend on the first sentence
+    remaining meaningful: scripts/backfill_learning.py:276 takes first_sentence(note) as the lesson
+    for closed tasks, and kind_robots components/conductor/project-detail.vue:363 renders
+    {{ task.note }} verbatim on the live project board. Copy the ROADMAP POINTER style of
+    projects/humboldt-scoop-cms/HISTORY.md, but NOT its archive style -- that file keeps only a
+    one-line summary per task and links to a commit SHA, which is summarizing and would break both
+    the carve-out and the byte-for-byte verification. HISTORY.md must hold the full original note
+    verbatim.
+
+
+    CONSTRAINTS, all load-bearing:
+
+    - Scope strictly to `status: done`. select_role.py (RAN/NO-OP recurring markers),
+    daily_gate.py, audit_human_gates.py and audit_roadmaps.py all scan note text, none of them on
+    done tasks. Touching a recurring, needs-human or claimed task breaks them.
+
+    - Emit block scalars (>-). scripts/check_roadmap_yaml.py rejects a quoted flow scalar whose
+    continuation lines sit at column 0.
+
+    - check_large_deletion_guard.py WILL fire (it flags >=500 deleted lines or >=20%). It is
+    continue-on-error: true and its own docstring blesses this case: "A deliberate large prune (an
+    archival pass, a roadmap reorganization) is legitimate." Expected -- explain it in the PR body.
+
+
+    THEN MAKE IT STICK. A one-time prune does not hold: t-104 was archived 2026-09-11 carrying the
+    literal instruction "Keep this note short going forward" and has regrown through slice 269
+    anyway. scripts/check_roadmap_note_size.py (from t-151) only warns on a SINGLE note over 50KB,
+    which misses today's actual failure mode -- 154 medium notes summing to 411KB in one file.
+    There is no byte-size check anywhere else in this repo (a grep for st_size/getsize/MAX_BYTES
+    across scripts/*.py returns zero). Extend it with a per-FILE threshold and a total-projection
+    check against MAX_PAYLOAD_BYTES, and add the projection-headroom line to the CLAUDE.md startup
+    sweep so every session sees the number.
+
+
+    VERIFY: python scripts/validate_roadmaps.py ; python scripts/check_roadmap_yaml.py ;
+    pytest tests/test_sync_kind_robots_projection.py ; and measure the payload before and after
+    with: python3 -c "import json,pathlib; print(len(json.dumps({'roadmaps':{p.parent.name:
+    p.read_text() for p in pathlib.Path('projects').glob('*/roadmap.yaml')}})))"
+  updated: '2026-09-14T10:30:00Z'
+- id: t-159
+  milestone: m2
+  title: Rotate root TALKBACK.md into monthly archives
+  status: ready
+  passes: 0
+  stakes: reversible
+  owner: null
+  depends_on: t-158
+  note: >-
+    Filed 2026-09-14 at Silas's direction, same size assessment as t-158. Depends on t-158 only
+    because that PR lands the AGENTS.md archival carve-out this task needs.
+
+
+    Root TALKBACK.md is 3.67MB / 1,034 entries (2026-06 x8, 07 x323, 08 x479, 09 x223), growing
+    ~48KB/day. It is NOT in the Kind Robots projection payload, so unlike t-158 there is no
+    transport deadline -- but this is an operational bug, not merely token cost.
+    scripts/append_ledger_entry.py's append_with_retry() reads the whole 3.67MB via
+    `git show origin/main:TALKBACK.md`, rebuilds the entire text, and pushes a single-file commit
+    straight to refs/heads/main ON EVERY APPEND. That is almost certainly the cause of the HTTP-413
+    TALKBACK-only push failures already documented in CLAUDE.md ("a follow-up TALKBACK-only commit
+    hit 413 on every retry"). Rotation fixes something that is actively failing.
+
+
+    SHAPE. Rotate to talkback/YYYY-MM.md. The ROOT PATH KEEPS THE CURRENT MONTH -- not a bare
+    index. .claude/hooks/session-start.sh:73-83 read_text()s the root file and surfaces its last 30
+    lines at every session start; an index at that path would show index text instead of recent
+    entries. Preserve the lines 1-22 preamble.
+
+
+    THREE SPECIFICS -- do not rediscover these:
+
+    - Split on ^## \d{4}-\d{2}-\d{2}, NOT on ^## . Line 11 is a format template inside a fenced
+    code block and is a false positive; the dated form matches 1034/1034 real entries and zero
+    templates. Do not try to parse the role field -- there are 126 variants of it.
+
+    - scripts/backfill_learning.py:376 whole-file-parses TALKBACK.md and indexes EVERY ## header
+    into a (project, task, outcome) -> latest-entry map. After rotation it would silently see only
+    the current month, so `--since all` backfills lose historical candidates. It needs a glob
+    across talkback/*.md. This is the one real breakage.
+
+    - LEAVE LEARNING.yaml ALONE. At 725KB it has the same append-only rule but four whole-file YAML
+    parsers (process_task_events.py, build_learning_summary.py, backfill_learning.py,
+    append_ledger_entry.py) and two workflow path filters, versus TALKBACK's one parser and zero.
+    Splitting it is a larger, different job -- note it and move on.
+
+
+    CONVENTION. Copy projects/interface-vision/T104-HISTORY.md: an archive file headed with what it
+    covers and why, plus an explicit pointer left at the original location. Do NOT treat
+    TALKBACK-wonderlab-retirement-2026-08-11.md as the precedent -- it is a standalone decision
+    record that nothing in the repo links to, an orphan rather than a pattern.
+
+
+    Same byte-for-byte round-trip verification as t-158: every rotated entry must be recoverable
+    identical to its original. check_large_deletion_guard.py does not currently watch TALKBACK.md,
+    so it will not fire here.
+  updated: '2026-09-14T10:30:00Z'
+- id: t-160
+  milestone: m2
+  title: Large binaries, the media-host policy boundary, and the stale art-request status doc
+  status: ready
+  passes: 0
+  stakes: reversible
+  owner: null
+  note: >-
+    Filed 2026-09-14 at Silas's direction, same size assessment as t-158/t-159. Read the SAFETY
+    RULE below before deleting anything.
+
+
+    Conductor is a 466MB working tree with a 231MB .git. projects/coat-dance/coat dance_x264.mp4 is
+    37MB -- the single largest object in the repo, 10x TALKBACK.md, and the only tracked
+    .mp4/.mov/.webm. projects/coloring-book/ is 89MB; ai-art-academy/docs/t-045-lora-evidence/ is
+    5 x 2.27MB; mermaids-of-venice/manuscript/ is ~4MB (PDF + two .doc);
+    mandarin-tutor/art-manifest.json 1.9MB; media-watchlist/media-entries.json 1.1MB. This is clone
+    and container-startup cost rather than token cost -- real, but lower priority than t-158.
+
+
+    THIS IS A DOCUMENTED POLICY CHANGE, NOT CLEANUP. ops/home-server/SELF-HOSTED-MEDIA.md currently
+    states the opposite on purpose: "Conductor-owned project images still use the existing
+    projects/process/ and projects/images/ flow." The media.acrocatranch.com pattern is real and
+    well-tooled (100 references, media_direct_consumer.py, media_migrate.py, check_render_box.py,
+    auto-art-generate.yml) but is scoped to kind_robots-TARGETED GENERATED ART. Extending it to
+    conductor-owned binaries means amending that doc. projects/coat-dance/BRIEF.md:25 and
+    projects/coat-dance/roadmap.yaml:249 both record the MP4's presence in git as a settled fact
+    and need updating too.
+
+
+    SAFETY RULE, NON-NEGOTIABLE: never delete a binary from git until a HEAD probe confirms the
+    media origin serves it 200. This repo already learned this the hard way --
+    scripts/distribute_images.py's docstring records ai-art-academy/t-010 (2026-07-27), where a
+    local copy LOOKED like delivery, the art-prompts request got pruned as done, and the record
+    that real delivery had never happened was silently lost. For the coat-dance MP4 especially,
+    assume it may be the only copy until proven otherwise. If a probe fails, upload first, verify,
+    and only then remove -- or leave it and say so.
+
+
+    DO NOT REWRITE GIT HISTORY to reclaim the 231MB. Filtering shared history is a worse problem
+    than the one it solves, and every other checkout would break. Stopping the growth is the goal.
+
+
+    ALSO IN SCOPE, both small:
+
+    - Delete docs/art-request-status.md. Generated 2026-06-30, it is a hand-made status table
+    describing the superseded manual ART-PROMPTS.md workflow. The live pipeline it predates
+    (art-request.post.ts -> artRequestYaml.ts -> projects/art-prompts.yaml ->
+    auto-art-generate.yml on a 0 */6 * * * cron) makes it actively misleading. Replace with a
+    generated queue-depth line or nothing.
+
+    - Fix .gitattributes. It is TRUNCATED: lines 18-26 are a comment block explaining that the
+    vendored WordPress trees should be marked linguist-vendored, but the actual directive lines are
+    missing -- the file just ends on the comment. It also has no *.mp4 / *.mov / *.webm entries
+    while *.png/jpg/webp/pdf/zip are all listed. Note there is no Git LFS configured (no .lfsconfig,
+    no filter=lfs lines) and no size policy anywhere in AGENTS.md or CLAUDE.md.
+  updated: '2026-09-14T10:30:00Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'

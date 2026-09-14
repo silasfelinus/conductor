@@ -4264,3 +4264,37 @@ tasks:
     without a flag day. Never add `--write` to CI, and never let the ratchet bypass a genuine
     formatting regression by re-recording upward.
   claimed_by: null
+- id: t-138
+  milestone: m6
+  title: Pending-art placeholder contract so queued art never reads as broken
+  status: ready
+  passes: 0
+  stakes: reversible
+  owner: null
+  note: >-
+    Filed 2026-09-14 from Silas's art-pipeline assessment. This is the one interface-shaped slice
+    of that pipeline -- the plumbing stays on kind-robots, only the placeholder belongs here.
+
+
+    When a card's image has been queued through the art-request fallback but not yet rendered, the
+    surface currently shows nothing distinguishable from a failure. Silas hit this an hour before
+    filing, on the new Storybook mode cards: he could not tell "art queued" from "art broken" and
+    reasonably guessed the art server outage (2026-09-14: "i hope they are queued and not appearing
+    because our art server is currently down"). From the reading end those two states must not look
+    identical.
+
+
+    Establish one shared treatment: any card whose image is queued says so visibly and calmly --
+    not an error, not an empty well. Apply it wherever entity art can be missing (Storybook cards,
+    Facets, project galleries, reward/character art).
+
+
+    Reuse rather than rebuild: stores/facetArtRequestStore.ts already tracks `requesting`,
+    `requested` and `errors` per entity id, and already calls POST /api/conductor/art-request --
+    but only on the Facets surface. Generalize that state into the shared treatment instead of
+    introducing a second mechanism.
+
+
+    Related: kind-robots/t-101 adds requested_at to the queue entries, which would let a placeholder
+    say how long something has been waiting. Useful but not required -- do not block on it.
+  updated: '2026-09-14T10:30:00Z'

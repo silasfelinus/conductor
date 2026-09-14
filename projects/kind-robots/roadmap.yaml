@@ -4343,6 +4343,45 @@ tasks:
     No human decision is needed: this is process, not content (released under Silas's
     2026-09-07 human-gate simplification policy). Nothing downstream depends on it.
   claimed_by: null
+- id: t-101
+  milestone: m6
+  title: Add requested_at to Conductor art-request entries
+  status: ready
+  passes: 0
+  stakes: reversible
+  owner: null
+  note: >-
+    Filed 2026-09-14 from Silas's art-pipeline assessment. Small, self-contained.
+
+
+    The art-request fallback is live and healthy -- server/api/conductor/art-request.post.ts ->
+    server/utils/artRequestYaml.ts appends to conductor projects/art-prompts.yaml, drained every
+    six hours by conductor's auto-art-generate.yml. But ArtQueueEntry carries NO TIMESTAMP AT ALL,
+    so nothing downstream can distinguish a two-hour backlog from a six-week stuck one. As of
+    2026-09-14, 19 of 28 entries are `pending` because Silas's art server is down; that is correct
+    behaviour, and it is indistinguishable from rot by inspection.
+
+
+    Add `requested_at` (ISO-8601 UTC) to the ArtQueueEntry type and to renderRequestEntry() in
+    server/utils/artRequestYaml.ts.
+
+
+    Two things to keep in mind:
+
+    - utils/scripts/verifyArtRequestYaml.ts pins the exact rendering contract -- column-0 `- `
+    marker, 2-space continuation keys, key order -- because mixed indentation silently breaks
+    conductor's PyYAML parser (the original bug, kind_robots PR #84). Update the guard alongside
+    the change rather than after it.
+
+    - The conductor consumers are dict-based and tolerate extra keys
+    (consume_art_requests_to_media.py uses entry.get(...)), and appendRequest's duplicate detection
+    is keyed on `id`, so a per-call-varying timestamp does not affect dedup. Confirm both rather
+    than assuming.
+
+
+    Once the field exists, conductor's side can report queue age; that reporting is not part of
+    this task.
+  updated: '2026-09-14T10:30:00Z'
 
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
