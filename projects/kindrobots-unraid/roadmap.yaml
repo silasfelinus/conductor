@@ -237,7 +237,7 @@ tasks:
 - id: t-016
   milestone: m1
   title: Add an external health probe/alert for kindrobots.org so outages are caught without waiting on a scheduled sweep
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -259,7 +259,16 @@ tasks:
     recovers. Does not require solving the container-recreate theory itself in this task;
     the immediate win is catching the next occurrence in real time rather than relying on
     a sweep's luck.
-  updated: '2026-09-14T13:48:46Z'
+
+    Implemented as kind_robots PR #2732: a GitHub Actions workflow (kindrobots-health-
+    monitor.yml) that probes /api/health/database every 10 minutes, independent of the
+    Conductor sweep cadence, debounces with one 30s retry, and opens/closes a
+    labeled+assigned GitHub issue as the alert on transition to failing/recovered. Root-
+    causing the 502 and capturing docker ps at failure time (needs direct Alexandria access,
+    not available in this sandbox) are explicitly out of scope per the task note.
+
+    Merged as kind_robots PR #2732 (squash 136c32dc).
+  updated: '2026-09-14T13:55:51Z'
   claimed_by: claude-20260914T140000Z-kru-t016-conductor
   claimed_at: '2026-09-14T13:48:46Z'
 
