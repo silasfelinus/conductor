@@ -13660,3 +13660,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A month-old design brief's file list (BRIEF.md's five confirmed chatStore.streamResponse consumers) had already drifted from the current tree -- one named file no longer existed, and two of the remaining four already had the exact fix this task was scoped to add, done incidentally by earlier unrelated work. A subagent sweep of current source (not the brief's own memory) caught both before writing any diff. Also: 'wire provider selection into the product surfaces' sounds like it could mean migrating chat UI onto the new unified /api/generate/text endpoint (the more impressive-looking fix) -- the brief's own 'explicitly out of scope' section said otherwise, and trusting that over the more expansive-sounding task title avoided a real scope violation."
+- date: 2026-09-14
+  project: coloring-book
+  task: t-044
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "art_quality.py's 'color' variant gate checked blank/degenerate, noise, and aspect but had no saturation floor at all -- a structurally valid, non-blank, non-noise render that came back essentially monochrome (mean_saturation ~0.01-0.02) silently passed every time, and had already been caught by hand three separate times across two sessions (mr-006/mr-008 on 2026-09-07, mr-025 on 2026-09-09) before mr-008 hit it a fourth time this cycle. Each prior catch documented the defect in a proposals.yaml note but nobody closed the loop by asking whether the mechanical gate itself should catch it -- the same shape as t-039's noise-detector gap, just for a different failure mode. When a defect gets manually caught 2+ times on the same objective, mechanically-measurable signal, that's the trigger to add a gate for it rather than keep relying on creative review to notice again; calibrating the threshold against the full existing corpus (115 real files, not just the one bad example) before picking a number is what kept it from being a guess."
