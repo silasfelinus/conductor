@@ -29,11 +29,12 @@ def test_prepare_requested_entries_skips_already_done_ids_without_force(tmp_path
     ]
     queue_file = write_queue_file(tmp_path, entries, monkeypatch)
 
-    already_resolved = mod.prepare_requested_entries(
+    already_resolved, would_force = mod.prepare_requested_entries(
         "monster-recast", ["mr-001", "mr-009", "mr-016"], force=False
     )
 
     assert already_resolved == [("mr-009", "done"), ("mr-016", "done")]
+    assert would_force == []
     # Nothing was mutated: the already-done entries keep their status and data.
     reloaded = yaml.safe_load(queue_file.read_text(encoding="utf-8"))
     by_id = {entry["id"]: entry for entry in reloaded["books"][0]["entries"]}
@@ -49,14 +50,15 @@ def test_prepare_requested_entries_all_already_resolved_returns_full_list(tmp_pa
     ]
     write_queue_file(tmp_path, entries, monkeypatch)
 
-    already_resolved = mod.prepare_requested_entries(
+    already_resolved, would_force = mod.prepare_requested_entries(
         "monster-recast", ["mr-009", "mr-016"], force=False
     )
 
     assert set(already_resolved) == {("mr-009", "done"), ("mr-016", "approved")}
+    assert would_force == []
 
 
-def test_prepare_requested_entries_force_still_resets_non_pending_entries(tmp_path, monkeypatch):
+def test_prepare_requested_entries_force_live_resets_non_pending_entries(tmp_path, monkeypatch):
     entries = [
         {
             "id": "mr-009",
@@ -68,14 +70,48 @@ def test_prepare_requested_entries_force_still_resets_non_pending_entries(tmp_pa
     ]
     write_queue_file(tmp_path, entries, monkeypatch)
 
-    already_resolved = mod.prepare_requested_entries("monster-recast", ["mr-009"], force=True)
+    already_resolved, would_force = mod.prepare_requested_entries(
+        "monster-recast", ["mr-009"], force=True, live=True
+    )
 
     assert already_resolved == []
+    assert would_force == []
     reloaded_file = mod.coloring.QUEUE_FILE
     reloaded = yaml.safe_load(reloaded_file.read_text(encoding="utf-8"))
     by_id = {entry["id"]: entry for entry in reloaded["books"][0]["entries"]}
     assert by_id["mr-009"]["status"] == "pending"
     assert "art_image_id" not in by_id["mr-009"]
+
+
+def test_prepare_requested_entries_force_without_live_does_not_mutate_state(tmp_path, monkeypatch):
+    """`--force` alone (no `--live`) must be a pure dry-run preview: it must
+    never archive the existing candidate file or rewrite the queue's
+    persisted status -- that mutation is real state a genuine dry run must
+    not touch. Regression test for a live incident (coloring-book/t-022,
+    2026-09-14): a `--force` probe without `--live` archived a real
+    accepted-review candidate image and reset its queue status before the
+    mistake was caught and manually reverted.
+    """
+    entries = [
+        {
+            "id": "mr-009",
+            "status": "done",
+            "art_image_id": 13144,
+            "rendered_path": "some/path.webp",
+            "image_path": "some/path.webp",
+        },
+    ]
+    queue_file = write_queue_file(tmp_path, entries, monkeypatch)
+    before = queue_file.read_text(encoding="utf-8")
+
+    already_resolved, would_force = mod.prepare_requested_entries(
+        "monster-recast", ["mr-009"], force=True, live=False
+    )
+
+    assert already_resolved == []
+    assert would_force == ["mr-009"]
+    # Nothing was mutated on disk: byte-identical to before the call.
+    assert queue_file.read_text(encoding="utf-8") == before
 
 
 def test_main_skips_stale_done_ids_and_processes_remaining_pending(tmp_path, monkeypatch, capsys):
