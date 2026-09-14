@@ -786,3 +786,24 @@ tasks:
   claimed_by: claude-scheduled-20260914T162935Z-cb-t045
   claimed_at: '2026-09-14T16:29:36Z'
   implementation_pr: 'silasfelinus/conductor#4353'
+- id: t-046
+  milestone: m4
+  title: Pin a regression fixture for art_quality.py's calibrated thresholds against the real approved/ corpus
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: >-
+    Kaizen from t-045 (2026-09-14): t-045's tint-concentration check went through two
+    discarded signal designs before landing, and both discards were only caught because
+    someone thought to test against the real monster-recast/approved/ corpus by hand --
+    art_quality.py has no automated test file at all, only the pure-synthetic
+    `--selftest` CLI check. Add `tests/test_art_quality.py` that loads (or pins frozen
+    pixel-stat fixtures derived from) the calibration corpus's key files -- at minimum
+    every approved/*-color.webp master plus the known-bad mr-025/hwr-021 examples -- and
+    asserts each still lands on the correct side of every threshold in the file
+    (BW_*, COLOR_MIN_*, TINT_*). This is a regression guard, not new detection logic: the
+    goal is that a future threshold tweak can't silently reintroduce a false positive
+    against real approved art (or silently stop catching a known-bad example) without a
+    test failing. Reuse `art_quality.assess_file`/`load_stats` directly rather than
+    reimplementing pixel math in the test.
