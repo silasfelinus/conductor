@@ -670,3 +670,34 @@ tasks:
   claimed_by: claude-scheduled-20260913T204500Z-cb-t043
   claimed_at: '2026-09-13T20:45:00Z'
   implementation_pr: 'silasfelinus/conductor#4281'
+- id: t-044
+  milestone: m4
+  title: "Add a minimum-saturation detector to art_quality.py's color-variant gate"
+  status: done
+  stakes: reversible
+  owner: worker
+  note: >-
+    Discovered during t-022 cycle 6 (2026-09-14): mr-008's re-render (job 22143) came
+    back structurally valid -- not blank, not noise, right aspect -- but essentially
+    monochrome (mean_saturation=0.013, colorful_fraction=0.012 via art_quality.py's own
+    assess_file), the same defect manually caught on mr-006 and mr-025 on 2026-09-07 and
+    2026-09-09. art_quality.assess()'s "color" variant only enforced the blank/degenerate,
+    noise (t-039), and aspect checks -- no saturation floor at all -- so all three slipped
+    through silently and had to be caught by hand in creative review each time.
+
+    Fix: added COLOR_MIN_MEAN_SATURATION (0.06) / COLOR_MIN_COLORFUL_FRACTION (0.05)
+    thresholds, calibrated against the 115 real color-stage files across all three books
+    (approved/ + generated/color-proposals-v1/) -- every genuine master sits at
+    mean_saturation 0.20-0.60, colorful_fraction 0.43-0.95, comfortably clear of the
+    defect's ~0.01-0.02 on both signals. A re-check of the same 115-file corpus after the
+    change flags only the one already-known-bad mr-008 file, confirming no false positives
+    against real content. New selftest case (near-monochrome pixels rejected for "color",
+    same pixels still pass "bw", a real color_master still passes) added alongside the
+    existing t-039 noise-detector test; `python scripts/art_quality.py --selftest` is
+    14/14. `PYTHONPATH=.:scripts pytest tests/test_coloring_book_production.py` is 6/6
+    (sandbox pytest needed `uv tool install pytest --with pyyaml --force` per AGENTS.md's
+    documented PyYAML gap). Full suite (`pytest`, same PYTHONPATH): 1895 passed, 1 skipped,
+    35 subtests, no regressions.
+  updated: '2026-09-14T14:45:00Z'
+  claimed_by: claude-20260914T142917Z-cb-t022-conductor
+  claimed_at: '2026-09-14T14:45:00Z'
