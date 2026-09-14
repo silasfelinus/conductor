@@ -460,21 +460,37 @@ overrides:
     kind: software
 
   - slug: taskmaster
-    status: active # onboarded 2026-07-29 (conductor burst-mode cycle) -- retroactive
-    # tracking for an already-shipped kind_robots product: the story-weaving task
-    # engine formerly tracked here as `serendipity` (see that entry's retirement note
-    # above), permanently renamed per kind_robots docs/products/storybook-taskmaster-boundary.md.
-    # Verified via code inspection: components/pages/taskmaster-page.vue (724 lines)
-    # and stores/taskmasterStore.ts (999 lines) are a mature, complete implementation,
-    # not a scaffold.
+    status: retired # retired 2026-09-14 (Silas-directed session) -- absorbed INTO storybook.
+    # Silas, 2026-09-12: "Stories should be able to be selected as open-ended (endless mode),
+    # episodic (scenario based), structured (da Vinci mode), and taskmaster (we should work
+    # taskmaster into this project as well, removing the taskmaster route when done)."
+    # Onboarded here 2026-07-29 as retroactive tracking for an already-shipped kind_robots
+    # product -- the story-weaving task engine formerly tracked as `serendipity` (see that
+    # entry's retirement note above), permanently renamed per kind_robots
+    # docs/products/storybook-taskmaster-boundary.md.
+    #
+    # The engine moved to the server in kind_robots #2689 (storybook t-044/t-045/t-046):
+    # a taskmaster quest is a story run whose Spark is an Objective and whose Thread slot
+    # deals the reader's own conductor-backed project work, with LifeRun.questLedger holding
+    # the checkpoints and the unapplied write-back proposals. The route retired in
+    # kind_robots #2718 (storybook t-047): /taskmaster is a permanent 301 to /storybook, and
+    # taskmaster-page.vue, components/taskmaster/*, taskmasterStore.ts, content/taskmaster.md
+    # and content/channels/plan/taskmaster.md are deleted. Its three CI guards were REWRITTEN
+    # against the storymaker surface rather than removed.
+    #
+    # `retired` rather than `finished`, matching davinci and serendipity: the product is not
+    # done, it was superseded -- anything NEW belongs on projects/storybook. All 4 tasks here
+    # are done; t-004 was a portfolio-wide asset audit that never belonged to this project and
+    # moved to kind-robots/t-100 so its 14 queued ArtJobs keep being scanned. roadmap.yaml
+    # kept as historical record, not deleted.
+    #
+    # Placement mirror lines dropped: /taskmaster is a redirect, and the `play` channel was
+    # dissolved 2026-07-28 (this entry still claimed it, while the CI-enforced
+    # utils/projectPlacements.ts had already been corrected to `plan`). That map now sends the
+    # slug to /storybook with tabKey 'storybook', the same treatment davinci got, so the
+    # projects board still has somewhere to send a reader who clicks it.
     priority: normal
     kind: software
-    # Frontend placement — synced to the kind_robots Project row by sync_projects.py.
-    # Values match the canonical PROJECT_PLACEMENTS['taskmaster'] entry in kind_robots
-    # utils/projectPlacements.ts (channelKey: 'play', tabKey: 'taskmaster', route: '/taskmaster').
-    liveUrl: /taskmaster
-    channelKey: play
-    tabKey: taskmaster
 
   - slug: appmaker
     status: active

@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-09-14T07:50:00.663351+00:00`
+Generated: `2026-09-14T08:22:27.811879+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **52** roadmaps, **21** active + **2** continuous projects, **1484** tasks
-- **45 ready**, **51 waiting**, **35 needs-human**, **1 claimed/review**, **1336 done**
+- **52** roadmaps, **20** active + **2** continuous projects, **1485** tasks
+- **44 ready**, **51 waiting**, **35 needs-human**, **1 claimed/review**, **1338 done**
 - Findings: **0 errors**, **6 warnings**, **20 informational**
 
 ## Project inventory
@@ -20,7 +20,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 4 | `coloring-book` | active | software | 1 | 9 | 1 | 0 | 32 / 43 |
 | 5 | `humboldt-scoop-cms` | active | software | 0 | 0 | 4 | 0 | 35 / 39 |
 | 6 | `digital-storefront` | active | software | 0 | 2 | 2 | 0 | 40 / 44 |
-| 7 | `kind-robots` | active | software | 5 | 0 | 0 | 0 | 94 / 99 |
+| 7 | `kind-robots` | active | software | 6 | 0 | 0 | 0 | 94 / 100 |
 | 8 | `rainbow-butterflies` | active | software | 0 | 0 | 3 | 0 | 49 / 52 |
 | 9 | `scene-animator` | active | software | 1 | 0 | 1 | 0 | 9 / 11 |
 | 10 | `text-generation` | active | software | 1 | 0 | 0 | 0 | 7 / 8 |
@@ -28,8 +28,8 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 12 | `model-builder` | active | software | 2 | 0 | 0 | 0 | 43 / 45 |
 | 13 | `lora-ingestion` | active | infrastructure | 1 | 0 | 0 | 0 | 7 / 8 |
 | 14 | `conductor` | active | software | 2 | 0 | 0 | 0 | 154 / 156 |
-| 15 | `taskmaster` | active | software | 1 | 0 | 0 | 0 | 3 / 4 |
-| 16 | `storybook` | active | software | 8 | 1 | 0 | 0 | 39 / 48 |
+| 15 | `taskmaster` | retired | software | 0 | 0 | 0 | 0 | 4 / 4 |
+| 16 | `storybook` | active | software | 7 | 1 | 0 | 0 | 40 / 48 |
 | 17 | `coat-dance` | active | content | 2 | 0 | 0 | 0 | 2 / 10 |
 | 18 | `conductor-app` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
 | 19 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |

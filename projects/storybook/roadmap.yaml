@@ -43,7 +43,7 @@ milestones:
 - id: m9
   title: Taskmaster absorbed as a mode
   weight: 30
-  status: in-progress
+  status: done
 tasks:
 - id: t-001
   milestone: m1
@@ -1153,11 +1153,11 @@ tasks:
 - id: t-047
   milestone: m9
   title: "Retire /taskmaster: route, content, placement, store, and rewrite its three guards"
-  status: claimed
+  status: done
   passes: 0
   stakes: reversible
   depends_on: [t-045, t-046]
-  note: >
+  note: >-
     The closing move Silas asked for ("removing the taskmaster route when done"). Retire
     content/taskmaster.md and content/channels/plan/taskmaster.md, the taskmaster entry in
     utils/projectPlacements.ts, components/pages/taskmaster-page.vue, components/taskmaster/*
@@ -1167,10 +1167,21 @@ tasks:
     REWRITTEN against the new surface, never deleted: they pin the checkpoint engine, the
     sample tasks and the storage recovery path, and the merge has to keep all three true.
     Do not start this until t-046 is deployed and the mode is genuinely usable.
-  updated: '2026-09-14T07:50:56Z'
+
+    2026-09-14: merged (kind_robots#2718, squash 21e9d9a, all 52 checks green). /taskmaster is a permanent 301 to /storybook alongside /play/davinci. Deleted: taskmaster-page.vue, components/taskmaster/* (3), stores/taskmasterStore.ts, content/taskmaster.md and content/channels/plan/taskmaster.md. The projectPlacements slug stays but resolves to /storybook with tabKey 'storybook' -- the davinci treatment, so the projects board still has somewhere to send a reader. Dashboard tab and tutorial card removed (the Storybook tab sits directly above and covers them); the Storybook tutorial card now names all four MODES, replacing copy that still described the four retired shapes.
+
+    THE THREE GUARDS WERE REWRITTEN, NOT DELETED, as this task required. Each keeps its truth and drops only the dead file paths. verifyTaskmasterCheckpointEngine now reads storybookQuest.ts, storybookRuns.ts and the Table/Reading, and its sharpest assertion survives intact -- a proposed but unapplied write-back must never block finishing a quest, which the old store expressed by banning 'proposed-complete' from its blocking set and the new engine expresses by keeping 'proposed' out of activeCheckpoint(). verifyTaskmasterSampleTasks lost its four canned objectives and now pins what they stood for: quests built from the reader's own conductor-backed projects, conductorSlug required, approval flags never touched. verifyTaskmasterSessionStorageRecoveryGuard's localStorage hazard is GONE rather than fixed, so it asserts the quest stays a server-side row and no client taskmaster session may return. All three were mutation-tested: re-adding 'proposed', dropping the conductorSlug filter, and re-creating taskmasterStore.ts each fail their guard, so none went vacuous.
+
+    Collateral guards updated to stop READING the deleted files, never to stop checking: narrative primitives, art persistence, art milestones, streaming-text isolation, narrative kit, page backdrop, API client follow-ups, and facet taxonomy authority -- whose Facet-consumer slot moved to storybook-visual-setup.vue, the direct successor. Plus the layout/mdc baselines and the responsive-audit route list. The orphaned taskmaster backdrop art seed was removed; verifyPageBackdrop had correctly read it as art queued to render nowhere.
+
+    One CI round: verifyWorkflowPaths.ts reads bare lowercase slash-joined tokens in a `run:` step as repo paths, so a project-qualified task id in an inline script comment failed as a missing directory. Fixed by naming the task without a slash and leaving a note saying why.
+
+    Left deliberately: the narrative-milestone-art plugin keeps its Storybook half -- that is the last client beat loop and belongs to t-037, not here. taskmaster is now retired in project-overrides.yaml (its route is gone, so the lifecycle validator's 'active project has no open tasks' is resolved at the root rather than papered over).
+  updated: '2026-09-14T08:22:12Z'
   owner: worker
   claimed_by: claude-20260914T075055Z-sb-t047
   claimed_at: '2026-09-14T07:50:56Z'
+  implementation_pr: 'silasfelinus/kind_robots#2718'
 
 - id: t-048
   milestone: m8
