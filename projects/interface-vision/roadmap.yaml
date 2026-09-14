@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -3318,7 +3318,20 @@ tasks:
     a full production build (npm run build, verifying the new @apply rules compile) all
     clean. Prettier collapsed 2 files whose class attribute got shorter; remaining 13
     flagged files confirmed pre-existing drift via git stash. Opening kind_robots PR now.
-  updated: '2026-09-14T02:41:00Z'
+
+    Slice 269 (silasfelinus/kind_robots#2714, merged): opened .kr-spinner-xs-dots/-sm-
+    dots/-md-dots/-lg-dots and migrated all 19 loading-dots spinner occurrences across 20
+    files. CI caught a real regression the local pass didn't: two hand-authored contract
+    verifiers (verifyDaVinciNarratingStatusGuard.ts,
+    verifyModelBuilderStartRunLoadingGuard.ts) did raw string/regex matching on the literal
+    'loading loading-dots' tokens -- same class of fragility as slice 248's object-cover
+    incident. Fixed both to accept the new kr-spinner-*-dots primitive as an equivalent
+    spelling (pushed as a same-PR fixup commit), reran their -selftest scripts locally, then
+    confirmed all 51 kind_robots CI checks green before merging. Return the recurring
+    consistency umbrella to ready for the next bounded slice. Kaizen for the next slice: run
+    a fresh full-repo class-frequency survey (kr_class_frequency_survey.py) outside every
+    now-closed family to pick the next target -- no specific candidate queued.
+  updated: '2026-09-14T02:55:13Z'
   implementation_pr: 'silasfelinus/kind_robots#2714'
   retry_context: ''
   owner: worker
