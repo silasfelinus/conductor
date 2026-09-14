@@ -29,6 +29,7 @@ crashing.
 from __future__ import annotations
 
 import argparse
+import math
 import sys
 from pathlib import Path
 from typing import Iterable, Optional
@@ -56,6 +57,54 @@ NOISE_MIN_HF_RATIO = 0.55          # spatially-uncorrelated static, any variant
 # master so a real, if muted, illustration is never falsely rejected.
 COLOR_MIN_MEAN_SATURATION = 0.06
 COLOR_MIN_COLORFUL_FRACTION = 0.05
+
+# Tint-concentration signal (coloring-book/t-045): t-044's saturation/
+# colorful_fraction pair only measures "is there color", not "is it actually
+# multi-color" -- a single-hue sepia/duotone wash can be comfortably saturated
+# and colorful by pixel count while still reading as a monochrome tint, not
+# the house style's flat cel-shaded multi-color palette. mr-025 (2026-09-14)
+# measured mean_saturation=0.28 and colorful_fraction=0.33 -- both well inside
+# the real-color range -- yet is visually a sepia-toned wash, not real color.
+#
+# The first two signals tried here both failed calibration against the real
+# monster-recast/approved/ corpus (10 Silas-approved masters) and had to be
+# discarded before this one:
+#   - A *global* pixel-count hue histogram (dominant-bin-fraction / entropy
+#     over all "colorful" >=0.20-saturation pixels): a threshold tight enough
+#     to catch mr-025 also false-positived on roughly half the approved corpus,
+#     since one character's skin/costume commonly dominates the saturated
+#     pixel count even in a real multi-region illustration.
+#   - A *spatial* hue-family count (grid the frame, count distinct dominant
+#     hues across cells): still false-positived on approved/masked-countess-
+#     color.webp (1 family -- same as the mr-025 wash) because that piece is a
+#     real, rich illustration (velvet cloak, gold trim, white mask, red rose)
+#     whose non-red elements are black/white/gold and fall *outside* the
+#     >=0.20 "colorful" cutoff entirely, so only its one true chromatic accent
+#     (red) ever reached the histogram -- an artifact of the cutoff, not a
+#     real single-hue defect. Visual inspection of both files during
+#     calibration confirmed this: masked-countess is genuinely multi-tonal to
+#     the eye; mr-025 genuinely reads as a tinted line-art page.
+#
+# What actually separates a real duotone/sepia filter from a real richly-toned
+# illustration is not the saturated pixels at all -- it's whether the *low*-
+# saturation pixels (background wash, shadow, near-neutral midtones -- just
+# below the "colorful" cutoff) carry a consistent hue too. A true duotone/
+# sepia effect is a tone-curve mapped through one hue at every brightness
+# level, so even its near-neutral pixels lean toward that same hue. A real
+# illustration's near-neutral pixels (true blacks, whites, greys, desaturated
+# shadow) carry no consistent hue at all -- hue is close to meaningless right
+# at low saturation, so a real image's low-saturation band reads as close to
+# hue-random. Measuring the circular concentration of hue *within that low-
+# saturation band alone* cleanly separated every calibration case: masked-
+# countess-color.webp (the closest approved case) measured 0.869; the mr-025
+# wash and hollywood-recast/hwr-021 ("the sepia/teal/red accent palette called
+# for isn't really present (mostly cream/brown/tan)", independently rejected
+# on creative review 2026-09-11, before this check existed) measured 0.946 and
+# 0.99. The threshold below sits with real margin on both sides of that gap.
+TINT_LOW_SAT_MIN = 0.03                 # true near-black/white pixels carry no real hue
+TINT_LOW_SAT_MAX = COLORFUL_PIXEL_SATURATION  # band stops where "colorful" starts
+TINT_MIN_SAMPLE_PIXELS = 300            # need this many low-sat pixels to trust the estimate
+TINT_MAX_HUE_CONCENTRATION = 0.90       # >= this in the low-sat band reads as a tint/filter
 
 
 class Stats:
@@ -163,6 +212,58 @@ def hf_energy_ratio(pixels: list[tuple[int, int, int]], width: int) -> float:
     return (diff_sq_sum / diff_count) / (2.0 * variance)
 
 
+def _pixel_hue_degrees(r: int, g: int, b: int) -> tuple[float, float]:
+    """Return (saturation, hue_degrees) for one pixel."""
+    rf, gf, bf = r / 255.0, g / 255.0, b / 255.0
+    mx, mn = max(rf, gf, bf), min(rf, gf, bf)
+    sat = 0.0 if mx == 0 else (mx - mn) / mx
+    d = mx - mn
+    if d == 0:
+        hue = 0.0
+    elif mx == rf:
+        hue = (60 * ((gf - bf) / d) + 360) % 360
+    elif mx == gf:
+        hue = (60 * ((bf - rf) / d) + 120) % 360
+    else:
+        hue = (60 * ((rf - gf) / d) + 240) % 360
+    return sat, hue
+
+
+def tint_hue_concentration(
+    pixels: Iterable[tuple[int, int, int]],
+    lo: float = TINT_LOW_SAT_MIN,
+    hi: float = TINT_LOW_SAT_MAX,
+) -> tuple[Optional[float], int]:
+    """Circular hue concentration over pixels in the near-neutral saturation
+    band `[lo, hi)` -- the pixels just below the "colorful" cutoff (true
+    blacks/whites/greys and desaturated shadow, excluded here).
+
+    Returns `(None, n)` when fewer than `TINT_MIN_SAMPLE_PIXELS` pixels fall
+    in that band -- too few to trust the estimate (e.g. a near-fully-saturated
+    or near-fully-neutral image with almost no true midtones). Otherwise
+    returns `(R, n)` where `R` is the mean resultant length of the band's hue
+    vectors: 0.0 means those pixels' hues are close to uniformly random (what
+    a real illustration's near-neutral tones look like -- hue is close to
+    meaningless right at low saturation), 1.0 means they all share the same
+    hue (what a tone-curve-mapped duotone/sepia filter produces, since it
+    tints every brightness level through one hue). See the
+    `TINT_MAX_HUE_CONCENTRATION` comment for the calibration this threshold is
+    based on.
+    """
+    sx = sy = 0.0
+    n = 0
+    for r, g, b in pixels:
+        sat, hue = _pixel_hue_degrees(r, g, b)
+        if lo <= sat < hi:
+            rad = math.radians(hue)
+            sx += math.cos(rad)
+            sy += math.sin(rad)
+            n += 1
+    if n < TINT_MIN_SAMPLE_PIXELS:
+        return None, n
+    return math.hypot(sx, sy) / n, n
+
+
 def is_blank_or_degenerate(stats: Stats) -> bool:
     """Blank page or a flat/dead frame with no real content."""
     if stats.count == 0:
@@ -184,14 +285,18 @@ def is_line_art(stats: Stats) -> bool:
 
 def assess(stats: Stats, variant: str, size: Optional[tuple[int, int]] = None,
            expect_portrait: bool = True,
-           hf_ratio: Optional[float] = None) -> tuple[bool, list[str]]:
+           hf_ratio: Optional[float] = None,
+           tint_concentration: Optional[float] = None) -> tuple[bool, list[str]]:
     """Return (ok, reasons). `reasons` explains every failure; empty on pass.
 
     variant: 'bw' enforces line-art; anything else ('color') only enforces the
     not-blank / not-degenerate floor. Aspect is checked when size is provided.
     `hf_ratio` (from `hf_energy_ratio`) is optional — callers that only have
     aggregate Stats with no pixel positions (e.g. the pure self-test blocks)
-    simply skip the noise/static check by leaving it None.
+    simply skip the noise/static check by leaving it None. `tint_concentration`
+    (from `tint_hue_concentration`) is the same kind of optional pixel-
+    position-dependent signal, gating the single-hue-wash check
+    (coloring-book/t-045).
     """
     reasons: list[str] = []
 
@@ -229,6 +334,19 @@ def assess(stats: Stats, variant: str, size: Optional[tuple[int, int]] = None,
             "color-engine defect, coloring-book/t-044"
         )
 
+    if (
+        variant != "bw"
+        and tint_concentration is not None
+        and tint_concentration >= TINT_MAX_HUE_CONCENTRATION
+    ):
+        reasons.append(
+            f"single-hue tint/wash — near-neutral pixels share a consistent "
+            f"hue (concentration={tint_concentration:.2f}, reject at "
+            f">= {TINT_MAX_HUE_CONCENTRATION}), the signature of a duotone/"
+            "sepia filter rather than the house style's flat cel-shaded "
+            "multi-color palette (coloring-book/t-045)"
+        )
+
     if size and expect_portrait:
         w, h = size
         if w > 0 and h > 0 and h < w:
@@ -244,10 +362,11 @@ def assess(stats: Stats, variant: str, size: Optional[tuple[int, int]] = None,
 _pil_missing_warned = False
 
 
-def load_stats(path: Path) -> Optional[tuple[Stats, tuple[int, int], float]]:
+def load_stats(path: Path) -> Optional[tuple[Stats, tuple[int, int], float, Optional[float]]]:
     """Sample an image file into Stats + (width, height) + hf_ratio (see
-    `hf_energy_ratio`). Returns None if PIL is unavailable (caller decides
-    whether that's fatal)."""
+    `hf_energy_ratio`) + tint_concentration (see `tint_hue_concentration`).
+    Returns None if PIL is unavailable (caller decides whether that's
+    fatal)."""
     global _pil_missing_warned
     try:
         from PIL import Image
@@ -272,7 +391,8 @@ def load_stats(path: Path) -> Optional[tuple[Stats, tuple[int, int], float]]:
         sampled_pixels = list(im.getdata())
         stats = stats_from_pixels(sampled_pixels)
         hf_ratio = hf_energy_ratio(sampled_pixels, im.width)
-    return stats, size, hf_ratio
+        tint_concentration, _tint_n = tint_hue_concentration(sampled_pixels)
+    return stats, size, hf_ratio, tint_concentration
 
 
 def assess_file(path: Path, variant: str) -> tuple[Optional[bool], list[str], dict]:
@@ -280,21 +400,28 @@ def assess_file(path: Path, variant: str) -> tuple[Optional[bool], list[str], di
     loaded = load_stats(path)
     if loaded is None:
         return None, ["PIL unavailable — image guard skipped"], {}
-    stats, size, hf_ratio = loaded
-    ok, reasons = assess(stats, variant, size=size, hf_ratio=hf_ratio)
+    stats, size, hf_ratio, tint_concentration = loaded
+    ok, reasons = assess(
+        stats, variant, size=size, hf_ratio=hf_ratio,
+        tint_concentration=tint_concentration,
+    )
     info = stats.as_dict()
     info["size"] = f"{size[0]}x{size[1]}"
     info["hf_ratio"] = round(hf_ratio, 4)
+    info["tint_concentration"] = (
+        round(tint_concentration, 4) if tint_concentration is not None else None
+    )
     return ok, reasons, info
 
 
 def describe_gate() -> str:
     return (
         "Objective gate only: validates that a render is structurally what was "
-        "asked for (bw==line art, color==actually has color, not blank, not "
-        "spatially-uncorrelated noise, portrait). It does NOT judge likeness, "
-        "camp, or composition — that is a vision-model pass layered on top "
-        "before anything is promoted to approved/."
+        "asked for (bw==line art, color==actually has color from more than one "
+        "hue family, not blank, not spatially-uncorrelated noise, portrait). "
+        "It does NOT judge likeness, camp, or composition — that is a "
+        "vision-model pass layered on top before anything is promoted to "
+        "approved/."
     )
 
 
@@ -411,6 +538,51 @@ def _selftest() -> int:
     # below the approved/ set's typical saturation) must not be caught by this.
     ok, r = assess(color_master, "color")
     checks.append(("real color_master is NOT rejected as desaturated", ok is True))
+
+    # 7. Single-hue tint/wash (coloring-book/t-045): mr-025's real defect — a
+    #    duotone/sepia filter tone-maps every brightness level through one
+    #    hue, so even its near-neutral (low-saturation) pixels carry that same
+    #    hue. Build a synthetic wash: many pixels at hue=50deg (olive/yellow)
+    #    spanning both the "colorful" range and the low-sat tint-check band.
+    import colorsys
+
+    def hsv_pixel(h_deg: float, s: float, v: float) -> tuple[int, int, int]:
+        r, g, b = colorsys.hsv_to_rgb(h_deg / 360.0, s, v)
+        return int(r * 255), int(g * 255), int(b * 255)
+
+    wash_pixels = (
+        [hsv_pixel(50, s, v) for s in (0.05, 0.08, 0.12, 0.16) for v in (0.4, 0.55, 0.7, 0.85) for _ in range(20)]
+        + [hsv_pixel(50, s, v) for s in (0.35, 0.5) for v in (0.5, 0.7) for _ in range(20)]
+    )
+    wash_r, wash_n = tint_hue_concentration(wash_pixels)
+    checks.append(("synthetic duotone wash has high tint concentration", wash_r is not None and wash_r >= TINT_MAX_HUE_CONCENTRATION))
+    wash_stats = stats_from_pixels(wash_pixels)
+    ok, r = assess(wash_stats, "color", tint_concentration=wash_r)
+    checks.append(("single-hue wash is REJECTED for color variant", ok is False and any("single-hue tint/wash" in x for x in r)))
+    ok, r = assess(wash_stats, "bw", tint_concentration=wash_r)
+    checks.append(("tint check does not apply to bw variant", not any("single-hue tint/wash" in x for x in r)))
+
+    # A real illustration's near-neutral pixels carry no consistent hue (true
+    # blacks/whites/greys/shadow, not a filter) — cycle the low-sat band
+    # through many different hues, alongside a real saturated color region,
+    # and confirm it is NOT rejected even though it shares the same overall
+    # saturation profile as the wash above.
+    real_low_sat = [
+        hsv_pixel((i * 47) % 360, 0.05 + 0.1 * ((i * 13) % 3) / 2, 0.5)
+        for i in range(400)
+    ]
+    real_pixels = real_low_sat + [(200, 30, 40)] * 300 + [(30, 120, 200)] * 300
+    real_r, real_n = tint_hue_concentration(real_pixels)
+    checks.append(("real multi-hue low-sat band has low tint concentration", real_r is not None and real_r < TINT_MAX_HUE_CONCENTRATION))
+    real_stats = stats_from_pixels(real_pixels)
+    ok, r = assess(real_stats, "color", tint_concentration=real_r)
+    checks.append(("real illustration is NOT rejected as a wash", ok is True))
+
+    # Too few low-saturation pixels to judge — the check must abstain (None),
+    # never guess, so a near-fully-saturated or near-fully-neutral image
+    # can't be false-rejected on a handful of noisy samples.
+    sparse_r, sparse_n = tint_hue_concentration([hsv_pixel(50, 0.5, 0.6)] * 50)
+    checks.append(("too few low-sat pixels abstains (None) rather than guessing", sparse_r is None))
 
     failed = 0
     for name, passed in checks:
