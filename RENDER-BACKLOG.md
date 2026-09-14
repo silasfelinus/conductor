@@ -571,3 +571,6 @@ queueDepth: PENDING=29, DONE=10339, CANCELLED=10567 (all-time). oldestPending: i
 
 ## 2026-09-12T07:33:04Z | cthulhuquarium/t-073 | healthy
 queueDepth: DONE=10371, FAILED=1, CANCELLED=10569 (all-time). oldestPending: none. windowThroughput (24h): DONE=92, FAILED=1, CANCELLED=2. recentFailed (last 1): 1/1 = Stale claim reaped: relay stopped responding after 3 attempts. [scene-animator=1].
+
+## 2026-09-14T05:42:54Z | coloring-book/t-022 | healthy
+queueDepth: DONE=10435, FAILED=166, CANCELLED=10569 (all-time). oldestPending: none. windowThroughput (24h): FAILED=132. recentFailed (last 25): 25/25 = hostbuf_file_reader_read failed (CLIPTextEncode node) [cthulhuquarium=21, coloring-book=4].

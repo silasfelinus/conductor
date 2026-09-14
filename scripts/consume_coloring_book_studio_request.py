@@ -36,10 +36,10 @@ REVISION_CLEAR_FIELDS = (
     "on_brief",
     "prompt_fingerprint",
     "render_engine",
+    "render_gate_error",
+    "render_gate_error_at",
     "render_seed",
     "rendered_path",
-    "semantic_gate_error",
-    "semantic_gate_error_at",
     "semantic_model",
     "semantic_score",
     "semantic_verdict",
@@ -196,6 +196,7 @@ def run_entries(entries: list[dict[str, Any]], *, live: bool, timeout: int) -> i
 
     for entry in entries:
         destination = coloring.target_path(entry)
+        job_id: int | None = None
         try:
             recovered: tuple[bool, dict[str, Any]] | None = None
             if destination.exists():
@@ -204,6 +205,7 @@ def run_entries(entries: list[dict[str, Any]], *, live: bool, timeout: int) -> i
                     f"at {destination.relative_to(coloring.ROOT)}"
                 )
             elif (stuck_job_id := coloring.referenced_job_id(entry)) is not None:
+                job_id = stuck_job_id
                 recovered = coloring.recover_timed_out_job(entry, stuck_job_id)
                 if recovered is None:
                     print(
@@ -267,7 +269,7 @@ def run_entries(entries: list[dict[str, Any]], *, live: bool, timeout: int) -> i
                     )
                 except Exception:  # noqa: BLE001
                     pass
-            coloring.record_semantic_gate_error(entry, error)
+            coloring.record_render_gate_error(entry, error, job_id=job_id)
             print(f"  FAILED {entry['set']}/{entry['concept_id']}: {error}", file=sys.stderr)
 
     marked = coloring.mark_done(completed)

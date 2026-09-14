@@ -5791,5 +5791,41 @@ tasks:
   claimed_at: '2026-09-12T21:31:59Z'
   implementation_pr: 'silasfelinus/conductor#4204'
 
+- id: t-156
+  milestone: m2
+  title: recheck_render_queue.py classifies a known-bad render-box failure signature as "healthy"
+  status: ready
+  stakes: reversible
+  passes: 0
+  owner: null
+  note: >-
+    Filed live (coloring-book/t-022 cycle, 2026-09-14): the render box was actually down --
+    `scripts/check_render_box.py` correctly reported exit 1 ("36 render(s) failed and none
+    completed in the last 6h"), and a direct `GET /api/art/queue/stats` pull showed 132
+    FAILED in 24h with 25/25 recentFailed entries sharing the identical
+    `node 3 (CLIPTextEncode): hostbuf_file_reader_read failed` signature. But
+    `scripts/recheck_render_queue.py --task coloring-book/t-022`, run in the same session
+    against the same live stats, classified it "healthy" and appended that verdict to
+    RENDER-BACKLOG.md -- because its classifier only looks at queueDepth/oldestPending
+    (both clear, since nothing is stuck PENDING -- every job fails fast to a terminal state
+    instead) and never inspects recentFailed's content or the 24h FAILED throughput.
+
+    This is the exact gap ai-art-academy/t-078 raised as a kaizen before that project closed
+    (add a check that flags this specific recurring hardware signature -- see that now-closed
+    roadmap's t-078/t-079 for the full history) and it looks like it was never implemented.
+    Now there are two scripts that both read the same stats endpoint and disagree, and the
+    one that's wrong is the one that writes the human-facing ledger.
+
+    Fix: teach recheck_render_queue.py's classifier to also flag "down"/"unhealthy" when
+    recentFailed is dominated by a single known-bad signature (hostbuf_file_reader_read, or
+    more generally a high same-signature-share of recentFailed) and/or when 24h FAILED
+    throughput is high relative to DONE, not just when something is stuck PENDING. Consider
+    whether it should simply delegate to check_render_box.py's classification (single source
+    of truth) rather than maintaining a second, weaker one. Add a regression test using this
+    session's actual stats shape (queueDepth DONE=10435/FAILED=166/CANCELLED=10569,
+    windowThroughput FAILED=132, recentFailed 25/25 hostbuf) asserting it no longer reads
+    "healthy". Reversible, tooling-only change; no roadmap/gate semantics affected.
+  updated: '2026-09-14T05:50:00Z'
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'

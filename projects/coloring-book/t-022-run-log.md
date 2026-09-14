@@ -1879,3 +1879,86 @@ touched, no re-renders requested for the rejected slot).
    everywhere) or the Monster Recast re-review backlog.
 
 Re-arming to `ready` (recurring), releasing the claim.
+
+## 2026-09-14 (cycle N+1, conductor scheduled session, session claude-scheduled-20260914T053509Z-cb-t022)
+
+Continued the Monster Recast re-review backlog. Picked mr-001, mr-013, mr-023 as a
+bounded slice -- each has a clear, documented, actionable violation (not a "render just
+didn't match at all" case needing more investigation first).
+
+**Prompt revisions** (`art-modeler-request.yaml`):
+- mr-001 (Bride-of-Frankenstein hair-streak violation): added explicit negative clauses
+  for every specific trope the rejected render actually reproduced -- white/silver hair
+  streak, bandages, a bald male-presenting doctor -- and specified the
+  originalization_hook's concrete quilted-seam-map + heart-voltmeter details instead of
+  the old prompt's generic "surgical stitching and scarring."
+- mr-013 (boy doll rendered as gender-ambiguous girl in a christening dress): the old
+  prompt never actually said "sailor" or "boy" anywhere -- "immaculate Sunday-best
+  clothes" is exactly vague enough to drift toward generic Annabelle-adjacent imagery.
+  Added explicit "sailor-inspired formalwear" + "unmistakably a BOY doll" language.
+- mr-023 (amorphous blob rendered as an ordinary glamorous woman in a gown): the old
+  prompt led with "voluptuous" and only ended with the amorphous-body requirement.
+  Reordered to lead with "CRITICAL: NO human body/legs/dress fabric" plus concrete
+  visual anchors (four-plus hands emerging from the gel, half-absorbed faces, no
+  visible waist).
+- Did not touch the shared `negative_prompt`/`global_prompt_suffix` defaults (they
+  apply to all 36 entries) even though mr-023's "many hands" requirement sits in mild
+  tension with the shared negative prompt's "accidental extra limbs" -- flagged in the
+  TALKBACK entry, not fixed here; out of scope for a per-slot prompt revision.
+
+**Tooling bug found and fixed** (`consume_coloring_book_studio_request.py`):
+Requesting fresh renders crashed on mr-001's first failure:
+`AttributeError: module 'consume_coloring_book_color_art' has no attribute
+'record_semantic_gate_error'`. The real function is `record_render_gate_error`
+(renamed at some point in `consume_coloring_book_color_art.py`'s own history); this
+narrower studio-request wrapper still referenced the old name and had apparently never
+been exercised through a real failure path before. Fixed:
+- The call site (`coloring.record_render_gate_error(entry, error, job_id=job_id)`).
+- `REVISION_CLEAR_FIELDS`' matching stale field names (`semantic_gate_error`/
+  `semantic_gate_error_at` -> `render_gate_error`/`render_gate_error_at`).
+- `job_id` was previously only bound inside the fresh-submission branch; a failure
+  during the recovery branch would have raised `NameError` reaching the except block.
+  Now initialized to `None` per entry and set in both the fresh-submission and
+  recovery branches.
+Added two regression tests (`test_run_entries_live_failure_records_render_gate_error`,
+`test_run_entries_live_recovery_failure_passes_stuck_job_id`); confirmed both fail
+against the pre-fix code with the exact real `AttributeError`, and pass after the fix.
+Full local suite green (1860 passed, 1 skipped, 35 subtests) before pushing.
+
+**Render outcome:** with the fix in place, re-requested all three. All three failed
+again -- server-side this time -- with the identical `node 3 (CLIPTextEncode):
+hostbuf_file_reader_read failed` signature. Confirmed via `check_render_box.py` (exit
+1: box DOWN, 36 failed / 0 completed in the last 6h) and a direct
+`GET /api/art/queue/stats` pull (132 FAILED in 24h, 25/25 recentFailed sharing this
+exact signature). This is the same hardware fault `ai-art-academy/t-067`/`t-068`
+diagnosed (a failing SATA cable on Alexandria's disk13) and its two documented
+recurrences (`t-077`, `t-078`); `ai-art-academy` is now `finished`, so filed
+`kindrobots-unraid/t-021` (hard needs-human -- physical hardware access required) to
+track this recurrence, and pushed the incident to Silas via TALKBACK. All three ids
+correctly landed `status: pending` with `render_gate_error` recorded rather than a
+false `done`. Not attempting a third live retry per the transient-failure triage rule
+-- this needs physical attention to the render box, not another submission.
+
+Also filed `conductor/t-156`: `recheck_render_queue.py --task coloring-book/t-022`, run
+against the same live stats, classified this exact live outage "healthy" (its
+classifier only looks at queueDepth/oldestPending, both clear since every job fails
+fast instead of sitting pending) while `check_render_box.py` correctly caught it as
+DOWN. This is the same gap `ai-art-academy/t-078`'s kaizen asked to close before that
+project finished; looks like it was never implemented.
+
+**For the next pass:**
+1. Once `kindrobots-unraid/t-021` clears (render box healthy again, confirm with
+   `check_render_box.py` exit 0): re-run `consume_coloring_book_studio_request.py
+   --book monster-recast --proposal-id mr-001 --proposal-id mr-013 --proposal-id
+   mr-023 --live` (no `--force` needed -- all three are already `status: pending`) to
+   get real renders of the revised prompts, then re-review.
+2. 18 rejected Monster Recast slots remain after this slice (mr-006, mr-008, mr-010,
+   mr-014, mr-015, mr-017 through mr-019, mr-021, mr-022, mr-025 through mr-028,
+   mr-030 through mr-032, mr-group-001) -- most are "the render didn't match the
+   concept at all" cases (not a missing-detail-in-the-prompt case like mr-001/013/023)
+   and may need more than a prompt tweak, e.g. mr-021's literal "invisible body" ask
+   is a fundamentally hard composition for a diffusion model regardless of prompt
+   wording -- worth flagging for judgment rather than assuming a stronger prompt alone
+   fixes it.
+
+Re-arming to `ready` (recurring), releasing the claim.

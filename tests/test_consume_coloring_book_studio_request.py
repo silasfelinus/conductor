@@ -175,3 +175,79 @@ def test_main_returns_zero_when_every_requested_id_is_already_resolved(tmp_path,
 
     assert exit_code == 0
     assert "nothing to do" in capsys.readouterr().out
+
+
+def test_run_entries_live_failure_records_render_gate_error(monkeypatch, tmp_path):
+    """Regression test (coloring-book/t-022, 2026-09-14 live incident): the
+    exception handler in run_entries() called a nonexistent
+    `coloring.record_semantic_gate_error`, so ANY failure during a --live
+    studio request (a fresh enqueue error, a timeout, a validation crash)
+    raised AttributeError and aborted the whole batch instead of being
+    recorded as a retryable failure and moving on to the next proposal id.
+    Hit for real requesting fresh renders for mr-001/mr-013/mr-023: mr-001's
+    fresh submission failed and the AttributeError killed the run before
+    mr-013 or mr-023 were even attempted.
+    """
+    entry = {
+        "id": "mr-001",
+        "set": "monster-recast",
+        "concept_id": "mr-001",
+        "queue_id": "mr-001",
+        "image_path": "does/not/exist.webp",
+    }
+
+    monkeypatch.setattr(mod.queue_consumer, "KR_API_TOKEN", "fake-token")
+    monkeypatch.setattr(mod.coloring, "target_path", lambda e: tmp_path / "missing.webp")
+    monkeypatch.setattr(mod.coloring, "referenced_job_id", lambda e: None)
+    monkeypatch.setattr(mod.coloring, "enqueue", lambda e: (_ for _ in ()).throw(RuntimeError("boom")))
+
+    calls = []
+
+    def fake_record_render_gate_error(entry, error, job_id=None):
+        calls.append((entry["id"], str(error), job_id))
+
+    monkeypatch.setattr(mod.coloring, "record_render_gate_error", fake_record_render_gate_error)
+    # Guarantee the old, nonexistent name really is gone -- if the bug ever
+    # comes back (the call site reverted to it), this makes the failure loud
+    # (AttributeError) instead of quietly matching a stray attribute.
+    monkeypatch.delattr(mod.coloring, "record_semantic_gate_error", raising=False)
+
+    exit_code = mod.run_entries([entry], live=True, timeout=30)
+
+    assert exit_code == 1
+    assert calls == [("mr-001", "boom", None)]
+
+
+def test_run_entries_live_recovery_failure_passes_stuck_job_id(monkeypatch, tmp_path):
+    """Same regression as above, but for the recovery path: a failure while
+    recovering a previously-stuck job must record the stuck job's id (so a
+    future pass can still find it), not just None.
+    """
+    entry = {
+        "id": "mr-001",
+        "set": "monster-recast",
+        "concept_id": "mr-001",
+        "queue_id": "mr-001",
+        "image_path": "does/not/exist.webp",
+    }
+
+    monkeypatch.setattr(mod.queue_consumer, "KR_API_TOKEN", "fake-token")
+    monkeypatch.setattr(mod.coloring, "target_path", lambda e: tmp_path / "missing.webp")
+    monkeypatch.setattr(mod.coloring, "referenced_job_id", lambda e: 9999)
+
+    def fake_recover(entry, stuck_job_id):
+        raise RuntimeError("still broken")
+
+    monkeypatch.setattr(mod.coloring, "recover_timed_out_job", fake_recover)
+
+    calls = []
+
+    def fake_record_render_gate_error(entry, error, job_id=None):
+        calls.append((entry["id"], str(error), job_id))
+
+    monkeypatch.setattr(mod.coloring, "record_render_gate_error", fake_record_render_gate_error)
+
+    exit_code = mod.run_entries([entry], live=True, timeout=30)
+
+    assert exit_code == 1
+    assert calls == [("mr-001", "still broken", 9999)]

@@ -624,5 +624,46 @@ tasks:
     least one full pass and the 09-12 reboot is accounted for.
   updated: '2026-09-13T13:00:00Z'
 
+- id: t-021
+  milestone: m4
+  title: 'ComfyUI render box down again: CLIPTextEncode "hostbuf_file_reader_read failed" across every project'
+  status: needs-human
+  soft_gate: true
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    FOR SILAS: the render box is down again -- confirmed live this session via
+    `python scripts/check_render_box.py` (exit 1: "36 render(s) failed and none completed in
+    the last 6h") and a direct `GET /api/art/queue/stats` pull (132 FAILED in the last 24h;
+    the 25 most recent failures are 100% the identical `node 3 (CLIPTextEncode):
+    hostbuf_file_reader_read failed` signature, hitting cthulhuquarium and coloring-book jobs
+    indiscriminately). This blocks ALL art rendering across every project, not just one --
+    three coloring-book/t-022 render requests this session (mr-001, mr-013, mr-023) failed
+    with this exact error and are correctly left `status: pending` rather than forced through.
+
+    This is the same hardware signature ai-art-academy/t-067 and t-068 diagnosed and fixed
+    (a failing SATA cable on Alexandria's disk13, swapped, error count confirmed dropped to
+    0) -- and then t-077 and t-078 each caught it recurring roughly 24h-ish later, same box,
+    same symptom. ai-art-academy is now `finished` so this incident has no active project
+    home; filing here since kindrobots-unraid is the active infra project that owns
+    Alexandria. Full diagnostic trail is in that project's now-closed roadmap history
+    (search `hostbuf_file_reader_read`) if useful context.
+
+    TO APPROVE / TO DO: this needs physical hands on Alexandria -- reseat or re-swap the
+    disk13 cable/drive, or check whichever drive is now exhibiting the identical symptom (the
+    prior fix may not have held, or a sibling drive/cable in the same array is failing the
+    same way). No sandbox can check hardware. Once fixed, nothing else needs to be re-run by
+    hand -- every project's pending render queue (this task's three coloring-book entries
+    included) drains on its own once the box is healthy; confirm with
+    `python scripts/check_render_box.py` (should exit 0).
+
+    Separately, NOT blocking on this and filed as its own task: conductor/t-156 tracks that
+    `scripts/recheck_render_queue.py` classified this exact live outage as "healthy" (see
+    RENDER-BACKLOG.md's 2026-09-14 entry from this session) even with 25/25 recentFailed
+    saturated by a known-bad signature, while `scripts/check_render_box.py` correctly caught
+    it as DOWN -- the two scripts disagree and the ledger-writing one is the one that's wrong.
+  updated: '2026-09-14T05:50:00Z'
+
 goal: Run Kind Robots reliably on the Unraid/home infrastructure, with deployment, storage, networking, GPU services,
   and recovery procedures kept reproducible.
