@@ -2388,7 +2388,7 @@ tasks:
 - id: t-158
   milestone: m2
   title: Offload done-task notes to per-project HISTORY.md and enforce the size ceiling
-  status: claimed
+  status: done
   passes: 0
   stakes: reversible
   owner: worker
@@ -2475,9 +2475,22 @@ tasks:
     pytest tests/test_sync_kind_robots_projection.py ; and measure the payload before and after
     with: python3 -c "import json,pathlib; print(len(json.dumps({'roadmaps':{p.parent.name:
     p.read_text() for p in pathlib.Path('projects').glob('*/roadmap.yaml')}})))"
-  updated: '2026-09-14T11:43:27Z'
+
+    DONE 2026-09-14 (PR #4331). Archived 1,110 done-task notes across 48 projects into projects/<slug>/HISTORY.md. Projection payload 3,734,373 -> 1,635,532 bytes (93.4% -> 40.9%), headroom 2,364,468. Verification: 1,110/1,110 round-trip byte-identical against git HEAD, 0 backfill_learning lessons changed, re-run is a no-op, 1,895 tests pass.
+
+    TWO THINGS THE FIRST ATTEMPT GOT WRONG, both silent. (1) I wrote my own first_sentence() for the pointer summary; backfill_learning.py has its own that caps at 280 chars with a raw-truncation fallback, so for notes with no sentence boundary the appended "Full history:" text bled into that window and silently altered 3 of 34 lesson records on the storybook trial run. Fixed by importing the real function and having build_pointer() VERIFY first_sentence(pointer) == first_sentence(original) per task, declining rather than rewriting where it cannot hold. (2) verify_project() matched a loose "HISTORY.md#" and reported t-158 itself as a broken pointer, because this notes quotes the pointer format as example text; tightened to each task own exact pointer. Both now have tests.
+
+    ENFORCEMENT, because a one-time prune does not hold (t-104 was archived 2026-09-11 carrying the literal instruction "Keep this note short going forward" and regrew through slice 269): check_roadmap_note_size.py now also reports oversized roadmap FILES and the true projection headroom, measured with sync_kind_robots_projection own encoder rather than an approximation. CLAUDE.md startup sweep reports the headroom line every session.
+
+    AGENTS.md gained the archival carve-out (authorized by Silas in session 2026-09-14): a verified byte-for-byte move into a named archive file is not deletion; summarizing or trimming remains forbidden. This is what makes the work distinguishable from t-129 and lets a future agent run the script rather than correctly refusing.
+
+    CI: "Build changed TypeScript projects" failed on a cause unrelated to this diff -- it selects any changed projects/<x>/ with a package.json then runs npm ci, which refuses without a lockfile, and projects/approval-portal (retired) has no lockfile. Latent until this pass touched all 48 project dirs at once. Fixed at the selection step (skip with a message) rather than by generating a lockfile for a retired project; also dropped --silent, which had hidden the error entirely.
+
+    FOLLOW-UPS, not in scope here: two oversized notes remain on LIVE recurring tasks (model-builder/t-029 118KB, storybook/t-010 65KB) -- the t-104 per-task pattern applies there, not this script, which is done-only. interface-vision/roadmap.yaml is still marginally over the new 150KB per-file threshold. t-159 (TALKBACK rotation) is unblocked now that the carve-out has landed.
+  updated: '2026-09-14T11:59:38Z'
   claimed_by: claude-20260914T1030Z-cd-t158
   claimed_at: '2026-09-14T11:43:27Z'
+  implementation_pr: 'silasfelinus/conductor#4331'
 - id: t-159
   milestone: m2
   title: Rotate root TALKBACK.md into monthly archives
