@@ -280,6 +280,87 @@ def test_build_entries_carries_render_gate_error_onto_the_consumption_entry(monk
     assert mod.referenced_job_id(entries[0]) == 2702
 
 
+def test_build_entries_applies_content_safety_negative_prompt_by_default(monkeypatch, tmp_path):
+    # Regression (coloring-book/t-022 cycle 10, 2026-09-14): a live Hollywood
+    # Recast render (hwr-030) came back with unrequested exposed nipples.
+    # monster-recast/art-modeler-request.yaml documents a content-safety
+    # negative_prompt, but build_entries() never actually read it -- only a
+    # per-entry `negative_prompt` override on color-art-jobs.yaml itself, which
+    # no entry in any of the three books has ever set. Every render across all
+    # three books therefore only ever got the purely technical
+    # DEFAULT_NEGATIVE_PROMPT. An entry with no explicit override must now get
+    # CONTENT_SAFETY_NEGATIVE baked in automatically.
+    queue_file = tmp_path / "color-art-jobs.yaml"
+    queue_file.write_text(
+        yaml.safe_dump(
+            {
+                "defaults": {},
+                "books": [
+                    {
+                        "slug": "hollywood-recast",
+                        "entries": [
+                            {
+                                "id": "hwr-030",
+                                "status": "pending",
+                                "title": "Mermaid on Lot Seven",
+                                "prompt": "An adult mermaid performer takes a lunch break",
+                                "image_path": (
+                                    "projects/coloring-book/sets/hollywood-recast/"
+                                    "generated/hwr-030.webp"
+                                ),
+                            }
+                        ],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(mod, "QUEUE_FILE", queue_file)
+
+    _queue, entries = mod.build_entries("hollywood-recast")
+
+    assert len(entries) == 1
+    negative = entries[0]["negative_prompt"]
+    assert mod.CONTENT_SAFETY_NEGATIVE in negative
+    assert mod.consume_art_queue_core.DEFAULT_NEGATIVE_PROMPT in negative
+
+
+def test_build_entries_keeps_an_explicit_negative_prompt_override_verbatim(monkeypatch, tmp_path):
+    # A source entry that names its own negative_prompt is an explicit choice,
+    # not an omission -- the content-safety floor must not silently append to
+    # or replace it.
+    queue_file = tmp_path / "color-art-jobs.yaml"
+    queue_file.write_text(
+        yaml.safe_dump(
+            {
+                "defaults": {},
+                "books": [
+                    {
+                        "slug": "monster-recast",
+                        "entries": [
+                            {
+                                "id": "mr-001",
+                                "status": "pending",
+                                "title": "Perfect Woman",
+                                "prompt": "A vampire family portrait",
+                                "image_path": "projects/coloring-book/sets/monster-recast/generated/mr-001.webp",
+                                "negative_prompt": "a fully custom override",
+                            }
+                        ],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(mod, "QUEUE_FILE", queue_file)
+
+    _queue, entries = mod.build_entries("monster-recast")
+
+    assert entries[0]["negative_prompt"] == "a fully custom override"
+
+
 def test_dry_run_with_ids_bounds_pass_to_exactly_those_entries(monkeypatch, tmp_path, capsys):
     # Regression: a plain --limit takes the next N pending entries in queue-slot
     # order, which mixes recovery-eligible entries (a stuck job to reconcile) with
