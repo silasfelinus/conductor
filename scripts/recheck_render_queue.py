@@ -35,6 +35,7 @@ LOG_MARKER = "## Log"
 
 sys.path.insert(0, str(Path(__file__).parent))
 from consume_art_queue_core import fetch_queue_stats  # noqa: E402
+import check_render_box  # noqa: E402
 
 
 # Mirrors kind_robots' server/utils/artFailureSignature.ts (ai-art-academy/
@@ -144,8 +145,28 @@ def summarize_failures(data: dict) -> str:
     return "recentFailed (last " + str(total) + "): " + "; ".join(lines)
 
 
-def classify(queue_depth: dict, window_throughput: dict) -> str:
-    """Return 'growing', 'draining', or 'healthy' from PENDING depth/throughput."""
+def classify(data: dict) -> str:
+    """Return 'down', 'growing', 'draining', or 'healthy' from the full queue
+    stats `data` block.
+
+    conductor/t-156: this used to look only at queueDepth.PENDING /
+    windowThroughput before ever asking whether the box was actually
+    rendering, so a run of the same known-bad hardware signature (e.g.
+    hostbuf_file_reader_read) that fails every job fast -- never leaving
+    anything stuck PENDING -- read as "healthy". check_render_box.py already
+    solves this exact problem (it's the single source of truth
+    check_render_box.py's own docstring calls for delegating to): its
+    `render_throughput_verdict` treats a stale RUNNING claim with PENDING
+    work behind it, or sustained FAILED throughput with zero completions, as
+    positive evidence the box is down. Ask it first; only fall back to the
+    PENDING-depth-based growing/draining/healthy distinction once it has no
+    opinion (an idle queue, or no throughput data at all)."""
+    healthy, _reason = check_render_box.render_throughput_verdict(data)
+    if healthy is False:
+        return "down"
+
+    queue_depth = data.get("queueDepth") or {}
+    window_throughput = data.get("windowThroughput") or {}
     pending_depth = queue_depth.get("PENDING", 0) or 0
     if pending_depth == 0:
         return "healthy"
@@ -162,7 +183,7 @@ def format_entry(data: dict, task: str | None) -> tuple[str, str]:
     window_throughput = data.get("windowThroughput") or {}
     oldest_pending = data.get("oldestPending")
 
-    status_label = classify(queue_depth, window_throughput)
+    status_label = classify(data)
 
     depth_parts = ", ".join(f"{k}={v}" for k, v in queue_depth.items())
     throughput_parts = ", ".join(f"{k}={v}" for k, v in window_throughput.items())

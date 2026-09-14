@@ -45,15 +45,52 @@ SAMPLE_DATA = {
 
 
 def test_classify_growing():
-    assert recheck.classify({"PENDING": 10}, {"DONE": 5, "PENDING": 20}) == "growing"
+    data = {"queueDepth": {"PENDING": 10}, "windowThroughput": {"DONE": 5, "PENDING": 20}}
+    assert recheck.classify(data) == "growing"
 
 
 def test_classify_draining():
-    assert recheck.classify({"PENDING": 10}, {"DONE": 50, "PENDING": 5}) == "draining"
+    data = {"queueDepth": {"PENDING": 10}, "windowThroughput": {"DONE": 50, "PENDING": 5}}
+    assert recheck.classify(data) == "draining"
 
 
 def test_classify_healthy_when_no_pending():
-    assert recheck.classify({"PENDING": 0}, {"DONE": 5, "PENDING": 0}) == "healthy"
+    data = {"queueDepth": {"PENDING": 0}, "windowThroughput": {"DONE": 5, "PENDING": 0}}
+    assert recheck.classify(data) == "healthy"
+
+
+def test_classify_down_when_render_box_reports_sustained_failure_with_no_completions():
+    # conductor/t-156: the exact live scenario that exposed the gap --
+    # coloring-book/t-022, 2026-09-14. The render box was actually down
+    # (check_render_box.py correctly reported exit 1), but the old
+    # PENDING-only classifier here read "healthy" because nothing was stuck
+    # PENDING -- every job fails fast to a terminal state instead. This is
+    # this session's real stats shape (windowThroughput carries no DONE, 132
+    # FAILED in the window; queueDepth has no PENDING at all).
+    data = {
+        "windowHours": 24,
+        "queueDepth": {"DONE": 10435, "FAILED": 166, "CANCELLED": 10569},
+        "windowThroughput": {"FAILED": 132},
+        "oldestPending": None,
+        "recentFailed": [
+            {"error": "node 3 (CLIPTextEncode): hostbuf_file_reader_read failed"}
+            for _ in range(25)
+        ],
+    }
+    assert recheck.classify(data) == "down"
+
+
+def test_classify_down_takes_priority_over_pending_depth():
+    # Even when something IS stuck PENDING, a render-box-down verdict from
+    # check_render_box.py's stale-claim check must win over the old
+    # growing/draining split -- "down" is a stronger, more specific signal
+    # than "growing".
+    data = {
+        "queueDepth": {"PENDING": 5},
+        "windowThroughput": {"DONE": 0, "PENDING": 5},
+        "staleRunningCount": 1,
+    }
+    assert recheck.classify(data) == "down"
 
 
 def test_summarize_failures_groups_by_signature():
