@@ -13,15 +13,16 @@
 #
 # Kapowarr remains the next finite project after the top pair. Kind Economy remains an
 # important tentpole and retains its `priority: urgent` semantic override, but this file
-# is the actual deterministic worker pickup order. The top pair is protected by
+# is the actual deterministic worker pickup order within lifecycle tiers. The top pair is protected by
 # tests/test_project_priority_contract.py so agents cannot silently reorder it.
 # Rainbow Butterflies was added 2026-08-28 at Silas's requested middle priority: important
 # mission work, but intentionally behind the current top build queue and Kind Robots core.
 #
 # 2026-09-14: taskmaster removed -- absorbed into storybook as its fourth mode and flipped
 # `retired` (storybook/t-047, kind_robots#2718), so it is a historical record rather than
-# pickable work. interface-vision moved to the continuous block the same day; see its own
-# note down there for why its position in this file no longer sets its rank.
+# pickable work. interface-vision became continuous the same day. It remains in the third
+# textual slot to keep CONTROL.md's human steering band and this ledger mechanically aligned;
+# lifecycle sorting still places every finite active project ahead of it at runtime.
 order:
   # Human priority decision, 2026-08-25: Mandarin Tutor and Cthulhuquarium were the
   # two top non-continuous projects, Mandarin Tutor leading. Earlier Cthulhuquarium/
@@ -42,6 +43,10 @@ order:
   # Kind Economy inherits second place, where it already sat.
   - cthulhuquarium
   - kind-economy
+  # interface-vision is continuous as of 2026-09-14. Its textual position mirrors
+  # CONTROL.md for audit parity only; project_lifecycle.ordered_workable_slugs() still
+  # schedules all finite active projects before any continuous project.
+  - interface-vision
   - coloring-book
   - humboldt-scoop-cms
   - digital-storefront
@@ -71,14 +76,5 @@ order:
   # wishmaster removed 2026-09-11 — retired 2026-08-09; retirement ratified by Silas 2026-09-11.
   - ruler-hooked
   # music-mentor removed 2026-09-11 — finished; pre-existing drift, swept with the rest.
-  # interface-vision moved here from third place on 2026-09-14, when Silas flipped it
-  # to `continuous`: "interface vision should be a continuous project at this point, if
-  # not, it should be." Its position in this file is now only meaningful RELATIVE TO THE
-  # OTHER CONTINUOUS PROGRAMS -- project_lifecycle.ordered_workable_slugs() sorts every
-  # `active` project ahead of every `continuous` one regardless of this order, so the
-  # effective rank is 20 of 22 either way. Kept ahead of animation-manager and dream-cycle
-  # deliberately: of the three fallback programs it is the one with real release work
-  # behind it, so it should be the first thing an idle worker reaches for.
-  - interface-vision
   - animation-manager
   - dream-cycle
