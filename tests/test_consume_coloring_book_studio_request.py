@@ -218,10 +218,15 @@ def test_run_entries_live_failure_records_render_gate_error(monkeypatch, tmp_pat
     assert calls == [("mr-001", "boom", None)]
 
 
-def test_run_entries_live_recovery_failure_passes_stuck_job_id(monkeypatch, tmp_path):
-    """Same regression as above, but for the recovery path: a failure while
-    recovering a previously-stuck job must record the stuck job's id (so a
-    future pass can still find it), not just None.
+def test_run_entries_live_recovery_ambiguous_failure_preserves_job_reference(monkeypatch, tmp_path, capsys):
+    """Same regression class as above, but for the recovery path: an ambiguous
+    failure while checking a previously-stuck job (network error, missing
+    local dependency, ...) does NOT positively prove the job is dead -- it may
+    still be a perfectly good, completed render. Mirrors
+    consume_coloring_book_color_art.py's batch-consumer handling: leave the
+    entry's existing render_gate_error (still naming the stuck job) untouched
+    rather than overwriting it, so a future pass can still recover it instead
+    of losing the reference and submitting a genuine duplicate ArtJob.
     """
     entry = {
         "id": "mr-001",
@@ -242,12 +247,63 @@ def test_run_entries_live_recovery_failure_passes_stuck_job_id(monkeypatch, tmp_
 
     calls = []
 
-    def fake_record_render_gate_error(entry, error, job_id=None):
-        calls.append((entry["id"], str(error), job_id))
+    def fake_record_render_gate_error(entry, error, job_id=None, drop_reference=False):
+        calls.append((entry["id"], str(error), job_id, drop_reference))
 
     monkeypatch.setattr(mod.coloring, "record_render_gate_error", fake_record_render_gate_error)
 
     exit_code = mod.run_entries([entry], live=True, timeout=30)
 
     assert exit_code == 1
-    assert calls == [("mr-001", "still broken", 9999)]
+    # The ambiguous failure must NOT touch render_gate_error at all -- the
+    # existing "job 9999 ..." reference stays exactly as it was.
+    assert calls == []
+    stderr = capsys.readouterr().err
+    assert "RECOVERY UNVERIFIED" in stderr
+    assert "job 9999 reference left intact" in stderr
+
+
+def test_run_entries_live_recovery_abandoned_drops_job_reference(monkeypatch, tmp_path, capsys):
+    """The flip side: when recover_timed_out_job() positively determines the
+    referenced job failed/was cancelled (RecoveryAbandoned), the reference
+    MUST be dropped so the next pass submits a fresh render instead of
+    re-checking the same dead job forever. This is the exact bug found live
+    running coloring-book/t-022 on 2026-09-14: the render box came back up
+    after an outage, but re-requesting mr-001/mr-013/mr-023 just re-confirmed
+    their original hostbuf failures (job 22003/22004/22005) instead of firing
+    fresh renders, because this call site used to fall through to the generic
+    except and preserve the dead job's id via `job_id=job_id`.
+    """
+    entry = {
+        "id": "mr-001",
+        "set": "monster-recast",
+        "concept_id": "mr-001",
+        "queue_id": "mr-001",
+        "image_path": "does/not/exist.webp",
+    }
+
+    monkeypatch.setattr(mod.queue_consumer, "KR_API_TOKEN", "fake-token")
+    monkeypatch.setattr(mod.coloring, "target_path", lambda e: tmp_path / "missing.webp")
+    monkeypatch.setattr(mod.coloring, "referenced_job_id", lambda e: 22003)
+
+    def fake_recover(entry, stuck_job_id):
+        raise mod.coloring.RecoveryAbandoned(f"job {stuck_job_id} FAILED: hostbuf_file_reader_read failed")
+
+    monkeypatch.setattr(mod.coloring, "recover_timed_out_job", fake_recover)
+
+    calls = []
+
+    def fake_record_render_gate_error(entry, error, job_id=None, drop_reference=False):
+        calls.append((entry["id"], str(error), job_id, drop_reference))
+
+    monkeypatch.setattr(mod.coloring, "record_render_gate_error", fake_record_render_gate_error)
+
+    exit_code = mod.run_entries([entry], live=True, timeout=30)
+
+    assert exit_code == 1
+    assert calls == [
+        ("mr-001", "job 22003 FAILED: hostbuf_file_reader_read failed", None, True)
+    ]
+    stderr = capsys.readouterr().err
+    assert "RECOVERY UNVERIFIED" not in stderr
+    assert "FAILED monster-recast/mr-001" in stderr

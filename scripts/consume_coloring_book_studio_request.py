@@ -196,7 +196,8 @@ def run_entries(entries: list[dict[str, Any]], *, live: bool, timeout: int) -> i
 
     for entry in entries:
         destination = coloring.target_path(entry)
-        job_id: int | None = None
+        stuck_job_id: int | None = None
+        submitted_job_id: int | None = None
         try:
             recovered: tuple[bool, dict[str, Any]] | None = None
             if destination.exists():
@@ -205,7 +206,6 @@ def run_entries(entries: list[dict[str, Any]], *, live: bool, timeout: int) -> i
                     f"at {destination.relative_to(coloring.ROOT)}"
                 )
             elif (stuck_job_id := coloring.referenced_job_id(entry)) is not None:
-                job_id = stuck_job_id
                 recovered = coloring.recover_timed_out_job(entry, stuck_job_id)
                 if recovered is None:
                     print(
@@ -220,13 +220,13 @@ def run_entries(entries: list[dict[str, Any]], *, live: bool, timeout: int) -> i
                     f"{entry['set']}/{entry['concept_id']}"
                 )
             else:
-                job_id, deduplicated = coloring.enqueue(entry)
+                submitted_job_id, deduplicated = coloring.enqueue(entry)
                 suffix = " (existing matching attempt)" if deduplicated else ""
                 print(
-                    f"  queued ArtJob {job_id}{suffix} for "
+                    f"  queued ArtJob {submitted_job_id}{suffix} for "
                     f"{entry['set']}/{entry['concept_id']} color - waiting..."
                 )
-                job = queue_consumer.wait_for_job(job_id, timeout)
+                job = queue_consumer.wait_for_job(submitted_job_id, timeout)
                 entry["art_image_id"] = int(job["artImageId"])
                 image_b64 = queue_consumer.fetch_image_b64(job["artImageId"])
                 destination = coloring.save_result(entry, image_b64)
@@ -258,8 +258,39 @@ def run_entries(entries: list[dict[str, Any]], *, live: bool, timeout: int) -> i
                 f"{destination.relative_to(coloring.ROOT)} "
                 f"(ArtImage {entry.get('art_image_id') or 'existing'}, semantic={semantic.get('score')})"
             )
+        except coloring.RecoveryAbandoned as error:
+            # recover_timed_out_job() positively determined job stuck_job_id
+            # will never produce a usable render (failed/cancelled/wrong
+            # concept) -- safe (and correct) to drop the reference so the next
+            # pass submits fresh instead of re-checking a dead job forever.
+            # Mirrors consume_coloring_book_color_art.py's batch-consumer
+            # handling (conductor/t-022, 2026-09-14: this studio wrapper used
+            # to fall through to the generic except below, which preserved
+            # the dead job's id in render_gate_error and left every future
+            # studio-targeted request re-confirming the same stale failure
+            # instead of ever firing a fresh render once the outage cleared).
+            retryable_failures += 1
+            coloring.record_render_gate_error(entry, error, drop_reference=True)
+            print(f"  FAILED {entry['set']}/{entry['concept_id']}: {error}", file=sys.stderr)
         except Exception as error:  # noqa: BLE001
             retryable_failures += 1
+            if stuck_job_id is not None:
+                # Anything other than RecoveryAbandoned during a recovery
+                # attempt (network error checking/fetching the job, a missing
+                # local dependency while saving the fetched image, ...) means
+                # stuck_job_id's own fate is still unknown -- it may well be a
+                # completed, valid render. Leave the entry's existing
+                # render_gate_error (still naming stuck_job_id) untouched so a
+                # future pass can recover it, instead of overwriting it and
+                # losing the reference (see the batch consumer's identical
+                # guard for the incidents this avoids).
+                print(
+                    f"  RECOVERY UNVERIFIED {entry['set']}/{entry['concept_id']}: {error} -- "
+                    f"job {stuck_job_id} reference left intact for a future pass, "
+                    "no duplicate submitted",
+                    file=sys.stderr,
+                )
+                continue
             if destination.exists():
                 try:
                     rejected = coloring.rejection_destination(destination, entry, "unverified")
@@ -269,7 +300,7 @@ def run_entries(entries: list[dict[str, Any]], *, live: bool, timeout: int) -> i
                     )
                 except Exception:  # noqa: BLE001
                     pass
-            coloring.record_render_gate_error(entry, error, job_id=job_id)
+            coloring.record_render_gate_error(entry, error, job_id=submitted_job_id)
             print(f"  FAILED {entry['set']}/{entry['concept_id']}: {error}", file=sys.stderr)
 
     marked = coloring.mark_done(completed)

@@ -575,3 +575,102 @@ def test_fetch_queue_stats_passes_window_hours_through(monkeypatch):
     monkeypatch.setattr(consumer, "http_json", fake_http_json)
     consumer.fetch_queue_stats(window_hours=6)
     assert seen_urls == [f"{consumer.KR_BASE_URL}/api/art/queue/stats?window=6"]
+
+
+class _FakeUrlResponse:
+    def __init__(self, status, body):
+        self.status = status
+        self._body = body
+
+    def read(self):
+        return self._body
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc_info):
+        return False
+
+
+def test_fetch_image_b64_returns_api_image_data_when_present(monkeypatch):
+    monkeypatch.setattr(
+        consumer,
+        "http_json",
+        lambda method, url, timeout=None: (200, {"success": True, "data": {"imageData": "aGVsbG8="}}),
+    )
+
+    def fail_urlopen(*args, **kwargs):
+        raise AssertionError("must not fall back to imagePath when imageData is present")
+
+    monkeypatch.setattr(consumer.urllib.request, "urlopen", fail_urlopen)
+
+    assert consumer.fetch_image_b64(23966) == "aGVsbG8="
+
+
+def test_fetch_image_b64_falls_back_to_image_path_when_image_data_missing(monkeypatch):
+    # Regression (conductor/t-022, 2026-09-14 live incident): the ArtJob's own
+    # completion proof was VERIFIED (a real imageHash) and `imagePath` served a
+    # real, valid rendered WebP, but the ArtImage row's `imageData` DB blob was
+    # empty -- fetch_image_b64() used to treat this as a hard failure and burn
+    # a duplicate ArtJob against the render backend for a picture that already
+    # existed. It must instead fetch the already-rendered bytes from imagePath.
+    monkeypatch.setattr(
+        consumer,
+        "http_json",
+        lambda method, url, timeout=None: (
+            200,
+            {
+                "success": True,
+                "data": {
+                    "imageData": None,
+                    "imagePath": "/images/projects/coloring-book/sets/monster-recast/generated/mr-001.webp",
+                },
+            },
+        ),
+    )
+
+    seen_urls = []
+
+    def fake_urlopen(url, timeout=None):
+        seen_urls.append(url)
+        return _FakeUrlResponse(200, b"real-image-bytes")
+
+    monkeypatch.setattr(consumer.urllib.request, "urlopen", fake_urlopen)
+
+    result = consumer.fetch_image_b64(23966)
+
+    assert seen_urls == [
+        f"{consumer.KR_BASE_URL}/images/projects/coloring-book/sets/monster-recast/generated/mr-001.webp"
+    ]
+    assert base64.b64decode(result) == b"real-image-bytes"
+
+
+def test_fetch_image_b64_raises_when_neither_image_data_nor_image_path_exist(monkeypatch):
+    monkeypatch.setattr(
+        consumer,
+        "http_json",
+        lambda method, url, timeout=None: (200, {"success": True, "data": {"imageData": None}}),
+    )
+
+    def fail_urlopen(*args, **kwargs):
+        raise AssertionError("must not attempt a fallback fetch with no imagePath")
+
+    monkeypatch.setattr(consumer.urllib.request, "urlopen", fail_urlopen)
+
+    with pytest.raises(RuntimeError, match="no imageData and no imagePath"):
+        consumer.fetch_image_b64(23966)
+
+
+def test_fetch_image_b64_raises_when_image_path_fallback_is_also_empty(monkeypatch):
+    monkeypatch.setattr(
+        consumer,
+        "http_json",
+        lambda method, url, timeout=None: (
+            200,
+            {"success": True, "data": {"imageData": None, "imagePath": "/images/x.webp"}},
+        ),
+    )
+    monkeypatch.setattr(consumer.urllib.request, "urlopen", lambda url, timeout=None: _FakeUrlResponse(200, b""))
+
+    with pytest.raises(RuntimeError, match="imagePath fallback was empty"):
+        consumer.fetch_image_b64(23966)
