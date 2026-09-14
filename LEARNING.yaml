@@ -13606,3 +13606,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "The task's original filing (grep of 'return errorHandler(error)') undercounted the real call-site pattern -- most of the codebase actually writes 'const handled = errorHandler(error)' then a separate status line, so the literal grep matched only 19 of 470 real call sites and the filing concluded almost nothing was fixed (8/432) when in fact 429/470 already were. Re-derive the live count with a broader pattern (any errorHandler( call, cross-referenced against status-setting patterns) before trusting a stale filing's scope estimate, especially for a task that's sat open a couple of days -- the codebase moves. Also found and fixed a second, coupled bug while auditing: several routes called errorHandler() with a wrapper object ({error, context, statusCode}) instead of the actual Error, which errorHandler() doesn't recognize, silently discarding the intended status and message even in the JSON body -- worth checking call-site *shape*, not just call-site *presence*, when fixing a suspected systemic misuse."
+- date: 2026-09-14
+  project: interface-vision
+  task: t-133
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Real PR traffic touching *.sh files was too sparse to answer the task's own question from CI history alone (only one recent PR had an actual .sh diff, and it produced zero shellcheck findings) -- ran shellcheck directly against the full current *.sh corpus (12 scripts) as a stand-in evidence base instead of waiting indefinitely for more PR traffic. Only SC2086 had multiple true-positive hits with zero false positives; the other codes seen (SC2207/SC2010/SC2209/SC1003) each had a single occurrence and one (SC2209) was a confirmed false positive on this repo's TOOL=name assignment style, confirming the task's own caution against flipping the whole pass to blocking at once."
