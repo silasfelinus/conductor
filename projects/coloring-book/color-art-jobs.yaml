@@ -516,8 +516,8 @@ books:
     id: mr-025
     slug: little-miss-omen
     title: Little Miss Omen
-    status: done
-    seed: 840025
+    status: approved
+    seed: 434342201
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-025-little-miss-omen.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-025
     studio_revision_history:
@@ -528,13 +528,39 @@ books:
       semantic_score: null
       prompt_fingerprint: 2b6f56dd4a54532875965ad68e78fb502e66f0156df9e41aa0ae7f2b7da587bb
       archived_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/revisions/mr-025-little-miss-omen-20260914T153611Z.webp
-    studio_revision_requested_at: '2026-09-14T15:36:11Z'
+    - requested_at: '2026-09-14T18:30:19Z'
+      previous_status: done
+      art_image_id: 24037
+      rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-025-little-miss-omen.webp
+      semantic_score: null
+      prompt_fingerprint: fa4853aa5fc4494e4c431249338742d70e3dd534a4f4b0806dd35e4ca6c92d08
+      archived_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/revisions/mr-025-little-miss-omen-20260914T183019Z.webp
+    studio_revision_requested_at: '2026-09-14T18:30:19Z'
+    render_failures:
+    - attempt: 1
+      seed: 1794629632
+      engine: krea2
+      art_image_id: 24054
+      prompt_fingerprint: fa4853aa5fc4494e4c431249338742d70e3dd534a4f4b0806dd35e4ca6c92d08
+      gate: mechanical
+      reasons: &id002
+      - single-hue tint/wash — near-neutral pixels share a consistent hue (concentration=0.97, reject at >= 0.9),
+        the signature of a duotone/sepia filter rather than the house style's flat cel-shaded multi-color palette
+        (coloring-book/t-045)
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/render/rejected/mr-025-little-miss-omen-attempt-1-seed-1794629632.webp
+      checked_at: '2026-09-14T18:35:58Z'
+    render_attempts: 1
+    last_rejected_art_image_id: 24054
+    last_render_seed: 1794629632
+    last_render_reasons: *id002
     rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-025-little-miss-omen.webp
-    art_image_id: 24037
-    render_seed: 1314999922
+    art_image_id: 24055
+    render_seed: 434342201
     render_engine: krea2
-    completed_at: '2026-09-14T15:38:36Z'
-    prompt_fingerprint: fa4853aa5fc4494e4c431249338742d70e3dd534a4f4b0806dd35e4ca6c92d08
+    completed_at: '2026-09-14T18:37:39Z'
+    prompt_fingerprint: bd4d46fc6ba95c0a36cecaabe007b5cc3509b0c1cb83ea49f7fdaf74b5be0ad3
+    approved_at: '2026-09-14T18:37:56Z'
+    lock_seed: true
   - slot: 26
     id: mr-026
     slug: madam-satan

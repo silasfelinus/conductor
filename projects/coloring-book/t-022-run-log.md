@@ -2219,3 +2219,59 @@ reworded-prompt experiment) rather than another automatic retry. mr-025 needs t-
 hue-diversity gate (or a human color-diversity call) before spending another render budget
 on it. Hollywood Recast (16) and Kind Robots (8) not-yet-accepted backlogs remain untouched
 this cycle.
+
+## Cycle 8 (2026-09-14, scheduled Conductor session) -- mr-025 cleared with t-045's gate, found and fixed a real crash in the studio-request rejection path
+
+Render box confirmed up (`check_render_box.py`, 54 renders/6h, Comfy heartbeat healthy).
+Claimed a fresh `ready` task (cycle 7's own claim had already been reconciled/released by
+the prior session-end sweep per the roadmap note's RECONCILED entry).
+
+### Real bug found and fixed: `consume_coloring_book_studio_request.py`'s SEMANTIC-REJECT path called a nonexistent function
+
+Retrying mr-025 (t-045's new hue-diversity gate now exists; the prior cycle left this slot
+explicitly waiting on it) hit a missing-Pillow gap first (documented, `pip3 install
+Pillow`), then on the recovery pass crashed with `RECOVERY UNVERIFIED ... module
+'consume_coloring_book_color_art' has no attribute 'record_semantic_rejection'`. Confirmed
+via grep that no such function has ever existed in `consume_coloring_book_color_art.py` --
+this is a sibling bug to cycle 2's `record_semantic_gate_error` fix (2026-09-14), same
+root cause (a call site referencing a function name that was never actually defined), just
+on the SEMANTIC-REJECT branch (a real mechanical-gate rejection) instead of the generic
+exception handler. `validate_candidate()`/`recover_timed_out_job()` only ever return the
+*mechanical* gate result on this path (per `consume_coloring_book_color_art.py`'s own
+docstring: "Anything that is a real image goes to a human instead and never reaches
+[`record_render_rejection`]" -- i.e. that function IS the correct handler for exactly this
+case), and the plain batch consumer's `main()` already calls `record_render_rejection` for
+the identical situation. Fixed the call site to use it. Added
+`test_run_entries_live_gate_rejection_records_render_rejection` (same `delattr` guard
+pattern as cycle 2's regression test, so a reintroduced typo fails loudly instead of
+silently matching a stray attribute). Full suite green: 1901 passed, 30 skipped, 35
+subtests (`uv tool install pytest --with pyyaml --force` first, per the documented sandbox
+PyYAML gap).
+
+### mr-025 -- accepted
+
+With the crash fixed, recovered job 22165 cleanly: t-045's tint-concentration gate
+correctly rejected it (concentration=0.97, still the sepia wash from cycle 7) --
+confirming the new gate catches exactly the defect it was built for, and that this cycle's
+bug was purely a bookkeeping crash, not a false accept. A second live attempt (job 22166,
+ArtImage 24055) passed both t-044's saturation floor and t-045's tint-diversity gate.
+Visual review: a real flat cel-shaded multi-color palette (navy/purple sky, cream stone,
+black clothing, warm skin tones) with the brief's calm smile, pageboy bob, blazer-and-tie
+schoolgirl uniform, iron-fenced London street, and a bare tree whose ground-shadow reads
+as a grasping hand -- a fitting quiet-occult-horror touch. Promoted via
+`manage_coloring_book_production.py --operation accept-color --live`. Monster Recast now
+20/36 accepted color (up from 19).
+
+Verification: `python scripts/art_quality.py --selftest` -> 20/20.
+`python scripts/validate_roadmaps.py` clean. `coloring_queue_status.py --book
+monster-recast` -> `queue_integrity_safe: true`, `recovery_safe: true`, `retry_safe: true`,
+0 duplicate job/entry ids, mr-025 now `done`. `git diff --stat` reviewed before committing
+(1 fresh render + 1 archived rejected-attempt + 1 archived revision under mr-025's own
+paths, `color-art-jobs.yaml` queue state, `proposals.yaml` review note, the
+`consume_coloring_book_studio_request.py` fix, its regression test, and this run-log entry
+-- nothing else touched).
+
+**Next actionable step:** mr-008 still needs a human call (different engine or a
+deliberate reworded-prompt experiment) -- its bounded retry budget was already exhausted
+in cycle 7. ~12 other not-yet-accepted Monster Recast slots remain untouched this cycle.
+Hollywood Recast (16) and Kind Robots (8) not-yet-accepted backlogs also remain untouched.
