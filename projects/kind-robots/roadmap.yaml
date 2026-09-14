@@ -1840,6 +1840,31 @@ tasks:
     whether any other in-flight branch/PR still references it.
   updated: '2026-09-14T13:45:00Z'
 
+- id: t-104
+  milestone: m6
+  title: Run the v5 Facet art repair sweep and decide what prompt-modifier Facets should show
+  status: needs-human
+  gate_human: true
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: |
+    Filed 2026-09-14 from Silas's report that the Storybook genre picker was showing "weird statuesque heads" -- the same class of complaint as the earlier "bunch of cartoon faces" wave.
+
+    Root cause and code fix: kind_robots PR #2736 (facet-coverage-krea2-v5). scripts/generate_facet_art_v4.ts appended art-direction jargon to every Facet prompt -- 'Iconic scene, concrete focal subject, environment, action, strong atmosphere.' -- and Krea 2, caption-conditioned at cfg 1 with no instruction channel, painted the words: "concrete" as concrete, "iconic" as a monument, "focal subject" as a head placed centre-frame. Verified against live data rather than inferred: the stored artPrompt for every affected row is literally "<Title>. Iconic scene, concrete focal subject, ...", and the rendered images were pulled and inspected. Office Satire, Body Horror and Aging Protagonist are the same grey bust in the same grey room. The occupation clause ('...unmistakable silhouette, workplace cues.') renders as a literal black paper cut-out on a desk -- Chaos Consultant and Accidental Diplomat are the same cut-out.
+
+    It only bites where the Facet has no description/flavorText/examples. With prose the clause is diluted and the art is fine, which is why 595 of 991 v4 renders are good and this ran unnoticed for six weeks. Of 1,633 live Facets, 206 renders are selected for resubmission (GENRE 78, THEME 70, OCCUPATION 20, ROLE 18, ARCHETYPE 12, SETTING 8). The 64 bare ANIMAL rows are deliberately NOT re-rolled: their clause names a real subject and a Blue-Footed Booby looks like a Blue-Footed Booby.
+
+    TWO THINGS REMAIN, neither doable from a Claude Code web session.
+
+    1. Run the repair sweep where the database is reachable:
+         npx tsx scripts/generate_facet_art.ts --repair-tainted          # dry run first
+         npx tsx scripts/generate_facet_art.ts --write --repair-tainted
+       acrocatranch.com:5544 is outside the web sandbox's network policy (TCP timeout), so the producer cannot run from a web session at all; only the HTTPS API is reachable. Enqueuing through /api/art/enqueue instead was considered and rejected: it bypasses the producer's idempotency key, facetArtworkVersion provenance and requireCompletionProof, which is the same provenance gap that let dream-cycle/t-026 log 36 "complete" bundles over an empty Character for six weeks. The dry run was rehearsed offline against all 1,633 live Facets instead: 0 contract rejections, so the sweep will not abort mid-run the way the 2026-09-05 repair did.
+
+    2. Decide what the 55 PROMPT_ENHANCEMENT Facets should show. "4k render" and "award-winning" name nothing visible, so no prompt renders them well; v4 gave them unrelated anime portraits, and a repair render is just a different arbitrary picture. The producer now reports them rather than re-rolling them. facetCatalogAudit already flags this shape as prompt-cargo-cult -> suppress-random, so the real options are: suppress the art slot, retire the rows as randomizables, or accept decorative filler. That is a catalog call, not a render call, which is why it is gated here rather than decided in the PR.
+  updated: '2026-09-14T23:50:00Z'
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
 
