@@ -10,6 +10,7 @@ on:
       - "projects/coloring-book/sets/*/generated/**"
       - "scripts/coloring_book_package_status.py"
       - "tests/test_coloring_book_package_status.py"
+      - ".gitignore"
       - ".github/workflows/coloring-book-package-readiness.yml"
   push:
     branches: [main]
@@ -21,6 +22,7 @@ on:
       - "projects/coloring-book/sets/*/generated/**"
       - "scripts/coloring_book_package_status.py"
       - "tests/test_coloring_book_package_status.py"
+      - ".gitignore"
       - ".github/workflows/coloring-book-package-readiness.yml"
   workflow_dispatch:
 
@@ -54,6 +56,18 @@ jobs:
 
       - name: Build current readiness and ordered manifests
         run: python scripts/coloring_book_package_status.py --check
+
+      - name: Verify generated manifests are trackable
+        shell: bash
+        run: |
+          ignored=0
+          for path in projects/coloring-book/packages/*/interiors.yaml; do
+            if git check-ignore --no-index -q "$path"; then
+              echo "::error::$path is ignored; package readiness cannot persist it on main"
+              ignored=1
+            fi
+          done
+          exit "$ignored"
 
       - name: Commit generated readiness on main
         if: github.event_name != 'pull_request'
