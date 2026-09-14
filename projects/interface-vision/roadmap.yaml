@@ -4021,11 +4021,11 @@ tasks:
 - id: t-133
   milestone: m6
   title: "Kaizen: promote high-confidence shellcheck rules (e.g. SC2086) to blocking once real PR traffic shows their false-positive rate"
-  status: ready
+  status: claimed
   gate_human: false
   stakes: reversible
   passes: 0
-  owner: null
+  owner: worker
   note: >-
     Kaizen from t-132 (kind_robots#2674, 2026-09-12): the new shellcheck pass in
     layout-contract.yml is entirely warning-only (`|| true`) since its
@@ -4054,9 +4054,9 @@ tasks:
     pulling the layout-contract job log for any PR that touches *.sh files going forward
     (grep the 'Syntax-check changed shell scripts' step for SC#### codes) and revisit once a
     handful of real hits have accumulated. Releasing the claim rather than holding it idle.
-  claimed_by: null
-  claimed_at: '2026-09-13T14:35:00Z'
-  updated: '2026-09-13T14:39:54Z'
+  claimed_by: scheduled-20260914T003054Z-iv-t133
+  claimed_at: '2026-09-14T00:30:55Z'
+  updated: '2026-09-14T00:30:55Z'
 
 - id: t-134
   milestone: m5
