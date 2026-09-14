@@ -39,7 +39,20 @@ from typing import Iterable, Optional
 # the guard should only reject the clearly-wrong, never a borderline keeper.
 BW_MAX_MEAN_SATURATION = 0.10      # line art is essentially greyscale
 BW_MAX_COLORFUL_FRACTION = 0.04    # allow a few stray tinted pixels
-BW_MIN_WHITE_FRACTION = 0.30       # a coloring page is mostly open white
+# BW_MIN_WHITE_FRACTION was 0.30 until coloring-book/t-046's regression fixture
+# checked it against the real monster-recast/approved/ corpus: 4 of 17
+# Silas-approved bw masters (alien-king, draculina, masking-up, perfect-woman)
+# measure 0.16-0.25 white_fraction -- dense, heavily-shaded/stippled line art
+# that is still genuinely black-on-white (mean_saturation/colorful_fraction
+# both comfortably pass) but has far less open background than a simpler
+# page. The old floor would have rejected all four as if they were
+# colored/shaded, which they are not. Every other approved bw master measures
+# >= 0.35, so 0.12 sits with real margin below the four dense pieces (lowest
+# observed: 0.1633) while still catching a genuinely near-solid-black or
+# fully-shaded frame -- this is a floor against "no colorable space at all",
+# not a proxy for "is it colored" (mean_saturation/colorful_fraction already
+# do that job).
+BW_MIN_WHITE_FRACTION = 0.12       # a coloring page has some open space to color
 COLORFUL_PIXEL_SATURATION = 0.20   # a pixel counts as "colorful" past this
 BLANK_WHITE_FRACTION = 0.985       # near-all-white == blank
 DEGENERATE_MAX_LUMA_STD = 0.02     # near-zero contrast == flat/dead frame
