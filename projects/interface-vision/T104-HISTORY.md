@@ -34,6 +34,26 @@ Both DaisyUI form-control candidates named in slice 233's kaizen note (`kr-input
 `kr-select-muted`) are now closed as of slice 234. A fresh full-repo class-frequency
 survey (outside the families listed above) is needed to find the next target.
 
+## Slice 270 (this session)
+
+Fresh full-repo class-frequency survey outside every now-closed family (kr-spinner-*,
+kr-input-*, kr-btn-*, kr-badge-*, kr-icon-*, kr-loading-*, kr-text-error-xs) found
+`text-error text-sm` -- the `-sm` sibling of `.kr-text-error-xs` -- at 10 exact
+occurrences across 8 files, plus 18 subset-match occurrences across 16 more files
+carrying extra background/border/padding/layout wrapper tokens around the same
+error-caption role. Opened `.kr-text-error-sm` and migrated all 28 occurrences across
+23 files via a new codemod (`kr_text_error_sm_codemod.py`). No color/behavior/API/
+schema/route/geometry change. vue-tsc, eslint (3 pre-existing unrelated errors
+confirmed via git stash), test:layout-contract (0 new violations), test:kr-class-coverage
+(OK), a full production build, and prettier drift on 11 files confirmed pre-existing via
+git stash -- all clean before opening the kind_robots PR.
+
+Slice 270 merged as silasfelinus/kind_robots#2716 (text-error text-sm -> kr-text-error-sm),
+all 51 kind_robots PR checks green before merging. Return the recurring consistency
+umbrella to ready for the next bounded slice. Kaizen for the next slice: run a fresh
+full-repo class-frequency survey (`kr_class_frequency_survey.py`) outside every now-closed
+family to pick the next target -- no specific candidate queued.
+
 ## For future slices: keep the live note short
 
 Append each slice's progress to this file's own history (or a dated section below),
