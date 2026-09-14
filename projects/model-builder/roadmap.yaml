@@ -469,7 +469,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: review
     recurring: true
     passes: 52
     stakes: reversible
@@ -624,7 +624,18 @@ tasks:
       to ready for the next cycle; next lead per cycle 100's note: extend the guard-coverage
       cross-reference to server/api/model-builder/**/*.ts route handlers, not yet done that
       way.
-    updated: '2026-09-14T13:53:59Z'
+
+      Cycle 102 (background audit agent): extended the guard-coverage cross-reference to
+      server/api/model-builder/**/*.ts route handlers per cycle 101's own next-lead pointer.
+      Found items/[id]/commit.post.ts's idempotency-claim compare-and-swap (the double-commit
+      race guard) had zero regression coverage; added
+      verifyModelBuilderCommitIdempotencyClaimGuard.ts + selftest, wired into package.json and
+      contract-tests.yml. Current code already correct -- a coverage-gap fix, not a bug fix.
+      Also audited artifacts.post.ts, commit.post.ts's other guards, runs/[id].patch.ts,
+      runs/[id].get.ts, runs/[id].delete.ts, runs/index.get.ts -- all either already well-
+      covered or carry no documented fix/cap to guard. PR: silasfelinus/kind_robots#2733
+      (open, not yet merged).
+    updated: '2026-09-14T14:02:17Z'
     owner: worker
     claimed_by: claude-20260914T141500Z-mb-t029-conductor
     claimed_at: '2026-09-14T13:53:59Z'
