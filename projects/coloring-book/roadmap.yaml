@@ -789,7 +789,7 @@ tasks:
 - id: t-046
   milestone: m4
   title: Pin a regression fixture for art_quality.py's calibrated thresholds against the real approved/ corpus
-  status: review
+  status: done
   stakes: reversible
   owner: worker
   passes: 0
@@ -807,6 +807,16 @@ tasks:
     against real approved art (or silently stop catching a known-bad example) without a
     test failing. Reuse `art_quality.assess_file`/`load_stats` directly rather than
     reimplementing pixel math in the test.
+
+    DONE: merged as PR #4356 (squash ba4f0a7). tests/test_art_quality.py pins frozen pixel-
+    stat fixtures for all 17 approved/*-bw.webp masters, all 10 approved/*-color.webp
+    masters, and the known-bad mr-025/hwr-021 tint-wash examples against
+    BW_*/COLOR_MIN_*/TINT_* thresholds, plus a Pillow-gated live cross-check. Recalibrated
+    BW_MIN_WHITE_FRACTION 0.30 -> 0.12 after finding 4/17 real approved bw masters (dense,
+    heavily-shaded line art) genuinely failed the old floor -- visually confirmed all four
+    as legitimate before touching the threshold. Full suite: 1900 passed/30 skipped (no
+    Pillow, matches CI); 34/34 with Pillow. art_quality.py --selftest 20/20.
   claimed_by: claude-conductor-scheduled-20260914T173630Z-cb-t046
   claimed_at: '2026-09-14T17:36:31Z'
-  updated: '2026-09-14T17:42:46Z'
+  updated: '2026-09-14T17:46:11Z'
+  implementation_pr: 'silasfelinus/conductor#4356'
