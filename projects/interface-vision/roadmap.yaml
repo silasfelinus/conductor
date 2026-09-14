@@ -3286,7 +3286,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -3307,7 +3307,18 @@ tasks:
     a fresh full-repo class-frequency survey outside every family already migrated (kr-
     spinner-*, kr-input-*, kr-btn-*, kr-badge-*, kr-icon-*, kr-loading-*) to find the next
     bounded target.
-  updated: '2026-09-14T02:29:03Z'
+
+    Slice 269 (this session): fresh full-repo class-frequency survey found the DaisyUI
+    loading-dots animation entirely unmigrated across four sizes
+    (kr_loading_primary_xs_codemod.py had explicitly set it aside). Opened .kr-spinner-xs-
+    dots/-sm-dots/-md-dots/-lg-dots and migrated all 19 exact+subset-match occurrences
+    (9/9/5/3 across 20 files) via four new codemods. No
+    color/behavior/API/schema/route/geometry change. vue-tsc, eslint (2 pre-existing
+    unrelated errors confirmed via git stash), test:layout-contract (0 new violations), and
+    a full production build (npm run build, verifying the new @apply rules compile) all
+    clean. Prettier collapsed 2 files whose class attribute got shorter; remaining 13
+    flagged files confirmed pre-existing drift via git stash. Opening kind_robots PR now.
+  updated: '2026-09-14T02:40:32Z'
   implementation_pr: 'silasfelinus/kind_robots#2713'
   retry_context: ''
   owner: worker
