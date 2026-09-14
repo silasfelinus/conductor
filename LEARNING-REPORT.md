@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-14T18:45:51Z
+Generated: 2026-09-14T18:49:14Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **959**
-- Outcomes: blocked: 16, cancelled: 1, done: 942
+- Closed tasks recorded: **960**
+- Outcomes: blocked: 16, cancelled: 1, done: 943
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -25,7 +25,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | brainstorm | 26 | 96% |
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
-| coloring-book | 32 | 100% |
+| coloring-book | 33 | 100% |
 | conductor | 101 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 51 | 98% |
@@ -69,13 +69,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 942 | 99% |
+| software | 943 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
-| quality | 21 |
+| quality | 22 |
 | transient | 15 |
 | actionable | 14 |
 | scope | 3 |
@@ -84,13 +84,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - project `coat-dance` — 11% success over 9 closed tasks; aim the next kaizen task here
 - kind `content` — 47% success over 17 closed tasks; aim the next kaizen task here
-- failure category `quality` — 21 occurrences; look for the shared cause across its records
+- failure category `quality` — 22 occurrences; look for the shared cause across its records
 - failure category `transient` — 15 occurrences; look for the shared cause across its records
 - failure category `actionable` — 14 occurrences; look for the shared cause across its records
 - failure category `scope` — 3 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-09-14 `coloring-book/t-022` — consume_coloring_book_studio_request.py had two independent call sites referencing coloring functions that were never actually defined (record_semantic_gate_error, fixed cycle 2; record_semantic_rejection, fixed cycle 8, same day) -- both a mismatch between this wrapper's error handling and consume_coloring_book_color_art.py's real public API, each only discovered by hitting the exact code path live. A single pass grepping every coloring.<name> call in the wrapper against the other module's actual def list would have caught both in one sitting instead of one crash at a time; filed as this cycle's kaizen suggestion rather than done inline to keep the cycle's diff scoped to the crash actually hit.
 - 2026-09-14 `coloring-book/t-046` — Pinning a regression fixture against a real approved/ corpus is itself a calibration exercise, not just a testing exercise: building tests/test_art_quality.py to cover BW_*, COLOR_MIN_*, and TINT_* (as the task's own note asked) surfaced that BW_MIN_WHITE_FRACTION=0.30 would reject 4 of 17 real Silas-approved bw masters -- dense, heavily-shaded/stippled line art that is genuinely black-and-white by every other measure but has less open background than a simpler page. The fixture only becomes trustworthy once every real approved file actually lands on the correct side of it; a fixture that pins current behavior without checking it against real data first would have baked in the same false-rejection the threshold itself has. Visually inspecting the specific failing files (not just their stats) before touching the constant is what distinguished 'bad threshold' from 'bad data' -- same lesson as t-045's masked-countess case, now generalized to a second threshold family.
 - 2026-09-14 `coloring-book/t-045` — Calibrating a quality-gate threshold against a bad example alone is not enough -- the first two signal designs tried here (global pixel-count hue histogram, then a spatial per-cell hue-family count) both caught mr-025's sepia wash cleanly but were never tested against the real *approved* corpus until asked to be, and both turned out to false-positive on genuinely good, Silas-approved art (masked-countess-color.webp) once they were. The spatial design's failure mode was subtle: it looked spatially principled but still only counted pixels above the same 'colorful' saturation cutoff, so a real illustration whose non-primary elements (black cloak, white mask, gold trim) are desaturated collapsed to the same single-family signal as an actual wash. What worked was measuring hue consistency in the *opposite* band -- the low-saturation pixels every other check ignores -- because that's the band a duotone/sepia tone-curve filter actually tints and a real illustration's true neutrals do not. Any pixel-statistic quality gate needs its negative-space calibration (the full trusted-good corpus, not just the one known-bad case) run before landing, and visually inspecting the disputed calibration file directly (not just its stats) is what actually explained why the second design failed.
 - 2026-09-14 `kind-robots/t-098` — Session-end reconciliation caught this: implementation PR kind_robots#2727 merged over 2 hours before this sweep ran, but the roadmap task was left at status: review with a malformed implementation_pr field (a raw https:// URL instead of the owner/repo#N format check_pr_merged_drift.py's authoritative pass expects) -- so the drift check's title-text fallback caught it instead. Whatever closed the implementing PR didn't finish the roadmap close-out step in the same run. Reconciling promptly (same session that ran the drift check, not deferred) keeps status: review tasks from accumulating as false 'awaiting review' signals for a PR that already landed.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-14 `kind-robots/t-094` — The task's own note named three duplicated 'creation paths' to consolidate, but reading server/api/conductor/sync.post.ts closely showed its Project-slug handling isn't actually a copy of the same logic: it upserts Conductor-authoritative projects from an already-validated projection (update on collision), the opposite semantics of the two AppMaker routes' reject-on-collision check for user-supplied slugs. Forcing a third call site onto a shared reject-style helper would have silently changed sync.post.ts's behavior rather than just its shape -- worth verifying a task's premise against the actual code before extending a refactor's scope to match a filing's word count, and documenting the deliberate exclusion in the new helper's own comment so a later pass doesn't 'fix' it back in.
 - 2026-09-14 `conductor/t-156` — recheck_render_queue.py's classify() checked only queueDepth.PENDING before check_render_box.py's own render_throughput_verdict() was ever consulted, so it wrote 'healthy' to RENDER-BACKLOG.md for a box that was actually down (every job failing fast, never leaving anything stuck PENDING) in the exact same live session where check_render_box.py correctly reported DOWN. Two scripts reading the same stats endpoint with different classifiers will disagree eventually -- when one is already the documented single source of truth for a judgment (here, 'is the render box actually rendering'), the other should delegate to it rather than reimplement a weaker version. Caught this live because the two scripts were run back-to-back in the same session on coloring-book/t-022; would otherwise have silently written a wrong ledger entry.
 - 2026-09-14 `kind-robots/t-062` — This sandbox's local verification habit of running vue-tsc/eslint/prettier/test:layout-contract missed a fourth check bundled into the same CI job: test:kr-class-coverage, which failed on the first push over kr-text-sm -- a plausible-looking primitive name (the sm-size family is all modified: kr-text-black-sm, kr-text-dim-sm, kr-text-bold-sm, kr-text-faded-sm, but no bare kr-text-sm) that doesn't actually exist in assets/css/tailwind.css. Read a CI workflow file's full step list (.github/workflows/<job>.yml) before claiming local verification covers a job, rather than assuming the one script named in the job title is the whole job -- layout-contract.yml alone runs four separate npm scripts plus two fixture/selftest scripts. Also: a Grant-sharing pitch (kind-robots/t-044/t-050/t-062) that adds canView()/existsActiveGrant() to two view routes plus a minimal Share/Shared-with-me UI has no existing owner-facing edit surface to embed the share widget into for either Project or Resource -- shipped as two standalone /projects/[id]/share and /resources/[id]/share pages instead of wiring into the admin-only conductor project-detail panel, which is gated on isAdmin and would never reach the non-admin owners Grant sharing exists for.
-- 2026-09-14 `interface-vision/t-133` — Real PR traffic touching *.sh files was too sparse to answer the task's own question from CI history alone (only one recent PR had an actual .sh diff, and it produced zero shellcheck findings) -- ran shellcheck directly against the full current *.sh corpus (12 scripts) as a stand-in evidence base instead of waiting indefinitely for more PR traffic. Only SC2086 had multiple true-positive hits with zero false positives; the other codes seen (SC2207/SC2010/SC2209/SC1003) each had a single occurrence and one (SC2209) was a confirmed false positive on this repo's TOOL=name assignment style, confirming the task's own caution against flipping the whole pass to blocking at once.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-14T18:45:51Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-14T18:49:14Z_
