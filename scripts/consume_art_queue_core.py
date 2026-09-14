@@ -814,6 +814,70 @@ def entry_to_job(entry):
     }
 
 
+QUEUE_PAGE_SIZE = 200
+MAX_QUEUE_PAGES = 25
+
+
+def delivery_identity(payload):
+    """The (targetRepo, imagePath) a job will deliver to, or None when it has no
+    static destination (an in-app render that lands nowhere on disk).
+
+    Mirrors kind_robots' server/utils/artJobQueueCoverage.ts readStaticDeliveryTarget,
+    minus the prompt: two jobs writing the same file are the same unit of work
+    here even when a prompt edit landed between them.
+    """
+    repo = str(payload.get("targetRepo") or "").strip().lower()
+    image_path = str(payload.get("imagePath") or "").strip().replace("\\", "/")
+    if not repo or not image_path:
+        return None
+    return (repo, image_path)
+
+
+def in_flight_delivery_targets(timeout=30):
+    """{(targetRepo, imagePath): job_id} for every PENDING/RUNNING ArtJob.
+
+    conductor/t-162: art-generate.yaml entries carry no record of the ArtJob they
+    were submitted as, so a batch whose renders had not landed yet was re-queued
+    in full on every Auto Art Generate run. Observed 2026-09-14: 13 cthulhuquarium
+    destinations holding 78 PENDING jobs -- six identical copies each, one per run
+    across two days. ArtJob.attemptFingerprint cannot collapse them, because seeds
+    are randomised per submission by design (2026-08-30), so every resubmission is
+    a genuinely new payload and a genuinely new fingerprint. kind_robots cancels
+    the extras at claim time (artJobQueueCoverage.ts reconcileStaticDelivery),
+    which is why this surfaced as a queue that mysteriously emptied itself rather
+    than as duplicate artwork.
+
+    Returns None when the queue cannot be read. Callers treat that as "no guard"
+    and enqueue exactly as before: a network hiccup must never silently skip real
+    work, and the claim-time reconciler is still there as the backstop.
+    """
+    if not KR_API_TOKEN:
+        return None
+
+    targets = {}
+    for status in ("PENDING", "RUNNING"):
+        for page in range(1, MAX_QUEUE_PAGES + 1):
+            try:
+                code, resp = http_json(
+                    "GET",
+                    f"{KR_BASE_URL}/api/art/queue"
+                    f"?status={status}&pageSize={QUEUE_PAGE_SIZE}&page={page}",
+                    timeout=timeout,
+                )
+            except Exception:  # noqa: BLE001 - stay silent, fall back to enqueueing
+                return None
+            if code != 200 or not isinstance(resp, dict) or not resp.get("success"):
+                return None
+            data = resp.get("data") or {}
+            for job in data.get("jobs") or []:
+                identity = delivery_identity(job.get("payload") or {})
+                if identity and identity not in targets:
+                    targets[identity] = job.get("id")
+            if not (data.get("pagination") or {}).get("hasNextPage"):
+                break
+    return targets
+
+
 def load_entries():
     if not ART_GENERATE_FILE.exists():
         return []
@@ -1081,11 +1145,27 @@ def main():
         return 1
 
     failures = 0
+    skipped = 0
     done_paths = []
+    in_flight = in_flight_delivery_targets()
     for entry in entries:
         name = entry["image_path"]
         try:
-            job_id = enqueue(entry_to_job(entry))
+            job_body = entry_to_job(entry)
+
+            # Do not queue a second render for a destination the relay is already
+            # working on. Without this the same batch is re-submitted on every run
+            # until its renders land -- see in_flight_delivery_targets.
+            identity = delivery_identity(job_body.get("payload") or {})
+            if in_flight and identity and identity in in_flight:
+                skipped += 1
+                print(
+                    f"  SKIP {name} - ArtJob {in_flight[identity]} is already queued "
+                    "for this destination"
+                )
+                continue
+
+            job_id = enqueue(job_body)
 
             if args.no_wait:
                 # Fire-and-forget: the entry is now an ArtJob; the relay owns the
@@ -1110,16 +1190,22 @@ def main():
 
     cleared = mark_generate_done(done_paths)
 
+    if skipped:
+        print(
+            f"\n  {skipped} entr{'y' if skipped == 1 else 'ies'} skipped: an ArtJob is "
+            "already queued for that destination."
+        )
+
     if args.no_wait:
         print(
-            f"\n{len(entries) - failures}/{len(entries)} enqueued"
+            f"\n{len(entries) - failures - skipped}/{len(entries)} enqueued"
             f"; {cleared} marked done in {ART_GENERATE_FILE.relative_to(ROOT)}."
             " The relay renders them asynchronously; run distribute_images.py once"
             " the images land (or set the relay's KR_LOCAL_IMAGES_DIR)."
         )
     else:
         print(
-            f"\n{len(entries) - failures}/{len(entries)} succeeded"
+            f"\n{len(entries) - failures - skipped}/{len(entries)} succeeded"
             f"; {cleared} marked done in {ART_GENERATE_FILE.relative_to(ROOT)}."
             + ("" if failures else " Next: python scripts/distribute_images.py --dry-run")
         )

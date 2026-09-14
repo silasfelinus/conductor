@@ -156,6 +156,15 @@ def test_main_pending_filter_excludes_an_unresolved_non_daily_dream_request(
     file.write_text(sample)
     monkeypatch.setattr(cr, "ART_PROMPTS_FILE", file)
     monkeypatch.setattr(cr, "already_satisfied", lambda entry: False)
+    # Pin job 99 to PENDING instead of letting this reach the real API: the row
+    # must be excluded because its job is genuinely in flight, not because a
+    # sandbox happened to be offline or because production moved the job on.
+    monkeypatch.setattr(cr.consumer, "KR_API_TOKEN", "test-token")
+    monkeypatch.setattr(
+        cr.consumer,
+        "http_json",
+        lambda *a, **k: (200, {"success": True, "data": {"job": {"id": 99, "status": "PENDING"}}}),
+    )
     monkeypatch.setattr(
         sys, "argv", ["consume_art_requests.py", "--id-prefix", "kind-robots-fox"]
     )
@@ -496,3 +505,232 @@ def test_enqueue_accepts_deduplicated_done_job(monkeypatch):
         ),
     )
     assert cr.consumer.enqueue({"engine": "COMFY", "payload": {}}) == 881
+
+
+def _done_job_response(art_image_id=4242):
+    return (
+        200,
+        {
+            "success": True,
+            "data": {"job": {"id": 99, "status": "DONE", "artImageId": art_image_id}},
+        },
+    )
+
+
+def test_finished_submission_art_image_returns_id_for_done_job(monkeypatch):
+    """conductor/t-162: a DONE ArtJob whose media never landed is adoptable."""
+    monkeypatch.setattr(cr.consumer, "KR_API_TOKEN", "test-token")
+    monkeypatch.setattr(cr.consumer, "http_json", lambda *a, **k: _done_job_response())
+    assert cr.finished_submission_art_image({"last_art_job_id": 99}) == 4242
+
+
+def test_finished_submission_art_image_none_for_unfinished_or_unrecorded(monkeypatch):
+    monkeypatch.setattr(cr.consumer, "KR_API_TOKEN", "test-token")
+    # No recorded job at all -- nothing to adopt, and no network call needed.
+    assert cr.finished_submission_art_image({}) is None
+    for status in ("PENDING", "RUNNING", "FAILED", "CANCELLED"):
+        monkeypatch.setattr(
+            cr.consumer,
+            "http_json",
+            lambda *a, status=status, **k: (
+                200,
+                {"success": True, "data": {"job": {"id": 99, "status": status}}},
+            ),
+        )
+        assert cr.finished_submission_art_image({"last_art_job_id": 99}) is None, status
+    # DONE but with no ArtImage attached is not adoptable either.
+    monkeypatch.setattr(
+        cr.consumer,
+        "http_json",
+        lambda *a, **k: (
+            200,
+            {"success": True, "data": {"job": {"id": 99, "status": "DONE", "artImageId": None}}},
+        ),
+    )
+    assert cr.finished_submission_art_image({"last_art_job_id": 99}) is None
+
+
+def test_finished_submission_art_image_stays_quiet_without_token(monkeypatch):
+    monkeypatch.setattr(cr.consumer, "KR_API_TOKEN", "")
+    assert cr.finished_submission_art_image({"last_art_job_id": 99}) is None
+
+
+def test_recover_finished_submissions_adopts_the_existing_render(monkeypatch, tmp_path):
+    """The whole point: land the render that already exists, and never enqueue.
+
+    Reproduces the wedge this closes -- the row is pending, its ArtJob is DONE,
+    and its media is absent, which is exactly the state that made
+    has_unresolved_submission() and already_satisfied() deadlock each other.
+    """
+    monkeypatch.setattr(cr.consumer, "KR_API_TOKEN", "test-token")
+    monkeypatch.setattr(cr.consumer, "http_json", lambda *a, **k: _done_job_response())
+    monkeypatch.setattr(cr, "already_satisfied", lambda entry: False)
+    monkeypatch.setattr(cr, "sync_project_art", lambda entry, art_image_id: False)
+    monkeypatch.setattr(cr.consumer, "fetch_image_b64", lambda art_image_id: "ZmFrZQ==")
+
+    saved = []
+
+    def fake_save_result(entry, image_b64):
+        saved.append((entry["id"], image_b64))
+        return cr.ROOT / "projects" / "process" / "adopted.webp", None
+
+    monkeypatch.setattr(cr.consumer, "save_result", fake_save_result)
+
+    def explode(*a, **k):  # adoption must never re-POST a new job
+        raise AssertionError("recovery must not enqueue")
+
+    monkeypatch.setattr(cr.consumer, "enqueue", explode)
+
+    entries = [
+        {
+            "id": "stuck-row",
+            "status": "pending",
+            "image_path": "projects/images/x.webp",
+            "last_art_job_id": 99,
+        }
+    ]
+    recovered, failures = cr.recover_finished_submissions(entries, live=True)
+
+    assert recovered == ["stuck-row"]
+    assert failures == 0
+    assert saved == [("stuck-row", "ZmFrZQ==")]
+
+
+def test_recover_finished_submissions_skips_satisfied_and_non_pending(monkeypatch):
+    monkeypatch.setattr(cr.consumer, "KR_API_TOKEN", "test-token")
+    monkeypatch.setattr(cr.consumer, "http_json", lambda *a, **k: _done_job_response())
+    monkeypatch.setattr(cr, "already_satisfied", lambda entry: entry.get("present", False))
+
+    def explode(art_image_id):
+        raise AssertionError("must not download for a row that needs nothing")
+
+    monkeypatch.setattr(cr.consumer, "fetch_image_b64", explode)
+
+    entries = [
+        {
+            "id": "already-here",
+            "status": "pending",
+            "image_path": "a.webp",
+            "present": True,
+            "last_art_job_id": 98,
+        },
+        {"id": "already-done", "status": "done", "image_path": "b.webp", "last_art_job_id": 99},
+    ]
+    assert cr.recover_finished_submissions(entries, live=True) == ([], 0)
+
+
+def test_recover_finished_submissions_dry_run_downloads_nothing(monkeypatch):
+    monkeypatch.setattr(cr.consumer, "KR_API_TOKEN", "test-token")
+    monkeypatch.setattr(cr.consumer, "http_json", lambda *a, **k: _done_job_response())
+    monkeypatch.setattr(cr, "already_satisfied", lambda entry: False)
+
+    def explode(art_image_id):
+        raise AssertionError("dry run must not download")
+
+    monkeypatch.setattr(cr.consumer, "fetch_image_b64", explode)
+
+    entries = [
+        {
+            "id": "stuck-row",
+            "status": "pending",
+            "image_path": "projects/images/x.webp",
+            "last_art_job_id": 99,
+        }
+    ]
+    assert cr.recover_finished_submissions(entries, live=False) == ([], 0)
+
+
+def test_recover_finished_submissions_counts_failures(monkeypatch):
+    """One bad download must not abort the rest of the batch."""
+    monkeypatch.setattr(cr.consumer, "KR_API_TOKEN", "test-token")
+    monkeypatch.setattr(cr.consumer, "http_json", lambda *a, **k: _done_job_response())
+    monkeypatch.setattr(cr, "already_satisfied", lambda entry: False)
+    monkeypatch.setattr(cr, "sync_project_art", lambda entry, art_image_id: False)
+    monkeypatch.setattr(cr.consumer, "save_result", lambda e, b: (cr.ROOT / "x.webp", None))
+
+    def fetch(art_image_id):
+        raise RuntimeError("image fetch failed: HTTP 500")
+
+    monkeypatch.setattr(cr.consumer, "fetch_image_b64", fetch)
+
+    entries = [
+        {"id": "row-a", "status": "pending", "image_path": "a.webp", "last_art_job_id": 98},
+        {"id": "row-b", "status": "pending", "image_path": "b.webp", "last_art_job_id": 99},
+    ]
+    recovered, failures = cr.recover_finished_submissions(entries, live=True)
+    assert recovered == []
+    assert failures == 2
+
+
+def test_read_request_ledger_ignores_a_patched_load_requests(monkeypatch):
+    """consume_art_requests_to_media reassigns load_requests to a filtered view.
+
+    Recovery must not read through it: the rows a staging filter hides are
+    exactly the wedged ones it needs to find.
+    """
+    monkeypatch.setattr(cr, "load_requests", lambda: [])
+    monkeypatch.setattr(cr, "ART_PROMPTS_FILE", cr.ROOT / "projects" / "art-prompts.yaml")
+    assert len(cr.read_request_ledger()) > 0
+
+
+def test_recover_finished_submissions_skips_an_already_staged_render(monkeypatch, tmp_path):
+    """kind_robots media targets are RETAINED in projects/process/ forever, so a
+    staged file must not be re-downloaded on every run."""
+    monkeypatch.setattr(cr.consumer, "KR_API_TOKEN", "test-token")
+    monkeypatch.setattr(cr.consumer, "http_json", lambda *a, **k: _done_job_response())
+    monkeypatch.setattr(cr, "already_satisfied", lambda entry: False)
+    monkeypatch.setattr(cr.consumer, "PROCESS_DIR", tmp_path)
+
+    entry = {
+        "id": "staged-row",
+        "status": "pending",
+        "image_path": "public/images/creation-burst/x-card.webp",
+        "last_art_job_id": 99,
+    }
+    (tmp_path / cr.consumer.staged_filename(entry)).write_bytes(b"already here")
+
+    def explode(art_image_id):
+        raise AssertionError("a staged render must not be downloaded again")
+
+    monkeypatch.setattr(cr.consumer, "fetch_image_b64", explode)
+    assert cr.recover_finished_submissions([entry], live=True) == ([], 0)
+
+
+def test_main_adoption_leaves_the_request_pending(tmp_path, monkeypatch, capsys):
+    """ai-art-academy/t-010: staging a file is not delivery.
+
+    distribute_images.py prunes a request only once the file actually reached its
+    destination, and RETAINS every kind_robots media target in projects/process/
+    instead of moving it. If adoption marked rows done here, a request whose media
+    never shipped would be pruned on apparent delivery and the 'still needs
+    delivery' record would be lost silently -- the same class of bug this change
+    exists to remove.
+    """
+    sample = SAMPLE.replace(
+        "  prompt: a fox\n",
+        "  prompt: a fox\n  last_art_job_id: 99\n",
+    )
+    ledger = tmp_path / "art-prompts.yaml"
+    ledger.write_text(sample)
+    monkeypatch.setattr(cr, "ART_PROMPTS_FILE", ledger)
+    monkeypatch.setattr(cr, "already_satisfied", lambda entry: False)
+    monkeypatch.setattr(cr, "sync_project_art", lambda entry, art_image_id: False)
+    monkeypatch.setattr(cr.consumer, "PROCESS_DIR", tmp_path / "process")
+    monkeypatch.setattr(cr.consumer, "KR_API_TOKEN", "test-token")
+    monkeypatch.setattr(cr.consumer, "http_json", lambda *a, **k: _done_job_response())
+    monkeypatch.setattr(cr.consumer, "fetch_image_b64", lambda art_image_id: "ZmFrZQ==")
+    monkeypatch.setattr(
+        cr.consumer, "save_result", lambda entry, b64: (cr.ROOT / "staged.webp", None)
+    )
+    monkeypatch.setattr(
+        sys, "argv", ["consume_art_requests.py", "--live", "--id-prefix", "kind-robots-fox"]
+    )
+
+    cr.main()
+
+    out = capsys.readouterr().out
+    assert "ADOPTED" in out
+    assert "marked done" not in out
+    # The row must still be pending on disk for distribute_images.py to resolve.
+    rows = {r["id"]: r for r in cr.read_request_ledger()}
+    assert rows["kind-robots-fox-image-abc123"]["status"] == "pending"

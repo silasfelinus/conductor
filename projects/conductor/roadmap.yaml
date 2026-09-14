@@ -2636,5 +2636,57 @@ tasks:
     `--branch <my-current-branch>` preserves local work the way a normal `git push` would.
   updated: '2026-09-14T17:58:00Z'
 
+- id: t-162
+  milestone: m2
+  title: Art requests wedge forever when their ArtJob finishes but the render is never downloaded
+  status: review
+  stakes: reversible
+  passes: 1
+  owner: claude
+  note: >-
+    Filed 2026-09-14 from Silas's report: "things are moving from finished but they aren't hitting
+    done, and I have the same three coloring book pages duplicated in my most recent list. there was
+    201 entries 20 minutes ago, but then they disappear."
+
+
+    THE WEDGE. A projects/art-prompts.yaml request whose ArtJob reaches DONE but whose media never
+    lands can never be resolved by anything. record_submitted_job() writes only last_art_job_id and
+    leaves status pending; the row flips to done only when already_satisfied() sees the file at its
+    destination; and has_unresolved_submission(check_live=True) blocks re-submission unless the job
+    is 404 or CANCELLED -- a DONE job still reserves the row. So it is neither retried nor completed.
+    t-136's own docstring lists "DONE not yet reflected in already_satisfied" as a still-reserving
+    state, assuming it is transient, but nothing downloads the render once the run that submitted it
+    has exited. Measured on main 2026-09-14: 16 of the 17 pending rows were in exactly this state,
+    each holding a real ArtImage, the oldest (ArtJobs 18426-18429) stuck for over a week.
+
+
+    FIX: consume_art_requests.py gains a recovery pass that adopts the existing render -- fetch the
+    ArtImage and stage it -- rather than re-queueing a second one or leaving the row stuck. It never
+    enqueues, so it cannot reopen t-133. It deliberately does NOT mark rows done: staging is not
+    delivery, and distribute_images.py already prunes a request only once the file actually landed
+    (ai-art-academy/t-010, 2026-07-27, is the incident that rule exists for). Recovered this session:
+    9 delivered into git, 7 kind_robots media targets staged and correctly left pending.
+
+
+    THE DUPLICATES. Separately, projects/art-generate.yaml entries carry no record of the ArtJob they
+    were submitted as, so a batch whose renders had not landed was re-queued in full on every Auto
+    Art Generate run. Measured 2026-09-14: 13 cthulhuquarium destinations holding 78 PENDING jobs,
+    six identical copies each, ids stepping by exactly 32 per run across two days.
+    ArtJob.attemptFingerprint cannot collapse them because seeds are randomised per submission by
+    design (2026-08-30), so every resubmission is a genuinely new payload. kind_robots cancels the
+    extras at claim time (artJobQueueCoverage.ts reconcileStaticDelivery) -- which is why this
+    presented to Silas as a queue that emptied itself, not as duplicate art. Repo-wide CANCELLED
+    (10,695) had overtaken DONE (10,599). FIX: consume_art_queue_core.py skips an entry whose
+    (targetRepo, imagePath) already owns a PENDING/RUNNING job, failing open when the queue cannot
+    be read.
+
+
+    NOT FIXED, worth a look later: the "same three coloring book pages" are retry attempts that all
+    completed -- 22177/22178/22179 all target hwr-030-mermaid-on-lot-seven.webp, likewise mr-025 and
+    mr-008. Only one can ever be adopted, but every attempt lands DONE with its own ArtImage, so a
+    newest-first feed shows all three. That is the retry design showing through a view that does not
+    collapse by destination, not corruption.
+  updated: '2026-09-14T23:10:00Z'
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'

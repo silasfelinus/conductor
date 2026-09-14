@@ -108,8 +108,15 @@ def weak_prompt_reason(entry):
     return None
 
 
-def load_requests():
-    """Pending-or-not request dicts from art-prompts.yaml requests:."""
+def read_request_ledger():
+    """Every request row in art-prompts.yaml, unfiltered by any staging policy.
+
+    load_requests() is reassigned by consume_art_requests_to_media.py to apply
+    Daily Dream staging order and to skip rows the relay already owns. The
+    recovery pass must still see those rows: a wedged row is precisely one that
+    some filter has been skipping, so reading through the patched loader would
+    hide exactly the entries recovery exists to rescue.
+    """
     if not ART_PROMPTS_FILE.exists():
         return []
     data = yaml.safe_load(ART_PROMPTS_FILE.read_text()) or {}
@@ -118,6 +125,11 @@ def load_requests():
         for r in (data.get("requests") or [])
         if isinstance(r, dict) and r.get("prompt") and r.get("image_path")
     ]
+
+
+def load_requests():
+    """Pending-or-not request dicts from art-prompts.yaml requests:."""
+    return read_request_ledger()
 
 
 def filter_by_id_prefix(entries, prefix):
@@ -179,6 +191,113 @@ def job_still_reserves_submission(job_id, timeout=20):
         return True
     job = (resp.get("data") or {}).get("job") or {}
     return str(job.get("status") or "").upper() != "CANCELLED"
+
+
+def fetch_job(job_id, timeout=20):
+    """Return the ArtJob record for job_id, or None when it cannot be read.
+
+    Deliberately total: every failure mode (no token, network hiccup, non-200,
+    unsuccessful envelope) collapses to None so callers can treat "I could not
+    look" and "nothing useful there" identically and simply do nothing.
+    """
+    if not consumer.KR_API_TOKEN:
+        return None
+    try:
+        status, resp = consumer.http_json(
+            "GET", f"{consumer.KR_BASE_URL}/api/art/queue/{job_id}", timeout=timeout
+        )
+    except Exception:  # noqa: BLE001 - network hiccup, nothing to adopt
+        return None
+    if status != 200 or not isinstance(resp, dict) or not resp.get("success"):
+        return None
+    return (resp.get("data") or {}).get("job") or None
+
+
+def finished_submission_art_image(entry, timeout=20):
+    """ArtImage id of a recorded ArtJob that already rendered, else None.
+
+    conductor/t-162: a row whose ArtJob reached DONE but whose media never
+    landed was wedged permanently. already_satisfied() stays False, so the row
+    is never marked done; job_still_reserves_submission() keeps returning True
+    (DONE is neither CANCELLED nor a 404), so it is never re-submitted either.
+    Nothing else in the pipeline acts on it. Observed 2026-09-14: 16 rows in
+    that state, the oldest (ArtJobs 18426-18429) stuck for over a week, each
+    holding a perfectly good ArtImage nobody ever downloaded.
+
+    The render is not lost -- only the download half of the handoff is, when
+    the run that submitted the job exits before the relay finishes it. So adopt
+    the existing render rather than re-queueing a second one: re-submitting
+    would burn a GPU render to reproduce an image that already exists, and is
+    the exact duplicate-enqueue shape t-133 closed.
+    """
+    job_id = positive_job_id(entry.get("last_art_job_id"))
+    if job_id is None:
+        return None
+    job = fetch_job(job_id, timeout=timeout)
+    if not job or str(job.get("status") or "").upper() != "DONE":
+        return None
+    return positive_job_id(job.get("artImageId"))
+
+
+def recover_finished_submissions(entries, *, live, timeout=20):
+    """Download renders for rows whose ArtJob finished but whose media never
+    arrived, and return (recovered_ids, failure_count).
+
+    Never enqueues anything, so this cannot reopen t-133 no matter how many
+    rows it touches. Lands each render in projects/process/ exactly as the
+    normal success path does, leaving distribute_images.py to route it.
+    """
+    recovered_ids = []
+    failures = 0
+
+    for entry in entries:
+        if not is_pending(entry) or already_satisfied(entry):
+            continue
+        # Already staged and waiting on delivery. kind_robots media targets are
+        # RETAINED in projects/process/ indefinitely (distribute_images.py never
+        # moves them -- /public/images/** ships via the relay, not git), so this
+        # would otherwise re-download the same bytes on every run, forever.
+        staged = consumer.PROCESS_DIR / consumer.staged_filename(entry)
+        if staged.exists():
+            continue
+
+        art_image_id = finished_submission_art_image(entry, timeout=timeout)
+        if art_image_id is None:
+            continue
+
+        name = entry["image_path"]
+        if not live:
+            print(f"  would adopt ArtImage {art_image_id} for {name} (its ArtJob is already DONE)")
+            continue
+
+        try:
+            image_b64 = consumer.fetch_image_b64(art_image_id)
+            output, warning = consumer.save_result(entry, image_b64)
+            print(f"  ADOPTED {name} -> {output.relative_to(ROOT)} (ArtImage {art_image_id})")
+            if warning:
+                print(f"    WARNING: {warning}")
+        except Exception as error:  # noqa: BLE001 - keep draining the batch
+            failures += 1
+            print(f"  FAILED to adopt {name}: {error}", file=sys.stderr)
+            continue
+
+        # Landing the render is what unwedges the row; the Project cover sync is
+        # a bonus that only applies to genuine project-art rows. project_art_sync_
+        # payload() recovers a slug from the `{slug}-{variant}.webp` filename, which
+        # misfires on card art that merely looks like it ("world-card.webp" ->
+        # "Project world not found"). Letting that 404 abort the adoption would
+        # leave the row pending with its render already downloaded -- re-wedging
+        # the exact state this function exists to clear.
+        try:
+            if sync_project_art(entry, art_image_id):
+                print("    synchronized Project cover path + ArtImage relation")
+        except Exception as error:  # noqa: BLE001 - cosmetic next to the render
+            print(f"    WARNING: Project cover sync skipped: {error}", file=sys.stderr)
+
+        if entry.get("id"):
+            recovered_ids.append(entry["id"])
+
+    return recovered_ids, failures
 
 
 def has_unresolved_submission(entry, *, check_live=False):
@@ -460,6 +579,27 @@ def main():
     )
     args = parser.parse_args()
 
+    # Rescue pass first: a row whose ArtJob already finished can never reach the
+    # pending filter below (has_unresolved_submission holds it) nor the satisfied
+    # pass (its media never landed), so it has to be resolved before either runs.
+    recovered_ids, recovery_failures = recover_finished_submissions(
+        filter_by_id_prefix(read_request_ledger(), args.id_prefix),
+        live=args.live,
+    )
+    if recovered_ids:
+        # Deliberately NOT mark_done: staging a file in projects/process/ is not
+        # delivery. distribute_images.py prunes a request only once the file
+        # actually reached its destination, and RETAINS every kind_robots media
+        # target there instead of moving it. Marking these done here would
+        # re-create ai-art-academy/t-010 (2026-07-27), where a request pruned on
+        # apparent delivery silently lost the record that real delivery never
+        # happened -- the same class of bug this whole change exists to remove.
+        print(
+            f"Adopted {len(recovered_ids)} already-finished render(s) into "
+            "projects/process/; distribute_images.py resolves their requests "
+            "once each one actually lands.\n"
+        )
+
     pending = filter_by_id_prefix(
         [
             request
@@ -500,7 +640,7 @@ def main():
             print("No safe pending requests remain; blocked entries stay pending for prompt repair.")
         else:
             print("No pending requests in projects/art-prompts.yaml - nothing to do.")
-        return 0
+        return 1 if recovery_failures else 0
 
     print(
         f"{'LIVE' if args.live else 'DRY RUN'}: {len(todo)} to generate, "
@@ -559,14 +699,14 @@ def main():
             f"\n{len(todo) - failures}/{len(todo)} submitted; ArtJob ids recorded on "
             "each request. They stay pending until a later run finds the media path live."
         )
-        return 1 if failures else 0
+        return 1 if failures or recovery_failures else 0
 
     marked = mark_done(done_ids)
     print(
         f"\n{len(todo) - failures}/{len(todo)} generated; {marked} marked done."
         + ("" if failures else " Next: python scripts/distribute_images.py --dry-run")
     )
-    return 1 if failures else 0
+    return 1 if failures or recovery_failures else 0
 
 
 if __name__ == "__main__":
