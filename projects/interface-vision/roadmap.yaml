@@ -4021,7 +4021,7 @@ tasks:
 - id: t-133
   milestone: m6
   title: "Kaizen: promote high-confidence shellcheck rules (e.g. SC2086) to blocking once real PR traffic shows their false-positive rate"
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
   passes: 0
@@ -4054,9 +4054,16 @@ tasks:
     pulling the layout-contract job log for any PR that touches *.sh files going forward
     (grep the 'Syntax-check changed shell scripts' step for SC#### codes) and revisit once a
     handful of real hits have accumulated. Releasing the claim rather than holding it idle.
+
+    Merged kind_robots#2712: promoted shellcheck SC2086 to blocking in layout-contract.yml's
+    changed-shell-scripts pass. Audited full 12-script *.sh corpus + available CI history:
+    SC2086 (4 hits, all in utils/scripts/image_gen.sh) were all genuine true positives, zero
+    false positives -- fixed and used as the clean baseline. SC2207/SC2010/SC2209/SC1003
+    each had only 1 occurrence and SC2209 was a confirmed false positive (sync-comfy-
+    models.sh:184 COPY_TOOL=rsync), so they stay warning-only.
   claimed_by: scheduled-20260914T003054Z-iv-t133
   claimed_at: '2026-09-14T00:30:55Z'
-  updated: '2026-09-14T00:34:30Z'
+  updated: '2026-09-14T00:39:43Z'
   implementation_pr: 'silasfelinus/kind_robots#2712'
 
 - id: t-134
