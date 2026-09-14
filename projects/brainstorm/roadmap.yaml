@@ -71,11 +71,9 @@ tasks:
     passes: 1
     stakes: reversible
     note: >-
-      Historical Brainstorm roadmap task was a recurring proposal generator for Silas. That
-      capability was useful but semantically displaced the user-facing Brainstorm product.
-      The 2026-08-10 revival pass replaced `kind: proposal` with this finite software
-      roadmap. Any future Conductor proposal-generation loop should consume Brainstorm as a
-      tool or live under Conductor coordination rather than defining `/brainstorm` itself.
+      Historical Brainstorm roadmap task was a recurring proposal generator for Silas.
+
+      Full history: projects/brainstorm/HISTORY.md#t-001
 
   - id: t-002
     milestone: m0
@@ -84,12 +82,10 @@ tasks:
     updated: '2026-08-10T09:09:00Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Inspect the 2023-2024 Brainstorm commit sequence, including old page/view, selector, add-pitch, Pitch/PitchType store/model code, API route, image/persona, and save/edit behavior. Identify the last coherent working snapshot and the later commit/route change that replaced the public Brainstorm surface. Write `projects/brainstorm/RECOVERY-MAP.md` with: historical file -> current equivalent, reusable vs obsolete code, old data model assumptions, provider/API assumptions, and the smallest safe restoration slice. Do not restore code blindly; current Nuxt 4/Pinia/server conventions win.
+    note: >-
+      Inspect the 2023-2024 Brainstorm commit sequence, including old page/view, selector, add-pitch, Pitch/PitchType store/model code, API route, image/persona, and save/edit behavior.
 
-      Reconstructed the Brainstorm lineage and documented the recovery map. The last coherent public standalone product survived through June 9, 2026; the exact regression occurred in the June 15 Pitch-to-Dream migration, which deleted the Brainstorm manager and changed content/brainstorm.md from :brainstorm-manager/pitchCards to :dream-manager/dreamCards. RECOVERY-MAP.md separates interaction behavior worth restoring from the deleted Pitch schema, obsolete provider/parser assumptions, and historical LLM output that remains an anti-benchmark.
-
-      Merged PR #2019 with projects/brainstorm/RECOVERY-MAP.md. The recovery target is now evidence-based: the June 9 standalone manager is the best behavioral donor, and the June 15 Pitch-to-Dream migration is the exact point where Brainstorm was deleted and replaced by the Dream manager. Restore the interaction loop, not the deleted Pitch schema or old LLM output.
+      Full history: projects/brainstorm/HISTORY.md#t-002
     claimed_by: 2026-08-10T084900Z-brainstorm-t-002-b7f2
     claimed_at: '2026-08-10T08:49:00Z'
 
@@ -100,12 +96,10 @@ tasks:
     updated: '2026-08-10T09:31:00Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Map current `/brainstorm`, `/plan/brainstorm`, content frontmatter, dashboard config, workspace route stitching, Dream manager reuse, project placement, tutorials/nav, existing `Pitch`, Prompt, Project, Dream, Character, Scenario, Reward and Bot models, plus current text-generation provider/server abstractions. Flag semantic collisions: Conductor pitches are coordination proposals and must not become user Brainstorm data. Record recommended reusable primitives and exact files in RECOVERY-MAP.md.
+    note: >-
+      Map current `/brainstorm`, `/plan/brainstorm`, content frontmatter, dashboard config, workspace route stitching, Dream manager reuse, project placement, tutorials/nav, existing `Pitch`, Prompt, Project, Dream, Character, Scenario, Reward and Bot models, plus current text-generati
 
-      Completed the current Kind Robots architecture audit and appended it to projects/brainstorm/RECOVERY-MAP.md. The audit maps current route/presentation files, active text-server selection, provider abstraction, mana/auth behavior, the surviving OpenAI-only Brainstorm endpoint, DreamType.BRAINSTORM legacy semantics, Prompt/PitchSheet persistence boundaries, source-object visibility helpers, and responsive primitives. It defines an implementation path for t-004 through t-007: dedicated Brainstorm route/store, provider-aware structured generation endpoint, and candidate-first workbench without resurrecting Pitch or Dream-specific storage semantics.
-
-      Merged PR #2020 with the current architecture audit in RECOVERY-MAP.md and PR #2021 with IMPLEMENTATION-CONTRACT.md. Brainstorm now has an evidence-backed current implementation path: canonical route plus alias, dedicated Pinia store, provider-aware structured endpoint using current server/mana infrastructure, candidate-first workbench, and explicit boundaries against Dream/Pitch/Prompt/Conductor semantic overloading.
+      Full history: projects/brainstorm/HISTORY.md#t-003
     claimed_by: 2026-08-10T091100Z-brainstorm-t-003-c4a1
     claimed_at: '2026-08-10T09:11:00Z'
 
@@ -119,12 +113,10 @@ tasks:
     updated: '2026-08-10T09:48:00Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Make `/brainstorm` render the Brainstorm product instead of `:dream-manager` and stop routing the Brainstorm dashboard tab to `/dreams`. `/plan/brainstorm` must resolve to the same implementation via the site's existing route/alias pattern, not duplicate it. Keep presentation metadata in Kind Robots. Preserve direct-load and refresh behavior.
+    note: >-
+      Make `/brainstorm` render the Brainstorm product instead of `:dream-manager` and stop routing the Brainstorm dashboard tab to `/dreams`.
 
-      Restored the canonical Brainstorm route on Kind Robots branch worker/brainstorm-t-004-d8e3. content/brainstorm.md now mounts a dedicated :brainstorm-manager instead of :dream-manager and no longer declares dreamCards; /plan/brainstorm is a redirect-only alias to /brainstorm; the Brainstorm dashboard tab now routes to /brainstorm with general ideation language; and a dedicated candidate-first workbench shell restores an honest Brainstorm surface without fake generation controls or resurrecting Pitch. Diff is limited to four intended files.
-
-      Merged Kind Robots PR #1709. /brainstorm now mounts a dedicated Brainstorm manager instead of the Dream manager, /plan/brainstorm redirects to the canonical route, and the Brainstorm dashboard tab routes home instead of /dreams. The first layout attempt tripped the Interface Vision viewport-grid ratchet; the corrected component uses auto-fit/minmax and wrapping flex, and the replacement head passed TypeScript, Layout Contract, Contract Tests, and all other PR workflows.
+      Full history: projects/brainstorm/HISTORY.md#t-004
     claimed_by: 2026-08-10T093300Z-brainstorm-t-004-d8e3
     claimed_at: '2026-08-10T09:33:00Z'
 
@@ -136,12 +128,10 @@ tasks:
     updated: '2026-08-10T10:15:00Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Create/modernize the Pinia store so components never call APIs or localStorage directly. Define typed session, request, candidate, generation-state and error contracts. A batch has independent candidate IDs and preserves prior candidate text when one slot is regenerated. The store must support result count, constraints/examples, keep/reject, inline edits, replacement generation and future object/art metadata without one giant untyped blob.
+    note: >-
+      Create/modernize the Pinia store so components never call APIs or localStorage directly.
 
-      Built the modern Brainstorm state contract on Kind Robots branch worker/brainstorm-t-005-e5c7. Added shared typed request/response/session/candidate/batch/error contracts plus a dedicated Pinia store that owns premise, result count, constraints/examples, source refs, batch history, stable candidate IDs, keep/reject/edit state, local session persistence, slot regeneration, branching, revision history, active text-server snapshots, and the future /api/brainstorm/generate call. Added a Brainstorm Store Contract workflow that rejects old Dream/Pitch ownership, legacy botcafe endpoint reuse, provider knobs in creative state, and Promise-valued store state. No schema or endpoint implementation is included in this task.
-
-      Merged Kind Robots PR #1712. Brainstorm now has shared typed session/batch/candidate/request/ response/error contracts and a dedicated Pinia store owning premise, constraints/examples, stable candidate IDs, fresh-batch history, keep/reject/edit state, revision-preserving slot regeneration, explicit branching, source/art metadata slots, active text-server snapshots, typed failures, and ephemeral local persistence. A dedicated Brainstorm Store Contract plus TypeScript and the full repository contract suite passed before merge.
+      Full history: projects/brainstorm/HISTORY.md#t-005
     claimed_by: 2026-08-10T095000Z-brainstorm-t-005-e5c7
     claimed_at: '2026-08-10T09:50:00Z'
 
@@ -155,12 +145,10 @@ tasks:
     updated: '2026-08-10T10:41:00Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Use the current Kind Robots default/active text-server/provider abstraction rather than an old hard-coded OpenAI path. Accept a pitch, requested count and optional constraints. Request structured candidate output, validate/sanitize it, reject malformed provider wrappers safely, and return the standard `{ success, ... }` API shape via errorHandler. Prompt explicitly for semantic diversity and non-duplicate ideas. Apply normal auth/mana behavior if current text generation requires it. Add focused endpoint/parser tests.
+    note: >-
+      Use the current Kind Robots default/active text-server/provider abstraction rather than an old hard-coded OpenAI path.
 
-      Implemented the provider-aware Brainstorm generation contract on Kind Robots branch worker/brainstorm-t-006-f6a9. Added POST /api/brainstorm/generate with canonical Server-row resolution, access/transport guards, mana gating, exact-count structured validation, duplicate rejection, and errorHandler responses. Official OpenAI uses native Responses JSON schema; Anthropic, Ollama, and OpenAI-compatible servers share the current provider caller and are normalized through one JSON candidate parser with no prose-line fallback. Added modern creative-quality prompting including the anti-benchmark rule and 'do not confuse safe with bland', plus regression tests and a dedicated generation-contract workflow. Hardened shared provider derivation so compatible/local servers need not fake an OpenAI key and first-party OpenAI credentials are never forwarded to arbitrary compatible URLs.
-
-      Merged Kind Robots PR #1713. Brainstorm now has POST /api/brainstorm/generate with canonical Server-row resolution, provider-aware structured generation, exact-count/duplicate validation, modern creative-quality prompting, mana charging only after usable output, and backend/server trust guards. Official OpenAI uses native Responses JSON schema; Anthropic, Ollama, and compatible servers normalize through the shared provider caller. The dedicated generation contract, TypeScript, Layout, API client, and full repository contract suites passed.
+      Full history: projects/brainstorm/HISTORY.md#t-006
     claimed_by: 2026-08-10T101700Z-brainstorm-t-006-f6a9
     claimed_at: '2026-08-10T10:17:00Z'
 
@@ -197,14 +185,10 @@ tasks:
       left uncovered.
       All 13 other checks on the PR are green. Branch/PR left open for the retry -- fix on
       the same branch, don't open a new PR. See PR #1714 review comment for the same detail.
-    note: |-
-      Front-end centerpiece: pitch textarea, sensible result-count control, optional compact constraints/examples, generate action, and responsive candidate cards. Candidate cards must support keep, reject/delete, edit, regenerate-this-slot, duplicate/branch and "more like this" affordances without turning the page into a chat transcript. Design for keyboard and touch. Loading/error/empty states are first-class.
+    note: >-
+      Front-end centerpiece: pitch textarea, sensible result-count control, optional compact constraints/examples, generate action, and responsive candidate cards.
 
-      Built the first playable Brainstorm workbench on Kind Robots branch worker/brainstorm-t-007-a7d4. The dedicated manager now provides a premise composer, explicit result count, optional constraints/examples, fresh-batch history, structured loading/error/empty states, and a container-responsive candidate workspace. Candidate cards emit keep/reject/reset/delete, inline edit, feedback, regenerate-this, and branch/more-like-this actions; the manager orchestrates the Brainstorm store so components contain no API or localStorage calls. Added a Brainstorm Workbench Contract workflow enforcing store ownership and intrinsic grid layout.
-
-      REJECTED 2026-08-10T11:00:00Z (pass 1, quality): see retry_context above -- real TypeScript and Contract-verifier failures on PR #1714, not a transient CI blip. PR left open for the fix.
-
-      Merged Kind Robots PR #1714 as 07a42d057988f4ff06b1d00e2006a801067cfa71 after the retry head completed all attached checks successfully. The missing WonderLab preview fixture was added, the prior TypeScript failure no longer reproduces on the current PR head, and the playable Brainstorm composer/candidate workbench is now on Kind Robots main.
+      Full history: projects/brainstorm/HISTORY.md#t-007
     claimed_by: 2026-08-10T104400Z-brainstorm-t-007-a7d4
     claimed_at: '2026-08-10T10:44:00Z'
 
@@ -216,14 +200,10 @@ tasks:
     updated: '2026-08-10T11:52:20Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Add user-language controls for variation rather than provider parameters: e.g. stranger, more practical, darker/funnier where allowed, shorter, different genre/angle, invert, and fresh batch. These should translate into prompt intent in the store/API contract. Keep advanced controls collapsible and defaults obvious. Include sample starters that demonstrate both utility and playful absurdity without hard-coding output.
+    note: >-
+      Add user-language controls for variation rather than provider parameters: e.g. stranger, more practical, darker/funnier where allowed, shorter, different genre/angle, invert, and fresh batch.
 
-      Implemented human-language creative direction controls and starter premises on Kind Robots branch worker/brainstorm-t-008-c3f7. Creative presets flow through the existing Brainstorm store mode field into explicit server-side prompt instructions; no provider knobs or new persistence semantics were added. Added generation and workbench contract coverage.
-
-      Implemented human-language creative direction controls plus focused/assortment response composition on the Kind Robots worker branch. Assortment supports selectable response lenses with optional exact counts, Auto allocation, adaptive mixes when no lens is selected, candidate lens metadata, and server-side quota validation. Scope remains Brainstorm-only and is ready for PR/CI review.
-
-      Merged Kind Robots PR #1715 as 3ea642a3bb2e3adc9f09d588be4d3d81d7e9aa74 after every attached workflow completed successfully. Brainstorm now has human-language creative-direction controls plus Focused and Assortment response composition. Assortment supports adaptive mixes or selectable response lenses with Auto allocation and exact integer quotas; candidates carry their structured response lens, and server-side parsing validates the requested mix. No provider knobs, schema migration, durable persistence, or art generation were added.
+      Full history: projects/brainstorm/HISTORY.md#t-008
     claimed_by: 2026-08-10T111800Z-brainstorm-t-008-c3f7
     claimed_at: '2026-08-10T11:18:00Z'
 
@@ -235,14 +215,10 @@ tasks:
     updated: '2026-08-10T12:14:00Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Regenerating or branching a candidate must not silently destroy its previous text. Add lightweight revision lineage so a user can inspect or restore earlier variants during the active session. Reordering and editing should not lose candidate identity.
+    note: >-
+      Regenerating or branching a candidate must not silently destroy its previous text.
 
-      Claiming the next Brainstorm workbench slice after t-008: make candidate revision history inspectable/restorable and preserve non-destructive branch lineage without changing durable persistence semantics.
-
-      Implemented inspectable/restorable per-candidate revision history and exact branch-origin lineage on Kind Robots worker/brainstorm-t-009-e4b9. Restores append a new restored revision instead of deleting later work; branches snapshot the exact parent revision used. Candidate UI exposes collapsible history and branch lineage, and WonderLab carries a deterministic multi-version branch specimen. Diff is Brainstorm-only and ready for PR/CI review.
-
-      Merged Kind Robots PR #1717 as 56eb1c539f920d06250235118f0ff280fd63c2f2 after every attached workflow completed successfully. Brainstorm candidate cards now expose restorable revision history; restoring an older version appends a new restored revision instead of truncating later work. Branches snapshot the exact parent revision used, so later parent edits or deletion cannot rewrite branch provenance. WonderLab includes deterministic multi-version branch coverage. No durable database persistence or generation behavior changed.
+      Full history: projects/brainstorm/HISTORY.md#t-009
     claimed_by: 2026-08-10T115600Z-brainstorm-t-009-e4b9
     claimed_at: '2026-08-10T11:56:00Z'
 
@@ -256,14 +232,10 @@ tasks:
     updated: '2026-08-10T12:45:00Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Audit existing Pitch/Prompt and related schema before adding a migration. Reuse only if semantics genuinely fit; do not overload Conductor projection/pitches. Logged-in users should be able to save named Brainstorm sessions/candidates and reopen them. Anonymous sessions may remain ephemeral/local for v1. Any schema change must be additive and data-preserving with API routes, store actions and tests.
+    note: >-
+      Audit existing Pitch/Prompt and related schema before adding a migration.
 
-      Auditing current Kind Robots persistence models before choosing Brainstorm durable storage. Reuse an existing model only if its semantics genuinely match named private creative sessions and candidate lineage; otherwise use an additive data-preserving Brainstorm-specific schema with authenticated API/store ownership.
-
-      Implemented durable private Brainstorm persistence on Kind Robots worker/brainstorm-t-010-f2d6. Added additive BrainstormSession/BrainstormCandidate schema + migration, owner-scoped authenticated list/create/open/update APIs, typed snapshot normalization and round-trip reconstruction, store-owned explicit save/update/reopen actions while keeping browser drafts local, and minimal Saved Work controls. Added dedicated persistence/Prisma contract coverage. Migration audit is additive-only: CREATE TABLE/indexes plus a foreign key between the two new tables; no existing data/table/column rewrite or drop.
-
-      Merged Kind Robots PR #1718 after every attached workflow passed, including the dedicated Prisma validation/generation and Brainstorm persistence round-trip contract. Added additive BrainstormSession/BrainstormCandidate persistence, authenticated owner-scoped list/create/open/update APIs, explicit Pinia save/update/reopen behavior while preserving local unsaved drafts, and minimal private Saved Work controls. Migration was audited as additive-only: two CREATE TABLE statements, indexes, and one foreign-key ADD CONSTRAINT between the two new tables; no existing data/table/column rewrite or drop. The worker branch is deleted, the resulting production deployment succeeded, and live /brainstorm returns the Saved Work surface.
+      Full history: projects/brainstorm/HISTORY.md#t-010
     claimed_by: 2026-08-10T121700Z-brainstorm-t-010-f2d6
     claimed_at: '2026-08-10T12:17:00Z'
 
@@ -276,7 +248,10 @@ tasks:
     updated: '2026-08-11T09:01:48Z'
     passes: 0
     stakes: reversible
-    note: 'Implemented on worker/brainstorm-t011-20260811. Replaced the bare "Reopen" <select> in brainstorm-manager.vue with a compact scrollable card list (name, premise excerpt, candidate count, updated time). Added a session-wide "Kept ideas" panel (all kept candidates across every batch, not just the active one, via a new allKeptCandidates store computed) with per-idea checkboxes defaulted to selected, plus "Copy selected" (clipboard) and "Export .md" (client-side Blob download) actions -- no new server endpoints. Fixed one real CI failure along the way: verifyMdcScrollOwnership.ts flagged the two new lists nested overflow-y-auto scroll containers inside a page-level-mounted component, so both were changed to grow with the page instead of owning their own scrollbar. vue-tsc, eslint, prettier (scoped to new hunks -- file already carried unrelated whole-file prettier drift), verifyBrainstormWorkbench.mjs (updated for new testids), and verifyBrainstormStoreContract.mjs all pass. All 18 kind_robots CI checks green. Merged squash 5aa6c4f.'
+    note: >-
+      Implemented on worker/brainstorm-t011-20260811.
+
+      Full history: projects/brainstorm/HISTORY.md#t-011
     claimed_by: sweep-20260811-brainstorm-t011
     claimed_at: '2026-08-11T08:31:52Z'
     implementation_pr: 'silasfelinus/kind_robots#1753'
@@ -292,26 +267,10 @@ tasks:
     passes: 0
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#1820'
-    note: |-
-      Create an explicit, inspectable adapter contract for brainstorming from Kind Robots entities. The user sees the selected source object and can remove it. Start with Character and Dream and design the contract so Scenario, Reward, Bot, Project and Prompt can follow without bespoke endpoints. Limit context to relevant canonical fields and avoid leaking private data across ownership/visibility boundaries.
+    note: >-
+      Create an explicit, inspectable adapter contract for brainstorming from Kind Robots entities.
 
-      REVIEW REJECTED (quality) on Kind Robots PR #1820 exact head 8582736a5eada206391a3c4511469bed9d05a5a5. Character source resolution can reuse a cached/localStorage Character without a fresh server visibility check because fetchCharacterById(ref.id) defaults to force=false; resolve must revalidate authorization before displaying source data. The async source watcher also lacks invalidation/request identity, so a slower old resolve can resurrect a removed or superseded source card. All 21 GitHub Actions on the head passed, but the separate Vercel status remains failure: Account is blocked. Fix these defects on the existing PR branch and rerun exact-head checks; do not bypass the Vercel account gate.
-
-      FOLLOW-UP REVIEW REJECTED (quality) on Kind Robots PR #1820 exact head c8b4d4818a670238ba7d9b5a4fd6b5cb191fde78. The prior privacy revalidation and selected-source resolve race are fixed, but runSourceSearch still has no request-identity guard: a slower earlier search can overwrite a newer search's results and clear isSearchingSource while the newer request is still in flight. Add a search token/captured request identity so only the latest search may write results or clear loading state, with regression coverage. All 21 attached GitHub Actions completed successfully on this head. Separate Vercel status remains failure because the account is blocked; do not bypass that gate.
-
-      FIX PUSHED 2026-08-12 to Kind Robots PR #1820 exact head bd82875: added sourceSearchToken (mirrors the existing sourceResolveToken pattern) so runSourceSearch drops a stale search's results and no longer clears isSearchingSource out from under a newer, still-in-flight search. vue-tsc/eslint/prettier clean, verifyBrainstormSourceAdapters.test.ts extended with the new guard's assertions and passes, verifyBrainstormWorkbench.mjs/verifyBrainstormStoreContract.mjs/test:workflow-paths unaffected. Awaiting re-review; merge still blocked separately on kind-robots/t-064 (Vercel account gate).
-
-      FOLLOW-UP REVIEW REJECTED (quality) on Kind Robots PR #1820 exact head bd8287580ed567b057fa2292ee11145fe375ff0c. The sourceSearchToken race fix is correct and all 21 attached GitHub Actions completed successfully, but Character search still calls fetchCharacters() with its default force=false. characterStore short-circuits to persisted/in-memory characters when hasLoaded is true, so after an auth transition the Brainstorm source picker can still list stale Character rows the current session may no longer be authorized to view. Force a fresh authorized Character list fetch for search (or equivalent server-authorized search path) and add regression coverage. Separate Vercel status remains failure: Account is blocked; do not bypass that gate.
-
-      FIX PUSHED 2026-08-12 to Kind Robots PR #1820 exact head e7272c6: characterAdapter.search now calls store.fetchCharacters(true) instead of the unforced default, so the source picker can no longer surface a pre-auth-transition cached Character list -- same staleness class as the resolve() fix, just on the search path. Confirmed Dream's fetchDreams()/fetchDreamById() have no equivalent hasLoaded cache short-circuit, so no analogous fix was needed there. vue-tsc/eslint/prettier clean on changed files; verifyBrainstormSourceAdapters.test.ts extended with a regression assertion and passes; verifyBrainstormWorkbench.mjs/verifyBrainstormStoreContract.mjs/test:workflow-paths/verifyCaptureGroupGuards.ts all clean. Awaiting re-review; merge still blocked separately on kind-robots/t-064 (Vercel account gate).
-
-      FOLLOW-UP REVIEW REJECTED (quality/privacy boundary) on Kind Robots PR #1820 exact head e7272c618476d38e9e9cca84edfc7cbc4e2423a5. Character search now calls fetchCharacters(true), but characterStore.fetchCharacters() catches failed revalidation and returns the existing persisted characters array; the adapter then searches store.characters anyway. An expired/unauthorized/network-failed forced fetch can therefore still surface stale private Character rows. Make the Brainstorm Character picker fail closed on unsuccessful fresh authorization (prefer adapter-scoped handling rather than changing global offline fallback semantics unless audited) and add a regression proving a failed forced fetch yields no cached candidates. All 21 attached GitHub Actions passed on this head. Separate Vercel status remains failure: Account is blocked; do not bypass that gate.
-
-      CORRECTION TO THE 2026-08-12 e7272c6 REVIEW NOTE: the failed-fresh-fetch privacy issue affects both list adapters, not only Character. Character fetchCharacters(true) returns the existing persisted characters array on request failure, and characterAdapter.search then reads store.characters. Dream fetchDreams() returns [] on request failure but leaves store.dreams intact, and dreamAdapter.search ignores the returned fresh array and reads store.dreams instead. Thus either picker can surface stale pre-auth-transition rows when fresh authorization/list retrieval fails. Make both Brainstorm source searches fail closed on unsuccessful fresh retrieval and add regression coverage with preloaded cached rows plus failed fetches, asserting zero candidates. PR #1820 exact head e7272c618476d38e9e9cca84edfc7cbc4e2423a5 remains Actions-green but separately blocked by Vercel Account is blocked.
-
-      BLOCKED after repeated quality/privacy review failures on Kind Robots PR #1820. AGENTS.md requires a quality/scope rejection to consume a pass and to block at the third such rejection. This task has had at least four distinct quality rejections (stale Character resolve plus source race; overlapping search race; cached Character search; and the current fail-open fresh-list failure affecting Character and Dream), although connector-native ready events did not increment the roadmap passes field. Current exact head e7272c618476d38e9e9cca84edfc7cbc4e2423a5 is Actions-green but still fails closed incorrectly on list retrieval: Character forced fetch falls back to cached characters on error, and Dream fetch returns [] on error while the adapter ignores that result and searches stale store.dreams. Do not continue automatic retry churn. Resolution should explicitly design a fail-closed adapter/list-result contract, then return the task to ready deliberately. Vercel remains separately blocked at the account level.
-
-      CLOSED 2026-08-12: exact head 4a6966d (fetchFreshSourceRows fail-closed helper, pushed directly by Silas) fixes the fail-open security-flag finding -- both characterAdapter.search() and dreamAdapter.search() now return zero candidates whenever a fresh authorized fetch does not succeed (checked via store.error, which fetchCharacters()/fetchDreams() both clear before the request and only set on a caught failure), rather than falling back to whatever the store already had cached. Verified independently: read stores/characterStore.ts and stores/dreamStore.ts directly to confirm clearError()/setLastError()/reportError() give store.error call-accurate semantics, not just trusting the PR description. All 21 GitHub Actions checks green on this head; the Vercel "Account is blocked" status is stale (kind_robots migrated production to kindrobots.org and disabled Vercel Git deployments in kind_robots #1823, merged 2026-08-12) and is not a real merge gate -- confirmed via kind_robots #1816/#1818/#1819/#1821/#1823 all merging today with the same non-required Vercel failure present. Merged Kind Robots PR #1820 (squash 00e6a34).
+      Full history: projects/brainstorm/HISTORY.md#t-012
 
   - id: t-013
     milestone: m3
@@ -323,29 +282,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Let a user choose/deep-link a Character and request ideas that preserve canonical
-      traits: situations, dialogue hooks, visual concepts, portrait/action compositions and
-      batches such as "20 art prompts for this Character under these constraints." Output is
-      text only in this task. Provide a reusable deep-link/query-state contract for other
-      surfaces to launch Brainstorm with source + intent prefilled.
+      Let a user choose/deep-link a Character and request ideas that preserve canonical traits: situations, dialogue hooks, visual concepts, portrait/action compositions and batches such as "20 art prompts for this Character under these constraints." Output is text only in this task.
 
-      DONE 2026-08-13 (conductor scheduled Agent run): kind_robots PR #1856 merged squash
-      1fd0cc40. buildBrainstormPrompts never actually read BrainstormSourceRef even though
-      t-012 already let a user pick/persist one -- a Character-grounded session generated the
-      same premise-only ideas as freeform. Added server/utils/brainstorm/brainstormSourceContext(Kit).ts
-      to resolve a source ref into a compact, canView-checked trait summary and fold it into
-      the prompt as a "Grounded in this Kind Robots object" block (resolve failure degrades to
-      ungrounded, never fails the request). Added the reusable deep-link/query-state contract
-      on brainstorm-manager.vue (source/sourceId/intent query keys, generic over modelType,
-      mirrors storybook-page.vue seedFromQuery()) and wired the first entry point on
-      character-manager.vue ("Brainstorm variations" button). Art-prompt variations use the
-      existing count/returnTypes/mode machinery plus the new intent prefill rather than a new
-      return-type taxonomy. Scope deliberately Character-only; Dream-aware grounding is
-      t-014, which slots into the same one-entry resolver registry. Verified: eslint clean,
-      prettier clean on all new files, vue-tsc --noEmit exit 0, all 5 brainstorm contract
-      scripts pass (generation, source-context, object-entry-links, workbench, source-adapters).
-      Kaizen filed as a note in the PR: character-card.vue still has no entry point, only
-      character-manager.vue's detail panel does.
+      Full history: projects/brainstorm/HISTORY.md#t-013
     claimed_by: ''
     claimed_at: ''
     implementation_pr: 'silasfelinus/kind_robots#1856'
@@ -359,7 +298,10 @@ tasks:
     updated: '2026-08-18T17:55:49Z'
     passes: 0
     stakes: reversible
-    note: 'PROGRESS 2026-08-18 (conductor scheduled Agent run, 2026-08-18T-scheduled-brainstorm-t014): Ship Dream-aware brainstorming and expand adapter coverage. brainstormSourceContext.ts previously only had a characterContext resolver (brainstorm/t-013); resolveBrainstormSourceContext had no entry for dream, so picking a Dream as a Brainstorm source showed the pickers label but generated exactly the same premise-only ideas as a freeform session. Added dreamContext (title/type, premise, sensory detail via flavorText, visual concept via artPrompt, linked Characters, linked Rewards, and the locations/encounters/threats carried by linked Scenarios) and formatDreamContext in brainstormSourceContextKit.ts, same joinFacts-based/MAX_CONTEXT_LENGTH-bounded shape and canView revalidation contract as characterContext. Added the additional lightweight entity adapter the task asked for: a Scenario picker adapter in brainstormSourceAdapters.ts (force-revalidate + fail-closed search, same discipline as Character/Dream) plus a matching scenarioContext resolver and formatScenarioContext, so Scenario is not left as a picker-only source with no grounding (the exact gap this task closed for Dream). Extended verifyBrainstormSourceContext.ts and verifyBrainstormSourceAdapters.test.ts with the new formatting/contract assertions, and wired verifyBrainstormSourceContext.ts into package.json/contract-tests.yml -- it existed since t-013 but was never actually run in CI; fixed that gap since this PR substantially extends it. Verified: eslint/prettier clean, vue-tsc --noEmit clean, both brainstorm contract tests pass locally (via provision_kind_robots_deps.sh) and in CI (Contract verifiers check, green). kind_robots PR #1937 (squash f6d92ae) -- all checks green except comment-contract, a pre-existing unrelated failure (verifyPopulationDraftQuality.ts live GET to kindrobots.org/api/characters returned 502; confirmed via direct curl that production itself was 502ing at the time, matching the exact precedent from alexa-integration/t-015 and davinci/t-021 earlier the same day); mergeable_state was unstable (non-required check only), so merged. Reward, Bot, Project, and Prompt remain the documented next candidates for both the picker adapter and the context resolver -- comments in both files updated to reflect Dream/Scenario now done.'
+    note: >-
+      PROGRESS 2026-08-18 (conductor scheduled Agent run, 2026-08-18T-scheduled-brainstorm-t014): Ship Dream-aware brainstorming and expand adapter coverage.
+
+      Full history: projects/brainstorm/HISTORY.md#t-014
     claimed_by: 2026-08-18T-scheduled-brainstorm-t014
     claimed_at: '2026-08-18T17:29:13Z'
     implementation_pr: 'silasfelinus/kind_robots#1937'
@@ -375,7 +317,10 @@ tasks:
     updated: '2026-08-18T18:59:11Z'
     passes: 0
     stakes: reversible
-    note: 'PROGRESS 2026-08-18 (conductor scheduled Agent run, 2026-08-18T-scheduled-brainstorm-t015): Add dedicated art-prompt brainstorm mode. Added a second Brainstorm output domain (BRAINSTORM_OUTPUT_DOMAINS: ideas | art-prompts) orthogonal to the existing mode creative-direction knob -- outputDomain changes WHAT KIND of thing a candidates text field is (a concept/joke vs. a ready-to-use image-generation prompt), not how it is stylistically pushed. art-prompts mode instructs the model to vary composition, subject, action, environment, and visual direction across the batch (more than one dimension per candidate, no two candidates sharing the same combination), write each prompt as a dense consumable string, and never describe the act of generating/enqueuing an image -- matching the task notes explicit scope boundary (Do not enqueue images merely because the user requested 20 prompt ideas; the Generate art action stays out of scope). Works freeform or grounded in an entity via the existing source mechanism, unchanged. Wired end to end: types/brainstorm.ts (BRAINSTORM_OUTPUT_DOMAINS, outputDomain on BrainstormGenerateRequest/BrainstormSessionSnapshot), brainstormPrompt.ts (buildBrainstormPrompts branches its QUALITY BAR/OUTPUT CONTRACT sections on outputDomain, byte-identical for the default ideas domain), generate.post.ts (server-side validation, never trusts the client value), brainstormPersistence.ts + prisma/brainstorm.prisma + a new additive-only migration (20260818190000_add_brainstorm_output_domain) so outputDomain persists through saved sessions and degrades to ideas for any pre-existing/unrecognized value, brainstormStore.ts (outputDomain mirrors every existing mode touch point), and brainstorm-manager.vue (an Output toggle next to the premise field; count label and generate-button text adapt; the Visual directions starter premise now actually uses the new domain instead of asking for portrait concepts under the ideas domain). Extended verifyBrainstormGeneration.ts and verifyBrainstormPersistence.ts with real coverage (framing, the enqueue-disclaimer, the diversity-dimensions line, endpoint normalization, schema/migration assertions, save-stored-reopen round-trip, legacy/corrupt-value fallback) and regenerated the Prisma client. Verified: eslint clean, vue-tsc --noEmit clean, all 7 brainstorm contract scripts pass locally and in CI. kind_robots PR #1938 (squash 324781f) -- all 36 checks green except the same known-unrelated comment-contract production-502 flake documented earlier today (alexa-integration/t-015, davinci/t-021, brainstorm/t-014); mergeable_state was unstable (non-required check only), so merged. Kaizen note recorded in the PR: the reused ideas-domain RESPONSE LENSES (dark-humor/pun/dad-joke/...) may be worth revisiting with a dedicated per-domain lens set once real usage shows whether they read naturally for art prompts.'
+    note: >-
+      PROGRESS 2026-08-18 (conductor scheduled Agent run, 2026-08-18T-scheduled-brainstorm-t015): Add dedicated art-prompt brainstorm mode.
+
+      Full history: projects/brainstorm/HISTORY.md#t-015
     claimed_by: 2026-08-18T-scheduled-brainstorm-t015
     claimed_at: '2026-08-18T18:04:04Z'
     implementation_pr: 'silasfelinus/kind_robots#1938'
@@ -391,26 +336,9 @@ tasks:
     stakes: reversible
     implementation_pr: silasfelinus/kind_robots#1993
     note: >-
-      DONE (conductor scheduled Agent run, 2026-08-21, kind_robots PR #1993 merged
-      squash d4a720b): wired explicit selected-candidate art generation to the normal
-      POST /api/art/enqueue pipeline, defaulting to Krea2. brainstorm-candidate-card.vue
-      gained a "Select for art" checkbox (kept candidates only) and thumbnail display of
-      generated images; brainstorm-manager.vue gained an explicit "Generate art" batch
-      button with a "N of M kept ideas selected · Krea 2" count preview and an error
-      banner; brainstormStore.ts gained selection state and generateArtForSelected(),
-      which enqueues one ArtJob per selected candidate, polls each to resolution, and
-      records job/image ids onto candidate.meta.art.{jobIds,imageIds} (the
-      already-scaffolded type from prior work, never previously wired up). Also fixed a
-      real pre-existing bug along the way: the client localStorage autosave round-trip
-      was silently dropping meta.art on every page reload before an explicit server
-      save. New BrainstormArtEnqueueContext/brainstormContext tags each job with
-      session/candidate/source for traceability, kept separate from the narrative-beat
-      dedup context other products use since Brainstorm has no equivalent re-trigger
-      concern. Verified: full-project vue-tsc --noEmit clean, eslint/prettier clean on
-      changed files, all 6 Brainstorm contract scripts pass, verifyLayoutContract.ts
-      holds, no Prisma migration needed. All 38 kind_robots PR checks green before
-      merge. Kaizen filed as t-025 (engine picker for the batch generation UI, currently
-      hardcoded to krea2 with no picker offered).
+      DONE (conductor scheduled Agent run, 2026-08-21, kind_robots PR #1993 merged squash d4a720b): wired explicit selected-candidate art generation to the normal POST /api/art/enqueue pipeline, defaulting to Krea2.
+
+      Full history: projects/brainstorm/HISTORY.md#t-016
     claimed_by: scheduled-20260821T0400Z-conductor-brainstorm-t016
     claimed_at: '2026-08-21T03:29:23Z'
 
@@ -424,11 +352,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Show queued/processing/delivered/failed art state on the originating candidate without
-      browser polling becoming the source of truth. Reuse ArtJob IDs after transient failures,
-      avoid duplicate enqueues, and verify final delivered URLs before marking image work done.
-      Allow generated art to be attached/saved through existing entity-art semantics where
-      appropriate rather than inventing Brainstorm-specific image storage.
+      Show queued/processing/delivered/failed art state on the originating candidate without browser polling becoming the source of truth.
+
+      Full history: projects/brainstorm/HISTORY.md#t-017
     claimed_by: sched-conductor-brainstorm-t017-20260821T054036Z
     claimed_at: '2026-08-21T05:40:36Z'
     implementation_pr: 'silasfelinus/kind_robots#1995'
@@ -442,7 +368,10 @@ tasks:
     updated: '2026-08-18T20:10:20Z'
     passes: 0
     stakes: reversible
-    note: 'DONE 2026-08-18 (conductor scheduled Agent run, worktree-isolated background agent). Audited historical Brainstorm persona evidence: stores/seeds/seedBots.ts has a stale dev-seed Brainb0t record referencing avatarImage /images/avatars/brain1.webp -- confirmed via git log --all --diff-filter=A that this path was never a committed repo file (public/images/** is gitignored) and the seed schema is stale relative to the live Bot table, so it never actually populated production. The legacy asset IS live at kindrobots.org/images/avatars/brain1.webp but wired to nothing in current code. content/brainstorm.md already carries recognizable persona copy that was never lost (tooltip, amiTip, dottiTip, kind-icon:brain). Found a fully modern live Bot record already in production (GET /api/bots id 4, name Brainbot, slug brainstorm-bot, tagline, narrativeVoice, generated art) with zero UI surface. Confirmed generate.post.ts and server/utils/brainstorm/** have zero botId coupling -- the no-hard-dependency requirement was already satisfied by prior t-006/t-012 work, no fix needed. Added a small soft reversible persona flourish to components/brainstorm/brainstorm-manager.vue: on mount, softly fetches the live brainstorm-bot record via the existing useBotStore().fetchBots() and shows its avatar/tagline in the header badge, falling back silently to the plain emoji on any failure -- persona is never read by the generation path. Verified: vue-tsc --noEmit clean, eslint clean, verifyBrainstormWorkbench.mjs + verifyBrainstormStoreContract.mjs both pass, live-checked brain1.webp and /api/bots via curl. kind_robots PR #1940 (1 file, +47/-1), all 30 CI checks green, squash-merged 1cd1ff873. Did not restore brain1.webp or the stale seedBots.ts record -- reused the live, already-generated Brainbot record instead (materially better: real art, tagline, voice), no schema/migration/seed change needed. Kaizen t-024 filed: Brainbot and 68 other live Bot records have no reachable gallery surface on the site.'
+    note: >-
+      DONE 2026-08-18 (conductor scheduled Agent run, worktree-isolated background agent).
+
+      Full history: projects/brainstorm/HISTORY.md#t-018
     claimed_by: claude-scheduled-20260818T1945-brainstorm-t018
     claimed_at: '2026-08-18T19:46:29Z'
     implementation_pr: 'silasfelinus/kind_robots#1940'
@@ -458,7 +387,10 @@ tasks:
     updated: '2026-08-21T12:34:30Z'
     passes: 0
     stakes: reversible
-    note: 'Investigated (conductor scheduled Agent run, session sched-conductor-brainstorm-t019-20260821T123016Z, worktree-isolated background agent). Read the full brainstorm-manager.vue (~1400 lines), character-manager.vue, dream-manager.vue, dream-brainstorm.vue, and stores/helpers/brainstormSourceAdapters.ts before touching anything. Found both explicitly-prioritized halves of this task''s scope already shipped by prior tasks: Character via t-013 (kind_robots#1856, merged) -- character-manager.vue already has a single "Brainstorm variations" button in the detail panel only (not on every card, matching this task''s own "do not clutter" instruction) that navigates to /brainstorm?source=character&sourceId=<id>&intent=<text>, and brainstorm-manager.vue already has a generic seedFromQuery() deep-link contract (reads route.query.source/sourceId/intent on mount, prefills, strips consumed keys) built generic over modelType specifically so later surfaces need no change to that function. Dream via t-014 (kind_robots#1937, merged) -- added a dreamContext resolver to the same source-context registry, and Dream''s actual UI coverage is dream-brainstorm.vue, a full first-class Brainstorm tab already wired into dream-manager.vue (pitch -> riffs -> save-as-Dream-seed). This task''s own note explicitly allows scoping to Character-only if Dream already has adequate coverage via dream-brainstorm.vue -- confirmed it does; adding a second /brainstorm deep-link next to Dream''s existing dedicated tab would itself be redundant clutter, the thing this task warns against. No code change made -- there was no genuine gap left in the Character/Dream scope. Closing as done on that basis. The task''s other half ("then evaluate Prompt, Reward, Scenario, Project and art surfaces") was explicitly out of scope for this pass and is picked up as a new follow-up task, t-027 -- Scenario already has an adapter + context resolver built per t-014''s note, so it''s likely the cheapest next surface to wire an entry point for.'
+    note: >-
+      Investigated (conductor scheduled Agent run, session sched-conductor-brainstorm-t019-20260821T123016Z, worktree-isolated background agent).
+
+      Full history: projects/brainstorm/HISTORY.md#t-019
     claimed_by: sched-conductor-brainstorm-t019-20260821T123016Z
     claimed_at: '2026-08-21T12:30:16Z'
 
@@ -474,62 +406,9 @@ tasks:
     passes: 1
     stakes: reversible
     note: >-
-      Preserve the genuinely useful part of the old Conductor brainstorm project: generating
-      candidate project/product ideas under dedup and quality constraints. Implement it as an
-      explicit downstream workflow that may use Brainstorm generation but only promotes vetted
-      ideas into canonical Conductor `pitches/*.md`. A normal user Brainstorm can never mutate
-      roadmaps, lifecycle or coordination pitches implicitly.
+      Preserve the genuinely useful part of the old Conductor brainstorm project: generating candidate project/product ideas under dedup and quality constraints.
 
-
-      IMPLEMENTED 2026-08-24 (scheduled Reviewer session,
-      20260824T2145Z-sched-conductor-brainstorm-t020): added
-      scripts/generate_conductor_pitch_candidates.py, the "request candidate ideas"
-      half of DESIGN-BRIEF.md's Conductor-as-downstream-consumer contract. It calls
-      the live POST /api/brainstorm/generate endpoint (the same one the public
-      /brainstorm product uses) with a premise scoped to small/medium Kind-Robots-
-      ecosystem project ideas, picks a usable text server via GET /api/server
-      (preferring a backend-keyed OpenAI/Anthropic server, since those bypass the
-      brainstorm backend's public/official/default visibility gate per
-      generate.post.ts's assertBackendProviderAccess), and scores every returned
-      candidate for novelty via a local Jaccard-similarity heuristic against every
-      existing pitches/*.md title and every known project's slug + roadmap goal
-      (100 corpus entries as of this run). It deliberately does not write
-      pitches/*.md itself -- promoting a candidate into a canonical pitch stays a
-      human/agent policy decision (existing-work check, fuller narrative,
-      dedup judgment), matching the design brief's explicit source-of-truth
-      boundary ("Conductor decides whether something becomes a coordination
-      pitch/task").
-
-
-      Proved the pipeline end-to-end for real, not just against fixtures: ran it
-      live against kindrobots.org with KR_API_TOKEN, using server id=108 ("OpenAI
-      Text"). It returned 6 candidates, mana charged=0 (balance unaffected), and
-      the novelty heuristic scored all 6 as clearly non-duplicate (similarity
-      0.03-0.05, well under the 0.35 flag threshold). Agent judgment on the actual
-      6 candidates from this run ("AI Memory Keeper", "Sentiment Karaoke", "Role
-      Reversal Stories", "Crafty Conversations", "Time Capsule Projector", "Mundane
-      Magic"): none promoted to pitches/*.md this cycle -- they read as generic
-      family-activity-app ideas rather than fitting Kind Robots' established
-      playful/weird voice or filling a concrete gap in the existing product family,
-      which is a legitimate "no genuine candidate this round" outcome per this
-      project's own quality bar (see DESIGN-BRIEF.md and the existing pitches/
-      README's vetting expectation), not a pipeline failure. A future run may want
-      a sharper premise/return-type mix if this genericness recurs.
-
-
-      13 new unit tests (tests/test_generate_conductor_pitch_candidates.py) cover
-      the pure logic (tokenize/jaccard/score_novelty/pick_text_server) without any
-      network calls. Full suite: 1202 passed, 1 skipped. py_compile clean.
-      validate_roadmaps.py clean. t-020's own depends_on (t-010, t-019) were
-      already done before this claim.
-
-
-      Left for a follow-up cycle rather than this task: actually running the
-      script again with a tuned premise/return-type mix to try to surface a
-      promotable candidate, and (optional, smaller) wiring this into a recurring
-      roadmap task the way animation-manager/t-006 and dream-cycle/t-006 already
-      do for their own idea-generation loops, so Conductor pitch ideation via
-      Brainstorm becomes a standing cadence rather than a one-off proof run.
+      Full history: projects/brainstorm/HISTORY.md#t-020
     claimed_by: 20260824T2145Z-sched-conductor-brainstorm-t020
     claimed_at: '2026-08-24T21:40:59Z'
     implementation_pr: 'silasfelinus/conductor#2799'
@@ -549,15 +428,7 @@ tasks:
     note: >-
       Kaizen from t-018s 2026-08-18 cycle wired to real coverage (conductor scheduled Agent run, 2026-08-19).
 
-      Split the pure BrainstormCandidate normalizers and state-transition logic out of stores/brainstormStore.ts into stores/helpers/brainstormCandidateLifecycle.ts -- same split already used for brainstormSourceAdapterKit.ts/brainstormSourceContextKit.ts, for the same reason: brainstormStore.ts pulls in useServerStore -> userStore -> achievementStore, and achievementStore.ts calls the Vite-only import.meta.glob(...) at module load time, so the store itself cannot be imported from a plain tsx test process. Behavior unchanged -- pure extraction, store actions are now thin findCandidate-then-delegate wrappers.
-
-      Added utils/scripts/verifyBrainstormCandidateLifecycle.test.ts: real behavioral fixtures (not source-text shape checks) for candidate state transitions (keep/reject/reset), edit/regenerate/restore revision lineage, branch-origin computation, error classification, the stores own exact-duplicate response check (previously untested), and client-side save/reopen restore (normalizeStoredCandidate/normalizeStoredBatch round-tripping a realistic session payload through JSON) -- the client half of save/reopen; the server half already had deep coverage in verifyBrainstormPersistence.ts.
-
-      Updated verifyBrainstormStoreContract.mjs to check the new helper file for internal-detail assertions that moved with the logic, kept call-site/wiring checks against the store. Wired the new test into brainstorm-store-contract.yml.
-
-      Parser validation/requested-result-counts/duplicate-suppression (server-side near-duplicate check) and object-context privacy were already solid (verifyBrainstormGeneration.ts, verifyBrainstormSourceContext.ts) -- deliberately not duplicated.
-
-      Verified: full brainstorm test suite (7 verify scripts) green, no regressions; eslint/prettier clean on touched files; repo-wide vue-tsc --noEmit clean; git status --porcelain showed exactly the 6 intended files. First CI run failed (ERR_MODULE_NOT_FOUND on the @/ path alias -- the new job installs with npm ci --ignore-scripts, which skips the nuxi prepare postinstall that generates the tsconfig path mapping); fixed by switching the new helper file to relative imports, verified locally by temporarily removing .nuxt entirely and re-running clean. kind_robots PR #1973 -- 34/35 checks green before merge (only "Build production image", the documented non-required deploy-image job, still in flight), squash-merged eec10db.
+      Full history: projects/brainstorm/HISTORY.md#t-021
     claimed_by: 20260819T203603-brainstorm-t021-sched
     claimed_at: '2026-08-19T20:36:04Z'
     implementation_pr: 'silasfelinus/kind_robots#1973'
@@ -578,11 +449,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Verify PR preview at phone, tablet and desktop widths plus direct load/refresh. Exercise
-      empty, loading, provider failure, malformed response, auth transition, saved-session,
-      regeneration, object-context and ArtJob states. Check keyboard focus/actions, touch target
-      sizes, long candidate text, 1-result and max-result batches, and slow generation. Run
-      typecheck and relevant tests. Fix findings rather than only documenting them.
+      Verify PR preview at phone, tablet and desktop widths plus direct load/refresh.
+
+      Full history: projects/brainstorm/HISTORY.md#t-022
     claimed_by: scheduled-20260826T-brainstorm-t022-sk1
     claimed_at: '2026-08-26T08:35:03Z'
     implementation_pr: 'silasfelinus/kind_robots#2128'
@@ -597,24 +466,9 @@ tasks:
     stakes: reversible
     gate_human: true
     note: >-
-      FOR SILAS: Play with the restored Brainstorm at the preview/live route after t-022 and confirm that the pitch -> many ideas -> keep/edit/regenerate/save loop feels like the Brainstorm you cared about, not merely a technically functional generator. Try both a practical prompt and something absurd/dark-comedy. TO APPROVE: if the product has regained the right utility and personality, set `approved_by_human: true` and `status: done`; if not, leave concrete notes and return the project to active refinement. This gate controls only declaring the finite revival project finished, not routine reversible development.
-      STATUS CORRECTED (conductor scheduled sweep, 2026-08-26): this task carries gate_human: true and its note is a complete FOR SILAS playtest gate with no further agent-actionable work -- it should never sit at status: ready (which implies agent pickup) once its dependency t-022 clears. t-022 completed today (2026-08-26T09:28:38Z) and resolve_deps.py correctly flipped this task's status from waiting to ready, but a gate_human:true task with no agent work component belongs at needs-human from the moment it unblocks, not ready. Moving it there now so it surfaces in audit_human_gates.py's report. No content change to the FOR SILAS instructions themselves.
+      FOR SILAS: Play with the restored Brainstorm at the preview/live route after t-022 and confirm that the pitch -> many ideas -> keep/edit/regenerate/save loop feels like the Brainstorm you cared about, not merely a technically functional generator.
 
-      Human acceptance test failed on 2026-09-07. Brainstorm was given the premise "Tell me things about Vanderbuilt Lacrosse" plus four terse one-sentence examples about an absurdly rich, comically out-of-touch character. Both Open Field and Darker/Funnier returned paragraph-length mini-scenes instead of matching the one-sentence pattern; one candidate directly recycled the pony example; and ordinary whimsical material such as gourmet-flavored lacrosse balls was tagged as dark humor. Expected output is fresh, compact facts/jokes in the same formal shape as the examples, e.g. "Vanderbuilt Lacrosse has the trademark on the concept of vampires" or "Every time someone sings Happy Birthday, Spotify pays Vanderbuilt Lacrosse 5 cents." Kind Robots PR #2507 fixes the prompt contract so examples define output form while their content becomes excluded territory, and tightens the dark-humor contract. Return this task to the agent queue; after the fix is deployed, request one focused human retest rather than treating the prior run as accepted.
-
-      ACCEPTED BY SILAS, 2026-09-11 (in session): "I'm going to accept brainstorm as acceptable and cleared. Project can be marked completed." This closes the focused retest this task asked for after the 2026-09-07 failure, and closes the finite Brainstorm revival project.
-
-      WHAT THE RETEST FOUND, AND WHAT SHIPPED. Silas ran two real pitches (rejected ice cream flavors, then Vanderbuilt Lacrosse) and reported the first went well with genuinely good suggestions. Three defects surfaced, all fixed in kind_robots#2615 (squash 7db4090, merged by Silas):
-      (1) LENS SELECTION WAS A FLOOR, NOT AN ALLOW-LIST -- the real bug. Selecting only Dark humor on Auto and asking for 20 ideas returned one dark-humor candidate and nineteen unselected lenses. assortmentInstructions() computed wildcardSlots = count - (pinnedTotal + automatic.length) and then told the model those slots "may use an Auto lens again or another valid response lens" -- with one Auto lens and 20 ideas, 19 slots explicitly opened to lenses the user did not pick. The model was obeying instructions. Selected lenses now claim every slot, with an explicit "do not introduce unselected response lenses"; the escape hatch survives only where every selected lens is pinned to an exact quota that cannot fill the batch alone, since a pinned count is a ceiling as well as a floor. Regression tests cover the single-Auto-lens case (including assert.doesNotMatch on "another valid response lens") and the all-pinned-underfilled case.
-      (2) NO WAY TO START A NEW PITCH. brainstormStore.clearSession() had existed and been exported all along with ZERO call sites anywhere in the app, so the UI offered no clear affordance; because the store deep-watches its state into persistence, changing the premise left the prior pitch's batches and kept ideas in place (Silas saw the ice cream batch still sitting as batch 1 with "Kept ideas 8/8" from an unrelated premise). A "Start a new pitch" control is now wired, shown only when there is work to discard and confirming first since clearing throws away kept ideas. The workbench contract now pins both the control and the clearSession call so it cannot silently become uncalled again.
-      (3) CANDIDATE CARDS DID NOT SHARE A BASELINE. The card root was already flex/min-h-64/flex-col with a flex-1 body built to pin its actions to the bottom, but the grid container set items-start, which sizes each cell to its own content and defeated it; shorter cards floated their action rows above their neighbours'. Now items-stretch.
-      Silas also asked for the composer to be condensed: the "Human taste stays in charge" aside, the Brainbot persona tagline line, and the restated intro paragraph were removed.
-
-      #2507 IS VALIDATED. The 2026-09-07 rejection was caused by paragraph-length mini-scenes instead of one-sentence output, a candidate recycling the pony example, and whimsical material mis-tagged as dark humor. All three are gone: every candidate in the retest came back as a terse one-sentence assertion matching the user's examples, with no example-content reuse.
-
-      INCIDENTAL REPAIR, worth knowing for other projects: the brainstorm-generation-contract workflow had been RED ON MAIN independently of this work. PR #2507 added "or merely whimsical weirdness" to CREATIVE_DIRECTION_INSTRUCTIONS['darker-funnier'] without updating verifyBrainstormGeneration.ts's regex. Confirmed pre-existing by stashing against clean main, and fixed in the same PR.
-
-      DOCUMENTED RESIDUAL, accepted as-is rather than left as hidden scope: in FOCUSED batch shape, brainstormPrompt.ts still instructs "Assign each candidate the closest returnType lens", and brainstorm-candidate-card.vue badges that lens identically to a user-selected ASSORTMENT quota -- so a coherent focused batch can still look varied at a glance even when its content is tightly grouped. This is presentation, not plumbing (mode and batchShape both reach the server correctly), and it matters less now that assortment genuinely honors the selection. Silas accepted the product with this known; if it becomes annoying in use, the cheap fix is to mute or drop the lens badge in focused mode, and that should be filed as a fresh task rather than reopening this one.
+      Full history: projects/brainstorm/HISTORY.md#t-023
     approved_by_human: true
     implementation_pr: 'silasfelinus/kind_robots#2615'
 
@@ -628,11 +482,7 @@ tasks:
     note: >-
       RESOLVED BY VERIFICATION (conductor scheduled Agent run, 2026-08-19): re-checked the "Scope check first" step the task itself required before building anything, and found the premise already false on current kind_robots main.
 
-      bot-gallery.vue IS mounted and reachable: content/bots.md (frontmatter dashboardKey: bot, dashboardTab: bots) renders `:bot-manager`, whose default (non-forge) panel is bot-interact.vue, which renders bot-gallery.vue directly (`<bot-gallery v-if="!isInteractMode" variant="dashboard" ... />`). content/channels/play/bots.md registers this as a real tab (channelKey: play, tabKey: bots, route: /bots, sort: 30) alongside academy/art -- the play channel and its tabs are read dynamically by channel-select.vue/channelContentStore from these content files, not a hardcoded allow-list, so /bots is reachable from the normal channel-nav a real user clicks through, not just a direct URL.
-
-      Also confirmed `bot` is one of the seven declared CORE_OBJECT_ROUTES (utils/scripts/coreObjectRoutes.ts: object bot -> route /bots -> gallery bot-gallery), and `npm run test:route-gallery-contract` (CI-enforced, utils/scripts/verifyRouteGalleryContract.ts) passes clean and explicitly lists bot-gallery as reachable from /bots (plus every other core-object route where it is embedded as a picker). This is the same check interface-vision/global-ui built specifically to catch an unmounted-gallery gap like the one this task described -- it is green for bot-gallery today.
-
-      No code change made -- there is nothing to fix. The 69-live-Bot-records / zero-UI-surface finding from t-018s 2026-08-18 cycle either was already stale when written or was fixed by an intervening cycle without this task being reconciled; either way current main already satisfies the tasks goal ("Mount bot-gallery.vue ... somewhere reachable"). No kind_robots PR opened since no diff exists to make.
+      Full history: projects/brainstorm/HISTORY.md#t-024
     claimed_by: 20260819T202922-brainstorm-t024-sched
     claimed_at: '2026-08-19T20:29:23Z'
 
@@ -642,11 +492,10 @@ tasks:
     status: done
     passes: 0
     stakes: reversible
-    note: |-
-      Kaizen from t-016 (2026-08-21, kind_robots PR #1993): batch art generation for selected candidates is hardcoded to the krea2 engine with no UI to choose another supported option, even though enqueueArtGeneration/POST /api/art/enqueue already support flux/kontext/sdxl/etc. Add a lightweight engine selector to the "Generate art" batch control in brainstorm-manager.vue (default remains Krea2 per the original task note), threaded through generateArtForSelected's per-candidate enqueue call. Small, reversible, self-contained.
-      ROADMAP-ACCURACY FIX 2026-08-29 (conductor scheduled Agent run, state-reconciliation sweep): status was left at `claimed` (claimed_by claude- scheduled-20260824T045500Z-brainstorm-t025, claimed_at 2026-08-24T04:46:11Z) for 5 days -- far past CLAIM_TTL_MINUTES (90 min). Searched for any PR referencing t-025 (search_pull_requests, search_issues) -- none exists, so this is not merged-PR drift, just an abandoned claim whose implementing session never opened a PR. Cleared owner/claimed_by/claimed_at and reset status to ready so it surfaces normally in priority rotation again.
+    note: >-
+      Kaizen from t-016 (2026-08-21, kind_robots PR #1993): batch art generation for selected candidates is hardcoded to the krea2 engine with no UI to choose another supported option, even though enqueueArtGeneration/POST /api/art/enqueue already support flux/kontext/sdxl/etc. Add a l
 
-      Reviewed and squash-merged kind_robots PR #2199 at exact head 3f930579b6c2c3e4287cafe7d65d8fbf66083576 after all attached workflows completed successfully. Brainstorm selected-candidate art generation now exposes the existing prompt-only engine catalog, keeps Krea 2 as the default, and threads the selected engine through the durable ArtJob enqueue path.
+      Full history: projects/brainstorm/HISTORY.md#t-025
     updated: '2026-08-29T14:10:57Z'
     claimed_by: 20260829T124800Z-brainstorm-t025-scheduled
     claimed_at: '2026-08-29T12:48:08Z'
@@ -659,44 +508,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Kaizen from t-017 (2026-08-21, kind_robots PR #1995): candidate art delivered
-      through Brainstorm lives only in meta.art.imageIds -- there is no path to carry
-      it forward if a candidate is later promoted into a Character/Dream/other entity
-      with its own entity-art field (server/utils/entityArt.ts's typed system). t-017
-      deliberately kept meta.art as the linkage point rather than forcing the heavier
-      entity-art system onto a non-Prisma-backed candidate; this task is the deferred
-      follow-up once there is a concrete promotion flow to hang it on. Scope: find (or
-      confirm there isn't yet) a "promote this candidate into an X" action anywhere in
-      the app, and if one exists, wire its already-delivered art across rather than
-      dropping it.
+      Kaizen from t-017 (2026-08-21, kind_robots PR #1995): candidate art delivered through Brainstorm lives only in meta.art.imageIds -- there is no path to carry it forward if a candidate is later promoted into a Character/Dream/other entity with its own entity-art field (server/util
 
-
-      RESOLVED (2026-08-24, no kind_robots code change -- investigation-only, scope was
-      conditional on a promotion flow existing): searched the whole app
-      (components/brainstorm/, brainstorm-manager.vue's kept-candidate bulk actions,
-      server/api/brainstorm/, and a repo-wide grep for promote/convert/"turn into"/
-      createFrom) and confirmed no "promote this Brainstorm candidate into a
-      Character/Dream/Project/other entity" action exists anywhere today.
-      brainstorm-candidate-card.vue's only per-candidate actions are keep/reject/reset/
-      delete/regenerate/branch/restoreRevision/edit/feedback/toggleArtSelection; the
-      manager's only kept-candidate bulk actions are a Markdown clipboard copy and a
-      .md file export, neither of which touches meta.art.imageIds at all. The only
-      "promote" actions in the repo are unrelated (promptStore.promoteToDream /
-      dreamStore.promotePromptToDream -- Prompt to Dream, not Brainstorm; the
-      artjob-feedback-manager PROMOTE verdict; modelBuilderStore.promoteAsset;
-      conductor-page.vue's promoteFeatureToTask). The only existing Brainstorm<->entity
-      wiring runs the other direction (entity -> Brainstorm session, via
-      startBrainstormWith*() CTAs on Character/Scenario/Reward/Bot/Project, asserted by
-      verifyBrainstormObjectEntryLinks.mjs) and never touches art.
-
-      Also surfaced a real design gap for whoever builds the promotion action: entityArt.ts's
-      ENTITY_FIELDS/EntityArtType model is strictly one scalar artImageId/imagePath per
-      named slot per entity, while a candidate's meta.art.imageIds is an array -- any
-      promotion implementation needs to pick/map from possibly-many candidate images down
-      to the target entity's single primary slot (promptStore.promoteToDream's Prompt-has-
-      one-artImageId case is not a direct precedent for that reduction). Filed as t-031
-      rather than expanding this task's scope, since t-026 was conditional on a promotion
-      flow already existing and none does.
+      Full history: projects/brainstorm/HISTORY.md#t-026
     updated: '2026-08-24T05:40:00Z'
     claimed_by: claude-scheduled-20260824T052829Z-brainstorm-t026
     claimed_at: '2026-08-24T05:28:30Z'
@@ -709,7 +523,10 @@ tasks:
     owner: worker
     passes: 0
     stakes: reversible
-    note: 'Wired Scenario into the existing seedFromQuery() deep-link contract (conductor scheduled Agent run, worktree kind_robots). Added a "Brainstorm variations" button to scenario-manager.vue detail panel mirroring character-manager.vue startBrainstormWithCharacter exactly (source=scenario, sourceId, intent). Scenario BRAINSTORM_SOURCE_ADAPTERS entry (t-014) already existed with no UI entry point; this closes that gap. Extended verifyBrainstormObjectEntryLinks.mjs with a Scenario assertion block and added scenario-manager.vue to brainstorm-object-entry-links-contract.yml path filters so future changes trigger the check. Evaluated Reward and Project: both have a clear existing detail-panel home for a similar button (deferred as follow-up, see t-028). Prompt has no standalone detail/CRUD surface yet -- no natural place to attach a button until one exists. Verified: node verifyBrainstormObjectEntryLinks.mjs passes, test:brainstorm-source-adapters and test:brainstorm-source-context pass with no regression, eslint/prettier clean on touched files, vue-tsc --noEmit repo-wide exit 0, git status --porcelain showed exactly the 3 intended files. All 35 kind_robots CI checks green. kind_robots PR #2002 squash-merged 8fed769c.'
+    note: >-
+      Wired Scenario into the existing seedFromQuery() deep-link contract (conductor scheduled Agent run, worktree kind_robots).
+
+      Full history: projects/brainstorm/HISTORY.md#t-027
     updated: '2026-08-21T13:43:33Z'
     claimed_by: sched-conductor-brainstorm-t027-20260821T130500Z
     claimed_at: '2026-08-21T13:32:05Z'
@@ -722,25 +539,10 @@ tasks:
     owner: worker
     passes: 0
     stakes: reversible
-    note: 'Done (conductor scheduled Agent run): registered a rewardAdapter in
-      BRAINSTORM_SOURCE_ADAPTERS (stores/helpers/brainstormSourceAdapters.ts),
-      mirroring the Scenario adapter''s shape -- resolve() via fetchRewardById,
-      search() via the same fail-closed fetchFreshSourceRows contract as
-      Character/Dream/Scenario (noted inline: fetchRewardById has no force param,
-      fine since Reward carries no canView authorization gate the way
-      Character/Scenario do). Added a v-if="rewardStore.selectedReward" gating div
-      + "Brainstorm variations" button to reward-manager.vue''s #rewards slot,
-      following the same startBrainstormWith*() -> navigateTo(source/sourceId/intent)
-      pattern as character-manager.vue/scenario-manager.vue. Extended
-      verifyBrainstormObjectEntryLinks.mjs with a Reward assertion block, and added
-      components/rewards/reward-manager.vue to the contract workflow''s path
-      triggers (it wasn''t covered before). Verified: node
-      verifyBrainstormObjectEntryLinks.mjs passes, test:brainstorm-source-adapters
-      passes, eslint/prettier clean on changed files, full-project vue-tsc --noEmit
-      exit 0, git status --porcelain scoped to exactly the 4 intended files
-      (reverted an incidental prisma generate regen diff from local provisioning
-      before committing). All 37 kind_robots CI checks green. kind_robots PR #2050
-      squash-merged d47fa82f.'
+    note: >-
+      Done (conductor scheduled Agent run): registered a rewardAdapter in BRAINSTORM_SOURCE_ADAPTERS (stores/helpers/brainstormSourceAdapters.ts), mirroring the Scenario adapter's shape -- resolve() via fetchRewardById, search() via the same fail-closed fetchFreshSourceRows contract as
+
+      Full history: projects/brainstorm/HISTORY.md#t-028
     claimed_by: claude-conductor-scheduled-20260823T1828Z-bs-t028
     claimed_at: '2026-08-23T18:30:25Z'
     updated: '2026-08-23T18:43:27Z'
@@ -753,36 +555,10 @@ tasks:
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-028 (2026-08-23, kind_robots PR #2050): Bot is the next
-      remaining core entity without a BrainstormSourceAdapter/CTA pair after
-      Character, Dream, Scenario, and Reward. Bot already has an interact-style
-      detail surface analogous to reward-interact.vue (bot-interact.vue, per
-      brainstorm/t-028's own reward-interact.vue reading), so the same pattern
-      should apply directly: register a botAdapter in BRAINSTORM_SOURCE_ADAPTERS
-      (mirroring rewardAdapter's shape), add a v-if="botStore.selectedBot" gating
-      div + "Brainstorm variations" button to bot-manager.vue (or wherever Bot's
-      detail panel lives) following the same startBrainstormWith*() pattern, and
-      extend verifyBrainstormObjectEntryLinks.mjs with a Bot assertion block.
-      Project is the one other entity flagged as having a natural detail-view
-      home (t-027's note) and can follow as its own task once Bot lands.
+    note: >-
+      Kaizen from t-028 (2026-08-23, kind_robots PR #2050): Bot is the next remaining core entity without a BrainstormSourceAdapter/CTA pair after Character, Dream, Scenario, and Reward.
 
-
-      Done (kind_robots#2052, merged): implemented exactly as scoped above.
-      Registered botAdapter in BRAINSTORM_SOURCE_ADAPTERS mirroring
-      rewardAdapter's shape (resolve() via botStore.loadBotById, no force param;
-      search() via botStore.fetchBots(true) with the same fail-closed
-      fresh-fetch contract as every other adapter). Added the gated CTA to
-      bot-manager.vue's #bots template and startBrainstormWithBot(), wired
-      identically to startBrainstormWithReward(). Extended
-      verifyBrainstormObjectEntryLinks.mjs with a Bot assertion block.
-      brainstorm-manager.vue's seedFromQuery() needed no changes -- already
-      source-agnostic. Verified: all 5 test:brainstorm-* contract scripts pass,
-      verifyBrainstormObjectEntryLinks.mjs passes directly, eslint/prettier
-      clean, vue-tsc clean except the same pre-existing unrelated error tracked
-      as davinci/t-026, test:layout-contract holds with no new violations.
-      Filed brainstorm/t-030 for the Project-entity follow-on this task's own
-      note named.
+      Full history: projects/brainstorm/HISTORY.md#t-029
     claimed_by: claude-conductor-scheduled-20260823T-brainstorm-t029
     claimed_at: '2026-08-23T20:13:31Z'
     updated: '2026-08-23T20:20:35Z'
@@ -795,22 +571,10 @@ tasks:
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Kaizen from t-029 (2026-08-23, kind_robots PR #2052). Project is the
-      other core entity t-027's note flagged as having a natural detail-view
-      home for the same BrainstormSourceAdapter/CTA pattern already shipped
-      for Character, Dream, Scenario, Reward, and Bot. Scope: find (or
-      confirm) Project's own detail-view surface (likely
-      components/conductor/ or a project-manager.vue equivalent), register a
-      projectAdapter in BRAINSTORM_SOURCE_ADAPTERS mirroring the existing
-      adapters' shape (check projectStore for its fetch-by-id/search-list
-      methods and error field name first, per the pattern established by
-      characterAdapter/rewardAdapter/botAdapter), add a gated
-      "Brainstorm variations" CTA following the same startBrainstormWith*()
-      pattern, and extend verifyBrainstormObjectEntryLinks.mjs with a Project
-      assertion block. Once Project lands, re-check whether any further
-      natural detail-view entities remain before assuming this task type is
-      exhausted for the project.
+    note: >-
+      Kaizen from t-029 (2026-08-23, kind_robots PR #2052).
+
+      Full history: projects/brainstorm/HISTORY.md#t-030
     claimed_by: claude-scheduled-20260824T032902Z-brainstorm-t030
     claimed_at: '2026-08-24T03:29:03Z'
     updated: '2026-08-24T03:42:49Z'
@@ -824,28 +588,9 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Kaizen from t-026 (2026-08-24): no "promote this Brainstorm candidate into a
-      Character/Dream/other entity" action exists anywhere in the app today (t-026
-      searched components/brainstorm/, server/api/brainstorm/, and did a repo-wide
-      grep -- see its note for the full negative-result evidence). Candidate art
-      delivered via meta.art.imageIds (an array, see types/brainstorm.ts) is
-      currently a dead end: once a candidate is "kept," the only export paths are a
-      Markdown clipboard copy and a .md file download, both of which drop the art
-      entirely. Scope: pick one natural target entity (Character is the most
-      developed entity-art consumer and the most plausible home for a Brainstorm
-      candidate's title/text) and add a real "Promote to Character" (or similarly
-      named) action on brainstorm-candidate-card.vue or brainstorm-manager.vue's
-      kept-candidate row, following promptStore.promoteToDream's shape as the closest
-      structural precedent for the general copy-fields-then-create flow. The one
-      genuinely new problem promptStore.promoteToDream doesn't already solve:
-      meta.art.imageIds is an array while entityArt.ts's ENTITY_FIELDS model is one
-      scalar artImageId/imagePath per named slot, so the implementation must pick a
-      primary image (first delivered image, or a UI affordance if multiple are kept)
-      to write into the target entity's primary art slot rather than silently
-      dropping the rest -- decide and document which. Extend
-      verifyBrainstormObjectEntryLinks.mjs (or an equivalent contract test) to assert
-      the new action actually carries meta.art.imageIds across on a successful
-      promotion.
+      Kaizen from t-026 (2026-08-24): no "promote this Brainstorm candidate into a Character/Dream/other entity" action exists anywhere in the app today (t-026 searched components/brainstorm/, server/api/brainstorm/, and did a repo-wide grep -- see its note for the full negative-result
+
+      Full history: projects/brainstorm/HISTORY.md#t-031
     claimed_by: claude-scheduled-20260824-brainstorm-t031
     claimed_at: '2026-08-24T06:53:16Z'
     updated: '2026-08-24T07:09:20Z'
@@ -859,21 +604,9 @@ tasks:
     stakes: reversible
     passes: 0
     note: >-
-      Filed from the 2026-08-30 weekly site audit (`projects/global-ui/AUDIT-REPORT-2026-08-30.md`). This roadmap's milestone `status:` fields are almost entirely desynced from actual task completion -- `check_milestone_status_drift.py` doesn't currently catch this shape (see conductor/t-138, filed alongside this task) because every one of these reads as `in-progress`/`planned` rather than the `not-started`/`done` extremes it checks for.
-      Confirmed task counts as of this audit: m0 (in-progress) 3/3 done -> done; m1 (planned) 5/5 done -> done; m2 (planned) 3/3 done -> done; m3 (planned) 3/3 done -> done; m4 (planned) 6/6 done (t-015/016/017/025/026/031) -> done; m5 (planned) 9/9 done (t-018/019/020/021/024/027/028/029/030) -> done; m6 (planned) 1/2 done, t-023 still `needs-human` -> in-progress (not done -- leave as the one milestone still open).
-      Fix: edit each milestone's `status:` field in `projects/brainstorm/roadmap.yaml` to the target value above. No task-list or dependency changes needed -- this is a pure bookkeeping correction so the kind_robots front-end's portfolio-percentage math (which reads milestone status, per CONTROL.md) stops under-reporting a project that is in fact almost entirely finished.
+      Filed from the 2026-08-30 weekly site audit (`projects/global-ui/AUDIT-REPORT-2026-08-30.md`).
 
-      Implementing the remaining deterministic drift only: Brainstorm milestone m6 is still planned although t-022 is done and t-023 is needs-human. The branch changes m6 to in-progress; m0-m5 were already corrected by intervening work and are intentionally untouched.
-
-      Connector-only pass confirmed the remaining correction is exactly m6 status planned -> in-progress. No safe line-patch primitive is available for this large roadmap; a branch-only helper workflow was tested, did not activate, and was removed before merge. PR #3245 was closed with zero net changed files. Returning the task to ready rather than falsely completing it; the finding remains deterministic and suitable for a shell-capable worker.
-
-      RESOLVED 2026-08-30 (conductor scheduled Agent run): applied the deterministic fix
-      directly with real git/shell access after the prior connector-only session could not
-      safely line-patch this large roadmap (PR #3245 closed with zero net changes). Edited m6
-      milestone status from planned to in-progress in projects/brainstorm/roadmap.yaml (m0-m5
-      were already done and needed no change, matching this note's own audit). re-ran
-      check_milestone_status_drift.py after the edit: clean, no drift. No task-list or
-      dependency changes made.
+      Full history: projects/brainstorm/HISTORY.md#t-032
     updated: '2026-08-30T16:29:47Z'
     owner: worker
     claimed_by: 20260830T162851Z-brainstorm-t032-cds1

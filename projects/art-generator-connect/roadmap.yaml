@@ -86,14 +86,10 @@ tasks:
   updated: '2026-06-30T00:00:00Z'
   passes: 0
   stakes: reversible
-  note: 'Written docs/art-request-status.md. Cross-referenced ART-PROMPTS.md against projects/images/ (conductor) and kind_robots/public/images/artcollections/.
-    Findings: 18/20 project asset sets complete; pinball-hero and career-transition are missing all 3 project images. 17/17
-    queued inspiration sets complete (3-4 images each); pinball-hero and career-transition also have no artcollection dir
-    or prompts written yet. global-ui has no inspiration prompts queued either. Summary table and immediate actions for Silas
-    are in the doc. the Worker a clear picture of which art requests are queued vs. fulfilled without needing the live art
-    API contract.
+  note: >-
+    Written docs/art-request-status.md.
 
-    '
+    Full history: projects/art-generator-connect/HISTORY.md#t-005
 - id: t-006
   milestone: m4
   title: Add a unit test for queue_missing_project_art.py using a temp prompt catalog and fake images folder
@@ -115,30 +111,10 @@ tasks:
   updated: '2026-07-06T00:00:00Z'
   passes: 0
   stakes: reversible
-  note: >
-    The image pipeline now drops inspiration files into kind_robots
-    public/images/{slug}/ (with a gallery.json manifest per folder), and
-    GET /api/art/collection/folder/{slug} returns that folder's images.
-    Per Silas (2026-07-04): a folder's contents ARE the slug's art collection.
-    Wire the endpoint into the collection display components so folder
-    inspirations appear alongside DB-backed ArtImages for the same slug.
+  note: >-
+    The image pipeline now drops inspiration files into kind_robots public/images/{slug}/ (with a gallery.json manifest per folder), and GET /api/art/collection/folder/{slug} returns that folder's images.
 
-    IMPLEMENTED 2026-07-06 on branch claude/conductor-worker-image-gen-zbvhbn:
-    kind_robots PR #105 (merged) + conductor PR #237 (merged). Backend:
-    server/utils/folderCollections.ts (shared nested->flat->artcollections
-    resolution + listFolderCollections enum), GET /api/art/collection/folders
-    (list), POST /api/art/collection/folder/[slug]/sync (materialize folder ->
-    DB ArtCollection, idempotent, machine auth). Frontend: collectionStore
-    fetchFolderCollections/syncFolderCollection + art-gallery renders folder
-    collections alongside DB ones with a "Sync to collection" action.
-
-    REVIEWER AUDIT 2026-07-06: kind_robots PR #105 was merged with the PR
-    body still marked "source-reviewed only, please let CI validate" (the
-    manual gallery-click checklist was left unchecked). Confirmed after the
-    fact that CI actually did validate it: TypeScript check and Vercel
-    deploy both report `success` on the merge commit (3932cb4). Treating
-    this as sufficient verification for a reversible, additive-only change
-    and closing the task rather than leaving it stranded at `claimed`.
+    Full history: projects/art-generator-connect/HISTORY.md#t-007
 - id: t-008
   milestone: m4
   title: Add a regression test for renderRequestEntry's YAML indentation in kind_robots' art-request.post.ts
@@ -147,26 +123,10 @@ tasks:
   updated: '2026-07-06T20:25:00Z'
   passes: 0
   stakes: reversible
-  note: >
-    DONE 2026-07-06: merged in kind_robots PR #108 (squash 5d76872), TypeScript
-    (vue-tsc) check green. IMPLEMENTED (Silas-directed session, pipeline hardening) on
-    branch claude/daily-standup-priorities-gdvhjr. Extracted the pure YAML
-    rendering logic (yamlQuoted/yamlFolded/renderRequestEntry/appendRequest +
-    ArtQueueEntry) out of server/api/conductor/art-request.post.ts into a new
-    dependency-free module server/utils/artRequestYaml.ts, and added a tsx
-    regression verifier utils/scripts/verifyArtRequestYaml.ts (npm run
-    test:art-request-yaml) asserting: column-0 list marker, exactly-2-space
-    continuation keys, folded prompt scalar, optional-field omission, and
-    appendRequest column-0 output + idempotency across all three requests:
-    seed shapes. Verified the rendering logic green via a plain-node mirror
-    (no node_modules in the fresh clone); vue-tsc/CI validates on the PR.
-    ORIGINAL: Filed after kind_robots PR #84 fixed a silent bug: renderRequestEntry() emitted requests:
-    list items at 2-space indent instead of column 0, producing YAML that conductor''s parser
-    could not read and stalling the missing-image pipeline undetected. A snapshot/unit test
-    asserting the rendered entry matches conductor''s art-prompts.yaml requests: list style
-    would catch this class of regression before it reaches main.
+  note: >-
+    DONE 2026-07-06: merged in kind_robots PR #108 (squash 5d76872), TypeScript (vue-tsc) check green.
 
-    '
+    Full history: projects/art-generator-connect/HISTORY.md#t-008
 - id: t-009
   milestone: m5
   title: Install pm2 supervision for ComfyUI and A1111 on the home server
@@ -177,14 +137,10 @@ tasks:
   stakes: reversible
   gate_human: true
   approved_by_human: true
-  note: >
-    Done and verified live by Silas in the 2026-07-05 session (clearance per
-    CONTROL.md in-session rule): pm2 supervises comfyui (venv, 127.0.0.1:8188)
-    and sd-webui (forge-neo, full args) on the home box; survived a reboot via
-    pm2-windows-startup after backing out a misconfigured pm2-installer
-    service; health endpoints answering; kr-relay also enabled and polling
-    kind-robots.vercel.app (bonus - part of t-010's runtime). Field notes and
-    troubleshooting captured in ops/home-server/README.md.
+  note: >-
+    Done and verified live by Silas in the 2026-07-05 session (clearance per CONTROL.md in-session rule): pm2 supervises comfyui (venv, 127.0.0.1:8188) and sd-webui (forge-neo, full args) on the home box; survived a reboot via pm2-windows-startup after backing out a misconfigured pm2
+
+    Full history: projects/art-generator-connect/HISTORY.md#t-009
 - id: t-010
   milestone: m5
   title: 'kind_robots ArtJob queue: model, enqueue/claim/complete endpoints, home relay agent'
@@ -193,18 +149,10 @@ tasks:
   updated: '2026-07-05T13:30:00Z'
   passes: 0
   stakes: reversible
-  note: >
-    Cross-repo (kind_robots). Design in
-    projects/art-generator-connect/docs/pipeline-architecture.md section 4.
-    Additive-only migration (ArtJob model + enum), five endpoints
-    (POST /api/art/queue, GET /api/art/queue, GET /api/art/queue/[id],
-    POST /api/art/queue/claim, POST /api/art/queue/[id]/complete), and a
-    small pull-based relay script that runs on the home box under pm2 and
-    drives localhost ComfyUI/A1111. Claim is atomic (guarded updateMany
-    CAS); stale RUNNING jobs re-claimable. Merged in kind_robots PR #90
-    (squash 131ed63) after Reviewer line-by-line audit of migration.sql
-    (CREATE TABLE + ADD FK only, no drops) and the claim/complete logic.
-    Relay agent lives at conductor ops/home-server/relay_agent.py.
+  note: >-
+    Cross-repo (kind_robots).
+
+    Full history: projects/art-generator-connect/HISTORY.md#t-010
 - id: t-011
   milestone: m5
   title: Accept user apiKey auth on comfy endpoints (machine-auth parity with /api/art/generate)
@@ -213,16 +161,10 @@ tasks:
   updated: '2026-07-05T13:30:00Z'
   passes: 0
   stakes: reversible
-  note: >
-    Cross-repo (kind_robots). /api/comfy/flux/generate (and siblings under
-    /api/comfy/) gated on session JWT via authAndGate; conductor's static
-    tokens couldn't call them. Added requireMachineUser (JWT, user apiKey,
-    or beta admin token) in authGuard.ts, wired into comfyGate.authAndGate.
-    Reviewer verified the apiKey path exactly mirrors the existing
-    prisma.user.findFirst({apiKey}) lookup already live in
-    /api/art/generate.post.ts, plus adds an isActive check that route
-    lacks — no new exposure, just a shared, slightly stricter helper.
-    Merged in kind_robots PR #90 (squash 131ed63).
+  note: >-
+    Cross-repo (kind_robots).
+
+    Full history: projects/art-generator-connect/HISTORY.md#t-011
 - id: t-012
   milestone: m5
   title: 'Conductor consumer: submit approved art-generate.yaml jobs and land results in projects/process/'
@@ -235,37 +177,10 @@ tasks:
   approved_by_human: true
   depends_on:
   - t-010
-  note: >
-    DONE + AUTOMATED 2026-07-06 (Silas in-session, daily standup): Silas
-    directed that the live cycle be automated and that he is NOT the gate for
-    it - "we set up the tailscale connection for a reason, I am not needed for
-    this test to finish." The manual first-run gate is superseded by a
-    scheduled pipeline, so approved_by_human is set per the CONTROL.md
-    in-session clearance rule (generated art is pre-approved; existing secret;
-    reversible). NEW: .github/workflows/auto-art-generate.yml runs daily +
-    on demand: refreshes projects/art-generate.yaml to only currently-missing
-    project art (self-draining), submits each entry to the public kind_robots
-    Vercel ArtJob queue via the existing KR_API_TOKEN secret, the home-box
-    relay (already under pm2) renders and uploads, then the workflow downloads,
-    runs distribute_images.py, and commits conductor + kind_robots results -
-    reusing the already-blessed distribute-images.yml commit pattern. Box-down
-    is a soft no-op (jobs wait in queue). No local script runs required.
-    See t-019 for the live end-to-end confirmation (workflow_dispatch run).
-    ORIGINAL:
-    Consumes the approved queue: read projects/art-generate.yaml, submit
-    each entry via the t-010 queue API (KR_API_TOKEN), poll for completion,
-    download results into projects/process/ where distribute_images.py
-    already routes them to project folders and kind_robots collections.
-    FOR SILAS: scripts/consume_art_queue.py is built and merged (dry-run
-    default, 6 unit tests). TO APPROVE the first live cycle: populate a
-    batch (python scripts/queue_missing_project_art.py), review
-    projects/art-generate.yaml, then KR_API_TOKEN=... python
-    scripts/consume_art_queue.py --live --limit 1 and watch the relay log.
-    When satisfied, set approved_by_human: true and status: done.
-    What unblocks: the Worker may run the consumer in cycles - missing
-    project art then generates without any human enqueueing.
-    (Local fast path note retained: relay already writes collection copies
-    on the home box; direct-write for the consumer stays a future option.)
+  note: >-
+    DONE + AUTOMATED 2026-07-06 (Silas in-session, daily standup): Silas directed that the live cycle be automated and that he is NOT the gate for it - "we set up the tailscale connection for a reason, I am not needed for this test to finish." The manual first-run gate is superseded .
+
+    Full history: projects/art-generator-connect/HISTORY.md#t-012
 - id: t-013
   milestone: m5
   title: Align image tooling with the canonical placement convention (context/slug nesting, iterated numbering)
@@ -274,21 +189,10 @@ tasks:
   updated: '2026-07-05T00:00:00Z'
   passes: 0
   stakes: reversible
-  note: >
-    Silas directive (2026-07-05): ideal placement is
-    public/images/{most_relevant_schema_or_project}/{slug}/{slug}-{utility}-{n};
-    artcollections/ is an unsorted fallback, not a home. URL-MAPPING.md
-    section 1 now codifies this. Align scripts/distribute_images.py
-    (write nested paths, iterated {utility}-{n} numbering beyond
-    inspiration), kind_robots GET /api/art/collection/folder/[slug]
-    (resolve nested context/slug then flat slug then artcollections),
-    and gallery.json regeneration. No bulk moves of existing folders -
-    flat public/images/{slug}/ stays valid; migrate opportunistically.
-    DONE 2026-07-06: distribute_images.py gained slug_folder_rel /
-    next_numbered_path / collections.json master index (5 unit tests);
-    kind_robots folder endpoint resolves nested -> flat -> artcollections
-    (PR #98). Webp-at-source conversion handled by the t-012 consumer via
-    optional Pillow.
+  note: >-
+    Silas directive (2026-07-05): ideal placement is public/images/{most_relevant_schema_or_project}/{slug}/{slug}-{utility}-{n}; artcollections/ is an unsorted fallback, not a home.
+
+    Full history: projects/art-generator-connect/HISTORY.md#t-013
 - id: t-014
   milestone: m5
   title: Add .http test coverage for the ArtJob queue contract (enqueue → claim → complete) against a dev DB
@@ -310,17 +214,10 @@ tasks:
   updated: '2026-07-06T00:50:00Z'
   passes: 0
   stakes: reversible
-  note: >
-    Kaizen from kind_robots PR #96 (save-generated 401'd the relay's admin
-    token while the queue endpoints accepted it - auth drift between
-    generations of endpoints). Sweep the remaining bespoke inline
-    apiKey-only checks (/api/art/generate, textGate consumers, any others
-    matching prisma.user.findFirst({apiKey})) onto the shared
-    requireMachineUser guard so machine auth is uniform and defined in one
-    place. Behavior-preserving for existing JWT/apiKey callers.
-    DONE 2026-07-06 in kind_robots PR #97: art/generate,
-    chats/openai/images/generate, textGate swapped; the three comfy routes'
-    inline checks were redundant second auths and were removed.
+  note: >-
+    Kaizen from kind_robots PR #96 (save-generated 401'd the relay's admin token while the queue endpoints accepted it - auth drift between generations of endpoints).
+
+    Full history: projects/art-generator-connect/HISTORY.md#t-015
 - id: t-016
   milestone: m5
   title: 'Decide whether kind_robots PR #101 (Comfy direct smoke-test endpoints) may merge'
@@ -331,22 +228,10 @@ tasks:
   stakes: outward-facing
   gate_human: true
   approved_by_human: true
-  note: >
-    CLEARED 2026-07-06 (Silas in-session, daily standup): Silas confirmed
-    closing this formality. approved_by_human set + status done per the
-    CONTROL.md in-session clearance rule; the underlying decision was already
-    made when Silas merged PR #101 himself.
-    FOR SILAS: kind_robots PR #101 has already been merged directly on
-    GitHub (merged_by: silasfelinus, 2026-07-06T07:15:48Z) -
-    https://github.com/silasfelinus/kind_robots/pull/101 - via the
-    "merge it on GitHub directly" option this task's original note offered,
-    so the underlying decision is resolved and nothing is blocked in
-    practice. TO CLOSE: this task only needs the roadmap formality - set
-    approved_by_human: true and status: done (citing the direct merge as
-    the clearance) whenever convenient. Left at needs-human rather than
-    closed automatically because only you can set approved_by_human on a
-    gate_human task; the Reviewer is not overriding the gate, just
-    recording that you already cleared it.
+  note: >-
+    CLEARED 2026-07-06 (Silas in-session, daily standup): Silas confirmed closing this formality.
+
+    Full history: projects/art-generator-connect/HISTORY.md#t-016
 - id: t-017
   milestone: m4
   title: Guard folder-collection sync against long imagePath overflow and batch the per-image writes
@@ -355,29 +240,10 @@ tasks:
   updated: '2026-07-06T20:25:00Z'
   passes: 0
   stakes: reversible
-  note: >
-    DONE 2026-07-06: merged in kind_robots PR #108 (squash 5d76872), TypeScript
-    (vue-tsc) check green. IMPLEMENTED (Silas-directed session, pipeline hardening) on
-    branch claude/daily-standup-priorities-gdvhjr. In kind_robots
-    server/api/art/collection/folder/[slug]/sync.post.ts: (1) added a
-    MAX_IMAGE_PATH=191 guard that splits off any folder URL whose imagePath
-    would overflow ArtImage's default VarChar(191), skips it, logs a warning,
-    and reports a `skipped` count in the response instead of failing the whole
-    batch insert; (2) replaced the per-image loop (2 queries per image:
-    create + connect) with a single batched nested `ArtCollection.update ->
-    ArtImages.create[]` write. Accounting stays exact: created + skipped +
-    alreadyPresent = total. Permanent fix noted in-code = widen imagePath to
-    VarChar(764) via migration (deferred; needs its own migration PR). vue-tsc/
-    CI validates on the PR. ORIGINAL note follows:
-    ---
-    Kaizen from kind_robots PR #105 (t-007)'s own "Known limits" section:
-    ArtImage.imagePath is the default VARCHAR(191) and a very deeply nested
-    long slug path could overflow it, and POST
-    /api/art/collection/folder/[slug]/sync currently writes rows
-    sequentially (2 queries per image) with the list endpoint resolving all
-    folders' images per call - fine at current folder counts but worth
-    hardening before folder counts grow. Add a length guard/truncation (or
-    widen the column) and batch the sync writes.
+  note: >-
+    DONE 2026-07-06: merged in kind_robots PR #108 (squash 5d76872), TypeScript (vue-tsc) check green.
+
+    Full history: projects/art-generator-connect/HISTORY.md#t-017
 - id: t-018
   milestone: m5
   title: Run the tsx contract verifiers (art-request YAML + davinci seed) in a kind_robots CI job
@@ -386,23 +252,10 @@ tasks:
   updated: '2026-07-06T20:47:00Z'
   passes: 0
   stakes: reversible
-  note: >
-    DONE 2026-07-06: merged in kind_robots PR #109 (squash ef2ada1). Added
-    .github/workflows/contract-tests.yml - a lean DB-free "Contract verifiers"
-    job (checkout -> node 24 -> npm ci -> npm run test:art-request-yaml) that
-    runs on every PR + push to main + dispatch. Self-validated: the new
-    Contract verifiers check ran green on its own PR (#109) alongside
-    TypeScript + GitGuardian. Davinci verifiers left for a future fold-in when
-    the scratch-DB cost is worthwhile (already covered nightly by
-    davinci-seed-verify.yml). ORIGINAL:
-    Kaizen from t-008 merge (kind_robots PR #108): the new
-    `npm run test:art-request-yaml` verifier (and the existing
-    seed:davinci:verify) currently only run on demand. Add a lightweight GitHub
-    Actions job in kind_robots that runs `npm run test:art-request-yaml` (no DB
-    needed - it is pure string assertions) on PRs, so the art-prompts.yaml
-    indentation contract is enforced automatically rather than relying on a
-    human to run it. Optionally fold in the davinci verifiers where a scratch
-    DB is available.
+  note: >-
+    DONE 2026-07-06: merged in kind_robots PR #109 (squash ef2ada1).
+
+    Full history: projects/art-generator-connect/HISTORY.md#t-018
 - id: t-019
   milestone: m5
   title: Confirm the auto-art-generate pipeline end-to-end via a live workflow_dispatch run
@@ -411,35 +264,10 @@ tasks:
   updated: '2026-07-20T13:35:00Z'
   passes: 0
   stakes: reversible
-  note: >
-    Follow-up to t-012's automation. After auto-art-generate.yml merges,
-    trigger a workflow_dispatch (limit 1) and watch the run: it should enqueue
-    a job to the kind_robots Vercel queue, the home-box relay should render +
-    upload, and the workflow should download + distribute + commit the result.
-    A green run with a committed image is the live proof that replaces the old
-    manual local-script gate. If the render box is offline the enqueue path
-    still verifies (job waits in queue) - that is a soft no-op, not a failure.
-    HARDENING IDEAS if issues surface: surface generation results in the daily
-    digest, and add a mark-consumed path so refresh_queue=false runs of the
-    committed queue do not re-generate the same entries.
+  note: >-
+    Follow-up to t-012's automation.
 
-    DONE 2026-07-20 (claude-conductor-agent-20260720T-run2): a scheduled run
-    was already executing when this task was picked up
-    (https://github.com/silasfelinus/conductor/actions/runs/29739603475,
-    started 11:44 UTC) -- the workflow's `concurrency: {group:
-    auto-art-generate, cancel-in-progress: false}` means a fresh
-    workflow_dispatch would only have queued behind it, not run
-    independently, so this run stood in for the requested dispatch. The
-    "Submit + wait + verify project-art results" step ran for ~25 minutes and
-    completed with conclusion `success`, confirming the enqueue path is live:
-    real jobs are submitted to the Kind Robots ArtJob queue and really
-    polled, exactly as t-012 designed it, and the box-down soft-no-op path
-    works as documented. That is the live proof this task asked for. Did NOT
-    wait for the run to fully finish -- the second step ("Submit + wait +
-    verify art requests") was still in progress at 13:35 UTC, 85+ minutes
-    after starting, well past its expected ~25 minute ceiling
-    (--limit 5 x --timeout 300s). Filed that anomaly as t-022 rather than
-    block this task on it further.
+    Full history: projects/art-generator-connect/HISTORY.md#t-019
   claimed_by: claude-conductor-agent-20260720T-run2
   claimed_at: '2026-07-20T12:18:43Z'
 - id: t-022
@@ -450,60 +278,10 @@ tasks:
   owner: worker
   passes: 0
   stakes: reversible
-  note: >
-    Kaizen from t-019 (2026-07-20). auto-art-generate.yml's "art requests"
-    step calls `consume_art_requests_to_media.py --live --limit 5 --timeout
-    300`, which per scripts/consume_art_queue.py's `wait_for_job` should cap
-    total wall time near limit x timeout (~25 minutes) even in the
-    box-down/soft-no-op case. Run
-    https://github.com/silasfelinus/conductor/actions/runs/29739603475
-    (2026-07-20, schedule-triggered) had this step still running 85+ minutes
-    after it started, well past that ceiling, while the prior "project-art"
-    step in the same run completed cleanly in ~25 minutes as expected.
-    Investigate scripts/consume_art_requests.py /
-    scripts/consume_art_requests_to_media.py for a path that ignores or
-    re-triggers past --timeout (e.g. a retry loop around wait_for_job, or the
-    requests: block in art-prompts.yaml genuinely containing far more than 5
-    eligible entries because already_satisfied() is under-matching). Check
-    the finished run's logs once it completes for the actual per-item timing
-    before changing behavior.
-    RESOLVED 2026-07-20 (conductor agent session
-    claude-conductor-agent-20260720T1315Z): root cause was not the
-    wait_for_job/--timeout path at all -- that loop is correctly bounded to
-    args.limit items each waiting at most args.timeout. It was
-    consume_art_requests.py's self-drain pre-scan: `already_satisfied(r)` ran
-    over EVERY pending request (154 in art-prompts.yaml right now, 120 of
-    them kind_robots media targets), not just the `--limit`-bounded batch,
-    and was called TWICE per entry (once building `satisfied`, once building
-    `todo`, since neither comprehension cached the result). For a
-    kind_robots-media-target entry, `already_satisfied()` resolves to
-    media_direct_consumer._media_exists(), a live HTTP HEAD request to
-    media.acrocatranch.com with a 30s timeout -- so with the media host
-    unreachable during the box-down window, this pre-scan alone could run up
-    to 120 entries x 2 calls x 30s = 7200s (120 min), independent of
-    --limit/--timeout, fully explaining the observed 85+ minutes against a
-    "project-art" step (no self-drain pre-scan, hence no unbounded network
-    fan-out) that stayed within its ~25 minute ceiling. Fixed both
-    contributing factors: (1) scripts/consume_art_requests.py now computes
-    already_satisfied(r) exactly once per entry in a single pass instead of
-    once per comprehension: (2) scripts/media_direct_consumer.py's
-    _media_exists() HEAD-check timeout dropped from 30s to 8s
-    (MEDIA_EXISTS_TIMEOUT_SECONDS) -- it is a lightweight existence probe
-    against a static file host, not a render wait, so 30s per call was never
-    warranted. Together this bounds worst-case pre-scan time to roughly
-    (pending backlog size) x 8s instead of x 60s, a ~7.5x reduction, and the
-    actual --limit/--timeout-bounded generation loop is unaffected. No
-    already_satisfied() "under-matching" bug was found -- the hypothesis in
-    this task's original note was not the cause. Verified: full `pytest
-    tests/` (429 tests, 428 passed + 1 pre-existing skip, 0 new failures);
-    added a standalone repro confirming already_satisfied is now called
-    exactly once per entry (was twice before the fix); `py_compile` on both
-    changed files; `python scripts/audit_roadmaps.py` (0 errors). No live
-    workflow re-run performed (would require the actual GitHub Actions
-    schedule/dispatch and a reachable media host neither available from this
-    sandbox) -- the fix is a direct, provable elimination of the redundant
-    network fan-out that the run log's timing already demonstrated, not a
-    speculative change.
+  note: >-
+    Kaizen from t-019 (2026-07-20).
+
+    Full history: projects/art-generator-connect/HISTORY.md#t-022
   claimed_by: claude-conductor-agent-20260720T1315Z
   claimed_at: '2026-07-20T13:17:12Z'
   updated: '2026-07-20T13:21:55Z'
@@ -516,22 +294,10 @@ tasks:
   updated: '2026-07-19T23:23:00Z'
   passes: 0
   stakes: reversible
-  note: >
-    Kaizen from reviewing kind_robots PR #108 (t-008/t-017): when renderRequestEntry's YAML logic was extracted out of server/api/conductor/art-request.post.ts
-    into server/utils/artRequestYaml.ts, ArtQueueEntry.variant was quietly widened from a specific ArtVariant union to plain
-    string. Harmless today (CI/tsc green, all call sites still pass ArtVariant values) but it loosens the compile-time contract
-    on a module whose whole purpose is enforcing a contract. Narrow it back to the ArtVariant union and confirm tsc + test:art-request-yaml
-    stay green.
-    IMPLEMENTED 2026-07-19 (~23:20 UTC): moved `ArtVariant` ('icon'|'card'|'hero'| 'image') into artRequestYaml.ts as the
-    canonical contract module and narrowed ArtQueueEntry.variant to it; art-request.post.ts now imports ArtVariant instead
-    of re-declaring its own via `keyof typeof VARIANT_SIZES`, and VARIANT_SIZES is pinned to `Record<ArtVariant, string>`
-    so the two can't drift apart again. Verified: test:art-request-yaml and full vue-tsc typecheck both clean. Merged kind_robots
-    PR #581 (squash 984c412), all 3 CI checks green.
-    ROTATION COLLISION (separate session, 2026-07-19T23:15-23:29 UTC): a second session claimed this same task within the
-    same minute (both landed the identical `claim_task.py` claim commit at f2d0405) and independently produced a functionally
-    identical fix, opened as kind_robots PR #580 from the same main base (d06f365). PR #581 above merged first; #580 was closed
-    unmerged as redundant once the collision surfaced via a dirty mergeable_state. No rework needed -- see root TALKBACK.md
-    for the full collision writeup and a suggested claim_task.py hardening idea for cross-repo tasks.
+  note: >-
+    Kaizen from reviewing kind_robots PR #108 (t-008/t-017): when renderRequestEntry's YAML logic was extracted out of server/api/conductor/art-request.post.ts into server/utils/artRequestYaml.ts, ArtQueueEntry.variant was quietly widened from a specific ArtVariant union to plain str
+
+    Full history: projects/art-generator-connect/HISTORY.md#t-020
   claimed_by: claude-conductor-burst-20260719T2306Z
   claimed_at: '2026-07-19T23:06:07Z'
 - id: t-021
@@ -544,23 +310,9 @@ tasks:
   stakes: reversible
   depends_on:
   - t-012
-  note: >
-    DONE. The automated loop (auto-art-generate.yml) drained only
-    art-generate.yaml (self-draining project icon/card/hero art); the requests:
-    block of art-prompts.yaml — written by /api/conductor/art-request,
-    scripts/request_art.py, and now the Serendipity voice runtime — had no
-    consumer ("nothing consumes it", per pipeline-architecture.md section 2).
-    Added scripts/consume_art_requests.py: reads pending requests, submits each
-    through the SAME kind_robots ArtJob queue as consume_art_queue.py (reuses its
-    enqueue/poll/fetch/save so generation is identical), lands results in
-    projects/process/ where distribute_images.py already routes them by
-    image_path/target_repo, and marks each request status: done with a
-    comment-preserving edit. Idempotent: a request whose target image already
-    exists is marked done, never regenerated (the "mark-consumed path" t-019
-    flagged). Wired as a step in auto-art-generate.yml before distribute_images;
-    the commit step already includes art-prompts.yaml. Dry-run default; 8 unit
-    tests (22 total green); dry-run verified against the live 18-entry requests
-    block. First live drain is the existing scheduled KR_API_TOKEN workflow run.
-    This is the pipeline half the Alexa/Serendipity voice art path funnels into.
+  note: >-
+    DONE.
+
+    Full history: projects/art-generator-connect/HISTORY.md#t-021
 goal: Keep Kind Robots art generation reliably connected to its generation backends, with queueing, execution, and 
   delivery working end to end.

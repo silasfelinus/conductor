@@ -1,0 +1,770 @@
+# kapowarr — task history archive
+
+Full `note:` prose for completed kapowarr tasks, moved out of `roadmap.yaml` so the
+Kind Robots projection payload (`scripts/sync_kind_robots_projection.py`, hard limit
+4,000,000 bytes) stays well clear of its ceiling. See conductor/t-158.
+
+Each note below is the **verbatim** original — nothing is summarized or trimmed. The
+`roadmap.yaml` task keeps its own first sentence plus a pointer here. The HTML comment
+markers delimit each note exactly; `archive_done_task_notes.py --verify-only` re-extracts
+every note and checks it byte-for-byte against what the roadmap recorded.
+
+## t-003 — Make the displayed application title configurable
+
+<!-- note:begin t-003 -->
+Applied and merged in silasfelinus/Kapowarr#1 (squash 09c2574) — this session had Kapowarr in its GitHub scope, so the previously-designed handoff patch (projects/kapowarr/docs/t-003-configurable-title.md) was implemented and verified live: PUT /api/settings with app_title round-trips, login/tab-title/PWA-manifest pick it up with no server restart, System Status attribution stays untouched. See TALKBACK.md for full verification notes.
+<!-- note:end t-003 -->
+
+## t-005 — Audit -arr quality-of-life gaps
+
+<!-- note:begin t-005 -->
+Audit written at projects/kapowarr/docs/t-005-arr-qol-audit.md, grounded in a read-only inspection of the live silasfelinus/Kapowarr source (queue.js, view_volume.js, settings_download_clients.js, root_folders.py, status.html, history.html). Found queue reorder/delete/blocklist, per-issue/per-volume search, download-client test-connection, and multi-root-folder support already mature -- no action needed there. Concrete gaps: no notification/webhook system at all (t-012 created), no health-check/system-warnings panel (t-013 created). Import lists and a calendar view were considered and deliberately not turned into tasks (see doc for reasoning) to keep follow-ups scoped to real friction rather than speculative new surface.
+<!-- note:end t-005 -->
+
+## t-006 — Design the Usenet/NZB boundary
+
+<!-- note:begin t-006 -->
+Design spec written at projects/kapowarr/docs/t-006-usenet-nzb-boundary.md, grounded in a read-only inspection of the live silasfelinus/Kapowarr source (external_clients.py, definitions.py's ExternalDownloadClient/Download/ExternalDownload ABCs, download_clients.py's TorrentDownload, search.py's ranking pipeline). Maps two seams: (1) a new SABnzbd(BaseExternalClient) + NZBDownload(ExternalDownload) pair that reuses the existing polling contract (TorrentDownload.update_status() already calls through the ABC, not torrent-specific -- confirmed by reading it) with one flagged real touchpoint (download_queue.py's isinstance(download, TorrentDownload) dispatch needs widening), and (2) a new NZB indexer search module feeding the existing source-agnostic SearchResultData/_rank_search_result pipeline, parallel to and never touching getcomics.py. Treated upstream issue #71 as research only -- no upstream reads/writes beyond public content, no upstream PR/issue. t-007/t-008 (not-started) can implement directly from this spec.
+<!-- note:end t-006 -->
+
+## t-007 — Implement SABnzbd download-client support
+
+<!-- note:begin t-007 -->
+Implemented and merged silasfelinus/Kapowarr#26 (squash 973ad03), per the seam mapped in t-006's design doc. Added DownloadType.USENET and a SABnzbd(BaseExternalClient) peer to qBittorrent/Transmission (connection test, submission, queue+history status polling, cancellation), registered it in ExternalClients.get_client_types(), and added NZBDownload(ExternalDownload, BaseDirectDownload) modeled on TorrentDownload. download_queue.py's shared external-download polling loop was extracted into __run_external_download(); the new __run_usenet_download() always uses PostProcessorTorrentsComplete since Usenet never seeds (torrent behavior unchanged). Real constraint found during implementation, corrected vs. the design doc's assumption: SABnzbd has no per-job arbitrary target-folder parameter (submits under a fixed 'kapowarr' category instead, folder mapped in SABnzbd's own settings), and doesn't expose a completed download's folder until its history reports 'Completed' -- NZBDownload.update_status() picks that up from SABnzbd.get_download()'s 'storage' key rather than assuming zero polling changes. Verified by reading the code (not assumed): the settings UI and /externalclients* API routes are already fully client-type-registry- driven, so SABnzbd needed zero UI/route changes to become selectable/configurable. mypy -p backend clean, isort clean on touched files, python -m unittest discover: 96/96 passing (25 new: 14 client unit tests against mocked SABnzbd API responses, 11 NZBDownload tests). SABnzbd's exact JSON field names are documented from its long-stable public API but not live-verified (no reachable instance in this sandbox) -- flagged in the module docstring for first real use. NZBDownload exists and is unit-tested but has no caller yet -- wiring a real search result into it is t-008 (NZB indexer ingestion), not this task.
+<!-- note:end t-007 -->
+
+## t-008 — Implement NZB source/indexer ingestion
+
+<!-- note:begin t-008 -->
+Add an extensible NZB/indexer path separately from the SABnzbd client. Define normalized search results and handoff so additional indexers/download clients can be supported later without another architecture rewrite.
+
+Implemented via a new Indexer/Indexers DB-backed registry (Newznab-compatible: title/base_url/api_key, no per-indexer client-type hierarchy needed since Newznab is one shared spec), search_indexer() normalising results into the existing SearchResultData shape (picked up automatically by search.py's SearchSource discovery -- zero changes to the search/matching pipeline), and create_nzb_download() handing off to NZBDownload (t-007) via a new 'nzb' branch in download_queue.py's add(), mirroring the 'gc' branch. New additive-only `indexers` table (migration handler 46). Settings CRUD API + page included, mirroring the existing Notifications settings page. mypy clean, isort clean, full suite 128/128 (32 new). Not live-verified against a real indexer (none reachable in this sandbox) -- same caveat as t-005/t-007. Merged silasfelinus/Kapowarr#28 (squash 888f415) -- 6/7 checks green (Build container still in flight, non-required, mergeable_state: clean), diff matched exactly (1451/+, 13 files).
+<!-- note:end t-008 -->
+
+## t-009 — Harden download completion and import workflows
+
+<!-- note:begin t-009 -->
+Added regression coverage for backend/features/post_processing.py (34 tests) and backend/features/download_queue.py's DownloadHandler (31 tests) -- previously zero coverage for either module. Covers success/canceled/ permanently-failed/shutdown/stalled/seeding-once cases for the external (torrent+NZB) download polling state machine, queue management (_process_queue, set_queue_location, duplicate-add short-circuit), remove()'s branch logic (queued vs actively-downloading vs silently-died-thread vs external-download exclusion), and the restart path (__load_downloads, broken-link/limit-reached/issue-not-found/ client-not-working/successful-restore cases). Comic matching (backend/implementations/matching.py) already had solid coverage in tests/Tbackend/matching.py -- confirmed by reading it first rather than duplicating it. Real bug found and fixed while writing the restart-path coverage: __load_downloads()'s LinkBroken except-handler read download['source'], but the download_queue table/SELECT only has source_type -- on a real sqlite3.Row this raised an uncaught IndexError, killing the queue-restore loop mid-iteration on every server restart where a queued link had gone broken, silently dropping every row after it. Fixed (one-line) and locked in with a regression test verified to fail pre-fix and pass post-fix. Full suite 193/193 (128 pre-existing + 65 new), mypy clean, isort clean. Merged silasfelinus/Kapowarr#29 (squash 6f79c1e) -- all 7 checks green, mergeable_state: clean, diff matched exactly (967/+, 1/-, 3 files).
+<!-- note:end t-009 -->
+
+## t-010 — Verify Conductor to Kind Robots project projection
+
+<!-- note:begin t-010 -->
+Verified live: GET https://kindrobots.org/api/projects shows the kapowarr Project row (id 2109) with conductorSlug=kapowarr, status=ACTIVE, priority=HIGH -- matching project-overrides.yaml's status: active / priority: high exactly. GET /api/conductor/projects confirms the commit-stamped ConductorProjection: sourceCommitSha tracked the live claim commit (840a745, this task's own claim) within the same minute it was pushed -- sync is real-time, not stale. Milestones/tasks in that response are re-parsed from the raw roadmap.yaml text on every request (no separate Milestone/Task SQL table -- confirmed by reading kind_robots' server/api/conductor/sync.post.ts, conductorProjectionDb.ts, and conductorRoadmap.ts directly), so task-level state (t-001 done, t-002/t-003/t-004 needs-human, etc.) is always current by construction. One real staleness bug found and fixed: m1 and m2 milestone status were both hard-coded 'not-started' in roadmap.yaml despite m1 having 1 done + 3 needs-human tasks and m2 having 2 done + 2 ready tasks -- flipped both to 'in-progress' here (m3 correctly stays not-started; no completed work yet). No sync failures found; no repair needed beyond the milestone-status fix.
+<!-- note:end t-010 -->
+
+## t-011 — Document fork maintenance and upstream refresh workflow
+
+<!-- note:begin t-011 -->
+Implemented and merged in silasfelinus/Kapowarr#30 (squash 7af5aaf): new FORK_MAINTENANCE.md covering fetch/compare upstream (adding the upstream remote, git merge-base, log/diff against Casvt/Kapowarr), deciding what to pull in while keeping fork customizations isolated at the commit level (Usenet/NZB indexer + download-client support, notifications, health-check panel, branding vs. shared upstream code), resolving conflicts (fork-only areas vs. shared logic vs. branding/identity files), running the existing mypy/isort/autopep8/unittest tooling, and preserving attribution (license, README fork notice, upstream links, commit authorship on import). Linked from README.md's fork notice. Verified live against the real Casvt/Kapowarr repo before writing the doc: fork point is the V1.3.1 tag (55946aa), fork is 49 commits ahead, upstream/main has 0 commits since that point. mypy clean (70 files), full unittest suite 193/193 passing. Docs-only change (215/-1, 2 files); all 7 CI checks green, mergeable_state clean, diff matched exactly intended scope before squash-merge.
+<!-- note:end t-011 -->
+
+## t-012 — Add a Discord/generic-webhook notification system
+
+<!-- note:begin t-012 -->
+Implemented and merged in silasfelinus/Kapowarr#5 (squash 79c57e5): new notification_services table + backend/implementations/notifications.py sends a POST to enabled Discord/generic-webhook services on download-complete (PostProcessor.success) and import-failed (PostProcessor.perm_failed, torrent blocklist path). Settings > Notifications page for CRUD + test. Live testing caught and fixed two real bugs before merge: (1) the Test buttons unreachable-host case took 90+s due to Sessions retry/backoff, same class of bug health.py already fixed for health checks -- bounded the same way (ThreadPoolExecutor + future.result timeout); (2) firing from a background thread raised a Working outside of application context error since the bounding executors worker thread does not inherit Flask app context -- fixed by pushing Server().app.app_context() in the worker itself. Re-verified end-to-end against a local HTTP receiver: both events delivered correct payloads. Health-warning events deliberately deferred per the tasks own future framing; NotificationEvent is designed to extend. See PR body for full verification and the Flags-for-Reviewer note on perm_failed()s current torrent-only reach.
+<!-- note:end t-012 -->
+
+## t-013 — Add a health-check / system-warnings panel
+
+<!-- note:begin t-013 -->
+Implemented and merged in silasfelinus/Kapowarr#2 (squash f70537e): new GET /api/system/health aggregates a ComicVine API-key check, a per-external-client reachability test, and a root-folder accessibility check into warnings shown on the Status page. Live testing surfaced a real robustness bug (an unreachable download client made the endpoint take 90+ seconds due to Session retry/backoff) which was fixed with a bounded per-check timeout before merging. See TALKBACK.md for full verification notes.
+<!-- note:end t-013 -->
+
+## t-014 — Resolve GitHub scope gap blocking kapowarr code tasks
+
+<!-- note:begin t-014 -->
+FOR SILAS: Update 2026-08-15 (later same day) — this session's GitHub scope now includes silasfelinus/Kapowarr (confirmed via mcp__github__get_file_contents and a real push), so option (a) appears to already be in effect for this trigger. Used it to apply, verify (mypy/isort/unittest/live smoke test), and ship the three accumulated handoff patches: silasfelinus/Kapowarr#1 (squash 09c2574) closes t-002/t-003/t-004. t-012 and t-013 are unblocked and pickable by a future cycle without the handoff-doc workaround. TO APPROVE: if this scope grant is intentional and standing (not a one-off), please close this task done — the concrete blocker it tracked is resolved and demonstrated working end-to-end. If it was unintentional or session-specific, leave this open so the pattern can be re-escalated if a future session hits the wall again.
+
+Silas explicitly confirmed in the 2026-08-15 GitHub session that he restarted the thread specifically so this session would have GitHub access, and this session successfully created a branch, commits, and PR #3 in silasfelinus/Kapowarr. The repo-scope blocker is therefore intentionally cleared and verified end-to-end.
+<!-- note:end t-014 -->
+
+## t-015 — Bound the external-client connectivity-test retry/backoff with a timeout
+
+<!-- note:begin t-015 -->
+Kaizen from t-013 (silasfelinus/Kapowarr#2): the Settings page's existing "Test" button for external download clients (POST /api/externalclients/test, backed by ExternalClients.test() -> each client's classmethod test(), which uses the shared Session class) has no timeout of its own -- against a genuinely unreachable client it waits out Session's full retry cycle (5 retries with exponential backoff, observed to take 90+ seconds live during t-013's testing) before reporting failure. t-013 fixed this for the new health-check endpoint with a bounded per-call timeout run in a thread pool (see backend/internals/health.py's HEALTH_CHECK_TIMEOUT / _run_bounded); apply the same or a similar bound to the interactive Test button's request path so a user testing a dead client isn't stuck waiting minute-plus for a spinner. Same cross-repo boundary as other kapowarr code tasks -- implementation belongs in silasfelinus/Kapowarr, not this repo.
+<!-- note:end t-015 -->
+
+## t-016 — Bound send_notification()'s per-service thread fan-out with a worker pool
+
+<!-- note:begin t-016 -->
+Kaizen from t-012 (silasfelinus/Kapowarr#5): send_notification() fires one plain threading.Thread per matching, enabled notification service per event (backend/implementations/notifications.py), each of which itself spins up a one-worker ThreadPoolExecutor to bound the actual HTTP call. Fine at today's scale (a handful of services, downloads aren't that frequent), but a library with many enabled services and frequent concurrent downloads could accumulate many short-lived threads at once with no cap. Replace the per-call Thread + one-off ThreadPoolExecutor with a small shared, bounded worker pool (reusing the ThreadPoolExecutor + future.result(timeout=NOTIFICATION_REQUEST_TIMEOUT) pattern that already exists, just not sized/shared across calls). Same cross-repo boundary as other kapowarr code tasks -- implementation belongs in silasfelinus/Kapowarr, not this repo.
+<!-- note:end t-016 -->
+
+## t-017 — Bound ExternalClients.add()/update_client()'s unbounded .test() calls the same way t-015 bounded the Test button
+
+<!-- note:begin t-017 -->
+Kaizen from t-015 (silasfelinus/Kapowarr#6): that task bounded the interactive Settings-page "Test" button's connectivity check (ExternalClients.test(), behind POST /api/externalclients/test) to 10s, deliberately leaving ExternalClients.add() and BaseExternalClient.update_client() untouched -- both still call a client type's .test() classmethod directly and unbounded, inheriting the same full 5-retry/exponential-backoff Session cycle (90+ seconds against a genuinely unreachable host) t-015 just fixed for the Test button. Apply the same one-worker ThreadPoolExecutor + future.result(timeout=...) bound (reuse EXTERNAL_CLIENT_TEST_TIMEOUT from backend/implementations/external_clients.py) to these two write paths so adding or editing a client with an unreachable/wrong URL doesn't hang the request for over a minute. Same cross-repo boundary as other kapowarr code tasks -- implementation belongs in silasfelinus/Kapowarr, not this repo.
+<!-- note:end t-017 -->
+
+## t-018 — Dedupe ExternalClients.test()'s inline bound into the shared _test_client_bounded() helper
+
+<!-- note:begin t-018 -->
+Kaizen from t-017 (silasfelinus/Kapowarr#9): that task factored the one-worker ThreadPoolExecutor + future.result(timeout=...) bounding pattern out of ExternalClients.test() into a shared _test_client_bounded() helper for add()/update_client() to reuse, but deliberately left ExternalClients.test() itself with its own near-identical inline copy of the same bounding logic -- it needed to keep returning a ClientTestResult dict (for the interactive Settings "Test" button) rather than raising, which _test_client_bounded() doesn't support today. Extend _test_client_bounded() (or add a thin wrapper) so ExternalClients.test() can call it too, removing the last duplicate copy of the timeout/executor/app-context plumbing. Same cross-repo boundary as other kapowarr code tasks -- implementation belongs in silasfelinus/Kapowarr, not this repo.
+<!-- note:end t-018 -->
+
+## t-019 — Add a branch-janitor workflow to silasfelinus/Kapowarr
+
+<!-- note:begin t-019 -->
+Kaizen from this session's end-of-cycle branch cleanup sweep (root TALKBACK.md, 2026-08-16): silasfelinus/Kapowarr has no delete-on-merge and, unlike conductor/kind_robots, no branch-janitor.yml workflow -- session credentials 403 on `git push origin --delete <branch>` for every confirmed-superseded stale branch found (6 this cycle: old claude/* and worker/* branches whose content is fully present in main under different squash-merge SHAs), and there is no GitHub MCP tool that deletes a branch ref directly either. Port conductor's scripts/branch_janitor.py / .github/workflows/branch-janitor.yml pattern (or a minimal equivalent scoped to Kapowarr's actual needs -- it doesn't need conductor's STRANDED-tier judgment logic, just a workflow_dispatch-triggered "delete these named branches via the Actions token" escape hatch) so a future session can clear confirmed- superseded branches without needing elevated ref-deletion credentials. Same cross-repo boundary as other kapowarr code tasks -- implementation belongs in silasfelinus/Kapowarr, not this repo.
+<!-- note:end t-019 -->
+
+## t-020 — Fix stale m3 milestone status (stamped not-started, but t-010 is done)
+
+<!-- note:begin t-020 -->
+Kaizen from the 2026-08-16 weekly site audit. Milestone m3 ("POLISH & SHIP -- tests, migration safety, and sync integrity") is stamped `status: not-started`, but t-010 (milestone m3, "Verify Conductor to Kind Robots project projection") is already `status: done`; t-009 and t-011 (the other two m3 tasks) remain not-started. Flip m3's own `status` to `in-progress` to match the 1-of-3 real completion state -- same stale-milestone-metadata pattern kind-robots/t-058 already flagged elsewhere. No task content changes needed, just the milestone status field.
+<!-- note:end t-020 -->
+
+## t-021 — Make library import continuous, paced, and observable
+
+<!-- note:begin t-021 -->
+User-prioritized before SAB/NZB work: evolve the existing manual library importer for a 4500+ volume collection. Preserve Review Scan, add an explicit unattended mode that can check all root-folder candidates without repeated confirmation, pace ComicVine conservatively, stop disguising ComicVine throttling as a missing match, keep unmatched folders available for review, and expose visible checked/imported/review/remaining progress. First slice is implemented in silasfelinus/Kapowarr#13; follow-up confidence scoring and durable restart persistence can build on the same conveyor after live use.
+
+
+Implemented and merged silasfelinus/Kapowarr#13 (squash 5c4d5f5). The existing review importer now surfaces ComicVine throttling instead of converting it to a missing match; Continuous Auto-Import snapshots the unimported folder queue once, processes it one folder at a time with conservative ComicVine pacing and cooldown, auto-imports the current best match without renaming, leaves unmatched folders for review, and exposes checked/imported/review/remaining progress through the existing background-task API. The importer page reconnects to a running task after navigation. PR and post-merge Python 3.8-3.12 matrices, docs, and container builds all passed; main published ghcr.io/silasfelinus/kapowarr:latest and sha-5c4d5f5 with digest sha256:bc810d0645f82016304533d4013cd742643f611f41141eb04398387c70452b9a. Follow-up confidence-margin policy and durable task persistence across container restarts remain explicit future refinements after live-library testing.
+
+Projection resync verification after merging the task-event dispatcher fix. No implementation state changed; this repeat done transition is intentionally idempotent and exists to exercise the full task-event processor -> explicit Kind Robots projection workflow path on the already-completed importer task.
+
+Follow-up confidence hardening shipped in silasfelinus/Kapowarr#14. Continuous Auto-Import now uses the existing filename-evidence score but only imports unattended when the best ComicVine candidate scores at least 4/5 and leads the runner-up by at least 2 points. Exact ties, one-point leads, and weak single candidates stay untouched in the needs-review bucket, while Review Scan keeps the historical best-guess behavior. PR and post-merge Python 3.8-3.12 tests, docs, and container builds passed. Main d38b08e published ghcr.io/silasfelinus/kapowarr:latest and sha-d38b08e with digest sha256:653bbb5c5d83f848dfdff12dc97ad9f8403e203169b470b0fbdfcdeecc3142e6.
+
+Live-library calibration after 1,153/9,222 folders in about 10 hours (751 volumes imported; 642 folders held for review) shipped in silasfelinus/Kapowarr#15, merged as e7b2cfb51c05e8a0d6bb84bb062fb903edc513ad. Continuous Auto-Import keeps the 4/5 filename-evidence floor, now accepts a one-point lead while exact ties remain for review, and paces ComicVine by a 20-second minimum between search starts so API/import processing time overlaps the cooldown. Progress now reports tied, weak-score, and no-candidate review holds for future calibration. PR exact-head Python 3.8-3.12, docs, and container checks passed; post-merge main Python 3.8-3.12, docs, and GHCR publish also passed. Published ghcr.io/silasfelinus/kapowarr:latest digest sha256:977c4bed856a7203387eef671b14c28a6afc5093bc7ddc598d82d7d8715d80d5.
+
+Live-control follow-up shipped in silasfelinus/Kapowarr#16, merged as 3ba5294a399795329b886c426b0154733638b4bf. Continuous Library Import can now be manually stopped at a safe folder boundary, including responsive cancellation during ComicVine cooldowns. While it is still running, Review Holds exposes accumulated tied, weak, and no-candidate groups in the normal editable import table using ComicVine results already fetched by the conveyor, so opening review does not duplicate searches. The background progress poll no longer steals the page after Run in Background or while reviewing. Exact-head and post-merge Python 3.8-3.12, docs, and container checks passed. Published ghcr.io/silasfelinus/kapowarr:latest and ghcr.io/silasfelinus/kapowarr:sha-3ba5294 with digest sha256:3cfc9fedf643c05842eb32a522a22aa931b0ab5b363cf6947429e382d4ab50c2. Active task and review state remains process-memory only and does not survive a container restart; durable importer job persistence remains separate future work.
+
+Durable Continuous Library Import persistence shipped in silasfelinus/Kapowarr#17, merged as c2295f4b4c6035682c883cfffc4b03cabaa655d1. Jobs now persist an ordered folder snapshot and per-folder pending/processing/done/review checkpoints in Kapowarr's SQLite database, including imported-volume counters and held review rows. A user Stop Import is a durable pause that stays paused across restarts and resumes on the next explicit Continuous Auto-Import start; an application/container interruption leaves the job running and Kapowarr auto-requeues it on startup, resetting only an in-flight processing folder to pending. Completed and review checkpoints are kept, and durable held rows reconcile against the canonical files table after manual imports. Unexpected worker errors persist as paused with the error to avoid restart loops. The only crash window is after import_library commits but before the folder checkpoint writes: that one folder can replay, but already-recorded files are filtered from the rescan, so library state stays safe while the persisted imported counter may undercount that crash-window work. Exact-head and post-merge Python 3.8-3.12 tests, docs, and container builds passed. GHCR latest and sha-c2295f4 were published at digest sha256:11a7af9ca32b63e298cf1dcfb62c2573a68f05795926307199d62425fb5bbd15.
+
+Review-match postmortem diagnostics shipped in silasfelinus/Kapowarr#18, merged as f18c05c2b08eca11d445f51aa4180c6a3f8e9631. Continuous Auto-Import now records zero-extra-request JSONL diagnostics beside Kapowarr.db for each held filename group, including parsed filename evidence, current score/margin thresholds, best/runner-up scores, ranked viable candidates, and up to 25 raw ComicVine search results annotated with viable scores. Existing pre-#18 holds do not have full candidate history and require paced re-search to backfill. Exact-head and post-merge Python 3.8-3.12, docs, and container checks passed. Published ghcr.io/silasfelinus/kapowarr:latest digest sha256:af641768dbf7833836926170e29993b062480c96a977bdbba543eddbc744aca6.
+
+Postmortem-driven false-review cleanup shipped in silasfelinus/Kapowarr#19, merged as 33d3ffd00e1e93f2be49684c28cda6996c090ecc. Analysis of 1,265 review-postmortem groups found 523 (41.3%) were artifact-only cover.jpg/folder.jpg groups. Continuous Auto-Import now ignores cover-classified images and hidden cache paths while preserving page-image comics, prunes historical artifact rows when Review Holds reconciles, and uses safe folder-local series.json or compatible metadata.json ComicVine IDs when the filename or same-folder evidence agrees. Organizer folders do not blindly propagate their metadata to differently named child/peer series. The existing continuous 4/5 score floor and one-point margin remain unchanged for groups without trusted local metadata. Exact-head and post-merge Python 3.8-3.12, docs, and container checks passed. Published ghcr.io/silasfelinus/kapowarr:latest and :sha-33d3ffd at digest sha256:3449b61c5cdec7a8719d9075640c0490be250dffec4c0d724a37ac84c5d75996. Existing real pre-#19 review holds are not automatically re-matched by this change; artifact rows are pruned immediately and local metadata applies prospectively as pending folders are processed.
+
+Library Import review UX shipped in silasfelinus/Kapowarr#20, merged as 8d849724e7c9d7fe2afbfa411b971cf2e13f34cf. Review rows now collapse by Kapowarr's existing volume group_number so a proposed volume appears once while its underlying issue/file rows remain hidden and synchronized for the existing per-file import payload. Groups without any proposed ComicVine match default to unchecked and disabled; assigning a manual group match makes them importable and selected. Select All operates only on visible matched volume groups. A Show matched only toggle filters the review table without deleting holds, and grouped rows expose an expandable file list when individual issues need inspection. Matching thresholds and backend import policy are unchanged. Exact-head and post-merge Python 3.8-3.12 checks passed, docs passed, and the production container published ghcr.io/silasfelinus/kapowarr:latest and ghcr.io/silasfelinus/kapowarr:sha-8d84972 at digest sha256:beadf34f7da7774a5595cc75a71498fd7efce0490860d4c2becf1a8d02582ad5.
+
+Kapowarr#23 shipped a serialized Reset & Re-evaluate All Holds workflow. It cooperatively stops an active continuous import, retires stale paused review jobs, rescans current unimported filesystem paths, creates a fresh durable job ID, and restarts the current cvinfo/whole-run/artifact-aware matcher without touching already imported files or the append-only postmortem log.
+
+Follow-up UI repair shipped in silasfelinus/Kapowarr#24, merged as e0f890dd285f953de60db43d87c9c5953ec52eb5. Reset & Re-evaluate All Holds is now directly available on the main Library Import screen. A background Continuous Auto-Import exposes View Progress, Review Holds, Stop Import, and Reset & Re-evaluate controls on that same screen, and Review Scan / Continuous start buttons are disabled while the continuous conveyor is active so two importers cannot collide. The older synchronous Review Scan loader now has Back to Import Options and blocks overlapping scans until its server request settles; it is intentionally not labeled as cancellable because the synchronous backend has no cancellation token. Exact-head and post-merge Python 3.8-3.12, docs, and container checks passed. GHCR latest and sha-e0f890d were published at digest sha256:1d0c812a29f8bcb43ad555944266cc8580d5c1beea5b49ce9eb5822427e3d865.
+
+User-reported live follow-up after #24: Reset & Re-evaluate can leave the browser on the intermediate "Scanning current unimported folders..." state until a refresh. Investigating the reset-to-continuous async handoff; this done event is an idempotent trace marker only and does not claim implementation completion.
+
+Live reset-handoff repair shipped in silasfelinus/Kapowarr#25, merged as 8e0ccf480c8e4cf6b025f24d9adaa8e7e8113d5a. Root cause: Reset & Re-evaluate waited for the recheck task to disappear, then fired startContinuousImport asynchronously and immediately released its reset UI state without confirming that the browser had attached to the newly created continuous_library_import task. The UI now waits up to 15 seconds for that task to become visible, explicitly attaches the normal progress poller before finishing the reset flow, and disables Continuous-only Review/Stop/Background controls while the snapshot rebuild itself is running. PR and post-merge Python 3.8-3.12 tests, docs, and container builds all passed. GHCR latest and sha-8e0ccf4 were published at digest sha256:259e1032e96d590abfc8d212fbc76fca72e79fc1ab174dc30b5f287b07fb4da9.
+
+Adjacent live-use follow-ups shipped after the continuous importer work. silasfelinus/Kapowarr#31 (merge 0c8ed204) keeps large Volumes galleries responsive by revealing the first 50 entries immediately and hydrating the remainder in browser-idle batches while preserving complete Mass Edit semantics. silasfelinus/Kapowarr#32 (merge 206c63f9) adds the first built-in comic-reader slice: authenticated issue/page endpoints, CBZ/ZIP and loose-image reading without permanent extraction, natural page ordering, responsive swipe/keyboard/page-fit UI, and Read actions on downloaded issues. Both exact PR heads passed Python 3.8-3.12, docs, and container workflows before merge. CBR/RAR, PDF, and remembered reading position remain explicit reader follow-ups.
+
+Adjacent comic-reader follow-up shipped in silasfelinus/Kapowarr#33, squash 779c2c47648ab0cb4ecd9373a23098efa5a4370b. The built-in reader now supports issue-linked PDF files in addition to CBZ/ZIP and loose images. PDFs are streamed only through an authenticated issue-derived endpoint with Flask conditional responses left intact for HTTP range/206 behavior, then embedded in the existing responsive reader using the browser-native PDF renderer. Image/CBZ page mode remains preferred when both forms are linked. Exact PR head 5c0fb22d passed Python 3.8-3.12, docs, and container workflows before squash merge. CBR/RAR remains the next reader-format follow-up.
+<!-- note:end t-021 -->
+
+## t-022 — Rename the settings UI's Torrent-labeled client picker to a generic External Client label
+
+<!-- note:begin t-022 -->
+Renamed Torrent-labeled download-client settings UI (windows, element ids, JS function names, CSS selectors) to generic External Client naming. Kaizen from t-007 (Kapowarr#26). Verified: repo-wide grep found no other file depended on the literal torrent substring for these ids (only legitimately torrent-specific backend/implementations/torrent_clients/Transmission.py remains); Remote Mapping section unaffected; node --check clean; Jinja template parse clean. Merged as Kapowarr#27 (squash a5cb166), CI 7/7 green, mergeable_state clean, diff 59/-59 across exactly the 3 intended files.
+<!-- note:end t-022 -->
+
+## t-024 — Live-verify and harden Newznab to SABnzbd end-to-end
+
+<!-- note:begin t-024 -->
+FOR SILAS: Kapowarr#36 (merged, squash 92d8923) hardened three real failure-handling gaps in the Newznab-to-SABnzbd path, found by code audit rather than live testing (no real indexer/SABnzbd instance is reachable from this sandbox). What it contains: (1) the download-status polling loop no longer dies silently on a client outage/malformed response -- it now retries for ~5 minutes before marking the download failed instead of freezing forever with no error; (2) SABnzbd queue/history parsing and (3) Newznab search-result parsing no longer crash on a null/malformed field a misbehaving indexer or proxy could send. 61 new tests, full suite 216/216, mypy/isort clean. None of this required your real services -- it's defensive coding, not the live verification this task actually asked for. TO APPROVE: this task's actual ask -- live-verify caps/search/download/queue/history/ storage, remote mappings, restart persistence, real failures, and post-processing against your real indexer + SABnzbd instance -- still hasn't happened and can't from this sandbox. When you (or a session with access to your real stack) has run through that exercise, set status: done here (or note what broke so it can be fixed). Nothing else is blocked on this in the meantime.
+CONFIRMED BY SILAS, 2026-09-11 (in session): "Kapowarr has had successful Sab downloads, pretty sure torrents as well. Confirmed." This is the live verification this task always needed and that no sandboxed session could perform -- it required his real indexer and his real SABnzbd instance, which is exactly why it sat at needs-human while the defensive hardening in Kapowarr#36 (squash 92d8923) landed without it. The Newznab-to- SABnzbd path is confirmed working end-to-end in his actual environment, with torrent acquisition also reported working. Closing on his confirmation. Note the honest boundary: he confirmed real downloads succeed, not that every failure branch Kapowarr#36 hardened (client outage retry, malformed queue/history parsing, malformed indexer search results) has been exercised in production -- those remain covered by the 61 tests added there rather than by live proof, which is the appropriate level for defensive paths. With this closed, Kapowarr reaches 71/71 tasks.
+<!-- note:end t-024 -->
+
+## t-025 — Reconcile relevant upstream development acquisition architecture
+
+<!-- note:begin t-025 -->
+Perform a one-time selective reconciliation against Casvt/development's newer indexer/download-client/download-prepper/query-builder/search-planner architecture. Preserve fork-only SABnzbd/Newznab, importer, notifications, health, reader, and branding behavior. This is foundation work, not recurring monitoring.
+
+Claimed for the selective upstream development acquisition-architecture reconciliation after Kapowarr #35 and #36 landed. Preserve working GetComics/Newznab/SAB behavior while introducing the upstream planner/query/indexer seams needed for Torznab/Prowlarr and Discover.
+
+Selective upstream acquisition-architecture reconciliation completed without replacing fork-specific Newznab/SAB behavior. Kapowarr #38 made search sources and query planning protocol-aware; Kapowarr #39 moved source-specific queue handoff into a DownloadPrepper registry. Existing GetComics/Newznab behavior remains behind those seams, and a future source can register without adding new branches to manual_search() or DownloadHandler.add().
+<!-- note:end t-025 -->
+
+## t-026 — Add Torznab with first-class Prowlarr and Jackett support
+
+<!-- note:begin t-026 -->
+Implement torrent indexers as protocol peers to Newznab so Prowlarr and Jackett feed the normal search/ranking/queue pipeline. Support multiple indexers, test/caps behavior, categories, source provenance, and clean handoff to torrent clients.
+
+Integration decision: do not fork Prowlarr for the first implementation. Kapowarr should consume Prowlarr through its generic Torznab/Newznab-facing indexer/proxy boundary, so Prowlarr remains an independently updated service. A later native Prowlarr Settings > Apps adapter that pushes indexers into Kapowarr can be proposed upstream to Prowlarr; maintain a Prowlarr fork only if that upstream integration genuinely requires changes that cannot land there.
+
+Claim Torznab integration as the next acquisition task after t-025. Implement Torznab as a Torrent protocol peer to Newznab using the new SearchSources/QueryBuilders/DownloadPreppers seams, with multiple configured feeds suitable for Prowlarr and Jackett, source provenance, capability testing, comic categories, and clean handoff to existing torrent clients.
+
+Torznab support merged as Kapowarr #40 (squash 4a8235e). Prowlarr/Jackett-compatible Torznab feeds are first-class Torrent search peers to GetComics/Newznab, configurable from Settings > Indexers with editable comic categories, source-aware search results, .torrent-to-magnet handoff, qBittorrent compatibility, and restart-safe queue restoration. Exact PR head passed Python 3.8-3.12, docs, and container builds. Not live-verified against the user's actual Prowlarr/Jackett + torrent-client stack; archival history/blocklist source-type labels remain coarse while search/active queue provenance uses the configured indexer name.
+<!-- note:end t-026 -->
+
+## t-027 — Add weekly release and pull-list workflows
+
+<!-- note:begin t-027 -->
+Weekly comic-release and pull-list workflow, built as a v1: a pluggable WeeklyReleaseSource abstraction (backend/base/definitions.py + backend/features/pull_list.py registry, mirroring the existing SearchSource pattern), one concrete GetComics-backed source (backend/implementations/weekly_releases.py), cross-referencing against monitored library volumes by title (match_releases_to_library()), a weekly scheduled task (WeeklyPullListCheck, 7-day interval, auto-gets a Run button on the Tasks page), a new pull_list_entries table (fresh-install schema + migration 47), and a read-only GET /api/pulllist endpoint plus a new /activity/pull-list UI page with Refresh and Check Now. 27 new tests (fixture-based HTML parsing, title-matching, DB persistence). Deliberately deferred: ComicVine-ID matching (title-only for now), one-click download from a match, a second release source, and notification-system wiring -- listed as kaizen candidates in the PR body. Built by an isolated background agent (no local git access to the shared Kapowarr checkout by design) that pushed via the GitHub API (create_branch + push_files) against a *stale* snapshot of main taken before kapowarr/t-026 (Torznab) had merged concurrently. This silently reverted the `import frontend.torznab` line in frontend/ui.py that registers the /torznab-indexers* settings routes -- a real regression that would have broken t-026s just-merged feature. Caught by diffing the PR against current main before merging (not trusting the agents self-report), fixed with a follow-up commit restoring the import line, re-verified all 7 checks green on the corrected commit, then squash-merged as 4b752b6. No migration-slot collision with t-026 (it never touches db_migration.py). Kaizen for next cycle: when a background agent must push via the GitHub content API instead of git (sandbox/isolation constraints), it should re-fetch each touched files *current* remote content immediately before constructing its patch/push, not rely on a snapshot taken at task-start -- otherwise any file a concurrent PR also touches is at risk of a silent revert.
+<!-- note:end t-027 -->
+
+## t-028 — Add story arcs and portable CBL/read-list workflows
+
+<!-- note:begin t-028 -->
+Model ordered story arcs/read lists across volumes and issues, support CBL import/export where practical, and let arcs identify missing issues acquisition can fill. Keep this aggregation oriented; per-user reading-state sophistication is out of scope for now.
+
+Claim story arcs and portable CBL/read-list workflows as the final planned curation foundation before the GetComics Discover browser. Keep this aggregation-oriented: ordered cross-volume issue lists, CBL import/export, missing-issue visibility and acquisition hooks; no multi-user reading-state scope.
+
+Story arcs and portable CBL/read-list workflows are merged in silasfelinus/Kapowarr#44 (squash d44c8c98e25f90a6e18193ee81f2897a16d780e8). The feature preserves ordered cross-volume entries, resolves exact ComicVine IDs before conservative title/year/issue fallback, keeps unresolved gaps visible, reports owned/missing status, exports enriched CBL identity, and can queue existing acquisition tasks for resolved missing issues. Exact head passed Python 3.8-3.12, docs, container, namespace-CBL regression, shared-file diff audit, and review-thread gates.
+<!-- note:end t-028 -->
+
+## t-029 — Build a GetComics Discover browser
+
+<!-- note:begin t-029 -->
+Implemented and merged silasfelinus/Kapowarr#45 (squash a391576) via an isolated background worker agent. New "Discover" page under Activity > Discover: browses GetComics recent-posts listing (paged), cross-references each item against the whole library via match_title(), and links not-yet-added items straight into the existing Add Volume flow (/add?q=<series>) rather than building a second add/search path. Backend: DiscoverItemData/DiscoverMatchData/DiscoverSource in definitions.py, backend/implementations/discover.py (reuses getcomics.py _get_max_page for pagination, best-effort cover-image extraction incl. lazy-load data-src/data-lazy-src), backend/features/discover.py (DiscoverSources registry mirroring WeeklyReleaseSources/SearchSources, match_discover_items_to_library() checks whole library not just monitored). Frontend: frontend/discover.py (GET /activity/discover, GET /api/discover?page=N, following reading_lists.py routing convention), discover.html/js/css modelled on pull_list + blocklist page-turner, nav entry in base.html. 21 new fixture-based unit tests (tests/Tbackend/discover.py); full suite 313/313 pass, isort/mypy clean. No live network egress in sandbox so GC markup (esp. cover-image lazy-load heuristic) unverified against the live site -- same standing caveat as weekly_releases.py. Verified merge myself via GitHub MCP before closing: PR #45 state=closed/merged=true, 10 files changed +967/-0, diff matches the PR description exactly, no unexpected reverted lines.
+<!-- note:end t-029 -->
+
+## t-030 — Add library-informed Discover and Similar recommendations
+
+<!-- note:begin t-030 -->
+Extend Discover with explainable recommendations from the current library: related series/franchise/title stems, publisher, creators and characters when metadata supports them, plus recent source releases not already owned. Start deterministic, not opaque ML.
+
+Promote library-informed Discover and Similar recommendations now that the acquisition foundation, weekly pull lists, story arcs/CBL, torrent lifecycle hardening, Torznab, and the first GetComics Discover browser are merged.
+
+Claim the library-informed Discover and Similar recommendations slice. Build deterministic, explainable recommendations on top of the newly merged Discover page without duplicating acquisition/search paths.
+
+Library-informed Discover recommendations merged in silasfelinus/Kapowarr#46 as squash 904496ec1e2e56a11e5557420943aac28e140f26. Adds Recent/For You modes, a bounded three-page recent-source sample, deterministic explainable title/franchise scoring, already-owned suppression, weak-overlap rejection, and per-result reasons linking to the related owned volume. Exact PR head 3a255568daa53ff1542ddafcc4ec01ab40bef70f passed Python 3.8-3.12, docs, and container before merge.
+<!-- note:end t-030 -->
+
+## t-031 — Harden torrent lifecycle, hardlinks, and oversized pack handling
+
+<!-- note:begin t-031 -->
+Close acquisition gaps reflected in upstream issues #208 and #212: allow packs with extra issues to satisfy monitored gaps when permitted, add seed-safe hardlink imports, and verify rename/conversion/post-processing does not break active seeding.
+
+Promote torrent lifecycle hardening to ready now that t-025 acquisition architecture and t-026 Torznab support are complete. #37 already covers safe nested range-pack normalization; remaining scope is seed-safe hardlink/copy import, single-file torrent handling, and range-aware missing-issue acquisition.
+
+Claim torrent lifecycle hardening as the final acquisition-foundation lane before Discover. #37 already handles safe nested range-pack normalization; remaining work is range-aware issue matching, seed-safe hardlink-first import with copy fallback, single-file torrent handling, and ensuring rename/conversion/post-processing do not mutate active seed content.
+
+Torrent lifecycle hardening is merged in silasfelinus/Kapowarr#41 (squash 7cf14d69c757c8e7e06df347c5738d82cc452811). The final merge-ref verification passed Python 3.8-3.12, docs, and container against current main after the weekly-release work landed. The implementation adds hardlink-first seed-safe imports with copy fallback, single-file torrent-root handling, deferred inode metadata processing until seed cleanup, range-aware issue search, direct already-owned issue pruning, and one-pack-only oversized-range fallback.
+<!-- note:end t-031 -->
+
+## t-032 — Add source quality preferences and upgrade policy
+
+<!-- note:begin t-032 -->
+Bring more Sonarr/Radarr-style acquisition control to comics: source/client priority, GetComics SD/HD preference (upstream issue #222), pack preference, and optional later upgrade searches without replacing a known-good file with a worse candidate.
+
+Promote source quality preferences and upgrade policy as the next Kapowarr acquisition task after Discover/For You and torrent lifecycle hardening merged.
+
+First source-quality slice is ready for review on worker/kapowarr-t-032-20260818T081700Z-a7c4: protocol source priority, GetComics HD/SD preference, pack preference, user-facing Download Settings controls, and regression coverage. Automatic replacement upgrades and per-client/indexer priority remain deliberately deferred until durable quality/provenance can make them safe.
+
+Preference slice merged in silasfelinus/Kapowarr#47 as squash f2a4b802ee009549d78307b468a4a79fcab1ade5. Exact head 45021253a8c2eb76d9005cb30e5baccc60dd40b6 passed Python 3.8-3.12, docs, and container. Shipped protocol source priority, GetComics HD/SD preference, pack preference, and Download Settings controls with defaults preserving existing behavior. Keep t-032 open for per-client/indexer priority and durable acquisition-quality provenance before any automatic replacement/upgrade searches.
+
+Continue t-032 after PR #47 with per-client/indexer priority and durable quality/provenance design before any automatic replacement upgrades.
+
+Per-indexer priority follow-up is ready for review on worker/kapowarr-t-032-20260818T085000Z-b94d. Adds 1-100 priority for Newznab and Torznab feeds using deletion-safe config metadata, applies priority as stable same-protocol ordering only, exposes it in Settings > Indexers, and tests both protocol search paths. Durable file acquisition-quality provenance remains required before automatic replacement upgrades can be safe.
+
+Per-indexer priority merged in silasfelinus/Kapowarr#48 as squash 0a4f5284f10023e2fe74cac2a12ba6b0f949dcc9. Exact head bb35fd182adeb2e553195212fc529ab7c468a64c passed Python 3.8-3.12, docs, and container. Continue t-032 for external download-client priority and explicit durable provenance design; automatic replacement upgrades remain disabled until provenance exists.
+
+Finalize t-032 selection controls with external download-client priority while preserving load balancing inside equal-priority tiers, and document/structure durable acquisition provenance required for safe future replacement upgrades.
+
+Final t-032 slice is ready for review on worker/kapowarr-t-032-20260818T092500Z-d31e. Adds external download-client priority with least-used balancing preserved inside equal-priority tiers, deletion-safe priority cleanup, a lightweight edit-dialog priority control, regression coverage, and an explicit durable acquisition-provenance contract gating any future automatic replacement upgrades.
+
+Source quality preferences and selection policy are complete across Kapowarr #47, #48, and #49. Shipped protocol source ordering, GetComics HD/SD preference, pack preference, per-Newznab/Torznab indexer priority, and external download-client priority with least-used balancing preserved inside equal-priority tiers. PR #49 merged as 44e621e78aad6c32be41f7a6f5e271d49eaae9b0 from exact head 5f4717a484e0ab3511ec12b21c4ab3bae302df72 after Python 3.8-3.12, docs, container, JS syntax, diff, and review-thread gates passed. Automatic replacement upgrades remain intentionally disabled until durable per-file acquisition provenance exists; docs/acquisition-quality-provenance.md defines that safety contract for a separate follow-up task.
+<!-- note:end t-032 -->
+
+## t-033 — Add Wanted/Missing workbench and manual import
+
+<!-- note:begin t-033 -->
+Add an -arr-style global Wanted view for monitored missing issues/volumes, searchable and bulk-actionable, with manual import for files acquired elsewhere. Incorporate the useful intent of upstream issue #344 without duplicating continuous library import.
+
+Promote the global Wanted/Missing workbench and manual import as the next Kapowarr task after source/indexer/client quality policy completed. Build an -arr-style view over monitored missing issues with search/bulk actions, while reusing the existing hardened acquisition and import paths rather than duplicating them.
+
+Claim the global Wanted/Missing workbench and manual import. Build a searchable global view of monitored missing issues with per-row and bulk acquisition actions, then reuse existing file matching/import seams for manual import rather than creating a parallel library importer.
+<!-- note:end t-033 -->
+
+## t-034 — Add watched-folder auto import for external downloads
+
+<!-- note:begin t-034 -->
+Shipped in silasfelinus/Kapowarr#82 (squash 03a9a71b552ca7e83905b0877bb456798695da0b). Upstream issue #122, and item 2 on Kapowarr's own docs/ARR_PARITY.md near-term roadmap -- the last "remains missing" entry in its completed-download-handling row. A new `watched_folder` setting names one inbound folder; a 15-minute interval task (WatchedFolderImport) scans it and imports each file that has stopped changing and matches exactly one volume ALREADY in the library, reusing manual_import_files() for the move+match and then the same mass_rename/mass_convert/mass_process_files steps a completed download goes through. Boundaries, each covered by a test: it never creates a volume (the task note's "do not compete with root-library continuous import" requirement -- identifying an unknown series needs Continuous Library Import's ComicVine pacing, and duplicating it would race the same rate limit); an ambiguous file that two volumes could claim is left for a human rather than guessed; a file must sit unmodified for two minutes before import so a large archive still being copied in is never imported truncated, and a file that can't be stat'd counts as unsettled rather than settled; nothing is deleted that wasn't imported, only sub-folders emptied by this run's own moves; Settings rejects a watched folder overlapping a root folder or the download folder, checked from both sides so neither setting can be moved onto the other afterwards; and one volume's import failing is counted and surfaced in the task message rather than aborting the rest of the pass. LibraryIndex reads each volume once per pass and loads issue lists only for title matches -- matching is O(files x volumes) over DB round-trips, so 30 files on a 2000-volume library would otherwise issue ~60k volume reads per scan (the same shape Kapowarr#81 just fixed for Continuous Import). The Task class is declared in features/tasks.py beside the other interval tasks so get_subclasses(Task) registers it with no import-order dependency: the interval is seeded for every install and a task_library miss would break the whole interval loop. Off by default -- with `watched_folder` empty the pass returns before touching the filesystem. Verified: 493 backend tests pass (36 new), 41 frontend tests pass, flake8/isort clean on all touched files (pre-existing findings confirmed via git-stash), Python 3.8 compatibility hand-checked and confirmed by CI's 3.8 job. All 7 Kapowarr CI checks green before merge. Not verified: no live run against a real inbound folder on a populated library -- no Kapowarr instance is reachable from this sandbox; first real-world exercise will be on Silas's install. Deliberately out of scope, both recorded in docs/ARR_PARITY.md: surfacing unmatched files in the manual-import workbench rather than only in the task message, and letting a watched folder feed volume creation once that can share Continuous Library Import's ComicVine pacing.
+<!-- note:end t-034 -->
+
+## t-035 — Add NZBGet as a second Usenet download client
+
+<!-- note:begin t-035 -->
+Shipped in silasfelinus/Kapowarr#83 (squash 41019cb4e327bfb7699efcad836b6d1394e05c3d). The Usenet seam had exactly one implementation, so an NZBGet user had no way to route acquisitions through their existing setup. NZBGet now sits beside SABnzbd as a peer client, picked up automatically by the existing get_subclasses(BaseExternalClient) registry; no frontend change was needed because the add/edit client form is driven entirely by the options API. Four API differences from SABnzbd shaped the implementation, each documented at the call site and covered by tests: (1) JSON-RPC 1.1 over POST /jsonrpc with positional params and HTTP basic auth, replies carrying no `jsonrpc` member -- a client validating one would reject every response; credentials are username/password rather than an API key, and an instance with no credentials at all still connects. (2) A job stays in the QUEUE through post-processing (par repair, unpack, move, scripts are ordinary listgroups statuses) and reaches history only when finished, so history is TERMINAL -- the opposite of SABnzbd, meaning an unrecognised history status must fail rather than await a resolution that will never come. (3) There is no per-group download rate at all (firm negative, verified against source: DownloadRate exists only on the global `status` command), so an actively downloading group borrows the instance-wide figure and everything else reports 0; progress and size stay exact and the user docs state the caveat. (4) 64-bit byte counts arrive split into unsigned 32-bit Lo/Hi halves, preferred over the lossy ...MB field so a download over 4GiB isn't wrong by exactly 2**32. Two judgement calls worth knowing: history statuses are matched on their PREFIX/ rather than an enumerated list (NZBGet adds suffixes between versions), and only SUCCESS/* plus WARNING/SCRIPT are importable -- WARNING/PASSWORD, /DAMAGED and friends mean the archive was never unpacked into usable form, so importing them would import a broken or encrypted file as if it were the comic. And delete_download maps onto NZBGet's own conditional disk handling rather than onto a flag, because it already does what each caller wants: GroupFinalDelete/HistoryFinalDelete clean disk for a cancelled/failed job, while for a successful one HistoryFinalDelete erases the record and leaves DestDir untouched for Kapowarr to import from. Field names, status vocabularies and the append/editqueue parameter orders were taken from NZBGet's published API docs cross-checked against its implementation (daemon/remote/XmlRpc.cpp, daemon/queue/DownloadInfo.cpp, daemon/queue/HistoryCoordinator.cpp) rather than from memory -- several documented details are wrong (APPEND.md's prose argument list omits Content entirely; its Python example passes 10 of 11 arguments). Verified: 535 backend tests pass (42 new), 41 frontend tests pass, flake8/isort clean on both new files (pre-existing findings on external_clients.py/definitions.py confirmed via git-stash: 21 on main vs 22 with this change, the addition being the same deliberate registration-import F401 the three existing client imports already carry; isort was already failing on external_clients.py before this change). All 7 Kapowarr CI checks green including the Python 3.8 matrix job. Not verified: no live NZBGet instance was reachable from this sandbox, so the wire behaviour is exercised against representative fixtures only. SABnzbd.py carries the identical caveat in its own module docstring and NZBGet.py states it too. Recommended kaizen (also in the PR): a short 'verify against a live client' checklist in AGENT_WORKFLOW_NOTES.md, since both Usenet clients now share this unverified-wire-behaviour gap.
+<!-- note:end t-035 -->
+
+## t-036 — Build a publisher-aware weekly release calendar and subscriptions
+
+<!-- note:begin t-036 -->
+User-prioritized live follow-up on 2026-08-18. Replace the current thin GetComics-only
+monitored-match table with a real weekly release catalogue: retain all releases, store
+publisher and release-week/date metadata, support previous/current/next week navigation
+and publisher/library/status filters, and expose actions for adding, monitoring, wanting,
+and searching releases. Add explicit per-publisher subscription modes so a user can browse,
+automatically add/monitor new series, or automatically mark new releases wanted and search
+through the normal enabled-indexer/acquisition pipeline. Keep release metadata separate from
+GetComics availability; publisher automation must be opt-in and must not bypass existing
+acquisition preferences or enabled-indexer controls.
+Review handoff: implementation branch worker/kapowarr-t-036-20260819T000211Z-7f3c
+adds a nine-week Mylar-provider catalogue, GetComics availability overlay, publisher rules,
+background manual grabs, migrations, responsive filters and pagination. Local syntax,
+JavaScript, schema and migration smoke checks pass; the full dependency-backed matrix is
+delegated to the implementation PR because package installation is unavailable in this worker.
+Shipped in silasfelinus/Kapowarr#56, squash 69e9e68fc98080c248d881599f01df2972467fd4,
+after container and docs builds plus the Python 3.8-3.12 matrix passed. The first matrix run
+caught a stale helper name in a docstring; correcting it to the exported extract_issue_number
+helper made the complete rerun green.
+<!-- note:end t-036 -->
+
+## t-037 — Introduce a metadata-provider abstraction
+
+<!-- note:begin t-037 -->
+Stop treating ComicVine as an irreplaceable global singleton. Define stable provider IDs, cross-provider
+external IDs, search/fetch capabilities, cover provenance and conflict rules so alternate metadata
+providers can coexist without destabilizing existing libraries.
+
+Silas explicitly promoted this staged task on 2026-08-19: preserve Kapowarr's minimalist, image-first
+interface while breaking ComicVine's metadata monopoly. Implement the provider boundary as an additive,
+backward-compatible backend/schema seam; ComicVine remains the default and existing screens must not
+gain configuration clutter in this task.
+
+Merged silasfelinus/Kapowarr#61 as 81c9d8e09ee3db26bac289d15c69169504e1e567.
+ComicVine now implements a lazy provider/capability boundary; additive provider-neutral volume and
+issue identity maps enforce conflicts, legacy IDs are restart-safely backfilled, and cover provenance
+is retained. Existing API fields and the image-first UI are unchanged. Local verification passed 380
+tests and mypy; Python 3.8-3.12, docs, PR container, and post-merge tests/docs/container publication passed.
+<!-- note:end t-037 -->
+
+## t-038 — Add Metron as an alternate metadata provider
+
+<!-- note:begin t-038 -->
+Merged silasfelinus/Kapowarr#63 as 3d32cf72a4dfa4065e61cf2aa1225be5ec926c89. Metron is available as an optional Basic-auth provider and safely handles search, volume, issue, cover, and incomplete-batch fallback through explicit ComicVine cross-links while preserving durable Metron provenance. Native-only Metron additions remain intentionally gated by the legacy NOT NULL ComicVine columns instead of surfacing broken Add actions. Local verification passed 386 tests, mypy across 116 source files, touched-file import formatting and JavaScript syntax; PR and post-merge tests/docs/container publication all passed.
+<!-- note:end t-038 -->
+
+## t-039 — Use and export portable comic metadata
+
+<!-- note:begin t-039 -->
+Expand local-metadata awareness into deliberate ComicInfo.xml and compatible series metadata import/export. Incorporate upstream issues #139 and #50 so imported files can identify themselves and managed archives retain useful metadata outside Kapowarr.
+
+Use (import) side already covered: Continuous Auto-Import (t-019/#19) uses safe folder-local series.json or compatible metadata.json ComicVine IDs when filename or same-folder evidence agrees. Export side shipped in silasfelinus/Kapowarr#79, merged as cbad1158eb4308961aa9b6e337ddf3cd3bf58a9e (reviewer pr-medic pass, 2026-08-19). Generates conservative Mylar-compatible series.json 1.0.2 metadata for a managed volume; fills only evidence Kapowarr actually knows and never relabels a Metron ID as ComicVine. Preserves an existing series.json by default (existing_preserved), uses exclusive filesystem creation so a concurrent third-party file cannot be clobbered, and explicit overwrite uses same-folder temp-write + atomic replace. Successful materialization is re-scanned so series.json becomes ordinary volume metadata. Does not mutate CBZ/CBR/RAR archives. PR opened with one real test failure (test_existing_series_json_is_preserved_by_default: write_series_json() called serialized_series_json() unconditionally before checking whether the existing file should be preserved) -- fixed by moving the exists()-and-not-overwrite check ahead of serialization; all 445 backend unittest cases plus the 4 frontend node --test cases pass post-fix, all 7 CI checks green. Archive-level ComicInfo mutation and a General Files preview/create UI affordance remain deliberately out of scope per the PR's own "Roadmap" section -- file as a follow-on task if wanted, not implied by this closure.
+<!-- note:end t-039 -->
+
+## t-040 — Add an Anna's Archive source adapter
+
+<!-- note:begin t-040 -->
+FOR SILAS: Nothing has been built. This needs one scope decision from you before an
+agent writes any code, and it is now a soft gate so it stops being re-derived by every
+scheduled cycle (it was left at `ready` on 2026-08-20 with the reasoning only in
+TALKBACK, and the very next session hit the same wall and had to go read it).
+
+The task's own note says "only automate downloads lawfully accessible to the user; do
+not bypass access controls." For a shadow-library service that is not an implementation
+detail — it is the entire question, and an unattended run at 3am is the wrong place to
+settle what counts as lawfully accessible.
+
+TO APPROVE: replace this note with what you actually want, then set status: ready.
+The three shapes worth choosing between:
+  1. Metadata/search only — surface Anna's Archive results, link out, never download.
+  2. Download only what the user's own credentials/membership already entitle them to.
+  3. Drop it — set status: blocked and say why, so it stops resurfacing.
+Whichever you pick, t-041 (Internet Archive) is waiting on the same call in milder form.
+
+ORIGINAL NOTE: Track upstream issue #171 and the maintainer's preference for Anna's
+Archive over separate Z-Library/Libgen integrations. Fit discovery into the generic
+source/indexer boundary and only automate downloads lawfully accessible to the user;
+do not bypass access controls.
+
+Apply Silas's standing default-recommendation policy with the conservative lawful boundary: implement Anna's Archive as metadata/search discovery plus link-out only. Do not automate downloads from the shadow-library service, bypass access controls, or infer entitlement. This gives Kapowarr useful discovery without creating an unattended acquisition-policy gate.
+<!-- note:end t-040 -->
+
+## t-041 — Add Internet Archive public-download source support
+
+<!-- note:begin t-041 -->
+FOR SILAS: Nothing has been built. Same scope call as t-040, one step milder — decide
+both together.
+
+Internet Archive genuinely does serve some items as free public downloads, so unlike
+t-040 there is an unambiguous lawful slice here. The undecided part is the boundary:
+controlled-lending items (the borrow-for-an-hour ones) are the majority of comics
+there, and "treat as browse/link-out only" is easy to write and easy for an
+implementation to quietly erode.
+
+TO APPROVE: set status: ready, plus one line saying whether controlled-lending items
+should appear in search results at all (link-out) or be filtered out of the adapter
+entirely. Either answer is buildable; picking neither is what stalls it.
+
+ORIGINAL NOTE: Integrate Internet Archive search/metadata and official downloadable
+assets where an item permits direct public access. Treat controlled-lending or
+restricted items as browse/link-out only; do not build page ripping or access-control
+bypasses.
+
+Apply Silas's standing default-recommendation policy: automate only Internet Archive assets that are directly and publicly downloadable. Controlled-lending/borrow-only items may appear in discovery results as link-out entries but must not be acquired automatically or have lending/access controls bypassed. This preserves useful catalog discovery while keeping the acquisition boundary explicit.
+<!-- note:end t-041 -->
+
+## t-042 — Evaluate debrid acquisition support
+
+<!-- note:begin t-042 -->
+Assess upstream issue #276 and common -arr-adjacent workflows for a clean debrid client
+boundary. Implement only if it adds meaningful coverage without contaminating generic
+search/download architecture with a provider-specific shortcut.
+OUTCOME 2026-08-20: evaluation delivered at projects/kapowarr/docs/t-042-debrid-boundary.md.
+Upstream #276 asks for the hoster-unrestrictor pattern ("instead of having to use Mega
+directly"), not the torrent-cache pattern the word usually implies -- the two have opposite
+verdicts. Unrestrict: approved, fits BaseDirectDownload._convert_to_pure_link() exactly,
+with PixelDrainDownload as a near-identical template; no new DownloadType, no migration, no
+post-processing change. Torrent-cache: ruled out -- DownloadState has no member for the
+caching wait, BaseDirectDownload resolves eagerly and would fail outright on an uncached
+magnet, multi-file results have no representation (move_to_dest only touches files[0]), and
+a new DownloadType member is a breaking settings migration via SOURCE_PREFERENCE_OPTIONS.
+Motivation is real and already modelled: ONLY_RATE_LIMITED_LINKS plus DownloadLimitReached
+exist precisely for "the comic is there and the free tier won't give it to me."
+Not scheduled next: debrid is absent from ARR_PARITY's near-term list, and the one risk that
+matters (no reachable account to verify against) shrinks by waiting rather than by building.
+Implementation filed as t-058 at soft needs-human on that single question.
+<!-- note:end t-042 -->
+
+## t-043 — Evaluate eMule/aMule for non-US comic catalogs
+
+<!-- note:begin t-043 -->
+Evaluated and declined; see projects/kapowarr/docs/t-043-ed2k-boundary.md (silasfelinus/conductor#2582). Both preconditions this task set fail. NO MAINTAINABLE CLIENT API: aMules only bidirectional remote surface is the binary EC protocol on TCP 4712 -- no REST/JSON, and amuleweb is a cookie-session HTML app. The EC protocol documentation says of itself that opcodes, tagnames, tag content formats and values are still changing, advising callers to track ECcodes.h or read the source; aMule separately requires the client binary and the daemon to come from the same release or the connection is rejected as Invalid protocol version. Kapowarrs four existing clients (qBittorrent/Transmission/SABnzbd/NZBGet, 246-458 lines each) all tolerate version skew by design. Escapes fail too: the best-known Python EC library is 6 commits / 1 star / unpublished; amulecmd has no machine-readable output mode and re-imports the same-release lockstep. NO MATCHING STRATEGY, because of our own query shape: ComicQueryBuilder always puts the series title first, and Kad routes a search on the hash of the FIRST keyword with the rest filtered client-side -- so every query routes on the most contended word available and result caps bite before volume/year/issue ever influence which node is asked; on ed2k servers keyword tokenization destroys #12 and (2011), losing the issue number, the most important term in an issue search. THE DECIDING FINDING IS UPSTREAM OF BOTH: acquisition is not where non-US catalog coverage is lost. Kapowarr only searches for volumes already in the library, volumes enter via ComicVine + Metron (both anglophone US direct-market databases), so a bande dessinee is never added, never monitored, and no protocol is ever asked about it. A fourth download protocol does not enter that chain at any point. RECORDED PLAINLY: the architecture is NOT the obstacle -- SearchSources, DownloadPreppers, ExternalDownloadClient and QueryBuilders are all open registries and all 16 DownloadType. reference sites are registrations or lookups with no exhaustive switch, so this declines ed2k specifically, not new sources generally. DECLINE RATHER THAN DEFER, unlike t-042 on debrid: there the one risk (no account to test against) shrinks by waiting; nothing here shrinks by waiting, since EC version lockstep is a property of aMule and first-keyword routing is a property of Kademlia. Filed t-059 (non-US metadata provider, GCD first -- the actual lever) and t-060 (make peer availability count in ranking; SearchResultAvailabilityData is populated by Torznab but _rank_search_result never reads it, so auto_search picks blind between a healthy and a zero-seeder release). NOT VERIFIED, stated as judgment: current ed2k/Kad network health -- sources are qualitative and partly promotional, no trustworthy 2026 figures found, and the sandbox did not connect to the network; the verdict does not rest on it.
+<!-- note:end t-043 -->
+
+## t-044 — Verify downloaded comic/archive integrity
+
+<!-- note:begin t-044 -->
+Shipped in silasfelinus/Kapowarr#85 (squash 935656141eb202068e7a5bf63315b12b0f780e66). Upstream issue #154. New backend/features/archive_integrity.py verifies a completed download before post-processing imports it: ZIP via ZipFile.testzip() (the same CRC pass features/backups.py already runs on backup archives; encrypted members skip the CRC pass, which raises rather than reporting, and are judged on names as pack_normalization._archive_members already does), RAR via `rar t` with -p- -- not optional, since without it a header-encrypted archive blocks on an interactive password prompt run_rar gives the subprocess no stdin to answer, hanging post-processing indefinitely (exit 3 corrupt, 11 wrong-password treated as unverifiable rather than damaged, 0/1 pass, anything else unreadable). Dispatch is on magic bytes rather than extension, so the mislabelled .cbz-that-is-really-a-RAR case rename_with_proper_extension exists to fix cannot fool it. THE GOVERNING DESIGN BIAS is asymmetric on purpose and worth carrying forward: a missed corrupt file sits in the library until a user deletes it, but a false positive blocklists a good release, deletes it, and steers every future search away from it -- so anything unprovable passes. 7z/tar/epub report UNSUPPORTED (nothing in this codebase can open them, so there is no basis to call one corrupt) and UNSUPPORTED is explicitly not a failure; an unexpected exception reports UNSUPPORTED rather than condemning, since a raise inside post-processing would abandon a download mid-pipeline. The 'no pages' test is INVERTED for the same reason: the obvious allowlist rule ('pass only if a member has a known image extension') would condemn a comic whose pages are .bmp/.tiff/.avif/.jxl, none of which are in FileConstants.IMAGE_EXTENSIONS -- so an archive is EMPTY only when every member is provably not a page. There is a regression test for exactly that false positive. FAILURE ROUTING: a failing download runs a new actions_integrity_failed INSTEAD of actions_success (same shape as the perm-failed path, under a new BlocklistReason.DOWNLOAD_CORRUPT / ID 5 -- the link worked, what it served did not). Instead-of rather than after is the entire point: add_file_to_database never runs, so the file is never registered, so the issue stays wanted and the next auto_search finds a different release. Blocklisting alone would stop the bad link being repicked while leaving the corrupt file as the issue's file. Off switch: PublicSettingsValues.verify_downloaded_archives, default True. DELIBERATELY NOT COVERED, both documented in code as follow-ups rather than silently skipped: (1) PostProcessorTorrentsCopy is opted out via verify_integrity_on_success=False, because copy_file_torrent has already imported by the time its success() runs -- gating there would blocklist and delete the seeding copy while leaving the imported one; gating its seeding() needs an answer for what to do with a torrent still being seeded, which is more than an integrity check should decide. (2) Folder-shaped torrent payloads pass unchecked (download.files[0] is still the folder at gate time; a directory reports UNSUPPORTED). Both are worth their own task. VERIFIED: 572 backend tests pass (37 new, 535 before), including the repo's first corrupt-archive fixtures -- _corrupt_payload locates the first member's data via its local file header and flips only those bytes, leaving headers and the central directory intact, so the archive still opens and still lists its pages and only the CRC disagrees; the test asserts that precondition explicitly because it is exactly the state every existing check in the codebase reads as healthy. flake8/isort clean on both new files (post_processing.py's isort failure confirmed via git-stash to predate this change); Python 3.8 syntax checked against the CI matrix floor. All 3 Kapowarr CI workflows green before merge. NOT VERIFIED: no live download was run end-to-end; the RAR path is exercised against mocked run_rar fixtures the same way tests/Tbackend/comic_reader.py does, since the bundled rar binary is not runnable in the sandbox.
+<!-- note:end t-044 -->
+
+## t-046 — Document the content-API push workaround's stale-base risk
+
+<!-- note:begin t-046 -->
+Kaizen from t-027 (Kapowarr#42): a background agent isolated from the shared git checkout pushed its branch via the GitHub content API (create_branch + push_files) instead of git, using a start-of-task snapshot of main. main moved concurrently (kapowarr/t-026 merged mid-task), and the agent's push silently reverted a line t-026 had added to a file it also touched (frontend/ui.py's `import frontend.torznab`) -- a regression neither the agent's own isolated-copy tests nor the PR's CI could detect, since both only exercised the agent's own before/after snapshot, not live main. Caught only by diffing the PR's actual file list against current main before merging.
+Document (FORK_MAINTENANCE.md or a new docs/ note) that any content-API-based push workaround must re-fetch each touched file's *current* remote content immediately before constructing the write, not rely on a start-of-task snapshot -- and that a reviewing session merging such a PR should specifically diff every touched file against live main before merging rather than trusting green CI alone, since CI cannot detect an import-time-only removal with no direct test coverage.
+<!-- note:end t-046 -->
+
+## t-047 — Hide collected Discover volumes and surface weekly pull-list task failures
+
+<!-- note:begin t-047 -->
+User-reported live follow-up on 2026-08-18. Discover now loads successfully but should omit releases whose volume is already present in the collection instead of displaying them with an In Library badge. The manually triggered weekly pull-list check silently disappeared without reaching the finished task list; trace and fix the task lifecycle so failures remain observable and actionable rather than vanishing. Keep both changes within the existing Discover/pull-list/task seams.
+
+Implementation complete on worker/live-discover-pulllist-20260818. Discover excludes owned volumes; the weekly source URL and live row parser are repaired; empty source results preserve the last good pull list; and failed tasks are retained in task history with their error. Local verification: 364/364 unit tests, mypy clean, isort clean, live GetComics parse returned 61 releases.
+
+Merged silasfelinus/Kapowarr#51 and silasfelinus/Kapowarr#52. Discover now excludes owned volumes; the live Weekly Pack source/parser is repaired; empty source results preserve the last good list; and failed tasks remain in task history with a concise error instead of disappearing. PR #52 passed 365 local tests, mypy, isort, and all seven PR jobs (Python 3.8-3.12, docs, container). Post-merge runs 32181184343, 32181184417, and 32181184370 completed successfully, including container publication; branch janitor run 32181185053 removed the worker branch.
+<!-- note:end t-047 -->
+
+## t-048 — Refresh task history immediately after task completion
+
+<!-- note:begin t-048 -->
+User clarified that the manually triggered Weekly Pull List task succeeded, but the Tasks page did not refresh its History table when the task-ended WebSocket event arrived. Refresh task history (and scheduled execution timestamps) after completion, ensuring the task-history insert is committed before the event tells clients to reload it.
+
+Claim the clarified live follow-up: refresh Tasks history after task completion and commit the row before notifying clients.
+
+Implementation is ready in silasfelinus/Kapowarr#53. The task-history row is committed before task_ended, and the Tasks page refreshes History and scheduled timestamps when that WebSocket event arrives. Local verification passed 365 tests, mypy, isort, Node syntax checks, and diff checks.
+
+Merged silasfelinus/Kapowarr#53 at 6e1fe58 after all seven PR jobs passed. Task history is committed before task_ended, and open Tasks pages refresh History and Scheduled timestamps immediately.
+<!-- note:end t-048 -->
+
+## t-049 — Surface queued and downloading status on volume views
+
+<!-- note:begin t-049 -->
+User-reported live follow-up on 2026-08-18. A monitored volume can be queued or actively downloading in Activity while both its volume detail page and gallery card still look idle. Expose the existing download-queue state on both surfaces with clear queued/downloading status and live progress where available, using one shared data path so the two views remain consistent.
+
+Claim the user-reported live follow-up to expose queued and downloading status consistently on volume detail and gallery views.
+
+Implementation is ready on worker/kapowarr-t-049-download-status. A shared live queue store now drives queued/downloading badges on volume detail, poster gallery, and table views with progress and speed where available. Node syntax checks and a multi-download summary smoke test pass.
+
+Merged silasfelinus/Kapowarr#54 at a819314 after all seven PR jobs passed. Volume detail, poster gallery, and table views now share live queued/downloading state with progress and speed, and clear it when the queue entry ends.
+<!-- note:end t-049 -->
+
+## t-050 — Allow indexers to be enabled or disabled
+
+<!-- note:begin t-050 -->
+User-reported live follow-up on 2026-08-18. Searches can be delayed by a slow or unavailable configured indexer. Add a persistent per-indexer enabled toggle in Settings, default existing and newly created indexers to enabled, preserve disabled indexer configuration, and exclude disabled indexers consistently from automatic, manual, Wanted, Discover, and other shared search paths.
+
+Claim the user-requested per-indexer enable toggle and ensure disabled indexers are excluded through the shared search registry.
+
+Implementation is ready on worker/kapowarr-t-050-indexer-toggle. The settings list exposes immediate Enabled/Disabled controls for Newznab and Torznab indexers while preserving credentials, categories, priorities, and the existing enabled-only shared search registry. Node syntax and focused toggle-payload checks pass.
+
+Merged silasfelinus/Kapowarr#55 at 60897ba after all seven PR jobs passed. Indexer cards now expose immediate Enabled/Disabled controls for both Newznab and Torznab while preserving configuration and using the existing enabled-only shared search registry.
+<!-- note:end t-050 -->
+
+## t-051 — Restore Prowlarr Newznab and Torznab search results
+
+<!-- note:begin t-051 -->
+User-reported live follow-up on 2026-08-19. Kapowarr manual search returns a GetComics match for Gwar: Orgasmageddon while the same query in Prowlarr returns valid NZB and torrent releases. Support both host-style Newznab base URLs and full Prowlarr Newznab feed URLs without corrupting the endpoint, align Torznab category behavior with Prowlarr manual search so valid comic/eBook mappings are not silently excluded, preserve explicit user category filters, and add regression coverage using the reported release titles.
+
+Merged silasfelinus/Kapowarr#57 as 8008561e75aa0d8f4521c2f34f0bfbd5a5264e49. Complete Prowlarr Newznab feed URLs are now used as supplied, Torznab category filtering is explicit and disabled by default to match Prowlarr manual search, and clearly customized legacy filters remain enabled. The reported Gwar NZB/torrent fixtures passed Python 3.8-3.12; docs, pull-request container, and post-merge container publication all passed. Learning: when an integration UI asks for an API URL, endpoint construction must distinguish host roots from already-complete protocol feeds, and implicit category defaults must not silently narrow an aggregator's broader search.
+<!-- note:end t-051 -->
+
+## t-052 — Make the weekly-calendar database migration restart-safe
+
+<!-- note:begin t-052 -->
+User-reported production startup failure on 2026-08-19. Database migration 48 runs after the current base schema has already created publisher_subscriptions and publisher_automation_history, then attempts unconditional CREATE TABLE statements and aborts with sqlite3.OperationalError before the application starts. Make the migration tolerate the current schema and a retry after partial execution, preserve existing pull-list data, and add an upgrade-path regression test that reproduces setup_db ordering.
+
+Merged silasfelinus/Kapowarr#58 as 6171fa296100f305a5cb37131b0198384580c3eb. Migration 48 now tolerates publisher tables already created by setup_db, and the production-order regression proves legacy pull-list data plus subscription/history rows survive. The exact old exception was reproduced locally; the patched smoke, Python 3.8-3.12, docs, PR container, and post-merge tests/docs/container publication all passed. Learning: every upgrade fixture must execute the current base schema before the historical migration handler, because that is Kapowarr's real startup order.
+<!-- note:end t-052 -->
+
+## t-053 — Stop blocking web startup on post-migration VACUUM
+
+<!-- note:begin t-053 -->
+User-reported live follow-up on 2026-08-19. After migration 48 succeeds and database_version advances to 49, startup emits no further log and the frontend remains unreachable. The synchronous post-migration VACUUM is the only remaining database operation on that path and can block for a long time on a large library without progress output. Remove heavyweight compaction from startup, retain only bounded/cheap optimization if useful, log migration completion, and cover the post-migration operation so future schema upgrades reach the web server promptly.
+
+Merged silasfelinus/Kapowarr#59 as 3965925ed014c59870eb8d7079174ca148f65473. The user's report that the frontend eventually loaded confirmed synchronous post-migration VACUUM—not a second migration failure—was blocking startup. Startup now skips that unbounded compaction and logs migration completion. The regression passed on Python 3.8-3.12; docs, PR container, and all post-merge tests/docs/container publication passed.
+<!-- note:end t-053 -->
+
+## t-054 — Make torrent search results actionable and informative
+
+<!-- note:begin t-054 -->
+User-reported live follow-up on 2026-08-19. Adding a Torznab result can leave the manual-search action spinning indefinitely, torrent results omit the seed/leech availability already supplied by Prowlarr, and the manual-search dialog does not identify the selected volume or issue. Diagnose and bound the torrent-add path so every click reaches a visible success or failure state, carry Torznab seeders/leechers through the search API into clear result columns, and label the dialog with the title that initiated the search. Cover Torznab parsing and the client/UI terminal-state behavior with regressions.
+
+Merged silasfelinus/Kapowarr#60 as 60b3cdccfd76576df1d0a8d23733f5378f683d57. The indefinite action state came from an unhandled frontend rejection plus a Torznab metadata request that could spend several minutes inside shared retries. Torrent metadata resolution is now capped at 30 seconds and every manual-search action reaches a visible success or error state. Search results show Prowlarr seed/leech availability and the dialog identifies the selected volume/issue. Python 3.8-3.12, three frontend interaction tests, docs, PR container, and all post-merge tests/docs/container publication passed.
+<!-- note:end t-054 -->
+
+## t-055 — Make Review Holds imports resumable and actionable
+
+<!-- note:begin t-055 -->
+User-reported live failure on 2026-08-19. Continuous Library Import resumes a saved job with hundreds
+of Review Holds, but clicking Import aborts the selected batch with a generic InternalError. Trace and
+repair the manual Review Holds import path: validate selected mappings, fix corrupted edited-match
+payloads, isolate recoverable per-volume failures so successful rows remain imported, return concise
+path-specific results/errors, reconcile completed review rows, and leave failed rows selected for retry.
+Do not reset the long-running saved job or discard existing review decisions.
+
+Merged silasfelinus/Kapowarr#62 as 8f58cffbe0b1c2430b09540b4309df83d79e90b6.
+The manual endpoint now continues per volume and returns imported/skipped/failed details; successful
+rows disappear while attention rows remain selected with a concise reason. Background retry semantics,
+saved checkpoints, and existing review decisions remain unchanged. Local verification passed 383 tests,
+mypy and JavaScript syntax; Python 3.8-3.12, docs, PR container and post-merge publication all passed.
+
+Reopened from user-reported live testing on 2026-08-24. Editing a weak Library Import Review Hold opens the match-search modal, but submitting a title can leave the dialog blank with no results, no loading/error state, and enough repeated requests to make the tab appear frozen. Diagnose the metadata-provider search/edit path, preserve provider-neutral identities, make the search visibly terminal on success/empty/error, and prevent duplicate in-flight searches.
+
+Live weak-match edit regression fixed and merged in silasfelinus/Kapowarr#145 (squash 6dbdeabb9ced29629645d4bb30c27c09d71934f7). Root cause on the UI path was a blank, manual-only ComicVine-era search modal: opening Edit Match cleared the query and results; search had no loading, empty, or error state; repeated submits could stack identical provider fan-outs; and selecting a native Metron/GCD result lost provider-neutral identity because the Review Holds importer only retained comicvine_id. Edit Match now immediately searches the current proposed title (falling back to the held file title), keeps the field editable for a fuzzier retry when zero matches return, reports searching/empty/error/success states, coalesces duplicate in-flight submits, and imports selected matches with provider_id + external_id. The modal copy now says metadata rather than ComicVine. PR head 7bb48ed8faaeab3440630f979273e8b126ab73ce passed Tests on Python 3.8, 3.9, 3.10, 3.11 and 3.12, including the frontend suite on 3.12, plus Build docs and Build/publish container. Branch janitor removed the merged worker branch; main is the only remaining implementation line.
+
+Reopened from user-reported live testing on 2026-08-26. Reset & Re-evaluate All Holds currently discards the saved pass and rescans every current unimported folder, so a roughly 68-folder review backlog can unexpectedly become an 867-folder whole-library pass. Split the semantics: re-evaluate only live Review Holds by default, and expose whole-library discovery separately as Rescan Untracked Library. Preserve safe stop/resume behavior and add regression coverage for both paths.
+
+Implement the approved split between re-evaluating only live Review Holds and deliberately rescanning the full set of current untracked library folders.
+
+Implementation is ready for PR review: Review Holds re-evaluation now snapshots only live held folders, a separate Rescan Untracked Library action deliberately rebuilds from every current unimported folder, both maintenance actions serialize behind the continuous-import lane, and backend/frontend regressions plus docs cover the split.
+
+Merged silasfelinus/Kapowarr#149 as 04fc78ed5f29eaeb563cf1f1f6d11bf3af324e4b. The misleading Reset & Re-evaluate All Holds path was a whole-library untracked rescan, so a roughly 68-folder review backlog could become an 867-folder pass. Reset & Re-evaluate Holds now stages only live outstanding Review Holds; Rescan Untracked Library is the explicit full current-untracked scan. Both maintenance paths serialize in the Continuous Import write lane so a cooperative stop reaches a safe folder boundary before snapshot replacement. Exact-head PR CI completed green: Tests across Python 3.8-3.12 with frontend Node tests on 3.12, Build docs, and Build and publish container.
+<!-- note:end t-055 -->
+
+## t-056 — Make Metron a fully native metadata identity
+
+<!-- note:begin t-056 -->
+Silas explicitly requested the reasonable completion of Metron support after t-038 shipped safe
+ComicVine-linked fallback. Remove the remaining legacy requirement that every volume and issue have a
+ComicVine ID; allow Metron-native search results to preview, add, refresh, and retain durable provider
+identities; keep old API fields nullable for compatibility; make migration 50 restart-safe and
+data-preserving; and keep the existing minimalist, image-forward Add Volume workflow.
+Implementation is ready for review on the Kapowarr feature branch. It also runs configured provider
+searches concurrently, follows Metron's current list/detail efficiency guidance, and supports its
+recommended bearer-token authentication without removing Basic auth. Local verification passed 393
+tests, a fresh database-version-51 startup smoke test, mypy on all touched Python sources, import-order
+checks, JavaScript syntax checks, and whitespace validation.
+Merged silasfelinus/Kapowarr#64 as cb3161b2e4a260e4dda7a9ec74672df417efdd06. Metron-only
+series and issues now search, add, refresh, and retain durable provider identities without invented
+ComicVine IDs. Configured providers search concurrently; Metron issue-list responses avoid per-issue
+detail bursts; token and Basic authentication are supported. Python 3.8-3.12 tests, docs, and the PR
+container build all passed. Learning: provider abstraction is not complete while a legacy provider's
+identifier remains a schema requirement; portable identity needs nullable compatibility columns and
+refresh routing keyed by the stored provider identity.
+<!-- note:end t-056 -->
+
+## t-057 — Decide what a checksum-less integrity verdict is worth, and verify TAR/CBT
+
+<!-- note:begin t-057 -->
+Shipped in silasfelinus/Kapowarr#87 (squash c1e510ff11b73b73114ed3d2ce9a03eb1ae1f21e). THE DECISION: neither of the two outcomes this task offered. It asked to either implement _verify_tar for exactly UNREADABLE/EMPTY and never CORRUPT, or record the decision not to. Both rest on the premise that a tar carries no checksum, and that premise is only half true -- it holds for a bare .tar and fails for every compressed form. MEASURED before coding, sweeping a single flipped byte across five-page archives (~1000 offsets per format): bare .tar 521 of 531 body flips open cleanly with the RIGHT member names and the RIGHT member sizes, no signal at all; .tar.gz 1036/1036 caught, .tar.bz2 1042/1042, .tar.xz 1047/1047, all via the wrapper checksum (gzip CRC32 trailer, bzip2 per-block CRCs, xz stream check) and only when the stream is read through to its end. A compressed tar carries BROADER evidence than ZIP per-member CRC, not weaker, since it covers the tar headers too. THE TRAP, and the most valuable finding: verifying a compressed tar the obvious way, by iterating TarFile members instead of reading the stream out, caught 5 of 733 flips -- and the other 728 did not merely pass, they returned a SHORTER MEMBER LIST that _judge_contents happily calls OK. A corrupt five-page archive presents as a healthy one-page archive, at all three errorlevel settings, because the desynchronised stream stops looking like a tar header and tarfile reads that as a clean end-of-archive. So the weak version this task proposed is not just weak, it is actively misleading in exactly the case the module exists to catch -- worse than the UNSUPPORTED it would have replaced. That is why the implemented version decompresses explicitly, with a regression test that asserts the member list really does shrink so it tests the fix rather than the fixture. VERDICTS: CORRUPT for compressed forms only on the decompressors own evidence; UNREADABLE for a truncated or unopenable stream; EMPTY when no member could be a page; OK otherwise; a bare .tar is never CORRUPT. FALSE-POSITIVE GUARDS, since a wrong CORRUPT blocklists a good release, deletes it and steers every future search away: bz2 has no dedicated corruption exception and raises a plain OSError that a genuine disk failure also raises, so it is read as corruption only when errno is unset (the decompressor sets none, the OS always does) and only for bzip2; and only regular-file members are judged, so a tar of nothing but symlinks cannot look populated. ONE LIMIT DOCUMENTED AND PINNED rather than papered over: a bare tar is a run of 512-byte blocks with no index, so truncation landing exactly on a block boundary still parses as a complete shorter archive -- mid-block cuts are caught, aligned ones are not (test_a_block_aligned_bare_tar_truncation_is_undetectable). The suffix list moved to FileConstants.TAR_ARCHIVE_SUFFIXES so the set the reader displays and the set the verifier checks cannot drift apart; tar detection stayed local rather than joining ARCHIVE_MAGIC_BYTES, which also drives rename_with_proper_extension. VERIFIED: full backend suite 581 -> 592 (11 new tests) green on the whole 3.8-3.12 CI matrix, plus 41 frontend tests, docs build and container build; isort clean on both changed files (comic_reader.py and others already fail isort on main under the repos combine_as_imports config, confirmed by git-stash, so only substantially-changed files were brought into line); flake8 count unchanged at 6, all pre-existing E501s on untouched lines; Python 3.8 syntax checked against the matrix floor (gzip.BadGzipFile is 3.8+, exactly at it). NOT VERIFIED: no live download ran end-to-end, same as t-044; and no survey of how common .cbt releases actually are, so the value is bounded by that unknown even though the correctness argument does not depend on it. BEHAVIOUR CHANGE WORTH KNOWING: a TAR-family download that previously returned UNSUPPORTED (always imported) can now be blocklisted and deleted; PublicSettingsValues.verify_downloaded_archives remains the off switch.
+<!-- note:end t-057 -->
+
+## t-058 — Implement debrid hoster-unrestrict downloads (Real-Debrid or chosen provider)
+
+<!-- note:begin t-058 -->
+FOR SILAS: Nothing has been built. The design work is finished and lives in
+projects/kapowarr/docs/t-042-debrid-boundary.md -- t-042 evaluated this and the
+architectural answer is yes, it fits cleanly. One question decides when it gets built,
+and it is a question only you can answer.
+
+THE QUESTION: do you have a Real-Debrid (or AllDebrid / Premiumize / TorBox) account
+an agent could verify against? No debrid account is reachable from an agent sandbox,
+so without one this ships on mocked tests and a reading of the provider's docs -- and
+the last time we did that (t-035, NZBGet) the published docs turned out to be wrong
+about a required parameter, caught only by reading that service's source. Real-Debrid
+has no public source to read.
+
+TO APPROVE: set status: ready and add one line naming the provider, plus whether you
+have an account to test against. If you don't and don't want one, set status: blocked
+-- the evaluation stands on its own and does not need this task to stay open.
+
+WHAT IT DOES: GetComics serves comics behind Mega/MediaFire/Pixeldrain links, and the
+free tiers rate-limit. Kapowarr already models that failure (ONLY_RATE_LIMITED_LINKS).
+A debrid account is the direct answer, and someone holding one currently cannot use it.
+Scope is deliberately unrestrict-only: hand an existing hoster link to the debrid API,
+download the plain HTTPS result. NOT the torrent-caching pattern -- t-042 ruled that
+out separately, and the doc says why.
+
+SIZE: ~100 lines plus tests. One DebridDownload(BaseDirectDownload) modelled on
+PixelDrainDownload, a priority field on the DownloadPreppers registry, one
+CredentialSource member. No migration, no new DownloadType, no post-processing change.
+
+Silas confirmed on 2026-09-07 that he has no debrid account and wants this feature shelved. Per the task's own decision contract, do not acquire a Real-Debrid/AllDebrid/Premiumize/TorBox subscription merely to satisfy the roadmap. The completed architectural evaluation in t-042 remains available if this is revisited later.
+<!-- note:end t-058 -->
+
+## t-059 — Evaluate a metadata provider with genuine non-US comic coverage (GCD first)
+
+<!-- note:begin t-059 -->
+Evaluated and APPROVED; see projects/kapowarr/docs/t-059-gcd-metadata-provider.md (silasfelinus/conductor#2585). Verdict differs from t-043 in kind: nothing here is structural, so this is approve-and-sequence rather than decline. TWO CORRECTIONS TO THE TASKS OWN PREMISE. (1) GCD IS NO LONGER DUMP-ONLY. The note inherited t-043s (correct-when-written, eight days stale) framing. There is now a live public REST API at https://www.comics.org/api/, reachable anonymously from this sandbox, with an OpenAPI schema at /api/schema/. This decides the verdict, because the dump contains NO IMAGE URLS AT ALL -- which is exactly why the reference consumer, comictagger/gcd_talker, has to scrape comics.org HTML for covers and check for Cloudflare challenge pages while doing it -- whereas the API returns cover_url directly. The dump is also ~6 GB, bi-weekly, and login-gated. Same provider, opposite verdict, entirely down to access path. (2) THE TASKS GATE ("implement only if the contract fits without special-casing") SPLITS. MetadataProvider, MetadataProviderRegistry, MetadataIdentityStore, VolumeMetadata/IssueMetadata, Volume.add (volumes.py:1100), the refresh path (volumes.py:1471-1477) and the POST /api/volumes route (frontend/api.py:796) are all genuinely provider-generic -- every call site was read. But search_metadata_with_fallback() (backend/features/metadata.py:233) is hardcoded to exactly two providers: it imports MetronError by name and calls _metron_is_configured() (metadata.py:224), which peeks at settings.metron_* directly and is called at four sites; the registrys lazy imports name comicvine/metron explicitly in both get() and capabilities(). The registry cannot route around this because the contract has no is_configured(). So the contract fits, the fan-out does not, and the fix DELETES Metrons special-casing rather than adding GCDs beside it. Filed t-061 (generalize the fan-out, ready) and t-062 (implement the GCD provider, waiting on t-061) rather than smuggling a third branch into a function that already has two. COVERAGE, MEASURED NOT ASSUMED: /api/series/name/Tintin/ returns 145 series -- 20 Franco-Belgian vs 3 US on page one, plus Italian, Portuguese, Spanish, Danish, Norwegian, German, Dutch, Thai and Scots/Welsh/Gaelic/Picard; Asterix 188; Tex 389, largest the 973-issue Italian Collana del Tex. FOUR MEASURED TRAPS recorded on t-062 so the implementation does not rediscover them: page size is fixed at 50 with page_size/limit silently ignored, so /api/series/name/a/ is 178,526 results = 3,571 pages and Metrons unbounded _all() helper must NOT be reused for search; a series name containing / 404s even percent-encoded and returns an Apache HTML page rather than a JSON error; key_date returns literal "1959-00-00" placeholders that are not valid dates; GCD has no series-level volume number (default to 1, do not silently adopt gcd_talkers year-as-volume). Cost measured: 973 issues in 20 requests / 11.5s / no 429 anonymously, via /api/series/{id}/overview/, which returns per-issue number/key_date/on_sale_date/cover_url and lets a whole issue list load without a detail request per issue. NOT VERIFIED, stated as judgment: the current GCD license version -- search summaries disagree between CC BY 3.0 and CC BY-SA 4.0 (ShareAlike is materially stronger) and the primary source is behind a Cloudflare 403 that this sandbox reproduced on docs.comics.org and www.comics.org HTML while /api/ paths pass unchallenged; recorded as an open decision for Silas on t-062, not a gate here. Also not verified: the authenticated rate limit (no GCD account), and how well GCD titles match filenames in practice. Deliberately NO EGRESS-BLOCKERS.md entry -- by that ledgers own definition a real HTTP response means reachable and only connection-level failure means blocked, so a bot challenge is not an egress block.
+<!-- note:end t-059 -->
+
+## t-060 — Make peer availability count in search ranking instead of only in the UI
+
+<!-- note:begin t-060 -->
+Done; implemented in silasfelinus/Kapowarr#90 (squash 0094dc5). ROOT CAUSE CONFIRMED AS FILED: SearchResultAvailabilityData (backend/base/definitions.py:679) is populated by Torznab (torznab.py:497-500) but _rank_search_result() never read it, so the only consumers were frontend/static/js/view_volume.js:396-397 and the manual-search table column -- peer availability was display-only and auto_search could pick a zero-seeder release over a healthy one. FIX: availability_rank() added beside pack_preference_rank()/getcomics_quality_rank() in backend/features/acquisition_preferences.py and appended in _rank_search_result(). BOTH CAUTIONS FROM THE TASK NOTE HELD, and the second one determined the design: because the field is total=False and only Torznab populates it, a seeder-count gradient cannot place a no-peer-data result anywhere without promoting or demoting every non-torrent source for no reason, so the only shape satisfying "absent data ranks neutrally" is binary -- missing, None and any positive count all score 0; only an explicit zero (or a negative, from a malformed indexer response) is demoted. RANK POSITION went one tier higher than the note suggested, deliberately: below match/title/year correctness as required (a well-seeded wrong issue is still the wrong issue) but ABOVE pack preference, since preferring the shape of a release nobody can download is meaningless. Pinned from both directions by named tests so a reviewer who disagrees gets a failing test, not a silent change. ONE DELIBERATE DIVERGENCE flagged in projects/kapowarr/TALKBACK.md: unlike its neighbours this reads no settings and has no off switch, because zero seeders is a fact about the release rather than a preference about it; a side benefit is that it needs no database and therefore no Flask app_context in tests. VERIFIED: 7 new tests in tests/Tbackend/acquisition_preferences.py covering both cautions, the negative-count case, and both rank-position boundaries; full suite via the project's own CI command (python -m unittest discover -s ./tests -p '*.py') = 619 tests, OK; PR checks all green before merge -- Tests on 3.8/3.9/3.10/3.11/3.12, Build docs, Build container. OUT OF SCOPE, LEFT WHERE IT WAS: the third t-043 finding this task also carried (DownloadState has no member for "handed to the client, waiting in a remote queue, transferring nothing") is untouched -- it is a separate design question, still owned by whichever of t-058/t-042's debrid work lands first. Kaizen filed as t-063: the ranking TIER ORDER is the actual policy but is pinned only by pairwise adjacent-boundary tests, so a future component inserted at the wrong tier would break nothing.
+<!-- note:end t-060 -->
+
+## t-061 — Generalize the metadata search fan-out to registered providers instead of hardcoding two
+
+<!-- note:begin t-061 -->
+Done 2026-08-20 via Kapowarr PR #91 (squash 094e918). search_metadata_with_fallback() now iterates MetadataProviderRegistry.configured_provider_ids(SEARCH_VOLUMES) instead of hardcoding ComicVine+Metron: MetadataProvider gained is_configured() and unavailable_errors, the registry gained a table-driven _builtin_modules lazy-import map, and _metron_is_configured() plus all four of its call sites are gone. Adding a third metadata provider is now implement + register + one table line. 625 tests green on Python 3.8-3.12; the two pre-existing fan-out regression tests assert the same behaviour with only their patch target moved.
+<!-- note:end t-061 -->
+
+## t-062 — Implement a Grand Comics Database metadata provider against its REST API
+
+<!-- note:begin t-062 -->
+Done 2026-08-20 via Kapowarr PR #96 (squash 96e239e). backend/implementations/gcd.py
+implements the five measured traps below against https://www.comics.org/api/: search
+reads exactly one page of /series/name/{name}/ (never follows next), Accept:
+application/json + ?format=json are always sent, '/' is stripped from search queries
+before the request, key_date's zero-placeholder components are truncated rather than
+emitted or discarded, and volume_number always defaults to 1. publisher (a URL) is
+resolved once per fetch_volume through a small id->name cache; comicvine_id stays None
+throughout. t-061 had already generalized the search fan-out, so registering 'gcd' in
+MetadataProviderRegistry._builtin_modules was the only wiring needed -- Volume's refresh
+path and the add-volume search UI were both already provider-generic.
+
+Not built: a settings-page UI row for optional gcd_username/gcd_password (GCD works
+fully anonymously; the credentials only raise its documented rate limit). Filed as
+t-067. The license/attribution open decision below is still open and still not blocking,
+since no UI renders a GCD-sourced credit yet -- carries forward to whoever builds that.
+
+Kaizen: t-066 (unrelated Metron.test_key() bug found while reading metron.py for the
+request-guarding pattern -- imports the wrong `run`, would raise instead of returning
+bool; not fixed here to keep this PR scoped).
+
+20 new unit tests (constructed via object.__new__(Gcd), mirroring Metron's own test
+pattern, to avoid touching real Settings()/DB state outside an app context). Full
+suite: 673/673 passing.
+
+--- Original task note, preserved for the evaluation context below ---
+
+Filed from t-059; full evaluation in projects/kapowarr/docs/t-059-gcd-metadata-provider.md.
+Approved on evidence, not on assumption: GCD's coverage was measured live
+(/api/series/name/Tintin/ returns 145 series -- 20 Franco-Belgian vs 3 US on page one;
+Asterix 188; Tex 389, largest being the 973-issue Italian Collana del Tex).
+
+Build against the REST API at https://www.comics.org/api/, NOT the bulk dump. t-043 and
+this task's own original note both assumed dump-only; that is out of date. The dump is
+~6 GB, bi-weekly, behind an account login, and contains no image URLs at all -- which is
+why comictagger/gcd_talker has to scrape comics.org HTML for covers and check for
+Cloudflare challenge pages. The API returns cover URLs directly.
+
+Five measured traps, each of which a naive implementation hits:
+(1) Cap search pagination explicitly. Page size is fixed at 50; page_size and limit are
+    silently ignored; /api/series/name/a/ returns 178526 results = 3571 pages. Do NOT
+    reuse Metron's unbounded _all() helper for series-name search.
+(2) Send Accept: application/json or ?format=json. It is Django REST Framework with a
+    browsable HTML renderer -- without the header you get HTML at HTTP 200.
+(3) Guard JSON parsing. A series name containing '/' 404s even percent-encoded (Apache
+    AllowEncodedSlashes) and returns an Apache HTML error page, not a JSON error body.
+    Metron's _get() already has the right shape for this.
+(4) Normalize dates. key_date uses zero placeholders ("1959-00-00" is a real returned
+    value). Use on_sale_date or normalize(key_date) or None; never emit -00- components.
+(5) volume_number defaults to 1. GCD has no series-level volume number and the issue-level
+    volume field is frequently empty. gcd_talker offers year-as-volume as a user setting;
+    do not adopt that silently, it changes folder naming and matching.
+
+Shape: fetch_volume = /api/series/{id}/ plus /api/series/{id}/overview/, which returns
+per-issue number/key_date/on_sale_date/cover_url/longest_story and lets the whole issue
+list load without a detail request per issue -- the same optimization Metron makes
+deliberately (metron.py:176-179). Measured cost: 973 issues in 20 requests / 11.5s /
+no 429 anonymously. publisher comes back as a URL, so resolve the name in fetch_volume
+only (never per search hit) with a small id->name cache. comicvine_id is None (GCD has
+no CV cross-link, unlike Metron's cv_id) -- that is fine, it is nullable throughout.
+
+Open decision for Silas before shipping user-visible credits: GCD data is Creative
+Commons and requires attribution plus a link back, but the evaluation could NOT confirm
+the current license version from a primary source (docs.comics.org and www.comics.org
+HTML both return Cloudflare 403 from the sandbox, while /api/ paths are not challenged;
+search summaries disagree between CC BY 3.0 and CC BY-SA 4.0, and ShareAlike is a
+materially stronger obligation). VolumeMetadata.site_url and CoverProvenance already
+carry the data attribution needs; the placement is a product call.
+
+Medium-term risk to record: GCD's own wiki says API fields/format are not yet stable and
+that anonymous access "will likely bye turned off at some point" (auth is Basic/Session
+with a GCD account, not an API token). The dump stays documented as the fallback if that
+happens.
+<!-- note:end t-062 -->
+
+## t-063 — Pin the search-ranking tier order with one table-driven test instead of pairwise boundaries
+
+<!-- note:begin t-063 -->
+Done 2026-08-20 via Kapowarr PR #92 (squash fbf8b67). RANKING_TIERS in tests/Tbackend/acquisition_preferences.py now states all six _rank_search_result() components in one table, most significant first, with one test asserting the full sorted tier order and a second guarding that each table entry degrades exactly one component (so an inserted or transposed component fails loudly). Also pins the shared neutral contract for pack_preference_rank, getcomics_quality_rank and availability_rank. Test-only -- backend/ is byte-identical to main. Both new tests were verified to FAIL against a deliberately transposed policy and against a component inserted above match correctness; the latter is caught only by the new guard while all 22 pre-existing tests still pass, which is the gap the task described.
+<!-- note:end t-063 -->
+
+## t-064 — Make ComicVine's system-events instrumentation a provider-declared opt-in
+
+<!-- note:begin t-064 -->
+Kaizen from t-061. MetadataProviderRegistry.register() now checks a provider-declared instrument_operations flag instead of the hardcoded 'comicvine' id; the wrapper (_instrument_operations) classifies outcomes via the provider's own operation_outcomes exception-to-bucket table (unmapped -> other_error). ComicVine opts in with its existing three-exception table; Metron stays unwrapped. Merged silasfelinus/Kapowarr#93.
+<!-- note:end t-064 -->
+
+## t-065 — Return search ranking as a named tuple instead of a bare positional list
+
+<!-- note:begin t-065 -->
+Kaizen from t-063. _rank_search_result() now returns SearchResultRank (a NamedTuple with fields match/title_overlap/volume_year/availability/pack_preference/issue_fit) instead of a bare positional List[int]; tuples compare lexicographically exactly as the old list did so no behaviour moved. issue_fit defaults to 0 for the one case that previously appended nothing (volume-search branch, issue_number neither tuple nor float), which is strictly less than every value the branch computes otherwise so ordering is unchanged. RANKING_TIERS' test now compares by field name and is pinned against SearchResultRank._fields directly, which is stricter than the old index-based check. Merged silasfelinus/Kapowarr#94.
+<!-- note:end t-065 -->
+
+## t-066 — Metron.test_key() imports the wrong `run` and would raise, not return bool
+
+<!-- note:begin t-066 -->
+Kaizen from t-062 (GCD provider implementation). backend/implementations/metron.py imports `run` from `backend.base.helpers` (`from backend.base.helpers import (AsyncSession, force_range, normalise_string, run)`), but `helpers.py` only re-exports `subprocess.run` (`from subprocess import run`, helpers.py:18) -- there is no async-run helper defined or exported there. `test_key()` calls `run(test())` where `test()` is a coroutine function; `subprocess.run(<coroutine object>)` raises `TypeError`, it does not return `False`. Compare `backend/implementations/comicvine.py`, which does this correctly via `from asyncio import gather, run, sleep` (comicvine.py:7) and the identical `return run(_test_key())` pattern (comicvine.py:468) -- asyncio.run is the one actually needed. Net effect: any caller of `Metron(...).test_key()` (e.g. a settings-page "test credentials" button, if one exists for Metron the way ComicVine has one) gets an unhandled exception instead of a pass/fail result. Fix: change metron.py's import to `from asyncio import run` (dropping it from the `backend.base.helpers` import list). One-line fix plus a regression test asserting `test_key()` returns a bool (True/False) rather than raising, for both the success and MetronError-caught branches -- the existing test suite has no coverage of `test_key()` at all today, which is how this shipped unnoticed.
+<!-- note:end t-066 -->
+
+## t-067 — Add a settings-page UI row for optional GCD (Grand Comics Database) credentials
+
+<!-- note:begin t-067 -->
+Followup from t-062 (GCD provider implementation, silasfelinus/Kapowarr#96). The GCD provider works fully anonymously -- no credentials are required to search or fetch -- so this was deliberately left out of t-062's scope to keep that PR focused on the backend contract. `gcd_username`/`gcd_password` already exist as real settings (backend/internals/settings.py: added to PublicSettingsValues, the todict() credential-masking tuple, SENSITIVE_SETTING_KEYS, and the key-conversion elif chain, mirroring metron_username/metron_password exactly) and are already readable/writable through the generic settings API -- there is just no dedicated UI to enter them yet, the same gap Metron's credentials would have before frontend/templates/settings_metadata.html and frontend/static/js/settings_metadata.js were built out for them. Mirror that existing Metron row: add a `#gcd-username-input`/`#gcd-password-input` pair to settings_metadata.html and wire their load/save in settings_metadata.js exactly the way the three `#metron-*-input` elements are wired today (see settings_metadata.js:5-7 and :15-17). Worth noting in the UI copy that these are optional and only raise GCD's documented rate limit -- unlike the Metron/ComicVine rows, an empty GCD row is a fully working configuration, not a disabled one.
+<!-- note:end t-067 -->
+
+## t-068 — Identify which Kapowarr page is still slow after the review-holds fix
+
+<!-- note:begin t-068 -->
+Resolved by silasfelinus/Kapowarr#99 ("Build the review list in batches instead of one blocking pass"), merged 2026-08-20. The slow page was the Library Import review list: a continuous import pass holds a whole folder at a time, producing several hundred held folders (thousands of rows, each with its own button) appended to the live list in one synchronous pass -- the page stopped responding until the last row landed, reading as a hang especially on tablet, recurring on every reopen. Fix batches row insertion between frames (first batch painted immediately, list scrollable while the rest fills in), guards against a stale batch appending onto a newer list via a render generation counter, and takes each batch's Select-All state from the live selection rather than the template default. This PR was authored/merged independently of this investigation task (different session, found via a live repro rather than this task's planned repro-then-fix path) -- reconciling status to done rather than duplicating the investigation.
+
+Reopened from live testing on 2026-08-23: the volume gallery still produces a cross-browser main-thread freeze on mobile Chrome, desktop Chrome, and Safari. Import paused versus running makes no apparent difference; Library Import itself loads in about a second. Poster view gets materially faster when filtered to Wanted, and switching to table view still stutters, pointing to library-size-dependent gallery rendering rather than the importer.
+
+Root cause narrowed to the Volumes gallery render path. The earlier batching change revealed the first 50 entries sooner but still drained every remaining volume into the DOM in background batches; Safari's setTimeout fallback makes that especially eager. Filtering to Wanted shortens that work, which matches the live report. Branch worker/kapowarr-t-068-gallery-render-budget-855eab now renders a bounded viewport runway in 16-entry batches only as the footer approaches, bulk-clears old gallery DOM, keeps Mass Edit selection in data so lazy rows preserve Select All, and updates queue badges only for volumes represented by the queue. Local syntax check passed and 4 focused frontend regression tests pass; full repository Actions will run on the PR head.
+
+Merged silasfelinus/Kapowarr#142 at 9a89574d0daaa708bebaab45b1e06691484b1395. The remaining freeze was the Volumes gallery: the previous first-batch optimization still drained the entire filtered library into poster/table DOM in background batches, so work still scaled with total volume count and switching views started a second full drain. The merged fix keeps a bounded 16-entry, 1200px render runway, bulk-clears stale DOM, preserves Mass Edit selection independently of lazy row existence, and scopes queue badge refreshes to queue-bearing volumes. PR checks were fully green: Tests run 32682206854 passed on Python 3.8, 3.9, 3.10, 3.11, and 3.12, with the frontend suite passing in 3.12; Build docs run 32682206814 and Build and publish container run 32682206782 also passed. Main now points to the merge commit.
+
+Reopened from live testing after Kapowarr#142. The bounded-runway fix removed the browser freeze but introduced an artificial scroll cliff: the gallery stops at the end of rendered cards and waits before creating the next batch. Desired behavior is the standard large-media-gallery model: establish full library geometry immediately with lightweight placeholders/text from the existing /api/volumes metadata payload, then hydrate covers around the viewport with overscan so scrolling never waits for card construction.
+
+Follow-up implementation is ready on worker/kapowarr-t-068-skeleton-gallery-a91c. Poster view now materializes the complete lightweight metadata index in one DocumentFragment so the browser gets full gallery geometry and titles immediately, while cover <img> elements remain source-less placeholders until an IntersectionObserver brings them within 1800px of the viewport. Visible covers receive high fetch priority, near-viewport overscan low priority, and the existing native lazy-loading flag remains as fallback. content-visibility/contain-intrinsic-size let supporting browsers skip off-screen paint work. The existing /api/volumes payload remains the only metadata index; no duplicate endpoint was added. Table view keeps the bounded renderer from #142. Diff audit caught and repaired one accidentally truncated CSS tail before review; current compare is scoped to 5 intended files and 0 commits behind main. Full repository Actions will run on the PR head.
+
+Final close after merged PR #143. Poster view now has complete lightweight gallery geometry and viewport-prioritized cover hydration; all PR checks passed and main is at 7924631f3b4dd13b9d0e2702988702f3d3fa5fb9.
+
+Reopened for a user-supplied production log follow-up. The log shows three Continuous Library Import task crashes where a ComicVine 420 rate limit is incorrectly converted into a Metron no-crosslink error, bypassing the importer's existing cooldown/retry handler, plus one real Update All sqlite3 database-is-locked failure while it overlaps the continuous import. Scope this follow-up to preserving transient ComicVine semantics through fallback and preventing those two heavyweight library writers from running concurrently.
+
+Candidate fix is ready on worker/kapowarr-t-068-log-error-semantics-91af. fetch_volume_with_fallback now preserves the original ComicVine rate-limit/API-key exception when configured Metron cannot rescue the CV-linked volume, so Continuous Library Import reaches its existing cooldown/retry handler instead of a generic task ERROR. Update All now shares the continuous_import writer lane, preventing the production-observed concurrent volume_files SQLite write while unrelated default-lane work remains concurrent. Added regressions for the CV-rate-limit/Metron-miss case, unexpected fallback bugs, and Update All queueing behind continuous import. Branch is four intended files and 0 commits behind main; full Actions will run on the PR head.
+
+Merged silasfelinus/Kapowarr#144 as c6566aea52507ec887608728ed33700d52aac866. Production-log follow-up fixed two distinct failures: ComicVine 420 throttling now keeps its original CVRateLimitReached signal when Metron fallback cannot rescue a CV-linked volume, allowing Continuous Library Import's existing cooldown/retry path instead of a task ERROR; Update All now shares the continuous_import writer lane so it cannot overlap the importer on heavyweight SQLite library writes. Exact PR head d55067a661599c40359647cf375611d92551f974 passed Tests on Python 3.8, 3.9, 3.10, 3.11 and 3.12, with frontend tests passing on 3.12; docs and container build also passed. Unexpected fallback exceptions remain fatal. Main is at the squash merge commit.
+<!-- note:end t-068 -->
+
+## t-069 — Fix 3 stale kapowarr milestone status fields (m4/m6/m9 all fully done but not stamped done)
+
+<!-- note:begin t-069 -->
+Kaizen from the 2026-08-23 weekly site audit. Same stale-milestone-metadata pattern t-020 already fixed for m3, recurring elsewhere: m4 "MAINTAIN" was `in-progress` but all 3 tasks (t-023, t-053, t-055) are done -- flipped to `done`; m6 "DISCOVER & CURATE" was `not-started` but all 11 tasks are done -- flipped to `done`; m9 "READER FOLLOW-UPS" was `not-started` but its only task (t-045) is done -- flipped to `done`. m5/m8 correctly stay `in-progress` (each has a genuine open needs-human task). No task content changed, just the 3 milestone `status:` fields.
+<!-- note:end t-069 -->
+
+## t-070 — Add a release-feed poll so new indexer releases are found without a per-volume sweep
+
+<!-- note:begin t-070 -->
+Retroactive roadmap entry: work was implemented and merged directly (branch claude/missing-comics-j8osws, not claimed through claim_task.py) before this session found it as an unreconciled live PR during a scheduled conductor sweep. Recorded here so the shipped feature isn't invisible to future audits/roadmap reconciliation.
+Newznab/Torznab both answer `t=search` with no `q` by returning their most recent releases, so one request per indexer covers the entire library instead of one targeted search per volume plus one per missing issue (a sweep on 2026-09-02 reached 8 volumes out of thousands in an hour and spent every indexer's daily quota doing it). Added `backend/features/release_feed.py`: a stateless quarter-hourly (900s) poll task (`ReleaseFeedSync`) that asks every enabled Newznab/Torznab indexer for its recent-releases feed (comic category applied when no query narrows the request), matches each release against the library via the same matcher the watched-folder importer uses, and queues anything for a monitored volume with a matching missing issue via the ordinary search matcher -- deciding nothing of its own. Keeps no state (an already-downloaded/queued/blocklisted release naturally stops matching). One indexer being down/out of quota costs only that indexer's answers. Also added `SearchAll._come_back_when_the_quota_does()`: when a per-volume sweep stops early on a rate limit, the next sweep is brought forward to when the shortest cooldown clears (plus a 60s margin) instead of waiting a full day, addressing a real case where a sweep stopped at volume 156 and Silas expected it to resume automatically.
+Merged silasfelinus/Kapowarr#181 ("Listen to the indexers instead of only asking them") at 13cb65f. All 7 checks green (Python 3.8-3.12 tests, docs build, container build) before this session merged it; 18 new backend tests plus coverage for the new query-omission/category behavior, dedup-by-link across indexers, one indexer's failure not costing the others, and exactly one request per indexer regardless of library size. Reviewed the diff directly (release_feed.py, the settings/task-interval wiring, and the Newznab/Torznab query-omission change) before merging: additive-only, no destructive DB operations (one bounded `UPDATE ... SET next_run = MIN(next_run, ?)`), no secrets touched.
+<!-- note:end t-070 -->
+
+## t-071 — Detect volumes sharing a folder that the importer cannot tell apart
+
+<!-- note:begin t-071 -->
+Retroactive roadmap entry: work was implemented and merged directly (branch claude/missing-comics-j8osws, same branch name pattern as t-070, not claimed through claim_task.py) before this session found it as an unreconciled live PR during a scheduled conductor sweep. Recorded here so the shipped diagnostic fix isn't invisible to future audits/roadmap reconciliation.
+`scripts/library_conflicts.py`'s `shared_folders()` previously only flagged a folder whose volumes shared *no* meaningful word in their titles -- meant to catch unrelated series dumped into one folder while leaving franchise directories (many ElfQuest/Batman volumes sharing a folder) silent. That rule had a blind spot: two volumes with the exact same title share every word, so this check skipped the identical-title case before it skipped anything else -- exactly the case that costs comics, since `scan_files` files whatever it finds in a folder against whichever volume owns that folder, so an indistinguishable pair silently loses one volume's issues to the other. Silas's real library had three identically-titled Web of Spider-Man volumes (82/83/84) sharing one folder with 24 files misattributed, reported by neither the old word-overlap check.
+Fix adds a second, independent question -- `indistinguishable()` -- that asks `match_title` (the same function the importer itself uses) whether any two volumes sharing a folder are one title to it, rather than inventing a second "same series" heuristic. The two shapes (unrelated series vs. indistinguishable titles) are reported separately since they need different fixes: a stranger gets moved out, an indistinguishable duplicate needs its own folder. Also corrected a test fixture (`The Bunker`/`Bunker` in `/content/Bunker`) that had been miscategorized as a "must stay silent" franchise case when `match_title` (which strips leading articles) actually treats them as identical -- moved to its own indistinguishable-pair test.
+This script only reports (read-only against the live API, confirmed by its own "the only call it makes is a read" test) -- it does not move or delete anything. Which volume to keep in a shared folder remains a judgement only Silas can make.
+Merged silasfelinus/Kapowarr#212 ("Report the folders whose volumes cannot be told apart") at 0c36a3249fefd164c53d7f9cd1af90cac6a92856. All 7 checks green (Python 3.8-3.12 tests, docs build, container build) before this session merged it; new coverage for the three-volumes-one-folder case, the leading-article false-negative, the annual correctly staying silent, and the reporting order between the two shapes. Reviewed the diff directly before merging: read-only reporting change plus tests, no destructive operations, no secrets touched.
+<!-- note:end t-071 -->

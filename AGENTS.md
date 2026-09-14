@@ -586,9 +586,38 @@ delete it now, not an observation for later. (Kaizen from challenge-center/t-002
 ### Neither agent — EVER
 - Set `approved_by_human: true`
 - Touch DNS, secrets, billing, or trigger a live deploy or publish
-- Delete TALKBACK entries (the log is append-only)
+- Delete TALKBACK entries (the log is append-only) — see the archival carve-out below
 - Skip a `needs-human` gate on an `outward-facing` or `irreversible` task
 - Hold more than one claimed task at once (claims are sequential — finish, hand off, or cleanly park one before claiming the next)
+
+### Archival carve-out to the append-only rules
+
+Authorized by Silas on 2026-09-14, in session, for conductor/t-158.
+
+The append-only rules above and hard safety rule 7 exist to stop **history loss**. Moving a record
+to a named archive file, unchanged, does not lose it. So:
+
+> **Moving content verbatim into a named archive file is not deletion**, provided (a) the move is
+> byte-for-byte — the archived text is recoverable *identical* to the original, (b) the script
+> performing it verifies that round-trip before it rewrites the source, (c) a pointer is left at the
+> original location, and (d) the PR names the session and the human authorization for the sweep.
+
+**Rewriting, summarizing, paraphrasing, truncating, or dropping an entry remains forbidden**, in an
+archive file exactly as in the original. "I condensed it into the archive" is the prohibited thing,
+not a lighter version of it. If you cannot verify the round-trip, you may not do the move.
+
+This is what separates a deliberate archival pass from the incidents these rules were written for:
+conductor/t-129 (a `--set note=` close-out silently dropped 199 lines of diagnostic history across
+cthulhuquarium/t-033 and t-034, repaired in #2816) and the 11,014-line `art-prompts.yaml` deletion
+that `check_large_deletion_guard.py` was written after. Both destroyed content. An archival pass
+relocates it and proves it did.
+
+Practical notes: `scripts/set_task_field.py`'s `set_task_field_text(..., force=True)` bypasses the
+t-129 destructive-replace guard and is the sanctioned path **only inside a verified archival
+script** — never for an ordinary close-out, which uses `--append-note`.
+`check_large_deletion_guard.py` will flag the resulting diff; that is the guard working as designed
+(its own docstring blesses "a deliberate large prune"), and the PR body should say so rather than
+work around it.
 
 ## Role assignment — decided on arrival, not by which trigger fired
 
@@ -1139,7 +1168,9 @@ Silas approval is required for the image generation itself.
    before claiming the next. Never hold two active claims at once.
 5. Never touch DNS, secrets, billing, deploys, or send/publish anything without `needs-human`.
 6. Scope discipline: unrelated problems become new `ready` tasks, not extra diff.
-7. TALKBACK files are append-only: never edit or delete a prior entry from either agent.
+7. TALKBACK files are append-only: never edit or delete a prior entry from either agent. The one
+   exception is the archival carve-out under "Neither agent — EVER": a verified byte-for-byte move
+   into a named archive file, leaving a pointer behind. Summarizing or trimming is still forbidden.
 8. A `security-flag` entry in TALKBACK.md must be acknowledged by Silas before the next
    cycle touches that project. Include a note in the task if one exists.
 9. `STATUS.md` and `workspace.html` are auto-generated. Merge conflicts in these files
