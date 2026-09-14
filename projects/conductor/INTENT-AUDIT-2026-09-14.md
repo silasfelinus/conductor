@@ -1,26 +1,23 @@
-# Roadmap intent audit — 2026-09-14
-
-Session: `openai-manual-20260914T0615Z-oversight-fix`
+# Portfolio intent audit — 2026-09-14
 
 ## Verified
 
-- Current human steering and deterministic priority agree on the lead queue: Cthulhuquarium → Kind Economy → Interface Vision → Coloring Book → Humboldt Scoop CMS → Digital Storefront → Kind Robots → Rainbow Butterflies. `CONTROL.md` and the head of `projects/priority.yaml` match exactly for that band.
-- The major 2026-09-11 direction changes are reflected rather than being treated as stale task-count churn: Mandarin Tutor and Kapowarr were accepted and moved to `finished`; AI Art Academy was explicitly closed as an outdated test project; Mermaids of Venice was paused; Cthulhuquarium inherited the lead and Kind Economy inherited second place without inventing a new ordering decision.
-- Later lifecycle steering is also represented: DaVinci is retired into Storybook's `life` shape, and Mural Design is paused while its current direction is retired. Neither remains in the selectable priority queue.
-- The latest persisted portfolio sensor reports zero roadmap errors, zero Kind Robots → Conductor forward drift, zero reverse project orphans, and a healthy OpenAI scheduled-agent heartbeat. The seven roadmap findings are warning-level rather than direction drift.
-- Coloring Book remains active and correctly placed. Its current render-box `hostbuf_file_reader_read failed` recurrence is an operational/hardware incident tracked outside the semantic product-direction decision; it does not justify changing Coloring Book's priority or lifecycle.
+- **Priority and lifecycle:** CONTROL.md and `projects/priority.yaml` agree on the current finite lead band: cthulhuquarium → kind-economy → interface-vision → coloring-book → humboldt-scoop-cms → digital-storefront → kind-robots → rainbow-butterflies. The September 11–12 lifecycle changes are reflected in `project-overrides.yaml`: Kapowarr, Mandarin Tutor, Brainstorm, and AI Art Academy are finished; Mermaids of Venice and Mural Design are paused; Davinci is retired. No stale inactive project remains in the selectable priority list.
+- **Cthulhuquarium:** the lead position still matches Silas's explicit direction. Its goal remains the playable browser aquarium with persistent tanks, collectible/shared bestiary, idle progression, and browsable aquariums. m1 and m2 are done; m3 is still in progress. The current absence of ordinary ready work is not evidence that the project is finished: ROADMAP-AUDIT reports one waiting and five needs-human tasks, so lifecycle `active` remains appropriate while those ship/acceptance edges are unresolved.
+- **Kind Economy:** the second-place goal still matches the August 19 tentpole direction: real Stripe money flow, auditable three-way net split, creator accrual/payout, and mission remittance. The September 11 decision resolves the entity shape to for-profit Kind Robots with the mission share donated directly to AMF; the roadmap correctly treats remaining live-payment actions as operational/human gates rather than reopening the entity decision. m3–m6 remain in progress, so `active` is appropriate despite no ordinary ready task today.
+- **Interface Vision:** the third-place project still directly represents Silas's beta blocker. Its roadmap goal is outcome-based rather than task-count based: every reachable surface works responsively, shared primitives are consistently adopted, then visual polish reaches human beta acceptance. Phases 1 and 2 are complete while Phase 3 remains in progress, so the active lifecycle and continuing bounded consistency/polish work remain aligned with intent.
+- **Structural audit:** ROADMAP-AUDIT currently reports zero errors. Its seven warnings are advisory rather than evidence of priority drift. In particular, inactive projects with retained ready tasks are informational and are correctly excluded by lifecycle.
+- **Source-of-truth/parity:** PORTFOLIO-OVERSIGHT reports zero forward Kind Robots→Conductor drift and zero reverse active-Conductor orphans. Conductor remains authoritative for lifecycle/priority/task coordination; no presentation metadata was copied back from Kind Robots.
 
 ## Corrected
 
-- No roadmap direction correction was required by this semantic pass. The September 11–12 human steering has already been propagated into `CONTROL.md`, `project-overrides.yaml`, and `projects/priority.yaml`.
-- The oversight delivery path is being corrected in the same maintenance PR: a semantic review becoming due remains an internal agent-routing signal immediately, while email becomes an escalation after a one-day grace. The active OpenAI Conductor automation was also updated to read `PORTFOLIO-OVERSIGHT.md` and select `roadmap-intent-auditor` ahead of ordinary Worker work when this signal is due.
+- No unambiguous priority, lifecycle, goal, milestone, or superseded-task drift was found that justified changing a project roadmap in this audit. The correction this cycle is the overdue semantic review itself: this report records the evidence-backed comparison instead of manufacturing roadmap churn to clear the sensor.
 
 ## Still questionable
 
-- `cthulhuquarium/t-065` is `needs-human` without an obvious hard-gate marker. The structural auditor is correctly asking whether it should instead be `ready`, carry `soft_gate: true`, or document the concrete human gate.
-- Six completed human-gated tasks lack `approved_by_human: true`: `davinci/t-022`, `kind-economy/t-017`, and `kindrobots-unraid/t-014`, `t-015`, `t-017`, `t-018`. These are bookkeeping/provenance warnings, not current product-direction drift; review their close-out evidence rather than reopening them automatically.
-- No new subjective product-direction choice was found that warrants a fresh `FOR SILAS:` gate.
+- `cthulhuquarium/t-065` is flagged by ROADMAP-AUDIT as `needs-human` without an obvious hard-gate marker. That is a bookkeeping-quality question, not enough evidence by itself to remove or weaken a gate. Review the task's concrete consequence before changing it; do not let this advisory warning block unrelated portfolio work.
+- Cthulhuquarium and Kind Economy are both high-priority active projects with no ordinary ready tasks. That is currently coherent because their remaining work is waiting/human-gated, but it should be rechecked if those gates remain unchanged through the next semantic review. Do not demote either merely to make the queue look busier.
 
 ## Next review
 
-2026-09-17, or sooner after another explicit priority, lifecycle, or major product-direction change.
+2026-09-17, or sooner after a new explicit priority/lifecycle decision from Silas.
