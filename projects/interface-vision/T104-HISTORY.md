@@ -54,6 +54,28 @@ umbrella to ready for the next bounded slice. Kaizen for the next slice: run a f
 full-repo class-frequency survey (`kr_class_frequency_survey.py`) outside every now-closed
 family to pick the next target -- no specific candidate queued.
 
+## Slice 271 (this session)
+
+Fresh full-repo class-frequency survey outside every now-closed family found `badge-success
+badge-sm` -- the `-sm` sibling of the existing `.kr-badge-success-xs` primitive -- at 6 exact
+occurrences across 6 files, plus 3 subset-match occurrences across 3 more files carrying an
+extra positioning/spacing token. Extended the shared `kr_badge_codemod.py` module (rather than
+writing a new one-off script) with the new `kr-badge-success-sm` family. Running the shared
+codemod also swept up several already-established badge primitives (`kr-badge-outline`,
+`kr-badge-outline-sm`, `kr-badge-secondary`, `kr-badge-warning`, `kr-badge-ghost`) left
+hand-rolled in two files (`storybook-reading.vue`, `ui-gallery.vue`) that hadn't been touched
+by earlier slices -- a legitimate bonus cleanup within existing scope, not new primitive
+creation. No color/behavior/API/schema/route/geometry change. vue-tsc, eslint (1 pre-existing
+unrelated error confirmed via git stash), test:layout-contract (0 new violations),
+test:kr-class-coverage (OK), a full production build, and prettier drift on 6 files confirmed
+pre-existing via git stash -- all clean before opening the kind_robots PR.
+
+Slice 271 merged as silasfelinus/kind_robots#2717 (badge-success badge-sm -> kr-badge-success-sm),
+all 48 kind_robots PR checks green before merging. Return the recurring consistency umbrella to
+ready for the next bounded slice. Kaizen for the next slice: run a fresh full-repo
+class-frequency survey (`kr_class_frequency_survey.py`) outside every now-closed family to pick
+the next target -- no specific candidate queued.
+
 ## For future slices: keep the live note short
 
 Append each slice's progress to this file's own history (or a dated section below),
