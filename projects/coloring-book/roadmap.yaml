@@ -745,7 +745,7 @@ tasks:
 - id: t-045
   milestone: m4
   title: "art_quality.py's color-variant gate has no hue-diversity check -- a single-hue sepia wash can pass the t-044 saturation floor"
-  status: review
+  status: done
   stakes: reversible
   owner: worker
   passes: 0
@@ -782,6 +782,7 @@ tasks:
     a revision is ever requested. Worth a quick grep-and-fix across all three books'
     art-modeler-request.yaml files for the same "poster" pattern before it surprises a
     future cycle.
-  updated: '2026-09-14T16:45:46Z'
+  updated: '2026-09-14T16:48:49Z'
   claimed_by: claude-scheduled-20260914T162935Z-cb-t045
   claimed_at: '2026-09-14T16:29:36Z'
+  implementation_pr: 'silasfelinus/conductor#4353'
