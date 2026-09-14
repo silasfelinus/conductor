@@ -1642,7 +1642,7 @@ tasks:
 - id: t-100
   milestone: m6
   title: "Deliver the 14 missing tutorial-card images found by the portfolio-wide asset audit"
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -1681,9 +1681,14 @@ tasks:
 
     No human decision is needed: this is process, not content (released under Silas's
     2026-09-07 human-gate simplification policy). Nothing downstream depends on it.
+
+    RESOLVED (process reconciliation, no code change needed): polled all 14 ArtJobs (ids 8234-8247) via GET /api/art/queue/{id} -- the render backlog tracked when this was filed has since cleared and all 14 are status=DONE with verified completion proofs. HEAD-checked all 14 target paths on kindrobots.org/images/tutorials/**: all return 200.
+    - 13/14 (Animation Manager, Dream Brainstorm, Community Broadcasts, Mana Purse, Model Builder, AppMaker, Conductor App, Packmaker, WonderLab, Screen FX, Media Watchlist, Ruler Hooked, Voice Lab) are confirmed live and referenced by an active tutorialImage() call in stores/helpers/tutorialCards.ts.
+    - Da Vinci (job 8244, wonder/davinci.webp) rendered successfully (200) but tutorialCards.ts no longer has any tutorialImage('wonder', 'davinci') call -- its card was already removed from the tutorial config independently when Da Vinci retired into storybook on 2026-09-12 (/play/davinci is a 301). No broken card results from this: nothing links to the asset, so it's a harmless orphaned file, not a bug needing a fix. WonderLab (still live, checked separately) does have an active card and is fine.
+    No repair, requeue, or code change was needed -- this was a pure poll-and-verify close-out.
   claimed_by: claude-20260914T131700Z-kr-t100-conductor
   claimed_at: '2026-09-14T13:10:39Z'
-  updated: '2026-09-14T13:10:39Z'
+  updated: '2026-09-14T13:13:18Z'
 - id: t-101
   milestone: m6
   title: Add requested_at to Conductor art-request entries
