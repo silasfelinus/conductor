@@ -1,0 +1,8 @@
+version: 1
+project: coloring-book
+task: t-022
+operation: rearm
+session: openai-scheduled-2026-09-14T072924Z-coloring-book-t022-a28
+updated: '2026-09-14T07:33:12Z'
+note: >-
+  Scheduled production audit: verified the latest t-022 run log and kindrobots-unraid/t-021 before touching the queue. The three revised Monster Recast rerenders (mr-001, mr-013, mr-023) remain correctly pending behind the current Alexandria render-box hardware incident; t-021 is still needs-human/soft_gate and documents 36 failed/0 completed renders in 6h plus the recurring CLIPTextEncode hostbuf_file_reader_read signature requiring physical disk/cable attention. BW derivation also remains blocked by coloring-book/t-039. No duplicate ArtJobs, prompt churn, or false acceptance was created. Rearming this recurring production task for the first cycle after the render box is healthy.
