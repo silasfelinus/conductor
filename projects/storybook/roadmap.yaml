@@ -1199,3 +1199,33 @@ tasks:
     home-network blip stops teaching sessions to discount red CI as routine.
   updated: '2026-09-12T23:34:00Z'
   owner: null
+- id: t-049
+  milestone: m7
+  title: "Art for the four mode cards"
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: >-
+    The Mode slot is the one card on the Table with no artwork -- MODE_CARDS in
+    utils/storybookTableDecks.ts carries an icon and a word, because the four modes are
+    concepts rather than records and nothing in the library depicts them. Silas noticed it
+    immediately (2026-09-13: "the mode section is missing art for the selections, i hope they
+    are queued and not appearing because our art server is currently down") and chose to have
+    real art authored rather than reuse something or leave them typographic.
+
+    Four images, through the normal narrative art profile: open-ended (a story with no last
+    page), episodic (a plot thread across a set run of scenes), structured (one life told in
+    chapters), taskmaster (a quest built from real work). Attach each to its MODE_CARDS entry
+    as imagePath, the same field every other card on the Table resolves art from.
+
+    THEY MUST BE TEXT-FREE AND DEPICT THE MODE. This project already learned that once: the
+    narrator-voice and structure cards used to be full-bleed getTutorialHeroPath() images --
+    tutorial channel banners with STORIES / CHARACTERS / LOCATIONS set in large type across
+    them -- which labelled "Cinematic" with a picture that said STORIES and put generated
+    typography on screen against the art guidelines. The header comment in
+    components/storybook/storybook-visual-setup.vue records it. Do not reuse a banner for its
+    dimensions.
+
+    Waits on the art server, which Silas was repairing on 2026-09-13. Not a blocker for
+    anything else: the icons hold the slots and the Table works without them.
+  updated: '2026-09-14T00:00:00Z'
