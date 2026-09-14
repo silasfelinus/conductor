@@ -2639,7 +2639,7 @@ tasks:
 - id: t-162
   milestone: m2
   title: Art requests wedge forever when their ArtJob finishes but the render is never downloaded
-  status: review
+  status: done
   stakes: reversible
   passes: 1
   owner: claude
@@ -2686,7 +2686,17 @@ tasks:
     mr-008. Only one can ever be adopted, but every attempt lands DONE with its own ArtImage, so a
     newest-first feed shows all three. That is the retry design showing through a view that does not
     collapse by destination, not corruption.
-  updated: '2026-09-14T23:10:00Z'
+
+    Closed 2026-09-14. PR #4368 merged as d5924c2: the DONE-but-undelivered wedge is
+    released via render adoption (never re-enqueue), and duplicate re-enqueue is blocked by
+    an in-flight (targetRepo, imagePath) guard that fails open. Recovery run this session
+    adopted 16 stuck renders -- 9 delivered into git, 7 kind_robots media targets staged and
+    deliberately left pending, since staging is not delivery (ai-art-academy/t-010). Full
+    suite green: 1921 passed, 30 skipped. The triplicate coloring-book pages are NOT fixed
+    and are not a defect: they are retry attempts that each completed against the same
+    destination; collapsing them is a kind_robots view change, noted above.
+  updated: '2026-09-14T22:52:37Z'
+  implementation_pr: 'silasfelinus/conductor#4368'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
