@@ -54,7 +54,7 @@ proposals:
     ref: null
   inspirations: []
   accepted:
-    color: null
+    color: "generated/color-proposals-v1/hwr-002-the-grand-staircase.webp"
     bw: null
   final:
     color: null
@@ -100,9 +100,10 @@ proposals:
   title: Midnight Detective
   prompt:
     text: Hardboiled neon-noir portrait of a nonbinary detective with a cane and a patient service dog studying
-      a clue beneath a flickering hotel sign. The detective wears a broad-shouldered trench coat, sharp undercut,
-      tired eyes, and practical shoes; the dog notices the hidden figure first. Deep perspective, wet pavement,
-      saturated cyan-magenta-gold lighting, original city and mystery, no readable lettering.
+      a clue beneath a flickering lodging-house sign, its neon tubing glowing in abstract glyph-like shapes.
+      The detective wears a broad-shouldered trench coat, sharp undercut, tired eyes, and practical shoes; the
+      dog notices the hidden figure first. Deep perspective, wet pavement, saturated cyan-magenta-gold lighting,
+      original city and mystery, no readable lettering.
     ref: null
   inspirations: []
   accepted:
@@ -113,6 +114,7 @@ proposals:
     bw: null
   notes:
   - "NOT ACCEPTED 2026-09-11 (scheduled Conductor session, creative review pass): rendered candidate (generated/color-proposals-v1/hwr-005-midnight-detective.webp) violates this book's blanket 'no readable lettering' constraint with a large, fully legible neon HOTEL marquee filling the top third of the frame. The prompt does call for 'a flickering hotel sign' as a scene element, but that should read as an abstracted/illegible sign shape, not spelled-out text -- every other element (nonbinary detective, cane, service dog noticing the hidden figure first, trench coat, noir lighting) matches well. Needs a fresh render with the hotel sign re-prompted as illegible signage. Not re-enqueued this session (render queue backlog)."
+  - "NOT ACCEPTED 2026-09-14 (scheduled Conductor session, t-022 cycle 9): rewrote the sign phrase to 'a flickering lodging-house sign, its neon tubing glowing in abstract glyph-like shapes' (art-modeler prompt-contract check flagged the first rewrite attempt, which repeated text-exclusion wording five times across the full submitted prompt -- HTTP 422 -- before a render was even attempted; trimmed to a single 'no readable lettering' mention and re-submitted, which cleared the contract check). The resulting render (ArtImage 24057) is WORSE than the original: it renders two large, fully legible neon signs reading 'LODDING HOUSE' and 'SIARINE' (near-miss misspellings of 'LODGING HOUSE', not real words, but still rendered as crisp readable block lettering, not abstract shapes) filling the top third of the frame -- composition otherwise matches well (cane, service dog noticing the hidden figure first, trench coat, noir lighting, phone/gesture exchange). Describing the sign as 'glyph-like' did not stop the engine from rendering it as legible text; this reads as the same engine-level tendency other slots in this book have hit with signage (hwr-002's prior slender-build miss was a different defect, but the coloring-book/t-039-adjacent pattern of literal readable text appearing despite explicit avoidance wording is now confirmed on at least two attempts for this exact slot). Not re-attempting a third live retry in the same session per the transient-failure triage rule. Next attempt should drop the sign as a described object entirely (e.g. an unlit/dark sign silhouette, or replace it with a different light source such as a bare streetlamp) rather than trying another wording of 'sign with no text', since two distinct wordings of that idea have both failed."
 - slot: 6
   id: hwr-006
   title: Temple of the Sun Engine
