@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-14T13:49:36Z
+Generated: 2026-09-14T13:53:29Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **954**
-- Outcomes: blocked: 16, cancelled: 1, done: 937
+- Closed tasks recorded: **955**
+- Outcomes: blocked: 16, cancelled: 1, done: 938
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -62,14 +62,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | superkate-hairstyle-ai | 18 | 100% |
 | superkate-services-calculator | 12 | 100% |
 | taskmaster | 3 | 100% |
-| text-generation | 6 | 100% |
+| text-generation | 7 | 100% |
 
 ## By kind
 
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 937 | 99% |
+| software | 938 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-14 `text-generation/t-006` — A month-old design brief's file list (BRIEF.md's five confirmed chatStore.streamResponse consumers) had already drifted from the current tree -- one named file no longer existed, and two of the remaining four already had the exact fix this task was scoped to add, done incidentally by earlier unrelated work. A subagent sweep of current source (not the brief's own memory) caught both before writing any diff. Also: 'wire provider selection into the product surfaces' sounds like it could mean migrating chat UI onto the new unified /api/generate/text endpoint (the more impressive-looking fix) -- the brief's own 'explicitly out of scope' section said otherwise, and trusting that over the more expansive-sounding task title avoided a real scope violation.
 - 2026-09-14 `kind-robots/t-078` — A remaining-polish list of 4 items had 2 already resolved by earlier, unrelated commits (home-dream-hero.vue's cast-row chevrons; Send-to-agent already answers-and-releases) -- checking each item against the CURRENT codebase before implementing anything caught this and avoided duplicate/no-op work on two of the four. The real bug in the other two (home-attention.vue's submission receipt) was a timing bug invisible from reading the template alone: the confirmation message and the row it needed to survive were removed from the DOM on the exact same reactive tick, so it only surfaces by tracing submitTaskAction's optimistic store update against the v-if that gates the whole message. The one item that didn't fit the task's own scope (whether the home showcase should server-render) was split into kind-robots/t-102 rather than attempted blind -- it touches the whole page's data flow, not one component, and carries hydration-mismatch risk this sandbox has no way to visually verify pre-merge; deciding NOT to convert it now, and recording why, is itself the 'normal technical decision' the task's own note granted latitude for.
 - 2026-09-14 `kind-robots/t-094` — The task's own note named three duplicated 'creation paths' to consolidate, but reading server/api/conductor/sync.post.ts closely showed its Project-slug handling isn't actually a copy of the same logic: it upserts Conductor-authoritative projects from an already-validated projection (update on collision), the opposite semantics of the two AppMaker routes' reject-on-collision check for user-supplied slugs. Forcing a third call site onto a shared reject-style helper would have silently changed sync.post.ts's behavior rather than just its shape -- worth verifying a task's premise against the actual code before extending a refactor's scope to match a filing's word count, and documenting the deliberate exclusion in the new helper's own comment so a later pass doesn't 'fix' it back in.
 - 2026-09-14 `conductor/t-156` — recheck_render_queue.py's classify() checked only queueDepth.PENDING before check_render_box.py's own render_throughput_verdict() was ever consulted, so it wrote 'healthy' to RENDER-BACKLOG.md for a box that was actually down (every job failing fast, never leaving anything stuck PENDING) in the exact same live session where check_render_box.py correctly reported DOWN. Two scripts reading the same stats endpoint with different classifiers will disagree eventually -- when one is already the documented single source of truth for a judgment (here, 'is the render box actually rendering'), the other should delegate to it rather than reimplement a weaker version. Caught this live because the two scripts were run back-to-back in the same session on coloring-book/t-022; would otherwise have silently written a wrong ledger entry.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-13 `coloring-book/t-043` — t-039's second finding (quality guard blind to noise on the color variant) sat unaddressed in a task note for two days because it was independent of the hard relay-access gate blocking the rest of that task -- worth scanning needs-human/soft_gate notes for an already-specified, self-contained fix like this rather than treating the whole task as blocked. The fix itself needed no new dependency: a spatial-autocorrelation ratio computed from pixels PIL already samples, verified against real random noise (hf_ratio 0.98) and real structured images (gradient 0.0001, blurred texture 0.047) before picking the threshold, not just the selftest's synthetic blocks.
 - 2026-09-13 `conductor/t-151` — Built the advisory periodic-sweep guard (option (b)) the filing task itself proposed, mirroring check_milestone_status_drift.py's structure exactly (same overrides-filtering, --json/--include-inactive flags, exit-1-on-findings-only contract) rather than inventing a new shape. Running it against the live repo immediately validated the fix: both findings (model-builder/t-029, storybook/t-010) were already known from the filing session's ad hoc sweep, and interface-vision/t-104 -- the task whose 395KB note prompted this -- no longer appears, confirming its T104-HISTORY.md archive trim is still holding months later.
 - 2026-09-13 `coloring-book/t-042` — Kaizen from t-041: load_stats() now warns once (module-level flag, printed to stderr) the first time it hits Pillow's ImportError in a process, instead of only ever returning None. Verified against a real missing-Pillow sandbox rather than a mock. A tiny, fully-specified kaizen note from the prior session's close-out needed no design judgement -- just implement, verify against the real failure condition it names, and close.
-- 2026-09-13 `coloring-book/t-041` — Kaizen from t-040: grepping the rest of the coloring-book pipeline for the same bare 'from PIL import Image' pattern found two more genuine hits (consume_coloring_book_color_art.py, manage_coloring_book_cover.py) and two false leads that already degrade gracefully (art_quality.py's load_stats returns None; consume_art_queue_core.py's save_result falls back to PNG with its own actionable message). A kaizen framed as 'grep for the same pattern elsewhere' is worth doing literally and completely in one pass rather than fixing only the first hit found -- distinguishing already-graceful call sites from genuinely bare ones is the actual work, not the grep itself.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-14T13:49:36Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-14T13:53:29Z_
