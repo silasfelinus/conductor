@@ -203,6 +203,42 @@ def test_record_render_gate_error_does_not_double_stamp_an_existing_job_referenc
     assert mod.referenced_job_id({"render_gate_error": stored}) == 2751
 
 
+def test_record_render_gate_error_drop_reference_strips_the_job_id(tmp_path, monkeypatch):
+    # RecoveryAbandoned means recover_timed_out_job() positively determined the
+    # referenced job is dead (failed/cancelled/wrong concept) -- its own
+    # exception message names that dead job ("job 2751 FAILED: ..."). Passing
+    # drop_reference=True must scrub the numeric id from what gets stored so
+    # referenced_job_id() finds nothing next time and a fresh ArtJob gets
+    # submitted, rather than the id surviving verbatim in the message text and
+    # getting re-extracted forever (conductor/t-022, 2026-09-14 live incident).
+    queue_file = tmp_path / "color-art-jobs.yaml"
+    queue_file.write_text(
+        yaml.safe_dump(
+            {
+                "defaults": {},
+                "books": [
+                    {
+                        "slug": "monster-recast",
+                        "entries": [{"id": "mr-018", "status": "pending", "title": "Blocked"}],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(mod, "QUEUE_FILE", queue_file)
+
+    mod.record_render_gate_error(
+        entry(queue_id="mr-018"),
+        RuntimeError("job 2751 FAILED: hostbuf_file_reader_read failed"),
+        drop_reference=True,
+    )
+
+    stored = yaml.safe_load(queue_file.read_text())["books"][0]["entries"][0]["render_gate_error"]
+    assert stored == "job [abandoned] FAILED: hostbuf_file_reader_read failed"
+    assert mod.referenced_job_id({"render_gate_error": stored}) is None
+
+
 def test_build_entries_carries_render_gate_error_onto_the_consumption_entry(monkeypatch, tmp_path):
     # Regression: build_entries() previously only copied a fixed allowlist of
     # fields from the raw queue source onto the entry used by main()'s loop,
@@ -606,7 +642,15 @@ def test_live_recovery_of_genuinely_failed_job_still_clears_reference(monkeypatc
     assert "RECOVERY UNVERIFIED" not in stderr
 
     _queue, entries = mod.build_entries("monster-recast")
-    assert entries[0]["render_gate_error"] == "job 2751 FAILED: boom"
+    # The stored message keeps the status/error text for human debugging, but
+    # the dead job's numeric id must be gone -- otherwise referenced_job_id()
+    # on the next pass extracts 2751 right back out and "recovers" (re-checks)
+    # the same already-FAILED job forever instead of ever submitting a fresh,
+    # differently-seeded attempt (found live running coloring-book/t-022,
+    # 2026-09-14: this is exactly what happened to mr-001/mr-013/mr-023 once
+    # the render box came back up after an outage).
+    assert entries[0]["render_gate_error"] == "job [abandoned] FAILED: boom"
+    assert mod.referenced_job_id(entries[0]) is None
 
 
 def test_live_recovery_of_rejected_job_clears_stale_job_reference(monkeypatch, tmp_path, capsys):

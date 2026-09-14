@@ -398,18 +398,43 @@ def record_render_rejection(
     return next_status
 
 
-def record_render_gate_error(entry: dict[str, Any], error: Exception, job_id: int | None = None) -> None:
+def record_render_gate_error(
+    entry: dict[str, Any],
+    error: Exception,
+    job_id: int | None = None,
+    *,
+    drop_reference: bool = False,
+) -> None:
     def mutate(source: dict[str, Any]) -> None:
         message = str(error)[:1000]
-        # A fresh submission's ArtJob completed and rendered (job_id is set) but
-        # validate_candidate() then failed -- e.g. PIL missing on the runner.
-        # Without a "job N" reference in the stored error, referenced_job_id()
-        # can never find it and every future pass is forced into a genuine
-        # duplicate resubmission for an image that already rendered. Stamp the id
-        # in (only if the message doesn't already carry one, e.g. from recovery).
-        if job_id is not None and JOB_ID_PATTERN.search(message) is None:
+        if drop_reference:
+            # recover_timed_out_job() has positively determined the referenced
+            # ArtJob will never produce a usable render (RecoveryAbandoned --
+            # failed/cancelled/wrong concept). Its own exception message names
+            # that dead job ("job 2751 FAILED: ..."), and naively storing it
+            # verbatim left the exact "job N" text referenced_job_id() scans
+            # for still sitting in render_gate_error -- so the *next* pass
+            # would extract 2751 right back out and "recover" (re-check) the
+            # same already-dead job forever, never submitting a fresh,
+            # differently-seeded attempt even once the underlying outage
+            # clears (found live running coloring-book/t-022, 2026-09-14: the
+            # render box came back up but mr-001/mr-013/mr-023 kept
+            # re-confirming their original hostbuf failures instead of
+            # rendering). Strip any "job N" reference from the stored message
+            # so the next referenced_job_id() call finds nothing and a fresh
+            # ArtJob gets submitted, while keeping the rest of the message
+            # (status/error text) for human debugging.
+            message = JOB_ID_PATTERN.sub("job [abandoned]", message)
+        elif job_id is not None and JOB_ID_PATTERN.search(message) is None:
+            # A fresh submission's ArtJob completed and rendered (job_id is
+            # set) but validate_candidate() then failed -- e.g. PIL missing on
+            # the runner. Without a "job N" reference in the stored error,
+            # referenced_job_id() can never find it and every future pass is
+            # forced into a genuine duplicate resubmission for an image that
+            # already rendered. Stamp the id in (only if the message doesn't
+            # already carry one, e.g. from recovery).
             message = f"job {job_id}: {message}"[:1000]
-        source["render_gate_error"] = message
+        source["render_gate_error"] = message[:1000]
         source["render_gate_error_at"] = now_iso()
         source["status"] = "pending"
 
@@ -679,7 +704,7 @@ def main() -> int:
             # concept) -- safe (and correct) to drop the reference so the next
             # pass submits fresh instead of retrying a dead job forever.
             failures += 1
-            record_render_gate_error(entry, error, job_id=stuck_job_id)
+            record_render_gate_error(entry, error, drop_reference=True)
             print(f"  FAILED {entry['set']}/{entry['concept_id']}: {error}", file=sys.stderr)
         except Exception as error:  # noqa: BLE001
             failures += 1

@@ -2006,3 +2006,76 @@ that's verified, non-speculative work. Beyond that, the remaining rejected-slot 
 all three books needs a judgment call above a routine prompt-revision slice (a different
 generation approach, or accepting simpler concepts for the hardest few) rather than more blind
 prompt edits — worth a note to Silas if it recurs unresolved for several more cycles.
+
+## Cycle 5 (2026-09-14, scheduled Conductor session) -- render box recovered, fired the three revised renders, hit and fixed two real pipeline bugs
+
+`check_render_box.py` now reports UP (39 renders completed in the last 6h, heartbeat healthy).
+Reconciled the incident: closed `kindrobots-unraid/t-021` to `done` (conductor#4326) per its own
+stated recovery bar, with a note that root cause is unconfirmed (third recurrence) and a fresh
+task should be filed if it recurs rather than reopening this one.
+
+Re-ran `consume_coloring_book_studio_request.py --book monster-recast --proposal-id mr-001
+--proposal-id mr-013 --proposal-id mr-023 --live` per cycle 4's "next pass" note. First attempt
+re-confirmed the same three OLD hostbuf failures (job 22003/22004/22005) instead of firing fresh
+renders -- traced this to a real bug: `RecoveryAbandoned`'s own exception message names the dead
+job ("job 22003 FAILED: ..."), and `record_render_gate_error()` was storing that message verbatim,
+so `referenced_job_id()` kept re-extracting the same dead job id on every future pass forever, even
+once the outage that killed it had cleared. Fixed in `consume_coloring_book_color_art.py` (new
+`drop_reference=True` mode that redacts the job-id text before storing) and mirrored the same fix
+into `consume_coloring_book_studio_request.py`, which was missing the `RecoveryAbandoned`-specific
+handling entirely (it fell through to the generic exception branch, which has the same problem
+plus didn't distinguish "job positively dead" from "job's fate still unknown" the way the batch
+consumer does). Added regression tests for both files plus a direct unit test for the new
+`drop_reference` parameter. Full suite green (1873 passed, 1 skipped, 35 subtests) before this
+next step.
+
+Second attempt submitted three genuinely fresh ArtJobs (22077/22079/22081), which rendered
+successfully server-side (job status DONE, completion proof VERIFIED with a real imageHash) but
+then failed a *different* way: `fetch_image_b64()` got `ArtImage N has no imageData` from the API
+even though the file was reachable and valid at its `imagePath` (confirmed directly: a real
+196KB/1024x1536 WebP). This is a second real bug -- the completion-proof path can write the
+rendered file to disk without ever populating the ArtImage row's `imageData` DB blob the API
+fetch relies on. Fixed `fetch_image_b64()` in `consume_art_queue_core.py` to fall back to fetching
+the raw bytes from `imagePath` (public, unauthenticated) when `imageData` is empty, rather than
+treating an already-rendered image as a hard failure. Added regression tests
+(`tests/test_consume_art_queue.py`). Also hit and fixed a missing-Pillow environment gap
+(`pip3 install Pillow`) blocking the WebP save step during recovery.
+
+Third attempt: all three recovered cleanly via the now-fixed fallback path -- `DONE
+monster-recast/mr-001/mr-013/mr-023`, 3/3 marked done, `coloring_queue_status.py --book
+monster-recast` confirms 0 pending / 21 done (up from 18).
+
+Did the creative review pass on all three new renders against their documented 2026-09-07/09-09
+rejection reasoning and the revised prompts' explicit fixes:
+- **mr-001**: no white/silver hair streak (uniform dark auburn hair), no bandages, no bald male
+  doctor (a woman operates the heart-voltmeter apparatus, flanked by a non-bald male assistant).
+  Heart-shaped voltmeter and quilted grid-seam skin both present per the originalization_hook.
+  **ACCEPTED.**
+- **mr-013**: clearly an unmistakably male doll in sailor-inspired formalwear (sailor collar, tie,
+  shorts, knee socks) -- no longer the generic girl-in-white-dress the prior render collapsed
+  into. **ACCEPTED.**
+- **mr-023**: amorphous gelatinous body with four-plus hands/arms emerging at different points and
+  multiple half-absorbed faces embedded in the mass -- the specific anchors the revised prompt
+  called for, replacing the prior "ordinary glamorous woman in a gown" render. **ACCEPTED.**
+
+Updated `proposals.yaml` for all three (surgical edits preserving the file's existing flow-style
+formatting -- an earlier full `yaml.safe_dump` round-trip was caught and reverted before commit
+because it reformatted the entire 900+ line file for a 3-entry change). Monster Recast now
+18/36 accepted color (up from 15); BW derivation for these three remains correctly blocked on
+`coloring-book/t-039` (Kontext engine BW-corruption bug, still open) -- did not attempt
+`generate-bw` on any slot.
+
+Verification: `pytest tests/` full suite (1877 passed, 1 skipped, 35 subtests) after both fixes;
+`python -m py_compile` on every changed script; `coloring_queue_status.py --book monster-recast`
+and `coloring_proposal_status.py --check` both match expected counts; `validate_roadmaps.py`
+clean; `git diff --stat` reviewed before committing (3 new binary renders, `color-art-jobs.yaml`
+queue state, `proposals.yaml` accept notes, the two script fixes + their tests -- nothing else
+touched).
+
+**Next actionable step:** the remaining ~31 rejected slots across all three books (per cycle 3's
+audit) are still the rendering-fidelity problem described there, not a prompt-authoring gap --
+still needs a judgment call above a routine prompt-revision slice. Separately worth a look:
+`kindrobots-unraid/t-021`'s closing note flags a possible ComfyUI local-path software contributor
+(Ferngrotto `extra_model_paths.yaml`) that has not been confirmed applied -- if the hostbuf
+signature recurs, check that before assuming hardware alone. Re-arming to `ready` (recurring),
+releasing the claim.

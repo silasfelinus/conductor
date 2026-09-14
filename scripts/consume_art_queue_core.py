@@ -998,9 +998,38 @@ def fetch_image_b64(art_image_id):
         raise RuntimeError(f"image fetch failed: HTTP {status}")
     record = resp.get("data") or {}
     image_b64 = record.get("imageData")
-    if not image_b64:
-        raise RuntimeError(f"ArtImage {art_image_id} has no imageData")
-    return image_b64
+    if image_b64:
+        return image_b64
+
+    # Fallback (conductor/t-022, 2026-09-14 live incident): the completion-proof
+    # path can write the rendered file to disk (imagePath) and mark the ArtJob
+    # DONE/VERIFIED -- imageHash present, a real render -- without ever
+    # populating the ArtImage.imageData DB blob the API returns here.
+    # Confirmed live for ArtImage 23966/23968/23970: job completion VERIFIED,
+    # imagePath a real, fetchable 1024x1536 WebP, but `imageData` empty. That
+    # is a genuine, already-rendered image, not a failed job -- treating it as
+    # a hard failure would burn a duplicate ArtJob against the render backend
+    # for a picture that already exists. imagePath is served unauthenticated,
+    # so fetch the bytes directly from there instead.
+    image_path = record.get("imagePath")
+    if not image_path:
+        raise RuntimeError(f"ArtImage {art_image_id} has no imageData and no imagePath to fall back to")
+    image_url = image_path if image_path.startswith("http") else f"{KR_BASE_URL}{image_path}"
+    try:
+        with urllib.request.urlopen(image_url, timeout=180) as file_resp:
+            if file_resp.status != 200:
+                raise RuntimeError(
+                    f"ArtImage {art_image_id} has no imageData and its imagePath fallback "
+                    f"returned HTTP {file_resp.status}"
+                )
+            raw_bytes = file_resp.read()
+    except urllib.error.URLError as error:
+        raise RuntimeError(
+            f"ArtImage {art_image_id} has no imageData and its imagePath fallback fetch failed: {error}"
+        ) from error
+    if not raw_bytes:
+        raise RuntimeError(f"ArtImage {art_image_id} has no imageData and its imagePath fallback was empty")
+    return base64.b64encode(raw_bytes).decode("ascii")
 
 
 def main():
