@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-15T07:42:47Z
+Generated: 2026-09-15T07:48:55Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **967**
-- Outcomes: blocked: 16, cancelled: 1, done: 950
+- Closed tasks recorded: **968**
+- Outcomes: blocked: 16, cancelled: 1, done: 951
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -25,7 +25,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | brainstorm | 26 | 96% |
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
-| coloring-book | 36 | 100% |
+| coloring-book | 37 | 100% |
 | conductor | 104 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 51 | 98% |
@@ -69,13 +69,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 950 | 99% |
+| software | 951 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
-| quality | 24 |
+| quality | 25 |
 | transient | 15 |
 | actionable | 15 |
 | scope | 3 |
@@ -84,13 +84,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - project `coat-dance` — 11% success over 9 closed tasks; aim the next kaizen task here
 - kind `content` — 47% success over 17 closed tasks; aim the next kaizen task here
-- failure category `quality` — 24 occurrences; look for the shared cause across its records
+- failure category `quality` — 25 occurrences; look for the shared cause across its records
 - failure category `transient` — 15 occurrences; look for the shared cause across its records
 - failure category `actionable` — 15 occurrences; look for the shared cause across its records
 - failure category `scope` — 3 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-09-15 `coloring-book/t-022` — hwr-008 (Laboratory Tenor) failed creative review 4 times across 4 sessions on the same core requirement -- a trans man tenor with visible healed bilateral chest-surgery scars -- and the failure mode changed each time a wardrobe strategy was fixed: attempt 1-2 rendered a conventional young man with no scars; attempt 3 fixed the age/face but produced a fully buttoned tuxedo occluding any possible scar; attempt 4 opened the neckline but the exposed skin was smooth and unmarked. Two different wardrobe rewrites (closed tuxedo, then open cape) both failed to surface any scar once the neckline was actually open, which is stronger evidence than either alone that the render engine is declining to depict surgical scar texture on skin at all -- plausibly a content-safety-adjacent smoothing bias -- rather than a wardrobe-occlusion problem a prompt rewrite can keep chasing. When a creative-review slot keeps failing on the *same specific visual element* after the prompt-level cause it was blamed on gets fixed, stop revising wardrobe/pose/framing language and treat the element itself (not its surrounding context) as the suspect -- escalate for a human/engine-level call rather than a fifth blind wardrobe rewrite.
 - 2026-09-15 `coloring-book/t-022` — manage_coloring_book_production.py's generate-bw leaves a stale bw_job_id/bw_status: running entry unrecovered indefinitely unless a future cycle happens to re-request that exact proposal id -- five Monster Recast slots (mr-005/007/009/011/012) sat at a week-old running status even though the render backend had actually completed and mechanically rejected all five as Kontext-engine noise a day after submission. Recovering them in one pass raised t-039's known-defect count from 2 to 7 of 7 checked attempts (100% failure), which is a materially different finding than "two isolated misses" -- when a recurring production task's queue-status tooling only reports the current batch, periodically sweep every bw_status/render_gate_error still marked running/pending regardless of the active batch, since a silently-completed-and-rejected job looks identical to a still-pending one until someone re-checks it.
 - 2026-09-15 `model-builder/t-029` — A text-truncation guard that only asserts pickText()'s own cap (verifyModelBuilderCommitTextTruncationGuard.ts, cycle 33) does not cover every place raw user/AI text reaches a bounded DB column -- commit.post.ts's updateText()/createRecord() also assigned the raw, uncapped pitch/fieldsDraft blob directly as a fallback for Bot.description/botIntro/prompt (bounded VarChar columns) whenever the FIELDS stage left those blank, bypassing pickText and its cap entirely. When auditing a text-length bug class, trace every write site for the affected columns, not just the ones that already go through the sanctioned helper -- a fallback path written before or after the helper call is exactly where the same bug re-enters uncaught.
 - 2026-09-15 `conductor/t-159` — Rotating an append-only log (TALKBACK.md) into monthly archives is safe when every archive write is verified byte-for-byte round-trip (write, re-read, re-extract, compare) before the source is ever rewritten, and the one real consumer that whole-file-parses the source for historical data (backfill_learning.py's --since all) gets fixed to read the archive directory too -- the archival carve-out only holds if every consumer of the pre-split file is checked, not just the file split itself.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-14 `coloring-book/t-022` — A documented safety guard that is never actually wired into the code that runs is worse than no guard, because it reads as coverage that does not exist: monster-recast/art-modeler-request.yaml documented a content-safety negative_prompt (no explicit genitals/nipples/etc.) for months, but build_entries() only ever read a per-entry override that no entry in any of the 108 slots across all three books had ever set -- every render, Monster Recast included, only got the purely technical DEFAULT_NEGATIVE_PROMPT. Caught live when a routine re-render (not a targeted safety audit) came back with unrequested exposed nudity, and the pre-existing already-committed candidate for that same slot turned out to have the identical defect. The fix (bake the content-safety terms into every entry by default) was small, but finding it required actually tracing the negative_prompt value from the documented YAML through to the submitted payload rather than trusting that a file named art-modeler-request.yaml next to the render queue meant its contents were in effect. Worth a standing habit: when a generation pipeline documents a safety constraint in a config/request file, verify by reading the actual code path that consumes it, not by the file's existence or its prose.
 - 2026-09-14 `coloring-book/t-022` — consume_coloring_book_studio_request.py had two independent call sites referencing coloring functions that were never actually defined (record_semantic_gate_error, fixed cycle 2; record_semantic_rejection, fixed cycle 8, same day) -- both a mismatch between this wrapper's error handling and consume_coloring_book_color_art.py's real public API, each only discovered by hitting the exact code path live. A single pass grepping every coloring.<name> call in the wrapper against the other module's actual def list would have caught both in one sitting instead of one crash at a time; filed as this cycle's kaizen suggestion rather than done inline to keep the cycle's diff scoped to the crash actually hit.
 - 2026-09-14 `coloring-book/t-046` — Pinning a regression fixture against a real approved/ corpus is itself a calibration exercise, not just a testing exercise: building tests/test_art_quality.py to cover BW_*, COLOR_MIN_*, and TINT_* (as the task's own note asked) surfaced that BW_MIN_WHITE_FRACTION=0.30 would reject 4 of 17 real Silas-approved bw masters -- dense, heavily-shaded/stippled line art that is genuinely black-and-white by every other measure but has less open background than a simpler page. The fixture only becomes trustworthy once every real approved file actually lands on the correct side of it; a fixture that pins current behavior without checking it against real data first would have baked in the same false-rejection the threshold itself has. Visually inspecting the specific failing files (not just their stats) before touching the constant is what distinguished 'bad threshold' from 'bad data' -- same lesson as t-045's masked-countess case, now generalized to a second threshold family.
-- 2026-09-14 `coloring-book/t-045` — Calibrating a quality-gate threshold against a bad example alone is not enough -- the first two signal designs tried here (global pixel-count hue histogram, then a spatial per-cell hue-family count) both caught mr-025's sepia wash cleanly but were never tested against the real *approved* corpus until asked to be, and both turned out to false-positive on genuinely good, Silas-approved art (masked-countess-color.webp) once they were. The spatial design's failure mode was subtle: it looked spatially principled but still only counted pixels above the same 'colorful' saturation cutoff, so a real illustration whose non-primary elements (black cloak, white mask, gold trim) are desaturated collapsed to the same single-family signal as an actual wash. What worked was measuring hue consistency in the *opposite* band -- the low-saturation pixels every other check ignores -- because that's the band a duotone/sepia tone-curve filter actually tints and a real illustration's true neutrals do not. Any pixel-statistic quality gate needs its negative-space calibration (the full trusted-good corpus, not just the one known-bad case) run before landing, and visually inspecting the disputed calibration file directly (not just its stats) is what actually explained why the second design failed.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-15T07:42:47Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-15T07:48:55Z_
