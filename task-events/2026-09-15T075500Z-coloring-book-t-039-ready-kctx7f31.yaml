@@ -1,7 +1,0 @@
-version: 1
-project: coloring-book
-task: t-039
-operation: ready
-updated: '2026-09-15T07:55:00Z'
-note: >-
-  Silas supplied a known-working Kontext workflow for direct comparison. It uses the same flux1-kontext-dev-Q5_K_M.gguf UNet, ae.safetensors VAE, ReferenceLatent source-conditioning shape, and empty sampler latent as the broken Kind Robots path, but uses t5xxl_fp8_e4m3fn_scaled.safetensors through stock DualCLIPLoader. The pre-2026-08-13 Kind Robots graph already had the current sampler/scheduler/DetailDaemon settings and that same working T5 loader; PR #1870 changed the T5 to t5-v1_1-xxl-encoder-Q5_K_S.gguf / DualCLIPLoaderGGUF without a live render verification. This directly removes the prior relay-only blocker and makes the encoder switch the focused regression candidate. Return t-039 to ready for a scoped fix and regression coverage.
