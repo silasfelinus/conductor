@@ -3005,10 +3005,10 @@ tasks:
 - id: t-169
   milestone: m2
   title: 'Audit other note: >- tasks for the same giant-line CI-hang risk append_note_text corrupted'
-  status: ready
+  status: claimed
   stakes: reversible
   passes: 0
-  owner: null
+  owner: reviewer
   note: |-
     Filed 2026-09-15 (scheduled conductor sweep session), kaizen from
     model-builder/t-029 cycle 68 (PR #4443).
@@ -3072,6 +3072,9 @@ tasks:
     Future sessions hitting a stuck-in_progress PR check should pull the actual job log
     first (it often shows the real work already finished) before assuming a code-side hang
     or spending a long diagnostic session chasing content as the cause.
+  claimed_by: claude-20260915T223201Z-conductor-t169
+  claimed_at: '2026-09-15T22:32:02Z'
+  updated: '2026-09-15T22:32:02Z'
 
 - id: t-170
   milestone: m2
