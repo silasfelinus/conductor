@@ -2852,7 +2852,7 @@ tasks:
   stakes: reversible
   passes: 0
   approved_by_human: false
-  note: |
+  note: >-
     FOR SILAS. Filed 2026-09-15. Deliberately narrow: this is the part of today's
     outage that t-165 does NOT cover, and it matters because it breaks t-165's
     working theory that the Flux.2 Klein checkpoint is the whole story.
@@ -2926,7 +2926,20 @@ tasks:
     (SMART_QUEUE_MAX_BYPASS = 24) is inert and the queue drains strictly
     oldest-first. With affinity on, the relay would prefer jobs whose checkpoint
     is already resident, making cold loads rare rather than routine.
-  updated: '2026-09-15T13:20:00Z'
+
+    UPDATE 2026-09-15T~19:30Z (workflow-medic sweep): a fourth job stalled the same way
+    today, on a different engine again -- ArtJob 23052, a coloring-book Kontext generate-bw
+    canary (monster-recast mr-016, queued via process-color-art-events.yml), timed out after
+    900s never leaving queued/running, several hours after this task last relay-wedge note.
+    coloring-book/t-039 (separately needs-human, tracking a suspected Kontext render defect)
+    had been treating its own canary failures as a render/graph-correctness issue, but this
+    occurrence symptom -- never completing, not completing-with-bad-output -- matches this
+    task cold-model-load wedge pattern rather than t-039 original diagnosis. Recorded here
+    so whoever investigates the relay treats Kontext/coloring-book jobs as in-scope too, not
+    just Flux.2/Pony. Removed the stale queued retry event from color-art-events/ to stop it
+    re-failing process-color-art-events.yml every 6h in the meantime (t-039 already
+    independently concluded not to resume live canaries as of its own 09:28Z update).
+  updated: '2026-09-15T19:33:46Z'
 
 - id: t-168
   milestone: m2
@@ -3041,6 +3054,40 @@ tasks:
     Future sessions hitting a stuck-in_progress PR check should pull the actual job log
     first (it often shows the real work already finished) before assuming a code-side hang
     or spending a long diagnostic session chasing content as the cause.
+
+- id: t-170
+  milestone: m2
+  title: 'process_coloring_art_events.py: cap retries and quarantine a queued event that keeps failing instead of retrying forever'
+  status: ready
+  stakes: reversible
+  passes: 0
+  owner: null
+  note: |-
+    Filed 2026-09-15 (scheduled conductor sweep session), kaizen from a workflow-medic
+    diagnosis of process-color-art-events.yml (root TALKBACK.md, conductor/t-167 and
+    coloring-book/t-039 entries, same date).
+
+    A queued event in color-art-events/ that keeps failing has no attempt cap and no
+    dead-letter path: `process_coloring_art_events.py` preserves it for retry on every
+    failure unconditionally, so a genuinely blocked event (relay wedge, unresolved
+    upstream defect) re-fails the same scheduled workflow every 6 hours indefinitely,
+    burning up to ~15 minutes of CI time per tick, until a human or agent happens to
+    notice and hand-remove the file. That happened for real today:
+    color-art-events/20260915-t039-kontext-canary-mr016.yaml failed 08:44Z, 13:57Z, and
+    18:17Z (ArtJob 23052 timing out after 900s "still queued/running", a relay-wedge
+    symptom -- see conductor/t-167) before this session removed it by hand.
+
+    Fix: add a small attempt-count guard mirroring the existing
+    `COLOR_ART_MAX_RENDER_ATTEMPTS` pattern already used for render attempts inside a
+    single event -- e.g. record consecutive failure count per event filename (a small
+    sidecar state file, or a comment/field appended to the event itself), and once a
+    threshold is hit, move the event to a `color-art-events/quarantine/` sibling
+    directory instead of leaving it in the live queue, with a clear log line naming the
+    quarantined file and why. A quarantined event should not silently disappear --
+    surfacing it (workflow summary output, or a line in the coloring-book project's
+    TALKBACK.md) is part of the fix, so quarantining isn't just replacing "keeps
+    failing loudly" with "silently stops trying."
+  updated: '2026-09-15T19:33:25Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
