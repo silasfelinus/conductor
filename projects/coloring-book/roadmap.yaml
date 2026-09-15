@@ -540,9 +540,9 @@ tasks:
 - id: t-039
   milestone: m4
   title: "Investigate: Kontext BW-derivation renders pure corrupted noise (mr-016, mr-020) -- resembles ai-art-academy/t-079"
-  status: review
+  status: done
   stakes: reversible
-  note: |-
+  note: >-
     Kaizen from t-022's 2026-09-11 pass. `manage_coloring_book_production.py`'s `generate-bw` always calls the art-enqueue endpoint with `"engine": "kontext"` (image-to-image line-art derivation from an accepted color master, no LoRA fields set). Two Monster Recast accepts left in-flight from the prior pass (mr-016 job 21667, mr-020 job 21668) both landed as pure corrupted color noise -- not line art, not a bad rendering of the source scene, just static -- and both were mechanically rejected by `art_quality.assess_file` with byte-identical statistics (mean_saturation=0.17, colorful_fraction=0.35, white_fraction=0.00) despite being derived from two completely different source color images. That identical-statistics result across different inputs points at the render backend itself, not per-image content. Rejected candidates saved at `projects/coloring-book/sets/monster-recast/generated/bw/rejected/mechanical/ mr-016-bw-20260911T003011Z.webp` and `mr-020-bw-20260911T003019Z.webp`.
     This resembles `ai-art-academy/t-079` ("Kontext LoRA arm renders pure corrupted noise instead of a real image", still `needs-human`/unresolved) -- same `kontext` engine family, same "every render comes back as uniform noise regardless of input" symptom -- but is NOT confirmed to be the identical bug: t-079's request body sets `loraName`/`loraStrength` (implicating the LoRA branch specifically), while this book's BW-derivation body has no LoRA fields at all, just a plain kontext image-to-image call. So either (a) the LoRA branch and the plain kontext branch share a broken component (e.g. a VAEDecode step, per t-079's own hypothesis), or (b) this is a second, separate kontext-engine defect. Both need the same backend/relay-side investigation this sandbox cannot do directly (no access to the ComfyUI node graph or relay process) -- compare the plain kontext workflow graph this book's BW derivation emits against a known-working kontext call (e.g. this same script's `accept-color`/mechanical-check path, which only downloads an already-rendered image and never calls enqueue) to see whether the corruption is upstream of both branches or specific to each.
     FOR SILAS: two systemic corrupted-noise signals now exist across two projects on the same `kontext` engine family (ai-art-academy/t-079 and this task). Worth having whoever has backend/relay access (ComfyUI workflow graph, or the relay's `buildKontextWorkflow`) look at both together rather than separately, since a shared root cause would explain both with one fix. TO APPROVE: no roadmap action needed from Silas to unblock other work -- this is a soft gate (agents keep working elsewhere; coloring-book's `t-022` is simply not re-attempting any `generate-bw` calls until this clears). What unblocks when it's fixed: `t-022` can resume BW derivation for mr-016, mr-020, and the other in-progress Monster Recast accepts.
@@ -565,10 +565,19 @@ tasks:
     Silas supplied a known-working Kontext workflow for direct comparison. It uses the same flux1-kontext-dev-Q5_K_M.gguf UNet, ae.safetensors VAE, ReferenceLatent source-conditioning shape, and empty sampler latent as the broken Kind Robots path, but uses t5xxl_fp8_e4m3fn_scaled.safetensors through stock DualCLIPLoader. The pre-2026-08-13 Kind Robots graph already had the current sampler/scheduler/DetailDaemon settings and that same working T5 loader; PR #1870 changed the T5 to t5-v1_1-xxl-encoder-Q5_K_S.gguf / DualCLIPLoaderGGUF without a live render verification. This directly removes the prior relay-only blocker and makes the encoder switch the focused regression candidate. Return t-039 to ready for a scoped fix and regression coverage.
 
     Root cause isolated from Silas's working workflow plus git history: PR #1870 switched Kontext from t5xxl_fp8_e4m3fn_scaled.safetensors + stock DualCLIPLoader to t5-v1_1-xxl-encoder-Q5_K_S.gguf + DualCLIPLoaderGGUF on 2026-08-13. The working workflow uses the same GGUF Kontext UNet, ae.safetensors VAE, reference-latent wiring, and empty sampler latent as Kind Robots; the pre-#1870 Kind Robots workflow also already had the current res_multistep/sgm_uniform/DetailDaemon sampler stack. Patch on worker/coloring-book-t039-20260915-kctx7f31 gives Kontext its own proven-good T5 loader while leaving ordinary Flux on the memory-saving GGUF T5, makes ArtJob retry normalization detect Kontext graphs and repair broken-era encoder nodes, and extends the existing Kontext contract test to pin the known-good chain and retry migration. Branch diff is limited to four intended files with no unrelated changes.
-  updated: '2026-09-15T08:04:00Z'
+
+    RECONCILED (conductor scheduled sweep, 2026-09-15T08:35Z): silasfelinus/kind_robots#2750
+    (Fix Kontext static regression by restoring its working T5 encoder) merged
+    2026-09-15T08:17:47Z, closing the root cause this task tracked -- Kontext's Flux T5
+    encoder regressed onto the GGUF path in #1870, now restored to the proven-good fp8
+    safetensors + DualCLIPLoader for Kontext specifically, with retry normalization
+    repairing stored broken-era jobs. Flipping to done. Next step is t-022's: retry the
+    blocked generate-bw batch now that the engine fix is live.
+  updated: '2026-09-15T08:33:04Z'
   owner: worker
   claimed_by: 2026-09-15T075700Z-coloring-book-t039-kctx7f31
   claimed_at: '2026-09-15T07:57:00Z'
+  implementation_pr: 'silasfelinus/kind_robots#2750'
 - id: t-040
   milestone: m4
   title: manage_coloring_book_production.py should surface the Pillow-missing fix inline instead of a bare ImportError
