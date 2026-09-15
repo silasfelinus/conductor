@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-15T13:50:50Z
+Generated: 2026-09-15T14:35:49Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **973**
-- Outcomes: blocked: 16, cancelled: 1, done: 956
+- Closed tasks recorded: **974**
+- Outcomes: blocked: 16, cancelled: 1, done: 957
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -26,7 +26,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 37 | 100% |
-| conductor | 108 | 100% |
+| conductor | 109 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 51 | 98% |
 | davinci | 8 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 956 | 99% |
+| software | 957 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-15 `conductor/t-168` — scripts/kr_token_set.sh's exit killed the calling shell when sourced -- the documented safe usage -- silently dropping any chained command; fixed with sourced-vs-executed runtime detection and pinned with a subprocess-driven regression test since none existed.
 - 2026-09-15 `storybook/t-027` — A recurring "check the real state and record it" audit task can surface a result the task's own follow-on wasn't designed for: t-028 assumed t-027 would find some endings missing art among an otherwise-seeded 1,024-row catalog, but the actual coverage call came back 0/1024 seeded -- zero rows exist at all, not partial art coverage. Letting the dependency resolver mechanically flip t-028 to `ready` on t-027's `done` would have handed a future worker a task it structurally could not start (nothing to attach art to). General lesson: when an audit's real result falls outside the shape its downstream task assumed, redirect the downstream task in the same close-out instead of letting an automatic status transition carry a stale scope forward -- the dependency graph tracks task completion, not whether the completed task's findings still match what its dependent expects.
 - 2026-09-15 `conductor/t-166` — Two tests in test_check_render_box.py asserted on check.main()'s return value without mocking every function main() calls (engine_heartbeat_verdict), so they silently made a real network call every run -- caught only because the live render engine happened to be reporting unhealthy at the moment this session ran the full suite, which flipped their result from a coincidental pass to a real failure. General lesson: a test that patches some of a function's dependencies but not all of them is not actually isolated -- it just hasn't been caught yet by the unpatched dependency disagreeing with what the test expects. When fixing one, audit every other test hitting the same entry point for the identical gap (two more tests here were leaking the same call and passing by coincidence).
 - 2026-09-15 `conductor/t-164` — check_pr_merged_drift.py's title-search and stranded-branch passes both scanned every repo in ALL_TRACKED_REPOS for every in-progress task, even though most tasks' own title/note history already names the one or two repos that actually matter for them. Added task_relevant_repos() to narrow both passes to a task's own cited repos first, falling back to the full list only when a task cites none. General lesson: when a checker scans "every tracked X" for "every candidate Y", check whether each Y already carries evidence of which X actually applies to it before paying the full cross-product cost -- the per-run caches already shared across tasks/repos mean this is a scope reduction, not just deferred work.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-15 `coloring-book/t-022` — manage_coloring_book_production.py's generate-bw leaves a stale bw_job_id/bw_status: running entry unrecovered indefinitely unless a future cycle happens to re-request that exact proposal id -- five Monster Recast slots (mr-005/007/009/011/012) sat at a week-old running status even though the render backend had actually completed and mechanically rejected all five as Kontext-engine noise a day after submission. Recovering them in one pass raised t-039's known-defect count from 2 to 7 of 7 checked attempts (100% failure), which is a materially different finding than "two isolated misses" -- when a recurring production task's queue-status tooling only reports the current batch, periodically sweep every bw_status/render_gate_error still marked running/pending regardless of the active batch, since a silently-completed-and-rejected job looks identical to a still-pending one until someone re-checks it.
 - 2026-09-15 `model-builder/t-029` — A text-truncation guard that only asserts pickText()'s own cap (verifyModelBuilderCommitTextTruncationGuard.ts, cycle 33) does not cover every place raw user/AI text reaches a bounded DB column -- commit.post.ts's updateText()/createRecord() also assigned the raw, uncapped pitch/fieldsDraft blob directly as a fallback for Bot.description/botIntro/prompt (bounded VarChar columns) whenever the FIELDS stage left those blank, bypassing pickText and its cap entirely. When auditing a text-length bug class, trace every write site for the affected columns, not just the ones that already go through the sanctioned helper -- a fallback path written before or after the helper call is exactly where the same bug re-enters uncaught.
 - 2026-09-15 `conductor/t-159` — Rotating an append-only log (TALKBACK.md) into monthly archives is safe when every archive write is verified byte-for-byte round-trip (write, re-read, re-extract, compare) before the source is ever rewritten, and the one real consumer that whole-file-parses the source for historical data (backfill_learning.py's --since all) gets fixed to read the archive directory too -- the archival carve-out only holds if every consumer of the pre-split file is checked, not just the file split itself.
-- 2026-09-15 `conductor/t-163` — Factored close_task.py's equal/not-equal branch-tip check (t-161) into scripts/branch_ancestry.py's classify_relationship(), a pure primitive over `git merge-base --is-ancestor` that names the actual relationship (equal/ahead/ behind/diverged) instead of a bare SHA comparison. Refusal behavior is unchanged -- only "equal" is safe to build on -- but the primitive is now independently unit-tested and reusable. claim_task.py's branch-naming paths were flagged (not yet audited) as a plausible next caller of the same primitive.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-15T13:50:50Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-15T14:35:49Z_
