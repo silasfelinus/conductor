@@ -13972,3 +13972,15 @@ records:
   lesson: scripts/kr_token_set.sh's exit killed the calling shell when sourced -- the documented safe
     usage -- silently dropping any chained command; fixed with sourced-vs-executed runtime detection and
     pinned with a subprocess-driven regression test since none existed.
+- date: 2026-09-15
+  project: storybook
+  task: t-048
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: verifyAcademyStarterManifest.ts/verifyPopulationDraftQuality.ts fetched live data with
+    no reachability guard, so a home-machine (Alexandria) reboot failed CI on main itself; fixed
+    with a short-timeout probe that skips with a warning (exit 0) on a network-level failure only,
+    verified by actually simulating an unreachable host rather than trusting the diff by inspection.
