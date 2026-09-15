@@ -2843,5 +2843,90 @@ tasks:
   claimed_at: '2026-09-15T12:41:30Z'
   implementation_pr: 'silasfelinus/conductor#4427'
 
+- id: t-167
+  milestone: null
+  title: 'Relay wedged again on a NON-Flux job after the Flux.2 one was cleared (ArtJob 22838)'
+  status: needs-human
+  gate_human: true
+  owner: null
+  stakes: reversible
+  passes: 0
+  approved_by_human: false
+  note: |
+    FOR SILAS. Filed 2026-09-15. Deliberately narrow: this is the part of today's
+    outage that t-165 does NOT cover, and it matters because it breaks t-165's
+    working theory that the Flux.2 Klein checkpoint is the whole story.
+
+    CORRECTION TO MY OWN EARLIER READING, recorded so it does not propagate.
+    An earlier draft of this task blamed ArtJob 22837 on a Flux.2 LoRA being
+    routed through the Flux.1 lane. That was wrong. 22837 was queued by the
+    lora-ingestion session through the `flux2` engine onto the
+    `flux2_dev_fp8mixed.safetensors` checkpoint, not through the Flux.1 dev
+    lane, and it is fully evidenced at
+    projects/lora-ingestion/docs/t-003-resource-backed-generation-evidence.md
+    and tracked at t-165. Nothing here re-litigates that. (kind_robots#2763 does
+    guard Flux.2 LoRAs out of the probe's Flux.1 lane, which is a real
+    misroute in its own right -- it simply is not what wedged 22837.)
+
+    WHAT IS NEW. After that session cancelled 22837 at ~11:53Z and reported the
+    relay healthy again, and after Silas restarted pm2 at 12:06:56Z, the relay
+    heartbeat ONCE (12:07:19Z), claimed ArtJob 22838, and went silent again.
+    The server released the claim as stale at 12:25:16Z (attempts back to 1,
+    claimedAt null) and relay-status returned agents: [] once more.
+
+    22838 is a plain Pony job: Pony/ponyFaetality_v11.safetensors, no Flux
+    anywhere near it. So the relay wedged on a completely different checkpoint,
+    on a different engine, minutes after the Flux.2 job was gone. That rules out
+    "the Flux.2 Klein pairing" as a sufficient explanation on its own.
+
+    Also worth weighing against t-165's healthy-relay reading: despite the
+    heartbeat recovering, latestDoneAt never moved off 10:43:51Z all session.
+    A heartbeat is not throughput -- the same lesson serendipity/t-012 recorded
+    in 2026-07 ("relay-status showing a registered agent is NOT sufficient
+    evidence the relay is accepting work").
+
+    THE PATTERN BOTH WEDGES SHARE is a cold model load, not sampling:
+      - ArtJob 22835 SUCCEEDED but took 12m30s end to end, almost all of it
+        loading Pony/cyberrealisticPony_v61.safetensors.
+      - The same relay rendered 63 consecutive jobs at ~65s each on 2026-09-14
+        (jobs 22469-22531) once a model was resident.
+      A ~12-minute load against a ~65-second render is the anomaly to explain.
+
+    TWO CANDIDATE CAUSES, neither confirmable from outside the box:
+      (a) The Alexandria SMB model share degraded again -- the recurring mount
+          documented at mandarin-tutor/t-020 and ops/home-server/README.md,
+          which would make a multi-GB checkpoint read crawl or hang. Supporting:
+          the relay's err log shows the lora-import thread dead on
+          FileNotFoundError [WinError 67] "The network name cannot be found:
+          'Z:/'", and after restart the relay still configured
+          KR_MEDIA_IMAGES_DIR = Z:/kindrobots/images. Models live on
+          //192.168.7.172/pc/ai/models, behind the share gate.
+      (b) Memory pressure: pm2 reported host RAM at 92.2%.
+
+    WHAT ONLY YOU CAN DO, on the box, in this order:
+      1. pm2 status -- did kr-relay's restart counter increment? If yes the
+         process is being killed (points at OOM); if no it is alive and hung
+         inside a load (points at the share). This one check separates (a)
+         from (b).
+      2. pm2 logs kr-relay --lines 100 -- last line after 12:07:19Z. A
+         'COMFY attempt 1' with nothing after it is a hang.
+      3. Confirm //192.168.7.172/pc/ai/models reads at full speed and that
+         Pony/ponyFaetality_v11.safetensors is present; re-map or drop Z:.
+      4. Free RAM before the next batch run.
+
+    STATE OF THE QUEUE: 202 PENDING, 0 RUNNING -- the LoRA preview probes for
+    kind-robots/t-105, ordered in seven checkpoint blocks with the 59-job
+    Pony/ponyFaetality block leading. A plain restart will retry that same first
+    job and may re-wedge. To make progress before diagnosing, bump a different
+    block forward: POST /api/art/queue/<id>/priority. Nothing is lost by leaving
+    them queued.
+
+    SEPARATE, SMALL, AND IT WOULD HAVE SHORTENED BOTH WEDGES: relay_agent.py
+    never sends smartQueue, so claim.post.ts's model-affinity bypass
+    (SMART_QUEUE_MAX_BYPASS = 24) is inert and the queue drains strictly
+    oldest-first. With affinity on, the relay would prefer jobs whose checkpoint
+    is already resident, making cold loads rare rather than routine.
+  updated: '2026-09-15T13:20:00Z'
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
