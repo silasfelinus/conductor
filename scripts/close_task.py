@@ -33,6 +33,7 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from set_task_field import append_note_text, set_task_field_text, TaskFieldError  # noqa: E402
+from branch_ancestry import classify_relationship  # noqa: E402
 from git_plumbing import (  # noqa: E402
     GitError,
     commit_file_on_ref,
@@ -118,17 +119,24 @@ def assert_local_branch_safe(branch: str, remote_ref: str) -> None:
     Before t-161 that meant ``--branch <current-branch>`` could silently omit local-only
     commits because the commit was based on ``origin/<branch>`` instead. A differing local
     ref is therefore a hard ambiguity: the caller must push it first or choose another branch.
+
+    conductor/t-163: the equal/not-equal check is built on ``classify_relationship``
+    (scripts/branch_ancestry.py) rather than a bare SHA comparison, so the error message
+    can name *how* the two differ (local has unpushed commits, the local checkout is
+    merely stale, or the two have genuinely diverged) instead of just "not equal". The
+    refusal itself is unchanged: only "equal" is treated as safe to build on.
     """
     local_sha = _try_resolve(f"refs/heads/{branch}")
     if local_sha is None:
         return
     remote_sha = resolve_ref(ROOT, remote_ref)
-    if local_sha != remote_sha:
+    relationship = classify_relationship(ROOT, f"refs/heads/{branch}", remote_ref)
+    if relationship != "equal":
         raise CloseError(
             f"ERROR: local branch {branch!r} is at {local_sha[:12]} but {remote_ref} is at "
-            f"{remote_sha[:12]}. Refusing to build a close-out from the remote tip because "
-            "that could omit local/unpushed commits. Push the branch first or use a distinct "
-            "--branch name."
+            f"{remote_sha[:12]} ({relationship}). Refusing to build a close-out from the "
+            "remote tip because that could omit local/unpushed commits. Push the branch "
+            "first or use a distinct --branch name."
         )
 
 
