@@ -23,11 +23,32 @@
 #
 # Never echo, log, or otherwise print "$KR_API_TOKEN" itself. This script
 # only ever reports presence/absence.
+#
+# `source`d vs executed both have to end this shell's involvement the same
+# way: `exit` inside a *sourced* script terminates the caller's whole shell,
+# not just this script — so `source scripts/kr_token_set.sh; <next command>`
+# silently never runs <next command> (conductor, 2026-09-15: discovered when
+# a scheduled session's own `source ... ; python3 ...` one-liner produced no
+# output at all — the token check killed the shell before the python call).
+# `(return 0 2>/dev/null)` succeeds only when this file is being sourced (a
+# bare `return` outside a function/sourced script is a no-op error), which is
+# how we tell the two cases apart at runtime.
+if (return 0 2>/dev/null); then
+  sourced=1
+else
+  sourced=0
+fi
 
 if [ -n "${KR_API_TOKEN:-}" ]; then
   echo "KR_API_TOKEN: set"
-  exit 0
+  status=0
 else
   echo "KR_API_TOKEN: not set"
-  exit 1
+  status=1
+fi
+
+if [ "$sourced" -eq 1 ]; then
+  return "$status"
+else
+  exit "$status"
 fi

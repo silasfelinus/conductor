@@ -2928,5 +2928,49 @@ tasks:
     is already resident, making cold loads rare rather than routine.
   updated: '2026-09-15T13:20:00Z'
 
+- id: t-168
+  milestone: m2
+  title: 'scripts/kr_token_set.sh: sourcing it silently kills the calling shell, dropping every later command'
+  status: done
+  stakes: reversible
+  passes: 0
+  owner: worker
+  note: |
+    Filed and fixed 2026-09-15 (scheduled conductor sweep session), discovered while
+    diagnosing the process-color-art-events.yml workflow-medic signal.
+
+    AGENTS.md documents `source scripts/kr_token_set.sh` as the safe, standard way to
+    check KR_API_TOKEN presence before a command that needs it, e.g.
+    `source scripts/kr_token_set.sh; python3 some_script.py`. The script ended with a
+    plain `exit 0`/`exit 1`. `exit` inside a *sourced* script terminates the calling
+    shell itself, not just the sourced file -- so any command chained after the
+    `source` in that same shell invocation silently never runs, with no error, no
+    non-zero exit surfaced to the caller in a way that explains why (the tool just
+    reports "no output"). Reproduced directly:
+      bash -c 'source scripts/kr_token_set.sh; echo "never printed"'
+    prints only "KR_API_TOKEN: set/not set" and exits; the echo never fires.
+
+    This is a plausible contributor to the sandbox behavior root/TALKBACK.md
+    2026-08-24 (conductor/t-128) already flagged from a different angle -- "an
+    earlier `source scripts/kr_token_set.sh` call silently had no effect on a later
+    call" was attributed there entirely to env vars not persisting across separate
+    Bash tool invocations, but *within* a single invocation this exit-kills-the-shell
+    bug independently produces the exact same symptom (source appears to do nothing
+    useful) and could invite the same bad "let me hand-probe it instead" reflex that
+    caused the t-128 secret leak.
+
+    Fix: detect sourced-vs-executed at runtime with `(return 0 2>/dev/null)` (succeeds
+    only when sourced) and call `return "$status"` when sourced, `exit "$status"` when
+    executed directly -- both paths still print the same "KR_API_TOKEN: set"/"not set"
+    line and carry the same 0/1 status, only the termination mechanism changes.
+    Verified all four combinations (sourced/executed x token-set/token-unset) by hand
+    and added tests/test_kr_token_set.py as a permanent regression (subprocess-drives
+    real bash in each mode, asserts the caller's shell survives sourcing and the
+    correct status/output in every case, and that the token value itself is never
+    printed).
+  updated: '2026-09-15T14:10:00Z'
+  claimed_by: 2026-09-15T140500-conductor-t168-sweep
+  claimed_at: '2026-09-15T14:05:00Z'
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
