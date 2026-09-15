@@ -1,8 +1,0 @@
-version: 1
-project: coloring-book
-task: t-039
-operation: review
-session: 2026-09-15T091200Z-coloring-book-t039-sampler9c2a
-updated: '2026-09-15T09:25:00Z'
-note: >-
-  Sampler-parity diagnostic/fix is ready for CI. Live ArtJob 22830 proved the prior T5-only fix insufficient. This pass makes fresh queued Kontext jobs match the supplied working sampler graph: euler, simple scheduler, 10 steps, direct KSamplerSelect into SamplerCustomAdvanced, and no DetailDaemon wrapper. Root cause remains unproven until a post-deploy live canary renders cleanly.
