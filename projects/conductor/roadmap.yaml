@@ -3005,7 +3005,7 @@ tasks:
 - id: t-169
   milestone: m2
   title: 'Audit other note: >- tasks for the same giant-line CI-hang risk append_note_text corrupted'
-  status: claimed
+  status: done
   stakes: reversible
   passes: 0
   owner: reviewer
@@ -3072,9 +3072,15 @@ tasks:
     Future sessions hitting a stuck-in_progress PR check should pull the actual job log
     first (it often shows the real work already finished) before assuming a code-side hang
     or spending a long diagnostic session chasing content as the cause.
+
+    AUDIT COMPLETE (conductor scheduled sweep, claude-20260915T223201Z-conductor-t169): read all 5 `>-`-labeled candidates end to end (animation-manager/t-007, coloring-book/t-022, coloring-book/t-039, conductor/t-132, interface-vision/t-104) looking specifically for lost information, not just length. Method: split each parsed note on entry-boundary markers (`PROGRESS (`, `RECONCILED (`, `Cycle (`, `DONE 202`, `CORRECTION (`, etc.) and inspected 60-80 chars either side of every boundary for truncation, word loss, or overlapping/garbled text.
+
+    Finding: no data loss in any of the 5. Every entry boundary reads as `<complete sentence ending in a period><single space><next entry's opening phrase>` -- the >- folding rule replaced each original line-break between adjacent non-blank lines with exactly one space, which is lossy for *whitespace/paragraph structure* but not for content: no words, sentences, or entries are missing, duplicated, or run together mid-word. The damage is entirely cosmetic -- dozens of originally one-entry-per-line update cycles now read as a single dense run-on paragraph per note, which is harder for a human or the next session to visually scan for "where did entry N end and N+1 begin," but every entry itself is intact and independently readable by searching for its dated marker phrase.
+
+    This confirms the correction already recorded in this task's history (the CI-hang theory was wrong; GitHub Actions status-reporting flakiness was the real cause) and closes the remaining open question: there is no content-folding data-loss risk from the historical `>-` bug, only a readability regression on notes that predate the append_note_text() fix. No manual unfolding or restoration is needed -- the 5 candidates are fully readable as-is. Not converting their `note:` style from `>-` to `|-` in this pass since that's a cosmetic-only change outside this audit's scope and none of them are actively size-critical the way model-builder/t-029 was (all 5 are well under model-builder's 126KB/72,000-char-line pathological case: largest here is interface-vision/t-104 at 39,859 bytes / 36,458-char max line).
   claimed_by: claude-20260915T223201Z-conductor-t169
   claimed_at: '2026-09-15T22:32:02Z'
-  updated: '2026-09-15T22:32:02Z'
+  updated: '2026-09-15T22:34:17Z'
 
 - id: t-170
   milestone: m2
