@@ -444,12 +444,12 @@ tasks:
 - id: t-029
   milestone: m5
   title: Seed the AGE/BUILD/HAIR/ORIGIN embodiment Facets into the live catalog
-  status: needs-human
+  status: done
   owner: null
   passes: 0
   stakes: outward-facing
-  updated: '2026-09-15T09:05:00Z'
-  note: >
+  updated: '2026-09-15T09:13:15Z'
+  note: >-
     GATE CLEARED 2026-09-15 ~08:15: Silas reviewed the vocabulary via the dry
     run on Alexandria and ran `npm run seed:embodiment:apply` against
     production -- "Wrote 82/82 embodiment Facet(s)." Both halves are now live:
@@ -534,3 +534,74 @@ tasks:
     from `look` changes no pixel, the mirror image of t-026's six-week silent
     no-op. Re-run the same measurement over the next ~20 built characters and
     confirm the zeros move.
+
+    CLOSED 2026-09-15. Gate satisfied end to end and VERIFIED AGAINST THE LIVE CATALOG
+    rather than against the terminal output, which was the right call: the second apply's
+    git pull reported 'Already up to date' and fetched only a worker/ branch, which looked
+    like the checkout had missed the correction. Querying /api/facets?taxonomy=HAIR settled
+    it -- 24 rows live, all five corrected art prompts present ('Dark hair or fur...', 'one
+    side of the head gone fully white', 'the finer hair around the eyes', 'Dark at the
+    roots'), and both dye entries carrying scope 'any'. The checkout had in fact already
+    been refreshed to current main by the deploy script before the pull ran. Full chain
+    live: kind_robots#2749 (4 taxonomies + 82 rows), kind_robots#2752 (art-prompt
+    correction), conductor#4399 (the planner), conductor#4404 (reconciliation). A live
+    --brief now reports catalog_source 'live' with no fallbacks and draws all five axes from
+    real rows -- for 2026-09-17: body creature, gender Neutrois, age Young and
+    Overqualified, build Long and Angular, hair One Streak Deliberate, origin Anatolian
+    Plateau Village + Baltic Timber Port. Follow-up t-030 carries the only thing that can
+    actually prove this worked: re-measuring look.
+  approved_by_human: true
+  implementation_pr: 'silasfelinus/kind_robots#2752'
+- id: t-030
+  milestone: m5
+  title: Re-measure character embodiment coverage now that the axes are seeded
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-09-15T09:30:00Z'
+  note: >
+    The proof step for t-029. Seeding the axes is not the same as the axes
+    reaching the rendered image, and the difference is invisible from the
+    pipeline end -- a Facet linked to a record but absent from `look` changes
+    no pixel while still reporting `status: complete` with `errors: []`. That
+    is exactly how t-026 went six weeks over a Character holding no Facets,
+    and check_live_facet_coverage.py only catches the LINK half. Nothing
+    checks whether the seeded body actually reached the prose Krea 2 reads.
+
+    WAIT FOR ~20 NEW CHARACTERS built after 2026-09-15 before running this;
+    a smaller sample cannot distinguish a real move from noise on axes whose
+    baseline was 0.
+
+    THE BASELINE, measured across all 98 characters authored before the axes
+    existed: saturated hair colour 0.0%, long hair 0.0%, hair mentioned at all
+    23.5%, explicit age 14.3%, human skin tone 9.2%, any stated affect 14.3%,
+    she/her 39.8% vs he/him 9.2% vs they/them 3.1%, "coat" 38.8%, "patched"
+    25.5%.
+
+    METHOD: extract `characters[].look` from each proposal's proposal-data
+    block under projects/dream-cycle/backlog/, then count the same axes. The
+    original pass used plain regex families over the lowercased text (build
+    words, hair words, saturated-colour words, age words, pronouns, skin-tone
+    words, affect words) -- reproduce those rather than inventing new
+    categories, or the comparison is meaningless.
+
+    WHAT A PASS LOOKS LIKE: gender roughly even rather than 4.3:1; age stated
+    far more often than 14.3% since AGE is now drawn every single day; hair
+    mentioned on nearly every character; saturated colour clearly above zero.
+    Build and origin should show up as visible description rather than as
+    labels.
+
+    WHAT A FAILURE LOOKS LIKE, and it is the likely one: the Facet LINKS are
+    all correct and `look` still reads like the old house style. That means
+    the brief's "express them, do not list them" instruction is being honoured
+    as "ignore them", and the fix is in the authoring contract
+    (_embodiment_instructions in build_dream_proposal_core.py), not in the
+    catalog. Do not conclude the feature works from the Facet links alone --
+    that is the precise mistake t-026 made.
+
+    ALSO WORTH CHECKING while the data is open: whether `look` has started
+    reading like a character sheet ("a 60-year-old broad-built feminine
+    character with long silver hair"). That is the opposite failure from the
+    rut and would mean the seeds are landing but the prose is not absorbing
+    them. Both failures are authoring-contract fixes.
