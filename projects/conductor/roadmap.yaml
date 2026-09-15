@@ -2567,10 +2567,10 @@ tasks:
 - id: t-160
   milestone: m2
   title: Large binaries, the media-host policy boundary, and the stale art-request status doc
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  owner: null
+  owner: worker
   note: >-
     Filed 2026-09-14 at Silas's direction, same size assessment as t-158/t-159. Read the SAFETY
     RULE below before deleting anything.
@@ -2620,7 +2620,9 @@ tasks:
     missing -- the file just ends on the comment. It also has no *.mp4 / *.mov / *.webm entries
     while *.png/jpg/webp/pdf/zip are all listed. Note there is no Git LFS configured (no .lfsconfig,
     no filter=lfs lines) and no size policy anywhere in AGENTS.md or CLAUDE.md.
-  updated: '2026-09-14T10:30:00Z'
+  updated: '2026-09-15T13:32:40Z'
+  claimed_by: 2026-09-15T133200-conductor-t160
+  claimed_at: '2026-09-15T13:32:40Z'
 - id: t-161
   milestone: m2
   title: close_task.py can silently drop a caller's unpushed local commits on the target branch
