@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-15T22:37:36Z
+Generated: 2026-09-15T22:40:58Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **977**
-- Outcomes: blocked: 16, cancelled: 1, done: 960
+- Closed tasks recorded: **978**
+- Outcomes: blocked: 16, cancelled: 1, done: 961
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -26,7 +26,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 37 | 100% |
-| conductor | 111 | 100% |
+| conductor | 112 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 51 | 98% |
 | davinci | 8 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 960 | 99% |
+| software | 961 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,18 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-15 `conductor/t-169` — Audited the 5 tasks whose notes were flagged >- (the historical
+append_note_text() folding bug's signature label) for actual content loss, not just
+length. Method: locate every entry-boundary marker (PROGRESS (, RECONCILED (, Cycle (,
+DONE 202, CORRECTION (, etc.) in the parsed note string and inspect text immediately
+before/after each for truncation or garbling. Finding: zero data loss across all 5 --
+every original single-newline break between adjacent entries became one space on
+folding, which loses paragraph/readability structure but never words or entries. The
+earlier concern (this same task's own history) that folding caused a CI-hang was
+already disproven by pulling the actual job logs (GitHub Actions status-reporting
+flakiness, unrelated to note content). Lesson for a future note-format audit: a
+`>-`/`|-` label mismatch alone is not evidence of damage -- verify by sampling actual
+entry boundaries for coherence before assuming restoration work is needed.
 - 2026-09-15 `conductor/t-170` — Clean first-pass fix (attempt-cap + quarantine for process_coloring_art_events.py), but
 the new tests initially relied on this sandbox's ambient KR_API_TOKEN (a container-level
 env var, not something kr_token_set.sh sets) instead of pinning it explicitly, so they
@@ -119,7 +131,6 @@ already showing the `>-`-plus-giant-line signature for the same latent risk.
 - 2026-09-15 `conductor/t-164` — check_pr_merged_drift.py's title-search and stranded-branch passes both scanned every repo in ALL_TRACKED_REPOS for every in-progress task, even though most tasks' own title/note history already names the one or two repos that actually matter for them. Added task_relevant_repos() to narrow both passes to a task's own cited repos first, falling back to the full list only when a task cites none. General lesson: when a checker scans "every tracked X" for "every candidate Y", check whether each Y already carries evidence of which X actually applies to it before paying the full cross-product cost -- the per-run caches already shared across tasks/repos mean this is a scope reduction, not just deferred work.
 - 2026-09-15 `conductor/t-150` — check_pr_merged_drift.py's title-search and note-reference passes can only report drift when a PR actually exists to find -- a task whose implementing session never opened one at all (cthulhuquarium/t-076) read as a false "clean", the exact opposite failure mode from what the script was built to catch. Closed by adding a fifth pass that lists branches across the same tracked repos already scanned for title matches and flags one matching the worker naming convention with no open PR against it. General lesson: a checker built to catch "state A drifted from state B" should also ask whether state B (the PR/evidence it searches for) exists at all -- absence-of-evidence and evidence-of-absence are different findings and a search that only handles the former will read a genuinely missing PR as clean.
 - 2026-09-15 `conductor/t-157` — check_hostbuf_failure.py's "unverified" state (a hostbuf failure older than the 2h alert window with no successful render since) was only ever reported via a `::warning::` line in that one hourly workflow run's own log -- a channel nothing else reads, so a stale unresolved incident could sit invisible indefinitely with no durable trace. Fixed by writing the same RENDER-BACKLOG.md ledger convention recheck_render_queue.py already uses, and giving the workflow contents: write plus a commit-back step so the entry actually reaches main. When a sentinel/check script's only failure signal is a workflow-log annotation, that is itself a gap worth closing -- durable state belongs in a file something else reads, not in a run nobody reopens.
-- 2026-09-15 `coloring-book/t-022` — hwr-008 (Laboratory Tenor) failed creative review 4 times across 4 sessions on the same core requirement -- a trans man tenor with visible healed bilateral chest-surgery scars -- and the failure mode changed each time a wardrobe strategy was fixed: attempt 1-2 rendered a conventional young man with no scars; attempt 3 fixed the age/face but produced a fully buttoned tuxedo occluding any possible scar; attempt 4 opened the neckline but the exposed skin was smooth and unmarked. Two different wardrobe rewrites (closed tuxedo, then open cape) both failed to surface any scar once the neckline was actually open, which is stronger evidence than either alone that the render engine is declining to depict surgical scar texture on skin at all -- plausibly a content-safety-adjacent smoothing bias -- rather than a wardrobe-occlusion problem a prompt rewrite can keep chasing. When a creative-review slot keeps failing on the *same specific visual element* after the prompt-level cause it was blamed on gets fixed, stop revising wardrobe/pose/framing language and treat the element itself (not its surrounding context) as the suspect -- escalate for a human/engine-level call rather than a fifth blind wardrobe rewrite.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-15T22:37:36Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-15T22:40:58Z_
