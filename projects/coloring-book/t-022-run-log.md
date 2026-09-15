@@ -2443,3 +2443,68 @@ regenerated `hwr-005-midnight-detective.webp`, its archived pre-revision copy, a
 and 28 Kind Robots slots have accepted color and are ready for `generate-bw`. mr-008 still
 needs a human call (retry budget exhausted, engine-level not prompt-level). No other slot
 currently has a documented specific next-attempt plan the way hwr-005 did.
+
+### Cycle 14: hwr-008 recovery still stuck; generate-bw production pass surfaces the Kontext BW bug is book-wide, not two slots
+
+Recovery check on hwr-008 (Laboratory Tenor, ArtJob 22678, `render_gate_job_id` from
+cycle 13): queried the job directly — still `PENDING`/`RUNNING` per the render backend
+itself (not a client-side timeout artifact). Preserved the reference untouched, no
+duplicate submitted; left for a future cycle's recovery pass.
+
+Since Monster Recast and Hollywood Recast's *color* stage is fully drained
+(`coloring_queue_status.py` shows 0 pending for monster-recast, 1 for hollywood-recast —
+just hwr-008 above), moved to the actual production-pass bottleneck: 17 Monster Recast
+slots have accepted color awaiting `generate-bw` (`mr-016`/`mr-020` excluded — already
+`needs-human` at t-039 for the same noise defect below).
+
+Ran `manage_coloring_book_production.py --operation generate-bw --live --book
+monster-recast` across 15 slots (mr-001, mr-005, mr-007, mr-009, mr-010, mr-011, mr-012,
+mr-013, mr-023, mr-024, mr-025, mr-029, mr-033, mr-034, mr-035). Five of these
+(mr-005/007/009/011/012) already carried a `bw_job_id` from a 2026-09-07 batch that had
+been sitting at local `bw_status: running` for over a week; the script's own recovery
+path fetched their live status and found all five actually completed on 2026-09-08
+(server-side, ~14h turnaround) but the local queue file was never updated because no
+later cycle re-checked them. Re-running the same command surfaced a second, unrelated
+sandbox gap first: `save_image()` needs Pillow, which this sandbox instance did not have
+installed (the exact same recurring gap AGENTS.md documents for
+`provision_kind_robots_deps.sh`/kind_robots verification — this is its coloring-book-side
+equivalent). `pip3 install Pillow` fixed it in-session; re-ran the same five proposal ids.
+
+Result: **all five recovered renders were rejected by the mechanical BW gate as
+spatially-uncorrelated noise/static** — byte-for-byte the same `art_quality.assess_file`
+signature t-039 already flagged for mr-016/mr-020 (`hf_ratio` ~0.86-0.88, `mean_saturation`
+~0.17-0.18, `colorful_fraction` ~0.34-0.36, `white_fraction` 0.00; came back colored/shaded
+noise, not line art). Rejected candidates saved under
+`generated/bw/rejected/mechanical/mr-0{05,07,09,11,12}-bw-20260915T07033*Z.webp`.
+This takes t-039's evidence from 2 affected slots to **7 of 7 recovered/checked
+`generate-bw` attempts against this book so far** — every single one. Appended this
+finding to t-039's note directly (still `needs-human`/`soft_gate`, reversible; not
+escalated to hard since nothing outward-facing or irreversible is at stake, but the
+book-wide scope is materially worse than t-039's original framing).
+
+Given that scope, did **not** submit fresh `generate-bw` jobs for the remaining 10 ready
+Monster Recast slots (mr-023/024/025/029/033/034/035, plus mr-018/mr-030 not yet checked)
+this cycle — burning more render jobs into what looks like a systemically broken engine
+path, before t-039 identifies the actual root cause, is not a good use of the render
+backend. The three slots that got genuinely fresh submissions before this pattern became
+clear (mr-001 ArtJob 22680, mr-010 ArtJob 22681, mr-013 ArtJob 22682) are already in
+flight and were left running rather than cancelled — worth checking their outcome next
+cycle (backend turnaround for this book appears to run into many hours based on the
+09-07/09-08 batch, so these will very likely still be pending at the start of the next
+cycle). No new final pairs landed this cycle (still 3/36); this cycle's yield is entirely
+diagnostic.
+
+Verification: `python scripts/coloring_proposal_status.py` re-run after — Monster Recast
+still 3/36 final pairs (unchanged), accepted color/BW correctly still 20/3 (the five
+rejects don't count as accepted BW). `python scripts/coloring_queue_status.py --book
+hollywood-recast` unchanged (`recommended_action: recover-existing-jobs`, hwr-008 the only
+blocker). Full pytest suite for `manage_coloring_book_production.py`'s existing test file
+green (no code changed this cycle, diagnosis only).
+
+**Next actionable step:** t-039 needs a human or engine-level decision before any more
+`generate-bw` jobs are worth submitting against Kontext for this book — the failure rate
+is now 100% (7/7) across every slot actually checked. Once t-039 resolves (a
+Krea/prompt/engine fix, or a decision to route BW derivation through a different engine
+entirely), resume the batch from mr-001/mr-010/mr-013's in-flight jobs and the remaining
+Monster Recast slots. hwr-008 (ArtJob 22678) still needs one more recovery pass once it
+finishes server-side.
