@@ -2625,6 +2625,30 @@ tasks:
   claimed_at: '2026-09-15T00:16:23Z'
   implementation_pr: 'silasfelinus/conductor#4378'
 
+- id: t-163
+  milestone: m2
+  title: Add a pure branch-tip-ancestry helper (fast-forward vs. diverged) for close_task.py-style branch plumbing
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: >-
+    Kaizen from conductor/t-161 (silasfelinus/conductor#4378, 2026-09-15): t-161 added
+    `assert_local_branch_safe`, a straight tip-equality check between a named local
+    branch and its chosen remote base, to stop close_task.py from silently rebuilding
+    a close-out on top of a stale remote tip when local-only commits exist. That check
+    is binary (equal or not) and lives inline in close_task.py. The Worker's own kaizen
+    suggestion: factor a small, pure helper that can classify the actual relationship
+    between two commits -- local is a fast-forward ahead of remote (safe, common after a
+    normal push), remote is ahead of local (caller's checkout is stale), or the two have
+    diverged (real ambiguity, same as today's refusal case) -- so future branch-plumbing
+    scripts (`claim_task.py`'s branch-naming paths flagged as worth checking for the same
+    assumption class) can reuse one tested primitive instead of re-deriving an
+    equality-only comparison each time. Land it as a small, independently testable
+    function (e.g. in `git_plumbing.py` or a new `branch_ancestry.py`), with unit tests
+    for all three relationships, then have close_task.py's existing guard call it.
+  updated: '2026-09-15T00:27:36Z'
+
 - id: t-162
   milestone: m2
   title: Art requests wedge forever when their ArtJob finishes but the render is never downloaded

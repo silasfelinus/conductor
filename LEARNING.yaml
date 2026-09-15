@@ -13766,3 +13766,22 @@ records:
     Worth a standing habit: an operation with zero successful invocations across many
     eligible candidates is a stronger signal than "not yet gotten to" -- check whether it
     has ever actually run, not just whether its inputs exist.'
+- date: '2026-09-15'
+  project: conductor
+  task: t-161
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'close_task.py built its close-out commit from the remote branch tip
+    (origin/<branch> or origin/main) regardless of whether a same-named local
+    branch existed with unpushed commits, so `--branch <my-current-branch>` did
+    not behave like a normal git push -- it could silently rebuild from a stale
+    base and force-push over local-only work (caught once already in
+    coloring-book/t-046, kaizen-sourced this task). Fixed with a fail-closed
+    branch-tip equality check before every commit attempt, tested against both
+    the divergent and matching-tip cases. Any scratch-index git plumbing that
+    targets a named branch without reading the caller''s actual worktree state
+    needs the same guard -- worth checking claim_task.py''s branch-naming paths
+    for the same class of assumption.'
