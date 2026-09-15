@@ -2607,18 +2607,47 @@ tasks:
 - id: t-161
   milestone: m2
   title: close_task.py can silently drop a caller's unpushed local commits on the target branch
-  status: review
+  status: done
   stakes: reversible
   passes: 0
   owner: worker
-  note: |-
+  note: >-
     Kaizen from coloring-book/t-046 (silasfelinus/conductor#4356, 2026-09-14): this session implemented t-046 locally (committed but not yet pushed) on its designated branch claude/blissful-curie-pubxnn, then ran `close_task.py coloring-book t-046 review --branch claude/blissful-curie-pubxnn ...`. The script's scratch-index plumbing built its close-out commit on top of the branch's remote tip (which did not yet have the local implementation commit, since it had never been pushed) rather than the caller's local HEAD, and force-pushed that result -- silently overwriting the remote ref with a branch that no longer contained the local implementation commit. Caught immediately via `git diff origin/main --stat` before opening the PR (the diff was missing scripts/art_quality.py and tests/test_art_quality.py); recovered via the still-present local commit object (`git reflog` + a clean cherry-pick) and a verified `--force-with-lease` re-push. No data was permanently lost, but it could easily have gone unnoticed by a session that didn't diff before pushing/opening the PR.
     DO: read close_task.py's actual git-plumbing implementation and confirm exactly what base it builds from when `--branch` names a branch that already has local (or even already-pushed) commits beyond origin/main. Fix one of: (a) make it fast-forward from the caller's actual local branch tip when one exists and matches `--branch`, or (b) refuse/warn loudly when the local branch tip it's about to build on top of doesn't match what `git rev-parse --branch` reports locally, rather than silently rebuilding from a stale base. At minimum, add an explicit docstring note describing the actual behavior so a caller knows to push their own commits first (or use a distinct `--branch` name for the close-out) rather than assuming `--branch <my-current-branch>` preserves local work the way a normal `git push` would.
 
     Implemented a fail-closed branch-tip guard in close_task.py so --branch cannot silently omit local-only commits; added regression coverage for mismatched and matching local/remote branch tips.
-  updated: '2026-09-15T00:22:00Z'
+
+    RESOLVED: merged in #4378 (squash 17a9924) - fail-closed local-vs-remote branch-tip
+    guard in close_task.py, with regression tests for both refusal and matching-tip cases.
+    Reviewed and merged same session.
+  updated: '2026-09-15T00:27:36Z'
   claimed_by: openai-scheduled-2026-09-15T001623Z-conductor-t161-a11
   claimed_at: '2026-09-15T00:16:23Z'
+  implementation_pr: 'silasfelinus/conductor#4378'
+
+- id: t-163
+  milestone: m2
+  title: Add a pure branch-tip-ancestry helper (fast-forward vs. diverged) for close_task.py-style branch plumbing
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: >-
+    Kaizen from conductor/t-161 (silasfelinus/conductor#4378, 2026-09-15): t-161 added
+    `assert_local_branch_safe`, a straight tip-equality check between a named local
+    branch and its chosen remote base, to stop close_task.py from silently rebuilding
+    a close-out on top of a stale remote tip when local-only commits exist. That check
+    is binary (equal or not) and lives inline in close_task.py. The Worker's own kaizen
+    suggestion: factor a small, pure helper that can classify the actual relationship
+    between two commits -- local is a fast-forward ahead of remote (safe, common after a
+    normal push), remote is ahead of local (caller's checkout is stale), or the two have
+    diverged (real ambiguity, same as today's refusal case) -- so future branch-plumbing
+    scripts (`claim_task.py`'s branch-naming paths flagged as worth checking for the same
+    assumption class) can reuse one tested primitive instead of re-deriving an
+    equality-only comparison each time. Land it as a small, independently testable
+    function (e.g. in `git_plumbing.py` or a new `branch_ancestry.py`), with unit tests
+    for all three relationships, then have close_task.py's existing guard call it.
+  updated: '2026-09-15T00:27:36Z'
 
 - id: t-162
   milestone: m2
