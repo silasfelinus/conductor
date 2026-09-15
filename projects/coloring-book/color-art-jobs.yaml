@@ -47,8 +47,25 @@ books:
     completed_at: '2026-09-14T10:48:58Z'
     prompt_fingerprint: f7a2b373e25e81fcf7b24d0ba97e92de70991b0fea9d810aaa9d40e954016930
     bw_job_id: 22680
-    bw_status: running
+    bw_status: needs_review
     bw_requested_at: '2026-09-15T06:31:06Z'
+    bw_art_image_id: 24457
+    bw_rendered_path: generated/bw/mr-001-bw.webp
+    bw_rejected_path: projects/coloring-book/sets/monster-recast/generated/bw/rejected/mechanical/mr-001-bw-20260915T073354Z.webp
+    bw_mechanical_info:
+      pixels: 16960
+      mean_saturation: 0.1695
+      colorful_fraction: 0.3277
+      white_fraction: 0.0
+      luma_std: 0.0826
+      size: 1024x1536
+      hf_ratio: 0.8745
+      tint_concentration: 0.2367
+    bw_render_reasons:
+    - spatially-uncorrelated noise/static — no discernible image structure (hf_ratio=0.87); this can pass the saturation/white-fraction
+      checks for either variant while being pure garbage (coloring-book/t-039)
+    - not black-and-white line art — came back colored/shaded (mean_saturation=0.17, colorful_fraction=0.33, white_fraction=0.00)
+    bw_completed_at: '2026-09-15T07:33:54Z'
   - slot: 2
     id: mr-002
     slug: dream-killer
@@ -303,8 +320,25 @@ books:
     approved_at: '2026-09-14T14:37:57Z'
     lock_seed: true
     bw_job_id: 22681
-    bw_status: running
+    bw_status: needs_review
     bw_requested_at: '2026-09-15T06:41:15Z'
+    bw_art_image_id: 24458
+    bw_rendered_path: generated/bw/mr-010-bw.webp
+    bw_rejected_path: projects/coloring-book/sets/monster-recast/generated/bw/rejected/mechanical/mr-010-bw-20260915T073358Z.webp
+    bw_mechanical_info:
+      pixels: 16960
+      mean_saturation: 0.1709
+      colorful_fraction: 0.3318
+      white_fraction: 0.0
+      luma_std: 0.0822
+      size: 1024x1536
+      hf_ratio: 0.861
+      tint_concentration: 0.2254
+    bw_render_reasons:
+    - spatially-uncorrelated noise/static — no discernible image structure (hf_ratio=0.86); this can pass the saturation/white-fraction
+      checks for either variant while being pure garbage (coloring-book/t-039)
+    - not black-and-white line art — came back colored/shaded (mean_saturation=0.17, colorful_fraction=0.33, white_fraction=0.00)
+    bw_completed_at: '2026-09-15T07:33:58Z'
   - slot: 11
     id: mr-011
     slug: alien-king
@@ -403,8 +437,25 @@ books:
     completed_at: '2026-09-14T10:48:58Z'
     prompt_fingerprint: 28e681623a3e382d6d679161a88ccee08a3b3348200f9fc1f515ed4412270b11
     bw_job_id: 22682
-    bw_status: running
+    bw_status: needs_review
     bw_requested_at: '2026-09-15T06:51:22Z'
+    bw_art_image_id: 24459
+    bw_rendered_path: generated/bw/mr-013-bw.webp
+    bw_rejected_path: projects/coloring-book/sets/monster-recast/generated/bw/rejected/mechanical/mr-013-bw-20260915T073402Z.webp
+    bw_mechanical_info:
+      pixels: 16960
+      mean_saturation: 0.171
+      colorful_fraction: 0.3354
+      white_fraction: 0.0
+      luma_std: 0.0832
+      size: 1024x1536
+      hf_ratio: 0.8686
+      tint_concentration: 0.2295
+    bw_render_reasons:
+    - spatially-uncorrelated noise/static — no discernible image structure (hf_ratio=0.87); this can pass the saturation/white-fraction
+      checks for either variant while being pure garbage (coloring-book/t-039)
+    - not black-and-white line art — came back colored/shaded (mean_saturation=0.17, colorful_fraction=0.34, white_fraction=0.00)
+    bw_completed_at: '2026-09-15T07:34:02Z'
   - slot: 14
     id: mr-014
     slug: bathtub-shave
@@ -983,7 +1034,7 @@ books:
     id: hwr-008
     slug: laboratory-tenor
     title: Laboratory Tenor
-    status: pending
+    status: done
     seed: 850008
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-008
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-008-laboratory-tenor.webp
@@ -1002,9 +1053,20 @@ books:
       semantic_score: null
       prompt_fingerprint: b88449c3aaa0ae59f48067d9327deac35f10d5444c98fe2195fc11b805899f26
       archived_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/revisions/hwr-008-laboratory-tenor-20260915T053230Z.webp
-    studio_revision_requested_at: '2026-09-15T05:32:30Z'
-    render_gate_error: job 22678 timed out after 600s (still queued/running)
-    render_gate_error_at: '2026-09-15T05:42:37Z'
+    - requested_at: '2026-09-15T07:32:01Z'
+      previous_status: done
+      art_image_id: 24460
+      rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-008-laboratory-tenor.webp
+      semantic_score: null
+      prompt_fingerprint: e0f5b90c581580241a8799a0aa0f2f177c53eeacfba702f01c83947b8b807017
+      archived_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/revisions/hwr-008-laboratory-tenor-20260915T073201Z.webp
+    studio_revision_requested_at: '2026-09-15T07:32:01Z'
+    rendered_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-008-laboratory-tenor.webp
+    art_image_id: 24466
+    render_seed: 224974627
+    render_engine: krea2
+    completed_at: '2026-09-15T07:34:32Z'
+    prompt_fingerprint: 026cc76a25d5a89967588176e0a6a872f182af6248e177af22852e88e02c8fc8
   - slot: 9
     id: hwr-009
     slug: ballroom-double-take
