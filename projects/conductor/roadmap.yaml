@@ -2949,7 +2949,15 @@ tasks:
     just Flux.2/Pony. Removed the stale queued retry event from color-art-events/ to stop it
     re-failing process-color-art-events.yml every 6h in the meantime (t-039 already
     independently concluded not to resume live canaries as of its own 09:28Z update).
-  updated: '2026-09-15T19:33:46Z'
+
+    Cross-reference (scheduled Conductor session, 2026-09-15T21:33Z, from kind-
+    robots/t-105): same queue-depth evidence as just appended to t-165 --
+    /api/art/queue/stats PENDING=2070 (up from ~104 at 16:30Z), RUNNING=1,
+    staleRunningCount=0, heartbeat healthy 0.5 min old, 160 completions/6h. Engine is
+    processing, not wedged in the stuck-RUNNING sense t-167 documents, but the backlog depth
+    itself is a relevant relay-health signal for whoever does the hands-on diagnosis. No
+    action taken beyond recording.
+  updated: '2026-09-15T21:34:15Z'
 
 - id: t-168
   milestone: m2
