@@ -83,6 +83,16 @@ matching the worker naming convention (`worker/<project>-<task-id>-*` or bare
 silent "clean". Advisory only: it never opens a PR itself, since whether the
 branch is real, safe, on-task work is still a judgment call.
 
+conductor/t-164: the title-search pass (1) and the stranded-branch pass (3)
+above both used to scan every repo in ALL_TRACKED_REPOS for every task they
+checked — fine at a handful of tracked repos, but an ever-larger constant
+cost per otherwise-clean task as that list grows. Both now narrow to
+`task_relevant_repos(task)` first: repos the task's own title/note already
+cites via a PR reference or its `implementation_pr` field, falling back to
+the full tracked-repo list only when the task cites none. The per-run
+caches (`repo_pr_cache`, `branch_cache`, `open_pr_heads_cache`) are still
+shared across every task and repo touched in a run, narrowed or not.
+
 Exit codes:
   0 = verified clean (no high-confidence, remaining-scope, weak, or stranded-
       branch findings, nothing unresolved)
@@ -280,6 +290,37 @@ def find_all_pr_refs(text: str) -> list[tuple[str, int]]:
         if pair not in seen:
             seen.append(pair)
     return seen
+
+
+def task_relevant_repos(
+    task: dict[str, Any], default: list[str] = ALL_TRACKED_REPOS
+) -> list[str]:
+    """Narrow the repo list to scan for a task from repos its own title/note
+    history has already cited, falling back to `default` (the full tracked-
+    repo list) when none are found.
+
+    Kaizen from conductor/t-150 (conductor/t-164): the title-search and
+    stranded-branch passes both scan every repo in ALL_TRACKED_REPOS for
+    every task, which is an ever-larger constant-factor cost per otherwise-
+    clean task as the tracked-repo list grows. A task's own title/note
+    already names the repo(s) that actually matter for it via PR references
+    (`find_all_pr_refs`, the same extraction find_field_stale_findings and
+    the note-reference fallback pass already rely on) and its
+    `implementation_pr` field — a much cheaper and equally strong signal
+    than scanning everything. Order is first-seen, `implementation_pr` last
+    (it is pass-0's job to resolve that field directly; here it is just one
+    more repo hint if the task falls through to search/stranded-branch at
+    all).
+    """
+    text = f"{task.get('title', '')}\n{task.get('note', '')}"
+    cited: list[str] = []
+    for repo, _number in find_all_pr_refs(text):
+        if repo in ALL_TRACKED_REPOS and repo not in cited:
+            cited.append(repo)
+    parsed = parse_implementation_pr(task.get("implementation_pr"))
+    if parsed and parsed[0] in ALL_TRACKED_REPOS and parsed[0] not in cited:
+        cited.append(parsed[0])
+    return cited or list(default)
 
 
 def _iter_in_progress_tasks(
@@ -521,6 +562,14 @@ def find_stranded_branch_candidates(
     that the title-search/note-reference passes cannot see, since there is
     genuinely no PR for either of them to find.
 
+    `repos` is the fallback full tracked-repo list. conductor/t-164: each
+    task is actually checked against `task_relevant_repos(task, repos)` — its
+    own title/note-cited repos first, falling back to `repos` only when the
+    task cites none — so an otherwise-clean task with a narrow citation
+    history doesn't pay for a branch/open-PR listing on every tracked repo.
+    The branch/open-PR caches below are still shared across every task and
+    repo checked in this call, narrowed or not.
+
     Returns (findings, failed). `findings` holds tasks with a matching branch
     and no open PR against it. `failed` holds tasks where a repo's branch or
     open-PR listing itself failed for every repo checked before a match (or
@@ -539,7 +588,7 @@ def find_stranded_branch_candidates(
         project, task_id = task["project"], task["task_id"]
         any_lookup_failed = False
         matched: dict[str, Any] | None = None
-        for repo in repos:
+        for repo in task_relevant_repos(task, repos):
             if repo not in branch_cache:
                 branch_cache[repo] = gh_list_repo_branches(repo, token)
             branches = branch_cache[repo]
@@ -812,13 +861,17 @@ def check_drift(
     # Pass 1 (authoritative title search): only for tasks with no usable
     # implementation_pr field. `repo_pr_cache` is shared across every task
     # checked below so each tracked repo's PR list is paginated at most once
-    # per run (conductor/t-153), not once per task.
+    # per run (conductor/t-153), not once per task. conductor/t-164: each
+    # task's own repo list is narrowed from its title/note history first
+    # (task_relevant_repos), falling back to ALL_TRACKED_REPOS only when the
+    # task cites none — the shared cache still applies across tasks that
+    # narrow to the same repo(s).
     search_candidates = []
     search_failed_tasks = []
     repo_pr_cache: dict[str, list[dict[str, Any]] | None] = {}
     for task in search_tasks:
         results = gh_search_task_prs(
-            ALL_TRACKED_REPOS,
+            task_relevant_repos(task),
             task["project"],
             task["task_id"],
             token,

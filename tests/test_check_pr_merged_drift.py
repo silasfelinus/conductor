@@ -156,6 +156,72 @@ def test_find_all_pr_refs_empty_text_returns_empty_list():
 
 
 # --------------------------------------------------------------------------- #
+# task_relevant_repos (conductor/t-164)
+# --------------------------------------------------------------------------- #
+
+
+def test_task_relevant_repos_falls_back_to_default_with_no_citations():
+    task = {"title": "Do a thing", "note": "No PR references here."}
+    assert dr.task_relevant_repos(task, ["a/one", "a/two"]) == ["a/one", "a/two"]
+
+
+def test_task_relevant_repos_narrows_from_note_alias_reference():
+    task = {"title": "t-081", "note": "kind_robots PR #1464 landed this."}
+    assert dr.task_relevant_repos(task, dr.ALL_TRACKED_REPOS) == [
+        "silasfelinus/kind_robots"
+    ]
+
+
+def test_task_relevant_repos_narrows_from_bare_owner_repo_reference():
+    task = {"title": "t-081", "note": "See silasfelinus/kind_robots#1464."}
+    assert dr.task_relevant_repos(task, dr.ALL_TRACKED_REPOS) == [
+        "silasfelinus/kind_robots"
+    ]
+
+
+def test_task_relevant_repos_includes_implementation_pr_field():
+    task = {
+        "title": "t-081",
+        "note": "",
+        "implementation_pr": "silasfelinus/kindrobots-unraid#12",
+    }
+    assert dr.task_relevant_repos(task, dr.ALL_TRACKED_REPOS) == [
+        "silasfelinus/kindrobots-unraid"
+    ]
+
+
+def test_task_relevant_repos_dedupes_and_preserves_first_seen_order():
+    task = {
+        "title": "t-081",
+        "note": (
+            "silasfelinus/kind_robots#10 first, then silasfelinus/conductor#20, "
+            "then silasfelinus/kind_robots#10 again."
+        ),
+        "implementation_pr": "silasfelinus/conductor#20",
+    }
+    assert dr.task_relevant_repos(task, dr.ALL_TRACKED_REPOS) == [
+        "silasfelinus/kind_robots",
+        "silasfelinus/conductor",
+    ]
+
+
+def test_task_relevant_repos_ignores_untracked_repo_reference():
+    # A cited repo outside ALL_TRACKED_REPOS is not a useful narrowing signal
+    # (this script cannot scan a repo it doesn't track), so it's dropped and
+    # the task falls back to the default list rather than narrowing to [].
+    task = {"title": "t-081", "note": "See someoneelse/other-repo#5."}
+    assert dr.task_relevant_repos(task, ["a/one"]) == ["a/one"]
+
+
+def test_task_relevant_repos_missing_fields_fall_back_to_default():
+    # find_stranded_branch_candidates' existing tests pass bare
+    # {"project", "task_id", "status"} tasks with no title/note at all --
+    # this must behave exactly like "no citations found", not raise.
+    task = {"project": "cthulhuquarium", "task_id": "t-076", "status": "review"}
+    assert dr.task_relevant_repos(task, ["a/one"]) == ["a/one"]
+
+
+# --------------------------------------------------------------------------- #
 # find_field_stale_findings (conductor/t-139)
 # --------------------------------------------------------------------------- #
 
@@ -765,6 +831,48 @@ def test_find_stranded_branch_candidates_skips_call_with_no_tasks():
     assert findings == []
     assert failed == []
     mock_urlopen.assert_not_called()
+
+
+def test_find_stranded_branch_candidates_narrows_to_task_cited_repo(monkeypatch):
+    # conductor/t-164: a task whose own note cites only kindrobots-unraid must
+    # not trigger a branch/open-PR lookup against kind_robots too, even though
+    # kind_robots is in the passed-in fallback `repos` list.
+    tasks = [{
+        "project": "cthulhuquarium",
+        "task_id": "t-076",
+        "status": "review",
+        "title": "t-076",
+        "note": "silasfelinus/kindrobots-unraid#9 is the branch to check.",
+    }]
+    seen_repos: list[str] = []
+
+    def fake_urlopen(req, timeout=10):
+        url = req.full_url if hasattr(req, "full_url") else req
+        m = re.search(r"/repos/([^/]+/[^/]+)/", url)
+        if m:
+            seen_repos.append(m.group(1))
+        return FakeResponse(b"[]")
+
+    with patch("urllib.request.urlopen", side_effect=fake_urlopen):
+        findings, failed = dr.find_stranded_branch_candidates(
+            tasks, ["silasfelinus/kind_robots", "silasfelinus/kindrobots-unraid"], token=None
+        )
+    assert findings == []
+    assert failed == []
+    assert seen_repos == ["silasfelinus/kindrobots-unraid"]
+
+
+def test_gh_search_task_prs_wiring_uses_task_relevant_repos_via_check_drift():
+    # Narrower, focused check that task_relevant_repos itself picks the exact
+    # subset check_drift's Pass 1 would then hand to gh_search_task_prs --
+    # the full orchestration is covered by the check_drift tests below.
+    task = {
+        "project": "interface-vision",
+        "task_id": "t-081",
+        "title": "t-081",
+        "note": "kind_robots PR #1464 is the implementation.",
+    }
+    assert dr.task_relevant_repos(task) == ["silasfelinus/kind_robots"]
 
 
 # --------------------------------------------------------------------------- #
