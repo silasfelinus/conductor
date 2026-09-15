@@ -469,7 +469,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 52
     stakes: reversible
@@ -485,7 +485,10 @@ tasks:
       Cycle 105 (conductor scheduled Agent run, verified no-op): read the four genuinely unaudited run/item-level API routes (items/[id].patch.ts, runs/[id].delete.ts, runs/[id].get.ts, runs/[id].patch.ts) plus model-builder-source-picker.vue and model-builder-run-history.vue in full, following cycle 104's "pick a genuinely different Model Builder subsystem" lead. All already carry the same defense-in-depth pattern established across prior cycles (fresh-read stage-status merges re-checked inside the write transaction, per-field length caps matching DB column widths, revision audit trail, confirm-to-cancel UI, full empty/error/loading state coverage) -- no new gap found. runs/[id].delete.ts intentionally omits assertRunWritable: deletion isn't the class of write that gate protects against (it cascade-deletes only this run's own ModelBuildItem/Artifact/Revision bookkeeping; targetType/targetId is a soft reference, so a committed Bot/Character/etc is untouched), and the route is not even reachable from the UI today -- model-builder-run-history.vue's trash button calls store.cancelRun (PATCH to CANCELLED), never DELETE. Confirmed via a full grep of stores/modelBuilderStore.ts and every model-builder/*.vue component for any DELETE-method call: none exists. Not treating an unused, correctly-guarded (assertRunAccess-checked) admin/API-only endpoint as a front-end polish gap. Also re-checked t-031's live-smoke-test blocker per its own "don't assume needs-human just because earlier sandboxes lacked Chromium" note: this session's environment does ship a pre-installed Chromium at /opt/pw-browsers/chromium (new relative to prior cycles), but kind_robots' own node_modules are not provisioned in this checkout (the playwright package is declared in package.json but not installed), and a full npm install just to test one page load was judged out of scope for this cycle. Did not conclude the documented proxy limitation is lifted -- AGENTS.md's prior finding was host-independent (byte-identical failure against example.com, not just kindrobots.org or Vercel) and this cycle produced no new evidence against it either way. Left t-031 exactly as-is (still `ready`, not gating anything else). Next lead: every component in this feature (model-builder-manager.vue, model-builder-item-panel.vue, model-builder-batch-editor.vue, model-builder-progress-matrix.vue, model-builder-recipe-selector.vue, model-builder-source-picker.vue, model-builder-run-history.vue) and every server route (commit.post.ts, batch.patch.ts, patch-policy.ts, relations.ts, artifacts.post.ts, the four routes read this cycle) has now had at least one dedicated close-reading cycle. A future cycle should default to cycle 56/66's method -- diff kind_robots activity since the last check against this feature's tracked files -- rather than re-reading the whole surface cold, or pick up t-031 if a working browser path ever opens up.
 
       Cycle 67 verified no-op: followed the roadmap's explicit cycle 56/66 method and checked fresh Kind Robots commit activity since the prior 2026-09-15T04:31:50Z audit across components/model-builder/**, stores/modelBuilderStore.ts, and server/api/model-builder/**. All three tracked surfaces have zero commits in that interval, so there is no fresh Model Builder code to regression-audit and re-reading the already exhaustively covered surface would manufacture work rather than improve it. No Kind Robots mutation or duplicate PR was created. Rearmed for a future cycle after fresh model-builder activity; if a working browser path becomes available, t-031 remains the higher-value live UX pass.
-    updated: '2026-09-15T11:17:17Z'
+    updated: '2026-09-15T17:31:38Z'
+    owner: worker
+    claimed_by: claude-20260915T173136Z-modelbuilder-t029
+    claimed_at: '2026-09-15T17:31:38Z'
 
   - id: t-030
     milestone: m6
