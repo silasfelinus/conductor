@@ -185,6 +185,29 @@ def extract_field(body: str, name: str) -> str | None:
     return " ".join(m.group(1).split()).strip() or None
 
 
+def load_talkback_text(root: Path) -> str:
+    """Concatenate archived talkback/YYYY-MM.md files with the root TALKBACK.md.
+
+    conductor/t-159 rotates fully-elapsed months out of root TALKBACK.md into
+    talkback/YYYY-MM.md, leaving only the current month in root. Reading root
+    alone would silently lose everything before the current month for `--since
+    all`. Archive files sort chronologically first (by filename), then the
+    root file (the current month) is appended last — order matters because
+    talkback_index() below keeps the LAST entry seen per (project, task,
+    outcome) key, so a genuine later re-close must still sort after an
+    earlier close of the same task across the root/archive split.
+    """
+    parts: list[str] = []
+    archive_dir = root / "talkback"
+    if archive_dir.is_dir():
+        for path in sorted(archive_dir.glob("*.md")):
+            parts.append(path.read_text(encoding="utf-8"))
+    root_file = root / "TALKBACK.md"
+    if root_file.is_file():
+        parts.append(root_file.read_text(encoding="utf-8"))
+    return "\n".join(parts)
+
+
 def talkback_index(text: str) -> dict[tuple[str, str, str], dict]:
     """Index the latest TALKBACK entry per (project, task, outcome).
 
@@ -373,8 +396,7 @@ def main(argv: list[str] | None = None) -> int:
 
     since = resolve_since(args.since)
     projects_dir = pte.ROOT / "projects"
-    talkback_file = pte.ROOT / "TALKBACK.md"
-    talkback_text = talkback_file.read_text(encoding="utf-8") if talkback_file.is_file() else ""
+    talkback_text = load_talkback_text(pte.ROOT)
 
     candidates = build_candidates(projects_dir, talkback_text, since, args.source)
     if args.limit is not None:

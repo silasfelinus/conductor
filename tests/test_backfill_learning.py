@@ -233,6 +233,35 @@ def test_consumer_parses_after_backfill(tmp_path, monkeypatch):
     assert "Recent lessons" in report
 
 
+def test_load_talkback_text_concatenates_archives_before_root(tmp_path):
+    """conductor/t-159: --since all must still see months rotated out of root."""
+    (tmp_path / "talkback").mkdir()
+    (tmp_path / "talkback" / "2026-06.md").write_text(
+        "# archive\n\n## 2026-06-05 | Worker -> Reviewer | demo/t-001 | closed\nold close\n"
+    )
+    (tmp_path / "talkback" / "2026-07.md").write_text(
+        "# archive\n\n## 2026-07-05 | Worker -> Reviewer | demo/t-002 | closed\nmid close\n"
+    )
+    (tmp_path / "TALKBACK.md").write_text(
+        "# TALKBACK\n\n## 2026-09-05 | Worker -> Reviewer | demo/t-001 | closed\nre-close\n"
+    )
+    text = bl.load_talkback_text(tmp_path)
+    idx = bl.talkback_index(text)
+    # Archive months are present at all (not silently dropped by rotation)...
+    assert ("demo", "t-002", "done") in idx
+    # ...and a later root-file entry for the same (project, task, outcome) key
+    # still wins over an earlier archived one, because root sorts last.
+    assert idx[("demo", "t-001", "done")]["date"] == "2026-09-05"
+
+
+def test_load_talkback_text_with_no_archive_dir(tmp_path):
+    (tmp_path / "TALKBACK.md").write_text(
+        "# TALKBACK\n\n## 2026-09-05 | Worker -> Reviewer | demo/t-001 | closed\nclose\n"
+    )
+    text = bl.load_talkback_text(tmp_path)
+    assert "demo/t-001" in text
+
+
 def test_committed_ledger_schema_conformance():
     """Every record in the real committed ledger (existing + backfilled) conforms."""
     records = yaml.safe_load(REAL_LEDGER.read_text())["records"]
