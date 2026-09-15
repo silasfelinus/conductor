@@ -2852,7 +2852,7 @@ tasks:
   stakes: reversible
   passes: 0
   approved_by_human: false
-  note: |
+  note: >-
     FOR SILAS. Filed 2026-09-15. Deliberately narrow: this is the part of today's
     outage that t-165 does NOT cover, and it matters because it breaks t-165's
     working theory that the Flux.2 Klein checkpoint is the whole story.
@@ -2926,7 +2926,20 @@ tasks:
     (SMART_QUEUE_MAX_BYPASS = 24) is inert and the queue drains strictly
     oldest-first. With affinity on, the relay would prefer jobs whose checkpoint
     is already resident, making cold loads rare rather than routine.
-  updated: '2026-09-15T13:20:00Z'
+
+    UPDATE 2026-09-15T~19:30Z (workflow-medic sweep): a fourth job stalled the same way
+    today, on a different engine again -- ArtJob 23052, a coloring-book Kontext generate-bw
+    canary (monster-recast mr-016, queued via process-color-art-events.yml), timed out after
+    900s never leaving queued/running, several hours after this task last relay-wedge note.
+    coloring-book/t-039 (separately needs-human, tracking a suspected Kontext render defect)
+    had been treating its own canary failures as a render/graph-correctness issue, but this
+    occurrence symptom -- never completing, not completing-with-bad-output -- matches this
+    task cold-model-load wedge pattern rather than t-039 original diagnosis. Recorded here
+    so whoever investigates the relay treats Kontext/coloring-book jobs as in-scope too, not
+    just Flux.2/Pony. Removed the stale queued retry event from color-art-events/ to stop it
+    re-failing process-color-art-events.yml every 6h in the meantime (t-039 already
+    independently concluded not to resume live canaries as of its own 09:28Z update).
+  updated: '2026-09-15T19:33:46Z'
 
 - id: t-168
   milestone: m2
