@@ -1944,7 +1944,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: Generate owned preview art for the LoRA catalog, starting with the 223 blind rows
-  status: claimed
+  status: ready
   owner: worker
   stakes: reversible
   passes: 0
@@ -2149,7 +2149,29 @@ tasks:
     actionable step unchanged: once t-165/t-167 clear (or enough stable time passes), re-
     plan (do not reuse the stale probe-plan) and continue queuing the remaining ~101
     comfy/sdxl plans in small batches, holding the 13 flux plans for last.
-  updated: '2026-09-15T21:33:08Z'
+
+    PROGRESS (scheduled Conductor session, 2026-09-15T21:33Z): claimed to re-plan and
+    continue the small-batch rollout per the prior cycle's next step. Before queuing
+    anything, checked /api/art/queue/stats fresh and found the live queueDepth had grown
+    sharply since the 16:30Z session: PENDING now 2070 (up from ~104 earlier today), RUNNING
+    1, staleRunningCount 0, oldestPending is ArtJob 23040 (coloring-book project) aged
+    ~7.8h. check_render_box.py still reports UP with a healthy 0.5-minute-old heartbeat and
+    160 completions in the last 6h, so this is not the same stale/stuck-RUNNING wedge
+    signature as t-165/t-167 -- the engine is actively processing -- but at ~160/6h
+    throughput against a 2070-deep queue, a newly-queued LoRA-preview batch would sit for
+    many hours before rendering, and this cycle cannot verify completion (the actual proof-
+    of-write-back this task still needs) within a single session at that depth. Appended
+    this queue-depth data point to conductor/t-165 and t-167 as fresh relay-health evidence
+    rather than opening a new escalation, since it is the same underlying incident class
+    (post-wedge backlog, not a new independent defect). Did not submit a new probe-plan or
+    enqueue any jobs this cycle to avoid adding to an already backed-up queue with no
+    ability to verify the outcome. Re-arming to ready, releasing the claim. Next actionable
+    step: once the live queue depth drains back toward its normal range (check
+    /api/art/queue/stats before assuming stability from heartbeat alone) or enough time has
+    passed, re-plan via /api/lora/probe-plan {scope: blind} (the considered set shrinks as
+    jobs land elsewhere) and continue the small-batch comfy/sdxl rollout, holding the 13
+    flux plans for last.
+  updated: '2026-09-15T21:33:59Z'
   claimed_by: claude-20260915T213307Z-kindrobots-t105-batch2
   claimed_at: '2026-09-15T21:33:08Z'
   implementation_pr: 'silasfelinus/conductor#4442'
