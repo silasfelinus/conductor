@@ -14044,3 +14044,25 @@ records:
     flakiness, unrelated to note content). Lesson for a future note-format audit: a
     `>-`/`|-` label mismatch alone is not evidence of damage -- verify by sampling actual
     entry boundaries for coherence before assuming restoration work is needed.
+- date: 2026-09-15
+  project: storybook
+  task: t-050
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: |-
+    Clean first-pass mechanical kaizen: mirrored t-048's isMediaOriginReachable() guard
+    exactly onto verifyAcademyExamplesManifest.ts, the one sibling script t-048's own PR
+    (#2767) didn't cover despite sharing the identical unguarded-live-fetch shape.
+    Verified both paths concretely rather than trusting the diff: ran the check normally
+    (reachable) and again with MEDIA_ORIGIN pointed at a nonexistent host (simulated
+    unreachable), confirming exit 0 + warning on the latter instead of a hard failure.
+    kind_robots PR #2772's Contract verifiers check -- the one conductor/t-132 tracks as
+    occasionally hanging for 15-40+ minutes with zero step progress -- completed normally
+    this run, one more data point for that task's "monitor, don't force a repo-side fix"
+    conclusion. Lesson: when a kaizen task says "mirror X's diff exactly," find the
+    original commit first (git log/show) rather than reconstructing the pattern from
+    the task note's prose -- guarantees the two implementations stay byte-identical in
+    shape.
