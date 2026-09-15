@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-15T07:16:33Z
+Generated: 2026-09-15T07:21:34Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **966**
-- Outcomes: blocked: 16, cancelled: 1, done: 949
+- Closed tasks recorded: **967**
+- Outcomes: blocked: 16, cancelled: 1, done: 950
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -25,7 +25,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | brainstorm | 26 | 96% |
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
-| coloring-book | 35 | 100% |
+| coloring-book | 36 | 100% |
 | conductor | 104 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 51 | 98% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 949 | 99% |
+| software | 950 | 99% |
 
 ## Failure categories
 
@@ -77,7 +77,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 |---|---|
 | quality | 24 |
 | transient | 15 |
-| actionable | 14 |
+| actionable | 15 |
 | scope | 3 |
 
 ## Kaizen targets
@@ -86,11 +86,12 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - kind `content` — 47% success over 17 closed tasks; aim the next kaizen task here
 - failure category `quality` — 24 occurrences; look for the shared cause across its records
 - failure category `transient` — 15 occurrences; look for the shared cause across its records
-- failure category `actionable` — 14 occurrences; look for the shared cause across its records
+- failure category `actionable` — 15 occurrences; look for the shared cause across its records
 - failure category `scope` — 3 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-09-15 `coloring-book/t-022` — manage_coloring_book_production.py's generate-bw leaves a stale bw_job_id/bw_status: running entry unrecovered indefinitely unless a future cycle happens to re-request that exact proposal id -- five Monster Recast slots (mr-005/007/009/011/012) sat at a week-old running status even though the render backend had actually completed and mechanically rejected all five as Kontext-engine noise a day after submission. Recovering them in one pass raised t-039's known-defect count from 2 to 7 of 7 checked attempts (100% failure), which is a materially different finding than "two isolated misses" -- when a recurring production task's queue-status tooling only reports the current batch, periodically sweep every bw_status/render_gate_error still marked running/pending regardless of the active batch, since a silently-completed-and-rejected job looks identical to a still-pending one until someone re-checks it.
 - 2026-09-15 `model-builder/t-029` — A text-truncation guard that only asserts pickText()'s own cap (verifyModelBuilderCommitTextTruncationGuard.ts, cycle 33) does not cover every place raw user/AI text reaches a bounded DB column -- commit.post.ts's updateText()/createRecord() also assigned the raw, uncapped pitch/fieldsDraft blob directly as a fallback for Bot.description/botIntro/prompt (bounded VarChar columns) whenever the FIELDS stage left those blank, bypassing pickText and its cap entirely. When auditing a text-length bug class, trace every write site for the affected columns, not just the ones that already go through the sanctioned helper -- a fallback path written before or after the helper call is exactly where the same bug re-enters uncaught.
 - 2026-09-15 `conductor/t-159` — Rotating an append-only log (TALKBACK.md) into monthly archives is safe when every archive write is verified byte-for-byte round-trip (write, re-read, re-extract, compare) before the source is ever rewritten, and the one real consumer that whole-file-parses the source for historical data (backfill_learning.py's --since all) gets fixed to read the archive directory too -- the archival carve-out only holds if every consumer of the pre-split file is checked, not just the file split itself.
 - 2026-09-15 `conductor/t-163` — Factored close_task.py's equal/not-equal branch-tip check (t-161) into scripts/branch_ancestry.py's classify_relationship(), a pure primitive over `git merge-base --is-ancestor` that names the actual relationship (equal/ahead/ behind/diverged) instead of a bare SHA comparison. Refusal behavior is unchanged -- only "equal" is safe to build on -- but the primitive is now independently unit-tested and reusable. claim_task.py's branch-naming paths were flagged (not yet audited) as a plausible next caller of the same primitive.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-14 `coloring-book/t-022` — consume_coloring_book_studio_request.py had two independent call sites referencing coloring functions that were never actually defined (record_semantic_gate_error, fixed cycle 2; record_semantic_rejection, fixed cycle 8, same day) -- both a mismatch between this wrapper's error handling and consume_coloring_book_color_art.py's real public API, each only discovered by hitting the exact code path live. A single pass grepping every coloring.<name> call in the wrapper against the other module's actual def list would have caught both in one sitting instead of one crash at a time; filed as this cycle's kaizen suggestion rather than done inline to keep the cycle's diff scoped to the crash actually hit.
 - 2026-09-14 `coloring-book/t-046` — Pinning a regression fixture against a real approved/ corpus is itself a calibration exercise, not just a testing exercise: building tests/test_art_quality.py to cover BW_*, COLOR_MIN_*, and TINT_* (as the task's own note asked) surfaced that BW_MIN_WHITE_FRACTION=0.30 would reject 4 of 17 real Silas-approved bw masters -- dense, heavily-shaded/stippled line art that is genuinely black-and-white by every other measure but has less open background than a simpler page. The fixture only becomes trustworthy once every real approved file actually lands on the correct side of it; a fixture that pins current behavior without checking it against real data first would have baked in the same false-rejection the threshold itself has. Visually inspecting the specific failing files (not just their stats) before touching the constant is what distinguished 'bad threshold' from 'bad data' -- same lesson as t-045's masked-countess case, now generalized to a second threshold family.
 - 2026-09-14 `coloring-book/t-045` — Calibrating a quality-gate threshold against a bad example alone is not enough -- the first two signal designs tried here (global pixel-count hue histogram, then a spatial per-cell hue-family count) both caught mr-025's sepia wash cleanly but were never tested against the real *approved* corpus until asked to be, and both turned out to false-positive on genuinely good, Silas-approved art (masked-countess-color.webp) once they were. The spatial design's failure mode was subtle: it looked spatially principled but still only counted pixels above the same 'colorful' saturation cutoff, so a real illustration whose non-primary elements (black cloak, white mask, gold trim) are desaturated collapsed to the same single-family signal as an actual wash. What worked was measuring hue consistency in the *opposite* band -- the low-saturation pixels every other check ignores -- because that's the band a duotone/sepia tone-curve filter actually tints and a real illustration's true neutrals do not. Any pixel-statistic quality gate needs its negative-space calibration (the full trusted-good corpus, not just the one known-bad case) run before landing, and visually inspecting the disputed calibration file directly (not just its stats) is what actually explained why the second design failed.
-- 2026-09-14 `kind-robots/t-098` — Session-end reconciliation caught this: implementation PR kind_robots#2727 merged over 2 hours before this sweep ran, but the roadmap task was left at status: review with a malformed implementation_pr field (a raw https:// URL instead of the owner/repo#N format check_pr_merged_drift.py's authoritative pass expects) -- so the drift check's title-text fallback caught it instead. Whatever closed the implementing PR didn't finish the roadmap close-out step in the same run. Reconciling promptly (same session that ran the drift check, not deferred) keeps status: review tasks from accumulating as false 'awaiting review' signals for a PR that already landed.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-15T07:16:33Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-15T07:21:34Z_
