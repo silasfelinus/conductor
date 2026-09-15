@@ -13800,3 +13800,16 @@ records:
     unchanged -- only "equal" is safe to build on -- but the primitive is now
     independently unit-tested and reusable. claim_task.py''s branch-naming paths
     were flagged (not yet audited) as a plausible next caller of the same primitive.'
+- date: '2026-09-15'
+  project: conductor
+  task: t-159
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Rotating an append-only log (TALKBACK.md) into monthly archives is safe when every archive write
+    is verified byte-for-byte round-trip (write, re-read, re-extract, compare) before the source is ever
+    rewritten, and the one real consumer that whole-file-parses the source for historical data (backfill_learning.py's
+    --since all) gets fixed to read the archive directory too -- the archival carve-out only holds if
+    every consumer of the pre-split file is checked, not just the file split itself.
