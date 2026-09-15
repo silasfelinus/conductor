@@ -1864,8 +1864,39 @@ tasks:
          npx tsx scripts/generate_facet_art.ts --write --repair-tainted
        acrocatranch.com:5544 is outside the web sandbox's network policy (TCP timeout), so the producer cannot run from a web session at all; only the HTTPS API is reachable. Enqueuing through /api/art/enqueue instead was considered and rejected: it bypasses the producer's idempotency key, facetArtworkVersion provenance and requireCompletionProof, which is the same provenance gap that let dream-cycle/t-026 log 36 "complete" bundles over an empty Character for six weeks. The dry run was rehearsed offline against all 1,633 live Facets instead: 0 contract rejections, so the sweep will not abort mid-run the way the 2026-09-05 repair did.
 
-    2. Decide what the 55 PROMPT_ENHANCEMENT Facets should show. "4k render" and "award-winning" name nothing visible, so no prompt renders them well; v4 gave them unrelated anime portraits, and a repair render is just a different arbitrary picture. The producer now reports them rather than re-rolling them. facetCatalogAudit already flags this shape as prompt-cargo-cult -> suppress-random, so the real options are: suppress the art slot, retire the rows as randomizables, or accept decorative filler. That is a catalog call, not a render call, which is why it is gated here rather than decided in the PR.
-  updated: '2026-09-14T23:50:00Z'
+    2. DECIDED 2026-09-15 by Silas, and implemented in kind_robots PR #2739
+       ("If they are useless, kill them. The others do the swatch branch").
+       The pack is 59 rows and it splits: 13 are quality incantations with
+       nothing to depict (masterpiece, 4k render, trending on ArtStation,
+       perfect anatomy, ...) and 46 are real visual techniques (depth of field,
+       subsurface scattering, oil on canvas effect) that can be shown but not in
+       the abstract. An earlier reading of this task called all 55 non-depictable;
+       that was wrong for the 46, and the correction is what the split is built on.
+
+       The 13 are withdrawn by utils/scripts/retireCargoCultPromptEnhancements.ts
+       -- deactivated, de-randomized, art requirement released. NOT deleted:
+       RewardFacet links, ArtImage facet snapshots and saved Builder sheets
+       reference those rows. `--apply --restore` reverses it; hard removal is
+       cleanupRetiredFacetShells.ts, which migrates edges first.
+
+       The 46 render a fixed-subject swatch -- one ripe pear and one glass marble
+       on a bare table -- with the technique named first, so the technique is the
+       only variable across the 46 cards.
+
+    WHAT STILL NEEDS SILAS: only the two runs, both on Alexandria where the
+    database is reachable. The decision is made and the code is on main.
+
+      npx tsx utils/scripts/retireCargoCultPromptEnhancements.ts           # dry run
+      npx tsx utils/scripts/retireCargoCultPromptEnhancements.ts --apply
+      npx tsx scripts/generate_facet_art.ts --write --repair-tainted
+
+    Order does not matter; the producer skips retired rows by policy either way.
+    Repair cohort is now 252 (204 genre/occupation/archetype + 46 swatches);
+    diffed against main to confirm the 204 already dry-run on 2026-09-14 are
+    byte-identical, so a --write before or after #2739 queues the same jobs.
+    Close this task once both runs are done and the picker has been spot-checked.
+  updated: '2026-09-15T02:05:40Z'
+  approved_by_human: true
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
