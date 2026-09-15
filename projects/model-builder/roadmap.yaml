@@ -469,7 +469,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 52
     stakes: reversible
@@ -494,7 +494,10 @@ tasks:
       Cycle 103 (conductor scheduled Agent run): read modelBuilderFields.ts/modelBuilderRecipes.ts end-to-end (cycle 102's next-lead pointer) and cross-referenced commit.post.ts's SHORT_TEXT_MAX/NAME_MAX overrides against live prisma/schema.prisma column widths for every model-builder target -- all already correct, no drift. Continuing the cross-reference into updateText()/createRecord() found a real, reachable gap: the raw (item.pitch || item.fieldsDraft || '').trim() blob ('text') is written directly, bypassing pickText()'s own SHORT_TEXT_MAX cap entirely, as the fallback for Bot.description (every Bot UPDATE, unconditionally) and Bot.botIntro/prompt (Bot CREATE via expand-manager-bot/expand-narrator-bot, whenever FIELDS left those blank -- a normal state). ModelBuildItem.pitch/fieldsDraft are unbounded @db.Text columns; Bot.description/botIntro/prompt are bounded VarChar(764)/VarChar(3000)/VarChar(764), two NOT NULL. Every other CREATE/UPDATE target's equivalent column is @db.Text (unbounded), so this was harmless everywhere except Bot. Added capToBotWidth(), applying pickText's own slice-to-cap behavior to this one raw-text fallback path, plus utils/scripts/verifyModelBuilderCommitRawTextFallbackGuard.ts (+ .test.ts) wired into package.json and contract-tests.yml. Verified: new guard fails pre-fix / passes post-fix (git-stash round-trip); all 173 test:model-builder-* scripts pass; test:model-builder- contract-tests-coverage-guard confirms CI wiring; eslint clean; prettier --check clean; vue-tsc --noEmit repo-wide exit 0. Merged as kind_robots PR #2742 (squash e8170658), 48/49 CI checks green before merge (only the standard non-required Build production image deploy job still in flight, matching every prior cycle's merge-when-unstable precedent). Re-arming to ready per this task's recurring:true convention. Next lead: the SHORT_TEXT_MAX/NAME_MAX cross-reference this cycle ran manually -- a future cycle could extend verifyModelBuilderCommitTextTruncationGuard.ts's schema-walking approach to assert NAME_MAX automatically the same way, or pick up the end-to-end surface-read rotation / a different subsystem slice.
 
       Cycle 104 (OpenAI scheduled audit, verified no-op): followed cycle 103's explicit next lead to extend the text-truncation guard's schema walk to NAME_MAX, and found that work already exists on current kind_robots main rather than being an open gap. utils/scripts/verifyModelBuilderCommitNameWidthGuard.ts already walks CREATE_TARGETS, prisma/schema.prisma identifier widths (including Prisma/MySQL's implicit 191-char String width), and commit.post.ts NAME_MAX; its selftest exists, package.json exposes both guard/selftest scripts, and .github/workflows/contract-tests.yml runs both. commit.post.ts already uses the per-target NAME_MAX map. This means implementing cycle 103's suggested follow-up would duplicate an existing cycle-35 regression guard, so no code change or PR was warranted. Next slice should not revisit NAME_MAX; pick a genuinely different Model Builder subsystem or leave the browser/runtime smoke path to t-031, which already owns it.
-    updated: '2026-09-15T04:25:00Z'
+    updated: '2026-09-15T04:29:25Z'
+    owner: worker
+    claimed_by: claude-scheduled-20260915T0427Z-mb-t029
+    claimed_at: '2026-09-15T04:29:25Z'
 
   - id: t-030
     milestone: m6
