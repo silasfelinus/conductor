@@ -14,7 +14,53 @@ The plan supplies:
 - rotating flavour Facets drawn from OCCUPATION, PERSONALITY, ARCHETYPE, QUIRK, THEME, SETTING, BACKSTORY, ROLE, ALIGNMENT, or STYLE,
 - one additional GENRE for each dependent asset,
 - one MATERIAL Facet,
+- the character's embodiment: one GENDER, one AGE, one BUILD, one HAIR and **two** ORIGIN Facets,
+- a `body` of `humanoid` or `creature`,
 - two planned taxonomy gaps for newly invented Facets.
+
+## Embodiment — the character's body is seeded
+
+Added 2026-09-15. Silas: *"there are lots of factors that could be switched. Hair color, style, age, gender presentation, body shape, size, racial background, default emotional state ... It would be great if we could utilize something so there is more diversity automatically roled when creating characters without such guidance."*
+
+The catalog was deep on what a character IS and empty on what a character LOOKS like, so `look` was authored under no constraint at all — and unconstrained authoring converges. Measured across all 98 characters this pipeline had produced up to that date:
+
+| axis | coverage |
+| --- | --- |
+| saturated hair colour | 0.0% |
+| long hair | 0.0% |
+| hair mentioned at all | 23.5% |
+| explicit age | 14.3% |
+| human skin tone | 9.2% |
+| any stated affect | 14.3% |
+| she/her vs he/him | 39.8% vs 9.2% (they/them 3.1%) |
+
+Every axis the plan rolled came out varied. Every axis it did not roll collapsed to a single value: *"a wiry woman in a patched coat with close-cropped grey hair and a scar."* Diversity was never a prompting problem; it was a missing seed.
+
+**All five axes draw every day.** They are deliberately not rotated the way flavour taxonomies are: each measured at or near zero, so a rotation would leave most days still unrolled on most axes.
+
+### `body` is rolled, not assumed
+
+Whether the protagonist is a person or an animal used to be an unstated authoring choice that the creature Facet merely nudged — some days the otter was the lead, some days it sat on a human's shoulder, with nothing deciding which. It is now drawn. When `body` is `humanoid`, the creature Facet is someone or something else in the character's world. When it is `creature`, the creature Facet is what the character IS.
+
+### ORIGIN is culture, never phenotype
+
+This is what makes heritage safe to roll on a catalog where most characters are not human. Silas: *"we should figure out how to deal with non-humans so we don't get 'southeast asian/canadian walrus'."*
+
+A walrus raised in a Lisbon-facing trade quarter wears that quarter's oilcloth and swears by its saints. It does not have its people's cheekbones. Humanoid complexion is **derived from ORIGIN by the author**, which is why there is deliberately no COMPLEXION or ETHNICITY taxonomy — a standalone phenotype table read per character is precisely the shape that tokenizes. Two ORIGIN Facets draw rather than one, because a blend reads as a person where a single label reads as a label; this mirrors Silas's own practice: *"I usually choose a blend of 1-2 countries of origin with an ethnicity wildcard ... it works to provide diversity."*
+
+**The anti-stereotype rule.** An ORIGIN may shape **material specifics only** — a textile, a dish, a craft, a tool, a script, a naming convention, how something is worn or mended. It may **never** shape temperament, morality, competence, or personality. Those came from PERSONALITY and ALIGNMENT, which are rolled separately precisely so that origin does not predict them. Any proposal where the origin explains the character's disposition has broken this contract and needs revision.
+
+### Anatomy scope
+
+Every embodiment Facet declares a scope of `any`, `humanoid`, or `creature`, and the planner draws only what fits the day's `body`. Box braids need hands and head hair; a brindled coat needs fur. ORIGIN is `any` throughout, by definition — culture attaches to any body.
+
+### These axes are never auto-invented
+
+GENDER and ORIGIN are excluded from `INVENTABLE_TAXONOMIES` because a nightly script inventing an ethnicity or a gender, unreviewed, and then seeding it into every future dream is this feature's worst failure mode. AGE, BUILD and HAIR are excluded for a quieter reason: an invented body descriptor is overwhelmingly likely to be a near-synonym of an existing one, and a catalog of near-duplicate body words re-narrows exactly the axis this was built to widen. New entries are hand-added to kind_robots' `utils/seeds/facetEmbodimentValues.ts`.
+
+### The body must reach `look`
+
+A Facet linked to the record but absent from `look` changes no pixel. That is the mirror image of dream-cycle/t-026, where Facets were recorded as applied over a Character that held none: both read as "complete" from the pipeline end, and neither changes a rendered image. The brief therefore requires every embodiment seed to be visible in `look`, **expressed rather than listed** — `look` must read as one observed person, not a character sheet — and requires a visible default expression derived from the PERSONALITY Facet, since only 14.3% of characters stated any affect at all.
 
 ## Fusion rule
 

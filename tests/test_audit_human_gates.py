@@ -396,3 +396,70 @@ def test_scan_priority_rank_defaults_to_alphabetical_without_priority_file(tmp_p
 
     gates = audit.scan(tmp_path / "projects")
     assert [gate["project"] for gate in gates] == ["alpha", "beta"]
+
+
+def test_continuous_projects_are_workable_not_inactive(tmp_path):
+    """A `continuous` project's gates must be reported like an `active` one's.
+
+    Found 2026-09-15: the scan compared lifecycle against ACTIVE_STATUS alone
+    while priority_ranks ranked via ordered_workable_slugs, which treats
+    active AND continuous as workable. The two disagreed, so every gate in a
+    continuous project (interface-vision, animation-manager, dream-cycle) was
+    silently dropped -- the one tool built to surface what only Silas can
+    unblock could not see them, and the module docstring already scoped the
+    suppression to "paused/retired/finished".
+    """
+    projects = tmp_path / "projects"
+    for slug in ("steady", "tabled"):
+        (projects / slug).mkdir(parents=True)
+        (projects / slug / "roadmap.yaml").write_text(
+            "tasks:\n"
+            "- id: t-001\n"
+            f"  title: Gate in {slug}\n"
+            "  status: needs-human\n"
+            "  stakes: outward-facing\n",
+            encoding="utf-8",
+        )
+    (projects / "priority.yaml").write_text(
+        "order:\n  - steady\n  - tabled\n", encoding="utf-8"
+    )
+    overrides = tmp_path / "project-overrides.yaml"
+    overrides.write_text(
+        "overrides:\n"
+        "  - slug: steady\n"
+        "    status: continuous\n"
+        "  - slug: tabled\n"
+        "    status: retired\n",
+        encoding="utf-8",
+    )
+
+    gates = audit.scan(projects_dir=projects, overrides_path=overrides)
+    found = {(gate["project"], gate["task_id"]) for gate in gates}
+    assert ("steady", "t-001") in found, "a continuous project's gate must be reported"
+    # The retired project stays suppressed, which is the behaviour this filter
+    # exists for (career-transition/pinball-hero, CLAUDE.md 2026-07-25).
+    assert ("tabled", "t-001") not in found
+    # And it is ranked, not "outside the queue" -- continuous projects are in
+    # the workable walk.
+    steady = next(gate for gate in gates if gate["project"] == "steady")
+    assert steady["priority_rank"] is not None
+
+
+def test_retired_project_still_suppressed_unless_sweeping(tmp_path):
+    projects = tmp_path / "projects"
+    (projects / "gone").mkdir(parents=True)
+    (projects / "gone" / "roadmap.yaml").write_text(
+        "tasks:\n- id: t-001\n  title: Old gate\n  status: needs-human\n",
+        encoding="utf-8",
+    )
+    (projects / "priority.yaml").write_text("order:\n  - gone\n", encoding="utf-8")
+    overrides = tmp_path / "project-overrides.yaml"
+    overrides.write_text(
+        "overrides:\n  - slug: gone\n    status: retired\n", encoding="utf-8"
+    )
+
+    assert audit.scan(projects_dir=projects, overrides_path=overrides) == []
+    swept = audit.scan(
+        projects_dir=projects, overrides_path=overrides, include_inactive=True
+    )
+    assert [(gate["project"], gate["task_id"]) for gate in swept] == [("gone", "t-001")]

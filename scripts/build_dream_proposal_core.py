@@ -45,7 +45,48 @@ FALLBACK_FACETS = {
  "BACKSTORY": ["demoted|Demoted", "raised-by-committee|Raised By Committee", "sole-survivor|Sole Survivor", "bought-out|Bought Out", "returned-late|Returned Late"],
  "ROLE": ["witness|Witness", "fixer|Fixer", "understudy|Understudy", "inspector|Inspector", "courier|Courier"],
  "ALIGNMENT": ["lawful-tired|Lawful Tired", "chaotic-kind|Chaotic Kind", "neutral-stubborn|Neutral Stubborn", "loyal-to-a-fault|Loyal To A Fault", "principled-broke|Principled Broke"],
+ # EMBODIMENT AXES (2026-09-15). Everything above describes what a character IS.
+ # Nothing described what a character LOOKED LIKE, so `look` was authored with
+ # no constraint at all -- and unconstrained authoring converges. Measured over
+ # all 98 characters this pipeline has produced: 0% had a saturated hair colour,
+ # 0% had long hair, 14.3% named an age, 9.2% named a skin tone, and she/her
+ # outnumbered he/him 4.3 to 1. Every axis this plan rolled came out varied;
+ # every axis it did not roll collapsed to "a wiry woman in a patched coat with
+ # close-cropped grey hair and a scar".
+ #
+ # A third field is the SCOPE: any | humanoid | creature. See _body_pool.
+ "GENDER": ["gender-masculine|Masculine|any", "gender-feminine|Feminine|any", "gender-non-binary|Non-Binary|any",
+   "gender-gender-fluid|Gender Fluid|any", "gender-pronouns-are-paperwork|Pronouns Are Paperwork|any"],
+ "AGE": ["age-barely-grown|Barely Grown|any", "age-late-twenties|Late Twenties|any",
+   "age-solidly-middle-aged|Solidly Middle-Aged|any", "age-freshly-elderly|Freshly Elderly|any",
+   "age-genuinely-ancient|Genuinely Ancient|any", "age-old-for-the-species|Old for the Species|creature"],
+ "BUILD": ["build-broad-and-soft|Broad and Soft|any", "build-fat-and-fast|Fat and Fast|any",
+   "build-small-and-dense|Small and Dense|any", "build-long-and-angular|Long and Angular|any",
+   "build-uses-a-wheeled-chair|Uses a Wheeled Chair|humanoid", "build-massive-and-slow|Massive and Slow|creature"],
+ "HAIR": ["hair-waist-length-and-loose|Waist-Length and Loose|humanoid",
+   "hair-locs-long-maintained|Locs, Long Maintained|humanoid",
+   "hair-dyed-a-colour-that-does-not-occur|Dyed a Colour That Does Not Occur|humanoid",
+   "hair-faded-rainbow|Faded Rainbow|humanoid", "hair-white-since-young|White Since Young|any",
+   "hair-brindled-coat|Brindled Coat|creature", "hair-iridescent-plumage|Iridescent Plumage|creature",
+   "hair-crest-raised-and-dyed|Crest Raised and Dyed|creature"],
+ # ORIGIN is CULTURE, never phenotype, which is why every entry is scope `any`:
+ # a walrus from a Lisbon-facing trade quarter wears that quarter's oilcloth and
+ # swears by its saints, and does not have its people's cheekbones.
+ "ORIGIN": ["origin-lisbon-facing-trade-quarter|Lisbon-Facing Trade Quarter|any",
+   "origin-lagos-harbour-district|Lagos Harbour District|any",
+   "origin-mekong-delta-waterway|Mekong Delta Waterway|any",
+   "origin-andean-high-valley|Andean High Valley|any",
+   "origin-highland-crofting-country|Highland Crofting Country|any",
+   "origin-diaspora-second-generation|Diaspora, Second Generation|any"],
 }
+
+# Drawn for the character every single day rather than rotated, because each one
+# measured at or near zero and a rotation would leave most days still unrolled.
+# ORIGIN draws two -- Silas, 2026-09-15: "I usually choose a blend of 1-2
+# countries of origin with an ethnicity wildcard ... it works to provide
+# diversity." A blend reads as a person; a single label reads as a label.
+EMBODIMENT_DRAWS = (("GENDER", 1), ("AGE", 1), ("BUILD", 1), ("HAIR", 1), ("ORIGIN", 2))
+EMBODIMENT_TAXONOMIES = tuple(name for name, _ in EMBODIMENT_DRAWS)
 
 # The genre pair is the umbrella every element inherits, so GENRE is drawn every
 # day and is not part of the rotation. These are the slots that rotate.
@@ -67,8 +108,16 @@ FLAVOUR_TAXONOMIES = ("OCCUPATION", "PERSONALITY", "ARCHETYPE", "QUIRK",
 #     database types. Inventing one invents a schema value, not a story idea,
 #     and several have zero randomizable rows precisely because they are
 #     dispatch keys rather than flavour.
-#   GENDER      identity vocabulary. Not a gap for a nightly script to fill on
-#     its own initiative.
+#   GENDER, ORIGIN  identity and heritage vocabulary. Not a gap for a nightly
+#     script to fill on its own initiative. A generator inventing a new
+#     ethnicity or a new gender at 3am, unreviewed, and then seeding it into
+#     every future dream is the single worst failure mode this whole feature
+#     has. These two are hand-curated or they are nothing.
+#   AGE, BUILD, HAIR  body vocabulary. Excluded for a quieter reason: an
+#     invented body descriptor is overwhelmingly likely to be a synonym of an
+#     existing one ("Quite Tall"), and the failure is not neutral -- a catalog
+#     of near-duplicate body words re-narrows exactly the axis this was built
+#     to widen. Add to facetEmbodimentValues.ts by hand instead.
 #   COLOR       a nearly closed set, already 180 deep.
 #   ART_DIRECTION, PROMPT_ENHANCEMENT  render instructions aimed at Krea 2, not
 #     at the fiction. A bad entry here degrades every image that picks it up.
@@ -105,12 +154,22 @@ def _clean(raw: dict[str, Any]) -> dict[str, Any]:
            "randomWeight": max(float(raw.get("randomWeight") or 1), .0001)}
     if isinstance(raw.get("id"), int): out["id"] = raw["id"]
     if raw.get("canonicalValue"): out["canonicalValue"] = str(raw["canonicalValue"])
+    # Embodiment rows declare which bodies they can sit on. Anything without one
+    # is universally applicable, which is the correct default for every
+    # non-embodiment taxonomy too.
+    meta = raw.get("metadata")
+    scope = meta.get("scope") if isinstance(meta, dict) else None
+    out["scope"] = str(scope).lower() if scope in ("any", "humanoid", "creature") else "any"
     return out
 
 
 def _fallback(taxonomy: str) -> list[dict[str, Any]]:
-    return [_clean({"slug": pair.split("|", 1)[0], "title": pair.split("|", 1)[1], "taxonomy": taxonomy})
-            for pair in FALLBACK_FACETS[taxonomy]]
+    rows = []
+    for entry in FALLBACK_FACETS[taxonomy]:
+        slug, title, *rest = entry.split("|")
+        rows.append(_clean({"slug": slug, "title": title, "taxonomy": taxonomy,
+                            "metadata": {"scope": rest[0]} if rest else None}))
+    return rows
 
 
 def fetch_live_facets(taxonomy: str, timeout: int = 12) -> list[dict[str, Any]] | None:
@@ -149,6 +208,21 @@ def _draw(rng: random.Random, pool: list[dict[str, Any]], count: int = 1) -> lis
         pick = copy.deepcopy(rng.choices(left, weights=[max(float(x.get("randomWeight") or 1), .0001) for x in left], k=1)[0])
         chosen.append(pick); left = [x for x in left if x["slug"].casefold() != pick["slug"].casefold()]
     return chosen
+
+
+def _body_pool(pool: list[dict[str, Any]], body: str) -> list[dict[str, Any]]:
+    """Narrow an embodiment pool to what can actually sit on today's body.
+
+    This is the walrus guard. Silas, 2026-09-15: "we should figure out how to
+    deal with non-humans so we don't get 'southeast asian/canadian walrus'."
+
+    The fix is not to filter heritage -- ORIGIN is culture and applies to
+    everyone. It is to filter ANATOMY: box braids need hands and head hair, a
+    brindled coat needs fur. Falls back to the full pool rather than raising,
+    because a thin scope is a reason to reach wider, not to fail the day.
+    """
+    narrowed = [row for row in pool if (row.get("scope") or "any") in ("any", body)]
+    return narrowed or list(pool)
 
 
 def _proposal_data(text: str) -> dict[str, Any]:
@@ -288,21 +362,47 @@ def facet_seed_plan(
         ),
     )[0]
     material = _draw(rng, catalog["MATERIAL"])[0]
+
+    # WHETHER THE PROTAGONIST IS A PERSON OR AN ANIMAL IS NOW ROLLED, not left
+    # to drift. It was previously an unstated authoring choice that the creature
+    # Facet merely nudged, so some days the otter WAS the lead and some days it
+    # sat on a human's shoulder, with nothing deciding which. Rolling it does
+    # two jobs: it makes that variety deliberate, and it is what lets the
+    # embodiment draws below be scope-correct instead of guessing.
+    body = rng.choice(["humanoid", "creature"])
+    embodiment: dict[str, list[dict[str, Any]]] = {}
+    for taxonomy, count in EMBODIMENT_DRAWS:
+        pool = catalog.get(taxonomy)
+        if not pool: continue
+        scoped = _body_pool(pool, body)
+        embodiment[taxonomy.lower()] = _draw(rng, scoped, min(count, len(scoped)))
+
     umbrella = genres[:2]
     extras = dict(zip(("location", "character", "reward_item", "reward_skill", "scenario"), genres[2:]))
+    # Embodiment attaches to the character and to nothing else. A location does
+    # not have an age and a ladle does not have a heritage; scattering these
+    # across the bundle is how a seed becomes decoration.
+    embodied = [facet for drawn in embodiment.values() for facet in drawn]
     elements = {
       "vibe": [*umbrella, creature, occupation],
       "location": [*umbrella, extras["location"], creature, material],
-      "character": [*umbrella, extras["character"], creature, occupation, personality],
+      "character": [*umbrella, extras["character"], creature, occupation, personality, *embodied],
       "reward_item": [*umbrella, extras["reward_item"], material],
       "reward_skill": [*umbrella, extras["reward_skill"], occupation],
       "scenario": [*umbrella, extras["scenario"], extras["location"], extras["character"], creature],
     }
-    seeded = {"GENRE", creature_tax, "MATERIAL", *flavour_taxes}
+    # Only the axes that actually drew. A taxonomy absent from the live catalog
+    # (a Kind Robots deploy that has not run the embodiment seed yet) must not
+    # be reported as seeded -- plan_inventions reads this set to push today's
+    # seeded corners to the back, and a phantom entry would steer inventions
+    # away from a gap that is still wide open.
+    seeded = {"GENRE", creature_tax, "MATERIAL", *flavour_taxes,
+              *(tax for tax in EMBODIMENT_TAXONOMIES if embodiment.get(tax.lower()))}
     return {"version": 2, "date": day, "deterministic_seed": seed, "catalog_source": source,
       "umbrella": {"genres": umbrella, "creature": creature, "wildcard": occupation,
                    "wildcard_role": flavour_taxes[0].lower()},
       "shared": {"material": material, "personality": personality},
+      "body": body, "embodiment": embodiment,
       "seeded_taxonomies": sorted(seeded),
       "invent": plan_inventions(rng, catalog, seeded),
       "extra_genres": extras, "elements": elements}
@@ -353,10 +453,71 @@ def _invention_instructions(seeds: dict[str, Any]) -> list[str]:
     return lines
 
 
+def _embodiment_instructions(seeds: dict[str, Any]) -> list[str]:
+    """Make the body seeds land in `look`, where Krea 2 can actually see them.
+
+    The measurement that motivated this feature (all 98 characters built to
+    date) was taken on the `look` field, not on the record's Facet links, and
+    that distinction is the whole risk here. dream-cycle/t-026 already burned
+    six weeks on Facets that were recorded as applied while the Character held
+    none; the mirror-image failure is Facets correctly linked to a record whose
+    `look` never mentions them. Both read as "complete" from the pipeline end
+    and neither changes a single rendered image.
+    """
+    body = seeds.get("body")
+    embodiment = seeds.get("embodiment") if isinstance(seeds.get("embodiment"), dict) else {}
+    if not embodiment: return []
+
+    def titles(key: str) -> str:
+        return " + ".join(str(f.get("title")) for f in embodiment.get(key) or [])
+
+    lines = [
+        "THE CHARACTER'S BODY IS SEEDED. It is no longer yours to default.",
+        f"  - This character is {'a person' if body == 'humanoid' else 'not human'} "
+        f"(`seed_facets.body` = {body}). The creature Facet is "
+        + ("someone or something else in their world -- a companion, a colleague, a threat, "
+           "a presence -- not the character themself."
+           if body == "humanoid" else
+           "what this character IS. Write their anatomy, movement and senses as real."),
+    ]
+    for key in ("gender", "age", "build", "hair"):
+        if embodiment.get(key):
+            lines.append(f"  - {key}: {titles(key)}")
+    if embodiment.get("origin"):
+        lines.append(
+            f"  - origin: {titles('origin')}. This is CULTURE, not appearance, and it applies "
+            "whatever body the character has. It may shape MATERIAL SPECIFICS ONLY -- a "
+            "textile, a dish, a craft, a tool, a script, a naming convention, how something "
+            "is worn or mended. It may NEVER shape temperament, morality, competence or "
+            "personality: those came from PERSONALITY and ALIGNMENT, which were rolled "
+            "separately precisely so that origin does not predict them. If the character is "
+            "not human, the origin still attaches as culture and never as anatomy -- a "
+            "walrus can be from a Lisbon-facing trade quarter and swear by its saints; it "
+            "cannot have its people's cheekbones."
+        )
+    lines += [
+        "Every one of these must be VISIBLE in `look`, because `look` is what reaches Krea 2. "
+        "A Facet that is linked to the record but absent from `look` changes no pixel and is "
+        "the same silent no-op as never applying it.",
+        "Express them; do not list them. `look` must read as one observed person, in the same "
+        "register as the rest of the bundle -- not as a character sheet. "
+        "'Sixty-odd, wide through the chest and soft with it, silver locs bound back off a "
+        "face that has been outdoors its whole life' is right. "
+        "'A 60-year-old broad-built feminine character with long silver hair' is a form, not a "
+        "person.",
+        "Give `look` a visible DEFAULT EXPRESSION too -- what this face is doing at rest. The "
+        "assigned PERSONALITY Facet is the input; the output is something seeable (a held jaw, "
+        "an easy open grin, eyes already moving to the exit). Only 14.3% of characters built "
+        "so far stated any affect at all, which is why so many of them read the same flat, "
+        "weathered, unsmiling way.",
+    ]
+    return lines
+
+
 def build_brief(day: str | None = None, catalog=None) -> dict[str, Any]:
     day = day or _target_date(); seeds = facet_seed_plan(day, catalog)
     return {"proposal_date": day, "seed_facets": seeds,
-      "instructions": [*_invention_instructions(seeds),
+      "instructions": [*_invention_instructions(seeds), *_embodiment_instructions(seeds),
         "Create one coherent bundle under the vibe, not unrelated mini-pitches.",
         "Return exactly one location, one character, one ITEM, one SKILL, and one scenario; no narrator.",
         "Use the Facets as creative constraints and persist seed_facets unchanged, "
@@ -605,6 +766,10 @@ def render_markdown(p: dict[str, Any], day: str) -> str:
     item=next(x for x in p["rewards"] if x["reward_type"]=="ITEM"); skill=next(x for x in p["rewards"] if x["reward_type"]=="SKILL")
     lines=["---",f"slug: {p['slug']}",f"title: {p['title']}","type: dream","status: outline","priority: normal","narrator: 'no'",f"created: '{day}'","proposal: true",f"proposal_date: '{day}'","built_pr: null","---","","## Seed Facets",
       f"- **Deterministic seed:** `{s.get('deterministic_seed')}` ({s.get('catalog_source','unknown')} catalog)",
+      # `body` decides what the creature Facet MEANS on the character line
+      # below -- the character themself, or someone else in their world. A
+      # reviewer cannot judge whether the bundle honoured its seed without it.
+      *([f"- **Body:** {s['body']}"] if s.get("body") else []),
       *[f"- **{label}:** {_titles(e[key])}" for label,key in (("Dream vibe","vibe"),("Dream location","location"),("Character","character"),("Reward item","reward_item"),("Reward skill","reward_skill"),("Scenario","scenario"))],
       # The new Facets get their own section rather than blending into the
       # seed list above: what the catalog gained today is the part worth being

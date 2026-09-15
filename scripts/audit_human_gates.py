@@ -39,7 +39,11 @@ PRIORITY_FILE = ROOT / "projects" / "priority.yaml"
 ACTIVE_STATUS = "active"
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from project_lifecycle import load_project_overrides, ordered_workable_slugs  # noqa: E402
+from project_lifecycle import (  # noqa: E402
+    WORKABLE_PROJECT_STATUSES,
+    load_project_overrides,
+    ordered_workable_slugs,
+)
 
 # These phrases describe completed state, not merely a future condition. Keep
 # this deliberately narrow: a false negative is preferable to nagging Silas
@@ -208,7 +212,7 @@ LIFECYCLE_DISPUTE_TITLE = re.compile(
 
 def is_lifecycle_dispute_gate(task: dict[str, Any], lifecycle: str) -> bool:
     """True when a hard gate's own subject is the project's lifecycle status."""
-    if lifecycle == ACTIVE_STATUS:
+    if lifecycle in WORKABLE_PROJECT_STATUSES:
         return False
     if not task.get("gate_human"):
         return False
@@ -232,7 +236,16 @@ def scan(
         if project_slug == "_template":
             continue
         lifecycle = project_statuses.get(project_slug, ACTIVE_STATUS)
-        is_active = lifecycle == ACTIVE_STATUS
+        # WORKABLE, not merely ACTIVE. `continuous` is a pickup-queue status
+        # like `active` -- project_lifecycle.WORKABLE_PROJECT_STATUSES says so,
+        # ordered_workable_slugs() ranks those projects above, and this module's
+        # own docstring scopes the suppression to "paused/retired/finished".
+        # Comparing against ACTIVE_STATUS alone silently dropped every gate in
+        # a continuous project (interface-vision, animation-manager,
+        # dream-cycle), so the one tool built to surface what only Silas can
+        # unblock could not see them. Found 2026-09-15 by filing
+        # dream-cycle/t-029 and watching it fail to appear in this report.
+        is_workable = lifecycle in WORKABLE_PROJECT_STATUSES
 
         roadmap = load_yaml(roadmap_path)
         for task in roadmap.get("tasks", []) or []:
@@ -240,7 +253,7 @@ def scan(
                 continue
 
             orphaned = False
-            if not is_active:
+            if not is_workable:
                 if include_inactive:
                     # An explicit archive sweep already surfaces everything in
                     # this project -- no need for the special orphaned framing.

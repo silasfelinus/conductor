@@ -441,3 +441,57 @@ tasks:
     digest runs later. Reversible, no schema changes; a good candidate to share
     logic with build_ruler_hooked_art_queue.py's existing check rather than
     duplicating the regex a third time.
+- id: t-029
+  milestone: m5
+  title: Seed the AGE/BUILD/HAIR/ORIGIN embodiment Facets into the live catalog
+  status: needs-human
+  owner: null
+  passes: 0
+  stakes: outward-facing
+  updated: '2026-09-15T08:05:00Z'
+  note: >
+    Silas, 2026-09-15: "there are lots of factors that could be switched. Hair
+    color, style, age, gender presentation, body shape, size, racial background,
+    default emotional state ... It would be great if we could utilize something
+    so there is more diversity automatically roled when creating characters
+    without such guidance."
+
+    ROOT CAUSE, measured rather than asserted. The seed plan drew genre,
+    creature, occupation and personality and nothing about the body, so `look`
+    was authored under no constraint and converged. Across all 98 characters
+    this pipeline had produced: saturated hair colour 0.0%, long hair 0.0%, hair
+    mentioned at all 23.5%, explicit age 14.3%, human skin tone 9.2%, any stated
+    affect 14.3%, she/her 39.8% vs he/him 9.2% (they/them 3.1%), "coat" 38.8%,
+    "patched" 25.5%. Every axis the plan rolled came out varied; every axis it
+    did not roll collapsed to one value.
+
+    SHIPPED: silasfelinus/kind_robots#2749 (4 taxonomies + 82 curated rows +
+    store/art-prompt wiring) and silasfelinus/conductor#4399 (the planner draws
+    one GENDER/AGE/BUILD/HAIR and two ORIGIN for the character every day, plus a
+    rolled `body` of humanoid|creature that makes the anatomy scope filter
+    correct instead of guessing).
+
+    WHAT ONLY SILAS CAN DO, and why this is a gate rather than a session task:
+    `npm run seed:embodiment:apply` writes 82 rows to the PRODUCTION Facet
+    catalog. They become live creative vocabulary the moment they land -- every
+    generator that draws Facets starts using them, not only Daily Dream -- and
+    ORIGIN in particular is identity vocabulary that should be read by a human
+    before it is seeded, not applied on a session's own initiative. The seed
+    script is dry by default and idempotent by slug, so the apply is safe to
+    run and safe to re-run; it is the REVIEW that needs a human, not the
+    mechanics. Suggested: skim utils/seeds/facetEmbodimentValues.ts (especially
+    the 30 ORIGIN entries and the anti-stereotype rule in its header), then run
+    the dry form, then --apply.
+
+    UNTIL THEN the pipeline degrades cleanly and correctly: the live API 400s on
+    an unknown taxonomy, build_dream_proposal falls back to its built-in pools,
+    and no phantom taxonomy is reported as seeded. GENDER already draws real
+    catalog rows today because its 15 rows predate this work and were simply
+    never drawn. So dreams get more diverse immediately and MUCH more diverse
+    once this gate clears.
+
+    AFTER the apply, re-measure. The whole feature is only real if it reaches
+    `look`, which is what Krea 2 sees -- a Facet linked to a record but absent
+    from `look` changes no pixel, the mirror image of t-026's six-week silent
+    no-op. Re-run the same measurement over the next ~20 built characters and
+    confirm the zeros move.
