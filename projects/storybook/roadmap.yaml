@@ -475,17 +475,45 @@ tasks:
 - id: t-028
   milestone: m6
   title: "Generate, distribute, and verify every missing Life ending asset"
-  status: waiting
+  status: needs-human
   passes: 0
   stakes: reversible
   depends_on: t-027
-  note: >
+  note: >-
     Moved from davinci/t-019 on 2026-09-12. Consume t-027's exact missing list in bounded
     idempotent batches through the existing ArtJob pipeline. Do not create duplicate jobs for
     already-rendered or already-queued endings. Close only when all 1,024 Life endings (and,
     once seeded, every genre-deck ending) have the required delivered art and the verifier
     reports zero gaps.
-  updated: '2026-09-12T12:00:00Z'
+
+    REDIRECTED 2026-09-15 (scheduled conductor sweep session, from t-027's audit): the
+    production coverage check came back 0/1024 seeded -- not partial art coverage on an
+    existing catalog, but zero LifeEnding rows for the classic Life shape existing in
+    production at all (see t-027's close-out note for the full response and reasoning).
+    This task's original scope above (queue art through the ArtJob pipeline for
+    existing-but-unillustrated endings) cannot start yet: there is nothing to attach art
+    to, and no per-ending artPrompt to render from.
+
+    FOR SILAS: the actual next step is running `npm run seed:davinci -- <path> --write`
+    (kind_robots utils/scripts/seedDaVinciEndings.ts, fed by this repo's
+    scripts/generate_davinci_endings.py) against the PRODUCTION database, which needs
+    someone/something with real DB write access -- this sandbox only has the app's
+    admin API token, not database credentials. Two things worth checking first, since
+    either changes the fix: (1) has this seed ever been run against production at all,
+    or (2) did it run once and then get wiped/orphaned by the deckId-NOT-NULL migration
+    (20260913120000, which backfills existing LifeEnding rows onto the new `life`
+    EndingDeck -- if the seed predates that migration's rollout, the backfill may not
+    have covered it correctly). `npm run seed:davinci -- <path>` (no --write) is a safe
+    dry run that will show which case this is without touching the database.
+
+    TO APPROVE: once the classic Life catalog is confirmed seeded (seededEndingCount:
+    1024 on a fresh GET /api/davinci/endings/coverage), set status: ready here and the
+    original art-generation scope above applies as written -- no change needed to it.
+    Soft-gated (soft_gate: true) rather than hard: this doesn't block any other ready
+    work in this or another project, and per t-027's own note nothing here needs
+    Silas's judgment, only his (or automated) execution access.
+  updated: '2026-09-15T13:47:16Z'
+  soft_gate: true
 - id: t-029
   milestone: m6
   title: "Engine: server-side story runs for every shape (create, resume, list, turn)"
