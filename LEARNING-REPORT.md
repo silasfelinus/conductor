@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-15T02:41:03Z
+Generated: 2026-09-15T02:42:37Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **964**
-- Outcomes: blocked: 16, cancelled: 1, done: 947
+- Closed tasks recorded: **965**
+- Outcomes: blocked: 16, cancelled: 1, done: 948
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -26,7 +26,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 35 | 100% |
-| conductor | 103 | 100% |
+| conductor | 104 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 51 | 98% |
 | davinci | 8 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 947 | 99% |
+| software | 948 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-15 `conductor/t-159` — Rotating an append-only log (TALKBACK.md) into monthly archives is safe when every archive write is verified byte-for-byte round-trip (write, re-read, re-extract, compare) before the source is ever rewritten, and the one real consumer that whole-file-parses the source for historical data (backfill_learning.py's --since all) gets fixed to read the archive directory too -- the archival carve-out only holds if every consumer of the pre-split file is checked, not just the file split itself.
 - 2026-09-15 `conductor/t-163` — Factored close_task.py's equal/not-equal branch-tip check (t-161) into scripts/branch_ancestry.py's classify_relationship(), a pure primitive over `git merge-base --is-ancestor` that names the actual relationship (equal/ahead/ behind/diverged) instead of a bare SHA comparison. Refusal behavior is unchanged -- only "equal" is safe to build on -- but the primitive is now independently unit-tested and reusable. claim_task.py's branch-naming paths were flagged (not yet audited) as a plausible next caller of the same primitive.
 - 2026-09-15 `conductor/t-161` — close_task.py built its close-out commit from the remote branch tip (origin/<branch> or origin/main) regardless of whether a same-named local branch existed with unpushed commits, so `--branch <my-current-branch>` did not behave like a normal git push -- it could silently rebuild from a stale base and force-push over local-only work (caught once already in coloring-book/t-046, kaizen-sourced this task). Fixed with a fail-closed branch-tip equality check before every commit attempt, tested against both the divergent and matching-tip cases. Any scratch-index git plumbing that targets a named branch without reading the caller's actual worktree state needs the same guard -- worth checking claim_task.py's branch-naming paths for the same class of assumption.
 - 2026-09-14 `coloring-book/t-022` — finalize-pair (manage_coloring_book_production.py) crashed with a NameError on every live invocation -- it referenced an undefined `semantic` variable (a leftover name from a different script's local variable of the same purpose) instead of the queue entry's own `bw_semantic_score` field. This went unnoticed for weeks: all three coloring books accumulated dozens of slots with both an accepted color and accepted BW file (66 combined) while `final pairs` sat at 0/36 in every book, because nothing had ever tested `finalize_pair` and every attempt to run it in production would have failed loudly enough to be caught, yet apparently no prior cycle actually tried. Fixed the reference and landed the first 3 final pairs (Monster Recast mr-002/003/004). Worth a standing habit: an operation with zero successful invocations across many eligible candidates is a stronger signal than "not yet gotten to" -- check whether it has ever actually run, not just whether its inputs exist.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-14 `coloring-book/t-045` — Calibrating a quality-gate threshold against a bad example alone is not enough -- the first two signal designs tried here (global pixel-count hue histogram, then a spatial per-cell hue-family count) both caught mr-025's sepia wash cleanly but were never tested against the real *approved* corpus until asked to be, and both turned out to false-positive on genuinely good, Silas-approved art (masked-countess-color.webp) once they were. The spatial design's failure mode was subtle: it looked spatially principled but still only counted pixels above the same 'colorful' saturation cutoff, so a real illustration whose non-primary elements (black cloak, white mask, gold trim) are desaturated collapsed to the same single-family signal as an actual wash. What worked was measuring hue consistency in the *opposite* band -- the low-saturation pixels every other check ignores -- because that's the band a duotone/sepia tone-curve filter actually tints and a real illustration's true neutrals do not. Any pixel-statistic quality gate needs its negative-space calibration (the full trusted-good corpus, not just the one known-bad case) run before landing, and visually inspecting the disputed calibration file directly (not just its stats) is what actually explained why the second design failed.
 - 2026-09-14 `kind-robots/t-098` — Session-end reconciliation caught this: implementation PR kind_robots#2727 merged over 2 hours before this sweep ran, but the roadmap task was left at status: review with a malformed implementation_pr field (a raw https:// URL instead of the owner/repo#N format check_pr_merged_drift.py's authoritative pass expects) -- so the drift check's title-text fallback caught it instead. Whatever closed the implementing PR didn't finish the roadmap close-out step in the same run. Reconciling promptly (same session that ran the drift check, not deferred) keeps status: review tasks from accumulating as false 'awaiting review' signals for a PR that already landed.
 - 2026-09-14 `coloring-book/t-044` — art_quality.py's 'color' variant gate checked blank/degenerate, noise, and aspect but had no saturation floor at all -- a structurally valid, non-blank, non-noise render that came back essentially monochrome (mean_saturation ~0.01-0.02) silently passed every time, and had already been caught by hand three separate times across two sessions (mr-006/mr-008 on 2026-09-07, mr-025 on 2026-09-09) before mr-008 hit it a fourth time this cycle. Each prior catch documented the defect in a proposals.yaml note but nobody closed the loop by asking whether the mechanical gate itself should catch it -- the same shape as t-039's noise-detector gap, just for a different failure mode. When a defect gets manually caught 2+ times on the same objective, mechanically-measurable signal, that's the trigger to add a gate for it rather than keep relying on creative review to notice again; calibrating the threshold against the full existing corpus (115 real files, not just the one bad example) before picking a number is what kept it from being a guess.
-- 2026-09-14 `text-generation/t-006` — A month-old design brief's file list (BRIEF.md's five confirmed chatStore.streamResponse consumers) had already drifted from the current tree -- one named file no longer existed, and two of the remaining four already had the exact fix this task was scoped to add, done incidentally by earlier unrelated work. A subagent sweep of current source (not the brief's own memory) caught both before writing any diff. Also: 'wire provider selection into the product surfaces' sounds like it could mean migrating chat UI onto the new unified /api/generate/text endpoint (the more impressive-looking fix) -- the brief's own 'explicitly out of scope' section said otherwise, and trusting that over the more expansive-sounding task title avoided a real scope violation.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-15T02:41:03Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-15T02:42:37Z_
