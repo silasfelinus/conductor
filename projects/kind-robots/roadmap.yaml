@@ -1883,6 +1883,49 @@ tasks:
        on a bare table -- with the technique named first, so the technique is the
        only variable across the 46 cards.
 
+       2026-09-15. The shared-swatch idea above is retired: v1 (pear + marble,
+       flat light) gave the techniques nothing to act on, v2 (lamp, gilt, silk,
+       caustics) already did every effect at maximum so naming one changed
+       nothing -- Silas: "volumetric and gilded shimmer are not recognizably
+       different from my eyes." Both failures are the same law this task keeps
+       re-learning: anything concrete in a SHARED clause becomes the shared look,
+       because the clause is the only part that does not vary. Replaced by 45
+       per-technique authored prompts in utils/seeds/facetArtPrompts.ts (191
+       entries total with the 77 genres and 69 themes).
+
+       Two blockers found and fixed today, both silent, both caught by a number
+       or a picture rather than by any test:
+
+       kind_robots #2761 -- the unknown-flag guard added in #2755 ran at module
+       top level, so applyCuratedFacetArtPrompts.ts (which imports the producer)
+       died during import and `--apply` never wrote a prompt. CI could not see
+       it: every verifier imports the module with NO arguments, the one case the
+       guard allows. Now inside main(); regression test imports with foreign
+       flags.
+
+       kind_robots #2762 -- the deeper one. curatedPromptNeedsRender compared the
+       curated prompt against the newest job PAYLOAD (what the producer asked
+       for) rather than the linked ArtImage.promptString (what was painted). The
+       two diverge whenever a queued job does not produce the linked image. That
+       hid 148 genre/theme cards whose catalog prompt and job payload were both
+       the authored text while the actual picture had been painted from the
+       retired v5 template clause -- the exact "A scene of this kind underway"
+       phrasing this task set out to remove. Every counter read done; every card
+       was wrong. The predicate now prefers the painted prompt.
+
+       Also added utils/scripts/auditFacetArtFreshness.ts, which answers the
+       question nothing here could: does every Facet have a picture made from the
+       prompt it carries NOW? It reads the live API from outside and compares
+       three layers -- authored source, catalog prompt, painted prompt -- naming
+       which link is broken (apply-drift / render-drift / no-art / no-prompt).
+       Render-drift is the invisible case: the Facet HAS a picture, so nothing
+       else reports it.
+
+       Live state at close of session, pending Silas's runs on Alexandria:
+       45 swatches apply-drift, 148 genre/theme render-drift, 34 GENRE no-art,
+       11 THEME no-prompt (several are junk rows, e.g. cowcore-1783846580282).
+       Stays needs-human until the runs land and the auditor comes back clean.
+
     WHAT STILL NEEDS SILAS: only the two runs, both on Alexandria where the
     database is reachable. The decision is made and the code is on main.
 
