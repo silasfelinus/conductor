@@ -56,7 +56,7 @@ tasks:
 - id: t-003
   milestone: m2
   title: "Reconcile later Resource-backed generation evidence; run one current smoke only if proof is still missing"
-  status: ready
+  status: claimed
   stakes: reversible
   gate_human: false
   note: |-
@@ -82,7 +82,7 @@ tasks:
 
     Release under Silas's 2026-09-07 human-gate simplification policy. No product decision is required. conductor/t-147 has been closed as mitigated; a token-equipped agent should now queue exactly one fresh Flux2 Resource-backed LoRA smoke and record Resource id/localPath, ArtJob id, terminal DONE state, and ArtImage id/path. Krea2 proof may remain deferred until a genuinely Krea2-tagged LoRA Resource exists; absence of such a Resource is not a Silas gate.
   approved_by_human: false
-  updated: '2026-09-07T11:33:49+00:00'
+  updated: '2026-09-15T10:28:23Z'
   outcome_note: >
     The original July 28 gate is stale in scope. Since then Kind Robots made Resource.localPath
     authoritative for LoRA resolution across image/video engines (including PR #1090), fixed
@@ -91,6 +91,9 @@ tasks:
     later production/ArtJob evidence for a successful Resource-backed LoRA render. If that proof
     already exists, document it and finish the project. Only queue one fresh smoke render if the
     existing evidence is genuinely insufficient. No human product decision is required.
+  owner: reviewer
+  claimed_by: claude-scheduled-20260915T1027Z-lora-t003
+  claimed_at: '2026-09-15T10:28:23Z'
 
 - id: t-004
   milestone: m3
