@@ -427,16 +427,48 @@ tasks:
 - id: t-027
   milestone: m6
   title: "Audit actual art coverage for all 1,024 Life endings"
-  status: claimed
+  status: done
   passes: 0
   stakes: reversible
-  note: |-
+  note: >-
     Moved from davinci/t-018 on 2026-09-12 when davinci was retired into storybook (the life shape). Original note follows.
 
     kind_robots PR #1836 merged (852f02e5, all 19 checks green): new admin-only GET /api/davinci/endings/coverage endpoint. Classifies every LifeEnding's icon/hero art as resolved (real ArtImage row), queued (path-string only -- per seedDaVinciEndings.ts/docs/notes/davinci-ending-seed.md the importer never sets the ArtImage id fields), or missing; cross-checks dangling ArtImage refs; reports seeded-vs-expected (1024) count; inventories contextual LifeRunArt (by sceneType, runs with/without art).
 
     Released under Silas's 2026-09-07 human-gate simplification policy: no human decision is needed; the old gate was only deploy timing. A token-equipped worker should call the production /api/davinci/endings/coverage endpoint, record the actual 1,024-ending icon/hero/contextual-art counts here, and turn any real missing-art result into t-028. Do not park deployment timing in Silas's queue. After t-030 lands, the same audit should cover the genre decks' endings (24 rows across mystery/romance/heist) -- extend the coverage endpoint to take ?deckKey= rather than writing a second one.
-  updated: '2026-09-15T13:44:05Z'
+
+    Ran the audit for real against production (2026-09-15, scheduled conductor sweep
+    session): GET https://kindrobots.org/api/davinci/endings/coverage (admin token)
+    returned 200 with expectedTotalEndings: 1024, seededEndingCount: 0,
+    missingOutcomeKeyCount: 1024, extraOutcomeKeyCount: 0, inactiveEndingCount: 0.
+    icon {resolved:0, queued:0, missing:0}, hero {resolved:0, queued:0, missing:0},
+    bothIconAndHeroResolved: 0, danglingArtImageRefs: [], contextualArt
+    {totalLifeRunArtRows:0, totalLifeRuns:0, runsWithNoArt:0}.
+
+    This is NOT "art missing for existing endings" -- it is zero LifeEnding rows for
+    the classic Life catalog existing in production at all. missing.count is 0 (not
+    1024) specifically because the coverage check only classifies icon/hero art for
+    rows that already exist; with 0 seeded rows there is nothing yet to classify as
+    missing versus queued, hence icon/hero.missing also reads 0 even though the real
+    gap is total.
+
+    Root cause is almost certainly upstream of art: the classic 1,024-ending Life
+    catalog is only ever populated by `npm run seed:davinci -- <path> --write`
+    (kind_robots utils/scripts/seedDaVinciEndings.ts, fed by
+    scripts/generate_davinci_endings.py in this repo) -- this has apparently never
+    been run against the production database, or its rows were dropped by the
+    deckId-NOT-NULL migration (20260913120000 backfills existing rows to the new
+    `life` EndingDeck; if seeding ran before that migration was designed, or the
+    backfill only covers what it expected, this is worth checking) and never
+    reseeded since. t-028 as scoped (generate/distribute/verify art through the
+    ArtJob pipeline) cannot start: there is no ArtImage target because there is no
+    LifeEnding row to attach one to, and no per-ending artPrompt to render from
+    until the rows exist. See t-028's own note for the redirected next step -- this
+    is a soft needs-human on access, not a decision Silas needs to make (per this
+    task's own 2026-09-07 human-gate-simplification framing), since resolving it
+    needs someone/something with production database write access that this
+    sandbox does not have.
+  updated: '2026-09-15T13:46:32Z'
   owner: worker
   claimed_by: 2026-09-15T134500-storybook-t027
   claimed_at: '2026-09-15T13:44:05Z'
