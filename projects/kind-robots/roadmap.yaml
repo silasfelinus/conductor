@@ -1901,7 +1901,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: Generate owned preview art for the LoRA catalog, starting with the 223 blind rows
-  status: review
+  status: claimed
   owner: claude
   stakes: reversible
   passes: 0
@@ -2020,9 +2020,24 @@ tasks:
     Steps/cfg are deliberately unset so sdxlSamplerProfile() can tune the
     Lightning and Turbo bases in the catalog.
 
+    MERGED 2026-09-15: kind_robots PR #2756 (squash 8fb75be) and this roadmap
+    entry as conductor PR #4411. Pushing to main triggers
+    publish-container.yml, so the production image rebuilds from the merge;
+    the batch can run once Alexandria is serving that image.
+
+    ONE CI FAILURE, entirely self-inflicted and worth recording: this task was
+    first filed with `status: in-progress`, which is a MILESTONE status in this
+    repo, not a task status. scripts/validate_roadmaps.py gates task status
+    against the AGENTS.md lifecycle (ready -> claimed -> review -> done, side
+    exits blocked/needs-human/challenged/waiting) and rejected it. The mistake
+    came from grepping raw `status:` text across all roadmaps and reading the
+    52 milestone hits as evidence the value was valid for tasks. Two different
+    vocabularies share one key name; the validator is the authority, not a grep.
+
     STILL OPEN:
-      - The batch has NOT run. kindrobots.org serves deployed code, so the
-        223 can only be queued once this is on main and deployed.
+      - The batch has NOT run yet. It needs the merged image deployed, and then
+        either the triage page's render button or a direct call to
+        /api/lora/probe-plan followed by /api/art/enqueue per plan.
       - commercialSafe: most NSFW bases are not commercial-safe and these
         previews must never become print-eligible. Worth an explicit assertion
         against ArtImage.checkpointResourceId rather than trusting it.
