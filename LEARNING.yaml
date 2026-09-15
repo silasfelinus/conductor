@@ -14023,3 +14023,24 @@ records:
     Lesson for future tests exercising code with credential-gated branches: never assume a
     sandbox's ambient environment matches CI's; pin every env var the code under test
     branches on, explicitly, in the test itself.
+- date: 2026-09-15
+  project: conductor
+  task: t-169
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: |-
+    Audited the 5 tasks whose notes were flagged >- (the historical
+    append_note_text() folding bug's signature label) for actual content loss, not just
+    length. Method: locate every entry-boundary marker (PROGRESS (, RECONCILED (, Cycle (,
+    DONE 202, CORRECTION (, etc.) in the parsed note string and inspect text immediately
+    before/after each for truncation or garbling. Finding: zero data loss across all 5 --
+    every original single-newline break between adjacent entries became one space on
+    folding, which loses paragraph/readability structure but never words or entries. The
+    earlier concern (this same task's own history) that folding caused a CI-hang was
+    already disproven by pulling the actual job logs (GitHub Actions status-reporting
+    flakiness, unrelated to note content). Lesson for a future note-format audit: a
+    `>-`/`|-` label mismatch alone is not evidence of damage -- verify by sampling actual
+    entry boundaries for coherence before assuming restoration work is needed.
