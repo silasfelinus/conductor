@@ -1944,7 +1944,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: Generate owned preview art for the LoRA catalog, starting with the 223 blind rows
-  status: claimed
+  status: ready
   owner: worker
   stakes: reversible
   passes: 0
@@ -2171,7 +2171,27 @@ tasks:
     passed, re-plan via /api/lora/probe-plan {scope: blind} (the considered set shrinks as
     jobs land elsewhere) and continue the small-batch comfy/sdxl rollout, holding the 13
     flux plans for last.
-  updated: '2026-09-15T23:31:43Z'
+
+    PROGRESS (scheduled Conductor session, 2026-09-15T23:31Z): render box confirmed healthy
+    (check_render_box.py: UP, heartbeat 0.9 min, 256 completions/6h) with no stale-RUNNING
+    signature and no new wedge since the last t-165/t-167 note ~2h prior, so proceeded past
+    the prior cycle's hold. Re-planned via /api/lora/probe-plan {scope: blind, limit: 300}:
+    considered shrank to 72 (down from 124 two cycles ago as jobs land elsewhere), 54
+    plannable (53 comfy/pony+sdxl, 1 flux). Queued a 20-job batch from the comfy/pony lane
+    via /api/art/enqueue: resourceIds 1466,1478,1482,1483,1485,1486,1524,1530,1532,1544,1547
+    ,1548,1552,1556,1564,1570,1576,1577,1623,1624 -> ArtJob 25358-25377, all accepted
+    201/PENDING. Deliberately held the remaining ~33 comfy/sdxl plans and the 1 flux plan
+    rather than draining the whole plannable set in one pass, consistent with the small-
+    batch approach the task note has used throughout -- live queue was PENDING=2056
+    (oldestPending ArtJob 23040, coloring-book, aged ~9.8h) at plan time, so adding a large
+    batch on top would have pushed unrelated production work further back. Completion of
+    ArtJob 25358-25377 (and the Resource rows now carrying artImageId/imagePath) is NOT YET
+    VERIFIED -- did not block this session on a 2000+ deep queue draining. NEXT SESSION:
+    check ArtJob 25358-25377 via GET /api/art/queue/:id. If healthy (no new failures/wedge),
+    continue queuing the remaining ~33 comfy/sdxl plans in similar batches, re-planning
+    first since the considered set keeps shrinking; hold the flux plan for last and only
+    once t-165/t-167 show sustained calm.
+  updated: '2026-09-15T23:33:27Z'
   claimed_by: claude-20260915T233142Z-kindrobots-t105-batch3
   claimed_at: '2026-09-15T23:31:43Z'
   implementation_pr: 'silasfelinus/conductor#4442'
