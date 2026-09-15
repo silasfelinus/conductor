@@ -3058,10 +3058,10 @@ tasks:
 - id: t-170
   milestone: m2
   title: 'process_coloring_art_events.py: cap retries and quarantine a queued event that keeps failing instead of retrying forever'
-  status: ready
+  status: claimed
   stakes: reversible
   passes: 0
-  owner: null
+  owner: worker
   note: |-
     Filed 2026-09-15 (scheduled conductor sweep session), kaizen from a workflow-medic
     diagnosis of process-color-art-events.yml (root TALKBACK.md, conductor/t-167 and
@@ -3087,7 +3087,9 @@ tasks:
     surfacing it (workflow summary output, or a line in the coloring-book project's
     TALKBACK.md) is part of the fix, so quarantining isn't just replacing "keeps
     failing loudly" with "silently stops trying."
-  updated: '2026-09-15T19:33:25Z'
+  updated: '2026-09-15T21:35:20Z'
+  claimed_by: claude-20260915T213519Z-conductor-t170
+  claimed_at: '2026-09-15T21:35:20Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
