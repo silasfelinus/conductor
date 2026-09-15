@@ -303,28 +303,59 @@ def get_task_field_value(text: str, task_id: str, field: str) -> str | None:
     return None
 
 
+def get_task_field_block_style(text: str, task_id: str, field: str) -> str | None:
+    """Return `field`'s current block-scalar style (`|-`, `>-`, etc.) on `task_id`,
+    or None if the field is absent or not currently a block scalar."""
+    lines = text.splitlines(keepends=True)
+    start, end, field_indent = find_task_block(lines, task_id)
+    for idx in range(start + 1, end):
+        match = KEY_RE.match(lines[idx])
+        if not match:
+            continue
+        if len(match.group("indent")) != field_indent or match.group("key") != field:
+            continue
+        return existing_block_style(lines, idx)
+    return None
+
+
 def append_note_text(text: str, task_id: str, addition: str, *, width: int = 88) -> str:
     """Append `addition` as a new paragraph on `task_id`'s `note`, instead of
-    replacing it (conductor/t-129). Always renders the result as a `note: >-`
-    folded block (chomping indicator `-` so re-parsing doesn't pick up a stray
-    trailing newline), regardless of the note's prior style, since an
-    append-only log is the point.
+    replacing it (conductor/t-129). Renders the result as a block scalar with
+    chomping indicator `-` (so re-parsing doesn't pick up a stray trailing
+    newline): a brand-new note (or one that isn't currently a block scalar)
+    gets the folded `note: >-` style, but a note that already exists as a
+    literal `note: |-` block keeps that style instead of being forced to `>-`.
+
+    Forcing `>-` unconditionally used to silently reinterpret a `|-` note's
+    hard per-line breaks as soft wraps to be folded away on next parse --
+    correct for a note this function itself wrote and wrapped at `width`, but
+    corrupting for one authored with intentional hard line breaks (e.g. one
+    physical line per cycle, not wrapped to any fixed width). Folding merged
+    such a note's ~hundreds of short lines down to a handful of enormous
+    ones on reparse -- model-builder/t-029 collapsed to a single 72,000+
+    character line this way, which pathologically slowed at least one
+    regex-based check over the roadmap (conductor scheduled sweep,
+    2026-09-15). Preserving the existing style avoids the corruption instead
+    of just capping the damage.
     """
     addition = addition.strip()
     if not addition:
         raise TaskFieldError("Cannot append an empty note")
 
     existing = get_task_field_value(text, task_id, "note")
+    existing_style = get_task_field_block_style(text, task_id, "note")
     wrapped = addition if "\n" in addition else textwrap.fill(addition, width=width)
     if existing and existing.strip():
         combined = f"{existing.rstrip(chr(10))}\n\n{wrapped}"
     else:
         combined = wrapped
 
+    block_style = existing_style if existing_style == "|-" else ">-"
+
     # combined always contains the prior note as a prefix, so the destructive-
     # replace guard below would never fire here anyway -- force=True just skips
     # the (redundant) substring check.
-    return set_task_field_text(text, task_id, "note", combined, force=True, force_block=">-")
+    return set_task_field_text(text, task_id, "note", combined, force=True, force_block=block_style)
 
 
 def set_task_field_text(

@@ -398,6 +398,27 @@ def test_append_note_text_never_needs_force_despite_long_existing_note():
     assert tasks["t-010"]["note"].endswith("One more paragraph.")
 
 
+def test_append_note_text_preserves_existing_literal_block_style():
+    # t-004 (ROADMAP fixture) already carries a hand-maintained `note: |-`
+    # literal block. Forcing it to `>-` would fold its per-cycle hard line
+    # breaks away on next parse -- exactly what happened to
+    # model-builder/t-029's note in production (conductor scheduled sweep,
+    # 2026-09-15: a 126KB, many-line `|-` note collapsed into a single
+    # 72,000+ character line once rewritten as `>-`, which pathologically
+    # slowed at least one regex-based check over the roadmap). Appending
+    # must keep the field a literal block instead.
+    out = stf.append_note_text(ROADMAP, "t-004", "RAN 2026-07-15: third cycle paragraph.")
+    block = task_block(out, "t-004")
+    assert "note: |-" in block
+    assert "note: >" not in block
+    tasks = parse_tasks(out)
+    assert tasks["t-004"]["note"] == (
+        "RAN 2026-07-01: first cycle paragraph.\n\n"
+        "RAN 2026-07-08: second cycle paragraph.\n\n"
+        "RAN 2026-07-15: third cycle paragraph."
+    )
+
+
 def test_cli_force_flag_bypasses_note_guard(tmp_path: Path):
     roadmap = tmp_path / "projects" / "demo" / "roadmap.yaml"
     roadmap.parent.mkdir(parents=True)
