@@ -2243,7 +2243,7 @@ tasks:
 - id: t-150
   milestone: m2
   title: Extend check_pr_merged_drift.py to name an unmerged worker/* branch when a claimed/review task has no PR at all
-  status: review
+  status: done
   stakes: reversible
   passes: 0
   note: >-
@@ -2266,10 +2266,14 @@ tasks:
     real, safe, on-task) still needs judgment; it only needs to surface the candidate. kind_robots is
     already checked via the GitHub API by this script's existing repo-scanning code path, so reuse that
     rather than adding a new transport.
-  updated: '2026-09-15T11:40:07Z'
+
+    Closed by the same session that implemented it (PR #4416) and flipped it to review (PR
+    #4417), both merged 2026-09-15.
+  updated: '2026-09-15T11:44:36Z'
   owner: worker
   claimed_by: 2026-09-15T113910Z-conductor-t150-sched
   claimed_at: '2026-09-15T11:39:11Z'
+  implementation_pr: 'silasfelinus/conductor#4416'
 - id: t-151
   milestone: m2
   title: Guard against recurring-task note fields growing large enough to blow the Kind-Robots projection payload limit
@@ -2726,6 +2730,25 @@ tasks:
     destination; collapsing them is a kind_robots view change, noted above.
   updated: '2026-09-14T22:52:37Z'
   implementation_pr: 'silasfelinus/conductor#4368'
+
+- id: t-164
+  milestone: m2
+  title: Let the stranded-branch pass narrow which repos it checks per task instead of scanning every tracked repo
+  status: ready
+  stakes: reversible
+  passes: 0
+  owner: null
+  note: >-
+    Kaizen from conductor/t-150 (silasfelinus/conductor#4416, 2026-09-15): the new
+    stranded-branch pass in check_pr_merged_drift.py (find_stranded_branch_candidates)
+    lists branches and open PRs across every repo in ALL_TRACKED_REPOS for each candidate
+    task, same as the existing title-search pass it's modeled on. That's fine at today's
+    scale (a handful of tracked repos, cached per run), but as the tracked-repo list grows
+    it becomes an ever-larger constant-factor cost per otherwise-clean task. Worth teaching
+    both passes to narrow the repo list from a task's own project/note history (e.g. which
+    repo(s) that project's roadmap has previously cited a PR or branch in) before falling
+    back to the full ALL_TRACKED_REPOS scan, rather than always scanning everything.
+  updated: '2026-09-15T11:39:10Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'

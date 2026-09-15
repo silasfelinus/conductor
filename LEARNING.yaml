@@ -13887,3 +13887,22 @@ records:
     actually reaches main. When a sentinel/check script''s only failure signal is a
     workflow-log annotation, that is itself a gap worth closing -- durable state belongs in
     a file something else reads, not in a run nobody reopens.'
+- date: '2026-09-15'
+  project: conductor
+  task: t-150
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    check_pr_merged_drift.py's title-search and note-reference passes can only report drift
+    when a PR actually exists to find -- a task whose implementing session never opened one at
+    all (cthulhuquarium/t-076) read as a false "clean", the exact opposite failure mode from
+    what the script was built to catch. Closed by adding a fifth pass that lists branches
+    across the same tracked repos already scanned for title matches and flags one matching the
+    worker naming convention with no open PR against it. General lesson: a checker built to
+    catch "state A drifted from state B" should also ask whether state B (the PR/evidence it
+    searches for) exists at all -- absence-of-evidence and evidence-of-absence are different
+    findings and a search that only handles the former will read a genuinely missing PR as
+    clean.
