@@ -13906,3 +13906,38 @@ records:
     searches for) exists at all -- absence-of-evidence and evidence-of-absence are different
     findings and a search that only handles the former will read a genuinely missing PR as
     clean.
+- date: '2026-09-15'
+  project: conductor
+  task: t-164
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    check_pr_merged_drift.py's title-search and stranded-branch passes both scanned every repo
+    in ALL_TRACKED_REPOS for every in-progress task, even though most tasks' own title/note
+    history already names the one or two repos that actually matter for them. Added
+    task_relevant_repos() to narrow both passes to a task's own cited repos first, falling back
+    to the full list only when a task cites none. General lesson: when a checker scans "every
+    tracked X" for "every candidate Y", check whether each Y already carries evidence of which
+    X actually applies to it before paying the full cross-product cost -- the per-run caches
+    already shared across tasks/repos mean this is a scope reduction, not just deferred work.
+- date: '2026-09-15'
+  project: conductor
+  task: t-166
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: quality
+  lesson: >-
+    Two tests in test_check_render_box.py asserted on check.main()'s return value without
+    mocking every function main() calls (engine_heartbeat_verdict), so they silently made a
+    real network call every run -- caught only because the live render engine happened to be
+    reporting unhealthy at the moment this session ran the full suite, which flipped their
+    result from a coincidental pass to a real failure. General lesson: a test that patches some
+    of a function's dependencies but not all of them is not actually isolated -- it just hasn't
+    been caught yet by the unpatched dependency disagreeing with what the test expects. When
+    fixing one, audit every other test hitting the same entry point for the identical gap
+    (two more tests here were leaking the same call and passing by coincidence).
