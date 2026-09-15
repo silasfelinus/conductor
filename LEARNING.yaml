@@ -13984,3 +13984,22 @@ records:
     no reachability guard, so a home-machine (Alexandria) reboot failed CI on main itself; fixed
     with a short-timeout probe that skips with a warning (exit 0) on a network-level failure only,
     verified by actually simulating an unreachable host rather than trusting the diff by inspection.
+- date: 2026-09-15
+  project: conductor
+  task: t-169
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: quality
+  lesson: |-
+    append_note_text() forced every note to a folded `note: >-` block regardless of prior
+    style; on a note already stored as literal `note: |-` with substantial multi-line history,
+    a real YAML parser folds adjacent physical lines together on the next parse, silently
+    merging content. Hit for real on model-builder/t-029 (126KB note, 67+ cycles): the forced
+    `>-` rewrite collapsed it to a handful of enormous lines, which pathologically slowed the
+    "Python test suite" CI job (40+ min twice, vs. ~2 min normal) before the fix. Fixed by
+    preserving an existing `|-` style instead of always forcing `>-`; caught only by comparing
+    CI timing against recent successful runs and cancel/rerunning to confirm reproducibility
+    rather than trusting a plausible-looking diff. Filed conductor/t-169 to audit 5 other tasks
+    already showing the `>-`-plus-giant-line signature for the same latent risk.
