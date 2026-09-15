@@ -3019,5 +3019,28 @@ tasks:
     boundaries from an already-folded note, since folding is lossy for whitespace). If it
     doesn't reproduce, downgrade this to "just document the shape, no urgent risk."
 
+    CORRECTION (same session, after filing this task): pulled the actual job logs for the
+    run that first showed a 40+-minute API-reported stall (on the corrupted >- version,
+    before the append_note_text fix) and for a later run that stalled the same way on an
+    unrelated PR (#4444, which never touches model-builder/roadmap.yaml at all). Both logs
+    show "pytest tests/" itself completing normally in ~115s (1990-1991 passed, 29-30
+    skipped) with every remaining step finishing within the same couple of seconds -- the
+    stall was entirely AFTER the job's own work finished: the GitHub Actions job/check-run
+    API kept reporting status:in_progress for 15-40+ minutes past the log's own completion
+    timestamp, resolving only once a cancel_workflow_run call was sent (and on PR #4444's
+    third attempt, not even reliably then -- repeated cancels and reruns of the same run_id
+    left it wedged for over 20 minutes; a fresh commit forcing a brand-new run_id was what
+    actually got a clean run). This is GitHub Actions job-finalization/status-reporting
+    flakiness, not a slow test, and not something this repo's code can fix. The
+    append_note_text() >-/|- forcing bug is still real (independently reproduced by direct
+    function calls and pinned by a regression test) and worth having fixed, but it was NOT
+    the cause of the observed CI timing -- the theory linking them, written in this task's
+    original note and in PR #4443's body, was wrong. Downgrading this audit accordingly: the
+    5 already->--labeled giant-note tasks may still be worth a look for actual content-
+    folding damage (lost information), but there is no confirmed CI-hang risk tied to them.
+    Future sessions hitting a stuck-in_progress PR check should pull the actual job log
+    first (it often shows the real work already finished) before assuming a code-side hang
+    or spending a long diagnostic session chasing content as the cause.
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
