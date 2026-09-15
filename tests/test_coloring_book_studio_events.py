@@ -255,7 +255,9 @@ class ColorArtEventRetryQuarantineTests(unittest.TestCase):
     def test_failure_is_preserved_and_counted_below_threshold(self) -> None:
         event = MODULE.load_event(self.write_event())
         state: dict[str, int] = {}
-        with patch.object(MODULE.subprocess, "run") as run:
+        with patch.dict(MODULE.os.environ, {"KR_API_TOKEN": "test-token"}), patch.object(
+            MODULE.subprocess, "run"
+        ) as run:
             run.return_value.returncode = 1
             status = MODULE.process_event(event, live=True, attempt_state=state)
 
@@ -267,7 +269,9 @@ class ColorArtEventRetryQuarantineTests(unittest.TestCase):
     def test_event_is_quarantined_after_max_attempts(self) -> None:
         event = MODULE.load_event(self.write_event())
         state = {event.path.name: MODULE.MAX_EVENT_ATTEMPTS - 1}
-        with patch.object(MODULE.subprocess, "run") as run:
+        with patch.dict(MODULE.os.environ, {"KR_API_TOKEN": "test-token"}), patch.object(
+            MODULE.subprocess, "run"
+        ) as run:
             run.return_value.returncode = 1
             status = MODULE.process_event(event, live=True, attempt_state=state)
 
@@ -279,7 +283,9 @@ class ColorArtEventRetryQuarantineTests(unittest.TestCase):
     def test_success_clears_attempt_state(self) -> None:
         event = MODULE.load_event(self.write_event())
         state = {event.path.name: MODULE.MAX_EVENT_ATTEMPTS - 1}
-        with patch.object(MODULE.subprocess, "run") as run:
+        with patch.dict(MODULE.os.environ, {"KR_API_TOKEN": "test-token"}), patch.object(
+            MODULE.subprocess, "run"
+        ) as run:
             run.return_value.returncode = 0
             status = MODULE.process_event(event, live=True, attempt_state=state)
 
