@@ -1950,7 +1950,7 @@ tasks:
   passes: 0
   gate_human: false
   approved_by_human: true
-  note: |
+  note: >-
     Filed 2026-09-15 from Silas: "We have a lot of loras that don't have a default image attached."
 
     ASSESSMENT (live /api/resources, 2,345 active Resources).
@@ -2086,7 +2086,49 @@ tasks:
         against ArtImage.checkpointResourceId rather than trusting it.
       - Batches 2 (2,005 civitai hotlinks) and 3 (the 77 orphans, incl. a
         Kontext img2img path) are follow-on scope, not this task.
-  updated: '2026-09-15T16:30:54Z'
+
+    PROGRESS (conductor scheduled sweep, 2026-09-15T16:30Z): ran the STILL-OPEN
+    batch step for the first time since kind_robots#2756 merged. Confirmed the
+    merged code is actually live in production first (POST /api/lora/probe-plan
+    returns a real 401 auth challenge, not the SPA shell).
+
+    Called /api/lora/probe-plan {scope: blind, limit: 300}: 124 blind LoRAs
+    remain considered (down from the PR's original 223 -- some already got
+    previews another way since merge), 106 plannable (60 pony on
+    cyberrealisticPony_v61, 33 sdxl split across duskMixXLIllustration_v15/
+    dreamshaperXL_v21TurboDPMSDE, 13 flux), 18 skipped (same unsupported-base
+    shape the PR described).
+
+    DELIBERATELY DID NOT fire all 106 this cycle. Today's render relay had two
+    still-open hard gates filed the same day (conductor/t-165: relay hung 67+
+    min on flux2_dev_fp8mixed.safetensors, ArtJob 22837; conductor/t-167: relay
+    wedged again minutes later on an unrelated plain Pony job, ArtJob 22838,
+    proving it isn't checkpoint-specific). check_render_box.py and
+    /api/art/queue/stats both show the relay healthy again right now (heartbeat
+    0.1 min old, 96 completions/6h, staleRunningCount 0) -- but with 104 jobs
+    already PENDING (oldest 4+ hours) ahead of anything new, and given the same-
+    day wedge history, queuing all 106 at once felt like the wrong risk to take
+    unattended.
+
+    Instead queued a 5-job PILOT from the pony/comfy lane (resourceIds 1370,
+    1372, 1375, 1377, 1381 -> ArtJob 23041-23045, all accepted 201/PENDING).
+    These sit behind the existing backlog and had not reached RUNNING by the end
+    of this session, so completion (and the actual proof that
+    applyEntityArtCompletion correctly attaches art + isMature/isPublic back
+    onto the Resource for entityType 'resource', which has never fired in
+    production before) is NOT YET VERIFIED.
+
+    NEXT SESSION: check ArtJob 23041-23045 via GET /api/art/queue/:id. If all
+    DONE with the Resource rows (1370 etc.) now carrying artImageId/imagePath --
+    continue queuing the remaining ~101 comfy/sdxl plans in similar small
+    batches (avoid re-running probe-plan blind; re-plan first since the
+    considered set shrinks as jobs land). Hold the 13 flux plans for last per
+    the endpoint's own ordering comment (28 min/job, stalls everything queued
+    behind it) and only once t-165/t-167 are resolved or enough time has passed
+    to trust flux2-adjacent checkpoints again. If any of the 5 pilot jobs FAILED
+    or hung, stop and treat it as a new relay-health data point on t-165/t-167
+    rather than continuing the batch blind.
+  updated: '2026-09-15T16:34:16Z'
   claimed_by: claude-20260915T163054Z-kindrobots-t105
   claimed_at: '2026-09-15T16:30:54Z'
 
