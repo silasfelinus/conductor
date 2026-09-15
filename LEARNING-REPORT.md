@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-15T23:11:34Z
+Generated: 2026-09-15T23:14:26Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **978**
-- Outcomes: blocked: 16, cancelled: 1, done: 961
+- Closed tasks recorded: **979**
+- Outcomes: blocked: 16, cancelled: 1, done: 962
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -57,7 +57,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | scene-animator | 2 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
-| storybook | 23 | 100% |
+| storybook | 24 | 100% |
 | storymaker | 1 | 100% |
 | superkate-hairstyle-ai | 18 | 100% |
 | superkate-services-calculator | 12 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 961 | 99% |
+| software | 962 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,19 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-15 `storybook/t-050` — Clean first-pass mechanical kaizen: mirrored t-048's isMediaOriginReachable() guard
+exactly onto verifyAcademyExamplesManifest.ts, the one sibling script t-048's own PR
+(#2767) didn't cover despite sharing the identical unguarded-live-fetch shape.
+Verified both paths concretely rather than trusting the diff: ran the check normally
+(reachable) and again with MEDIA_ORIGIN pointed at a nonexistent host (simulated
+unreachable), confirming exit 0 + warning on the latter instead of a hard failure.
+kind_robots PR #2772's Contract verifiers check -- the one conductor/t-132 tracks as
+occasionally hanging for 15-40+ minutes with zero step progress -- completed normally
+this run, one more data point for that task's "monitor, don't force a repo-side fix"
+conclusion. Lesson: when a kaizen task says "mirror X's diff exactly," find the
+original commit first (git log/show) rather than reconstructing the pattern from
+the task note's prose -- guarantees the two implementations stay byte-identical in
+shape.
 - 2026-09-15 `conductor/t-169` — Audited the 5 tasks whose notes were flagged >- (the historical
 append_note_text() folding bug's signature label) for actual content loss, not just
 length. Method: locate every entry-boundary marker (PROGRESS (, RECONCILED (, Cycle (,
@@ -130,7 +143,6 @@ already showing the `>-`-plus-giant-line signature for the same latent risk.
 - 2026-09-15 `conductor/t-166` — Two tests in test_check_render_box.py asserted on check.main()'s return value without mocking every function main() calls (engine_heartbeat_verdict), so they silently made a real network call every run -- caught only because the live render engine happened to be reporting unhealthy at the moment this session ran the full suite, which flipped their result from a coincidental pass to a real failure. General lesson: a test that patches some of a function's dependencies but not all of them is not actually isolated -- it just hasn't been caught yet by the unpatched dependency disagreeing with what the test expects. When fixing one, audit every other test hitting the same entry point for the identical gap (two more tests here were leaking the same call and passing by coincidence).
 - 2026-09-15 `conductor/t-164` — check_pr_merged_drift.py's title-search and stranded-branch passes both scanned every repo in ALL_TRACKED_REPOS for every in-progress task, even though most tasks' own title/note history already names the one or two repos that actually matter for them. Added task_relevant_repos() to narrow both passes to a task's own cited repos first, falling back to the full list only when a task cites none. General lesson: when a checker scans "every tracked X" for "every candidate Y", check whether each Y already carries evidence of which X actually applies to it before paying the full cross-product cost -- the per-run caches already shared across tasks/repos mean this is a scope reduction, not just deferred work.
 - 2026-09-15 `conductor/t-150` — check_pr_merged_drift.py's title-search and note-reference passes can only report drift when a PR actually exists to find -- a task whose implementing session never opened one at all (cthulhuquarium/t-076) read as a false "clean", the exact opposite failure mode from what the script was built to catch. Closed by adding a fifth pass that lists branches across the same tracked repos already scanned for title matches and flags one matching the worker naming convention with no open PR against it. General lesson: a checker built to catch "state A drifted from state B" should also ask whether state B (the PR/evidence it searches for) exists at all -- absence-of-evidence and evidence-of-absence are different findings and a search that only handles the former will read a genuinely missing PR as clean.
-- 2026-09-15 `conductor/t-157` — check_hostbuf_failure.py's "unverified" state (a hostbuf failure older than the 2h alert window with no successful render since) was only ever reported via a `::warning::` line in that one hourly workflow run's own log -- a channel nothing else reads, so a stale unresolved incident could sit invisible indefinitely with no durable trace. Fixed by writing the same RENDER-BACKLOG.md ledger convention recheck_render_queue.py already uses, and giving the workflow contents: write plus a commit-back step so the entry actually reaches main. When a sentinel/check script's only failure signal is a workflow-log annotation, that is itself a gap worth closing -- durable state belongs in a file something else reads, not in a run nobody reopens.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-15T23:11:34Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-15T23:14:26Z_
