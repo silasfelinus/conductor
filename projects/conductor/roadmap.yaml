@@ -2494,7 +2494,7 @@ tasks:
 - id: t-159
   milestone: m2
   title: Rotate root TALKBACK.md into monthly archives
-  status: review
+  status: done
   passes: 0
   stakes: reversible
   owner: worker
@@ -2546,9 +2546,15 @@ tasks:
     Same byte-for-byte round-trip verification as t-158: every rotated entry must be recoverable
     identical to its original. check_large_deletion_guard.py does not currently watch TALKBACK.md,
     so it will not fire here.
-  updated: '2026-09-15T02:37:47Z'
+
+    Merged: silasfelinus/conductor#4385 (rotate_talkback.py + backfill_learning.py fix, 25
+    new tests) and #4384 (status: review bookkeeping). Rotated 2026-06 (8), 2026-07 (323),
+    2026-08 (479) entries to talkback/*.md; 2026-09 (228) stays in root. Full suite 1938
+    passed/30 skipped, ruff clean, all 22-24 PR checks green on both PRs before merge.
+  updated: '2026-09-15T02:41:29Z'
   claimed_by: claude-scheduled-20260915T023215Z-cond-t159
   claimed_at: '2026-09-15T02:32:16Z'
+  implementation_pr: 'silasfelinus/conductor#4385'
 - id: t-160
   milestone: m2
   title: Large binaries, the media-host policy boundary, and the stale art-request status doc
