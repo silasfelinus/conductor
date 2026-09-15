@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-09-14T16:23:45.258017+00:00",
+  "generated_at": "2026-09-15T15:04:10.916596+00:00",
   "summary": {
     "roadmaps": 52,
     "active_projects": 19,
     "continuous_projects": 3,
-    "tasks": 1498,
-    "ready": 42,
-    "waiting": 51,
-    "needs_human": 35,
-    "in_progress": 3,
-    "done": 1351,
+    "tasks": 1511,
+    "ready": 38,
+    "waiting": 50,
+    "needs_human": 39,
+    "in_progress": 2,
+    "done": 1366,
     "errors": 0,
-    "warnings": 6,
-    "info": 21
+    "warnings": 8,
+    "info": 26
   },
   "projects": [
     {
@@ -65,13 +65,12 @@
       "counts": {
         "claimed": 1,
         "done": 134,
-        "needs-human": 1,
-        "ready": 2,
+        "ready": 3,
         "waiting": 1
       },
       "open_count": 5,
-      "human_attention": 1,
-      "ready": 2,
+      "human_attention": 0,
+      "ready": 3,
       "waiting": 1,
       "claimed": 1,
       "review": 0,
@@ -83,21 +82,20 @@
       "override_status": "active",
       "priority_index": 4,
       "autonomous": false,
-      "task_count": 45,
+      "task_count": 46,
       "counts": {
-        "claimed": 1,
-        "done": 33,
+        "done": 35,
         "needs-human": 1,
         "ready": 1,
         "waiting": 9
       },
-      "open_count": 12,
+      "open_count": 11,
       "human_attention": 1,
       "ready": 1,
       "waiting": 9,
-      "claimed": 1,
+      "claimed": 0,
       "review": 0,
-      "done": 33
+      "done": 35
     },
     {
       "slug": "humboldt-scoop-cms",
@@ -144,19 +142,19 @@
       "override_status": "active",
       "priority_index": 7,
       "autonomous": false,
-      "task_count": 103,
+      "task_count": 105,
       "counts": {
         "claimed": 1,
-        "done": 101,
-        "ready": 1
+        "done": 103,
+        "needs-human": 1
       },
       "open_count": 2,
-      "human_attention": 0,
-      "ready": 1,
+      "human_attention": 1,
+      "ready": 0,
       "waiting": 0,
       "claimed": 1,
       "review": 0,
-      "done": 101
+      "done": 103
     },
     {
       "slug": "rainbow-butterflies",
@@ -263,11 +261,11 @@
       "task_count": 8,
       "counts": {
         "done": 7,
-        "ready": 1
+        "needs-human": 1
       },
       "open_count": 1,
-      "human_attention": 0,
-      "ready": 1,
+      "human_attention": 1,
+      "ready": 0,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
@@ -279,18 +277,19 @@
       "override_status": "active",
       "priority_index": 14,
       "autonomous": false,
-      "task_count": 160,
+      "task_count": 168,
       "counts": {
-        "done": 155,
-        "ready": 5
+        "done": 164,
+        "needs-human": 2,
+        "ready": 2
       },
-      "open_count": 5,
-      "human_attention": 0,
-      "ready": 5,
+      "open_count": 4,
+      "human_attention": 2,
+      "ready": 2,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 155
+      "done": 164
     },
     {
       "slug": "storybook",
@@ -300,17 +299,17 @@
       "autonomous": false,
       "task_count": 49,
       "counts": {
-        "done": 40,
-        "ready": 8,
-        "waiting": 1
+        "done": 41,
+        "needs-human": 1,
+        "ready": 7
       },
-      "open_count": 9,
-      "human_attention": 0,
-      "ready": 8,
-      "waiting": 1,
+      "open_count": 8,
+      "human_attention": 1,
+      "ready": 7,
+      "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 40
+      "done": 41
     },
     {
       "slug": "coat-dance",
@@ -434,18 +433,18 @@
       "override_status": "continuous",
       "priority_index": 22,
       "autonomous": true,
-      "task_count": 28,
+      "task_count": 30,
       "counts": {
-        "done": 25,
-        "ready": 3
+        "done": 26,
+        "ready": 4
       },
-      "open_count": 3,
+      "open_count": 4,
       "human_attention": 0,
-      "ready": 3,
+      "ready": 4,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 25
+      "done": 26
     },
     {
       "slug": "ai-art-academy",
@@ -1012,6 +1011,13 @@
   "findings": [
     {
       "severity": "warning",
+      "code": "POSSIBLY_UNNECESSARY_GATE",
+      "project": "conductor",
+      "task": "t-167",
+      "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
+    },
+    {
+      "severity": "warning",
       "code": "SOFT_NEEDS_HUMAN",
       "project": "cthulhuquarium",
       "task": "t-065",
@@ -1023,6 +1029,13 @@
       "project": "kind-economy",
       "task": "t-017",
       "message": "Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect."
+    },
+    {
+      "severity": "warning",
+      "code": "POSSIBLY_UNNECESSARY_GATE",
+      "project": "kind-robots",
+      "task": "t-104",
+      "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
     },
     {
       "severity": "warning",
@@ -1090,9 +1103,30 @@
     {
       "severity": "info",
       "code": "NEEDS_HUMAN_NOTE_FORMAT",
+      "project": "conductor",
+      "task": "t-167",
+      "message": "needs-human note does not use the AGENTS.md FOR SILAS action format."
+    },
+    {
+      "severity": "info",
+      "code": "NEEDS_HUMAN_NOTE_FORMAT",
       "project": "cthulhuquarium",
       "task": "t-073",
       "message": "needs-human note does not use the AGENTS.md FOR SILAS action format."
+    },
+    {
+      "severity": "info",
+      "code": "APPROVAL_WITHOUT_GATE",
+      "project": "dream-cycle",
+      "task": "t-029",
+      "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
+      "code": "APPROVAL_WITHOUT_GATE",
+      "project": "interface-vision",
+      "task": "t-105",
+      "message": "approved_by_human is set on a task that is not human-gated."
     },
     {
       "severity": "info",
@@ -1141,6 +1175,20 @@
       "code": "APPROVAL_WITHOUT_GATE",
       "project": "kind-robots",
       "task": "t-092",
+      "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
+      "code": "NEEDS_HUMAN_NOTE_FORMAT",
+      "project": "kind-robots",
+      "task": "t-104",
+      "message": "needs-human note does not use the AGENTS.md FOR SILAS action format."
+    },
+    {
+      "severity": "info",
+      "code": "APPROVAL_WITHOUT_GATE",
+      "project": "kind-robots",
+      "task": "t-105",
       "message": "approved_by_human is set on a task that is not human-gated."
     },
     {
