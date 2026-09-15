@@ -779,7 +779,7 @@ tasks:
 - id: t-048
   milestone: m8
   title: "Give verifyAcademyStarterManifest.ts and verifyPopulationDraftQuality.ts a reachability guard for Alexandria"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   note: >-
@@ -790,8 +790,10 @@ tasks:
     each: on an unreachable host, skip with a warning instead of failing, so the check still
     catches a genuine regression in its own assertions when Alexandria is up, but a transient
     home-network blip stops teaching sessions to discount red CI as routine.
-  updated: '2026-09-12T23:34:00Z'
-  owner: null
+  updated: '2026-09-15T15:28:31Z'
+  owner: worker
+  claimed_by: 2026-09-15T152830Z-storybook-t048
+  claimed_at: '2026-09-15T15:28:31Z'
 - id: t-049
   milestone: m7
   title: "Art for the four mode cards"
