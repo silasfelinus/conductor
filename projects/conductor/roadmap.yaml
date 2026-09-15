@@ -2971,6 +2971,76 @@ tasks:
   updated: '2026-09-15T14:10:00Z'
   claimed_by: 2026-09-15T140500-conductor-t168-sweep
   claimed_at: '2026-09-15T14:05:00Z'
+- id: t-169
+  milestone: m2
+  title: 'Audit other note: >- tasks for the same giant-line CI-hang risk append_note_text corrupted'
+  status: ready
+  stakes: reversible
+  passes: 0
+  owner: null
+  note: |-
+    Filed 2026-09-15 (scheduled conductor sweep session), kaizen from
+    model-builder/t-029 cycle 68 (PR #4443).
+
+    append_note_text() used to force every note to `note: >-` (folded) regardless of
+    its prior style, which is a real corruption risk once a note has substantial
+    multi-line history: a standards-compliant YAML parser folds every run of adjacent
+    non-blank physical lines under `>-` into one logical line, silently merging content
+    a `|-` (literal) note kept as separate lines. Hit for real on model-builder/t-029: a
+    126KB note collapsed from ~hundreds of logical lines to 10 (one 72,000+ character)
+    on the first `>-`-forced rewrite, which pathologically slowed the "Python test
+    suite" CI job (40+ minutes, reproduced twice, vs. the normal ~2 minutes). Fixed in
+    scripts/set_task_field.py's append_note_text() to preserve an existing `|-` style
+    instead of forcing `>-`.
+
+    That fix only stops *future* corruption -- it does not repair notes the old code
+    already damaged. A repo-wide scan (same session) for tasks with a `note` over 2000
+    chars containing any single line over 3000 chars found 12 candidates, 5 of which are
+    *currently* labeled `note: >-` (the label the buggy code always wrote, so these are
+    the most likely already-corrupted-by-this-bug cases, not just naturally long
+    single-paragraph notes): animation-manager/t-007, coloring-book/t-022,
+    coloring-book/t-039, conductor/t-132, interface-vision/t-104. (The other 7 --
+    animation-manager/t-006, dream-cycle/t-006, interface-vision/t-105, kind-robots/t-078,
+    model-builder/t-029 itself, serendipity/t-012, storybook/t-010 -- are already `|-`,
+    so lower priority, though still worth a look for the same "one giant physical line"
+    shape in case something else wrote them that way.)
+
+    Open question this session did NOT resolve: whether a `>-` label combined with a
+    giant folded line is what actually triggered the slow CI check, or whether it was
+    something else in that specific diff (the two observations -- hang reproduced twice
+    with `>-`, resolved once switched to `|-` -- are consistent with the label mattering,
+    but the mechanism (which check, why) was not pinned down; see PR #4443's body for the
+    full reasoning trail). Recommend: for each of the 5 `>-` candidates, read the actual
+    note content for signs of lost information (compare against git blame/history if
+    unclear), and cautiously test whether editing that task's note (e.g. a harmless
+    --append-note no-op, watching CI timing) reproduces the same slowdown -- if it does,
+    that confirms the mechanism and this becomes a hard blocker on those tasks until
+    manually unfolded (there's no automatic way to recover the original per-line
+    boundaries from an already-folded note, since folding is lossy for whitespace). If it
+    doesn't reproduce, downgrade this to "just document the shape, no urgent risk."
+
+    CORRECTION (same session, after filing this task): pulled the actual job logs for the
+    run that first showed a 40+-minute API-reported stall (on the corrupted >- version,
+    before the append_note_text fix) and for a later run that stalled the same way on an
+    unrelated PR (#4444, which never touches model-builder/roadmap.yaml at all). Both logs
+    show "pytest tests/" itself completing normally in ~115s (1990-1991 passed, 29-30
+    skipped) with every remaining step finishing within the same couple of seconds -- the
+    stall was entirely AFTER the job's own work finished: the GitHub Actions job/check-run
+    API kept reporting status:in_progress for 15-40+ minutes past the log's own completion
+    timestamp, resolving only once a cancel_workflow_run call was sent (and on PR #4444's
+    third attempt, not even reliably then -- repeated cancels and reruns of the same run_id
+    left it wedged for over 20 minutes; a fresh commit forcing a brand-new run_id was what
+    actually got a clean run). This is GitHub Actions job-finalization/status-reporting
+    flakiness, not a slow test, and not something this repo's code can fix. The
+    append_note_text() >-/|- forcing bug is still real (independently reproduced by direct
+    function calls and pinned by a regression test) and worth having fixed, but it was NOT
+    the cause of the observed CI timing -- the theory linking them, written in this task's
+    original note and in PR #4443's body, was wrong. Downgrading this audit accordingly: the
+    5 already->--labeled giant-note tasks may still be worth a look for actual content-
+    folding damage (lost information), but there is no confirmed CI-hang risk tied to them.
+    Future sessions hitting a stuck-in_progress PR check should pull the actual job log
+    first (it often shows the real work already finished) before assuming a code-side hang
+    or spending a long diagnostic session chasing content as the cause.
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
