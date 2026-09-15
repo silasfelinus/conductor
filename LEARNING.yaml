@@ -13785,3 +13785,18 @@ records:
     targets a named branch without reading the caller''s actual worktree state
     needs the same guard -- worth checking claim_task.py''s branch-naming paths
     for the same class of assumption.'
+- date: 2026-09-15
+  project: conductor
+  task: t-163
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Factored close_task.py''s equal/not-equal branch-tip check (t-161) into
+    scripts/branch_ancestry.py''s classify_relationship(), a pure primitive over
+    `git merge-base --is-ancestor` that names the actual relationship (equal/ahead/
+    behind/diverged) instead of a bare SHA comparison. Refusal behavior is
+    unchanged -- only "equal" is safe to build on -- but the primitive is now
+    independently unit-tested and reusable. claim_task.py''s branch-naming paths
+    were flagged (not yet audited) as a plausible next caller of the same primitive.'
