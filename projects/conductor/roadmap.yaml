@@ -2365,7 +2365,7 @@ tasks:
 - id: t-157
   milestone: m2
   title: "check_hostbuf_failure.py's UNVERIFIED state is a GH Actions annotation nobody reads -- surface it somewhere durable"
-  status: review
+  status: done
   stakes: reversible
   passes: 0
   owner: reviewer
@@ -2384,9 +2384,10 @@ tasks:
     t-021 while it's the active incident). Add a regression test asserting the unverified
     path actually writes/returns that record, not just prints to stdout. Reversible,
     tooling-only change; no roadmap/gate semantics affected.
-  updated: '2026-09-15T10:47:47Z'
+  updated: '2026-09-15T10:50:31Z'
   claimed_by: claude-scheduled-20260915T1027Z-conductor-t157
   claimed_at: '2026-09-15T10:42:39Z'
+  implementation_pr: 'silasfelinus/conductor#4414'
 - id: t-158
   milestone: m2
   title: Offload done-task notes to per-project HISTORY.md and enforce the size ceiling
