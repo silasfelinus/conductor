@@ -2787,5 +2787,44 @@ tasks:
     unblocks lora-ingestion/t-003 (currently needs-human, soft, pending this).
   updated: '2026-09-15T11:53:06Z'
 
+- id: t-166
+  milestone: m2
+  title: 'test_check_render_box.py: two tests leak onto the live network instead of mocking engine_heartbeat_verdict'
+  status: ready
+  stakes: reversible
+  passes: 0
+  owner: null
+  note: |
+    Filed 2026-09-15 (scheduled conductor sweep session, incidental to conductor/t-164).
+    While running the full `pytest tests/` suite to verify t-164's change, two tests in
+    tests/test_check_render_box.py failed: test_gate_passes_when_reachable_and_rendering
+    and test_gate_passes_on_an_idle_queue. Both monkeypatch render_box_reachable and
+    fetch_queue_stats, call check.main(), and assert it returns 0.
+
+    Root cause: check.main() also calls engine_heartbeat_verdict(), which neither test
+    mocks. engine_heartbeat_verdict() imports check_engine_heartbeat and calls its
+    fetch_uptime() -- a real network call. At the time this was discovered the live
+    render engine genuinely was reporting unhealthy (confirmed independently via
+    `python scripts/check_engine_heartbeat.py`: "engine heartbeat DOWN: Comfy: reporting
+    ok:false since 2026-09-15T12:11:47 (24 minutes)"), which is what made both tests fail
+    with a real "render box DOWN" verdict instead of the intended pass-through case they
+    were written to cover.
+
+    This violates tests/conftest.py's documented suite-wide invariant ("The one thing in
+    here keeps the test suite off the network") -- that fixture only stubs the Resource
+    registry consume_art_queue_core.py uses, not check_engine_heartbeat's HTTP call, so
+    this file is not actually covered by it. The two tests will pass or fail depending on
+    live infrastructure state at whatever moment CI happens to run, which is exactly the
+    kind of flake the conftest.py fixture exists to prevent elsewhere in the suite.
+
+    Fix: monkeypatch check.engine_heartbeat_verdict to return (True, "...") in both
+    tests (same pattern the file already uses for render_box_reachable/fetch_queue_stats),
+    so they test only the throughput-verdict branch they're named for and stay
+    deterministic regardless of the real engine's live state. Conductor's own
+    `Python test suite` CI check is non-required (per conductor/t-132's TALKBACK history),
+    so this was not blocking any merge, but it should still be fixed -- a flaky-looking
+    green/red on this check trains reviewers to stop trusting it.
+  updated: '2026-09-15T12:40:00Z'
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
