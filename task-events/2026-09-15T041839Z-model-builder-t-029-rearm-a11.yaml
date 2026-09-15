@@ -1,0 +1,8 @@
+version: 1
+project: model-builder
+task: t-029
+operation: rearm
+session: openai-scheduled-2026-09-15T041839Z-model-builder-t029-a11
+updated: '2026-09-15T04:25:00Z'
+note: >-
+  Cycle 104 (OpenAI scheduled audit, verified no-op): followed cycle 103's explicit next lead to extend the text-truncation guard's schema walk to NAME_MAX, and found that work already exists on current kind_robots main rather than being an open gap. utils/scripts/verifyModelBuilderCommitNameWidthGuard.ts already walks CREATE_TARGETS, prisma/schema.prisma identifier widths (including Prisma/MySQL's implicit 191-char String width), and commit.post.ts NAME_MAX; its selftest exists, package.json exposes both guard/selftest scripts, and .github/workflows/contract-tests.yml runs both. commit.post.ts already uses the per-target NAME_MAX map. This means implementing cycle 103's suggested follow-up would duplicate an existing cycle-35 regression guard, so no code change or PR was warranted. Next slice should not revisit NAME_MAX; pick a genuinely different Model Builder subsystem or leave the browser/runtime smoke path to t-031, which already owns it.
