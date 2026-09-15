@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-15T13:48:53Z
+Generated: 2026-09-15T13:50:50Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **972**
-- Outcomes: blocked: 16, cancelled: 1, done: 955
+- Closed tasks recorded: **973**
+- Outcomes: blocked: 16, cancelled: 1, done: 956
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -57,7 +57,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | scene-animator | 2 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
-| storybook | 21 | 100% |
+| storybook | 22 | 100% |
 | storymaker | 1 | 100% |
 | superkate-hairstyle-ai | 18 | 100% |
 | superkate-services-calculator | 12 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 955 | 99% |
+| software | 956 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-15 `storybook/t-027` — A recurring "check the real state and record it" audit task can surface a result the task's own follow-on wasn't designed for: t-028 assumed t-027 would find some endings missing art among an otherwise-seeded 1,024-row catalog, but the actual coverage call came back 0/1024 seeded -- zero rows exist at all, not partial art coverage. Letting the dependency resolver mechanically flip t-028 to `ready` on t-027's `done` would have handed a future worker a task it structurally could not start (nothing to attach art to). General lesson: when an audit's real result falls outside the shape its downstream task assumed, redirect the downstream task in the same close-out instead of letting an automatic status transition carry a stale scope forward -- the dependency graph tracks task completion, not whether the completed task's findings still match what its dependent expects.
 - 2026-09-15 `conductor/t-166` — Two tests in test_check_render_box.py asserted on check.main()'s return value without mocking every function main() calls (engine_heartbeat_verdict), so they silently made a real network call every run -- caught only because the live render engine happened to be reporting unhealthy at the moment this session ran the full suite, which flipped their result from a coincidental pass to a real failure. General lesson: a test that patches some of a function's dependencies but not all of them is not actually isolated -- it just hasn't been caught yet by the unpatched dependency disagreeing with what the test expects. When fixing one, audit every other test hitting the same entry point for the identical gap (two more tests here were leaking the same call and passing by coincidence).
 - 2026-09-15 `conductor/t-164` — check_pr_merged_drift.py's title-search and stranded-branch passes both scanned every repo in ALL_TRACKED_REPOS for every in-progress task, even though most tasks' own title/note history already names the one or two repos that actually matter for them. Added task_relevant_repos() to narrow both passes to a task's own cited repos first, falling back to the full list only when a task cites none. General lesson: when a checker scans "every tracked X" for "every candidate Y", check whether each Y already carries evidence of which X actually applies to it before paying the full cross-product cost -- the per-run caches already shared across tasks/repos mean this is a scope reduction, not just deferred work.
 - 2026-09-15 `conductor/t-150` — check_pr_merged_drift.py's title-search and note-reference passes can only report drift when a PR actually exists to find -- a task whose implementing session never opened one at all (cthulhuquarium/t-076) read as a false "clean", the exact opposite failure mode from what the script was built to catch. Closed by adding a fifth pass that lists branches across the same tracked repos already scanned for title matches and flags one matching the worker naming convention with no open PR against it. General lesson: a checker built to catch "state A drifted from state B" should also ask whether state B (the PR/evidence it searches for) exists at all -- absence-of-evidence and evidence-of-absence are different findings and a search that only handles the former will read a genuinely missing PR as clean.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-15 `model-builder/t-029` — A text-truncation guard that only asserts pickText()'s own cap (verifyModelBuilderCommitTextTruncationGuard.ts, cycle 33) does not cover every place raw user/AI text reaches a bounded DB column -- commit.post.ts's updateText()/createRecord() also assigned the raw, uncapped pitch/fieldsDraft blob directly as a fallback for Bot.description/botIntro/prompt (bounded VarChar columns) whenever the FIELDS stage left those blank, bypassing pickText and its cap entirely. When auditing a text-length bug class, trace every write site for the affected columns, not just the ones that already go through the sanctioned helper -- a fallback path written before or after the helper call is exactly where the same bug re-enters uncaught.
 - 2026-09-15 `conductor/t-159` — Rotating an append-only log (TALKBACK.md) into monthly archives is safe when every archive write is verified byte-for-byte round-trip (write, re-read, re-extract, compare) before the source is ever rewritten, and the one real consumer that whole-file-parses the source for historical data (backfill_learning.py's --since all) gets fixed to read the archive directory too -- the archival carve-out only holds if every consumer of the pre-split file is checked, not just the file split itself.
 - 2026-09-15 `conductor/t-163` — Factored close_task.py's equal/not-equal branch-tip check (t-161) into scripts/branch_ancestry.py's classify_relationship(), a pure primitive over `git merge-base --is-ancestor` that names the actual relationship (equal/ahead/ behind/diverged) instead of a bare SHA comparison. Refusal behavior is unchanged -- only "equal" is safe to build on -- but the primitive is now independently unit-tested and reusable. claim_task.py's branch-naming paths were flagged (not yet audited) as a plausible next caller of the same primitive.
-- 2026-09-15 `conductor/t-161` — close_task.py built its close-out commit from the remote branch tip (origin/<branch> or origin/main) regardless of whether a same-named local branch existed with unpushed commits, so `--branch <my-current-branch>` did not behave like a normal git push -- it could silently rebuild from a stale base and force-push over local-only work (caught once already in coloring-book/t-046, kaizen-sourced this task). Fixed with a fail-closed branch-tip equality check before every commit attempt, tested against both the divergent and matching-tip cases. Any scratch-index git plumbing that targets a named branch without reading the caller's actual worktree state needs the same guard -- worth checking claim_task.py's branch-naming paths for the same class of assumption.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-15T13:48:53Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-15T13:50:50Z_
