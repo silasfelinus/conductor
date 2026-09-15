@@ -46,26 +46,20 @@ books:
     render_engine: krea2
     completed_at: '2026-09-14T10:48:58Z'
     prompt_fingerprint: f7a2b373e25e81fcf7b24d0ba97e92de70991b0fea9d810aaa9d40e954016930
-    bw_job_id: 22680
-    bw_status: needs_review
-    bw_requested_at: '2026-09-15T06:31:06Z'
-    bw_art_image_id: 24457
-    bw_rendered_path: generated/bw/mr-001-bw.webp
-    bw_rejected_path: projects/coloring-book/sets/monster-recast/generated/bw/rejected/mechanical/mr-001-bw-20260915T073354Z.webp
-    bw_mechanical_info:
-      pixels: 16960
-      mean_saturation: 0.1695
-      colorful_fraction: 0.3277
-      white_fraction: 0.0
-      luma_std: 0.0826
-      size: 1024x1536
-      hf_ratio: 0.8745
-      tint_concentration: 0.2367
+    bw_status: running
+    bw_requested_at: '2026-09-15T08:33:58Z'
     bw_render_reasons:
     - spatially-uncorrelated noise/static — no discernible image structure (hf_ratio=0.87); this can pass the saturation/white-fraction
       checks for either variant while being pure garbage (coloring-book/t-039)
     - not black-and-white line art — came back colored/shaded (mean_saturation=0.17, colorful_fraction=0.33, white_fraction=0.00)
-    bw_completed_at: '2026-09-15T07:33:54Z'
+    bw_revision_history:
+    - requested_at: '2026-09-15T08:33:57Z'
+      previous_status: needs_review
+      art_image_id: 24457
+      rendered_path: null
+      semantic_score: null
+      archived_path: null
+    bw_job_id: 22831
   - slot: 2
     id: mr-002
     slug: dream-killer
