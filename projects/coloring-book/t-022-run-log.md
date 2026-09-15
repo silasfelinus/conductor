@@ -2508,3 +2508,60 @@ Krea/prompt/engine fix, or a decision to route BW derivation through a different
 entirely), resume the batch from mr-001/mr-010/mr-013's in-flight jobs and the remaining
 Monster Recast slots. hwr-008 (ArtJob 22678) still needs one more recovery pass once it
 finishes server-side.
+
+### Cycle 15: confirms 10/10 generate-bw failure; hwr-008's 3rd and 4th attempts both miss casting again (different defect each time)
+
+Recovery check on the three jobs cycle 14 left in flight: queried the render backend
+directly for jobs 22678 (hwr-008 color), 22680 (mr-001 bw), 22681 (mr-010 bw), and 22682
+(mr-013 bw) — all four had completed server-side (`DONE`) by the start of this cycle.
+
+**generate-bw recovery (mr-001/mr-010/mr-013):** ran
+`manage_coloring_book_production.py --operation generate-bw --live` for all three. All
+three were mechanically rejected with the identical noise signature already documented
+for the other 7 slots (hf_ratio 0.86-0.87, mean_saturation 0.17, colorful_fraction
+0.33-0.34, white_fraction 0.00). That is now **10 of 10** `generate-bw` attempts checked
+against this book — the diagnosis in t-039 is solid at this sample size, so no further
+fresh `generate-bw` jobs were submitted this cycle; doing so would only re-confirm a
+conclusion that is no longer in doubt. Appended the evidence directly to t-039's note.
+
+**hwr-008 color recovery + two fresh attempts:** recovered ArtJob 22678 (ArtImage 24460)
+via `consume_coloring_book_studio_request.py` — Pillow was missing again in this sandbox
+instance (`pip3 install Pillow`, same recurring gap documented for prior cycles). Creative
+review: still a fully buttoned formal tuxedo with a closed bow tie and vest, no open
+neckline, no visible scars — the third consecutive instance of this exact defect. Revised
+the prompt to drop "formal stagewear"/vest/tie entirely in favor of an explicit opera cape
+over an open, tie-free, vest-free shirt, and requested a fresh render via `--force --live`
+(ArtJob 22683). The first `--live` call hit the documented client-side timeout (job still
+queued/running after 90s) but the reference was preserved (`render_gate_error` retained
+the "job 22683" text `referenced_job_id()` scans for); a same-cycle recheck found the job
+had actually completed within about 90 more seconds, so it was recovered cleanly with no
+duplicate submission (ArtImage 24466). Creative review of the fourth attempt: the
+buttoned-tuxedo defect is fixed — the shirt is genuinely open at the sternum now — but the
+exposed skin is smooth and unmarked, with no visible chest-surgery scarring at all. Two
+different wardrobe strategies (closed tuxedo, then open cape) have now both failed to
+surface any scar, which points less at wardrobe occlusion and more at the render engine
+declining to depict scar texture on skin — plausibly a content-safety-adjacent smoothing
+bias rather than something a wardrobe rewrite alone can fix. Not attempting a fifth blind
+retry this cycle; documented the full attempt history and a recommended next approach
+(blunt clinical-photography-style scar description as one more bounded experiment, or a
+different visual identity signal/engine, or a deliberate brief amendment) directly on
+hwr-008's proposal note for the next cycle or Silas to decide.
+
+Neither hwr-008 outcome nor the 10/10 generate-bw confirmation changed this book's
+final-pair count (still 3/36) — this cycle's yield is diagnostic/creative-review only, no
+new production mutations beyond the documented rejects and the still-pending hwr-008
+color candidate.
+
+Verification: `python scripts/coloring_proposal_status.py --check` → Monster Recast
+still 3/36 final pairs, accepted color/BW correctly still 20/3 (rejects don't count);
+Hollywood Recast accepted color unchanged at 22 (hwr-008 stays `done`/unaccepted, not
+promoted to `accepted`, since it wasn't accepted). `python scripts/coloring_queue_status.py`
+for both books → `queue_integrity_safe`/`recovery_safe`/`retry_safe` all true,
+`recommended_action: complete`, zero recovery candidates or duplicate job/entry ids left
+dangling. `python scripts/validate_roadmaps.py` → clean.
+
+**Next actionable step:** t-039 remains the blocker for all further `generate-bw` work
+across all three books (now 10/10 confirmed) — needs relay access for its non-GGUF
+comparison test. hwr-008 needs one more bounded creative-review attempt or a human call on
+whether the engine can depict this casting requirement at all; nothing else in either book
+is currently blocked.
