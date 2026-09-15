@@ -1,0 +1,9 @@
+version: 1
+project: conductor
+task: t-161
+operation: review
+owner: worker
+session: openai-scheduled-2026-09-15T001623Z-conductor-t161-a11
+updated: '2026-09-15T00:22:00Z'
+note: >-
+  Implemented a fail-closed branch-tip guard in close_task.py so --branch cannot silently omit local-only commits; added regression coverage for mismatched and matching local/remote branch tips.
