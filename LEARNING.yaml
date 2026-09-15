@@ -14003,3 +14003,23 @@ records:
     CI timing against recent successful runs and cancel/rerunning to confirm reproducibility
     rather than trusting a plausible-looking diff. Filed conductor/t-169 to audit 5 other tasks
     already showing the `>-`-plus-giant-line signature for the same latent risk.
+- date: 2026-09-15
+  project: conductor
+  task: t-170
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: |-
+    Clean first-pass fix (attempt-cap + quarantine for process_coloring_art_events.py), but
+    the new tests initially relied on this sandbox's ambient KR_API_TOKEN (a container-level
+    env var, not something kr_token_set.sh sets) instead of pinning it explicitly, so they
+    passed locally and failed on the GitHub Actions "Python test suite" job, which doesn't
+    inject that secret outside process-color-art-events.yml's own step. Caught by reading the
+    actual failing job log rather than assuming a plausible diff was CI-safe; fixed by
+    wrapping the three affected tests in patch.dict(os.environ, {"KR_API_TOKEN": ...}) and
+    re-verifying locally with `env -u KR_API_TOKEN pytest tests/ -q` before pushing again.
+    Lesson for future tests exercising code with credential-gated branches: never assume a
+    sandbox's ambient environment matches CI's; pin every env var the code under test
+    branches on, explicitly, in the test itself.
