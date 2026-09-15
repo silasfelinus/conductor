@@ -574,3 +574,9 @@ queueDepth: DONE=10371, FAILED=1, CANCELLED=10569 (all-time). oldestPending: non
 
 ## 2026-09-14T05:42:54Z | coloring-book/t-022 | healthy
 queueDepth: DONE=10435, FAILED=166, CANCELLED=10569 (all-time). oldestPending: none. windowThroughput (24h): FAILED=132. recentFailed (last 25): 25/25 = hostbuf_file_reader_read failed (CLIPTextEncode node) [cthulhuquarium=21, coloring-book=4].
+
+## 2026-09-15T11:51:58Z | lora-ingestion/t-003 | down
+queueDepth: PENDING=3, RUNNING=1, DONE=10977, CANCELLED=11024 (all-time). oldestPending: id=22838, age=2129s (~0.6h), engine=COMFY. windowThroughput (24h): PENDING=3, RUNNING=1, DONE=435, CANCELLED=292. recentFailed: none.
+
+## 2026-09-15T11:53:13Z | lora-ingestion/t-003 | draining
+queueDepth: PENDING=3, DONE=10977, CANCELLED=11025 (all-time). oldestPending: id=22838, age=2204s (~0.6h), engine=COMFY. windowThroughput (24h): PENDING=3, DONE=435, CANCELLED=293. recentFailed: none.
