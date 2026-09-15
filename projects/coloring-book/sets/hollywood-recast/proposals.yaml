@@ -197,10 +197,11 @@ proposals:
   title: Laboratory Tenor
   prompt:
     text: Operatic monster-musical scene in a cathedral-sized electrical laboratory. A clearly middle-aged trans man
-      tenor in formal stagewear, open shirt and vest neckline revealing visible healed bilateral chest-surgery scars,
-      mature face and body, sings one impossible note while glass organs, copper coils, and stitched but elegant
-      artificial creatures awaken around him. Dramatic spotlight, jewel-toned electricity, original science-fantasy
-      design, no recognizable monster costume, no text.
+      tenor, wearing an open opera cape over an unbuttoned white dress shirt with no tie and no vest, the shirt hanging
+      open to the sternum, clearly revealing visible healed bilateral chest-surgery scars across his mature, broad
+      torso, sings one impossible note while glass organs, copper coils, and stitched but elegant artificial creatures
+      awaken around him. Dramatic spotlight, jewel-toned electricity, original science-fantasy design, no recognizable
+      monster costume, no text.
     ref: null
   inspirations: []
   accepted:
@@ -224,6 +225,32 @@ proposals:
     gap rather than an unlucky roll. Needs either a stronger casting anchor in the prompt (explicit visible scar
     placement/description, not just ''scars visible'') or a different approach next pass rather than a third blind
     retry.'
+  - 'NOT ACCEPTED 2026-09-15 (scheduled Conductor session, t-022 cycle 15): applied the prior cycle''s casting-anchor
+    revision (clearly middle-aged, open shirt/vest neckline, visible healed bilateral chest-surgery scars, mature
+    face/body). Recovered ArtJob 22678 (ArtImage 24460) cleanly, but the render still shows a fully buttoned formal
+    tuxedo with a closed bow tie and vest -- no open neckline, no visible scars, though the face does read as older/gray-haired
+    this time. Third live attempt, third instance of the identical defect: the engine appears to strongly favor
+    "formal stagewear" as a buttoned tuxedo, which directly conflicts with the "open shirt/vest neckline" instruction.
+    Revised the prompt again to remove "formal stagewear"/vest/tie entirely and replace with an explicit opera cape
+    over an unbuttoned, tie-free, vest-free white dress shirt hanging open to the sternum -- removing the conflicting
+    "formal" framing rather than layering more adjectives onto it. Requesting one more render against this revision
+    before treating this as an engine-level casting-fidelity gap needing a human/engine-side look, consistent with
+    this book''s mr-008 precedent (5 attempts before escalation).'
+  - 'NOT ACCEPTED 2026-09-15 (scheduled Conductor session, t-022 cycle 15, second attempt this cycle): fresh render
+    against the opera-cape/open-shirt revision (ArtJob 22683, ArtImage 24466) fixed the buttoned-tuxedo defect --
+    the shirt is now genuinely open in a V at the sternum -- but the exposed skin is smooth and unmarked, still no
+    visible chest-surgery scarring of any kind, and the build reads as an older gentleman rather than a mature/broad
+    trans man specifically. Fourth live attempt across four sessions/cycles, fourth instance of the same core miss
+    (no visible scars) even after two different wardrobe strategies (buttoned tuxedo, then open cape) both failed
+    to surface it -- this now looks less like a wardrobe-occlusion problem and more like the render engine declining
+    to depict surgical scar texture on skin at all, plausibly a content-safety-adjacent smoothing bias rather than
+    something a wardrobe rewrite can fix. Not attempting a fifth blind retry this cycle. Recommend a human/engine-side
+    call next: either a blunt, clinical-photography-style scar description as one more bounded experiment, or accepting
+    that this slot may need a different engine, a different visual approach to signaling the character''s identity
+    (e.g. a visible surgical drain-site or binder-strap detail lower on the torso instead of bare-chest scarring), or
+    a deliberate brief amendment if the render engine cannot faithfully depict this. mr-008''s art_quality.py saturation
+    gate does not apply here -- this is a semantic/creative-review miss, not a mechanical one, so it will not surface
+    on its own the way t-039/t-044''s failures do.'
 - slot: 9
   id: hwr-009
   title: Ballroom Double Take
