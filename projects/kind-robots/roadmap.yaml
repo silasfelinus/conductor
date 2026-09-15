@@ -1944,7 +1944,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: Generate owned preview art for the LoRA catalog, starting with the 223 blind rows
-  status: claimed
+  status: ready
   owner: worker
   stakes: reversible
   passes: 0
@@ -2128,9 +2128,31 @@ tasks:
     to trust flux2-adjacent checkpoints again. If any of the 5 pilot jobs FAILED
     or hung, stop and treat it as a new relay-health data point on t-165/t-167
     rather than continuing the batch blind.
-  updated: '2026-09-15T16:34:16Z'
+
+    RECONCILED (conductor scheduled sweep, workflow-medic/state-reconciliation,
+    2026-09-15T~19:58Z): checked ArtJob 23041-23045 (the 5-job pilot batch from the merged
+    implementation PR) via GET /api/art/queue/:id. Result: 23041 DONE (artImageId 24620);
+    23042-23045 all CANCELLED ("Cancelled by admin"), not failures -- most likely swept up
+    in the same-day relay-wedge firefighting (conductor/t-165, t-167), not a defect in this
+    batch. Verified the actual thing this task exists to prove: GET /api/resources/1370 now
+    shows artImageId=24620, imagePath set, and isMature/isPublic populated --
+    applyEntityArtCompletion correctly attaches art back onto a Resource row for entityType
+    "resource" in real production, confirmed for the first time (the note flagged this as
+    never having fired in production before). That is a genuine positive result, not just an
+    enqueue-returns-a-jobId check. Recording implementation_pr for
+    silasfelinus/conductor#4442 (was unset, which is why check_pr_merged_drift.py flagged
+    this task as claimed/PR-already-merged drift). Re-arming to ready rather than done: only
+    1 of 223 target rows has verified art end-to-end, and conductor/t-165 and t-167 (relay
+    cold-model-load wedging) are still open and were reinforced with fresh evidence this
+    same session (a third engine wedged at 18:17Z) -- the task note already says to hold
+    further batches until relay stability returns, and nothing here changes that. Next
+    actionable step unchanged: once t-165/t-167 clear (or enough stable time passes), re-
+    plan (do not reuse the stale probe-plan) and continue queuing the remaining ~101
+    comfy/sdxl plans in small batches, holding the 13 flux plans for last.
+  updated: '2026-09-15T19:42:47Z'
   claimed_by: claude-20260915T163054Z-kindrobots-t105
   claimed_at: '2026-09-15T16:30:54Z'
+  implementation_pr: 'silasfelinus/conductor#4442'
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
