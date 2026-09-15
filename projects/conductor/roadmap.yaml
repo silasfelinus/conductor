@@ -2494,10 +2494,10 @@ tasks:
 - id: t-159
   milestone: m2
   title: Rotate root TALKBACK.md into monthly archives
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  owner: null
+  owner: worker
   depends_on: t-158
   note: >-
     Filed 2026-09-14 at Silas's direction, same size assessment as t-158. Depends on t-158 only
@@ -2546,7 +2546,9 @@ tasks:
     Same byte-for-byte round-trip verification as t-158: every rotated entry must be recoverable
     identical to its original. check_large_deletion_guard.py does not currently watch TALKBACK.md,
     so it will not fire here.
-  updated: '2026-09-14T10:30:00Z'
+  updated: '2026-09-15T02:32:16Z'
+  claimed_by: claude-scheduled-20260915T023215Z-cond-t159
+  claimed_at: '2026-09-15T02:32:16Z'
 - id: t-160
   milestone: m2
   title: Large binaries, the media-host policy boundary, and the stale art-request status doc
