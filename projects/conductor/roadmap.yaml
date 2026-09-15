@@ -2607,10 +2607,10 @@ tasks:
 - id: t-161
   milestone: m2
   title: close_task.py can silently drop a caller's unpushed local commits on the target branch
-  status: ready
+  status: claimed
   stakes: reversible
   passes: 0
-  owner: null
+  owner: worker
   note: >-
     Kaizen from coloring-book/t-046 (silasfelinus/conductor#4356, 2026-09-14): this session
     implemented t-046 locally (committed but not yet pushed) on its designated branch
@@ -2634,7 +2634,9 @@ tasks:
     explicit docstring note describing the actual behavior so a caller knows to push their own
     commits first (or use a distinct `--branch` name for the close-out) rather than assuming
     `--branch <my-current-branch>` preserves local work the way a normal `git push` would.
-  updated: '2026-09-14T17:58:00Z'
+  updated: '2026-09-15T00:16:23Z'
+  claimed_by: openai-scheduled-2026-09-15T001623Z-conductor-t161-a11
+  claimed_at: '2026-09-15T00:16:23Z'
 
 - id: t-162
   milestone: m2
