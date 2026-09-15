@@ -114,6 +114,7 @@ def test_pending_backlog_without_a_stale_claim_is_not_flagged():
 
 def test_gate_fails_when_reachable_but_not_rendering(monkeypatch):
     monkeypatch.setattr(check, "render_box_reachable", lambda *a, **k: (True, 404))
+    monkeypatch.setattr(check, "engine_heartbeat_verdict", lambda: (True, "ok"))
     monkeypatch.setattr(
         check, "fetch_queue_stats", lambda: {"windowThroughput": {"DONE": 0, "FAILED": 262}}
     )
@@ -122,6 +123,7 @@ def test_gate_fails_when_reachable_but_not_rendering(monkeypatch):
 
 def test_gate_fails_on_a_stalled_queue_despite_past_completions(monkeypatch):
     monkeypatch.setattr(check, "render_box_reachable", lambda *a, **k: (True, 404))
+    monkeypatch.setattr(check, "engine_heartbeat_verdict", lambda: (True, "ok"))
     monkeypatch.setattr(
         check,
         "fetch_queue_stats",
@@ -136,6 +138,7 @@ def test_gate_fails_on_a_stalled_queue_despite_past_completions(monkeypatch):
 
 def test_gate_passes_when_reachable_and_rendering(monkeypatch):
     monkeypatch.setattr(check, "render_box_reachable", lambda *a, **k: (True, 404))
+    monkeypatch.setattr(check, "engine_heartbeat_verdict", lambda: (True, "ok"))
     monkeypatch.setattr(
         check, "fetch_queue_stats", lambda: {"windowThroughput": {"DONE": 73, "FAILED": 0}}
     )
@@ -145,6 +148,7 @@ def test_gate_passes_when_reachable_and_rendering(monkeypatch):
 def test_gate_passes_on_an_idle_queue(monkeypatch):
     # No throughput signal must never turn a reachable box into a blocked one.
     monkeypatch.setattr(check, "render_box_reachable", lambda *a, **k: (True, 404))
+    monkeypatch.setattr(check, "engine_heartbeat_verdict", lambda: (True, "ok"))
     monkeypatch.setattr(check, "fetch_queue_stats", lambda: None)
     assert check.main() == 0
 
