@@ -13813,3 +13813,19 @@ records:
     rewritten, and the one real consumer that whole-file-parses the source for historical data (backfill_learning.py's
     --since all) gets fixed to read the archive directory too -- the archival carve-out only holds if
     every consumer of the pre-split file is checked, not just the file split itself.
+- date: '2026-09-15'
+  project: model-builder
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A text-truncation guard that only asserts pickText()''s own cap (verifyModelBuilderCommitTextTruncationGuard.ts,
+    cycle 33) does not cover every place raw user/AI text reaches a bounded DB column -- commit.post.ts''s
+    updateText()/createRecord() also assigned the raw, uncapped pitch/fieldsDraft blob directly as a
+    fallback for Bot.description/botIntro/prompt (bounded VarChar columns) whenever the FIELDS stage left
+    those blank, bypassing pickText and its cap entirely. When auditing a text-length bug class, trace
+    every write site for the affected columns, not just the ones that already go through the sanctioned
+    helper -- a fallback path written before or after the helper call is exactly where the same bug
+    re-enters uncaught.'
