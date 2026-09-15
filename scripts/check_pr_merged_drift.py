@@ -65,17 +65,35 @@ roadmap only) to a task at `status: done` is flagged as `remaining_scope_resolve
 anything (or 403 entirely). It's reported alongside, not instead of, whatever
 those passes found.
 
+conductor/t-150 adds a fifth pass, the opposite-direction gap the above passes
+can't see: a task with no implementation_pr field, no task-id-named merged PR,
+and no note-quoted merged PR either doesn't necessarily mean nothing happened
+— it can mean the implementing session never opened a PR at all, so there is
+genuinely no PR for the title search or note reference to find. Filed from
+cthulhuquarium/t-076 (2026-09-11): a prior session set `status: review` with a
+note describing a script it had written, but the commit sat on an un-PR'd
+`worker/cthulhuquarium-t-076-*` branch — this script correctly found no PR
+(there wasn't one), which read as a false "clean" until a human/session went
+looking by hand and found the stranded branch. For every task that passes 0-2
+leave with neither a high nor a weak finding, this pass lists open branches in
+the same tracked repos the title-search pass already scans and looks for one
+matching the worker naming convention (`worker/<project>-<task-id>-*` or bare
+`<project>-<task-id>`). A match with no open PR against it is reported as a
+`stranded_branches` finding — a specific, actionable pointer instead of a
+silent "clean". Advisory only: it never opens a PR itself, since whether the
+branch is real, safe, on-task work is still a judgment call.
+
 Exit codes:
-  0 = verified clean (no high-confidence, remaining-scope, or weak findings,
-      nothing unresolved)
+  0 = verified clean (no high-confidence, remaining-scope, weak, or stranded-
+      branch findings, nothing unresolved)
   1 = high-confidence drift found (implementation_pr field or task-id-named
       PR already merged, or a remaining_scope_task chain resolved to done)
   2 = could not fully verify (a search or PR lookup call failed) — a clean
       read here would be a false "all good", so this outranks a bare weak
       signal below
-  3 = only weak/unconfirmed signals found (note-quoted PR merged, but no
-      task-id-named PR confirmed it as the actual implementation) — worth a
-      look, not proof of drift
+  3 = only weak/unconfirmed signals found (note-quoted PR merged but not
+      title-confirmed as the implementation, or a stranded un-PR'd branch
+      found) — worth a look, not proof of drift
 """
 from __future__ import annotations
 
@@ -414,6 +432,142 @@ def gh_list_repo_prs(
     return results
 
 
+def gh_list_repo_branches(
+    repo: str,
+    token: str | None,
+    *,
+    max_pages: int = 10,
+) -> list[dict[str, Any]] | None:
+    """Fetch all branches for a repo via the repo-scoped branches endpoint.
+
+    Same contract as `gh_list_repo_prs`: returns None on any lookup failure
+    (network/API error, distinct from "repo has no branches"), otherwise the
+    full (paginated) branch list. Used by the stranded-branch pass
+    (conductor/t-150).
+    """
+    results: list[dict[str, Any]] = []
+    page = 1
+    while page <= max_pages:
+        url = f"https://api.github.com/repos/{repo}/branches?" + urllib.parse.urlencode(
+            {"per_page": 100, "page": page}
+        )
+        req = urllib.request.Request(
+            url,
+            headers={
+                "Accept": "application/vnd.github.v3+json",
+                "User-Agent": "conductor-check-pr-merged-drift/1.0",
+                **({"Authorization": f"Bearer {token}"} if token else {}),
+            },
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                batch = json.loads(resp.read())
+        except urllib.error.HTTPError as e:
+            print(f"  [gh-branches] {repo} page {page}: HTTP {e.code}", file=sys.stderr)
+            return None
+        except Exception as e:  # noqa: BLE001 — best-effort network call, never fatal
+            print(f"  [gh-branches] {repo} page {page}: {e}", file=sys.stderr)
+            return None
+        if not isinstance(batch, list) or not batch:
+            break
+        results.extend(batch)
+        if len(batch) < 100:
+            break
+        page += 1
+    return results
+
+
+def gh_open_pr_head_branches(repo: str, token: str | None) -> set[str] | None:
+    """Return the set of head branch names with an open PR against `repo`,
+    or None if the open-PR listing itself failed. Used by the stranded-branch
+    pass (conductor/t-150) to tell "branch with no PR at all" apart from
+    "branch already has an open PR" (that's ordinary in-review work, not a
+    stranded close-out).
+    """
+    prs = gh_list_repo_prs(repo, token, state="open")
+    if prs is None:
+        return None
+    heads: set[str] = set()
+    for pr in prs:
+        ref = (pr.get("head") or {}).get("ref")
+        if ref:
+            heads.add(ref)
+    return heads
+
+
+# A branch implementing "<project>/<task-id>" follows one of two established
+# naming shapes (conductor/t-150, from the worker-branch convention in
+# AGENTS.md's "If you're working" section): `worker/<project>-<task-id>-*`
+# (the usual timestamped/suffixed form) or a bare `<project>-<task-id>`.
+def branch_matches_task(branch_name: str, project: str, task_id: str) -> bool:
+    bare = f"{project}-{task_id}"
+    worker_prefix = f"worker/{bare}-"
+    worker_exact = f"worker/{bare}"
+    return (
+        branch_name == bare
+        or branch_name == worker_exact
+        or branch_name.startswith(worker_prefix)
+    )
+
+
+def find_stranded_branch_candidates(
+    tasks: list[dict[str, Any]],
+    repos: list[str],
+    token: str | None,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """For tasks with no high or weak finding from the passes above, look for
+    an open branch matching the worker naming convention with no open PR
+    against it (conductor/t-150) — evidence of a stranded, un-PR'd close-out
+    that the title-search/note-reference passes cannot see, since there is
+    genuinely no PR for either of them to find.
+
+    Returns (findings, failed). `findings` holds tasks with a matching branch
+    and no open PR against it. `failed` holds tasks where a repo's branch or
+    open-PR listing itself failed for every repo checked before a match (or
+    the absence of one) could be confirmed — best-effort per repo, so one
+    repo's failure doesn't stop the others in the same tracked-repo list from
+    being checked for the same task, but is reported so a clean result here
+    is never mistaken for "no stranded branch exists".
+    """
+    if not tasks:
+        return [], []
+    branch_cache: dict[str, list[dict[str, Any]] | None] = {}
+    open_pr_heads_cache: dict[str, set[str] | None] = {}
+    findings: list[dict[str, Any]] = []
+    failed: list[dict[str, Any]] = []
+    for task in tasks:
+        project, task_id = task["project"], task["task_id"]
+        any_lookup_failed = False
+        matched: dict[str, Any] | None = None
+        for repo in repos:
+            if repo not in branch_cache:
+                branch_cache[repo] = gh_list_repo_branches(repo, token)
+            branches = branch_cache[repo]
+            if branches is None:
+                any_lookup_failed = True
+                continue
+            for branch in branches:
+                name = branch.get("name") or ""
+                if not branch_matches_task(name, project, task_id):
+                    continue
+                if repo not in open_pr_heads_cache:
+                    open_pr_heads_cache[repo] = gh_open_pr_head_branches(repo, token)
+                heads = open_pr_heads_cache[repo]
+                if heads is None:
+                    any_lookup_failed = True
+                    continue
+                if name not in heads:
+                    matched = {"repo": repo, "branch": name}
+                    break
+            if matched:
+                break
+        if matched:
+            findings.append({**task, **matched})
+        elif any_lookup_failed:
+            failed.append(task)
+    return findings, failed
+
+
 def gh_search_task_prs(
     repos: list[str],
     project: str,
@@ -571,6 +725,13 @@ def check_drift(
       alongside `high` (its findings are NOT included in `high` itself, to
       keep that list's one-finding-per-task shape from pass 0/1 unchanged)
       but treated the same for the exit-code contract below.
+    `stranded_branches` — a task with neither a `high` nor a `weak` finding
+      (conductor/t-150) whose implementing session may simply never have
+      opened a PR: a branch matching the worker naming convention
+      (`worker/<project>-<task-id>-*` or bare `<project>-<task-id>`) exists
+      in one of the tracked repos with no open PR against it. Advisory —
+      never asserts the branch IS the implementation, only that it's a named,
+      actionable candidate instead of a silent "clean".
     """
     all_tasks = scan_in_progress_tasks(projects_dir, overrides_path, include_inactive)
     note_candidates = scan(projects_dir, overrides_path, include_inactive)
@@ -698,12 +859,32 @@ def check_drift(
         finding["confidence"] = "low"
         finding["source"] = "note-reference"
 
+    # Pass 3 (conductor/t-150): for a task with no high or weak finding at
+    # all — i.e. one passes 0-2 would otherwise report as plain "clean" —
+    # check whether a worker-convention branch exists with no open PR against
+    # it. Scoped to search_tasks whose title search actually completed
+    # (searched_keys already excludes search_failed_tasks): a task whose
+    # search itself failed is already `unresolved` for a different reason,
+    # and a field-present task took a different pass entirely.
+    weak_keys = {(f["project"], f["task_id"]) for f in weak_findings}
+    stranded_candidate_tasks = [
+        task
+        for task in search_tasks
+        if (task["project"], task["task_id"]) in searched_keys
+        and (task["project"], task["task_id"]) not in confirmed_keys
+        and (task["project"], task["task_id"]) not in weak_keys
+    ]
+    stranded_findings, stranded_failed = find_stranded_branch_candidates(
+        stranded_candidate_tasks, ALL_TRACKED_REPOS, token
+    )
+
     unresolved = (
         malformed_field_tasks
         + field_unresolved
         + list(search_failed_tasks)
         + search_unresolved
         + weak_unresolved
+        + stranded_failed
     )
     return {
         "high": high_findings,
@@ -711,6 +892,7 @@ def check_drift(
         "unresolved": unresolved,
         "remaining_scope_resolved": remaining_scope_resolved,
         "field_possibly_stale": field_possibly_stale,
+        "stranded_branches": stranded_findings,
     }
 
 
@@ -721,10 +903,12 @@ def render(
     weak: list[dict[str, Any]] | None = None,
     remaining_scope_resolved: list[dict[str, Any]] | None = None,
     field_possibly_stale: list[dict[str, Any]] | None = None,
+    stranded_branches: list[dict[str, Any]] | None = None,
 ) -> str:
     weak = weak or []
     remaining_scope_resolved = remaining_scope_resolved or []
     field_possibly_stale = field_possibly_stale or []
+    stranded_branches = stranded_branches or []
     lines = []
     if field_possibly_stale:
         lines.append(
@@ -803,12 +987,26 @@ def render(
                 f"merged {finding['pr_merged_at']}"
             )
         lines.append("")
+    if stranded_branches:
+        lines.append(
+            f"{len(stranded_branches)} task(s) at claimed/review have no merged/open PR at all, "
+            "but a branch matching the worker naming convention exists with no open PR against it "
+            "(conductor/t-150) — likely a stranded, un-PR'd close-out. Open a PR from it (if it's "
+            "real, on-task work) or confirm it's genuinely superseded:\n"
+        )
+        for finding in stranded_branches:
+            lines.append(
+                f"  {finding['project']}/{finding['task_id']} (status: {finding['status']}) — "
+                f"{finding['repo']}@{finding['branch']} has unmerged commits and no open PR"
+            )
+        lines.append("")
     if (
         not findings
         and not weak
         and not unresolved
         and not remaining_scope_resolved
         and not field_possibly_stale
+        and not stranded_branches
     ):
         lines.append(
             f"No drift found — all {total} active-project claimed/review task(s) "
@@ -819,6 +1017,7 @@ def render(
         and not weak
         and not remaining_scope_resolved
         and not field_possibly_stale
+        and not stranded_branches
         and unresolved
         and len(unresolved) < total
     ):
@@ -848,6 +1047,7 @@ def main() -> None:
     high, weak, unresolved = result["high"], result["weak"], result["unresolved"]
     remaining_scope_resolved = result["remaining_scope_resolved"]
     field_possibly_stale = result["field_possibly_stale"]
+    stranded_branches = result["stranded_branches"]
     total = len(scan_in_progress_tasks(include_inactive=args.include_inactive))
 
     if args.json:
@@ -861,6 +1061,7 @@ def main() -> None:
                 weak=weak,
                 remaining_scope_resolved=remaining_scope_resolved,
                 field_possibly_stale=field_possibly_stale,
+                stranded_branches=stranded_branches,
             )
         )
 
@@ -879,7 +1080,7 @@ def main() -> None:
         sys.exit(1)
     if unresolved:
         sys.exit(2)
-    if weak:
+    if weak or stranded_branches:
         sys.exit(3)
     sys.exit(0)
 
