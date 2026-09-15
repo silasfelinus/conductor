@@ -540,7 +540,7 @@ tasks:
 - id: t-039
   milestone: m4
   title: "Investigate: Kontext BW-derivation renders pure corrupted noise (mr-016, mr-020) -- resembles ai-art-academy/t-079"
-  status: ready
+  status: claimed
   stakes: reversible
   note: |-
     Kaizen from t-022's 2026-09-11 pass. `manage_coloring_book_production.py`'s `generate-bw` always calls the art-enqueue endpoint with `"engine": "kontext"` (image-to-image line-art derivation from an accepted color master, no LoRA fields set). Two Monster Recast accepts left in-flight from the prior pass (mr-016 job 21667, mr-020 job 21668) both landed as pure corrupted color noise -- not line art, not a bad rendering of the source scene, just static -- and both were mechanically rejected by `art_quality.assess_file` with byte-identical statistics (mean_saturation=0.17, colorful_fraction=0.35, white_fraction=0.00) despite being derived from two completely different source color images. That identical-statistics result across different inputs points at the render backend itself, not per-image content. Rejected candidates saved at `projects/coloring-book/sets/monster-recast/generated/bw/rejected/mechanical/ mr-016-bw-20260911T003011Z.webp` and `mr-020-bw-20260911T003019Z.webp`.
@@ -563,7 +563,10 @@ tasks:
     UPDATE (conductor scheduled sweep, cycle 15 of coloring-book/t-022, 2026-09-15T07:34Z): the three ArtJobs left in flight at the end of cycle 14 (mr-001 22680, mr-010 22681, mr-013 22682) all completed server-side and were recovered this cycle via `manage_coloring_book_production.py --operation generate-bw`. All three were mechanically rejected with the identical noise signature (hf_ratio 0.86-0.87, mean_saturation 0.17-0.17, colorful_fraction 0.33-0.34, white_fraction 0.00). That is now 10 of 10 generate-bw attempts checked against this book, still a 100% failure rate. Rejected files: generated/bw/rejected/mechanical/mr-0{01,10,13}-bw-20260915T0733*Z.webp. Did not submit any further fresh generate-bw jobs this cycle -- with 10/10 confirmed, another batch would only spend render-queue time re-confirming a diagnosis that is already solid; the remaining Monster Recast slots and both other books stay held pending this task's relay-access non-GGUF comparison test (still the only open item; nothing else agent-side has changed).
 
     Silas supplied a known-working Kontext workflow for direct comparison. It uses the same flux1-kontext-dev-Q5_K_M.gguf UNet, ae.safetensors VAE, ReferenceLatent source-conditioning shape, and empty sampler latent as the broken Kind Robots path, but uses t5xxl_fp8_e4m3fn_scaled.safetensors through stock DualCLIPLoader. The pre-2026-08-13 Kind Robots graph already had the current sampler/scheduler/DetailDaemon settings and that same working T5 loader; PR #1870 changed the T5 to t5-v1_1-xxl-encoder-Q5_K_S.gguf / DualCLIPLoaderGGUF without a live render verification. This directly removes the prior relay-only blocker and makes the encoder switch the focused regression candidate. Return t-039 to ready for a scoped fix and regression coverage.
-  updated: '2026-09-15T07:55:00Z'
+  updated: '2026-09-15T07:57:00Z'
+  owner: worker
+  claimed_by: 2026-09-15T075700Z-coloring-book-t039-kctx7f31
+  claimed_at: '2026-09-15T07:57:00Z'
 - id: t-040
   milestone: m4
   title: manage_coloring_book_production.py should surface the Pillow-missing fix inline instead of a bare ImportError
