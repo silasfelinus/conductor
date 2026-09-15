@@ -6,13 +6,15 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   hostbuf-sentinel:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -23,3 +25,30 @@ jobs:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
           KR_BASE_URL: https://kindrobots.org
         run: python scripts/check_hostbuf_failure.py
+      # conductor/t-157: an "unverified" state used to only print `::warning::`
+      # to this run's own log, which nothing else reads -- a stale unresolved
+      # incident could sit invisible indefinitely. The script itself now
+      # writes a dated entry to RENDER-BACKLOG.md when it reports unverified;
+      # this step is what actually gets that entry onto `main`.
+      - name: Persist unverified-state ledger entry
+        run: |
+          git config user.name "conductor-bot"
+          git config user.email "conductor-bot@users.noreply.github.com"
+          git add RENDER-BACKLOG.md
+          if git diff --staged --quiet; then
+            echo "No RENDER-BACKLOG.md changes to commit"
+          else
+            git commit -m "chore: record hostbuf sentinel unverified state [skip ci]"
+            for attempt in 1 2 3; do
+              git fetch origin main
+              git rebase origin/main
+              if git push origin HEAD:main; then
+                break
+              fi
+              if [ "$attempt" -eq 3 ]; then
+                echo "::error::Unable to persist RENDER-BACKLOG.md after 3 attempts"
+                exit 1
+              fi
+              sleep $((attempt * 2))
+            done
+          fi
