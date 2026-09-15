@@ -2567,7 +2567,7 @@ tasks:
 - id: t-160
   milestone: m2
   title: Large binaries, the media-host policy boundary, and the stale art-request status doc
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   owner: worker
@@ -2620,7 +2620,18 @@ tasks:
     missing -- the file just ends on the comment. It also has no *.mp4 / *.mov / *.webm entries
     while *.png/jpg/webp/pdf/zip are all listed. Note there is no Git LFS configured (no .lfsconfig,
     no filter=lfs lines) and no size policy anywhere in AGENTS.md or CLAUDE.md.
-  updated: '2026-09-15T13:32:40Z'
+
+    Cycle (this session): completed the two small in-scope items only -- deleted docs/art-
+    request-status.md (stale, superseded by the live art-request.post.ts pipeline) and fixed
+    .gitattributes (trimmed the stale vendored-WordPress comment now that conductor/t-106
+    already removed those trees; added *.mp4/*.mov/*.webm binary entries). PR:
+    silasfelinus/conductor#TBD (worker/conductor-t-160). Did NOT touch the media-host policy
+    question, ops/home-server/SELF-HOSTED-MEDIA.md, or the coat-dance MP4 migration --
+    media_migrate.py needs a mounted images share (Z:/kindrobots/images or WSL mount) this
+    sandbox doesn't have, and the task's own safety rule requires a live HEAD-200 probe
+    before deleting anything from git. Re-arming to ready afterward for a session with real
+    filesystem/share access to pick up the remaining migration scope.
+  updated: '2026-09-15T13:34:28Z'
   claimed_by: 2026-09-15T133200-conductor-t160
   claimed_at: '2026-09-15T13:32:40Z'
 - id: t-161
