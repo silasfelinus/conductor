@@ -1,0 +1,8 @@
+version: 1
+project: interface-vision
+task: t-105
+operation: review
+session: 2026-09-15T062500Z-interface-vision-t105-openai-c7f2
+updated: '2026-09-15T06:32:00Z'
+note: >-
+  Dashboard project-list slice implemented on worker/interface-vision-t-105-20260915-c7f2. Root cause was the home showcase API's hard six-project cap; the home component already renders every returned project inside its bounded xl overflow scroller. Removed only PROJECT_LIMIT and the matching Prisma take, preserving public/active/mature filters, ACTIVE/CONTINUOUS status filtering, ordering, cards, and navigation. Branch diff is one file with exactly two deleted lines.
