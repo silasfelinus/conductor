@@ -779,7 +779,7 @@ tasks:
 - id: t-048
   milestone: m8
   title: "Give verifyAcademyStarterManifest.ts and verifyPopulationDraftQuality.ts a reachability guard for Alexandria"
-  status: review
+  status: done
   passes: 0
   stakes: reversible
   note: >-
@@ -790,7 +790,7 @@ tasks:
     each: on an unreachable host, skip with a warning instead of failing, so the check still
     catches a genuine regression in its own assertions when Alexandria is up, but a transient
     home-network blip stops teaching sessions to discount red CI as routine.
-  updated: '2026-09-15T15:33:09Z'
+  updated: '2026-09-15T15:38:06Z'
   owner: worker
   claimed_by: 2026-09-15T152830Z-storybook-t048
   claimed_at: '2026-09-15T15:28:31Z'
@@ -824,3 +824,23 @@ tasks:
     Waits on the art server, which Silas was repairing on 2026-09-13. Not a blocker for
     anything else: the icons hold the slots and the Table works without them.
   updated: '2026-09-14T00:00:00Z'
+- id: t-050
+  milestone: m8
+  title: "Give verifyAcademyExamplesManifest.ts the same Alexandria reachability guard as t-048"
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from t-048's merge (kind_robots PR #2767). That task added
+    isMediaOriginReachable()/mediaOriginDescription() to
+    utils/scripts/mediaContractSource.ts and used them to make
+    verifyAcademyStarterManifest.ts and verifyPopulationDraftQuality.ts skip with a
+    warning (exit 0) instead of failing when their live host is unreachable --
+    fixing the same "home machine reboot fails CI on main itself" problem t-048's
+    own note described. verifyAcademyExamplesManifest.ts reads the manifest through
+    the same mediaContractSource.ts readMediaText() helper and has the identical
+    live-fetch-with-no-reachability-guard shape, but wasn't named in t-048's scope.
+    Apply the same isMediaOriginReachable() guard to it (mirror t-048's diff exactly)
+    and verify both the reachable and simulated-unreachable paths the same way t-048
+    did.
+  updated: '2026-09-15T15:40:00Z'
