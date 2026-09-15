@@ -104,14 +104,14 @@ proposals:
   title: Midnight Detective
   prompt:
     text: Hardboiled neon-noir portrait of a nonbinary detective with a cane and a patient service dog studying
-      a clue beneath a flickering lodging-house sign, its neon tubing glowing in abstract glyph-like shapes. The
-      detective wears a broad-shouldered trench coat, sharp undercut, tired eyes, and practical shoes; the dog notices
-      the hidden figure first. Deep perspective, wet pavement, saturated cyan-magenta-gold lighting, original city
-      and mystery, no readable lettering.
+      a clue beneath a bare cyan streetlamp, its light pooling on the wet pavement and glowing faintly in a nearby
+      window. The detective wears a broad-shouldered trench coat, sharp undercut, tired eyes, and practical shoes;
+      the dog notices the hidden figure first. Deep perspective, wet pavement, saturated cyan-magenta-gold lighting,
+      original city and mystery, no readable lettering.
     ref: null
   inspirations: []
   accepted:
-    color: null
+    color: "generated/color-proposals-v1/hwr-005-midnight-detective.webp"
     bw: null
   final:
     color: null
@@ -141,6 +141,23 @@ proposals:
     object entirely (e.g. an unlit/dark sign silhouette, or replace it with a different light source such as a bare
     streetlamp) rather than trying another wording of ''sign with no text'', since two distinct wordings of that
     idea have both failed.'
+  - 'ACCEPTED 2026-09-15 (scheduled Conductor session, t-022 cycle 12): applied cycle 9''s own recommendation --
+    dropped the sign as a described object entirely rather than trying a third wording of ''sign with no text''.
+    Revised the prompt to a bare cyan streetlamp with light pooling on wet pavement and glowing faintly in a nearby
+    window, with no mention of sign/marquee/hotel/lodging-house/glyphs/letters/text anywhere in the positive
+    description (single trailing ''no readable lettering'' constraint kept). Requested via consume_coloring_book_studio_request.py;
+    the first attempt failed locally on a missing Pillow dependency in this sandbox (ArtJob 22183 rendered fine
+    server-side, just could not be saved as WebP) -- installed Pillow and re-ran, which recovered the completed
+    ArtJob cleanly with no duplicate submitted. Creative review of the recovered render (ArtImage 24111,
+    generated/color-proposals-v1/hwr-005-midnight-detective.webp): the sign-avoidance fix worked completely -- no
+    text, glyphs, or signage of any kind anywhere in the frame, resolving the exact defect that failed both prior
+    attempts. Composition matches well: nonbinary detective with cane and undercut, service dog in a harness,
+    detective reading a small notebook (the ''clue''), broad-shouldered trench coat, wet reflective pavement, deep
+    perspective with receding city silhouette, a warmly-lit window with a hatted figure visible inside (reads as
+    the ''hidden figure'' the dog would notice). Palette leans cyan+gold rather than a strong three-way
+    cyan-magenta-gold split, and the dog''s gaze is toward the detective rather than the window, but neither is a
+    contract violation and both are within the tolerance prior accepted slots in this book have shown. Accepted
+    via manage_coloring_book_production.py --operation accept-color --live.'
 - slot: 6
   id: hwr-006
   title: Temple of the Sun Engine

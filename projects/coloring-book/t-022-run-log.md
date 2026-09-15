@@ -2394,3 +2394,52 @@ Monster Recast, 21 Hollywood Recast, and 28 Kind Robots slots have accepted colo
 ready for `generate-bw`. mr-008 still needs a human call (retry budget exhausted,
 engine-level not prompt-level). hwr-005 needs a sign-free rework, not another "no text"
 wording.
+
+### Cycle 12: hwr-005 accepted -- sign-free rework resolves the readable-lettering defect
+
+Picked up cycle 9's own next-actionable-step recommendation directly: hwr-005 (Midnight
+Detective) had failed creative review twice, both times because any described sign near
+the detective -- first "a flickering hotel sign", then "a flickering lodging-house sign,
+its neon tubing glowing in abstract glyph-like shapes" -- rendered as large, fully legible
+neon text, violating the book's blanket no-readable-lettering constraint. Cycle 9
+concluded two distinct wordings of "sign with no text" had both failed and recommended
+dropping the sign as a described object entirely.
+
+Revised the prompt (`sets/hollywood-recast/proposals.yaml`) to replace the sign with a
+bare cyan streetlamp, its light pooling on the wet pavement and glowing faintly in a
+nearby window -- no mention of sign/marquee/hotel/lodging-house/glyphs/letters/text
+anywhere in the positive description, keeping only the single trailing "no readable
+lettering" constraint.
+
+Requested via `consume_coloring_book_studio_request.py --book hollywood-recast
+--proposal-id hwr-005 --force --live`. First attempt queued ArtJob 22183 and failed
+locally on the documented sandbox Pillow gap (`pip3 install Pillow` fixes it) -- the
+render itself had already succeeded server-side. Re-ran the identical command after
+installing Pillow: it recovered the completed ArtJob cleanly via `referenced_job_id` +
+`recover_timed_out_job`, no duplicate submitted.
+
+Creative review of the recovered render (ArtImage 24111): the sign-avoidance fix worked
+completely -- no text, glyphs, or signage of any kind anywhere in the frame. Composition
+matches well otherwise (detective with cane and undercut reading a small notebook, service
+dog in a harness, broad-shouldered trench coat, wet reflective pavement, deep perspective,
+a warmly-lit window with a hatted figure visible inside reading as the "hidden figure").
+Palette leans cyan+gold rather than a strong cyan-magenta-gold three-way split and the
+dog's gaze reads toward the detective rather than the window, but neither is a contract
+violation and both fall within the tolerance this book's other accepted slots have shown.
+Accepted via `manage_coloring_book_production.py --operation accept-color --book
+hollywood-recast --proposal-id hwr-005 --live`.
+
+Verification: `python scripts/coloring_proposal_status.py --check` -> Hollywood Recast
+accepted color 21 -> 22, ledger/queue structure OK, roadmaps valid. `python
+scripts/coloring_queue_status.py --book hollywood-recast` -> `queue_integrity_safe: true`,
+`recovery_safe: true`, `retry_safe: true`, `recommended_action: complete` (no outstanding
+render jobs). Full pytest suite for the two touched scripts (`test_consume_coloring_book_
+studio_request.py`, `test_consume_coloring_book_color_art.py`) green, 32/32. `git diff
+--stat` reviewed before committing (`color-art-jobs.yaml`'s hwr-005 job history, the
+regenerated `hwr-005-midnight-detective.webp`, its archived pre-revision copy, and
+`proposals.yaml`'s `accepted.color`/note for hwr-005 only -- nothing else touched).
+
+**Next actionable step:** 20 Monster Recast, 22 Hollywood Recast (now including hwr-005),
+and 28 Kind Robots slots have accepted color and are ready for `generate-bw`. mr-008 still
+needs a human call (retry budget exhausted, engine-level not prompt-level). No other slot
+currently has a documented specific next-attempt plan the way hwr-005 did.
