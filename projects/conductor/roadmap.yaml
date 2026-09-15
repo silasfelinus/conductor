@@ -2790,10 +2790,10 @@ tasks:
 - id: t-166
   milestone: m2
   title: 'test_check_render_box.py: two tests leak onto the live network instead of mocking engine_heartbeat_verdict'
-  status: ready
+  status: claimed
   stakes: reversible
   passes: 0
-  owner: null
+  owner: worker
   note: |
     Filed 2026-09-15 (scheduled conductor sweep session, incidental to conductor/t-164).
     While running the full `pytest tests/` suite to verify t-164's change, two tests in
@@ -2824,7 +2824,9 @@ tasks:
     `Python test suite` CI check is non-required (per conductor/t-132's TALKBACK history),
     so this was not blocking any merge, but it should still be fixed -- a flaky-looking
     green/red on this check trains reviewers to stop trusting it.
-  updated: '2026-09-15T12:40:00Z'
+  updated: '2026-09-15T12:41:30Z'
+  claimed_by: 2026-09-15T124129-conductor-t166-sweep
+  claimed_at: '2026-09-15T12:41:30Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
