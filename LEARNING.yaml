@@ -13961,3 +13961,14 @@ records:
     in the same close-out instead of letting an automatic status transition carry a
     stale scope forward -- the dependency graph tracks task completion, not whether
     the completed task's findings still match what its dependent expects.
+- date: 2026-09-15
+  project: conductor
+  task: t-168
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: scripts/kr_token_set.sh's exit killed the calling shell when sourced -- the documented safe
+    usage -- silently dropping any chained command; fixed with sourced-vs-executed runtime detection and
+    pinned with a subprocess-driven regression test since none existed.
