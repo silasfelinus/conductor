@@ -505,6 +505,26 @@ def test_render_reports_clean_state_with_no_weak_findings():
     assert "No drift found" in dr.render([], [], total=1, weak=[])
 
 
+def test_render_lists_stranded_branch_finding():
+    stranded = [
+        {
+            "project": "cthulhuquarium",
+            "task_id": "t-076",
+            "status": "review",
+            "repo": "silasfelinus/kind_robots",
+            "branch": "worker/cthulhuquarium-t-076-20260911T141847Z-r4m9",
+        }
+    ]
+    output = dr.render([], [], total=1, stranded_branches=stranded)
+    assert "No drift found" not in output
+    assert "cthulhuquarium/t-076" in output
+    assert "silasfelinus/kind_robots@worker/cthulhuquarium-t-076-20260911T141847Z-r4m9" in output
+
+
+def test_render_reports_clean_state_with_no_stranded_branches():
+    assert "No drift found" in dr.render([], [], total=1, stranded_branches=[])
+
+
 # --------------------------------------------------------------------------- #
 # scan_in_progress_tasks
 # --------------------------------------------------------------------------- #
@@ -593,6 +613,157 @@ def test_gh_search_task_prs_skips_call_with_no_repos():
     with patch("urllib.request.urlopen") as mock_urlopen:
         results = dr.gh_search_task_prs([], "interface-vision", "t-081", token=None)
     assert results == []
+    mock_urlopen.assert_not_called()
+
+
+# --------------------------------------------------------------------------- #
+# stranded-branch pass (conductor/t-150)
+# --------------------------------------------------------------------------- #
+
+
+def full_repo_router(closed_prs=None, open_prs=None, branches=None, default=b"[]"):
+    """Fake urlopen router covering the repo-scoped endpoints the stranded-
+    branch pass uses alongside the existing title-search pass: closed pulls
+    (title search), open pulls (open-PR head branches), and repo branches.
+    Each argument is keyed by repo; a repo missing from a given map gets
+    `default` (empty list) for that endpoint."""
+    closed_prs = closed_prs or {}
+    open_prs = open_prs or {}
+    branches = branches or {}
+
+    def fake_urlopen(req, timeout=10):
+        url = req.full_url if hasattr(req, "full_url") else req
+        m_branches = re.search(r"/repos/([^/]+/[^/]+)/branches\?", url)
+        if m_branches:
+            return FakeResponse(branches.get(m_branches.group(1), default))
+        m_list = re.search(r"/repos/([^/]+/[^/]+)/pulls\?(.*)", url)
+        if m_list:
+            repo, qs = m_list.group(1), m_list.group(2)
+            if "state=open" in qs:
+                return FakeResponse(open_prs.get(repo, default))
+            return FakeResponse(closed_prs.get(repo, default))
+        raise AssertionError(f"unexpected URL: {url}")
+
+    return fake_urlopen
+
+
+def test_branch_matches_task_matches_worker_prefix_form():
+    assert dr.branch_matches_task(
+        "worker/cthulhuquarium-t-076-20260911T141847Z-r4m9", "cthulhuquarium", "t-076"
+    )
+
+
+def test_branch_matches_task_matches_bare_worker_exact_form():
+    assert dr.branch_matches_task("worker/cthulhuquarium-t-076", "cthulhuquarium", "t-076")
+
+
+def test_branch_matches_task_matches_plain_bare_form():
+    assert dr.branch_matches_task("cthulhuquarium-t-076", "cthulhuquarium", "t-076")
+
+
+def test_branch_matches_task_rejects_unrelated_branch():
+    assert not dr.branch_matches_task("worker/other-project-t-076-abc", "cthulhuquarium", "t-076")
+    assert not dr.branch_matches_task("cthulhuquarium-t-077", "cthulhuquarium", "t-076")
+    assert not dr.branch_matches_task("main", "cthulhuquarium", "t-076")
+
+
+def test_gh_list_repo_branches_parses_list():
+    body = json.dumps([{"name": "main"}, {"name": "worker/x-t-001-abc"}]).encode()
+    with patch("urllib.request.urlopen", return_value=FakeResponse(body)):
+        branches = dr.gh_list_repo_branches("silasfelinus/kind_robots", token=None)
+    assert [b["name"] for b in branches] == ["main", "worker/x-t-001-abc"]
+
+
+def test_gh_list_repo_branches_returns_none_on_failure():
+    with patch("urllib.request.urlopen", side_effect=http_error(500)):
+        assert dr.gh_list_repo_branches("silasfelinus/kind_robots", token=None) is None
+
+
+def test_gh_open_pr_head_branches_extracts_ref():
+    body = json.dumps([{"head": {"ref": "worker/x-t-001-abc"}}]).encode()
+    with patch("urllib.request.urlopen", return_value=FakeResponse(body)):
+        heads = dr.gh_open_pr_head_branches("silasfelinus/kind_robots", token=None)
+    assert heads == {"worker/x-t-001-abc"}
+
+
+def test_gh_open_pr_head_branches_returns_none_on_failure():
+    with patch("urllib.request.urlopen", side_effect=http_error(403)):
+        assert dr.gh_open_pr_head_branches("silasfelinus/kind_robots", token=None) is None
+
+
+def test_find_stranded_branch_candidates_flags_branch_with_no_open_pr():
+    tasks = [{"project": "cthulhuquarium", "task_id": "t-076", "status": "review"}]
+    fake_urlopen = full_repo_router(
+        branches={
+            "silasfelinus/kind_robots": json.dumps(
+                [{"name": "worker/cthulhuquarium-t-076-20260911T141847Z-r4m9"}]
+            ).encode()
+        },
+        open_prs={"silasfelinus/kind_robots": b"[]"},
+    )
+    with patch("urllib.request.urlopen", side_effect=fake_urlopen):
+        findings, failed = dr.find_stranded_branch_candidates(
+            tasks, ["silasfelinus/kind_robots"], token=None
+        )
+    assert failed == []
+    assert len(findings) == 1
+    assert findings[0]["repo"] == "silasfelinus/kind_robots"
+    assert findings[0]["branch"] == "worker/cthulhuquarium-t-076-20260911T141847Z-r4m9"
+
+
+def test_find_stranded_branch_candidates_ignores_branch_with_open_pr():
+    tasks = [{"project": "cthulhuquarium", "task_id": "t-076", "status": "review"}]
+    fake_urlopen = full_repo_router(
+        branches={
+            "silasfelinus/kind_robots": json.dumps(
+                [{"name": "worker/cthulhuquarium-t-076-abc"}]
+            ).encode()
+        },
+        open_prs={
+            "silasfelinus/kind_robots": json.dumps(
+                [{"head": {"ref": "worker/cthulhuquarium-t-076-abc"}}]
+            ).encode()
+        },
+    )
+    with patch("urllib.request.urlopen", side_effect=fake_urlopen):
+        findings, failed = dr.find_stranded_branch_candidates(
+            tasks, ["silasfelinus/kind_robots"], token=None
+        )
+    assert findings == []
+    assert failed == []
+
+
+def test_find_stranded_branch_candidates_ignores_non_matching_branch():
+    tasks = [{"project": "cthulhuquarium", "task_id": "t-076", "status": "review"}]
+    fake_urlopen = full_repo_router(
+        branches={"silasfelinus/kind_robots": json.dumps([{"name": "main"}]).encode()},
+    )
+    with patch("urllib.request.urlopen", side_effect=fake_urlopen):
+        findings, failed = dr.find_stranded_branch_candidates(
+            tasks, ["silasfelinus/kind_robots"], token=None
+        )
+    assert findings == []
+    assert failed == []
+
+
+def test_find_stranded_branch_candidates_reports_branch_lookup_failure():
+    tasks = [{"project": "cthulhuquarium", "task_id": "t-076", "status": "review"}]
+    with patch("urllib.request.urlopen", side_effect=http_error(500)):
+        findings, failed = dr.find_stranded_branch_candidates(
+            tasks, ["silasfelinus/kind_robots"], token=None
+        )
+    assert findings == []
+    assert len(failed) == 1
+    assert failed[0]["task_id"] == "t-076"
+
+
+def test_find_stranded_branch_candidates_skips_call_with_no_tasks():
+    with patch("urllib.request.urlopen") as mock_urlopen:
+        findings, failed = dr.find_stranded_branch_candidates(
+            [], ["silasfelinus/kind_robots"], token=None
+        )
+    assert findings == []
+    assert failed == []
     mock_urlopen.assert_not_called()
 
 
@@ -730,7 +901,119 @@ def test_check_drift_clean_when_no_evidence_either_way(tmp_path):
         "unresolved": [],
         "remaining_scope_resolved": [],
         "field_possibly_stale": [],
+        "stranded_branches": [],
     }
+
+
+def test_check_drift_flags_stranded_branch_when_search_finds_nothing(tmp_path):
+    # cthulhuquarium/t-076 (conductor/t-150's filing incident): a task at
+    # review with no implementation_pr field and no note-quoted PR at all --
+    # the title search correctly comes back empty (there never was a PR) --
+    # but a worker-convention branch with no open PR against it exists. That
+    # must surface as a named finding, not a silent "clean".
+    write_roadmap(
+        tmp_path,
+        "cthulhuquarium",
+        [{"id": "t-076", "status": "review", "title": "a script with no PR opened yet"}],
+    )
+    fake_urlopen = full_repo_router(
+        branches={
+            "silasfelinus/kind_robots": json.dumps(
+                [{"name": "worker/cthulhuquarium-t-076-20260911T141847Z-r4m9"}]
+            ).encode()
+        },
+    )
+    with patch("urllib.request.urlopen", side_effect=fake_urlopen):
+        result = dr.check_drift(tmp_path / "projects", token=None)
+
+    assert result["high"] == []
+    assert result["weak"] == []
+    assert result["unresolved"] == []
+    assert len(result["stranded_branches"]) == 1
+    finding = result["stranded_branches"][0]
+    assert finding["project"] == "cthulhuquarium"
+    assert finding["task_id"] == "t-076"
+    assert finding["branch"] == "worker/cthulhuquarium-t-076-20260911T141847Z-r4m9"
+
+
+def test_check_drift_does_not_flag_stranded_branch_when_high_finding_exists(tmp_path):
+    # A task already confirmed via task-id search must never also trigger the
+    # stranded-branch pass -- it's not "clean", so pass 3 must not run for it.
+    write_roadmap(
+        tmp_path,
+        "newsfeed",
+        [{"id": "t-020", "status": "claimed", "title": "x"}],
+    )
+    pr_body = json.dumps({
+        "merged": True,
+        "merged_at": "2026-08-01T00:00:00Z",
+        "title": "newsfeed/t-020: fix",
+    }).encode()
+    list_body = json.dumps([
+        {"number": 1464, "title": "newsfeed/t-020: fix", "merged_at": "2026-08-01T00:00:00Z"}
+    ]).encode()
+
+    def fake_urlopen(req, timeout=10):
+        url = req.full_url if hasattr(req, "full_url") else req
+        if re.search(r"/repos/[^/]+/[^/]+/branches\?", url):
+            raise AssertionError(f"stranded-branch pass must not run for a confirmed task: {url}")
+        m_single = re.search(r"/repos/([^/]+/[^/]+)/pulls/(\d+)", url)
+        if m_single:
+            return FakeResponse(pr_body)
+        m_list = re.search(r"/repos/([^/]+/[^/]+)/pulls\?", url)
+        if m_list:
+            return FakeResponse(
+                list_body if m_list.group(1) == "silasfelinus/kind_robots" else b"[]"
+            )
+        raise AssertionError(f"unexpected URL: {url}")
+
+    with patch("urllib.request.urlopen", side_effect=fake_urlopen):
+        result = dr.check_drift(tmp_path / "projects", token=None)
+
+    assert len(result["high"]) == 1
+    assert result["stranded_branches"] == []
+
+
+def test_check_drift_does_not_flag_stranded_branch_when_weak_finding_exists(tmp_path):
+    # A task with a weak (note-quoted) finding is already reported -- it must
+    # not also pick up a stranded-branch finding for the same task.
+    write_roadmap(
+        tmp_path,
+        "interface-vision",
+        [
+            {
+                "id": "t-081",
+                "status": "claimed",
+                "title": "x",
+                "note": "kind_robots PR #1391",
+            }
+        ],
+    )
+    pr_body = json.dumps({
+        "merged": True,
+        "merged_at": "2026-07-28T00:00:00Z",
+        "title": "some other task's kaizen PR",
+    }).encode()
+    empty_list = b"[]"
+
+    def fake_urlopen(req, timeout=10):
+        url = req.full_url if hasattr(req, "full_url") else req
+        if re.search(r"/repos/[^/]+/[^/]+/branches\?", url):
+            raise AssertionError(f"stranded-branch pass must not run for a weak-confirmed task: {url}")
+        m_single = re.search(r"/repos/([^/]+/[^/]+)/pulls/(\d+)", url)
+        if m_single:
+            return FakeResponse(pr_body)
+        m_list = re.search(r"/repos/([^/]+/[^/]+)/pulls\?", url)
+        if m_list:
+            return FakeResponse(empty_list)
+        raise AssertionError(f"unexpected URL: {url}")
+
+    with patch("urllib.request.urlopen", side_effect=fake_urlopen):
+        result = dr.check_drift(tmp_path / "projects", token=None)
+
+    assert result["high"] == []
+    assert len(result["weak"]) == 1
+    assert result["stranded_branches"] == []
 
 
 # --------------------------------------------------------------------------- #
