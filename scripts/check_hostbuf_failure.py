@@ -19,6 +19,7 @@ Exit codes:
 
 from __future__ import annotations
 
+import argparse
 from datetime import datetime, timezone
 import sys
 from pathlib import Path
@@ -26,10 +27,11 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 from consume_art_queue_core import fetch_queue_stats  # noqa: E402
-from recheck_render_queue import group_failures_by_signature  # noqa: E402
+from recheck_render_queue import append_entry, group_failures_by_signature  # noqa: E402
 
 HOSTBUF_SIGNATURE = "hostbuf-file-reader-read"
 SENTINEL_WINDOW_HOURS = 2
+LEDGER_FILE = Path(__file__).resolve().parent.parent / "RENDER-BACKLOG.md"
 
 
 def _parse_iso8601(value: object) -> datetime | None:
@@ -99,7 +101,19 @@ def hostbuf_state(data: dict, *, now: datetime | None = None) -> str:
     return "unverified"
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--task",
+        help="project/task-id this run relates to, e.g. kindrobots-unraid/t-021",
+    )
+    parser.add_argument(
+        "--no-append",
+        action="store_true",
+        help="Do not write an 'unverified' state to RENDER-BACKLOG.md (dry run)",
+    )
+    args = parser.parse_args(argv)
+
     try:
         data = fetch_queue_stats(window_hours=SENTINEL_WINDOW_HOURS, timeout=20.0)
     except RuntimeError as exc:
@@ -124,12 +138,15 @@ def main() -> int:
         return 2
 
     if state == "unverified":
-        print(
-            "::warning::UNVERIFIED render recovery: the latest hostbuf failure "
-            f"({failure_at}) is older than {SENTINEL_WINDOW_HOURS}h, but no successful "
-            "render has completed after it. Suppressing duplicate hourly failure mail; "
-            "do not treat the renderer as healthy until a render completes."
+        detail = (
+            f"UNVERIFIED render recovery: the latest hostbuf failure ({failure_at}) is "
+            f"older than {SENTINEL_WINDOW_HOURS}h, but no successful render has completed "
+            "after it. Suppressing duplicate hourly failure mail; do not treat the "
+            f"renderer as healthy until a render completes. Latest DONE: {done_at}."
         )
+        print(f"::warning::{detail}")
+        if not args.no_append:
+            append_entry(args.task, "unverified", detail, ledger_path=LEDGER_FILE)
         return 0
 
     if state == "recovered":
