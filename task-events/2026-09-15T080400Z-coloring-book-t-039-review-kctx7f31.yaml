@@ -1,0 +1,8 @@
+version: 1
+project: coloring-book
+task: t-039
+operation: review
+session: 2026-09-15T075700Z-coloring-book-t039-kctx7f31
+updated: '2026-09-15T08:04:00Z'
+note: >-
+  Root cause isolated from Silas's working workflow plus git history: PR #1870 switched Kontext from t5xxl_fp8_e4m3fn_scaled.safetensors + stock DualCLIPLoader to t5-v1_1-xxl-encoder-Q5_K_S.gguf + DualCLIPLoaderGGUF on 2026-08-13. The working workflow uses the same GGUF Kontext UNet, ae.safetensors VAE, reference-latent wiring, and empty sampler latent as Kind Robots; the pre-#1870 Kind Robots workflow also already had the current res_multistep/sgm_uniform/DetailDaemon sampler stack. Patch on worker/coloring-book-t039-20260915-kctx7f31 gives Kontext its own proven-good T5 loader while leaving ordinary Flux on the memory-saving GGUF T5, makes ArtJob retry normalization detect Kontext graphs and repair broken-era encoder nodes, and extends the existing Kontext contract test to pin the known-good chain and retry migration. Branch diff is limited to four intended files with no unrelated changes.
