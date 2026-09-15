@@ -2750,5 +2750,40 @@ tasks:
     back to the full ALL_TRACKED_REPOS scan, rather than always scanning everything.
   updated: '2026-09-15T11:39:10Z'
 
+- id: t-165
+  milestone: m2
+  title: 'lora-ingestion/t-003: relay hangs a second time on flux2_dev_fp8mixed.safetensors, needs hands-on diagnosis'
+  status: needs-human
+  gate_human: true
+  stakes: reversible
+  passes: 0
+  owner: null
+  note: >-
+    FOR SILAS: The render relay (Silas-PC) has now hung twice, five weeks apart, running the
+    exact same checkpoint: `flux2_dev_fp8mixed.safetensors` (the "Flux.2 Klein" model). Both
+    times it fully wedged the relay's one concurrent slot, blocking the entire production
+    render queue (2026-08-10: ArtJob 21616, ~30 min; today, 2026-09-15: ArtJob 22837, 67+
+    minutes before this session cancelled it). Both jobs used correctly Resource-resolved
+    workflows (verified at the application layer both times) and recorded `error: null` --
+    this is a hang, not a rejection, so it can't be diagnosed from the API side.
+
+
+    Full evidence: projects/lora-ingestion/docs/t-003-resource-backed-generation-evidence.md
+    (2026-09-15 update section).
+
+
+    TO APPROVE: this needs someone at the Silas-PC relay console to watch the ComfyUI
+    log/window while a flux2_dev_fp8mixed.safetensors job runs (queue one via the
+    lora-ingestion-t003 project slug, or just watch the next time it comes up naturally --
+    only 3-5 Resources in the whole catalog use this checkpoint, so it's rare live traffic).
+    Likely candidates: a slow first-time model load being mistaken for a hang (check disk/CPU
+    activity during the stall), or the LoraLoaderModelOnly node choking on this specific
+    checkpoint's precision/dtype. Once you know the cause, either fix it (e.g. re-export/
+    re-quantize the checkpoint, add a documented startup warm-load) or mark the checkpoint
+    unavailable for LoRA-backed jobs so the queue can reject it before claiming instead of
+    hanging after. Set approved_by_human: true and status: done here once resolved; this
+    unblocks lora-ingestion/t-003 (currently needs-human, soft, pending this).
+  updated: '2026-09-15T11:53:06Z'
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
