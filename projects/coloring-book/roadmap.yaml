@@ -583,10 +583,30 @@ tasks:
     STATUS: this task stays needs-human ONLY for relay access to run the non-GGUF comparison. Everything that could be established from an agent session now has been. coloring-book/t-022's `generate-bw` should continue to hold rather than burn more jobs on a path proven broken today.
 
     UPDATE 2026-09-13 (scheduled Conductor session): the second, independent bug -- the quality guard being blind to saturated/busy noise on the "color" variant -- is fixed and does not need to wait on relay access. See coloring-book/t-043 (silasfelinus/conductor#4281): art_quality.py now computes a spatial-autocorrelation ratio (hf_energy_ratio) from adjacent-pixel luma differences and rejects any variant whose frame has none, regardless of saturation/white-fraction. Verified against real Pillow-rendered iid random noise (hf_ratio 0.98, correctly rejected) and a smooth gradient plus Gaussian-blurred texture (hf_ratio 0.0001 and 0.047, correctly not flagged as noise). This task's remaining scope is only the relay-access non-GGUF comparison test named above.
+
+    UPDATE (conductor scheduled sweep, cycle 14 of coloring-book/t-022, 2026-09-15T07:04Z):
+    this is no longer a 2-slot anomaly. Recovering five more stuck bw_job_id entries from
+    the 2026-09-07 batch (mr-005 job 21643, mr-007 job 21644, mr-009 job 21645, mr-011 job
+    21646, mr-012 job 21647 -- all had actually completed server-side on 2026-09-08 but were
+    never re-checked until now) surfaced the identical mechanical-rejection signature as
+    mr-016/mr-020: hf_ratio ~0.86-0.88, mean_saturation ~0.17-0.18, colorful_fraction
+    ~0.34-0.36, white_fraction 0.00 -- colored/shaded noise, not line art. That is now 7 of
+    7 generate-bw attempts checked against this book, a 100% failure rate, not two isolated
+    misses. Rejected files:
+    generated/bw/rejected/mechanical/mr-0{05,07,09,11,12}-bw-20260915T07033*Z.webp. Did not
+    submit further fresh generate-bw jobs this cycle given the pattern -- three already in
+    flight from before this became clear (mr-001 ArtJob 22680, mr-010 ArtJob 22681, mr-013
+    ArtJob 22682, all still PENDING as of 07:10Z) are worth checking once they land, but
+    burning more render jobs into what looks like a systemically broken Kontext BW-
+    derivation path isn't a good use of the backend until this is diagnosed. Full detail in
+    projects/coloring-book/t-022-run-log.md cycle 14. Given the book-wide scope, recommend
+    treating this as blocking most of t-022's remaining generate-bw work across all three
+    books (they share the same engine path), not just Monster Recast's two originally-
+    flagged slots.
   owner: null
   claimed_by: null
   claimed_at: null
-  updated: '2026-09-11T11:26:03Z'
+  updated: '2026-09-15T07:06:03Z'
 - id: t-040
   milestone: m4
   title: manage_coloring_book_production.py should surface the Pillow-missing fix inline instead of a bare ImportError
