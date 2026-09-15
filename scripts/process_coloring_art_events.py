@@ -16,6 +16,13 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 EVENT_DIR = ROOT / "color-art-events"
+QUARANTINE_DIR = EVENT_DIR / "quarantine"
+ATTEMPT_STATE_PATH = EVENT_DIR / "attempt-state.yaml"
+# How many consecutive failures a single queued event may accrue before it is
+# pulled out of the live queue instead of retrying forever. Mirrors
+# render_retry.py's COLOR_ART_MAX_RENDER_ATTEMPTS pattern, but counts across
+# separate scheduled runs of this script rather than within one.
+MAX_EVENT_ATTEMPTS = int(os.environ.get("COLOR_ART_EVENT_MAX_ATTEMPTS", "3"))
 COLOR_CONSUMER = ROOT / "scripts" / "consume_coloring_book_studio_request.py"
 PRODUCTION_CONSUMER = ROOT / "scripts" / "manage_coloring_book_production.py"
 ADOPTION_CONSUMER = ROOT / "scripts" / "adopt_coloring_book_asset.py"
@@ -247,10 +254,60 @@ def load_event(path: Path) -> ColorArtEvent:
 def queued_events() -> list[Path]:
     if not EVENT_DIR.exists():
         return []
-    return sorted(path for path in EVENT_DIR.glob("*.yaml") if path.is_file())
+    return sorted(
+        path
+        for path in EVENT_DIR.glob("*.yaml")
+        if path.is_file() and path != ATTEMPT_STATE_PATH
+    )
 
 
-def process_event(event: ColorArtEvent, *, live: bool) -> int:
+def load_attempt_state() -> dict[str, int]:
+    """Consecutive-failure count per queued event filename, keyed by name.
+
+    Persisted as a sidecar file alongside the events themselves so a count
+    survives between separate scheduled runs of this script (each run is a
+    fresh process/checkout).
+    """
+
+    if not ATTEMPT_STATE_PATH.exists():
+        return {}
+    data = yaml.safe_load(ATTEMPT_STATE_PATH.read_text(encoding="utf-8")) or {}
+    if not isinstance(data, dict):
+        return {}
+    return {
+        str(name): int(count)
+        for name, count in data.items()
+        if isinstance(count, int) and not isinstance(count, bool) and count > 0
+    }
+
+
+def save_attempt_state(state: dict[str, int]) -> None:
+    if not state:
+        if ATTEMPT_STATE_PATH.exists():
+            ATTEMPT_STATE_PATH.unlink()
+        return
+    EVENT_DIR.mkdir(parents=True, exist_ok=True)
+    ATTEMPT_STATE_PATH.write_text(
+        yaml.safe_dump(dict(sorted(state.items())), sort_keys=True),
+        encoding="utf-8",
+    )
+
+
+def quarantine_event(event: ColorArtEvent, *, attempts: int) -> Path:
+    QUARANTINE_DIR.mkdir(parents=True, exist_ok=True)
+    destination = QUARANTINE_DIR / event.path.name
+    event.path.replace(destination)
+    print(
+        f"::warning::Quarantined {event.path.name} after {attempts} consecutive "
+        f"failures -- moved to {destination.relative_to(ROOT)} for manual review "
+        "instead of retrying forever."
+    )
+    return destination
+
+
+def process_event(
+    event: ColorArtEvent, *, live: bool, attempt_state: dict[str, int]
+) -> int:
     command = event.command(live=live)
     print(
         f"{'LIVE' if live else 'DRY RUN'} event {event.path.name}: "
@@ -275,14 +332,27 @@ def process_event(event: ColorArtEvent, *, live: bool) -> int:
     # any *good* is decided by a human in the ArtJob trainer panel.
     result = subprocess.run(command, cwd=ROOT, check=False)
     if result.returncode == 0:
+        attempt_state.pop(event.path.name, None)
         event.path.unlink()
         print(f"Consumed {event.path.relative_to(ROOT)}")
-    else:
-        print(
-            f"Consumer exited {result.returncode}; preserving "
-            f"{event.path.relative_to(ROOT)} for retry.",
-            file=sys.stderr,
-        )
+        return 0
+
+    attempts = attempt_state.get(event.path.name, 0) + 1
+    if attempts >= MAX_EVENT_ATTEMPTS:
+        attempt_state.pop(event.path.name, None)
+        quarantine_event(event, attempts=attempts)
+        # Quarantining is the resolution, not another failure to retry: return
+        # 0 so the scheduled workflow stops reporting this event as an
+        # unaddressed error on every future tick.
+        return 0
+
+    attempt_state[event.path.name] = attempts
+    print(
+        f"Consumer exited {result.returncode}; preserving "
+        f"{event.path.relative_to(ROOT)} for retry "
+        f"({attempts}/{MAX_EVENT_ATTEMPTS} attempts).",
+        file=sys.stderr,
+    )
     return result.returncode
 
 
@@ -311,11 +381,17 @@ def main() -> int:
             )
             return 1
 
-    for event in events:
-        status = process_event(event, live=args.live)
-        if status != 0:
-            return status
-    return 0
+    attempt_state = load_attempt_state()
+    exit_status = 0
+    try:
+        for event in events:
+            status = process_event(event, live=args.live, attempt_state=attempt_state)
+            if status != 0:
+                exit_status = status
+                break
+    finally:
+        save_attempt_state(attempt_state)
+    return exit_status
 
 
 if __name__ == "__main__":
