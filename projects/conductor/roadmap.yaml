@@ -2243,7 +2243,7 @@ tasks:
 - id: t-150
   milestone: m2
   title: Extend check_pr_merged_drift.py to name an unmerged worker/* branch when a claimed/review task has no PR at all
-  status: ready
+  status: claimed
   stakes: reversible
   passes: 0
   note: >-
@@ -2266,8 +2266,10 @@ tasks:
     real, safe, on-task) still needs judgment; it only needs to surface the candidate. kind_robots is
     already checked via the GitHub API by this script's existing repo-scanning code path, so reuse that
     rather than adding a new transport.
-  updated: '2026-09-11T16:00:00Z'
-  owner: null
+  updated: '2026-09-15T11:39:11Z'
+  owner: worker
+  claimed_by: 2026-09-15T113910Z-conductor-t150-sched
+  claimed_at: '2026-09-15T11:39:11Z'
 - id: t-151
   milestone: m2
   title: Guard against recurring-task note fields growing large enough to blow the Kind-Robots projection payload limit
