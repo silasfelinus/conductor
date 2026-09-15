@@ -623,7 +623,22 @@ tasks:
     TO APPROVE / DECIDE: this needs someone with direct ComfyUI/Alexandria access to compare a live execution of Silas's originally-supplied known-working workflow against the current queue-submitted graph node-by-node (not just the T5/CLIP nodes already checked), since the fix that seemed to isolate the difference did not actually change the output. Candidates worth checking next: whether t5xxl_fp8_e4m3fn_scaled.safetensors and clip_l.safetensors are actually present and loading correctly on the render worker (a missing-file silent fallback would explain identical output pre/post fix), the VAE/reference-latent wiring, and the sampler/seed path for the img2img call specifically (as opposed to txt2img, which may not have been what was actually compared).
 
     Not proceeding with the rest of the generate-bw batch (hwr-001 onward) until this is resolved -- would just burn more render cycles confirming the same failure. coloring-book/t-022 is re-armed to ready with an unblocked=false note; do not resume generate-bw work on any book until this task closes for real (a render that structurally matches Silas's known-working reference, not just a green mechanical gate).
-  updated: '2026-09-15T09:28:51Z'
+
+    UPDATE (conductor scheduled sweep, workflow-medic role, 2026-09-15T~19:30Z): the queued
+    canary retry (color-art-events/20260915-t039-kontext-canary-mr016.yaml, requested 08:28Z
+    by chatgpt-coloring-t039, predating this task own 09:28Z reopening) failed process-
+    color-art-events.yml on every scheduled run since (08:44Z, 13:57Z, 18:17Z) with a NEW
+    symptom: ArtJob 23052 timed out after 900s "still queued/running" -- the job never
+    completed at all, unlike the earlier canaries (22830, 22831) which completed and
+    rendered noise. This matches the relay-wedge signature conductor/t-165 and t-167 are
+    tracking today (cold-model-load hangs across unrelated checkpoints/engines) rather than
+    the previously-diagnosed Kontext render-graph defect -- worth folding into that
+    investigation rather than treating as new Kontext-specific evidence. Cross-referenced at
+    conductor/t-167. Removed the stale queued event: it predates this task own conclusion to
+    stop live canaries, and retrying it every 6h against a currently-wedging relay only
+    burns render-queue time without new diagnostic value. Still needs-human for relay
+    access; no roadmap action needed elsewhere.
+  updated: '2026-09-15T19:33:35Z'
   owner: worker
   claimed_by: 2026-09-15T091200Z-coloring-book-t039-sampler9c2a
   claimed_at: '2026-09-15T09:19:00Z'
