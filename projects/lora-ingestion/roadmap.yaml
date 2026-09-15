@@ -56,7 +56,7 @@ tasks:
 - id: t-003
   milestone: m2
   title: "Reconcile later Resource-backed generation evidence; run one current smoke only if proof is still missing"
-  status: claimed
+  status: needs-human
   stakes: reversible
   gate_human: false
   note: >-
@@ -110,8 +110,18 @@ tasks:
     id/localPath, ArtJob id, terminal state, and ArtImage id/path per the task's standing
     instruction; only escalate to needs-human if 22837 itself later shows the same
     staleRunning hang pattern once it actually starts running.
+
+    Second reproduction of the identical Flux.2 Klein (flux2_dev_fp8mixed.safetensors) relay
+    hang, five weeks after the first (2026-08-10, ArtJob 21616 / conductor/t-147). This time
+    ArtJob 22837, 67+ min staleRunning, 3 jobs queued behind it -- cancelled to restore
+    throughput; relay resumed healthy within a minute, so it's checkpoint-specific, not a
+    dead relay. Filed conductor/t-165 (hard needs-human, physical/console access to Silas-
+    PC) for the hands-on diagnosis this needs. Full evidence in projects/lora-
+    ingestion/docs/t-003-resource-backed-generation-evidence.md (2026-09-15 update). t-003
+    stays soft needs-human pending t-165; Krea2 remains untestable (no compatible Resource)
+    for the same reason as before.
   approved_by_human: false
-  updated: '2026-09-15T11:53:06Z'
+  updated: '2026-09-15T11:55:17Z'
   outcome_note: >
     The original July 28 gate is stale in scope. Since then Kind Robots made Resource.localPath
     authoritative for LoRA resolution across image/video engines (including PR #1090), fixed
@@ -123,6 +133,7 @@ tasks:
   owner: reviewer
   claimed_by: 2026-09-15T115306Z-lora-t003-relay-recur
   claimed_at: '2026-09-15T11:53:06Z'
+  soft_gate: true
 
 - id: t-004
   milestone: m3
