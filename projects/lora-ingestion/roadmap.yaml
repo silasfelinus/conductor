@@ -56,10 +56,10 @@ tasks:
 - id: t-003
   milestone: m2
   title: "Reconcile later Resource-backed generation evidence; run one current smoke only if proof is still missing"
-  status: claimed
+  status: ready
   stakes: reversible
   gate_human: false
-  note: |-
+  note: >-
     Import half CONFIRMED 2026-07-28: standalone run detected ume as Flux, moved it, and upserted the Resource (created:1). Remaining: (1) run it as the embedded kr-relay thread on the pm2 box (pm2 restart kr-relay after setx CIVITAI_TOKEN), and (2) confirm a krea2/flux2 render selecting that Resource succeeds — closes the path bug end-to-end. Note ume sorted NSFW because Civitai flags the model nsfw; override to SFW if wrong.
 
     SENT BACK by silasfelinus via Kind Robots For You. this should have been fixed. if not, please report back.
@@ -81,8 +81,37 @@ tasks:
     TO APPROVE: this needs your eyes on the actual relay machine, which nothing in this sandbox can reach. Once you've restarted/checked the relay and resolved conductor/t-147 with what you found, t-003 can either get a fresh Flux2 smoke attempt or wait on a Krea2 Resource before it's closeable. Set approved_by_human: true and status: done (or ready, if you want another smoke attempted) once conductor/t-147 is resolved.
 
     Release under Silas's 2026-09-07 human-gate simplification policy. No product decision is required. conductor/t-147 has been closed as mitigated; a token-equipped agent should now queue exactly one fresh Flux2 Resource-backed LoRA smoke and record Resource id/localPath, ArtJob id, terminal DONE state, and ArtImage id/path. Krea2 proof may remain deferred until a genuinely Krea2-tagged LoRA Resource exists; absence of such a Resource is not a Silas gate.
+
+    Cycle (conductor scheduled sweep, 2026-09-15T10:30Z): re-verified the Flux2 LoRA
+    compatibility gate landed correctly since the 2026-09-05 evidence -- POST
+    /api/art/enqueue now returns 409 "LoRA Resource 1055 is marked FLUX, not
+    FLUX2-compatible" when the payload uses a Flux.1-generation Resource on the flux2 engine
+    (this is flux2LoraCompatibilityRank() in utils/loraSelection.ts requiring generation to
+    match /FLUX[ ._-]*2/), closing the ambiguity the 2026-09-05 doc left open about whether
+    the earlier relay hang was a Resource/path bug or a generation mismatch -- it was gated
+    correctly by the app, not a hang cause. Found a genuine Flux.2-generation LoRA Resource
+    that did not exist in the 2026-09-05 search: Resource 1123 (Flux_2-Turbo-LoRA_comfyui,
+    localPath Flux/SFW/Flux_2-Turbo-LoRA_comfyui.safetensors, generation "Flux.2 D",
+    isActive true). Queued ArtJob 22837 with it via the real POST /api/art/enqueue endpoint;
+    confirmed via GET /api/art/queue/22837 that the LoraLoaderModelOnly node correctly wired
+    lora_name to this Resource's exact localPath onto the flux2_dev_fp8mixed.safetensors
+    checkpoint -- Resource-path resolution proven correct again at the application layer.
+    Job did not reach DONE this cycle: it sat PENDING for the full session behind ArtJob
+    22836 (claimedBy Silas-PC, claimed 10:15:52Z), which GET /api/art/queue/stats flagged
+    staleRunning past the 15-minute threshold for the whole ~25 minutes this session polled
+    it. Did not cancel 22836 -- unlike the 2026-09-05 incident, this job is not this
+    session's own, its designer/projectSlug are unset so its owner and purpose are unknown,
+    and this backend's DONE-job history includes legitimate 70+ minute renders, so a mid-
+    length RUNNING job is not on its own proof of a second relay hang. Not resubmitting --
+    ArtJob 22837 is valid, queued, and will be picked up once the relay's single concurrent
+    slot frees. Re-arming to ready rather than needs-human: this is a transient queue/relay
+    wait, not a blocked task -- next actionable step is simply to poll GET
+    /api/art/queue/22837 to a terminal state (DONE or FAILED) and record the Resource
+    id/localPath, ArtJob id, terminal state, and ArtImage id/path per the task's standing
+    instruction; only escalate to needs-human if 22837 itself later shows the same
+    staleRunning hang pattern once it actually starts running.
   approved_by_human: false
-  updated: '2026-09-15T10:28:23Z'
+  updated: '2026-09-15T10:41:59Z'
   outcome_note: >
     The original July 28 gate is stale in scope. Since then Kind Robots made Resource.localPath
     authoritative for LoRA resolution across image/video engines (including PR #1090), fixed
