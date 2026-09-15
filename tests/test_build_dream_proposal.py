@@ -276,3 +276,110 @@ def test_normalize_converts_ascii_dashes_in_card_copy_only():
     # Krea prompt material and identity fields are left exactly as authored.
     assert out["characters"][0]["look"] == "a mantis-shrimp advocate -- midnight suit, cracked lens"
     assert out["title"] == "Prism -- Appeal"
+
+
+# --- embodiment axes (2026-09-15) -------------------------------------------
+#
+# Silas: "there are lots of factors that could be switched. Hair color, style,
+# age, gender presentation, body shape, size, racial background ... It would be
+# great if we could utilize something so there is more diversity automatically
+# roled when creating characters without such guidance."
+#
+# Measured over all 98 characters built before this landed: 0% saturated hair
+# colour, 0% long hair, 14.3% explicit age, 9.2% skin tone, she/her outnumbering
+# he/him 4.3 to 1. Every axis the plan rolled varied; every axis it did not roll
+# collapsed. These tests hold the axes rolled.
+
+
+def test_every_embodiment_axis_draws_every_day():
+    """Rotation was rejected on purpose: each axis measured at or near zero, so
+    rotating would leave most days still unrolled on most axes."""
+    for day in ("2026-09-17", "2026-09-18", "2026-09-19", "2026-11-02", "2027-01-30"):
+        plan = bdp.facet_seed_plan(day, catalog=fallback_catalog())
+        for taxonomy, count in bdp.EMBODIMENT_DRAWS:
+            drawn = plan["embodiment"][taxonomy.lower()]
+            assert len(drawn) == count, (day, taxonomy, drawn)
+            assert len({facet["slug"] for facet in drawn}) == count
+
+
+def test_origin_draws_a_blend_rather_than_a_single_label():
+    """Silas, 2026-09-15: 'I usually choose a blend of 1-2 countries of origin
+    with an ethnicity wildcard ... it works to provide diversity.'"""
+    assert dict(bdp.EMBODIMENT_DRAWS)["ORIGIN"] == 2
+
+
+def test_embodiment_attaches_to_the_character_and_nothing_else():
+    plan = bdp.facet_seed_plan("2026-09-17", catalog=fallback_catalog())
+    embodied = {
+        facet["slug"] for drawn in plan["embodiment"].values() for facet in drawn
+    }
+    assert embodied <= {facet["slug"] for facet in plan["elements"]["character"]}
+    for element in ("vibe", "location", "reward_item", "reward_skill", "scenario"):
+        overlap = embodied & {facet["slug"] for facet in plan["elements"][element]}
+        assert not overlap, (element, overlap)
+
+
+def test_body_scope_never_puts_braids_on_a_hammerhead():
+    """The walrus guard. Silas: 'we should figure out how to deal with
+    non-humans so we don't get "southeast asian/canadian walrus".'"""
+    seen = set()
+    for offset in range(60):
+        day = f"2026-09-{offset % 28 + 1:02d}" if offset < 28 else f"2026-10-{offset - 27:02d}"
+        plan = bdp.facet_seed_plan(day, catalog=fallback_catalog())
+        body = plan["body"]
+        assert body in ("humanoid", "creature")
+        seen.add(body)
+        for drawn in plan["embodiment"].values():
+            for facet in drawn:
+                assert facet.get("scope") in ("any", body), (day, body, facet)
+    # Both bodies actually occur, or the scope filter is untested in practice.
+    assert seen == {"humanoid", "creature"}
+
+
+def test_origin_is_culture_so_it_applies_to_every_body():
+    """ORIGIN is the axis that makes heritage safe on a non-human catalog: it
+    carries culture, never phenotype, so nothing in it may be scope-limited."""
+    for facet in bdp._fallback("ORIGIN"):
+        assert facet["scope"] == "any", facet
+
+
+def test_identity_axes_are_never_auto_invented():
+    """A nightly script inventing an ethnicity or a gender, unreviewed, and then
+    seeding it into every future dream is this feature's worst failure mode."""
+    for taxonomy in bdp.EMBODIMENT_TAXONOMIES:
+        assert taxonomy not in bdp.INVENTABLE_TAXONOMIES
+
+
+def test_embodiment_survives_a_catalog_without_the_new_taxonomies():
+    """A Kind Robots deploy that has not run the embodiment seed yet must
+    degrade to the old behaviour, not crash the day's proposal."""
+    catalog = {
+        key: rows
+        for key, rows in fallback_catalog().items()
+        if key not in bdp.EMBODIMENT_TAXONOMIES
+    }
+    plan = bdp.facet_seed_plan("2026-09-17", catalog=catalog)
+    assert plan["embodiment"] == {}
+    # And no phantom taxonomy is reported as seeded, which would steer
+    # plan_inventions away from a gap that is still wide open.
+    for taxonomy in bdp.EMBODIMENT_TAXONOMIES:
+        assert taxonomy not in plan["seeded_taxonomies"]
+
+
+def test_brief_tells_the_author_to_make_the_body_visible_in_look():
+    """A Facet linked to the record but absent from `look` changes no pixel --
+    the mirror image of dream-cycle/t-026's six-week silent no-op."""
+    brief = bdp.build_brief("2026-09-19", catalog=fallback_catalog())
+    text = "\n".join(brief["instructions"])
+    assert "`look`" in text
+    assert "seed_facets.body" in text
+    assert "MATERIAL SPECIFICS ONLY" in text
+    assert "never shape temperament" in text.lower()
+    assert "DEFAULT EXPRESSION" in text
+
+
+def test_embodiment_draw_is_deterministic_for_a_date():
+    first = bdp.facet_seed_plan("2026-09-19", catalog=fallback_catalog())
+    second = bdp.facet_seed_plan("2026-09-19", catalog=fallback_catalog())
+    assert first["body"] == second["body"]
+    assert first["embodiment"] == second["embodiment"]

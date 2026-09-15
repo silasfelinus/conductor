@@ -207,6 +207,27 @@ def facet_seed_plan(
         ),
     )[0]
 
+    # EMBODIMENT. Mirrors build_dream_proposal_core.facet_seed_plan -- this
+    # overlay reimplements the whole plan rather than extending it, so an axis
+    # added only to core would be silently dropped on every real run and survive
+    # only in tests that call core directly.
+    #
+    # The recent-Facet cooldown applies here as it does everywhere else, so the
+    # same hair or origin does not land three days running. `minimum=count`
+    # keeps a required draw possible on a thin axis.
+    body = rng.choice(["humanoid", "creature"])
+    embodiment: dict[str, list[dict[str, Any]]] = {}
+    for taxonomy, count in EMBODIMENT_DRAWS:
+        pool = catalog.get(taxonomy)
+        if not pool:
+            continue
+        scoped = _body_pool(pool, body)
+        cooled = creative_entropy.apply_recent_facet_cooldown(
+            scoped, recent_spent, minimum=count
+        )
+        embodiment[taxonomy.lower()] = _draw(rng, cooled, min(count, len(cooled)))
+    embodied = [facet for drawn in embodiment.values() for facet in drawn]
+
     umbrella = genres[:2]
     extras = dict(
         zip(
@@ -217,7 +238,14 @@ def facet_seed_plan(
     elements = {
         "vibe": [*umbrella, creature, occupation],
         "location": [*umbrella, extras["location"], creature, material],
-        "character": [*umbrella, extras["character"], creature, occupation, personality],
+        "character": [
+            *umbrella,
+            extras["character"],
+            creature,
+            occupation,
+            personality,
+            *embodied,
+        ],
         "reward_item": [*umbrella, extras["reward_item"], material],
         "reward_skill": [*umbrella, extras["reward_skill"], occupation],
         "scenario": [
@@ -228,7 +256,13 @@ def facet_seed_plan(
             creature,
         ],
     }
-    seeded = {"GENRE", creature_tax, "MATERIAL", *flavour_taxes}
+    seeded = {
+        "GENRE",
+        creature_tax,
+        "MATERIAL",
+        *flavour_taxes,
+        *(tax for tax in EMBODIMENT_TAXONOMIES if embodiment.get(tax.lower())),
+    }
     return {
         "version": 2,
         "creative_entropy_version": CREATIVE_ENTROPY_VERSION,
@@ -242,6 +276,8 @@ def facet_seed_plan(
             "wildcard_role": flavour_taxes[0].lower(),
         },
         "shared": {"material": material, "personality": personality},
+        "body": body,
+        "embodiment": embodiment,
         "seeded_taxonomies": sorted(seeded),
         "invent": plan_inventions(rng, catalog, seeded),
         "extra_genres": extras,
