@@ -427,7 +427,7 @@ tasks:
 - id: t-027
   milestone: m6
   title: "Audit actual art coverage for all 1,024 Life endings"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   note: |-
@@ -436,7 +436,10 @@ tasks:
     kind_robots PR #1836 merged (852f02e5, all 19 checks green): new admin-only GET /api/davinci/endings/coverage endpoint. Classifies every LifeEnding's icon/hero art as resolved (real ArtImage row), queued (path-string only -- per seedDaVinciEndings.ts/docs/notes/davinci-ending-seed.md the importer never sets the ArtImage id fields), or missing; cross-checks dangling ArtImage refs; reports seeded-vs-expected (1024) count; inventories contextual LifeRunArt (by sceneType, runs with/without art).
 
     Released under Silas's 2026-09-07 human-gate simplification policy: no human decision is needed; the old gate was only deploy timing. A token-equipped worker should call the production /api/davinci/endings/coverage endpoint, record the actual 1,024-ending icon/hero/contextual-art counts here, and turn any real missing-art result into t-028. Do not park deployment timing in Silas's queue. After t-030 lands, the same audit should cover the genre decks' endings (24 rows across mystery/romance/heist) -- extend the coverage endpoint to take ?deckKey= rather than writing a second one.
-  updated: '2026-09-12T12:00:00Z'
+  updated: '2026-09-15T13:44:05Z'
+  owner: worker
+  claimed_by: 2026-09-15T134500-storybook-t027
+  claimed_at: '2026-09-15T13:44:05Z'
 - id: t-028
   milestone: m6
   title: "Generate, distribute, and verify every missing Life ending asset"
