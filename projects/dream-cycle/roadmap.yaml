@@ -448,8 +448,47 @@ tasks:
   owner: null
   passes: 0
   stakes: outward-facing
-  updated: '2026-09-15T08:05:00Z'
+  updated: '2026-09-15T09:05:00Z'
   note: >
+    GATE CLEARED 2026-09-15 ~08:15: Silas reviewed the vocabulary via the dry
+    run on Alexandria and ran `npm run seed:embodiment:apply` against
+    production -- "Wrote 82/82 embodiment Facet(s)." Both halves are now live:
+    kind_robots#2749 (schema + rows) and conductor#4399 (the planner that draws
+    them) are merged, so the next daily dream seeds a real body rather than
+    leaving `look` unconstrained.
+
+    ONE CORRECTION STILL PENDING, and it needs a second `--apply`, not a code
+    change on this side. kind_robots#2752 fixes five HAIR entries that were
+    correctly scoped `any` but whose art prompts had been written for a human
+    head ("an unlined young face", "one temple fully white", "pale lashes and
+    brows matching", "dark at the scalp"). On a creature-bodied day those five
+    were 5 of 11 drawable entries, and artPrompt reaches Krea 2 verbatim, so
+    about half of all creature hair draws would have asked it to paint a temple
+    or a brow onto an animal. This is the walrus problem arriving through a
+    channel the scope filter cannot see: the filter asks whether an entry may
+    sit on a body, never whether its prose secretly assumes a different one.
+    The same PR widens dyed colour to non-humans (both dye entries were
+    humanoid-only, so a creature day's sole dyed option was a raised crest),
+    taking the creature-day hair pool 11 -> 13 and saturated-colour options
+    2 -> 4 -- which matters because saturated hair colour measured at 0.0%
+    across all 98 prior characters and is the axis this feature most exists
+    for.
+
+    No titles or slugs change in #2752, so re-running
+    `npm run seed:embodiment:apply` after it merges UPDATES the 82 existing
+    rows in place (the upsert already writes artPrompt and the scope metadata)
+    rather than creating a second set. Until then the live rows carry the
+    human-headed prompts; the blast radius is at most a few odd creature
+    renders, not a broken pipeline.
+
+    THEN re-measure, which is the only thing that proves this worked. The whole
+    feature is real only if the seeds reach `look`, which is what Krea 2 sees;
+    a Facet linked to a record but absent from `look` changes no pixel and is
+    the mirror image of t-026's six-week silent no-op. Re-run the measurement
+    below over the next ~20 built characters and confirm the zeros move.
+
+    ORIGINAL FILING FOLLOWS.
+
     Silas, 2026-09-15: "there are lots of factors that could be switched. Hair
     color, style, age, gender presentation, body shape, size, racial background,
     default emotional state ... It would be great if we could utilize something
