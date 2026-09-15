@@ -1898,6 +1898,138 @@ tasks:
   updated: '2026-09-15T02:05:40Z'
   approved_by_human: true
 
+- id: t-105
+  milestone: m6
+  title: Generate owned preview art for the LoRA catalog, starting with the 223 blind rows
+  status: in-progress
+  owner: claude
+  stakes: reversible
+  passes: 0
+  gate_human: false
+  approved_by_human: true
+  note: |
+    Filed 2026-09-15 from Silas: "We have a lot of loras that don't have a default image attached."
+
+    ASSESSMENT (live /api/resources, 2,345 active Resources).
+    The gap is not partial, it is total: ZERO of the 2,228 LoRA-family rows
+    (2,015 LORA + 213 LYCORIS) carry a generated ArtImage or a stored imagePath.
+    Every preview in the catalog today is a hotlink to a third party:
+      - 2,005 to image.civitai.com (alive; 59/60 sampled returned 206)
+      -   163 to genur.art (DEAD -- img.genur.art has no DNS record at all)
+      -    60 with no preview of any kind
+    Checkpoints are the same shape: 0 of 58 own their art, 24 have nothing.
+
+    That leaves 223 LoRAs being triaged BLIND -- the maturity page shows them
+    /images/kindart.webp and asks for an SFW/NSFW ruling on a filename. 128 of
+    those are currently flagged mature and 95 SFW, and neither flag was set from
+    looking at anything. Maturity split catalog-wide is 880 mature / 1,348 SFW.
+
+    MATCHING LORAS TO BASES. supportedServer is too coarse to drive this -- it
+    buckets Pony, Illustrious and SDXL-base together, and a Pony LoRA on an
+    SDXL-base checkpoint renders mush rather than failing, so nothing would flag
+    it. `generation` carries the real Civitai baseModel and is the key.
+    2,151 of 2,228 (96.5%) have a same-family base already registered. The 77
+    orphans are Flux Kontext (47, an edit model needing a source image), SD 2.1
+    (16, no base on hand), Anima/Krea/blank (14).
+
+    Checkpoint `generation` is NOT trustworthy the way the LoRA one is:
+    cyberrealisticPony_v61 carries 'ARCHIVE', cartoonArcadiaSDXLSD1_v2 carries
+    'base', and duchaitenStylelikeme (filed under SD15/) carries 'SDXL'. The
+    localPath DIRECTORY is how they are filed for ComfyUI and is the reliable
+    signal. Reading it that way corrects an earlier count made from `generation`:
+    there are 3 Pony checkpoints (one of them SFW, realcartoonPony_v1) and 6
+    Illustrious, not 2 and 0.
+
+    CAPACITY. The live queue did 535 images in 24h, sits idle (oldestPending
+    null) and is not paused, so the full 2,228 is ~4-5 days of background
+    rendering, and batch 1 is ~10 hours.
+
+    WHAT LANDED THIS SESSION (kind_robots, branch claude/happy-gauss-l3znps):
+      - utils/loraProbe.ts: family classification, per-family probe recipe,
+        checkpoint selection, blind-preview detection. Pure and self-tested.
+      - server/api/lora/probe-plan.post.ts: admin-only planner. Resolves what
+        would render on which base with which prompt, and enqueues NOTHING --
+        the caller posts each plan to the existing /api/art/enqueue, so gating,
+        workflow building and queueing are reused rather than duplicated.
+      - server/utils/entityArt.ts: 'resource' added as an EntityArtType. This is
+        what makes the write-back free -- art/queue/[id]/complete.post.ts already
+        calls applyEntityArtCompletion, which sets Resource.artImageId +
+        imagePath and propagates isMature/isPublic from the Resource onto the
+        ArtImage, so a mature LoRA's preview is born correctly gated.
+      - stores/loraTriageStore.ts + pages/admin/lora-triage.vue: a "Render N
+        missing previews" action, per-card render/re-render, a missing-preview
+        filter and count, queued/failed badges, and a skipped-with-reasons list.
+      - utils/scripts/verifyLoraProbePlan.test.ts (npm run test:lora-probe-plan).
+
+    No UI resolution change was needed: previewSrc() in both lora-triage.vue and
+    resource-card.vue already prefers ArtImage over previewImageUrl, so a
+    generated preview displaces its hotlink on arrival.
+
+    WHY THE CATALOG WAS EMPTY DESPITE A PREVIEW ENDPOINT ALREADY EXISTING.
+    server/api/resources/[id]/generate-preview.post.ts has been queueing
+    single-resource preview renders for weeks. Its loop was open at the far end:
+    the job payload carries previewResourceId, but the ONLY reader of that field
+    is preview-job/[jobId].get.ts, and only to check ownership while polling.
+    Nothing attached the finished ArtImage to the Resource that asked for it, so
+    every render it ever queued went nowhere. That is the actual reason 0 of
+    2,228 rows carry art. It now declares the same entityArt metadata, which
+    routes its result through applyEntityArtCompletion and arms
+    expectsEntityArtCompletion, so a failed attachment rolls the completion back
+    instead of marking the job DONE over an unchanged row.
+
+    A BUG THIS INTRODUCED AND THEN FIXED, worth recording because the typecheck
+    could not see it: adding 'resource' to the EntityArtType union and to
+    ENTITY_FIELDS is not sufficient. The runtime gate is
+    normalizeEntityArtType's hardcoded literal list, and a type missing from it
+    is rejected with a 400 at enqueue while the compiler stays happy, because
+    the return type still narrows. verifyLoraProbePlan.test.ts now compares the
+    union, the normalize list and the ENTITY_FIELDS keys as source text so the
+    next entity type added cannot repeat it.
+
+    NOT converged, deliberately: generate-preview.post.ts still uses its own
+    checkpointScore() and its own prompt. That scorer matches `generation`
+    exactly for +100, which misses cyberrealisticPony_v61 ('ARCHIVE') entirely
+    and drops Pony LoRAs onto whatever SDXL checkpoint scores next -- the exact
+    mush-render this task's mapping exists to prevent -- and it 409s on FLUX.
+    Pointing it at utils/loraProbe.ts is the right follow-up but changes
+    behaviour for an existing caller, so it is not being folded into this PR.
+
+    TWO BUGS THE DRY RUN AGAINST LIVE DATA CAUGHT, both fixed before commit:
+      1. The flux lane never reads `checkpoint` -- buildFluxWorkflowFromRequest
+         resolves a fixed UNet through fluxModelByVariant (flux1-dev-Q8_0.gguf).
+         Selecting a Flux checkpoint would have recorded a base on the ArtImage
+         that took no part in the render, and would have routed Flux.1 D LoRAs
+         onto the Flux.2 Klein rows that share the Flux/ directory. Recipes now
+         carry basePolicy, and flux is 'engine-default'.
+      2. Parens in a trigger are attention-weighting syntax, not literal text.
+         '(Imminent) Reversed Gangbang (Concept)' is a real defaultTrigger, and
+         raw parens silently re-weight the probe. The SD lanes now escape them;
+         Flux, read by T5 as prose, does not.
+
+    DRY RUN over the 223: 205 plannable, 18 skipped (8 SD 2.1, 2 LTX, 1 Kontext,
+    1 Anima, 6 blank/other). Bases: 61 cyberrealisticPony, 35 disneyrealcartoonmix,
+    33 duchaitenStylelikeme, 28 bigLove_xl25, 27 revAnimated, 14 flux engine
+    default, 6 realcartoonPony, 1 furrytoonmix.
+
+    DESIGN NOTE. One fixed probe per family, not a per-LoRA prompt. artPrompt is
+    a byte-identical copy of defaultTrigger on all 2,228 rows (median 25 chars),
+    so there was never a curated prompt to use. Identical scaffolding within a
+    family is the point: when every Pony LoRA renders the same subject, framing
+    and lighting, whatever differs in the output is the LoRA -- which is what
+    makes "lackluster" and "wrongly matched" legible when scanning the grid.
+    Steps/cfg are deliberately unset so sdxlSamplerProfile() can tune the
+    Lightning and Turbo bases in the catalog.
+
+    STILL OPEN:
+      - The batch has NOT run. kindrobots.org serves deployed code, so the
+        223 can only be queued once this is on main and deployed.
+      - commercialSafe: most NSFW bases are not commercial-safe and these
+        previews must never become print-eligible. Worth an explicit assertion
+        against ArtImage.checkpointResourceId rather than trusting it.
+      - Batches 2 (2,005 civitai hotlinks) and 3 (the 77 orphans, incl. a
+        Kontext img2img path) are follow-on scope, not this task.
+  updated: '2026-09-15T00:00:00Z'
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
 
