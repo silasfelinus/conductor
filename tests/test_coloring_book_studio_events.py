@@ -3,6 +3,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 import yaml
 
@@ -207,6 +208,104 @@ class ColoringBookStudioEventTests(unittest.TestCase):
     def test_load_event_rejects_unknown_fields(self) -> None:
         with self.assertRaisesRegex(ValueError, "unsupported event fields: command"):
             MODULE.load_event(self.write_event(command="rm -rf /"))
+
+
+class ColorArtEventRetryQuarantineTests(unittest.TestCase):
+    """coloring-book/conductor#t-170: a queued event must not retry forever."""
+
+    def setUp(self) -> None:
+        self.temp = tempfile.TemporaryDirectory()
+        self.event_dir = Path(self.temp.name)
+        self.original_root = MODULE.ROOT
+        self.original_event_dir = MODULE.EVENT_DIR
+        self.original_quarantine_dir = MODULE.QUARANTINE_DIR
+        self.original_attempt_state_path = MODULE.ATTEMPT_STATE_PATH
+        MODULE.ROOT = self.event_dir
+        MODULE.EVENT_DIR = self.event_dir
+        MODULE.QUARANTINE_DIR = self.event_dir / "quarantine"
+        MODULE.ATTEMPT_STATE_PATH = self.event_dir / "attempt-state.yaml"
+
+    def tearDown(self) -> None:
+        MODULE.ROOT = self.original_root
+        MODULE.EVENT_DIR = self.original_event_dir
+        MODULE.QUARANTINE_DIR = self.original_quarantine_dir
+        MODULE.ATTEMPT_STATE_PATH = self.original_attempt_state_path
+        self.temp.cleanup()
+
+    def write_event(self, name: str = "event.yaml", **overrides: object) -> Path:
+        payload: dict[str, object] = {
+            "version": 1,
+            "operation": "generate-color-proposals",
+            "book": "monster-recast",
+            "proposal_ids": ["mr-009"],
+            "timeout": 600,
+            "force": False,
+        }
+        payload.update(overrides)
+        path = self.event_dir / name
+        path.write_text(yaml.safe_dump(payload, sort_keys=False), encoding="utf-8")
+        return path
+
+    def test_queued_events_excludes_attempt_state_file(self) -> None:
+        self.write_event("real-event.yaml")
+        MODULE.save_attempt_state({"stale.yaml": 1})
+        names = [path.name for path in MODULE.queued_events()]
+        self.assertEqual(names, ["real-event.yaml"])
+
+    def test_failure_is_preserved_and_counted_below_threshold(self) -> None:
+        event = MODULE.load_event(self.write_event())
+        state: dict[str, int] = {}
+        with patch.object(MODULE.subprocess, "run") as run:
+            run.return_value.returncode = 1
+            status = MODULE.process_event(event, live=True, attempt_state=state)
+
+        self.assertEqual(status, 1)
+        self.assertTrue(event.path.exists())
+        self.assertEqual(state.get(event.path.name), 1)
+        self.assertFalse(MODULE.QUARANTINE_DIR.exists())
+
+    def test_event_is_quarantined_after_max_attempts(self) -> None:
+        event = MODULE.load_event(self.write_event())
+        state = {event.path.name: MODULE.MAX_EVENT_ATTEMPTS - 1}
+        with patch.object(MODULE.subprocess, "run") as run:
+            run.return_value.returncode = 1
+            status = MODULE.process_event(event, live=True, attempt_state=state)
+
+        self.assertEqual(status, 0)
+        self.assertFalse(event.path.exists())
+        self.assertTrue((MODULE.QUARANTINE_DIR / event.path.name).exists())
+        self.assertNotIn(event.path.name, state)
+
+    def test_success_clears_attempt_state(self) -> None:
+        event = MODULE.load_event(self.write_event())
+        state = {event.path.name: MODULE.MAX_EVENT_ATTEMPTS - 1}
+        with patch.object(MODULE.subprocess, "run") as run:
+            run.return_value.returncode = 0
+            status = MODULE.process_event(event, live=True, attempt_state=state)
+
+        self.assertEqual(status, 0)
+        self.assertFalse(event.path.exists())
+        self.assertNotIn(event.path.name, state)
+
+    def test_attempt_state_round_trips_through_disk(self) -> None:
+        MODULE.save_attempt_state({"a.yaml": 2, "b.yaml": 1})
+        self.assertEqual(
+            MODULE.load_attempt_state(), {"a.yaml": 2, "b.yaml": 1}
+        )
+        MODULE.save_attempt_state({})
+        self.assertFalse(MODULE.ATTEMPT_STATE_PATH.exists())
+        self.assertEqual(MODULE.load_attempt_state(), {})
+
+    def test_missing_kr_api_token_does_not_consume_an_attempt(self) -> None:
+        event = MODULE.load_event(self.write_event())
+        state: dict[str, int] = {}
+        with patch.dict(MODULE.os.environ, {}, clear=False):
+            MODULE.os.environ.pop("KR_API_TOKEN", None)
+            status = MODULE.process_event(event, live=True, attempt_state=state)
+
+        self.assertEqual(status, 1)
+        self.assertEqual(state, {})
+        self.assertTrue(event.path.exists())
 
 
 if __name__ == "__main__":
