@@ -1,9 +1,0 @@
-version: 1
-project: interface-vision
-task: t-105
-operation: rearm
-session: 2026-09-15T062500Z-interface-vision-t105-openai-c7f2
-approved_by_human: true
-updated: '2026-09-15T06:42:00Z'
-note: >-
-  Slice: home dashboard What we're building project list. Silas's screenshot showed substantial blank panel space while only six projects rendered. Root cause was server/api/showcase/home.get.ts capping eligible ACTIVE/CONTINUOUS public projects at PROJECT_LIMIT=6 even though components/home/home-page.vue already renders every returned project inside a bounded xl overflow-y-auto scroller. Removed only that cap (two deleted lines), preserving public/isActive/isMature filters, ACTIVE/CONTINUOUS filtering, priority/update ordering, links, cards, and CSS. Merged silasfelinus/kind_robots#2748 as e0d73e70c9da46843359d340772bd0e62ae4eb53 after all 46 exact-head check runs completed with no queued/in-progress/failing/cancelled/timed-out/action-required/skipped/neutral results, including TypeScript and Contract Tests run 34937580271 whose Contract verifiers job completed all 347 contract steps successfully. The working branch was automatically removed after merge. Production is self-hosted and was not deployed from this session. Return the reusable page-polish task to ready for the next visual review slice.

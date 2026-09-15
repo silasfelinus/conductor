@@ -1845,7 +1845,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: "Polish every reachable Kind Robots surface page-by-page"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -1867,12 +1867,11 @@ tasks:
     Silas supplied a fresh screenshot-driven polish direction for the home dashboard: use the available What we're building space to show all active/continuous projects in the existing bounded scrollable container instead of arbitrarily stopping at six.
 
     Dashboard project-list slice implemented on worker/interface-vision-t-105-20260915-c7f2. Root cause was the home showcase API's hard six-project cap; the home component already renders every returned project inside its bounded xl overflow scroller. Removed only PROJECT_LIMIT and the matching Prisma take, preserving public/active/mature filters, ACTIVE/CONTINUOUS status filtering, ordering, cards, and navigation. Branch diff is one file with exactly two deleted lines.
-  updated: '2026-09-15T06:32:00Z'
+
+    Slice: home dashboard What we're building project list. Silas's screenshot showed substantial blank panel space while only six projects rendered. Root cause was server/api/showcase/home.get.ts capping eligible ACTIVE/CONTINUOUS public projects at PROJECT_LIMIT=6 even though components/home/home-page.vue already renders every returned project inside a bounded xl overflow-y-auto scroller. Removed only that cap (two deleted lines), preserving public/isActive/isMature filters, ACTIVE/CONTINUOUS filtering, priority/update ordering, links, cards, and CSS. Merged silasfelinus/kind_robots#2748 as e0d73e70c9da46843359d340772bd0e62ae4eb53 after all 46 exact-head check runs completed with no queued/in-progress/failing/cancelled/timed-out/action-required/skipped/neutral results, including TypeScript and Contract Tests run 34937580271 whose Contract verifiers job completed all 347 contract steps successfully. The working branch was automatically removed after merge. Production is self-hosted and was not deployed from this session. Return the reusable page-polish task to ready for the next visual review slice.
+  updated: '2026-09-15T06:42:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2639'
   approved_by_human: true
-  owner: worker
-  claimed_by: 2026-09-15T062500Z-interface-vision-t105-openai-c7f2
-  claimed_at: '2026-09-15T06:30:00Z'
 
 - id: t-106
   milestone: m6
