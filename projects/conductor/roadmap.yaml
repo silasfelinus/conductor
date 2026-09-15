@@ -2799,7 +2799,17 @@ tasks:
     unavailable for LoRA-backed jobs so the queue can reject it before claiming instead of
     hanging after. Set approved_by_human: true and status: done here once resolved; this
     unblocks lora-ingestion/t-003 (currently needs-human, soft, pending this).
-  updated: '2026-09-15T11:53:06Z'
+
+    Cross-reference (scheduled Conductor session, 2026-09-15T21:33Z, from kind-
+    robots/t-105): /api/art/queue/stats now shows queueDepth PENDING=2070, RUNNING=1,
+    staleRunningCount=0, oldestPending ArtJob 23040 (coloring-book) aged ~7.8h -- up sharply
+    from ~104 pending seen at 16:30Z the same day. check_render_box.py reports UP with a
+    healthy 0.5-minute heartbeat and 160 completions/6h, so the engine is actively
+    processing, not stuck-RUNNING the way the original wedge symptom was -- but at this
+    throughput a 2070-deep backlog takes many hours to drain. Recording as a data point on
+    the same incident (post-wedge backlog depth), not a new independent defect. No action
+    taken beyond recording.
+  updated: '2026-09-15T21:34:12Z'
 
 - id: t-166
   milestone: m2
