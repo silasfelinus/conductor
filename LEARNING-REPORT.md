@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-15T11:44:39Z
+Generated: 2026-09-15T11:49:14Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **969**
-- Outcomes: blocked: 16, cancelled: 1, done: 952
+- Closed tasks recorded: **970**
+- Outcomes: blocked: 16, cancelled: 1, done: 953
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -26,7 +26,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 37 | 100% |
-| conductor | 105 | 100% |
+| conductor | 106 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 51 | 98% |
 | davinci | 8 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 952 | 99% |
+| software | 953 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-15 `conductor/t-150` — check_pr_merged_drift.py's title-search and note-reference passes can only report drift when a PR actually exists to find -- a task whose implementing session never opened one at all (cthulhuquarium/t-076) read as a false "clean", the exact opposite failure mode from what the script was built to catch. Closed by adding a fifth pass that lists branches across the same tracked repos already scanned for title matches and flags one matching the worker naming convention with no open PR against it. General lesson: a checker built to catch "state A drifted from state B" should also ask whether state B (the PR/evidence it searches for) exists at all -- absence-of-evidence and evidence-of-absence are different findings and a search that only handles the former will read a genuinely missing PR as clean.
 - 2026-09-15 `conductor/t-157` — check_hostbuf_failure.py's "unverified" state (a hostbuf failure older than the 2h alert window with no successful render since) was only ever reported via a `::warning::` line in that one hourly workflow run's own log -- a channel nothing else reads, so a stale unresolved incident could sit invisible indefinitely with no durable trace. Fixed by writing the same RENDER-BACKLOG.md ledger convention recheck_render_queue.py already uses, and giving the workflow contents: write plus a commit-back step so the entry actually reaches main. When a sentinel/check script's only failure signal is a workflow-log annotation, that is itself a gap worth closing -- durable state belongs in a file something else reads, not in a run nobody reopens.
 - 2026-09-15 `coloring-book/t-022` — hwr-008 (Laboratory Tenor) failed creative review 4 times across 4 sessions on the same core requirement -- a trans man tenor with visible healed bilateral chest-surgery scars -- and the failure mode changed each time a wardrobe strategy was fixed: attempt 1-2 rendered a conventional young man with no scars; attempt 3 fixed the age/face but produced a fully buttoned tuxedo occluding any possible scar; attempt 4 opened the neckline but the exposed skin was smooth and unmarked. Two different wardrobe rewrites (closed tuxedo, then open cape) both failed to surface any scar once the neckline was actually open, which is stronger evidence than either alone that the render engine is declining to depict surgical scar texture on skin at all -- plausibly a content-safety-adjacent smoothing bias -- rather than a wardrobe-occlusion problem a prompt rewrite can keep chasing. When a creative-review slot keeps failing on the *same specific visual element* after the prompt-level cause it was blamed on gets fixed, stop revising wardrobe/pose/framing language and treat the element itself (not its surrounding context) as the suspect -- escalate for a human/engine-level call rather than a fifth blind wardrobe rewrite.
 - 2026-09-15 `coloring-book/t-022` — manage_coloring_book_production.py's generate-bw leaves a stale bw_job_id/bw_status: running entry unrecovered indefinitely unless a future cycle happens to re-request that exact proposal id -- five Monster Recast slots (mr-005/007/009/011/012) sat at a week-old running status even though the render backend had actually completed and mechanically rejected all five as Kontext-engine noise a day after submission. Recovering them in one pass raised t-039's known-defect count from 2 to 7 of 7 checked attempts (100% failure), which is a materially different finding than "two isolated misses" -- when a recurring production task's queue-status tooling only reports the current batch, periodically sweep every bw_status/render_gate_error still marked running/pending regardless of the active batch, since a silently-completed-and-rejected job looks identical to a still-pending one until someone re-checks it.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-15 `conductor/t-161` — close_task.py built its close-out commit from the remote branch tip (origin/<branch> or origin/main) regardless of whether a same-named local branch existed with unpushed commits, so `--branch <my-current-branch>` did not behave like a normal git push -- it could silently rebuild from a stale base and force-push over local-only work (caught once already in coloring-book/t-046, kaizen-sourced this task). Fixed with a fail-closed branch-tip equality check before every commit attempt, tested against both the divergent and matching-tip cases. Any scratch-index git plumbing that targets a named branch without reading the caller's actual worktree state needs the same guard -- worth checking claim_task.py's branch-naming paths for the same class of assumption.
 - 2026-09-14 `coloring-book/t-022` — finalize-pair (manage_coloring_book_production.py) crashed with a NameError on every live invocation -- it referenced an undefined `semantic` variable (a leftover name from a different script's local variable of the same purpose) instead of the queue entry's own `bw_semantic_score` field. This went unnoticed for weeks: all three coloring books accumulated dozens of slots with both an accepted color and accepted BW file (66 combined) while `final pairs` sat at 0/36 in every book, because nothing had ever tested `finalize_pair` and every attempt to run it in production would have failed loudly enough to be caught, yet apparently no prior cycle actually tried. Fixed the reference and landed the first 3 final pairs (Monster Recast mr-002/003/004). Worth a standing habit: an operation with zero successful invocations across many eligible candidates is a stronger signal than "not yet gotten to" -- check whether it has ever actually run, not just whether its inputs exist.
 - 2026-09-14 `coloring-book/t-022` — A documented safety guard that is never actually wired into the code that runs is worse than no guard, because it reads as coverage that does not exist: monster-recast/art-modeler-request.yaml documented a content-safety negative_prompt (no explicit genitals/nipples/etc.) for months, but build_entries() only ever read a per-entry override that no entry in any of the 108 slots across all three books had ever set -- every render, Monster Recast included, only got the purely technical DEFAULT_NEGATIVE_PROMPT. Caught live when a routine re-render (not a targeted safety audit) came back with unrequested exposed nudity, and the pre-existing already-committed candidate for that same slot turned out to have the identical defect. The fix (bake the content-safety terms into every entry by default) was small, but finding it required actually tracing the negative_prompt value from the documented YAML through to the submitted payload rather than trusting that a file named art-modeler-request.yaml next to the render queue meant its contents were in effect. Worth a standing habit: when a generation pipeline documents a safety constraint in a config/request file, verify by reading the actual code path that consumes it, not by the file's existence or its prose.
-- 2026-09-14 `coloring-book/t-022` — consume_coloring_book_studio_request.py had two independent call sites referencing coloring functions that were never actually defined (record_semantic_gate_error, fixed cycle 2; record_semantic_rejection, fixed cycle 8, same day) -- both a mismatch between this wrapper's error handling and consume_coloring_book_color_art.py's real public API, each only discovered by hitting the exact code path live. A single pass grepping every coloring.<name> call in the wrapper against the other module's actual def list would have caught both in one sitting instead of one crash at a time; filed as this cycle's kaizen suggestion rather than done inline to keep the cycle's diff scoped to the crash actually hit.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-15T11:44:39Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-15T11:49:14Z_
