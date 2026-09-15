@@ -444,12 +444,12 @@ tasks:
 - id: t-029
   milestone: m5
   title: Seed the AGE/BUILD/HAIR/ORIGIN embodiment Facets into the live catalog
-  status: needs-human
+  status: done
   owner: null
   passes: 0
   stakes: outward-facing
-  updated: '2026-09-15T09:05:00Z'
-  note: >
+  updated: '2026-09-15T09:13:15Z'
+  note: >-
     GATE CLEARED 2026-09-15 ~08:15: Silas reviewed the vocabulary via the dry
     run on Alexandria and ran `npm run seed:embodiment:apply` against
     production -- "Wrote 82/82 embodiment Facet(s)." Both halves are now live:
@@ -534,3 +534,21 @@ tasks:
     from `look` changes no pixel, the mirror image of t-026's six-week silent
     no-op. Re-run the same measurement over the next ~20 built characters and
     confirm the zeros move.
+
+    CLOSED 2026-09-15. Gate satisfied end to end and VERIFIED AGAINST THE LIVE CATALOG
+    rather than against the terminal output, which was the right call: the second apply's
+    git pull reported 'Already up to date' and fetched only a worker/ branch, which looked
+    like the checkout had missed the correction. Querying /api/facets?taxonomy=HAIR settled
+    it -- 24 rows live, all five corrected art prompts present ('Dark hair or fur...', 'one
+    side of the head gone fully white', 'the finer hair around the eyes', 'Dark at the
+    roots'), and both dye entries carrying scope 'any'. The checkout had in fact already
+    been refreshed to current main by the deploy script before the pull ran. Full chain
+    live: kind_robots#2749 (4 taxonomies + 82 rows), kind_robots#2752 (art-prompt
+    correction), conductor#4399 (the planner), conductor#4404 (reconciliation). A live
+    --brief now reports catalog_source 'live' with no fallbacks and draws all five axes from
+    real rows -- for 2026-09-17: body creature, gender Neutrois, age Young and
+    Overqualified, build Long and Angular, hair One Streak Deliberate, origin Anatolian
+    Plateau Village + Baltic Timber Port. Follow-up t-030 carries the only thing that can
+    actually prove this worked: re-measuring look.
+  approved_by_human: true
+  implementation_pr: 'silasfelinus/kind_robots#2752'
