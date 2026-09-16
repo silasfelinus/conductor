@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-15T23:37:33Z
+Generated: 2026-09-16T00:32:00Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **979**
-- Outcomes: blocked: 16, cancelled: 1, done: 962
+- Closed tasks recorded: **980**
+- Outcomes: blocked: 16, cancelled: 1, done: 963
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -26,7 +26,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 37 | 100% |
-| conductor | 112 | 100% |
+| conductor | 113 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 51 | 98% |
 | davinci | 8 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 962 | 99% |
+| software | 963 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-16 `conductor/t-160` — Worker's PR handoff template omitted Stakes/Flags-for-Reviewer/Kaizen-suggestion even on a small doc-only PR; enforce full template discipline regardless of diff size so a real kaizen suggestion or flag isn't silently dropped.
 - 2026-09-15 `storybook/t-050` — Clean first-pass mechanical kaizen: mirrored t-048's isMediaOriginReachable() guard
 exactly onto verifyAcademyExamplesManifest.ts, the one sibling script t-048's own PR
 (#2767) didn't cover despite sharing the identical unguarded-live-fetch shape.
@@ -142,7 +143,6 @@ already showing the `>-`-plus-giant-line signature for the same latent risk.
 - 2026-09-15 `storybook/t-027` — A recurring "check the real state and record it" audit task can surface a result the task's own follow-on wasn't designed for: t-028 assumed t-027 would find some endings missing art among an otherwise-seeded 1,024-row catalog, but the actual coverage call came back 0/1024 seeded -- zero rows exist at all, not partial art coverage. Letting the dependency resolver mechanically flip t-028 to `ready` on t-027's `done` would have handed a future worker a task it structurally could not start (nothing to attach art to). General lesson: when an audit's real result falls outside the shape its downstream task assumed, redirect the downstream task in the same close-out instead of letting an automatic status transition carry a stale scope forward -- the dependency graph tracks task completion, not whether the completed task's findings still match what its dependent expects.
 - 2026-09-15 `conductor/t-166` — Two tests in test_check_render_box.py asserted on check.main()'s return value without mocking every function main() calls (engine_heartbeat_verdict), so they silently made a real network call every run -- caught only because the live render engine happened to be reporting unhealthy at the moment this session ran the full suite, which flipped their result from a coincidental pass to a real failure. General lesson: a test that patches some of a function's dependencies but not all of them is not actually isolated -- it just hasn't been caught yet by the unpatched dependency disagreeing with what the test expects. When fixing one, audit every other test hitting the same entry point for the identical gap (two more tests here were leaking the same call and passing by coincidence).
 - 2026-09-15 `conductor/t-164` — check_pr_merged_drift.py's title-search and stranded-branch passes both scanned every repo in ALL_TRACKED_REPOS for every in-progress task, even though most tasks' own title/note history already names the one or two repos that actually matter for them. Added task_relevant_repos() to narrow both passes to a task's own cited repos first, falling back to the full list only when a task cites none. General lesson: when a checker scans "every tracked X" for "every candidate Y", check whether each Y already carries evidence of which X actually applies to it before paying the full cross-product cost -- the per-run caches already shared across tasks/repos mean this is a scope reduction, not just deferred work.
-- 2026-09-15 `conductor/t-150` — check_pr_merged_drift.py's title-search and note-reference passes can only report drift when a PR actually exists to find -- a task whose implementing session never opened one at all (cthulhuquarium/t-076) read as a false "clean", the exact opposite failure mode from what the script was built to catch. Closed by adding a fifth pass that lists branches across the same tracked repos already scanned for title matches and flags one matching the worker naming convention with no open PR against it. General lesson: a checker built to catch "state A drifted from state B" should also ask whether state B (the PR/evidence it searches for) exists at all -- absence-of-evidence and evidence-of-absence are different findings and a search that only handles the former will read a genuinely missing PR as clean.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-15T23:37:33Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-16T00:32:00Z_
