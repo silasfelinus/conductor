@@ -336,7 +336,7 @@ tasks:
 - id: t-019
   milestone: m5
   title: Generate species designs for the 15-fish vertical-slice roster
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   gate_human: true
@@ -348,10 +348,24 @@ tasks:
 
 
     Release under Silas's 2026-09-07 human-gate simplification policy. Internal generated-art curation is agent-owned. Review the 15-fish species batch against docs/art-direction.md and, for the shared Cthulhuquarium species, compare directly against their Ichthyonomicon identity anchors. Regenerate only specific designs that materially drift. Once the documented house look and shared-species identity pass, close and unblock the production batches; do not require Silas to rubber-stamp every internal art batch.
-  updated: '2026-09-16T23:02:15Z'
+
+    PARTIAL REVIEW (conductor scheduled sweep): 13/15 species pass -- same creature as their
+    Cthulhuquarium Ichthyonomicon anchor (choirfish, moebius-crab, lamplight-angler, the-
+    pleasant-island have anchors; parlour-rustfish/errand-guppy do not yet -- 2 of
+    cthulhuquarium/t-073's 32 unplated species) and/or their own silhouette/distinction
+    text. 2 fail: choirfish rendered as one clownfish-style fish instead of the three
+    ribbon-finned fish its own spec and anchor require (root cause: FISH_FRAME's 'a single
+    fish specimen study' contradicted the multi-fish silhouette); the-pleasant-island
+    rendered as a fish instead of the sea turtle its anchor/species name establish (its
+    silhouette was the one entry naming no creature type at all). Fixed both root causes and
+    requeued corrected prompts for regeneration: silasfelinus/conductor#4526. Re-arming to
+    ready rather than closing -- a future session should re-check these two once the
+    corrected renders land via auto-art-generate.yml and close this task if they pass.
+  updated: '2026-09-16T23:03:53Z'
   owner: worker
   claimed_by: claude-scheduled-20260916T223318Z-rulerhooked-t019
   claimed_at: '2026-09-16T23:02:15Z'
+  implementation_pr: 'silasfelinus/conductor#4526'
 
 - id: t-020
   milestone: m5
