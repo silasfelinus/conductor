@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-16T14:50:16Z
+Generated: 2026-09-16T14:54:17Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **988**
-- Outcomes: blocked: 16, cancelled: 1, done: 971
+- Closed tasks recorded: **989**
+- Outcomes: blocked: 16, cancelled: 1, done: 972
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -26,7 +26,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 38 | 100% |
-| conductor | 117 | 100% |
+| conductor | 118 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 51 | 98% |
 | davinci | 8 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 971 | 99% |
+| software | 972 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-16 `conductor/t-173` — A three-call-site staleness rule (next_ready_task.py, claim_task.py, process_task_events.py) had silently drifted to two-out-of-three: the connector processor's claim collision check never consulted roadmap_claims.claim_is_stale(), so a prior session had to paper over the disagreement with a dedicated preflight script (promote_stale_task_event_claims.py) instead of fixing the root disagreement. Making the processor call the shared helper directly let that whole preflight (plus its test and workflow step) be deleted rather than maintained alongside the thing it was working around -- a smaller total diff than the workaround it replaced (68 insertions/177 deletions).
 - 2026-09-16 `kind-robots/t-105` — A multi-session small-batch rollout (probe-plan -> enqueue -> verify write-back, repeated in bounded batches while checking render-box/relay health each cycle rather than firing all 223 jobs at once) closed cleanly: 2209/2228 LoRA-family Resources now carry owned preview art, the last job (ArtJob 26249, resourceId 1072) verified DONE with Resource.artImageId/imagePath confirmed written back. The remaining 18 rows are a genuine structural gap (no still-image probe recipe for SD 2.1 768 / Flux.1 Kontext bases), not further queue/relay work -- correctly left as a deferred scope decision for Silas rather than forced into this task or auto-filed as a new one.
 - 2026-09-16 `conductor/t-174` — Test-only PR closing a kaizen-flagged coverage gap (main() integration tests for a script whose pure formatter already had unit coverage) merged clean on the first pass, all 25 checks green, no behavior change to the script under test.
 - 2026-09-16 `conductor/t-172` — Clean first-pass success. A narrowly-scoped CI-annotation feature (one ::error:: line naming the first missing heading, existing stderr list untouched) with a regression test asserting the exact emitted text merged with all 23 checks green on the first push, including its own PR passing the handoff-template gate it is adjacent to.
@@ -100,19 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-16 `rainbow-butterflies/t-053` — A "document this orphaned API surface" task can surface a real design question (AgentProfile-bound credentials have no UI in kind_robots) without it being safe to file as a fix task, when the other half of the flow lives in a repo outside the session's access scope (rainbowbutterflies) -- flag the open question in the note for a session that can see both sides instead of guessing at scope.
 - 2026-09-16 `conductor/t-132` — Cross-workflow stalls at unrelated steps, despite an existing job timeout, are runner/platform evidence; do not optimize the most frequently observed command unless the failure reproduces specifically there.
 - 2026-09-16 `conductor/t-160` — Worker's PR handoff template omitted Stakes/Flags-for-Reviewer/Kaizen-suggestion even on a small doc-only PR; enforce full template discipline regardless of diff size so a real kaizen suggestion or flag isn't silently dropped.
-- 2026-09-15 `storybook/t-050` — Clean first-pass mechanical kaizen: mirrored t-048's isMediaOriginReachable() guard
-exactly onto verifyAcademyExamplesManifest.ts, the one sibling script t-048's own PR
-(#2767) didn't cover despite sharing the identical unguarded-live-fetch shape.
-Verified both paths concretely rather than trusting the diff: ran the check normally
-(reachable) and again with MEDIA_ORIGIN pointed at a nonexistent host (simulated
-unreachable), confirming exit 0 + warning on the latter instead of a hard failure.
-kind_robots PR #2772's Contract verifiers check -- the one conductor/t-132 tracks as
-occasionally hanging for 15-40+ minutes with zero step progress -- completed normally
-this run, one more data point for that task's "monitor, don't force a repo-side fix"
-conclusion. Lesson: when a kaizen task says "mirror X's diff exactly," find the
-original commit first (git log/show) rather than reconstructing the pattern from
-the task note's prose -- guarantees the two implementations stay byte-identical in
-shape.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-16T14:50:16Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-16T14:54:17Z_
