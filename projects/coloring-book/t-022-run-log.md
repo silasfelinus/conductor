@@ -2653,3 +2653,32 @@ files -> parses cleanly.
 revised, `pending`, no `--force` needed) with a properly long-running or unwrapped timeout;
 kr-006 (job 25419) still needs a recovery pass once the relay clears it, matching conductor/t-165
 and t-167; t-039 remains the blocker for all further `generate-bw` work across all three books.
+
+RAN 2026-09-16T07:30Z (session claude-scheduled-20260916T072956Z-cb-t022, scheduled conductor
+run): `check_render_box.py` confirmed the render box UP and healthy (31 completions/6h, Comfy
+heartbeat 0.4 min old) before touching anything. Took the prior cycle's own advice literally:
+ran both recovery candidates through `consume_coloring_book_studio_request.py --live` with no
+external shell `timeout` wrapper at all, `--timeout 900` (the script's own max), letting its
+internal polling own the wait —
+  - `hollywood-recast/hwr-008` (job 25421): still queued/running after the full 900s wait;
+    script correctly preserved the event without submitting a duplicate. No ledger change.
+  - `kind-robots/kr-006` (job 25419): same outcome — still queued/running after 900s, no
+    duplicate submitted, no ledger change.
+Both jobs have now failed to resolve (neither completing nor erroring) across two independent
+recovery attempts each, spanning two different sessions and two different `--timeout` values
+(kr-006: 300s then 900s; hwr-008: 340s [killed by an external wrapper, not the script itself]
+then 900s clean) — this is the same per-job relay-wedge signature already tracked at
+conductor/t-165 and t-167 (both still `status: needs-human`, unresolved), not a new incident,
+and not something a longer `--timeout` can work around: 900s is the script's ceiling.
+Re-checked `monster-recast`: unchanged, `recommended_action: complete`, zero recovery
+candidates — fully drained. All three books' `generate-bw` work remains blocked on
+`coloring-book/t-039` (needs-human, unresolved). No unblocked slice existed this cycle across
+any of the three books; `git status` after both attempts confirmed zero working-tree changes
+(both recoveries were genuinely no-op, not silently mutating queue state). Did not force a
+third attempt or a fresh submission per the transient-failure triage rule. Re-arming to ready
+(recurring), releasing the claim.
+
+**Next actionable step (unchanged):** hwr-008 (job 25421) and kr-006 (job 25419) both need a
+recovery pass once conductor/t-165/t-167's underlying relay wedge actually clears — retrying the
+recovery call itself without that has now been tried twice each with no effect. t-039 remains
+the blocker for all further `generate-bw` work across all three books.
