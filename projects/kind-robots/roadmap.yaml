@@ -1944,7 +1944,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: Generate owned preview art for the LoRA catalog, starting with the 223 blind rows
-  status: claimed
+  status: ready
   owner: worker
   stakes: reversible
   passes: 0
@@ -2191,7 +2191,18 @@ tasks:
     continue queuing the remaining ~33 comfy/sdxl plans in similar batches, re-planning
     first since the considered set keeps shrinking; hold the flux plan for last and only
     once t-165/t-167 show sustained calm.
-  updated: '2026-09-16T02:32:21Z'
+
+    PROGRESS (scheduled Conductor session, 2026-09-16T02:32Z): render box confirmed healthy (check_render_box.py: UP, heartbeat 0.8-0.9 min throughout, 23-54 completions/6h across the cycle) with no stale-RUNNING signature at any check, so proceeded past the prior cycle's hold. Verified the prior cycle's held batch (ArtJob 25358-25377, resourceIds 1466,1478,1482,1483,1485,1486,1524,1530,1532,1544,1547,1548,1552,1556,1564,1570,1576,1577,1623,1624) all landed DONE with artImageId/imagePath confirmed on the Resource rows (sampled 5, all OK) -- this closes the "completion not yet verified" gap the prior note left open.
+
+    Re-planned via /api/lora/probe-plan {scope: blind, limit: 300}: considered shrank to 50 (from 72), 32 plannable (31 comfy/pony, 1 flux). Queued and verified TWO full batches this cycle rather than holding at 20 as before, since the render box showed sustained health with no new wedge:
+      - Batch A (20 comfy/pony): ArtJob 25385-25404, resourceIds 1625,1634,1635,1651,1658,1660,1665,1670,1729,1732,1742,1747,1759,1764,1768,1769,1827,1839,1844,1845 -- all DONE, all 20 resources confirmed artImageId/imagePath written back.
+      - Batch B (11 comfy/pony, the remainder of the plannable comfy lane): ArtJob 25405-25415, resourceIds 1861,1869,1871,1877,1879,1883,1899,1900,1901,2377,2439 -- all DONE, all 11 resources confirmed artImageId/imagePath written back.
+    No FAILED/errored jobs in either batch. Queue depth held steady around PENDING~2000 throughout (pre-existing production backlog, oldestPending unrelated to this task's jobs) and did not visibly worsen from adding these 31 jobs.
+
+    Re-probed once more after both batches: considered dropped to 19, plans to 1 -- the ENTIRE comfy/pony/sdxl blind lane is now exhausted. The only remaining plannable item is resourceId 1072 (flux), deliberately held back per the standing relay-wedge gates (conductor/t-165, t-167 -- both still status: needs-human, unresolved as of this cycle). The 19 remaining "considered" resources are NOT plannable at all: probe-plan's `skipped` list shows they're on base models with no still-image probe recipe (SD 2.1, Kontext, video/audio bases -- e.g. resourceId 1269 "Digital Illustration Style"/Kontext, 2706/2833 "SD 2.1 768"). This is a structural gap in probe-plan's recipe coverage, not a queue/relay issue -- worth a follow-up task to add still-image probe recipes for those base families if Silas wants blind coverage to reach 100%, but it's a scope decision for him/a new task, not something to force into this cycle.
+
+    Re-arming to ready (recurring-shaped continuation). Next actionable step: once conductor/t-165 or t-167 clear (flux relay stable), queue the single remaining flux plan (resourceId 1072). Until then, this task has no more plannable blind-scope work in the comfy/sdxl lane -- next session should either (a) wait on the flux gate, or (b) consider filing a follow-up task for the 19 unsupported-base-model resources if broader coverage is wanted.
+  updated: '2026-09-16T03:05:05Z'
   claimed_by: claude-scheduled-20260916T023220Z-kindrobots-t105-a11
   claimed_at: '2026-09-16T02:32:21Z'
   implementation_pr: 'silasfelinus/conductor#4442'
