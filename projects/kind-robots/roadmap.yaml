@@ -2240,7 +2240,7 @@ tasks:
 - id: t-106
   milestone: null
   title: Per-Resource recommendedCfg, backfilled from the preview batch's own clipping
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
   passes: 0
@@ -2294,7 +2294,13 @@ tasks:
     migration, resourceGallerySelect update, Prisma client regen. vue-tsc/eslint/prettier
     clean, loraStackCfgCeiling contract test still passes. Backfill + enqueue/render wiring
     remain open follow-up under this same task.
-  updated: '2026-09-16T17:38:35Z'
+
+    Merged silasfelinus/kind_robots#2781 (squash, CI green: 50/51 checks success, one skip;
+    build-production-image also completed green). Schema-only slice of t-106 landed. Follow-
+    up under this same task: backfill Resource.recommendedCfg from t-105's clipping data,
+    then wire the enqueue/render path to read it via loraStackCfgCeiling (kind_robots#2780)
+    per engine.
+  updated: '2026-09-16T17:50:57Z'
   owner: worker
   claimed_by: claude-scheduled-20260916T173010Z-kr-t106
   claimed_at: '2026-09-16T17:30:10Z'
