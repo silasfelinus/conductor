@@ -2240,7 +2240,7 @@ tasks:
 - id: t-106
   milestone: null
   title: Per-Resource recommendedCfg, backfilled from the preview batch's own clipping
-  status: claimed
+  status: review
   gate_human: false
   stakes: reversible
   passes: 0
@@ -2289,10 +2289,16 @@ tasks:
     Connector-only continuation inspected the merged first slice and the next schema slice. The next change requires an atomic edit to the large existing prisma/schema.prisma plus generated Prisma client parity; this connector surface exposes full-file replacement but no patch/edit primitive, and the runtime has no authenticated git transport. No unsafe partial migration was committed. Also re-audited the superseded prior t-106 branch: it is diverged from main and its only remaining diff is the unwanted checkpointProfiles.ts rewrite (+10/-60), confirming it should be force-deleted by branch-janitor rather than salvaged. Releasing t-106 to ready for a session with authenticated git or a patch-capable connector.
 
     Reconfirmed the schema slice after ownership was acquired. This connector can create and replace whole files but still has no patch primitive, and prisma/schema.prisma is too large to safely reconstruct from abbreviated connector reads. No partial migration or generated-client mismatch was committed. The stale t-106 branch was also re-compared against current main and remains diverged with exactly one unwanted diff: utils/checkpointProfiles.ts (+10/-60). Release this finite task for a patch-capable/authenticated-git session; do not salvage that stale branch.
-  updated: '2026-09-16T17:30:10Z'
+
+    Landed the schema-only slice this session: nullable Resource.recommendedCfg column,
+    migration, resourceGallerySelect update, Prisma client regen. vue-tsc/eslint/prettier
+    clean, loraStackCfgCeiling contract test still passes. Backfill + enqueue/render wiring
+    remain open follow-up under this same task.
+  updated: '2026-09-16T17:38:35Z'
   owner: worker
   claimed_by: claude-scheduled-20260916T173010Z-kr-t106
   claimed_at: '2026-09-16T17:30:10Z'
+  implementation_pr: 'silasfelinus/kind_robots#2781'
 
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
