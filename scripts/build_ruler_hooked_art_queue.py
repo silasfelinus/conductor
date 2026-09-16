@@ -784,7 +784,7 @@ def concept_entries(cast: list[dict[str, str]]) -> list[dict]:
 # context, silhouette) is derived from. Getting the design right once, first, is
 # what stops the two games drifting into near-duplicate species.
 FISH_FRAME = (
-    "a single fish specimen study, the whole creature clearly visible in profile "
+    "a clean specimen study, the whole creature clearly visible in profile "
     "against soft open water, nothing else competing for attention in the frame"
 )
 
