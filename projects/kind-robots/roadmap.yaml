@@ -2209,7 +2209,7 @@ tasks:
 - id: t-106
   milestone: null
   title: Per-Resource recommendedCfg, backfilled from the preview batch's own clipping
-  status: claimed
+  status: review
   gate_human: false
   owner: worker
   stakes: reversible
@@ -2246,7 +2246,9 @@ tasks:
     clipping budget says 10 for the character one. This column should record what a LoRA
     TOLERATES; how close to that ceiling to actually run is a separate taste setting.
     Conflating the two would bake one person's contrast preference into a catalog field.
-  updated: '2026-09-16T13:15:51Z'
+
+    Implemented the first bounded t-106 slice: a pure loraStackCfgCeiling helper that enforces the task's minimum-across-selected-LoRAs rule with family fallback, plus contract coverage. The nullable Resource column and backfill remain follow-up work in this same task.
+  updated: '2026-09-16T13:24:00Z'
   claimed_by: openai-scheduled-2026-09-16T131551Z-kind-robots-t106-a11
   claimed_at: '2026-09-16T13:15:51Z'
 
