@@ -3128,6 +3128,21 @@ tasks:
   claimed_by: openai-scheduled-2026-09-16T041753Z-conductor-t171-a11
   claimed_at: '2026-09-16T04:17:53Z'
   implementation_pr: 'silasfelinus/conductor#4473'
+- id: t-172
+  milestone: m2
+  title: Have check_pr_handoff_template.py emit a GitHub PR annotation naming the first missing heading
+  status: ready
+  stakes: reversible
+  passes: 0
+  owner: null
+  note: |-
+    Kaizen from t-171 (PR #4473, 2026-09-16 scheduled Reviewer session): the new
+    `scripts/check_pr_handoff_template.py` / `pr-handoff-template.yml` CI gate currently
+    reports missing sections only in the job's stderr/log output. Have it also emit a
+    GitHub Actions `::error::` (or `::warning::`) annotation naming the first missing
+    heading, so a Worker whose PR fails the check sees the actual reason directly in the
+    PR's Checks summary/Files-changed annotations instead of having to open job logs.
+  updated: '2026-09-16T04:27:37Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'

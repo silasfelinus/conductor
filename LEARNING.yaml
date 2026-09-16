@@ -14098,3 +14098,14 @@ records:
     credentials have no UI in kind_robots) without it being safe to file as a fix task, when the other half of
     the flow lives in a repo outside the session's access scope (rainbowbutterflies) -- flag the open question
     in the note for a session that can see both sides instead of guessing at scope.
+- date: 2026-09-16
+  project: conductor
+  task: t-171
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Enforcing a documentation convention (the Worker PR handoff template) as a CI check on worker/*
+    branches, verified against its own PR before merge, closes a kaizen loop more durably than relying on
+    each Reviewer session to notice thin PR bodies ad hoc.
