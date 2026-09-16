@@ -3082,6 +3082,30 @@ tasks:
   claimed_by: claude-20260915T213519Z-conductor-t170
   claimed_at: '2026-09-15T21:35:20Z'
   implementation_pr: 'silasfelinus/conductor#4452'
+- id: t-171
+  milestone: m2
+  title: Enforce the full PR handoff template (Stakes/Flags-for-Reviewer/Kaizen-suggestion) even on small doc-only PRs
+  status: ready
+  stakes: reversible
+  passes: 0
+  owner: null
+  note: |-
+    Kaizen from t-160 (PR #4462, 2026-09-16 scheduled Reviewer session): the Worker's PR body
+    for a small, well-scoped, one-file doc change contained only Summary/Scope/Verification —
+    it omitted the handoff template's `### Stakes`, `### Flags for Reviewer`, and
+    `### Kaizen suggestion` sections entirely (AGENTS.md "PR handoff template"). The PR was
+    still easy to review by inference (stakes were obviously reversible/doc-only), but a
+    thin template is exactly how a real flag or a genuine kaizen suggestion goes missing
+    without anyone noticing, since there's no empty heading to prompt for it.
+
+    Investigate whether the OpenAI Worker's PR-authoring path has a way to enforce/lint the
+    template's required sections before opening a PR (e.g. a small check in the PR-authoring
+    script, or a CI step that greps for the section headers on `worker/*` PRs and warns/fails
+    if `### Stakes` is missing), rather than relying on each Reviewer session to notice and
+    call it out ad hoc every time. If enforcement isn't practical, at minimum confirm the
+    Worker's own template/prompt still lists the full template so this is drift, not a
+    template that was already thinned out.
+  updated: '2026-09-16T00:32:00Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
