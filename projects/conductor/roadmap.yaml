@@ -2758,7 +2758,18 @@ tasks:
     throughput a 2070-deep backlog takes many hours to drain. Recording as a data point on
     the same incident (post-wedge backlog depth), not a new independent defect. No action
     taken beyond recording.
-  updated: '2026-09-15T21:34:12Z'
+
+    Cross-reference (scheduled Conductor session, 2026-09-16T~05:50Z, from coloring-
+    book/t-022 cycle 11): requested a fresh kr-006 render via the Coloring Book Studio; two
+    consecutive submissions (ArtJob 25418, then recovery ArtJob 25419) both timed out after
+    600s/300s respectively, still queued/running, never completing. check_render_box.py
+    reports UP throughout with a healthy 0.1-0.5min heartbeat and steady throughput (34-54
+    completions/6h) -- the engine is processing other work fine, so this reads as a per-job
+    wedge on this specific submission rather than a global outage, the same shape t-167
+    documents. Not a new incident; recording as a data point. kr-006 left correctly at
+    status: pending for the next cycle to recover (not retried a third time this session,
+    per the transient-failure triage rule).
+  updated: '2026-09-16T05:51:21Z'
 
 - id: t-166
   milestone: m2
@@ -2934,7 +2945,15 @@ tasks:
     staleRunning while working perfectly normally. Any alarm keyed on staleRunning will cry
     wolf on this lane. Note 22838 was correctly flagged stale by that same threshold -- the
     signal is not useless, it just cannot distinguish "slow lane" from "wedged" on its own.
-  updated: '2026-09-16T02:05:00Z'
+
+    Cross-reference (scheduled Conductor session, 2026-09-16T~05:50Z, from coloring-
+    book/t-022 cycle 11): same evidence just appended to t-165 -- two consecutive kr-006
+    render submissions (ArtJob 25418, then recovery ArtJob 25419) timed out after 600s/300s
+    respectively without ever completing, while check_render_box.py showed the engine UP
+    throughout with a healthy heartbeat and steady throughput elsewhere. Matches this task's
+    own documented pattern (engine processing, not globally wedged, but individual jobs
+    hang). No action taken beyond recording.
+  updated: '2026-09-16T05:51:32Z'
 
 - id: t-168
   milestone: m2
