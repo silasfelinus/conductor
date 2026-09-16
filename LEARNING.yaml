@@ -14266,3 +14266,43 @@ records:
     patterns into the upstream gate (rather than inventing a new heuristic)
     keeps both sides provably in sync and was cheap once the downstream
     source was actually read.
+- date: '2026-09-16'
+  project: kind-robots
+  task: t-107
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A one-line vue-tsc noUncheckedIndexedAccess rejection (TS18048 "possibly
+    undefined" on array-destructured lookups used before arithmetic) cost a full
+    retry cycle that a local `npm run test`/vue-tsc pass before opening the PR
+    would have caught in seconds. The retry itself was clean: explicit
+    `if (!x) return null`/`continue` guards immediately after each array lookup,
+    before any arithmetic. Also confirms the by-now-recurring shape for
+    backfill-style tasks that touch production rows: land the interpolation/
+    schema-opening prerequisite as its own small, fully-tested, zero-mutation PR
+    first, and file the actual live-data mutation as a separate follow-up task
+    (kind-robots/t-108 here) rather than bundling both into one PR.
+- date: '2026-09-16'
+  project: interface-vision
+  task: t-105
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Cycle: two of the Responsive Layout Audit's 19 reported failures were checker false
+    positives rather than real defects -- a nested-scroll-ancestor walk that stopped at
+    the first offscreen inner scroller instead of continuing to a fitting outer one
+    (flagging shelf items inside an intentional home swipe rail), and a sub-32px flex
+    text item flagged as crushed purely for being short rather than for its text
+    actually being clipped (scrollWidth > clientWidth). Fixing the checker's own logic
+    rather than suppressing the routes kept coverage intact. The one real defect
+    (/messages forcing a two-column grid that crushed the empty thread pane to 4px on
+    phones) was fixed with a CSS container query rather than a viewport media query,
+    since the component can be embedded at different container widths elsewhere --
+    worth defaulting to container queries over viewport media queries for any
+    reusable/embeddable panel component going forward.

@@ -1845,7 +1845,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: "Polish every reachable Kind Robots surface page-by-page"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -1869,8 +1869,19 @@ tasks:
     Dashboard project-list slice implemented on worker/interface-vision-t-105-20260915-c7f2. Root cause was the home showcase API's hard six-project cap; the home component already renders every returned project inside its bounded xl overflow scroller. Removed only PROJECT_LIMIT and the matching Prisma take, preserving public/active/mature filters, ACTIVE/CONTINUOUS status filtering, ordering, cards, and navigation. Branch diff is one file with exactly two deleted lines.
 
     Slice: home dashboard What we're building project list. Silas's screenshot showed substantial blank panel space while only six projects rendered. Root cause was server/api/showcase/home.get.ts capping eligible ACTIVE/CONTINUOUS public projects at PROJECT_LIMIT=6 even though components/home/home-page.vue already renders every returned project inside a bounded xl overflow-y-auto scroller. Removed only that cap (two deleted lines), preserving public/isActive/isMature filters, ACTIVE/CONTINUOUS filtering, priority/update ordering, links, cards, and CSS. Merged silasfelinus/kind_robots#2748 as e0d73e70c9da46843359d340772bd0e62ae4eb53 after all 46 exact-head check runs completed with no queued/in-progress/failing/cancelled/timed-out/action-required/skipped/neutral results, including TypeScript and Contract Tests run 34937580271 whose Contract verifiers job completed all 347 contract steps successfully. The working branch was automatically removed after merge. Production is self-hosted and was not deployed from this session. Return the reusable page-polish task to ready for the next visual review slice.
-  updated: '2026-09-16T20:00:00Z'
-  implementation_pr: 'silasfelinus/kind_robots#2639'
+
+    Cycle: repaired the /messages page's phone-width layout (single-column pane below md via
+    a CSS container query, instead of a forced two-column grid that crushed the empty thread
+    pane to 4px) and fixed two Responsive Layout Audit false-positive checkers: nested-
+    scroll-ancestor walking now continues past an offscreen inner scroller to find a fitting
+    outer one instead of flagging shelf items inside the intentional home swipe rail, and a
+    sub-32px flex text item is only reported as crushed when its text is actually clipped
+    (scrollWidth > clientWidth), not merely short. .sr-only accessibility text is now
+    excluded from visual-starvation geometry. Merged silasfelinus/kind_robots#2784 after all
+    47 CI checks passed (2 files, +148/-125). Returning to ready for the next visual-polish
+    cycle.
+  updated: '2026-09-16T20:33:22Z'
+  implementation_pr: 'silasfelinus/kind_robots#2784'
   approved_by_human: true
   owner: worker
   claimed_by: worker-interface-vision-t105-layout-7f3c9d2a
