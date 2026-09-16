@@ -461,6 +461,31 @@ This changes what verification is actually possible and when:
   target being Vercel or kindrobots.org — don't reach for a local headless-browser
   fallback in a non-interactive session; use `curl`/`WebFetch` for markup and let CI's
   `audit` check carry real pixels.
+  **UPDATE (rainbow-butterflies/t-053 cycle, measured 2026-09-16): this failure does
+  NOT reproduce in a Claude Code web/cloud remote-execution environment** (the kind
+  with a pre-installed `/opt/pw-browsers/chromium` and `PLAYWRIGHT_BROWSERS_PATH` set
+  for it, distinct from whatever sandbox interface-vision/t-091 ran in). There, the
+  earlier failure mode was a cert error (`net::ERR_CERT_AUTHORITY_INVALID`), not a
+  connection reset — a different symptom than what t-091 saw, and one `ignoreHTTPSErrors`
+  alone did not fix (it changed the error to a timeout instead). The combination that
+  worked, verified against `https://example.com`, `https://kindrobots.org`, and
+  `https://kindrobots.org/model-builder` (200, real hydrated title, zero horizontal
+  overflow at a 390px viewport): launch with explicit
+  `proxy: { server: 'http://127.0.0.1:38425' }` (read the actual port from `$HTTPS_PROXY`
+  rather than hardcoding it) plus `args: ['--ignore-certificate-errors', '--disable-http2']`,
+  and a browser context with `ignoreHTTPSErrors: true`. Use Node's global Playwright at
+  `/opt/node22/lib/node_modules/playwright` via `require()`/CJS (a bare `import
+  'playwright'` fails with `ERR_MODULE_NOT_FOUND` unless the project's own
+  `node_modules` has it). Do not assume this generalizes to every session type — verify
+  with the `example.com` + target-host pair above before relying on it for a specific
+  task, since t-091's environment and this one clearly differ in ways not fully
+  understood. If it works, this reopens live UI-driven verification (clicking through
+  an authenticated flow, screenshotting hydrated state, running a task like
+  model-builder/t-031's live smoke test) for sessions that previously treated it as
+  categorically impossible — the remaining blocker for an authenticated flow
+  specifically is that no test-login/E2E-auth mechanism exists in kind_robots to reach
+  a signed-in session without a real human's credentials, which is a separate gap from
+  the browser-connectivity one this note is about.
 
 So a UI change on a `claude/*` branch is NOT merging on structural CI alone. The honest
 summary of what a non-interactive session can claim: SSR markup via `curl`/`WebFetch`
