@@ -14154,3 +14154,15 @@ records:
     with a regression test asserting the exact emitted text merged with all 23 checks
     green on the first push, including its own PR passing the handoff-template gate
     it is adjacent to.
+- date: 2026-09-16
+  project: conductor
+  task: t-174
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Test-only PR closing a kaizen-flagged coverage gap (main() integration
+    tests for a script whose pure formatter already had unit coverage) merged clean
+    on the first pass, all 25 checks green, no behavior change to the script under
+    test."
