@@ -123,13 +123,12 @@ The rollout is intentionally wrapper-based:
 No database URL migration is involved. ArtImage records and front-end content
 continue using `/images/...`.
 
-## Final repository migration
+## Final Kind Robots repository migration
 
 After the direct smoke test succeeds:
 
 1. Run the final incremental rsync from Kind Robots to Unraid without `--delete`.
-2. Add the Vercel `/images/:path*` redirect to the media origin.
-3. Verify representative app pages and folder collections.
-4. Stop accepting new binaries under `kind_robots/public/images`.
-5. Remove the tracked image tree in a separate PR.
-6. Rewrite Git history only after active branches and working copies are ready.
+2. Verify representative app pages and folder collections against the media origin.
+3. Stop accepting new binaries under `kind_robots/public/images`.
+4. Remove the tracked image tree in a separate PR only after the public copies are verified.
+5. Leave Git history intact. Historical object size is accepted; future binary growth is the problem this policy prevents.
