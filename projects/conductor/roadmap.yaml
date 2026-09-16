@@ -2953,7 +2953,21 @@ tasks:
     throughout with a healthy heartbeat and steady throughput elsewhere. Matches this task's
     own documented pattern (engine processing, not globally wedged, but individual jobs
     hang). No action taken beyond recording.
-  updated: '2026-09-16T05:51:32Z'
+
+    UPDATE 2026-09-16T~08:40Z (scheduled Conductor session, kind_robots#2777 merged):
+    mitigation for the ponyFaetality half of this pattern is now live. requeue-failed now
+    runs assessRequeueSafety() against the frozen graph before resending it -- a checkpoint
+    matching Pony/ponyFaetality_v11.safetensors is repointed to
+    Pony/realcartoonPony_v1.safetensors (Silas, 2026-09-15, on realcartoonPony: "It's highly
+    consistent in my tests and one of my favorites.") instead of silently resending the same
+    defect, closing the gap where kind_robots#2766 stopped NEW plans choosing ponyFaetality
+    but did nothing for rows already queued (ArtJob 22838 being the case in point --
+    attempts:0, payload untouched, still pointed at ponyFaetality after two restarts). This
+    is a mitigation, not a root-cause fix: it stops the queue from re-wedging on this ONE
+    known-bad checkpoint, it does not explain WHY a cold load on that checkpoint hangs
+    rather than merely being slow (see the pm2/share/RAM diagnosis steps above, still
+    unrun). No action taken on this task's actual hands-on-the-box ask.
+  updated: '2026-09-16T08:29:37Z'
 
 - id: t-168
   milestone: m2
