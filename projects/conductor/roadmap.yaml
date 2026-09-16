@@ -2769,7 +2769,16 @@ tasks:
     documents. Not a new incident; recording as a data point. kr-006 left correctly at
     status: pending for the next cycle to recover (not retried a third time this session,
     per the transient-failure triage rule).
-  updated: '2026-09-16T05:51:21Z'
+
+    UPDATE 2026-09-16T~08:40Z (scheduled Conductor session, kind_robots#2777 merged):
+    unrelated to the Flux.2/flux2_dev_fp8mixed checkpoint this task tracks, but relevant
+    context -- a requeue-safety guard merged today (see t-167's matching update) now
+    blocks/repoints known-bad checkpoints instead of silently resending a frozen graph
+    unchanged. No Flux.2 checkpoint is in the quarantine list yet since this task's root
+    cause is still unconfirmed; flagging so whoever diagnoses the relay knows the mechanism
+    now exists if flux2_dev_fp8mixed turns out to need the same treatment. No action taken
+    on this task's actual hands-on-the-box ask.
+  updated: '2026-09-16T08:29:43Z'
 
 - id: t-166
   milestone: m2
