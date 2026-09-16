@@ -14240,3 +14240,29 @@ records:
     (verifyLoraCfg.test.ts, landed with a prior PR) had never been wired into
     package.json/CI at all -- a merged, passing-looking PR can still ship a test that
     never actually runs again after that one PR's own CI checked it inline.
+- date: '2026-09-16'
+  project: conductor
+  task: t-176
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    submit_daily_dream_art.py resubmits every status:pending entry in
+    art-prompts.yaml on every daily-digest run with no attempt cap or
+    standing-failure surfacing beyond a failing scheduled workflow, so one
+    entry whose stored prompt trips kind_robots' artPromptContract.ts
+    conditional-instruction rule ("only when X chooses to Y") re-fails
+    identically forever until a human or session edits the stored text by
+    hand. The upstream gate (dream_prose_quality.py's complaints(), run at
+    proposal authoring/revision time) checked known_for/best_scene for length,
+    label-echo, and self-reference but not for the phrasing its own downstream
+    consumer (dream_art_prompts.py) would later fail on at ArtJob enqueue --
+    the two checks had never been tested against each other. When a producer
+    and a downstream contract check live in different repos/layers, a
+    validation gap between them can persist indefinitely with each side
+    individually "passing." Mirroring the downstream contract's own regex
+    patterns into the upstream gate (rather than inventing a new heuristic)
+    keeps both sides provably in sync and was cheap once the downstream
+    source was actually read.
