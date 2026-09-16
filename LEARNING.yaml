@@ -14122,3 +14122,21 @@ records:
     reading that overlap as license to migrate the client onto the larger engine would have been an
     undisclosed scope expansion; the literal rename (move the routes, thin-shim the old paths, dual-read the
     storage keys) was the correct, reversible scope the task actually asked for.
+- date: '2026-09-16'
+  project: coloring-book
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: transient
+  lesson: Wrapping a live production-mutating script call (consume_coloring_book_studio_request.py
+    --live) in a shell-level `timeout` shorter than the script's own internal polling/recovery
+    window SIGTERMs the process before it can record its own render_gate_job_id, discarding
+    the graceful-preserve bookkeeping every other in-flight queue entry relies on for later
+    recovery. coloring_queue_status.py's queue_integrity_safe/recovery_safe/retry_safe checks
+    caught that this left the entry in a safe (if less useful) fresh-submission state rather
+    than a duplicate/orphaned one -- always re-run that check immediately after any
+    forcibly-terminated production script call, and prefer omitting an external timeout
+    wrapper (or sizing it well past the script's documented internal timeout) over guessing a
+    shorter one.
