@@ -400,7 +400,7 @@ tasks:
 - id: t-023
   milestone: m4
   title: Strip conductor project-scaffold chrome out of the product surfaces
-  status: claimed
+  status: review
   gate_human: false
   owner: worker
   stakes: reversible
@@ -443,9 +443,15 @@ tasks:
     starting: it establishes the precedent that the right fix is to change what the shared
     wrapper CHOOSES to render rather than to delete the wrapper or fork per-page copies of
     it.
-  updated: '2026-09-16T22:33:19Z'
+
+    PR silasfelinus/kind_robots#2788 opened: suppresses the deliverables panel on ruler-
+    hooked/aquarium/scoop-cms (coloring-book already had it off), moves the PWA install
+    banner behind an icon, and moves Cast & catch / Rule the realm into a How to play
+    dialog. eslint/vue-tsc/layout-contract/pwa-precache/kr-class-coverage all pass locally.
+  updated: '2026-09-16T22:41:48Z'
   claimed_by: claude-scheduled-20260916T223318Z-rulerhooked-t023
   claimed_at: '2026-09-16T22:33:19Z'
+  implementation_pr: 'silasfelinus/kind_robots#2788'
 - id: t-024
   milestone: m4
   title: Make Ruler Hooked one navigable screen instead of a scrolled document
