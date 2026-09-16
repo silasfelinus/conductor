@@ -3098,7 +3098,7 @@ tasks:
 - id: t-171
   milestone: m2
   title: Enforce the full PR handoff template (Stakes/Flags-for-Reviewer/Kaizen-suggestion) even on small doc-only PRs
-  status: claimed
+  status: review
   stakes: reversible
   passes: 0
   owner: worker
@@ -3118,7 +3118,9 @@ tasks:
     call it out ad hoc every time. If enforcement isn't practical, at minimum confirm the
     Worker's own template/prompt still lists the full template so this is drift, not a
     template that was already thinned out.
-  updated: '2026-09-16T04:17:53Z'
+
+    Added a Worker PR handoff-template validator, focused regression tests, and a PR workflow that enforces the required AGENTS.md headings on worker/* pull requests.
+  updated: '2026-09-16T04:25:00Z'
   claimed_by: openai-scheduled-2026-09-16T041753Z-conductor-t171-a11
   claimed_at: '2026-09-16T04:17:53Z'
 
