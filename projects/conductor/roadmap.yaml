@@ -3234,10 +3234,10 @@ tasks:
 - id: t-175
   milestone: m2
   title: Decide whether a stale claim should also unblock a later review/done event from a different session
-  status: ready
+  status: claimed
   stakes: reversible
   passes: 0
-  owner: null
+  owner: worker
   note: |-
     Kaizen from t-173 (PR #4502, 2026-09-16 scheduled Reviewer session):
     `process_task_events.py`'s `compute_transition_ops()` claim branch now consults
@@ -3264,6 +3264,9 @@ tasks:
     plus a regression test pinning the decided behavior -- so a future kaizen from a
     session that only reads the claim branch doesn't propose "fixing" this a third
     time without the context above.
+  claimed_by: claude-web-2026-09-16T152600Z-cd-t175
+  claimed_at: '2026-09-16T15:31:46Z'
+  updated: '2026-09-16T15:31:46Z'
 - id: t-174
   milestone: m2
   title: Add an integration test around check_pr_handoff_template.py's main() covering stdin/stderr and exit code together
