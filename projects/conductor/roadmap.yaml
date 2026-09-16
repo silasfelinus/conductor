@@ -2567,7 +2567,7 @@ tasks:
 - id: t-160
   milestone: m2
   title: Large binaries, the media-host policy boundary, and the stale art-request status doc
-  status: review
+  status: done
   passes: 0
   stakes: reversible
   owner: worker
@@ -2588,9 +2588,16 @@ tasks:
     Cycle (this session): completed the two small in-scope items only -- deleted docs/art- request-status.md (stale, superseded by the live art-request.post.ts pipeline) and fixed .gitattributes (trimmed the stale vendored-WordPress comment now that conductor/t-106 already removed those trees; added *.mp4/*.mov/*.webm binary entries). PR: silasfelinus/conductor#TBD (worker/conductor-t-160). Did NOT touch the media-host policy question, ops/home-server/SELF-HOSTED-MEDIA.md, or the coat-dance MP4 migration -- media_migrate.py needs a mounted images share (Z:/kindrobots/images or WSL mount) this sandbox doesn't have, and the task's own safety rule requires a live HEAD-200 probe before deleting anything from git. Re-arming to ready afterward for a session with real filesystem/share access to pick up the remaining migration scope.
 
     Documented the approved Conductor large-binary media-host policy and made the no-history-rewrite rule explicit. The remaining coat-dance MP4 migration still requires a mounted media share and a successful public HEAD 200 before any tracked binary can be removed.
-  updated: '2026-09-16T00:21:20Z'
+
+    Reviewed and merged in PR #4462 (squash 4632dc8): documented the Conductor large-binary
+    migration policy (upload + verified public HEAD 200 + reference updates before removal;
+    no git-history rewriting) and updated the Kind Robots final-migration section to match.
+    Coat-dance MP4 migration itself remains out of scope pending a mounted media share and a
+    live HEAD-200 probe, per the task's own safety rule.
+  updated: '2026-09-16T00:27:11Z'
   claimed_by: openai-scheduled-2026-09-16T001704Z-conductor-t160-a11
   claimed_at: '2026-09-16T00:17:04Z'
+  implementation_pr: 'silasfelinus/conductor#4462'
 - id: t-161
   milestone: m2
   title: close_task.py can silently drop a caller's unpushed local commits on the target branch
