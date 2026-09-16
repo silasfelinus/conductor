@@ -14166,3 +14166,21 @@ records:
     tests for a script whose pure formatter already had unit coverage) merged clean
     on the first pass, all 25 checks green, no behavior change to the script under
     test."
+- date: 2026-09-16
+  project: kind-robots
+  task: t-105
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A multi-session small-batch rollout (probe-plan -> enqueue -> verify write-back,
+    repeated in bounded batches while checking render-box/relay health each cycle
+    rather than firing all 223 jobs at once) closed cleanly: 2209/2228 LoRA-family
+    Resources now carry owned preview art, the last job (ArtJob 26249, resourceId
+    1072) verified DONE with Resource.artImageId/imagePath confirmed written back.
+    The remaining 18 rows are a genuine structural gap (no still-image probe recipe
+    for SD 2.1 768 / Flux.1 Kontext bases), not further queue/relay work -- correctly
+    left as a deferred scope decision for Silas rather than forced into this task or
+    auto-filed as a new one.
