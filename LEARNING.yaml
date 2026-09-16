@@ -14220,3 +14220,23 @@ records:
     session a safe way to take over stale work, so no extension was needed --
     documenting the asymmetry in the docstring (with a pinning regression test) closed
     the decision task without changing behavior.
+- date: '2026-09-16'
+  project: kind-robots
+  task: t-106
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A task can sit re-armed across several connector-only sessions purely for lack of
+    git/patch primitives (schema edits, prisma regen) rather than any real ambiguity in
+    scope -- this slice (wiring the already-merged Resource.recommendedCfg column into
+    the already-merged loraStackCfgCeiling helper) was fully specified two slices ago
+    and only needed a session with local git + provisioned node_modules to land. Worth
+    checking, on a stuck recurring/re-armed task, whether the blocker is genuinely
+    unresolved scope or just tooling access before assuming it needs more design work.
+    Also: touching a helper's own area surfaced that its contract test
+    (verifyLoraCfg.test.ts, landed with a prior PR) had never been wired into
+    package.json/CI at all -- a merged, passing-looking PR can still ship a test that
+    never actually runs again after that one PR's own CI checked it inline.
