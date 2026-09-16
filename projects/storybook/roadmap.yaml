@@ -396,13 +396,13 @@ tasks:
 - id: t-026
   milestone: m5
   title: Rename the /api/davinci/* namespace and davinci-* storage keys, migrating runs in flight
-  status: review
+  status: done
   owner: worker
   stakes: reversible
   passes: 0
-  updated: '2026-09-16T04:48:02Z'
+  updated: '2026-09-16T04:52:52Z'
   depends_on: t-025
-  note: >
+  note: >-
     The merge deliberately left the API namespace and the two localStorage keys
     (davinci-active-life-run-id, davinci-active-life-run-art-jobs) with their
     old names. Renaming a live API and orphaning every in-flight run buys
@@ -426,6 +426,11 @@ tasks:
     stores/storybookRunStore.ts, so this task shrinks to retiring the old /api/davinci/*
     routes (thin re-exports first) and the davinci-* localStorage keys once life runs in
     flight have drained. Still sequenced behind t-025/t-031.
+
+    Merged silasfelinus/kind_robots#2774 (all 48 checks green). See PR body for full
+    verification detail: vue-tsc clean, eslint clean (2 pre-existing unrelated errors
+    confirmed present before this change), prettier applied, all 14 test:davinci-*-guard
+    scripts pass, full test:storybook aggregate passes.
   claimed_by: claude-20260916T043554Z-storybook-t026
   claimed_at: '2026-09-16T04:35:55Z'
   implementation_pr: 'silasfelinus/kind_robots#2774'
@@ -854,3 +859,25 @@ tasks:
   claimed_by: claude-20260915T230009Z-storybook-t050
   claimed_at: '2026-09-15T23:00:10Z'
   implementation_pr: 'silasfelinus/kind_robots#2772'
+- id: t-051
+  milestone: m5
+  title: Delete the retired /api/davinci/* shim routes and legacy localStorage keys once in-flight runs have drained
+  status: ready
+  stakes: reversible
+  passes: 0
+  owner: null
+  note: |-
+    Kaizen from t-026 (kind_robots PR #2774, 2026-09-16 scheduled Conductor session):
+    that task moved the life engine's 6 API routes to /api/storybook/life/runs|endings/*
+    and renamed the two davinci-active-life-run* localStorage keys, leaving the old
+    /api/davinci/* paths as thin re-export shims and both storybook-life-run.vue and
+    storybookStore.ts reading the legacy keys as a migration fallback -- deliberately,
+    so a cached pre-move client bundle or an in-flight run wasn't stranded.
+    Once enough time has passed with no traffic on the six /api/davinci/* shim routes
+    (checkable via existing request logging/metrics) and no davinci-active-life-run*
+    localStorage reads turn up in error reports or analytics, delete: the 6 shim files
+    under server/api/davinci/runs/** and server/api/davinci/endings/coverage.get.ts,
+    the LEGACY_LIFE_RUN_ID_KEY/LEGACY_LIFE_RUN_ART_JOBS_KEY fallback branches in
+    components/storybook/storybook-life-run.vue and stores/storybookStore.ts, and the
+    now-unused legacy exports from utils/storybookLifeRunKeys.ts.
+  updated: '2026-09-16T04:59:00Z'

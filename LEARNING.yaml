@@ -14109,3 +14109,16 @@ records:
   lesson: Enforcing a documentation convention (the Worker PR handoff template) as a CI check on worker/*
     branches, verified against its own PR before merge, closes a kaizen loop more durably than relying on
     each Reviewer session to notice thin PR bodies ad hoc.
+- date: 2026-09-16
+  project: storybook
+  task: t-026
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A task titled "rename the API namespace and storage keys" can share a database table with a much
+    larger adjacent engine (the generic /api/storybook/runs/* deck engine also reads/writes LifeRun rows) --
+    reading that overlap as license to migrate the client onto the larger engine would have been an
+    undisclosed scope expansion; the literal rename (move the routes, thin-shim the old paths, dual-read the
+    storage keys) was the correct, reversible scope the task actually asked for.
