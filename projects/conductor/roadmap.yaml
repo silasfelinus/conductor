@@ -3350,9 +3350,18 @@ tasks:
 
     Re-ran daily-digest.yml via workflow_dispatch after merging; see PR for the
     resulting run link/conclusion.
+
+    VERIFIED (2026-09-16T19:54 UTC): triggered daily-digest.yml via workflow_dispatch after
+    PR #4515 merged. Run #116
+    (https://github.com/silasfelinus/conductor/actions/runs/35143162645) completed
+    conclusion=success, including the exact step that failed on runs #114/#115 ("Submit
+    Daily Dream ArtJobs") -- all 6 assets submitted with 0 failed. Also caught and fixed a
+    second live instance of the same conditional-instruction bug in 2026-09-18-fogkin.md
+    (rewards[item].look) via check_dream_creative_contract.py --all-open before this run, so
+    it did not recur on a later date either.
   claimed_by: claude-scheduled-20260916T-conductor-t176-wfmedic
   claimed_at: '2026-09-16T19:05:00Z'
-  updated: '2026-09-16T19:05:00Z'
+  updated: '2026-09-16T19:54:48Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
