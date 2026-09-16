@@ -2240,7 +2240,7 @@ tasks:
 - id: t-106
   milestone: null
   title: Per-Resource recommendedCfg, backfilled from the preview batch's own clipping
-  status: ready
+  status: claimed
   gate_human: false
   stakes: reversible
   passes: 0
@@ -2309,10 +2309,10 @@ tasks:
     prior 'Re-arming to ready for the next slice' entries above). Next slice: backfill
     Resource.recommendedCfg from t-105's clipping data, then wire the enqueue/render path to
     read it via loraStackCfgCeiling (kind_robots#2780) per engine.
-  updated: '2026-09-16T17:55:19Z'
+  updated: '2026-09-16T18:43:38Z'
   owner: worker
-  claimed_by: claude-scheduled-20260916T173010Z-kr-t106
-  claimed_at: '2026-09-16T17:30:10Z'
+  claimed_by: claude-scheduled-20260916T184324Z-kr-t106-slice2
+  claimed_at: '2026-09-16T18:43:38Z'
   implementation_pr: 'silasfelinus/kind_robots#2781'
 
 
