@@ -814,7 +814,7 @@ tasks:
 - id: t-049
   milestone: m7
   title: "Art for the four mode cards"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   note: >-
@@ -840,7 +840,39 @@ tasks:
 
     Waits on the art server, which Silas was repairing on 2026-09-13. Not a blocker for
     anything else: the icons hold the slots and the Table works without them.
-  updated: '2026-09-16T23:35:07Z'
+
+    Cycle 1 (2026-09-16T23:3xZ, scheduled Conductor session): browser connectivity is no
+    longer the blocker (AGENTS.md's 2026-09-16 update -- this environment's Playwright+proxy
+    recipe was verified working against example.com and kindrobots.org earlier the same
+    day), but t-031's other documented blocker (no test-login/E2E-auth mechanism for an
+    authenticated /model-builder click-through) is unrelated to this task and untouched
+    here. For t-049 specifically: read MODE_CARDS in utils/storybookTableDecks.ts and
+    narrativeIngredientArtwork()/resolveEntityArtwork() in utils/artImageSrc.ts -- imagePath
+    is a plain optional string field on NarrativeIngredientOption, the card renders
+    aspect-[2/3] (narrative-ingredient-card.vue), so a static 768x1152 image is the right
+    shape. Wrote four prompts (one per mode, text-free, following the storybook
+    NARRATIVE_ART_PROFILES entry: krea2, steps 4, cfg 1, euler/simple, the shared style
+    directive and negative prompt) and enqueued them live via POST /api/art/enqueue
+    (priority defaults to 100, above bulk): open-ended=job 26351, episodic=job 26352,
+    structured=job 26353, taskmaster=job 26354, all projectSlug storybook / designer
+    storybook-auto-director / isPublic true. All four are still PENDING, never claimed by
+    the relay after 10+ minutes. GET /api/art/queue/stats confirms why: this is a systemic
+    render-backend capacity issue, not a bug in this task -- queueDepth PENDING=1861,
+    RUNNING=1, oldestPending ~34h, 24h window throughput 212 DONE vs 650 newly PENDING (net-
+    growing backlog). This is the same chronic render-backend congestion documented across
+    ai-art-academy/t-045, coloring-book/t-022, and multiple other tasks' TALKBACK entries --
+    not something this sandbox can fix (no deploy/infra access), and not worth a needs-human
+    escalation on its own since it is already a known, recurring condition. No duplicate
+    submission risk: job ids are recorded here. NEXT ACTIONABLE STEP: a future cycle should
+    GET /api/art/queue/26351 (and 26352-26354) -- once status is DONE, read artImageId, GET
+    /api/art/image/<id> for the final imagePath, view each image to confirm it is text-free
+    and actually depicts its mode (the art-guideline bar this task's note explicitly calls
+    out), then set that imagePath as a literal string on the matching MODE_CARDS entry in
+    utils/storybookTableDecks.ts, run vue-tsc/eslint, and open the kind_robots PR. If any
+    render fails the text-free/on-concept bar, regenerate just that one job rather than all
+    four. No pass consumed (transient render-backend capacity failure, not a quality/scope
+    failure) -- re-arming to ready, releasing the claim.
+  updated: '2026-09-16T23:44:04Z'
   owner: worker
   claimed_by: claude-scheduled-20260916T232900Z-storybook-t049
   claimed_at: '2026-09-16T23:35:07Z'
