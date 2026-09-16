@@ -1,0 +1,21 @@
+name: Worker PR handoff template
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  validate-worker-handoff:
+    name: Validate Worker PR handoff
+    if: startsWith(github.head_ref, 'worker/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate required AGENTS.md handoff sections
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: printf '%s' "$PR_BODY" | python scripts/check_pr_handoff_template.py --head-ref "${{ github.head_ref }}"
