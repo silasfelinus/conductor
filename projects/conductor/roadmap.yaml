@@ -3198,10 +3198,10 @@ tasks:
 - id: t-173
   milestone: m2
   title: Extract one shared stale-claim-eligibility helper used directly by next_ready_task.py, claim_task.py, and process_task_events.py
-  status: review
+  status: done
   stakes: reversible
   passes: 0
-  owner: worker
+  owner: null
   note: |-
     Kaizen from PR #4488 (2026-09-16 scheduled Reviewer session): the selector
     (`next_ready_task.py`), the local claimer (`claim_task.py`), and the connector
@@ -3218,9 +3218,18 @@ tasks:
     re-deriving staleness themselves. Once that lands, `promote_stale_task_event_claims.py`
     becomes redundant and can be removed — the processor's own collision check would
     already agree with the selector and local claimer.
+
+    Merged silasfelinus/conductor#4502 (squash, all CI green including the full pytest suite
+    -- one pre-existing, unrelated art_quality fixture failure confirmed via git-stash
+    bisection against origin/main before opening the PR). process_task_events.py's
+    compute_transition_ops() claim branch now calls roadmap_claims.claim_is_stale() directly
+    and only falls through to replace a claimed task when it is stale, agreeing with
+    next_ready_task.py and claim_task.py's existing use of the same helper. Removed the now-
+    redundant promote_stale_task_event_claims.py preflight, its test, and its workflow step.
   claimed_by: conductor-sched-2026-09-16T145900Z-cd-t173
   claimed_at: '2026-09-16T14:39:37Z'
-  updated: '2026-09-16T14:45:10Z'
+  updated: '2026-09-16T14:49:46Z'
+  implementation_pr: 'silasfelinus/conductor#4502'
 
 - id: t-174
   milestone: m2
