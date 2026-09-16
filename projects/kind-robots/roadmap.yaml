@@ -2405,7 +2405,7 @@ tasks:
 - id: t-108
   milestone: null
   title: Backfill live Resource.recommendedCfg for Pony LORA/LYCORIS rows from t-105 preview clipping
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
   passes: 0
@@ -2449,7 +2449,15 @@ tasks:
     3.00, 372 spread 3-13, 52 at ceiling 13.00). vue-tsc/eslint clean. Live --apply pass
     launched this session; result counts to follow in the next note before this task closes
     to done.
-  updated: '2026-09-16T21:43:28Z'
+
+    Live --apply run completed: wrote recommendedCfg for 769/769 candidates, 0 failures
+    (first attempt crashed on an unhandled UND_ERR_HEADERS_TIMEOUT mid preview-fetch before
+    any writes happened -- fixed with a retry-and-skip wrapper in a follow-up commit on the
+    same PR, then re-ran clean). Spot-verified live: ArtgermLycoXL (id 1952)
+    recommendedCfg=4.06, AsheLoLXL (id 1955) recommendedCfg=8.83, RanniV1 (id 2317)
+    recommendedCfg=13 -- all match the dry-run plan exactly. Merged
+    silasfelinus/kind_robots#2785.
+  updated: '2026-09-16T21:55:55Z'
   claimed_by: claude-scheduled-20260916T2200Z-kr-t108
   claimed_at: '2026-09-16T21:42:37Z'
   implementation_pr: 'silasfelinus/kind_robots#2785'
