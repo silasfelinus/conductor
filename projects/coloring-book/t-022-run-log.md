@@ -2565,3 +2565,91 @@ across all three books (now 10/10 confirmed) — needs relay access for its non-
 comparison test. hwr-008 needs one more bounded creative-review attempt or a human call on
 whether the engine can depict this casting requirement at all; nothing else in either book
 is currently blocked.
+
+### Cycle (2026-09-16, session claude-worker-20260916T063242Z-cb-t022): mr-025 visual verification resolved; kr-006 recovery re-checked, still genuinely in-flight; hwr-008 bounded scar-description experiment, tooling mistake on the timeout wrapper left it as a clean fresh-submission candidate
+
+Claimed the task, then worked the three items in the brief's priority order.
+
+**mr-025 visual verification (resolved):** viewed both flagged inspiration files directly
+(`sets/monster-recast/approved/gothic-schoolgirl-color.webp` and `-bw.webp`, elimination-only
+matched to this slot since 2026-07-17, never confirmed). Both depict a private-school-uniformed
+child in an immaculate dark coat/blazer/tie/pleated skirt/knee socks, blunt pageboy bob, an
+unreadable closed-mouth smile, centered vintage-poster framing in a gothic hallway with two
+ravens and triangular shadows -- a clean match to mr-025's "Little Miss Omen" concept
+(body_direction, framing, camp_engine all line up), fully and conventionally clothed with no
+sexualization per the concept's explicit "never sexualized" direction. One drift noted: the
+concept's visual_hook calls for the "666" motif hidden once each in negative space, shadow
+intersections, and ironwork "without becoming obvious typography" -- the actual image shows
+several repeated, clearly legible decorative "6" wall-panel numerals instead. This is a
+reference/inspiration file, not the production-accepted color master (mr-025's actual
+`accepted.color` is a separate already-generated file, unaffected), so the drift doesn't block
+anything; recorded it as a note in case this file is ever promoted beyond inspiration. Cleared
+`needs_visual_verification: true` from both inspiration entries in
+`sets/monster-recast/proposals.yaml` and added a dated verification note (no dedicated script
+manages this flag -- t-029 only added it to `--check` output -- so this is a direct proposals.yaml
+edit with reasoning, the same pattern every other creative-review decision in this ledger already
+uses). `coloring_proposal_status.py --check`'s "NEEDS VISUAL VERIFICATION" section is now empty.
+
+**kr-006 recovery (still in-flight, not forced):** re-ran
+`consume_coloring_book_studio_request.py --book kind-robots --proposal-id kr-006 --live`
+against the job (25419) cycle 11 left pending. It came back "still queued/running; preserving
+the event without submitting a duplicate" -- genuinely in-flight server-side, not a client
+artifact. `check_render_box.py` confirms the render box itself is healthy (34 completions/6h,
+Comfy heartbeat 0.3 min old), so this reads as the same per-job relay wedge already tracked at
+conductor/t-165 and t-167 (both still `status: needs-human`, unresolved, unchanged since the
+prior cycle) rather than a new incident. No duplicate submitted; left `kr-006` exactly as
+cycle 11 recorded it for a future cycle's recovery pass.
+
+**hwr-008 bounded scar-description experiment (one attempt made; left as a clean
+fresh-submission candidate, not a recovery-with-job-id):** per the prior cycle's own
+recommended next experiment, revised the prompt in `sets/hollywood-recast/proposals.yaml` to a
+blunt, clinical-photography-style scar description (explicit double-mastectomy scar line
+beneath each pectoral, "distinct linear scars, not shading, not a tattoo, not stitching or
+bandages") in place of the more general "clearly revealing visible healed bilateral chest-surgery
+scars" wording the last four attempts already used. First submission attempt hit a real (if
+narrow) YAML bug in my own edit: an unquoted colon inside the flow-style block scalar
+("...bare chest: a horizontal...") broke YAML parsing ("mapping values are not allowed here");
+fixed by rewording to an em-dash before resubmitting -- confirmed the file parses cleanly with
+`yaml.safe_load` before touching production. Submitted via
+`consume_coloring_book_studio_request.py --book hollywood-recast --proposal-id hwr-008 --force
+--live`, wrapped in a shell `timeout 340` that turned out to be a mistake: the render itself
+did not finish (or fail) within 340s, so the wrapper SIGTERM'd the Python process before its own
+internal recovery/timeout logic could record a `render_gate_job_id` the way `kr-006`'s did --
+the process was killed, not allowed to exit on its own terms. Checked `coloring_queue_status.py
+--book hollywood-recast` immediately after: `queue_integrity_safe`/`recovery_safe`/`retry_safe`
+all `true`, zero duplicate job/entry ids, hwr-008 correctly reported as `pending` with no
+`render_gate_job_id` and classified as a `next_batch` fresh-submission candidate rather than a
+stuck/duplicate entry -- so nothing unsafe was left behind, but there is no specific ArtJob
+reference to recover from (if a real backend job was created before the kill, it is orphaned
+and untracked; a future submission would not know to look for it). Given the brief's explicit
+"only ONE bounded attempt, not a retry loop" for this optional/exploratory item, and given the
+attempt that was made did not get a real creative outcome (it never reached rendering/review),
+did not re-submit a second live attempt this cycle. The revised clinical-scar prompt is
+committed and ready; a future cycle (or this same cycle, at Silas's discretion) can run
+`consume_coloring_book_studio_request.py --book hollywood-recast --proposal-id hwr-008 --live`
+(no `--force` needed, already `pending`) with either a much longer wrapper timeout or, better,
+no shell-level timeout wrapper at all -- let the script's own internal timeout/recovery logic
+own that decision, the way every other successful recovery in this run log has relied on.
+
+**Kaizen suggestion for a future cycle:** don't wrap
+`consume_coloring_book_studio_request.py --live` (or `manage_coloring_book_production.py
+--live`) in an external shell `timeout` shorter than the script's own internal polling window --
+it silently discards the script's own graceful-preserve/recovery bookkeeping (the
+`render_gate_job_id`/`render_gate_error` fields that every other in-flight entry in this ledger
+relies on for later recovery) and can orphan a real backend ArtJob. Either omit the wrapper, or
+set it comfortably longer than the script's documented internal timeout.
+
+Verification: `python scripts/coloring_proposal_status.py --check` -> Monster Recast NEEDS
+VISUAL VERIFICATION section now empty, accepted/final counts unchanged (20/3 accepted, 3/36
+final pairs); Hollywood Recast accepted color unchanged at 22 (hwr-008 correctly still not
+accepted, now `pending` awaiting a fresh render rather than `done`/unaccepted); Kind Robots
+unchanged (28 accepted, kr-006 still the sole pending/blocked entry). `python
+scripts/coloring_queue_status.py` for all three books -> `queue_integrity_safe`/`recovery_safe`/
+`retry_safe` all `true`, zero duplicate job/entry ids. `python scripts/validate_roadmaps.py` ->
+clean. `python3 -c "import yaml; yaml.safe_load(open(...))"` against both edited `proposals.yaml`
+files -> parses cleanly.
+
+**Next actionable step:** hwr-008 is ready for one more live render attempt (prompt already
+revised, `pending`, no `--force` needed) with a properly long-running or unwrapped timeout;
+kr-006 (job 25419) still needs a recovery pass once the relay clears it, matching conductor/t-165
+and t-167; t-039 remains the blocker for all further `generate-bw` work across all three books.
