@@ -14184,3 +14184,21 @@ records:
     for SD 2.1 768 / Flux.1 Kontext bases), not further queue/relay work -- correctly
     left as a deferred scope decision for Silas rather than forced into this task or
     auto-filed as a new one.
+- date: 2026-09-16
+  project: conductor
+  task: t-173
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A three-call-site staleness rule (next_ready_task.py, claim_task.py,
+    process_task_events.py) had silently drifted to two-out-of-three: the connector
+    processor's claim collision check never consulted roadmap_claims.claim_is_stale(),
+    so a prior session had to paper over the disagreement with a dedicated preflight
+    script (promote_stale_task_event_claims.py) instead of fixing the root
+    disagreement. Making the processor call the shared helper directly let that whole
+    preflight (plus its test and workflow step) be deleted rather than maintained
+    alongside the thing it was working around -- a smaller total diff than the
+    workaround it replaced (68 insertions/177 deletions).
