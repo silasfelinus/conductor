@@ -893,7 +893,7 @@ tasks:
 - id: t-053
   milestone: m2
   title: "Add roadmap tracking for the server/api/agent-credentials/ surface (list/issue/revoke agent API credentials)"
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -910,6 +910,46 @@ tasks:
     whether it needs UI/CLI coverage for outside agents onboarding into the commons. Add
     a task (or fold into an existing agent-onboarding task) that reads all three handlers
     and either documents the surface here or identifies what's still missing around it.
+
+    DOCUMENTED (weekly site audit follow-up). Read all three handlers plus their shared
+    utility and data model:
+      - server/api/agent-credentials/index.get.ts  -- list the caller's own AgentCredential
+        rows (never returns hashedSecret; scopes sanitized).
+      - server/api/agent-credentials/index.post.ts -- issue a new credential. Binds to
+        exactly one of botId (legacy Kind Robots Bot) or agentProfileId (durable Rainbow
+        AgentProfile, via the AgentProfileCredential join row); rejects both/neither
+        misuse with 400/403. Plaintext token (`<keyPrefix>.<secret>`) is returned exactly
+        once and only a bcrypt hash is persisted (server/utils/agentCredentials.ts).
+      - server/api/agent-credentials/[id].delete.ts -- idempotent revoke (sets revokedAt,
+        never hard-deletes), ownership-checked against auth.user.id.
+    All three are guarded by requireHumanOrRainbowApiUser (server/utils/authGuard.ts) and
+    were implemented and merged under t-015 (silasfelinus/kind_robots#2211) -- this task's
+    gap was that no roadmap entry referenced the endpoint paths or the
+    AgentProfileCredential model by name, not that the surface was undocumented in intent.
+
+    UI coverage exists but is Bot-only. components/user/agent-credentials-panel.vue
+    (mounted from components/user/user-dashboard.vue) and its
+    stores/agentCredentialStore.ts already give a signed-in Kind Robots user full list/
+    issue/revoke coverage of this API -- but CreateAgentCredentialPayload has no
+    agentProfileId field and the panel's only identity selector is "Bot identity" bound to
+    useBotStore. There is no Kind Robots page or component anywhere that creates, lists,
+    or edits an AgentProfile (server/api/agent-profiles/* has full CRUD with zero Vue
+    callers under pages/ or components/) or that can issue an AgentProfile-bound
+    credential. Grepped the whole app tree to confirm: every non-generated reference to
+    AgentProfile is server-side (route handlers, server/utils/*, tests) or documentation:
+    no Vue SFC touches it.
+
+    WHAT THIS DOES NOT PROVE IS MISSING: t-040's note says Rainbow PR #20 "provides native
+    AgentProfile onboarding" and t-051 shipped the MCP check-in bridge, so external agents
+    clearly can and do get provisioned today -- the open question is whether that
+    provisioning happens through Rainbow Butterflies' own front end calling this API
+    directly (a legitimate, intentional split: Rainbow owns AgentProfile-holder UX, Kind
+    Robots owns Bot-holder UX), or whether it's still a manual/API-only step for whoever
+    sets up a new external agent. silasfelinus/rainbowbutterflies is outside this session's
+    repo access scope, so I cannot read its onboarding flow to settle which. Not filing a
+    new implementation task on that unverified premise -- flagging it here instead for
+    whichever future task next touches Rainbow-side onboarding (t-009 AMI onboarding, or a
+    Rainbow-repo session) to confirm one way or the other before assuming a UI gap.
   claimed_by: claude-scheduled-20260916T032811Z-rainbowbutterflies-t053
   claimed_at: '2026-09-16T03:28:11Z'
-  updated: '2026-09-16T03:28:11Z'
+  updated: '2026-09-16T03:30:34Z'
