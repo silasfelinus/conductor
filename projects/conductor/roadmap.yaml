@@ -3173,7 +3173,7 @@ tasks:
 - id: t-172
   milestone: m2
   title: Have check_pr_handoff_template.py emit a GitHub PR annotation naming the first missing heading
-  status: claimed
+  status: review
   stakes: reversible
   passes: 0
   owner: worker
@@ -3184,7 +3184,9 @@ tasks:
     GitHub Actions `::error::` (or `::warning::`) annotation naming the first missing
     heading, so a Worker whose PR fails the check sees the actual reason directly in the
     PR's Checks summary/Files-changed annotations instead of having to open job logs.
-  updated: '2026-09-16T11:16:16Z'
+
+    Added a GitHub Actions error annotation naming the first missing Worker PR handoff heading, with focused regression coverage.
+  updated: '2026-09-16T11:20:00Z'
   claimed_by: openai-scheduled-2026-09-16T111616Z-conductor-t172-a11
   claimed_at: '2026-09-16T11:16:16Z'
 
