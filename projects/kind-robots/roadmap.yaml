@@ -1944,7 +1944,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: Generate owned preview art for the LoRA catalog, starting with the 223 blind rows
-  status: ready
+  status: claimed
   owner: worker
   stakes: reversible
   passes: 0
@@ -2202,9 +2202,9 @@ tasks:
     Re-probed once more after both batches: considered dropped to 19, plans to 1 -- the ENTIRE comfy/pony/sdxl blind lane is now exhausted. The only remaining plannable item is resourceId 1072 (flux), deliberately held back per the standing relay-wedge gates (conductor/t-165, t-167 -- both still status: needs-human, unresolved as of this cycle). The 19 remaining "considered" resources are NOT plannable at all: probe-plan's `skipped` list shows they're on base models with no still-image probe recipe (SD 2.1, Kontext, video/audio bases -- e.g. resourceId 1269 "Digital Illustration Style"/Kontext, 2706/2833 "SD 2.1 768"). This is a structural gap in probe-plan's recipe coverage, not a queue/relay issue -- worth a follow-up task to add still-image probe recipes for those base families if Silas wants blind coverage to reach 100%, but it's a scope decision for him/a new task, not something to force into this cycle.
 
     Re-arming to ready (recurring-shaped continuation). Next actionable step: once conductor/t-165 or t-167 clear (flux relay stable), queue the single remaining flux plan (resourceId 1072). Until then, this task has no more plannable blind-scope work in the comfy/sdxl lane -- next session should either (a) wait on the flux gate, or (b) consider filing a follow-up task for the 19 unsupported-base-model resources if broader coverage is wanted.
-  updated: '2026-09-16T03:05:05Z'
-  claimed_by: claude-scheduled-20260916T023220Z-kindrobots-t105-a11
-  claimed_at: '2026-09-16T02:32:21Z'
+  updated: '2026-09-16T13:34:57Z'
+  claimed_by: conductor-sched-2026-09-16T133456Z-kr-t105
+  claimed_at: '2026-09-16T13:34:57Z'
   implementation_pr: 'silasfelinus/conductor#4442'
 - id: t-106
   milestone: null
