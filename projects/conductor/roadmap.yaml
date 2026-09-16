@@ -3222,10 +3222,10 @@ tasks:
 - id: t-174
   milestone: m2
   title: Add an integration test around check_pr_handoff_template.py's main() covering stdin/stderr and exit code together
-  status: ready
+  status: claimed
   stakes: reversible
   passes: 0
-  owner: null
+  owner: worker
   note: |-
     Kaizen from t-172 (PR #4490, 2026-09-16 scheduled Reviewer session): the new
     `github_error_annotation()` formatter is covered by a focused unit test, but nothing
@@ -3234,6 +3234,9 @@ tasks:
     command land together. Add that integration test so a future change to the CLI
     plumbing (argument parsing, stdin handling, exit codes) can't silently break the
     annotation path while the pure-formatter unit test still passes.
+  claimed_by: claude-scheduled-20260916T-conductor-t174-a1
+  claimed_at: '2026-09-16T12:30:16Z'
+  updated: '2026-09-16T12:30:16Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
