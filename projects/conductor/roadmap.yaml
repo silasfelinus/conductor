@@ -3173,7 +3173,7 @@ tasks:
 - id: t-172
   milestone: m2
   title: Have check_pr_handoff_template.py emit a GitHub PR annotation naming the first missing heading
-  status: review
+  status: done
   stakes: reversible
   passes: 0
   owner: worker
@@ -3186,9 +3186,14 @@ tasks:
     PR's Checks summary/Files-changed annotations instead of having to open job logs.
 
     Added a GitHub Actions error annotation naming the first missing Worker PR handoff heading, with focused regression coverage.
-  updated: '2026-09-16T11:20:00Z'
+
+    Reviewer (2026-09-16 scheduled session): PR #4490 merged (all 23 checks green).
+    Annotation emits ::error:: naming the first missing heading; regression test covers
+    exact text. Handoff complete and well-scoped.
+  updated: '2026-09-16T11:27:23Z'
   claimed_by: openai-scheduled-2026-09-16T111616Z-conductor-t172-a11
   claimed_at: '2026-09-16T11:16:16Z'
+  implementation_pr: 'silasfelinus/conductor#4490'
 
 - id: t-173
   milestone: m2
@@ -3213,6 +3218,22 @@ tasks:
     re-deriving staleness themselves. Once that lands, `promote_stale_task_event_claims.py`
     becomes redundant and can be removed — the processor's own collision check would
     already agree with the selector and local claimer.
+
+- id: t-174
+  milestone: m2
+  title: Add an integration test around check_pr_handoff_template.py's main() covering stdin/stderr and exit code together
+  status: ready
+  stakes: reversible
+  passes: 0
+  owner: null
+  note: |-
+    Kaizen from t-172 (PR #4490, 2026-09-16 scheduled Reviewer session): the new
+    `github_error_annotation()` formatter is covered by a focused unit test, but nothing
+    exercises `main()` end-to-end — piping a body missing a required section through
+    stdin and asserting both the process exit code and the emitted `::error::` workflow
+    command land together. Add that integration test so a future change to the CLI
+    plumbing (argument parsing, stdin handling, exit codes) can't silently break the
+    annotation path while the pure-formatter unit test still passes.
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
