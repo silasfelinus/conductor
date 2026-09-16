@@ -2351,7 +2351,7 @@ tasks:
 - id: t-107
   milestone: null
   title: Backfill Resource.recommendedCfg from t-105's preview-batch clipping data
-  status: claimed
+  status: review
   gate_human: false
   stakes: reversible
   passes: 0
@@ -2386,7 +2386,9 @@ tasks:
     two LoRAs t-106's own note already measured by hand (AsheLoLXL, ArtgermLycoXL) and
     confirm the backfill's number lands close to what that sweep actually showed, before
     trusting it across the rest of the pony-family catalog.
-  updated: '2026-09-16T19:19:04Z'
+
+    First bounded t-107 slice: codified the measured Pony clipping-to-CFG interpolation and opened Resource.recommendedCfg through the existing authenticated PATCH /api/resources/:id mutation path. Added a focused interpolation contract test. The live preview-data backfill remains a later slice after this prerequisite lands; no production Resource rows were mutated in this connector-only run.
+  updated: '2026-09-16T19:26:50Z'
   claimed_by: openai-scheduled-2026-09-16T191904Z-kind-robots-t107-a11
   claimed_at: '2026-09-16T19:19:04Z'
 
