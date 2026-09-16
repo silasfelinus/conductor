@@ -396,11 +396,11 @@ tasks:
 - id: t-026
   milestone: m5
   title: Rename the /api/davinci/* namespace and davinci-* storage keys, migrating runs in flight
-  status: ready
+  status: claimed
   owner: worker
   stakes: reversible
   passes: 0
-  updated: '2026-09-09T00:00:00Z'
+  updated: '2026-09-16T04:35:55Z'
   depends_on: t-025
   note: >
     The merge deliberately left the API namespace and the two localStorage keys
@@ -426,6 +426,8 @@ tasks:
     stores/storybookRunStore.ts, so this task shrinks to retiring the old /api/davinci/*
     routes (thin re-exports first) and the davinci-* localStorage keys once life runs in
     flight have drained. Still sequenced behind t-025/t-031.
+  claimed_by: claude-20260916T043554Z-storybook-t026
+  claimed_at: '2026-09-16T04:35:55Z'
 
 - id: t-027
   milestone: m6
