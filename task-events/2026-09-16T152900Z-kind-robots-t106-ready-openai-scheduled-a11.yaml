@@ -1,0 +1,9 @@
+version: 1
+project: kind-robots
+task: t-106
+operation: ready
+owner: worker
+session: openai-scheduled-2026-09-16T152200Z-kind-robots-t106-a11
+updated: '2026-09-16T15:29:00Z'
+note: >-
+  Connector-only continuation inspected the merged first slice and the next schema slice. The next change requires an atomic edit to the large existing prisma/schema.prisma plus generated Prisma client parity; this connector surface exposes full-file replacement but no patch/edit primitive, and the runtime has no authenticated git transport. No unsafe partial migration was committed. Also re-audited the superseded prior t-106 branch: it is diverged from main and its only remaining diff is the unwanted checkpointProfiles.ts rewrite (+10/-60), confirming it should be force-deleted by branch-janitor rather than salvaged. Releasing t-106 to ready for a session with authenticated git or a patch-capable connector.
