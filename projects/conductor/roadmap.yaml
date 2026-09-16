@@ -3131,10 +3131,10 @@ tasks:
 - id: t-172
   milestone: m2
   title: Have check_pr_handoff_template.py emit a GitHub PR annotation naming the first missing heading
-  status: ready
+  status: claimed
   stakes: reversible
   passes: 0
-  owner: null
+  owner: worker
   note: |-
     Kaizen from t-171 (PR #4473, 2026-09-16 scheduled Reviewer session): the new
     `scripts/check_pr_handoff_template.py` / `pr-handoff-template.yml` CI gate currently
@@ -3142,7 +3142,9 @@ tasks:
     GitHub Actions `::error::` (or `::warning::`) annotation naming the first missing
     heading, so a Worker whose PR fails the check sees the actual reason directly in the
     PR's Checks summary/Files-changed annotations instead of having to open job logs.
-  updated: '2026-09-16T04:27:37Z'
+  updated: '2026-09-16T05:18:02Z'
+  claimed_by: openai-scheduled-2026-09-16T051802Z-conductor-t172-a11
+  claimed_at: '2026-09-16T05:18:02Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
