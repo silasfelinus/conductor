@@ -2567,10 +2567,10 @@ tasks:
 - id: t-160
   milestone: m2
   title: Large binaries, the media-host policy boundary, and the stale art-request status doc
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  owner: null
+  owner: worker
   note: >-
     Filed 2026-09-14 at Silas's direction, same size assessment as t-158/t-159. Read the SAFETY
     RULE below before deleting anything.
@@ -2631,9 +2631,9 @@ tasks:
     sandbox doesn't have, and the task's own safety rule requires a live HEAD-200 probe
     before deleting anything from git. Re-arming to ready afterward for a session with real
     filesystem/share access to pick up the remaining migration scope.
-  updated: '2026-09-15T13:37:22Z'
-  claimed_by: 2026-09-15T133200-conductor-t160
-  claimed_at: null
+  updated: '2026-09-16T00:17:04Z'
+  claimed_by: openai-scheduled-2026-09-16T001704Z-conductor-t160-a11
+  claimed_at: '2026-09-16T00:17:04Z'
 - id: t-161
   milestone: m2
   title: close_task.py can silently drop a caller's unpushed local commits on the target branch
