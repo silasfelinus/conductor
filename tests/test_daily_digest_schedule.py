@@ -43,3 +43,16 @@ def test_digest_retry_watchdog_keeps_expected_offsets():
     primary = daily_minutes(digest[0])
     fallbacks = [daily_minutes(schedule) for schedule in retry]
     assert fallbacks == [primary + 60, primary + 180]
+
+
+def test_daily_dream_sidecars_warn_without_manufacturing_a_failed_digest_run():
+    workflow = DIGEST.read_text(encoding="utf-8")
+
+    assert "::warning::Daily Dream object build failed" in workflow
+    assert "::warning::Daily Dream live composed-field verification found drift" in workflow
+    assert "Fail after digest if Daily Dream cycle failed" not in workflow
+    assert 'exit "$failed"' not in workflow
+
+    email_block = workflow.split("- name: Email via Brevo", 1)[1]
+    email_block = email_block.split("\n  creative-revision:", 1)[0]
+    assert "continue-on-error" not in email_block
