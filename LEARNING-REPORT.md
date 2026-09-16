@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-16T18:56:35Z
+Generated: 2026-09-16T19:52:43Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **991**
-- Outcomes: blocked: 16, cancelled: 1, done: 974
+- Closed tasks recorded: **992**
+- Outcomes: blocked: 16, cancelled: 1, done: 975
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -26,7 +26,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 38 | 100% |
-| conductor | 119 | 100% |
+| conductor | 120 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 51 | 98% |
 | davinci | 8 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 974 | 99% |
+| software | 975 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-16 `conductor/t-176` — submit_daily_dream_art.py resubmits every status:pending entry in art-prompts.yaml on every daily-digest run with no attempt cap or standing-failure surfacing beyond a failing scheduled workflow, so one entry whose stored prompt trips kind_robots' artPromptContract.ts conditional-instruction rule ("only when X chooses to Y") re-fails identically forever until a human or session edits the stored text by hand. The upstream gate (dream_prose_quality.py's complaints(), run at proposal authoring/revision time) checked known_for/best_scene for length, label-echo, and self-reference but not for the phrasing its own downstream consumer (dream_art_prompts.py) would later fail on at ArtJob enqueue -- the two checks had never been tested against each other. When a producer and a downstream contract check live in different repos/layers, a validation gap between them can persist indefinitely with each side individually "passing." Mirroring the downstream contract's own regex patterns into the upstream gate (rather than inventing a new heuristic) keeps both sides provably in sync and was cheap once the downstream source was actually read.
 - 2026-09-16 `kind-robots/t-106` — A task can sit re-armed across several connector-only sessions purely for lack of git/patch primitives (schema edits, prisma regen) rather than any real ambiguity in scope -- this slice (wiring the already-merged Resource.recommendedCfg column into the already-merged loraStackCfgCeiling helper) was fully specified two slices ago and only needed a session with local git + provisioned node_modules to land. Worth checking, on a stuck recurring/re-armed task, whether the blocker is genuinely unresolved scope or just tooling access before assuming it needs more design work. Also: touching a helper's own area surfaced that its contract test (verifyLoraCfg.test.ts, landed with a prior PR) had never been wired into package.json/CI at all -- a merged, passing-looking PR can still ship a test that never actually runs again after that one PR's own CI checked it inline.
 - 2026-09-16 `conductor/t-175` — Not every asymmetry between two similar-looking code paths is a bug to converge. verify_event_ownership() (review/done) and the claim branch of compute_transition_ops() (t-173) both touch roadmap_claims.claim_is_stale(), but only the claim branch should: a fresh claim over a stale one only starts new work, while a stale session's late review/done event could silently overwrite a second session's in-progress reclaim. The existing claim path already gives a legitimate session a safe way to take over stale work, so no extension was needed -- documenting the asymmetry in the docstring (with a pinning regression test) closed the decision task without changing behavior.
 - 2026-09-16 `conductor/t-173` — A three-call-site staleness rule (next_ready_task.py, claim_task.py, process_task_events.py) had silently drifted to two-out-of-three: the connector processor's claim collision check never consulted roadmap_claims.claim_is_stale(), so a prior session had to paper over the disagreement with a dedicated preflight script (promote_stale_task_event_claims.py) instead of fixing the root disagreement. Making the processor call the shared helper directly let that whole preflight (plus its test and workflow step) be deleted rather than maintained alongside the thing it was working around -- a smaller total diff than the workaround it replaced (68 insertions/177 deletions).
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-16 `coloring-book/t-022` — Wrapping a live production-mutating script call (consume_coloring_book_studio_request.py --live) in a shell-level `timeout` shorter than the script's own internal polling/recovery window SIGTERMs the process before it can record its own render_gate_job_id, discarding the graceful-preserve bookkeeping every other in-flight queue entry relies on for later recovery. coloring_queue_status.py's queue_integrity_safe/recovery_safe/retry_safe checks caught that this left the entry in a safe (if less useful) fresh-submission state rather than a duplicate/orphaned one -- always re-run that check immediately after any forcibly-terminated production script call, and prefer omitting an external timeout wrapper (or sizing it well past the script's documented internal timeout) over guessing a shorter one.
 - 2026-09-16 `storybook/t-026` — A task titled "rename the API namespace and storage keys" can share a database table with a much larger adjacent engine (the generic /api/storybook/runs/* deck engine also reads/writes LifeRun rows) -- reading that overlap as license to migrate the client onto the larger engine would have been an undisclosed scope expansion; the literal rename (move the routes, thin-shim the old paths, dual-read the storage keys) was the correct, reversible scope the task actually asked for.
 - 2026-09-16 `conductor/t-171` — Enforcing a documentation convention (the Worker PR handoff template) as a CI check on worker/* branches, verified against its own PR before merge, closes a kaizen loop more durably than relying on each Reviewer session to notice thin PR bodies ad hoc.
-- 2026-09-16 `rainbow-butterflies/t-053` — A "document this orphaned API surface" task can surface a real design question (AgentProfile-bound credentials have no UI in kind_robots) without it being safe to file as a fix task, when the other half of the flow lives in a repo outside the session's access scope (rainbowbutterflies) -- flag the open question in the note for a session that can see both sides instead of guessing at scope.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-16T18:56:35Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-16T19:52:43Z_
