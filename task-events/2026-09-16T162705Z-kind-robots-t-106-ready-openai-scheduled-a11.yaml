@@ -1,8 +1,0 @@
-version: 1
-project: kind-robots
-task: t-106
-operation: ready
-session: openai-scheduled-2026-09-16T162005Z-kind-robots-t106-a11
-updated: '2026-09-16T16:27:05Z'
-note: >-
-  Reconfirmed the schema slice after ownership was acquired. This connector can create and replace whole files but still has no patch primitive, and prisma/schema.prisma is too large to safely reconstruct from abbreviated connector reads. No partial migration or generated-client mismatch was committed. The stale t-106 branch was also re-compared against current main and remains diverged with exactly one unwanted diff: utils/checkpointProfiles.ts (+10/-60). Release this finite task for a patch-capable/authenticated-git session; do not salvage that stale branch.
