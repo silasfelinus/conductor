@@ -2921,7 +2921,35 @@ tasks:
     processing, not wedged in the stuck-RUNNING sense t-167 documents, but the backlog depth
     itself is a relevant relay-health signal for whoever does the hands-on diagnosis. No
     action taken beyond recording.
-  updated: '2026-09-15T21:34:15Z'
+
+    UPDATE 2026-09-16T02:05Z (Z-Image lane verification, kind_robots#2773 -- CONTROLLED
+    cold-vs-warm measurement). Every cold-load datapoint in this task so far has been
+    incidental. Three Z-Image jobs run tonight give a clean controlled pair on the same box,
+    same engine, same graph shape: ArtJob 25379 claim->done 31.8 min (cold); ArtJob 25383
+    32.3 min (cold); ArtJob 25384 12.2 min (WARM -- claimed 1 second after 25383 finished,
+    so the z_image_turbo_bf16 + qwen_3_4b + ae weights were still resident; identical
+    prompt, identical seed 4242424, the only difference being one LoraLoaderModelOnly node).
+
+    Against the 61s median / 69s p90 measured across the last 200 completions tonight, that
+    is a ~20 MINUTE pure weight-load delta, isolated under controlled conditions rather than
+    inferred. It is the strongest evidence yet for the cold-model-load pattern this task
+    describes, and it independently confirms the affinity point above: consecutive jobs
+    sharing resident weights cost a fraction of scattered ones, so relay_agent.py not
+    sending smartQueue is costing real hours.
+
+    BUT IT ALSO ARGUES AGAINST THE SIMPLE STORY, and that cuts against my own hypothesis:
+    these cold loads all COMPLETED, at ~32 min. ArtJob 22838 never completed at all. So
+    "cold load is slow" is NOT sufficient to explain a wedge -- slowness and hanging are
+    different failures, and something additional turns one into the other on the
+    Pony/ponyFaetality path. The pm2 status check in step 1 above is still the thing that
+    separates (a) from (b); this measurement does not substitute for it.
+
+    MONITORING CONSEQUENCE, worth fixing regardless of root cause: at 12-32 min per job,
+    EVERY Z-Image job exceeds STALE_CLAIM_MINUTES (15) and shows up in /api/art/queue/stats
+    staleRunning while working perfectly normally. Any alarm keyed on staleRunning will cry
+    wolf on this lane. Note 22838 was correctly flagged stale by that same threshold -- the
+    signal is not useless, it just cannot distinguish "slow lane" from "wedged" on its own.
+  updated: '2026-09-16T02:05:00Z'
 
 - id: t-168
   milestone: m2
