@@ -3188,5 +3188,29 @@ tasks:
   claimed_by: openai-scheduled-2026-09-16T051802Z-conductor-t172-a11
   claimed_at: '2026-09-16T05:18:02Z'
 
+- id: t-173
+  milestone: m2
+  title: Extract one shared stale-claim-eligibility helper used directly by next_ready_task.py, claim_task.py, and process_task_events.py
+  status: ready
+  stakes: reversible
+  passes: 0
+  owner: null
+  note: |-
+    Kaizen from PR #4488 (2026-09-16 scheduled Reviewer session): the selector
+    (`next_ready_task.py`), the local claimer (`claim_task.py`), and the connector
+    task-event processor (`process_task_events.py`) all read the same
+    `CLAIM_TTL_MINUTES` constant, but each independently implemented its own notion of
+    "is this claim stale enough to be reclaimed" — and the connector processor's copy
+    disagreed with the other two, which is what PR #4488's
+    `scripts/promote_stale_task_event_claims.py` preflight had to paper over (connector
+    workers kept losing t-172's claim to `ALREADY_CLAIMED` even after the claim had
+    expired).
+
+    Extract `roadmap_claims.claim_is_stale()` (already used by the new preflight) as the
+    single source of truth, and have all three call sites use it directly instead of
+    re-deriving staleness themselves. Once that lands, `promote_stale_task_event_claims.py`
+    becomes redundant and can be removed — the processor's own collision check would
+    already agree with the selector and local claimer.
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
