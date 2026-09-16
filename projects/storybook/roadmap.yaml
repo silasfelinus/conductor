@@ -396,11 +396,11 @@ tasks:
 - id: t-026
   milestone: m5
   title: Rename the /api/davinci/* namespace and davinci-* storage keys, migrating runs in flight
-  status: claimed
+  status: review
   owner: worker
   stakes: reversible
   passes: 0
-  updated: '2026-09-16T04:35:55Z'
+  updated: '2026-09-16T04:48:02Z'
   depends_on: t-025
   note: >
     The merge deliberately left the API namespace and the two localStorage keys
@@ -428,6 +428,7 @@ tasks:
     flight have drained. Still sequenced behind t-025/t-031.
   claimed_by: claude-20260916T043554Z-storybook-t026
   claimed_at: '2026-09-16T04:35:55Z'
+  implementation_pr: 'silasfelinus/kind_robots#2774'
 
 - id: t-027
   milestone: m6
