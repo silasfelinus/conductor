@@ -469,7 +469,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 52
     stakes: reversible
@@ -494,7 +494,13 @@ tasks:
       three tracked surfaces in that interval -- confirmed no fresh Model Builder code exists
       to regression-audit. No Kind Robots mutation or duplicate PR created. Rearmed for a
       future cycle.
-    updated: '2026-09-16T03:46:28Z'
+
+      Cycle 69 verified no-op (conductor scheduled sweep, claude-scheduled-20260916T034627Z-modelbuilder-t029): followed the roadmap's cycle 56/66/67/68 method and checked fresh Kind Robots commit activity since the prior 2026-09-15T17:31:38Z audit across components/model-builder/**, stores/modelBuilderStore.ts, and server/api/model-builder/** (also spot-checked prisma/model-builder.prisma and the two content/model-builder*.md docs for completeness). Zero commits on any tracked surface in that interval -- confirmed no fresh Model Builder code exists to regression-audit. No Kind Robots mutation or duplicate PR created.
+
+      Separately this cycle (working rainbow-butterflies/t-053 and a standalone AGENTS.md correction, silasfelinus/conductor#4471): got a working headless-Chromium repro against kindrobots.org itself in this session's sandbox type, using the GLOBAL Playwright install at /opt/node22/lib/node_modules/playwright (no kind_robots node_modules/npm-install needed -- that's what stopped cycle 66's attempt). Verified https://kindrobots.org and https://kindrobots.org/model-builder both load with a real hydrated title and zero horizontal overflow at 390px, using an explicit proxy launch arg + ignoreHTTPSErrors + --disable-http2 (see AGENTS.md's updated "visual verification" note for the exact recipe). This does not by itself unblock t-031: reaching the page is no longer the obstacle, but there is still no test-login/E2E-auth path in kind_robots to click through an *authenticated* async-generate flow without real human credentials, so t-031 stays exactly as cycle 66/67/68 left it (ready, not gating anything). Recording here since it directly answers this task's own prior "did the sandbox limitation lift" question that cycle 66/68 explicitly left open.
+
+      Rearmed for a future cycle.
+    updated: '2026-09-16T03:47:15Z'
     owner: worker
     claimed_by: claude-scheduled-20260916T034627Z-modelbuilder-t029
     claimed_at: '2026-09-16T03:46:28Z'
