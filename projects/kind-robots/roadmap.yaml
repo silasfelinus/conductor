@@ -2405,11 +2405,11 @@ tasks:
 - id: t-108
   milestone: null
   title: Backfill live Resource.recommendedCfg for Pony LORA/LYCORIS rows from t-105 preview clipping
-  status: ready
+  status: claimed
   gate_human: false
   stakes: reversible
   passes: 0
-  owner: null
+  owner: worker
   approved_by_human: false
   note: |-
     The remaining slice of t-107 (done, kind_robots#2783 merged 2026-09-16): that PR
@@ -2435,7 +2435,9 @@ tasks:
     fetches the t-105 Pony preview cohort, computes clipping, prints the proposed
     Resource -> CFG changes, and only PATCHes null-recommendedCfg rows under an explicit
     --apply flag -- rather than a one-shot mutation with no preview step.
-  updated: '2026-09-16T20:30:29Z'
+  updated: '2026-09-16T21:42:37Z'
+  claimed_by: claude-scheduled-20260916T2200Z-kr-t108
+  claimed_at: '2026-09-16T21:42:37Z'
 
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
