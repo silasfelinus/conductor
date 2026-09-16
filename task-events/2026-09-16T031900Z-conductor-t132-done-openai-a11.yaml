@@ -1,0 +1,10 @@
+version: 1
+project: conductor
+task: t-132
+operation: done
+session: openai-scheduled-2026-09-16T031522Z-conductor-t132-a11
+updated: '2026-09-16T03:19:00Z'
+note: >-
+  RESOLVED 2026-09-16 after a fresh connector-native investigation. The live kind_robots Contract Tests workflow already has timeout-minutes: 10 on the entire Contract verifiers job, and the historical evidence in this task shows stalls at varied unrelated steps (Set up job, npm ci, Route gallery contract, ESLint ratchet, capture-group self-test) plus the separate Publish Production Container Build and publish step. That rules out an ESLint-specific repo defect as the general cause. ESLint --cache would only target a minority of incidents and would add cache-state risk; lowering the existing timeout cannot make GitHub enforce a timeout on a runner that has stopped reporting. No safe repo-side change remains that addresses the observed cross-workflow failure mode. Treat future recurrences as GitHub Actions runner/platform incidents: inspect the job-level Actions state, rerun at most once, and do not merge past an unfinished required check. Reopen only if new evidence points to a reproducible repository-specific cause.
+learning: >-
+  Cross-workflow stalls at unrelated steps, despite an existing job timeout, are runner/platform evidence; do not optimize the most frequently observed command unless the failure reproduces specifically there.
