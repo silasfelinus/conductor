@@ -33,7 +33,7 @@ from bump_continuous_improvement import (  # noqa: E402
     PR_RE as CI_PR_RE,
     bump_continuous_improvement_text,
 )
-from roadmap_claims import parse_timestamp  # noqa: E402
+from roadmap_claims import claim_is_stale, parse_timestamp  # noqa: E402
 from roadmap_text_patch import apply_task_field_ops  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -318,13 +318,18 @@ def compute_transition_ops(
             # an already-claimed task lost the race -- surface it as a collision so
             # the losing event is consumed, preserving the atomic ALREADY_CLAIMED
             # invariant instead of silently no-op'ing two rival claims into one.
+            # UNLESS the existing claim is stale (claim_is_stale, the same TTL rule
+            # next_ready_task.py and claim_task.py already use to treat an abandoned
+            # claim as pickable again) -- then fall through and let the new claim
+            # replace it, instead of disagreeing with the selector/local claimer.
             if task.get("owner") == owner and task.get("claimed_by") == session:
                 return []
-            raise TaskEventCollision(
-                f"ALREADY_CLAIMED: task claimed_by={task.get('claimed_by')!r} "
-                f"(owner={task.get('owner')!r}); losing claim session={session!r}"
-            )
-        if current != "ready" and not force:
+            if not claim_is_stale(task.get("claimed_at")):
+                raise TaskEventCollision(
+                    f"ALREADY_CLAIMED: task claimed_by={task.get('claimed_by')!r} "
+                    f"(owner={task.get('owner')!r}); losing claim session={session!r}"
+                )
+        elif current != "ready" and not force:
             raise ValueError(f"claim requires status ready, found {current!r}")
         ops.append(("set", "status", "claimed"))
         ops.append(("set", "owner", owner))

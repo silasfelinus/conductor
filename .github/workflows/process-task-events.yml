@@ -84,9 +84,6 @@ jobs:
             echo "Attempt ${attempt}/${max_attempts}: processing against $(git rev-parse HEAD)"
 
             had_error=0
-            if [ -f scripts/promote_stale_task_event_claims.py ]; then
-              python3 scripts/promote_stale_task_event_claims.py
-            fi
             if [ -f scripts/reject_ineligible_task_event_claims.py ]; then
               python3 scripts/reject_ineligible_task_event_claims.py
             else

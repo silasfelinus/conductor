@@ -657,6 +657,63 @@ class TaskEventProcessorTests(unittest.TestCase):
         # Losing event is consumed (not a poison event), so the shared queue stays clean.
         self.assertFalse(second.exists())
 
+    def test_claim_on_stale_claimed_task_replaces_it_without_force(self):
+        # conductor/t-173: compute_transition_ops() must agree with
+        # roadmap_claims.claim_is_stale() -- the same TTL rule next_ready_task.py and
+        # claim_task.py already use to treat an abandoned claim as pickable again --
+        # instead of blindly treating any `status: claimed` task as an unconditional
+        # collision. Fixture t-003 is already `claimed` by sess-stale with a
+        # claimed_at from 2026-07, far past CLAIM_TTL_MINUTES.
+        event = self.write_event(
+            "reclaim-stale.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-003",
+                "operation": "claim",
+                "session": "sess-fresh",
+            },
+        )
+
+        result = MODULE.process(event, dry_run=False)
+
+        self.assertNotIn("ALREADY_CLAIMED", result)
+        task = next(t for t in self.roadmap()["tasks"] if t["id"] == "t-003")
+        self.assertEqual(task["status"], "claimed")
+        self.assertEqual(task["claimed_by"], "sess-fresh")
+        self.assertFalse(event.exists())
+
+    def test_claim_on_fresh_claimed_task_still_collides_without_force(self):
+        # Sibling of the stale case above: a claim still within CLAIM_TTL_MINUTES
+        # must keep colliding exactly as before -- only staleness, not mere
+        # `status: claimed`, opens the door to a replacement claim.
+        fresh_claim = self.write_event(
+            "claim.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "claim",
+                "session": "sess-A",
+            },
+        )
+        MODULE.process(fresh_claim, dry_run=False)
+
+        rival = self.write_event(
+            "rival-claim.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "claim",
+                "session": "sess-B",
+            },
+        )
+        result = MODULE.process(rival, dry_run=False)
+
+        self.assertIn("ALREADY_CLAIMED", result)
+        self.assertEqual(self.roadmap()["tasks"][0]["claimed_by"], "sess-A")
+
     def test_collision_dry_run_leaves_losing_event_in_place(self):
         first = self.write_event(
             "claim.yaml",
