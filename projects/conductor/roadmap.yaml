@@ -3299,6 +3299,60 @@ tasks:
   claimed_at: '2026-09-16T12:30:16Z'
   updated: '2026-09-16T12:37:11Z'
   implementation_pr: 'silasfelinus/conductor#4494'
+- id: t-176
+  milestone: m2
+  title: 'workflow-medic: fix the daily-digest ArtJob submission failure and close the validation gap that let it through'
+  status: done
+  stakes: reversible
+  passes: 0
+  owner: null
+  note: |-
+    select_role.py recommended workflow-medic: daily-digest.yml had failed its last
+    2 consecutive completed runs (#114, #115), both on the same step ("Submit Daily
+    Dream ArtJobs"), always with the identical failure: `dream-cycle-ansas-borrowed-
+    orchard-featherroot-vale: enqueue failed: HTTP 422 Art prompt rejected by the
+    prompt contract (1 violation): [conditional-instruction] "only when" asks the
+    model to evaluate a condition.`
+
+    Root cause: the "Ansa's Borrowed Orchard" dream cycle's Featherroot Vale
+    location's `known_for` field read "...settles only when the cassowary flock
+    chooses to scratch, nest, and scatter seed...", which kind_robots'
+    server/utils/artPromptContract.ts CONDITIONAL_PATTERNS rejects with a 422 (a
+    diffusion model has no instruction-following layer; it paints the words
+    instead of deciding). `submit_daily_dream_art.py` resubmits every `status:
+    pending` entry from `projects/art-prompts.yaml` on every digest run, so this
+    one entry re-failed on every single cycle since it was staged, with no
+    mechanism to ever stop retrying or surface itself as a standing problem beyond
+    a failing scheduled workflow.
+
+    Fix: rewrote the entry's stored `prompt` in `projects/art-prompts.yaml`
+    (`dream-cycle-ansas-borrowed-orchard-featherroot-vale`) to state one outcome
+    ("settles as the cassowary flock scratches, nests, and scatters seed...")
+    instead of a condition, verified against the same five CONDITIONAL_PATTERNS
+    regexes read directly from kind_robots' artPromptContract.ts.
+
+    Also fixed the validation gap, since it is real and already recurred across
+    repos (kind_robots' own config/art-coverage/batch-0001.json documents the same
+    "only when" pattern repaired twice before): `scripts/dream_prose_quality.py`'s
+    `complaints()` — the shared gate `author_dream_proposal.py`,
+    `build_dream_proposal_core.py`, `apply_dream_revision.py`, and
+    `check_dream_creative_contract.py` all call before a proposal is authored or
+    revised — checked `known_for`/`best_scene`/etc. for length, label-echo, and
+    self-reference, but never for phrasing that would later fail the KR server's
+    art-prompt contract at ArtJob enqueue time, even though those exact fields get
+    spliced verbatim into the Krea prompt (`dream_art_prompts.py`). Added
+    `_conditional_instruction()` mirroring the contract's four host-agnostic
+    CONDITIONAL_PATTERNS entries (the fifth, a cast-noun-plus-presence-verb guard
+    against crowd rendering, is KR house style, not a shape producer prose falls
+    into), wired into every card-copy field plus the art-prompt-only `look`/
+    `art_direction` fields that are otherwise exempt from the sentence-shape
+    checks. 6 new regression tests; full suite 2010 passed, 30 skipped, 0 failed.
+
+    Re-ran daily-digest.yml via workflow_dispatch after merging; see PR for the
+    resulting run link/conclusion.
+  claimed_by: claude-scheduled-20260916T-conductor-t176-wfmedic
+  claimed_at: '2026-09-16T19:05:00Z'
+  updated: '2026-09-16T19:05:00Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'

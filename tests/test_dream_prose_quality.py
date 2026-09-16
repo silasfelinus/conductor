@@ -473,3 +473,67 @@ def test_carries_leading_with_the_object_is_the_target_register():
         "A cracked spectrum lens rides at her hip, still holding the testimony she was made to delete."
     )
     assert not any("carry-verb formula" in p for p in prose.complaints(proposal))
+
+
+def test_known_for_conditional_instruction_is_flagged():
+    # kind_robots' artPromptContract.ts 422s any Krea enqueue phrased as a
+    # condition for the model to evaluate. known_for/best_scene get spliced
+    # straight into the location's art prompt (dream_art_prompts.location_prompt),
+    # so text that clears every other check here can still fail at ArtJob
+    # submission time and sit `pending` forever (conductor/t-176,
+    # "Featherroot Vale": "settles only when the cassowary flock chooses to").
+    proposal = _quality_sample()
+    proposal["locations"][0]["known_for"] = (
+        "A long green basin where a migrating orchard settles only when the flock "
+        "chooses to scratch, nest, and scatter seed among the exposed root-mounds."
+    )
+    problems = prose.complaints(proposal)
+    assert any(
+        "known_for asks the art prompt to evaluate a condition" in p for p in problems
+    )
+
+
+def test_conditional_instruction_covers_every_contract_pattern():
+    # Mirrors kind_robots' server/utils/artPromptContract.ts CONDITIONAL_PATTERNS
+    # (minus its cast-noun/presence-verb entry, which is a house-style guard
+    # against crowd rendering, not a shape producer prose falls into).
+    offenders = [
+        "only when the flock chooses to gather",
+        "only if the light is right",
+        "painted when the scene calls for detail",
+        "rendered if the context demands it",
+        "shown where appropriate",
+        "lit as needed",
+    ]
+    for phrase in offenders:
+        proposal = _quality_sample()
+        proposal["locations"][0]["best_scene"] = (
+            f"The wall glows gold {phrase} and the crowd falls silent to watch it."
+        )
+        problems = prose.complaints(proposal)
+        assert any("evaluate a condition" in p for p in problems), phrase
+
+
+def test_conditional_instruction_also_covers_krea_only_fields():
+    # `look`/`art_direction` are exempt from the sentence-shape checks (see
+    # test_art_prompt_fields_stay_exempt_from_the_sentence_contract) but still
+    # feed straight into a Krea prompt, so they need the same contract guard.
+    proposal = _quality_sample()
+    proposal["characters"][0]["look"] = "a suit that only when observed shifts color"
+    problems = prose.complaints(proposal)
+    assert any(
+        "characters[0].look asks the art prompt to evaluate a condition" in p
+        for p in problems
+    )
+
+
+def test_ordinary_only_usage_is_not_flagged_as_conditional():
+    # "only" alone is common, fine prose; the contract rule is specifically
+    # "only when"/"only if", not the word "only" on its own.
+    proposal = _quality_sample()
+    proposal["locations"][0]["known_for"] = (
+        "Its prismatic chambers turn spoken testimony into color, the only court "
+        "in the region willing to let a case be seen rather than only heard."
+    )
+    problems = prose.complaints(proposal)
+    assert not any("evaluate a condition" in p for p in problems)

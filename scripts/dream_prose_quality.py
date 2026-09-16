@@ -345,6 +345,31 @@ EDITORIALIZING_OPENER = re.compile(
     re.IGNORECASE,
 )
 
+# kind_robots' server/utils/artPromptContract.ts rejects any Krea enqueue whose
+# prompt asks the model to evaluate a condition -- "only when the flock
+# chooses to ...", "if the scene calls for it" -- with a 422, since a diffusion
+# model has no instruction-following layer and just renders the words instead
+# of deciding. `known_for`/`best_scene`/`art_direction`/`look` all get spliced
+# directly into a Krea prompt (see dream_art_prompts.py), so text that passes
+# this check but carries that phrasing still fails at ArtJob enqueue time --
+# the whole proposal builds, and only the one asset silently sits `pending`
+# forever, re-failing every daily-digest run until someone rewrites the field
+# by hand (conductor/t-176: "Featherroot Vale"'s known_for sat this way across
+# 2+ digest cycles). Catching it here, before the proposal is even committed,
+# is cheaper than repairing it after the fact. Mirrors the four host-agnostic
+# CONDITIONAL_PATTERNS entries from artPromptContract.ts; the fifth (a cast
+# noun plus a presence verb, e.g. "when any figures appear") is deliberately
+# left out -- it is a Kind-Robots house-style guard against crowd rendering,
+# not a shape ordinary producer prose falls into.
+CONDITIONAL_INSTRUCTION = re.compile(
+    r"\bonly (?:when|if)\b"
+    r"|\bwhen (?:the )?(?:subject|scene|context)\b"
+    r"|\b(?:if|unless) (?:the )?(?:subject|scene|context|prompt)\b"
+    r"|\bwhere (?:appropriate|relevant|applicable)\b"
+    r"|\bas (?:needed|appropriate)\b",
+    re.IGNORECASE,
+)
+
 
 # `carries` is the FIRST sentence of every character's backstory, so its opening
 # is not a per-card question but a catalog-wide one: 31 of 34 begin "She carries"
@@ -414,6 +439,20 @@ def _editorializing(label: str, value: Any) -> list[str]:
     return [
         f"{label} opens by editorializing ({match.group(0)!r}); the sentence already "
         "carries the judgement, so state it and cut the adverb"
+    ]
+
+
+def _conditional_instruction(label: str, value: Any) -> list[str]:
+    if not isinstance(value, str):
+        return []
+    match = CONDITIONAL_INSTRUCTION.search(value)
+    if not match:
+        return []
+    return [
+        f"{label} asks the art prompt to evaluate a condition ({match.group(0)!r}); "
+        "a diffusion model renders the words instead of deciding, so this will be "
+        "rejected at ArtJob enqueue time -- decide before writing the field and "
+        "state one outcome"
     ]
 
 
@@ -505,8 +544,11 @@ def complaints(proposal: Any) -> list[str]:
     item = _reward_of_type(proposal, "ITEM")
     skill = _reward_of_type(proposal, "SKILL")
 
-    # `look` and `art_direction` are deliberately excluded: they are Krea prompt
-    # material, not card copy, and are supposed to read as visual noun phrases.
+    # `look` and `art_direction` are deliberately excluded from the card-copy
+    # checks below: they are Krea prompt material, not card copy, and are
+    # supposed to read as visual noun phrases. They still get the
+    # conditional-instruction check, since dream_art_prompts.py splices them
+    # into the same Krea prompt as known_for/best_scene/setup.
     checks = [
         ("idea", proposal.get("idea"), 14),
         ("vibe.line", vibe.get("line"), 8),
@@ -527,14 +569,25 @@ def complaints(proposal: Any) -> list[str]:
             ]
         )
 
+    art_only_checks = [
+        ("vibe.art_direction", vibe.get("art_direction")),
+        ("locations[0].art_direction", location.get("art_direction")),
+        ("characters[0].look", character.get("look")),
+        ("rewards[item].look", item.get("look")),
+        ("rewards[skill].look", skill.get("look")),
+    ]
+
     problems: list[str] = []
     for label, value, minimum_words in checks:
         problems.extend(_check(label, value, minimum_words))
         problems.extend(_label_echo(label, value))
         problems.extend(_schema_leak(label, value))
         problems.extend(_editorializing(label, value))
+        problems.extend(_conditional_instruction(label, value))
         if label.endswith(".grants"):
             problems.extend(_padding(label, value))
+    for label, value in art_only_checks:
+        problems.extend(_conditional_instruction(label, value))
     problems.extend(_vibe_echo(proposal))
     problems.extend(_borrowed_names(proposal))
     problems.extend(_reward_self_reference(proposal))
