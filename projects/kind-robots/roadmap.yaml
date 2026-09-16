@@ -2206,6 +2206,48 @@ tasks:
   claimed_by: claude-scheduled-20260916T023220Z-kindrobots-t105-a11
   claimed_at: '2026-09-16T02:32:21Z'
   implementation_pr: 'silasfelinus/conductor#4442'
+- id: t-106
+  milestone: null
+  title: Per-Resource recommendedCfg, backfilled from the preview batch's own clipping
+  status: ready
+  gate_human: false
+  owner: worker
+  stakes: reversible
+  passes: 0
+  approved_by_human: false
+  note: |-
+    Silas, 2026-09-16, mid cfg-sweep: "I'm just wondering if we should have a recommended
+    cfg in our resources if we don't already. Then we can specifically randomize when
+    combining loras. Not sure if that's worth the extra complexity, but if certain ones want
+    more or less with the same checkpoint, it's the stronger option."
+    IT IS WORTH IT, on evidence from that same session. On ONE checkpoint
+    (realcartoonPony_v1) two LoRAs wanted guidance three points apart: ArtgermLycoXL (style)
+    clipped only 0.39% of its pixels even at cfg 13, while AsheLoLXL (character) clipped
+    5.39% at the same setting and 3.48% at cfg 10. A family-level number is therefore always
+    a compromise between LoRAs that are not alike, and utils/checkpointProfiles.ts can only
+    express the family.
+    WHAT MAKES IT CHEAP. Populating the column is normally what kills an idea like this,
+    because nobody measures 2,078 LoRAs by hand. But the t-105 preview batch renders every
+    one of them, and clipping -- the percentage of pixels crushed to 0 or blown to 255 -- is
+    computable from each finished probe at zero extra render cost. Low clipping means that
+    LoRA tolerates more guidance. The measurement is a by-product of work already scheduled.
+    SHAPE. Add `recommendedCfg Float?` to Resource, beside `loraTarget`, which is the
+    existing precedent for a per-LoRA hint column. Null means 'use the family profile', so
+    it lands as a zero-behaviour-change migration and enqueue reads it only when present.
+    STACKING. Take the MINIMUM across the selected LoRAs, not the mean: the most clipping-
+    prone LoRA is the binding constraint, and one crushed LoRA spoils the render whatever
+    the others tolerate. Silas's randomisation idea then falls out of that -- sample within
+    the OVERLAPPING tolerable band, so a stack of high-tolerance style LoRAs gets a wide
+    range while any stack containing a clip-prone character LoRA stays narrow.
+    SEQUENCING. Land the column null and backfill afterwards. Do not block the column on the
+    backfill, and do not make the batch wait on the column.
+    CAVEAT to carry. Clipping is a proxy for tolerance, not a statement of preference. Silas
+    consistently preferred cfg 13 by eye on BOTH the style and the character LoRA, where the
+    clipping budget says 10 for the character one. This column should record what a LoRA
+    TOLERATES; how close to that ceiling to actually run is a separate taste setting.
+    Conflating the two would bake one person's contrast preference into a catalog field.
+  updated: '2026-09-16T11:05:00Z'
+
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
