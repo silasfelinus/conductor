@@ -2567,71 +2567,28 @@ tasks:
 - id: t-160
   milestone: m2
   title: Large binaries, the media-host policy boundary, and the stale art-request status doc
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   owner: worker
-  note: >-
-    Filed 2026-09-14 at Silas's direction, same size assessment as t-158/t-159. Read the SAFETY
-    RULE below before deleting anything.
+  note: |-
+    Filed 2026-09-14 at Silas's direction, same size assessment as t-158/t-159. Read the SAFETY RULE below before deleting anything.
 
+    Conductor is a 466MB working tree with a 231MB .git. projects/coat-dance/coat dance_x264.mp4 is 37MB -- the single largest object in the repo, 10x TALKBACK.md, and the only tracked .mp4/.mov/.webm. projects/coloring-book/ is 89MB; ai-art-academy/docs/t-045-lora-evidence/ is 5 x 2.27MB; mermaids-of-venice/manuscript/ is ~4MB (PDF + two .doc); mandarin-tutor/art-manifest.json 1.9MB; media-watchlist/media-entries.json 1.1MB. This is clone and container-startup cost rather than token cost -- real, but lower priority than t-158.
 
-    Conductor is a 466MB working tree with a 231MB .git. projects/coat-dance/coat dance_x264.mp4 is
-    37MB -- the single largest object in the repo, 10x TALKBACK.md, and the only tracked
-    .mp4/.mov/.webm. projects/coloring-book/ is 89MB; ai-art-academy/docs/t-045-lora-evidence/ is
-    5 x 2.27MB; mermaids-of-venice/manuscript/ is ~4MB (PDF + two .doc);
-    mandarin-tutor/art-manifest.json 1.9MB; media-watchlist/media-entries.json 1.1MB. This is clone
-    and container-startup cost rather than token cost -- real, but lower priority than t-158.
+    THIS IS A DOCUMENTED POLICY CHANGE, NOT CLEANUP. ops/home-server/SELF-HOSTED-MEDIA.md currently states the opposite on purpose: "Conductor-owned project images still use the existing projects/process/ and projects/images/ flow." The media.acrocatranch.com pattern is real and well-tooled (100 references, media_direct_consumer.py, media_migrate.py, check_render_box.py, auto-art-generate.yml) but is scoped to kind_robots-TARGETED GENERATED ART. Extending it to conductor-owned binaries means amending that doc. projects/coat-dance/BRIEF.md:25 and projects/coat-dance/roadmap.yaml:249 both record the MP4's presence in git as a settled fact and need updating too.
 
+    SAFETY RULE, NON-NEGOTIABLE: never delete a binary from git until a HEAD probe confirms the media origin serves it 200. This repo already learned this the hard way -- scripts/distribute_images.py's docstring records ai-art-academy/t-010 (2026-07-27), where a local copy LOOKED like delivery, the art-prompts request got pruned as done, and the record that real delivery had never happened was silently lost. For the coat-dance MP4 especially, assume it may be the only copy until proven otherwise. If a probe fails, upload first, verify, and only then remove -- or leave it and say so.
 
-    THIS IS A DOCUMENTED POLICY CHANGE, NOT CLEANUP. ops/home-server/SELF-HOSTED-MEDIA.md currently
-    states the opposite on purpose: "Conductor-owned project images still use the existing
-    projects/process/ and projects/images/ flow." The media.acrocatranch.com pattern is real and
-    well-tooled (100 references, media_direct_consumer.py, media_migrate.py, check_render_box.py,
-    auto-art-generate.yml) but is scoped to kind_robots-TARGETED GENERATED ART. Extending it to
-    conductor-owned binaries means amending that doc. projects/coat-dance/BRIEF.md:25 and
-    projects/coat-dance/roadmap.yaml:249 both record the MP4's presence in git as a settled fact
-    and need updating too.
-
-
-    SAFETY RULE, NON-NEGOTIABLE: never delete a binary from git until a HEAD probe confirms the
-    media origin serves it 200. This repo already learned this the hard way --
-    scripts/distribute_images.py's docstring records ai-art-academy/t-010 (2026-07-27), where a
-    local copy LOOKED like delivery, the art-prompts request got pruned as done, and the record
-    that real delivery had never happened was silently lost. For the coat-dance MP4 especially,
-    assume it may be the only copy until proven otherwise. If a probe fails, upload first, verify,
-    and only then remove -- or leave it and say so.
-
-
-    DO NOT REWRITE GIT HISTORY to reclaim the 231MB. Filtering shared history is a worse problem
-    than the one it solves, and every other checkout would break. Stopping the growth is the goal.
-
+    DO NOT REWRITE GIT HISTORY to reclaim the 231MB. Filtering shared history is a worse problem than the one it solves, and every other checkout would break. Stopping the growth is the goal.
 
     ALSO IN SCOPE, both small:
+    - Delete docs/art-request-status.md. Generated 2026-06-30, it is a hand-made status table describing the superseded manual ART-PROMPTS.md workflow. The live pipeline it predates (art-request.post.ts -> artRequestYaml.ts -> projects/art-prompts.yaml -> auto-art-generate.yml on a 0 */6 * * * cron) makes it actively misleading. Replace with a generated queue-depth line or nothing.
+    - Fix .gitattributes. It is TRUNCATED: lines 18-26 are a comment block explaining that the vendored WordPress trees should be marked linguist-vendored, but the actual directive lines are missing -- the file just ends on the comment. It also has no *.mp4 / *.mov / *.webm entries while *.png/jpg/webp/pdf/zip are all listed. Note there is no Git LFS configured (no .lfsconfig, no filter=lfs lines) and no size policy anywhere in AGENTS.md or CLAUDE.md.
+    Cycle (this session): completed the two small in-scope items only -- deleted docs/art- request-status.md (stale, superseded by the live art-request.post.ts pipeline) and fixed .gitattributes (trimmed the stale vendored-WordPress comment now that conductor/t-106 already removed those trees; added *.mp4/*.mov/*.webm binary entries). PR: silasfelinus/conductor#TBD (worker/conductor-t-160). Did NOT touch the media-host policy question, ops/home-server/SELF-HOSTED-MEDIA.md, or the coat-dance MP4 migration -- media_migrate.py needs a mounted images share (Z:/kindrobots/images or WSL mount) this sandbox doesn't have, and the task's own safety rule requires a live HEAD-200 probe before deleting anything from git. Re-arming to ready afterward for a session with real filesystem/share access to pick up the remaining migration scope.
 
-    - Delete docs/art-request-status.md. Generated 2026-06-30, it is a hand-made status table
-    describing the superseded manual ART-PROMPTS.md workflow. The live pipeline it predates
-    (art-request.post.ts -> artRequestYaml.ts -> projects/art-prompts.yaml ->
-    auto-art-generate.yml on a 0 */6 * * * cron) makes it actively misleading. Replace with a
-    generated queue-depth line or nothing.
-
-    - Fix .gitattributes. It is TRUNCATED: lines 18-26 are a comment block explaining that the
-    vendored WordPress trees should be marked linguist-vendored, but the actual directive lines are
-    missing -- the file just ends on the comment. It also has no *.mp4 / *.mov / *.webm entries
-    while *.png/jpg/webp/pdf/zip are all listed. Note there is no Git LFS configured (no .lfsconfig,
-    no filter=lfs lines) and no size policy anywhere in AGENTS.md or CLAUDE.md.
-
-    Cycle (this session): completed the two small in-scope items only -- deleted docs/art-
-    request-status.md (stale, superseded by the live art-request.post.ts pipeline) and fixed
-    .gitattributes (trimmed the stale vendored-WordPress comment now that conductor/t-106
-    already removed those trees; added *.mp4/*.mov/*.webm binary entries). PR:
-    silasfelinus/conductor#TBD (worker/conductor-t-160). Did NOT touch the media-host policy
-    question, ops/home-server/SELF-HOSTED-MEDIA.md, or the coat-dance MP4 migration --
-    media_migrate.py needs a mounted images share (Z:/kindrobots/images or WSL mount) this
-    sandbox doesn't have, and the task's own safety rule requires a live HEAD-200 probe
-    before deleting anything from git. Re-arming to ready afterward for a session with real
-    filesystem/share access to pick up the remaining migration scope.
-  updated: '2026-09-16T00:17:04Z'
+    Documented the approved Conductor large-binary media-host policy and made the no-history-rewrite rule explicit. The remaining coat-dance MP4 migration still requires a mounted media share and a successful public HEAD 200 before any tracked binary can be removed.
+  updated: '2026-09-16T00:21:20Z'
   claimed_by: openai-scheduled-2026-09-16T001704Z-conductor-t160-a11
   claimed_at: '2026-09-16T00:17:04Z'
 - id: t-161
