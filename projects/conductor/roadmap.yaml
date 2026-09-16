@@ -3098,7 +3098,7 @@ tasks:
 - id: t-171
   milestone: m2
   title: Enforce the full PR handoff template (Stakes/Flags-for-Reviewer/Kaizen-suggestion) even on small doc-only PRs
-  status: review
+  status: done
   stakes: reversible
   passes: 0
   owner: worker
@@ -3120,9 +3120,14 @@ tasks:
     template that was already thinned out.
 
     Added a Worker PR handoff-template validator, focused regression tests, and a PR workflow that enforces the required AGENTS.md headings on worker/* pull requests.
-  updated: '2026-09-16T04:25:00Z'
+
+    Reviewer (2026-09-16 scheduled session): PR #4473 merged (all 23 checks green, including
+    the new Validate Worker PR handoff check passing on its own PR). Handoff was complete
+    and well-scoped.
+  updated: '2026-09-16T04:27:37Z'
   claimed_by: openai-scheduled-2026-09-16T041753Z-conductor-t171-a11
   claimed_at: '2026-09-16T04:17:53Z'
+  implementation_pr: 'silasfelinus/conductor#4473'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
