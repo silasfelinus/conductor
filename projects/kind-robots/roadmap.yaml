@@ -2240,7 +2240,7 @@ tasks:
 - id: t-106
   milestone: null
   title: Per-Resource recommendedCfg, backfilled from the preview batch's own clipping
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
   passes: 0
@@ -2329,7 +2329,21 @@ tasks:
     slice after this: backfill Resource.recommendedCfg from t-105's clipping data (needs a
     defensible per-LoRA cfg-from-clipping methodology, only the pony family has a measured
     curve today -- deliberately left as its own follow-up rather than rushed into this PR).
-  updated: '2026-09-16T18:43:50Z'
+
+    Merged silasfelinus/kind_robots#2782 (squash, CI green, mergeable_state clean, 165
+    insertions/3 deletions across 6 files). Confirms the slice described in the review note
+    above landed exactly as planned: resolveEnqueueLoraResource now returns recommendedCfgs,
+    enqueue.post.ts threads it through, buildDefaultComfyWorkflow's cfg now resolves via
+    loraStackCfgCeiling(profile.cfg, loraRecommendedCfgs). Verified no-op in production
+    today (recommendedCfg still null repo-wide). Closing THIS slice as done -- but the
+    task's own title ('...backfilled from the preview batch's own clipping') is not fully
+    satisfied yet: the backfill itself (computing per-LoRA clipping from t-105's preview
+    images and deriving a defensible recommendedCfg) is real follow-up work requiring a
+    methodology decision (only the pony family has a measured cfg-vs-clipping curve today,
+    in utils/checkpointProfiles.ts) rather than something to rush blind. Filing that as a
+    fresh ready task below rather than re-arming this one, since the enqueue-wiring goal
+    this task's note asked for is now actually done.
+  updated: '2026-09-16T18:51:56Z'
   owner: worker
   claimed_by: claude-scheduled-20260916T184324Z-kr-t106-slice2
   claimed_at: '2026-09-16T18:43:38Z'
