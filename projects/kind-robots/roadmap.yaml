@@ -1944,8 +1944,8 @@ tasks:
 - id: t-105
   milestone: m6
   title: Generate owned preview art for the LoRA catalog, starting with the 223 blind rows
-  status: claimed
-  owner: worker
+  status: done
+  owner: null
   stakes: reversible
   passes: 0
   gate_human: false
@@ -2220,7 +2220,20 @@ tasks:
     unsupported SD2.1/Kontext rows as a known, permanent gap -- worth a small follow-up task
     only if a still-image probe recipe becomes feasible for those bases, not urgent. Re-
     arming to ready pending that verification.
-  updated: '2026-09-16T14:37:11Z'
+
+    VERIFIED (conductor scheduled sweep, 2026-09-16T14:52Z): GET /api/art/queue/26249
+    confirms status DONE, artImageId 25358. GET /api/resources/1072 confirms the write-back
+    landed: artImageId=25358, imagePath='/api/art/images/25358/file?v=...', updatedAt
+    matches the job's completion time. This closes the batch-render scope of this task:
+    2209/2228 LoRAs are now non-blind (own generated preview art rather than a third-party
+    hotlink or no preview). The remaining 18 rows are a structural gap, not a queue/relay
+    issue -- probe-plan has no still-image probe recipe for their base families (SD 2.1 768,
+    Flux.1 Kontext, which is an edit model needing a source image). Leaving that gap undone
+    rather than filing a follow-up task now, per this task's own prior note: it is a scope
+    decision for Silas (does he want 100% coverage badly enough to justify building new
+    probe recipes for two niche base families), not agent-actionable work. No code change
+    this cycle -- pure verification of already-landed work. Closing done.
+  updated: '2026-09-16T14:37:53Z'
   claimed_by: conductor-sched-2026-09-16T145200Z-kr-t105
   claimed_at: '2026-09-16T14:37:11Z'
   implementation_pr: 'silasfelinus/conductor#4442'
