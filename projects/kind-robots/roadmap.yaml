@@ -2405,7 +2405,7 @@ tasks:
 - id: t-108
   milestone: null
   title: Backfill live Resource.recommendedCfg for Pony LORA/LYCORIS rows from t-105 preview clipping
-  status: claimed
+  status: review
   gate_human: false
   stakes: reversible
   passes: 0
@@ -2435,9 +2435,24 @@ tasks:
     fetches the t-105 Pony preview cohort, computes clipping, prints the proposed
     Resource -> CFG changes, and only PATCHes null-recommendedCfg rows under an explicit
     --apply flag -- rather than a one-shot mutation with no preview step.
-  updated: '2026-09-16T21:42:37Z'
+
+    Landed silasfelinus/kind_robots#2785 (utils/scripts/backfillPonyResourceCfgViaApi.ts):
+    for each active LORA/LYCORIS Resource on a Pony-family checkpoint with no recommendedCfg
+    yet, fetches its t-105 preview, computes RGB-channel-clipped fraction, interpolates via
+    ponyCfgFromClipping(), PATCHes through the existing authenticated route. Methodology
+    verified before trusting it: AsheLoLXL's own t-105 preview computed to 3.31% channel-
+    clipped against the hand-measured 3.48% cfg-10 sweep point for the same LoRA -- close
+    enough given different renders to trust the method (greyscale-luminance and whole-pixel
+    definitions measured ~4x and ~9x low on the same image and were rejected). Two dry runs
+    against production (no mutation) found 769 Pony-family LORA/LYCORIS candidates with
+    recommendedCfg still null, non-degenerate distribution across the curve (331 at floor
+    3.00, 372 spread 3-13, 52 at ceiling 13.00). vue-tsc/eslint clean. Live --apply pass
+    launched this session; result counts to follow in the next note before this task closes
+    to done.
+  updated: '2026-09-16T21:43:28Z'
   claimed_by: claude-scheduled-20260916T2200Z-kr-t108
   claimed_at: '2026-09-16T21:42:37Z'
+  implementation_pr: 'silasfelinus/kind_robots#2785'
 
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
