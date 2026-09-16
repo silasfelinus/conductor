@@ -2351,11 +2351,11 @@ tasks:
 - id: t-107
   milestone: null
   title: Backfill Resource.recommendedCfg from t-105's preview-batch clipping data
-  status: ready
+  status: claimed
   gate_human: false
   stakes: reversible
   passes: 0
-  owner: null
+  owner: worker
   approved_by_human: false
   note: |-
     Kaizen follow-up from t-106 (kind_robots#2782, merged 2026-09-16): the column and the
@@ -2386,7 +2386,9 @@ tasks:
     two LoRAs t-106's own note already measured by hand (AsheLoLXL, ArtgermLycoXL) and
     confirm the backfill's number lands close to what that sweep actually showed, before
     trusting it across the rest of the pony-family catalog.
-  updated: '2026-09-16T18:43:38Z'
+  updated: '2026-09-16T19:19:04Z'
+  claimed_by: openai-scheduled-2026-09-16T191904Z-kind-robots-t107-a11
+  claimed_at: '2026-09-16T19:19:04Z'
 
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
