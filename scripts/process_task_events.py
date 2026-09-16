@@ -275,6 +275,26 @@ def verify_event_ownership(task: dict[str, Any], event: dict[str, Any], operatio
     TaskEventCollision so process() consumes the losing event rather than letting a
     session that lost the claim later flip the winner's task to review/done/etc.
     A `force: true` event bypasses this check (explicit override).
+
+    Deliberately does NOT consult roadmap_claims.claim_is_stale() the way the
+    `claim` branch of compute_transition_ops() does (conductor/t-175, decided
+    2026-09-16, following the claim-branch fix in t-173). The two branches face
+    different risks: a fresh `claim` on a stale claim only *starts* new work, so
+    letting a stale claimed_by lose to a new one is safe. A `review`/`done` event
+    *mutates* a task that a second session may already be mid-implementation on if
+    it reclaimed in the meantime -- honoring a stale session's late event over that
+    could silently revert or misattribute the reclaiming session's in-progress
+    work, which is exactly the hazard this check exists to prevent. There is also
+    no gap this would need to fix: a session that legitimately wants to take over
+    stale work already has a safe on-ramp -- submit a `claim` event first (which
+    the t-173 fix lets succeed over a stale claim), establishing itself as the new
+    `claimed_by`; only then does its own review/done event match trivially. A
+    session finishing work under its *own* still-live claimed_by session id always
+    passes here regardless of staleness, since `session == claimed_by` already
+    short-circuits the mismatch check below. So the stricter, staleness-blind
+    behavior here is intentional, not an oversight -- see
+    test_later_done_from_non_owning_session_is_rejected_even_when_claim_is_stale
+    in tests/test_process_task_events.py for the pinned contract.
     """
     if event.get("force") or event.get("session") is None:
         return

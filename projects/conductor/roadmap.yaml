@@ -3234,7 +3234,7 @@ tasks:
 - id: t-175
   milestone: m2
   title: Decide whether a stale claim should also unblock a later review/done event from a different session
-  status: claimed
+  status: review
   stakes: reversible
   passes: 0
   owner: worker
@@ -3264,9 +3264,21 @@ tasks:
     plus a regression test pinning the decided behavior -- so a future kaizen from a
     session that only reads the claim branch doesn't propose "fixing" this a third
     time without the context above.
+
+    DECISION (2026-09-16): leave verify_event_ownership() as intentionally
+    staleness-blind, not a gap. A fresh `claim` event replacing a stale claim only
+    starts new work, so letting staleness win there is safe (t-173's fix). A
+    review/done event mutates a task a different session may already be
+    mid-implementation on if it reclaimed in the meantime; honoring a stale
+    session's late event there could silently revert/misattribute that work. No
+    extension needed: a session that wants stale work already has a safe on-ramp
+    via a fresh claim event, after which its own review/done event matches
+    trivially. Documented in verify_event_ownership()'s docstring and pinned by
+    test_later_done_from_non_owning_session_is_rejected_even_when_claim_is_stale.
+    Full pytest suite: 2006 passed, 30 skipped, 0 failed.
   claimed_by: claude-web-2026-09-16T152600Z-cd-t175
   claimed_at: '2026-09-16T15:31:46Z'
-  updated: '2026-09-16T15:31:46Z'
+  updated: '2026-09-16T15:36:05Z'
 - id: t-174
   milestone: m2
   title: Add an integration test around check_pr_handoff_template.py's main() covering stdin/stderr and exit code together

@@ -583,3 +583,6 @@ queueDepth: PENDING=3, DONE=10977, CANCELLED=11025 (all-time). oldestPending: id
 
 ## 2026-09-16T04:34:57Z | kind-robots/t-105 | growing
 queueDepth: PENDING=1911, RUNNING=1, DONE=11577, FAILED=2, CANCELLED=11090 (all-time). oldestPending: id=23040, age=53549s (~14.9h), engine=COMFY. windowThroughput (24h): PENDING=1911, RUNNING=1, DONE=613, FAILED=2, CANCELLED=358. recentFailed (last 2): 1/2 = ComfyUI workflow error (other/unspecified node) [(none)=1]; 1/2 = ComfyUI POST /prompt failed at http://#.0.0.1:# (timed out). No accepted prompt for client Silas-PC-prompt-# appeared wi [(none)=1].
+
+## 2026-09-16T15:31:04Z | growing
+queueDepth: PENDING=2148, RUNNING=1, DONE=11945, CANCELLED=11320 (all-time). oldestPending: id=23040, age=92916s (~25.8h), engine=COMFY. windowThroughput (24h): PENDING=2147, RUNNING=1, DONE=827, CANCELLED=234. recentFailed: none.

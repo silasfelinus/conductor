@@ -805,6 +805,38 @@ class TaskEventProcessorTests(unittest.TestCase):
         self.assertNotIn("ALREADY_CLAIMED", result)
         self.assertEqual(self.roadmap()["tasks"][0]["status"], "done")
 
+    def test_later_done_from_non_owning_session_is_rejected_even_when_claim_is_stale(self):
+        # conductor/t-175: verify_event_ownership() deliberately does NOT consult
+        # claim_is_stale() the way the claim branch does (t-173) -- a stale
+        # claimed_by must still block a review/done event from a *different*
+        # session, because that session might be about to silently overwrite a
+        # third session's in-progress reclaim. The safe on-ramp for a session that
+        # wants to take over stale work is to submit its own `claim` event first
+        # (which t-173 already lets succeed over a stale claim), not to have its
+        # done/review event bypass ownership directly. Fixture t-003 is already
+        # `claimed` by sess-stale with a claimed_at far past CLAIM_TTL_MINUTES.
+        before = (self.root / "projects" / "demo" / "roadmap.yaml").read_text(encoding="utf-8")
+
+        intruder_done = self.write_event(
+            "done.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-003",
+                "operation": "done",
+                "session": "sess-fresh",
+            },
+        )
+        result = MODULE.process(intruder_done, dry_run=False)
+
+        after = (self.root / "projects" / "demo" / "roadmap.yaml").read_text(encoding="utf-8")
+        self.assertIn("ALREADY_CLAIMED", result)
+        self.assertEqual(before, after)
+        task = next(t for t in self.roadmap()["tasks"] if t["id"] == "t-003")
+        self.assertEqual(task["status"], "claimed")
+        self.assertEqual(task["claimed_by"], "sess-stale")
+        self.assertFalse(intruder_done.exists())
+
     def test_sessionless_done_still_applies_backward_compatible(self):
         # Legacy path: a done event with no session skips the ownership check and
         # applies as before, so existing sessionless workflows keep working.
