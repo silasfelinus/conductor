@@ -628,3 +628,27 @@ tasks:
     character with long silver hair"). That is the opposite failure from the
     rut and would mean the seeds are landing but the prose is not absorbing
     them. Both failures are authoring-contract fixes.
+- id: t-031
+  milestone: null
+  title: Guard against workflow-behavior contract drift when an intentional failure policy changes
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-09-16T22:05:00Z'
+  note: >
+    Kaizen from conductor#4519 (dream-cycle/t-006, merged 2026-09-16): removing
+    daily-digest.yml's "Fail after digest if Daily Dream cycle failed" step (to
+    make sidecar problems warning-only) left tests/test_daily_digest_resilience.py
+    asserting the OLD behavior (that exact step must exist and gate on it) while
+    tests/test_daily_digest_schedule.py's new test asserted the opposite. Both
+    passed independently at HEAD before the change and only conflicted once one
+    of them was touched -- a full pytest run caught it this time, but nothing
+    stops two workflow-behavior contracts from silently asserting opposite
+    policies if a future change only edits one of them and CI happens to run a
+    filtered subset. Add either a single shared assertion helper both tests call
+    (so a policy change can only be made in one place) or a lightweight
+    cross-check test that fails if the two files' daily-digest.yml assertions
+    ever disagree about whether the post-email failure step exists. Scope this to
+    daily-digest.yml's contract tests specifically; a repo-wide version of this
+    guard is out of scope for one kaizen task.
