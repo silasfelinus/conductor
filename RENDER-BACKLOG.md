@@ -580,3 +580,6 @@ queueDepth: PENDING=3, RUNNING=1, DONE=10977, CANCELLED=11024 (all-time). oldest
 
 ## 2026-09-15T11:53:13Z | lora-ingestion/t-003 | draining
 queueDepth: PENDING=3, DONE=10977, CANCELLED=11025 (all-time). oldestPending: id=22838, age=2204s (~0.6h), engine=COMFY. windowThroughput (24h): PENDING=3, DONE=435, CANCELLED=293. recentFailed: none.
+
+## 2026-09-16T04:34:57Z | kind-robots/t-105 | growing
+queueDepth: PENDING=1911, RUNNING=1, DONE=11577, FAILED=2, CANCELLED=11090 (all-time). oldestPending: id=23040, age=53549s (~14.9h), engine=COMFY. windowThroughput (24h): PENDING=1911, RUNNING=1, DONE=613, FAILED=2, CANCELLED=358. recentFailed (last 2): 1/2 = ComfyUI workflow error (other/unspecified node) [(none)=1]; 1/2 = ComfyUI POST /prompt failed at http://#.0.0.1:# (timed out). No accepted prompt for client Silas-PC-prompt-# appeared wi [(none)=1].
