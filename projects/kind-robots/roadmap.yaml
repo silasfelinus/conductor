@@ -2348,6 +2348,45 @@ tasks:
   claimed_by: claude-scheduled-20260916T184324Z-kr-t106-slice2
   claimed_at: '2026-09-16T18:43:38Z'
   implementation_pr: 'silasfelinus/kind_robots#2782'
+- id: t-107
+  milestone: null
+  title: Backfill Resource.recommendedCfg from t-105's preview-batch clipping data
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  owner: null
+  approved_by_human: false
+  note: |-
+    Kaizen follow-up from t-106 (kind_robots#2782, merged 2026-09-16): the column and the
+    enqueue-path wiring both landed, but recommendedCfg is still null for every Resource --
+    the backfill itself was deliberately left as its own slice rather than rushed.
+
+    THE GAP. sharp (already a dependency) can compute clipping -- the fraction of pixels at
+    0 or 255 -- from each t-105 preview ArtImage cheaply. But a raw clipping percentage is
+    not a cfg value, and there is only ONE finished-probe measurement per LoRA (the family's
+    default cfg), not a sweep. Converting "this LoRA clipped X% at cfg 10" into a
+    recommendedCfg number requires inverting a family's cfg-vs-clipping curve -- and only the
+    pony family has one, from the exact sweep t-106's own note documents (realcartoonPony_v1,
+    AsheLoLXL: cfg 3->0.11%, 7->2.03%, 9->3.43%, 10->3.48%, 11->4.87%, 13->5.39%, in
+    utils/checkpointProfiles.ts). illustrious/sdxl/sd15/distilled have no measured curve
+    (checkpointProfiles.ts marks them PROVISIONAL), so there is nothing defensible to invert
+    for LoRAs on those checkpoints yet -- leave their recommendedCfg null rather than invent
+    a number.
+
+    SHAPE, deliberately narrow for pass 1: for each active LORA/LYCORIS Resource with a
+    Pony-family checkpointResourceId preview ArtImage from the t-105 batch and no
+    recommendedCfg yet, compute that image's clipping fraction, linearly interpolate the
+    pony reference curve above to find the cfg where that same clipping level would occur,
+    and write it (clamped to the family's sane range, e.g. 3-13) as Resource.recommendedCfg.
+    Leave every non-pony LoRA's recommendedCfg null -- that is a separate follow-up once a
+    family gets its own measured curve, not a gap to paper over here.
+
+    VERIFY before writing anything live: spot-check the computed recommendedCfg against the
+    two LoRAs t-106's own note already measured by hand (AsheLoLXL, ArtgermLycoXL) and
+    confirm the backfill's number lands close to what that sweep actually showed, before
+    trusting it across the rest of the pony-family catalog.
+  updated: '2026-09-16T18:43:38Z'
 
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
