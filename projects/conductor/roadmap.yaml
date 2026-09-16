@@ -3098,10 +3098,10 @@ tasks:
 - id: t-171
   milestone: m2
   title: Enforce the full PR handoff template (Stakes/Flags-for-Reviewer/Kaizen-suggestion) even on small doc-only PRs
-  status: ready
+  status: claimed
   stakes: reversible
   passes: 0
-  owner: null
+  owner: worker
   note: |-
     Kaizen from t-160 (PR #4462, 2026-09-16 scheduled Reviewer session): the Worker's PR body
     for a small, well-scoped, one-file doc change contained only Summary/Scope/Verification —
@@ -3118,7 +3118,9 @@ tasks:
     call it out ad hoc every time. If enforcement isn't practical, at minimum confirm the
     Worker's own template/prompt still lists the full template so this is drift, not a
     template that was already thinned out.
-  updated: '2026-09-16T00:32:00Z'
+  updated: '2026-09-16T04:17:53Z'
+  claimed_by: openai-scheduled-2026-09-16T041753Z-conductor-t171-a11
+  claimed_at: '2026-09-16T04:17:53Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
