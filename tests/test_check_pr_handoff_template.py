@@ -1,4 +1,8 @@
-from scripts.check_pr_handoff_template import REQUIRED_SECTIONS, missing_sections
+from scripts.check_pr_handoff_template import (
+    REQUIRED_SECTIONS,
+    github_error_annotation,
+    missing_sections,
+)
 
 
 def complete_body() -> str:
@@ -12,6 +16,12 @@ def test_complete_handoff_has_no_missing_sections():
 def test_missing_stakes_is_reported():
     body = complete_body().replace("### Stakes\ncontent\n\n", "")
     assert missing_sections(body) == ["### Stakes"]
+
+
+def test_github_annotation_names_missing_heading():
+    assert github_error_annotation("### Stakes") == (
+        "::error title=Worker PR handoff incomplete::Missing required heading: ### Stakes"
+    )
 
 
 def test_flags_for_reviewer_is_not_required_when_empty():

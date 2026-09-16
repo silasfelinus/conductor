@@ -25,6 +25,11 @@ def missing_sections(body: str) -> list[str]:
     return [heading for heading in REQUIRED_SECTIONS if heading not in body]
 
 
+def github_error_annotation(heading: str) -> str:
+    """Return a GitHub Actions workflow-command annotation for a missing heading."""
+    return f"::error title=Worker PR handoff incomplete::Missing required heading: {heading}"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--head-ref", required=True)
@@ -37,6 +42,7 @@ def main() -> int:
     body = sys.stdin.read()
     missing = missing_sections(body)
     if missing:
+        print(github_error_annotation(missing[0]), file=sys.stderr)
         print("ERROR: Worker PR body is missing required handoff section(s):", file=sys.stderr)
         for heading in missing:
             print(f"  - {heading}", file=sys.stderr)
