@@ -3198,10 +3198,10 @@ tasks:
 - id: t-173
   milestone: m2
   title: Extract one shared stale-claim-eligibility helper used directly by next_ready_task.py, claim_task.py, and process_task_events.py
-  status: ready
+  status: claimed
   stakes: reversible
   passes: 0
-  owner: null
+  owner: worker
   note: |-
     Kaizen from PR #4488 (2026-09-16 scheduled Reviewer session): the selector
     (`next_ready_task.py`), the local claimer (`claim_task.py`), and the connector
@@ -3218,6 +3218,9 @@ tasks:
     re-deriving staleness themselves. Once that lands, `promote_stale_task_event_claims.py`
     becomes redundant and can be removed — the processor's own collision check would
     already agree with the selector and local claimer.
+  claimed_by: conductor-sched-2026-09-16T145900Z-cd-t173
+  claimed_at: '2026-09-16T14:39:37Z'
+  updated: '2026-09-16T14:39:37Z'
 
 - id: t-174
   milestone: m2
