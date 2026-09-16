@@ -37,14 +37,13 @@ def test_daily_dream_failures_are_recorded_without_blocking_digest_delivery():
     assert "exit 1" not in verify
 
 
-def test_daily_dream_failure_is_restored_after_email_has_had_its_chance():
+def test_daily_dream_sidecar_failure_is_not_restored_after_email_delivery():
     text = WORKFLOW.read_text(encoding="utf-8")
     email_pos = text.index("      - name: Email via Brevo")
-    final_pos = text.index("      - name: Fail after digest if Daily Dream cycle failed")
-    final = text[final_pos:]
+    creative_revision_pos = text.index("  creative-revision:", email_pos)
+    after_email = text[email_pos:creative_revision_pos]
 
-    assert email_pos < final_pos
-    assert "if: ${{ always() }}" in final
-    assert "steps.daily_dream_author.outcome" in final
-    assert "steps.daily_dream_build.outcome" in final
-    assert 'exit "$failed"' in final
+    assert "Fail after digest if Daily Dream cycle failed" not in text
+    assert "steps.daily_dream_author.outcome" not in after_email
+    assert "steps.daily_dream_build.outcome" not in after_email
+    assert 'exit "$failed"' not in after_email
