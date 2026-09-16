@@ -14086,3 +14086,15 @@ records:
   lesson: Cross-workflow stalls at unrelated steps, despite an existing job timeout, are runner/platform
     evidence; do not optimize the most frequently observed command unless the failure reproduces specifically
     there.
+- date: 2026-09-16
+  project: rainbow-butterflies
+  task: t-053
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A "document this orphaned API surface" task can surface a real design question (AgentProfile-bound
+    credentials have no UI in kind_robots) without it being safe to file as a fix task, when the other half of
+    the flow lives in a repo outside the session's access scope (rainbowbutterflies) -- flag the open question
+    in the note for a session that can see both sides instead of guessing at scope.
