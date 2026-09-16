@@ -1944,7 +1944,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: Generate owned preview art for the LoRA catalog, starting with the 223 blind rows
-  status: claimed
+  status: ready
   owner: worker
   stakes: reversible
   passes: 0
@@ -2202,7 +2202,25 @@ tasks:
     Re-probed once more after both batches: considered dropped to 19, plans to 1 -- the ENTIRE comfy/pony/sdxl blind lane is now exhausted. The only remaining plannable item is resourceId 1072 (flux), deliberately held back per the standing relay-wedge gates (conductor/t-165, t-167 -- both still status: needs-human, unresolved as of this cycle). The 19 remaining "considered" resources are NOT plannable at all: probe-plan's `skipped` list shows they're on base models with no still-image probe recipe (SD 2.1, Kontext, video/audio bases -- e.g. resourceId 1269 "Digital Illustration Style"/Kontext, 2706/2833 "SD 2.1 768"). This is a structural gap in probe-plan's recipe coverage, not a queue/relay issue -- worth a follow-up task to add still-image probe recipes for those base families if Silas wants blind coverage to reach 100%, but it's a scope decision for him/a new task, not something to force into this cycle.
 
     Re-arming to ready (recurring-shaped continuation). Next actionable step: once conductor/t-165 or t-167 clear (flux relay stable), queue the single remaining flux plan (resourceId 1072). Until then, this task has no more plannable blind-scope work in the comfy/sdxl lane -- next session should either (a) wait on the flux gate, or (b) consider filing a follow-up task for the 19 unsupported-base-model resources if broader coverage is wanted.
-  updated: '2026-09-16T13:34:57Z'
+
+    Cycle (2026-09-16T13:34Z, scheduled Conductor session): live probe-plan check
+    (scope=blind) shows the original 223-blind-row gap has already been almost entirely
+    closed by prior sessions -- only 19 blind LoRAs remain, of which 18 are structurally
+    unplannable (family=unsupported: SD 2.1 768 and Flux.1 Kontext bases have no still-image
+    probe recipe in loraProbe.ts) and 1 (resourceId 1072, an Epic Movie Poster FLUX LoRA)
+    was plannable. Enqueued its preview via POST /api/lora/probe-plan -> POST
+    /api/art/enqueue (ArtJob 26249, flux engine, entityArt write-back to Resource.imagePath)
+    -- confirmed queued (201, mana charged 0) and progressed PENDING -> RUNNING on a healthy
+    render box (check_render_box.py: heartbeat 0.2min, 77 completions/6h) before this
+    session ended; not yet confirmed DONE (Flux single-image renders can run several
+    minutes, and this session did not block indefinitely on one job). Next cycle: verify
+    ArtJob 26249 landed (GET /api/art/queue/26249, expect status DONE and a populated
+    artImageId / Resource.imagePath) and, if so, the batch-render scope of this task is
+    effectively complete (2209/2228 LoRAs now non-blind) with only the 18 structurally-
+    unsupported SD2.1/Kontext rows as a known, permanent gap -- worth a small follow-up task
+    only if a still-image probe recipe becomes feasible for those bases, not urgent. Re-
+    arming to ready pending that verification.
+  updated: '2026-09-16T13:37:24Z'
   claimed_by: conductor-sched-2026-09-16T133456Z-kr-t105
   claimed_at: '2026-09-16T13:34:57Z'
   implementation_pr: 'silasfelinus/conductor#4442'
