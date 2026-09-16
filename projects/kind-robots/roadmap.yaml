@@ -2240,7 +2240,7 @@ tasks:
 - id: t-106
   milestone: null
   title: Per-Resource recommendedCfg, backfilled from the preview batch's own clipping
-  status: claimed
+  status: review
   gate_human: false
   stakes: reversible
   passes: 0
@@ -2309,11 +2309,31 @@ tasks:
     prior 'Re-arming to ready for the next slice' entries above). Next slice: backfill
     Resource.recommendedCfg from t-105's clipping data, then wire the enqueue/render path to
     read it via loraStackCfgCeiling (kind_robots#2780) per engine.
-  updated: '2026-09-16T18:43:38Z'
+
+    Landed the next t-106 slice this session (local git + provisioned node_modules, not
+    connector-only): wired the already-merged pieces together. resolveEnqueueLoraResource
+    (server/utils/artLoraResource.ts) now selects Resource.recommendedCfg on the LoRA rows
+    it already fetches and returns it as recommendedCfgs, positionally aligned with
+    resourceIds. enqueue.post.ts threads that array into buildDefaultComfyWorkflow's new
+    loraRecommendedCfgs field. workflow.ts's KSampler cfg now resolves as cfgValue ||
+    loraStackCfgCeiling(profile.cfg, loraRecommendedCfgs) -- explicit caller cfg still wins,
+    family default unchanged today since recommendedCfg is still null repo-wide (verified
+    no-op). Deliberately scoped to buildDefaultComfyWorkflow only: buildSdxlImg2ImgWorkflow
+    pins cfg=2 by its own contract (verifyComfyOnlyGeneration.ts), and patchComfyWorkflow's
+    direct/relay route never resolves LoRAs against Resource so has nothing to read. Added
+    utils/scripts/verifyLoraCfgWiring.test.ts covering the ceiling wiring end to end, and
+    registered it plus the pre-existing (but never-wired-into-CI) verifyLoraCfg.test.ts in
+    package.json/contract-tests.yml. vue-tsc clean, eslint clean, full relevant test suite
+    (lora-cfg-ceiling, lora-cfg-wiring, comfy-only-generation, lora-chain) green. PR:
+    silasfelinus/kind_robots#2782, opened, CI in progress -- will merge when green. Next
+    slice after this: backfill Resource.recommendedCfg from t-105's clipping data (needs a
+    defensible per-LoRA cfg-from-clipping methodology, only the pony family has a measured
+    curve today -- deliberately left as its own follow-up rather than rushed into this PR).
+  updated: '2026-09-16T18:43:50Z'
   owner: worker
   claimed_by: claude-scheduled-20260916T184324Z-kr-t106-slice2
   claimed_at: '2026-09-16T18:43:38Z'
-  implementation_pr: 'silasfelinus/kind_robots#2781'
+  implementation_pr: 'silasfelinus/kind_robots#2782'
 
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
