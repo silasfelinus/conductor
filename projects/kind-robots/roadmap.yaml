@@ -2240,7 +2240,7 @@ tasks:
 - id: t-106
   milestone: null
   title: Per-Resource recommendedCfg, backfilled from the preview batch's own clipping
-  status: ready
+  status: claimed
   gate_human: false
   stakes: reversible
   passes: 0
@@ -2287,7 +2287,10 @@ tasks:
     Re-arming to ready for the next slice.
 
     Connector-only continuation inspected the merged first slice and the next schema slice. The next change requires an atomic edit to the large existing prisma/schema.prisma plus generated Prisma client parity; this connector surface exposes full-file replacement but no patch/edit primitive, and the runtime has no authenticated git transport. No unsafe partial migration was committed. Also re-audited the superseded prior t-106 branch: it is diverged from main and its only remaining diff is the unwanted checkpointProfiles.ts rewrite (+10/-60), confirming it should be force-deleted by branch-janitor rather than salvaged. Releasing t-106 to ready for a session with authenticated git or a patch-capable connector.
-  updated: '2026-09-16T15:29:00Z'
+  updated: '2026-09-16T16:20:05Z'
+  owner: worker
+  claimed_by: openai-scheduled-2026-09-16T162005Z-kind-robots-t106-a11
+  claimed_at: '2026-09-16T16:20:05Z'
 
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
