@@ -2227,9 +2227,9 @@ tasks:
 - id: t-106
   milestone: null
   title: Per-Resource recommendedCfg, backfilled from the preview batch's own clipping
-  status: review
+  status: ready
   gate_human: false
-  owner: worker
+  owner: null
   stakes: reversible
   passes: 0
   approved_by_human: false
@@ -2266,9 +2266,17 @@ tasks:
     Conflating the two would bake one person's contrast preference into a catalog field.
 
     Implemented the first bounded t-106 slice: a pure loraStackCfgCeiling helper that enforces the task's minimum-across-selected-LoRAs rule with family fallback, plus contract coverage. The nullable Resource column and backfill remain follow-up work in this same task.
-  updated: '2026-09-16T13:24:00Z'
+
+    Reviewer (Claude) merged silasfelinus/kind_robots#2780 (squash, CI 45/45 green,
+    mergeable_state clean): adds the pure loraStackCfgCeiling helper (minimum-across-
+    selected-LoRAs with family fallback) plus contract tests, matching the task's stacking
+    rule. This is only the first bounded slice -- the nullable Resource.recommendedCfg
+    column and its backfill from t-105's clipping data are still open under this same task.
+    Re-arming to ready for the next slice.
+  updated: '2026-09-16T14:27:28Z'
   claimed_by: openai-scheduled-2026-09-16T131551Z-kind-robots-t106-a11
   claimed_at: '2026-09-16T13:15:51Z'
+  implementation_pr: 'silasfelinus/kind_robots#2780'
 
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
