@@ -2945,7 +2945,15 @@ tasks:
     staleRunning while working perfectly normally. Any alarm keyed on staleRunning will cry
     wolf on this lane. Note 22838 was correctly flagged stale by that same threshold -- the
     signal is not useless, it just cannot distinguish "slow lane" from "wedged" on its own.
-  updated: '2026-09-16T02:05:00Z'
+
+    Cross-reference (scheduled Conductor session, 2026-09-16T~05:50Z, from coloring-
+    book/t-022 cycle 11): same evidence just appended to t-165 -- two consecutive kr-006
+    render submissions (ArtJob 25418, then recovery ArtJob 25419) timed out after 600s/300s
+    respectively without ever completing, while check_render_box.py showed the engine UP
+    throughout with a healthy heartbeat and steady throughput elsewhere. Matches this task's
+    own documented pattern (engine processing, not globally wedged, but individual jobs
+    hang). No action taken beyond recording.
+  updated: '2026-09-16T05:51:32Z'
 
 - id: t-168
   milestone: m2
