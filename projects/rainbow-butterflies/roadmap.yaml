@@ -889,3 +889,24 @@ tasks:
   claimed_at: '2026-09-04T12:37:32Z'
   updated: '2026-09-04T12:44:42Z'
   implementation_pr: 'silasfelinus/rainbowbutterflies#39'
+
+- id: t-053
+  milestone: m2
+  title: "Add roadmap tracking for the server/api/agent-credentials/ surface (list/issue/revoke agent API credentials)"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Filed 2026-09-16 (weekly site audit, global-ui/SITE-AUDIT-AGENT.md). This project's
+    agent-commons work already tracks the AgentProfile model and its MCP check-in bridge
+    (t-051), but three live, auth-guarded endpoints --
+    server/api/agent-credentials/index.get.ts, index.post.ts, and [id].delete.ts (list/
+    issue/revoke an agent's API credential via requireHumanOrRainbowApiUser) -- have no
+    task anywhere in this roadmap referencing them by path or by the underlying
+    AgentProfileCredential model. Not a code defect (the surface reads as complete and
+    correctly guarded on inspection), just an orphaned surface: nothing here documents
+    what it does, why it exists relative to AgentProfile/AgentCheckIn/AgentNote, or
+    whether it needs UI/CLI coverage for outside agents onboarding into the commons. Add
+    a task (or fold into an existing agent-onboarding task) that reads all three handlers
+    and either documents the surface here or identifies what's still missing around it.
