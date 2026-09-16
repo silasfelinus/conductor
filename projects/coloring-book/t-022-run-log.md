@@ -2682,3 +2682,27 @@ third attempt or a fresh submission per the transient-failure triage rule. Re-ar
 recovery pass once conductor/t-165/t-167's underlying relay wedge actually clears — retrying the
 recovery call itself without that has now been tried twice each with no effect. t-039 remains
 the blocker for all further `generate-bw` work across all three books.
+
+Cycle 16 (2026-09-16T~16:30Z, scheduled conductor Agent run): `check_render_box.py` confirmed
+the render box UP and healthy (31 completions/6h, Comfy heartbeat 0.2 min old). Checked whether
+either underlying blocker had cleared since cycle 15: conductor/t-165 and t-167 are both still
+`status: needs-human`, unchanged; coloring-book/t-039 is still `status: needs-human` /
+`soft_gate: true`, unchanged. Re-ran both open recovery candidates via
+`consume_coloring_book_studio_request.py --live --timeout 900` (no external shell wrapper) —
+`hollywood-recast/hwr-008` (job 25421) and `kind-robots/kr-006` (job 25419) both came back
+"still queued/running; preserving the event without submitting a duplicate," identical to every
+prior recovery attempt on these two job ids. `coloring_queue_status.py` for all three books:
+`queue_integrity_safe`/`recovery_safe` all `true`, zero duplicate job/entry ids;
+`recommended_action` is `complete` for Monster Recast (0 pending, fully drained) and
+`recover-existing-jobs` for Hollywood Recast and Kind Robots (both still pointing at the same
+two wedged jobs). `coloring_proposal_status.py --check` confirms all three books' `next` action
+is deriving a BW counterpart from an accepted color master — i.e. `generate-bw` work, still
+blocked on t-039 across all three books. No unblocked slice existed this cycle. No duplicate
+submissions; `git status` after both recovery attempts confirmed zero working-tree changes.
+Re-arming to ready (recurring), releasing the claim.
+
+**Next actionable step (unchanged):** hwr-008 (job 25421) and kr-006 (job 25419) both need a
+recovery pass once conductor/t-165/t-167's underlying relay wedge clears; t-039 remains the
+blocker for all further `generate-bw` work across all three books. Nothing in this cycle changed
+that picture — a future cycle should re-check t-165/t-167/t-039 status before repeating the same
+recovery probe again.
