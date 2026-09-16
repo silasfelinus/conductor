@@ -3231,6 +3231,39 @@ tasks:
   updated: '2026-09-16T14:49:46Z'
   implementation_pr: 'silasfelinus/conductor#4502'
 
+- id: t-175
+  milestone: m2
+  title: Decide whether a stale claim should also unblock a later review/done event from a different session
+  status: ready
+  stakes: reversible
+  passes: 0
+  owner: null
+  note: |-
+    Kaizen from t-173 (PR #4502, 2026-09-16 scheduled Reviewer session):
+    `process_task_events.py`'s `compute_transition_ops()` claim branch now consults
+    `roadmap_claims.claim_is_stale()` so a claim event can replace an abandoned claim
+    without `force: true`. `verify_event_ownership()` -- the separate check guarding
+    non-claim transitions (`review`, `done`, etc.) tagged with a `session` -- is a
+    different code path and does NOT consult `claim_is_stale()` at all: it rejects any
+    session-tagged event whose `session` doesn't match the task's live `claimed_by`,
+    stale or not.
+
+    Decide whether that's a gap or intentional stricter behavior. Argument for
+    extending it: a session that let its own claim go stale (crashed, never returned)
+    and is then reclaimed by a second session should not have its late-arriving
+    `review`/`done` event silently rejected either -- today it collides exactly like a
+    live ownership conflict would. Argument for leaving it as-is: unlike a fresh
+    *claim* (which only starts new work), a `review`/`done` event mutates a task a
+    DIFFERENT session may already be mid-implementation on if the reclaim already
+    happened -- applying a stale session's late done event over that could silently
+    revert or misattribute the second session's in-progress work, which is exactly the
+    hazard the ownership check exists to prevent.
+
+    Whichever way this resolves, add a docstring note next to
+    `verify_event_ownership()` (or wherever the fix lands) making the choice explicit,
+    plus a regression test pinning the decided behavior -- so a future kaizen from a
+    session that only reads the claim branch doesn't propose "fixing" this a third
+    time without the context above.
 - id: t-174
   milestone: m2
   title: Add an integration test around check_pr_handoff_template.py's main() covering stdin/stderr and exit code together
