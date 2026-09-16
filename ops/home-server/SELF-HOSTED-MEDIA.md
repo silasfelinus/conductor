@@ -28,8 +28,31 @@ and pm2 run in Windows rather than WSL.
 6. The GitHub consumer performs a public HEAD request against the media origin.
    If verification fails, it keeps a recoverable copy in `projects/process/`.
 
-Conductor-owned project images still use the existing `projects/process/` and
-`projects/images/` flow.
+Conductor-owned generated project images continue to use the existing
+`projects/process/` and `projects/images/` flow. Large binary media that is not
+usefully versioned as source text, such as project video masters, may instead live
+on the self-hosted media origin when the project records a stable public media URL.
+This is a storage policy, not permission to delete a tracked source file.
+
+## Conductor large-binary migration policy
+
+For a tracked Conductor binary being moved to self-hosted media:
+
+1. Treat the tracked file as the only copy until proven otherwise.
+2. Upload or copy it to the intended media path using a machine with the media share mounted.
+3. Perform a public `HEAD` request against the exact final media URL and require HTTP 200.
+4. Update every project document or data record that refers to the tracked path so it points at the verified media URL.
+5. Only after steps 2-4 succeed may a separate, reviewable change remove the tracked binary from the current tree.
+6. Do not rewrite Git history to reclaim old object bytes. The goal is to stop repository growth without invalidating existing clones.
+
+If the media share is unavailable, the upload cannot be verified, or the public
+probe is anything other than 200, leave the tracked binary in place. A local copy,
+an intended URL, or a successful upload without the public probe is not delivery.
+
+This policy does not move ordinary Conductor project images out of the existing
+image-distribution pipeline. It provides an explicit home for unusually large
+binary assets where Git is serving as an expensive file bucket rather than useful
+version history.
 
 ## Windows relay rollout
 
@@ -100,13 +123,12 @@ The rollout is intentionally wrapper-based:
 No database URL migration is involved. ArtImage records and front-end content
 continue using `/images/...`.
 
-## Final repository migration
+## Final Kind Robots repository migration
 
 After the direct smoke test succeeds:
 
 1. Run the final incremental rsync from Kind Robots to Unraid without `--delete`.
-2. Add the Vercel `/images/:path*` redirect to the media origin.
-3. Verify representative app pages and folder collections.
-4. Stop accepting new binaries under `kind_robots/public/images`.
-5. Remove the tracked image tree in a separate PR.
-6. Rewrite Git history only after active branches and working copies are ready.
+2. Verify representative app pages and folder collections against the media origin.
+3. Stop accepting new binaries under `kind_robots/public/images`.
+4. Remove the tracked image tree in a separate PR only after the public copies are verified.
+5. Leave Git history intact. Historical object size is accepted; future binary growth is the problem this policy prevents.
