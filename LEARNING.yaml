@@ -14140,3 +14140,17 @@ records:
     forcibly-terminated production script call, and prefer omitting an external timeout
     wrapper (or sizing it well past the script's documented internal timeout) over guessing a
     shorter one.
+- date: 2026-09-16
+  project: conductor
+  task: t-172
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Clean first-pass success. A narrowly-scoped CI-annotation feature (one
+    ::error:: line naming the first missing heading, existing stderr list untouched)
+    with a regression test asserting the exact emitted text merged with all 23 checks
+    green on the first push, including its own PR passing the handoff-template gate
+    it is adjacent to.
