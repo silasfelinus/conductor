@@ -14202,3 +14202,21 @@ records:
     preflight (plus its test and workflow step) be deleted rather than maintained
     alongside the thing it was working around -- a smaller total diff than the
     workaround it replaced (68 insertions/177 deletions).
+- date: '2026-09-16'
+  project: conductor
+  task: t-175
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Not every asymmetry between two similar-looking code paths is a bug to converge.
+    verify_event_ownership() (review/done) and the claim branch of
+    compute_transition_ops() (t-173) both touch roadmap_claims.claim_is_stale(), but
+    only the claim branch should: a fresh claim over a stale one only starts new work,
+    while a stale session's late review/done event could silently overwrite a second
+    session's in-progress reclaim. The existing claim path already gives a legitimate
+    session a safe way to take over stale work, so no extension was needed --
+    documenting the asymmetry in the docstring (with a pinning regression test) closed
+    the decision task without changing behavior.

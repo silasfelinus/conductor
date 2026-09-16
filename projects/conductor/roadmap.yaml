@@ -3234,7 +3234,7 @@ tasks:
 - id: t-175
   milestone: m2
   title: Decide whether a stale claim should also unblock a later review/done event from a different session
-  status: review
+  status: done
   stakes: reversible
   passes: 0
   owner: worker
@@ -3278,7 +3278,8 @@ tasks:
     Full pytest suite: 2006 passed, 30 skipped, 0 failed.
   claimed_by: claude-web-2026-09-16T152600Z-cd-t175
   claimed_at: '2026-09-16T15:31:46Z'
-  updated: '2026-09-16T15:36:05Z'
+  updated: '2026-09-16T15:42:53Z'
+  implementation_pr: 'silasfelinus/conductor#4505'
 - id: t-174
   milestone: m2
   title: Add an integration test around check_pr_handoff_template.py's main() covering stdin/stderr and exit code together
