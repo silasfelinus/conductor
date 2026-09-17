@@ -116,7 +116,7 @@ tasks:
 - id: t-010
   milestone: m3
   title: Graduation flow (monorepo app to its own repo)
-  status: review
+  status: done
   passes: 0
   stakes: irreversible
   gate_human: true
@@ -215,7 +215,20 @@ tasks:
     monorepo. Both PRs are needs-human per design section 5c.
 
     Decision accepted under Silas's 2026-09-07 default-recommendation policy. Use the lower-risk squash-graduation model rather than inventing a commit-replay history service: preserve full historical provenance in Conductor and link back to it from the graduated repo. Monorepo apps without an individual owner may be graduated only by an admin. Require an already-connected GitHub installation and explicitly selected existing target repo; do not create repos implicitly. Target-repo push and monorepo removal PRs remain explicit review gates because they mutate real repositories.
-  updated: '2026-09-17T15:48:36Z'
+
+    Merged kind_robots#2802 (silasfelinus/kind_robots@8cff47a) 2026-09-17: admin-only POST
+    /api/appmaker/graduate-request (files a Todo, does not push to GitHub), GET
+    /api/appmaker/apps extended with graduated/pendingGraduations, admin-only Graduate
+    trigger + repo picker in appmaker-page.vue's fleet cards, and
+    verifyAppmakerGraduateRequestGuard.ts (+selftest) wired into contract-tests.yml. All 51
+    kind_robots CI checks green (Build production image still in flight at merge, non-
+    required per established precedent). This closes the request-filing half of graduation
+    per Silas's 2026-09-07 decision (squash graduation, admin-only, existing-granted-repo-
+    only). The squash-push executor itself (conductor-script + kind_robots-endpoint pair
+    that mints an installation token and writes a single commit via the Git Data API, then
+    opens the monorepo-removal PR) is separate, higher-risk infrastructure and remains
+    unbuilt -- filed as appmaker/t-015 (next_free_task_id.py) rather than left implicit.
+  updated: '2026-09-17T15:54:56Z'
   owner: worker
   claimed_by: claude-scheduled-20260917T153609Z-appmaker-t010
   claimed_at: '2026-09-17T15:36:09Z'
