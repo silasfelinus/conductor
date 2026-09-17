@@ -637,7 +637,7 @@ tasks:
 - id: t-037
   milestone: m7
   title: "Delete the client-side beat loop and rewrite its ~25 verifyStorybook*Guard scripts"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-036, t-052]
@@ -651,10 +651,19 @@ tasks:
     Connector dependency audit before deletion found a sequencing hazard that the current t-037/t-053 notes do not fully encode. stores/storybookStore.ts is still imported directly by components/storybook/storybook-life-run.vue, while t-053 deliberately keeps that component until after t-037 and itself depends on t-037. Therefore t-037 must not delete storybookStore.ts wholesale: it should remove the short/chaptered/episodic beat-loop state/actions and legacy setup callers, but preserve the life-only exports still consumed by storybook-life-run.vue until t-053 retires that component and its 13 Da Vinci guards. Direct-import search also found narrativeArtMilestones.ts, narrative-milestone-art.client.ts, storybook-state-panel.vue, storybookLibraryHelper.ts, storybook-library-page.vue, storybook-page.vue, storybook-life-run.vue, and storybook-visual-setup.vue referencing the store, so the implementation must migrate/remove each relevant dependency rather than treating the four files named in the older note as the complete deletion graph. No code was deleted in this cycle because doing so before reconciling these live dependents would break the ?legacy=1 life path that t-053 explicitly says must survive until t-037 lands. The task is returned to ready with this concrete implementation constraint; no human decision is required.
 
     First bounded t-037 implementation slice: rewrote verifyStorybookSessionStorageRecoveryGuard.mjs against the server-backed storybookRunStore active-run pointer, preserving SSR safety and fail-soft blocked-storage behavior. Remaining beat-loop deletion and guard migration stays in t-037.
-  updated: '2026-09-17T15:19:00Z'
-  owner: worker
-  claimed_by: openai-scheduled-2026-09-17T151539Z-storybook-t037-a1
-  claimed_at: '2026-09-17T15:15:39Z'
+
+    Reviewer merged kind_robots#2801 (silasfelinus/kind_robots@e6b3334) 2026-09-17: rewrote
+    verifyStorybookSessionStorageRecoveryGuard.mjs against storybookRunStore.ts's
+    readStoredRunId/writeStoredRunId, preserving SSR-safety and fail-soft blocked-storage
+    behavior for both read and write paths. All 45 kind_robots CI checks green,
+    mergeable_state clean, squash-merged. This was only the first bounded slice -- remaining
+    beat-loop deletion and the ~25 other verifyStorybook*Guard rewrites are still unclaimed
+    scope under this task id. Returning to ready (not done) for the next slice.
+  updated: '2026-09-17T15:29:53Z'
+  owner: ''
+  claimed_by: ''
+  claimed_at: ''
+  implementation_pr: 'silasfelinus/kind_robots#2801'
 
 - id: t-052
   milestone: m7
