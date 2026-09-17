@@ -637,7 +637,7 @@ tasks:
 - id: t-037
   milestone: m7
   title: "Delete the client-side beat loop and rewrite its ~25 verifyStorybook*Guard scripts"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-036, t-052]
@@ -671,10 +671,10 @@ tasks:
     mergeable_state clean, squash-merged. This was the second bounded slice -- remaining
     beat-loop deletion and the ~24 other verifyStorybook*Guard rewrites are still unclaimed
     scope under this task id. Returning to ready (not done) for the next slice.
-  updated: '2026-09-17T16:27:45Z'
+  updated: '2026-09-17T18:32:46Z'
   owner: worker
-  claimed_by: openai-scheduled-2026-09-17T161709Z-storybook-t037-a2
-  claimed_at: '2026-09-17T16:17:09Z'
+  claimed_by: claude-scheduled-20260917T183245Z-storybook-t037
+  claimed_at: '2026-09-17T18:32:46Z'
   implementation_pr: 'silasfelinus/kind_robots#2803'
 
 - id: t-052
