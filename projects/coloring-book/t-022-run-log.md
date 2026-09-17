@@ -2789,3 +2789,32 @@ reason not to burn ~30 minutes re-probing when nothing upstream has changed).
 coloring-book/t-047 is a small, reversible, unclaimed `ready` task a future Worker
 cycle (this one included, in a later run) can pick up independently of t-022's own
 production-line scope.
+
+Cycle 19 (2026-09-17T~04:30Z, scheduled Conductor Agent run): t-047 merged since cycle
+18 (kind_robots/conductor PR #4536) and reset mr-008 from a data-integrity-gap
+`needs_review` entry to a normal `pending` entry pointing at a fresh job (ArtJob
+26356) instead of the three stale, mechanically-rejected art_image_ids from before.
+Re-checked conductor/t-165, t-167, and coloring-book/t-039 fresh before touching
+anything: all three unchanged (`status: needs-human`, t-165/t-167 hard, t-039 soft) —
+same relay-wedge / generate-bw blockers as every prior cycle. `coloring_queue_status.py
+--book monster-recast` now reports mr-008 as the sole `pending`/recovery-candidate
+entry, `recommended_action: recover-existing-jobs`. Ran exactly one recovery probe
+(this is a genuinely new job id, not a repeat of the hwr-008/kr-006 no-op pair) via
+`consume_coloring_book_studio_request.py --live --book monster-recast --proposal-id
+mr-008 --timeout 60`: job 26356 is still queued/running, same relay-wedge signature
+as t-165/t-167 (consistent with t-167's own framing — a non-Flux job wedged again
+after the Flux.2 one cleared — i.e. the relay issue is generic, not
+job/model-specific). No duplicate submitted. Did not re-probe hwr-008 (job 25421) /
+kr-006 (job 25419) again this cycle, per cycle 17/18's own advice — their blockers are
+identical and unchanged. `python scripts/validate_roadmaps.py` -> clean. `git status`
+confirms zero production queue/ledger changes this cycle beyond this log entry and the
+roadmap status transition. No unblocked slice existed. Re-arming t-022 to ready
+(recurring), releasing the claim.
+
+**Next actionable step (unchanged in substance):** the whole production line — MR's
+mr-008, HWR's hwr-008, KR's kr-006 — is now blocked on the identical relay-wedge
+signature tracked at conductor/t-165 and t-167 (hard `needs-human`, hands-on-the-box
+diagnosis only Silas can do), and `generate-bw` remains blocked book-wide by
+coloring-book/t-039. A future cycle should check t-165/t-167/t-039 before any further
+recovery probe; once the relay wedge clears, all three pending jobs (26356, 25421,
+25419) become recoverable at once, not just one book's queue.
