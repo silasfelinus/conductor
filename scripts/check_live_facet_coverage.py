@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 check_live_facet_coverage.py — Ask Kind Robots what Facets each built daily-dream
-record ACTUALLY carries, and flag any that were requested but never landed.
+record or creation-burst bundle ACTUALLY carries, and flag any that were requested
+but never landed.
 
 Kaizen from dream-cycle/t-026 (2026-09-02). Silas, reading his digest: "I just
 don't get the facets added as part of my daily digest, so there is a
@@ -22,6 +23,14 @@ catalog row merged out from under a record, or a repair that was never run on a
 bundle built before the fix. Only asking the live records answers that, and
 "what does production actually hold" is a different question from "what did we
 believe when we wrote it down".
+
+dream-cycle/t-027: creation_burst.py's bundles under projects/kind-robots/bursts/
+record the same shape of information -- a `built.facets` map of "<model>:<id>" to
+the Facet ids/slugs it applied -- but for a one-off creation burst rather than a
+daily dream. A Facet link dropped from one of THOSE records afterwards would be
+just as invisible as the original t-026 bug unless this check also walks them, so
+it does: recorded_burst_targets() reuses the same per-target GET-and-compare loop
+as the daily-dream records below.
 
 Read-only by default. `--repair` shells out to apply_daily_dream_facets.py
 --force, which re-PUTs each bundle's stored seed selection -- the same data the
@@ -49,8 +58,11 @@ import urllib.request
 from collections import Counter
 from pathlib import Path
 
+import yaml
+
 ROOT = Path(__file__).resolve().parents[1]
 BACKLOG = ROOT / "projects" / "dream-cycle" / "backlog"
+BURSTS = ROOT / "projects" / "kind-robots" / "bursts"
 BASE_URL = os.environ.get("KR_BASE_URL", "https://kindrobots.org").rstrip("/")
 BUILT_RE = re.compile(r"<!-- built-data\n(.*?)\n-->", re.DOTALL)
 
@@ -113,6 +125,57 @@ def recorded_targets() -> list[dict]:
     return targets
 
 
+def recorded_burst_targets() -> list[dict]:
+    """Every Facet target a creation-burst bundle's `built.facets` block recorded."""
+    targets: list[dict] = []
+    for path in sorted(BURSTS.glob("*.yaml")):
+        try:
+            doc = yaml.safe_load(path.read_text(encoding="utf-8"))
+        except yaml.YAMLError:
+            continue
+        if not isinstance(doc, dict):
+            continue
+        built = doc.get("built")
+        if not isinstance(built, dict):
+            continue
+        facets = built.get("facets")
+        if not isinstance(facets, dict):
+            continue
+
+        # Reverse-index id -> the human label creation_burst.py filed it under
+        # (e.g. "character:tom-tomtum", "world", "location:the-monastery-of-
+        # the-long-quiet"), so a gap reads like the slug it actually is instead
+        # of a bare model:id pair.
+        id_to_label: dict[int, str] = {}
+        for key, value in built.items():
+            if key in ("art", "facets") or not isinstance(value, int):
+                continue
+            id_to_label[value] = key
+
+        for key, payload in facets.items():
+            if not isinstance(payload, dict):
+                continue
+            model, _, raw_id = key.partition(":")
+            if not raw_id.isdigit():
+                continue
+            record_id = int(raw_id)
+            collection = ENDPOINTS.get(model.capitalize())
+            if not collection:
+                continue
+            requested = len(payload.get("facet_ids") or []) or len(
+                payload.get("slugs") or []
+            )
+            targets.append({
+                "bundle": path.name,
+                "element": id_to_label.get(record_id, key),
+                "model": model.capitalize(),
+                "record_id": record_id,
+                "path": f"/api/{collection}/{record_id}/facets",
+                "requested": requested,
+            })
+    return targets
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -128,7 +191,7 @@ def main(argv: list[str] | None = None) -> int:
         print("KR_API_TOKEN is absent; live Facet coverage is UNRESOLVED.", file=sys.stderr)
         return 2
 
-    targets = recorded_targets()
+    targets = recorded_targets() + recorded_burst_targets()
     if not targets:
         print("No built bundles with recorded Facet targets. Nothing to check.")
         return 0
