@@ -664,11 +664,11 @@ tasks:
 - id: t-052
   milestone: m7
   title: "Migrate saved beat-loop localStorage sessions into server adventures (or offer an export) before t-037 deletes them"
-  status: claimed
+  status: done
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-036]
-  note: >
+  note: >-
     Filed 2026-09-17 splitting t-037 (too large for one pass; see t-037's note). The
     outgoing beat loop's localStorage keys (storybook-session, storybook-setup-draft,
     storybook-life-seed, storybookMode, and the storybook-session-library-v1 "Recent
@@ -685,10 +685,30 @@ tasks:
     action surfaced once at the ?legacy=1 screen before t-037 ships, if (a) turns out not to
     be a faithful mapping. Whichever is chosen, verify against a real saved
     storybook-session-library-v1 entry, not just an empty-state check.
-  updated: '2026-09-17T10:28:58Z'
+
+    Closed via kind_robots PR #2798 (merged): added a dismissible alert-info
+    banner on the default (non-legacy) /storybook storymaker view, shown when
+    storyStore.recentStories.length > 0, linking to ?legacy=1 to review/export
+    before storybook/t-037 deletes the beat loop and its localStorage keys.
+    Dismissal persists in localStorage (storybook-legacy-notice-dismissed) so it
+    surfaces once per device, per this task's own framing.
+
+    The export mechanism itself (buildExport/downloadStory, per-story and bulk,
+    markdown or JSON) already existed at ?legacy=1 -- this closed the discovery
+    gap (option (b) from the task note), not the export path. Chose (b) over (a)
+    (automatic server-side migration into /api/storybook/runs) as lower-risk:
+    legacy beat-loop session shapes do not map cleanly onto the new deck-based
+    run model, and a one-time client export sidesteps that mismatch entirely.
+
+    Verified: verifyStorybookTable.mjs, verifyStorybookSessionLibrary.mjs,
+    verifyStorybookLibrarySessionConsistencyGuard.mjs, verifyStorybookStudio.mjs
+    all pass; npm run test (vue-tsc) exits 0; eslint clean. All 46 kind_robots CI
+    checks green before merge. Not exercised in a live browser this pass.
+  updated: '2026-09-17T10:39:17Z'
   owner: worker
   claimed_by: claude-scheduled-20260917T102858Z-storybook-t052
   claimed_at: '2026-09-17T10:28:58Z'
+  implementation_pr: 'silasfelinus/kind_robots#2798'
 
 - id: t-053
   milestone: m7
