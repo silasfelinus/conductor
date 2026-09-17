@@ -523,7 +523,7 @@ tasks:
   - id: t-031
     milestone: m6
     title: "Live smoke test of the t-025 async ArtJob queue path on /model-builder"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     note: |-
@@ -579,10 +579,10 @@ tasks:
       kind_robots PR #2794 merges) should redo this same source->recipe->run->auto-build flow
       and see how far the asset-generation step gets, independent of the render-backlog
       question which is out of this task's scope to fix.
-    updated: '2026-09-17T04:51:06Z'
+    updated: '2026-09-17T05:36:02Z'
     owner: worker
-    claimed_by: claude-scheduled-20260917T045500Z-mb-t031
-    claimed_at: '2026-09-17T04:50:21Z'
+    claimed_by: claude-scheduled-20260917T053602Z-mb-t031-verify
+    claimed_at: '2026-09-17T05:36:02Z'
     soft_gate: false
 
   - id: t-032
