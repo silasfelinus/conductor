@@ -636,20 +636,85 @@ tasks:
   implementation_pr: 'silasfelinus/kind_robots#2701'
 - id: t-037
   milestone: m7
-  title: "Retire the client-side beat loop and the localStorage library; rewrite the guards that pin them"
+  title: "Delete the client-side beat loop and rewrite its ~25 verifyStorybook*Guard scripts"
+  status: waiting
+  passes: 0
+  stakes: reversible
+  depends_on: [t-034, t-035, t-036, t-052]
+  note: >
+    Part C6's second half, split down to its landable core (conductor/t-158-era scope
+    triage, 2026-09-17: the original t-037 bundled a localStorage migration, a 4-file
+    deletion, ~25 verifyStorybook*Guard rewrites, 13 verifyDaVinci*Guard rewrites and ~29
+    workflow files into one task -- too large to land in one pass per AGENTS.md's Failure
+    triage "scope" category, and genuinely sequenced: deleting the beat loop before its
+    localStorage sessions have anywhere to go strands real reader data).
+
+    This task now covers ONLY: delete the beat loop in stores/storybookStore.ts,
+    storybookLibraryHelper.ts, conductor/storybook-page.vue and storybook-visual-setup.vue
+    (confirmed dead once t-052 lands -- already reachable only at
+    components/pages/storybook-library-page.vue's `?legacy=1`), and rewrite the ~25
+    verifyStorybook*Guard.mjs/.ts scripts plus their storybook-*-contract.yml workflows
+    against the new storybookRunStore.ts surface (the design doc's C6 section lists every
+    one; do not skip or quarantine a guard to get green -- rewrite it). The 13
+    verifyDaVinci*Guard.ts scripts pinning storybook-life-run.vue are t-053's, not this
+    task's -- they pin a different file with a still-open question about whether it is even
+    in scope for deletion (see t-053's note).
+  updated: '2026-09-17T06:00:00Z'
+
+- id: t-052
+  milestone: m7
+  title: "Migrate saved beat-loop localStorage sessions into server adventures (or offer an export) before t-037 deletes them"
   status: ready
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-036]
   note: >
-    Part C6's second half. Once the new screens run every shape on storybookRunStore, delete
-    the beat loop in stores/storybookStore.ts, storybookLibraryHelper.ts, conductor/storybook-
-    page.vue and storybook-visual-setup.vue, migrate any saved localStorage sessions into
-    server adventures (or export them), and rewrite the ~25 verifyStorybook*Guard.mjs, the 13
-    verifyDaVinci*Guard.ts, and their storybook-*-contract.yml workflows -- the design doc
-    lists every one. Never skip or quarantine a guard to get green; rewrite it against the
-    new surface.
-  updated: '2026-09-12T12:00:00Z'
+    Filed 2026-09-17 splitting t-037 (too large for one pass; see t-037's note). The
+    outgoing beat loop's localStorage keys (storybook-session, storybook-setup-draft,
+    storybook-life-seed, storybookMode, and the storybook-session-library-v1 "Recent
+    stories" drawer in stores/helpers/storybookLibraryHelper.ts) are a reader's only copy of
+    an in-progress or finished legacy story -- t-037's own note already required this
+    migration/export step before deletion, but as a sub-clause of a much bigger task it was
+    easy to skip under time pressure. Landing it as its own task makes it a real gate: a
+    reader with a saved session must not silently lose it the day the beat loop is deleted.
+
+    Options to weigh: (a) a one-time client-side migration that reads the legacy keys on
+    next load and POSTs them into a new StorybookRun/adventure row via the existing
+    /api/storybook/runs surface, best-effort since the beat loop's session shape does not
+    map cleanly onto a deck-based run; or (b) a simple "export your story as text/JSON"
+    action surfaced once at the ?legacy=1 screen before t-037 ships, if (a) turns out not to
+    be a faithful mapping. Whichever is chosen, verify against a real saved
+    storybook-session-library-v1 entry, not just an empty-state check.
+  updated: '2026-09-17T06:00:00Z'
+
+- id: t-053
+  milestone: m7
+  title: "Rewrite the 13 verifyDaVinci*Guard.ts scripts (or retire storybook-life-run.vue) once the life shape's new-engine parity is confirmed"
+  status: ready
+  passes: 0
+  stakes: reversible
+  depends_on: [t-034, t-035, t-036]
+  note: >
+    Filed 2026-09-17 splitting t-037 (too large for one pass; see t-037's note). The 13
+    verifyDaVinci*Guard.ts scripts pin storybook-life-run.vue's focus/status/error behaviors
+    (e.g. verifyDaVinciChapterFocusGuard, verifyDaVinciPhaseFocusGuard,
+    verifyDaVinciNarrateStaleResponseGuard, verifyDaVinciArtResumeGuard,
+    verifyDaVinciDimensionToneGuard) plus davinci-seed-verify.yml -- a distinct file set from
+    t-037's ~25 verifyStorybook*Guard scripts, reachable only at ?legacy=1 the same way.
+
+    OPEN QUESTION FIRST, before touching any guard: does the new engine's "life" mode
+    (deck key `life`, server routes /api/storybook/runs + /api/storybook/endings) already
+    have full functional parity with storybook-life-run.vue's dedicated UI, or does the life
+    shape still need its own screen? The design doc (docs/storymaker-redesign.md C5) treats
+    resolveLifeRunEnding as a permanent delegate rather than obviously deletable, which
+    suggests the life-run UI/store code may outlive the short/chaptered/episodic beat loop
+    rather than being deleted alongside it in t-037. Confirm parity (or the lack of it) first
+    -- if parity is real, retire storybook-life-run.vue and its store code the same way
+    t-037 retires the rest, and these 13 guards go with it; if it is not there yet, these 13
+    guards stay exactly as they are (life-run.vue stays live at ?legacy=1) until a future
+    task closes that gap, and this task should say so and re-park at status: ready with that
+    finding recorded rather than force a premature deletion.
+  updated: '2026-09-17T06:00:00Z'
 - id: t-038
   milestone: m7
   title: "Gate genres, characters and narrators; award them on completion"
