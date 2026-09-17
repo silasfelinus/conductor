@@ -760,3 +760,30 @@ tasks:
 
     Ruler Hooked must not be described as finished, nor reported near-complete, before this.
   updated: '2026-09-11T13:30:00Z'
+- id: t-033
+  milestone: m4
+  title: Per-species visual theming of the timing bar
+  status: ready
+  gate_human: false
+  owner: worker
+  stakes: reversible
+  passes: 0
+  note: >-
+    Kaizen task filed from t-026 (silasfelinus/kind_robots#2800), which replaced the
+    three-button fishing menu with a sliding-marker timing bar
+    (`components/ruler-hooked/ruler-hooked-timing-bar.vue`,
+    `utils/rulerHooked/timingBar.ts`). That redesign already varies the band width and
+    sweep speed by rarity (`timingProfileFor`), but the bar's visual presentation --
+    colors, marker shape/icon, sweep behaviour -- is identical across all three families
+    (STANDARD_TENSION, PATIENCE, REVERSE_CONTROL) and all 15 fish.
+
+    DO: give the timing bar per-species/per-family visual identity once Silas has actually
+    played the new mechanic and there is real signal on what reads well in motion, not
+    speculatively ahead of that. Natural candidates: Moebius Crab (REVERSE_CONTROL) could
+    sweep its marker in the opposite direction once `reversed` is true, rather than only
+    flipping the REEL/SLACK zone mapping under the hood as it does today; Sunspoke Koi
+    (PATIENCE) could slow/pause the sweep during APPROACH to visually reinforce the
+    patience requirement; higher-rarity fish could get a distinct marker or band color
+    beyond just a narrower/faster band. This is explicitly a follow-up polish layer, not a
+    blocker on t-032's re-audit gate.
+  updated: '2026-09-17T00:00:00Z'

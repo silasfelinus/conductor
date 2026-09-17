@@ -14441,3 +14441,23 @@ records:
     roadmap task''s two listed options are both still open; often one is already done and
     the task is really about surfacing it. Filed t-054 (waiting on t-037) so the banner
     does not become permanent dead code once the beat loop it points at is deleted.'
+- date: 2026-09-17
+  project: ruler-hooked
+  task: t-026
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Redesigning a discrete-action minigame (button REEL/SLACK/WAIT) into a continuous
+    timing-bar input without breaking replay determinism was made tractable by keeping the
+    animation purely client-side display and only ever sending the recorded stop position
+    into a pure reducer -- the same "framework-free, never elapsed milliseconds" contract
+    the rest of the engine already kept. Adding a `quality` parameter defaulting to 1 and
+    proving byte-for-byte equivalence to the old formulas at quality=1 (self-test #8) gave
+    a cheap, concrete regression guard for a refactor that touched core resolution math.
+    Also confirmed prettier is not CI-enforced in kind_robots (no workflow runs
+    `lint:prettier`/`npm run lint`) -- running it blind reformats unrelated code the task
+    never touched; check for an enforcing workflow before applying a formatter repo-wide,
+    and prefer reverting to the original eslint-clean formatting when it isn't enforced.
