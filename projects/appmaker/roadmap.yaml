@@ -116,7 +116,7 @@ tasks:
 - id: t-010
   milestone: m3
   title: Graduation flow (monorepo app to its own repo)
-  status: ready
+  status: claimed
   passes: 0
   stakes: irreversible
   gate_human: true
@@ -215,7 +215,10 @@ tasks:
     monorepo. Both PRs are needs-human per design section 5c.
 
     Decision accepted under Silas's 2026-09-07 default-recommendation policy. Use the lower-risk squash-graduation model rather than inventing a commit-replay history service: preserve full historical provenance in Conductor and link back to it from the graduated repo. Monorepo apps without an individual owner may be graduated only by an admin. Require an already-connected GitHub installation and explicitly selected existing target repo; do not create repos implicitly. Target-repo push and monorepo removal PRs remain explicit review gates because they mutate real repositories.
-  updated: '2026-09-07T11:36:56+00:00'
+  updated: '2026-09-17T15:36:09Z'
+  owner: worker
+  claimed_by: claude-scheduled-20260917T153609Z-appmaker-t010
+  claimed_at: '2026-09-17T15:36:09Z'
 - id: t-004
   milestone: m4
   title: Build the AppMaker page in kind_robots
