@@ -2734,3 +2734,58 @@ the fourth consecutive cycle (14, 15, 16, 17) with an identical no-op outcome on
 same two job ids — a future cycle should stop re-probing the same two jobs every single
 run and instead just check whether t-165/t-167/t-039's status changed before deciding
 whether a fresh recovery attempt is even worth the two ~15-minute blocking calls.
+
+Cycle 18 (2026-09-17T~03:30Z, scheduled Conductor Agent run): per cycle 17's own
+advice, checked whether the underlying blockers changed before repeating any probe:
+conductor/t-165 and t-167 are both still `status: needs-human`, unchanged;
+coloring-book/t-039 is both still `status: needs-human` / `soft_gate: true`,
+unchanged. Since nothing changed, did not re-run the hwr-008 (job 25421) / kr-006
+(job 25419) recovery probes a fifth consecutive time — that would only reconfirm the
+same no-op cycle 14-17 already established, at the cost of two ~15-minute blocking
+calls each.
+
+Looked instead for any unblocked slice outside `generate-bw` (blocked book-wide by
+t-039) and outside the two known-wedged recovery jobs. `coloring_proposal_status.py
+--check` reported Monster Recast's color queue as fully drained (0 pending) but with
+one `needs_review` entry (mr-008, "The Little Game Mistress") — a genuine candidate
+for visual review, unlike the wedged HWR/KR jobs. Investigating it surfaced a real
+data-integrity gap rather than a reviewable image: `color-art-jobs.yaml` still marks
+mr-008 `needs_review` and points `rendered_path`/`image_path` at
+`generated/color-proposals-v1/mr-008-game-mistress.webp`, but that file does not exist
+in the working tree or at `HEAD` (confirmed via `git cat-file -e` and a directory
+listing) — only two archived revisions from 2026-09-14 exist under
+`generated/color-proposals-v1/revisions/`, and three further resubmission attempts
+after those (art_image_id 24034-24036, in the entry's own `render_failures`) were all
+mechanically rejected for the monochrome/desaturated defect t-044 has since fixed, so
+no new candidate file ever landed. `coloring_queue_status.py --book monster-recast`
+does not surface this: `recommended_action: complete`, `actionable: false` — its
+recovery logic only inspects `status: pending` entries with a stuck
+`render_gate_job_id`, not a `needs_review` entry whose backing file has gone missing.
+
+Did not hand-edit the queue YAML to force a reset: no CLI flag exists for a
+force-reset of a `needs_review` color entry (unlike `generate-bw --force` for BW), and
+a manual edit without that safeguard risks silently dropping the `render_failures`/
+revision history the ledger is supposed to preserve — exactly what the archival/
+ledger-integrity guardrails in AGENTS.md exist to prevent. Filed
+`coloring-book/t-047` (status: ready, stakes: reversible) instead, covering both the
+missing-CLI-reset gap for mr-008 specifically and the broader
+`coloring_queue_status.py` blind spot (a `needs_review`/`done`/`approved` entry with a
+missing file isn't flagged as a recovery candidate) so this class of gap surfaces
+automatically next time.
+
+No unblocked production slice existed this cycle across any of the three books:
+`generate-bw` remains blocked book-wide by t-039, HWR/KR color remain blocked on the
+same two wedged jobs already tracked at t-165/t-167 (not re-probed this cycle per the
+above), and MR's sole `needs_review` item is the newly-filed data-integrity gap
+rather than a reviewable render. `python scripts/validate_roadmaps.py` -> clean after
+adding t-047. `git status` confirms the only change this cycle is the roadmap task
+addition and this log entry — no production queue/ledger files touched. Re-arming
+t-022 to ready (recurring), releasing the claim.
+
+**Next actionable step:** re-check conductor/t-165, t-167, and coloring-book/t-039
+before repeating the hwr-008/kr-006 recovery probes again (five consecutive no-ops on
+the same two job ids is not yet a reason to stop checking whether they cleared, just a
+reason not to burn ~30 minutes re-probing when nothing upstream has changed).
+coloring-book/t-047 is a small, reversible, unclaimed `ready` task a future Worker
+cycle (this one included, in a later run) can pick up independently of t-022's own
+production-line scope.
