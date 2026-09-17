@@ -710,6 +710,31 @@ tasks:
   claimed_at: '2026-09-17T10:28:58Z'
   implementation_pr: 'silasfelinus/kind_robots#2798'
 
+- id: t-054
+  milestone: m7
+  title: "Kaizen: remove the t-052 legacy-export notice banner and its localStorage dismissal key in the same pass as t-037"
+  status: waiting
+  passes: 0
+  stakes: reversible
+  depends_on: [t-037]
+  note: >-
+    Kaizen from t-052 (kind_robots PR #2798, 2026-09-17 scheduled Conductor
+    session). t-052 added a dismissible banner (storybook-library-page.vue,
+    the `!legacy && showLegacyExportNotice` block) and a
+    `storybook-legacy-notice-dismissed` localStorage key so readers with a
+    saved beat-loop session would discover the ?legacy=1 export path before
+    t-037 deletes it. Once t-037 actually deletes the beat loop,
+    storyStore.recentStories can never again be non-empty (nothing writes to
+    storybook-session-library-v1 anymore), so the banner becomes permanently
+    dead code and the dismissal key permanently unused -- but nothing forces
+    t-037 to remember removing them, since t-052 landed as its own separate
+    task with no automatic linkage back into t-037's own deletion list.
+    When t-037 lands: delete the banner markup/script block, the
+    LEGACY_NOTICE_DISMISSED_KEY constant and its read/write functions, and
+    drop the `verifyStorybookTable.mjs` legacy-band assertions' reliance on
+    the surrounding `!legacy` branch staying as-is if it changes shape.
+  updated: '2026-09-17T10:39:17Z'
+
 - id: t-053
   milestone: m7
   title: "Rewrite the 13 verifyDaVinci*Guard.ts scripts (or retire storybook-life-run.vue) once the life shape's new-engine parity is confirmed"
