@@ -14358,3 +14358,28 @@ records:
     local certainty for this class of change until Chromium-through-proxy visual
     verification (see AGENTS.md's 2026-09-16 update) gets used more routinely for a
     merged/deployed follow-up look.
+- date: 2026-09-17
+  project: ruler-hooked
+  task: t-024
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Scoped Silas's "one navigable screen, setup on a centered window over a
+    background" playtest note to the two literal, low-risk pieces (stage renders
+    unconditionally via a new never-persisted preview scene; save-slot management
+    moved into a dismissible modal) rather than also touching the shared
+    project-front-page.vue hero/description banner that still precedes the
+    interactive slot on four product pages. That's a bigger, higher-blast-radius
+    structural call better left to Silas's next playtest to confirm is still
+    needed, rather than guessed at in one unverified pass. Attempted local dev-
+    server visual verification in this sandbox (npm run dev + the AGENTS.md
+    2026-09-16 Playwright-through-proxy recipe) but hit an unrelated environment
+    gap: even this repo's own root route serves Nuxt's built-in <NuxtWelcome/>
+    placeholder rather than app.vue when run via `nuxt dev` here, so the new
+    Playwright capability doesn't yet close the "no live preview" gap for a
+    repo that needs its actual dev server, not just a pre-built target host,
+    to render local changes -- worth a dedicated look before relying on it for
+    the next UI-shaped task.
