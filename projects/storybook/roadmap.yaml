@@ -653,7 +653,7 @@ tasks:
 - id: t-038
   milestone: m7
   title: "Gate genres, characters and narrators; award them on completion"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   depends_on: [t-033, t-036]
@@ -662,7 +662,10 @@ tasks:
     unlock condition lives on the deck/card record (EndingDeck.unlockAchievementId, and a
     matching column on Character) and is awarded in the same resolution transaction that
     credits the ending. Flip STORYBOOK_ENFORCE_DECK_GATES on once the hand renders locks.
-  updated: '2026-09-12T12:00:00Z'
+  updated: '2026-09-17T06:34:19Z'
+  owner: worker
+  claimed_by: claude-scheduled-20260917T063418Z-storybook-t038
+  claimed_at: '2026-09-17T06:34:19Z'
 - id: t-039
   milestone: m8
   title: "Engine: replace the four story shapes with the four story modes"
