@@ -1,4 +1,4 @@
-from scripts.coloring_queue_status import requirement_satisfied, summarize_queue
+from scripts.coloring_queue_status import has_missing_file, requirement_satisfied, summarize_queue
 
 
 def queue(entries):
@@ -196,3 +196,61 @@ def test_unknown_book_raises_value_error():
         assert str(error) == "book not found: missing"
     else:
         raise AssertionError("expected ValueError")
+
+
+def test_no_path_field_is_not_flagged_as_missing():
+    # Mirrors real fixtures/tests elsewhere in this file that omit
+    # image_path/rendered_path entirely -- nothing to check means no finding,
+    # not a false positive.
+    assert has_missing_file({"status": "approved"}) is False
+    assert has_missing_file({"status": "needs_review"}) is False
+
+
+def test_pending_entry_with_no_file_yet_is_not_flagged():
+    # A `pending` entry is never expected to have a rendered file yet.
+    assert has_missing_file({"status": "pending", "image_path": "/nonexistent/path.webp"}) is False
+
+
+def test_resolved_entry_with_existing_file_is_not_flagged(tmp_path):
+    real_file = tmp_path / "mr-001-color.webp"
+    real_file.write_bytes(b"fake")
+    assert has_missing_file({"status": "done", "rendered_path": str(real_file)}) is False
+
+
+def test_resolved_entry_with_missing_file_is_flagged(tmp_path):
+    missing = tmp_path / "mr-008-game-mistress.webp"
+    for status in ("needs_review", "done"):
+        assert has_missing_file({"status": status, "image_path": str(missing)}) is True
+
+
+def test_approved_entry_with_missing_queue_path_is_not_flagged(tmp_path):
+    # Once accepted, proposals.yaml's accepted.color is authoritative and may
+    # legitimately diverge from this queue entry's own (now-stale) path --
+    # see the RESOLVED_STATUSES_EXPECTING_A_FILE comment for the real
+    # mr-002/mr-003/mr-004 case this guards against.
+    missing = tmp_path / "renamed-away.webp"
+    assert has_missing_file({"status": "approved", "image_path": str(missing)}) is False
+
+
+def test_summarize_queue_reports_missing_file_entries(tmp_path):
+    missing = tmp_path / "mr-008-game-mistress.webp"
+    summary = summarize_queue(
+        queue(
+            [
+                {"slot": 8, "id": "mr-008", "status": "needs_review", "image_path": str(missing)},
+                {"slot": 9, "id": "mr-009", "status": "approved"},
+            ]
+        ),
+        "monster-recast",
+    )
+
+    assert summary["missing_file_count"] == 1
+    assert [entry["id"] for entry in summary["missing_file_entries"]] == ["mr-008"]
+    assert summary["missing_file_entries"][0]["referenced_path"] == str(missing)
+    assert summary["recommended_action"] == "repair-missing-file"
+
+
+def test_require_no_missing_files_flag_via_recommended_action():
+    summary = {"recommended_action": "repair-missing-file"}
+    assert requirement_satisfied(summary, "repair-missing-file") is True
+    assert requirement_satisfied(summary, "complete") is False
