@@ -482,10 +482,37 @@ This changes what verification is actually possible and when:
   understood. If it works, this reopens live UI-driven verification (clicking through
   an authenticated flow, screenshotting hydrated state, running a task like
   model-builder/t-031's live smoke test) for sessions that previously treated it as
-  categorically impossible — the remaining blocker for an authenticated flow
-  specifically is that no test-login/E2E-auth mechanism exists in kind_robots to reach
-  a signed-in session without a real human's credentials, which is a separate gap from
-  the browser-connectivity one this note is about.
+  categorically impossible.
+
+  **UPDATE (model-builder/t-031 cycle, 2026-09-17): the authenticated-flow gap above is
+  closed** — a working test-login path already exists, it just hadn't been wired to
+  browser-based verification before. kind_robots' own CI (`cleanup-test-users.yml`,
+  Cypress's `createFreshLoggedInTestUser`) already registers and logs in disposable
+  `cypress-*` users against production `kindrobots.org` as its normal test methodology.
+  The same pattern works from a plain script, no Cypress required: `POST
+  /api/users/register` with `x-api-key: $KR_API_TOKEN` (this is the beta-admin token,
+  read via `x-api-key`/`x-admin-token`/`Authorization`, per
+  `server/utils/validateKey.ts`) creates a `cypress-`-prefixed user; `POST
+  /api/auth/login` with that user's username/password returns a real session JWT;
+  `page.evaluate(() => localStorage.setItem('token', <jwt>))` before navigating logs the
+  Playwright browser context in exactly the way the SPA's own `userStore.ts` expects
+  (`getFromLocalStorage('token')`, validated via `/api/auth/validate/token`) — confirmed
+  live, including a full `/model-builder` source-pick → recipe → run flow rendering
+  correctly with a real username in the header. `KR_API_TOKEN` itself is NOT a valid
+  session token and must not be dropped into `localStorage` directly — it authenticates
+  server-to-server admin calls (`x-api-key` etc.), not a browser session; the app's own
+  client-side validation silently strips it back out if you try. Clean up afterward via
+  `POST /api/users/cypress-cleanup` with `{"username": "cypress-..."}` and the same
+  admin header — restricted server-side to `cypress-*` usernames, so it can't be used to
+  delete real accounts. This whole round trip is the established, sanctioned pattern
+  already running in kind_robots CI, not a new bypass. One live gap remains, not an
+  auth one: a fresh test user owns nothing, so exercising a source-owned flow (model
+  builder, or anything gated by `assertSourceOwnership`-style checks) needs a same-session
+  API call to create an owned record first (e.g. `POST /api/characters` with
+  `Authorization: Bearer <jwt>`) — the UI's source picker itself does not filter to
+  owned-only records and will happily let you pick something you can't actually build on,
+  which surfaces as a 403 from the write endpoint rather than a clear UI-level warning
+  (worth a small UX task on its own).
 
 So a UI change on a `claude/*` branch is NOT merging on structural CI alone. The honest
 summary of what a non-interactive session can claim: SSR markup via `curl`/`WebFetch`
