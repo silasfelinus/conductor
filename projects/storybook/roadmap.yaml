@@ -637,7 +637,7 @@ tasks:
 - id: t-037
   milestone: m7
   title: "Delete the client-side beat loop and rewrite its ~25 verifyStorybook*Guard scripts"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-036, t-052]
@@ -647,7 +647,10 @@ tasks:
 
 
     Dependency reconciliation: t-052 is done and t-034/t-035/t-036 were already done, so every declared dependency for t-037 is satisfied. Promoting the stale waiting task to ready per the roadmap audit and resolver contract.
-  updated: '2026-09-17T13:19:29Z'
+  updated: '2026-09-17T14:19:07Z'
+  owner: worker
+  claimed_by: openai-scheduled-2026-09-17T141907Z-storybook-t037-a1
+  claimed_at: '2026-09-17T14:19:07Z'
 
 - id: t-052
   milestone: m7
