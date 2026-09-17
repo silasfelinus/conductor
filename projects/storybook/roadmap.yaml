@@ -637,29 +637,17 @@ tasks:
 - id: t-037
   milestone: m7
   title: "Delete the client-side beat loop and rewrite its ~25 verifyStorybook*Guard scripts"
-  status: waiting
+  status: ready
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-036, t-052]
-  note: >
-    Part C6's second half, split down to its landable core (conductor/t-158-era scope
-    triage, 2026-09-17: the original t-037 bundled a localStorage migration, a 4-file
-    deletion, ~25 verifyStorybook*Guard rewrites, 13 verifyDaVinci*Guard rewrites and ~29
-    workflow files into one task -- too large to land in one pass per AGENTS.md's Failure
-    triage "scope" category, and genuinely sequenced: deleting the beat loop before its
-    localStorage sessions have anywhere to go strands real reader data).
+  note: |-
+    Part C6's second half, split down to its landable core (conductor/t-158-era scope triage, 2026-09-17: the original t-037 bundled a localStorage migration, a 4-file deletion, ~25 verifyStorybook*Guard rewrites, 13 verifyDaVinci*Guard rewrites and ~29 workflow files into one task -- too large to land in one pass per AGENTS.md's Failure triage "scope" category, and genuinely sequenced: deleting the beat loop before its localStorage sessions have anywhere to go strands real reader data).
+    This task now covers ONLY: delete the beat loop in stores/storybookStore.ts, storybookLibraryHelper.ts, conductor/storybook-page.vue and storybook-visual-setup.vue (confirmed dead once t-052 lands -- already reachable only at components/pages/storybook-library-page.vue's `?legacy=1`), and rewrite the ~25 verifyStorybook*Guard.mjs/.ts scripts plus their storybook-*-contract.yml workflows against the new storybookRunStore.ts surface (the design doc's C6 section lists every one; do not skip or quarantine a guard to get green -- rewrite it). The 13 verifyDaVinci*Guard.ts scripts pinning storybook-life-run.vue are t-053's, not this task's -- they pin a different file with a still-open question about whether it is even in scope for deletion (see t-053's note).
 
-    This task now covers ONLY: delete the beat loop in stores/storybookStore.ts,
-    storybookLibraryHelper.ts, conductor/storybook-page.vue and storybook-visual-setup.vue
-    (confirmed dead once t-052 lands -- already reachable only at
-    components/pages/storybook-library-page.vue's `?legacy=1`), and rewrite the ~25
-    verifyStorybook*Guard.mjs/.ts scripts plus their storybook-*-contract.yml workflows
-    against the new storybookRunStore.ts surface (the design doc's C6 section lists every
-    one; do not skip or quarantine a guard to get green -- rewrite it). The 13
-    verifyDaVinci*Guard.ts scripts pinning storybook-life-run.vue are t-053's, not this
-    task's -- they pin a different file with a still-open question about whether it is even
-    in scope for deletion (see t-053's note).
-  updated: '2026-09-17T06:00:00Z'
+
+    Dependency reconciliation: t-052 is done and t-034/t-035/t-036 were already done, so every declared dependency for t-037 is satisfied. Promoting the stale waiting task to ready per the roadmap audit and resolver contract.
+  updated: '2026-09-17T13:19:29Z'
 
 - id: t-052
   milestone: m7
