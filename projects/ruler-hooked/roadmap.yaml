@@ -563,9 +563,15 @@ tasks:
     Staged the corrected 12-entry ruler lane into projects/art-prompts.yaml (build_ruler_hooked_art_queue.py's ruler_entries() only -- deliberately NOT the other 80 not-yet-staged concept/fish/reward/ending/card entries the same --write would also produce; those are separate, unrelated scope) and submitted all 12 via consume_art_requests.py --live --submit-only --id-prefix ruler-hooked-ruler- (ArtJob ids 28694-28705, ruler_entries()'s existing backdrop-portrait prompt, at the corrected flat path). Then set their status to blocked-design-review (not pending, so no unrelated future 'drain the art request queue' cycle auto-downloads and commits them into kind_robots before the design question below is resolved) rather than letting a render already in flight go to waste.
 
     NEXT: decide whether (a) the flat path should stay dual-purpose and ruler_entries() needs a genuinely different prompt for a proper depth-band/figure-prominent layer (matching ruler-fishing.webp's original style, not the reference-sheet framing) -- probably the right long-term answer, since it's what HERO_RULER_PRESET_ID's fallback-ladder design already assumes every preset will eventually have; or (b) split the picker onto its own asset path distinct from the stage's fallback rung, so the existing reference-sheet-style renders (this cycle's 12, or a redo) can be used for the picker without ever risking stage compositing. Once decided: either flip these 12 back to status: pending (if (a) is rejected and the current renders are accepted as-is) or resubmit with a new prompt/path (if (a) is chosen) via --force --id-prefix ruler-hooked-ruler- so the accepted-but-wrong renders don't block a redo. No visual/browser verification possible from this session -- says what was checked (curl + downloaded-and-read three images) and what wasn't (nothing rendered by this session's own 12 jobs has been viewed yet, since they were still in flight).
-  updated: '2026-09-17T23:46:14Z'
+
+    Correction to the previous note in this cycle: a shell quoting mistake on my end dropped
+    the literal CSS class list from one sentence describing ruler-hooked-stage.vue (it
+    should read: "draws every art layer absolute-positioned full-bleed with object-cover,
+    stacked in z-order over the whole canvas"). No other content in that note is affected.
+  updated: '2026-09-17T23:46:56Z'
   claimed_by: null
   claimed_at: null
+  implementation_pr: 'silasfelinus/kind_robots#2789'
 - id: t-026
   milestone: m4
   title: Replace the text-button fishing panel with a real timing minigame
