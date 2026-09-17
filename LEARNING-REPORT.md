@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-17T10:46:45Z
+Generated: 2026-09-17T10:50:26Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1000**
-- Outcomes: blocked: 16, cancelled: 1, done: 983
+- Closed tasks recorded: **1001**
+- Outcomes: blocked: 16, cancelled: 1, done: 984
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -57,7 +57,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | scene-animator | 2 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
-| storybook | 26 | 100% |
+| storybook | 27 | 100% |
 | storymaker | 1 | 100% |
 | superkate-hairstyle-ai | 18 | 100% |
 | superkate-services-calculator | 12 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 983 | 99% |
+| software | 984 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-17 `storybook/t-052` — The task note offered two options (client migration vs. export) but the export mechanism (buildExport/downloadStory) was already fully built at ?legacy=1 -- the actual gap was discovery, not implementation. Read the existing code before assuming a roadmap task's two listed options are both still open; often one is already done and the task is really about surfacing it. Filed t-054 (waiting on t-037) so the banner does not become permanent dead code once the beat loop it points at is deleted.
 - 2026-09-17 `storybook/t-038` — Generalizing an existing dormant gate (EndingDeck.unlockAchievementId from t-033) into a shared isUnlocked/assertCastPlayable pair, rather than writing a parallel Character-specific gate function, kept the enforcement flag single and the contract guard simple to write. When a roadmap note says "same hook as X", check whether the prior task's implementation was already written generically enough to extend, before reaching for a second concept.
 - 2026-09-17 `model-builder/t-031` — A prior cycle's "browser fails on every HTTPS host" note was itself wrong for this sandbox class and would have been taken at face value if not re-verified directly (a 3-line Playwright probe against example.com + kindrobots.org before trusting an inherited claim). When a task note contradicts AGENTS.md's own documented working recipe for the same environment, re-run the cheapest possible check before accepting the note -- a stale/wrong claim from one session otherwise silently downgrades every session after it.
 - 2026-09-17 `coloring-book/t-047` — Before filing a new task claiming "no CLI flag exists" for a production gap, grep the sibling *_request.py wrapper scripts, not just the batch consumer -- consume_coloring_book_studio_request.py --force --live already did exactly what t-022 cycle 18 said was missing (reset a needs_review color entry back to pending for a fresh render), and would have resolved mr-008 a cycle earlier if checked first. Also: when adding a "file went missing" detector to a status-driven pipeline, exclude any status where a downstream ledger (here: proposals.yaml's accepted.color) becomes the authoritative pointer after promotion -- the promoting operation may correctly leave the upstream queue's own path field stale without anything actually being broken (mr-002/mr-003/mr-004 here).
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-16 `interface-vision/t-105` — Cycle: two of the Responsive Layout Audit's 19 reported failures were checker false positives rather than real defects -- a nested-scroll-ancestor walk that stopped at the first offscreen inner scroller instead of continuing to a fitting outer one (flagging shelf items inside an intentional home swipe rail), and a sub-32px flex text item flagged as crushed purely for being short rather than for its text actually being clipped (scrollWidth > clientWidth). Fixing the checker's own logic rather than suppressing the routes kept coverage intact. The one real defect (/messages forcing a two-column grid that crushed the empty thread pane to 4px on phones) was fixed with a CSS container query rather than a viewport media query, since the component can be embedded at different container widths elsewhere -- worth defaulting to container queries over viewport media queries for any reusable/embeddable panel component going forward.
 - 2026-09-16 `kind-robots/t-107` — A one-line vue-tsc noUncheckedIndexedAccess rejection (TS18048 "possibly undefined" on array-destructured lookups used before arithmetic) cost a full retry cycle that a local `npm run test`/vue-tsc pass before opening the PR would have caught in seconds. The retry itself was clean: explicit `if (!x) return null`/`continue` guards immediately after each array lookup, before any arithmetic. Also confirms the by-now-recurring shape for backfill-style tasks that touch production rows: land the interpolation/ schema-opening prerequisite as its own small, fully-tested, zero-mutation PR first, and file the actual live-data mutation as a separate follow-up task (kind-robots/t-108 here) rather than bundling both into one PR.
 - 2026-09-16 `conductor/t-176` — submit_daily_dream_art.py resubmits every status:pending entry in art-prompts.yaml on every daily-digest run with no attempt cap or standing-failure surfacing beyond a failing scheduled workflow, so one entry whose stored prompt trips kind_robots' artPromptContract.ts conditional-instruction rule ("only when X chooses to Y") re-fails identically forever until a human or session edits the stored text by hand. The upstream gate (dream_prose_quality.py's complaints(), run at proposal authoring/revision time) checked known_for/best_scene for length, label-echo, and self-reference but not for the phrasing its own downstream consumer (dream_art_prompts.py) would later fail on at ArtJob enqueue -- the two checks had never been tested against each other. When a producer and a downstream contract check live in different repos/layers, a validation gap between them can persist indefinitely with each side individually "passing." Mirroring the downstream contract's own regex patterns into the upstream gate (rather than inventing a new heuristic) keeps both sides provably in sync and was cheap once the downstream source was actually read.
-- 2026-09-16 `kind-robots/t-106` — A task can sit re-armed across several connector-only sessions purely for lack of git/patch primitives (schema edits, prisma regen) rather than any real ambiguity in scope -- this slice (wiring the already-merged Resource.recommendedCfg column into the already-merged loraStackCfgCeiling helper) was fully specified two slices ago and only needed a session with local git + provisioned node_modules to land. Worth checking, on a stuck recurring/re-armed task, whether the blocker is genuinely unresolved scope or just tooling access before assuming it needs more design work. Also: touching a helper's own area surfaced that its contract test (verifyLoraCfg.test.ts, landed with a prior PR) had never been wired into package.json/CI at all -- a merged, passing-looking PR can still ship a test that never actually runs again after that one PR's own CI checked it inline.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-17T10:46:45Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-17T10:50:26Z_

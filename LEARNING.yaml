@@ -14427,3 +14427,17 @@ records:
     guard simple to write. When a roadmap note says "same hook as X", check whether the
     prior task''s implementation was already written generically enough to extend, before
     reaching for a second concept.'
+- date: 2026-09-17
+  project: storybook
+  task: t-052
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'The task note offered two options (client migration vs. export) but the export
+    mechanism (buildExport/downloadStory) was already fully built at ?legacy=1 -- the actual
+    gap was discovery, not implementation. Read the existing code before assuming a
+    roadmap task''s two listed options are both still open; often one is already done and
+    the task is really about surfacing it. Filed t-054 (waiting on t-037) so the banner
+    does not become permanent dead code once the beat loop it points at is deleted.'
