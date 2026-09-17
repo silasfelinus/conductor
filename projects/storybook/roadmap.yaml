@@ -690,10 +690,10 @@ tasks:
 - id: t-053
   milestone: m7
   title: "Rewrite the 13 verifyDaVinci*Guard.ts scripts (or retire storybook-life-run.vue) once the life shape's new-engine parity is confirmed"
-  status: ready
+  status: waiting
   passes: 0
   stakes: reversible
-  depends_on: [t-034, t-035, t-036]
+  depends_on: [t-034, t-035, t-036, t-037]
   note: >
     Filed 2026-09-17 splitting t-037 (too large for one pass; see t-037's note). The 13
     verifyDaVinci*Guard.ts scripts pin storybook-life-run.vue's focus/status/error behaviors
@@ -714,7 +714,34 @@ tasks:
     guards stay exactly as they are (life-run.vue stays live at ?legacy=1) until a future
     task closes that gap, and this task should say so and re-park at status: ready with that
     finding recorded rather than force a premature deletion.
-  updated: '2026-09-17T06:00:00Z'
+
+    FINDING (conductor scheduled sweep, 2026-09-17T~09:30Z): parity is real at the
+    gameplay/engine level. `life` is seeded as a genuine `EndingDeck` (`LIFE_DECK_KEY` in
+    kind_robots utils/scripts/seedStorybookDecks.ts) alongside the mystery/romance/heist
+    genre decks, and plays through the exact same deck-agnostic
+    Table -> Reading -> Ending flow as every other deck
+    (components/storybook/storybook-storymaker.vue has zero deck-specific branching --
+    it switches purely on `runStore.run`/`isComplete`/`ending`). Server-side,
+    server/api/storybook/life/runs/[id]/resolve.post.ts already delegates to the legacy
+    `resolveLifeRunEnding` in server/utils/davinci.ts (the doc's "permanent delegate" is a
+    backend implementation-reuse detail, not evidence the old UI is still needed), and
+    server/api/storybook/runs/[id]/index.get.ts special-cases `stats` for
+    `deck.ownerKind === 'LIFE'` runs, i.e. the new engine's generic Reading screen already
+    renders life-specific stats.
+
+    BUT actual deletion is not safe yet, for a sequencing reason distinct from "parity
+    isn't there": storybook-life-run.vue's only remaining live trigger is
+    `store.beginLife(input)` in components/storybook/storybook-visual-setup.vue:550 -- and
+    that file is itself one of the four files t-037 deletes (still `status: waiting`,
+    unlanded). Until t-037 removes storybook-visual-setup.vue, a reader can still reach the
+    legacy setup form at ?legacy=1, submit shape=life, and land on storybook-life-run.vue;
+    deleting the component now while its only caller is still live would strand that path
+    (broken template branch or silent dead end) rather than cleanly retiring dead code.
+    Re-parked as `status: waiting` on `t-037` (added to depends_on) rather than `ready`,
+    since the blocker is a concrete file dependency, not an open question -- once t-037
+    lands, storybook-life-run.vue and its 13 guards can be deleted in the same spirit
+    immediately, no further parity research needed.
+  updated: '2026-09-17T09:35:00Z'
 - id: t-038
   milestone: m7
   title: "Gate genres, characters and narrators; award them on completion"
