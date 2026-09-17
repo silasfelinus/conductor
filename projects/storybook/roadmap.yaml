@@ -1156,3 +1156,50 @@ tasks:
     components/storybook/storybook-life-run.vue and stores/storybookStore.ts, and the
     now-unused legacy exports from utils/storybookLifeRunKeys.ts.
   updated: '2026-09-16T04:59:00Z'
+
+- id: t-055
+  milestone: m7
+  title: "Live bug: three deep-link CTAs into /storybook are silently ignored by the default (new-engine) storymaker"
+  status: ready
+  passes: 0
+  stakes: reversible
+  owner: null
+  note: |-
+    Filed from t-037 cycle 25 investigation (2026-09-17 scheduled Conductor session,
+    checking whether components/dreams/dream-narration.vue, components/rewards/reward-encounter.vue,
+    components/brainstorm/brainstorm-manager.vue, and components/facets/facet-profile.vue have
+    real (not comment-only) dependencies on components/conductor/storybook-page.vue -- they don't,
+    which is the good news for t-037 -- but the investigation surfaced a live, currently-shipping
+    bug distinct from t-037's own guard-rewrite scope.
+
+    THE BUG: dream-narration.vue, reward-encounter.vue, and facet-profile.vue each call
+    `navigateTo({ path: '/storybook', query: { location|reward|character: slug } })` -- no
+    `legacy: '1'` in the query. components/pages/storybook-library-page.vue computes
+    `legacy = route.query.legacy === '1'` and mounts `<StorybookStorymaker v-if="!legacy" />`
+    by default, so all three CTAs land on the NEW engine. Only the LEGACY storybook-page.vue
+    defines `seedFromQuery()` (reads `?location=`/`?reward=`/`?character=` into the setup
+    draft) -- confirmed via repo-wide grep for `seedFromQuery` and for `route.query`/`useRoute`
+    in components/storybook/storybook-storymaker.vue and components/storybook/storybook-table.vue
+    (zero matches in either). So today, any reader who clicks "continue this dream in
+    Storybook" from a Dream location, a Reward, or a Facet profile lands on the storymaker
+    with their location/reward/character silently dropped -- no error, just a blank/default
+    setup screen instead of the pre-filled one the CTA promised.
+
+    DO: implement the equivalent of `seedFromQuery()` (or route the three callers' intent
+    into it another way) inside the new engine -- storybook-storymaker.vue and/or
+    storybookRunStore.ts -- so `?location=`, `?reward=`, and `?character=` seed the new
+    setup flow the same way they used to seed the legacy one. This is genuinely new-engine
+    feature work, not a t-037 guard rewrite: t-037's own "SETUP/DEEP-LINK, unknown new-engine
+    parity" category (10 verifyStorybook*Guard scripts pinning storybook-page.vue's
+    seedFromQuery/picker/restart-confirm behavior) depends on this same parity question, so
+    closing this task also unblocks that category's guard rewrites.
+
+    NOT in scope here: touching storybook-page.vue itself (t-037 deletes it later), or the
+    3 callers' navigateTo() call sites (they are already correct -- the fix belongs in the
+    new engine, not in every caller).
+
+    Verify against all three real call sites (dream-narration.vue ?location=, reward-encounter.vue
+    ?reward=, facet-profile.vue ?character=) with a live-ish check (unit/component test or a
+    manual authenticated browser pass per AGENTS.md's kind_robots test-login pattern), not just
+    a code read.
+  updated: '2026-09-17T23:35:00Z'
