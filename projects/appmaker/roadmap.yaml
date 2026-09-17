@@ -116,7 +116,7 @@ tasks:
 - id: t-010
   milestone: m3
   title: Graduation flow (monorepo app to its own repo)
-  status: review
+  status: done
   passes: 0
   stakes: irreversible
   gate_human: true
@@ -215,7 +215,20 @@ tasks:
     monorepo. Both PRs are needs-human per design section 5c.
 
     Decision accepted under Silas's 2026-09-07 default-recommendation policy. Use the lower-risk squash-graduation model rather than inventing a commit-replay history service: preserve full historical provenance in Conductor and link back to it from the graduated repo. Monorepo apps without an individual owner may be graduated only by an admin. Require an already-connected GitHub installation and explicitly selected existing target repo; do not create repos implicitly. Target-repo push and monorepo removal PRs remain explicit review gates because they mutate real repositories.
-  updated: '2026-09-17T15:48:36Z'
+
+    Merged kind_robots#2802 (silasfelinus/kind_robots@8cff47a) 2026-09-17: admin-only POST
+    /api/appmaker/graduate-request (files a Todo, does not push to GitHub), GET
+    /api/appmaker/apps extended with graduated/pendingGraduations, admin-only Graduate
+    trigger + repo picker in appmaker-page.vue's fleet cards, and
+    verifyAppmakerGraduateRequestGuard.ts (+selftest) wired into contract-tests.yml. All 51
+    kind_robots CI checks green (Build production image still in flight at merge, non-
+    required per established precedent). This closes the request-filing half of graduation
+    per Silas's 2026-09-07 decision (squash graduation, admin-only, existing-granted-repo-
+    only). The squash-push executor itself (conductor-script + kind_robots-endpoint pair
+    that mints an installation token and writes a single commit via the Git Data API, then
+    opens the monorepo-removal PR) is separate, higher-risk infrastructure and remains
+    unbuilt -- filed as appmaker/t-015 (next_free_task_id.py) rather than left implicit.
+  updated: '2026-09-17T15:54:56Z'
   owner: worker
   claimed_by: claude-scheduled-20260917T153609Z-appmaker-t010
   claimed_at: '2026-09-17T15:36:09Z'
@@ -335,5 +348,43 @@ tasks:
     Decision accepted under Silas's 2026-09-07 default-recommendation policy: keep /appmaker admin-only for now and fix the stale self-serve/free-tier copy so the UI tells the truth. Do not broaden public project creation merely to match old copy; if self-serve AppMaker later becomes a real product goal, open a fresh outward-facing task with explicit abuse/rate-limit/GitHub-install review.
   updated: '2026-09-07T11:36:56+00:00'
   approved_by_human: true
-goal: Let a user turn an app idea into a working, maintainable project through AppMaker, from scaffold through a usable 
+
+- id: t-015
+  milestone: m4
+  title: Build the squash-graduation executor (conductor script + kind_robots endpoint) that consumes graduate-request Todos
+  status: ready
+  passes: 0
+  stakes: irreversible
+  gate_human: true
+  note: |-
+    Split off t-010's 2026-09-17 close-out (kind_robots#2802): that PR shipped only
+    the request-filing half -- an admin-only POST /api/appmaker/graduate-request
+    that validates the target installation/repo and files a "Graduate app
+    '<slug>' to its own repo" Todo, without pushing anything to GitHub. This task
+    is the actual mechanism: mint an installation token for the AppRepo's
+    installationId, build a single commit (blob -> tree -> commit -> ref-update
+    via the Git Data API -- NOT server/utils/appmakerGithub.ts's existing
+    pushScaffoldBranchAndOpenPr, which does one Contents-API PUT per file and is
+    the wrong shape for a squash push into a brand-new/empty repo) containing the
+    apps/<slug>/ tree, push it to the target owner/repo, then open a second,
+    separate PR in THIS (conductor) repo removing apps/<slug>/ from the monorepo.
+    Both the target-repo push and the monorepo-removal PR are real, irreversible
+    writes to repositories a bug here can't cleanly undo -- gate_human: true per
+    appmaker/t-010's original design note (section 5c), which this task inherits
+    unchanged.
+    Consumes: open Todos matching `Graduate app '<slug>' to its own repo`
+    (category AGENT, filed by graduate-request.post.ts) -- read the AppRepo row
+    via the Todo's description for the target owner/repo/installation, and the
+    'do not create another' idempotency note in the same Todo.
+    Open design question carried from t-010's original research (not yet
+    resolved by Silas): whether the target repo's initial commit needs a
+    'default_branch' to exist first (an empty GitHub repo has no ref to build a
+    tree on top of) -- appmakerGithub.ts's pushScaffoldBranchAndOpenPr assumes an
+    existing branch/ref to fork from, which a genuinely empty target repo won't
+    have. Confirm GitHub's Git Data API behavior for an empty repo (does creating
+    the first blob/tree/commit let you create the initial ref directly, or does
+    the repo need an initial commit via the regular Contents API first) before
+    implementing.
+  updated: '2026-09-17T16:00:00Z'
+goal: Let a user turn an app idea into a working, maintainable project through AppMaker, from scaffold through a usable
   handoff.
