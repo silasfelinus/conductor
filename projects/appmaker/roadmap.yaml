@@ -322,7 +322,7 @@ tasks:
 - id: t-014
   milestone: m4
   title: "Decide: keep /appmaker admin-only and fix its self-serve copy, or open project creation to all users"
-  status: ready
+  status: done
   passes: 0
   stakes: reversible
   note: |-
@@ -346,8 +346,18 @@ tasks:
 
 
     Decision accepted under Silas's 2026-09-07 default-recommendation policy: keep /appmaker admin-only for now and fix the stale self-serve/free-tier copy so the UI tells the truth. Do not broaden public project creation merely to match old copy; if self-serve AppMaker later becomes a real product goal, open a fresh outward-facing task with explicit abuse/rate-limit/GitHub-install review.
-  updated: '2026-09-07T11:36:56+00:00'
+
+    Implemented (scheduled conductor Agent run): rewrote appmaker-page.vue's copy per
+    Silas's 2026-09-07 decision -- removed the free-tier/self-serve language (Sign in...,
+    Free accounts can run N active projects) since content/channels/plan/appmaker.md's
+    requiredRole: ADMIN means no non-admin visitor can ever reach this page, and
+    enforceProjectCap() already no-ops for admins. Removed the now-dead FREE_PROJECT_LIMIT
+    constant. Verified with eslint (clean) and a full vue-tsc --noEmit typecheck (clean).
+    Merged silasfelinus/kind_robots#2804 (squash 71bf10a), all 46 CI checks green,
+    mergeable_state clean before merge.
+  updated: '2026-09-17T17:50:10Z'
   approved_by_human: true
+  implementation_pr: 'silasfelinus/kind_robots#2804'
 
 - id: t-015
   milestone: m4

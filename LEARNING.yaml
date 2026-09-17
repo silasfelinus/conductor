@@ -14479,3 +14479,18 @@ records:
     writes to a real external repo) kept this PR safely mergeable without a human gate,
     while filing the executor as its own gate_human task (t-015) rather than either
     building it unreviewed or leaving the remaining scope implicit in t-010's note.
+- date: 2026-09-17
+  project: appmaker
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A "FOR SILAS: decide X or Y" task can sit fully implementable long after the decision
+    lands if nobody revisits it -- Silas answered this one on 2026-09-07
+    (approved_by_human: true, keep /appmaker admin-only and fix the copy) but the actual
+    one-file copy fix wasn't picked up until this cycle. Worth a quick pass over ready
+    tasks with approved_by_human: true and no implementation_pr to catch this class
+    earlier next time.
