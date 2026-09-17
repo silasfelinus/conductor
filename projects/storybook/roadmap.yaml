@@ -637,7 +637,7 @@ tasks:
 - id: t-037
   milestone: m7
   title: "Delete the client-side beat loop and rewrite its ~25 verifyStorybook*Guard scripts"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-036, t-052]
@@ -661,11 +661,21 @@ tasks:
     scope under this task id. Returning to ready (not done) for the next slice.
 
     Second bounded t-037 slice: moved verifyStorybookAnswerRollbackGuard.mjs from the retired client answerCurrentBeat rollback implementation to the server-backed storybookRunStore submitMove contract. The guard now proves failed responses mutate no local turn state and successful responses append/apply state only after the success check.
-  updated: '2026-09-17T16:22:00Z'
+
+    Reviewer merged silasfelinus/kind_robots#2803 (squash
+    8085c43089ae887b8a0ea20666c6bce4a0665a6b) 2026-09-17: moved
+    verifyStorybookAnswerRollbackGuard.mjs from the retired client answerCurrentBeat
+    rollback implementation to the server-backed storybookRunStore submitMove contract,
+    proving failed responses mutate no local turn state and successful responses
+    append/apply state only after the success check. All 45 kind_robots CI checks green,
+    mergeable_state clean, squash-merged. This was the second bounded slice -- remaining
+    beat-loop deletion and the ~24 other verifyStorybook*Guard rewrites are still unclaimed
+    scope under this task id. Returning to ready (not done) for the next slice.
+  updated: '2026-09-17T16:27:45Z'
   owner: worker
   claimed_by: openai-scheduled-2026-09-17T161709Z-storybook-t037-a2
   claimed_at: '2026-09-17T16:17:09Z'
-  implementation_pr: 'silasfelinus/kind_robots#2801'
+  implementation_pr: 'silasfelinus/kind_robots#2803'
 
 - id: t-052
   milestone: m7
