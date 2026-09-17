@@ -1,0 +1,8 @@
+version: 1
+project: storybook
+task: t-037
+operation: ready
+session: openai-scheduled-2026-09-17T141907Z-storybook-t037-a1
+updated: '2026-09-17T14:22:00Z'
+note: >-
+  Connector dependency audit before deletion found a sequencing hazard that the current t-037/t-053 notes do not fully encode. stores/storybookStore.ts is still imported directly by components/storybook/storybook-life-run.vue, while t-053 deliberately keeps that component until after t-037 and itself depends on t-037. Therefore t-037 must not delete storybookStore.ts wholesale: it should remove the short/chaptered/episodic beat-loop state/actions and legacy setup callers, but preserve the life-only exports still consumed by storybook-life-run.vue until t-053 retires that component and its 13 Da Vinci guards. Direct-import search also found narrativeArtMilestones.ts, narrative-milestone-art.client.ts, storybook-state-panel.vue, storybookLibraryHelper.ts, storybook-library-page.vue, storybook-page.vue, storybook-life-run.vue, and storybook-visual-setup.vue referencing the store, so the implementation must migrate/remove each relevant dependency rather than treating the four files named in the older note as the complete deletion graph. No code was deleted in this cycle because doing so before reconciling these live dependents would break the ?legacy=1 life path that t-053 explicitly says must survive until t-037 lands. The task is returned to ready with this concrete implementation constraint; no human decision is required.
