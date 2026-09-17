@@ -97,7 +97,7 @@ tasks:
 - id: t-003
   milestone: m1
   title: "Create source-video beat map template"
-  status: review
+  status: needs-human
   passes: 0
   stakes: reversible
   depends_on:
@@ -109,11 +109,18 @@ tasks:
 
 
     Silas's 2026-09-07 default-recommendation policy accepts the existing beat-map columns and pipeline order. Do not close this as mere template approval: the remaining deliverable is the real timestamped beat map from the already-present coat dance_x264.mp4. Treat ffmpeg/librosa/MediaPipe availability as agent-owned tooling/setup work; prefer a dedicated isolated analysis environment as t-002 recommended, and produce exact setup/run instructions when execution must occur on a local/render host. Original synced audio remains the soundtrack per Silas's earlier decision.
-  updated: '2026-09-17T11:44:41Z'
+
+    FOR SILAS: the real, timestamped beat map is done -- projects/coat-dance/source/beatmap.md (38 sections, full 0:00-5:32 runtime, no gaps). It contains: per-section Movement/Action, Coat Behavior, and Emotional Tone read directly from extracted video frames (not guessed), grounded in real audio-structure and motion-energy numbers; a first-pass Candidate AI Treatment idea per section; and a "Structural read" summary of the piece's arc (quiet coat-handling opening -> row 16 flourish hinge -> photo-projection sequence with a measured energy peak at row 17 and a legible image/body rhyme at row 31 -> blackout -> closing tableau).
+
+    TO APPROVE: read through the table (or at least the "Structural read" section and a sample of rows) and confirm the beat boundaries and descriptions feel right, or leave notes on what to adjust -- rows 3/5's "blurred figure" read as motion blur of you, not a second performer, is the one interpretive call most worth double-checking against your own memory of the performance. Set approved_by_human: true and status: done, or edit the note with corrections.
+
+    What unblocks when you do: t-004 (section-by-section creative treatment) can start for real -- it was blocked on this table existing. Generation Method is deliberately left blank throughout, pending t-006's render-environment tool inventory.
+  updated: '2026-09-17T11:48:10Z'
   approved_by_human: true
   owner: worker
   claimed_by: claude-scheduled-20260917T1140Z-coatdance-t003
   claimed_at: '2026-09-17T11:39:06Z'
+  implementation_pr: 'silasfelinus/conductor#4553'
 
 - id: t-004
   milestone: m2
