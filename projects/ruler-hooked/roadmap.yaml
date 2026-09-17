@@ -537,7 +537,7 @@ tasks:
 - id: t-026
   milestone: m4
   title: Replace the text-button fishing panel with a real timing minigame
-  status: review
+  status: done
   gate_human: false
   owner: worker
   stakes: reversible
@@ -563,7 +563,15 @@ tasks:
 
     Do not simply animate the existing buttons. The complaint is that the mechanic is a menu, not
     that the menu lacks motion.
-  updated: '2026-09-17T12:07:31Z'
+
+    Merged: silasfelinus/kind_robots#2800. All 47 CI checks green (Contract verifiers,
+    TypeScript/vue-tsc, layout-contract, GitGuardian, and every Storybook/Taskmaster/facet-
+    catalog suite -- none touch ruler-hooked but all ran clean against the change). The old
+    three-button Reel/Slack/Wait menu is gone; the "on the line" panel is now the sliding-
+    marker timing bar Silas asked for twice (2026-09-11). Deterministic replay preserved
+    (same seed + same recorded stop positions -> same encounter), and rarity now drives real
+    difficulty (band width/sweep speed) across all 15 fish, not just draw weight.
+  updated: '2026-09-17T12:11:50Z'
   claimed_by: claude-scheduled-20260917T1215Z-rh-t026
   claimed_at: '2026-09-17T11:49:18Z'
   implementation_pr: 'silasfelinus/kind_robots#2800'
