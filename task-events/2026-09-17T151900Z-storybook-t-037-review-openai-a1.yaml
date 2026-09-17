@@ -1,0 +1,9 @@
+version: 1
+project: storybook
+task: t-037
+operation: review
+owner: worker
+session: openai-scheduled-2026-09-17T151539Z-storybook-t037-a1
+updated: '2026-09-17T15:19:00Z'
+note: >-
+  First bounded t-037 implementation slice: rewrote verifyStorybookSessionStorageRecoveryGuard.mjs against the server-backed storybookRunStore active-run pointer, preserving SSR safety and fail-soft blocked-storage behavior. Remaining beat-loop deletion and guard migration stays in t-037.
