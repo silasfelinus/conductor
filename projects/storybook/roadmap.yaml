@@ -627,7 +627,7 @@ tasks:
 - id: t-037
   milestone: m7
   title: "Delete the client-side beat loop and rewrite its ~25 verifyStorybook*Guard scripts"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-036, t-052]
@@ -724,10 +724,16 @@ tasks:
     whether category (2)/(3) is one bulk cutover PR (kill legacy code + delete these guards
     together) or has any further genuinely portable sub-slice. No Kind Robots mutation this
     cycle. Releasing the claim, re-arming to ready (recurring multi-slice task).
-  updated: '2026-09-17T23:31:41Z'
-  owner: worker
-  claimed_by: claude-scheduled-20260917T233141Z-storybook-t037-slice5
-  claimed_at: '2026-09-17T23:31:41Z'
+
+    Cycle 25 (claude-scheduled-20260917T233141Z-storybook-t037-slice5): resolved cycle 24's open investigative question. Checked the 5 named components for real (non-comment) references to components/conductor/storybook-page.vue via git grep against origin/main: dream-narration.vue, reward-encounter.vue, brainstorm-manager.vue, and facet-profile.vue have none -- all mentions are code comments. storybook-life-run.vue's one mention is also comment-only. Repo-wide grep for real importers/consumers of storybook-page.vue found only: components/pages/storybook-library-page.vue (the known, intended <StorybookPage v-if="legacy" /> mount) and three utils/scripts/verify*.ts files that read its source text as part of a contract check (verifyGalleryIndexHydration.ts, verifyNarrativeRoles.ts, verifyNarrativeKit.ts -- these will need updating whenever storybook-page.vue is actually deleted, separate from the ~25 verifyStorybook*Guard list already tracked). So category (2)/(3)'s premise holds: the 5 named components are not part of the deletion graph and do not block a bulk cutover on their own account.
+
+    However, chasing category (3)'s deep-link/query-seeding parity question (does StorybookStorymaker/storybookRunStore have an equivalent to storybook-page.vue's seedFromQuery()?) surfaced a live product bug, not just a guard-migration risk: dream-narration.vue, reward-encounter.vue, and facet-profile.vue each navigateTo('/storybook', { query: { location|reward|character } }) with no legacy=1, so all three CTAs land on the NEW engine by default -- and storybook-storymaker.vue/storybook-table.vue have zero route.query/useRoute handling (confirmed via grep). The query param is silently dropped today, in production, for any reader using these three real CTAs. Filed as storybook/t-055 (new task, ready, stakes: reversible) rather than folding new-engine feature work into this already-large cutover task, per AGENTS.md scope discipline -- t-055 also directly unblocks category (3)'s ~10 verifyStorybook*Guard rewrites once it lands, since there would then be a real new-engine behavior to pin instead of a doomed-legacy one.
+
+    Still no safe bounded code-deletion slice this cycle for t-037 itself: the LEGACY-ONLY (8 guards + storybookLibraryHelper.ts) and SETUP/DEEP-LINK (10 guards) categories both remain blocked on decisions/work outside this task's own scope (the former on deciding whether the bulk cutover is one PR or has a further sub-slice; the latter on t-055 landing first). No Kind Robots mutation this cycle. Releasing the claim, re-arming to ready.
+  updated: '2026-09-17T23:33:50Z'
+  owner: null
+  claimed_by: null
+  claimed_at: null
   implementation_pr: 'silasfelinus/kind_robots#2806'
 
 - id: t-052
