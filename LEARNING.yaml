@@ -14383,3 +14383,19 @@ records:
     repo that needs its actual dev server, not just a pre-built target host,
     to render local changes -- worth a dedicated look before relying on it for
     the next UI-shaped task.
+- date: 2026-09-17
+  project: coloring-book
+  task: t-047
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Before filing a new task claiming "no CLI flag exists" for a production gap, grep the sibling
+    *_request.py wrapper scripts, not just the batch consumer -- consume_coloring_book_studio_request.py
+    --force --live already did exactly what t-022 cycle 18 said was missing (reset a needs_review color
+    entry back to pending for a fresh render), and would have resolved mr-008 a cycle earlier if checked
+    first. Also: when adding a "file went missing" detector to a status-driven pipeline, exclude any status
+    where a downstream ledger (here: proposals.yaml''s accepted.color) becomes the authoritative pointer
+    after promotion -- the promoting operation may correctly leave the upstream queue''s own path field
+    stale without anything actually being broken (mr-002/mr-003/mr-004 here).'
