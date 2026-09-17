@@ -14413,3 +14413,17 @@ records:
     When a task note contradicts AGENTS.md''s own documented working recipe for the same
     environment, re-run the cheapest possible check before accepting the note -- a stale/wrong
     claim from one session otherwise silently downgrades every session after it.'
+- date: 2026-09-17
+  project: storybook
+  task: t-038
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Generalizing an existing dormant gate (EndingDeck.unlockAchievementId from t-033)
+    into a shared isUnlocked/assertCastPlayable pair, rather than writing a parallel
+    Character-specific gate function, kept the enforcement flag single and the contract
+    guard simple to write. When a roadmap note says "same hook as X", check whether the
+    prior task''s implementation was already written generically enough to extend, before
+    reaching for a second concept.'
