@@ -336,7 +336,7 @@ tasks:
 - id: t-019
   milestone: m5
   title: Generate species designs for the 15-fish vertical-slice roster
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   gate_human: true
@@ -361,7 +361,27 @@ tasks:
     requeued corrected prompts for regeneration: silasfelinus/conductor#4526. Re-arming to
     ready rather than closing -- a future session should re-check these two once the
     corrected renders land via auto-art-generate.yml and close this task if they pass.
-  updated: '2026-09-17T20:32:38Z'
+
+    Re-checked before doing any work (per convention), conductor scheduled sweep 2026-09-17.
+    Downloaded and visually inspected both re-rendered species from
+    silasfelinus/conductor#4526: the-pleasant-island now reads correctly as a sea turtle
+    with a small tropical island growing from its back, matching its corrected silhouette --
+    PASSES, 14/15 species now confirmed. choirfish still fails: despite the FISH_FRAME fix
+    (single fish specimen study -> clean specimen study), the render is still one ornate
+    fish with elaborate fins rather than three separate small fish. Root cause this time is
+    prompt phrasing, not the frame contradiction: the prompt described the trio only in
+    aggregate (three slender ribbon-finned fish moving as one ascending chord) without
+    describing each of the three bodies individually, and this engine (krea2, cfg 1) treats
+    guidance as inert, so any negation would have landed as positive conditioning anyway --
+    there was nothing to remove, only something to add. Rewrote the choirfish entry prompt
+    (positive-only, no negation) to describe three individually-sized, individually-colored
+    fish explicitly (first/second/third, red/blue/gold throats) and reset its status to
+    pending in projects/art-prompts.yaml; validated with
+    build_ruler_hooked_art_queue.contract_violations() (clean) and repair_art_prompt_yaml.py
+    (not flagged). Re-arming to ready rather than closing -- a future session should check
+    this single remaining species once the corrected render lands via auto-art-generate.yml
+    and close this task if it passes.
+  updated: '2026-09-17T20:36:05Z'
   owner: reviewer
   claimed_by: claude-scheduled-20260917T203238Z-rulerhooked-t019-conductor
   claimed_at: '2026-09-17T20:32:38Z'
