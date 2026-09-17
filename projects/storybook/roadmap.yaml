@@ -637,7 +637,7 @@ tasks:
 - id: t-037
   milestone: m7
   title: "Delete the client-side beat loop and rewrite its ~25 verifyStorybook*Guard scripts"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-036, t-052]
@@ -677,9 +677,66 @@ tasks:
     the new engine's submitWritten()/writeMove() path. Re-armed to ready (recurring multi-
     slice task) -- ~10 verifyStorybook*Guard scripts still reference the retired client
     store and remain the next bounded slices (see kaizen list on kind_robots#2806).
-  updated: '2026-09-17T19:31:31Z'
-  owner: worker
-  claimed_by: claude-scheduled-20260917T1930Z-storybook-t037-slice4
+
+    Cycle 24 (conductor scheduled sweep, claude-
+    scheduled-20260917T1930Z-storybook-t037-slice4): investigated the kaizen list from #2806
+    before picking a 4th slice and found it names guards inaccurately -- grepped all
+    utils/scripts/verifyStorybook*.{mjs,ts} in kind_robots for real references (not just
+    comment mentions) to the retired storybookStore.ts/storybook-page.vue beat loop rather
+    than trusting the PR-authored list blind. Bigger finding: components/pages/storybook-
+    library-page.vue already gates on a `legacy` flag -- `!legacy` (the default, live path)
+    mounts StorybookStorymaker/StorybookTable on the new server-backed storybookRunStore
+    (openStory/loadRun/resumeActiveRun/fetchAdventures), `legacy` (only via ?legacy=1, per
+    t-053) still mounts the old StorybookPage/StorybookVisualSetup/StorybookLifeRun on
+    storybookStore.ts. So the new engine is not still-unbuilt scope -- it is already the
+    default, and t-034..036/t-052 (this task deps) are done. What remains splits three ways,
+    not one flat guard-by-guard list: (1) DONE -- 3 guards (AnswerRollback #2803,
+    SessionStorageRecovery #2801, AnswerInputPreservation #2806) pinned transferable
+    optimistic-update properties and were safely rewritten against
+    writeMove()/submitWritten() ahead of any deletion. (2) LEGACY-ONLY, no server-side
+    equivalent -- verifyStorybookLibraryPhantomSessionGuard,
+    verifyStorybookLibraryStorageRecoveryGuard,
+    verifyStorybookLibrarySessionConsistencyGuard, verifyStorybookSessionLibrary,
+    verifyStorybookDuplicateResumeGuard, verifyStorybookDuplicateArtCarryoverGuard,
+    verifyStorybookRestartScenarioFrameGuard, verifyStorybookRestartInputCompletenessGuard
+    all pin stores/helpers/storybookLibraryHelper.ts (a client localStorage recent-stories
+    cache with restart/duplicate). storybookRunStore.ts has no such client cache --
+    StorybookTable/fetchAdventures reads the library from the server instead. These 8 cannot
+    be faithfully "rewritten" one at a time against a feature that does not exist server-
+    side; they get deleted together with
+    storybookLibraryHelper.ts/storybookStore.ts/storybook-page.vue when the legacy path
+    itself is finally removed -- that removal (also dropping the ?legacy=1 flag t-053
+    pinned) is a single larger, riskier cutover PR, not a bounded slice, and needs
+    confirming no other live surface still imports storybook-page.vue first
+    (components/dreams/dream-narration.vue, components/rewards/reward-encounter.vue,
+    components/brainstorm/brainstorm-manager.vue, components/facets/facet-profile.vue, and
+    storybook-life-run.vue all currently reference it -- unchecked this cycle whether those
+    are real imports or comment/text mentions, that check is the right next investigative
+    step). (3) SETUP/DEEP-LINK, unknown new-engine parity --
+    verifyStorybookCharacterDeepLinkGuard, verifyStorybookConfirmArmScopeGuard,
+    verifyStorybookLibraryNewStoryConfirmGuard, verifyStorybookLocationDeepLinkGuard,
+    verifyStorybookObjectEntryLinks, verifyStorybookPickerRestoredSelectionGuard,
+    verifyStorybookPickerSearchResetGuard, verifyStorybookRestoreIdempotencyGuard,
+    verifyStorybookSeedQueryCapGuard, verifyStorybookSeedQueryRaceGuard all pin storybook-
+    page.vue setup-screen behavior (seedFromQuery deep links, picker state, restart/new-
+    story confirm arming) that is a different concern from the beat loop itself -- whether
+    StorybookStorymaker/StorybookTable has equivalent deep-link/query-seeding support is not
+    yet checked. (4) verifyStorybookBranchState and verifyStorybookStudio pin the whole
+    legacy studio surface broadly (setup shell art-first layout,
+    branch/consequence/inventory state via client-parsed [STORY_STATE] markers) and will
+    need a full rewrite once/if that shell moves, not a small patch -- storybookRunStore.ts
+    explicitly states "THE SERVER OWNS THE NUMBERS," so the STORY_STATE-marker mechanism
+    itself has no new-engine equivalent by design. No safe bounded slice this cycle that
+    would not mean fabricating an invariant for a feature that may not carry over --
+    attempting one blind risks a quality-category rejection (a guard that either passes
+    trivially or wrongly pins doomed legacy-only behavior as if it were the target). Next
+    cycle: check the 5 named components for real storybook-page.vue imports, then decide
+    whether category (2)/(3) is one bulk cutover PR (kill legacy code + delete these guards
+    together) or has any further genuinely portable sub-slice. No Kind Robots mutation this
+    cycle. Releasing the claim, re-arming to ready (recurring multi-slice task).
+  updated: '2026-09-17T19:36:19Z'
+  owner: null
+  claimed_by: null
   claimed_at: '2026-09-17T19:31:31Z'
   implementation_pr: 'silasfelinus/kind_robots#2806'
 
