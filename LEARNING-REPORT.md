@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-17T12:10:02Z
+Generated: 2026-09-17T12:19:25Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1001**
-- Outcomes: blocked: 16, cancelled: 1, done: 984
+- Closed tasks recorded: **1002**
+- Outcomes: blocked: 16, cancelled: 1, done: 985
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -53,7 +53,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | newsfeed | 20 | 100% |
 | packmaker | 10 | 100% |
 | rainbow-butterflies | 21 | 100% |
-| ruler-hooked | 13 | 100% |
+| ruler-hooked | 14 | 100% |
 | scene-animator | 2 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 984 | 99% |
+| software | 985 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-17 `ruler-hooked/t-026` — Redesigning a discrete-action minigame (button REEL/SLACK/WAIT) into a continuous timing-bar input without breaking replay determinism was made tractable by keeping the animation purely client-side display and only ever sending the recorded stop position into a pure reducer -- the same "framework-free, never elapsed milliseconds" contract the rest of the engine already kept. Adding a `quality` parameter defaulting to 1 and proving byte-for-byte equivalence to the old formulas at quality=1 (self-test #8) gave a cheap, concrete regression guard for a refactor that touched core resolution math. Also confirmed prettier is not CI-enforced in kind_robots (no workflow runs `lint:prettier`/`npm run lint`) -- running it blind reformats unrelated code the task never touched; check for an enforcing workflow before applying a formatter repo-wide, and prefer reverting to the original eslint-clean formatting when it isn't enforced.
 - 2026-09-17 `storybook/t-052` — The task note offered two options (client migration vs. export) but the export mechanism (buildExport/downloadStory) was already fully built at ?legacy=1 -- the actual gap was discovery, not implementation. Read the existing code before assuming a roadmap task's two listed options are both still open; often one is already done and the task is really about surfacing it. Filed t-054 (waiting on t-037) so the banner does not become permanent dead code once the beat loop it points at is deleted.
 - 2026-09-17 `storybook/t-038` — Generalizing an existing dormant gate (EndingDeck.unlockAchievementId from t-033) into a shared isUnlocked/assertCastPlayable pair, rather than writing a parallel Character-specific gate function, kept the enforcement flag single and the contract guard simple to write. When a roadmap note says "same hook as X", check whether the prior task's implementation was already written generically enough to extend, before reaching for a second concept.
 - 2026-09-17 `model-builder/t-031` — A prior cycle's "browser fails on every HTTPS host" note was itself wrong for this sandbox class and would have been taken at face value if not re-verified directly (a 3-line Playwright probe against example.com + kindrobots.org before trusting an inherited claim). When a task note contradicts AGENTS.md's own documented working recipe for the same environment, re-run the cheapest possible check before accepting the note -- a stale/wrong claim from one session otherwise silently downgrades every session after it.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-16 `kind-robots/t-108` — A hand-measured methodology (t-106's clipped-pixel curve, described only as "the fraction of pixels at 0 or 255") was ambiguous enough to implement three different ways -- greyscale luminance, whole-pixel all-channels-clipped, and RGB per-channel-sample -- with wildly different results (0.86%, 0.09%, and 3.31% respectively on the same reference image, against a recorded 3.48%). Only re-deriving the number on the exact LoRA/render the original measurement named (AsheLoLXL's own cfg-10 datapoint) caught this before 769 production rows got written from the wrong one. When a task's note says "verify against the hand-measured reference before trusting it catalog-wide," that check is doing real work, not boilerplate -- budget time for it rather than picking the first plausible-sounding definition. Separately: a per-candidate network call inside a concurrency-limited batch (mapLimited) MUST be wrapped in its own try/catch -- an unhandled rejection (UND_ERR_HEADERS_TIMEOUT, seen live) aborts the whole Promise.all and kills every other in-flight candidate with it, not just the one that failed. Caught here before any writes happened, but a script over 700+ items should always assume the network will hiccup on at least one of them.
 - 2026-09-16 `interface-vision/t-105` — Cycle: two of the Responsive Layout Audit's 19 reported failures were checker false positives rather than real defects -- a nested-scroll-ancestor walk that stopped at the first offscreen inner scroller instead of continuing to a fitting outer one (flagging shelf items inside an intentional home swipe rail), and a sub-32px flex text item flagged as crushed purely for being short rather than for its text actually being clipped (scrollWidth > clientWidth). Fixing the checker's own logic rather than suppressing the routes kept coverage intact. The one real defect (/messages forcing a two-column grid that crushed the empty thread pane to 4px on phones) was fixed with a CSS container query rather than a viewport media query, since the component can be embedded at different container widths elsewhere -- worth defaulting to container queries over viewport media queries for any reusable/embeddable panel component going forward.
 - 2026-09-16 `kind-robots/t-107` — A one-line vue-tsc noUncheckedIndexedAccess rejection (TS18048 "possibly undefined" on array-destructured lookups used before arithmetic) cost a full retry cycle that a local `npm run test`/vue-tsc pass before opening the PR would have caught in seconds. The retry itself was clean: explicit `if (!x) return null`/`continue` guards immediately after each array lookup, before any arithmetic. Also confirms the by-now-recurring shape for backfill-style tasks that touch production rows: land the interpolation/ schema-opening prerequisite as its own small, fully-tested, zero-mutation PR first, and file the actual live-data mutation as a separate follow-up task (kind-robots/t-108 here) rather than bundling both into one PR.
-- 2026-09-16 `conductor/t-176` — submit_daily_dream_art.py resubmits every status:pending entry in art-prompts.yaml on every daily-digest run with no attempt cap or standing-failure surfacing beyond a failing scheduled workflow, so one entry whose stored prompt trips kind_robots' artPromptContract.ts conditional-instruction rule ("only when X chooses to Y") re-fails identically forever until a human or session edits the stored text by hand. The upstream gate (dream_prose_quality.py's complaints(), run at proposal authoring/revision time) checked known_for/best_scene for length, label-echo, and self-reference but not for the phrasing its own downstream consumer (dream_art_prompts.py) would later fail on at ArtJob enqueue -- the two checks had never been tested against each other. When a producer and a downstream contract check live in different repos/layers, a validation gap between them can persist indefinitely with each side individually "passing." Mirroring the downstream contract's own regex patterns into the upstream gate (rather than inventing a new heuristic) keeps both sides provably in sync and was cheap once the downstream source was actually read.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-17T12:10:02Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-17T12:19:25Z_
