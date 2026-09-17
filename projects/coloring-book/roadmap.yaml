@@ -775,7 +775,7 @@ tasks:
 - id: t-047
   milestone: m4
   title: 'color-art-jobs.yaml can carry status: needs_review with no backing rendered file (mr-008)'
-  status: ready
+  status: claimed
   stakes: reversible
   note: >-
     Found during t-022 cycle 18 (2026-09-17, scheduled Conductor session) while looking
@@ -812,5 +812,8 @@ tasks:
     the recovery-detection fix, or (if the fix looks larger than expected once someone
     reads consume_coloring_book_color_art.py's revision-request path in full) it should
     split into two tasks rather than block on doing both at once.
-  owner: null
+  owner: worker
   passes: 0
+  claimed_by: claude-scheduled-20260917T033808Z-cb-t047
+  claimed_at: '2026-09-17T03:38:09Z'
+  updated: '2026-09-17T03:38:09Z'
