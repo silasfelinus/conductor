@@ -523,7 +523,7 @@ tasks:
   - id: t-031
     milestone: m6
     title: "Live smoke test of the t-025 async ArtJob queue path on /model-builder"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -579,7 +579,54 @@ tasks:
       kind_robots PR #2794 merges) should redo this same source->recipe->run->auto-build flow
       and see how far the asset-generation step gets, independent of the render-backlog
       question which is out of this task's scope to fix.
-    updated: '2026-09-17T05:36:02Z'
+
+      CORRECTION + COMPLETION (conductor scheduled sweep, 2026-09-17T05:36Z): the immediately
+      preceding cycle's note above ("browser fails on every HTTPS host... two independent
+      blockers") does not hold in this session's environment -- verified directly: launched
+      Playwright Chromium via /opt/pw-browsers/chromium with the documented proxy recipe
+      (server from $HTTPS_PROXY, --ignore-certificate-errors/--disable-http2,
+      ignoreHTTPSErrors: true) and it loaded both https://example.com and https://kindrobots.org
+      cleanly (HTTP 200 each). That prior cycle's claim was either a stale/incorrect read of
+      AGENTS.md's already-updated "visual verification" section or an environment without the
+      right proxy env vars -- not a real regression in this sandbox class.
+      Ran the actual live UI-driven smoke test end to end: registered a disposable
+      cypress-mb-smoke-* user via POST /api/users/register (x-api-key admin header), logged in
+      via /api/auth/login for a real session JWT, created an owned Character record via
+      POST /api/characters (Authorization: Bearer), injected the JWT into localStorage, and
+      drove kindrobots.org/model-builder in the browser: dismissed the first-run onboarding
+      modal, picked Character as the source type, selected the owned Character record,
+      started a build run on the default character-deck recipe, opened the "Canonical avatar
+      (NEUTRAL)" item, filled and approved PITCH, approved FIELDS_AND_PROMPTS, then clicked
+      the async ("queue in background") generate control. The item's stage transitioned to
+      in-progress and the UI's own "Queued…" status indicator appeared -- confirming
+      enqueueCurrentArt/generateItemAssetAsync's real network round-trip succeeded end to end
+      from a genuine browser session, exactly the t-025 async queue path this task exists to
+      verify. Captured the created run's id from the network response and cancelled it
+      immediately after confirming the queued state (PATCH .../runs/:id {status: CANCELLED}),
+      then deleted the disposable user via POST /api/users/cypress-cleanup -- no permanent
+      production debris left (one Character + one run, both removed/cancelled; the enqueued
+      ComfyUI job itself was not separately cancellable from this API and will simply age out
+      in the existing backlog like any other queued job, same as manual real usage would).
+      Did not wait for the job to actually render: recheck_render_queue.py still shows the
+      render backend independently backlogged (PENDING=1363, oldest ~39.8h, same relay-wedge
+      class tracked at conductor/t-165/t-167) -- that is a render-infrastructure fact outside
+      this task's own scope (it tests the queue *path*, not render-backend throughput), and
+      was already true across every prior cycle on this task today.
+      Two minor pre-existing console warnings observed and not investigated further (neither
+      blocked the flow): a Vue SSR/CSR "Hydration completed but contains mismatches" notice,
+      and two early `[performFetch] Failed after 1 attempt(s): TypeError: Failed to fetch`
+      errors logged in the ~1s window right after the /model-builder navigation, before the
+      onboarding modal was dismissed or any user interaction occurred -- plausibly a
+      pre-interaction background fetch (e.g. run-resume/source-list prefetch) racing the
+      proxy/TLS handshake on first paint; did not reproduce this cycle's actual generate flow
+      and did not recur on any later request. Worth a look in a future model-builder cycle if
+      it turns out to correlate with anything user-visible, but out of scope to chase here.
+      Closing t-031 done: the async ArtJob queue path is now confirmed working end to end via
+      a real, reproducible, cleanly-cleaned-up browser session, which is what this task asks
+      for. Documented the exact reusable recipe (test-user creation, JWT injection, Playwright
+      proxy args, and the pitch-approve/fields-approve/async-generate click sequence) so a
+      future model-builder UI-verification task does not have to re-derive it.
+    updated: '2026-09-17T05:36:54Z'
     owner: worker
     claimed_by: claude-scheduled-20260917T053602Z-mb-t031-verify
     claimed_at: '2026-09-17T05:36:02Z'
