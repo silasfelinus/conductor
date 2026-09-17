@@ -653,19 +653,31 @@ tasks:
 - id: t-038
   milestone: m7
   title: "Gate genres, characters and narrators; award them on completion"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   depends_on: [t-033, t-036]
-  note: >
+  note: >-
     Part B5. Locked cards appear face-down in the hand with a lock and an unlock hint; the
     unlock condition lives on the deck/card record (EndingDeck.unlockAchievementId, and a
     matching column on Character) and is awarded in the same resolution transaction that
     credits the ending. Flip STORYBOOK_ENFORCE_DECK_GATES on once the hand renders locks.
-  updated: '2026-09-17T06:34:19Z'
+
+    Cross-repo PR open: silasfelinus/kind_robots#2795. Adds Character.unlockAchievementId
+    (additive migration, mirrors EndingDeck's from t-033), generalizes storybookGating.ts
+    into assertCastPlayable checking the whole cast, new GET /api/storybook/characters,
+    Table lock rendering (face-down card, lock icon, unlock hint), new
+    verifyStorybookCharacterGating.mjs guard wired into test:storybook + contract-tests.yml.
+    Ships fully dormant (no unlockAchievementId set on any live record yet) -- same posture
+    as t-033's deck gate. Flipping STORYBOOK_ENFORCE_DECK_GATES in prod is a follow-up
+    content/ops step, not tracked in-repo. Scoped to genre+character only, not narrator (the
+    concrete C5 engine-groundwork spec only ever names Character as t-038's addition;
+    narrator gating isn't described with any schema hook anywhere).
+  updated: '2026-09-17T06:47:17Z'
   owner: worker
   claimed_by: claude-scheduled-20260917T063418Z-storybook-t038
   claimed_at: '2026-09-17T06:34:19Z'
+  implementation_pr: 'silasfelinus/kind_robots#2795'
 - id: t-039
   milestone: m8
   title: "Engine: replace the four story shapes with the four story modes"
