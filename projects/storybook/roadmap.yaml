@@ -664,7 +664,7 @@ tasks:
 - id: t-052
   milestone: m7
   title: "Migrate saved beat-loop localStorage sessions into server adventures (or offer an export) before t-037 deletes them"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-036]
@@ -685,7 +685,10 @@ tasks:
     action surfaced once at the ?legacy=1 screen before t-037 ships, if (a) turns out not to
     be a faithful mapping. Whichever is chosen, verify against a real saved
     storybook-session-library-v1 entry, not just an empty-state check.
-  updated: '2026-09-17T06:00:00Z'
+  updated: '2026-09-17T10:28:58Z'
+  owner: worker
+  claimed_by: claude-scheduled-20260917T102858Z-storybook-t052
+  claimed_at: '2026-09-17T10:28:58Z'
 
 - id: t-053
   milestone: m7
