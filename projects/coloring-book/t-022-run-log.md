@@ -2893,3 +2893,23 @@ keeps reporting DOWN on the stale-claim heuristic even while the pipeline is act
 producing -- check `/api/art/queue/stats` directly (`imagesCreatedInWindow`,
 `windowThroughput.DONE`, and whether `latestDoneAt` is recent) before concluding the
 box is actually stuck, rather than trusting the one-line verdict alone.
+
+Cycle 23 (2026-09-17T, scheduled Conductor sweep): `check_render_box.py` reported UP
+again this cycle (heartbeat healthy 0.6 minutes ago, 75 renders completed in the last
+6h) -- unlike cycle 22's stale-claim DOWN reading. Ran `coloring_queue_status.py`
+across all three books: unchanged shape from prior cycles -- exactly one pending color
+entry per book, each flagged `recovery_candidate`/`recommended_action:
+recover-existing-jobs` (monster-recast/mr-008 job 26356, hollywood-recast/hwr-008 job
+25421, kind-robots/kr-006 job 25419 -- the same three job ids tracked since they were
+first flagged). Ran a live recovery pass against all three (`consume_coloring_book_color_art.py
+--live`, `--ids mr-008` for monster-recast, default pending-batch for the other two
+since each book has exactly one pending entry): all three jobs are STILL
+queued/running server-side (no duplicate submitted, script correctly left them for
+next cycle) even though the render box is otherwise healthy and actively draining a
+separate, newer batch of jobs normally. This confirms cycle 20-22's read: the wedge is
+specific to these three particular queued jobs, not a backend-down condition -- general
+render-box health recovering does not clear a job that's actually stuck relay-side.
+Still gated on conductor/t-165 (relay hang, hands-on diagnosis needed) / t-167 (relay
+wedge after restart) for these three specific jobs, and coloring-book/t-039
+(Kontext BW-corruption) for the book-wide `generate-bw` stage. No unblocked slice this
+cycle. Re-arming to ready (recurring), releasing the claim.
