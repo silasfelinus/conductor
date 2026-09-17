@@ -627,7 +627,7 @@ tasks:
 - id: t-037
   milestone: m7
   title: "Delete the client-side beat loop and rewrite its ~25 verifyStorybook*Guard scripts"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-036, t-052]
@@ -724,10 +724,10 @@ tasks:
     whether category (2)/(3) is one bulk cutover PR (kill legacy code + delete these guards
     together) or has any further genuinely portable sub-slice. No Kind Robots mutation this
     cycle. Releasing the claim, re-arming to ready (recurring multi-slice task).
-  updated: '2026-09-17T19:36:19Z'
-  owner: null
-  claimed_by: null
-  claimed_at: '2026-09-17T19:31:31Z'
+  updated: '2026-09-17T23:31:41Z'
+  owner: worker
+  claimed_by: claude-scheduled-20260917T233141Z-storybook-t037-slice5
+  claimed_at: '2026-09-17T23:31:41Z'
   implementation_pr: 'silasfelinus/kind_robots#2806'
 
 - id: t-052
