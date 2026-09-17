@@ -12,8 +12,25 @@ import yaml
 
 DEFAULT_QUEUE = Path("projects/coloring-book/color-art-jobs.yaml")
 JOB_ID_PATTERN = re.compile(r"\bjob\s+#?(\d+)\b", re.IGNORECASE)
+# Statuses where a caller (a reviewer, or a future recovery pass) expects a
+# real rendered file to exist at this entry's own `rendered_path`/
+# `image_path` -- as opposed to `pending`, where no file is expected yet.
+# Deliberately excludes `approved`: `accept_color()`
+# (manage_coloring_book_production.py) never renames or moves the file, it
+# only copies the same path into proposals.yaml's `accepted.color` -- so once
+# accepted, that ledger becomes the authoritative pointer and this queue
+# entry's own path field can go stale (e.g. a later manual rename/re-key of
+# the proposal) without the actual production asset being missing at all.
+# Confirmed live on mr-002/mr-003/mr-004 (coloring-book/t-047, 2026-09-17):
+# color-art-jobs.yaml's `image_path` for all three pointed at long-gone
+# generated/color-proposals-v1/ files from an early naming pass, while
+# proposals.yaml's accepted.color correctly pointed at their real, present
+# approved/ files under entirely different names -- flagging these as broken
+# would have been a false positive with nothing to repair.
+RESOLVED_STATUSES_EXPECTING_A_FILE = frozenset({"needs_review", "done"})
 RECOMMENDED_ACTIONS = (
     "repair-queue-integrity",
+    "repair-missing-file",
     "recover-existing-jobs",
     "resolve-fresh-submission-errors",
     "submit-next-batch",
@@ -41,6 +58,33 @@ def render_gate_job_id(entry: dict[str, Any]) -> int | None:
 
 def requirement_satisfied(summary: dict[str, Any], required_action: str | None) -> bool:
     return required_action is None or summary.get("recommended_action") == required_action
+
+
+def referenced_render_path(entry: dict[str, Any]) -> str | None:
+    path = entry.get("rendered_path") or entry.get("image_path")
+    return str(path) if path else None
+
+
+def has_missing_file(entry: dict[str, Any]) -> bool:
+    """True when a resolved entry names a rendered file that does not exist.
+
+    Only entries that actually reference a path are checked -- an entry with
+    no `rendered_path`/`image_path` at all has nothing to verify (this is
+    normal for synthetic/test fixtures and for any status that never expects
+    a landed file). Found via coloring-book/t-047 (mr-008, 2026-09-17): a
+    `needs_review` entry whose only rendered file had been archived away by a
+    revision request, then every resubmission attempt after that failed the
+    mechanical gate before a replacement ever landed, leaving `needs_review`
+    pointing at nothing. `summarize_queue`'s existing recovery logic only
+    ever inspected `status: pending` entries, so this class of gap was
+    invisible to `recommended_action` and any tooling that trusted it.
+    """
+    if str(entry.get("status") or "") not in RESOLVED_STATUSES_EXPECTING_A_FILE:
+        return False
+    path = referenced_render_path(entry)
+    if not path:
+        return False
+    return not Path(path).exists()
 
 
 def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None = None) -> dict[str, Any]:
@@ -74,6 +118,7 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
     duplicate_job_ids = duplicate_values(render_job_ids)
     duplicate_entry_ids = duplicate_values([entry.get("id") for entry in normalized])
     duplicate_slots = duplicate_values([entry.get("slot") for entry in normalized])
+    missing_file_entries = [entry for entry in normalized if has_missing_file(entry)]
 
     def entry_summary(entry: dict[str, Any]) -> dict[str, Any]:
         return {
@@ -85,6 +130,14 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
             "render_gate_job_id": render_gate_job_id(entry),
         }
 
+    def missing_file_summary(entry: dict[str, Any]) -> dict[str, Any]:
+        return {
+            "slot": entry.get("slot"),
+            "id": entry.get("id"),
+            "status": entry.get("status"),
+            "referenced_path": referenced_render_path(entry),
+        }
+
     queue_integrity_safe = len(duplicate_entry_ids) == 0 and len(duplicate_slots) == 0
     recovery_safe = len(duplicate_job_ids) == 0 and queue_integrity_safe
     recovery_batch = recovery_candidates[:effective_batch_size] if recovery_safe else []
@@ -94,6 +147,8 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
 
     if not queue_integrity_safe or duplicate_job_ids:
         recommended_action = "repair-queue-integrity"
+    elif missing_file_entries:
+        recommended_action = "repair-missing-file"
     elif recovery_actionable:
         recommended_action = "recover-existing-jobs"
     elif fresh_submission_blocked:
@@ -124,6 +179,8 @@ def summarize_queue(data: dict[str, Any], book_slug: str, batch_size: int | None
         "duplicate_render_gate_job_ids": duplicate_job_ids,
         "duplicate_entry_ids": duplicate_entry_ids,
         "duplicate_slots": duplicate_slots,
+        "missing_file_entries": [missing_file_summary(entry) for entry in missing_file_entries],
+        "missing_file_count": len(missing_file_entries),
         "queue_integrity_safe": queue_integrity_safe,
         "recovery_safe": recovery_safe,
         "retry_safe": retry_safe,
@@ -142,6 +199,7 @@ def main() -> int:
     parser.add_argument("--require-actionable", action="store_true")
     parser.add_argument("--require-recovery-candidates", action="store_true")
     parser.add_argument("--require-recovery-actionable", action="store_true")
+    parser.add_argument("--require-no-missing-files", action="store_true")
     parser.add_argument("--require-recommended-action", choices=RECOMMENDED_ACTIONS)
     args = parser.parse_args()
 
@@ -159,6 +217,8 @@ def main() -> int:
     if args.require_recovery_candidates and summary["recovery_candidate_count"] == 0:
         return 1
     if args.require_recovery_actionable and not summary["recovery_actionable"]:
+        return 1
+    if args.require_no_missing_files and summary["missing_file_count"] > 0:
         return 1
     if not requirement_satisfied(summary, getattr(args, "require_recommended_action", None)):
         return 1

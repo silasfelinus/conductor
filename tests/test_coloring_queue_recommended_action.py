@@ -58,3 +58,29 @@ def test_recommends_fresh_batch_only_for_clean_pending_entries():
 
 def test_recommends_complete_when_no_entries_are_pending():
     assert recommendation([{"slot": 1, "id": "mr-001", "status": "approved"}]) == "complete"
+
+
+def test_recommends_missing_file_repair_before_recovery(tmp_path):
+    missing = tmp_path / "does-not-exist.webp"
+    assert (
+        recommendation(
+            [
+                {"slot": 1, "id": "mr-001", "status": "needs_review", "image_path": str(missing)},
+                {"slot": 2, "id": "mr-002", "status": "pending", "render_gate_error": "job 2474 timed out"},
+            ]
+        )
+        == "repair-missing-file"
+    )
+
+
+def test_missing_file_repair_outranked_by_queue_integrity(tmp_path):
+    missing = tmp_path / "does-not-exist.webp"
+    assert (
+        recommendation(
+            [
+                {"slot": 1, "id": "mr-001", "status": "needs_review", "image_path": str(missing)},
+                {"slot": 1, "id": "mr-002", "status": "pending"},
+            ]
+        )
+        == "repair-queue-integrity"
+    )
