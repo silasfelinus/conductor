@@ -97,7 +97,7 @@ tasks:
 - id: t-003
   milestone: m1
   title: "Create source-video beat map template"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   depends_on:
@@ -109,8 +109,11 @@ tasks:
 
 
     Silas's 2026-09-07 default-recommendation policy accepts the existing beat-map columns and pipeline order. Do not close this as mere template approval: the remaining deliverable is the real timestamped beat map from the already-present coat dance_x264.mp4. Treat ffmpeg/librosa/MediaPipe availability as agent-owned tooling/setup work; prefer a dedicated isolated analysis environment as t-002 recommended, and produce exact setup/run instructions when execution must occur on a local/render host. Original synced audio remains the soundtrack per Silas's earlier decision.
-  updated: '2026-09-07T11:35:54+00:00'
+  updated: '2026-09-17T11:39:06Z'
   approved_by_human: true
+  owner: worker
+  claimed_by: claude-scheduled-20260917T1140Z-coatdance-t003
+  claimed_at: '2026-09-17T11:39:06Z'
 
 - id: t-004
   milestone: m2
