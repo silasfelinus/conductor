@@ -14494,3 +14494,15 @@ records:
     one-file copy fix wasn't picked up until this cycle. Worth a quick pass over ready
     tasks with approved_by_human: true and no implementation_pr to catch this class
     earlier next time.
+- date: '2026-09-17'
+  project: dream-cycle
+  task: t-027
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: check_live_facet_coverage.py now walks creation-burst bundles too (built.facets in projects/kind-robots/bursts/*.yaml),
+    not only daily-dream backlog records -- any future live-coverage-style check over agent-recorded built-state
+    should default to covering every bundle shape that records it, not just the first one that prompted
+    the check.
