@@ -527,9 +527,9 @@ tasks:
 - id: t-025
   milestone: m4
   title: Give the ruler presets real portraits, and stop cropping the ruler art
-  status: claimed
+  status: ready
   gate_human: false
-  owner: worker
+  owner: null
   stakes: reversible
   passes: 0
   note: >-
@@ -551,9 +551,21 @@ tasks:
     in the play view -- Silas's screenshot shows the King's head cut off entirely, leaving a torso
     and a ship's wheel. Check the aspect/object-fit against the actual plate dimensions rather than
     assuming a square.
-  updated: '2026-09-17T23:37:27Z'
-  claimed_by: claude-scheduled-20260917T233900Z-rulerhooked-t025
-  claimed_at: '2026-09-17T23:37:27Z'
+
+    Cycle (claude-scheduled-20260917T233900Z-rulerhooked-t025): part (2) of this task (the play-view cropping fix) was already shipped separately as kind_robots#2789 (components/ruler-hooked/ruler-hooked-stage.vue now uses aspect-[7/4] matching the 1344x768 layer aspect, confirmed by reading the merged file and its own header comment, which explicitly attributes the fix to this task). Remaining scope is part (1), the 12 preset portraits.
+
+    FOUND A REAL PATH BUG: scripts/build_ruler_hooked_art_queue.py's ruler_entries() wrote image_path=public/images/ruler-hooked/ruler/{id}.webp (nested), but BOTH real consumers expect the flat, hyphenated form public/images/ruler-hooked/ruler-{id}.webp: components/ruler-hooked/ruler-hooked-cosmetics-picker.vue hardcodes :src="`/images/ruler-hooked/ruler-${preset.id}.webp`" (shipped in t-021, kind_robots#2142, 2026-08-27 -- before this task existed), and utils/rulerHooked/compositor.ts's assetCandidates() builds the exact same flat rung as one of the ruler region's fallback candidates for the composited play-scene stage. So the nested path this task's own 92-entry queue-builder would have staged was never going to reach either place that reads it -- fixed in this commit (image_path and the explanatory comment); a future --write for this lane now stages the right path.
+
+    FOUND A DEEPER DESIGN GAP while verifying the fix, serious enough that I did NOT let generation proceed on it blind: the SAME flat path serves two different jobs with different requirements. The picker just needs a nice thumbnail. The stage compositor uses it as a fallback rung for the full-frame composited layer (ruler-hooked-stage.vue draws every art layer , stacked in z-order over the WHOLE canvas per t-017's resolution) -- which per art-direction.md §2 and the LAYER_TAIL contract must be 'transparent'-safe (a single depth band, rest of frame empty), or it will paint over every other region whenever it's the topmost layer. ruler_entries()'s existing prompt is explicitly a 'character sheet' reference-style portrait WITH a backdrop ('full figure visible against a simple soft painted backdrop... side-on pose') -- t-020's own note already flagged this exact style as 'not drop-in composited layer files' when the same content was rendered at the (now known to be unused) nested path back in 2026-08-26. Putting that backdrop-bearing style at the flat path fixes the picker but would risk breaking stage compositing the same way t-020 already warned against.
+
+    Confirmed via curl that 3 of the 12 flat-path files already exist on media origin (ruler-king-osric.webp, ruler-queen-mabel.webp, ruler-little-monarch-pip.webp; last-modified 2026-09-11/12 -- the exact window this task was filed), but downloaded and read king-osric's: it is a realistic painterly style completely off the established cartoony storybook house look (matches neither ruler_entries()'s own prompt nor art-direction.md), almost certainly a stalled/abandoned earlier attempt at this same task that hit the same ambiguity and stopped after 3/12. Left those 3 files alone (did not overwrite) since I have no more confidence in guessing their replacement than in the style they used.
+
+    Staged the corrected 12-entry ruler lane into projects/art-prompts.yaml (build_ruler_hooked_art_queue.py's ruler_entries() only -- deliberately NOT the other 80 not-yet-staged concept/fish/reward/ending/card entries the same --write would also produce; those are separate, unrelated scope) and submitted all 12 via consume_art_requests.py --live --submit-only --id-prefix ruler-hooked-ruler- (ArtJob ids 28694-28705, ruler_entries()'s existing backdrop-portrait prompt, at the corrected flat path). Then set their status to blocked-design-review (not pending, so no unrelated future 'drain the art request queue' cycle auto-downloads and commits them into kind_robots before the design question below is resolved) rather than letting a render already in flight go to waste.
+
+    NEXT: decide whether (a) the flat path should stay dual-purpose and ruler_entries() needs a genuinely different prompt for a proper depth-band/figure-prominent layer (matching ruler-fishing.webp's original style, not the reference-sheet framing) -- probably the right long-term answer, since it's what HERO_RULER_PRESET_ID's fallback-ladder design already assumes every preset will eventually have; or (b) split the picker onto its own asset path distinct from the stage's fallback rung, so the existing reference-sheet-style renders (this cycle's 12, or a redo) can be used for the picker without ever risking stage compositing. Once decided: either flip these 12 back to status: pending (if (a) is rejected and the current renders are accepted as-is) or resubmit with a new prompt/path (if (a) is chosen) via --force --id-prefix ruler-hooked-ruler- so the accepted-but-wrong renders don't block a redo. No visual/browser verification possible from this session -- says what was checked (curl + downloaded-and-read three images) and what wasn't (nothing rendered by this session's own 12 jobs has been viewed yet, since they were still in flight).
+  updated: '2026-09-17T23:46:14Z'
+  claimed_by: null
+  claimed_at: null
 - id: t-026
   milestone: m4
   title: Replace the text-button fishing panel with a real timing minigame
