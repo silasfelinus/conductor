@@ -768,3 +768,46 @@ tasks:
   claimed_at: '2026-09-14T17:36:31Z'
   updated: '2026-09-14T17:46:11Z'
   implementation_pr: 'silasfelinus/conductor#4356'
+
+- id: t-047
+  milestone: m4
+  title: 'color-art-jobs.yaml can carry status: needs_review with no backing rendered file (mr-008)'
+  status: ready
+  stakes: reversible
+  note: >-
+    Found during t-022 cycle 18 (2026-09-17, scheduled Conductor session) while looking
+    for unblocked work outside the generate-bw path t-039 blocks. Monster Recast's
+    color-art-jobs.yaml entry for mr-008 (The Little Game Mistress) carries
+    `status: needs_review` with `image_path`/`rendered_path` pointing at
+    generated/color-proposals-v1/mr-008-game-mistress.webp, but that file does not exist
+    anywhere in the working tree or in git history at HEAD (confirmed via
+    `git cat-file -e HEAD:<path>` and a directory listing). Its two prior revisions are
+    archived under generated/color-proposals-v1/revisions/ (20260914T143150Z and
+    20260914T152956Z), and three further resubmission attempts after that (art_image_id
+    24034/24035/24036, all logged in the entry's own render_failures) were mechanically
+    rejected for rendering "essentially monochrome/desaturated" (the color-engine defect
+    tracked at t-044, since fixed) -- so the entry was left needs_review with nothing to
+    review: every attempt after the last archived revision failed before landing a new
+    candidate file. `coloring_queue_status.py --book monster-recast` does not surface
+    this as a recovery candidate (it reports `recommended_action: complete`,
+    `actionable: false`) because its recovery logic only looks at `status: pending`
+    entries, not a `needs_review` entry whose file has gone missing. Two things worth
+    fixing together: (1) reset mr-008 back to a submittable state (likely `pending`,
+    clearing bw/color-review-specific fields the same way `manage_coloring_book_
+    production.py`'s `--force` path does for BW, so a future
+    `consume_coloring_book_color_art.py` pass picks it up and submits a fresh render --
+    t-044's saturation-detector fix landed after the three failed attempts here, so a
+    retry may now succeed cleanly), and (2) teach `coloring_queue_status.py` to flag a
+    `needs_review`/`done`/`approved` entry whose referenced file is missing as a
+    recovery candidate in its own right, not just `pending` entries with a stuck
+    `render_gate_job_id`, so this class of gap surfaces automatically next time instead
+    of requiring a manual file-existence check. Not fixed directly this cycle: no CLI
+    flag exists yet to force-reset a `needs_review` color entry the way `generate-bw
+    --force` does for BW, and hand-editing the queue YAML without that safeguard risks
+    silently dropping the render_failures/revision history the ledger is supposed to
+    keep. Scoped small and reversible -- either a worker adds the reset capability plus
+    the recovery-detection fix, or (if the fix looks larger than expected once someone
+    reads consume_coloring_book_color_art.py's revision-request path in full) it should
+    split into two tasks rather than block on doing both at once.
+  owner: null
+  passes: 0
