@@ -718,7 +718,7 @@ tasks:
 - id: t-038
   milestone: m7
   title: "Gate genres, characters and narrators; award them on completion"
-  status: review
+  status: done
   passes: 0
   stakes: reversible
   depends_on: [t-033, t-036]
@@ -738,7 +738,17 @@ tasks:
     content/ops step, not tracked in-repo. Scoped to genre+character only, not narrator (the
     concrete C5 engine-groundwork spec only ever names Character as t-038's addition;
     narrator gating isn't described with any schema hook anywhere).
-  updated: '2026-09-17T06:47:17Z'
+
+    Merged: silasfelinus/kind_robots#2795 (commit f29a8ff). All 58 CI checks green (vue-tsc,
+    eslint, the full test:storybook composite including the new
+    verifyStorybookCharacterGating.mjs guard, migration parity, production image build).
+    Scoped to genre+character gating only (narrator gating has no schema hook anywhere in
+    the concrete C5 spec, despite B8's aspirational 'genre/character/narrator' wording --
+    flagged for Reviewer as a scope call, not silently dropped). Ships fully dormant: no
+    live Character or genre deck has unlockAchievementId set, so flipping
+    STORYBOOK_ENFORCE_DECK_GATES in prod remains a follow-up content/ops decision, not part
+    of this task.
+  updated: '2026-09-17T07:01:08Z'
   owner: worker
   claimed_by: claude-scheduled-20260917T063418Z-storybook-t038
   claimed_at: '2026-09-17T06:34:19Z'
