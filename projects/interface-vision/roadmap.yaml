@@ -1765,7 +1765,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -1821,8 +1821,15 @@ tasks:
     and a prior note already describing the reconciliation, but the status field itself
     hadn't been flipped back to ready. Returning recurring umbrella to ready for the next
     slice.
-  updated: '2026-09-17T22:43:01Z'
-  implementation_pr: 'silasfelinus/kind_robots#2717'
+
+    Slice: migrated 22 bare-glyph h-8 w-8 / size-8 <Icon> usages across 22 files to kr-
+    icon-8, composition-only (color/opacity utilities preserved). Verified vue-tsc clean,
+    eslint/prettier drift unchanged from baseline (confirmed via git stash), test:layout-
+    contract 0 new violations, test:lint-ratchet unchanged at 331, test:kr-class-coverage
+    OK. PR: silasfelinus/kind_robots#2809 (open, CI running). Return to ready for the next
+    bounded slice once merged.
+  updated: '2026-09-17T22:43:15Z'
+  implementation_pr: 'silasfelinus/kind_robots#2809'
   retry_context: ''
   owner: worker
   claimed_by: claude-scheduled-2026-09-17T224500Z-iv-t104-icon8
