@@ -478,9 +478,9 @@ tasks:
 - id: t-024
   milestone: m4
   title: Make Ruler Hooked one navigable screen instead of a scrolled document
-  status: ready
+  status: claimed
   gate_human: false
-  owner: worker
+  owner: reviewer
   stakes: reversible
   passes: 0
   note: >-
@@ -501,7 +501,9 @@ tasks:
 
     Depends on t-023 in practice: most of what makes this a scrolling document is the chrome that
     task removes, so do that first and re-judge how much restructuring is genuinely left.
-  updated: '2026-09-11T13:30:00Z'
+  updated: '2026-09-17T00:35:43Z'
+  claimed_by: claude-scheduled-20260917-rulerhooked-t024
+  claimed_at: '2026-09-17T00:35:43Z'
 - id: t-025
   milestone: m4
   title: Give the ruler presets real portraits, and stop cropping the ruler art
