@@ -841,7 +841,11 @@ def ruler_entries() -> list[dict]:
         entries.append(
             make_entry(
                 request_id=f"ruler-hooked-ruler-{preset['id']}",
-                image_path=f"public/images/ruler-hooked/ruler/{preset['id']}.webp",
+                # Matches components/ruler-hooked/ruler-hooked-cosmetics-picker.vue's
+                # `/images/ruler-hooked/ruler-${preset.id}.webp` <img> src exactly
+                # (ruler-hooked/t-025) -- a nested `ruler/{id}.webp` path here would
+                # render fine but land where the picker never looks for it.
+                image_path=f"public/images/ruler-hooked/ruler-{preset['id']}.webp",
                 label=f"Ruler Hooked ruler preset: {preset['title']} ({preset['id']})",
                 size=PORTRAIT,
                 prompt=f"{body}. {STYLE_TAIL}. {NO_TEXT}",
