@@ -637,7 +637,7 @@ tasks:
 - id: t-037
   milestone: m7
   title: "Delete the client-side beat loop and rewrite its ~25 verifyStorybook*Guard scripts"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-036, t-052]
@@ -677,10 +677,10 @@ tasks:
     the new engine's submitWritten()/writeMove() path. Re-armed to ready (recurring multi-
     slice task) -- ~10 verifyStorybook*Guard scripts still reference the retired client
     store and remain the next bounded slices (see kaizen list on kind_robots#2806).
-  updated: '2026-09-17T18:43:52Z'
+  updated: '2026-09-17T19:31:31Z'
   owner: worker
-  claimed_by: claude-scheduled-20260917T183245Z-storybook-t037
-  claimed_at: '2026-09-17T18:32:46Z'
+  claimed_by: claude-scheduled-20260917T1930Z-storybook-t037-slice4
+  claimed_at: '2026-09-17T19:31:31Z'
   implementation_pr: 'silasfelinus/kind_robots#2806'
 
 - id: t-052
