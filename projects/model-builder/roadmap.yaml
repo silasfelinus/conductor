@@ -523,7 +523,7 @@ tasks:
   - id: t-031
     milestone: m6
     title: "Live smoke test of the t-025 async ArtJob queue path on /model-builder"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     note: |-
@@ -545,10 +545,45 @@ tasks:
 
 
       Reclassified under Silas's anti-overgating policy. This is a reversible product/browser smoke test, not a human-only decision. A browser-capable agent should exercise the real /model-builder async ArtJob path on a couple of ordinary build items, verify queued jobs reach terminal success with the expected outputs, and file/fix any real defect it finds. Escalate to Silas only if authentication or a production-only action genuinely cannot be completed through the available browser/tooling; do not use needs-human merely because earlier sandboxes lacked Chromium.
-    updated: '2026-09-17T04:50:21Z'
+
+      PROGRESS (conductor scheduled sweep, 2026-09-17T~04:55Z): ran the actual live UI-driven
+      smoke test this cycle -- confirmed this sandbox's Chromium-through-proxy DOES work (per
+      AGENTS.md's rainbow-butterflies/t-053 recipe) AND closed the previously-assumed auth
+      gap: kind_robots' own Cypress test-user pattern (register a cypress-* user via x-api-key
+      admin auth, log in for a real session JWT, drop it into localStorage) works from a plain
+      Playwright script too, no Cypress needed. Logged in as a real disposable test user,
+      navigated /model-builder, picked a source, and hit 'Anthropic: Bad Request' on every
+      'Draft with AI' pitch attempt (auto-build: 0/3 committed, 3 failed) -- before even
+      reaching the async ArtJob asset-generation step this task is actually about. Root-caused
+      it: server/utils/suggest/suggestProviders.ts's resolveSuggestModel() defaults to
+      'claude-sonnet-4-6', which is not a valid current Anthropic model id, and the identical
+      stale default is hardcoded in 4 more places (textGenerationDispatch.ts,
+      commentBackfillAnthropic.ts, chats/anthropic/stream.post.ts, chatStore.ts) -- this was
+      breaking AI text-drafting sitewide, not just here. Fixed all 5 plus the 3 pinned test
+      assertions to claude-sonnet-5 in kind_robots PR #2794 (verifyTextGenerationDispatch.ts
+      35/35 pass, vue-tsc clean, eslint clean on changed files). Also found the UI's source
+      picker doesn't filter to records the current user actually owns -- picking someone
+      else's Character 403s at the write endpoint (assertSourceOwnership) instead of being
+      filtered out or warned about in the UI; created a fresh owned Character via the API to
+      work around it for this test, noted as a small follow-on UX gap rather than blocking
+      this task. Cleaned up all disposable test data (character + 2 cypress-* users) via the
+      existing cypress-cleanup endpoint. Did NOT reach a terminal ArtJob completion this
+      cycle: (a) the pitch-drafting fix needs to merge first before the run can even reach the
+      GENERATE ASSETS step, and (b) recheck_render_queue.py independently confirms the render
+      backend is still massively backlogged (1464 pending, oldest ~39h, throughput 183 done vs
+      643 new pending over 24h) -- the same relay-wedge issue already hard-gated at
+      conductor/t-165/t-167 -- so even a successfully-enqueued job has no realistic chance of
+      reaching DONE within a session's runtime right now. Documented the working auth-for-
+      browser-testing technique in AGENTS.md's kind_robots verification section (dated update)
+      so future sessions don't have to rediscover it. Re-arming to ready: next cycle (after
+      kind_robots PR #2794 merges) should redo this same source->recipe->run->auto-build flow
+      and see how far the asset-generation step gets, independent of the render-backlog
+      question which is out of this task's scope to fix.
+    updated: '2026-09-17T04:51:06Z'
     owner: worker
     claimed_by: claude-scheduled-20260917T045500Z-mb-t031
     claimed_at: '2026-09-17T04:50:21Z'
+    soft_gate: false
 
   - id: t-032
     milestone: m6
