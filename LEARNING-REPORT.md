@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-17T19:47:12Z
+Generated: 2026-09-17T19:48:57Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1004**
-- Outcomes: blocked: 16, cancelled: 1, done: 987
+- Closed tasks recorded: **1005**
+- Outcomes: blocked: 16, cancelled: 1, done: 988
 - Success rate: **98%**
 - Average passes on successful tasks: **0.1**
 
@@ -31,7 +31,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | cthulhuquarium | 51 | 98% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
-| dream-cycle | 23 | 100% |
+| dream-cycle | 24 | 100% |
 | ecosystem-map | 5 | 100% |
 | global-ui | 13 | 100% |
 | humboldt-impropriety-calendar | 1 | 0% |
@@ -69,7 +69,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 987 | 99% |
+| software | 988 | 99% |
 
 ## Failure categories
 
@@ -91,6 +91,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-17 `dream-cycle/t-027` — check_live_facet_coverage.py now walks creation-burst bundles too (built.facets in projects/kind-robots/bursts/*.yaml), not only daily-dream backlog records -- any future live-coverage-style check over agent-recorded built-state should default to covering every bundle shape that records it, not just the first one that prompted the check.
 - 2026-09-17 `appmaker/t-014` — A "FOR SILAS: decide X or Y" task can sit fully implementable long after the decision lands if nobody revisits it -- Silas answered this one on 2026-09-07 (approved_by_human: true, keep /appmaker admin-only and fix the copy) but the actual one-file copy fix wasn't picked up until this cycle. Worth a quick pass over ready tasks with approved_by_human: true and no implementation_pr to catch this class earlier next time.
 - 2026-09-17 `appmaker/t-010` — A task blocked for weeks on open design questions can turn fully actionable the moment a human decision resolves them -- the roadmap note already carried Silas's 2026-09-07 answers to all three open questions (squash graduation, admin-only, existing-granted-repo-only), so the real work was reading that note carefully rather than re-deriving the design. Splitting the landable, reversible half (a Todo-filing request endpoint) from the genuinely irreversible half (the squash-push executor that writes to a real external repo) kept this PR safely mergeable without a human gate, while filing the executor as its own gate_human task (t-015) rather than either building it unreviewed or leaving the remaining scope implicit in t-010's note.
 - 2026-09-17 `ruler-hooked/t-026` — Redesigning a discrete-action minigame (button REEL/SLACK/WAIT) into a continuous timing-bar input without breaking replay determinism was made tractable by keeping the animation purely client-side display and only ever sending the recorded stop position into a pure reducer -- the same "framework-free, never elapsed milliseconds" contract the rest of the engine already kept. Adding a `quality` parameter defaulting to 1 and proving byte-for-byte equivalence to the old formulas at quality=1 (self-test #8) gave a cheap, concrete regression guard for a refactor that touched core resolution math. Also confirmed prettier is not CI-enforced in kind_robots (no workflow runs `lint:prettier`/`npm run lint`) -- running it blind reformats unrelated code the task never touched; check for an enforcing workflow before applying a formatter repo-wide, and prefer reverting to the original eslint-clean formatting when it isn't enforced.
@@ -100,7 +101,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-17 `coloring-book/t-047` — Before filing a new task claiming "no CLI flag exists" for a production gap, grep the sibling *_request.py wrapper scripts, not just the batch consumer -- consume_coloring_book_studio_request.py --force --live already did exactly what t-022 cycle 18 said was missing (reset a needs_review color entry back to pending for a fresh render), and would have resolved mr-008 a cycle earlier if checked first. Also: when adding a "file went missing" detector to a status-driven pipeline, exclude any status where a downstream ledger (here: proposals.yaml's accepted.color) becomes the authoritative pointer after promotion -- the promoting operation may correctly leave the upstream queue's own path field stale without anything actually being broken (mr-002/mr-003/mr-004 here).
 - 2026-09-17 `ruler-hooked/t-024` — Scoped Silas's "one navigable screen, setup on a centered window over a background" playtest note to the two literal, low-risk pieces (stage renders unconditionally via a new never-persisted preview scene; save-slot management moved into a dismissible modal) rather than also touching the shared project-front-page.vue hero/description banner that still precedes the interactive slot on four product pages. That's a bigger, higher-blast-radius structural call better left to Silas's next playtest to confirm is still needed, rather than guessed at in one unverified pass. Attempted local dev- server visual verification in this sandbox (npm run dev + the AGENTS.md 2026-09-16 Playwright-through-proxy recipe) but hit an unrelated environment gap: even this repo's own root route serves Nuxt's built-in <NuxtWelcome/> placeholder rather than app.vue when run via `nuxt dev` here, so the new Playwright capability doesn't yet close the "no live preview" gap for a repo that needs its actual dev server, not just a pre-built target host, to render local changes -- worth a dedicated look before relying on it for the next UI-shaped task.
 - 2026-09-16 `ruler-hooked/t-023` — Silas's in-session product feedback ("Deliverables and status does not belong, that's more of a project info section that should be redundant") named a leak in a SHARED component (project-front-page.vue) mounted by four separate product pages, not just the one he was playing. Following the precedent #2623 already established for this exact wrapper -- change what the shared component chooses to render, don't delete or fork it -- kept the fix to a one-line prop flip on three call sites plus the page-specific banner/sections work Ruler Hooked itself needed. Cross-referencing the task note against #2623's actual diff before starting caught that a superficially similar-sounding complaint (raw pitch text as page copy) was already fixed and out of scope, avoiding redundant work on the same file. No live preview exists for pre-merge UI verification (Vercel retired); eslint + vue-tsc + test:layout-contract + verifyPwaPrecacheBudget + verifyKrClassCoverage were the full pre-merge verification surface available, and none of them render a single template -- worth remembering as the ceiling of local certainty for this class of change until Chromium-through-proxy visual verification (see AGENTS.md's 2026-09-16 update) gets used more routinely for a merged/deployed follow-up look.
-- 2026-09-16 `kind-robots/t-108` — A hand-measured methodology (t-106's clipped-pixel curve, described only as "the fraction of pixels at 0 or 255") was ambiguous enough to implement three different ways -- greyscale luminance, whole-pixel all-channels-clipped, and RGB per-channel-sample -- with wildly different results (0.86%, 0.09%, and 3.31% respectively on the same reference image, against a recorded 3.48%). Only re-deriving the number on the exact LoRA/render the original measurement named (AsheLoLXL's own cfg-10 datapoint) caught this before 769 production rows got written from the wrong one. When a task's note says "verify against the hand-measured reference before trusting it catalog-wide," that check is doing real work, not boilerplate -- budget time for it rather than picking the first plausible-sounding definition. Separately: a per-candidate network call inside a concurrency-limited batch (mapLimited) MUST be wrapped in its own try/catch -- an unhandled rejection (UND_ERR_HEADERS_TIMEOUT, seen live) aborts the whole Promise.all and kills every other in-flight candidate with it, not just the one that failed. Caught here before any writes happened, but a script over 700+ items should always assume the network will hiccup on at least one of them.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-17T19:47:12Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-17T19:48:57Z_
