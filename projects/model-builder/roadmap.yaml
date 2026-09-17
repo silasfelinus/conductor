@@ -469,7 +469,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: claimed
     recurring: true
     passes: 52
     stakes: reversible
@@ -480,10 +480,10 @@ tasks:
       What's established: each cycle checks fresh Kind Robots commit activity since the prior audit timestamp across components/model-builder/**, stores/modelBuilderStore.ts, server/api/model-builder/**, prisma/model-builder.prisma, and content/model-builder*.md via the GitHub commits API (path+since filtered). A regression audit or polish pass only happens when that surface has fresh commits; otherwise the cycle is a verified no-op that re-arms to ready with a short note here (append future cycles here, not to T029-HISTORY.md).
 
       As of cycle 70 (checked through 2026-09-17T07:29:49Z): zero commits on any tracked surface since the prior 2026-09-16T03:46:27Z audit. Sibling task model-builder/t-031 (live UI-driven verification via a real authenticated browser session) closed done 2026-09-17T05:36:54Z in an unrelated session — no action needed here, t-031 owns that scope.
-    updated: '2026-09-17T07:32:51Z'
+    updated: '2026-09-17T23:28:45Z'
     owner: worker
-    claimed_by: claude-scheduled-20260917T072949Z-mb-t029
-    claimed_at: '2026-09-17T07:32:42Z'
+    claimed_by: claude-scheduled-20260917T232844Z-mb-t029
+    claimed_at: '2026-09-17T23:28:45Z'
 
   - id: t-030
     milestone: m6
