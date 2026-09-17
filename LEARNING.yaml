@@ -14399,3 +14399,17 @@ records:
     where a downstream ledger (here: proposals.yaml''s accepted.color) becomes the authoritative pointer
     after promotion -- the promoting operation may correctly leave the upstream queue''s own path field
     stale without anything actually being broken (mr-002/mr-003/mr-004 here).'
+- date: 2026-09-17
+  project: model-builder
+  task: t-031
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A prior cycle''s "browser fails on every HTTPS host" note was itself wrong for this
+    sandbox class and would have been taken at face value if not re-verified directly (a 3-line
+    Playwright probe against example.com + kindrobots.org before trusting an inherited claim).
+    When a task note contradicts AGENTS.md''s own documented working recipe for the same
+    environment, re-run the cheapest possible check before accepting the note -- a stale/wrong
+    claim from one session otherwise silently downgrades every session after it.'
