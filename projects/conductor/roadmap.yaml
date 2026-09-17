@@ -2778,7 +2778,19 @@ tasks:
     cause is still unconfirmed; flagging so whoever diagnoses the relay knows the mechanism
     now exists if flux2_dev_fp8mixed turns out to need the same treatment. No action taken
     on this task's actual hands-on-the-box ask.
-  updated: '2026-09-16T08:29:43Z'
+
+    Cross-reference (scheduled Conductor session, 2026-09-17T~13:31Z, from coloring-
+    book/t-022 cycle 22): check_render_box.py flipped to DOWN for the first time in this
+    incident's cycle history -- /api/art/queue/stats shows queueDepth PENDING=2207,
+    RUNNING=1, staleRunningCount=1 (claimedBy 'Silas-PC', claimed 2026-09-17T13:13:03Z),
+    oldestPending ArtJob 23040 (coloring-book) aged ~47.8h. This is a continuation of the
+    same post-wedge backlog already recorded here growing (2070 PENDING on
+    2026-09-15T21:33Z), not a new independent defect -- real throughput continues
+    (imagesCreatedInWindow=1277, windowThroughput.DONE=162 in the last 24h, latestDoneAt
+    essentially concurrent with the stale claim). Noting the claimant name is 'Silas-PC'
+    rather than the usual automated relay claimant, in case that means hands-on diagnosis is
+    already underway. No action taken beyond recording.
+  updated: '2026-09-17T13:34:13Z'
 
 - id: t-166
   milestone: m2
@@ -2976,7 +2988,19 @@ tasks:
     known-bad checkpoint, it does not explain WHY a cold load on that checkpoint hangs
     rather than merely being slow (see the pm2/share/RAM diagnosis steps above, still
     unrun). No action taken on this task's actual hands-on-the-box ask.
-  updated: '2026-09-16T08:29:37Z'
+
+    Cross-reference (scheduled Conductor session, 2026-09-17T~13:31Z, from coloring-
+    book/t-022 cycle 22): check_render_box.py flipped to DOWN for the first time in this
+    incident's cycle history -- /api/art/queue/stats shows queueDepth PENDING=2207,
+    RUNNING=1, staleRunningCount=1 (claimedBy 'Silas-PC', claimed 2026-09-17T13:13:03Z),
+    oldestPending ArtJob 23040 (coloring-book) aged ~47.8h. This is a continuation of the
+    same post-wedge backlog already recorded here growing (2070 PENDING on
+    2026-09-15T21:33Z), not a new independent defect -- real throughput continues
+    (imagesCreatedInWindow=1277, windowThroughput.DONE=162 in the last 24h, latestDoneAt
+    essentially concurrent with the stale claim). Noting the claimant name is 'Silas-PC'
+    rather than the usual automated relay claimant, in case that means hands-on diagnosis is
+    already underway. No action taken beyond recording.
+  updated: '2026-09-17T13:34:17Z'
 
 - id: t-168
   milestone: m2

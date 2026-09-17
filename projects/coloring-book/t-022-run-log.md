@@ -2818,3 +2818,78 @@ diagnosis only Silas can do), and `generate-bw` remains blocked book-wide by
 coloring-book/t-039. A future cycle should check t-165/t-167/t-039 before any further
 recovery probe; once the relay wedge clears, all three pending jobs (26356, 25421,
 25419) become recoverable at once, not just one book's queue.
+
+Cycle 20 (conductor scheduled sweep, 2026-09-17T07:29Z): re-verified conductor/t-165 and
+t-167 (relay-wedge, needs-human, unchanged since 2026-09-16T08:29Z) before touching
+production. Ran clean 900s recovery probes (no external timeout wrapper) against all
+three open recovery candidates: mr-008 (job 26356, cycle 19's fresh job), hwr-008 (job
+25421), kr-006 (job 25419) -- all three still queued/running server-side after the full
+timeout, unchanged from prior cycles. Render box itself confirmed UP
+(check_render_box.py: Comfy heartbeat healthy, queue idle) -- this reconfirms the wedge
+is generic and job-independent (now spanning a freshly-submitted job as well as two
+long-stuck ones), not a backend-down condition. No duplicate submissions; queue
+integrity verified safe on all three books before and after. No unblocked slice this
+cycle -- every remaining actionable path is still gated on conductor/t-165 or t-167
+resolving (hands-on relay diagnosis) or coloring-book/t-039 clearing (generate-bw,
+unrelated blocker, also still needs-human). Re-arming to ready (recurring), releasing
+the claim.
+
+Cycle 21 (conductor scheduled sweep, 2026-09-17T~13:15Z): reconfirmed cycle 20's
+finding, no new information. Recovery probes against the same two open candidates --
+hwr-008 (job 25421) and kr-006 (job 25419) -- both still PENDING server-side (queue GET
+shows updatedAt == createdAt, i.e. never claimed by the relay), while newer jobs from a
+separate batch (28405-28409, submitted 2026-09-17T09:05Z) are draining normally at
+roughly one per 70s through a single concurrent RUNNING slot. This is consistent with
+cycle 20's read: the wedge is specific to these particular queued jobs, not a backend-
+down condition, and remains gated on conductor/t-165 (relay hang, hands-on diagnosis
+needed) or t-167 (relay wedge after restart) clearing. coloring-book/t-039 (Kontext BW-
+corruption) also unchanged, still blocking generate-bw for all three books. render box
+confirmed UP (check_render_box.py, heartbeat healthy). No duplicate submissions;
+queue_integrity_safe true on both affected books before and after. No unblocked slice
+this cycle. Re-arming to ready (recurring), releasing the claim.
+
+Cycle 22 (conductor scheduled sweep, 2026-09-17T~13:31Z): re-checked conductor/t-165,
+t-167, and coloring-book/t-039 fresh before touching anything -- all three unchanged
+(`status: needs-human` since 2026-09-16T08:29Z/2026-09-16T08:29Z/2026-09-15T19:33Z
+respectively). Per cycle 17/18's own advice, did NOT re-run the 900s recovery probes
+against the same three known-wedged jobs (mr-008/26356, hwr-008/25421, kr-006/25419) a
+sixth+ consecutive time -- nothing upstream changed, so a repeat probe would only
+reconfirm the same no-op already established five times running.
+
+`check_render_box.py` reported **DOWN** for the first time this cycle series (every
+prior cycle in this run reported UP) -- `1 stale RUNNING claim(s) with 2207 PENDING
+job(s) still waiting and nothing else moving`. Queried `/api/art/queue/stats` directly
+for the full picture rather than trusting the one-line verdict alone:
+`queueDepth {PENDING: 2207, RUNNING: 1, DONE: 13104, CANCELLED: 12540}`, oldest pending
+is ArtJob 23040 (coloring-book, age ~47.8h, matching cycle 1-19's own oldest-pending
+history), the one stale claim is `claimedBy: "Silas-PC"` (claimed 2026-09-17T13:13:03Z,
+~18min before this check, past the 15min STALE_CLAIM_MINUTES threshold), and
+`latestDoneAt` is 2026-09-17T13:13:03Z -- essentially the same instant as that claim,
+with `imagesCreatedInWindow: 1277` and `windowThroughput.DONE: 162` in the last 24h.
+Read: this is NOT a fresh independent outage -- it is the same post-wedge backlog
+conductor/t-165 already recorded growing (2070 PENDING on 2026-09-15T21:33Z, now 2207,
+~2 days later) continuing its slow climb while genuine throughput persists (1277 images
+produced in the last 24h). The stale-claim trigger this cycle is notable mainly because
+`claimedBy` is `"Silas-PC"` rather than the usual automated relay claimant -- read as a
+signal Silas may be working the render box hands-on right now, which is exactly what
+t-165/t-167 have been asking for; did not treat this as confirmation either way, just
+recorded it. Appended this data point as a cross-reference note to conductor/t-165 and
+t-167 rather than opening a new incident, per t-165's own established convention for
+this exact kind of update.
+
+`coloring_proposal_status.py --check` across all three books: unchanged from prior
+cycles -- 1 pending color job each (the same three tracked job ids), 0 needs_review,
+`next` action for every book is `generate-bw`, still blocked book-wide by t-039. No
+unblocked production slice existed this cycle. `python scripts/validate_roadmaps.py`
+clean. `git status` confirmed no production queue/ledger files touched beyond this log
+entry and the roadmap note/status transition. Re-arming t-022 to ready (recurring),
+releasing the claim.
+
+**Next actionable step (unchanged in substance):** still gated on conductor/t-165/t-167
+(relay wedge, hands-on-the-box diagnosis) and coloring-book/t-039 (generate-bw,
+Kontext BW-corruption) clearing. The backlog is now large enough (2207 PENDING,
+system-wide) that a future cycle should not be surprised if `check_render_box.py`
+keeps reporting DOWN on the stale-claim heuristic even while the pipeline is actively
+producing -- check `/api/art/queue/stats` directly (`imagesCreatedInWindow`,
+`windowThroughput.DONE`, and whether `latestDoneAt` is recent) before concluding the
+box is actually stuck, rather than trusting the one-line verdict alone.
