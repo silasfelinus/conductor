@@ -1,9 +1,0 @@
-version: 1
-project: storybook
-task: t-037
-operation: review
-owner: worker
-session: openai-scheduled-2026-09-17T161709Z-storybook-t037-a2
-updated: '2026-09-17T16:22:00Z'
-note: >-
-  Second bounded t-037 slice: moved verifyStorybookAnswerRollbackGuard.mjs from the retired client answerCurrentBeat rollback implementation to the server-backed storybookRunStore submitMove contract. The guard now proves failed responses mutate no local turn state and successful responses append/apply state only after the success check.
