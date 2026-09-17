@@ -469,7 +469,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 52
     stakes: reversible
@@ -480,10 +480,20 @@ tasks:
       What's established: each cycle checks fresh Kind Robots commit activity since the prior audit timestamp across components/model-builder/**, stores/modelBuilderStore.ts, server/api/model-builder/**, prisma/model-builder.prisma, and content/model-builder*.md via the GitHub commits API (path+since filtered). A regression audit or polish pass only happens when that surface has fresh commits; otherwise the cycle is a verified no-op that re-arms to ready with a short note here (append future cycles here, not to T029-HISTORY.md).
 
       As of cycle 70 (checked through 2026-09-17T07:29:49Z): zero commits on any tracked surface since the prior 2026-09-16T03:46:27Z audit. Sibling task model-builder/t-031 (live UI-driven verification via a real authenticated browser session) closed done 2026-09-17T05:36:54Z in an unrelated session — no action needed here, t-031 owns that scope.
-    updated: '2026-09-17T23:28:45Z'
-    owner: worker
-    claimed_by: claude-scheduled-20260917T232844Z-mb-t029
-    claimed_at: '2026-09-17T23:28:45Z'
+
+      Cycle 71 (checked through 2026-09-17T23:28Z): one fresh commit touched the tracked
+      surface since the prior 2026-09-17T07:29:49Z audit -- kind_robots#2809 (interface-
+      vision/t-104 icon-class sweep), which included components/model-builder/model-builder-
+      run-history.vue (1 line: h-8 w-8 -> kr-icon-8 on the empty-state Icon, no
+      behavior/geometry change). Read the merged file directly: kr-icon-8 is used consistently
+      with the component's existing kr-icon-3-5/kr-icon-primary-5 size-primitive convention,
+      and the PR's own CI (vue-tsc, eslint, layout-contract, lint-ratchet, kr-class-coverage)
+      already covered it clean/unchanged. No model-builder-specific regression audit warranted
+      -- re-arming to ready.
+    updated: '2026-09-17T23:29:25Z'
+    owner: null
+    claimed_by: null
+    claimed_at: null
 
   - id: t-030
     milestone: m6
