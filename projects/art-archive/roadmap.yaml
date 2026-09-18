@@ -384,19 +384,28 @@ tasks:
   - id: t-014
     milestone: m4
     title: "Add persisted archive action presets for generation modifiers"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-007
-    note: >
+    note: >-
       Presets describe reusable edits such as add/replace a LoRA, swap
       checkpoint, append/replace prompt text, change generation settings, create
       an additional render, or replace the source after successful generation.
       Reuse current ArtJob vocabulary rather than inventing a second renderer.
+
+      Reviewed and merged kind_robots#2826 (squash 9ff9790). Diff: purely additive migration
+      (one new ArchiveActionPreset table, no existing table touched), zero-Prisma preset-
+      modifiers validator (matches this session's own t-008/t-009 DB-free-testability
+      convention) with full per-actionType unit coverage, four admin-gated CRUD endpoints
+      (delete is soft via isActive: false, matching stakes: reversible). All 54 CI checks
+      green, mergeable_state clean. Posted REVIEWING marker before review. t-015 (drag/drop
+      curation board) now has both dependencies (t-010, t-014) in progress.
     claimed_by: claude-scheduled-20260918T073320Z-artarchive-t014-a1
     claimed_at: '2026-09-18T07:36:04Z'
-    updated: '2026-09-18T07:36:04Z'
+    updated: '2026-09-18T08:03:21Z'
+    implementation_pr: 'silasfelinus/kind_robots#2826'
 
   - id: t-015
     milestone: m4
