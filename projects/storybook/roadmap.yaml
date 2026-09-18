@@ -148,7 +148,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: ready
+  status: claimed
   passes: 50
   stakes: reversible
   note: >-
@@ -157,10 +157,10 @@ tasks:
     What's established: each cycle reads a Storybook surface not recently covered (component, store, or page), looks for a genuine layout/UX/consistency gap, fixes it with a matching contract-check addition where practical, and opens a scoped kind_robots PR. Mode-card art is out of scope here (tracked separately as t-049). Legacy `?legacy=1` band + storybookStore.ts removal is tracked by t-037, not this task.
 
     Last state (2026-09-16T14:30:21Z, conductor state-reconciliation sweep): released a stale claim (claimed_by openai-scheduled-2026-09-15T201543Z-storybook-t010-a11) that had sat ~18h past the 90-minute claim TTL with no open kind_robots PR referencing it; no code change, re-armed to ready.
-  updated: '2026-09-16T14:30:21Z'
-  owner: null
-  claimed_by: openai-scheduled-2026-09-15T201543Z-storybook-t010-a11
-  claimed_at: '2026-09-15T20:15:43Z'
+  updated: '2026-09-18T00:19:25Z'
+  owner: worker
+  claimed_by: openai-scheduled-2026-09-18T001925Z-storybook-t010-a12
+  claimed_at: '2026-09-18T00:19:25Z'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
