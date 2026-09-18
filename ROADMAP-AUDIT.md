@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-09-17T15:04:49.623938+00:00`
+Generated: `2026-09-18T14:32:58.954261+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **52** roadmaps, **19** active + **3** continuous projects, **1531** tasks
-- **28 ready**, **52 waiting**, **40 needs-human**, **4 claimed/review**, **1391 done**
-- Findings: **0 errors**, **9 warnings**, **26 informational**
+- **54** roadmaps, **21** active + **3** continuous projects, **1589** tasks
+- **45 ready**, **60 waiting**, **42 needs-human**, **3 claimed/review**, **1423 done**
+- Findings: **3 errors**, **8 warnings**, **26 informational**
 
 ## Project inventory
 
@@ -16,26 +16,28 @@ This is a conservative structural audit. It reports suspicious state; it does no
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `cthulhuquarium` | active | software | 0 | 1 | 5 | 0 | 71 / 77 |
 | 2 | `kind-economy` | active | software | 0 | 2 | 4 | 0 | 21 / 27 |
-| 3 | `interface-vision` | continuous | software | 2 | 1 | 0 | 2 | 134 / 139 |
-| 4 | `coloring-book` | active | software | 1 | 9 | 1 | 0 | 36 / 47 |
-| 5 | `humboldt-scoop-cms` | active | software | 0 | 0 | 4 | 0 | 35 / 39 |
-| 6 | `digital-storefront` | active | software | 0 | 2 | 2 | 0 | 40 / 44 |
-| 7 | `kind-robots` | active | software | 0 | 0 | 1 | 0 | 107 / 108 |
-| 8 | `rainbow-butterflies` | active | software | 0 | 0 | 3 | 0 | 50 / 53 |
-| 9 | `scene-animator` | active | software | 0 | 0 | 1 | 0 | 10 / 11 |
-| 10 | `text-generation` | active | software | 0 | 0 | 1 | 0 | 8 / 9 |
-| 11 | `kindrobots-unraid` | active | software | 0 | 6 | 1 | 0 | 14 / 21 |
-| 12 | `model-builder` | active | software | 1 | 0 | 0 | 0 | 44 / 45 |
-| 13 | `lora-ingestion` | active | infrastructure | 0 | 0 | 1 | 0 | 7 / 8 |
-| 14 | `conductor` | active | software | 0 | 0 | 2 | 0 | 174 / 176 |
-| 15 | `storybook` | active | software | 4 | 2 | 1 | 1 | 46 / 54 |
-| 16 | `coat-dance` | active | content | 1 | 0 | 1 | 0 | 2 / 10 |
-| 17 | `conductor-app` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
-| 18 | `appmaker` | active | software | 2 | 0 | 0 | 0 | 12 / 14 |
-| 19 | `media-watchlist` | active | software | 1 | 0 | 0 | 0 | 18 / 19 |
-| 20 | `ruler-hooked` | active | software | 7 | 1 | 0 | 1 | 24 / 33 |
-| 21 | `animation-manager` | continuous | software | 2 | 0 | 0 | 0 | 15 / 17 |
-| 22 | `dream-cycle` | continuous | software | 5 | 0 | 0 | 0 | 26 / 31 |
+| 3 | `butterfly-gallery` | active | software | 7 | 7 | 1 | 1 | 12 / 28 |
+| 4 | `art-archive` | active | software | 9 | 1 | 0 | 0 | 16 / 26 |
+| 5 | `interface-vision` | continuous | software | 3 | 1 | 0 | 1 | 134 / 139 |
+| 6 | `coloring-book` | active | software | 1 | 9 | 1 | 0 | 36 / 47 |
+| 7 | `humboldt-scoop-cms` | active | software | 0 | 0 | 4 | 0 | 35 / 39 |
+| 8 | `digital-storefront` | active | software | 0 | 2 | 2 | 0 | 40 / 44 |
+| 9 | `kind-robots` | active | software | 1 | 0 | 2 | 0 | 107 / 110 |
+| 10 | `rainbow-butterflies` | active | software | 0 | 0 | 3 | 0 | 50 / 53 |
+| 11 | `scene-animator` | active | software | 0 | 0 | 1 | 0 | 10 / 11 |
+| 12 | `text-generation` | active | software | 0 | 0 | 1 | 0 | 8 / 9 |
+| 13 | `kindrobots-unraid` | active | software | 0 | 6 | 1 | 0 | 14 / 21 |
+| 14 | `model-builder` | active | software | 1 | 0 | 0 | 0 | 44 / 45 |
+| 15 | `lora-ingestion` | active | infrastructure | 0 | 0 | 1 | 0 | 7 / 8 |
+| 16 | `conductor` | active | software | 0 | 0 | 2 | 0 | 174 / 176 |
+| 17 | `storybook` | active | software | 4 | 2 | 1 | 1 | 47 / 55 |
+| 18 | `coat-dance` | active | content | 1 | 0 | 1 | 0 | 2 / 10 |
+| 19 | `conductor-app` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
+| 20 | `appmaker` | active | software | 1 | 0 | 0 | 0 | 14 / 15 |
+| 21 | `media-watchlist` | active | software | 1 | 0 | 0 | 0 | 18 / 19 |
+| 22 | `ruler-hooked` | active | software | 8 | 1 | 0 | 0 | 24 / 33 |
+| 23 | `animation-manager` | continuous | software | 2 | 0 | 0 | 0 | 15 / 17 |
+| 24 | `dream-cycle` | continuous | software | 4 | 0 | 0 | 0 | 27 / 31 |
 | — | `ai-art-academy` | finished | software | 0 | 0 | 0 | 0 | 79 / 79 |
 | — | `alexa-integration` | paused | software | 0 | 0 | 1 | 0 | 21 / 22 |
 | — | `animation-studio` | retired | software | 0 | 3 | 0 | 0 | 4 / 8 |
@@ -69,15 +71,16 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 ## Findings by severity
 
-### Error (0)
+### Error (3)
 
-_None._
+- **CONTROL_PRIORITY_DRIFT** — `_global`: CONTROL.md priority band ['cthulhuquarium', 'kind-economy', 'interface-vision', 'coloring-book', 'humboldt-scoop-cms', 'digital-storefront', 'kind-robots', 'rainbow-butterflies'] does not match priority.yaml prefix ['cthulhuquarium', 'kind-economy', 'butterfly-gallery', 'art-archive', 'interface-vision', 'coloring-book', 'humboldt-scoop-cms', 'digital-storefront'].
+- **WAITING_WITH_SATISFIED_DEPS** — `butterfly-gallery` / `t-013`: All dependencies are satisfied; resolver should promote this task to ready.
+- **WAITING_WITH_SATISFIED_DEPS** — `butterfly-gallery` / `t-015`: All dependencies are satisfied; resolver should promote this task to ready.
 
-### Warning (9)
+### Warning (8)
 
 - **POSSIBLY_UNNECESSARY_GATE** — `conductor` / `t-167`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **SOFT_NEEDS_HUMAN** — `cthulhuquarium` / `t-065`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
-- **STALE_IN_PROGRESS** — `interface-vision` / `t-104`: Task has remained claimed for 3 days.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kind-economy` / `t-017`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **POSSIBLY_UNNECESSARY_GATE** — `kind-robots` / `t-104`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-014`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
