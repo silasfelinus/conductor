@@ -14909,3 +14909,17 @@ records:
     two-step task, queuing the ArtJob now, then a separate follow-up (filed as t-028) to wire the
     rendered images in once the async relay finishes — don't block the first step's closure on
     the second happening within the same session.
+- date: 2026-09-18
+  project: butterfly-gallery
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    check_pr_handoff_template.py's check-run history can carry a stale `failure` entry from
+    an earlier PR-body revision (e.g. missing the "### Notes for reviewer" heading) even
+    after the Worker edits the body and a later run of the same check passes. Verify
+    mergeable_state plus the latest commit's own check-run/PR_BODY content via get_job_logs
+    before treating an older failed run as a live blocker.
