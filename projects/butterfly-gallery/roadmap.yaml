@@ -155,7 +155,7 @@ tasks:
     depends_on:
       - t-003
       - t-004
-    note: >
+    note: >-
       Render the pile as a deep foreground mass of overlapping thumbnails that
       rises from BELOW the viewport with NO box/container front. Only the upper
       portion is visible, implying a much larger hidden backlog. It should be
@@ -164,9 +164,25 @@ tasks:
       frame; the next image advances smoothly after a successful sort. The pile
       remains a foreground DOM layer so it can occlude the lower-right robot
       animation behind it.
+
+      FLAG (2026-09-18, same session that shipped this task): Silas's approved-stage-spec
+      commit (839ade1) landed mid-flight and rewrote this task's own note above to specify
+      below-viewport rise / no box-container / slight overlap with the central frame /
+      foreground-DOM layering against a lower-right robot animation. The merged
+      implementation (kind_robots#2832) satisfies the ORIGINAL note this session claimed
+      against (top-of-pile rendering, hover/lift, remaining count, promote-to-frame,
+      smooth advance) but does NOT implement the newer positioning/layering requirements
+      above -- the pile currently renders in-flow inside a bordered kr-panel, not rising
+      from below the viewport with no container. t-010 (STAGE milestone m3, depends_on
+      t-005+t-006) already explicitly owns "Implement APPROVED-STAGE-SPEC.md exactly ...
+      image pile rising from below viewport and slightly overlapping the display", so the
+      positioning/layering rework is likely t-010's job, not a t-005 defect -- but flagging
+      here since t-005's own note now describes requirements this PR doesn't meet. Confirm
+      this reading (t-010 absorbs the staging) or reopen t-005 if the below-viewport/no-box
+      behavior should land before t-010's broader composition pass.
     claimed_by: claude-scheduled-20260918T102941Z-butterfly-t005
     claimed_at: '2026-09-18T10:29:41Z'
-    updated: '2026-09-18T10:42:27Z'
+    updated: '2026-09-18T10:55:40Z'
     implementation_pr: 'silasfelinus/kind_robots#2832'
 
   - id: t-006
