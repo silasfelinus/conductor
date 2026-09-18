@@ -538,9 +538,9 @@ tasks:
   - id: t-018
     milestone: m5
     title: "Add persisted custom bins and generation/action presets"
-    status: review
+    status: ready
     owner: worker
-    passes: 0
+    passes: 1
     stakes: reversible
     depends_on:
       - t-006
@@ -571,8 +571,9 @@ tasks:
       Added the reusable admin preset-editor component for the t-018 continuation: visible-bin toggles, editable labels, and persisted generation-action bindings through the existing Pinia preset store. This is a scoped slice; page integration remains before t-018 is complete.
     claimed_by: openai-scheduled-2026-09-18T201608Z-butterfly-gallery-t018-a11
     claimed_at: '2026-09-18T20:16:08Z'
-    updated: '2026-09-18T20:20:00Z'
+    updated: '2026-09-18T20:30:13Z'
     implementation_pr: 'silasfelinus/kind_robots#2848'
+    retry_context: 'pass 1 failed (quality): kind_robots#2850 (third t-018 slice, ButterflyGalleryPresetEditor.vue) failed CI''s test:component-reachability -- the new component isn''t mounted anywhere reachable from app.vue/pages/layouts/content. Do differently: mount the editor into pages/butterfly-gallery.vue (even behind an admin-only toggle) in the same PR so it''s reachable, or justify+--update if a runtime-only path exists.'
 
   - id: t-019
     milestone: m5
