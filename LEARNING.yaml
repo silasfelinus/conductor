@@ -14645,3 +14645,21 @@ records:
     silently overwritten. Kaizen follow-on (surfacing match-quality
     candidates before auto-apply) was already filed as t-023, so no new
     kaizen task was needed on this close-out.
+- date: '2026-09-18'
+  project: art-archive
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: transient
+  lesson: >-
+    A unit test that imports a module needing Prisma will crash under this
+    repo's contract-tests job, which runs without DATABASE_URL -- even if the
+    test itself only calls a pure function from that module. The fix
+    (applied here, matching applyArtArchiveResourceMatch.ts's existing
+    precedent) is to keep any Prisma-free decision logic in its own module
+    with zero Prisma import, so a pure-logic unit test can import it directly
+    without dragging in the real client. Caught and fixed same-cycle before
+    merge; no wasted review round since the fix landed on the same PR before
+    a Reviewer ever saw the red check.
