@@ -295,7 +295,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Add admin-only archive APIs for browse/filter/detail and safe filesystem actions"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -308,7 +308,13 @@ tasks:
       Implementation PR kind_robots#2825 open (admin browse/filter/detail APIs + safe
       filesystem move/quarantine actions). Will follow up with status: done once CI-green and
       merged.
-    updated: '2026-09-18T07:25:26Z'
+
+      Implementation PR kind_robots#2825 merged 2026-09-18T07:42:29Z. Note: the 'Build
+      production image' job was cancelled once mid-run (GitHub Actions cache-export infra
+      cancellation, unrelated to this PR's diff -- confirmed by re-running just that job,
+      which then passed cleanly). All other 50 checks were green on the first pass. Closing
+      t-009 to done.
+    updated: '2026-09-18T07:51:39Z'
     owner: worker
     claimed_by: claude-scheduled-20260918T071827Z-artarchive-t009-a1
     claimed_at: '2026-09-18T07:18:27Z'
