@@ -644,3 +644,24 @@ tasks:
       ArtJobPayloadRecord's shape. This gives t-015's curation board (and any
       future "apply preset" endpoint) a tested foundation to call rather than
       reimplementing the merge inline against a live ArtJob write path.
+
+  - id: t-026
+    milestone: m2
+    title: "Add a shared ExtractedArchiveMetadata narrowing helper"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-021
+    note: >-
+      Kaizen from t-021 (missing resource acquisition backlog, kind_robots#2824):
+      the pass-1 rejection was a real TypeScript error from reading
+      `metadata.a1111`/`metadata.comfy` before narrowing
+      `ExtractedArchiveMetadata` away from its JpegWebpMetadata branch. The
+      fix duplicated the same `!metadata.supported || metadata.format !==
+      'png'` guard that `artArchiveResourceMatch.ts`/`artArchiveMetadata.ts`
+      already use independently. Add one shared helper (e.g.
+      `narrowToPngMetadata(metadata): Png...Metadata | null` in
+      `artArchiveMetadata.ts`) and have all three call sites use it, so the
+      next module that reads `.a1111`/`.comfy` can't reintroduce the same
+      unnarrowed-union compile error.
