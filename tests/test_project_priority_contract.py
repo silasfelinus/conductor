@@ -5,6 +5,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 PRIORITY = ROOT / "projects" / "priority.yaml"
+OVERRIDES = ROOT / "project-overrides.yaml"
 
 
 def test_lead_projects_are_the_ones_silas_named():
@@ -50,3 +51,19 @@ def test_dream_cycle_ordinary_maintenance_remains_fallback():
     order = data.get("order") or []
 
     assert order[-1] == "dream-cycle"
+
+
+def test_butterfly_gallery_leads_art_archive_and_both_are_high():
+    """Silas 2026-09-18: both projects are high priority, Butterfly Gallery first."""
+    data = yaml.safe_load(PRIORITY.read_text(encoding="utf-8")) or {}
+    order = data.get("order") or []
+    assert order.index("butterfly-gallery") < order.index("art-archive")
+
+    overrides_raw = yaml.safe_load(OVERRIDES.read_text(encoding="utf-8")) or {}
+    overrides = {
+        row.get("slug"): row
+        for row in (overrides_raw.get("overrides") or [])
+        if isinstance(row, dict) and row.get("slug")
+    }
+    assert overrides["butterfly-gallery"]["priority"] == "high"
+    assert overrides["art-archive"]["priority"] == "high"
