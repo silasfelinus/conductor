@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-18T05:03:55Z
+Generated: 2026-09-18T05:12:33Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1011**
-- Outcomes: blocked: 16, cancelled: 1, done: 994
+- Closed tasks recorded: **1012**
+- Outcomes: blocked: 16, cancelled: 1, done: 995
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -21,7 +21,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | animation-studio | 2 | 50% |
 | appmaker | 11 | 100% |
 | approval-portal | 2 | 0% |
-| art-archive | 4 | 100% |
+| art-archive | 5 | 100% |
 | art-generator-connect | 3 | 100% |
 | brainstorm | 26 | 96% |
 | challenge-center | 16 | 100% |
@@ -70,7 +70,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 994 | 99% |
+| software | 995 | 99% |
 
 ## Failure categories
 
@@ -92,6 +92,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-18 `art-archive/t-022` — Clean pass. When a task note offers two implementation shapes ("a CLI script or an admin-gated endpoint"), picking one and filing the other as an explicit follow-on task (rather than silently treating the chosen option as if it fully satisfied the note, or scope-creeping to build both) keeps the task's actual delivered scope honest and visible in the roadmap.
 - 2026-09-18 `art-archive/t-006` — Clean first-pass implementation of an ambiguous task note ("prefer embedded ids...") by picking the most defensible concrete reading (embedded content hash, since legacy files carry no Resource id) and flagging the interpretation explicitly in the PR body rather than silently guessing or stalling on it. Also worth repeating: returning ALL same-tier candidates instead of narrowing to one made an otherwise-invisible ambiguous-match case (two Resources sharing a normalized name) visible to the next task downstream, instead of a matching function silently picking a winner that later turns out wrong.
 - 2026-09-18 `art-archive/t-005` — Clean first-pass success following t-004's rejection lesson: the Worker correctly treated raw-metadata retention as a hard invariant (preserved verbatim in extractedMetadata for every format) while still scoping per-column generation-field extraction to PNG only, matching what t-006/ t-008 actually need next. A contract verifier regex-checking the privacy/ maturity/idempotency invariants directly against source shipped alongside the feature, not as an afterthought -- worth treating as the default shape for any importer/reconciler task in this project going forward.
 - 2026-09-18 `art-archive/t-004` — A reviewer caught a real scope gap on the first pass: the task's own note said "extract available ... EXIF/text metadata" but the implementation returned supported:false for every JPEG/WebP unconditionally, reasoning (in the PR body) that PNG was "the format that actually carries this data in practice" -- true for AI-tool defaults, but the roadmap language was about what's AVAILABLE, not just the common case, and JPEG/WebP EXIF/XMP/COM can carry real provenance. Re-read a task's exact wording against the diff before calling something out of scope, especially when the shortcut is also the path of least implementation effort. Separately: Silas intervened directly on the implementation branch mid-cycle to correct an invented ART_ARCHIVE_ROOT env var to the already-existing PRIVATE_PATH convention -- when a human pushes directly to a branch you're working on, rebase your next commit on top of it rather than force-pushing over it; a plain rebase merged cleanly here since the files didn't overlap.
@@ -101,7 +102,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-17 `dream-cycle/t-027` — check_live_facet_coverage.py now walks creation-burst bundles too (built.facets in projects/kind-robots/bursts/*.yaml), not only daily-dream backlog records -- any future live-coverage-style check over agent-recorded built-state should default to covering every bundle shape that records it, not just the first one that prompted the check.
 - 2026-09-17 `appmaker/t-014` — A "FOR SILAS: decide X or Y" task can sit fully implementable long after the decision lands if nobody revisits it -- Silas answered this one on 2026-09-07 (approved_by_human: true, keep /appmaker admin-only and fix the copy) but the actual one-file copy fix wasn't picked up until this cycle. Worth a quick pass over ready tasks with approved_by_human: true and no implementation_pr to catch this class earlier next time.
 - 2026-09-17 `appmaker/t-010` — A task blocked for weeks on open design questions can turn fully actionable the moment a human decision resolves them -- the roadmap note already carried Silas's 2026-09-07 answers to all three open questions (squash graduation, admin-only, existing-granted-repo-only), so the real work was reading that note carefully rather than re-deriving the design. Splitting the landable, reversible half (a Todo-filing request endpoint) from the genuinely irreversible half (the squash-push executor that writes to a real external repo) kept this PR safely mergeable without a human gate, while filing the executor as its own gate_human task (t-015) rather than either building it unreviewed or leaving the remaining scope implicit in t-010's note.
-- 2026-09-17 `ruler-hooked/t-026` — Redesigning a discrete-action minigame (button REEL/SLACK/WAIT) into a continuous timing-bar input without breaking replay determinism was made tractable by keeping the animation purely client-side display and only ever sending the recorded stop position into a pure reducer -- the same "framework-free, never elapsed milliseconds" contract the rest of the engine already kept. Adding a `quality` parameter defaulting to 1 and proving byte-for-byte equivalence to the old formulas at quality=1 (self-test #8) gave a cheap, concrete regression guard for a refactor that touched core resolution math. Also confirmed prettier is not CI-enforced in kind_robots (no workflow runs `lint:prettier`/`npm run lint`) -- running it blind reformats unrelated code the task never touched; check for an enforcing workflow before applying a formatter repo-wide, and prefer reverting to the original eslint-clean formatting when it isn't enforced.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-18T05:03:55Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-18T05:12:33Z_
