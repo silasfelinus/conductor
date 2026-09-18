@@ -1,0 +1,441 @@
+project: butterfly-gallery
+kind: software
+goal: "Ship /butterfly-gallery as a private, mature-aware Kind Robots art-curation experience: a fast drag/drop sorter staged as an animated rainbow-butterfly gallery room, while leaving ingestion/provenance ownership in art-archive."
+
+notes_from_silas: |
+  Butterfly Gallery is a SEPARATE project from art-archive.
+
+  art-archive owns ingesting the legacy filesystem, reconciling files into
+  private/mature ArtImages, recovering checkpoint/LoRA provenance, and exposing
+  the private-art source. butterfly-gallery consumes those ArtImages; it does
+  not own scanning, archive reconciliation, or Resource matching.
+
+  The intended route is /butterfly-gallery. It belongs in the Kind Robots Plan
+  channel under Projects. The page itself is an admin/private curation surface
+  and must remain compatible with the app's mature-content visibility rules.
+
+  The visual premise is an animated gallery sorting room. On first entry a
+  ceiling trapdoor opens and framed pictures tumble into a pile. Rainbow
+  butterflies, the Kind Robots mascot, carry pictures around with varying levels
+  of success: some tow frames on strings, some work in pairs, some struggle
+  alone. After the intro, the page settles into a calm working state.
+
+  The steady-state composition has a painting pile at bottom/center, one selected
+  image in a prominent central frame, customizable drag/drop bins on the left
+  and right, and a peekaboo opening/window where butterflies pass in the
+  background. The whimsy must never slow down the actual sorting workflow.
+
+  Drag/drop is primary theater, not the only control. Every action must have a
+  click/tap and keyboard-accessible fallback. Intro motion is non-looping,
+  skippable, session-aware, and respects prefers-reduced-motion.
+
+  Build functional behavior first, then static art direction, then motion. Do
+  not block useful curation work on final animation assets.
+
+milestones:
+  - id: m1
+    title: "FOUNDATION — route, Plan placement, data seam, and interaction contract"
+    weight: 20
+    status: in-progress
+
+  - id: m2
+    title: "SORT — pile, central frame, bins, metadata, and real curation actions"
+    weight: 25
+    status: not-started
+
+  - id: m3
+    title: "STAGE — gallery-room composition and production art assets"
+    weight: 20
+    status: not-started
+
+  - id: m4
+    title: "MOTION — trapdoor intro, butterfly clips, ambient scene, and micro-interactions"
+    weight: 20
+    status: not-started
+
+  - id: m5
+    title: "POWER + POLISH — presets, accessibility, responsiveness, performance, and acceptance"
+    weight: 15
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write Butterfly Gallery design brief and preserve the project boundary"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: "2026-09-17T22:56:00-07:00"
+    note: >
+      DESIGN-BRIEF.md captures Silas's full visual/interaction outline and the
+      implementation sequencing. The boundary is explicit: butterfly-gallery
+      owns the curation experience; art-archive owns filesystem ingestion,
+      ArchiveEntry reconciliation, provenance matching, and the private-image
+      source.
+
+  - id: t-002
+    milestone: m1
+    title: "Create the Kind Robots Project identity and place Butterfly Gallery in Plan"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Ensure the matching Kind Robots Project uses conductorSlug
+      butterfly-gallery, title "Butterfly Gallery", channelKey=plan,
+      tabKey=projects, and liveUrl=/butterfly-gallery. This is a private admin
+      curation project; preserve isPublic=false and mature-aware access so its
+      eventual private/mature ArtImage feed is never exposed by navigation.
+      Kind Robots owns these presentation fields, not Conductor override YAML.
+
+  - id: t-003
+    milestone: m1
+    title: "Create /butterfly-gallery shell, store, and scene state machine"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Build the route and Pinia/store state for loading, intro, ready, dragging,
+      dropping, saving, rescanning, and error states. Include selected image,
+      pile/queue entries, bin configuration, filters, batch selection, and
+      intro-played state. Use fixture/private ArtImage data initially so this
+      work does not wait on art-archive integration.
+
+  - id: t-004
+    milestone: m1
+    title: "Define the private-ArtImage feed contract without duplicating art-archive"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Define the narrow read contract Butterfly Gallery needs from the archive:
+      id/thumbnail/display path, processed state, rating, folder/custom
+      collections, prompt/generation metadata, resource provenance, match state,
+      missing/trashed state, and next-page cursors. Prefer an adapter over
+      duplicating archive queries. Fixture this contract for UI work. The real
+      provider switches to art-archive once that project exposes the feed.
+
+  - id: t-005
+    milestone: m2
+    title: "Build the painting pile and selected central frame interaction"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-003
+      - t-004
+    note: >
+      Render only the visible top portion of the pile, with lightweight
+      rotations/lift-on-hover and a clear remaining count. Selecting or dragging
+      a pile image promotes it into the central frame. The next image should
+      advance smoothly after a successful sort action.
+
+  - id: t-006
+    milestone: m2
+    title: "Build configurable left/right sorting-bin rails"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-003
+    note: >
+      Add reusable bins with side, label, icon, kind, payload, sort order, and
+      enabled state. Support drag hover/drop plus click/tap action fallback from
+      the selected frame. Start with fixture actions; keep bins visually
+      distinctive without turning the rails into a rainbow wall of noise.
+
+  - id: t-007
+    milestone: m2
+    title: "Wire core curation actions: processed state, rating, trash, and collections"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-005
+      - t-006
+    note: >
+      Make first-class bin/action targets for mark processed/unprocessed,
+      Rate 1-5, recoverable Trash, and Add to collection. Call existing archive
+      APIs when available; until then keep the action adapter injectable and
+      test against fixtures. Do not recreate archive filesystem semantics here.
+
+  - id: t-008
+    milestone: m2
+    title: "Build the selected-image metadata and quick-action drawer"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-004
+    note: >
+      Show prompt, negative prompt, checkpoint, LoRAs, rating, processed state,
+      collection membership, resource-match state, and relevant extracted
+      metadata beside/below the central frame. Quick actions must remain usable
+      without drag/drop.
+
+  - id: t-009
+    milestone: m2
+    title: "Add queue filters and folder/collection browsing"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-004
+    note: >
+      Support processed/unprocessed, rating, match state, missing/trashed state,
+      folder, collection, and search filters. Preserve the theatrical pile
+      metaphor while making the real queue state legible and recoverable.
+
+  - id: t-010
+    milestone: m3
+    title: "Build the static Butterfly Gallery stage composition"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-005
+      - t-006
+    note: >
+      Establish the steady-state room before motion: ceiling/trapdoor region,
+      central display frame, painting pile, left/right bins, peekaboo
+      window/opening, and restrained workshop/gallery background. Let mascot
+      color carry the rainbow; keep the room itself warm/dusky enough that user
+      art remains the focal point.
+
+  - id: t-011
+    milestone: m3
+    title: "Produce the static art asset set for room, frame, pile, bins, and window"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Use the existing Kind Robots image-generation/art pipeline to create or
+      refine layered assets: room background, closed/open trapdoor states,
+      painting pile base, empty central frame, bin shells, peekaboo window, and
+      small utility overlays. Assets should compose cleanly across desktop,
+      tablet, and narrow layouts rather than baking UI labels into images.
+
+  - id: t-012
+    milestone: m4
+    title: "Storyboard the non-looping trapdoor intro and reduced-motion variant"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Lock timing and beats before producing expensive motion: room appears,
+      trapdoor opens, framed pictures tumble into the pile, butterflies react,
+      then the scene settles and controls become fully active. Target roughly
+      2-4 seconds, skippable immediately, once per page/session by default, and
+      replace with an instant/subtle transition under prefers-reduced-motion.
+
+  - id: t-013
+    milestone: m4
+    title: "Create the butterfly animation shot list and animation-creator jobs"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-012
+    note: >
+      Produce separate non-looping reusable clips/jobs for: frame-on-string
+      carrier, two-butterfly team carry, solo struggler, frame dragger,
+      peekaboo scout, simple cross-window flight, and rare oops/drop gag.
+      Reuse the existing animation creator rather than inventing a new motion
+      pipeline. Keep source art/frame layers suitable for compositing user
+      thumbnails separately.
+
+  - id: t-014
+    milestone: m4
+    title: "Render and catalog reusable butterfly motion clips"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-013
+    note: >
+      Generate, inspect, and store the approved non-looping butterfly clips with
+      stable asset identity and transparent/composable presentation where the
+      current animation pipeline supports it. Reject clips whose framing makes
+      them impossible to reuse around arbitrary user artwork.
+
+  - id: t-015
+    milestone: m4
+    title: "Implement intro orchestration with trapdoor, picture fall, and session memory"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-010
+      - t-012
+    note: >
+      Orchestrate DOM/asset motion rather than making the entire page one giant
+      video. Intro never blocks navigation indefinitely, exposes Skip, records
+      that it played for the intended session scope, and leaves the exact same
+      steady-state DOM the user will interact with afterward.
+
+  - id: t-016
+    milestone: m4
+    title: "Implement ambient peekaboo butterfly traffic"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-010
+      - t-014
+    note: >
+      Schedule intermittent non-looping background passes through the peekaboo
+      window/opening and behind the working UI. Avoid constant loops, foreground
+      obstruction, or synchronized repetition. Pause/degrade motion when the tab
+      is hidden or reduced motion is requested.
+
+  - id: t-017
+    milestone: m4
+    title: "Add sorting micro-interactions without physics friction"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-005
+      - t-006
+      - t-010
+    note: >
+      Animate pile selection, central-frame settle, drag-target highlight,
+      successful bin acceptance, and next-image rise. Keep hit targets generous
+      and deterministic; no free-physics behavior may make a valid drop hard to
+      complete.
+
+  - id: t-018
+    milestone: m5
+    title: "Add persisted custom bins and generation/action presets"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-006
+      - t-007
+    note: >
+      Let the admin choose which bins appear and bind them to reusable actions
+      such as Add LoRA, replace LoRA, switch checkpoint, append/replace prompt,
+      change common generation settings, add variant, or request replacement.
+      Prefer the archive project's preset/action API if it already exists.
+
+  - id: t-019
+    milestone: m5
+    title: "Integrate regeneration actions with normal ArtJobs"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-018
+    note: >
+      Regenerate/additional/replacement actions must use the existing durable
+      ArtJob system and archive adapters. Butterfly Gallery is a controller,
+      not a second render queue. Failed replacement jobs never destroy the
+      current source image.
+
+  - id: t-020
+    milestone: m5
+    title: "Add keyboard, touch, and accessible non-drag workflows"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-006
+      - t-008
+    note: >
+      Every bin/action is reachable via focus and keyboard and usable on touch
+      without requiring a drag gesture. Provide visible selected/focus states,
+      useful announcements, and keyboard shortcuts for high-frequency sorting
+      where they do not conflict with browser/app navigation.
+
+  - id: t-021
+    milestone: m5
+    title: "Add batch selection and batch-action confirmation"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-007
+      - t-009
+    note: >
+      Support multi-select from pile/grid/filtered queue and apply compatible
+      bins/presets in batches. Preview count/scope for destructive or expensive
+      actions and report partial failures without losing successful results.
+
+  - id: t-022
+    milestone: m5
+    title: "Integrate the real art-archive private image feed"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-004
+      - t-009
+    note: >
+      EXTERNAL DEPENDENCY: art-archive must expose the private/mature ArtImage
+      read/action contract. Swap the fixture adapter onto that real provider,
+      preserving admin auth and mature-viewer gating. Do not query PRIVATE_PATH
+      directly from Butterfly Gallery and do not duplicate ArchiveEntry scanner
+      logic. Mark ready when the art-archive API seam exists.
+
+  - id: t-023
+    milestone: m5
+    title: "Harden privacy, maturity, and navigation boundaries"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-002
+      - t-022
+    note: >
+      Verify the Plan project placement does not make private ArtImages public.
+      Require admin authorization plus mature-content permission for the gallery
+      data surface. Test direct-route access, API access, thumbnails, metadata,
+      and Resource/collection links for no private-content bleed.
+
+  - id: t-024
+    milestone: m5
+    title: "Tune large-queue performance and responsive composition"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-009
+      - t-017
+    note: >
+      Paginate/virtualize queue reads, use thumbnails rather than originals,
+      prefetch only a small next-item window, pause unnecessary animation, and
+      keep the stage useful across desktop/tablet/mobile. On constrained widths,
+      bins may become drawers/trays without losing action parity.
+
+  - id: t-025
+    milestone: m5
+    title: "Cross-width visual and interaction acceptance"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    note: >
+      FOR SILAS: final visual acceptance after the real archive feed and motion
+      system are deployed. Verify the room/pile/frame/bin composition, intro
+      timing, butterfly personality, drag/click/keyboard sorting, reduced motion,
+      and phone/tablet/desktop layouts. This is a final appearance/feel gate, not
+      a blocker for earlier implementation.
