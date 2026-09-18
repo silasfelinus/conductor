@@ -14506,3 +14506,20 @@ records:
     not only daily-dream backlog records -- any future live-coverage-style check over agent-recorded built-state
     should default to covering every bundle shape that records it, not just the first one that prompted
     the check.
+- date: '2026-09-18'
+  project: storybook
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 50
+  outcome: done
+  failure_category: null
+  lesson: >-
+    select_role.py's raw urllib GitHub probe 403'd in this sandbox as usual, but the
+    underlying worker-branch PR (kind_robots#2811) was real and reviewable via the GitHub
+    MCP tools -- cross-checking select_role.py's uncertain verdict against a working
+    transport before falling back to its "worker" recommendation caught a genuine PR that a
+    literal reading of the tool's own output would have missed. Reviewed, confirmed all 47
+    checks green and mergeable_state clean with a diff scoped to exactly the intended files,
+    then squash-merged and re-armed the task to ready per the established recurring-polish
+    precedent.
