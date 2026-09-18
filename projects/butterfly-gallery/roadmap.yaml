@@ -500,8 +500,8 @@ tasks:
   - id: t-018
     milestone: m5
     title: "Add persisted custom bins and generation/action presets"
-    status: review
-    owner: worker
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
     depends_on:
@@ -512,9 +512,18 @@ tasks:
 
 
       Implemented the first t-018 slice on the Kind Robots worker branch: a versioned, validated persistence contract for custom bin presets and generation/action intents. Store/UI wiring remains for the continuation after this scoped slice is reviewed and merged.
-    claimed_by: openai-scheduled-2026-09-18T161958Z-butterfly-gallery-t018-a11
-    claimed_at: '2026-09-18T16:19:58Z'
-    updated: '2026-09-18T16:26:00Z'
+
+      Reviewed and merged kind_robots#2843 (squash 45041e8) 2026-09-18: versioned, validated
+      persistence contract for custom bin presets + typed generation/action intents in
+      stores/helpers/butterflyGalleryBinPresets.ts. All 46 CI checks green, mergeable_state
+      clean. Verified: type shapes match types/butterflyGallery.ts exactly
+      (ButterflyBinConfig, ButterflyBinKind), BIN_KINDS set complete/correct, no pre-existing
+      duplicate persistence helper. Inert until wired into the Pinia store + editor UI -- re-
+      arming to ready for that continuation.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-09-18T16:30:32Z'
+    implementation_pr: 'silasfelinus/kind_robots#2843'
 
   - id: t-019
     milestone: m5
