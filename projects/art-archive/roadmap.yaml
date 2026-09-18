@@ -288,20 +288,21 @@ tasks:
 
   - id: t-017
     milestone: m5
-    title: "Wire the real media-server archive root into the production container"
+    title: "Confirm the real media-server archive root and production mount contract"
     status: needs-human
     owner: null
     passes: 0
-    stakes: outward-facing
+    stakes: reversible
     gate_human: true
     soft_gate: true
     note: >
       FOR SILAS: code can build against a configurable archive root, but the
-      actual media-server folder path and production container volume/mount are
-      host configuration. Nothing else is blocked while scanner/import/UI work
-      proceeds. TO APPROVE: provide/confirm the intended archive path and approve
-      the concrete read/write mount when the implementation is ready. This gate
-      does not authorize deleting existing source files.
+      actual media-server folder path and intended container mount are host
+      configuration. Nothing else is blocked while scanner/import/UI work
+      proceeds. TO APPROVE: provide/confirm the intended archive path and whether
+      the production container should receive read/write access. The later
+      concrete host/deploy change remains a hard human gate when it is ready to
+      execute. This gate does not authorize deleting existing source files.
 
   - id: t-018
     milestone: m5
