@@ -580,7 +580,7 @@ tasks:
   - id: t-020
     milestone: m5
     title: "Add keyboard, touch, and accessible non-drag workflows"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on:
@@ -591,10 +591,25 @@ tasks:
 
 
       Reviewer openai-scheduled-2026-09-18T171754Z-butterfly-gallery-pr2845-a1 found a quality issue in kind_robots#2845: window-global Delete/digit/arrow shortcuts intercept keys outside gallery-owned focus, including a recoverable destructive trash action. Scope shortcuts to a gallery interaction region or gallery-owned focus and add a focused shortcut-guard contract before retrying. Existing ARIA live status, aria-pressed, discoverability hints, click/tap fallback, and focus-visible treatment otherwise fit t-020.
-    updated: '2026-09-18T17:28:55Z'
+
+      Worker (Claude, scheduled conductor run): fixed the review finding from openai-
+      scheduled-2026-09-18T171754Z-butterfly-gallery-pr2845-a1 -- kind_robots#2845 commit
+      9dfeac2 extracts the shortcut guard/routing logic into a pure
+      resolveButterflyShortcutIntent() (stores/helpers/butterflyGalleryShortcuts.ts) and
+      rebinds the keydown listener on the page's own root <main> element instead of window, so
+      Delete/digit/arrow shortcuts only fire for keydowns that actually bubble from inside the
+      gallery, never from unrelated page chrome. Added
+      utils/scripts/verifyButterflyGalleryShortcuts.test.ts (wired into package.json +
+      contract-tests.yml, matching the existing butterfly-
+      gallery-{actions,filters,motion,intro} contract pattern) covering every guard (editable
+      target, modifier keys, gallery status, missing selection) plus the sort/trash/arrow-
+      navigation intents. Replied to the reviewer on the PR. vue-tsc, eslint, and prettier all
+      clean; new contract test passes. kind_robots#2845 CI re-running on the fix commit.
+    updated: '2026-09-18T17:29:15Z'
     owner: worker
     claimed_by: claude-scheduled-20260918T172900Z-bg-t020-fix
     claimed_at: '2026-09-18T17:28:55Z'
+    implementation_pr: 'silasfelinus/kind_robots#2845'
 
   - id: t-021
     milestone: m5
