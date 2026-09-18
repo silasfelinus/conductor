@@ -278,7 +278,7 @@ tasks:
   - id: t-009
     milestone: m2
     title: "Add queue filters and folder/collection browsing"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -294,9 +294,14 @@ tasks:
       stores/helpers/butterflyGalleryFilters.ts. Fixed a real bug: trash visibility was folded
       into matchState==='missing' (t-003 scaffolding), which never actually worked for real
       trashed entries. New trashView filter decouples it. PR: kind_robots#2838, CI pending.
+
+      Merged kind_robots#2838 (1488740a). 51/51 checks green. Fixed a real pre-existing bug
+      along the way: trash visibility was folded into matchState==='missing' (t-003
+      scaffolding), which never actually revealed trashed entries since trashing doesn't touch
+      matchState -- now filters.trashView is its own dimension.
     claimed_by: claude-scheduled-2026-09-18T-conductor-run-t009
     claimed_at: '2026-09-18T12:34:24Z'
-    updated: '2026-09-18T12:45:57Z'
+    updated: '2026-09-18T12:57:16Z'
     implementation_pr: 'silasfelinus/kind_robots#2838'
 
   - id: t-010
