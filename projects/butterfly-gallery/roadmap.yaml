@@ -671,20 +671,21 @@ tasks:
   - id: t-021
     milestone: m5
     title: "Add batch selection and batch-action confirmation"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on:
       - t-007
       - t-009
-    note: >
-      Support multi-select from pile/grid/filtered queue and apply compatible
-      bins/presets in batches. Preview count/scope for destructive or expensive
-      actions and report partial failures without losing successful results.
+    note: |-
+      Support multi-select from pile/grid/filtered queue and apply compatible bins/presets in batches. Preview count/scope for destructive or expensive actions and report partial failures without losing successful results.
+
+
+      Implemented the first t-021 slice: a pure batch execution/preview contract that deduplicates selected ids, flags destructive/expensive batches for confirmation, and preserves per-entry success/failure results so partial failures do not erase successful work. Store/page wiring remains before t-021 is complete.
     claimed_by: openai-scheduled-2026-09-18T221811Z-butterfly-gallery-t021-a11
     claimed_at: '2026-09-18T22:18:11Z'
-    updated: '2026-09-18T22:18:11Z'
+    updated: '2026-09-18T22:21:00Z'
 
   - id: t-022
     milestone: m5
