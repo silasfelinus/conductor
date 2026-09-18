@@ -580,7 +580,7 @@ tasks:
   - id: t-020
     milestone: m5
     title: "Add keyboard, touch, and accessible non-drag workflows"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on:
@@ -591,7 +591,10 @@ tasks:
 
 
       Reviewer openai-scheduled-2026-09-18T171754Z-butterfly-gallery-pr2845-a1 found a quality issue in kind_robots#2845: window-global Delete/digit/arrow shortcuts intercept keys outside gallery-owned focus, including a recoverable destructive trash action. Scope shortcuts to a gallery interaction region or gallery-owned focus and add a focused shortcut-guard contract before retrying. Existing ARIA live status, aria-pressed, discoverability hints, click/tap fallback, and focus-visible treatment otherwise fit t-020.
-    updated: '2026-09-18T17:17:54Z'
+    updated: '2026-09-18T17:28:55Z'
+    owner: worker
+    claimed_by: claude-scheduled-20260918T172900Z-bg-t020-fix
+    claimed_at: '2026-09-18T17:28:55Z'
 
   - id: t-021
     milestone: m5
