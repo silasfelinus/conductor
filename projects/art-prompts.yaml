@@ -38,45 +38,28 @@
 #   6. Run `python scripts/build_workspace.py` to refresh the workspace.
 #
 # Status values: pending
-# Optional project/asset priority is forwarded to the Kind Robots ArtJob queue.
-# Daily Dream art uses priority 200; Resource/LoRA preview refill currently uses 1.
 
 images:
 - project: butterfly-gallery
-  priority: 200
-  icon:
-    image_path: projects/images/butterfly-gallery-icon.webp
-    size: 256x256
-    status: pending
-    engine: krea2
-    prompt: >-
-      A single luminous rainbow butterfly struggling upward while towing a tiny
-      ornate empty picture frame by a fine string, playful imbalance, crisp
-      premium app-icon silhouette on a warm dark gallery ground, square
-      composition, unmarked surfaces, free of text.
   card:
     image_path: projects/images/butterfly-gallery-card.webp
     size: 512x768
     status: pending
     engine: krea2
-    prompt: >-
-      Portrait key art inside a whimsical dusky gallery sorting room, a loose
-      pile of framed pictures on the floor, one large empty presentation frame
-      glowing at center, rainbow butterflies carrying frames with varying
-      degrees of success around the room, warm wood and velvet tones, vertical
-      2:3 composition, unmarked surfaces, free of text.
+    prompt: Portrait key art inside a whimsical dusky gallery sorting room, a loose pile of
+      framed pictures on the floor, one large empty presentation frame glowing at center,
+      rainbow butterflies carrying frames with varying degrees of success around the room,
+      warm wood and velvet tones, vertical 2:3 composition, unmarked surfaces, free of text.
   hero:
     image_path: projects/images/butterfly-gallery-hero.webp
     size: 1280x720
     status: pending
     engine: krea2
-    prompt: >-
-      Wide cinematic gallery-workshop scene built around a central empty picture
-      frame, painting pile below, sorting crates at both sides, a ceiling
-      trapdoor above, and a peekaboo opening where luminous rainbow butterflies
-      tow and carry blank framed art through the space, warm restrained room
-      palette with vivid mascot color, 16:9 composition, unmarked surfaces,
-      free of text.
+    prompt: Wide cinematic gallery-workshop scene built around a central empty picture frame,
+      painting pile below, sorting crates at both sides, a ceiling trapdoor above, and a peekaboo
+      opening where luminous rainbow butterflies tow and carry blank framed art through the
+      space, warm restrained room palette with vivid mascot color, 16:9 composition, unmarked
+      surfaces, free of text.
 requests:
 - id: creation-burst-tom-tomtum-the-monastery-of-the-long-quiet
   last_art_job_id: 21617
@@ -266,590 +249,78 @@ requests:
   entity_type: scenario
   entity_id: 2213
   entity_field: imagePath
-- id: kind-robots-matter-replicator-image-47080634-mu0yhjdo
-  last_art_job_id: 22006
+- id: kind-robots-almost-invisible-image-1ff66a8e-mu3dwhaa
+  last_art_job_id: 25380
   source: kind-robots-missing-image
-  status: done
+  status: pending
+  requested_at: '2026-09-16T00:50:29.123Z'
   target_repo: silasfelinus/kind_robots
-  image_path: public/images/rewards/power/matter-replicator.webp
-  source_url: /images/rewards/power/matter-replicator.webp
-  page_url: https://kindrobots.org/storybook
+  image_path: public/images/rewards/power/almost-invisible.webp
+  source_url: /images/rewards/power/almost-invisible.webp
+  page_url: https://kindrobots.org/rewards
   variant: image
-  label: Matter Replicator
-  prompt: 'A high-tech Matter Replicator stands at the center of a dimly lit, futuristic workshop,
-    surrounded by shimmering holographic displays showcasing various fantastical characters,
-    mythical places, and treasures. The replicator itself is sleek and metallic with intricate
-    circuitry, emitting a soft blue glow that reflects off the polished surfaces of the room.
-    Wisps of energy swirl around it, hinting at its powerful capabilities, while scattered
-    artifacts and story scrolls lay on the workbench, inviting exploration. The atmosphere
-    is charged with creativity and mystery, with a cool color palette dominated by blues and
-    silvers, punctuated by warm golden light from overhead fixtures. The composition emphasizes
-    the replicator as the focal point, with a slightly angled perspective to create depth
-    and intrigue. no readable text, no logo, no watermark, no collage.
+  label: Almost Invisible
+  prompt: 'A figure-shaped shimmer of near-transparency stands in a vibrant environment, where
+    a faint outline catches the light, emphasizing the awkwardness of its presence. One stubbornly
+    solid elbow or shoe remains fully visible, conveying a sense of embarrassment. The color
+    palette features cool translucent blues contrasted against a vivid background, enhancing
+    the comic quality of the scene. The composition should focus on the shimmering figure,
+    utilizing crisp linework to highlight the contrast between the almost invisible and the
+    stubbornly present. The mood is playful yet slightly awkward, rendered in a digital art
+    style that emphasizes both transparency and visibility. No readable text, no logo, no
+    watermark, no collage.
 
     '
-- id: "kind-robots-lora-triage-image-e42be9cd-mu29yh51"
-  last_art_job_id: 22679
-  source: "kind-robots-missing-image"
-  status: done
-  requested_at: "2026-09-15T06:12:17.606Z"
-  target_repo: "silasfelinus/kind_robots"
-  image_path: "public/images/channels/admin/lora-triage.webp"
-  source_url: "/images/channels/admin/lora-triage.webp"
-  page_url: "https://kindrobots.org/artjob"
-  variant: "image"
-  label: "LoRA Maturity Triage"
-  prompt: >
-    Create a visually striking gallery artwork showcasing a digital workspace interface for LoRA Maturity Triage. The focal subject is a sleek, modern computer screen displaying a user-friendly dashboard with clear categories for SFW and NSFW reviews, along with batch-saving options prominently featured. Surround the screen with scattered design elements like icons representing maturity levels, a clipboard with notes, and a progress bar illustrating workflow. Set this within a bright, minimalist office environment that conveys a sense of productivity and organization, using a clean palette of soft blues and whites contrasted with vibrant accent colors for the interface elements. The lighting should be bright and even, emphasizing clarity and focus. Render this in a high-resolution digital format to enhance the textures of the screen and workspace. No readable text, no logo, no watermark, no collage.
-- id: dream-cycle-white-horns-under-red-sun-white-horns-under-red-sun
-  last_art_job_id: 23046
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/white-horns-under-red-sun/white-horns-under-red-sun-card.webp
-  source_url: /images/dreams/white-horns-under-red-sun/white-horns-under-red-sun-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'White Horns Under Red Sun'
-  prompt: 'establishing key art for White Horns Under Red Sun, A vast red plateau under a white-hot sun, a small kudu warlock with branching mineral horns facing a single colossal prismarine ridge pushing up through cracked earth, the defining image of a place where nothing is chasing her; the frightening part is that the new shape feels like home, vertical 2:3 portrait composition, wide establishing view with a strong foreground anchor, clear middle ground, and deep atmospheric background, the setting is the subject; any figures present are incidental to the place, luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5750
-  entity_field: imagePath
-- id: dream-cycle-white-horns-under-red-sun-redglass-basin
-  last_art_job_id: 23047
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/white-horns-under-red-sun/redglass-basin-card.webp
-  source_url: /images/dreams/white-horns-under-red-sun/redglass-basin-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Redglass Basin'
-  prompt: 'A monumental desert basin of rust-red stone plates, sparse modular homes and skeletal towers dwarfed by one luminous blue-green mineral ridge rising through the ground — the Redglass Basin, known for: A post-collapse settlement spread across enormous stone plates that creep a few centimeters each season, carrying homes, gardens, and old transit pylons into new arrangements, staged at its most telling moment: An entire neighborhood watches in silence as a newborn prismarine ridge lifts one edge of the basin and gently tips abandoned towers into a new horizon, set in the world of White Horns Under Red Sun, where nothing is chasing her; the frightening part is that the new shape feels like home, vertical 2:3 portrait composition, architectural establishing shot, the environment is the subject and any figures present are small and incidental, included only for scale, luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5751
-  entity_field: imagePath
-- id: dream-cycle-white-horns-under-red-sun-jori-n-brooks
-  last_art_job_id: 23048
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/white-horns-under-red-sun/jori-n-brooks-card.webp
-  source_url: /images/dreams/white-horns-under-red-sun/jori-n-brooks-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Jori N. Brooks'
-  prompt: 'character portrait of Jori N. Brooks, A tall kudu warlock in sun-bleached travel clothes, spiral horns branching into translucent blue-green crystal, fine red dust caught in her short fur, and a long canvas wrap trailing from one shoulder, visibly carrying: A soft canvas horn-wrap stitched with pockets for chalk, dried fruit, and fragments of the vault casing she once helped steal through, the bearing of someone driven by this: A kudu warlock who wants to understand whether the shard changing her horns is consuming her, collaborating with her, or revealing a form she had no language for, set in the world of White Horns Under Red Sun, where nothing is chasing her; the frightening part is that the new shape feels like home, vertical 2:3 portrait composition, single figure, three-quarter view from the waist up, filling most of the frame, sharply separated from a simple world-specific background, luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
-  entity_type: character
-  entity_id: 3342
-  entity_field: imagePath
-- id: dream-cycle-white-horns-under-red-sun-faultseed-ring
-  last_art_job_id: 23049
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/white-horns-under-red-sun/faultseed-ring-card.webp
-  source_url: /images/dreams/white-horns-under-red-sun/faultseed-ring-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Faultseed Ring'
-  prompt: 'a single Faultseed Ring, one object alone in frame, A wide dark-metal ring inset with a thin prismarine seam, its inner surface carrying a raised texture like a tiny topographic map, its purpose readable in its shape: Placed on a changing object or body, it preserves a tactile impression of its current shape so someone can later feel what that earlier state was like without restoring it, set in the world of White Horns Under Red Sun, where nothing is chasing her; the frightening part is that the new shape feels like home, vertical 2:3 portrait composition, museum-like object study, the object centered and filling the frame, resting on a bare surface or floating against a simple ground, close enough to read material and wear, an unpeopled frame, the subject stands alone with no bystanders, no onlookers, and no crowd, rendered with the reverence given a rare artifact, luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2942
-  entity_field: imagePath
-- id: dream-cycle-white-horns-under-red-sun-strata-sense
-  last_art_job_id: 23050
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/white-horns-under-red-sun/strata-sense-card.webp
-  source_url: /images/dreams/white-horns-under-red-sun/strata-sense-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Strata Sense'
-  prompt: 'Strata Sense, a single practiced technique caught mid-use, Thin luminous contour bands travel across a surface in parallel waves, and one band brightens as the material bends cleanly along it, the effect itself is the subject: The user can feel layers of change inside stone, bone, wood, or metal as distinct pressures and choose one layer to move with rather than resist, set in the world of White Horns Under Red Sun, where nothing is chasing her; the frightening part is that the new shape feels like home, vertical 2:3 portrait composition, tight centered composition on the effect, at most one pair of hands entering frame at the edge to work it, no full figure, no faces, no onlookers, rendered with the weight given a uncommon ability, luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2943
-  entity_field: imagePath
-- id: dream-cycle-white-horns-under-red-sun-let-the-mountain-finish-scenario
-  last_art_job_id: 23051
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/white-horns-under-red-sun/let-the-mountain-finish-scenario-card.webp
-  source_url: /images/dreams/white-horns-under-red-sun/let-the-mountain-finish-scenario-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Let the Mountain Finish'
-  prompt: 'establishing scene art for the moment titled Let the Mountain Finish, In White Horns Under Red Sun at Redglass Basin, Jori N. Brooks uses the Faultseed Ring and Strata Sense while her crystallizing horns resonate with a rising prismarine ridge, choosing how much of herself to let join the migrating ruin as friends walk beside her and the basin rearranges around them, staged at Redglass Basin, set in the world of White Horns Under Red Sun, where nothing is chasing her; the frightening part is that the new shape feels like home, vertical 2:3 portrait composition, a single decisive moment with one clear focal action, foreground figures reacting, uncluttered staging so the event reads at a glance, cast the figures who appear naturally across many species, ages, body sizes, body shapes, and gender presentations, luminous gouache storybook painting, matte pigment, simplified confident shapes, soft edge variation, layered hand-painted texture, unmarked surfaces, free of text'
-  entity_type: scenario
-  entity_id: 2222
-  entity_field: imagePath
-- id: dream-cycle-streets-inside-a-fallen-giant-streets-inside-a-fallen-giant
-  last_art_job_id: 25269
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/streets-inside-a-fallen-giant/streets-inside-a-fallen-giant-card.webp
-  source_url: /images/dreams/streets-inside-a-fallen-giant/streets-inside-a-fallen-giant-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Streets Inside a Fallen Giant'
-  prompt: 'establishing key art for Streets Inside a Fallen Giant, A colossal fallen bronze-and-bone kudu-titan filling the horizon, sunlit ribs and spiral horn-spurs towering over tiny rooftop clusters built along its spine, wide open sky, minimal ornament, the defining image of a place where a fallen titan''s skeleton is the only home this delta has left, vertical 2:3 portrait composition, wide establishing view with a strong foreground anchor, clear middle ground, and deep atmospheric background, the setting is the subject; any figures present are incidental to the place, charcoal-and-chalk cosmic-horror drawing, rough paper grain, crushed blacks, pale luminous accents, smeared edges, unsettling shifts of scale, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5752
-  entity_field: imagePath
-- id: dream-cycle-streets-inside-a-fallen-giant-bonehull-reach
-  last_art_job_id: 25270
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/streets-inside-a-fallen-giant/bonehull-reach-card.webp
-  source_url: /images/dreams/streets-inside-a-fallen-giant/bonehull-reach-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Bonehull Reach'
-  prompt: 'Monumental fallen bronze kudu-titan the size of a hill, sunlit ribs and coral-grown horn-spurs as rooftops, tiny catwalks along its spine, wide open sky, little ornament — the Bonehull Reach, known for: A fallen mechanical kudu the size of a hill, its ribs, plating, and spiral horn-spurs now load-bearing for the whole settlement built inside them, staged at its most telling moment: Sunrise floods straight down the spine walkway, turning every rooftop and grown coral plate gold at once, set in the world of Streets Inside a Fallen Giant, where a fallen titan''s skeleton is the only home this delta has left, vertical 2:3 portrait composition, architectural establishing shot, the environment is the subject and any figures present are small and incidental, included only for scale, charcoal-and-chalk cosmic-horror drawing, rough paper grain, crushed blacks, pale luminous accents, smeared edges, unsettling shifts of scale, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5753
-  entity_field: imagePath
-- id: dream-cycle-streets-inside-a-fallen-giant-nkiru-osazuwa
-  last_art_job_id: 25271
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/streets-inside-a-fallen-giant/nkiru-osazuwa-card.webp
-  source_url: /images/dreams/streets-inside-a-fallen-giant/nkiru-osazuwa-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Nkiru Osazuwa'
-  prompt: 'character portrait of Nkiru Osazuwa, A stocky dark-skinned woman with a bronze grafting awl fused flush into her right palm, forearm ridged where old coral-metal growth has healed into the skin, practical work wrap, sunlit workshop light, visibly carrying: A bronze grafting awl has fused into her right palm, its handle grown flush with her skin after the first small merge she performed alone, the bearing of someone driven by this: She tends the settlement''s slow-growing horn-spurs, deciding each season which volunteers are ready to graft, set in the world of Streets Inside a Fallen Giant, where a fallen titan''s skeleton is the only home this delta has left, vertical 2:3 portrait composition, single figure, three-quarter view from the waist up, filling most of the frame, sharply separated from a simple world-specific background, charcoal-and-chalk cosmic-horror drawing, rough paper grain, crushed blacks, pale luminous accents, smeared edges, unsettling shifts of scale, unmarked surfaces, free of text'
-  entity_type: character
-  entity_id: 3343
-  entity_field: imagePath
-- id: dream-cycle-streets-inside-a-fallen-giant-prismarine-main-gauche
-  last_art_job_id: 25272
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/streets-inside-a-fallen-giant/prismarine-main-gauche-card.webp
-  source_url: /images/dreams/streets-inside-a-fallen-giant/prismarine-main-gauche-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Prismarine Main Gauche'
-  prompt: 'a single Prismarine Main Gauche, one object alone in frame, A slim curved parrying dagger forged from layered prismarine shard and dark iron, blade edge faintly iridescent, hilt wrapped in salt-cured leather, small chips worn along the guard, its purpose readable in its shape: Parries a single incoming blow no matter its force, so long as the wielder names what they are protecting out loud before it lands, set in the world of Streets Inside a Fallen Giant, where a fallen titan''s skeleton is the only home this delta has left, vertical 2:3 portrait composition, museum-like object study, the object centered and filling the frame, resting on a bare surface or floating against a simple ground, close enough to read material and wear, an unpeopled frame, the subject stands alone with no bystanders, no onlookers, and no crowd, rendered with the reverence given a rare artifact, charcoal-and-chalk cosmic-horror drawing, rough paper grain, crushed blacks, pale luminous accents, smeared edges, unsettling shifts of scale, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2944
-  entity_field: imagePath
-- id: dream-cycle-streets-inside-a-fallen-giant-ironbloom-calling
-  last_art_job_id: 25273
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/streets-inside-a-fallen-giant/ironbloom-calling-card.webp
-  source_url: /images/dreams/streets-inside-a-fallen-giant/ironbloom-calling-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Ironbloom Calling'
-  prompt: 'Ironbloom Calling, a single practiced technique caught mid-use, A slow ring of rusted scrap iron and bronze bolts orbiting a raised forearm, faint heat-shimmer where the metal grinds against itself, no visible weapon, the effect itself is the subject: Calls every nearby loose scrap of iron into a single slow-orbiting ring around the caster''s raised arm, set in the world of Streets Inside a Fallen Giant, where a fallen titan''s skeleton is the only home this delta has left, vertical 2:3 portrait composition, tight centered composition on the effect, at most one pair of hands entering frame at the edge to work it, no full figure, no faces, no onlookers, rendered with the weight given a uncommon ability, charcoal-and-chalk cosmic-horror drawing, rough paper grain, crushed blacks, pale luminous accents, smeared edges, unsettling shifts of scale, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2945
-  entity_field: imagePath
-- id: dream-cycle-streets-inside-a-fallen-giant-first-graft-grown-wrong-scenario
-  last_art_job_id: 25274
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/streets-inside-a-fallen-giant/first-graft-grown-wrong-scenario-card.webp
-  source_url: /images/dreams/streets-inside-a-fallen-giant/first-graft-grown-wrong-scenario-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'First Graft, Grown Wrong'
-  prompt: 'establishing scene art for the moment titled First Graft, Grown Wrong, In Bonehull Providence, at Bonehull Reach, Nkiru Osazuwa is asked to perform the settlement''s first graft in a generation without a proven pattern to follow, on a volunteer half her age, staged at Bonehull Reach, set in the world of Streets Inside a Fallen Giant, where a fallen titan''s skeleton is the only home this delta has left, vertical 2:3 portrait composition, a single decisive moment with one clear focal action, foreground figures reacting, uncluttered staging so the event reads at a glance, cast the figures who appear naturally across many species, ages, body sizes, body shapes, and gender presentations, charcoal-and-chalk cosmic-horror drawing, rough paper grain, crushed blacks, pale luminous accents, smeared edges, unsettling shifts of scale, unmarked surfaces, free of text'
-  entity_type: scenario
-  entity_id: 2223
-  entity_field: imagePath
-- id: "kind-robots-almost-invisible-image-1ff66a8e-mu3dwhaa"
-  last_art_job_id: 25380
-  source: "kind-robots-missing-image"
-  status: "pending"
-  requested_at: "2026-09-16T00:50:29.123Z"
-  target_repo: "silasfelinus/kind_robots"
-  image_path: "public/images/rewards/power/almost-invisible.webp"
-  source_url: "/images/rewards/power/almost-invisible.webp"
-  page_url: "https://kindrobots.org/rewards"
-  variant: "image"
-  label: "Almost Invisible"
-  prompt: >
-    A figure-shaped shimmer of near-transparency stands in a vibrant environment, where a faint outline catches the light, emphasizing the awkwardness of its presence. One stubbornly solid elbow or shoe remains fully visible, conveying a sense of embarrassment. The color palette features cool translucent blues contrasted against a vivid background, enhancing the comic quality of the scene. The composition should focus on the shimmering figure, utilizing crisp linework to highlight the contrast between the almost invisible and the stubbornly present. The mood is playful yet slightly awkward, rendered in a digital art style that emphasizes both transparency and visibility. No readable text, no logo, no watermark, no collage.
-- id: "kind-robots-iou-for-1-million-dollars-image-91754bef-mu3dwn93"
+- id: kind-robots-iou-for-1-million-dollars-image-91754bef-mu3dwn93
   last_art_job_id: 25416
-  source: "kind-robots-missing-image"
-  status: "pending"
-  requested_at: "2026-09-16T00:50:36.856Z"
-  target_repo: "silasfelinus/kind_robots"
-  image_path: "public/images/rewards/item/iou-for-1-million-dollars.webp"
-  source_url: "/images/rewards/item/iou-for-1-million-dollars.webp"
-  page_url: "https://kindrobots.org/rewards"
-  variant: "image"
-  label: "IOU for 1 Million Dollars"
-  prompt: >
-    A slightly crumpled, handwritten IOU note promising one million dollars, featuring a bold signature with a flourish, rests on a textured wooden surface. The note glows with an uncertain promise, casting a warm gold light that highlights the crisp linework and the ambiguity of its worth. Behind the note, a subtle shadow in the shape of a question mark hints at the mystery surrounding its value. The background is simple and unobtrusive, enhancing the focus on the note while evoking a mood of tantalizing possibility and dubious adventure. Rendered in a realistic style with intricate details to emphasize the texture of the parchment and the glow of the signature. no readable text, no logo, no watermark, no collage.
-- id: "kind-robots-userupload-yokai-12-1778845501712-image-0b6878cc-mu3ro51c"
+  source: kind-robots-missing-image
+  status: pending
+  requested_at: '2026-09-16T00:50:36.856Z'
+  target_repo: silasfelinus/kind_robots
+  image_path: public/images/rewards/item/iou-for-1-million-dollars.webp
+  source_url: /images/rewards/item/iou-for-1-million-dollars.webp
+  page_url: https://kindrobots.org/rewards
+  variant: image
+  label: IOU for 1 Million Dollars
+  prompt: 'A slightly crumpled, handwritten IOU note promising one million dollars, featuring
+    a bold signature with a flourish, rests on a textured wooden surface. The note glows with
+    an uncertain promise, casting a warm gold light that highlights the crisp linework and
+    the ambiguity of its worth. Behind the note, a subtle shadow in the shape of a question
+    mark hints at the mystery surrounding its value. The background is simple and unobtrusive,
+    enhancing the focus on the note while evoking a mood of tantalizing possibility and dubious
+    adventure. Rendered in a realistic style with intricate details to emphasize the texture
+    of the parchment and the glow of the signature. no readable text, no logo, no watermark,
+    no collage.
+
+    '
+- id: kind-robots-userupload-yokai-12-1778845501712-image-0b6878cc-mu3ro51c
   last_art_job_id: 25422
-  source: "kind-robots-missing-image"
-  status: "pending"
-  requested_at: "2026-09-16T07:15:54.625Z"
-  target_repo: "silasfelinus/kind_robots"
-  image_path: "public/images/userUpload-yokai-12-1778845501712.png"
-  source_url: "/images/userUpload-yokai-12-1778845501712.png"
-  page_url: "https://kindrobots.org/play/memory"
-  variant: "image"
-  label: "Userupload Yokai 12 1778845501712"
-  prompt: >
-    Create a vibrant and engaging gallery artwork for "Memory Dungeon," showcasing a stylized dungeon setting filled with colorful memory cards scattered across a textured stone floor. The dungeon walls are adorned with glowing runes and mystical artifacts, illuminated by ethereal light sources casting dynamic shadows. The cards should feature intricate AI-generated art, each depicting unique creatures or landscapes, emphasizing their role in the roguelite gameplay. Use a rich color palette of deep purples, blues, and hints of gold to evoke a sense of adventure and mystery. The composition should draw the viewer's eye into the depths of the dungeon, inviting them to explore and engage with the game. Render this scene with a digital painting technique that enhances the textures and atmospheric lighting, creating a captivating and immersive visual experience. no readable text, no logo, no watermark, no collage.
-- id: dream-cycle-ansas-borrowed-orchard-ansas-borrowed-orchard
-  last_art_job_id: 26250
-  source: dream-cycle
-  status: done
+  source: kind-robots-missing-image
+  status: pending
+  requested_at: '2026-09-16T07:15:54.625Z'
   target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/ansas-borrowed-orchard/ansas-borrowed-orchard-card.webp
-  source_url: /images/dreams/ansas-borrowed-orchard/ansas-borrowed-orchard-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Ansa''s Borrowed Orchard'
-  prompt: 'establishing key art for Ansa''s Borrowed Orchard, A broad orchard moving through pale morning mist on exposed, root-laced mounds of soil, blue-necked cassowaries striding between flowering trees while a lone human figure stands small at the edge, the defining image of a place where she taught the flock. the orchard taught everyone else, vertical 2:3 portrait composition, wide establishing view with a strong foreground anchor, clear middle ground, and deep atmospheric background, the setting is the subject; any figures present are incidental to the place, cinematic photorealism, natural lens behavior, physically believable materials, volumetric atmosphere, restrained color grading, fine environmental detail, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5754
-  entity_field: imagePath
-- id: dream-cycle-ansas-borrowed-orchard-featherroot-vale
-  last_art_job_id: 26262
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/ansas-borrowed-orchard/featherroot-vale-card.webp
-  source_url: /images/dreams/ansas-borrowed-orchard/featherroot-vale-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Featherroot Vale'
-  prompt: 'A wide misty valley with enormous exposed tree roots lifting dark soil in slow ridges, flowering branches bending over cassowaries with cobalt necks and black feathers, tiny people gathered far behind a low stone wall — the Featherroot Vale, known for: A long green basin where a migrating orchard settles as the cassowary flock scratches, nests, and scatters seed among the exposed root-mounds, staged at its most telling moment: Hundreds of residents stand along an old stone wall while the orchard slowly uproots itself beyond them, roots flexing through wet soil as the flock calmly walks beside it, set in the world of Ansa''s Borrowed Orchard, where she taught the flock. The orchard taught everyone else, vertical 2:3 portrait composition, architectural establishing shot, the environment is the subject and any figures present are small and incidental, included only for scale, cinematic photorealism, natural lens behavior, physically believable materials, volumetric atmosphere, restrained color grading, fine environmental detail, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5755
-  entity_field: imagePath
-- id: dream-cycle-ansas-borrowed-orchard-ansa-marlowe
-  last_art_job_id: 26251
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/ansas-borrowed-orchard/ansa-marlowe-card.webp
-  source_url: /images/dreams/ansas-borrowed-orchard/ansa-marlowe-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Ansa Marlowe'
-  prompt: 'character portrait of Ansa Marlowe, A weathered field mentor with cropped dark hair, gold-pollen veins faintly visible at her wrists, a quill-braided whistle at her throat, mist dampening a patched green coat, visibly carrying: A plaited grass whistle threaded with shed cassowary quills, worn smooth where her thumb worries the braid whenever the birds ignore her, the bearing of someone driven by this: She mentors the cassowary flock by reading tiny changes in posture and calls that she insists are psychic impressions, and has quietly built her adult identity around being the human they choose to follow, set in the world of Ansa''s Borrowed Orchard, where she taught the flock. The orchard taught everyone else, vertical 2:3 portrait composition, single figure, three-quarter view from the waist up, filling most of the frame, sharply separated from a simple world-specific background, cinematic photorealism, natural lens behavior, physically believable materials, volumetric atmosphere, restrained color grading, fine environmental detail, unmarked surfaces, free of text'
-  entity_type: character
-  entity_id: 3344
-  entity_field: imagePath
-- id: dream-cycle-ansas-borrowed-orchard-reciprocity-seed
-  last_art_job_id: 26252
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/ansas-borrowed-orchard/reciprocity-seed-card.webp
-  source_url: /images/dreams/ansas-borrowed-orchard/reciprocity-seed-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Reciprocity Seed'
-  prompt: 'a single Reciprocity Seed, one object alone in frame, A walnut-sized translucent seedpod veined with silver mist, one half wrapped in fine root hairs and the other in short blue-black feathers, its purpose readable in its shape: Lets two living groups share one useful adaptation for as long as both continue benefiting from the exchange, set in the world of Ansa''s Borrowed Orchard, where she taught the flock. The orchard taught everyone else, vertical 2:3 portrait composition, museum-like object study, the object centered and filling the frame, resting on a bare surface or floating against a simple ground, close enough to read material and wear, an unpeopled frame, the subject stands alone with no bystanders, no onlookers, and no crowd, rendered with the reverence given a rare artifact, cinematic photorealism, natural lens behavior, physically believable materials, volumetric atmosphere, restrained color grading, fine environmental detail, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2946
-  entity_field: imagePath
-- id: dream-cycle-ansas-borrowed-orchard-flock-listening
-  last_art_job_id: 26253
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/ansas-borrowed-orchard/flock-listening-card.webp
-  source_url: /images/dreams/ansas-borrowed-orchard/flock-listening-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Flock Listening'
-  prompt: 'Flock Listening, a single practiced technique caught mid-use, A loose ring of pale mist ripples outward at ankle height while nearby heads, wings, leaves, and shoulders all tilt along the same invisible line, the effect itself is the subject: Reveals the direction a group is leaning before any individual has committed, through shifts in spacing, breath, posture, and attention, set in the world of Ansa''s Borrowed Orchard, where she taught the flock. The orchard taught everyone else, vertical 2:3 portrait composition, tight centered composition on the effect, at most one pair of hands entering frame at the edge to work it, no full figure, no faces, no onlookers, rendered with the weight given a uncommon ability, cinematic photorealism, natural lens behavior, physically believable materials, volumetric atmosphere, restrained color grading, fine environmental detail, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2947
-  entity_field: imagePath
-- id: dream-cycle-ansas-borrowed-orchard-where-the-orchard-walks-scenario
-  last_art_job_id: 26254
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/ansas-borrowed-orchard/where-the-orchard-walks-scenario-card.webp
-  source_url: /images/dreams/ansas-borrowed-orchard/where-the-orchard-walks-scenario-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Where the Orchard Walks'
-  prompt: 'establishing scene art for the moment titled Where the Orchard Walks, In Ansa''s Borrowed Orchard, at Featherroot Vale, Ansa Marlowe finds the cassowary flock escorting the walking trees beyond the cultivated basin and chooses among following them, helping her neighbors release the ecosystem, or testing the Mutualist bargain with humans as the abandoned partner, staged at Featherroot Vale, set in the world of Ansa''s Borrowed Orchard, where she taught the flock. The orchard taught everyone else, vertical 2:3 portrait composition, a single decisive moment with one clear focal action, foreground figures reacting, uncluttered staging so the event reads at a glance, cast the figures who appear naturally across many species, ages, body sizes, body shapes, and gender presentations, cinematic photorealism, natural lens behavior, physically believable materials, volumetric atmosphere, restrained color grading, fine environmental detail, unmarked surfaces, free of text'
-  entity_type: scenario
-  entity_id: 2224
-  entity_field: imagePath
-- id: dream-cycle-when-the-floodwall-flowers-when-the-floodwall-flowers
-  last_art_job_id: 26255
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/when-the-floodwall-flowers/when-the-floodwall-flowers-card.webp
-  source_url: /images/dreams/when-the-floodwall-flowers/when-the-floodwall-flowers-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'When the Floodwall Flowers'
-  prompt: 'establishing key art for When the Floodwall Flowers, A colossal translucent floodwall rising through a flooded city at dusk, thousands of tiny luminous fairy nests flowering across one vast pane while people and maintenance boats appear minute below, the defining image of a place where the newcomers chose the wall, and the wall answered by growing light, vertical 2:3 portrait composition, wide establishing view with a strong foreground anchor, clear middle ground, and deep atmospheric background, the setting is the subject; any figures present are incidental to the place, watercolor-and-ink naturalist illustration, transparent washes, dry-brush texture, expressive line variation, visible paper tooth, selective fine detail, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5756
-  entity_field: imagePath
-- id: dream-cycle-when-the-floodwall-flowers-phantom-span
-  last_art_job_id: 26256
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/when-the-floodwall-flowers/phantom-span-card.webp
-  source_url: /images/dreams/when-the-floodwall-flowers/phantom-span-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Phantom Span'
-  prompt: 'One towering sheet of smoky translucent glass fills most of the frame, dark floodwater pressed against its far side, a sparse constellation of tiny gold nests embedded across it, with miniature rooftops and figures at the base — the Phantom Span, known for: A kilometer-long phantom-glass barrier dividing the Floodline Precinct from a drowned river, now stippled with hanging fairy habitats that glow inside the material instead of on its surface, staged at its most telling moment: The entire district falls silent as one immense pane flexes in a storm surge and the fairy colony flexes with it, thousands of lit nests tightening into a single luminous lattice, set in the world of When the Floodwall Flowers, where the newcomers chose the wall, and the wall answered by growing light, vertical 2:3 portrait composition, architectural establishing shot, the environment is the subject and any figures present are small and incidental, included only for scale, watercolor-and-ink naturalist illustration, transparent washes, dry-brush texture, expressive line variation, visible paper tooth, selective fine detail, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5757
-  entity_field: imagePath
-- id: dream-cycle-when-the-floodwall-flowers-eda-serrin
-  last_art_job_id: 26257
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/when-the-floodwall-flowers/eda-serrin-card.webp
-  source_url: /images/dreams/when-the-floodwall-flowers/eda-serrin-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Eda Serrin'
-  prompt: 'character portrait of Eda Serrin, A palm-sized fairy in a dark rain cape standing on the shoulder of a forty-meter flood-control walker, translucent wings folded tight, the enormous machine mostly lost in open gray sky behind her, visibly carrying: A thimble-sized brass speaking horn wired into the shoulder speaker of an abandoned flood-control walker, letting her voice carry across several city blocks without making the machine move, the bearing of someone driven by this: A stranded fairy from another world who has become the loudest defender of the colony''s right to remain, even though she arrived months before the others and still does not understand why the floodwall welcomed them, set in the world of When the Floodwall Flowers, where the newcomers chose the wall, and the wall answered by growing light, vertical 2:3 portrait composition, single figure, three-quarter view from the waist up, filling most of the frame, sharply separated from a simple world-specific background, watercolor-and-ink naturalist illustration, transparent washes, dry-brush texture, expressive line variation, visible paper tooth, selective fine detail, unmarked surfaces, free of text'
-  entity_type: character
-  entity_id: 3345
-  entity_field: imagePath
-- id: dream-cycle-when-the-floodwall-flowers-ghostline-spindle
-  last_art_job_id: 26258
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/when-the-floodwall-flowers/ghostline-spindle-card.webp
-  source_url: /images/dreams/when-the-floodwall-flowers/ghostline-spindle-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Ghostline Spindle'
-  prompt: 'a single Ghostline Spindle, one object alone in frame, A hand-sized black ceramic spindle wound with nearly invisible glass thread, each turn catching a thin violet edge-light, its purpose readable in its shape: Spins a temporary phantom-glass filament strong enough to suspend fabric or light across building-scale gaps without adding visible supports, set in the world of When the Floodwall Flowers, where the newcomers chose the wall, and the wall answered by growing light, vertical 2:3 portrait composition, museum-like object study, the object centered and filling the frame, resting on a bare surface or floating against a simple ground, close enough to read material and wear, an unpeopled frame, the subject stands alone with no bystanders, no onlookers, and no crowd, rendered with the reverence given a rare artifact, watercolor-and-ink naturalist illustration, transparent washes, dry-brush texture, expressive line variation, visible paper tooth, selective fine detail, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2948
-  entity_field: imagePath
-- id: dream-cycle-when-the-floodwall-flowers-host-the-strange
-  last_art_job_id: 26259
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/when-the-floodwall-flowers/host-the-strange-card.webp
-  source_url: /images/dreams/when-the-floodwall-flowers/host-the-strange-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Host the Strange'
-  prompt: 'Host the Strange, a single practiced technique caught mid-use, Pale geometric seams briefly glow across pavement, bark, glass, water, and skin, joining unlike surfaces into one slowly pulsing pattern, the effect itself is the subject: Reveals one environmental change that lets an introduced population coexist without pretending the host world will remain exactly as it was, set in the world of When the Floodwall Flowers, where the newcomers chose the wall, and the wall answered by growing light, vertical 2:3 portrait composition, tight centered composition on the effect, at most one pair of hands entering frame at the edge to work it, no full figure, no faces, no onlookers, rendered with the weight given a epic ability, watercolor-and-ink naturalist illustration, transparent washes, dry-brush texture, expressive line variation, visible paper tooth, selective fine detail, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2949
-  entity_field: imagePath
-- id: dream-cycle-when-the-floodwall-flowers-let-the-wall-decide-scenario
-  last_art_job_id: 26260
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/when-the-floodwall-flowers/let-the-wall-decide-scenario-card.webp
-  source_url: /images/dreams/when-the-floodwall-flowers/let-the-wall-decide-scenario-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Let the Wall Decide'
-  prompt: 'establishing scene art for the moment titled Let the Wall Decide, In When the Floodwall Flowers, at Phantom Span, Eda Serrin stands among thousands of residents as the fairy colony and the floodwall begin responding to each other during a river surge; Skyline Dressers turn their city-scale rigging into a shared visual language while the precinct decides how to live with newcomers already woven into its defenses, staged at Phantom Span, set in the world of When the Floodwall Flowers, where the newcomers chose the wall, and the wall answered by growing light, vertical 2:3 portrait composition, a single decisive moment with one clear focal action, foreground figures reacting, uncluttered staging so the event reads at a glance, cast the figures who appear naturally across many species, ages, body sizes, body shapes, and gender presentations, watercolor-and-ink naturalist illustration, transparent washes, dry-brush texture, expressive line variation, visible paper tooth, selective fine detail, unmarked surfaces, free of text'
-  entity_type: scenario
-  entity_id: 2225
-  entity_field: imagePath
-- id: ruler-hooked-fish-choirfish
-  source: ruler-hooked
-  status: done
-  priority: 150
-  target_repo: silasfelinus/kind_robots
-  project_slug: ruler-hooked
-  lane: fish
-  image_path: public/images/ruler-hooked/fish/choirfish/bestiary.webp
-  source_url: https://media.acrocatranch.com/images/ruler-hooked/fish/choirfish/bestiary.webp
-  page_url: https://kindrobots.org/plan/projects/ruler-hooked
+  image_path: public/images/userUpload-yokai-12-1778845501712.png
+  source_url: /images/userUpload-yokai-12-1778845501712.png
+  page_url: https://kindrobots.org/play/memory
   variant: image
-  label: 'Ruler Hooked fish: Choirfish (GOOD, RARE)'
-  engine: krea2
-  size: 1344x768
-  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality, deformed,
-    extra limbs, bad hands, cropped
-  prompt: 'Choirfish, a matched trio of three small fantastical fish in a comedic fantasy kingdom, swimming
-    together in a tight ascending formation like three notes of a chord: a first small fish, a second
-    small fish just above it, and a third small fish highest of all, each with long slender ribbon-like
-    fins, each body separate and clearly countable, the first fish glowing red at the throat, the second
-    fish glowing blue at the throat, the third fish glowing gold at the throat. a clean specimen study
-    of the three-fish trio, all three small bodies visible side-by-side in profile against soft open
-    water, nothing else competing for attention in the frame. cartoony goofy storybook illustration,
-    soft confident hand-drawn linework, loose characterful line quality, rounded generous shape language,
-    emotionally legible faces, bold clean colour blocking, warm saturated slightly-faded storybook palette,
-    painterly depth and warm cinematic light, exaggerated expressive acting, clearly staged so the shapes
-    read instantly at a glance, heroic and goofy and wry, charming, hand-drawn animation cel and gouache
-    painting, visibly illustrated by a person. every surface left bare and unmarked, blank clean untouched
-    surfaces, one single uncropped image filling the frame'
-- id: ruler-hooked-fish-the-pleasant-island
-  source: ruler-hooked
-  status: done
-  priority: 150
-  target_repo: silasfelinus/kind_robots
-  project_slug: ruler-hooked
-  lane: fish
-  image_path: public/images/ruler-hooked/fish/the-pleasant-island/bestiary.webp
-  source_url: https://media.acrocatranch.com/images/ruler-hooked/fish/the-pleasant-island/bestiary.webp
-  page_url: https://kindrobots.org/plan/projects/ruler-hooked
-  variant: image
-  label: 'Ruler Hooked fish: The Pleasant Island (EVIL, LEGENDARY)'
-  engine: krea2
-  size: 1344x768
-  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality, deformed,
-    extra limbs, bad hands, cropped
-  prompt: 'The Pleasant Island, a fantastical freshwater fish in a comedic fantasy kingdom: cheerful tiny
-    tropical island above water attached to an enormous sea turtle below. The biggest visual fake-out
-    in the slice. What first reads as new scenery is the creature itself; the palms, sand, and warm shallows
-    are part of its body. a clean specimen study, the whole creature clearly visible in profile against
-    soft open water, nothing else competing for attention in the frame. cartoony goofy storybook illustration,
-    soft confident hand-drawn linework, loose characterful line quality, rounded generous shape language,
-    emotionally legible faces, bold clean colour blocking, warm saturated slightly-faded storybook palette,
-    painterly depth and warm cinematic light, exaggerated expressive acting, clearly staged so the shapes
-    read instantly at a glance, heroic and goofy and wry, charming, hand-drawn animation cel and gouache
-    painting, visibly illustrated by a person. every surface left bare and unmarked, blank clean untouched
-    surfaces, one single uncropped image filling the frame'
-- id: dream-cycle-i-kept-my-manners-after-i-died-i-kept-my-manners-after-i-died
-  last_art_job_id: 28688
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/i-kept-my-manners-after-i-died/i-kept-my-manners-after-i-died-card.webp
-  source_url: /images/dreams/i-kept-my-manners-after-i-died/i-kept-my-manners-after-i-died-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'I Kept My Manners After I Died'
-  prompt: 'establishing key art for I Kept My Manners After I Died, A pastel-lit greenhouse dome under a rust-orange Martian sky, translucent quartz-veined figures tending trellised vines beside living colonists, everyone queued politely at a single hand pump, the defining image of a place where nobody in cutbrace hollow got faster after dying; they only got more careful with each other, vertical 2:3 portrait composition, wide establishing view with a strong foreground anchor, clear middle ground, and deep atmospheric background, the setting is the subject; any figures present are incidental to the place, bold four-color superhero-comic aesthetic, muscular ink contours, saturated cel color, halftone texture, dramatic foreshortening, crisp graphic shadows, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5758
-  entity_field: imagePath
-- id: dream-cycle-i-kept-my-manners-after-i-died-cutbrace-hollow
-  last_art_job_id: 28689
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/i-kept-my-manners-after-i-died/cutbrace-hollow-card.webp
-  source_url: /images/dreams/i-kept-my-manners-after-i-died/cutbrace-hollow-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Cutbrace Hollow'
-  prompt: 'A narrow pressurized stone corridor lit by embedded blue-veined ore seams, one wall rough unfinished rock and the other lined with reinforced glass, condensation beading over faint root-like growths threading through hairline cracks — the Cutbrace Hollow, known for: The reinforced airlock chamber between the colony''s living quarters and the raw Astral Ore vein, where the newly reanimated complete their first growth before rejoining the community, staged at its most telling moment: A line of newly grown colonists waits one after another at the inner airlock, translucent quartz veins still spreading up their forearms, each one patiently practicing the handshake they used to give, set in the world of I Kept My Manners After I Died, where nobody in Cutbrace Hollow got faster after dying; they only got more careful with each other, vertical 2:3 portrait composition, architectural establishing shot, the environment is the subject and any figures present are small and incidental, included only for scale, bold four-color superhero-comic aesthetic, muscular ink contours, saturated cel color, halftone texture, dramatic foreshortening, crisp graphic shadows, unmarked surfaces, free of text'
-  entity_type: dream
-  entity_id: 5759
-  entity_field: imagePath
-- id: dream-cycle-i-kept-my-manners-after-i-died-renata-voss
-  last_art_job_id: 28690
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/i-kept-my-manners-after-i-died/renata-voss-card.webp
-  source_url: /images/dreams/i-kept-my-manners-after-i-died/renata-voss-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Renata Voss'
-  prompt: 'character portrait of Renata Voss, A stocky woman in a scale-plated work coat, one forearm laced with fine blue-white quartz veins beneath faintly translucent skin, close-cropped grey hair, knuckles callused from gripping cane after cane, visibly carrying: A hand-grown astral-ore cane she swaps out every few weeks, endlessly convinced the next one will finally read a body''s condition without lying to her, the bearing of someone driven by this: As Cutbrace Hollow''s Threshold Warden, she personally walks every newly reanimated colonist through their first days of growth, treating the job as equal parts triage nurse, etiquette coach, and structural inspector, set in the world of I Kept My Manners After I Died, where nobody in Cutbrace Hollow got faster after dying; they only got more careful with each other, vertical 2:3 portrait composition, single figure, three-quarter view from the waist up, filling most of the frame, sharply separated from a simple world-specific background, bold four-color superhero-comic aesthetic, muscular ink contours, saturated cel color, halftone texture, dramatic foreshortening, crisp graphic shadows, unmarked surfaces, free of text'
-  entity_type: character
-  entity_id: 3349
-  entity_field: imagePath
-- id: dream-cycle-i-kept-my-manners-after-i-died-verdigris-divining-cane
-  last_art_job_id: 28691
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/i-kept-my-manners-after-i-died/verdigris-divining-cane-card.webp
-  source_url: /images/dreams/i-kept-my-manners-after-i-died/verdigris-divining-cane-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'Verdigris Divining Cane'
-  prompt: 'a single Verdigris Divining Cane, one object alone in frame, A slender astral-ore cane grown rather than carved, its handle a fused knot of pale root fiber, faint blue veining threaded through the shaft that brightens wherever the tip touches something mid-change, its purpose readable in its shape: Reveals which parts of a changing body, wall, or vein have finished settling into their new shape and which are still moving, set in the world of I Kept My Manners After I Died, where nobody in Cutbrace Hollow got faster after dying; they only got more careful with each other, vertical 2:3 portrait composition, museum-like object study, the object centered and filling the frame, resting on a bare surface or floating against a simple ground, close enough to read material and wear, an unpeopled frame, the subject stands alone with no bystanders, no onlookers, and no crowd, rendered with the reverence given a rare artifact, bold four-color superhero-comic aesthetic, muscular ink contours, saturated cel color, halftone texture, dramatic foreshortening, crisp graphic shadows, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2950
-  entity_field: imagePath
-- id: dream-cycle-i-kept-my-manners-after-i-died-good-stick-eye
-  last_art_job_id: 28692
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/i-kept-my-manners-after-i-died/good-stick-eye-card.webp
-  source_url: /images/dreams/i-kept-my-manners-after-i-died/good-stick-eye-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Good-Stick Eye'
-  prompt: 'The Good-Stick Eye, a single practiced technique caught mid-use, A steady hand slowly flexing a found stick along its length, ear tilted close to it, eyes half-closed while a light scatter of bark or mineral dust falls with each test, the effect itself is the subject: Lets its user judge the true structural health of anything load-bearing by handling a stick, root, rail, or bone from the same material family, set in the world of I Kept My Manners After I Died, where nobody in Cutbrace Hollow got faster after dying; they only got more careful with each other, vertical 2:3 portrait composition, tight centered composition on the effect, at most one pair of hands entering frame at the edge to work it, no full figure, no faces, no onlookers, rendered with the weight given a uncommon ability, bold four-color superhero-comic aesthetic, muscular ink contours, saturated cel color, halftone texture, dramatic foreshortening, crisp graphic shadows, unmarked surfaces, free of text'
-  entity_type: reward
-  entity_id: 2951
-  entity_field: imagePath
-- id: dream-cycle-i-kept-my-manners-after-i-died-vein-grows-someone-who-won-t-be-escorted-scenario
-  last_art_job_id: 28693
-  source: dream-cycle
-  status: done
-  target_repo: silasfelinus/kind_robots
-  image_path: public/images/dreams/i-kept-my-manners-after-i-died/vein-grows-someone-who-won-t-be-escorted-scenario-card.webp
-  source_url: /images/dreams/i-kept-my-manners-after-i-died/vein-grows-someone-who-won-t-be-escorted-scenario-card.webp
-  page_url: https://kindrobots.org
-  variant: card
-  size: 512x768
-  label: 'The Vein Grows Someone Who Won''t Be Escorted'
-  prompt: 'establishing scene art for the moment titled The Vein Grows Someone Who Won''t Be Escorted, In I Kept My Manners After I Died, at Cutbrace Hollow, Renata Voss meets a newly reanimated colonist whose quartz veining is spreading faster than any first-growth she has walked before, and who won''t wait at the threshold to be walked through it — so she must decide whether Becoming-Faithful duty means matching that pace or holding the line meant to protect every other colonist, staged at Cutbrace Hollow, set in the world of I Kept My Manners After I Died, where nobody in Cutbrace Hollow got faster after dying; they only got more careful with each other, vertical 2:3 portrait composition, a single decisive moment with one clear focal action, foreground figures reacting, uncluttered staging so the event reads at a glance, cast the figures who appear naturally across many species, ages, body sizes, body shapes, and gender presentations, bold four-color superhero-comic aesthetic, muscular ink contours, saturated cel color, halftone texture, dramatic foreshortening, crisp graphic shadows, unmarked surfaces, free of text'
-  entity_type: scenario
-  entity_id: 2226
-  entity_field: imagePath
+  label: Userupload Yokai 12 1778845501712
+  prompt: 'Create a vibrant and engaging gallery artwork for "Memory Dungeon," showcasing
+    a stylized dungeon setting filled with colorful memory cards scattered across a textured
+    stone floor. The dungeon walls are adorned with glowing runes and mystical artifacts,
+    illuminated by ethereal light sources casting dynamic shadows. The cards should feature
+    intricate AI-generated art, each depicting unique creatures or landscapes, emphasizing
+    their role in the roguelite gameplay. Use a rich color palette of deep purples, blues,
+    and hints of gold to evoke a sense of adventure and mystery. The composition should draw
+    the viewer''s eye into the depths of the dungeon, inviting them to explore and engage
+    with the game. Render this scene with a digital painting technique that enhances the textures
+    and atmospheric lighting, creating a captivating and immersive visual experience. no readable
+    text, no logo, no watermark, no collage.
+
+    '
 - id: ruler-hooked-ruler-king-osric
   last_art_job_id: 28694
   source: ruler-hooked
-  status: blocked-design-review
+  status: pending
   priority: 150
   target_repo: silasfelinus/kind_robots
   project_slug: ruler-hooked
@@ -861,24 +332,25 @@ requests:
   label: 'Ruler Hooked ruler preset: King (king-osric)'
   engine: krea2
   size: 768x1024
-  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality, deformed,
-    extra limbs, bad hands, cropped
-  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish than rule: a
-    plump contented middle-aged monarch with deep brown skin and grey-streaked locs, a slightly-too-large
-    crown sitting askew, robes hitched up over bare feet, holding a battered fishing rod with total unearned
-    confidence. seated in profile on a worn wooden fishing perch at the edge of a lake, rod out over the
-    water, entirely at peace, full figure visible against a simple soft painted backdrop, character sheet
-    framing, consistent side-on pose. cartoony goofy storybook illustration, soft confident hand-drawn
-    linework, loose characterful line quality, rounded generous shape language, emotionally legible faces,
-    bold clean colour blocking, warm saturated slightly-faded storybook palette, painterly depth and warm
-    cinematic light, exaggerated expressive acting, clearly staged so the shapes read instantly at a glance,
-    heroic and goofy and wry, charming, hand-drawn animation cel and gouache painting, visibly illustrated
-    by a person. every surface left bare and unmarked, blank clean untouched surfaces, one single uncropped
-    image filling the frame'
+  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality,
+    deformed, extra limbs, bad hands, cropped
+  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish
+    than rule: a plump contented middle-aged monarch with deep brown skin and grey-streaked
+    locs, a slightly-too-large crown sitting askew, robes hitched up over bare feet, holding
+    a battered fishing rod with total unearned confidence. seated in profile on a worn wooden
+    fishing perch at the edge of a lake, rod out over the water, entirely at peace, full figure
+    visible against a simple soft painted backdrop, character sheet framing, consistent side-on
+    pose. cartoony goofy storybook illustration, soft confident hand-drawn linework, loose
+    characterful line quality, rounded generous shape language, emotionally legible faces,
+    bold clean colour blocking, warm saturated slightly-faded storybook palette, painterly
+    depth and warm cinematic light, exaggerated expressive acting, clearly staged so the shapes
+    read instantly at a glance, heroic and goofy and wry, charming, hand-drawn animation cel
+    and gouache painting, visibly illustrated by a person. every surface left bare and unmarked,
+    blank clean untouched surfaces, one single uncropped image filling the frame'
 - id: ruler-hooked-ruler-queen-mabel
   last_art_job_id: 28695
   source: ruler-hooked
-  status: blocked-design-review
+  status: pending
   priority: 150
   target_repo: silasfelinus/kind_robots
   project_slug: ruler-hooked
@@ -890,24 +362,26 @@ requests:
   label: 'Ruler Hooked ruler preset: Queen (queen-mabel)'
   engine: krea2
   size: 768x1024
-  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality, deformed,
-    extra limbs, bad hands, cropped
-  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish than rule: a
-    tall broad-shouldered monarch in her fifties, warm brown skin, close-cropped silver hair under a slim
-    gold circlet, an embroidered fishing coat thrown over her royal robes, sleeves rolled to the elbow,
-    holding a battered fishing rod with total unearned confidence. seated in profile on a worn wooden
-    fishing perch at the edge of a lake, rod out over the water, entirely at peace, full figure visible
-    against a simple soft painted backdrop, character sheet framing, consistent side-on pose. cartoony
-    goofy storybook illustration, soft confident hand-drawn linework, loose characterful line quality,
-    rounded generous shape language, emotionally legible faces, bold clean colour blocking, warm saturated
-    slightly-faded storybook palette, painterly depth and warm cinematic light, exaggerated expressive
-    acting, clearly staged so the shapes read instantly at a glance, heroic and goofy and wry, charming,
-    hand-drawn animation cel and gouache painting, visibly illustrated by a person. every surface left
-    bare and unmarked, blank clean untouched surfaces, one single uncropped image filling the frame'
+  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality,
+    deformed, extra limbs, bad hands, cropped
+  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish
+    than rule: a tall broad-shouldered monarch in her fifties, warm brown skin, close-cropped
+    silver hair under a slim gold circlet, an embroidered fishing coat thrown over her royal
+    robes, sleeves rolled to the elbow, holding a battered fishing rod with total unearned
+    confidence. seated in profile on a worn wooden fishing perch at the edge of a lake, rod
+    out over the water, entirely at peace, full figure visible against a simple soft painted
+    backdrop, character sheet framing, consistent side-on pose. cartoony goofy storybook illustration,
+    soft confident hand-drawn linework, loose characterful line quality, rounded generous
+    shape language, emotionally legible faces, bold clean colour blocking, warm saturated
+    slightly-faded storybook palette, painterly depth and warm cinematic light, exaggerated
+    expressive acting, clearly staged so the shapes read instantly at a glance, heroic and
+    goofy and wry, charming, hand-drawn animation cel and gouache painting, visibly illustrated
+    by a person. every surface left bare and unmarked, blank clean untouched surfaces, one
+    single uncropped image filling the frame'
 - id: ruler-hooked-ruler-sovereign-wren
   last_art_job_id: 28696
   source: ruler-hooked
-  status: blocked-design-review
+  status: pending
   priority: 150
   target_repo: silasfelinus/kind_robots
   project_slug: ruler-hooked
@@ -919,24 +393,26 @@ requests:
   label: 'Ruler Hooked ruler preset: Sovereign (sovereign-wren)'
   engine: krea2
   size: 768x1024
-  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality, deformed,
-    extra limbs, bad hands, cropped
-  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish than rule: a
-    lanky young androgynous monarch, pale freckled skin, dark hair shaved at the sides, the circlet worn
-    loose around the throat instead of the head, patched waders under a half-cape, holding a battered
-    fishing rod with total unearned confidence. seated in profile on a worn wooden fishing perch at the
-    edge of a lake, rod out over the water, entirely at peace, full figure visible against a simple soft
-    painted backdrop, character sheet framing, consistent side-on pose. cartoony goofy storybook illustration,
-    soft confident hand-drawn linework, loose characterful line quality, rounded generous shape language,
-    emotionally legible faces, bold clean colour blocking, warm saturated slightly-faded storybook palette,
-    painterly depth and warm cinematic light, exaggerated expressive acting, clearly staged so the shapes
-    read instantly at a glance, heroic and goofy and wry, charming, hand-drawn animation cel and gouache
-    painting, visibly illustrated by a person. every surface left bare and unmarked, blank clean untouched
-    surfaces, one single uncropped image filling the frame'
+  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality,
+    deformed, extra limbs, bad hands, cropped
+  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish
+    than rule: a lanky young androgynous monarch, pale freckled skin, dark hair shaved at
+    the sides, the circlet worn loose around the throat instead of the head, patched waders
+    under a half-cape, holding a battered fishing rod with total unearned confidence. seated
+    in profile on a worn wooden fishing perch at the edge of a lake, rod out over the water,
+    entirely at peace, full figure visible against a simple soft painted backdrop, character
+    sheet framing, consistent side-on pose. cartoony goofy storybook illustration, soft confident
+    hand-drawn linework, loose characterful line quality, rounded generous shape language,
+    emotionally legible faces, bold clean colour blocking, warm saturated slightly-faded storybook
+    palette, painterly depth and warm cinematic light, exaggerated expressive acting, clearly
+    staged so the shapes read instantly at a glance, heroic and goofy and wry, charming, hand-drawn
+    animation cel and gouache painting, visibly illustrated by a person. every surface left
+    bare and unmarked, blank clean untouched surfaces, one single uncropped image filling
+    the frame'
 - id: ruler-hooked-ruler-regent-halvard
   last_art_job_id: 28697
   source: ruler-hooked
-  status: blocked-design-review
+  status: pending
   priority: 150
   target_repo: silasfelinus/kind_robots
   project_slug: ruler-hooked
@@ -948,24 +424,25 @@ requests:
   label: 'Ruler Hooked ruler preset: Regent (regent-halvard)'
   engine: krea2
   size: 768x1024
-  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality, deformed,
-    extra limbs, bad hands, cropped
-  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish than rule: a
-    very old wiry monarch, deep-set eyes and a long white beard tucked into a belt, olive skin, swimming
-    in robes several sizes too big, a folding stool and a thermos, holding a battered fishing rod with
-    total unearned confidence. seated in profile on a worn wooden fishing perch at the edge of a lake,
-    rod out over the water, entirely at peace, full figure visible against a simple soft painted backdrop,
-    character sheet framing, consistent side-on pose. cartoony goofy storybook illustration, soft confident
-    hand-drawn linework, loose characterful line quality, rounded generous shape language, emotionally
-    legible faces, bold clean colour blocking, warm saturated slightly-faded storybook palette, painterly
-    depth and warm cinematic light, exaggerated expressive acting, clearly staged so the shapes read instantly
-    at a glance, heroic and goofy and wry, charming, hand-drawn animation cel and gouache painting, visibly
-    illustrated by a person. every surface left bare and unmarked, blank clean untouched surfaces, one
-    single uncropped image filling the frame'
+  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality,
+    deformed, extra limbs, bad hands, cropped
+  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish
+    than rule: a very old wiry monarch, deep-set eyes and a long white beard tucked into a
+    belt, olive skin, swimming in robes several sizes too big, a folding stool and a thermos,
+    holding a battered fishing rod with total unearned confidence. seated in profile on a
+    worn wooden fishing perch at the edge of a lake, rod out over the water, entirely at peace,
+    full figure visible against a simple soft painted backdrop, character sheet framing, consistent
+    side-on pose. cartoony goofy storybook illustration, soft confident hand-drawn linework,
+    loose characterful line quality, rounded generous shape language, emotionally legible
+    faces, bold clean colour blocking, warm saturated slightly-faded storybook palette, painterly
+    depth and warm cinematic light, exaggerated expressive acting, clearly staged so the shapes
+    read instantly at a glance, heroic and goofy and wry, charming, hand-drawn animation cel
+    and gouache painting, visibly illustrated by a person. every surface left bare and unmarked,
+    blank clean untouched surfaces, one single uncropped image filling the frame'
 - id: ruler-hooked-ruler-matriarch-oshun
   last_art_job_id: 28698
   source: ruler-hooked
-  status: blocked-design-review
+  status: pending
   priority: 150
   target_repo: silasfelinus/kind_robots
   project_slug: ruler-hooked
@@ -977,24 +454,25 @@ requests:
   label: 'Ruler Hooked ruler preset: Matriarch (matriarch-oshun)'
   engine: krea2
   size: 768x1024
-  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality, deformed,
-    extra limbs, bad hands, cropped
-  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish than rule: a
-    short and gloriously round monarch, rich dark skin, an enormous coiled crown of braided hair with
-    the actual crown perched on top of it, beaded rings on every finger, holding a battered fishing rod
-    with total unearned confidence. seated in profile on a worn wooden fishing perch at the edge of a
-    lake, rod out over the water, entirely at peace, full figure visible against a simple soft painted
-    backdrop, character sheet framing, consistent side-on pose. cartoony goofy storybook illustration,
-    soft confident hand-drawn linework, loose characterful line quality, rounded generous shape language,
-    emotionally legible faces, bold clean colour blocking, warm saturated slightly-faded storybook palette,
-    painterly depth and warm cinematic light, exaggerated expressive acting, clearly staged so the shapes
-    read instantly at a glance, heroic and goofy and wry, charming, hand-drawn animation cel and gouache
-    painting, visibly illustrated by a person. every surface left bare and unmarked, blank clean untouched
-    surfaces, one single uncropped image filling the frame'
+  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality,
+    deformed, extra limbs, bad hands, cropped
+  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish
+    than rule: a short and gloriously round monarch, rich dark skin, an enormous coiled crown
+    of braided hair with the actual crown perched on top of it, beaded rings on every finger,
+    holding a battered fishing rod with total unearned confidence. seated in profile on a
+    worn wooden fishing perch at the edge of a lake, rod out over the water, entirely at peace,
+    full figure visible against a simple soft painted backdrop, character sheet framing, consistent
+    side-on pose. cartoony goofy storybook illustration, soft confident hand-drawn linework,
+    loose characterful line quality, rounded generous shape language, emotionally legible
+    faces, bold clean colour blocking, warm saturated slightly-faded storybook palette, painterly
+    depth and warm cinematic light, exaggerated expressive acting, clearly staged so the shapes
+    read instantly at a glance, heroic and goofy and wry, charming, hand-drawn animation cel
+    and gouache painting, visibly illustrated by a person. every surface left bare and unmarked,
+    blank clean untouched surfaces, one single uncropped image filling the frame'
 - id: ruler-hooked-ruler-chieftain-brakka
   last_art_job_id: 28699
   source: ruler-hooked
-  status: blocked-design-review
+  status: pending
   priority: 150
   target_repo: silasfelinus/kind_robots
   project_slug: ruler-hooked
@@ -1006,24 +484,26 @@ requests:
   label: 'Ruler Hooked ruler preset: Chieftain (chieftain-brakka)'
   engine: krea2
   size: 768x1024
-  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality, deformed,
-    extra limbs, bad hands, cropped
-  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish than rule: a
-    powerfully built orcish monarch, moss-green skin, small proud tusks, a crown of shed antlers, forearms
-    like tree roots, a rod that looks like a toothpick in one huge hand, holding a battered fishing rod
-    with total unearned confidence. seated in profile on a worn wooden fishing perch at the edge of a
-    lake, rod out over the water, entirely at peace, full figure visible against a simple soft painted
-    backdrop, character sheet framing, consistent side-on pose. cartoony goofy storybook illustration,
-    soft confident hand-drawn linework, loose characterful line quality, rounded generous shape language,
-    emotionally legible faces, bold clean colour blocking, warm saturated slightly-faded storybook palette,
-    painterly depth and warm cinematic light, exaggerated expressive acting, clearly staged so the shapes
-    read instantly at a glance, heroic and goofy and wry, charming, hand-drawn animation cel and gouache
-    painting, visibly illustrated by a person. every surface left bare and unmarked, blank clean untouched
-    surfaces, one single uncropped image filling the frame'
+  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality,
+    deformed, extra limbs, bad hands, cropped
+  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish
+    than rule: a powerfully built orcish monarch, moss-green skin, small proud tusks, a crown
+    of shed antlers, forearms like tree roots, a rod that looks like a toothpick in one huge
+    hand, holding a battered fishing rod with total unearned confidence. seated in profile
+    on a worn wooden fishing perch at the edge of a lake, rod out over the water, entirely
+    at peace, full figure visible against a simple soft painted backdrop, character sheet
+    framing, consistent side-on pose. cartoony goofy storybook illustration, soft confident
+    hand-drawn linework, loose characterful line quality, rounded generous shape language,
+    emotionally legible faces, bold clean colour blocking, warm saturated slightly-faded storybook
+    palette, painterly depth and warm cinematic light, exaggerated expressive acting, clearly
+    staged so the shapes read instantly at a glance, heroic and goofy and wry, charming, hand-drawn
+    animation cel and gouache painting, visibly illustrated by a person. every surface left
+    bare and unmarked, blank clean untouched surfaces, one single uncropped image filling
+    the frame'
 - id: ruler-hooked-ruler-heron-queen-sedge
   last_art_job_id: 28700
   source: ruler-hooked
-  status: blocked-design-review
+  status: pending
   priority: 150
   target_repo: silasfelinus/kind_robots
   project_slug: ruler-hooked
@@ -1035,24 +515,26 @@ requests:
   label: 'Ruler Hooked ruler preset: Queen (heron-queen-sedge)'
   engine: krea2
   size: 768x1024
-  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality, deformed,
-    extra limbs, bad hands, cropped
-  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish than rule: a
-    tall heron-folk monarch, soft grey-blue plumage and a long elegant neck, the crown balanced carefully
-    between two head plumes, standing on one leg out of sheer habit, holding a battered fishing rod with
-    total unearned confidence. seated in profile on a worn wooden fishing perch at the edge of a lake,
-    rod out over the water, entirely at peace, full figure visible against a simple soft painted backdrop,
-    character sheet framing, consistent side-on pose. cartoony goofy storybook illustration, soft confident
-    hand-drawn linework, loose characterful line quality, rounded generous shape language, emotionally
-    legible faces, bold clean colour blocking, warm saturated slightly-faded storybook palette, painterly
-    depth and warm cinematic light, exaggerated expressive acting, clearly staged so the shapes read instantly
-    at a glance, heroic and goofy and wry, charming, hand-drawn animation cel and gouache painting, visibly
-    illustrated by a person. every surface left bare and unmarked, blank clean untouched surfaces, one
-    single uncropped image filling the frame'
+  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality,
+    deformed, extra limbs, bad hands, cropped
+  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish
+    than rule: a tall heron-folk monarch, soft grey-blue plumage and a long elegant neck,
+    the crown balanced carefully between two head plumes, standing on one leg out of sheer
+    habit, holding a battered fishing rod with total unearned confidence. seated in profile
+    on a worn wooden fishing perch at the edge of a lake, rod out over the water, entirely
+    at peace, full figure visible against a simple soft painted backdrop, character sheet
+    framing, consistent side-on pose. cartoony goofy storybook illustration, soft confident
+    hand-drawn linework, loose characterful line quality, rounded generous shape language,
+    emotionally legible faces, bold clean colour blocking, warm saturated slightly-faded storybook
+    palette, painterly depth and warm cinematic light, exaggerated expressive acting, clearly
+    staged so the shapes read instantly at a glance, heroic and goofy and wry, charming, hand-drawn
+    animation cel and gouache painting, visibly illustrated by a person. every surface left
+    bare and unmarked, blank clean untouched surfaces, one single uncropped image filling
+    the frame'
 - id: ruler-hooked-ruler-little-monarch-pip
   last_art_job_id: 28701
   source: ruler-hooked
-  status: blocked-design-review
+  status: pending
   priority: 150
   target_repo: silasfelinus/kind_robots
   project_slug: ruler-hooked
@@ -1064,24 +546,26 @@ requests:
   label: 'Ruler Hooked ruler preset: Monarch (little-monarch-pip)'
   engine: krea2
   size: 768x1024
-  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality, deformed,
-    extra limbs, bad hands, cropped
-  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish than rule: a
-    tiny mouse-folk monarch barely taller than a boot, round ears, warm tan fur, an enormous crown resting
-    on both ears at once, seated on a stack of unread royal ledgers, holding a rod three times their length,
-    holding a battered fishing rod with total unearned confidence. seated in profile on a worn wooden
-    fishing perch at the edge of a lake, rod out over the water, entirely at peace, full figure visible
-    against a simple soft painted backdrop, character sheet framing, consistent side-on pose. cartoony
-    goofy storybook illustration, soft confident hand-drawn linework, loose characterful line quality,
-    rounded generous shape language, emotionally legible faces, bold clean colour blocking, warm saturated
-    slightly-faded storybook palette, painterly depth and warm cinematic light, exaggerated expressive
-    acting, clearly staged so the shapes read instantly at a glance, heroic and goofy and wry, charming,
-    hand-drawn animation cel and gouache painting, visibly illustrated by a person. every surface left
-    bare and unmarked, blank clean untouched surfaces, one single uncropped image filling the frame'
+  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality,
+    deformed, extra limbs, bad hands, cropped
+  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish
+    than rule: a tiny mouse-folk monarch barely taller than a boot, round ears, warm tan fur,
+    an enormous crown resting on both ears at once, seated on a stack of unread royal ledgers,
+    holding a rod three times their length, holding a battered fishing rod with total unearned
+    confidence. seated in profile on a worn wooden fishing perch at the edge of a lake, rod
+    out over the water, entirely at peace, full figure visible against a simple soft painted
+    backdrop, character sheet framing, consistent side-on pose. cartoony goofy storybook illustration,
+    soft confident hand-drawn linework, loose characterful line quality, rounded generous
+    shape language, emotionally legible faces, bold clean colour blocking, warm saturated
+    slightly-faded storybook palette, painterly depth and warm cinematic light, exaggerated
+    expressive acting, clearly staged so the shapes read instantly at a glance, heroic and
+    goofy and wry, charming, hand-drawn animation cel and gouache painting, visibly illustrated
+    by a person. every surface left bare and unmarked, blank clean untouched surfaces, one
+    single uncropped image filling the frame'
 - id: ruler-hooked-ruler-boy-king-tobin
   last_art_job_id: 28702
   source: ruler-hooked
-  status: blocked-design-review
+  status: pending
   priority: 150
   target_repo: silasfelinus/kind_robots
   project_slug: ruler-hooked
@@ -1093,24 +577,26 @@ requests:
   label: 'Ruler Hooked ruler preset: King (boy-king-tobin)'
   engine: krea2
   size: 768x1024
-  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality, deformed,
-    extra limbs, bad hands, cropped
-  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish than rule: a
-    small boy king of about eight, pale skin and a mop of red hair, a crown far too big for him pushed
-    back off his forehead, ceremonial robes puddling around him, feet nowhere near the ground and swinging,
-    holding a battered fishing rod with total unearned confidence. seated in profile on a worn wooden
-    fishing perch at the edge of a lake, rod out over the water, entirely at peace, full figure visible
-    against a simple soft painted backdrop, character sheet framing, consistent side-on pose. cartoony
-    goofy storybook illustration, soft confident hand-drawn linework, loose characterful line quality,
-    rounded generous shape language, emotionally legible faces, bold clean colour blocking, warm saturated
-    slightly-faded storybook palette, painterly depth and warm cinematic light, exaggerated expressive
-    acting, clearly staged so the shapes read instantly at a glance, heroic and goofy and wry, charming,
-    hand-drawn animation cel and gouache painting, visibly illustrated by a person. every surface left
-    bare and unmarked, blank clean untouched surfaces, one single uncropped image filling the frame'
+  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality,
+    deformed, extra limbs, bad hands, cropped
+  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish
+    than rule: a small boy king of about eight, pale skin and a mop of red hair, a crown far
+    too big for him pushed back off his forehead, ceremonial robes puddling around him, feet
+    nowhere near the ground and swinging, holding a battered fishing rod with total unearned
+    confidence. seated in profile on a worn wooden fishing perch at the edge of a lake, rod
+    out over the water, entirely at peace, full figure visible against a simple soft painted
+    backdrop, character sheet framing, consistent side-on pose. cartoony goofy storybook illustration,
+    soft confident hand-drawn linework, loose characterful line quality, rounded generous
+    shape language, emotionally legible faces, bold clean colour blocking, warm saturated
+    slightly-faded storybook palette, painterly depth and warm cinematic light, exaggerated
+    expressive acting, clearly staged so the shapes read instantly at a glance, heroic and
+    goofy and wry, charming, hand-drawn animation cel and gouache painting, visibly illustrated
+    by a person. every surface left bare and unmarked, blank clean untouched surfaces, one
+    single uncropped image filling the frame'
 - id: ruler-hooked-ruler-girl-queen-marisol
   last_art_job_id: 28703
   source: ruler-hooked
-  status: blocked-design-review
+  status: pending
   priority: 150
   target_repo: silasfelinus/kind_robots
   project_slug: ruler-hooked
@@ -1122,24 +608,26 @@ requests:
   label: 'Ruler Hooked ruler preset: Queen (girl-queen-marisol)'
   engine: krea2
   size: 768x1024
-  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality, deformed,
-    extra limbs, bad hands, cropped
-  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish than rule: a
-    small girl queen of about nine, warm brown skin and two tight buns, a gap-toothed look of total concentration,
-    a crown pinned firmly in place because she checked, sleeves shoved up past her elbows, holding a battered
-    fishing rod with total unearned confidence. seated in profile on a worn wooden fishing perch at the
-    edge of a lake, rod out over the water, entirely at peace, full figure visible against a simple soft
-    painted backdrop, character sheet framing, consistent side-on pose. cartoony goofy storybook illustration,
-    soft confident hand-drawn linework, loose characterful line quality, rounded generous shape language,
-    emotionally legible faces, bold clean colour blocking, warm saturated slightly-faded storybook palette,
-    painterly depth and warm cinematic light, exaggerated expressive acting, clearly staged so the shapes
-    read instantly at a glance, heroic and goofy and wry, charming, hand-drawn animation cel and gouache
-    painting, visibly illustrated by a person. every surface left bare and unmarked, blank clean untouched
-    surfaces, one single uncropped image filling the frame'
+  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality,
+    deformed, extra limbs, bad hands, cropped
+  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish
+    than rule: a small girl queen of about nine, warm brown skin and two tight buns, a gap-toothed
+    look of total concentration, a crown pinned firmly in place because she checked, sleeves
+    shoved up past her elbows, holding a battered fishing rod with total unearned confidence.
+    seated in profile on a worn wooden fishing perch at the edge of a lake, rod out over the
+    water, entirely at peace, full figure visible against a simple soft painted backdrop,
+    character sheet framing, consistent side-on pose. cartoony goofy storybook illustration,
+    soft confident hand-drawn linework, loose characterful line quality, rounded generous
+    shape language, emotionally legible faces, bold clean colour blocking, warm saturated
+    slightly-faded storybook palette, painterly depth and warm cinematic light, exaggerated
+    expressive acting, clearly staged so the shapes read instantly at a glance, heroic and
+    goofy and wry, charming, hand-drawn animation cel and gouache painting, visibly illustrated
+    by a person. every surface left bare and unmarked, blank clean untouched surfaces, one
+    single uncropped image filling the frame'
 - id: ruler-hooked-ruler-cub-prince-bramble
   last_art_job_id: 28704
   source: ruler-hooked
-  status: blocked-design-review
+  status: pending
   priority: 150
   target_repo: silasfelinus/kind_robots
   project_slug: ruler-hooked
@@ -1151,24 +639,26 @@ requests:
   label: 'Ruler Hooked ruler preset: Prince (cub-prince-bramble)'
   engine: krea2
   size: 768x1024
-  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality, deformed,
-    extra limbs, bad hands, cropped
-  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish than rule: a
-    bear-cub-folk child ruler, round and shaggy in brown fur, a circlet of woven river-reeds instead of
-    gold, enormous paws entirely unsuited to a delicate reel, deeply serious about the task, holding a
-    battered fishing rod with total unearned confidence. seated in profile on a worn wooden fishing perch
-    at the edge of a lake, rod out over the water, entirely at peace, full figure visible against a simple
-    soft painted backdrop, character sheet framing, consistent side-on pose. cartoony goofy storybook
-    illustration, soft confident hand-drawn linework, loose characterful line quality, rounded generous
-    shape language, emotionally legible faces, bold clean colour blocking, warm saturated slightly-faded
-    storybook palette, painterly depth and warm cinematic light, exaggerated expressive acting, clearly
-    staged so the shapes read instantly at a glance, heroic and goofy and wry, charming, hand-drawn animation
-    cel and gouache painting, visibly illustrated by a person. every surface left bare and unmarked, blank
-    clean untouched surfaces, one single uncropped image filling the frame'
+  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality,
+    deformed, extra limbs, bad hands, cropped
+  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish
+    than rule: a bear-cub-folk child ruler, round and shaggy in brown fur, a circlet of woven
+    river-reeds instead of gold, enormous paws entirely unsuited to a delicate reel, deeply
+    serious about the task, holding a battered fishing rod with total unearned confidence.
+    seated in profile on a worn wooden fishing perch at the edge of a lake, rod out over the
+    water, entirely at peace, full figure visible against a simple soft painted backdrop,
+    character sheet framing, consistent side-on pose. cartoony goofy storybook illustration,
+    soft confident hand-drawn linework, loose characterful line quality, rounded generous
+    shape language, emotionally legible faces, bold clean colour blocking, warm saturated
+    slightly-faded storybook palette, painterly depth and warm cinematic light, exaggerated
+    expressive acting, clearly staged so the shapes read instantly at a glance, heroic and
+    goofy and wry, charming, hand-drawn animation cel and gouache painting, visibly illustrated
+    by a person. every surface left bare and unmarked, blank clean untouched surfaces, one
+    single uncropped image filling the frame'
 - id: ruler-hooked-ruler-elder-tortoise-yew
   last_art_job_id: 28705
   source: ruler-hooked
-  status: blocked-design-review
+  status: pending
   priority: 150
   target_repo: silasfelinus/kind_robots
   project_slug: ruler-hooked
@@ -1180,17 +670,19 @@ requests:
   label: 'Ruler Hooked ruler preset: Sovereign (elder-tortoise-yew)'
   engine: krea2
   size: 768x1024
-  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality, deformed,
-    extra limbs, bad hands, cropped
-  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish than rule: an
-    immensely old tortoise-folk sovereign, mossy shell and a kindly wrinkled face, a crown worn smooth
-    by centuries, moving at a pace that suggests the fish will simply have to wait, holding a battered
-    fishing rod with total unearned confidence. seated in profile on a worn wooden fishing perch at the
-    edge of a lake, rod out over the water, entirely at peace, full figure visible against a simple soft
-    painted backdrop, character sheet framing, consistent side-on pose. cartoony goofy storybook illustration,
-    soft confident hand-drawn linework, loose characterful line quality, rounded generous shape language,
-    emotionally legible faces, bold clean colour blocking, warm saturated slightly-faded storybook palette,
-    painterly depth and warm cinematic light, exaggerated expressive acting, clearly staged so the shapes
-    read instantly at a glance, heroic and goofy and wry, charming, hand-drawn animation cel and gouache
-    painting, visibly illustrated by a person. every surface left bare and unmarked, blank clean untouched
-    surfaces, one single uncropped image filling the frame'
+  negative_prompt: photorealistic, photograph, 3d render, cgi, grimdark, blurry, low quality,
+    deformed, extra limbs, bad hands, cropped
+  prompt: 'The player-character ruler of a comedic fantasy kingdom, who would rather fish
+    than rule: an immensely old tortoise-folk sovereign, mossy shell and a kindly wrinkled
+    face, a crown worn smooth by centuries, moving at a pace that suggests the fish will simply
+    have to wait, holding a battered fishing rod with total unearned confidence. seated in
+    profile on a worn wooden fishing perch at the edge of a lake, rod out over the water,
+    entirely at peace, full figure visible against a simple soft painted backdrop, character
+    sheet framing, consistent side-on pose. cartoony goofy storybook illustration, soft confident
+    hand-drawn linework, loose characterful line quality, rounded generous shape language,
+    emotionally legible faces, bold clean colour blocking, warm saturated slightly-faded storybook
+    palette, painterly depth and warm cinematic light, exaggerated expressive acting, clearly
+    staged so the shapes read instantly at a glance, heroic and goofy and wry, charming, hand-drawn
+    animation cel and gouache painting, visibly illustrated by a person. every surface left
+    bare and unmarked, blank clean untouched surfaces, one single uncropped image filling
+    the frame'
