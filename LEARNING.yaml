@@ -14954,3 +14954,20 @@ records:
     project's own locked visual contract (APPROVED-STAGE-SPEC.md here) rather than
     inventing new motion language -- kept this PR reviewable in one pass with zero
     round-trips.
+- date: '2026-09-18'
+  project: butterfly-gallery
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Before building a first-visit-intro state machine from scratch, check whether an
+    earlier task already scaffolded it -- t-003/t-012 had already wired the intro
+    status, session-storage marker, and completeIntro()/replayIntro() into the store;
+    this task only needed to replace one placeholder line
+    (`gallery.completeIntro()` called immediately with no animation) with real DOM
+    orchestration. Route every exit path (Skip, Escape, hard timeout, reduced-motion
+    change, unmount) through one idempotent finish function so a multi-exit motion
+    sequence can never strand the page mid-animation.
