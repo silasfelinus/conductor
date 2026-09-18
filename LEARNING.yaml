@@ -14663,3 +14663,20 @@ records:
     without dragging in the real client. Caught and fixed same-cycle before
     merge; no wasted review round since the fix landed on the same PR before
     a Reviewer ever saw the red check.
+- date: '2026-09-18'
+  project: art-archive
+  task: t-024
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Clean first-pass implementation. When a task depends on an existing CLI
+    entrypoint but the task itself is "expose this over HTTP", extract the
+    CLI's per-file loop/counting logic into a small shared function the new
+    endpoint calls, rather than duplicating the loop a second time or
+    rewriting the CLI to use a shared function too (which would risk
+    breaking that CLI's own frozen regex-based contract test). Left the CLI
+    untouched and its existing verifyImportArtArchive.mjs contract passing
+    unmodified.
