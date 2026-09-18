@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-18T06:34:34Z
+Generated: 2026-09-18T06:38:10Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1012**
-- Outcomes: blocked: 16, cancelled: 1, done: 995
+- Closed tasks recorded: **1013**
+- Outcomes: blocked: 16, cancelled: 1, done: 996
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -21,7 +21,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | animation-studio | 2 | 50% |
 | appmaker | 11 | 100% |
 | approval-portal | 2 | 0% |
-| art-archive | 5 | 100% |
+| art-archive | 6 | 100% |
 | art-generator-connect | 3 | 100% |
 | brainstorm | 26 | 96% |
 | challenge-center | 16 | 100% |
@@ -70,7 +70,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 995 | 99% |
+| software | 996 | 99% |
 
 ## Failure categories
 
@@ -92,6 +92,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-18 `art-archive/t-007` — Clean first-pass implementation of high-confidence resource-provenance application: only writes ArtImage.checkpointResourceId/LoraResources from unique hash/exact-name matches, records ambiguous/suggested/unmatched evidence for later review instead of guessing, and skips resourceMatchLocked entries so a manual admin correction is never silently overwritten. Kaizen follow-on (surfacing match-quality candidates before auto-apply) was already filed as t-023, so no new kaizen task was needed on this close-out.
 - 2026-09-18 `art-archive/t-022` — Clean pass. When a task note offers two implementation shapes ("a CLI script or an admin-gated endpoint"), picking one and filing the other as an explicit follow-on task (rather than silently treating the chosen option as if it fully satisfied the note, or scope-creeping to build both) keeps the task's actual delivered scope honest and visible in the roadmap.
 - 2026-09-18 `art-archive/t-006` — Clean first-pass implementation of an ambiguous task note ("prefer embedded ids...") by picking the most defensible concrete reading (embedded content hash, since legacy files carry no Resource id) and flagging the interpretation explicitly in the PR body rather than silently guessing or stalling on it. Also worth repeating: returning ALL same-tier candidates instead of narrowing to one made an otherwise-invisible ambiguous-match case (two Resources sharing a normalized name) visible to the next task downstream, instead of a matching function silently picking a winner that later turns out wrong.
 - 2026-09-18 `art-archive/t-005` — Clean first-pass success following t-004's rejection lesson: the Worker correctly treated raw-metadata retention as a hard invariant (preserved verbatim in extractedMetadata for every format) while still scoping per-column generation-field extraction to PNG only, matching what t-006/ t-008 actually need next. A contract verifier regex-checking the privacy/ maturity/idempotency invariants directly against source shipped alongside the feature, not as an afterthought -- worth treating as the default shape for any importer/reconciler task in this project going forward.
@@ -101,7 +102,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-18 `storybook/t-010` — select_role.py's raw urllib GitHub probe 403'd in this sandbox as usual, but the underlying worker-branch PR (kind_robots#2811) was real and reviewable via the GitHub MCP tools -- cross-checking select_role.py's uncertain verdict against a working transport before falling back to its "worker" recommendation caught a genuine PR that a literal reading of the tool's own output would have missed. Reviewed, confirmed all 47 checks green and mergeable_state clean with a diff scoped to exactly the intended files, then squash-merged and re-armed the task to ready per the established recurring-polish precedent.
 - 2026-09-17 `dream-cycle/t-027` — check_live_facet_coverage.py now walks creation-burst bundles too (built.facets in projects/kind-robots/bursts/*.yaml), not only daily-dream backlog records -- any future live-coverage-style check over agent-recorded built-state should default to covering every bundle shape that records it, not just the first one that prompted the check.
 - 2026-09-17 `appmaker/t-014` — A "FOR SILAS: decide X or Y" task can sit fully implementable long after the decision lands if nobody revisits it -- Silas answered this one on 2026-09-07 (approved_by_human: true, keep /appmaker admin-only and fix the copy) but the actual one-file copy fix wasn't picked up until this cycle. Worth a quick pass over ready tasks with approved_by_human: true and no implementation_pr to catch this class earlier next time.
-- 2026-09-17 `appmaker/t-010` — A task blocked for weeks on open design questions can turn fully actionable the moment a human decision resolves them -- the roadmap note already carried Silas's 2026-09-07 answers to all three open questions (squash graduation, admin-only, existing-granted-repo-only), so the real work was reading that note carefully rather than re-deriving the design. Splitting the landable, reversible half (a Todo-filing request endpoint) from the genuinely irreversible half (the squash-push executor that writes to a real external repo) kept this PR safely mergeable without a human gate, while filing the executor as its own gate_human task (t-015) rather than either building it unreviewed or leaving the remaining scope implicit in t-010's note.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-18T06:34:34Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-18T06:38:10Z_
