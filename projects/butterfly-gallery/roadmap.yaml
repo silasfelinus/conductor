@@ -405,8 +405,8 @@ tasks:
   - id: t-014
     milestone: m4
     title: "Render and catalog reusable butterfly motion clips"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-013
@@ -452,9 +452,9 @@ tasks:
       tsc/eslint, and open the kind_robots PR. Re-render only a specific FAILED/rejected job
       rather than the whole batch. No duplicate-submission risk: every job id is recorded
       here. Re-arming to ready, releasing the claim.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-09-18T16:45:34Z'
+    claimed_by: claude-scheduled-20260918T203409Z-butterfly-gallery-t014
+    claimed_at: '2026-09-18T20:34:10Z'
+    updated: '2026-09-18T20:34:10Z'
 
   - id: t-015
     milestone: m4
