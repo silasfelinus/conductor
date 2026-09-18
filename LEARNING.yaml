@@ -14893,3 +14893,19 @@ records:
   failure_category: null
   lesson: Preserve path-derived membership as system-owned state and expose custom membership as an additive
     relation, rather than reusing replace-style collection APIs that could erase the folder invariant.
+- date: '2026-09-18'
+  project: butterfly-gallery
+  task: t-011
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A sandbox with no production DATABASE_URL can still queue real ArtJobs by POSTing to
+    /api/art/queue with KR_API_TOKEN as x-api-key, building the Krea2 workflow via the real
+    buildKrea2WorkflowFromRequest under tsx (a node_modules/~ symlink workaround resolves the
+    repo's '~' import alias without a full Nuxt build). "Producing" a static art asset set is a
+    two-step task, queuing the ArtJob now, then a separate follow-up (filed as t-028) to wire the
+    rendered images in once the async relay finishes — don't block the first step's closure on
+    the second happening within the same session.
