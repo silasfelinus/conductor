@@ -62,6 +62,7 @@ def iter_missing_project_assets(catalog: dict[str, Any]) -> list[dict[str, Any]]
         slug = project_entry.get("project")
         if not isinstance(slug, str) or not slug:
             continue
+        project_priority = project_entry.get("priority")
 
         for variant in VARIANT_ORDER:
             asset = project_entry.get(variant)
@@ -89,6 +90,16 @@ def iter_missing_project_assets(catalog: dict[str, Any]) -> list[dict[str, Any]]
             }
             engine = asset.get("engine") or asset.get("model") or DEFAULT_PROJECT_ART_ENGINE
             entry["engine"] = str(engine).strip() or DEFAULT_PROJECT_ART_ENGINE
+
+            priority = asset.get("priority", project_priority)
+            if priority is not None:
+                try:
+                    entry["priority"] = int(priority)
+                except (TypeError, ValueError):
+                    raise SystemExit(
+                        f"Invalid project-art priority for {slug}/{variant}: {priority!r}"
+                    )
+
             entries.append(entry)
 
     return entries
