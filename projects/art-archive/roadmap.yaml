@@ -207,12 +207,12 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Build confidence-ranked matching from legacy metadata to active checkpoint and LoRA Resources"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-004
-    note: >
+    note: >-
       Match only active Resources with compatible types. Prefer embedded ids,
       then exact localPath/name/customLabel and normalized basename matches,
       then parsed A1111/Comfy model and LoRA names/hashes. Folder/file-name clues
@@ -220,9 +220,23 @@ tasks:
       and confidence; never let a Resource's maturity flag alter ArtImage
       privacy. Unmatched embedded names/hashes/tokens feed the missing-Resource
       backlog rather than being discarded.
+
+      Implemented matchArchiveResources() in server/utils/artArchiveResourceMatch.ts on
+      kind_robots claude/eager-bohr-v8dejz. Tiered matching: embedded hash > exact name >
+      normalized basename > folder/file-name substring suggestion; a tier is only consulted
+      once every tier above it found nothing, and a same-tier tie returns all candidates
+      rather than an arbitrary pick. Unmatched evidence retained per checkpoint/LoRA slot for
+      t-021's backlog. JPEG/WebP return no evidence (t-004 has no structured fields for those
+      formats). Never reads isMature/isPublic -- enforced by a self-test source scan, not just
+      a comment. Also wired t-005's already-shipped verifyArtArchiveImporter.mjs into CI
+      (existed since kind_robots#2818 but nothing ran it). Verified: eslint clean, self-test
+      (verifyArtArchiveResourceMatch.test.ts) covers hash/exact/basename/suggested tiers,
+      ambiguous ties, CHECKPOINT/LORA pool separation, unmatched backlog retention,
+      unsupported-format short-circuit, and the isMature/isPublic structural invariant. vue-
+      tsc running; PR opens once clean.
     claimed_by: claude-scheduled-20260918T043218Z-artarchive-t006-a1
     claimed_at: '2026-09-18T04:32:19Z'
-    updated: '2026-09-18T04:32:19Z'
+    updated: '2026-09-18T04:39:44Z'
 
   - id: t-007
     milestone: m2
