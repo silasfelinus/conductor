@@ -1,0 +1,11 @@
+version: 1
+project: art-archive
+task: t-011
+operation: done
+owner: worker
+session: openai-scheduled-2026-09-18T131950Z-art-archive-t011-a1
+updated: '2026-09-18T13:28:50Z'
+note: >-
+  Merged kind_robots#2839 (squash cec9d7b4). Existing t-009 move handling already root-confines filesystem moves, updates the archive path and folder-derived collection, and disconnects only the prior folder collection. Added an admin-only custom ArtCollection membership endpoint that connects/disconnects custom memberships while refusing manual removal of the path-owned folder collection. All 48 PR checks completed; no queued or in-progress checks remained and Contract Tests run 35349943355 completed successfully.
+learning: >-
+  Preserve path-derived membership as system-owned state and expose custom membership as an additive relation, rather than reusing replace-style collection APIs that could erase the folder invariant.
