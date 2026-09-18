@@ -538,7 +538,7 @@ tasks:
   - id: t-018
     milestone: m5
     title: "Add persisted custom bins and generation/action presets"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -558,9 +558,11 @@ tasks:
       (ButterflyBinConfig, ButterflyBinKind), BIN_KINDS set complete/correct, no pre-existing
       duplicate persistence helper. Inert until wired into the Pinia store + editor UI -- re-
       arming to ready for that continuation.
+
+      Added a dedicated Pinia preset store that loads validated v1 custom-bin envelopes from localStorage, falls back safely to defaults, persists edits, and owns enable/action/reset mutations. The editor UI remains for the next continuation slice.
     claimed_by: openai-scheduled-2026-09-18T182108Z-butterfly-gallery-t018-a13
     claimed_at: '2026-09-18T18:21:08Z'
-    updated: '2026-09-18T18:21:08Z'
+    updated: '2026-09-18T18:29:00Z'
     implementation_pr: 'silasfelinus/kind_robots#2843'
 
   - id: t-019
