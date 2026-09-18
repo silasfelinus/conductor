@@ -247,7 +247,7 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Apply high-confidence resource provenance while preserving manual corrections"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-006
@@ -256,7 +256,10 @@ tasks:
 
 
       Roadmap-auditor repair: dependency t-006 is done, so this waiting task is now eligible for work.
-    updated: '2026-09-18T05:36:10Z'
+
+      Implementation PR kind_robots#2821 merged 2026-09-18T06:19:06Z (all CI green, squash-
+      merged by Silas). Closing t-007 to done.
+    updated: '2026-09-18T06:29:19Z'
     owner: worker
     claimed_by: claude-scheduled-20260918T053000Z-artarchive-t007-a1
     claimed_at: '2026-09-18T05:31:57Z'
