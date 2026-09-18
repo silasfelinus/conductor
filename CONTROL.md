@@ -411,3 +411,13 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 - Production archive storage is confirmed: host `/mnt/user/pc/kindrobots/private` -> container `/app/private`, with `PRIVATE_PATH=/app/private`. Scanner code should use that existing variable rather than inventing a second root setting.
 - Missing checkpoints/LoRAs are expected; import continues with unresolved provenance preserved, and the project maintains a deduplicated backlog of Resources to locate/add later.
 - Keep this project at high agent-work priority until complete (Silas, 2026-09-17).
+
+### butterfly-gallery  (software)
+**Direction (2026-09-17, new project):** Build `/butterfly-gallery` as a private, mature-aware art-curation experience in the Kind Robots Plan channel: a fast sorter staged as an animated rainbow-butterfly gallery room.
+**Notes:**
+- This is intentionally separate from `art-archive`. Art Archive owns filesystem ingestion, ArchiveEntry reconciliation, Resource provenance, missing-model recovery, and the private ArtImage source. Butterfly Gallery consumes that source through APIs/adapters.
+- Placement is Kind Robots `channelKey: plan`, `tabKey: projects`, intended live route `/butterfly-gallery`. Kind Robots owns those Project presentation fields.
+- The page opens with a short, non-looping, skippable trapdoor/picture-drop vignette, then settles into a working room with a painting pile, central frame, left/right custom bins, and a peekaboo butterfly window.
+- Rainbow butterflies move frames with varied competence: string tow, pair carry, solo struggle, dragging, peekaboo, and rare drop gags. Ambient motion stays behind the working UI and is intermittent rather than constantly looping.
+- Drag/drop is theatrical, never mandatory. Every action needs click/tap and keyboard paths, and reduced-motion users get an immediate calm version.
+- Build order is functional sorter first, static stage second, motion third, power-user presets/batch actions fourth, then real art-archive integration and cross-width acceptance.
