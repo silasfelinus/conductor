@@ -15034,3 +15034,18 @@ records:
     Prisma's implicit VarChar(191) default, that inconsistency is itself the signal to
     check for -- grep every same-named column across the schema before assuming a single
     reported failure is isolated.
+- date: 2026-09-18
+  project: butterfly-gallery
+  task: t-018
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: quality
+  lesson: >-
+    A new component this repo's test:component-reachability check can't reach (not
+    mounted anywhere from app.vue/pages/layouts/content) fails CI deterministically
+    regardless of how clean the rest of the diff is. A "scoped slice" that adds a
+    component should mount it behind even a minimal admin toggle in the same PR,
+    not defer wiring to a following slice -- the reachability check is a hard
+    invariant on every PR, not advisory.
