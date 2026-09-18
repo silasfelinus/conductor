@@ -57,3 +57,24 @@ type: resolution
 **Kaizen task:** t-022 — Wire a runnable entrypoint that calls the t-005 importer against real scanner output.
 
 **Pattern note:** Two-cycle track record so far (t-004 rejected then fixed, t-005 clean first pass) — the Worker read and applied the t-004 lesson (re-read task wording precisely) visibly here: metadata retention was treated as a hard invariant even though promoting it to columns for every format was correctly scoped out.
+
+## 2026-09-18 | Agent (Claude, scheduled conductor run) | art-archive/t-006 | resolution
+
+type: resolution
+
+**Decision:** merged (self-implemented + self-reviewed in the same session)
+
+**Subject:** Implemented and merged `silasfelinus/kind_robots#2819` (confidence-ranked checkpoint/LoRA resource matching), closed t-006 `done`.
+
+**Detail:**
+- After reviewing/merging t-005 (kind_robots#2818) this session, `select_role.py` and the priority queue both pointed at art-archive/t-006 as the next ready task, so this session continued as Worker rather than stopping.
+- `matchArchiveResources()` matches A1111/ComfyUI-embedded checkpoint/LoRA evidence against active `CHECKPOINT`/`LORA`/`LYCORIS` Resources in tier order: embedded content hash > exact name (`localPath`/`name`/`customLabel`) > normalized basename > folder/file-name substring suggestion. A tier is only consulted once every tier above it produced zero matches; all candidates within the winning tier are returned (not narrowed to one), so a same-tier tie is visible as ambiguous rather than an arbitrary pick winning silently.
+- "Embedded ids" (the task note's top tier) was interpreted as the embedded content hash, since legacy archive files carry no Kind Robots Resource id at all — flagged explicitly for Reviewer/Silas in the PR body in case a different reading was intended.
+- Unmatched embedded evidence (name/hash/weight) is retained per checkpoint/LoRA slot for t-021's backlog; JPEG/WebP return no evidence rather than guessing from unstructured EXIF/XMP text (t-004 has no structured parse for those formats).
+- The isMature/isPublic-independence requirement is enforced structurally: a self-test scans the module's source (comments excluded) and fails if either identifier appears at all, not just documented in a comment.
+- Also wired t-005's `verifyArtArchiveImporter.mjs` into CI (`.github/workflows/contract-tests.yml`) — it shipped with kind_robots#2818 but nothing was running it, a real gap from the previous review.
+- Verified: eslint clean, `vue-tsc --noEmit` clean, new self-test (7 assertions) covers every tier plus the ambiguous-tie and structural-invariant cases, existing importer contract still passes. All 49 kind_robots CI checks green (the "Build production image" job ran long — ~12 minutes, cleanup steps after the actual build step had already succeeded — but never failed).
+
+**Kaizen task:** t-023 — Extend t-022's (not-yet-built) runnable entrypoint to report resource-match candidates per file, so match quality against the real archive is visible before t-007 automates anything.
+
+**Pattern note:** Third consecutive clean/well-scoped cycle on this project (t-004 rejected-then-fixed, t-005 and t-006 both clean). Worth continuing to watch whether the "flag the interpretation, defer to the narrower reading" habit (used here for both "embedded ids" and the folder-suggestion tier's scope) holds up under Silas's actual review — if he corrects either interpretation, that's useful signal for how literally to read future ambiguous task notes on this project.
