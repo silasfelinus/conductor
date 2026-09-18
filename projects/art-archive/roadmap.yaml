@@ -383,7 +383,7 @@ tasks:
   - id: t-012
     milestone: m3
     title: "Add delete/remove workflow with recoverable trash semantics"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-009
@@ -404,7 +404,13 @@ tasks:
       buttons. vue-tsc, eslint, the fileops unit tests (including two new restore-round-trip
       cases), kr-class-coverage, and the layout contract all pass. No manual browser
       click-through was possible in this sandbox. kind_robots#2846 open, CI running.
-    updated: '2026-09-18T17:49:13Z'
+
+      kind_robots#2846 merged (squash 78d845f), all checks green including Contract verifiers
+      and the production image build. Closing t-012: restore.post.ts (quarantine's exact
+      inverse), the preQuarantineRelativePath column, and the admin UI (Show trash toggle,
+      Trashed badge, Delete/Restore buttons) are all live. A manual browser click-through was
+      not possible in this sandbox -- flagged in the PR's test plan for a future spot-check.
+    updated: '2026-09-18T18:00:30Z'
     owner: worker
     claimed_by: claude-scheduled-20260918T172902Z-aa-t012
     claimed_at: '2026-09-18T17:29:03Z'
