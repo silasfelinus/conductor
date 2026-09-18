@@ -399,3 +399,13 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 - This project is also the deliberate trial run for autonomous project scaffolding. Silas: "if the
   agents can't create assets, then that should be part of this workflow". Asset-pipeline gaps are
   findings to fix and document (t-005), not reasons to descope.
+
+### art-archive  (software)
+**Direction (2026-09-17, new project):** Reconcile a large pre-Kind-Robots AI-art filesystem into the existing ArtImage/ArtCollection/Resource ecosystem, with an admin-only curation and regeneration workspace.
+**Notes:**
+- Imported archive images are ALWAYS `isPublic: false` and `isMature: true`; Resource maturity never changes that boundary.
+- The image's immediate parent folder names its folder-derived ArtCollection; nested paths disambiguate repeated folder names.
+- Scans are idempotent and preserve processed state, ratings, manual Resource corrections, moves, and missing-file history.
+- Resource matching may use smart/fuzzy candidate discovery, but only unique defensible matches auto-link. Manual choices win.
+- Existing ArtJob is the only generation queue. Imported art regeneration adapts stored provenance into normal ArtJobs.
+- The production archive root/mount is host configuration and remains a human gate; code should keep the root configurable.
