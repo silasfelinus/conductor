@@ -671,8 +671,8 @@ tasks:
   - id: t-021
     milestone: m5
     title: "Add batch selection and batch-action confirmation"
-    status: review
-    owner: worker
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
     depends_on:
@@ -683,9 +683,18 @@ tasks:
 
 
       Implemented the first t-021 slice: a pure batch execution/preview contract that deduplicates selected ids, flags destructive/expensive batches for confirmation, and preserves per-entry success/failure results so partial failures do not erase successful work. Store/page wiring remains before t-021 is complete.
+
+      Reviewer (Claude, conductor sweep): merged kind_robots#2853 (squash cfbd08d) -- pure
+      batch executor/preview contract (previewButterflyBatch, executeButterflyBatch) with
+      dedupe, destructive/expensive confirmation flagging, and partial-failure preservation.
+      Focused contract test added at utils/scripts/verifyButterflyGalleryBatch.test.ts. All 47
+      CI checks green, mergeable_state clean, no schema/API/deploy changes. This is a
+      deliberate first slice per the Worker's own PR note -- store/page wiring remains, so
+      returning task to ready rather than done.
     claimed_by: openai-scheduled-2026-09-18T221811Z-butterfly-gallery-t021-a11
     claimed_at: '2026-09-18T22:18:11Z'
-    updated: '2026-09-18T22:21:00Z'
+    updated: '2026-09-18T22:29:07Z'
+    implementation_pr: 'silasfelinus/kind_robots#2853'
 
   - id: t-022
     milestone: m5
