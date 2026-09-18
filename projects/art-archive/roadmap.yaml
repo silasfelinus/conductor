@@ -481,9 +481,9 @@ tasks:
   - id: t-021
     milestone: m2
     title: "Produce the missing checkpoint and LoRA acquisition backlog"
-    status: review
-    owner: worker
-    passes: 0
+    status: ready
+    owner: null
+    passes: 1
     stakes: reversible
     depends_on: t-006
     note: |-
@@ -491,9 +491,29 @@ tasks:
 
 
       Implemented a queryable missing checkpoint/LoRA backlog that deduplicates unresolved evidence, preserves candidate confidence and representative archive examples, and automatically excludes resources once reconciliation applies a unique match.
+
+
+      Reviewer rejection (pass 1, quality): kind_robots#2824's TypeScript check fails to
+      compile, reproduced locally on the PR branch. rawEvidence() in the new
+      artArchiveMissingResourceBacklog.ts reads metadata.a1111/metadata.comfy without first
+      narrowing ExtractedArchiveMetadata away from its JpegWebpMetadata branch (which has
+      neither field), plus one downstream implicit-any on the loraTokens.map() token param.
+      Full errors and suggested fix posted on kind_robots#2824. Not transient -- reproduced
+      identically outside CI. status: ready, passes: 1, retry_context set below.
     claimed_by: openai-scheduled-2026-09-18T071938Z-art-archive-t021-a1
     claimed_at: '2026-09-18T07:19:38Z'
-    updated: '2026-09-18T07:25:00Z'
+    updated: '2026-09-18T07:34:07Z'
+    retry_context: >
+      pass 1 failed (quality): TypeScript compile errors in
+      server/utils/artArchiveMissingResourceBacklog.ts (kind_robots#2824) --
+      metadata.a1111/metadata.comfy accessed without narrowing ExtractedArchiveMetadata away
+      from its JpegWebpMetadata branch first (TS2339 x2), plus an implicit-any on the
+      loraTokens.map() token param (TS7006). Do differently: discriminate the
+      ExtractedArchiveMetadata union on metadata.format/supported (matching how
+      artArchiveResourceMatch.ts / artArchiveMetadata.ts already narrow it) before touching
+      .a1111/.comfy, returning the empty { checkpoint: null, loras: [] } shape for the
+      non-PNG branch; add an explicit type for the map() callback param; run `npm run test`
+      (vue-tsc) locally before pushing.
 
   - id: t-022
     milestone: m2
