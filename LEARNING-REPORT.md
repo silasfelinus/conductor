@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-18T03:41:58Z
+Generated: 2026-09-18T03:43:58Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1008**
-- Outcomes: blocked: 16, cancelled: 1, done: 991
+- Closed tasks recorded: **1009**
+- Outcomes: blocked: 16, cancelled: 1, done: 992
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -21,7 +21,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | animation-studio | 2 | 50% |
 | appmaker | 11 | 100% |
 | approval-portal | 2 | 0% |
-| art-archive | 1 | 100% |
+| art-archive | 2 | 100% |
 | art-generator-connect | 3 | 100% |
 | brainstorm | 26 | 96% |
 | challenge-center | 16 | 100% |
@@ -70,13 +70,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 991 | 99% |
+| software | 992 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
-| quality | 27 |
+| quality | 28 |
 | transient | 16 |
 | actionable | 15 |
 | scope | 3 |
@@ -85,13 +85,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - project `coat-dance` — 11% success over 9 closed tasks; aim the next kaizen task here
 - kind `content` — 47% success over 17 closed tasks; aim the next kaizen task here
-- failure category `quality` — 27 occurrences; look for the shared cause across its records
+- failure category `quality` — 28 occurrences; look for the shared cause across its records
 - failure category `transient` — 16 occurrences; look for the shared cause across its records
 - failure category `actionable` — 15 occurrences; look for the shared cause across its records
 - failure category `scope` — 3 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-09-18 `art-archive/t-004` — A reviewer caught a real scope gap on the first pass: the task's own note said "extract available ... EXIF/text metadata" but the implementation returned supported:false for every JPEG/WebP unconditionally, reasoning (in the PR body) that PNG was "the format that actually carries this data in practice" -- true for AI-tool defaults, but the roadmap language was about what's AVAILABLE, not just the common case, and JPEG/WebP EXIF/XMP/COM can carry real provenance. Re-read a task's exact wording against the diff before calling something out of scope, especially when the shortcut is also the path of least implementation effort. Separately: Silas intervened directly on the implementation branch mid-cycle to correct an invented ART_ARCHIVE_ROOT env var to the already-existing PRIVATE_PATH convention -- when a human pushes directly to a branch you're working on, rebase your next commit on top of it rather than force-pushing over it; a plain rebase merged cleanly here since the files didn't overlap.
 - 2026-09-18 `art-archive/t-003` — First implementation cycle on a brand-new project (art-archive, scaffolded the same day). Following an existing sibling model's own loose-reference convention (ModelBuildItem.artImageId has no formal Prisma @relation) let this migration add a whole new ledger table without touching ArtImage/ArtCollection at all, keeping the Reviewer's additive-migration audit trivial. CI's "Replay migrations on MariaDB" job is the real backstop for a hand-authored migration.sql in a sandbox with no MIGRATION_DATABASE_URL -- it caught nothing here, but it is the check that would.
 - 2026-09-18 `storybook/t-010` — Same connectivity gap recurred immediately (select_role.py's urllib probe 403'd against cthulhuquarium again, producing reviewer-uncertain), but a direct GitHub MCP check on kind_robots again found the real open PR (#2813) the script's own failed calls weren't even probing. This is now the second session in a row hitting the identical pattern -- worth checking whether select_role.py's underlying_role fallback should itself try the GitHub MCP transport before giving up, rather than relying on every session to remember to cross-check by hand.
 - 2026-09-18 `storybook/t-010` — select_role.py's raw urllib GitHub probe 403'd in this sandbox as usual, but the underlying worker-branch PR (kind_robots#2811) was real and reviewable via the GitHub MCP tools -- cross-checking select_role.py's uncertain verdict against a working transport before falling back to its "worker" recommendation caught a genuine PR that a literal reading of the tool's own output would have missed. Reviewed, confirmed all 47 checks green and mergeable_state clean with a diff scoped to exactly the intended files, then squash-merged and re-armed the task to ready per the established recurring-polish precedent.
@@ -101,7 +102,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-17 `ruler-hooked/t-026` — Redesigning a discrete-action minigame (button REEL/SLACK/WAIT) into a continuous timing-bar input without breaking replay determinism was made tractable by keeping the animation purely client-side display and only ever sending the recorded stop position into a pure reducer -- the same "framework-free, never elapsed milliseconds" contract the rest of the engine already kept. Adding a `quality` parameter defaulting to 1 and proving byte-for-byte equivalence to the old formulas at quality=1 (self-test #8) gave a cheap, concrete regression guard for a refactor that touched core resolution math. Also confirmed prettier is not CI-enforced in kind_robots (no workflow runs `lint:prettier`/`npm run lint`) -- running it blind reformats unrelated code the task never touched; check for an enforcing workflow before applying a formatter repo-wide, and prefer reverting to the original eslint-clean formatting when it isn't enforced.
 - 2026-09-17 `storybook/t-052` — The task note offered two options (client migration vs. export) but the export mechanism (buildExport/downloadStory) was already fully built at ?legacy=1 -- the actual gap was discovery, not implementation. Read the existing code before assuming a roadmap task's two listed options are both still open; often one is already done and the task is really about surfacing it. Filed t-054 (waiting on t-037) so the banner does not become permanent dead code once the beat loop it points at is deleted.
 - 2026-09-17 `storybook/t-038` — Generalizing an existing dormant gate (EndingDeck.unlockAchievementId from t-033) into a shared isUnlocked/assertCastPlayable pair, rather than writing a parallel Character-specific gate function, kept the enforcement flag single and the contract guard simple to write. When a roadmap note says "same hook as X", check whether the prior task's implementation was already written generically enough to extend, before reaching for a second concept.
-- 2026-09-17 `model-builder/t-031` — A prior cycle's "browser fails on every HTTPS host" note was itself wrong for this sandbox class and would have been taken at face value if not re-verified directly (a 3-line Playwright probe against example.com + kindrobots.org before trusting an inherited claim). When a task note contradicts AGENTS.md's own documented working recipe for the same environment, re-run the cheapest possible check before accepting the note -- a stale/wrong claim from one session otherwise silently downgrades every session after it.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-18T03:41:58Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-18T03:43:58Z_
