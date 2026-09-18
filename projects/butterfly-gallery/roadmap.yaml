@@ -156,10 +156,14 @@ tasks:
       - t-003
       - t-004
     note: >
-      Render only the visible top portion of the pile, with lightweight
-      rotations/lift-on-hover and a clear remaining count. Selecting or dragging
-      a pile image promotes it into the central frame. The next image should
-      advance smoothly after a successful sort action.
+      Render the pile as a deep foreground mass of overlapping thumbnails that
+      rises from BELOW the viewport with NO box/container front. Only the upper
+      portion is visible, implying a much larger hidden backlog. It should be
+      tall enough to very slightly overlap the bottom edge of the central
+      display. Selecting or dragging an image promotes it into the large central
+      frame; the next image advances smoothly after a successful sort. The pile
+      remains a foreground DOM layer so it can occlude the lower-right robot
+      animation behind it.
     claimed_by: claude-scheduled-20260918T102941Z-butterfly-t005
     claimed_at: '2026-09-18T10:29:41Z'
     updated: '2026-09-18T10:29:41Z'
@@ -173,10 +177,13 @@ tasks:
     stakes: reversible
     depends_on: t-003
     note: >
-      Add reusable bins with side, label, icon, kind, payload, sort order, and
-      enabled state. Support drag hover/drop plus click/tap action fallback from
-      the selected frame. Start with fixture actions; keep bins visually
-      distinctive without turning the rails into a rainbow wall of noise.
+      The approved desktop composition has exactly FIVE large configurable
+      preset bins on the LEFT. They are data-driven multi-action presets, not
+      hard-coded meanings; mockup examples include 5★+collection, 4★+favorite
+      tag, 3★ keep-as-is, 2★+move, and 1★+archive. A successful preset marks the
+      item processed/done unless that preset explicitly opts out. Support drag
+      hover/drop plus click/tap fallback. The RIGHT side is not a second custom
+      bin rail: it is reserved for compact Image Info, Cleanup, and Trash.
 
   - id: t-007
     milestone: m2
@@ -203,10 +210,13 @@ tasks:
     stakes: reversible
     depends_on: t-004
     note: >
-      Show prompt, negative prompt, checkpoint, LoRAs, rating, processed state,
-      collection membership, resource-match state, and relevant extracted
-      metadata beside/below the central frame. Quick actions must remain usable
-      without drag/drop.
+      Implement the compact RIGHT-RAIL Image Info panel from the approved stage
+      spec. Keep it small enough not to compete with the main artwork: thumbnail
+      or identity, filename/title, prompt excerpt, dimensions, checkpoint/LoRAs,
+      rating, processed state, collection/match state as appropriate. Deeper
+      metadata belongs behind a Details/expand affordance. Immediately below it
+      are Cleanup and Trash actions; do not add Keep/Replace tiles unless Silas
+      later requests them.
 
   - id: t-009
     milestone: m2
@@ -232,11 +242,15 @@ tasks:
       - t-005
       - t-006
     note: >
-      Establish the steady-state room before motion: ceiling/trapdoor region,
-      central display frame, painting pile, left/right bins, peekaboo
-      window/opening, and restrained workshop/gallery background. Let mascot
-      color carry the rainbow; keep the room itself warm/dusky enough that user
-      art remains the focal point.
+      Implement APPROVED-STAGE-SPEC.md exactly: bright friendly minimalist
+      industrial warehouse; one long horizontal top runway/window behind a
+      convex yellow drop funnel; five custom preset bins left; large central
+      display; compact Image Info + Cleanup + Trash right; image pile rising
+      from below viewport and slightly overlapping the display. No in-scene page
+      header, no random copy, and NO living/acting things baked into the static
+      scene. Reserve explicit layer slots for top-runway animation, left
+      butterfly loop, lower-right robot-behind-pile loop, blank-state display
+      loop, and selected-image drop transition.
 
   - id: t-011
     milestone: m3
@@ -246,13 +260,13 @@ tasks:
     passes: 0
     stakes: reversible
     note: >
-      Use the existing Kind Robots image-generation/art pipeline to create or
-      refine layered assets: room background, closed/open trapdoor states,
-      painting pile base, empty central frame, bin shells, peekaboo window, and
-      small utility overlays. Queue Butterfly Gallery production art at ArtJob
-      priority 200, matching Daily Dream art and outranking Resource/LoRA
-      preview refill jobs. Assets should compose cleanly across desktop, tablet,
-      and narrow layouts rather than baking UI labels into images.
+      Productionize the approved scene as SEPARATE layers. The static background
+      contains warehouse architecture and structural mounts only: no butterflies,
+      robots, artwork pile, example art, moving conveyor content, or UI labels.
+      Produce structural runway/window and a CONVEX yellow funnel whose lower
+      bell/mouth is wider than its neck so art can visibly emerge downward.
+      Bins/frame/info are accessible DOM surfaces over the background. Queue any
+      generated Butterfly Gallery art at ArtJob priority 200.
 
   - id: t-012
     milestone: m4
@@ -262,11 +276,12 @@ tasks:
     passes: 0
     stakes: reversible
     note: >
-      Lock timing and beats before producing expensive motion: room appears,
-      trapdoor opens, framed pictures tumble into the pile, butterflies react,
-      then the scene settles and controls become fully active. Target roughly
-      2-4 seconds, skippable immediately, once per page/session by default, and
-      replace with an instant/subtle transition under prefers-reduced-motion.
+      Replace the older generic trapdoor storyboard with the approved motion
+      contract. The selected-image entry transition is deterministic DOM motion:
+      art emerges downward through the convex funnel, stretches comically long
+      vertically, then snaps/recoils to its true aspect ratio in the central
+      frame. Keep any first-visit intro short/skippable/session-aware. Reduced
+      motion uses a brief fade/scale instead of squash-and-stretch.
 
   - id: t-013
     milestone: m4
@@ -277,13 +292,14 @@ tasks:
     stakes: reversible
     depends_on: t-012
     note: >
-      Produce separate non-looping reusable clips/jobs for: frame-on-string
-      carrier, two-butterfly team carry, solo struggler, frame dragger,
-      peekaboo scout, simple cross-window flight, and rare oops/drop gag.
-      Source/generated still art feeding these jobs uses the project's priority
-      200 art tier. Reuse the existing animation creator rather than inventing a
-      new motion pipeline. Keep source art/frame layers suitable for compositing
-      user thumbnails separately.
+      Build animation-creator jobs for the APPROVED layers: (1) upper runway
+      passes behind the funnel: string carrier, team carry, solo struggler,
+      clean cross, rare failed/drop gag; (2) one transparent rainbow butterfly
+      foreground loop above the left bins: fly-in, hover/flap, settle/perch,
+      idle/reset; (3) one transparent Kind Robot foreground loop in the lower
+      right, BEHIND the pile: pick up/examine/shuffle pictures; and (4) a gentle
+      blank-state center-display loop used only while no ArtImage is selected.
+      No living thing may be baked into the background.
 
   - id: t-014
     milestone: m4
@@ -294,10 +310,12 @@ tasks:
     stakes: reversible
     depends_on: t-013
     note: >
-      Generate, inspect, and store the approved non-looping butterfly clips with
-      stable asset identity and transparent/composable presentation where the
-      current animation pipeline supports it. Reject clips whose framing makes
-      them impossible to reuse around arbitrary user artwork.
+      Generate, inspect, and catalog the approved reusable motion assets with
+      stable identities and transparent/composable presentation where supported:
+      top-runway butterfly/art passes, left foreground butterfly loop,
+      lower-right robot-sifting loop, and blank-state display loop. Verify the
+      robot can be partially occluded by the dynamic foreground pile and the top
+      passes fit the full horizontal runway while disappearing behind the funnel.
 
   - id: t-015
     milestone: m4
@@ -326,10 +344,12 @@ tasks:
       - t-010
       - t-014
     note: >
-      Schedule intermittent non-looping background passes through the peekaboo
-      window/opening and behind the working UI. Avoid constant loops, foreground
-      obstruction, or synchronized repetition. Pause/degrade motion when the tab
-      is hidden or reduced motion is requested.
+      Implement the long upper runway scheduler from APPROVED-STAGE-SPEC.md:
+      varied butterfly+art passes travel across the full horizontal window and
+      are clipped/occluded behind the central funnel. This is the ONLY
+      background-area character animation. No static butterfly silhouettes or
+      robots appear in the warehouse backdrop. Pause when hidden and suppress
+      under reduced motion.
 
   - id: t-017
     milestone: m4
@@ -343,10 +363,11 @@ tasks:
       - t-006
       - t-010
     note: >
-      Animate pile selection, central-frame settle, drag-target highlight,
-      successful bin acceptance, and next-image rise. Keep hit targets generous
-      and deterministic; no free-physics behavior may make a valid drop hard to
-      complete.
+      Animate pile selection, drag-target highlight, successful bin acceptance,
+      next-image reveal, and the approved selected-image funnel transition:
+      exaggerated vertical stretch while dropping, then snap/squash back to
+      correct aspect ratio on arrival. No crane exists; selection automatically
+      places the art. Keep every interaction deterministic and easy to drop.
 
   - id: t-018
     milestone: m5
