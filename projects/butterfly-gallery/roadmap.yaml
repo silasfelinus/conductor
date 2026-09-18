@@ -421,21 +421,36 @@ tasks:
   - id: t-015
     milestone: m4
     title: "Implement intro orchestration with trapdoor, picture fall, and session memory"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on:
       - t-010
       - t-012
-    note: >
+    note: >-
       Orchestrate DOM/asset motion rather than making the entire page one giant
       video. Intro never blocks navigation indefinitely, exposes Skip, records
       that it played for the intended session scope, and leaves the exact same
       steady-state DOM the user will interact with afterward.
+
+      Worker/Reviewer (Claude, scheduled conductor run, same session): implemented and merged
+      silasfelinus/kind_robots#2842 -- stores/helpers/butterflyGalleryIntro.ts (pure,
+      deterministic trapdoor/tumble/settle beat timing + tumble-frame trajectory planner,
+      directly unit-tested) plus pages/butterfly-gallery.vue orchestration (trapdoor cue,
+      staggered tumble frames, Skip button, 3.2s hard timeout, reduced-motion at-mount and
+      mid-intro handling, Escape-invokes-Skip, full timer/listener cleanup on finish/unmount).
+      Verified: vue-tsc, eslint, prettier, new test:butterfly-gallery-intro plus the existing
+      actions/filters/motion suites, and the full cross-project guard suite (layout-contract,
+      kr-class-coverage, gallery-adoption, gallery-consistency, disabled-affordances, no-
+      promise-in-store-state, card-action-contract) -- all clean. 51/51 CI checks green,
+      mergeable_state clean, merged. No visual/browser verification was possible in this non-
+      interactive session (flagged in the PR body), matching the same honest gap t-017's PR
+      (kind_robots#2841) flagged.
     claimed_by: claude-scheduled-20260918T154441Z-butterfly-t015
     claimed_at: '2026-09-18T15:44:44Z'
-    updated: '2026-09-18T15:44:44Z'
+    updated: '2026-09-18T16:01:11Z'
+    implementation_pr: 'silasfelinus/kind_robots#2842'
 
   - id: t-016
     milestone: m4
