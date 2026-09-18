@@ -169,6 +169,30 @@ an admin review queue with evidence.
 Manual selections win forever until Silas explicitly unlocks them. A later
 rescan must never "improve" a human correction away.
 
+## Missing Resource backlog
+
+Some legacy images will identify their checkpoint/LoRAs cleanly, some will
+provide only names or hashes, and some will reference models that are no longer
+present in the current Resource catalog. None of those cases should block the
+image itself from being imported.
+
+Unresolved provenance becomes a durable acquisition backlog. Aggregate and
+deduplicate entries by the strongest available identity evidence while
+retaining:
+
+- raw checkpoint/LoRA name or filename/token;
+- embedded model hash when available;
+- likely Resource type;
+- occurrence count across archive images;
+- representative ArchiveEntry/ArtImage examples;
+- candidate active Resources and confidence/evidence;
+- resolved/unresolved state.
+
+This backlog should be visible from the admin archive workflow and exportable
+for manual research. Adding a missing Resource later should allow reconciliation
+to attach it to affected ArtImages automatically where the new match is
+unambiguous. The source images do not need to be re-imported.
+
 ## Admin surface
 
 This belongs inside the existing admin navigation, not a new top-level channel.
@@ -263,13 +287,20 @@ Treat the collection as large from the beginning.
 
 ## Production root
 
-The archive path is configuration, not code. Do not hardcode a workstation or
-Unraid absolute path.
+The production mount is already established:
 
-The production container will need an explicit read/write mount for the chosen
-media-server directory. Code work can proceed against a configured root before
-that host-level mount is approved. The actual production mount remains a human
-gate.
+- host: `/mnt/user/pc/kindrobots/private`
+- container: `/app/private`
+- container variable: `PRIVATE_PATH=/app/private`
+
+The archive scanner should consume `PRIVATE_PATH` directly. Do not add a second
+archive-root environment variable and do not hardcode the Unraid host path into
+application code. Local/dev runs may point `PRIVATE_PATH` at a different test
+directory or use an explicit dry-run CLI override.
+
+The first batch of archive files is already present. More files and folders will
+be added over time, so incremental reconciliation is a permanent workflow rather
+than a one-time import.
 
 ## Definition of done
 
