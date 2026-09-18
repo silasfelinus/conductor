@@ -580,21 +580,18 @@ tasks:
   - id: t-020
     milestone: m5
     title: "Add keyboard, touch, and accessible non-drag workflows"
-    status: claimed
-    owner: worker
+    status: ready
     passes: 0
     stakes: reversible
     depends_on:
       - t-006
       - t-008
-    note: >
-      Every bin/action is reachable via focus and keyboard and usable on touch
-      without requiring a drag gesture. Provide visible selected/focus states,
-      useful announcements, and keyboard shortcuts for high-frequency sorting
-      where they do not conflict with browser/app navigation.
-    claimed_by: claude-scheduled-20260918T170554Z-bg-t020
-    claimed_at: '2026-09-18T17:05:55Z'
-    updated: '2026-09-18T17:05:55Z'
+    note: |-
+      Every bin/action is reachable via focus and keyboard and usable on touch without requiring a drag gesture. Provide visible selected/focus states, useful announcements, and keyboard shortcuts for high-frequency sorting where they do not conflict with browser/app navigation.
+
+
+      Reviewer openai-scheduled-2026-09-18T171754Z-butterfly-gallery-pr2845-a1 found a quality issue in kind_robots#2845: window-global Delete/digit/arrow shortcuts intercept keys outside gallery-owned focus, including a recoverable destructive trash action. Scope shortcuts to a gallery interaction region or gallery-owned focus and add a focused shortcut-guard contract before retrying. Existing ARIA live status, aria-pressed, discoverability hints, click/tap fallback, and focus-visible treatment otherwise fit t-020.
+    updated: '2026-09-18T17:17:54Z'
 
   - id: t-021
     milestone: m5
