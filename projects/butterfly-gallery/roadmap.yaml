@@ -580,21 +580,33 @@ tasks:
   - id: t-020
     milestone: m5
     title: "Add keyboard, touch, and accessible non-drag workflows"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on:
       - t-006
       - t-008
-    note: >
+    note: >-
       Every bin/action is reachable via focus and keyboard and usable on touch
       without requiring a drag gesture. Provide visible selected/focus states,
       useful announcements, and keyboard shortcuts for high-frequency sorting
       where they do not conflict with browser/app navigation.
+
+      Worker (Claude, scheduled conductor run): implemented keyboard (digits 1-5 sort by
+      rating, Delete trashes, ArrowLeft/ArrowRight move pile selection), aria-live
+      announcement of the store's existing lastSaveMessage, aria-keyshortcuts/title
+      discoverability hints, aria-pressed on pile cards, and distinct :focus-visible outlines
+      on preset bins/right-rail actions/pile cards. Click/tap reachability already existed
+      from t-006 (native button elements with @click fallbacks); this closes the remaining
+      keyboard-shortcut and announcement gap. vue-tsc, eslint, and prettier all clean.
+      kind_robots#2845 open, CI running. No manual browser keyboard-only pass was possible in
+      this sandbox (no browser session) -- flagged in the PR body as the one unchecked test-
+      plan item.
     claimed_by: claude-scheduled-20260918T170554Z-bg-t020
     claimed_at: '2026-09-18T17:05:55Z'
-    updated: '2026-09-18T17:05:55Z'
+    updated: '2026-09-18T17:18:58Z'
+    implementation_pr: 'silasfelinus/kind_robots#2845'
 
   - id: t-021
     milestone: m5
