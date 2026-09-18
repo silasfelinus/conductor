@@ -1,0 +1,9 @@
+version: 1
+project: butterfly-gallery
+task: t-021
+operation: review
+owner: worker
+session: openai-scheduled-2026-09-18T231902Z-butterfly-gallery-t021-a11
+updated: '2026-09-18T23:22:00Z'
+note: >-
+  Added the second t-021 slice: a Pinia batch orchestration store now prepares bin batches, requires confirmation for trash or generation-backed presets, executes selected entries independently through the existing gallery drop/action seam, preserves partial failures, and removes only successful ids from batch selection. Page selection/confirmation UI remains before t-021 is complete.
