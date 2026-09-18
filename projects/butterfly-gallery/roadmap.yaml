@@ -104,19 +104,23 @@ tasks:
   - id: t-003
     milestone: m1
     title: "Create /butterfly-gallery shell, store, and scene state machine"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
+    note: >-
       Build the route and Pinia/store state for loading, intro, ready, dragging,
       dropping, saving, rescanning, and error states. Include selected image,
       pile/queue entries, bin configuration, filters, batch selection, and
       intro-played state. Use fixture/private ArtImage data initially so this
       work does not wait on art-archive integration.
+
+      Merged kind_robots#2830: route+store+state machine landed as described. Downstream
+      t-005/t-006/t-008/t-009 unblock via resolve_deps.py.
     claimed_by: 2026-09-18T09-30-00-conductor-agent-run-t003
     claimed_at: '2026-09-18T09:30:20Z'
-    updated: '2026-09-18T09:41:12Z'
+    updated: '2026-09-18T09:46:49Z'
+    implementation_pr: 'silasfelinus/kind_robots#2830'
 
   - id: t-004
     milestone: m1
