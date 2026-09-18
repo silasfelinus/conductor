@@ -2462,6 +2462,65 @@ tasks:
   claimed_at: '2026-09-16T21:42:37Z'
   implementation_pr: 'silasfelinus/kind_robots#2785'
 
+- id: t-109
+  milestone: m6
+  title: 'SECURITY: entity previews now serve from an unauthenticated static route, losing revocable access control for private/mature images'
+  status: needs-human
+  gate_human: true
+  stakes: outward-facing
+  owner: null
+  passes: 0
+  note: |
+    FOR SILAS: kind_robots PR #2814 ("Serve entity previews from disk, not the authenticated
+    API route"), merged 2026-09-18T01:44:03Z (you merged it yourself, in-session), fixes a real
+    UX bug (flickering/missing previews) but introduces a content-exposure regression the PR's
+    own framing did not surface, in server/utils/entityArt.ts's applyEntityArtImage.
+
+    What it contains: previously every entity's imagePath pointed at
+    `/api/art/images/:id/file`, which re-checks `mayView` (isPublic && !isMature for anonymous
+    requests, or owner/admin via Bearer auth) on EVERY request -- so access is revoked
+    immediately if the record later goes private, gets flagged mature, or is deactivated. The
+    route itself already redirected (302) to the same static file once mayView passed, but an
+    unauthorized viewer never learned that static URL, because they were 403'd before reaching
+    the redirect. PR #2814 now writes the entity's imagePath as the raw static URL
+    (`/images/...`) directly whenever one exists, unconditionally -- not gated on
+    isPublic/isMature at all. That static route (server/routes/images/[...path].get.ts) streams
+    any file under the image storage root with NO authentication or authorization check
+    whatsoever; it is pure path-based file serving.
+
+    Concrete failure scenario: a user generates a mature or otherwise private Character/
+    Resource/Bot/Reward preview, someone with legitimate access loads the page once (the
+    owner, an admin, or a viewer while the record was briefly public), and the raw static URL
+    now sits in that browser's history/cache/devtools/any proxy log along the way. The user
+    later marks the record private, or a moderator flags it mature, or the account is
+    restricted (e.g. a CHILD-consent case, which this same PR's diff explicitly discusses
+    elsewhere via effectiveShowMature). Under the OLD code, that revocation takes effect
+    immediately -- the next fetch of `/api/art/images/:id/file` re-evaluates mayView and 403s.
+    Under the NEW code, the raw `/images/...` URL keeps serving the exact same bytes forever,
+    to anyone who ever obtained it, with no re-check against current visibility/ownership at
+    all. This does not create a NEW way for an unauthorized viewer to discover the URL in the
+    first place (entity-level `visibilityWhere`/`viewerShowsMature` gating from kind_robots#2808,
+    merged the day before, still keeps the entity's own metadata -- including this same
+    imagePath field -- out of a response to a viewer who cannot see the entity), but it
+    permanently removes the ability to REVOKE access once a URL has legitimately left the
+    server once. That is a meaningful narrowing of the app's privacy/moderation guarantees for
+    exactly the content classes (mature, private) this system otherwise goes out of its way to
+    protect.
+
+    TO APPROVE: decide whether this tradeoff is acceptable (static-file performance/reliability
+    vs. losing per-request revocation for private/mature previews), and if not, the fix is
+    narrow: in applyEntityArtImage, only prefer the static path when
+    `target.record.isPublic && !target.record.isMature` (mirroring file.get.ts's own anonymous
+    `mayView` rule); keep routing through `/api/art/images/:id/file` for anything private or
+    mature, exactly as before, so `mayView` keeps being re-checked on every fetch. Set
+    approved_by_human: true and status: done once you've decided (either "acceptable, no
+    change" or "pointer to the fix PR").
+
+    What unblocks when he does: none, this is a standalone finding, not a dependency for other
+    work -- filed here rather than silently merged into the pile of #2814's fixes so it doesn't
+    get lost.
+  updated: '2026-09-18T01:50:00Z'
+
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
