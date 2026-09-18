@@ -176,22 +176,19 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement idempotent private+mature ArtImage and folder-ArtCollection import"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-004
-    note: >
-      Reconcile scanner entries into ArtImage records with isPublic=false and
-      isMature=true every time, never inferred from Resource metadata. Create or
-      reuse a private+mature folder ArtCollection based on the image's immediate
-      parent folder. Use parentFolder/full relative path to disambiguate repeated
-      folder names. Re-scans must not duplicate existing content. A missing or
-      unresolved checkpoint/LoRA never blocks image import; retain its raw
-      metadata for later reconciliation.
+    note: |-
+      Reconcile scanner entries into ArtImage records with isPublic=false and isMature=true every time, never inferred from Resource metadata. Create or reuse a private+mature folder ArtCollection based on the image's immediate parent folder. Use parentFolder/full relative path to disambiguate repeated folder names. Re-scans must not duplicate existing content. A missing or unresolved checkpoint/LoRA never blocks image import; retain its raw metadata for later reconciliation.
+
+
+      Implemented an idempotent archive importer on a worker branch. It creates/reuses deterministic folder collections, forces archive ArtImages and collections private+mature on every pass, preserves extracted metadata, and reconnects existing ledger-linked images rather than duplicating them.
     claimed_by: openai-scheduled-2026-09-18T111821Z-art-archive-t005-a1
     claimed_at: '2026-09-18T11:18:21Z'
-    updated: '2026-09-18T11:18:21Z'
+    updated: '2026-09-18T11:24:00Z'
 
   - id: t-006
     milestone: m2
