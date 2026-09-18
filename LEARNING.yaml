@@ -14628,3 +14628,20 @@ records:
     option as if it fully satisfied the note, or scope-creeping to build
     both) keeps the task's actual delivered scope honest and visible in the
     roadmap.
+- date: '2026-09-18'
+  project: art-archive
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Clean first-pass implementation of high-confidence resource-provenance
+    application: only writes ArtImage.checkpointResourceId/LoraResources from
+    unique hash/exact-name matches, records ambiguous/suggested/unmatched
+    evidence for later review instead of guessing, and skips
+    resourceMatchLocked entries so a manual admin correction is never
+    silently overwritten. Kaizen follow-on (surfacing match-quality
+    candidates before auto-apply) was already filed as t-023, so no new
+    kaizen task was needed on this close-out.
