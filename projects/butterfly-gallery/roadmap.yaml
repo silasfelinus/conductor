@@ -671,7 +671,7 @@ tasks:
   - id: t-021
     milestone: m5
     title: "Add batch selection and batch-action confirmation"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -691,9 +691,11 @@ tasks:
       CI checks green, mergeable_state clean, no schema/API/deploy changes. This is a
       deliberate first slice per the Worker's own PR note -- store/page wiring remains, so
       returning task to ready rather than done.
+
+      Added the second t-021 slice: a Pinia batch orchestration store now prepares bin batches, requires confirmation for trash or generation-backed presets, executes selected entries independently through the existing gallery drop/action seam, preserves partial failures, and removes only successful ids from batch selection. Page selection/confirmation UI remains before t-021 is complete.
     claimed_by: openai-scheduled-2026-09-18T231902Z-butterfly-gallery-t021-a11
     claimed_at: '2026-09-18T23:19:02Z'
-    updated: '2026-09-18T23:19:02Z'
+    updated: '2026-09-18T23:22:00Z'
     implementation_pr: 'silasfelinus/kind_robots#2853'
 
   - id: t-022
