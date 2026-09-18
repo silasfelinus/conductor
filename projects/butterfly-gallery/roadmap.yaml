@@ -188,12 +188,12 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Build configurable left/right sorting-bin rails"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     depends_on: t-003
-    note: >
+    note: >-
       The approved desktop composition has exactly FIVE large configurable
       preset bins on the LEFT. They are data-driven multi-action presets, not
       hard-coded meanings; mockup examples include 5★+collection, 4★+favorite
@@ -201,6 +201,15 @@ tasks:
       item processed/done unless that preset explicitly opts out. Support drag
       hover/drop plus click/tap fallback. The RIGHT side is not a second custom
       bin rail: it is reserved for compact Image Info, Cleanup, and Trash.
+
+      Shipped in kind_robots#2834 (Silas's own live session, "build approved sorting stage"):
+      exactly five configurable preset bins on the left (rating/collection/tag presets via
+      fixture `preset` payload), right side reserved for Image Info/Cleanup/Trash (not a
+      second bin rail), drag hover/drop plus click/tap fallback on each preset button.
+      Reconciled by the Reviewer session that also shipped t-005 and hit a merge conflict
+      against this PR on pages/butterfly-gallery.vue.
+    updated: '2026-09-18T11:11:02Z'
+    implementation_pr: 'silasfelinus/kind_robots#2834'
 
   - id: t-007
     milestone: m2
