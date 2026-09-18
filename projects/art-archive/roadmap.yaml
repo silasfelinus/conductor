@@ -176,7 +176,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement idempotent private+mature ArtImage and folder-ArtCollection import"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -186,9 +186,23 @@ tasks:
 
 
       Implemented an idempotent archive importer on a worker branch. It creates/reuses deterministic folder collections, forces archive ArtImages and collections private+mature on every pass, preserves extracted metadata, and reconnects existing ledger-linked images rather than duplicating them.
+
+      Reviewed and merged kind_robots#2818 (session openai-scheduled-2026-09-18T111821Z-art-
+      archive-t005-a1). Diff: server/utils/artArchiveImporter.ts
+      (+utils/scripts/verifyArtArchiveImporter.mjs), +188/-0. Forces
+      isPublic=false/isMature=true on every pass for both ArtImage and its folder
+      ArtCollection; folder identity keyed on sha256 of the full parent path (not the leaf
+      name), avoiding repeated-folder-name collisions; idempotent via
+      ArchiveEntry.relativePath lookup, reconnecting an existing ledger-linked ArtImage rather
+      than duplicating; raw scanner metadata preserved verbatim in extractedMetadata for
+      t-006's later Resource reconciliation. No schema/DB changes. All 47 kind_robots CI
+      checks green, mergeable_state clean. Posted REVIEWING marker before review. t-006
+      (confidence-ranked Resource matching) and t-008 (repeatable reconciliation) are now
+      unblocked.
     claimed_by: openai-scheduled-2026-09-18T111821Z-art-archive-t005-a1
     claimed_at: '2026-09-18T11:18:21Z'
-    updated: '2026-09-18T11:24:00Z'
+    updated: '2026-09-18T04:30:09Z'
+    implementation_pr: 'silasfelinus/kind_robots#2818'
 
   - id: t-006
     milestone: m2
@@ -431,3 +445,19 @@ tasks:
       Resources later. Once a Resource is added, the normal reconciliation path
       should re-attempt matching and clear resolved backlog entries without
       re-importing the image.
+
+  - id: t-022
+    milestone: m2
+    title: "Wire a runnable entrypoint that calls the t-005 importer against real scanner output"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      t-004 shipped utils/scripts/scanArtArchive.ts as a CLI entrypoint for the
+      dry-run scanner, but t-005's importArchiveScan()/importArchiveFile() are
+      exported functions with no script or admin route that actually invokes
+      them against scanArchiveRoot()'s live output. Without this, the importer
+      cannot be run against the real archive at all. Add a CLI script (mirroring
+      scanArtArchive.ts's shape) or an admin-gated endpoint that feeds scanner
+      results into the importer and reports created/reused counts.
