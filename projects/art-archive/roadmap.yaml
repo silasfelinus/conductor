@@ -247,44 +247,44 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Apply high-confidence resource provenance while preserving manual corrections"
-    status: waiting
-    owner: null
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-006
-    note: >
-      Populate ArtImage.checkpointResourceId and LoraResources only from unique,
-      defensible matches. Store unresolved/ambiguous candidates for admin review.
-      A manual resource choice locks that field against future automatic scans
-      until explicitly unlocked.
+    note: |-
+      Populate ArtImage.checkpointResourceId and LoraResources only from unique, defensible matches. Store unresolved/ambiguous candidates for admin review. A manual resource choice locks that field against future automatic scans until explicitly unlocked.
+
+
+      Roadmap-auditor repair: dependency t-006 is done, so this waiting task is now eligible for work.
+    updated: '2026-09-18T05:18:45Z'
 
   - id: t-008
     milestone: m2
     title: "Add repeatable reconciliation for newly dropped, copied, moved, changed, and missing files"
-    status: waiting
-    owner: null
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-005
-    note: >
-      Reconciliation, not a fragile filesystem watcher, is the source of truth.
-      Manual rescan plus a safe scheduled/accelerated scan should make newly
-      dropped files appear automatically. Content hash distinguishes moves from
-      changes where possible; missing files are marked, not silently deleted.
+    note: |-
+      Reconciliation, not a fragile filesystem watcher, is the source of truth. Manual rescan plus a safe scheduled/accelerated scan should make newly dropped files appear automatically. Content hash distinguishes moves from changes where possible; missing files are marked, not silently deleted.
+
+
+      Roadmap-auditor repair: dependency t-005 is done, so this waiting task is now eligible for work.
+    updated: '2026-09-18T05:18:46Z'
 
   - id: t-009
     milestone: m3
     title: "Add admin-only archive APIs for browse/filter/detail and safe filesystem actions"
-    status: waiting
-    owner: null
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-005
-    note: >
-      Require admin authentication and mature-content permission. Support folder,
-      collection, processed state, rating, resource-match state, and search
-      filters. File moves/deletes must be root-confined and path-traversal safe.
-      Automatic scans never move/delete anything.
+    note: |-
+      Require admin authentication and mature-content permission. Support folder, collection, processed state, rating, resource-match state, and search filters. File moves/deletes must be root-confined and path-traversal safe. Automatic scans never move/delete anything.
+
+
+      Roadmap-auditor repair: dependency t-005 is done, so this waiting task is now eligible for work.
+    updated: '2026-09-18T05:18:47Z'
 
   - id: t-010
     milestone: m3
@@ -450,7 +450,7 @@ tasks:
   - id: t-021
     milestone: m2
     title: "Produce the missing checkpoint and LoRA acquisition backlog"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
