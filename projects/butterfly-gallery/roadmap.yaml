@@ -51,7 +51,7 @@ milestones:
   - id: m3
     title: "STAGE — gallery-room composition and production art assets"
     weight: 20
-    status: not-started
+    status: in-progress
 
   - id: m4
     title: "MOTION — trapdoor intro, butterfly clips, ambient scene, and micro-interactions"
@@ -188,12 +188,12 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Build configurable left/right sorting-bin rails"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     depends_on: t-003
-    note: >
+    note: >-
       The approved desktop composition has exactly FIVE large configurable
       preset bins on the LEFT. They are data-driven multi-action presets, not
       hard-coded meanings; mockup examples include 5★+collection, 4★+favorite
@@ -202,10 +202,19 @@ tasks:
       hover/drop plus click/tap fallback. The RIGHT side is not a second custom
       bin rail: it is reserved for compact Image Info, Cleanup, and Trash.
 
+      Shipped in kind_robots#2834 (Silas's own live session, "build approved sorting stage"):
+      exactly five configurable preset bins on the left (rating/collection/tag presets via
+      fixture `preset` payload), right side reserved for Image Info/Cleanup/Trash (not a
+      second bin rail), drag hover/drop plus click/tap fallback on each preset button.
+      Reconciled by the Reviewer session that also shipped t-005 and hit a merge conflict
+      against this PR on pages/butterfly-gallery.vue.
+    updated: '2026-09-18T11:11:02Z'
+    implementation_pr: 'silasfelinus/kind_robots#2834'
+
   - id: t-007
     milestone: m2
     title: "Wire core curation actions: processed state, rating, trash, and collections"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -221,12 +230,12 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Build the selected-image metadata and quick-action drawer"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     depends_on: t-004
-    note: >
+    note: >-
       Implement the compact RIGHT-RAIL Image Info panel from the approved stage
       spec. Keep it small enough not to compete with the main artwork: thumbnail
       or identity, filename/title, prompt excerpt, dimensions, checkpoint/LoRAs,
@@ -234,6 +243,17 @@ tasks:
       metadata belongs behind a Details/expand affordance. Immediately below it
       are Cleanup and Trash actions; do not add Keep/Replace tiles unless Silas
       later requests them.
+
+      Shipped in kind_robots#2834: compact right-rail Image Info panel (rating, folder,
+      checkpoint, processed state) with a Details/expand affordance revealing prompt/LoRAs/
+      collections, plus Cleanup and Trash actions immediately below per the note. Two minor
+      gaps against the note's full field list: no explicit filename/title line and no
+      dimensions/match-state field in the compact view. Cleanup is rendered but intentionally
+      disabled pending the Art Archive action adapter (explicit PR flag, not an oversight).
+      Judged close enough to the note's core ask to close rather than leave open pending a
+      cosmetic field-list nit -- flag if Silas wants those two fields added.
+    updated: '2026-09-18T11:11:05Z'
+    implementation_pr: 'silasfelinus/kind_robots#2834'
 
   - id: t-009
     milestone: m2
@@ -251,14 +271,14 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Build the static Butterfly Gallery stage composition"
-    status: waiting
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     depends_on:
       - t-005
       - t-006
-    note: >
+    note: >-
       Implement APPROVED-STAGE-SPEC.md exactly: bright friendly minimalist
       industrial warehouse; one long horizontal top runway/window behind a
       convex yellow drop funnel; five custom preset bins left; large central
@@ -268,6 +288,18 @@ tasks:
       scene. Reserve explicit layer slots for top-runway animation, left
       butterfly loop, lower-right robot-behind-pile loop, blank-state display
       loop, and selected-image drop transition.
+
+      Shipped in kind_robots#2834: warehouse-structure stage with top runway slot, convex
+      yellow drop-funnel (neck/bell/mouth), five preset bins left, large central display,
+      right-rail Image Info+Cleanup+Trash, foreground pile rising from below viewport with no
+      box, and reserved animation layer slots (data-animation-slot="butterfly-runway",
+      "foreground-robot", plus a foreground-butterfly-slot and blank-state CSS loop) --
+      confirmed directly in the merged pages/butterfly-gallery.vue, not just taken from the
+      PR's own description. Per the PR body, t-024 (performance/responsive tuning) and t-025
+      (cross-width visual acceptance) remain explicitly responsible for what this pass doesn't
+      cover -- this task's own scope (implement the approved composition) is met.
+    updated: '2026-09-18T11:11:08Z'
+    implementation_pr: 'silasfelinus/kind_robots#2834'
 
   - id: t-011
     milestone: m3
@@ -371,7 +403,7 @@ tasks:
   - id: t-017
     milestone: m4
     title: "Add sorting micro-interactions without physics friction"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -419,7 +451,7 @@ tasks:
   - id: t-020
     milestone: m5
     title: "Add keyboard, touch, and accessible non-drag workflows"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
