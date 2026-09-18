@@ -15002,3 +15002,16 @@ records:
     row via isActive: false. Also: `prisma format`/`prisma generate` in this sandbox
     reformats every .prisma file and regenerates the whole client, not just the one
     touched -- always diff and revert unrelated files before committing a schema change.
+- date: '2026-09-18'
+  project: art-archive
+  task: t-013
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A field can be filterable and displayed in an admin browser for a while before
+    anyone notices nothing ever writes it -- when a task note says "expose fast rating
+    actions" for a field that already exists in the schema and the read path, check the
+    write path specifically before assuming only UI wiring is missing.
