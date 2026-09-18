@@ -207,7 +207,7 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Build confidence-ranked matching from legacy metadata to active checkpoint and LoRA Resources"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -234,9 +234,15 @@ tasks:
       ambiguous ties, CHECKPOINT/LORA pool separation, unmatched backlog retention,
       unsupported-format short-circuit, and the isMature/isPublic structural invariant. vue-
       tsc running; PR opens once clean.
+
+      Merged kind_robots#2819. All 49 CI checks green (including the new resource-match self-
+      test and t-005's now-wired importer contract), mergeable_state clean before merge. t-007
+      (apply high-confidence provenance) and t-021 (missing-Resource backlog) can now consume
+      matchArchiveResources()'s output directly.
     claimed_by: claude-scheduled-20260918T043218Z-artarchive-t006-a1
     claimed_at: '2026-09-18T04:32:19Z'
-    updated: '2026-09-18T04:39:44Z'
+    updated: '2026-09-18T04:53:08Z'
+    implementation_pr: 'silasfelinus/kind_robots#2819'
 
   - id: t-007
     milestone: m2
