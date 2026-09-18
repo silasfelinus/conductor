@@ -30,6 +30,14 @@ notes_from_silas: |
   may suggest candidates, but ambiguous matches must remain reviewable instead
   of being silently attached.
 
+  Production archive storage is already mounted read/write from
+  /mnt/user/pc/kindrobots/private to /app/private, with PRIVATE_PATH=/app/private.
+  The first batch of files is present now and more will be added over time.
+
+  Missing checkpoints and LoRAs are expected. Import must continue when a model
+  cannot be resolved, preserving the raw embedded name/hash/token evidence and
+  producing a deduplicated backlog of Resources to locate and add later.
+
 milestones:
   - id: m1
     title: "SAFETY + INDEX - durable archive ledger, scanner, and privacy invariants"
@@ -126,12 +134,15 @@ tasks:
     stakes: reversible
     depends_on: t-003
     note: >
-      Scan the configured archive root recursively without mutating files.
-      Recognize supported image formats, compute a stable content hash, capture
-      relative path/parent folder/size/mtime, and extract available A1111 PNG
-      parameters, Comfy prompt/workflow metadata, EXIF/text metadata, prompt,
-      negative prompt, seed, CFG, sampler, checkpoint names, and LoRA tokens.
-      Every resolved path must remain inside the configured root.
+      Scan PRIVATE_PATH recursively without mutating files. Production already
+      provides PRIVATE_PATH=/app/private, backed by
+      /mnt/user/pc/kindrobots/private. Recognize supported image formats, compute
+      a stable content hash, capture relative path/parent folder/size/mtime, and
+      extract available A1111 PNG parameters, Comfy prompt/workflow metadata,
+      EXIF/text metadata, prompt, negative prompt, seed, CFG, sampler,
+      checkpoint names, hashes, and LoRA tokens. Every resolved path must remain
+      inside the configured root. PR #2816 was corrected during review to use
+      the existing PRIVATE_PATH contract rather than invent ART_ARCHIVE_ROOT.
     claimed_by: claude-scheduled-20260918T023103Z-artarchive-t004
     claimed_at: '2026-09-18T03:09:15Z'
     updated: '2026-09-18T03:09:42Z'
@@ -150,7 +161,9 @@ tasks:
       isMature=true every time, never inferred from Resource metadata. Create or
       reuse a private+mature folder ArtCollection based on the image's immediate
       parent folder. Use parentFolder/full relative path to disambiguate repeated
-      folder names. Re-scans must not duplicate existing content.
+      folder names. Re-scans must not duplicate existing content. A missing or
+      unresolved checkpoint/LoRA never blocks image import; retain its raw
+      metadata for later reconciliation.
 
   - id: t-006
     milestone: m2
@@ -163,9 +176,11 @@ tasks:
     note: >
       Match only active Resources with compatible types. Prefer embedded ids,
       then exact localPath/name/customLabel and normalized basename matches,
-      then parsed A1111/Comfy model and LoRA names. Folder/file-name clues and
-      fuzzy matching are suggestions only. Return candidates with evidence and
-      confidence; never let a Resource's maturity flag alter ArtImage privacy.
+      then parsed A1111/Comfy model and LoRA names/hashes. Folder/file-name clues
+      and fuzzy matching are suggestions only. Return candidates with evidence
+      and confidence; never let a Resource's maturity flag alter ArtImage
+      privacy. Unmatched embedded names/hashes/tokens feed the missing-Resource
+      backlog rather than being discarded.
 
   - id: t-007
     milestone: m2
@@ -309,20 +324,18 @@ tasks:
   - id: t-017
     milestone: m5
     title: "Confirm the real media-server archive root and production mount contract"
-    status: needs-human
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
-    gate_human: true
-    soft_gate: true
+    updated: "2026-09-17T20:20:00-07:00"
     note: >
-      FOR SILAS: code can build against a configurable archive root, but the
-      actual media-server folder path and intended container mount are host
-      configuration. Nothing else is blocked while scanner/import/UI work
-      proceeds. TO APPROVE: provide/confirm the intended archive path and whether
-      the production container should receive read/write access. The later
-      concrete host/deploy change remains a hard human gate when it is ready to
-      execute. This gate does not authorize deleting existing source files.
+      Resolved by Silas 2026-09-17. The existing Unraid container configuration
+      maps host /mnt/user/pc/kindrobots/private to container /app/private and
+      exposes PRIVATE_PATH=/app/private. The first archive batch is already in
+      that directory and more files will be added incrementally. Scanner code
+      should consume PRIVATE_PATH directly. This confirmation does not authorize
+      destructive deletion of source files.
 
   - id: t-018
     milestone: m5
@@ -371,3 +384,22 @@ tasks:
       Final user-facing acceptance gate for phone/tablet/desktop admin layout
       after the main curation workflow is deployed and can be exercised against
       real archive data.
+
+  - id: t-021
+    milestone: m2
+    title: "Produce the missing checkpoint and LoRA acquisition backlog"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-006
+    note: >
+      Aggregate unresolved checkpoint and LoRA evidence from scanned images into
+      a deduplicated backlog instead of treating those images as failures.
+      Preserve the raw embedded model name, filename/token, model hash when
+      available, likely Resource type, occurrence count, representative
+      ArtImage/ArchiveEntry examples, and candidate matches/confidence. Make the
+      backlog queryable/exportable for Silas to track down and add missing
+      Resources later. Once a Resource is added, the normal reconciliation path
+      should re-attempt matching and clear resolved backlog entries without
+      re-importing the image.
