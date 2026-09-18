@@ -14940,3 +14940,17 @@ records:
     .pile-card's hover lift (`translate: 0 -14px` rather than
     `transform: translateY(-14px)`) before this task extended it to a selection-pop
     keyframe.
+- date: '2026-09-18'
+  project: butterfly-gallery
+  task: t-013
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A shot-list/job-manifest task that hands off actual asset generation to a later
+    task (t-014) should stay docs-only and cross-check every subject against the
+    project's own locked visual contract (APPROVED-STAGE-SPEC.md here) rather than
+    inventing new motion language -- kept this PR reviewable in one pass with zero
+    round-trips.
