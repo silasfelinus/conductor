@@ -360,20 +360,18 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Storyboard the non-looping trapdoor intro and reduced-motion variant"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
-      Replace the older generic trapdoor storyboard with the approved motion
-      contract. The selected-image entry transition is deterministic DOM motion:
-      art emerges downward through the convex funnel, stretches comically long
-      vertically, then snaps/recoils to its true aspect ratio in the central
-      frame. Keep any first-visit intro short/skippable/session-aware. Reduced
-      motion uses a brief fade/scale instead of squash-and-stretch.
+    note: |-
+      Replace the older generic trapdoor storyboard with the approved motion contract. The selected-image entry transition is deterministic DOM motion: art emerges downward through the convex funnel, stretches comically long vertically, then snaps/recoils to its true aspect ratio in the central frame. Keep any first-visit intro short/skippable/session-aware. Reduced motion uses a brief fade/scale instead of squash-and-stretch.
+
+
+      Wrote projects/butterfly-gallery/MOTION-STORYBOARD.md as the bounded implementation contract for the approved first-visit intro, selected-image stretch-and-snap transition, skip/session behavior, interruption rules, and reduced-motion path.
     claimed_by: openai-scheduled-2026-09-18T141839Z-butterfly-gallery-t012-a11
     claimed_at: '2026-09-18T14:18:39Z'
-    updated: '2026-09-18T14:18:39Z'
+    updated: '2026-09-18T14:23:00Z'
 
   - id: t-013
     milestone: m4
