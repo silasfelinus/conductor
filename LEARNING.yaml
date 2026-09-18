@@ -14848,3 +14848,20 @@ records:
     mutated a plain object reference regardless of whether it was reactive, so
     the refactor into standalone functions cost nothing and paid for itself
     immediately in test coverage.
+- date: '2026-09-18'
+  project: art-archive
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: quality
+  lesson: >-
+    Pass-1 rejection (kind_robots#2836) flagged two real, locally-reproduced defects
+    in the new admin Art Archive browser -- a nonexistent userStore.isInitialized
+    field (correct name: initialized) and a bare kr-select class with no matching
+    tailwind.css primitive (kr-select-sm already existed and was the fix). The
+    Worker's pass-2 retry addressed both directly and named them in the PR body;
+    all 51 checks went green on the first re-run. Confirms retry_context written at
+    rejection time is enough for a clean second pass when the failures are concrete
+    and locally reproducible rather than ambiguous.
