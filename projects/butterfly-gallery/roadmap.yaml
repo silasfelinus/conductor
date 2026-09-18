@@ -615,3 +615,25 @@ tasks:
       applyBinOutcome's 'needs-review' case through it, once a bin or action
       actually exercises that kind, so it doesn't silently bypass the adapter
       seam a real (t-022) art-archive-backed adapter will eventually implement.
+
+  - id: t-028
+    milestone: m3
+    title: "Wire the generated room/frame/pile/bins/window art into the stage once rendered"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Follow-on from t-011 (kind_robots#2840): 5 ArtJobs (ids 28711-28715,
+      priority 200, projectSlug butterfly-gallery) were queued for the static
+      room/window/frame/bins/pile assets, targeting public/images/butterfly-gallery/
+      {room,window,frame,bins,pile}.webp. Rendering happens asynchronously via
+      the relay and had not completed as of this task's creation. Once the
+      images exist, replace the corresponding pure-CSS/gradient shapes in
+      pages/butterfly-gallery.vue (.warehouse-backdrop, .runway-slot,
+      .art-display-inner border/background, .preset-bin background,
+      .art-pile background) with the rendered assets, keeping the current CSS
+      as a graceful fallback for any asset that failed to render. Check ArtJob
+      status via GET /api/art/queue/:id (or the admin queue UI) before
+      starting; if any job is still PENDING/RUNNING, wire only the ones that
+      are DONE and leave a note for the rest.
