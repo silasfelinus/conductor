@@ -469,7 +469,7 @@ tasks:
   - id: t-022
     milestone: m2
     title: "Wire a runnable entrypoint that calls the t-005 importer against real scanner output"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -490,9 +490,14 @@ tasks:
       match candidates. Verified: eslint clean, regex-based contract verifier
       (verifyImportArtArchive.mjs, matching t-005's own convention) passes, vue-tsc running.
       PR opens once clean.
+
+      Merged kind_robots#2820. All 48 CI checks green, mergeable_state clean before merge. Run
+      against the real archive via: PRIVATE_PATH=/app/private npm run art-archive:import (or
+      npm run art-archive:import -- --root ... --user-id ...).
     claimed_by: claude-scheduled-20260918T045745Z-artarchive-t022-a1
     claimed_at: '2026-09-18T04:57:46Z'
-    updated: '2026-09-18T04:59:56Z'
+    updated: '2026-09-18T05:08:45Z'
+    implementation_pr: 'silasfelinus/kind_robots#2820'
 
   - id: t-023
     milestone: m2
