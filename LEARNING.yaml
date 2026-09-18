@@ -14595,3 +14595,21 @@ records:
     maturity/idempotency invariants directly against source shipped alongside
     the feature, not as an afterthought -- worth treating as the default shape
     for any importer/reconciler task in this project going forward.
+- date: '2026-09-18'
+  project: art-archive
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Clean first-pass implementation of an ambiguous task note ("prefer embedded
+    ids...") by picking the most defensible concrete reading (embedded content
+    hash, since legacy files carry no Resource id) and flagging the
+    interpretation explicitly in the PR body rather than silently guessing or
+    stalling on it. Also worth repeating: returning ALL same-tier candidates
+    instead of narrowing to one made an otherwise-invisible ambiguous-match
+    case (two Resources sharing a normalized name) visible to the next task
+    downstream, instead of a matching function silently picking a winner that
+    later turns out wrong.
