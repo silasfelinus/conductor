@@ -14883,3 +14883,13 @@ records:
     filters.trashView dimension, decoupled from matchState, and adding direct
     unit coverage for the decoupling rather than assuming the old combined check
     was intentional just because it had shipped before.
+- date: '2026-09-18'
+  project: art-archive
+  task: t-011
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Preserve path-derived membership as system-owned state and expose custom membership as an additive
+    relation, rather than reusing replace-style collection APIs that could erase the folder invariant.
