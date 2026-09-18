@@ -671,8 +671,8 @@ tasks:
   - id: t-021
     milestone: m5
     title: "Add batch selection and batch-action confirmation"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on:
@@ -691,9 +691,9 @@ tasks:
       CI checks green, mergeable_state clean, no schema/API/deploy changes. This is a
       deliberate first slice per the Worker's own PR note -- store/page wiring remains, so
       returning task to ready rather than done.
-    claimed_by: openai-scheduled-2026-09-18T221811Z-butterfly-gallery-t021-a11
-    claimed_at: '2026-09-18T22:18:11Z'
-    updated: '2026-09-18T22:29:07Z'
+    claimed_by: openai-scheduled-2026-09-18T231902Z-butterfly-gallery-t021-a11
+    claimed_at: '2026-09-18T23:19:02Z'
+    updated: '2026-09-18T23:19:02Z'
     implementation_pr: 'silasfelinus/kind_robots#2853'
 
   - id: t-022
