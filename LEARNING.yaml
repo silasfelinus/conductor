@@ -14726,3 +14726,20 @@ records:
     placeholders/defaults and need a follow-up admin PATCH -- this is a live
     data fix via the existing admin API, not a code PR, for every new
     project's identity task.
+- date: 2026-09-18
+  project: butterfly-gallery
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Matching an existing admin-page pattern (pages/admin/curation-studio.vue,
+    pages/admin/lora-triage.vue: inline userStore.initialize() + v-else-if
+    admin gate, no middleware) plus an existing composition-API store shape
+    (stores/loraTriageStore.ts) let a brand-new route+store+state-machine land
+    first-pass clean (vue-tsc, eslint, prettier, layout-contract) with zero CI
+    rejections. Keeping the fixture data behind a single loadPile()/rescan()
+    seam (stores/helpers/butterflyGalleryFixtures.ts) rather than inlining it
+    in the store or page means the t-004 adapter swap only touches one file.

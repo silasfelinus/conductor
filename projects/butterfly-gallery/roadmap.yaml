@@ -104,19 +104,23 @@ tasks:
   - id: t-003
     milestone: m1
     title: "Create /butterfly-gallery shell, store, and scene state machine"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
+    note: >-
       Build the route and Pinia/store state for loading, intro, ready, dragging,
       dropping, saving, rescanning, and error states. Include selected image,
       pile/queue entries, bin configuration, filters, batch selection, and
       intro-played state. Use fixture/private ArtImage data initially so this
       work does not wait on art-archive integration.
+
+      Merged kind_robots#2830: route+store+state machine landed as described. Downstream
+      t-005/t-006/t-008/t-009 unblock via resolve_deps.py.
     claimed_by: 2026-09-18T09-30-00-conductor-agent-run-t003
     claimed_at: '2026-09-18T09:30:20Z'
-    updated: '2026-09-18T09:41:12Z'
+    updated: '2026-09-18T09:46:49Z'
+    implementation_pr: 'silasfelinus/kind_robots#2830'
 
   - id: t-004
     milestone: m1
@@ -152,7 +156,7 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Build configurable left/right sorting-bin rails"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -457,3 +461,18 @@ tasks:
       timing, butterfly personality, drag/click/keyboard sorting, reduced motion,
       and phone/tablet/desktop layouts. This is a final appearance/feel gate, not
       a blocker for earlier implementation.
+
+  - id: t-026
+    milestone: m1
+    title: "Add a fixture/adapter shape-parity contract for the Butterfly Gallery pile feed"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-004
+    note: >
+      Kaizen from t-003 (kind_robots#2830): once t-004's read contract/adapter
+      exists, add a verifyButterflyGalleryFixtureShape-style contract asserting
+      stores/helpers/butterflyGalleryFixtures.ts and the real art-archive-backed
+      provider both emit structurally identical ButterflyPileEntry records, so a
+      future adapter swap cannot silently drop a field the store/UI depends on.
