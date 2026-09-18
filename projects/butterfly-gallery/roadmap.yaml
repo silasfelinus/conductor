@@ -405,7 +405,7 @@ tasks:
   - id: t-014
     milestone: m4
     title: "Render and catalog reusable butterfly motion clips"
-    status: claimed
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
@@ -452,9 +452,15 @@ tasks:
       tsc/eslint, and open the kind_robots PR. Re-render only a specific FAILED/rejected job
       rather than the whole batch. No duplicate-submission risk: every job id is recorded
       here. Re-arming to ready, releasing the claim.
+
+      Checked all 8 Stage-2 video jobs this session: 28725=DONE (artImageId 28439),
+      28726=RUNNING, 28727-28732=still PENDING. Same single-GPU capacity bottleneck as before
+      -- transient, no pass consumed, not re-submitting. Re-arming to ready; a future cycle
+      should re-check 28726-28732 and, once all 8 are DONE, verify + catalog per the NEXT
+      ACTIONABLE STEP above.
     claimed_by: claude-scheduled-20260918T203409Z-butterfly-gallery-t014
     claimed_at: '2026-09-18T20:34:10Z'
-    updated: '2026-09-18T20:34:10Z'
+    updated: '2026-09-18T20:35:06Z'
 
   - id: t-015
     milestone: m4
