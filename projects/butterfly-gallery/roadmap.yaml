@@ -598,16 +598,16 @@ tasks:
   - id: t-019
     milestone: m5
     title: "Integrate regeneration actions with normal ArtJobs"
-    status: waiting
-    owner: null
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-018
-    note: >
-      Regenerate/additional/replacement actions must use the existing durable
-      ArtJob system and archive adapters. Butterfly Gallery is a controller,
-      not a second render queue. Failed replacement jobs never destroy the
-      current source image.
+    note: |-
+      Regenerate/additional/replacement actions must use the existing durable ArtJob system and archive adapters. Butterfly Gallery is a controller, not a second render queue. Failed replacement jobs never destroy the current source image.
+
+
+      Roadmap-auditor repair: t-019 was still waiting even though its dependency t-018 is done. Promote it to ready so normal dependency-resolved worker selection can proceed.
+    updated: '2026-09-18T21:16:24Z'
 
   - id: t-020
     milestone: m5
