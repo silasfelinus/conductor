@@ -52,12 +52,12 @@ milestones:
   - id: m3
     title: "CURATE - admin archive browser, file operations, collections, ratings, and review state"
     weight: 25
-    status: not-started
+    status: in-progress
 
   - id: m4
     title: "REGENERATE - editable generation metadata and drag/drop action presets"
     weight: 15
-    status: not-started
+    status: in-progress
 
   - id: m5
     title: "SCALE + HARDEN - large-library performance, reconciliation, recovery, and visual acceptance"
@@ -503,7 +503,7 @@ tasks:
   - id: t-021
     milestone: m2
     title: "Produce the missing checkpoint and LoRA acquisition backlog"
-    status: ready
+    status: done
     owner: null
     passes: 1
     stakes: reversible
@@ -522,9 +522,16 @@ tasks:
       neither field), plus one downstream implicit-any on the loraTokens.map() token param.
       Full errors and suggested fix posted on kind_robots#2824. Not transient -- reproduced
       identically outside CI. status: ready, passes: 1, retry_context set below.
+
+      Reviewed and merged kind_robots#2824 (squash ef351f7). Retry addressed pass-1 rejection:
+      rawEvidence() now narrows ExtractedArchiveMetadata to the PNG branch (checks
+      !metadata.supported || metadata.format !== 'png') before touching .a1111/.comfy, and the
+      loraTokens.map() callback param is explicitly typed. All 59 CI checks green,
+      mergeable_state clean, diff purely additive (new backlog module + test + scoped CI
+      workflow, no existing files touched). Posted REVIEWING marker before review.
     claimed_by: openai-scheduled-2026-09-18T071938Z-art-archive-t021-a1
     claimed_at: '2026-09-18T07:19:38Z'
-    updated: '2026-09-18T07:34:07Z'
+    updated: '2026-09-18T08:34:12Z'
     retry_context: >
       pass 1 failed (quality): TypeScript compile errors in
       server/utils/artArchiveMissingResourceBacklog.ts (kind_robots#2824) --
@@ -536,6 +543,7 @@ tasks:
       .a1111/.comfy, returning the empty { checkpoint: null, loras: [] } shape for the
       non-PNG branch; add an explicit type for the map() callback param; run `npm run test`
       (vue-tsc) locally before pushing.
+    implementation_pr: 'silasfelinus/kind_robots#2824'
 
   - id: t-022
     milestone: m2
@@ -636,3 +644,24 @@ tasks:
       ArtJobPayloadRecord's shape. This gives t-015's curation board (and any
       future "apply preset" endpoint) a tested foundation to call rather than
       reimplementing the merge inline against a live ArtJob write path.
+
+  - id: t-026
+    milestone: m2
+    title: "Add a shared ExtractedArchiveMetadata narrowing helper"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-021
+    note: >-
+      Kaizen from t-021 (missing resource acquisition backlog, kind_robots#2824):
+      the pass-1 rejection was a real TypeScript error from reading
+      `metadata.a1111`/`metadata.comfy` before narrowing
+      `ExtractedArchiveMetadata` away from its JpegWebpMetadata branch. The
+      fix duplicated the same `!metadata.supported || metadata.format !==
+      'png'` guard that `artArchiveResourceMatch.ts`/`artArchiveMetadata.ts`
+      already use independently. Add one shared helper (e.g.
+      `narrowToPngMetadata(metadata): Png...Metadata | null` in
+      `artArchiveMetadata.ts`) and have all three call sites use it, so the
+      next module that reads `.a1111`/`.comfy` can't reintroduce the same
+      unnarrowed-union compile error.

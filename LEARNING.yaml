@@ -14696,3 +14696,18 @@ records:
     validator module for its own unit tests) without being told to -- a
     good sign the pattern is now legible from the codebase itself, not just
     from session-to-session TALKBACK notes.
+- date: 2026-09-18
+  project: art-archive
+  task: t-021
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: quality
+  lesson: >-
+    Pass-1 rejection (TypeScript union-narrowing on ExtractedArchiveMetadata)
+    was fixed correctly on retry within the same session/branch -- the
+    Worker read retry_context and applied exactly the suggested guard rather
+    than retrying blind. Third module in this project to independently
+    discriminate the same metadata union; filed t-026 to extract a shared
+    helper instead of waiting for a fourth recurrence.
