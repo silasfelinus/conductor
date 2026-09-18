@@ -806,12 +806,24 @@ def entry_to_job(entry):
     else:  # pragma: no cover - guarded above; all Conductor jobs are COMFY
         raise AssertionError(f"missing COMFY workflow builder for {engine}")
 
-    return {
+    job = {
         "engine": relay_engine,
         "projectSlug": entry.get("project") or None,
         "payload": payload,
         "resolvedSeed": resolved_seed,
     }
+
+    # Kind Robots claims PENDING ArtJobs by priority DESC, id ASC. Project-art
+    # entries normally omit priority and retain the server default; selected
+    # projects can explicitly join a time-sensitive tier.
+    priority = entry.get("priority")
+    if priority is not None:
+        try:
+            job["priority"] = int(priority)
+        except (TypeError, ValueError):
+            raise ValueError(f"invalid ArtJob priority: {priority!r}")
+
+    return job
 
 
 QUEUE_PAGE_SIZE = 200
