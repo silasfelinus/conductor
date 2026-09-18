@@ -410,7 +410,7 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 - Existing ArtJob is the only generation queue. Imported art regeneration adapts stored provenance into normal ArtJobs.
 - Production archive storage is confirmed: host `/mnt/user/pc/kindrobots/private` -> container `/app/private`, with `PRIVATE_PATH=/app/private`. Scanner code should use that existing variable rather than inventing a second root setting.
 - Missing checkpoints/LoRAs are expected; import continues with unresolved provenance preserved, and the project maintains a deduplicated backlog of Resources to locate/add later.
-- Keep this project at high agent-work priority until complete (Silas, 2026-09-17).
+- Keep this project at high agent-work priority until complete (Silas, reaffirmed 2026-09-18). Butterfly Gallery is ordered immediately ahead of it.
 
 ### butterfly-gallery  (software)
 **Direction (2026-09-17, new project):** Build `/butterfly-gallery` as a private, mature-aware art-curation experience in the Kind Robots Plan channel: a fast sorter staged as an animated rainbow-butterfly gallery room.
@@ -421,3 +421,5 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 - Rainbow butterflies move frames with varied competence: string tow, pair carry, solo struggle, dragging, peekaboo, and rare drop gags. Ambient motion stays behind the working UI and is intermittent rather than constantly looping.
 - Drag/drop is theatrical, never mandatory. Every action needs click/tap and keyboard paths, and reduced-motion users get an immediate calm version.
 - Build order is functional sorter first, static stage second, motion third, power-user presets/batch actions fourth, then real art-archive integration and cross-width acceptance.
+- Keep this project at high agent-work priority until complete, ordered immediately ahead of Art Archive (Silas, 2026-09-18).
+- Butterfly Gallery project/scene art should enter the Kind Robots ArtJob queue at priority 200, the same tier as Daily Dream art and well above Resource/LoRA preview refill work (currently priority 1).

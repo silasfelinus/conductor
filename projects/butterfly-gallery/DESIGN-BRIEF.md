@@ -227,6 +227,15 @@ actions. Do not scale the entire desktop scene down until it becomes a dollhouse
 The painting pile can simplify into a compact overlapping stack/filmstrip on
 small screens while preserving the metaphor.
 
+## Generation priority
+
+Butterfly Gallery art is time-sensitive project work while this feature is
+being built. Submit its project assets, scene art, reusable stills, and other
+image-generation requests at ArtJob priority **200**, matching Daily Dream art.
+That intentionally outranks Resource/LoRA preview refill work, which currently
+queues at priority 1. This is an ArtJob scheduling decision only; it does not
+change Resource maturity or visibility semantics.
+
 ## Art assets
 
 Static/layered assets:

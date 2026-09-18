@@ -105,6 +105,38 @@ def test_iter_missing_project_assets_normalizes_prompt_default_sizes_and_engine(
     assert by_project_variant[("beta", "hero")]["engine"] == "krea2"
 
 
+
+def test_iter_missing_project_assets_inherits_project_priority_and_allows_asset_override(
+    tmp_path: Path, monkeypatch
+) -> None:
+    monkeypatch.setattr(art_queue, "ROOT", tmp_path)
+
+    catalog = {
+        "images": [
+            {
+                "project": "butterfly-gallery",
+                "priority": 200,
+                "icon": {
+                    "image_path": "projects/images/butterfly-gallery-icon.webp",
+                    "status": "pending",
+                    "prompt": "butterfly icon",
+                },
+                "card": {
+                    "image_path": "projects/images/butterfly-gallery-card.webp",
+                    "status": "pending",
+                    "prompt": "butterfly card",
+                    "priority": 150,
+                },
+            }
+        ]
+    }
+
+    entries = art_queue.iter_missing_project_assets(catalog)
+    by_variant = {entry["variant"]: entry for entry in entries}
+
+    assert by_variant["icon"]["priority"] == 200
+    assert by_variant["card"]["priority"] == 150
+
 def test_iter_missing_project_assets_uses_configured_default_engine(
     tmp_path: Path, monkeypatch
 ) -> None:
