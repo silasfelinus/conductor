@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-18T20:45:22Z
+Generated: 2026-09-18T20:50:10Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1037**
-- Outcomes: blocked: 16, cancelled: 1, done: 1020
+- Closed tasks recorded: **1038**
+- Outcomes: blocked: 16, cancelled: 1, done: 1021
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -24,7 +24,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | art-archive | 14 | 100% |
 | art-generator-connect | 3 | 100% |
 | brainstorm | 26 | 96% |
-| butterfly-gallery | 14 | 100% |
+| butterfly-gallery | 15 | 100% |
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 39 | 100% |
@@ -71,13 +71,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1020 | 99% |
+| software | 1021 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
-| quality | 30 |
+| quality | 31 |
 | transient | 17 |
 | actionable | 15 |
 | scope | 3 |
@@ -86,13 +86,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - project `coat-dance` — 11% success over 9 closed tasks; aim the next kaizen task here
 - kind `content` — 47% success over 17 closed tasks; aim the next kaizen task here
-- failure category `quality` — 30 occurrences; look for the shared cause across its records
+- failure category `quality` — 31 occurrences; look for the shared cause across its records
 - failure category `transient` — 17 occurrences; look for the shared cause across its records
 - failure category `actionable` — 15 occurrences; look for the shared cause across its records
 - failure category `scope` — 3 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-09-18 `butterfly-gallery/t-018` — A new component this repo's test:component-reachability check can't reach (not mounted anywhere from app.vue/pages/layouts/content) fails CI deterministically regardless of how clean the rest of the diff is. A "scoped slice" that adds a component should mount it behind even a minimal admin toggle in the same PR, not defer wiring to a following slice -- the reachability check is a hard invariant on every PR, not advisory.
 - 2026-09-18 `kind-robots/t-110` — A container-log "Data too long for column" truncation warning is worth escalating immediately, not just noting: it means writes are already succeeding with silently corrupted data. This one (imagePath, since kind_robots#2814) escalated from a warning to hard ArtJob write failures (HTTP 500) within two days once enough long static-path values accumulated. When one column in a family of otherwise-consistent columns (13 other imagePath fields already at VarChar(764)) is the odd one left at Prisma's implicit VarChar(191) default, that inconsistency is itself the signal to check for -- grep every same-named column across the schema before assuming a single reported failure is isolated.
 - 2026-09-18 `art-archive/t-013` — A field can be filterable and displayed in an admin browser for a while before anyone notices nothing ever writes it -- when a task note says "expose fast rating actions" for a field that already exists in the schema and the read path, check the write path specifically before assuming only UI wiring is missing.
 - 2026-09-18 `art-archive/t-012` — Quarantine ("delete") from t-009 overwrote relativePath with the trash path and threw the original location away, so a "recoverable trash" task needs a place to remember where a file came from before it can add restore -- don't assume an existing quarantine/soft-delete action is already restore-ready just because it preserves the row via isActive: false. Also: `prisma format`/`prisma generate` in this sandbox reformats every .prisma file and regenerates the whole client, not just the one touched -- always diff and revert unrelated files before committing a schema change.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-18 `butterfly-gallery/t-017` — When a CSS animation targets a property an inline style already sets for layout (e.g. pileStyle()'s inline `transform: translateX(...) rotate(...)`), animate the standalone `scale`/`translate`/`rotate` CSS properties instead of `transform` -- they compose independently with the inline `transform` rather than clobbering it for the animation's duration. This codebase already used this pattern for .pile-card's hover lift (`translate: 0 -14px` rather than `transform: translateY(-14px)`) before this task extended it to a selection-pop keyframe.
 - 2026-09-18 `butterfly-gallery/t-012` — check_pr_handoff_template.py's check-run history can carry a stale `failure` entry from an earlier PR-body revision (e.g. missing the "### Notes for reviewer" heading) even after the Worker edits the body and a later run of the same check passes. Verify mergeable_state plus the latest commit's own check-run/PR_BODY content via get_job_logs before treating an older failed run as a live blocker.
 - 2026-09-18 `butterfly-gallery/t-011` — A sandbox with no production DATABASE_URL can still queue real ArtJobs by POSTing to /api/art/queue with KR_API_TOKEN as x-api-key, building the Krea2 workflow via the real buildKrea2WorkflowFromRequest under tsx (a node_modules/~ symlink workaround resolves the repo's '~' import alias without a full Nuxt build). "Producing" a static art asset set is a two-step task, queuing the ArtJob now, then a separate follow-up (filed as t-028) to wire the rendered images in once the async relay finishes — don't block the first step's closure on the second happening within the same session.
-- 2026-09-18 `art-archive/t-011` — Preserve path-derived membership as system-owned state and expose custom membership as an additive relation, rather than reusing replace-style collection APIs that could erase the folder invariant.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-18T20:45:22Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-18T20:50:10Z_
