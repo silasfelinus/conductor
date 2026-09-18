@@ -14762,3 +14762,23 @@ records:
     is updated in the same PR -- vue-tsc catches a missed field immediately,
     but only if the fixtures are still plain object literals rather than
     already-cast `as ButterflyPileEntry`.
+- date: '2026-09-18'
+  project: butterfly-gallery
+  task: t-005
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Extracting the pile/frame sections directly out of the t-003 placeholder
+    page into two new presentational components (emit gestures up, no store
+    mutation of their own) landed clean on the first pass by following
+    narrative-cast-card.vue's established convention rather than inventing a
+    new shape. Adding a store-owned topOfPile computed (sliced from the
+    already-filtered visiblePile) kept the "only render the top of the
+    stack" requirement testable and reusable, instead of duplicating the
+    slice-and-filter logic inside the component. Touch/pointer drag-to-frame
+    was deliberately left to the sibling task (t-020) that already owns
+    that scope -- click (a real <button>, already keyboard-reachable)
+    covers the non-drag path in the meantime, so nothing regressed.
