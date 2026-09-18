@@ -14680,3 +14680,19 @@ records:
     breaking that CLI's own frozen regex-based contract test). Left the CLI
     untouched and its existing verifyImportArtArchive.mjs contract passing
     unmodified.
+- date: '2026-09-18'
+  project: art-archive
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Clean first-pass implementation, reviewed by a concurrent Reviewer
+    session. The Worker independently applied the same DB-free-testability
+    convention this session established earlier the same day for
+    artArchiveReconcilerPlan.ts and artArchiveFileOps.ts (a zero-Prisma
+    validator module for its own unit tests) without being told to -- a
+    good sign the pattern is now legible from the codebase itself, not just
+    from session-to-session TALKBACK notes.
