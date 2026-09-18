@@ -330,7 +330,7 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Build the admin archive browser with processed/unprocessed and folder/collection views"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: t-009
@@ -339,7 +339,9 @@ tasks:
 
 
       Roadmap-auditor dependency repair: t-009 is done, so t-010 is now eligible for work.
-    updated: '2026-09-18T10:16:46Z'
+
+      Implemented the first admin Art Archive browser slice with store-owned API access, filters, pagination, dense 2:3 gallery cards, and provenance/detail inspection.
+    updated: '2026-09-18T10:22:46Z'
     owner: worker
     claimed_by: openai-scheduled-2026-09-18T101646Z-art-archive-t010-a11
     claimed_at: '2026-09-18T10:16:46Z'
