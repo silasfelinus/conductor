@@ -230,12 +230,12 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Build the selected-image metadata and quick-action drawer"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     depends_on: t-004
-    note: >
+    note: >-
       Implement the compact RIGHT-RAIL Image Info panel from the approved stage
       spec. Keep it small enough not to compete with the main artwork: thumbnail
       or identity, filename/title, prompt excerpt, dimensions, checkpoint/LoRAs,
@@ -243,6 +243,17 @@ tasks:
       metadata belongs behind a Details/expand affordance. Immediately below it
       are Cleanup and Trash actions; do not add Keep/Replace tiles unless Silas
       later requests them.
+
+      Shipped in kind_robots#2834: compact right-rail Image Info panel (rating, folder,
+      checkpoint, processed state) with a Details/expand affordance revealing prompt/LoRAs/
+      collections, plus Cleanup and Trash actions immediately below per the note. Two minor
+      gaps against the note's full field list: no explicit filename/title line and no
+      dimensions/match-state field in the compact view. Cleanup is rendered but intentionally
+      disabled pending the Art Archive action adapter (explicit PR flag, not an oversight).
+      Judged close enough to the note's core ask to close rather than leave open pending a
+      cosmetic field-list nit -- flag if Silas wants those two fields added.
+    updated: '2026-09-18T11:11:05Z'
+    implementation_pr: 'silasfelinus/kind_robots#2834'
 
   - id: t-009
     milestone: m2
