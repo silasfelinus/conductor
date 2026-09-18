@@ -14680,3 +14680,22 @@ records:
     breaking that CLI's own frozen regex-based contract test). Left the CLI
     untouched and its existing verifyImportArtArchive.mjs contract passing
     unmodified.
+- date: 2026-09-18
+  project: art-archive
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Clean first-pass implementation of a schema+validator+CRUD task with no
+    UI dependency: kept the modifier-shape validator zero-Prisma from the
+    start (matching artArchivePresetModifiers.ts to the artArchiveFileOps.ts/
+    artArchiveReconcilerPlan.ts precedent already established in this
+    project), so contract-tests' no-DATABASE_URL job never risked the
+    Prisma-import-at-module-scope trap t-008 hit. Hit a real but trivial
+    conflict rebasing onto t-009's concurrent merge (both PRs appended a line
+    to the same package.json/contract-tests.yml block) -- worth remembering
+    that two same-project PRs adding sibling test-script entries will always
+    collide there; a plain rebase-and-keep-both resolves it in seconds.
