@@ -469,7 +469,7 @@ tasks:
   - id: t-022
     milestone: m2
     title: "Wire a runnable entrypoint that calls the t-005 importer against real scanner output"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -490,9 +490,14 @@ tasks:
       match candidates. Verified: eslint clean, regex-based contract verifier
       (verifyImportArtArchive.mjs, matching t-005's own convention) passes, vue-tsc running.
       PR opens once clean.
+
+      Merged kind_robots#2820. All 48 CI checks green, mergeable_state clean before merge. Run
+      against the real archive via: PRIVATE_PATH=/app/private npm run art-archive:import (or
+      npm run art-archive:import -- --root ... --user-id ...).
     claimed_by: claude-scheduled-20260918T045745Z-artarchive-t022-a1
     claimed_at: '2026-09-18T04:57:46Z'
-    updated: '2026-09-18T04:59:56Z'
+    updated: '2026-09-18T05:08:45Z'
+    implementation_pr: 'silasfelinus/kind_robots#2820'
 
   - id: t-023
     milestone: m2
@@ -510,3 +515,21 @@ tasks:
       checkpoint/LoRA candidates, confidence tier, and any unmatched evidence,
       so Silas can see real match quality against the actual archive before
       t-007 starts applying anything automatically.
+
+  - id: t-024
+    milestone: m2
+    title: "Add an admin-gated endpoint wrapping the t-022 import entrypoint"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-022
+    note: >
+      t-022's own task note offered a CLI script or an admin-gated endpoint;
+      the CLI was built first since it needed no new auth/route surface, but
+      running it still requires shell access to the container. Add an
+      admin-only API endpoint (matching the project's existing admin-gated
+      convention) that triggers the same scan-then-import flow and returns
+      the same created/reused counts as JSON, so this can eventually be
+      wired into the admin archive-curation UI (m3) instead of requiring
+      Silas to exec into the container.

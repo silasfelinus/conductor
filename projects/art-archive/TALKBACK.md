@@ -78,3 +78,22 @@ type: resolution
 **Kaizen task:** t-023 — Extend t-022's (not-yet-built) runnable entrypoint to report resource-match candidates per file, so match quality against the real archive is visible before t-007 automates anything.
 
 **Pattern note:** Third consecutive clean/well-scoped cycle on this project (t-004 rejected-then-fixed, t-005 and t-006 both clean). Worth continuing to watch whether the "flag the interpretation, defer to the narrower reading" habit (used here for both "embedded ids" and the folder-suggestion tier's scope) holds up under Silas's actual review — if he corrects either interpretation, that's useful signal for how literally to read future ambiguous task notes on this project.
+
+## 2026-09-18 | Agent (Claude, scheduled conductor run) | art-archive/t-022 | resolution
+
+type: resolution
+
+**Decision:** merged (self-implemented + self-reviewed in the same session)
+
+**Subject:** Implemented and merged `silasfelinus/kind_robots#2820` (CLI entrypoint wiring the t-005 importer to the t-004 scanner), closed t-022 `done`.
+
+**Detail:**
+- After t-006 merged, the priority queue and `select_role.py` both continued pointing at art-archive (this session's own kaizen task, t-022, was the next `ready` item), so the session kept going as Worker for a third cycle.
+- `utils/scripts/importArtArchive.ts` mirrors `scanArtArchive.ts`'s exact shape (same `--root` flag convention, same read-then-report structure) but calls `importArchiveFile()` per scanned file and reports created/reused image and collection counts. A per-file failure is caught, recorded, and reported at the end rather than aborting the whole run — matters for a large legacy archive where one corrupt file shouldn't stop the rest.
+- Deliberately did not fold in t-006's resource matching here — that's t-023, filed at the same time as this task and already `ready`, so scope stayed to exactly what t-022 asked for.
+- Chose the CLI-only path from the task's "CLI script or admin-gated endpoint" either/or, since it needed no new route/auth surface. Filed t-024 as the natural follow-up (admin endpoint) rather than treating the CLI as satisfying that half of the original note.
+- Verified: eslint clean, `vue-tsc --noEmit` clean, a regex-based contract verifier (`verifyImportArtArchive.mjs`, matching t-005's own verifier convention) checks the script's shape. Not run against a live database in this sandbox (no MariaDB connection available here) — the underlying `importArchiveFile()` call path is unchanged from its own already-merged, already-tested implementation, so this PR's actual new risk surface is narrow (argument parsing, count bookkeeping, error handling), all of which the contract verifier covers structurally.
+
+**Kaizen task:** t-024 — Add an admin-gated endpoint wrapping the t-022 import entrypoint, so it doesn't require shell access to the container.
+
+**Pattern note:** Fourth consecutive clean cycle on this project this session (t-004 was the only rejection, back near the start). The "flag deferred scope as its own ready task rather than silently expanding the current PR" habit held again here (t-023 and now t-024) — worth checking in a future audit whether these follow-on tasks are actually getting picked up promptly or just accumulating.
