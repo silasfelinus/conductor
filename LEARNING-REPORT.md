@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-18T02:43:47Z
+Generated: 2026-09-18T02:56:53Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1007**
-- Outcomes: blocked: 16, cancelled: 1, done: 990
+- Closed tasks recorded: **1008**
+- Outcomes: blocked: 16, cancelled: 1, done: 991
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -21,6 +21,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | animation-studio | 2 | 50% |
 | appmaker | 11 | 100% |
 | approval-portal | 2 | 0% |
+| art-archive | 1 | 100% |
 | art-generator-connect | 3 | 100% |
 | brainstorm | 26 | 96% |
 | challenge-center | 16 | 100% |
@@ -69,7 +70,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 990 | 99% |
+| software | 991 | 99% |
 
 ## Failure categories
 
@@ -91,6 +92,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-18 `art-archive/t-003` — First implementation cycle on a brand-new project (art-archive, scaffolded the same day). Following an existing sibling model's own loose-reference convention (ModelBuildItem.artImageId has no formal Prisma @relation) let this migration add a whole new ledger table without touching ArtImage/ArtCollection at all, keeping the Reviewer's additive-migration audit trivial. CI's "Replay migrations on MariaDB" job is the real backstop for a hand-authored migration.sql in a sandbox with no MIGRATION_DATABASE_URL -- it caught nothing here, but it is the check that would.
 - 2026-09-18 `storybook/t-010` — Same connectivity gap recurred immediately (select_role.py's urllib probe 403'd against cthulhuquarium again, producing reviewer-uncertain), but a direct GitHub MCP check on kind_robots again found the real open PR (#2813) the script's own failed calls weren't even probing. This is now the second session in a row hitting the identical pattern -- worth checking whether select_role.py's underlying_role fallback should itself try the GitHub MCP transport before giving up, rather than relying on every session to remember to cross-check by hand.
 - 2026-09-18 `storybook/t-010` — select_role.py's raw urllib GitHub probe 403'd in this sandbox as usual, but the underlying worker-branch PR (kind_robots#2811) was real and reviewable via the GitHub MCP tools -- cross-checking select_role.py's uncertain verdict against a working transport before falling back to its "worker" recommendation caught a genuine PR that a literal reading of the tool's own output would have missed. Reviewed, confirmed all 47 checks green and mergeable_state clean with a diff scoped to exactly the intended files, then squash-merged and re-armed the task to ready per the established recurring-polish precedent.
 - 2026-09-17 `dream-cycle/t-027` — check_live_facet_coverage.py now walks creation-burst bundles too (built.facets in projects/kind-robots/bursts/*.yaml), not only daily-dream backlog records -- any future live-coverage-style check over agent-recorded built-state should default to covering every bundle shape that records it, not just the first one that prompted the check.
@@ -100,7 +102,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-17 `storybook/t-052` — The task note offered two options (client migration vs. export) but the export mechanism (buildExport/downloadStory) was already fully built at ?legacy=1 -- the actual gap was discovery, not implementation. Read the existing code before assuming a roadmap task's two listed options are both still open; often one is already done and the task is really about surfacing it. Filed t-054 (waiting on t-037) so the banner does not become permanent dead code once the beat loop it points at is deleted.
 - 2026-09-17 `storybook/t-038` — Generalizing an existing dormant gate (EndingDeck.unlockAchievementId from t-033) into a shared isUnlocked/assertCastPlayable pair, rather than writing a parallel Character-specific gate function, kept the enforcement flag single and the contract guard simple to write. When a roadmap note says "same hook as X", check whether the prior task's implementation was already written generically enough to extend, before reaching for a second concept.
 - 2026-09-17 `model-builder/t-031` — A prior cycle's "browser fails on every HTTPS host" note was itself wrong for this sandbox class and would have been taken at face value if not re-verified directly (a 3-line Playwright probe against example.com + kindrobots.org before trusting an inherited claim). When a task note contradicts AGENTS.md's own documented working recipe for the same environment, re-run the cheapest possible check before accepting the note -- a stale/wrong claim from one session otherwise silently downgrades every session after it.
-- 2026-09-17 `coloring-book/t-047` — Before filing a new task claiming "no CLI flag exists" for a production gap, grep the sibling *_request.py wrapper scripts, not just the batch consumer -- consume_coloring_book_studio_request.py --force --live already did exactly what t-022 cycle 18 said was missing (reset a needs_review color entry back to pending for a fresh render), and would have resolved mr-008 a cycle earlier if checked first. Also: when adding a "file went missing" detector to a status-driven pipeline, exclude any status where a downstream ledger (here: proposals.yaml's accepted.color) becomes the authoritative pointer after promotion -- the promoting operation may correctly leave the upstream queue's own path field stale without anything actually being broken (mr-002/mr-003/mr-004 here).
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-18T02:43:47Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-18T02:56:53Z_
