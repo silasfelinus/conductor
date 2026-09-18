@@ -14711,3 +14711,18 @@ records:
     than retrying blind. Third module in this project to independently
     discriminate the same metadata union; filed t-026 to extract a shared
     helper instead of waiting for a fourth recurrence.
+- date: 2026-09-18
+  project: butterfly-gallery
+  task: t-002
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A Kind-Robots-authored project's Project row is auto-created by the
+    conductor projection sync with conductorSlug already set, but its
+    presentation fields (title/channelKey/tabKey/liveUrl/isPublic) start as
+    placeholders/defaults and need a follow-up admin PATCH -- this is a live
+    data fix via the existing admin API, not a code PR, for every new
+    project's identity task.
