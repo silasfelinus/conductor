@@ -14523,3 +14523,19 @@ records:
     checks green and mergeable_state clean with a diff scoped to exactly the intended files,
     then squash-merged and re-armed the task to ready per the established recurring-polish
     precedent.
+- date: '2026-09-18'
+  project: storybook
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 50
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Same connectivity gap recurred immediately (select_role.py's urllib probe 403'd against
+    cthulhuquarium again, producing reviewer-uncertain), but a direct GitHub MCP check on
+    kind_robots again found the real open PR (#2813) the script's own failed calls weren't
+    even probing. This is now the second session in a row hitting the identical pattern --
+    worth checking whether select_role.py's underlying_role fallback should itself try the
+    GitHub MCP transport before giving up, rather than relying on every session to
+    remember to cross-check by hand.
