@@ -148,7 +148,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: review
+  status: ready
   passes: 50
   stakes: reversible
   note: |-
@@ -157,10 +157,20 @@ tasks:
     Last state (2026-09-16T14:30:21Z, conductor state-reconciliation sweep): released a stale claim (claimed_by openai-scheduled-2026-09-15T201543Z-storybook-t010-a11) that had sat ~18h past the 90-minute claim TTL with no open kind_robots PR referencing it; no code change, re-armed to ready.
 
     Storybook polish slice: replaced the ending album's comma-separated text dump with responsive 2:3 collectible ending cards using existing heroImage/icon fields while preserving locked-ending secrecy. Implementation branch worker/storybook-t-010-openai-scheduled-2026-09-18T001925Z-storybook-t010-a12.
-  updated: '2026-09-18T00:24:00Z'
+
+    Merged kind_robots#2811 (2026-09-18): replaced the ending album comma-separated text
+    dump with responsive 2:3 collectible ending cards, using existing heroImage/icon fields;
+    locked endings stay spoiler-safe (mystery card, lock icon only). All 47 CI checks green,
+    mergeable_state clean, diff scoped to storybook-collection.vue + a trivial EOF-newline
+    normalization in verifyStorybookTable.mjs. Re-arming to ready per the established
+    recurring-task precedent (kaizen note left on the PR: a focused collection contract
+    check pinning unlocked-only hero art + 2:3 card shape would be a good next-cycle
+    addition).
+  updated: '2026-09-18T00:31:25Z'
   owner: worker
   claimed_by: openai-scheduled-2026-09-18T001925Z-storybook-t010-a12
   claimed_at: '2026-09-18T00:19:25Z'
+  implementation_pr: 'silasfelinus/kind_robots#2811'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
