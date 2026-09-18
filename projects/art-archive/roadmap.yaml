@@ -89,20 +89,32 @@ tasks:
   - id: t-003
     milestone: m1
     title: "Add the durable archive-entry ledger for file identity, processing state, rating, and match review"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
+    note: >-
       Add only the minimum additive schema needed to remember filesystem state
       independently of ArtImage: stable content hash, current relative path,
       size/mtime hints, linked ArtImage, folder collection, processed/review
       state, 1-5 rating, extracted metadata/match summary, and a manual-match
       lock or equivalent. Structured payloads follow the repo's LongText/string
       convention. This ledger is indexing/curation state, not a second ArtImage.
+
+      Merged kind_robots#2815 (2026-09-18): added ArchiveEntry (prisma/art-archive.prisma)
+      plus its hand-authored migration (prisma/migrations/20260918023500_add_archive_entry).
+      Purely additive one-table schema: contentHash, relativePath (unique), parentFolder,
+      fileSize/fileMtime, loose artImageId/folderCollectionId (no formal relation, matching
+      ModelBuildItem's own convention), processState (PENDING/IMPORTED/ERROR/MISSING),
+      matchState (UNMATCHED/SUGGESTED/CONFIRMED/MANUAL/AMBIGUOUS) + resourceMatchLocked,
+      rating, extractedMetadata/matchSummary JSON. Verified via prisma validate,
+      schemaMigrationParity self-test + verify, vue-tsc --noEmit (all clean), and CI's own
+      "Replay migrations on MariaDB" job (confirms the hand-authored SQL applies cleanly
+      against a real MariaDB instance). All 49 kind_robots checks green, mergeable_state
+      clean. t-004 (recursive dry-run scanner) is now unblocked.
     claimed_by: claude-scheduled-20260918T023103Z-artarchive-t003
     claimed_at: '2026-09-18T02:31:03Z'
-    updated: '2026-09-18T02:38:22Z'
+    updated: '2026-09-18T02:51:38Z'
     implementation_pr: 'silasfelinus/kind_robots#2815'
 
   - id: t-004
