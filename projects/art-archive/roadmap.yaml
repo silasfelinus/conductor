@@ -366,7 +366,7 @@ tasks:
   - id: t-014
     milestone: m4
     title: "Add persisted archive action presets for generation modifiers"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -439,7 +439,7 @@ tasks:
   - id: t-019
     milestone: m5
     title: "Run production dry-run reconciliation and verify zero privacy leakage before bulk import"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -473,8 +473,8 @@ tasks:
   - id: t-021
     milestone: m2
     title: "Produce the missing checkpoint and LoRA acquisition backlog"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-006
@@ -488,6 +488,9 @@ tasks:
       Resources later. Once a Resource is added, the normal reconciliation path
       should re-attempt matching and clear resolved backlog entries without
       re-importing the image.
+    claimed_by: openai-scheduled-2026-09-18T071938Z-art-archive-t021-a1
+    claimed_at: '2026-09-18T07:19:38Z'
+    updated: '2026-09-18T07:19:38Z'
 
   - id: t-022
     milestone: m2
