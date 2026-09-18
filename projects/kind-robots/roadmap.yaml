@@ -2524,9 +2524,9 @@ tasks:
 - id: t-110
   milestone: m6
   title: 'Investigate imagePath write truncation warning appearing since kind_robots#2814'
-  status: ready
+  status: claimed
   stakes: reversible
-  owner: null
+  owner: worker
   passes: 0
   note: |
     Spotted in Alexandria's container-log triage (check_container_log_drift.py), first seen
@@ -2552,7 +2552,9 @@ tasks:
     what gets written, whichever is the right fix once the actual cause is confirmed. Not
     blocking t-109's access-control decision -- a separate bug, just possibly the same root
     change.
-  updated: '2026-09-18T10:55:00Z'
+  updated: '2026-09-18T19:29:52Z'
+  claimed_by: 2026-09-18T19-30-conductor-t110
+  claimed_at: '2026-09-18T19:29:52Z'
 
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
