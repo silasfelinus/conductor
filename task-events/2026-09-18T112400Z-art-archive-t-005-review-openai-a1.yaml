@@ -1,0 +1,8 @@
+version: 1
+project: art-archive
+task: t-005
+operation: review
+session: openai-scheduled-2026-09-18T111821Z-art-archive-t005-a1
+updated: '2026-09-18T11:24:00Z'
+note: >-
+  Implemented an idempotent archive importer on a worker branch. It creates/reuses deterministic folder collections, forces archive ArtImages and collections private+mature on every pass, preserves extracted metadata, and reconnects existing ledger-linked images rather than duplicating them.
