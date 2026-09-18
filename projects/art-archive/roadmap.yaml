@@ -268,7 +268,7 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Add repeatable reconciliation for newly dropped, copied, moved, changed, and missing files"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: t-005
@@ -277,10 +277,15 @@ tasks:
 
 
       Roadmap-auditor repair: dependency t-005 is done, so this waiting task is now eligible for work.
-    updated: '2026-09-18T06:34:02Z'
+
+      Implementation PR kind_robots#2822 open (repeatable reconciliation for
+      new/changed/moved/copied/missing files). Will follow up with status: done once CI-green
+      and merged.
+    updated: '2026-09-18T06:38:27Z'
     owner: worker
     claimed_by: claude-scheduled-20260918T063401Z-artarchive-t008-a1
     claimed_at: '2026-09-18T06:34:02Z'
+    implementation_pr: 'silasfelinus/kind_robots#2822'
 
   - id: t-009
     milestone: m3
