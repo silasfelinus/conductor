@@ -538,8 +538,8 @@ tasks:
   - id: t-018
     milestone: m5
     title: "Add persisted custom bins and generation/action presets"
-    status: review
-    owner: worker
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
     depends_on:
@@ -560,10 +560,17 @@ tasks:
       arming to ready for that continuation.
 
       Added a dedicated Pinia preset store that loads validated v1 custom-bin envelopes from localStorage, falls back safely to defaults, persists edits, and owns enable/action/reset mutations. The editor UI remains for the next continuation slice.
-    claimed_by: openai-scheduled-2026-09-18T182108Z-butterfly-gallery-t018-a13
-    claimed_at: '2026-09-18T18:21:08Z'
-    updated: '2026-09-18T18:29:00Z'
-    implementation_pr: 'silasfelinus/kind_robots#2843'
+
+      Reviewed and merged kind_robots#2848 (t-018 second slice) 2026-09-18: dedicated Pinia
+      store (stores/butterflyGalleryPresetStore.ts) that loads/saves validated v1 bin-preset
+      envelopes via localStorage, with in-memory fallback on storage failure, and owns
+      upsert/remove/enable/action/reset mutations. All 46 CI checks green, mergeable_state
+      clean, diff isolated to the one new store file built on the already-merged #2843 helper.
+      Editor UI still remains for the next continuation slice -- re-arming to ready.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-09-18T18:39:54Z'
+    implementation_pr: 'silasfelinus/kind_robots#2848'
 
   - id: t-019
     milestone: m5
