@@ -365,8 +365,8 @@ tasks:
   - id: t-011
     milestone: m3
     title: "Support root-safe moves plus folder-derived and custom ArtCollection membership"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-010
@@ -374,6 +374,9 @@ tasks:
       Moving a file updates its archive path and folder-derived collection.
       Custom ArtCollections coexist with folder membership instead of replacing
       it. No operation may escape the archive root.
+    claimed_by: openai-scheduled-2026-09-18T131950Z-art-archive-t011-a1
+    claimed_at: '2026-09-18T13:19:50Z'
+    updated: '2026-09-18T13:19:50Z'
 
   - id: t-012
     milestone: m3
