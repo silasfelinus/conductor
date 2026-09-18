@@ -503,7 +503,7 @@ tasks:
   - id: t-021
     milestone: m2
     title: "Produce the missing checkpoint and LoRA acquisition backlog"
-    status: ready
+    status: done
     owner: null
     passes: 1
     stakes: reversible
@@ -522,9 +522,16 @@ tasks:
       neither field), plus one downstream implicit-any on the loraTokens.map() token param.
       Full errors and suggested fix posted on kind_robots#2824. Not transient -- reproduced
       identically outside CI. status: ready, passes: 1, retry_context set below.
+
+      Reviewed and merged kind_robots#2824 (squash ef351f7). Retry addressed pass-1 rejection:
+      rawEvidence() now narrows ExtractedArchiveMetadata to the PNG branch (checks
+      !metadata.supported || metadata.format !== 'png') before touching .a1111/.comfy, and the
+      loraTokens.map() callback param is explicitly typed. All 59 CI checks green,
+      mergeable_state clean, diff purely additive (new backlog module + test + scoped CI
+      workflow, no existing files touched). Posted REVIEWING marker before review.
     claimed_by: openai-scheduled-2026-09-18T071938Z-art-archive-t021-a1
     claimed_at: '2026-09-18T07:19:38Z'
-    updated: '2026-09-18T07:34:07Z'
+    updated: '2026-09-18T08:34:12Z'
     retry_context: >
       pass 1 failed (quality): TypeScript compile errors in
       server/utils/artArchiveMissingResourceBacklog.ts (kind_robots#2824) --
@@ -536,6 +543,7 @@ tasks:
       .a1111/.comfy, returning the empty { checkpoint: null, loras: [] } shape for the
       non-PNG branch; add an explicit type for the map() callback param; run `npm run test`
       (vue-tsc) locally before pushing.
+    implementation_pr: 'silasfelinus/kind_robots#2824'
 
   - id: t-022
     milestone: m2
