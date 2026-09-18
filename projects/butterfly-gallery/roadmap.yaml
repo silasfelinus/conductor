@@ -278,18 +278,26 @@ tasks:
   - id: t-009
     milestone: m2
     title: "Add queue filters and folder/collection browsing"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-004
-    note: >
+    note: >-
       Support processed/unprocessed, rating, match state, missing/trashed state,
       folder, collection, and search filters. Preserve the theatrical pile
       metaphor while making the real queue state legible and recoverable.
+
+      Implemented queue filters (search/processed/rating/matchState/trashView) and
+      folder/collection browsing chips in pages/butterfly-gallery.vue +
+      stores/butterflyGalleryStore.ts, extracting the predicate into
+      stores/helpers/butterflyGalleryFilters.ts. Fixed a real bug: trash visibility was folded
+      into matchState==='missing' (t-003 scaffolding), which never actually worked for real
+      trashed entries. New trashView filter decouples it. PR: kind_robots#2838, CI pending.
     claimed_by: claude-scheduled-2026-09-18T-conductor-run-t009
     claimed_at: '2026-09-18T12:34:24Z'
-    updated: '2026-09-18T12:34:24Z'
+    updated: '2026-09-18T12:45:57Z'
+    implementation_pr: 'silasfelinus/kind_robots#2838'
 
   - id: t-010
     milestone: m3
