@@ -82,17 +82,24 @@ tasks:
   - id: t-002
     milestone: m1
     title: "Create the Kind Robots Project identity and place Butterfly Gallery in Plan"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    note: >
+    note: >-
       Ensure the matching Kind Robots Project uses conductorSlug
       butterfly-gallery, title "Butterfly Gallery", channelKey=plan,
       tabKey=projects, and liveUrl=/butterfly-gallery. This is a private admin
       curation project; preserve isPublic=false and mature-aware access so its
       eventual private/mature ArtImage feed is never exposed by navigation.
       Kind Robots owns these presentation fields, not Conductor override YAML.
+
+      Patched the existing Kind Robots Project row (id 2118, auto-created by the conductor
+      projection sync, conductorSlug already set) via PATCH /api/projects/2118: title
+      'Butterfly Gallery', channelKey=plan, tabKey=projects, liveUrl=/butterfly-gallery,
+      isPublic=false. Confirmed via the response payload. No code change / PR needed -- this
+      is a live Kind Robots data field, not a roadmap-adjacent file.
+    updated: '2026-09-18T08:39:44Z'
 
   - id: t-003
     milestone: m1
