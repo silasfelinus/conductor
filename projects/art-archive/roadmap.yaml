@@ -442,3 +442,19 @@ tasks:
       Resources later. Once a Resource is added, the normal reconciliation path
       should re-attempt matching and clear resolved backlog entries without
       re-importing the image.
+
+  - id: t-022
+    milestone: m2
+    title: "Wire a runnable entrypoint that calls the t-005 importer against real scanner output"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      t-004 shipped utils/scripts/scanArtArchive.ts as a CLI entrypoint for the
+      dry-run scanner, but t-005's importArchiveScan()/importArchiveFile() are
+      exported functions with no script or admin route that actually invokes
+      them against scanArchiveRoot()'s live output. Without this, the importer
+      cannot be run against the real archive at all. Add a CLI script (mirroring
+      scanArtArchive.ts's shape) or an admin-gated endpoint that feeds scanner
+      results into the importer and reports created/reused counts.

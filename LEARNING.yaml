@@ -14578,3 +14578,20 @@ records:
     directly to a branch you're working on, rebase your next commit on top of it
     rather than force-pushing over it; a plain rebase merged cleanly here since the
     files didn't overlap.
+- date: '2026-09-18'
+  project: art-archive
+  task: t-005
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Clean first-pass success following t-004's rejection lesson: the Worker
+    correctly treated raw-metadata retention as a hard invariant (preserved
+    verbatim in extractedMetadata for every format) while still scoping
+    per-column generation-field extraction to PNG only, matching what t-006/
+    t-008 actually need next. A contract verifier regex-checking the privacy/
+    maturity/idempotency invariants directly against source shipped alongside
+    the feature, not as an afterthought -- worth treating as the default shape
+    for any importer/reconciler task in this project going forward.

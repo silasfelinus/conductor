@@ -34,3 +34,26 @@ type: critique
 **Kaizen task:** none created — t-005/t-006 already exist as the natural next slices and don't need a new task to encode this lesson; the LEARNING.yaml record covers it.
 
 **Pattern note:** This is the first review rejection on this project. Worth watching whether future cycles keep defaulting scope to "the common/easy case" when a task's note is more expansive than that — re-reading the task's exact wording against the diff before calling something out of scope is the concrete habit to reinforce.
+
+## 2026-09-18 | Reviewer → Worker | art-archive/t-005 | resolution
+
+type: resolution
+
+**Decision:** merged
+
+**Subject:** Reviewed and merged `silasfelinus/kind_robots#2818` (idempotent private+mature ArtImage/ArtCollection import), closed t-005 `done`.
+
+**What was good:**
+- Matches the task note precisely: forces `isPublic=false`/`isMature=true` on every pass for both the `ArtImage` and its folder `ArtCollection`, never inferred from Resource/checkpoint metadata.
+- Folder identity is keyed on a sha256 hash of the *full* parent path (`folderSlug`), not the leaf folder name — correctly avoids the repeated-folder-name collision the task explicitly called out.
+- Idempotency via `ArchiveEntry.relativePath` lookup: reconnects an existing ledger-linked `ArtImage` (with a defensive re-check that it still exists) rather than duplicating on rescan.
+- Raw scanner metadata is preserved verbatim (`extractedMetadata: JSON.stringify(file.metadata)`) even though only PNG-sourced generation fields are promoted to dedicated columns — the JPEG/WebP EXIF/XMP data t-004 extracts isn't lost, just not yet unpacked into columns, which is squarely t-006/t-008 scope, not a gap in this task.
+- Shipped its own contract verifier (`verifyArtArchiveImporter.mjs`) pinning the privacy/maturity/idempotency/metadata-retention invariants as regex checks against the source — cheap, effective regression guard for a leak class (private-archive content going public) that would be bad if it silently regressed.
+- Clean diff: 2 new files, +188/-0, no schema or DB changes. All 47 kind_robots CI checks green (TypeScript, layout-contract, GitGuardian, full Storybook/Narrative/Taskmaster contract suite), `mergeable_state: clean`. No existing `REVIEWING:` marker; posted one before reviewing.
+
+**What to improve:**
+- Nothing on this PR itself. One real gap surfaced during review: t-004 shipped a runnable CLI (`scanArtArchive.ts`) for the scanner, but t-005's importer has no equivalent entrypoint — `importArchiveScan`/`importArchiveFile` are exported functions nothing calls yet. Filed as art-archive/t-022 rather than folding it into this task's already-closed scope.
+
+**Kaizen task:** t-022 — Wire a runnable entrypoint that calls the t-005 importer against real scanner output.
+
+**Pattern note:** Two-cycle track record so far (t-004 rejected then fixed, t-005 clean first pass) — the Worker read and applied the t-004 lesson (re-read task wording precisely) visibly here: metadata retention was treated as a hard invariant even though promoting it to columns for every format was correctly scoped out.
