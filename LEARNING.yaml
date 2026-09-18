@@ -14831,3 +14831,20 @@ records:
     description alone before marking this milestone-3 task done -- the PR's own
     self-report matched what actually shipped, but checking the diff itself is what
     makes that confidence earned rather than assumed.
+- date: '2026-09-18'
+  project: butterfly-gallery
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Extracting the field-level action rules into small, pure appliers
+    (stores/helpers/butterflyGalleryActions.ts) before wiring them behind an
+    injectable adapter made the whole task independently unit-testable via a
+    plain tsx script (this repo has no vitest) without needing Pinia/component
+    setup at all -- the store's existing sync setRating()/applyBinOutcome()
+    mutated a plain object reference regardless of whether it was reactive, so
+    the refactor into standalone functions cost nothing and paid for itself
+    immediately in test coverage.

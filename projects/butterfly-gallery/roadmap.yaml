@@ -214,21 +214,38 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Wire core curation actions: processed state, rating, trash, and collections"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on:
       - t-005
       - t-006
-    note: >
+    note: >-
       Make first-class bin/action targets for mark processed/unprocessed,
       Rate 1-5, recoverable Trash, and Add to collection. Call existing archive
       APIs when available; until then keep the action adapter injectable and
       test against fixtures. Do not recreate archive filesystem semantics here.
+
+      Merged silasfelinus/kind_robots#2837 (squash 1df1861): wired setProcessed, setRating,
+      trashEntry/restoreEntry, addToCollection/removeFromCollection through a new injectable
+      ButterflyGalleryActionAdapter (fixture-backed today, mirroring the existing feed
+      provider pattern -- a real art-archive-backed adapter swaps in later under t-022, which
+      is `waiting` on an external art-archive read/action contract that doesn't exist yet).
+      Extracted the field-level rules into pure appliers
+      (stores/helpers/butterflyGalleryActions.ts) so dropOnBin and the new standalone actions
+      share one implementation. Trash is explicitly reversible at the data layer (never drops
+      the pile entry; restoreEntry fully reverses it) though the UI restore affordance itself
+      is t-009/t-020's job. Verification: full npm run test (vue-tsc) clean, layout-contract
+      and kr-class-coverage both hold, eslint/prettier clean, and a new contract test
+      (utils/scripts/verifyButterflyGalleryActions.test.ts, wired into contract-tests.yml)
+      covering processed toggle, rating clamp/clear, trash/restore round-trip, collection
+      add/remove dedup, preset-bin composition, and adapter-call composition -- all 49
+      kind_robots CI checks green.
     claimed_by: claude-scheduled-2026-09-18T-conductor-run-bg-t007
     claimed_at: '2026-09-18T11:33:24Z'
-    updated: '2026-09-18T11:44:45Z'
+    updated: '2026-09-18T11:51:52Z'
+    implementation_pr: 'silasfelinus/kind_robots#2837'
 
   - id: t-008
     milestone: m2
@@ -560,3 +577,22 @@ tasks:
       stores/helpers/butterflyGalleryFixtures.ts and the real art-archive-backed
       provider both emit structurally identical ButterflyPileEntry records, so a
       future adapter swap cannot silently drop a field the store/UI depends on.
+
+  - id: t-027
+    milestone: m2
+    title: "Add a ButterflyGalleryActionAdapter method for the needs-review bin kind"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-007
+    note: >
+      Kaizen from t-007 (kind_robots#2837): applyBinOutcome's 'needs-review' bin
+      kind still mutates entry.matchState directly instead of going through the
+      action adapter, unlike the other five bin kinds (processed/unprocessed,
+      rating, trash, collection) which all persist through
+      ButterflyGalleryActionAdapter first. Add a markNeedsReview(entryId) method
+      to the adapter (and its fixture-backed no-op implementation) and route
+      applyBinOutcome's 'needs-review' case through it, once a bin or action
+      actually exercises that kind, so it doesn't silently bypass the adapter
+      seam a real (t-022) art-archive-backed adapter will eventually implement.
