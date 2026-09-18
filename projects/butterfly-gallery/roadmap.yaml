@@ -538,7 +538,7 @@ tasks:
   - id: t-018
     milestone: m5
     title: "Add persisted custom bins and generation/action presets"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -567,9 +567,11 @@ tasks:
       upsert/remove/enable/action/reset mutations. All 46 CI checks green, mergeable_state
       clean, diff isolated to the one new store file built on the already-merged #2843 helper.
       Editor UI still remains for the next continuation slice -- re-arming to ready.
+
+      Added the reusable admin preset-editor component for the t-018 continuation: visible-bin toggles, editable labels, and persisted generation-action bindings through the existing Pinia preset store. This is a scoped slice; page integration remains before t-018 is complete.
     claimed_by: openai-scheduled-2026-09-18T201608Z-butterfly-gallery-t018-a11
     claimed_at: '2026-09-18T20:16:08Z'
-    updated: '2026-09-18T20:16:08Z'
+    updated: '2026-09-18T20:20:00Z'
     implementation_pr: 'silasfelinus/kind_robots#2848'
 
   - id: t-019
