@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-18T13:56:33Z
+Generated: 2026-09-18T14:31:17Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1029**
-- Outcomes: blocked: 16, cancelled: 1, done: 1012
+- Closed tasks recorded: **1030**
+- Outcomes: blocked: 16, cancelled: 1, done: 1013
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -24,7 +24,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | art-archive | 12 | 100% |
 | art-generator-connect | 3 | 100% |
 | brainstorm | 26 | 96% |
-| butterfly-gallery | 10 | 100% |
+| butterfly-gallery | 11 | 100% |
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 39 | 100% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1012 | 99% |
+| software | 1013 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-18 `butterfly-gallery/t-012` — check_pr_handoff_template.py's check-run history can carry a stale `failure` entry from an earlier PR-body revision (e.g. missing the "### Notes for reviewer" heading) even after the Worker edits the body and a later run of the same check passes. Verify mergeable_state plus the latest commit's own check-run/PR_BODY content via get_job_logs before treating an older failed run as a live blocker.
 - 2026-09-18 `butterfly-gallery/t-011` — A sandbox with no production DATABASE_URL can still queue real ArtJobs by POSTing to /api/art/queue with KR_API_TOKEN as x-api-key, building the Krea2 workflow via the real buildKrea2WorkflowFromRequest under tsx (a node_modules/~ symlink workaround resolves the repo's '~' import alias without a full Nuxt build). "Producing" a static art asset set is a two-step task, queuing the ArtJob now, then a separate follow-up (filed as t-028) to wire the rendered images in once the async relay finishes — don't block the first step's closure on the second happening within the same session.
 - 2026-09-18 `art-archive/t-011` — Preserve path-derived membership as system-owned state and expose custom membership as an additive relation, rather than reusing replace-style collection APIs that could erase the folder invariant.
 - 2026-09-18 `butterfly-gallery/t-009` — Reading the store's existing visiblePile filter logic before building any UI surfaced a real, previously-invisible bug: trash visibility was folded into matchState === 'missing' by the earlier t-003 scaffolding, but trashing an entry never touches matchState, so that path never actually revealed a real trashed entry (confirmed against the fixture data: entry 9005 is trashed:true, matchState:'matched'). Fixed by giving trash visibility its own filters.trashView dimension, decoupled from matchState, and adding direct unit coverage for the decoupling rather than assuming the old combined check was intentional just because it had shipped before.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-18 `butterfly-gallery/t-008` — Same PR (kind_robots#2834) substantially implemented the right-rail Image Info panel ahead of its own roadmap task being claimed. Closed with two minor field-list gaps noted (no filename/title or dimensions in the compact view) rather than reopening or leaving it artificially at ready -- the note's core ask (compact panel + Details expand + Cleanup/Trash below it) is met, and gating done-ness on a cosmetic completeness nit would misrepresent the task's actual state.
 - 2026-09-18 `butterfly-gallery/t-006` — Reconciled from kind_robots#2834 rather than implemented directly this cycle -- Silas built the full approved-stage composition himself in a live session that ran concurrently with this session's t-005 work, superseding t-005's narrower component-extraction approach and covering t-006/t-008/t-010's scope in one PR. The conflict this produced (both PRs touched pages/butterfly-gallery.vue, based on the same stale pre-t-005 commit) resolved cleanly by keeping the newer, more complete implementation and removing the now-orphaned t-005 components/store additions that nothing referenced. Worth a standing habit: when a design-lock/spec commit lands mid-task (visible via a fresh git log on the docs/roadmap repo), re-check for a matching implementation PR before assuming your own in-flight work is still the only game in town.
 - 2026-09-18 `butterfly-gallery/t-005` — Extracting the pile/frame sections directly out of the t-003 placeholder page into two new presentational components (emit gestures up, no store mutation of their own) landed clean on the first pass by following narrative-cast-card.vue's established convention rather than inventing a new shape. Adding a store-owned topOfPile computed (sliced from the already-filtered visiblePile) kept the "only render the top of the stack" requirement testable and reusable, instead of duplicating the slice-and-filter logic inside the component. Touch/pointer drag-to-frame was deliberately left to the sibling task (t-020) that already owns that scope -- click (a real <button>, already keyboard-reachable) covers the non-drag path in the meantime, so nothing regressed.
-- 2026-09-18 `butterfly-gallery/t-004` — Defining the read contract as a small interface (ButterflyGalleryFeedProvider. fetchPage) with one fixture implementation and a swappable module-level "active provider" landed clean and immediately exercised end-to-end (a real loadMore()/hasMore path in the store and page) rather than staying a paper contract nobody calls. Extending an existing type (ButterflyPileEntry) to satisfy a new task's field list is safe as long as every direct object-literal construction of that type (the fixtures file) is updated in the same PR -- vue-tsc catches a missed field immediately, but only if the fixtures are still plain object literals rather than already-cast `as ButterflyPileEntry`.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-18T13:56:33Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-18T14:31:17Z_
