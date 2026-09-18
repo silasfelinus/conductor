@@ -794,8 +794,8 @@ tasks:
   - id: t-027
     milestone: m2
     title: "Add a ButterflyGalleryActionAdapter method for the needs-review bin kind"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-007
@@ -809,6 +809,9 @@ tasks:
       applyBinOutcome's 'needs-review' case through it, once a bin or action
       actually exercises that kind, so it doesn't silently bypass the adapter
       seam a real (t-022) art-archive-backed adapter will eventually implement.
+    claimed_by: claude-scheduled-20260918T233009Z-bg-t027
+    claimed_at: '2026-09-18T23:30:10Z'
+    updated: '2026-09-18T23:30:10Z'
 
   - id: t-028
     milestone: m3
