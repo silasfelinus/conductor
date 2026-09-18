@@ -14743,3 +14743,22 @@ records:
     rejections. Keeping the fixture data behind a single loadPile()/rescan()
     seam (stores/helpers/butterflyGalleryFixtures.ts) rather than inlining it
     in the store or page means the t-004 adapter swap only touches one file.
+- date: 2026-09-18
+  project: butterfly-gallery
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Defining the read contract as a small interface (ButterflyGalleryFeedProvider.
+    fetchPage) with one fixture implementation and a swappable module-level
+    "active provider" landed clean and immediately exercised end-to-end (a
+    real loadMore()/hasMore path in the store and page) rather than staying a
+    paper contract nobody calls. Extending an existing type
+    (ButterflyPileEntry) to satisfy a new task's field list is safe as long as
+    every direct object-literal construction of that type (the fixtures file)
+    is updated in the same PR -- vue-tsc catches a missed field immediately,
+    but only if the fixtures are still plain object literals rather than
+    already-cast `as ButterflyPileEntry`.
