@@ -214,8 +214,8 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Wire core curation actions: processed state, rating, trash, and collections"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on:
@@ -226,6 +226,9 @@ tasks:
       Rate 1-5, recoverable Trash, and Add to collection. Call existing archive
       APIs when available; until then keep the action adapter injectable and
       test against fixtures. Do not recreate archive filesystem semantics here.
+    claimed_by: claude-scheduled-2026-09-18T-conductor-run-bg-t007
+    claimed_at: '2026-09-18T11:33:24Z'
+    updated: '2026-09-18T11:33:24Z'
 
   - id: t-008
     milestone: m2
