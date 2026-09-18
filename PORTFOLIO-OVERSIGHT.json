@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-09-17T21:28:48.068807+00:00",
+  "generated_at": "2026-09-18T04:52:08.731005+00:00",
   "summary": {
-    "status": "clean",
-    "roadmap_errors": 0,
-    "roadmap_warnings": 9,
+    "status": "action-needed",
+    "roadmap_errors": 3,
+    "roadmap_warnings": 8,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -12,8 +12,8 @@
   },
   "openai_scheduled_agent": {
     "overdue": false,
-    "last_activity": "2026-09-17T20:22:45+00:00",
-    "hours_since": 1.1,
+    "last_activity": "2026-09-18T04:39:00+00:00",
+    "hours_since": 0.22,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "OpenAI coordination activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit."
@@ -21,7 +21,7 @@
   "intent_review": {
     "due": false,
     "last_report": "INTENT-AUDIT-2026-09-17.md",
-    "days_since": 0,
+    "days_since": 1,
     "stale_days": 3.0
   },
   "project_parity": {
@@ -30,22 +30,44 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-09-17T21:28:48.068816+00:00",
+    "generated_at": "2026-09-18T04:52:08.731010+00:00",
     "summary": {
-      "roadmaps": 52,
-      "active_projects": 19,
+      "roadmaps": 53,
+      "active_projects": 20,
       "continuous_projects": 3,
-      "tasks": 1532,
-      "ready": 26,
-      "waiting": 52,
-      "needs_human": 40,
-      "in_progress": 4,
-      "done": 1394,
-      "errors": 0,
-      "warnings": 9,
+      "tasks": 1556,
+      "ready": 29,
+      "waiting": 66,
+      "needs_human": 41,
+      "in_progress": 3,
+      "done": 1401,
+      "errors": 3,
+      "warnings": 8,
       "info": 26
     },
-    "errors": [],
+    "errors": [
+      {
+        "severity": "error",
+        "code": "CONTROL_PRIORITY_DRIFT",
+        "project": "_global",
+        "task": null,
+        "message": "CONTROL.md priority band ['cthulhuquarium', 'kind-economy', 'interface-vision', 'coloring-book', 'humboldt-scoop-cms', 'digital-storefront', 'kind-robots', 'rainbow-butterflies'] does not match priority.yaml prefix ['cthulhuquarium', 'kind-economy', 'art-archive', 'interface-vision', 'coloring-book', 'humboldt-scoop-cms', 'digital-storefront', 'kind-robots']."
+      },
+      {
+        "severity": "error",
+        "code": "WAITING_WITH_SATISFIED_DEPS",
+        "project": "art-archive",
+        "task": "t-008",
+        "message": "All dependencies are satisfied; resolver should promote this task to ready."
+      },
+      {
+        "severity": "error",
+        "code": "WAITING_WITH_SATISFIED_DEPS",
+        "project": "art-archive",
+        "task": "t-009",
+        "message": "All dependencies are satisfied; resolver should promote this task to ready."
+      }
+    ],
     "warnings": [
       {
         "severity": "warning",
@@ -60,13 +82,6 @@
         "project": "cthulhuquarium",
         "task": "t-065",
         "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
-      },
-      {
-        "severity": "warning",
-        "code": "STALE_IN_PROGRESS",
-        "project": "interface-vision",
-        "task": "t-104",
-        "message": "Task has remained claimed for 3 days."
       },
       {
         "severity": "warning",
