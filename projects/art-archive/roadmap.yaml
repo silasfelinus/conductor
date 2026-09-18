@@ -539,8 +539,8 @@ tasks:
   - id: t-024
     milestone: m2
     title: "Add an admin-gated endpoint wrapping the t-022 import entrypoint"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-022
@@ -553,3 +553,6 @@ tasks:
       the same created/reused counts as JSON, so this can eventually be
       wired into the admin archive-curation UI (m3) instead of requiring
       Silas to exec into the container.
+    claimed_by: claude-scheduled-20260918T070158Z-artarchive-t024-a1
+    claimed_at: '2026-09-18T07:01:59Z'
+    updated: '2026-09-18T07:01:59Z'
