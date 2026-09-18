@@ -451,7 +451,7 @@ tasks:
   - id: t-017
     milestone: m4
     title: "Add sorting micro-interactions without physics friction"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -459,15 +459,21 @@ tasks:
       - t-005
       - t-006
       - t-010
-    note: >
+    note: >-
       Animate pile selection, drag-target highlight, successful bin acceptance,
       next-image reveal, and the approved selected-image funnel transition:
       exaggerated vertical stretch while dropping, then snap/squash back to
       correct aspect ratio on arrival. No crane exists; selection automatically
       places the art. Keep every interaction deterministic and easy to drop.
+
+      Merged silasfelinus/kind_robots#2841 -- sorting micro-interactions (pile selection pop,
+      drag-target highlight, bin-acceptance flash, and the Web-Animations-driven funnel-drop
+      transition per MOTION-STORYBOARD.md's geometry contract) implemented, tested, and
+      merged.
     claimed_by: claude-scheduled-2026-09-18T143205-butterfly-gallery-t017
     claimed_at: '2026-09-18T14:32:06Z'
-    updated: '2026-09-18T14:43:19Z'
+    updated: '2026-09-18T14:52:48Z'
+    implementation_pr: 'silasfelinus/kind_robots#2841'
 
   - id: t-018
     milestone: m5
