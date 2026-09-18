@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-18T18:16:22Z
+Generated: 2026-09-18T18:22:26Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1035**
-- Outcomes: blocked: 16, cancelled: 1, done: 1018
+- Closed tasks recorded: **1036**
+- Outcomes: blocked: 16, cancelled: 1, done: 1019
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -21,7 +21,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | animation-studio | 2 | 50% |
 | appmaker | 11 | 100% |
 | approval-portal | 2 | 0% |
-| art-archive | 13 | 100% |
+| art-archive | 14 | 100% |
 | art-generator-connect | 3 | 100% |
 | brainstorm | 26 | 96% |
 | butterfly-gallery | 14 | 100% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1018 | 99% |
+| software | 1019 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-18 `art-archive/t-013` — A field can be filterable and displayed in an admin browser for a while before anyone notices nothing ever writes it -- when a task note says "expose fast rating actions" for a field that already exists in the schema and the read path, check the write path specifically before assuming only UI wiring is missing.
 - 2026-09-18 `art-archive/t-012` — Quarantine ("delete") from t-009 overwrote relativePath with the trash path and threw the original location away, so a "recoverable trash" task needs a place to remember where a file came from before it can add restore -- don't assume an existing quarantine/soft-delete action is already restore-ready just because it preserves the row via isActive: false. Also: `prisma format`/`prisma generate` in this sandbox reformats every .prisma file and regenerates the whole client, not just the one touched -- always diff and revert unrelated files before committing a schema change.
 - 2026-09-18 `storybook/t-049` — A stale status: claimed with a note saying "releasing the claim" is a real drift, not just a stale note -- always re-check whether the described outcome actually landed in the status field before trusting the note. Separately: GitHub MCP create_or_update_file's content parameter is plain text, never pre-base64-encoded -- passing already-encoded content silently writes the base64 string itself as file content; verify a push by re-fetching real content, not just the tool's size/sha response.
 - 2026-09-18 `butterfly-gallery/t-015` — Before building a first-visit-intro state machine from scratch, check whether an earlier task already scaffolded it -- t-003/t-012 had already wired the intro status, session-storage marker, and completeIntro()/replayIntro() into the store; this task only needed to replace one placeholder line (`gallery.completeIntro()` called immediately with no animation) with real DOM orchestration. Route every exit path (Skip, Escape, hard timeout, reduced-motion change, unmount) through one idempotent finish function so a multi-exit motion sequence can never strand the page mid-animation.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-18 `butterfly-gallery/t-011` — A sandbox with no production DATABASE_URL can still queue real ArtJobs by POSTing to /api/art/queue with KR_API_TOKEN as x-api-key, building the Krea2 workflow via the real buildKrea2WorkflowFromRequest under tsx (a node_modules/~ symlink workaround resolves the repo's '~' import alias without a full Nuxt build). "Producing" a static art asset set is a two-step task, queuing the ArtJob now, then a separate follow-up (filed as t-028) to wire the rendered images in once the async relay finishes — don't block the first step's closure on the second happening within the same session.
 - 2026-09-18 `art-archive/t-011` — Preserve path-derived membership as system-owned state and expose custom membership as an additive relation, rather than reusing replace-style collection APIs that could erase the folder invariant.
 - 2026-09-18 `butterfly-gallery/t-009` — Reading the store's existing visiblePile filter logic before building any UI surfaced a real, previously-invisible bug: trash visibility was folded into matchState === 'missing' by the earlier t-003 scaffolding, but trashing an entry never touches matchState, so that path never actually revealed a real trashed entry (confirmed against the fixture data: entry 9005 is trashed:true, matchState:'matched'). Fixed by giving trash visibility its own filters.trashView dimension, decoupled from matchState, and adding direct unit coverage for the decoupling rather than assuming the old combined check was intentional just because it had shipped before.
-- 2026-09-18 `art-archive/t-010` — Pass-1 rejection (kind_robots#2836) flagged two real, locally-reproduced defects in the new admin Art Archive browser -- a nonexistent userStore.isInitialized field (correct name: initialized) and a bare kr-select class with no matching tailwind.css primitive (kr-select-sm already existed and was the fix). The Worker's pass-2 retry addressed both directly and named them in the PR body; all 51 checks went green on the first re-run. Confirms retry_context written at rejection time is enough for a clean second pass when the failures are concrete and locally reproducible rather than ambiguous.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-18T18:16:22Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-18T18:22:26Z_
