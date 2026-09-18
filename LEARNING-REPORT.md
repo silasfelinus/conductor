@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-18T19:40:31Z
+Generated: 2026-09-18T19:49:21Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1036**
-- Outcomes: blocked: 16, cancelled: 1, done: 1019
+- Closed tasks recorded: **1037**
+- Outcomes: blocked: 16, cancelled: 1, done: 1020
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -42,7 +42,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | interface-vision | 136 | 100% |
 | kapowarr | 52 | 100% |
 | kind-economy | 10 | 100% |
-| kind-robots | 64 | 98% |
+| kind-robots | 65 | 98% |
 | kindrobots-unraid | 9 | 100% |
 | lora-ingestion | 1 | 100% |
 | mandarin-tutor | 11 | 100% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1019 | 99% |
+| software | 1020 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-18 `kind-robots/t-110` — A container-log "Data too long for column" truncation warning is worth escalating immediately, not just noting: it means writes are already succeeding with silently corrupted data. This one (imagePath, since kind_robots#2814) escalated from a warning to hard ArtJob write failures (HTTP 500) within two days once enough long static-path values accumulated. When one column in a family of otherwise-consistent columns (13 other imagePath fields already at VarChar(764)) is the odd one left at Prisma's implicit VarChar(191) default, that inconsistency is itself the signal to check for -- grep every same-named column across the schema before assuming a single reported failure is isolated.
 - 2026-09-18 `art-archive/t-013` — A field can be filterable and displayed in an admin browser for a while before anyone notices nothing ever writes it -- when a task note says "expose fast rating actions" for a field that already exists in the schema and the read path, check the write path specifically before assuming only UI wiring is missing.
 - 2026-09-18 `art-archive/t-012` — Quarantine ("delete") from t-009 overwrote relativePath with the trash path and threw the original location away, so a "recoverable trash" task needs a place to remember where a file came from before it can add restore -- don't assume an existing quarantine/soft-delete action is already restore-ready just because it preserves the row via isActive: false. Also: `prisma format`/`prisma generate` in this sandbox reformats every .prisma file and regenerates the whole client, not just the one touched -- always diff and revert unrelated files before committing a schema change.
 - 2026-09-18 `storybook/t-049` — A stale status: claimed with a note saying "releasing the claim" is a real drift, not just a stale note -- always re-check whether the described outcome actually landed in the status field before trusting the note. Separately: GitHub MCP create_or_update_file's content parameter is plain text, never pre-base64-encoded -- passing already-encoded content silently writes the base64 string itself as file content; verify a push by re-fetching real content, not just the tool's size/sha response.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-18 `butterfly-gallery/t-012` — check_pr_handoff_template.py's check-run history can carry a stale `failure` entry from an earlier PR-body revision (e.g. missing the "### Notes for reviewer" heading) even after the Worker edits the body and a later run of the same check passes. Verify mergeable_state plus the latest commit's own check-run/PR_BODY content via get_job_logs before treating an older failed run as a live blocker.
 - 2026-09-18 `butterfly-gallery/t-011` — A sandbox with no production DATABASE_URL can still queue real ArtJobs by POSTing to /api/art/queue with KR_API_TOKEN as x-api-key, building the Krea2 workflow via the real buildKrea2WorkflowFromRequest under tsx (a node_modules/~ symlink workaround resolves the repo's '~' import alias without a full Nuxt build). "Producing" a static art asset set is a two-step task, queuing the ArtJob now, then a separate follow-up (filed as t-028) to wire the rendered images in once the async relay finishes — don't block the first step's closure on the second happening within the same session.
 - 2026-09-18 `art-archive/t-011` — Preserve path-derived membership as system-owned state and expose custom membership as an additive relation, rather than reusing replace-style collection APIs that could erase the folder invariant.
-- 2026-09-18 `butterfly-gallery/t-009` — Reading the store's existing visiblePile filter logic before building any UI surfaced a real, previously-invisible bug: trash visibility was folded into matchState === 'missing' by the earlier t-003 scaffolding, but trashing an entry never touches matchState, so that path never actually revealed a real trashed entry (confirmed against the fixture data: entry 9005 is trashed:true, matchState:'matched'). Fixed by giving trash visibility its own filters.trashView dimension, decoupled from matchState, and adding direct unit coverage for the decoupling rather than assuming the old combined check was intentional just because it had shipped before.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-18T19:40:31Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-18T19:49:21Z_
