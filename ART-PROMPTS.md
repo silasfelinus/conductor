@@ -303,6 +303,8 @@ These are not automatically queued for legacy projects. Generate them manually w
 
 ### butterfly-gallery
 
+**Queue priority:** 200 — same ArtJob tier as Daily Dream art, ahead of Resource/LoRA preview refill work.
+
 **Project assets:**
 - `butterfly-gallery-icon.webp` — A single luminous rainbow butterfly struggling upward while towing a tiny ornate empty picture frame by a fine string, playful imbalance, crisp premium app-icon silhouette on a warm dark gallery ground, no readable text, no logo, no collage.
 - `butterfly-gallery-card.webp` — Portrait key art inside a whimsical dusky gallery sorting room: a loose pile of framed pictures on the floor, one large empty presentation frame glowing at center, rainbow butterflies carrying frames with varying degrees of success around the room, warm wood and velvet tones, 2:3 composition, no readable text, no logo, no collage.
