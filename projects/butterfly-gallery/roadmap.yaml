@@ -125,8 +125,8 @@ tasks:
   - id: t-004
     milestone: m1
     title: "Define the private-ArtImage feed contract without duplicating art-archive"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -136,6 +136,9 @@ tasks:
       missing/trashed state, and next-page cursors. Prefer an adapter over
       duplicating archive queries. Fixture this contract for UI work. The real
       provider switches to art-archive once that project exposes the feed.
+    claimed_by: 2026-09-18T09-51-00-conductor-agent-run-t004
+    claimed_at: '2026-09-18T09:51:56Z'
+    updated: '2026-09-18T09:51:56Z'
 
   - id: t-005
     milestone: m2
