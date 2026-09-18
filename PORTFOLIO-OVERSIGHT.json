@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-18T16:31:48.499767+00:00",
+  "generated_at": "2026-09-18T20:58:37.232162+00:00",
   "summary": {
     "status": "action-needed",
     "roadmap_errors": 1,
@@ -12,8 +12,8 @@
   },
   "openai_scheduled_agent": {
     "overdue": false,
-    "last_activity": "2026-09-18T16:30:32+00:00",
-    "hours_since": 0.02,
+    "last_activity": "2026-09-18T20:49:35+00:00",
+    "hours_since": 0.15,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "OpenAI coordination activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit."
@@ -30,17 +30,17 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-09-18T16:31:48.499772+00:00",
+    "generated_at": "2026-09-18T20:58:37.232169+00:00",
     "summary": {
       "roadmaps": 54,
       "active_projects": 21,
       "continuous_projects": 3,
       "tasks": 1589,
-      "ready": 45,
+      "ready": 41,
       "waiting": 57,
       "needs_human": 42,
-      "in_progress": 3,
-      "done": 1426,
+      "in_progress": 1,
+      "done": 1432,
       "errors": 1,
       "warnings": 8,
       "info": 26
@@ -48,10 +48,10 @@
     "errors": [
       {
         "severity": "error",
-        "code": "CONTROL_PRIORITY_DRIFT",
-        "project": "_global",
-        "task": null,
-        "message": "CONTROL.md priority band ['cthulhuquarium', 'kind-economy', 'interface-vision', 'coloring-book', 'humboldt-scoop-cms', 'digital-storefront', 'kind-robots', 'rainbow-butterflies'] does not match priority.yaml prefix ['cthulhuquarium', 'kind-economy', 'butterfly-gallery', 'art-archive', 'interface-vision', 'coloring-book', 'humboldt-scoop-cms', 'digital-storefront']."
+        "code": "WAITING_WITH_SATISFIED_DEPS",
+        "project": "butterfly-gallery",
+        "task": "t-019",
+        "message": "All dependencies are satisfied; resolver should promote this task to ready."
       }
     ],
     "warnings": [
