@@ -419,18 +419,29 @@ tasks:
   - id: t-013
     milestone: m3
     title: "Persist 1-5 archive ratings and expose fast rating actions"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-010
-    note: >
+    note: >-
       Rating is curation state on the archive entry and survives rescans/moves.
       Make 1/2/3/4/5 available as click and drag/drop targets and filterable in
       the gallery.
+
+      Worker (Claude, scheduled conductor run): rating already existed on ArchiveEntry
+      (filterable, displayed) but had no write path. Added entries/[id]/rate.patch.ts
+      (admin-gated PATCH, {rating: 1-5|null}) and wired the admin page with five rating
+      targets above the grid that work as both click targets (rate the open detail entry)
+      and drag/drop targets (drag any thumbnail onto one) -- grid entries are now
+      draggable. Rating patches the entry in place in the store rather than a full
+      refetch. vue-tsc, eslint, prettier, kr-class-coverage, and the layout contract all
+      pass. No schema change needed. No manual browser click/drag-through was possible in
+      this sandbox. kind_robots#2847 open, CI running.
     claimed_by: claude-scheduled-20260918T180518Z-aa-t013
     claimed_at: '2026-09-18T18:05:18Z'
-    updated: '2026-09-18T18:05:18Z'
+    updated: '2026-09-18T18:12:12Z'
+    implementation_pr: 'silasfelinus/kind_robots#2847'
 
   - id: t-014
     milestone: m4
