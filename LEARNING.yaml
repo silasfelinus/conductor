@@ -15049,3 +15049,12 @@ records:
     component should mount it behind even a minimal admin toggle in the same PR,
     not defer wiring to a following slice -- the reachability check is a hard
     invariant on every PR, not advisory.
+- date: 2026-09-18
+  project: art-archive
+  task: t-025
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "When a task's target type is an untyped Record<string, unknown> (ArtJobPayloadRecord), check which concrete payload shape the field names actually mirror (here: A1111's flat fields, not a COMFY engine's built workflow graph) and say so explicitly in the PR rather than silently assuming the merge covers every engine."

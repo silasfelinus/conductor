@@ -734,3 +734,25 @@ tasks:
       `artArchiveMetadata.ts`) and have all three call sites use it, so the
       next module that reads `.a1111`/`.comfy` can't reintroduce the same
       unnarrowed-union compile error.
+
+  - id: t-027
+    milestone: m4
+    title: "Add an integration check that a merged preset payload survives COMFY workflow construction"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-025
+    note: >-
+      Kaizen from t-025 (kind_robots#2854): applyArchivePresetToPayload()
+      merges preset modifiers into the flat A1111-style payload shape
+      (checkpoint, promptString, loras, cfg, etc.), matching
+      artArchivePresetModifiers.ts's own vocabulary. It does not touch a
+      COMFY engine's already-built workflow node graph, which is how most
+      real ArtJob payloads (server/api/art/enqueue.post.ts's buildJobPayload)
+      actually carry these fields. Add a focused integration-level check
+      confirming a merged payload's fields still reach the right place after
+      going through buildJobPayload for at least one COMFY engine (e.g.
+      krea2), so t-015's curation board (or any future "apply preset"
+      endpoint) has a real signal if the flat-payload merge and the
+      graph-building step ever drift apart.
