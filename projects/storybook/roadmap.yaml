@@ -148,7 +148,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 50
   stakes: reversible
   note: |-
@@ -176,7 +176,12 @@ tasks:
     mergeable_state clean, diff scoped to the new verifier + workflow file (69 lines, 2
     files) matching the PR's stated scope. Posted a REVIEWING marker before review; squash-
     merged. Re-arming to ready per the established recurring-task precedent.
-  updated: '2026-09-18T02:17:49Z'
+
+    State reconciliation (scheduled conductor sweep): check_pr_merged_drift.py flagged this
+    recurring task stuck at status: claimed after its own note already documented
+    kind_robots#2813 merged clean. Re-arming to ready per the established recurring-task
+    precedent; no code change.
+  updated: '2026-09-18T03:29:43Z'
   owner: worker
   claimed_by: openai-scheduled-2026-09-18T021749Z-storybook-t010-a14
   claimed_at: '2026-09-18T02:17:49Z'
