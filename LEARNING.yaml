@@ -14782,3 +14782,52 @@ records:
     was deliberately left to the sibling task (t-020) that already owns
     that scope -- click (a real <button>, already keyboard-reachable)
     covers the non-drag path in the meantime, so nothing regressed.
+- date: '2026-09-18'
+  project: butterfly-gallery
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Reconciled from kind_robots#2834 rather than implemented directly this cycle --
+    Silas built the full approved-stage composition himself in a live session that ran
+    concurrently with this session's t-005 work, superseding t-005's narrower
+    component-extraction approach and covering t-006/t-008/t-010's scope in one PR. The
+    conflict this produced (both PRs touched pages/butterfly-gallery.vue, based on the
+    same stale pre-t-005 commit) resolved cleanly by keeping the newer, more complete
+    implementation and removing the now-orphaned t-005 components/store additions that
+    nothing referenced. Worth a standing habit: when a design-lock/spec commit lands
+    mid-task (visible via a fresh git log on the docs/roadmap repo), re-check for a
+    matching implementation PR before assuming your own in-flight work is still the
+    only game in town.
+- date: '2026-09-18'
+  project: butterfly-gallery
+  task: t-008
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Same PR (kind_robots#2834) substantially implemented the right-rail Image Info panel
+    ahead of its own roadmap task being claimed. Closed with two minor field-list gaps
+    noted (no filename/title or dimensions in the compact view) rather than reopening or
+    leaving it artificially at ready -- the note's core ask (compact panel + Details
+    expand + Cleanup/Trash below it) is met, and gating done-ness on a cosmetic
+    completeness nit would misrepresent the task's actual state.
+- date: '2026-09-18'
+  project: butterfly-gallery
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Verified against the merged file directly (grep for runway-slot/drop-funnel/
+    preset-bin/right-rail/pile-card/robot-animation-slot) rather than trusting the PR
+    description alone before marking this milestone-3 task done -- the PR's own
+    self-report matched what actually shipped, but checking the diff itself is what
+    makes that confidence earned rather than assumed.
