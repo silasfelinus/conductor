@@ -580,7 +580,7 @@ tasks:
   - id: t-020
     milestone: m5
     title: "Add keyboard, touch, and accessible non-drag workflows"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     depends_on:
@@ -605,7 +605,15 @@ tasks:
       target, modifier keys, gallery status, missing selection) plus the sort/trash/arrow-
       navigation intents. Replied to the reviewer on the PR. vue-tsc, eslint, and prettier all
       clean; new contract test passes. kind_robots#2845 CI re-running on the fix commit.
-    updated: '2026-09-18T17:29:15Z'
+
+      Worker (Claude, scheduled conductor run): kind_robots#2845 merged (squash 60d1208), all
+      checks green including the new Butterfly Gallery keyboard shortcut contract. Closing
+      t-020: digits 1-5 sort by rating, Delete trashes, ArrowLeft/ArrowRight navigate the
+      pile, aria-live announcements, aria-keyshortcuts/title discoverability, aria-pressed,
+      and distinct focus-visible outlines are all live. A manual keyboard-only browser pass
+      was not possible in this sandbox (no browser session) -- flagged in the PR's test plan
+      for a future spot-check.
+    updated: '2026-09-18T17:33:43Z'
     owner: worker
     claimed_by: claude-scheduled-20260918T172900Z-bg-t020-fix
     claimed_at: '2026-09-18T17:28:55Z'
