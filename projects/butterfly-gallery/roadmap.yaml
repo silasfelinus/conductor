@@ -544,7 +544,7 @@ tasks:
   - id: t-018
     milestone: m5
     title: "Add persisted custom bins and generation/action presets"
-    status: review
+    status: done
     owner: worker
     passes: 1
     stakes: reversible
@@ -582,9 +582,16 @@ tasks:
       reachability (0 unreachable, was 1), test:kr-class-coverage, test:layout-contract, and
       all five butterfly-gallery unit suites -- all clean. Live-bin sync with the real preset-
       rail remains a follow-up. Awaiting CI on the PR.
+
+      Merged kind_robots#2850 pass 2 (squash 11c1c97) 2026-09-18: mounted
+      ButterflyGalleryPresetEditor.vue into pages/butterfly-gallery.vue behind a toggle in the
+      existing admin-gated queue-toolbar. All 48 CI checks green, mergeable_state clean, diff
+      isolated to the component + page file. Live-bin synchronization with the actual preset-
+      rail remains a natural follow-up (not yet a separate roadmap task -- t-019 already
+      covers ArtJob integration once this lands).
     claimed_by: claude-scheduled-20260918T203409Z-butterfly-gallery-t018
     claimed_at: '2026-09-18T20:35:11Z'
-    updated: '2026-09-18T20:41:45Z'
+    updated: '2026-09-18T20:46:07Z'
     implementation_pr: 'silasfelinus/kind_robots#2850'
     retry_context: 'pass 1 failed (quality): kind_robots#2850 (third t-018 slice, ButterflyGalleryPresetEditor.vue) failed CI''s test:component-reachability -- the new component isn''t mounted anywhere reachable from app.vue/pages/layouts/content. Do differently: mount the editor into pages/butterfly-gallery.vue (even behind an admin-only toggle) in the same PR so it''s reachable, or justify+--update if a runtime-only path exists.'
 
