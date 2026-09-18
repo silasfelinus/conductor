@@ -300,3 +300,10 @@ These are not automatically queued for legacy projects. Generate them manually w
 - `art-archive-icon.webp` - A locked archival drawer partly open to reveal a luminous stack of varied AI-art prints, tiny provenance nodes and model tokens connected along the drawer edge, polished app-icon silhouette, deep gallery lighting, no text, no collage.
 - `art-archive-card.webp` - Portrait key art of a vast private digital art vault, nested folders unfolding into framed images while small curator robots sort model provenance tokens into precise trays, mature gallery atmosphere without explicit subject matter, premium archival-tool illustration, no text, no collage.
 - `art-archive-hero.webp` - Wide cinematic private archive workspace with thousands of AI artworks receding through organized shelves and luminous folder paths, an admin curator moving images between collections and generation stations while provenance threads connect checkpoints and LoRAs, sophisticated creative-operations banner, no text, no collage.
+
+### butterfly-gallery
+
+**Project assets:**
+- `butterfly-gallery-icon.webp` — A single luminous rainbow butterfly struggling upward while towing a tiny ornate empty picture frame by a fine string, playful imbalance, crisp premium app-icon silhouette on a warm dark gallery ground, no readable text, no logo, no collage.
+- `butterfly-gallery-card.webp` — Portrait key art inside a whimsical dusky gallery sorting room: a loose pile of framed pictures on the floor, one large empty presentation frame glowing at center, rainbow butterflies carrying frames with varying degrees of success around the room, warm wood and velvet tones, 2:3 composition, no readable text, no logo, no collage.
+- `butterfly-gallery-hero.webp` — Wide cinematic gallery-workshop scene built around a central empty picture frame, painting pile below, sorting crates at both sides, a ceiling trapdoor above, and a peekaboo opening where luminous rainbow butterflies tow and carry blank framed art through the space, warm restrained room palette with vivid mascot color, 16:9 composition, no readable text, no logo, no collage.
