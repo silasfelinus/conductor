@@ -383,7 +383,7 @@ tasks:
   - id: t-012
     milestone: m3
     title: "Add delete/remove workflow with recoverable trash semantics"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: t-009
@@ -392,10 +392,23 @@ tasks:
 
 
       Roadmap-auditor dependency repair: t-009 is done, so t-012 is now eligible for work.
-    updated: '2026-09-18T17:29:03Z'
+
+      Worker (Claude, scheduled conductor run): implemented recoverable delete/restore for
+      Art Archive. The existing quarantine ("delete") action from t-009 was backend-only,
+      never wired to any UI, and had no way back -- it overwrites relativePath with the
+      trash path, losing the original location. Added a nullable preQuarantineRelativePath
+      column (additive migration) that quarantine now populates, and a new restore.post.ts
+      endpoint that is quarantine's exact inverse: moves the file back (root-confined,
+      no-overwrite) and flips isActive back to true on the entry and its ArtImage. Wired
+      the admin page with a "Show trash" filter toggle, a Trashed badge, and Delete/Restore
+      buttons. vue-tsc, eslint, the fileops unit tests (including two new restore-round-trip
+      cases), kr-class-coverage, and the layout contract all pass. No manual browser
+      click-through was possible in this sandbox. kind_robots#2846 open, CI running.
+    updated: '2026-09-18T17:49:13Z'
     owner: worker
     claimed_by: claude-scheduled-20260918T172902Z-aa-t012
     claimed_at: '2026-09-18T17:29:03Z'
+    implementation_pr: 'silasfelinus/kind_robots#2846'
 
   - id: t-013
     milestone: m3
