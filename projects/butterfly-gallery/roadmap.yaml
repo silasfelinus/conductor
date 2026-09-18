@@ -421,8 +421,8 @@ tasks:
   - id: t-015
     milestone: m4
     title: "Implement intro orchestration with trapdoor, picture fall, and session memory"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on:
@@ -433,6 +433,9 @@ tasks:
       video. Intro never blocks navigation indefinitely, exposes Skip, records
       that it played for the intended session scope, and leaves the exact same
       steady-state DOM the user will interact with afterward.
+    claimed_by: claude-scheduled-20260918T154441Z-butterfly-t015
+    claimed_at: '2026-09-18T15:44:44Z'
+    updated: '2026-09-18T15:44:44Z'
 
   - id: t-016
     milestone: m4
