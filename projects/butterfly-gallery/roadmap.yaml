@@ -125,25 +125,30 @@ tasks:
   - id: t-004
     milestone: m1
     title: "Define the private-ArtImage feed contract without duplicating art-archive"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
+    note: >-
       Define the narrow read contract Butterfly Gallery needs from the archive:
       id/thumbnail/display path, processed state, rating, folder/custom
       collections, prompt/generation metadata, resource provenance, match state,
       missing/trashed state, and next-page cursors. Prefer an adapter over
       duplicating archive queries. Fixture this contract for UI work. The real
       provider switches to art-archive once that project exposes the feed.
+
+      Merged kind_robots#2831: feed contract (ButterflyGalleryFeedProvider, cursor pagination)
+      + extended ButterflyPileEntry fields landed as described. Downstream t-005/t-008/t-009
+      unblock via resolve_deps.py.
     claimed_by: 2026-09-18T09-51-00-conductor-agent-run-t004
     claimed_at: '2026-09-18T09:51:56Z'
-    updated: '2026-09-18T09:57:33Z'
+    updated: '2026-09-18T10:03:18Z'
+    implementation_pr: 'silasfelinus/kind_robots#2831'
 
   - id: t-005
     milestone: m2
     title: "Build the painting pile and selected central frame interaction"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -189,7 +194,7 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Build the selected-image metadata and quick-action drawer"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -203,7 +208,7 @@ tasks:
   - id: t-009
     milestone: m2
     title: "Add queue filters and folder/collection browsing"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -468,7 +473,7 @@ tasks:
   - id: t-026
     milestone: m1
     title: "Add a fixture/adapter shape-parity contract for the Butterfly Gallery pile feed"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
