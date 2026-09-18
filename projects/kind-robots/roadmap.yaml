@@ -2521,6 +2521,39 @@ tasks:
     get lost.
   updated: '2026-09-18T01:50:00Z'
 
+- id: t-110
+  milestone: m6
+  title: 'Investigate imagePath write truncation warning appearing since kind_robots#2814'
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: |
+    Spotted in Alexandria's container-log triage (check_container_log_drift.py), first seen
+    2026-09-16/17 and still recurring as of this session (2026-09-18): proxysql is logging
+    "[WARNING] Error during query on (...,mariadb-kindrobots2,3306,...): 1406, Data too long
+    for column 'imagePath' at row 1" -- MySQL's non-strict-mode truncation warning, meaning
+    the write likely succeeded with a silently truncated (corrupted) imagePath value rather
+    than failing outright.
+
+    Several imagePath columns in prisma/schema.prisma are `@db.VarChar(764)` (others are
+    `@db.Text`, seemingly unbounded) -- worth checking which table(s) proxysql's query
+    actually targeted. Timing lines up with kind_robots#2814 (merged 2026-09-18T01:44:03Z,
+    see the related t-109 security finding above): that PR changed applyEntityArtImage in
+    server/utils/entityArt.ts to write raw static `/images/...` file paths into imagePath
+    instead of the shorter `/api/art/images/:id/file` pointer, which is a plausible source of
+    a longer string tripping a VarChar(764) limit that the old short pointer never
+    approached.
+
+    Scope for whoever picks this up: confirm which model/column the warning is hitting (the
+    proxysql log line doesn't say), check whether any real imagePath values are actually
+    getting truncated in the DB (vs. proxysql logging a warning on a query that MySQL itself
+    handled fine), and either widen the column to Text/enough VarChar headroom or shorten
+    what gets written, whichever is the right fix once the actual cause is confirmed. Not
+    blocking t-109's access-control decision -- a separate bug, just possibly the same root
+    change.
+  updated: '2026-09-18T10:55:00Z'
+
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
