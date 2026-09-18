@@ -671,8 +671,8 @@ tasks:
   - id: t-021
     milestone: m5
     title: "Add batch selection and batch-action confirmation"
-    status: review
-    owner: worker
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
     depends_on:
@@ -693,10 +693,21 @@ tasks:
       returning task to ready rather than done.
 
       Added the second t-021 slice: a Pinia batch orchestration store now prepares bin batches, requires confirmation for trash or generation-backed presets, executes selected entries independently through the existing gallery drop/action seam, preserves partial failures, and removes only successful ids from batch selection. Page selection/confirmation UI remains before t-021 is complete.
+
+      Reviewer (Claude, scheduled conductor run): merged kind_robots#2855 (squash bf6b07e) --
+      the second t-021 slice, a Pinia batch orchestration store
+      (stores/butterflyGalleryBatchStore.ts) on top of the already-merged pure batch contract
+      (#2853). It previews selected-entry batches, flags Trash/generation-backed presets as
+      requiring confirmation, executes each selected entry independently through the existing
+      dropOnBin seam preserving partial failures, and removes only successful ids from
+      selection. Diff isolated to one new 85-line store file, all 46 CI checks green,
+      mergeable_state clean. Per the Worker's own PR note, the pile multi-select affordance
+      and confirmation/result UI still remain before t-021 is complete -- returning to ready
+      rather than done.
     claimed_by: openai-scheduled-2026-09-18T231902Z-butterfly-gallery-t021-a11
     claimed_at: '2026-09-18T23:19:02Z'
-    updated: '2026-09-18T23:22:00Z'
-    implementation_pr: 'silasfelinus/kind_robots#2853'
+    updated: '2026-09-18T23:28:49Z'
+    implementation_pr: 'silasfelinus/kind_robots#2855'
 
   - id: t-022
     milestone: m5
