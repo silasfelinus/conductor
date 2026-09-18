@@ -1,0 +1,9 @@
+version: 1
+project: butterfly-gallery
+task: t-021
+operation: review
+owner: worker
+session: openai-scheduled-2026-09-18T221811Z-butterfly-gallery-t021-a11
+updated: '2026-09-18T22:21:00Z'
+note: >-
+  Implemented the first t-021 slice: a pure batch execution/preview contract that deduplicates selected ids, flags destructive/expensive batches for confirmation, and preserves per-entry success/failure results so partial failures do not erase successful work. Store/page wiring remains before t-021 is complete.
