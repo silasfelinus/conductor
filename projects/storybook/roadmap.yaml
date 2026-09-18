@@ -148,16 +148,16 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: review
   passes: 50
   stakes: reversible
-  note: >-
+  note: |-
     Recurring Storybook front-end polish task (de-facto recurring: re-armed to ready after each merge per the established TALKBACK 2026-08-24 precedent rather than closed done). Full cycle-by-cycle history through the 2026-09-16 state-reconciliation note archived to projects/storybook/T010-HISTORY.md — see that file for every past cycle's specific find/fix (screenshot-driven layout passes, verifyStorybookTable.mjs / contract-check additions, the felt-table redesign, etc.).
-
     What's established: each cycle reads a Storybook surface not recently covered (component, store, or page), looks for a genuine layout/UX/consistency gap, fixes it with a matching contract-check addition where practical, and opens a scoped kind_robots PR. Mode-card art is out of scope here (tracked separately as t-049). Legacy `?legacy=1` band + storybookStore.ts removal is tracked by t-037, not this task.
-
     Last state (2026-09-16T14:30:21Z, conductor state-reconciliation sweep): released a stale claim (claimed_by openai-scheduled-2026-09-15T201543Z-storybook-t010-a11) that had sat ~18h past the 90-minute claim TTL with no open kind_robots PR referencing it; no code change, re-armed to ready.
-  updated: '2026-09-18T00:19:25Z'
+
+    Storybook polish slice: replaced the ending album's comma-separated text dump with responsive 2:3 collectible ending cards using existing heroImage/icon fields while preserving locked-ending secrecy. Implementation branch worker/storybook-t-010-openai-scheduled-2026-09-18T001925Z-storybook-t010-a12.
+  updated: '2026-09-18T00:24:00Z'
   owner: worker
   claimed_by: openai-scheduled-2026-09-18T001925Z-storybook-t010-a12
   claimed_at: '2026-09-18T00:19:25Z'
