@@ -383,7 +383,7 @@ tasks:
   - id: t-013
     milestone: m4
     title: "Create the butterfly animation shot list and animation-creator jobs"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -393,9 +393,14 @@ tasks:
 
 
       Added projects/butterfly-gallery/ANIMATION-SHOT-LIST.md with eight stable animation-creator job keys covering five runway passes, the left butterfly loop, lower-right robot loop, and blank-state loop; all generated project assets are specified at ArtJob priority 200 with compositing and provenance requirements for t-014.
+
+      Reviewer (Claude, scheduled conductor run): merged silasfelinus/conductor#4656 -- docs-
+      only ANIMATION-SHOT-LIST.md, cross-checked against APPROVED-STAGE-SPEC.md and MOTION-
+      STORYBOARD.md, mergeable_state clean, 23/23 check runs green. t-014 now unblocked.
     claimed_by: openai-scheduled-2026-09-18T152102Z-butterfly-gallery-t013-a11
     claimed_at: '2026-09-18T15:21:02Z'
-    updated: '2026-09-18T15:26:00Z'
+    updated: '2026-09-18T15:28:08Z'
+    implementation_pr: 'silasfelinus/conductor#4656'
 
   - id: t-014
     milestone: m4
