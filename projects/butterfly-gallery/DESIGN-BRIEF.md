@@ -7,6 +7,35 @@ imagined for Kind Robots: a functional curation tool presented as a living
 gallery workshop where rainbow butterflies carry, drop, drag, and sort framed
 pictures.
 
+## Approved production composition
+
+**APPROVED-STAGE-SPEC.md (2026-09-18) supersedes earlier composition examples
+in this brief wherever they conflict.**
+
+The approved direction is a bright, minimalist industrial warehouse in crisp
+Saturday-morning-cartoon/cel-shaded language, not a cozy gallery and not a
+cluttered factory. The static scene contains no living/acting things.
+
+Desktop composition:
+- one long horizontal animation runway at top, behind a convex yellow funnel;
+- five configurable multi-action preset bins on the left;
+- one very large central image display;
+- compact Image Info, Cleanup, and Trash on the right;
+- a deep foreground pile of real thumbnails rising from below the viewport and
+  slightly overlapping the central display;
+- a foreground rainbow-butterfly loop above the left bins;
+- a lower-right Kind Robot sifting loop behind the pile;
+- a blank-state loop inside the central display only when nothing is selected;
+- butterfly+art runway passes behind the funnel;
+- selected artwork enters automatically with a deterministic exaggerated
+  vertical stretch-and-snap cartoon transition. There is no crane.
+
+No extra Butterfly Gallery page-header row is drawn inside the scene; the actual
+Kind Robots app header already exists. No random motivational copy belongs in
+the scene.
+
+
+
 Route: `/butterfly-gallery`
 
 Placement: Kind Robots **Plan** channel, **Projects** tab.
@@ -64,29 +93,28 @@ work surface must become usable even if an animation asset fails.
 
 ### Steady-state composition
 
-The page reads vertically and spatially:
+See **APPROVED-STAGE-SPEC.md** for the authoritative layer map. In short: a
+bright minimalist industrial warehouse, one long top runway/window with convex
+funnel, five custom preset bins left, huge central artwork, compact
+Info/Cleanup/Trash rail right, and a foreground thumbnail pile rising from below
+the viewport.
 
-- **upper room:** ceiling/trapdoor plus a peekaboo window or opening;
-- **left rail:** cleanup/unresolved/action bins;
-- **center:** selected artwork in a large presentation frame;
-- **right rail:** keep/classify/rating/preset bins;
-- **bottom center:** the visible top of the unsorted painting pile;
-- **background:** warm/dusky gallery-workshop scene with intermittent butterflies.
-
-The room should be visually calmer than the butterflies. Let mascot color provide
-the rainbow. User artwork remains the strongest visual object on screen.
+The static warehouse contains no butterflies, robots, people, or other actors.
+Those exist only as separate animation layers. User artwork remains the strongest
+visual object on screen.
 
 ### Painting pile
 
 The pile is functional, not just scenery.
 
-Only a small number of top items render as overlapping framed thumbnails with
-light rotation and hover/focus lift. A remaining count communicates queue depth.
-Selecting an item lifts it into the central frame. Successful sorting causes the
-next candidate to rise naturally into place.
+It has **no box or front container**. It rises from below the viewport so only
+the upper portion of the mass is visible, implying a much larger hidden backlog.
+The pile very slightly overlaps the bottom of the central display and sits in
+front of the lower-right robot animation.
 
-For very large queues, pagination/virtualization happens behind the metaphor.
-Never render hundreds of originals just to look like a pile.
+Only a bounded set of thumbnails renders at once. Pagination/virtualization
+happens behind the metaphor. Never render hundreds of originals just to look
+like a pile.
 
 ### Central frame
 
@@ -123,8 +151,10 @@ Initial useful kinds include:
 - move;
 - generation/action preset.
 
-The visual grammar may use left for cleanup/unresolved and right for
-classification/keep actions, but customization is authoritative.
+The approved grammar is fixed at the structural level: LEFT is five
+configurable preset bins; RIGHT is compact Image Info, Cleanup, and Trash.
+Preset meanings are customizable and may combine rating, tags, moves,
+collections, or other actions.
 
 Every bin action has drag, click/tap, and keyboard paths.
 
