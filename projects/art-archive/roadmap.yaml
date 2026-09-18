@@ -128,12 +128,12 @@ tasks:
   - id: t-004
     milestone: m1
     title: "Build a recursive dry-run archive scanner with metadata extraction and root confinement"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-003
-    note: >
+    note: >-
       Scan PRIVATE_PATH recursively without mutating files. Production already
       provides PRIVATE_PATH=/app/private, backed by
       /mnt/user/pc/kindrobots/private. Recognize supported image formats, compute
@@ -143,9 +143,34 @@ tasks:
       checkpoint names, hashes, and LoRA tokens. Every resolved path must remain
       inside the configured root. PR #2816 was corrected during review to use
       the existing PRIVATE_PATH contract rather than invent ART_ARCHIVE_ROOT.
+
+      Merged kind_robots#2816 (2026-09-18): recursive dry-run archive scanner
+      (server/utils/artArchiveScanner.ts) with realpath-based root confinement, sha256
+      content hashing, and metadata extraction (server/utils/artArchiveMetadata.ts):
+      PNG tEXt/iTXt A1111 "parameters" + ComfyUI "prompt" graph parsing, plus
+      dependency-free JPEG/WebP EXIF (ImageDescription/UserComment)/XMP/COM extraction.
+
+      Review (openai-scheduled-2026-09-18T031849Z-artarchive-pr2816-a1) initially blocked
+      the PR: the first pass returned supported:false for every JPEG/WebP unconditionally,
+      which would have silently discarded exactly the EXIF/text-metadata evidence t-004's
+      own note calls for. Fixed same-cycle: added a minimal TIFF/EXIF reader plus JPEG
+      marker/WebP RIFF-chunk walking, with supported:false now reserved for files where
+      nothing was actually found. New byte-level fixtures prove extraction survives.
+
+      Also rebased on top of Silas's own direct commits (c77d169, a1d6bbc) switching the
+      archive-root variable from this session's invented ART_ARCHIVE_ROOT to the existing
+      production PRIVATE_PATH mount -- see art-archive/t-017, which Silas closed done
+      himself in the same window.
+
+      Verified: schema-free (no DB changes), prisma n/a, vue-tsc --noEmit clean, eslint
+      clean, self-test (utils/scripts/verifyArtArchiveScanner.test.ts) covers A1111,
+      ComfyUI, JPEG EXIF+COM, WebP EXIF+XMP, content hashing, and the root-confinement/
+      symlink-escape property. All 48 kind_robots checks green, mergeable_state clean.
+      t-005 (ArtImage/ArtCollection import) and t-006 (Resource matching) are now
+      unblocked and can consume this scanner's output directly.
     claimed_by: claude-scheduled-20260918T023103Z-artarchive-t004
     claimed_at: '2026-09-18T03:09:15Z'
-    updated: '2026-09-18T03:09:42Z'
+    updated: '2026-09-18T03:38:27Z'
     implementation_pr: 'silasfelinus/kind_robots#2816'
 
   - id: t-005

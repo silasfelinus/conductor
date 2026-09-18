@@ -14555,3 +14555,26 @@ records:
     Reviewer's additive-migration audit trivial. CI's "Replay migrations on MariaDB" job
     is the real backstop for a hand-authored migration.sql in a sandbox with no
     MIGRATION_DATABASE_URL -- it caught nothing here, but it is the check that would.
+- date: 2026-09-18
+  project: art-archive
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: quality
+  lesson: >-
+    A reviewer caught a real scope gap on the first pass: the task's own note said
+    "extract available ... EXIF/text metadata" but the implementation returned
+    supported:false for every JPEG/WebP unconditionally, reasoning (in the PR body)
+    that PNG was "the format that actually carries this data in practice" --
+    true for AI-tool defaults, but the roadmap language was about what's
+    AVAILABLE, not just the common case, and JPEG/WebP EXIF/XMP/COM can carry
+    real provenance. Re-read a task's exact wording against the diff before
+    calling something out of scope, especially when the shortcut is also the
+    path of least implementation effort. Separately: Silas intervened directly
+    on the implementation branch mid-cycle to correct an invented ART_ARCHIVE_ROOT
+    env var to the already-existing PRIVATE_PATH convention -- when a human pushes
+    directly to a branch you're working on, rebase your next commit on top of it
+    rather than force-pushing over it; a plain rebase merged cleanly here since the
+    files didn't overlap.
