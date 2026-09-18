@@ -500,21 +500,21 @@ tasks:
   - id: t-018
     milestone: m5
     title: "Add persisted custom bins and generation/action presets"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on:
       - t-006
       - t-007
-    note: >
-      Let the admin choose which bins appear and bind them to reusable actions
-      such as Add LoRA, replace LoRA, switch checkpoint, append/replace prompt,
-      change common generation settings, add variant, or request replacement.
-      Prefer the archive project's preset/action API if it already exists.
+    note: |-
+      Let the admin choose which bins appear and bind them to reusable actions such as Add LoRA, replace LoRA, switch checkpoint, append/replace prompt, change common generation settings, add variant, or request replacement. Prefer the archive project's preset/action API if it already exists.
+
+
+      Implemented the first t-018 slice on the Kind Robots worker branch: a versioned, validated persistence contract for custom bin presets and generation/action intents. Store/UI wiring remains for the continuation after this scoped slice is reviewed and merged.
     claimed_by: openai-scheduled-2026-09-18T161958Z-butterfly-gallery-t018-a11
     claimed_at: '2026-09-18T16:19:58Z'
-    updated: '2026-09-18T16:19:58Z'
+    updated: '2026-09-18T16:26:00Z'
 
   - id: t-019
     milestone: m5
