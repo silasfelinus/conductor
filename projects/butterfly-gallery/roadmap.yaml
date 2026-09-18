@@ -360,7 +360,7 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Storyboard the non-looping trapdoor intro and reduced-motion variant"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -369,9 +369,16 @@ tasks:
 
 
       Wrote projects/butterfly-gallery/MOTION-STORYBOARD.md as the bounded implementation contract for the approved first-visit intro, selected-image stretch-and-snap transition, skip/session behavior, interruption rules, and reduced-motion path.
+
+      Reviewer (Claude, scheduled conductor run): merged silasfelinus/conductor#4651 — MOTION-
+      STORYBOARD.md is the bounded implementation contract for t-012. Docs-only, reversible,
+      mergeable_state clean, all required checks green (an earlier Validate-Worker-PR-handoff
+      failure was against a pre-edit PR body missing the Notes-for-reviewer heading; the body
+      was corrected and the check passed on the final commit).
     claimed_by: openai-scheduled-2026-09-18T141839Z-butterfly-gallery-t012-a11
     claimed_at: '2026-09-18T14:18:39Z'
-    updated: '2026-09-18T14:23:00Z'
+    updated: '2026-09-18T14:27:08Z'
+    implementation_pr: 'silasfelinus/conductor#4651'
 
   - id: t-013
     milestone: m4
