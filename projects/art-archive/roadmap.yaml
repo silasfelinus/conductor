@@ -473,24 +473,19 @@ tasks:
   - id: t-021
     milestone: m2
     title: "Produce the missing checkpoint and LoRA acquisition backlog"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-006
-    note: >
-      Aggregate unresolved checkpoint and LoRA evidence from scanned images into
-      a deduplicated backlog instead of treating those images as failures.
-      Preserve the raw embedded model name, filename/token, model hash when
-      available, likely Resource type, occurrence count, representative
-      ArtImage/ArchiveEntry examples, and candidate matches/confidence. Make the
-      backlog queryable/exportable for Silas to track down and add missing
-      Resources later. Once a Resource is added, the normal reconciliation path
-      should re-attempt matching and clear resolved backlog entries without
-      re-importing the image.
+    note: |-
+      Aggregate unresolved checkpoint and LoRA evidence from scanned images into a deduplicated backlog instead of treating those images as failures. Preserve the raw embedded model name, filename/token, model hash when available, likely Resource type, occurrence count, representative ArtImage/ArchiveEntry examples, and candidate matches/confidence. Make the backlog queryable/exportable for Silas to track down and add missing Resources later. Once a Resource is added, the normal reconciliation path should re-attempt matching and clear resolved backlog entries without re-importing the image.
+
+
+      Implemented a queryable missing checkpoint/LoRA backlog that deduplicates unresolved evidence, preserves candidate confidence and representative archive examples, and automatically excludes resources once reconciliation applies a unique match.
     claimed_by: openai-scheduled-2026-09-18T071938Z-art-archive-t021-a1
     claimed_at: '2026-09-18T07:19:38Z'
-    updated: '2026-09-18T07:19:38Z'
+    updated: '2026-09-18T07:25:00Z'
 
   - id: t-022
     milestone: m2
