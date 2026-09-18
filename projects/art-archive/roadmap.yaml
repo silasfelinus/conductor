@@ -330,16 +330,16 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Build the admin archive browser with processed/unprocessed and folder/collection views"
-    status: waiting
-    owner: null
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-009
-    note: >
-      Add this to the existing admin surface rather than creating a new top-level
-      channel. Art-first dense gallery, folder tree/collection picker, processed
-      and unprocessed toggles, match-state filters, rating filters, and a detail
-      editor for prompt/checkpoint/LoRAs and extracted metadata.
+    note: |-
+      Add this to the existing admin surface rather than creating a new top-level channel. Art-first dense gallery, folder tree/collection picker, processed and unprocessed toggles, match-state filters, rating filters, and a detail editor for prompt/checkpoint/LoRAs and extracted metadata.
+
+
+      Roadmap-auditor dependency repair: t-009 is done, so t-010 is now eligible for work.
+    updated: '2026-09-18T09:16:42Z'
 
   - id: t-011
     milestone: m3
@@ -357,16 +357,16 @@ tasks:
   - id: t-012
     milestone: m3
     title: "Add delete/remove workflow with recoverable trash semantics"
-    status: waiting
-    owner: null
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-009
-    note: >
-      The normal Delete action should move the source file into an archive trash
-      area and mark the ledger/ArtImage inactive rather than immediately
-      destroying bytes. Permanent purge, if added, is an explicit separate admin
-      action. Keep enough provenance to explain what happened.
+    note: |-
+      The normal Delete action should move the source file into an archive trash area and mark the ledger/ArtImage inactive rather than immediately destroying bytes. Permanent purge, if added, is an explicit separate admin action. Keep enough provenance to explain what happened.
+
+
+      Roadmap-auditor dependency repair: t-009 is done, so t-012 is now eligible for work.
+    updated: '2026-09-18T09:16:42Z'
 
   - id: t-013
     milestone: m3
@@ -425,7 +425,7 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Queue additional or replacement ArtJobs from imported images with editable provenance"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
