@@ -14539,3 +14539,19 @@ records:
     worth checking whether select_role.py's underlying_role fallback should itself try the
     GitHub MCP transport before giving up, rather than relying on every session to
     remember to cross-check by hand.
+- date: 2026-09-18
+  project: art-archive
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    First implementation cycle on a brand-new project (art-archive, scaffolded the same
+    day). Following an existing sibling model's own loose-reference convention
+    (ModelBuildItem.artImageId has no formal Prisma @relation) let this migration add a
+    whole new ledger table without touching ArtImage/ArtCollection at all, keeping the
+    Reviewer's additive-migration audit trivial. CI's "Replay migrations on MariaDB" job
+    is the real backstop for a hand-authored migration.sql in a sandbox with no
+    MIGRATION_DATABASE_URL -- it caught nothing here, but it is the check that would.
