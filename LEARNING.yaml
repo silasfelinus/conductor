@@ -15058,3 +15058,19 @@ records:
   outcome: done
   failure_category: null
   lesson: "When a task's target type is an untyped Record<string, unknown> (ArtJobPayloadRecord), check which concrete payload shape the field names actually mirror (here: A1111's flat fields, not a COMFY engine's built workflow graph) and say so explicitly in the PR rather than silently assuming the merge covers every engine."
+- date: 2026-09-18
+  project: butterfly-gallery
+  task: t-027
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    When one bin/action kind in a family that's otherwise uniform (here: five of
+    six ButterflyGalleryActionAdapter-backed bin kinds both mutate local state and
+    persist through the adapter) silently skips the adapter call, grep the sibling
+    switch statement (persistBinOutcome) for the same case rather than assuming a
+    local-only mutation (applyBinOutcome's entry.matchState write) was a deliberate
+    design choice -- it was a silent no-op instead, exactly the kind of gap a future
+    real adapter swap (t-022) would otherwise inherit unnoticed.
