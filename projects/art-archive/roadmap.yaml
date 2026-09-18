@@ -515,3 +515,21 @@ tasks:
       checkpoint/LoRA candidates, confidence tier, and any unmatched evidence,
       so Silas can see real match quality against the actual archive before
       t-007 starts applying anything automatically.
+
+  - id: t-024
+    milestone: m2
+    title: "Add an admin-gated endpoint wrapping the t-022 import entrypoint"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-022
+    note: >
+      t-022's own task note offered a CLI script or an admin-gated endpoint;
+      the CLI was built first since it needed no new auth/route surface, but
+      running it still requires shell access to the container. Add an
+      admin-only API endpoint (matching the project's existing admin-gated
+      convention) that triggers the same scan-then-import flow and returns
+      the same created/reused counts as JSON, so this can eventually be
+      wired into the admin archive-curation UI (m3) instead of requiring
+      Silas to exec into the container.

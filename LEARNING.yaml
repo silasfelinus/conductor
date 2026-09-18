@@ -14613,3 +14613,18 @@ records:
     case (two Resources sharing a normalized name) visible to the next task
     downstream, instead of a matching function silently picking a winner that
     later turns out wrong.
+- date: '2026-09-18'
+  project: art-archive
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Clean pass. When a task note offers two implementation shapes ("a CLI
+    script or an admin-gated endpoint"), picking one and filing the other as
+    an explicit follow-on task (rather than silently treating the chosen
+    option as if it fully satisfied the note, or scope-creeping to build
+    both) keeps the task's actual delivered scope honest and visible in the
+    roadmap.
