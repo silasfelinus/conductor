@@ -469,11 +469,11 @@ tasks:
   - id: t-022
     milestone: m2
     title: "Wire a runnable entrypoint that calls the t-005 importer against real scanner output"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
+    note: >-
       t-004 shipped utils/scripts/scanArtArchive.ts as a CLI entrypoint for the
       dry-run scanner, but t-005's importArchiveScan()/importArchiveFile() are
       exported functions with no script or admin route that actually invokes
@@ -481,9 +481,18 @@ tasks:
       cannot be run against the real archive at all. Add a CLI script (mirroring
       scanArtArchive.ts's shape) or an admin-gated endpoint that feeds scanner
       results into the importer and reports created/reused counts.
+
+      Added utils/scripts/importArtArchive.ts on kind_robots claude/eager-bohr-v8dejz,
+      mirroring scanArtArchive.ts's shape: scans the configured root then reconciles every
+      file via importArchiveFile(), reporting created/reused image and collection counts; a
+      per-file failure is recorded and reported, never fatal to the run. Resource matching
+      (t-006) intentionally out of scope -- t-023 covers extending this entrypoint to report
+      match candidates. Verified: eslint clean, regex-based contract verifier
+      (verifyImportArtArchive.mjs, matching t-005's own convention) passes, vue-tsc running.
+      PR opens once clean.
     claimed_by: claude-scheduled-20260918T045745Z-artarchive-t022-a1
     claimed_at: '2026-09-18T04:57:46Z'
-    updated: '2026-09-18T04:57:46Z'
+    updated: '2026-09-18T04:59:56Z'
 
   - id: t-023
     milestone: m2
