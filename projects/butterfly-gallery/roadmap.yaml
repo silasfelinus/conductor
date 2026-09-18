@@ -156,7 +156,7 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Build configurable left/right sorting-bin rails"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -461,3 +461,18 @@ tasks:
       timing, butterfly personality, drag/click/keyboard sorting, reduced motion,
       and phone/tablet/desktop layouts. This is a final appearance/feel gate, not
       a blocker for earlier implementation.
+
+  - id: t-026
+    milestone: m1
+    title: "Add a fixture/adapter shape-parity contract for the Butterfly Gallery pile feed"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-004
+    note: >
+      Kaizen from t-003 (kind_robots#2830): once t-004's read contract/adapter
+      exists, add a verifyButterflyGalleryFixtureShape-style contract asserting
+      stores/helpers/butterflyGalleryFixtures.ts and the real art-archive-backed
+      provider both emit structurally identical ButterflyPileEntry records, so a
+      future adapter swap cannot silently drop a field the store/UI depends on.
