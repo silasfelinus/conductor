@@ -57,6 +57,32 @@ def test_entry_to_job_maps_fields():
     assert wf["24"]["inputs"]["unet_name"] == "flux1-dev-Q8_0.gguf"
 
 
+
+def test_entry_to_job_preserves_explicit_artjob_priority():
+    job = consumer.entry_to_job(
+        {
+            "project": "butterfly-gallery",
+            "image_path": "projects/images/butterfly-gallery-hero.webp",
+            "size": "1280x720",
+            "prompt": "rainbow butterflies moving picture frames",
+            "engine": "krea2",
+            "priority": 200,
+        }
+    )
+    assert job["priority"] == 200
+
+
+def test_entry_to_job_omits_priority_when_entry_does_not_set_one():
+    job = consumer.entry_to_job(
+        {
+            "project": "ordinary-project",
+            "image_path": "projects/images/ordinary-project-icon.webp",
+            "prompt": "ordinary project icon",
+            "engine": "krea2",
+        }
+    )
+    assert "priority" not in job
+
 def test_entry_to_job_untargeted_lands_in_default_engine_folder():
     # An untargeted entry (no project, no engine) falls back to the default
     # engine's model-family folder -- krea2 since it became the default.
