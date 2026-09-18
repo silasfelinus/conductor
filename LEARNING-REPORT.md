@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-18T11:49:04Z
+Generated: 2026-09-18T11:57:14Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1024**
-- Outcomes: blocked: 16, cancelled: 1, done: 1007
+- Closed tasks recorded: **1025**
+- Outcomes: blocked: 16, cancelled: 1, done: 1008
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -24,7 +24,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | art-archive | 10 | 100% |
 | art-generator-connect | 3 | 100% |
 | brainstorm | 26 | 96% |
-| butterfly-gallery | 7 | 100% |
+| butterfly-gallery | 8 | 100% |
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 39 | 100% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1007 | 99% |
+| software | 1008 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-18 `butterfly-gallery/t-007` — Extracting the field-level action rules into small, pure appliers (stores/helpers/butterflyGalleryActions.ts) before wiring them behind an injectable adapter made the whole task independently unit-testable via a plain tsx script (this repo has no vitest) without needing Pinia/component setup at all -- the store's existing sync setRating()/applyBinOutcome() mutated a plain object reference regardless of whether it was reactive, so the refactor into standalone functions cost nothing and paid for itself immediately in test coverage.
 - 2026-09-18 `butterfly-gallery/t-010` — Verified against the merged file directly (grep for runway-slot/drop-funnel/ preset-bin/right-rail/pile-card/robot-animation-slot) rather than trusting the PR description alone before marking this milestone-3 task done -- the PR's own self-report matched what actually shipped, but checking the diff itself is what makes that confidence earned rather than assumed.
 - 2026-09-18 `butterfly-gallery/t-008` — Same PR (kind_robots#2834) substantially implemented the right-rail Image Info panel ahead of its own roadmap task being claimed. Closed with two minor field-list gaps noted (no filename/title or dimensions in the compact view) rather than reopening or leaving it artificially at ready -- the note's core ask (compact panel + Details expand + Cleanup/Trash below it) is met, and gating done-ness on a cosmetic completeness nit would misrepresent the task's actual state.
 - 2026-09-18 `butterfly-gallery/t-006` — Reconciled from kind_robots#2834 rather than implemented directly this cycle -- Silas built the full approved-stage composition himself in a live session that ran concurrently with this session's t-005 work, superseding t-005's narrower component-extraction approach and covering t-006/t-008/t-010's scope in one PR. The conflict this produced (both PRs touched pages/butterfly-gallery.vue, based on the same stale pre-t-005 commit) resolved cleanly by keeping the newer, more complete implementation and removing the now-orphaned t-005 components/store additions that nothing referenced. Worth a standing habit: when a design-lock/spec commit lands mid-task (visible via a fresh git log on the docs/roadmap repo), re-check for a matching implementation PR before assuming your own in-flight work is still the only game in town.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-18 `butterfly-gallery/t-002` — A Kind-Robots-authored project's Project row is auto-created by the conductor projection sync with conductorSlug already set, but its presentation fields (title/channelKey/tabKey/liveUrl/isPublic) start as placeholders/defaults and need a follow-up admin PATCH -- this is a live data fix via the existing admin API, not a code PR, for every new project's identity task.
 - 2026-09-18 `art-archive/t-021` — Pass-1 rejection (TypeScript union-narrowing on ExtractedArchiveMetadata) was fixed correctly on retry within the same session/branch -- the Worker read retry_context and applied exactly the suggested guard rather than retrying blind. Third module in this project to independently discriminate the same metadata union; filed t-026 to extract a shared helper instead of waiting for a fourth recurrence.
 - 2026-09-18 `art-archive/t-014` — Clean first-pass implementation, reviewed by a concurrent Reviewer session. The Worker independently applied the same DB-free-testability convention this session established earlier the same day for artArchiveReconcilerPlan.ts and artArchiveFileOps.ts (a zero-Prisma validator module for its own unit tests) without being told to -- a good sign the pattern is now legible from the codebase itself, not just from session-to-session TALKBACK notes.
-- 2026-09-18 `art-archive/t-024` — Clean first-pass implementation. When a task depends on an existing CLI entrypoint but the task itself is "expose this over HTTP", extract the CLI's per-file loop/counting logic into a small shared function the new endpoint calls, rather than duplicating the loop a second time or rewriting the CLI to use a shared function too (which would risk breaking that CLI's own frozen regex-based contract test). Left the CLI untouched and its existing verifyImportArtArchive.mjs contract passing unmodified.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-18T11:49:04Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-18T11:57:14Z_
