@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-18T08:12:23Z
+Generated: 2026-09-18T08:40:52Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1016**
-- Outcomes: blocked: 16, cancelled: 1, done: 999
+- Closed tasks recorded: **1017**
+- Outcomes: blocked: 16, cancelled: 1, done: 1000
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -21,7 +21,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | animation-studio | 2 | 50% |
 | appmaker | 11 | 100% |
 | approval-portal | 2 | 0% |
-| art-archive | 9 | 100% |
+| art-archive | 10 | 100% |
 | art-generator-connect | 3 | 100% |
 | brainstorm | 26 | 96% |
 | challenge-center | 16 | 100% |
@@ -70,13 +70,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 999 | 99% |
+| software | 1000 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
-| quality | 28 |
+| quality | 29 |
 | transient | 17 |
 | actionable | 15 |
 | scope | 3 |
@@ -85,13 +85,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - project `coat-dance` — 11% success over 9 closed tasks; aim the next kaizen task here
 - kind `content` — 47% success over 17 closed tasks; aim the next kaizen task here
-- failure category `quality` — 28 occurrences; look for the shared cause across its records
+- failure category `quality` — 29 occurrences; look for the shared cause across its records
 - failure category `transient` — 17 occurrences; look for the shared cause across its records
 - failure category `actionable` — 15 occurrences; look for the shared cause across its records
 - failure category `scope` — 3 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-09-18 `art-archive/t-021` — Pass-1 rejection (TypeScript union-narrowing on ExtractedArchiveMetadata) was fixed correctly on retry within the same session/branch -- the Worker read retry_context and applied exactly the suggested guard rather than retrying blind. Third module in this project to independently discriminate the same metadata union; filed t-026 to extract a shared helper instead of waiting for a fourth recurrence.
 - 2026-09-18 `art-archive/t-014` — Clean first-pass implementation, reviewed by a concurrent Reviewer session. The Worker independently applied the same DB-free-testability convention this session established earlier the same day for artArchiveReconcilerPlan.ts and artArchiveFileOps.ts (a zero-Prisma validator module for its own unit tests) without being told to -- a good sign the pattern is now legible from the codebase itself, not just from session-to-session TALKBACK notes.
 - 2026-09-18 `art-archive/t-024` — Clean first-pass implementation. When a task depends on an existing CLI entrypoint but the task itself is "expose this over HTTP", extract the CLI's per-file loop/counting logic into a small shared function the new endpoint calls, rather than duplicating the loop a second time or rewriting the CLI to use a shared function too (which would risk breaking that CLI's own frozen regex-based contract test). Left the CLI untouched and its existing verifyImportArtArchive.mjs contract passing unmodified.
 - 2026-09-18 `art-archive/t-008` — A unit test that imports a module needing Prisma will crash under this repo's contract-tests job, which runs without DATABASE_URL -- even if the test itself only calls a pure function from that module. The fix (applied here, matching applyArtArchiveResourceMatch.ts's existing precedent) is to keep any Prisma-free decision logic in its own module with zero Prisma import, so a pure-logic unit test can import it directly without dragging in the real client. Caught and fixed same-cycle before merge; no wasted review round since the fix landed on the same PR before a Reviewer ever saw the red check.
@@ -101,7 +102,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-18 `art-archive/t-005` — Clean first-pass success following t-004's rejection lesson: the Worker correctly treated raw-metadata retention as a hard invariant (preserved verbatim in extractedMetadata for every format) while still scoping per-column generation-field extraction to PNG only, matching what t-006/ t-008 actually need next. A contract verifier regex-checking the privacy/ maturity/idempotency invariants directly against source shipped alongside the feature, not as an afterthought -- worth treating as the default shape for any importer/reconciler task in this project going forward.
 - 2026-09-18 `art-archive/t-004` — A reviewer caught a real scope gap on the first pass: the task's own note said "extract available ... EXIF/text metadata" but the implementation returned supported:false for every JPEG/WebP unconditionally, reasoning (in the PR body) that PNG was "the format that actually carries this data in practice" -- true for AI-tool defaults, but the roadmap language was about what's AVAILABLE, not just the common case, and JPEG/WebP EXIF/XMP/COM can carry real provenance. Re-read a task's exact wording against the diff before calling something out of scope, especially when the shortcut is also the path of least implementation effort. Separately: Silas intervened directly on the implementation branch mid-cycle to correct an invented ART_ARCHIVE_ROOT env var to the already-existing PRIVATE_PATH convention -- when a human pushes directly to a branch you're working on, rebase your next commit on top of it rather than force-pushing over it; a plain rebase merged cleanly here since the files didn't overlap.
 - 2026-09-18 `art-archive/t-003` — First implementation cycle on a brand-new project (art-archive, scaffolded the same day). Following an existing sibling model's own loose-reference convention (ModelBuildItem.artImageId has no formal Prisma @relation) let this migration add a whole new ledger table without touching ArtImage/ArtCollection at all, keeping the Reviewer's additive-migration audit trivial. CI's "Replay migrations on MariaDB" job is the real backstop for a hand-authored migration.sql in a sandbox with no MIGRATION_DATABASE_URL -- it caught nothing here, but it is the check that would.
-- 2026-09-18 `storybook/t-010` — Same connectivity gap recurred immediately (select_role.py's urllib probe 403'd against cthulhuquarium again, producing reviewer-uncertain), but a direct GitHub MCP check on kind_robots again found the real open PR (#2813) the script's own failed calls weren't even probing. This is now the second session in a row hitting the identical pattern -- worth checking whether select_role.py's underlying_role fallback should itself try the GitHub MCP transport before giving up, rather than relying on every session to remember to cross-check by hand.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-18T08:12:23Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-18T08:40:52Z_
