@@ -148,7 +148,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: review
+  status: ready
   passes: 50
   stakes: reversible
   note: |-
@@ -168,11 +168,19 @@ tasks:
     addition).
 
     Added a focused Storybook Collection contract verifier and a path-scoped GitHub Actions workflow pinning 2:3 ending cards and locked-ending privacy invariants.
-  updated: '2026-09-18T01:24:00Z'
+
+    Merged kind_robots#2813 (2026-09-18): added a focused Storybook Collection contract
+    verifier (verifyStorybookCollection.mjs) pinning the 2:3 collectible-card shape and
+    locked-ending privacy (no hero art/title/summary/private icon before unlock) introduced
+    in #2811, run via a path-scoped GitHub Actions workflow. All 46 CI checks green,
+    mergeable_state clean, diff scoped to the new verifier + workflow file (69 lines, 2
+    files) matching the PR's stated scope. Posted a REVIEWING marker before review; squash-
+    merged. Re-arming to ready per the established recurring-task precedent.
+  updated: '2026-09-18T01:30:07Z'
   owner: worker
   claimed_by: openai-scheduled-2026-09-18T011958Z-storybook-t010-a13
   claimed_at: '2026-09-18T01:19:58Z'
-  implementation_pr: 'silasfelinus/kind_robots#2811'
+  implementation_pr: 'silasfelinus/kind_robots#2813'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
