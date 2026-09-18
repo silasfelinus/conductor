@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-18T10:44:32Z
+Generated: 2026-09-18T10:49:29Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1020**
-- Outcomes: blocked: 16, cancelled: 1, done: 1003
+- Closed tasks recorded: **1021**
+- Outcomes: blocked: 16, cancelled: 1, done: 1004
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -24,7 +24,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | art-archive | 10 | 100% |
 | art-generator-connect | 3 | 100% |
 | brainstorm | 26 | 96% |
-| butterfly-gallery | 3 | 100% |
+| butterfly-gallery | 4 | 100% |
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 39 | 100% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1003 | 99% |
+| software | 1004 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-18 `butterfly-gallery/t-005` — Extracting the pile/frame sections directly out of the t-003 placeholder page into two new presentational components (emit gestures up, no store mutation of their own) landed clean on the first pass by following narrative-cast-card.vue's established convention rather than inventing a new shape. Adding a store-owned topOfPile computed (sliced from the already-filtered visiblePile) kept the "only render the top of the stack" requirement testable and reusable, instead of duplicating the slice-and-filter logic inside the component. Touch/pointer drag-to-frame was deliberately left to the sibling task (t-020) that already owns that scope -- click (a real <button>, already keyboard-reachable) covers the non-drag path in the meantime, so nothing regressed.
 - 2026-09-18 `butterfly-gallery/t-004` — Defining the read contract as a small interface (ButterflyGalleryFeedProvider. fetchPage) with one fixture implementation and a swappable module-level "active provider" landed clean and immediately exercised end-to-end (a real loadMore()/hasMore path in the store and page) rather than staying a paper contract nobody calls. Extending an existing type (ButterflyPileEntry) to satisfy a new task's field list is safe as long as every direct object-literal construction of that type (the fixtures file) is updated in the same PR -- vue-tsc catches a missed field immediately, but only if the fixtures are still plain object literals rather than already-cast `as ButterflyPileEntry`.
 - 2026-09-18 `butterfly-gallery/t-003` — Matching an existing admin-page pattern (pages/admin/curation-studio.vue, pages/admin/lora-triage.vue: inline userStore.initialize() + v-else-if admin gate, no middleware) plus an existing composition-API store shape (stores/loraTriageStore.ts) let a brand-new route+store+state-machine land first-pass clean (vue-tsc, eslint, prettier, layout-contract) with zero CI rejections. Keeping the fixture data behind a single loadPile()/rescan() seam (stores/helpers/butterflyGalleryFixtures.ts) rather than inlining it in the store or page means the t-004 adapter swap only touches one file.
 - 2026-09-18 `butterfly-gallery/t-002` — A Kind-Robots-authored project's Project row is auto-created by the conductor projection sync with conductorSlug already set, but its presentation fields (title/channelKey/tabKey/liveUrl/isPublic) start as placeholders/defaults and need a follow-up admin PATCH -- this is a live data fix via the existing admin API, not a code PR, for every new project's identity task.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-18 `art-archive/t-008` — A unit test that imports a module needing Prisma will crash under this repo's contract-tests job, which runs without DATABASE_URL -- even if the test itself only calls a pure function from that module. The fix (applied here, matching applyArtArchiveResourceMatch.ts's existing precedent) is to keep any Prisma-free decision logic in its own module with zero Prisma import, so a pure-logic unit test can import it directly without dragging in the real client. Caught and fixed same-cycle before merge; no wasted review round since the fix landed on the same PR before a Reviewer ever saw the red check.
 - 2026-09-18 `art-archive/t-007` — Clean first-pass implementation of high-confidence resource-provenance application: only writes ArtImage.checkpointResourceId/LoraResources from unique hash/exact-name matches, records ambiguous/suggested/unmatched evidence for later review instead of guessing, and skips resourceMatchLocked entries so a manual admin correction is never silently overwritten. Kaizen follow-on (surfacing match-quality candidates before auto-apply) was already filed as t-023, so no new kaizen task was needed on this close-out.
 - 2026-09-18 `art-archive/t-022` — Clean pass. When a task note offers two implementation shapes ("a CLI script or an admin-gated endpoint"), picking one and filing the other as an explicit follow-on task (rather than silently treating the chosen option as if it fully satisfied the note, or scope-creeping to build both) keeps the task's actual delivered scope honest and visible in the roadmap.
-- 2026-09-18 `art-archive/t-006` — Clean first-pass implementation of an ambiguous task note ("prefer embedded ids...") by picking the most defensible concrete reading (embedded content hash, since legacy files carry no Resource id) and flagging the interpretation explicitly in the PR body rather than silently guessing or stalling on it. Also worth repeating: returning ALL same-tier candidates instead of narrowing to one made an otherwise-invisible ambiguous-match case (two Resources sharing a normalized name) visible to the next task downstream, instead of a matching function silently picking a winner that later turns out wrong.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-18T10:44:32Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-18T10:49:29Z_
