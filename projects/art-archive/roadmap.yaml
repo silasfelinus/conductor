@@ -614,3 +614,25 @@ tasks:
     claimed_at: '2026-09-18T07:01:59Z'
     updated: '2026-09-18T07:08:53Z'
     implementation_pr: 'silasfelinus/kind_robots#2823'
+
+  - id: t-025
+    milestone: m4
+    title: "Add a pure function that merges a preset's modifiers into an ArtJob payload"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-014
+    note: >-
+      Kaizen from t-014 (persisted archive action presets): the preset's
+      `modifiers` JSON fragment already mirrors ArtJob payload field names by
+      design (server/utils/artArchivePresetModifiers.ts), but nothing yet
+      actually merges one into a real payload. Add a small, zero-Prisma,
+      unit-tested function (e.g.
+      `applyArchivePresetToPayload(actionType, modifiers, basePayload)`) that
+      performs the actual per-actionType merge (add/replace a LoRA entry,
+      swap checkpoint fields, append/replace prompt text, overwrite listed
+      generation settings) and returns the resulting payload, matching
+      ArtJobPayloadRecord's shape. This gives t-015's curation board (and any
+      future "apply preset" endpoint) a tested foundation to call rather than
+      reimplementing the merge inline against a live ArtJob write path.
