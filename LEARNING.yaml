@@ -15015,3 +15015,22 @@ records:
     anyone notices nothing ever writes it -- when a task note says "expose fast rating
     actions" for a field that already exists in the schema and the read path, check the
     write path specifically before assuming only UI wiring is missing.
+
+- date: '2026-09-18'
+  project: kind-robots
+  task: t-110
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A container-log "Data too long for column" truncation warning is worth escalating
+    immediately, not just noting: it means writes are already succeeding with silently
+    corrupted data. This one (imagePath, since kind_robots#2814) escalated from a
+    warning to hard ArtJob write failures (HTTP 500) within two days once enough long
+    static-path values accumulated. When one column in a family of otherwise-consistent
+    columns (13 other imagePath fields already at VarChar(764)) is the odd one left at
+    Prisma's implicit VarChar(191) default, that inconsistency is itself the signal to
+    check for -- grep every same-named column across the schema before assuming a single
+    reported failure is isolated.
