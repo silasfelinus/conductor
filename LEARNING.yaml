@@ -14923,3 +14923,20 @@ records:
     after the Worker edits the body and a later run of the same check passes. Verify
     mergeable_state plus the latest commit's own check-run/PR_BODY content via get_job_logs
     before treating an older failed run as a live blocker.
+- date: 2026-09-18
+  project: butterfly-gallery
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    When a CSS animation targets a property an inline style already sets for layout
+    (e.g. pileStyle()'s inline `transform: translateX(...) rotate(...)`), animate the
+    standalone `scale`/`translate`/`rotate` CSS properties instead of `transform` --
+    they compose independently with the inline `transform` rather than clobbering it
+    for the animation's duration. This codebase already used this pattern for
+    .pile-card's hover lift (`translate: 0 -14px` rather than
+    `transform: translateY(-14px)`) before this task extended it to a selection-pop
+    keyframe.
