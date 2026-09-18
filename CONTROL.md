@@ -408,4 +408,5 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 - Scans are idempotent and preserve processed state, ratings, manual Resource corrections, moves, and missing-file history.
 - Resource matching may use smart/fuzzy candidate discovery, but only unique defensible matches auto-link. Manual choices win.
 - Existing ArtJob is the only generation queue. Imported art regeneration adapts stored provenance into normal ArtJobs.
-- The production archive root/mount is host configuration and remains a human gate; code should keep the root configurable.
+- Production archive storage is confirmed: host `/mnt/user/pc/kindrobots/private` -> container `/app/private`, with `PRIVATE_PATH=/app/private`. Scanner code should use that existing variable rather than inventing a second root setting.
+- Missing checkpoints/LoRAs are expected; import continues with unresolved provenance preserved, and the project maintains a deduplicated backlog of Resources to locate/add later.
