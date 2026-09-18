@@ -1,0 +1,352 @@
+# Art Archive - legacy AI-art ingestion and curation
+# Created from Silas's 2026-09-17 direction.
+
+project: art-archive
+kind: software
+goal: "Continuously reconcile a large legacy AI-art filesystem into private, mature Kind Robots ArtImages with trustworthy resource provenance and an admin-only curation and regeneration workspace."
+
+notes_from_silas: |
+  This is the migration and curation home for a large collection of AI art made
+  before the current Kind Robots infrastructure existed.
+
+  The source is a dedicated media-server folder that may contain arbitrarily
+  deep subfolders. New images and folders will continue to be dropped into it.
+
+  Every imported image starts private and mature in Kind Robots: isPublic=false
+  and isMature=true. Resource matching is provenance only. A safe/SFW Resource
+  match must never cause an imported ArtImage to become public or non-mature.
+
+  The image's immediate parent folder determines its folder-derived
+  ArtCollection. Nested paths are allowed. Folder collections are also private
+  and mature. Custom ArtCollections may be added independently.
+
+  Repeated scans must be idempotent and remember prior work. The admin UI needs
+  processed/unprocessed filtering, folder and collection browsing, safe move and
+  delete operations, manual collection assignment, metadata editing, resource
+  correction, 1-5 ratings, and drag/drop action presets such as "regenerate
+  with this additional LoRA".
+
+  Prefer exact/deterministic metadata and Resource matches. Smart/fuzzy matching
+  may suggest candidates, but ambiguous matches must remain reviewable instead
+  of being silently attached.
+
+milestones:
+  - id: m1
+    title: "SAFETY + INDEX - durable archive ledger, scanner, and privacy invariants"
+    weight: 25
+    status: in-progress
+
+  - id: m2
+    title: "INGEST + PROVENANCE - ArtImages, ArtCollections, metadata, and Resource reconciliation"
+    weight: 25
+    status: not-started
+
+  - id: m3
+    title: "CURATE - admin archive browser, file operations, collections, ratings, and review state"
+    weight: 25
+    status: not-started
+
+  - id: m4
+    title: "REGENERATE - editable generation metadata and drag/drop action presets"
+    weight: 15
+    status: not-started
+
+  - id: m5
+    title: "SCALE + HARDEN - large-library performance, reconciliation, recovery, and visual acceptance"
+    weight: 10
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write the design brief and audit existing Kind Robots art infrastructure"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: "2026-09-17T18:48:00-07:00"
+    note: >
+      DESIGN-BRIEF.md captures the requested archive workflow and the initial
+      infrastructure audit. Existing ArtImage already has isPublic/isMature,
+      checkpointResourceId, prompt/generation fields and LoraResources; existing
+      ArtCollection already supports many-to-many ArtImages and parentFolder.
+      Existing resourceProvenance.ts provides a conservative starting point for
+      active CHECKPOINT/LORA/LYCORIS resolution.
+
+  - id: t-002
+    milestone: m1
+    title: "Record Silas's scope as the project baseline"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: "2026-09-17T18:48:00-07:00"
+    note: >
+      Scope came directly from Silas in the project-creation session. No
+      separate scope gate is needed. Course corrections remain cheap and should
+      update DESIGN-BRIEF.md and this roadmap.
+
+  - id: t-003
+    milestone: m1
+    title: "Add the durable archive-entry ledger for file identity, processing state, rating, and match review"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Add only the minimum additive schema needed to remember filesystem state
+      independently of ArtImage: stable content hash, current relative path,
+      size/mtime hints, linked ArtImage, folder collection, processed/review
+      state, 1-5 rating, extracted metadata/match summary, and a manual-match
+      lock or equivalent. Structured payloads follow the repo's LongText/string
+      convention. This ledger is indexing/curation state, not a second ArtImage.
+
+  - id: t-004
+    milestone: m1
+    title: "Build a recursive dry-run archive scanner with metadata extraction and root confinement"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-003
+    note: >
+      Scan the configured archive root recursively without mutating files.
+      Recognize supported image formats, compute a stable content hash, capture
+      relative path/parent folder/size/mtime, and extract available A1111 PNG
+      parameters, Comfy prompt/workflow metadata, EXIF/text metadata, prompt,
+      negative prompt, seed, CFG, sampler, checkpoint names, and LoRA tokens.
+      Every resolved path must remain inside the configured root.
+
+  - id: t-005
+    milestone: m2
+    title: "Implement idempotent private+mature ArtImage and folder-ArtCollection import"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-004
+    note: >
+      Reconcile scanner entries into ArtImage records with isPublic=false and
+      isMature=true every time, never inferred from Resource metadata. Create or
+      reuse a private+mature folder ArtCollection based on the image's immediate
+      parent folder. Use parentFolder/full relative path to disambiguate repeated
+      folder names. Re-scans must not duplicate existing content.
+
+  - id: t-006
+    milestone: m2
+    title: "Build confidence-ranked matching from legacy metadata to active checkpoint and LoRA Resources"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-004
+    note: >
+      Match only active Resources with compatible types. Prefer embedded ids,
+      then exact localPath/name/customLabel and normalized basename matches,
+      then parsed A1111/Comfy model and LoRA names. Folder/file-name clues and
+      fuzzy matching are suggestions only. Return candidates with evidence and
+      confidence; never let a Resource's maturity flag alter ArtImage privacy.
+
+  - id: t-007
+    milestone: m2
+    title: "Apply high-confidence resource provenance while preserving manual corrections"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-006
+    note: >
+      Populate ArtImage.checkpointResourceId and LoraResources only from unique,
+      defensible matches. Store unresolved/ambiguous candidates for admin review.
+      A manual resource choice locks that field against future automatic scans
+      until explicitly unlocked.
+
+  - id: t-008
+    milestone: m2
+    title: "Add repeatable reconciliation for newly dropped, copied, moved, changed, and missing files"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-005
+    note: >
+      Reconciliation, not a fragile filesystem watcher, is the source of truth.
+      Manual rescan plus a safe scheduled/accelerated scan should make newly
+      dropped files appear automatically. Content hash distinguishes moves from
+      changes where possible; missing files are marked, not silently deleted.
+
+  - id: t-009
+    milestone: m3
+    title: "Add admin-only archive APIs for browse/filter/detail and safe filesystem actions"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-005
+    note: >
+      Require admin authentication and mature-content permission. Support folder,
+      collection, processed state, rating, resource-match state, and search
+      filters. File moves/deletes must be root-confined and path-traversal safe.
+      Automatic scans never move/delete anything.
+
+  - id: t-010
+    milestone: m3
+    title: "Build the admin archive browser with processed/unprocessed and folder/collection views"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-009
+    note: >
+      Add this to the existing admin surface rather than creating a new top-level
+      channel. Art-first dense gallery, folder tree/collection picker, processed
+      and unprocessed toggles, match-state filters, rating filters, and a detail
+      editor for prompt/checkpoint/LoRAs and extracted metadata.
+
+  - id: t-011
+    milestone: m3
+    title: "Support root-safe moves plus folder-derived and custom ArtCollection membership"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-010
+    note: >
+      Moving a file updates its archive path and folder-derived collection.
+      Custom ArtCollections coexist with folder membership instead of replacing
+      it. No operation may escape the archive root.
+
+  - id: t-012
+    milestone: m3
+    title: "Add delete/remove workflow with recoverable trash semantics"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-009
+    note: >
+      The normal Delete action should move the source file into an archive trash
+      area and mark the ledger/ArtImage inactive rather than immediately
+      destroying bytes. Permanent purge, if added, is an explicit separate admin
+      action. Keep enough provenance to explain what happened.
+
+  - id: t-013
+    milestone: m3
+    title: "Persist 1-5 archive ratings and expose fast rating actions"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-010
+    note: >
+      Rating is curation state on the archive entry and survives rescans/moves.
+      Make 1/2/3/4/5 available as click and drag/drop targets and filterable in
+      the gallery.
+
+  - id: t-014
+    milestone: m4
+    title: "Add persisted archive action presets for generation modifiers"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-007
+    note: >
+      Presets describe reusable edits such as add/replace a LoRA, swap
+      checkpoint, append/replace prompt text, change generation settings, create
+      an additional render, or replace the source after successful generation.
+      Reuse current ArtJob vocabulary rather than inventing a second renderer.
+
+  - id: t-015
+    milestone: m4
+    title: "Build the drag/drop curation board with preset modifier targets"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-010
+      - t-014
+    note: >
+      Let the admin drag selected art onto visible action targets such as Rate
+      1-5, Delete, Add to collection, and named regeneration presets. Batch
+      actions must preview scope and report partial failures clearly.
+
+  - id: t-016
+    milestone: m4
+    title: "Queue additional or replacement ArtJobs from imported images with editable provenance"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-014
+    note: >
+      Imported ArtImages have no original ArtJob, so build a narrow adapter that
+      creates a normal durable ArtJob from the stored prompt/settings/resource
+      provenance plus the chosen preset. Replacement must not remove the source
+      file until a new ArtImage is delivered and verified.
+
+  - id: t-017
+    milestone: m5
+    title: "Wire the real media-server archive root into the production container"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    soft_gate: true
+    note: >
+      FOR SILAS: code can build against a configurable archive root, but the
+      actual media-server folder path and production container volume/mount are
+      host configuration. Nothing else is blocked while scanner/import/UI work
+      proceeds. TO APPROVE: provide/confirm the intended archive path and approve
+      the concrete read/write mount when the implementation is ready. This gate
+      does not authorize deleting existing source files.
+
+  - id: t-018
+    milestone: m5
+    title: "Harden large-library performance with pagination, thumbnails, incremental hashing, and bounded scans"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-010
+    note: >
+      Assume the archive becomes large enough that full-image grids and
+      re-hashing every byte on every request are unacceptable. Use thumbnails,
+      indexed filters, incremental size/mtime checks before hashes, bounded
+      concurrency, and resumable scans.
+
+  - id: t-019
+    milestone: m5
+    title: "Run production dry-run reconciliation and verify zero privacy leakage before bulk import"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-007
+      - t-008
+      - t-017
+    note: >
+      Before applying the first large import, report counts for files,
+      duplicates, folder collections, exact/high-confidence/ambiguous Resource
+      matches, and proposed ArtImage writes. Verify every proposed ArtImage and
+      folder ArtCollection is private+mature and that ordinary SFW Resource
+      galleries do not expose linked archive images.
+
+  - id: t-020
+    milestone: m5
+    title: "Cross-width visual acceptance of the admin archive workflow"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    depends_on:
+      - t-015
+      - t-018
+    note: >
+      Final user-facing acceptance gate for phone/tablet/desktop admin layout
+      after the main curation workflow is deployed and can be exercised against
+      real archive data.
