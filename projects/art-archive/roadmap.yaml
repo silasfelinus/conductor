@@ -469,8 +469,8 @@ tasks:
   - id: t-022
     milestone: m2
     title: "Wire a runnable entrypoint that calls the t-005 importer against real scanner output"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -481,6 +481,9 @@ tasks:
       cannot be run against the real archive at all. Add a CLI script (mirroring
       scanArtArchive.ts's shape) or an admin-gated endpoint that feeds scanner
       results into the importer and reports created/reused counts.
+    claimed_by: claude-scheduled-20260918T045745Z-artarchive-t022-a1
+    claimed_at: '2026-09-18T04:57:46Z'
+    updated: '2026-09-18T04:57:46Z'
 
   - id: t-023
     milestone: m2
