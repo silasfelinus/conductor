@@ -1855,7 +1855,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: "Polish every reachable Kind Robots surface page-by-page"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -1914,12 +1914,11 @@ tasks:
     Merged silasfelinus/kind_robots#2900 as 555a79d1fc756cbca27387293eeba072c71bf470 from exact head fe8a292af8e63e8b0e3a69831492db99882e218f. Restored the Theme Creator as a collapsible panel in the existing Theme Gallery, with a persistent Creator toggle and the existing shared-theme Edit action opening the same editor. The creator uses the surviving themeStore/API paths for color editing, metadata, public/apply-after-save toggles, randomize/reset, preview, create/update, and live palette preview. All 47 exact-head PR workflow runs completed successfully, including TypeScript Type Check, Layout Contract, Schema Migration Parity, and Contract Tests; the augmented Achievement/Theme creator contract passed inside Contract Tests. Production is self-hosted and was not deployed by this session. Return the recurring visual-polish task to ready for the next front-end feedback slice.
 
     Screenshot-directed Giving page fix: made the existing kr-unbound page root also use kr-panel-section, giving the entire Giving surface a base-100 background, border, padding, rounded corners, and shadow so text/cards no longer visually merge into the page backdrop art. No donation, cart, subscription, route, or data behavior changed.
-  updated: '2026-09-19T22:31:00Z'
+
+    Merged silasfelinus/kind_robots#2901 as 96af023a418074cd24b220bce1040f5b66cce81e from exact head 5e6dae2cd88500d570390408c5e42b2aa5a36480. The Giving page root now also uses kr-panel-section, so the full Giving surface has an opaque base-100 panel background, border, padding, rounded corners, and shadow instead of letting text visually merge into the page backdrop art. The implementation diff was exactly one line (+1/-1) and all 47 exact-head PR workflow runs completed successfully, including TypeScript Type Check, Layout Contract, Schema Migration Parity, Facet Catalog Contract, Project Architecture Contract, and the full Contract Tests suite. No donation/cart/subscription behavior changed. Production is self-hosted and was not deployed by this session. Return the recurring visual-polish task to ready for the next screenshot-driven slice.
+  updated: '2026-09-19T22:40:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2899'
   approved_by_human: true
-  owner: worker
-  claimed_by: 2026-09-19T223000Z-interface-vision-t105-giving-container-7c2f
-  claimed_at: '2026-09-19T22:30:00Z'
 
 - id: t-106
   milestone: m6
