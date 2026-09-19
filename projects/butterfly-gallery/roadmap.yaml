@@ -1066,3 +1066,57 @@ tasks:
     claimed_at: '2026-09-19T04:31:23Z'
     updated: '2026-09-19T04:43:32Z'
     implementation_pr: 'silasfelinus/kind_robots#2865'
+
+  - id: t-033
+    milestone: m4
+    title: "Integrate rendered Gallery motion actor clips into runway/left-loop/robot-loop once ArtJobs complete"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-014
+    note: >-
+      Follow-on from t-014 (this project's ANIMATION-JOB-CATALOG.md): 7
+      Butterfly Gallery motion ArtJobs were submitted at priority 0 (the
+      deliberate lowest queue band) and confirmed PENDING at submission time.
+      Job ids: 28739 (runway string tow), 28740 (runway team carry), 28741
+      (runway solo struggler), 28742 (runway clean cross), 28743 (runway rare
+      fumble), 28744 (left foreground butterfly loop), 28745 (lower-right
+      robot loop). Full prompts, dimensions, engine, and preset for each are
+      recorded in projects/butterfly-gallery/ANIMATION-JOB-CATALOG.md.
+
+      STEP 1 -- before doing anything else, GET /api/art/queue/:id for each
+      of the 7 job ids above. If ANY are still PENDING/RUNNING, this task is
+      NOT YET ACTIONABLE: do not attempt partial integration. Update this
+      note with "last checked <date>: jobs <ids> still PENDING/RUNNING",
+      leave status: ready, and move on to other work WITHOUT consuming a
+      pass or a retry -- per AGENTS.md's Failure Triage, checking and finding
+      it not-yet-ready is not a quality/scope failure.
+
+      STEP 2 -- once ALL 7 report DONE (or FAILED): for any FAILED job, note
+      here exactly which shot failed and that a fresh, scoped priority-0
+      resubmission of that one shot may be needed -- never revive/reuse the
+      old superseded jobs 28725-28732 as a substitute. For every DONE job,
+      proceed to integration.
+
+      STEP 3 -- splice the finished clips into pages/butterfly-gallery.vue's
+      existing reserved animation-slot elements (data-animation-slot=
+      "butterfly-runway", "foreground-butterfly", "foreground-robot") per
+      t-014's own acceptance criteria, carried over unchanged here:
+      - No unrelated living actors baked into the static background.
+      - Runway clips must fit the real horizontal runway window.
+      - The central funnel may occlude runway motion cleanly.
+      - The left butterfly loop remains independently composable (its own
+        layer, not fused into the runway or funnel imagery).
+      - The lower-right robot loop must read correctly while partially
+        hidden behind the live, dynamic foreground picture pile (t-005's
+        pile is a separate DOM layer in front of it).
+      - Reduced-motion/visibility gating is required: pause/suppress all
+        integrated clips under prefers-reduced-motion and when off-screen
+        (see t-031, which depends on this task and audits exactly this).
+
+      Verify with the project's normal suite (vue-tsc, eslint, prettier,
+      layout-contract, kr-class-coverage) plus whatever visual check is
+      actually possible in the session's environment; note clearly what was
+      verified vs. assumed.
+    updated: '2026-09-19T12:41:00Z'
