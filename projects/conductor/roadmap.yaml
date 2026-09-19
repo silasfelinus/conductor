@@ -3387,5 +3387,65 @@ tasks:
   claimed_at: '2026-09-16T19:05:00Z'
   updated: '2026-09-16T19:54:48Z'
 
+- id: t-177
+  milestone: m2
+  title: 'healthcheck.ps1 opens console processes per tick (Start-Job + pm2.cmd + node.exe) with no explicit windowless launch -- harden only if repointing the task at the .vbs wrapper does not stop the popups'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Filed from Silas's 2026-09-19 report: two cmd windows popping on ferngrotto every
+    3-5 minutes, with a confirmed burst at 05:26.
+
+    ALREADY FIXED IN THAT SESSION (ops/home-server PR): README.md documented registering
+    "AI-Backends-Healthcheck" as `/TR "powershell ... -File healthcheck.ps1"`, which under
+    "Interactive only" logon mode puts a visible console on the desktop every 5-minute
+    tick. healthcheck-hidden.vbs has existed since 2026-08-29 to prevent exactly that
+    (wscript is GUI-subsystem, and shell.Run(..., 0, True) hides the console its children
+    inherit) but no setup snippet ever pointed at it. The snippet now registers the wrapper
+    and carries a `schtasks /Change` line for a box already on the popup form. Also added
+    ops/home-server/watch-window-spawn.ps1 (keys on conhost.exe starts -- one new visible
+    console is one new conhost.exe -- and reports the owning parent chain with redacted
+    command lines) plus a triage section whose FIRST step is free: compare the burst times
+    against the `tick as ...` heartbeat lines in logs\healthcheck.log.
+
+    THIS TASK IS THE REMAINING, UNPROVEN HALF. If repointing the task at the wrapper does
+    NOT stop the popups, the windows are coming from the watchdog's CHILDREN rather than
+    from the task's own window, and each tick creates several console processes with no
+    explicit windowless launch: a `Start-Job` child powershell.exe bounding `pm2 jlist`,
+    `pm2` itself (pm2.cmd is a BATCH file, so cmd.exe) at healthcheck.ps1:468 and :475, and
+    node.exe for the pm2-jlist-snapshot.js projection. The fix would be to route those
+    through System.Diagnostics.ProcessStartInfo with CreateNoWindow = $true and
+    UseShellExecute = $false.
+
+    DO NOT DO THIS SPECULATIVELY, and do not start it without evidence from either the
+    healthcheck.log correlation or watch-window-spawn.ps1. Three constraints make this
+    riskier than it looks:
+
+    (1) The Start-Job wrapper is BOUNDED ON PURPOSE. An unresponsive pm2 daemon used to
+    hang the whole run, and with MultipleInstances=IgnoreNew plus a 72-hour
+    ExecutionTimeLimit one hang silently skipped every 5-minute trigger for DAYS while Task
+    Scheduler kept reporting a healthy NextRunTime (healthcheck.ps1:625-640). Any
+    replacement must keep the timeout, the exit code, and the "empty output" vs "error"
+    distinction -- conflating those two once disabled this watchdog entirely (2026-08-27).
+
+    (2) `pm2 jlist` output includes the full process environment and is LARGE. A
+    WaitForExit-then-read on a redirected pipe will deadlock when the pipe buffer fills;
+    read stdout asynchronously (ReadToEndAsync, then WaitForExit(ms)).
+
+    (3) tests/test_healthcheck_crash_loop_gate.py and
+    tests/test_home_server_share_watchdog.py currently PIN the Start-Job mechanism by name
+    ("Wait-Job $pm2Job -Timeout $pm2TimeoutSeconds", "Stop-Job $pm2Job", "$exe jlist" read
+    exactly once per tick). Those assertions encode the invariant "cannot hang forever" and
+    "read pm2 once per tick", not the implementation -- update them to pin the new bounded
+    windowless call rather than deleting them.
+
+    No PowerShell is available in the Conductor sandbox, so healthcheck.ps1 cannot be
+    syntax-checked here. That is the main reason this was not attempted in the filing
+    session: a parse error in the watchdog leaves a hung ComfyUI unattended, which is the
+    failure this script exists to prevent.
+  updated: '2026-09-19T00:00:00Z'
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
