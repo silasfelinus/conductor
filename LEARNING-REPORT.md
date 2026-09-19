@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-19T06:46:13Z
+Generated: 2026-09-19T06:56:42Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1052**
-- Outcomes: blocked: 17, cancelled: 1, done: 1034
+- Closed tasks recorded: **1053**
+- Outcomes: blocked: 17, cancelled: 1, done: 1035
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -21,7 +21,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | animation-studio | 2 | 50% |
 | appmaker | 11 | 100% |
 | approval-portal | 2 | 0% |
-| art-archive | 17 | 100% |
+| art-archive | 18 | 100% |
 | art-generator-connect | 3 | 100% |
 | brainstorm | 26 | 96% |
 | butterfly-gallery | 26 | 96% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1035 | 99% |
+| software | 1036 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-19 `art-archive/t-016` — The narrow-adapter framing worked cleanly here: buildArchiveEnqueuePayload() only builds a base ArtJob payload from ArtImage fields and merges the chosen preset via t-025's existing applyArchivePresetToPayload, so the endpoint itself stayed thin glue code. The 'no premature file removal' requirement needed no new schema/tracking field at all -- it falls out for free from the endpoint never calling any file-mutating or isActive-touching code path.
 - 2026-09-19 `art-archive/t-015` — Reviewer rejected pass 1 for a deterministic verifyDisabledAffordances failure (a batch-scoped Clear button used :disabled instead of v-if with no selection); the retry matched the existing correct pattern already in the same file, landed clean on the second pass, and merged as kind_robots#2866 -- a reminder that this project's PRs should run the full Contract verifiers suite locally before pushing, not just feature-scoped test scripts.
 - 2026-09-19 `art-archive/t-026` — Extracting a duplicated union-narrowing guard into one shared helper (narrowToPngMetadata) removes the exact TypeScript-compile-error class kind_robots#2824 hit, since the next module reading .a1111/.comfy can no longer re-derive the guard incorrectly by hand.
 - 2026-09-19 `butterfly-gallery/t-014` — A tight cluster of ArtJobs changing status within seconds of each other is at least as likely to be a deliberate administrative/human action as a queue-system glitch -- do not requeue or otherwise "correct" it without first checking for very recent out-of-band human steering beyond CONTROL.md and the task's own note. When a corrective action is needed, prefer the narrowest reversible one (a cancel-shaped action) over one whose semantics you have not read closely (DELETE removed the ArtJob rows outright rather than restoring CANCELLED status).
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-19 `butterfly-gallery/t-024` — Before implementing a "tune performance/responsive" task, audit what earlier tasks already covered: t-004/t-009/t-022 had already wired cursor pagination and thumbnailPath-vs-displayPath correctly, so t-024's real remaining gaps were narrower than its title suggested -- auto (rather than manual-click) prefetch, and a true phone-width breakpoint below the existing 900px one (whose rail clamp() minimums didn't shrink further, leaving almost nothing for the center art-display under ~480px). Citing what was already correct, with file/line evidence, kept the diff scoped to the two genuine gaps instead of re-touching working code.
 - 2026-09-19 `butterfly-gallery/t-023` — A clean first-pass security-hardening fix: gating GET /api/admin/art-archive/entries behind viewerShowsMature() (in addition to the existing requireAdminApiUser check) closed a real gap where admin privilege alone could expose mature/private archive metadata to an admin who hadn't opted into mature content. Worth checking other admin-only listing endpoints touching mature/private rows for the same "admin != opted-in-to-mature" gap.
 - 2026-09-19 `butterfly-gallery/t-021` — A layout-contract grid-cols rejection and a kr-class-coverage rejection can hide behind each other in the same CI job when it runs multiple checks sequentially: fixing the first (viewport-breakpoint grid-cols -> auto-fit/minmax) can reveal a second, unrelated violation (kr-text-black-md, an undefined size in the kr-text-black-* family) that was masked by the job failing early on the first check. Re-run the full job after a fix rather than assuming the next CI run will be clean just because the specific violation named in the rejection was addressed.
-- 2026-09-19 `butterfly-gallery/t-026` — Once a fixture provider and a real-backed provider both implement the same read contract (ButterflyGalleryFeedProvider here), a plain Object.keys().sort() shape-equality check across representative field-presence variants (nulls, missing optional fields, nested objects) is enough to catch a future field drop/rename on either side -- no need for a heavier structural-diff library. Comparing sorted key lists rather than deep-equal values keeps the test focused on shape parity, not incidental value differences between fixture and real data.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-19T06:46:13Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-19T06:56:42Z_
