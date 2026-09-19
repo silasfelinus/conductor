@@ -1,7 +1,7 @@
 """kr-download — pull-based model download agent for Kind Robots.
 
 The companion to relay_agent.py. Where the relay claims ArtJobs and generates
-media, this agent claims model *downloads* (LoRAs and checkpoints a user queued
+media, this agent claims model *downloads* (file-backed Resources a user queued
 from the Discover browser) and fetches the files onto the home server's engine
 directories.
 
@@ -12,7 +12,7 @@ catalogs it as a Resource, and reports the outcome to
 
 Flow per claimed row:
   1. resolve a download URL (explicit downloadUrl, or Civitai by version id)
-  2. pick the target dir from resourceType (LORA -> loras, CHECKPOINT -> ckpts)
+  2. pick the canonical ComfyUI target dir from resourceType
   3. stream the file to disk (atomic .part -> rename), hashing as we go
   4. POST /api/resources to catalog it, capturing the new resourceId
   5. POST .../complete with {success, resourceId} (or {success:false, error})
@@ -23,8 +23,9 @@ download + resource endpoints accept (x-api-key OR bearer).
 
 Run via pm2 as the `kr-download` app (see ecosystem.config.js). Env:
   KR_BASE_URL, KR_RELAY_TOKEN            (shared with the relay)
-  KR_LORA_DIR         default Z:/ai/models/Lora
-  KR_CHECKPOINT_DIR   default Z:/ai/models/Stable-diffusion
+  KR_MODEL_ROOT       default Z:/ai/models (base for all model categories)
+  KR_LORA_DIR         optional override for the LoRA/LyCORIS directory
+  KR_CHECKPOINT_DIR   optional override for the checkpoint directory
   KR_DOWNLOAD_POLL_SECONDS  default 30
   KR_CIVITAI_TOKEN    optional; appended as ?token= for Civitai downloads
 """
@@ -41,10 +42,25 @@ from pathlib import Path
 
 import relay_agent as relay
 
-LORA_DIR = os.environ.get("KR_LORA_DIR", "Z:/ai/models/Lora").strip()
+MODEL_ROOT = os.environ.get("KR_MODEL_ROOT", "Z:/ai/models").strip()
+LORA_DIR = os.environ.get("KR_LORA_DIR", os.path.join(MODEL_ROOT, "Lora")).strip()
 CHECKPOINT_DIR = os.environ.get(
-    "KR_CHECKPOINT_DIR", "Z:/ai/models/Stable-diffusion"
+    "KR_CHECKPOINT_DIR", os.path.join(MODEL_ROOT, "checkpoints")
 ).strip()
+
+RESOURCE_DIRS = {
+    "CHECKPOINT": CHECKPOINT_DIR,
+    "EMBEDDING": os.path.join(MODEL_ROOT, "embeddings"),
+    "LORA": LORA_DIR,
+    "LYCORIS": LORA_DIR,
+    "HYPERNETWORK": os.path.join(MODEL_ROOT, "hypernetworks"),
+    "CONTROLNET": os.path.join(MODEL_ROOT, "controlnet"),
+    "VAE": os.path.join(MODEL_ROOT, "vae"),
+    "TEXT_ENCODER": os.path.join(MODEL_ROOT, "text_encoders"),
+    "DIFFUSION_MODEL": os.path.join(MODEL_ROOT, "diffusion_models"),
+    "LATENT_UPSCALER": os.path.join(MODEL_ROOT, "latent_upscale_models"),
+    "UPSCALER": os.path.join(MODEL_ROOT, "upscale_models"),
+}
 POLL_SECONDS = float(os.environ.get("KR_DOWNLOAD_POLL_SECONDS", "30"))
 CIVITAI_TOKEN = os.environ.get("KR_CIVITAI_TOKEN", "").strip()
 DOWNLOAD_TIMEOUT = float(os.environ.get("KR_DOWNLOAD_TIMEOUT", "1800"))
@@ -56,11 +72,14 @@ MODEL_EXTENSIONS = (".safetensors", ".ckpt", ".pt", ".pth", ".bin", ".gguf")
 
 
 def target_dir(resource_type):
-    """Engine directory for a resource type. Checkpoints load from the
-    Stable-diffusion dir; everything else (LoRA/LyCORIS/etc.) from the loras dir."""
-    if str(resource_type or "").upper() == "CHECKPOINT":
-        return CHECKPOINT_DIR
-    return LORA_DIR
+    """Return the canonical ComfyUI directory for one file-backed Resource."""
+    key = str(resource_type or "LORA").upper()
+    directory = RESOURCE_DIRS.get(key)
+    if not directory:
+        raise ValueError(
+            f"resourceType {key!r} is not a downloadable model-file type"
+        )
+    return directory
 
 
 def claim_download():
@@ -169,7 +188,7 @@ def download_binary(request, url, dest_dir):
     return final_path, filename, size, sha.hexdigest()
 
 
-def catalog_resource(request, local_path, filename, file_hash):
+def catalog_resource(request, engine_path, filename, file_hash):
     """Create the Resource row for the downloaded file. Returns resourceId, or
     None if the name already exists (409) — the file is still on disk, so that's
     a benign 'already cataloged' outcome, not a failure."""
@@ -177,7 +196,9 @@ def catalog_resource(request, local_path, filename, file_hash):
     name = (request.get("label") or "").strip() or os.path.splitext(filename)[0]
     body = {
         "name": name,
-        "localPath": local_path,
+        # Resource.localPath is an engine-facing name, not an absolute SMB path.
+        # Files downloaded into a category root therefore resolve by filename.
+        "localPath": engine_path,
         "resourceType": request.get("resourceType") or "LORA",
         "isMature": bool(request.get("isMature")),
         "hash": file_hash,
@@ -237,7 +258,7 @@ def process_download(request):
         f"({size / 1_048_576:.1f} MiB, sha256 {file_hash[:12]}…)"
     )
 
-    resource_id = catalog_resource(request, final_path, filename, file_hash)
+    resource_id = catalog_resource(request, filename, filename, file_hash)
     complete_download(request_id, True, resource_id=resource_id)
     relay.log(
         f"download {request_id}: DONE (Resource {resource_id or 'existing'})"
@@ -251,7 +272,7 @@ def main():
 
     relay.log(
         f"download agent {AGENT_ID} polling {relay.KR_BASE_URL} every "
-        f"{POLL_SECONDS}s (loras={LORA_DIR}, checkpoints={CHECKPOINT_DIR})"
+        f"{POLL_SECONDS}s (model_root={MODEL_ROOT})"
     )
 
     while True:

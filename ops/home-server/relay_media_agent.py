@@ -490,7 +490,7 @@ relay.process = process_with_media
 
 
 def start_lora_watcher():
-    """Start the LoRA auto-import watcher on a daemon thread inside this process.
+    """Start the model auto-import watcher on a daemon thread inside this process.
 
     Folding it into kr-relay keeps deployment to a single pm2 app / token / log.
     A separate thread (not the relay's render loop) means a long import batch —
@@ -500,11 +500,11 @@ def start_lora_watcher():
     still runs as a pure render relay."""
     missing = lora.missing_config()
     if missing:
-        relay.log(f"lora-import watcher disabled (missing {', '.join(missing)})")
+        relay.log(f"model-import watcher disabled (missing {', '.join(missing)})")
         return
-    relay.log("lora-import watcher starting (embedded thread in kr-relay)")
+    relay.log("model-import watcher starting (embedded thread in kr-relay)")
     threading.Thread(
-        target=_supervised_lora_watch, name="lora-import", daemon=True
+        target=_supervised_lora_watch, name="model-import", daemon=True
     ).start()
 
 
@@ -529,13 +529,13 @@ def _supervised_lora_watch():
         try:
             lora.watch_loop()
             relay.log(
-                f"{relay.WARN} lora-import watcher returned on its own "
+                f"{relay.WARN} model-import watcher returned on its own "
                 "(watch_loop is supposed to run forever)"
             )
         except Exception as error:  # noqa: BLE001 - the net is the point
-            relay.log(f"{relay.WARN} lora-import watcher crashed: {error!r}")
+            relay.log(f"{relay.WARN} model-import watcher crashed: {error!r}")
         relay.log(
-            f"lora-import watcher restarting in {LORA_WATCHER_RESTART_SECONDS:g}s"
+            f"model-import watcher restarting in {LORA_WATCHER_RESTART_SECONDS:g}s"
         )
         time.sleep(LORA_WATCHER_RESTART_SECONDS)
 
