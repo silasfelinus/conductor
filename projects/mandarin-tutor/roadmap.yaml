@@ -608,8 +608,8 @@ tasks:
   - id: t-026
     milestone: m5
     title: "Audit that every catalog card can produce a usable lesson"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-022
@@ -626,3 +626,6 @@ tasks:
       to report how many of those exist and which they are, so the coverage gap is a number
       Silas can look at instead of something a learner discovers one dead lesson at a time.
       Follow `auditMandarinCatalog.ts`'s shape: a `--self-test` mode for CI plus a live mode.
+    claimed_by: claude-scheduled-20260919T1938Z-mandarin-t026
+    claimed_at: '2026-09-19T19:32:41Z'
+    updated: '2026-09-19T19:32:41Z'
