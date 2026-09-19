@@ -1062,7 +1062,7 @@ tasks:
   - id: t-035
     milestone: m5
     title: "Add a medium-sized cached preview for the archive detail panel"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1076,9 +1076,23 @@ tasks:
       pattern and mtime-based invalidation) and serve it from the detail
       panel instead of the untouched original, if large originals turn out
       to be common in the imported archive.
+
+      Added ensureArchiveMediumPreview (~1200px WebP, cached under .art-archive-medium/, same
+      mtime-invalidation pattern as the existing thumbnail cache) and switched the admin
+      detail panel's default imagePath to the medium variant; kept a new originalPath field +
+      small 'View original' link so the untouched full-size file is still reachable. Verified:
+      npm run test:art-archive-thumbnails (new medium-preview test included), vue-tsc --noEmit
+      clean, eslint clean on all touched files, test:kr-class-coverage OK, test:layout-
+      contract no new violations, and the full test:contracts-db-free suite (364/364 scripts)
+      green. Could not measure real archive file-size distribution from this sandbox (private
+      archive root lives on Silas's Unraid host, not reachable here, and ArchiveEntry has no
+      stored fileSize field) -- built the feature unconditionally since it is low-risk,
+      reversible, and mirrors the existing thumbnail-cache architecture exactly, rather than
+      leaving it unbuilt for lack of a measurement this session could not take.
     claimed_by: claude-conductor-sweep-2026-09-19T14-05-artarchive-t035
     claimed_at: '2026-09-19T13:52:55Z'
-    updated: '2026-09-19T13:52:55Z'
+    updated: '2026-09-19T13:59:34Z'
+    implementation_pr: 'silasfelinus/kind_robots#2884'
 
   - id: t-036
     milestone: m5
