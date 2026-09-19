@@ -844,9 +844,16 @@ tasks:
       pickable until the real provider exists to compare against. Failure category: actionable
       (undeclared dependency) -- fixed the roadmap rather than retrying or forcing a
       placeholder comparison.
+
+      Merged kind_robots#2860: added
+      utils/scripts/verifyButterflyGalleryFixtureShapeParity.test.ts asserting the fixture
+      provider and the real art-archive-backed provider's row mapping (toButterflyPileEntry)
+      emit structurally identical ButterflyPileEntry shapes, wired into package.json and
+      contract-tests.yml. Closing to done.
     claimed_by: claude-scheduled-20260919T022831Z-bg-t026
     claimed_at: '2026-09-19T02:30:49Z'
-    updated: '2026-09-19T02:48:18Z'
+    updated: '2026-09-19T02:48:40Z'
+    implementation_pr: 'silasfelinus/kind_robots#2860'
 
   - id: t-027
     milestone: m2
