@@ -1016,7 +1016,7 @@ tasks:
   - id: t-033
     milestone: m4
     title: "Confirm archive-preset ArtJobs are safe to always tag engine: 'A1111'"
-    status: ready
+    status: needs-human
     passes: 0
     stakes: reversible
     depends_on: t-016
@@ -1027,7 +1027,22 @@ tasks:
       What unblocks when he does: closing this either confirms t-016/t-025's existing archive-preset path as-is, or unblocks a properly-scoped follow-on task for real engine-family dispatch.
 
       Reclassified from soft needs-human to ordinary reversible engineering work after review of the live code path. Static checkpoint-profile and enqueue-routing analysis can determine whether hardcoded A1111 dispatch is correct and can implement/test engine-family routing without submitting a production GPU job. Any eventual real production-render verification remains separately human-gated if it is actually needed.
-    updated: '2026-09-19T10:17:51Z'
+
+      FOR SILAS: Investigated the live code path (server/api/admin/art-archive/entries/[id]/enqueue.post.ts, server/utils/buildArchiveEnqueuePayload.ts) rather than just reading the note.
+
+      What I found is BIGGER than the original concern. The endpoint hardcodes engine: 'A1111' unconditionally -- not just for COMFY-only checkpoint families (Flux/Krea2/Zimage/Flux2), but for EVERY archive-preset job, including plain SD1.5/SDXL/Pony ones. That contradicts your own standing directive (2026-08-09, verbatim): 'Nothing should be running a1111 ... any (all) gen tasks should be comfy.' This is already an enforced contract elsewhere (utils/scripts/verifyComfyOnlyGeneration.ts asserts several site-building files never create engine: 'A1111' rows) -- it just doesn't check THIS file yet, so nothing caught it.
+
+      The correct fix isn't a small guard: it's switching this endpoint to build a real COMFY workflow via buildDefaultComfyWorkflow (the same named-checkpoint lane server/api/resources/[id]/generate-preview.post.ts already uses for the equivalent 'render from an existing checkpoint + optional LoRA' case), restricted to the same compatible resource families that endpoint already limits itself to (SD15/SDXL/GENERIC/UNKNOWN via CHECKPOINT_RESOURCE_FAMILIES) -- rejecting FLUX/KONTEXT/LTX/WAN/OPENAI-family checkpoints with a clear error instead of silently building a wrong-shaped payload.
+
+      Why I didn't just implement it: switching the payload from a flat record to a COMFY workflow graph cascades into server/utils/applyArchivePresetToPayload.ts (t-025) -- its modifiers currently patch flat fields (cfg/steps/prompt/etc.) that would need to become node-input patches on a graph instead, and t-028's job-status board reads this payload shape too. That's a real payload-shape migration touching production GPU job dispatch and at least 3 other files' assumptions, not a local guard clause -- exactly the kind of thing that shouldn't be attempted blind without your confirmation on the target shape, per the task's own original framing.
+
+      TO APPROVE: confirm the target fix shape above (COMFY via buildDefaultComfyWorkflow, same family allowlist as generate-preview.post.ts, reject incompatible families) and I'll open a properly scoped follow-on task for the actual migration (payload builder + preset-modifier rewrite + job-status-board compatibility check + verifyComfyOnlyGeneration.ts coverage for this file). Or redirect me to a different shape if you see one I'm missing.
+
+      What unblocks when he does: a new t-039 (or similar) implementing exactly the confirmed shape, with this investigation as its starting context so the next session doesn't re-derive it.
+
+      Soft gate (stakes: reversible, unclear architectural direction per AGENTS.md's soft/hard split) -- not stopping the cycle for this; moving on to other ready work.
+    updated: '2026-09-19T15:38:55Z'
+    soft_gate: true
 
   - id: t-034
     milestone: m4
