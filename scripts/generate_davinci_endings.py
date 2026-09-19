@@ -160,7 +160,8 @@ def ending_for_key(outcome_key: str) -> dict:
     art_prompt = (
         f"Da Vinci life-sim ending art for outcome {outcome_key}: {title}. "
         f"Cinematic symbolic life narrative, {visual_tokens}, emotionally rich final tableau, "
-        f"premium game ending illustration, no readable text, no logo, no watermark, no collage."
+        f"premium game ending illustration, one single image filling the frame, "
+        f"every surface in it bare and unmarked."
     )
 
     return {
