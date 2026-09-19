@@ -32,6 +32,13 @@ notes_from_silas: |
   Build functional behavior first, then static art direction, then motion. Do
   not block useful curation work on final animation assets.
 
+  MOTION ASSET HOLD (2026-09-18, Silas relaying Moseley): butterfly animation
+  rendering is cancelled for now. Generated clips are not useful until the exact
+  production dimensions for the butterfly background/compositing surface are
+  known. Keep the existing storyboard/shot list as planning references, but do
+  not generate or catalog reusable butterfly motion assets until those dimensions
+  are locked.
+
   Keep butterfly-gallery HIGH priority until complete and order it immediately
   ahead of art-archive for agent pickup. Art generated for this project uses
   ArtJob priority 200, matching Daily Dream art and outranking the Resource/LoRA
@@ -405,8 +412,8 @@ tasks:
   - id: t-014
     milestone: m4
     title: "Render and catalog reusable butterfly motion clips"
-    status: needs-human
-    owner: worker
+    status: waiting
+    owner: null
     passes: 0
     stakes: reversible
     depends_on: t-013
@@ -417,6 +424,15 @@ tasks:
       lower-right robot-sifting loop, and blank-state display loop. Verify the
       robot can be partially occluded by the dynamic foreground pile and the top
       passes fit the full horizontal runway while disappearing behind the funnel.
+
+      SILAS HOLD (2026-09-18, relaying Moseley): the remaining animation renders were
+      intentionally cancelled because the exact production dimensions for the butterfly
+      background/compositing surface are not yet locked. A scheduled worker subsequently
+      treated five CANCELLED Stage-2 jobs (28728-28732) as transient failures and requeued
+      them; conductor PR #4712 was closed unmerged as superseded by this direction. Do not
+      treat those requeues, or already-generated clips, as authorization to continue. Keep
+      t-014 waiting until the production dimensions are recorded, then reassess what should
+      be regenerated against the real geometry.
 
       Worker (Claude, scheduled conductor run): submitted the full t-014 pipeline live. Stage
       1 (keyframe stills, krea2 engine, priority 200, all completed within this session): A1
@@ -475,46 +491,7 @@ tasks:
       submitting. Re-arming to ready; picked up butterfly-gallery/t-030 instead this session.
       A future cycle should re-check 28728-28732 and, once all 8 are DONE, verify + catalog
       per t-014's existing NEXT ACTIONABLE STEP.
-
-      Re-checked render jobs this session (2026-09-19, ~04:48 UTC): 28725/28726/28727 remain
-      DONE (artImageId 28439/28440/28441). Jobs 28728-28732 (the remaining 5 of 8) were found
-      status=CANCELLED, all with updatedAt clustered within a 12-second window
-      (04:44:45-04:44:56Z) -- not the individually-staggered timing a per-job idle timeout
-      would produce, so likely a bulk queue-management action (queue stats now show
-      staleRunningCount=0, windowThroughput.CANCELLED=5, consistent with exactly these 5). Not
-      a bug in this task's submission. Per this task's own note ('Re-render only a specific
-      FAILED/rejected job rather than the whole batch'), requeued all 5 via POST
-      /api/art/queue/{id}/requeue (admin action, reuses each job's existing payload, confirmed
-      each response success=true, attempts reset to 0) rather than resubmitting fresh jobs --
-      avoids any duplicate-submission risk. All 5 are back to PENDING as of this note. A
-      future cycle should re-check 28728-28732 and, once all 8 are DONE, verify + catalog per
-      t-014's existing NEXT ACTIONABLE STEP.
-
-      CORRECTION (2026-09-19, same session as the erroneous PR #4712): that PR requeued
-      ArtJobs 28728-28732, but Silas (PR comment, 2026-09-19T04:51:48Z) clarified those
-      cancellations were INTENTIONAL: Moseley cancelled Butterfly Gallery animation rendering
-      because the clips are not useful until the exact production dimensions for the butterfly
-      background/compositing surface are known. My requeue directly contradicted that
-      direction -- I did not check for same-day out-of-band human steering before treating the
-      cancellation pattern as a queue glitch. PR #4712 was closed unmerged by Silas before
-      landing, so this roadmap file was not affected by the incorrect 'ready' status change,
-      but the live ArtJob queue was: I re-corrected the queue state, but used DELETE (POST
-      /api/art/queue/{id}) instead of a cancel action, which removes the ArtJob row outright
-      rather than restoring status=CANCELLED. All 5 rows (28728-28732) are now deleted rather
-      than cancelled. Verified before deleting: none of the 5 had an artImageId set (they were
-      PENDING/RUNNING image-to-video jobs with no output yet), so no ArtImage/art asset was
-      lost -- only the ArtJob queue-metadata rows are gone. FOR SILAS: (1) confirm no further
-      correction is needed on the ArtJob side (job ids 28728-28732 no longer exist;
-      28725-28727 are untouched, still DONE with artImageId 28439/28440/28441). (2) This task
-      has no tracked dependency on the production-dimensions decision -- let me know whether
-      to create a new blocking task for it (and its target: APPROVED-STAGE-SPEC.md? a Kind
-      Robots Project field? something Moseley owns elsewhere?) or whether you'd rather just
-      tell agents directly when it's time to resume t-014. Not re-arming to ready or touching
-      the render queue again until you confirm the right way to track this.
-    claimed_by: claude-scheduled-20260919T045000Z-butterfly-gallery-t014-check
-    claimed_at: '2026-09-19T04:48:37Z'
-    updated: '2026-09-19T04:53:53Z'
-    soft_gate: true
+    updated: '2026-09-19T04:52:00Z'
 
   - id: t-015
     milestone: m4
