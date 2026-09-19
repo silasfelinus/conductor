@@ -504,8 +504,8 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Queue additional or replacement ArtJobs from imported images with editable provenance"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-014
@@ -514,6 +514,9 @@ tasks:
       creates a normal durable ArtJob from the stored prompt/settings/resource
       provenance plus the chosen preset. Replacement must not remove the source
       file until a new ArtImage is delivered and verified.
+    claimed_by: claude-2026-09-19T063500Z-art-archive-t016-a1
+    claimed_at: '2026-09-19T06:31:38Z'
+    updated: '2026-09-19T06:31:38Z'
 
   - id: t-017
     milestone: m5
