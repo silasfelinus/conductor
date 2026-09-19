@@ -1203,3 +1203,23 @@ tasks:
     claimed_at: '2026-09-19T16:10:13Z'
     updated: '2026-09-19T16:23:00Z'
     implementation_pr: 'silasfelinus/kind_robots#2888'
+
+  - id: t-039
+    milestone: m2
+    title: "Add a dedicated verify script for the admin import.post.ts endpoint"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from t-037 (kind_robots#2889): of the three call sites sharing
+      matchArchiveResources() output (CLI, admin import endpoint, admin
+      dry-run endpoint), only the CLI (verifyImportArtArchive.mjs) and the
+      dry-run endpoint (verifyArtArchiveDryRunEndpoint.mjs) have a dedicated
+      verify script. server/api/admin/art-archive/import.post.ts has none --
+      add one mirroring verifyArtArchiveDryRunEndpoint.mjs's shape (mock
+      requireAdminApiUser/scanArchiveRoot/importArchiveScan/
+      matchArchiveResources, assert the response shape and the
+      filesWithMatchEvidence/unmatchedModels aggregation), so all three call
+      sites have equivalent contract coverage.
+    updated: '2026-09-19T16:50:00Z'
