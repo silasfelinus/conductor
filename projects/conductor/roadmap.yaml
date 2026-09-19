@@ -3395,6 +3395,39 @@ tasks:
   passes: 0
   stakes: reversible
   note: >-
+    CONFIRMED 2026-09-19 by direct process trace -- do NOT close as moot. An earlier
+    reading of this session called it moot twice on the theory that the .vbs wrapper hides
+    the whole process tree. watch-window-spawn.ps1 disproved that. At 14:11:03, with the
+    task already registered to the wrapper:
+
+    start: powershell.exe pid 17896 (parent 25732 = wscript healthcheck-hidden.vbs)
+    start: powershell.exe pid 27484 (parent pid 17896)   <- the Start-Job child
+    start: cmd.exe        pid 26704 (parent pid 27484)   <- pm2.cmd inside it
+    POPUP: new console (conhost.exe pid 24620) owner: pid 27484
+
+    So the Start-Job child powershell.exe opens its OWN visible console in session 1, and
+    so does the parent healthcheck powershell (conhost 28268, owner pid 17896). The
+    wrapper's shell.Run(..., 0, True) does not suppress either. Two separate findings live
+    here: the children need an explicit windowless launch (this task), and the wrapper
+    itself does not hide what it claims to (see the separate Windows-11 default-terminal
+    question, and ops/home-server/README.md, which still asserts that it does).
+
+    CONFOUNDER CHANGED AFTER THAT TRACE (2026-09-19, later the same day). The box's
+    default terminal application was Windows Terminal when the trace above was captured.
+    Windows Terminal ignores the SW_HIDE that healthcheck-hidden.vbs passes via
+    shell.Run(..., 0, True), which plausibly explains every popup in that trace including
+    the Start-Job child's. Silas then set Settings > System > For developers > Terminal to
+    "Windows Console Host". If the popups stop, this task's fix is belt-and-braces rather
+    than necessary, and the real defect was the wrapper's claim being true only under the
+    classic console host.
+
+    So: RE-RUN watch-window-spawn.ps1 for 15 minutes before doing any work here. Close as
+    resolved-by-configuration if no conhost POPUP names a healthcheck descendant; keep and
+    fix if one still does. Do not close it on the reasoning alone -- that reasoning has
+    been wrong twice on this exact question today, in both directions.
+
+    Original filing follows.
+
     Filed from Silas's 2026-09-19 report: two cmd windows popping on ferngrotto every
     3-5 minutes, with a confirmed burst at 05:26.
 
@@ -3476,6 +3509,74 @@ tasks:
     LOOP branch does. This would have surfaced the pre-existing unhealthy state
     before #4781's fix landed on top of it and made things briefly worse.
   updated: '2026-09-19T21:30:00Z'
+
+- id: t-179
+  milestone: m2
+  title: 'Nothing watches pm2 restart_time as a TREND -- a count that climbs to 779 over weeks trips no alert, and reviving a watchdog onto an already-sick engine is how 2026-09-19 happened'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    healthcheck.ps1's CRASH LOOP branch alerts only when pm2's restart_time moves within a
+    SINGLE 5-minute tick (`$crashLoopRestarts = 3`). That catches a fast loop and is silent
+    on a slow one. comfyui reached 779 restarts by climbing gradually, and the only place
+    that number was ever visible was `pm2 status` typed by a human who happened to look.
+
+    Why it matters beyond bookkeeping: on 2026-09-19 a session repaired this watchdog after
+    an 11-day parse-error outage (conductor PR #4781) and handed it straight back onto an
+    engine that was already at 779 restarts. The watchdog's probe budget (20s + 60s retry)
+    was far shorter than ComfyUI's real 167-second boot, so it began restarting a booting
+    engine every tick. Within 35 minutes the count reached 794, pm2's process table was
+    corrupted ("Process 3 not found"), and four orphaned engines were sharing one RTX 3060
+    with an unsupervised one holding port 8188. The boot-grace fix is in PR #4786; this task
+    is the missing SIGNAL, not the missing fix.
+
+    A trend check would have said "do not restore this watchdog yet, the engine it
+    supervises is unhealthy" -- which is exactly the judgement that was missed.
+
+    Suggested shape: record restart_time per app per run (the watchdog already writes
+    logs\alert-state.json, so there is a precedent for small persisted state), and report in
+    the session sweep when a count exceeds an absolute threshold (say 50) or grows week over
+    week. Advisory, never a gate. Related: check_engine_heartbeat.py already reads engine
+    liveness from the CI side and could carry this.
+  updated: '2026-09-19T00:00:00Z'
+
+- id: t-180
+  milestone: m2
+  title: 'A scheduled task that fires and fails every 5 minutes is invisible: nothing reads LastTaskResult or the healthcheck log-write age'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    From the 2026-09-19 incident. healthcheck.ps1 had a PowerShell parse error, so the
+    scheduled task launched every 5 minutes, PowerShell refused the file, and the action
+    returned exit code 1 -- for ELEVEN DAYS (2026-09-08 00:36 to 2026-09-19). ComfyUI ran
+    unsupervised the whole time.
+
+    Every signal that could have caught it was already on the box and unread:
+
+      * `LastTaskResult: 1` (Task Scheduler recorded `action "wscript.exe" with return code
+        2147942401` = HRESULT_FROM_WIN32(1)) sitting beside a perfectly healthy
+        `NextRunTime` and `NumberOfMissedRuns: 0`
+      * logs\healthcheck.log frozen at 2026-09-08 00:36, its last entry a normal COMPLETE
+        run (through the `render watchdog:` line), so it does not even read as a crash
+      * Microsoft-Windows-TaskScheduler/Operational logging every launch and its result
+
+    This is the third time this watchdog has gone silent without saying so:
+    check_engine_heartbeat.py's own header records it stopping at 2026-09-01 02:26:07,
+    ~37 hours before Silas noticed. Same shape each time -- the log just ends.
+
+    Suggested shape: a check that reads the task's LastTaskResult and the log's last-write
+    age, and treats a non-zero result OR a log older than ~30 minutes as a finding. Both are
+    local reads, no token needed. The 48h-staleness rule in check_container_log_drift.py is
+    the precedent: from the reading end, "nothing to report" and "it stopped running" are
+    indistinguishable unless something checks explicitly.
+
+    Note the ordering trap: report freshness BEFORE content. A watchdog whose log is stale
+    is not reporting good news, it is not reporting.
+  updated: '2026-09-19T00:00:00Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
