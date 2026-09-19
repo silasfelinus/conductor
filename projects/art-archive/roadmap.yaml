@@ -1076,3 +1076,23 @@ tasks:
       pattern and mtime-based invalidation) and serve it from the detail
       panel instead of the untouched original, if large originals turn out
       to be common in the imported archive.
+
+  - id: t-036
+    milestone: m5
+    title: "Report the archive scanner's cache-hit rate prominently in dry-run output"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-030
+    note: >-
+      Kaizen from t-030 (kind_robots#2876): that PR fixed a real bug where
+      scanArchiveRoot()'s cache-hit check compared a live float mtimeMs
+      against a truncated-integer known.fileMtimeMs and almost never
+      matched, so every rescan silently re-hashed every unchanged file.
+      ArchiveScanResult.cacheHitCount is already tracked but not
+      prominently surfaced. Have reconcileArtArchive.ts's --dry-run output
+      report the cache-hit count/percentage clearly, so a future regression
+      of this kind (or any other cause of the cache silently not engaging)
+      is visible from an ordinary dry-run instead of requiring someone to
+      notice a scan running slower than expected.
