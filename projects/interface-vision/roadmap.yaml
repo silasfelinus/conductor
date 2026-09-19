@@ -1855,7 +1855,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: "Polish every reachable Kind Robots surface page-by-page"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -1924,7 +1924,9 @@ tasks:
     Screenshot-directed Music Mentor polish: the page's form and intro now sit on a single opaque raised surface instead of rendering text directly over the illustrated background. Tightened the intro to one sentence, made local-audio privacy explicit in a compact shield callout, shortened the capability caveat, converted the setup flow into three plain-language steps, shortened feedback labels and help text, and changed the primary CTA from "Analyze my medley" to "Analyze recording." Updated the channel metadata copy to match. No audio-analysis, mana, upload, store, or API behavior changed.
 
     Merged silasfelinus/kind_robots#2904 as 0aca9d6bd2e9772f203317388fb4818a1c29cb32 from exact head dcb5d6f46e63e32a4f1e364d7355951d689dbf2c. Screenshot-directed Music Mentor polish moved the intro and form onto one opaque raised surface so the illustrated background no longer interferes with readability; tightened the intro, privacy and capability copy; simplified setup into three plain-language steps; shortened feedback labels and help text; and changed the CTA to "Analyze recording." No audio-analysis, mana, upload, store, or API behavior changed. All 47 exact-head workflow runs completed successfully, including TypeScript Type Check, Layout Contract, MDC Scroll Ownership, Project Architecture Contract, Schema Migration Parity, Facet Catalog Contract, and the full Contract Tests suite. Production is self-hosted and was not deployed by this session. Return the recurring visual-polish task to ready for the next screenshot-driven slice.
-  updated: '2026-09-19T23:50:00Z'
+
+    Screenshot-directed Video Generator density pass: compressed the top-level spacing, collapsed the preset chooser into compact buttons with only the active preset description, reduced the motion prompt height, collapsed the optional LoRA browser by default with selected-count summary and a shorter comfortable browser height, paired content visibility with output/timing controls, and replaced the tall runtime alert plus separate button row with a compact status strip beside Generate. The default desktop form should now fit in roughly one viewport before result/error state and optional LoRA/advanced expansion, instead of consuming 2-3 screens. No generation, preset, upload, LoRA, privacy, mana, or API behavior changed.
+  updated: '2026-09-19T23:59:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2899'
   approved_by_human: true
   owner: worker
