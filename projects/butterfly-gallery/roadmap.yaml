@@ -1142,3 +1142,29 @@ tasks:
       actually possible in the session's environment; note clearly what was
       verified vs. assumed.
     updated: '2026-09-19T12:41:00Z'
+
+  - id: t-034
+    milestone: m4
+    title: "Document the video-enqueue payload's required renderScale field in ANIMATION-SHOT-LIST.md or a shared submission helper"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from t-014 (conductor#4748): ANIMATION-SHOT-LIST.md and the
+      roadmap's own payload description (task prompt) both describe
+      POST /api/art/enqueue's video-job shape but omit that `renderScale` is
+      a required numeric field for `engine: ltx`/`wan` requests independent
+      of whatever `presetId` is also supplied -- kind_robots'
+      server/api/art/enqueue.post.ts does not derive width/height/duration/
+      renderScale from `presetId` server-side; `presetId` is descriptive
+      metadata only, and every dimensional field must be supplied directly
+      by the caller. This had to be re-derived by reading enqueue.post.ts
+      directly rather than trusting the shot list. Either add a short note
+      to ANIMATION-SHOT-LIST.md (or wherever future Butterfly Gallery/other
+      video-ArtJob submissions get their payload contract from) documenting
+      this, or better, commit a small reusable submission helper script to
+      kind_robots (mirroring utils/scripts/enqueueButterflyGalleryArt.ts's
+      pattern but for the video engine) so future video-job submissions
+      don't have to re-derive the payload shape from server source each
+      time.

@@ -15376,3 +15376,16 @@ records:
     without a dedicated benchmark. Also confirmed the two reporting paths' denominators
     (scan.files.length vs result.scannedFileCount) were actually equal before reusing the
     same formatting in both, rather than assuming.
+- date: 2026-09-19
+  project: butterfly-gallery
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: The shot list/task-note description of the video-enqueue payload omitted that renderScale is
+    required for engine ltx/wan independent of presetId (the server never derives dimensional defaults
+    from a preset id) -- reading the actual server route source before submitting caught this before it
+    caused a rejected request; worth documenting the full required-field contract once rather than
+    re-deriving it from source each time (see t-034).
