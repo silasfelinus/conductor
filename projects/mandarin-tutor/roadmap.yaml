@@ -567,26 +567,19 @@ tasks:
   - id: t-024
     milestone: m5
     title: "Sound-family index: browse the catalog by phonetic series"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-022
-    note: >-
-      Once t-022 computes a card's phonetic series, the same derivation supports the inverse
-      view: an index of every sound component in the catalog (兑, 青, 马, 可 ...) with its
-      family underneath, showing how one sound component threads through many characters and
-      where the sound drifted. This is the browsable form of the thing Silas said he REALLY
-      loves about the writing system, and it is the natural entry point for an academic
-      learner who wants to read outward from a component rather than drill a deck.
+    note: |-
+      Once t-022 computes a card's phonetic series, the same derivation supports the inverse view: an index of every sound component in the catalog (兑, 青, 马, 可 ...) with its family underneath, showing how one sound component threads through many characters and where the sound drifted. This is the browsable form of the thing Silas said he REALLY loves about the writing system, and it is the natural entry point for an academic learner who wants to read outward from a component rather than drill a deck.
+      Keep it honest: only assert a phonetic relationship the pinned Make Me a Hanzi source actually claims (`etymology.phonetic`), never one inferred from a shared-looking shape, and show the modern readings side by side so a drifted family (说 shuō / 税 shuì) reads as the interesting case it is rather than as a data error.
 
-      Keep it honest: only assert a phonetic relationship the pinned Make Me a Hanzi source
-      actually claims (`etymology.phonetic`), never one inferred from a shared-looking shape,
-      and show the modern readings side by side so a drifted family (说 shuō / 税 shuì) reads
-      as the interesting case it is rather than as a data error.
+      Implemented the browsable phonetic-series index on the Kind Robots worker branch. The page derives families only from source-asserted role: phonetic components, shows modern readings and drift, and links each member to its lesson page.
     claimed_by: openai-scheduled-2026-09-19T182001Z-mandarin-tutor-t024-a11
     claimed_at: '2026-09-19T18:20:01Z'
-    updated: '2026-09-19T18:20:01Z'
+    updated: '2026-09-19T18:24:01Z'
 
   - id: t-025
     milestone: m5
