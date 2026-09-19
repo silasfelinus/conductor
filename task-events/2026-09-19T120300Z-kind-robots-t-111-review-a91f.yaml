@@ -1,0 +1,12 @@
+version: 1
+project: kind-robots
+task: t-111
+operation: review
+session: openai-chat-20260919-reward-prompt-a91f
+updated: '2026-09-19T12:03:00Z'
+note: >-
+  Implemented the bounded fix on worker/kind-robots-t-111-openai-chat-20260919-a91f:
+  EntityArtManager now emits stable data-art-model/data-model-id/data-model-slug/data-art-subject
+  attributes so the existing managerContextFromPage fallback can identify Reward and other entity
+  records without relying on Vue's private __vueParentComponent hook. Extended
+  verifyEntityArtPromptSuggest.ts to pin that identity contract. Diff is two files, +15/-1.
