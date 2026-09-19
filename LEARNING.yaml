@@ -15098,3 +15098,27 @@ records:
     implementation in its own module and install it via a client plugin
     (setXFeedProvider()/setXActionAdapter() at app startup) rather than
     wiring it as the fixture module's own default.
+- date: 2026-09-19
+  project: butterfly-gallery
+  task: t-028
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: n/a
+  lesson: >-
+    Wiring rendered ArtImage assets into placeholder CSS shapes reads cleanly
+    when each replacement keeps the prior gradient/color as a literal CSS
+    fallback layer (multi-background for gradients, `background: <color>
+    url(...) center / cover no-repeat` shorthand for solid colors) rather than
+    swapping the property outright -- a failed image load then degrades to
+    the exact prior look with no extra code. Where a solid color carries
+    semantic meaning (the five preset-bin variants: error/warning/accent/
+    success/info), `background-blend-mode: multiply` layers the art texture
+    over the color instead of replacing it, preserving the color-coding.
+    Border-thickness-sensitive replacements (a picture-frame graphic meant to
+    become an actual `border-image`) are safer left as a `background` layer
+    behind the existing CSS border when there is no PR-preview infra to
+    verify pixel alignment pre-merge (this repo's post-Vercel-migration
+    state) -- flag it as a documented follow-up rather than guessing at
+    border-image slice values blind.
