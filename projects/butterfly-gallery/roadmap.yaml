@@ -982,8 +982,8 @@ tasks:
   - id: t-030
     milestone: m5
     title: "Audit other admin-only listing endpoints for the same admin-privilege-without-mature-opt-in gap fixed in t-023"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: |-
@@ -995,6 +995,9 @@ tasks:
       (ArtImage, ArchiveEntry, and similar) and confirm each one applies the same
       viewerShowsMature (or visibilityWhere/canViewWithMaturity) gate, not just an
       admin check.
+    claimed_by: conductor-agent-20260919-t030
+    claimed_at: '2026-09-19T03:50:34Z'
+    updated: '2026-09-19T03:50:34Z'
 
   - id: t-031
     milestone: m4
