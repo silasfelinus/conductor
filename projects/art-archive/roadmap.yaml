@@ -683,9 +683,9 @@ tasks:
   - id: t-023
     milestone: m2
     title: "Extend t-022's runnable entrypoint to report resource-match candidates per file"
-    status: review
+    status: ready
     owner: worker
-    passes: 0
+    passes: 1
     stakes: reversible
     depends_on: t-022
     note: |-
@@ -693,9 +693,17 @@ tasks:
 
 
       Extended the runnable Art Archive import CLI to invoke matchArchiveResources for each imported file, report checkpoint/LoRA candidate resource ids with confidence/evidence, preserve unmatched embedded evidence, and summarize match coverage. Updated the existing CLI contract verifier. Implementation branch is ready for PR review.
+
+      REJECTED pass 1 (quality) by Reviewer: kind_robots#2869 has a real CI failure on its
+      current head (c7eec168) -- the new "reports unmatched embedded evidence" Contract-
+      verifiers check does not match the actual source order in importArtArchive.ts. All other
+      45 checks pass and the PR is otherwise scoped and matches its own description. See
+      retry_context for the exact fix. Left the PR open for the Worker to push a fix to the
+      same branch.
     claimed_by: openai-scheduled-2026-09-19T072214Z-art-archive-t023-a11
     claimed_at: '2026-09-19T07:22:14Z'
-    updated: '2026-09-19T07:28:00Z'
+    updated: '2026-09-19T07:33:01Z'
+    retry_context: 'pass 1 failed (quality): kind_robots#2869 (art-archive/t-023, resource-match reporting) fails CI on its current head -- the "Contract verifiers" job, specifically the new "reports unmatched embedded evidence" check in utils/scripts/verifyImportArtArchive.mjs. That checks regex /UNMATCHED[\s\S]*?evidence\.name[\s\S]*?evidence\.hash/ requires the literal "UNMATCHED" to appear in importArtArchive.ts BEFORE evidence.name/evidence.hash, but formatOutcome()s actual source order is evidence.name -> evidence.hash -> evidence.weight -> the "UNMATCHED" string (built into parts[] first, then returned as `${label}: UNMATCHED ${parts.join('' '')}` last). Do differently: fix the new verifier regex to match the real source order (e.g. /evidence\.name[\s\S]*?evidence\.hash[\s\S]*?UNMATCHED/) -- the runtime output is already correct ("<label>: UNMATCHED name=... hash=..."), only the static source-order check is wrong. Re-run npm run test:art-archive-import-cli locally before pushing.'
 
   - id: t-024
     milestone: m2
