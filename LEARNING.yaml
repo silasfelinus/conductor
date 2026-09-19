@@ -15172,3 +15172,22 @@ records:
     admin who hadn't opted into mature content. Worth checking other
     admin-only listing endpoints touching mature/private rows for the same
     "admin != opted-in-to-mature" gap.
+- date: 2026-09-19
+  project: butterfly-gallery
+  task: t-024
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Before implementing a "tune performance/responsive" task, audit what
+    earlier tasks already covered: t-004/t-009/t-022 had already wired
+    cursor pagination and thumbnailPath-vs-displayPath correctly, so t-024's
+    real remaining gaps were narrower than its title suggested -- auto
+    (rather than manual-click) prefetch, and a true phone-width breakpoint
+    below the existing 900px one (whose rail clamp() minimums didn't shrink
+    further, leaving almost nothing for the center art-display under
+    ~480px). Citing what was already correct, with file/line evidence,
+    kept the diff scoped to the two genuine gaps instead of re-touching
+    working code.

@@ -995,3 +995,23 @@ tasks:
       (ArtImage, ArchiveEntry, and similar) and confirm each one applies the same
       viewerShowsMature (or visibilityWhere/canViewWithMaturity) gate, not just an
       admin check.
+
+  - id: t-031
+    milestone: m4
+    title: "Gate the animation-slot elements' future motion assets on visibility/prefers-reduced-motion, not just CSS class toggles"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-014
+    note: |-
+      Kaizen from t-024 (kind_robots#2862): the page's `data-animation-slot`
+      containers (butterfly-runway, foreground-robot, foreground-butterfly,
+      blank-state) are still empty placeholders pending t-014's motion clips.
+      Once t-014 lands real video/CSS motion in them, confirm none of it runs
+      continuously regardless of viewport visibility or prefers-reduced-motion
+      -- an IntersectionObserver-gated pause (or a plain <video> element's own
+      `autoplay` tied to intersection) may be needed the way the current
+      short-lived/`v-if`-gated CSS animations in pages/butterfly-gallery.vue
+      already avoid this by construction. Depends on t-014 actually landing
+      motion content first; nothing to verify against until then.
