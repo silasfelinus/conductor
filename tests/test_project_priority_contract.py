@@ -2,6 +2,8 @@ from pathlib import Path
 
 import yaml
 
+from scripts.audit_roadmaps import audit
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PRIORITY = ROOT / "projects" / "priority.yaml"
@@ -56,6 +58,18 @@ def test_lead_projects_are_the_ones_silas_named():
     # Reopened 2026-09-19 (see docstring): present, but not the lead.
     assert "mandarin-tutor" in order
     assert order.index("mandarin-tutor") > order.index("art-archive")
+
+
+def test_control_priority_band_matches_priority_queue():
+    """CONTROL's human steering band must move atomically with priority.yaml."""
+    report = audit()
+    drifts = [
+        finding
+        for finding in report["findings"]
+        if finding["code"] == "CONTROL_PRIORITY_DRIFT"
+    ]
+
+    assert not drifts, drifts[0]["message"] if drifts else "CONTROL priority drift"
 
 
 def test_dream_cycle_ordinary_maintenance_remains_fallback():
