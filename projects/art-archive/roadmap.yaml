@@ -638,18 +638,25 @@ tasks:
   - id: t-020
     milestone: m5
     title: "Cross-width visual acceptance of the admin archive workflow"
-    status: ready
-    owner: null
+    status: needs-human
+    owner: worker
     passes: 0
     stakes: reversible
     gate_human: true
     depends_on:
       - t-015
       - t-018
-    note: >
+    note: >-
       Final user-facing acceptance gate for phone/tablet/desktop admin layout
       after the main curation workflow is deployed and can be exercised against
       real archive data.
+
+      FOR SILAS: Live-verified pages/admin/art-archive.vue on kindrobots.org at phone/tablet/desktop widths (390px/768px/1280px) via a disposable cypress-* admin test login (created, granted admin+mature access, screenshotted, then fully deleted afterward -- 0 remaining). Screenshots confirm no horizontal overflow and no crushed controls at any width: the filter/search panel, the batch-selection curation board (rating + drag/drop preset targets), and the paginated grid + detail pane all reflow cleanly. kind_robots' own test:layout-contract and test:disabled-affordances checks both pass with zero violations for this file, so no code changes were needed -- no PR opened in kind_robots.
+      Limitation: production currently has 0 rows in ArchiveEntry (t-019 ran a dry-run reconciliation only; the real bulk import via t-024's endpoint hasn't been triggered yet), so only the empty-state UI was exercised live -- the populated grid with real thumbnails and actual drag/drop-over-real-cards interaction could not be visually confirmed against live data. Worth a quick re-check at all three widths once the real import has run.
+      TO APPROVE: if the above is acceptable, set approved_by_human: true and status: done on art-archive/t-020. Nothing else in this roadmap depends_on t-020 -- it is the standalone m5 acceptance gate, not a blocker for other tasks.
+    claimed_by: claude-web-20260919T093219Z-artarchive-t020-a1
+    claimed_at: '2026-09-19T09:32:20Z'
+    updated: '2026-09-19T09:42:27Z'
 
   - id: t-021
     milestone: m2
@@ -868,8 +875,8 @@ tasks:
   - id: t-028
     milestone: m4
     title: "Surface queued preset-job status inline in the curation board"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-016
@@ -882,6 +889,10 @@ tasks:
       list keyed by the archiveEntryId/archivePresetId tags already written
       onto the payload) so the board itself reflects job status, once real
       usage shows which actionTypes admins actually reach for.
+    claimed_by: claude-scheduled-20260919T093227Z-artarchive-t028-b1
+    claimed_at: '2026-09-19T09:32:27Z'
+    updated: '2026-09-19T09:59:04Z'
+    implementation_pr: 'silasfelinus/kind_robots#2873'
 
   - id: t-029
     milestone: m5
@@ -1020,3 +1031,28 @@ tasks:
       What unblocks when he does: closing this either confirms t-016/t-025's
       existing archive-preset path as-is, or unblocks a properly-scoped
       follow-on task for real engine-family dispatch.
+
+  - id: t-034
+    milestone: m4
+    title: "Persist archive-preset actionType on the ArtJob row (or its payload) independent of the preset row"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-028
+    note: >-
+      Kaizen from t-028 (kind_robots#2873): the new job-status board relies
+      on archivePresetId to resolve an actionType for display, but that only
+      works for as long as the referenced ArchiveActionPreset still exists --
+      an admin can edit or delete a preset later, silently orphaning the
+      historical actionType for any job that already ran under it. Add
+      actionType as its own tagged field on the ArtJob payload (matching how
+      archiveEntryId/archivePresetId are already tagged in
+      buildArchiveEnqueuePayload.ts), so a future report/aggregation by
+      action type doesn't depend on presets never being edited or deleted.
+
+      (Renumbered from t-033 to t-034 during a PR merge conflict on
+      2026-09-19: a concurrent session independently filed its own t-033
+      -- "Confirm archive-preset ArtJobs are safe to always tag engine:
+      'A1111'" -- from the same t-027/t-016 investigation. Both are kept;
+      this one moved to the next free id rather than either being dropped.)
