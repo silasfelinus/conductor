@@ -15339,3 +15339,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "The task note assumed full-size archive images already rendered and only thumbnails were missing ('the admin browse endpoint already returns a thumbnailPath field, but it just falls back to the full-size ArtImage.path'). Reading the actual serving path (nuxt.config.ts, server/api, Dockerfile) showed nothing ever served raw archive bytes over HTTP at all -- ArtImage.path/ArchiveEntry.relativePath for an archive row is only a filesystem path relative to the private, non-web-served PRIVATE_PATH root, so both the thumbnail AND full-size <img> bindings were dead links before this task. Worth checking a task note's stated premise against the actual code path before implementing narrowly to it -- a byte-serving route turned out to be the real prerequisite, not an assumption safe to inherit."
+- date: 2026-09-19
+  project: art-archive
+  task: t-030
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The task's own note gated building anything behind a timing measurement ('confirm with a rough timing measurement... before adding persisted state'). Running that measurement with a synthetic benchmark (rather than skipping the gate or guessing) surfaced a real, unrelated correctness bug -- t-018's incremental-hash cache had a float-vs-integer mtime precision mismatch that made it never actually hit in practice, so every prior scan silently re-hashed everything regardless of that shipped optimization. Worth internalizing: a task's gating measurement is itself worth actually running, even approximately, rather than reasoning about it in the abstract -- it can surface bugs the abstract reasoning would never have found. Also: closing a task on 'measurement says no further work needed' is a legitimate done outcome when the task's own note explicitly allows for that conditional, not a failure to complete the nominal feature."
