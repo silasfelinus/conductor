@@ -15494,3 +15494,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "t-022's buildMandarinLesson() already computed a teachability: 'structural'|'vocabulary' field, which made the coverage-gap audit almost free -- the real design decision was keeping vocabulary-only lessons out of the issues/byCode tally entirely (a separate coverage section) so an honest, source-faithful lesson is never mistaken for a bug or fails --strict."
+- date: 2026-09-19
+  project: mandarin-tutor
+  task: t-025
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: cancelled
+  failure_category: null
+  lesson: "An optional feature Silas did not select should close as a no-op rather than remain waiting on a dependency that will eventually satisfy and trigger WAITING_WITH_SATISFIED_DEPS."
