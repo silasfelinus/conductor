@@ -15074,3 +15074,27 @@ records:
     local-only mutation (applyBinOutcome's entry.matchState write) was a deliberate
     design choice -- it was a silent no-op instead, exactly the kind of gap a future
     real adapter swap (t-022) would otherwise inherit unnoticed.
+- date: 2026-09-19
+  project: butterfly-gallery
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: quality
+  lesson: >-
+    A task whose note implies broad scope ("a real art-archive-backed adapter
+    swaps in later under t-022" -- from a sibling task's note, not t-022's own)
+    is worth deliberately re-scoping to what the task's own title actually
+    promises (here: the feed) plus only the sub-pieces with a clean 1:1
+    real-endpoint mapping, rather than either inventing unreviewed
+    infrastructure (a schema migration, an id-resolution endpoint) to cover
+    every implied piece or silently dropping them. Filing the honest gap as
+    its own task (t-029) kept the delivered slice verifiable and reversible.
+    Separately: real Nuxt-runtime code (anything importing stores/utils.ts,
+    which pulls in stores/userStore.ts's snapshotLoader.ts) cannot be
+    statically imported by a module a plain-tsx contract test also imports --
+    it crashes on import.meta.glob outside Vite. Keep the Nuxt-runtime-backed
+    implementation in its own module and install it via a client plugin
+    (setXFeedProvider()/setXActionAdapter() at app startup) rather than
+    wiring it as the fixture module's own default.
