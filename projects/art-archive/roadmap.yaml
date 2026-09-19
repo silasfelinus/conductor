@@ -940,8 +940,8 @@ tasks:
   - id: t-030
     milestone: m5
     title: "Make large-archive scans resumable across process restarts"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-018
@@ -959,6 +959,9 @@ tasks:
       persisted state) and only build real checkpoint/cursor tracking if
       that measurement shows the walk itself, not the hashing, is the actual
       bottleneck at scale.
+    claimed_by: claude-scheduled-20260919T110617Z-artarchive-t030
+    claimed_at: '2026-09-19T11:06:25Z'
+    updated: '2026-09-19T11:06:25Z'
 
   - id: t-031
     milestone: m2
