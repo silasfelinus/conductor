@@ -15276,3 +15276,12 @@ records:
   outcome: done
   failure_category: quality
   lesson: "Reviewer rejected pass 1 for a deterministic verifyDisabledAffordances failure (a batch-scoped Clear button used :disabled instead of v-if with no selection); the retry matched the existing correct pattern already in the same file, landed clean on the second pass, and merged as kind_robots#2866 -- a reminder that this project's PRs should run the full Contract verifiers suite locally before pushing, not just feature-scoped test scripts."
+- date: 2026-09-19
+  project: art-archive
+  task: t-016
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The narrow-adapter framing worked cleanly here: buildArchiveEnqueuePayload() only builds a base ArtJob payload from ArtImage fields and merges the chosen preset via t-025's existing applyArchivePresetToPayload, so the endpoint itself stayed thin glue code. The 'no premature file removal' requirement needed no new schema/tracking field at all -- it falls out for free from the endpoint never calling any file-mutating or isActive-touching code path."

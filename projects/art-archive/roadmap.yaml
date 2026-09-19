@@ -797,3 +797,21 @@ tasks:
       krea2), so t-015's curation board (or any future "apply preset"
       endpoint) has a real signal if the flat-payload merge and the
       graph-building step ever drift apart.
+
+  - id: t-028
+    milestone: m4
+    title: "Surface queued preset-job status inline in the curation board"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-016
+    note: >-
+      Kaizen from t-016 (kind_robots#2868): applyPresetToSelected() queues an
+      ArtJob per selected entry but the curation board never shows what
+      happened to it afterward -- an admin has to separately check the
+      general art queue (/api/art/queue/:id) to see whether a queued preset
+      job is PENDING/RUNNING/DONE/FAILED. Add a small poll (or a "recent jobs"
+      list keyed by the archiveEntryId/archivePresetId tags already written
+      onto the payload) so the board itself reflects job status, once real
+      usage shows which actionTypes admins actually reach for.
