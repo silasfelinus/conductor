@@ -15351,3 +15351,13 @@ records:
     assumption first and found a hidden cache-correctness bug instead (float vs truncated-integer mtime
     comparison defeating the existing hash cache); fixing that made the walk cheap enough that checkpoint
     tracking wasn't needed at all -- measure before building is cheaper than building the wrong thing.
+- date: '2026-09-19'
+  project: lora-ingestion
+  task: t-009
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: quality
+  lesson: Capability filters must derive from the same taxonomy as the scanner/downloader; a separate
+    hand-curated UI list silently fell behind Krea, Flux.2, ZImage, Qwen, and other supported families.
