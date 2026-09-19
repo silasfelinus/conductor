@@ -20,6 +20,8 @@ Files in this folder:
 | `preflight.ps1` | read-only "if I reboot now, does it all come back?" check — verifies the **saved** state (persistent mappings, `dump.pm2` and its env), not just the running state |
 | `relay_agent.py` | pull-based bridge: claims ArtJobs from kind_robots and drives local ComfyUI (enable after art-generator-connect/t-010 deploys) |
 | `relay_download_agent.py` | pull-based model downloader: claims queued LoRA/checkpoint downloads, fetches them onto the engine dirs, and catalogs them as Resources (the `kr-download` app) |
+| `watch-comfy-spawn.ps1` | diagnostic: records which process launches a second ComfyUI, captured while the spawner is still alive |
+| `watch-window-spawn.ps1` | diagnostic: records which process opens each new console window on the desktop (the "cmd popups" triage), with parent chain and redacted command lines |
 | `start-engines.bat` | double-click launcher: starts both engines (no-op if running) and attaches the live log stream — the old bats' echo, without owning the processes |
 | `container_log_triage.py` (now in **kind_robots** `scripts/`, deployed to `/mnt/user/appdata/kind_robots/scripts/`) | daily Unraid User Script: reads every container's logs, collapses them to signatures, reports only what is new, spiking, or newly silent, and commits the digest into this repo in the same run — no pm2 entry, this box is not ferngrotto (see `CONTAINER-LOG-TRIAGE.md`) |
 
@@ -108,12 +110,46 @@ WSL cleans up an accidentally spawned Linux daemon; harmless either way.)
 
 pm2 restarts a process that *exits*, but not one that hangs (e.g. CUDA wedge
 where the process is alive but the API stops answering). `healthcheck.ps1`
-covers that gap. Register it in Task Scheduler to run every 5 minutes:
+covers that gap. Register it in Task Scheduler to run every 5 minutes —
+**through `healthcheck-hidden.vbs`, not `powershell.exe` directly**:
 
 ```powershell
 schtasks /Create /SC MINUTE /MO 5 /TN "AI-Backends-Healthcheck" `
-  /TR "powershell -NoProfile -ExecutionPolicy Bypass -File \"C:\path\to\conductor\ops\home-server\healthcheck.ps1\""
+  /TR "wscript.exe \"C:\path\to\conductor\ops\home-server\healthcheck-hidden.vbs\""
 ```
+
+`wscript.exe` is a GUI-subsystem host and the wrapper calls `shell.Run(..., 0,
+True)`, so PowerShell and every child it shells out to (pm2.cmd, node.exe) run
+on a hidden console. Point the task at `powershell.exe` directly instead and you
+get a console window on the desktop **on every 5-minute tick** — which is
+exactly the popup complaint in the triage section below. That is why the wrapper
+exists; it was added on 2026-08-29 and this snippet went on recommending the
+popup form regardless, which is how a fixed problem stayed unfixed on the box.
+
+If you already registered the direct-PowerShell form, repoint it in place rather
+than deleting and recreating (that keeps the schedule and run history):
+
+```powershell
+schtasks /Change /TN "AI-Backends-Healthcheck" `
+  /TR "wscript.exe \"C:\path\to\conductor\ops\home-server\healthcheck-hidden.vbs\""
+```
+
+Do **not** "fix" the popup by switching the task to *Run whether user is logged
+on or not* without checking the log afterwards. That does make windows
+structurally impossible (session 0 has no desktop), but pm2's daemon is
+**per-user**, and a task running under an account that does not own the daemon
+gets an empty `pm2 jlist` and logs `WATCHDOG BLIND` while ComfyUI dies
+unattended — the 2026-08-27 incident, recorded under "Why you cannot just have a
+service fix this for you" below. If you do change the logon type, keep `/RU` on
+the *same* user and confirm the next tick still lists the apps:
+
+```powershell
+Get-Content logs\healthcheck.log -Tail 5
+```
+
+A line reading `tick as <you> - pm2 apps: comfyui, ...` means it still sees the
+daemon. `pm2 apps: NONE VISIBLE` means it does not, and the popup fix has
+silently cost you the watchdog.
 
 ### Email alerts on restart
 
@@ -601,6 +637,71 @@ python scripts/drain_failed_art_backlog.py --live
 
 It renders a canary batch first and refuses to drain if the host is still
 broken, so it is safe to run before you are sure the mount is fixed.
+
+### Triage: two cmd windows pop up every 3-5 minutes (2026-09-19)
+
+**Symptom.** Silas, 2026-09-19: *"I'm still getting two cmd popups about every
+3-5 minutes."* Confirmed burst at 05:26.
+
+**Start here — one command, no waiting.** The watchdog writes a timestamped
+heartbeat line on *every* tick, so the cheapest possible test is whether the
+bursts and the ticks are the same events:
+
+```powershell
+Get-Content logs\healthcheck.log -Tail 40 | Select-String "tick as"
+```
+
+Compare those timestamps against the times you saw windows. **If a tick lines up
+with each burst, the watchdog is the source and you are done diagnosing** — go
+to the fix below. Note that `schtasks /SC MINUTE /MO 5` anchors its cadence to
+the minute the task was *created*, not to :00, so a genuine 5-minute tick
+legitimately lands on times like 05:01/05:06/.../05:26. A burst at 05:26 is
+consistent with the tick; it does not rule it out for not being on a multiple of
+five.
+
+If the ticks do **not** line up, the popups are something else — most likely
+ComfyUI relaunching itself through the venv redirector, which is a separate open
+question with its own instrument (`watch-comfy-spawn.ps1`). The redirector is
+two processes, a stub plus the re-exec'd base interpreter, so it can also account
+for windows arriving in pairs.
+
+**Why two windows, not one.** Each tick can create several console processes, and
+a console process whose parent has no console of its own gets a brand new,
+visible one:
+
+| Per tick | What it is |
+|---|---|
+| `powershell.exe` | the task itself, if registered as `/TR "powershell ... -File healthcheck.ps1"` |
+| `powershell.exe` | the `Start-Job` child that bounds `pm2 jlist` (a second process, not a thread) |
+| `cmd.exe` | `pm2` is `pm2.cmd`, a batch file, so every `pm2` call is a `cmd.exe` |
+| `node.exe` | the `pm2-jlist-snapshot.js` projection |
+
+**Fix.** Register the task through `healthcheck-hidden.vbs` rather than
+`powershell.exe` — see "Optional: health watchdog" above for the exact
+`schtasks /Change` command and the `WATCHDOG BLIND` caveat about *not* reaching
+for "run whether user is logged on or not" instead. The wrapper hides the whole
+tree in one place, because the children inherit the hidden console.
+
+**If the windows persist after repointing the task**, the popups are coming from
+the watchdog's *children* rather than from the task's own window, and the fix is
+in `healthcheck.ps1` (give the `Start-Job`/`pm2.cmd`/`node.exe` calls an explicit
+windowless launch). Prove it before changing the watchdog's process handling:
+that code is bounded on purpose, and an unbounded rewrite of it wedged this
+watchdog for days once already.
+
+**Naming the culprit exactly**, when the log correlation above is not conclusive:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\watch-window-spawn.ps1 -Minutes 15
+```
+
+Run it **elevated**. It dumps the scheduled task's actual registration first
+(which on its own resolves the common case), then records every new console
+window with the full parent chain that owned it. It keys on `conhost.exe`
+starts — on Windows 10/11 one new visible console is one new `conhost.exe`, so a
+popup is not inferred, it is observed — and it reports `SessionID`, since only
+session 1+ can put a window on the desktop. Command lines in its log are
+redacted (AGENTS.md hard rule 15); it is still your call what you paste back.
 
 ### Triage: the ComfyUI console keeps reappearing, and art jobs fail (2026-09-02 incident)
 
