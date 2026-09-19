@@ -15294,3 +15294,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A task note listing five things (thumbnails, indexed filters, incremental hashing, bounded concurrency, resumable scans) was not one task -- two of the five (indexed filters, bounded concurrency) were already done or a small addition, and two more (real thumbnails, resumable scans) are genuinely separate, larger design surfaces (an image-resizing pipeline; persisted scan-cursor state). Landing the one clearly-scoped, testable core (incremental size/mtime caching) and splitting the rest into two named follow-on tasks (t-029, t-030) kept this a same-session, first-pass close instead of a half-finished multi-part PR. Also: vue-tsc caught a real nullable-field bug (ArchiveEntry.fileSize/fileMtime are Int?/DateTime? for pre-t-003 rows) that a hand-review of the Prisma schema before writing the cache-loader would have caught first -- worth checking a model's actual nullability before assuming a field is always populated."
+- date: 2026-09-19
+  project: art-archive
+  task: t-023
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: quality
+  lesson: "Reviewer rejected pass 1 for a static contract-verifier regex whose source-order assumption (UNMATCHED before evidence.name/evidence.hash) did not match formatOutcome()'s real build order (name -> hash -> weight -> UNMATCHED), even though the runtime output was already correct -- a reminder that a new regex-based contract check needs to be verified against the actual source it's asserting on, not just against the expected rendered string. The retry's one-line regex fix (matching the real order) landed clean on pass 2."

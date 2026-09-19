@@ -711,7 +711,7 @@ tasks:
   - id: t-023
     milestone: m2
     title: "Extend t-022's runnable entrypoint to report resource-match candidates per file"
-    status: review
+    status: done
     owner: worker
     passes: 1
     stakes: reversible
@@ -730,10 +730,15 @@ tasks:
       same branch.
 
       Retry addressed pass-1 CI rejection by aligning the static unmatched-evidence verifier with formatOutcome() source order on kind_robots PR #2869.
+
+      Retry (pass 2) fixed the verifier regex exactly per retry_context (evidence.name ->
+      evidence.hash -> UNMATCHED source order). All 46 CI checks green on kind_robots#2869;
+      merged to main (327853b).
     claimed_by: openai-scheduled-2026-09-19T081900Z-art-archive-t023-a12
     claimed_at: '2026-09-19T08:19:00Z'
-    updated: '2026-09-19T08:21:00Z'
-    retry_context: 'pass 1 failed (quality): kind_robots#2869 (art-archive/t-023, resource-match reporting) fails CI on its current head -- the "Contract verifiers" job, specifically the new "reports unmatched embedded evidence" check in utils/scripts/verifyImportArtArchive.mjs. That checks regex /UNMATCHED[\s\S]*?evidence\.name[\s\S]*?evidence\.hash/ requires the literal "UNMATCHED" to appear in importArtArchive.ts BEFORE evidence.name/evidence.hash, but formatOutcome()s actual source order is evidence.name -> evidence.hash -> evidence.weight -> the "UNMATCHED" string (built into parts[] first, then returned as `${label}: UNMATCHED ${parts.join('' '')}` last). Do differently: fix the new verifier regex to match the real source order (e.g. /evidence\.name[\s\S]*?evidence\.hash[\s\S]*?UNMATCHED/) -- the runtime output is already correct ("<label>: UNMATCHED name=... hash=..."), only the static source-order check is wrong. Re-run npm run test:art-archive-import-cli locally before pushing.'
+    updated: '2026-09-19T08:28:32Z'
+    retry_context: null
+    implementation_pr: 'silasfelinus/kind_robots#2869'
 
   - id: t-024
     milestone: m2
@@ -900,3 +905,27 @@ tasks:
       persisted state) and only build real checkpoint/cursor tracking if
       that measurement shows the walk itself, not the hashing, is the actual
       bottleneck at scale.
+
+  - id: t-031
+    milestone: m2
+    title: "Surface t-023's resource-match reporting in the t-024 admin import endpoint"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-023
+    note: >-
+      Kaizen from t-023 (kind_robots#2869): the CLI entrypoint
+      (utils/scripts/importArtArchive.ts) now runs matchArchiveResources()
+      per file and prints checkpoint/LoRA candidates and unmatched evidence
+      to the console, but the admin-gated endpoint from t-024
+      (server/api/admin/art-archive/import.post.ts) calls
+      importArchiveImporter.ts's importArchiveScan() directly and never
+      touches the matcher at all -- an admin using the endpoint (the whole
+      point of t-024: reconciling without shell access) gets zero
+      resource-match visibility. Extend importArchiveScan() (or add a
+      thin wrapper) to also run matchArchiveResources() per file and
+      include a per-file match summary (candidates + confidence/evidence,
+      unmatched evidence) in the JSON response/summary object, mirroring
+      what the CLI already reports, so Silas can see match quality via the
+      endpoint before t-007 starts applying anything automatically.
