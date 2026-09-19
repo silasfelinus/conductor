@@ -488,7 +488,7 @@ tasks:
   - id: t-023
     milestone: m5
     title: "Soft-gate drilling on comprehension and add the Mandarin point ledger"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -520,6 +520,32 @@ tasks:
       recalling a lapsed card earns a lot. Deliberately NOT in scope: daily streaks, daily
       point targets, notifications, or any nudge mechanic -- Silas ruled those out by name in
       the reopening request ("insistent and focused on interactions, notifications, nudges").
+
+      DONE 2026-09-19. Shipped the SOFT gate (cards whose lesson has been read sort to the
+      front of the study queue; unread cards sort to the back and carry a 'Learn this one
+      first' prompt, but Reveal answer stays live and the partition is a no-op for a learner
+      with no completed lessons, so a fresh account never faces an empty deck) and the point
+      ledger. server/utils/mandarinPoints.ts is pure and owns all the arithmetic: a lesson
+      read through pays 10 once per card ever (re-completion is idempotent and pays nothing);
+      a recall pays base(rating) x dueFactor x lapseFactor x maturityFactor, with hard > good
+      > easy because effortful recall is where the learning is, and 'again' paying 0 with
+      nothing ever deducted. dueFactor is the anti-grinding rule -- a review is scored against
+      how much of its scheduled interval actually elapsed, computed from the card's state
+      BEFORE the upsert, so re-drilling an easy card pays the 1-point floor while the same
+      card actually due pays full value, and a late review caps at 1 rather than rewarding
+      neglect. Schema is additive and per-domain (MandarinLessonProgress, MandarinPointEvent
+      append-only ledger, MandarinLearnerProfile summary), all on the plain userId ownership
+      scalar: the 'user upgrade' Silas asked about is deliberately NOT a sixth balance column
+      on User alongside questPoints/karma/mana/tokens/earnedTokens. Streaks, daily targets and
+      nudges were ruled out by name and MandarinLearnerProfile carries no streak or last-
+      active field on purpose. Verified: vue-tsc exit 0; new test:mandarin-points self-test
+      wired into contract-tests.yml covering the grinding exploit, the lapsed-card payoff, the
+      neglect cap and clock-skew edges; Replay migrations on MariaDB green in CI against a
+      real database; schema-migration-parity, no-prisma-json-cast and migration-drift-check
+      all green; layout contract holds. NOT verified: no migration applied to any live
+      database from the session, and no live points round trip exercised.
+    updated: '2026-09-19T12:44:59Z'
+    implementation_pr: 'silasfelinus/kind_robots#2881'
 
   - id: t-024
     milestone: m5
