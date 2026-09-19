@@ -87,6 +87,17 @@ if ($env:COMFY_ORPHAN_GRACE_MINUTES) {
     [int]::TryParse($env:COMFY_ORPHAN_GRACE_MINUTES, [ref]$orphanGraceMinutes) | Out-Null
 }
 
+# How long a freshly started engine gets to finish booting before a failed
+# health probe is read as "hung". pm2 reports an app 'online' within seconds of
+# spawning it, but ComfyUI does not bind its port until every custom node has
+# loaded. On this box that is minutes, not seconds, so the probe budget alone
+# cannot tell "still booting" from "wedged" - and the difference matters,
+# because restarting a booting engine starts the boot over.
+$engineStartupGraceMinutes = 5
+if ($env:ENGINE_STARTUP_GRACE_MINUTES) {
+    [int]::TryParse($env:ENGINE_STARTUP_GRACE_MINUTES, [ref]$engineStartupGraceMinutes) | Out-Null
+}
+
 # The interpreter pm2 launches the engine with (ecosystem.config.js
 # COMFY_BASE_PYTHON). Used to recognise our own engine when the command line
 # carries only a relative 'main.py' - see Invoke-PortReclaim.
@@ -1101,6 +1112,39 @@ foreach ($t in $targets) {
     }
 
     if (-not $ok) {
+        # A young engine is BOOTING, not hung.
+        #
+        # 2026-09-19: this watchdog was repaired after 11 days dead and
+        # immediately drove ComfyUI into a crash loop. pm2 reports 'online'
+        # within seconds of spawning the process, and the check above only
+        # skips non-online states, so the probe ran against an engine that had
+        # not finished starting. ComfyUI took 167 SECONDS to come up that day
+        # (14:11:32 start, ComfyUI-Manager's "All startup tasks have been
+        # completed" at 14:14:19) against a budget of 20s plus a 60s retry.
+        #
+        # The restart that follows does not rescue a hung engine, it kills a
+        # booting one and starts the boot over - and the loop sustains itself:
+        # pm2's restart counter climbed 779 -> 794 in the 35 minutes after the
+        # repair, every restart re-ran ~60 custom nodes (each spawning a
+        # console on the desktop, which is how Silas noticed), and two engines
+        # racing port 8188 meant whichever lost exited and was restarted again.
+        #
+        # A genuinely crash-looping engine is always young and so is always
+        # spared here. That is correct: restarting a crash-looping process does
+        # not help, and the CRASH LOOP detection above already owns that case
+        # and alerts on it.
+        $engineAgeMinutes = $null
+        if ($pm2Pid) {
+            $engineProc = Get-CimInstance Win32_Process -Filter "ProcessId = $pm2Pid" -ErrorAction SilentlyContinue
+            if ($engineProc -and $engineProc.CreationDate) {
+                $engineAgeMinutes = ((Get-Date) - $engineProc.CreationDate).TotalMinutes
+            }
+        }
+        if ($null -ne $engineAgeMinutes -and $engineAgeMinutes -lt $engineStartupGraceMinutes) {
+            Write-Log "$($t.Name): probe failed, but pm2's engine (pid $pm2Pid) is only $([math]::Round($engineAgeMinutes,1)) min old - inside the $engineStartupGraceMinutes-min startup grace, so it is still booting rather than hung; probing next tick"
+            continue
+        }
+
         Write-Log "$($t.Name): health probe failed ($($t.Url)) - restarting via pm2"
         Restart-Supervised $t.Name
 
