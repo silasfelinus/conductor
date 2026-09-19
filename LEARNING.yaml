@@ -15330,3 +15330,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Reviewed and merged another session's stalled work (REVIEWING marker 46+ minutes past its 20-minute TTL, PR untouched since): the task's original premise (an integration check against COMFY workflow construction) did not match the actual code path, and the Worker correctly pivoted to testing the real risk (a JSON storage round trip) instead of building a test for a code path that doesn't exist -- worth trusting a Worker's documented investigation over a task's original wording when the two conflict, provided the PR explains why. Separately: the Worker's own kaizen task and this session's own concurrent kaizen task both independently claimed the same next_free_task_id (t-033) because each was computed against a different stale view of origin/main -- a real collision, caught only because merging the second PR surfaced a git conflict at the same file location, not by the id-reuse detector alone (it validates the final merged state, not concurrent claims in flight). Resolved by keeping both entries and renumbering the later one to t-034 rather than dropping either."
+- date: 2026-09-19
+  project: art-archive
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The task note assumed full-size archive images already rendered and only thumbnails were missing ('the admin browse endpoint already returns a thumbnailPath field, but it just falls back to the full-size ArtImage.path'). Reading the actual serving path (nuxt.config.ts, server/api, Dockerfile) showed nothing ever served raw archive bytes over HTTP at all -- ArtImage.path/ArchiveEntry.relativePath for an archive row is only a filesystem path relative to the private, non-web-served PRIVATE_PATH root, so both the thumbnail AND full-size <img> bindings were dead links before this task. Worth checking a task note's stated premise against the actual code path before implementing narrowly to it -- a byte-serving route turned out to be the real prerequisite, not an assumption safe to inherit."

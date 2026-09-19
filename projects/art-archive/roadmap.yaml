@@ -1047,3 +1047,21 @@ tasks:
       -- "Confirm archive-preset ArtJobs are safe to always tag engine:
       'A1111'" -- from the same t-027/t-016 investigation. Both are kept;
       this one moved to the next free id rather than either being dropped.)
+
+  - id: t-035
+    milestone: m5
+    title: "Add a medium-sized cached preview for the archive detail panel"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-029
+    note: >-
+      Kaizen from t-029 (kind_robots#2875): the admin detail panel's larger
+      preview always requests the full-size original via
+      entries/[id]/file.get.ts, which could be slow on first paint for a
+      very large source file. Add a "medium" cached variant (~1200px,
+      reusing artArchiveThumbnails.ts's same dot-prefixed cache-folder
+      pattern and mtime-based invalidation) and serve it from the detail
+      panel instead of the untouched original, if large originals turn out
+      to be common in the imported archive.
