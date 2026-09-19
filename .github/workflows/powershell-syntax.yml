@@ -1,0 +1,38 @@
+# Parse every ops/home-server/*.ps1 with a real PowerShell parser.
+#
+# The render box's watchdog silently did nothing from 2026-09-08 to 2026-09-19
+# because healthcheck.ps1 had a parse error (`"$name: ..."` reads as a
+# drive-qualified variable). A parse error disables the WHOLE file, and no
+# Linux-hosted check can see it -- the guards in tests/ assert on source text,
+# and that file was valid ASCII and perfectly balanced. It just did not parse.
+#
+# windows-latest costs 2x Linux minutes, so this is paths-filtered: it runs
+# only when a .ps1 here, or this workflow, actually changes.
+name: PowerShell syntax
+
+on:
+  push:
+    paths:
+      - 'ops/home-server/**.ps1'
+      - '.github/workflows/powershell-syntax.yml'
+  pull_request:
+    paths:
+      - 'ops/home-server/**.ps1'
+      - '.github/workflows/powershell-syntax.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  parse:
+    name: Parse ops/home-server PowerShell
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse every .ps1 with Windows PowerShell 5.1
+        # `shell: powershell` is Windows PowerShell 5.1, which is what the
+        # render box runs. `pwsh` would be PowerShell 7 and can accept syntax
+        # 5.1 rejects, which would let the exact class of bug through again.
+        shell: powershell
+        run: .\ops\home-server\Test-PowerShellSyntax.ps1
