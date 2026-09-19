@@ -509,7 +509,7 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Queue additional or replacement ArtJobs from imported images with editable provenance"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -526,9 +526,17 @@ tasks:
       satisfying the 'no removal until verified' requirement by construction. Verified
       locally: new unit test (5 assertions), vue-tsc, eslint, disabled-affordances/kr-class-
       coverage/layout-contract all clean. Opened kind_robots#2868.
+
+      Merged kind_robots#2868 (squash c70c0f0). All 54 CI checks green, mergeable_state clean.
+      buildArchiveEnqueuePayload() + POST /api/admin/art-archive/entries/[id]/enqueue queue a
+      durable ArtJob (A1111) from an imported entry's stored prompt/settings plus a chosen
+      ArchiveActionPreset; the endpoint never touches the entry's file/isActive state,
+      satisfying the no-premature-removal requirement by construction. Wired into the curation
+      board's preset buttons.
     claimed_by: claude-2026-09-19T063500Z-art-archive-t016-a1
     claimed_at: '2026-09-19T06:31:38Z'
-    updated: '2026-09-19T06:40:50Z'
+    updated: '2026-09-19T06:50:50Z'
+    implementation_pr: 'silasfelinus/kind_robots#2868'
 
   - id: t-017
     milestone: m5
@@ -789,3 +797,21 @@ tasks:
       krea2), so t-015's curation board (or any future "apply preset"
       endpoint) has a real signal if the flat-payload merge and the
       graph-building step ever drift apart.
+
+  - id: t-028
+    milestone: m4
+    title: "Surface queued preset-job status inline in the curation board"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-016
+    note: >-
+      Kaizen from t-016 (kind_robots#2868): applyPresetToSelected() queues an
+      ArtJob per selected entry but the curation board never shows what
+      happened to it afterward -- an admin has to separately check the
+      general art queue (/api/art/queue/:id) to see whether a queued preset
+      job is PENDING/RUNNING/DONE/FAILED. Add a small poll (or a "recent jobs"
+      list keyed by the archiveEntryId/archivePresetId tags already written
+      onto the payload) so the board itself reflects job status, once real
+      usage shows which actionTypes admins actually reach for.
