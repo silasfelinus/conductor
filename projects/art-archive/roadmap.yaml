@@ -475,7 +475,7 @@ tasks:
   - id: t-015
     milestone: m4
     title: "Build the drag/drop curation board with preset modifier targets"
-    status: review
+    status: done
     owner: worker
     passes: 1
     stakes: reversible
@@ -496,10 +496,15 @@ tasks:
       kind_robots#2866. status: ready, passes: 1, retry_context set below.
 
       Retry addresses pass-1 disabled-affordance rejection: batch controls now appear only when a selection exists, and loading remains the only disabled state for live batch actions. Existing PR #2866 updated on its worker branch.
+
+      Retry addressed pass-1 rejection (verifyDisabledAffordances): Clear button now uses v-if
+      instead of :disabled. Reviewer re-verified all 48 checks green, mergeable_state clean,
+      diff matches the specified fix. Merged kind_robots#2866 (squash 6228ade).
     claimed_by: openai-scheduled-2026-09-19T061614Z-art-archive-t015-a12
     claimed_at: '2026-09-19T06:16:14Z'
-    updated: '2026-09-19T06:19:00Z'
+    updated: '2026-09-19T06:29:37Z'
     retry_context: 'pass 1 failed (quality): kind_robots#2866''s disabled-affordance contract fails -- pages/admin/art-archive.vue:30''s curation-board ''Clear'' button uses :disabled="!archive.selectedCount" instead of v-if="archive.selectedCount". This is a standing repo rule (Silas, 2026-08-10: we don''t need to see an option if it isn''t pertinent) enforced by verifyDisabledAffordances.ts, and the button has no subject with zero selected. Do differently: replace :disabled="!archive.selectedCount" with v-if="archive.selectedCount" on that button (matching the pattern already used correctly elsewhere in the file, e.g. the per-image rating Clear button which has no such guard because it always has a subject); run npm run test:disabled-affordances locally before pushing the retry.'
+    implementation_pr: 'silasfelinus/kind_robots#2866'
 
   - id: t-016
     milestone: m4
