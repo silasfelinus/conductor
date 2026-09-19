@@ -2591,7 +2591,7 @@ tasks:
 - id: t-112
   milestone: m6
   title: Replace Vue-private prompt-context discovery with an explicit EntityArtManager identity contract
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
   owner: worker
@@ -2607,9 +2607,41 @@ tasks:
     EntityArtManager identity attributes, and preserve the existing prompt/slot behavior.
 
     Prefer the explicit EntityArtManager DOM identity contract before legacy Vue-private component discovery while preserving workspace-project and selected-scenario fallbacks.
+
+    2026-09-19: Merged kind_robots#2898 (worker/kind-robots-t-112-openai-scheduled-2026-09-19T212030Z-kind-robots-t112-a11).
+    Diff verified against exact stated base: +4/-4, one file (plugins/entity-art-prompt-suggest.client.ts),
+    reorders managerContext() fallback precedence so the explicit DOM identity contract
+    (managerContextFromPage/WorkspaceProject/SelectedScenario) runs before the legacy
+    managerContextFromVue introspection, which now sits last as compatibility-only. All 46
+    CI checks green before merge. Kaizen: add a source-contract assertion pinning that
+    ordering.
+
+    Correction: filed as kind-robots/t-113 (AGENTS.md's kaizen-on-merge rule requires a
+    filed task, not a deferral).
   claimed_by: openai-scheduled-2026-09-19T212030Z-kind-robots-t112-a11
   claimed_at: '2026-09-19T21:20:30Z'
-  updated: '2026-09-19T21:25:00Z'
+  updated: '2026-09-19T21:29:32Z'
+  implementation_pr: 'silasfelinus/kind_robots#2898'
+
+- id: t-113
+  milestone: m6
+  title: Add a source-contract assertion pinning that entity-art managerContext() checks the explicit DOM identity path before managerContextFromVue
+  status: ready
+  gate_human: false
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: >-
+    Kaizen from kind-robots/t-112 (kind_robots#2898): the PR reordered
+    plugins/entity-art-prompt-suggest.client.ts's managerContext() fallback chain so the
+    explicit DOM identity contract (managerContextFromPage/WorkspaceProject/
+    SelectedScenario) runs before the legacy managerContextFromVue private-property
+    introspection, which is now compatibility-only and last. Nothing currently pins that
+    ordering in source, so a future refactor could silently re-promote the private Vue
+    hook without any test catching it. Add a focused assertion (in
+    verifyEntityArtPromptSuggest.ts or a sibling contract test) that the explicit path's
+    source position precedes managerContextFromVue's, per the PR's own suggested follow-up.
+  updated: '2026-09-19T21:35:00Z'
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
