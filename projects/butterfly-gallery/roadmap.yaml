@@ -991,7 +991,7 @@ tasks:
   - id: t-030
     milestone: m5
     title: "Audit other admin-only listing endpoints for the same admin-privilege-without-mature-opt-in gap fixed in t-023"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1004,9 +1004,17 @@ tasks:
       (ArtImage, ArchiveEntry, and similar) and confirm each one applies the same
       viewerShowsMature (or visibilityWhere/canViewWithMaturity) gate, not just an
       admin check.
+
+      Merged kind_robots#2863: audited every server/api/admin/**/*.get.ts route; found and
+      fixed the same admin-privilege-without-mature-opt-in gap on the archive entry detail
+      route (entries/[id].get.ts), which returned ArtImage/ArtCollection mature metadata
+      behind admin auth alone. No other admin GET route touches mature/ArtImage models;
+      mutation routes (rate/quarantine/restore/collections/move) already select only narrow
+      response fields, no leak found there. vue-tsc/eslint/prettier clean.
     claimed_by: conductor-agent-20260919-t030
     claimed_at: '2026-09-19T03:50:34Z'
-    updated: '2026-09-19T03:50:34Z'
+    updated: '2026-09-19T04:01:45Z'
+    implementation_pr: 'silasfelinus/kind_robots#2863'
 
   - id: t-031
     milestone: m4
