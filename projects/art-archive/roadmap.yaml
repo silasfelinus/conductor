@@ -898,8 +898,8 @@ tasks:
   - id: t-029
     milestone: m5
     title: "Generate real thumbnails for archive-sourced images"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-018
@@ -918,6 +918,9 @@ tasks:
       written. A large legacy archive's grid view is the actual pain point
       this fixes -- full-size images in a grid of dozens/hundreds of
       thumbnails is the "unacceptable" case t-018's own note named.
+    claimed_by: claude-scheduled-20260919T102924Z-artarchive-t029
+    claimed_at: '2026-09-19T10:29:25Z'
+    updated: '2026-09-19T10:29:25Z'
 
   - id: t-030
     milestone: m5
