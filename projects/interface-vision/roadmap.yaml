@@ -1855,7 +1855,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: "Polish every reachable Kind Robots surface page-by-page"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   recurring: true
@@ -1912,9 +1912,12 @@ tasks:
     Screenshot-driven Themes follow-up: the gallery retained themeStore.showCustom and edit-form state after the old add-theme/theme-manager UI was retired, but nothing in the live page rendered that state. Restored a live Theme Creator using the existing store/API paths and added a persistent Creator toggle to the current Theme Gallery. Shared-theme Edit now opens the same creator. The creator supports color editing, name/vibe/tagline/scheme, public/apply-after-save toggles, randomize/reset, preview, create/update, and a live palette sample without replacing the gallery layout Silas said already looks good.
 
     Merged silasfelinus/kind_robots#2900 as 555a79d1fc756cbca27387293eeba072c71bf470 from exact head fe8a292af8e63e8b0e3a69831492db99882e218f. Restored the Theme Creator as a collapsible panel in the existing Theme Gallery, with a persistent Creator toggle and the existing shared-theme Edit action opening the same editor. The creator uses the surviving themeStore/API paths for color editing, metadata, public/apply-after-save toggles, randomize/reset, preview, create/update, and live palette preview. All 47 exact-head PR workflow runs completed successfully, including TypeScript Type Check, Layout Contract, Schema Migration Parity, and Contract Tests; the augmented Achievement/Theme creator contract passed inside Contract Tests. Production is self-hosted and was not deployed by this session. Return the recurring visual-polish task to ready for the next front-end feedback slice.
-  updated: '2026-09-19T22:20:00Z'
+  updated: '2026-09-19T22:30:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2899'
   approved_by_human: true
+  owner: worker
+  claimed_by: 2026-09-19T223000Z-interface-vision-t105-giving-container-7c2f
+  claimed_at: '2026-09-19T22:30:00Z'
 
 - id: t-106
   milestone: m6
