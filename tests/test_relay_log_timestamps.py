@@ -140,7 +140,9 @@ def test_log_line_is_one_readable_local_time(monkeypatch):
     (ecosystem.config.js, time:false), so this is the only stamp on the line --
     which is why it has to carry seconds: a claim and its submit are seconds
     apart, and minute granularity would collapse them."""
-    for module, source_tag in ((relay, "relay"), (lora, "lora-import")):
+    # The lora agent's log tag became "model-import" in lora-ingestion/t-009 when the
+    # watched-import lane grew past LoRAs. lora_import_agent.py is the source of truth.
+    for module, source_tag in ((relay, "relay"), (lora, "model-import")):
         lines = []
         monkeypatch.setattr("builtins.print", lambda msg, **kw: lines.append(msg))
         module.log("hello world")
