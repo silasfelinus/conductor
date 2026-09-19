@@ -1032,8 +1032,8 @@ tasks:
   - id: t-034
     milestone: m4
     title: "Persist archive-preset actionType on the ArtJob row (or its payload) independent of the preset row"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-028
@@ -1053,6 +1053,9 @@ tasks:
       -- "Confirm archive-preset ArtJobs are safe to always tag engine:
       'A1111'" -- from the same t-027/t-016 investigation. Both are kept;
       this one moved to the next free id rather than either being dropped.)
+    claimed_by: claude-scheduled-20260919T152947Z-art-archive-t034
+    claimed_at: '2026-09-19T15:47:21Z'
+    updated: '2026-09-19T15:47:21Z'
 
   - id: t-035
     milestone: m5
