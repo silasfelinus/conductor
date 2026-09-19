@@ -1032,7 +1032,7 @@ tasks:
   - id: t-034
     milestone: m4
     title: "Persist archive-preset actionType on the ArtJob row (or its payload) independent of the preset row"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1053,9 +1053,16 @@ tasks:
       -- "Confirm archive-preset ArtJobs are safe to always tag engine:
       'A1111'" -- from the same t-027/t-016 investigation. Both are kept;
       this one moved to the next free id rather than either being dropped.)
+
+      Merged kind_robots#2887 (squash b6751ee). All 48 checks green (Contract verifiers,
+      TypeScript, layout-contract, GitGuardian included; full local npm run test:contracts-db-
+      free -- 364/364 -- also verified before push). actionType now tagged directly on the
+      ArtJob payload in buildArchiveEnqueuePayload.ts, surfaced by
+      pickLatestArchiveEntryJobs.ts, and threaded through stores/artArchiveStore.ts's
+      ArchiveEntryJobStatus type.
     claimed_by: claude-scheduled-20260919T152947Z-art-archive-t034
     claimed_at: '2026-09-19T15:47:21Z'
-    updated: '2026-09-19T15:47:42Z'
+    updated: '2026-09-19T15:52:46Z'
     implementation_pr: 'silasfelinus/kind_robots#2887'
 
   - id: t-035
@@ -1149,3 +1156,21 @@ tasks:
       t-031 import endpoint this task already targets. Scope now covers three call sites, not
       two.
     updated: '2026-09-19T15:30:04Z'
+
+  - id: t-038
+    milestone: m4
+    title: "Surface actionType on the admin curation board's job-status badge"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-034
+    note: >-
+      Kaizen from t-034 (kind_robots#2887): actionType is now tagged durably
+      on the ArtJob payload and returned by GET
+      /api/admin/art-archive/entries/jobs (ArchiveEntryJobStatus.actionType),
+      but pages/admin/art-archive.vue's job-status badge still only shows
+      "Job {{status}}" -- it never displays what action the job actually
+      ran. Surface actionType in the badge (e.g. its title/tooltip, or
+      appended to the label), now that it is durably available without a
+      live preset lookup.
