@@ -1855,7 +1855,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: "Polish every reachable Kind Robots surface page-by-page"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -1922,13 +1922,12 @@ tasks:
     Merged silasfelinus/kind_robots#2902 as 2c19ab951fcef49ebb3992e2ed3a5aaf144f6180 from exact head 779c00332c3b3381ced9cdce58e4cc826c048712. Replaced the customer-visible Giftshop scaffold with aligned live-offer cards for tokens, AMF direct/add-on giving, supporter plans, and Mermaids; surfaced the canonical print/shirt/sticker/mug catalog with product-specific storefront-art mockups; retained the existing featured-print cart path while sourcing the real catalog price; removed staging/demo copy; and made the Cart Nest content-height with container-responsive desktop columns. Physical shirt/sticker/mug checkout remains intentionally gated because digital-storefront/t-040 still needs a Printful account/API key and real variant ids. All 48 exact-head workflow runs completed successfully, including Giftshop Checkout Contract, TypeScript Type Check, Layout Contract, Project Architecture Contract, Schema Migration Parity, Facet Catalog Contract, and the full Contract Tests suite. Production is self-hosted and was not deployed by this session. Return the recurring visual-polish task to ready for the next screenshot-driven slice.
 
     Screenshot-directed Music Mentor polish: the page's form and intro now sit on a single opaque raised surface instead of rendering text directly over the illustrated background. Tightened the intro to one sentence, made local-audio privacy explicit in a compact shield callout, shortened the capability caveat, converted the setup flow into three plain-language steps, shortened feedback labels and help text, and changed the primary CTA from "Analyze my medley" to "Analyze recording." Updated the channel metadata copy to match. No audio-analysis, mana, upload, store, or API behavior changed.
-  updated: '2026-09-19T23:15:00Z'
+
+    Merged silasfelinus/kind_robots#2904 as 0aca9d6bd2e9772f203317388fb4818a1c29cb32 from exact head dcb5d6f46e63e32a4f1e364d7355951d689dbf2c. Screenshot-directed Music Mentor polish moved the intro and form onto one opaque raised surface so the illustrated background no longer interferes with readability; tightened the intro, privacy and capability copy; simplified setup into three plain-language steps; shortened feedback labels and help text; and changed the CTA to "Analyze recording." No audio-analysis, mana, upload, store, or API behavior changed. All 47 exact-head workflow runs completed successfully, including TypeScript Type Check, Layout Contract, MDC Scroll Ownership, Project Architecture Contract, Schema Migration Parity, Facet Catalog Contract, and the full Contract Tests suite. Production is self-hosted and was not deployed by this session. Return the recurring visual-polish task to ready for the next screenshot-driven slice.
+  updated: '2026-09-19T23:25:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2899'
   approved_by_human: true
 
-  owner: worker
-  claimed_by: 2026-09-19T224200Z-interface-vision-t105-music-mentor-4f7c
-  claimed_at: '2026-09-19T23:10:00Z'
 - id: t-106
   milestone: m6
   title: "FOR SILAS: visual beta-readiness acceptance of the complete front end"
