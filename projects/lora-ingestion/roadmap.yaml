@@ -196,3 +196,20 @@ tasks:
   claimed_by: 2026-08-25T003700Z-lora-ingestion-t-008-9c71
   claimed_at: '2026-08-25T00:37:00Z'
   updated: '2026-08-25T00:55:00Z'
+
+- id: t-009
+  milestone: m2
+  title: Generalize model discovery/download and watched imports beyond LoRA-only routing
+  status: claimed
+  owner: worker
+  stakes: reversible
+  passes: 0
+  claimed_by: 2026-09-19T104700Z-lora-ingestion-t009-7f3c
+  claimed_at: '2026-09-19T10:47:00Z'
+  updated: '2026-09-19T10:47:00Z'
+  note: >-
+    Silas-directed 2026-09-19: audit the downloader against the full Resource model taxonomy,
+    preserve automatic Lora/import ingestion, add equivalent checkpoint/import ingestion,
+    and stop routing every non-CHECKPOINT download into the LoRA directory. Keep Civitai
+    discovery aligned with the Resource types it can actually supply and with ComfyUI's
+    canonical model directories.
