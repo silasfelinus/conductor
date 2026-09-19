@@ -1138,3 +1138,10 @@ tasks:
       tallying) into one shared pure helper both callers use, so the CLI and
       the admin endpoint cannot silently drift in what counts as "matched"
       or "unmatched" as the matcher evolves.
+
+      t-032's dry-run endpoint (kind_robots#2886, merged) adds a THIRD independent inline
+      aggregation of matchArchiveResources() output
+      (confidenceCounts/filesWithMatchEvidence/unmatchedModels), alongside the CLI and the
+      t-031 import endpoint this task already targets. Scope now covers three call sites, not
+      two.
+    updated: '2026-09-19T15:30:04Z'
