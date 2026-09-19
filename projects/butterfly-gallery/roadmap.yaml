@@ -671,9 +671,9 @@ tasks:
   - id: t-021
     milestone: m5
     title: "Add batch selection and batch-action confirmation"
-    status: review
+    status: ready
     owner: worker
-    passes: 0
+    passes: 1
     stakes: reversible
     depends_on:
       - t-007
@@ -706,10 +706,18 @@ tasks:
       rather than done.
 
       Added the final t-021 UI slice: filtered-queue multi-select, batch preset application, explicit confirmation for destructive/generation-backed batches, and visible partial-failure results with failed items retained for retry.
+
+      Reviewer rejection (pass 1, quality): kind_robots#2857's layout-contract check fails --
+      components/art/ButterflyGalleryBatchControls.vue:20 uses sm:grid-cols-6, a viewport-
+      breakpoint grid-cols gate on a shared (non-page) component, which the viewport-grid rule
+      forbids. Reproduced identically reading the branch directly, not a CI flake. Full detail
+      and fix pattern posted on kind_robots#2857. status: ready, passes: 1, retry_context set
+      below.
     claimed_by: openai-scheduled-2026-09-19T001719Z-butterfly-gallery-t021-a11
     claimed_at: '2026-09-19T00:17:19Z'
-    updated: '2026-09-19T00:21:00Z'
-    implementation_pr: 'silasfelinus/kind_robots#2855'
+    updated: '2026-09-19T00:31:08Z'
+    implementation_pr: 'silasfelinus/kind_robots#2857'
+    retry_context: 'pass 1 failed (quality): kind_robots#2857''s layout-contract check fails -- components/art/ButterflyGalleryBatchControls.vue:20 uses sm:grid-cols-6, a viewport-breakpoint grid-cols gate on a shared (non-page) component, forbidden by the viewport-grid rule (a shared component can be embedded in a host narrower than its own viewport class implies -- the interface-vision t-113/t-114 regression this rule exists to catch). Reproduced identically reading the branch directly, not a CI flake. Do differently: swap to a container-width grid, e.g. grid-cols-[repeat(auto-fit,minmax(min(100%,Nrem),1fr))] per components/narrative/narrative-ingredient-picker.vue:96, tuned to this control''s thumbnail size, then run npm run test:layout-contract locally before pushing. Push the fix to the same branch/PR (#2857).'
 
   - id: t-022
     milestone: m5
