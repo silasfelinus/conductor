@@ -15361,3 +15361,18 @@ records:
   failure_category: quality
   lesson: Capability filters must derive from the same taxonomy as the scanner/downloader; a separate
     hand-curated UI list silently fell behind Krea, Flux.2, ZImage, Qwen, and other supported families.
+- date: 2026-09-19
+  project: art-archive
+  task: t-036
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A tracked counter (ArchiveScanResult.cacheHitCount) that is only ever printed as a raw
+    number is easy to skim past when it silently regresses; pairing it with a percentage
+    of the total in the same log line makes a partial cache-engagement regression visible
+    without a dedicated benchmark. Also confirmed the two reporting paths' denominators
+    (scan.files.length vs result.scannedFileCount) were actually equal before reusing the
+    same formatting in both, rather than assuming.
