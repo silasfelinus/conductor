@@ -15389,3 +15389,45 @@ records:
     from a preset id) -- reading the actual server route source before submitting caught this before it
     caused a rejected request; worth documenting the full required-field contract once rather than
     re-deriving it from source each time (see t-034).
+- date: 2026-09-19
+  project: butterfly-gallery
+  task: t-034
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A docs-only PR handoff can still fail "Validate Worker PR handoff" on a single missing
+    heading (here, "### Notes for reviewer") even when every other required section is present and
+    the content itself is correct -- the Reviewer edited the PR body directly to add the missing
+    heading rather than kicking the whole task back to the Worker for a retry, since it was a
+    template gap, not a quality/scope problem with the diff.
+- date: 2026-09-19
+  project: butterfly-gallery
+  task: t-016
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: needs-human
+  failure_category: actionable
+  lesson: A task's original approach can go stale without its own status changing -- t-016 said to
+    build the runway using the procedural Butterfly Scouts DOM/CSS renderer, but Silas's same-day
+    update to ANIMATION-SHOT-LIST.md switched the canonical runway approach to AI-video (LTX/WAN)
+    and explicitly forbade that substitution. Caught by reading the production motion contract
+    directly rather than trusting the task note; flagged needs-human (soft) instead of building the
+    now-wrong thing or silently reinterpreting scope across three related tasks (t-016/t-031/t-033).
+- date: 2026-09-19
+  project: art-archive
+  task: t-035
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: The task was written as conditional ("if large originals turn out to be common"), but this
+    sandbox has no way to measure real archive file sizes (private archive root lives on Silas's
+    Unraid host, not reachable here, and ArchiveEntry stores no fileSize field). Built the medium
+    cache unconditionally instead of blocking on an unmeasurable premise -- it mirrors the existing
+    thumbnail-cache architecture exactly, is low-risk/reversible, and never hurts even if large
+    originals turn out to be rare. Worth considering whether ArchiveEntry should record fileSize at
+    scan time so a future session actually could measure this.
