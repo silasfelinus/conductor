@@ -864,8 +864,8 @@ tasks:
   - id: t-028
     milestone: m3
     title: "Wire the generated room/frame/pile/bins/window art into the stage once rendered"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >
@@ -882,6 +882,9 @@ tasks:
       status via GET /api/art/queue/:id (or the admin queue UI) before
       starting; if any job is still PENDING/RUNNING, wire only the ones that
       are DONE and leave a note for the rest.
+    claimed_by: claude-scheduled-20260919T013146Z-bg-t028
+    claimed_at: '2026-09-19T01:31:47Z'
+    updated: '2026-09-19T01:31:47Z'
 
   - id: t-029
     milestone: m5
