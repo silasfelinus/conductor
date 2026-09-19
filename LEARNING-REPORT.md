@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-19T19:33:11Z
+Generated: 2026-09-19T19:44:02Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1071**
-- Outcomes: blocked: 18, cancelled: 1, done: 1052
+- Closed tasks recorded: **1072**
+- Outcomes: blocked: 18, cancelled: 1, done: 1053
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -45,7 +45,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kind-robots | 65 | 98% |
 | kindrobots-unraid | 9 | 100% |
 | lora-ingestion | 2 | 100% |
-| mandarin-tutor | 11 | 100% |
+| mandarin-tutor | 12 | 100% |
 | media-watchlist | 12 | 100% |
 | mermaids-of-venice | 3 | 100% |
 | model-builder | 85 | 100% |
@@ -71,13 +71,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1054 | 99% |
+| software | 1055 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
-| quality | 36 |
+| quality | 37 |
 | transient | 17 |
 | actionable | 17 |
 | scope | 3 |
@@ -86,13 +86,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - project `coat-dance` — 11% success over 9 closed tasks; aim the next kaizen task here
 - kind `content` — 47% success over 17 closed tasks; aim the next kaizen task here
-- failure category `quality` — 36 occurrences; look for the shared cause across its records
+- failure category `quality` — 37 occurrences; look for the shared cause across its records
 - failure category `transient` — 17 occurrences; look for the shared cause across its records
 - failure category `actionable` — 17 occurrences; look for the shared cause across its records
 - failure category `scope` — 3 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-09-19 `mandarin-tutor/t-024` — kind_robots#2891 merged (all 49 checks green) but the roadmap task sat at status: review on main -- state reconciliation caught it via a direct PR read (state showing merged/closed) rather than trusting the roadmap's own claimed_by/status snapshot. Session-start sweeps should verify a review-status task's actual PR state, not just its roadmap fields, when select_role.py's own GitHub reachability is degraded.
 - 2026-09-19 `art-archive/t-037` — Three independent inline aggregations of the same matchArchiveResources() output (CLI, admin import endpoint, admin dry-run endpoint) had already drifted in shape (confidenceCounts only tracked by one of the three) before any bug appeared -- extracting the aggregation into one pure helper the moment a second caller duplicates it is cheaper than waiting for a third to also duplicate it and only then noticing the drift.
 - 2026-09-19 `art-archive/t-038` — Once a field is durably tagged on a payload and surfaced by its read endpoint (t-034), wiring it into a display badge is a one-line template change -- the bulk of the work was already done by the field's original plumbing, not the UI surface.
 - 2026-09-19 `art-archive/t-034` — Tagging a new durable field onto an existing payload builder (mirroring how archiveEntryId/archivePresetId were already tagged) is a clean, low-risk change when every consumer already reads the payload generically -- no schema migration needed, just thread the field through the read path and the frontend type.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-19 `butterfly-gallery/t-016` — A task's original approach can go stale without its own status changing -- t-016 said to build the runway using the procedural Butterfly Scouts DOM/CSS renderer, but Silas's same-day update to ANIMATION-SHOT-LIST.md switched the canonical runway approach to AI-video (LTX/WAN) and explicitly forbade that substitution. Caught by reading the production motion contract directly rather than trusting the task note; flagged needs-human (soft) instead of building the now-wrong thing or silently reinterpreting scope across three related tasks (t-016/t-031/t-033).
 - 2026-09-19 `butterfly-gallery/t-034` — A docs-only PR handoff can still fail "Validate Worker PR handoff" on a single missing heading (here, "### Notes for reviewer") even when every other required section is present and the content itself is correct -- the Reviewer edited the PR body directly to add the missing heading rather than kicking the whole task back to the Worker for a retry, since it was a template gap, not a quality/scope problem with the diff.
 - 2026-09-19 `butterfly-gallery/t-014` — The shot list/task-note description of the video-enqueue payload omitted that renderScale is required for engine ltx/wan independent of presetId (the server never derives dimensional defaults from a preset id) -- reading the actual server route source before submitting caught this before it caused a rejected request; worth documenting the full required-field contract once rather than re-deriving it from source each time (see t-034).
-- 2026-09-19 `art-archive/t-036` — A tracked counter (ArchiveScanResult.cacheHitCount) that is only ever printed as a raw number is easy to skim past when it silently regresses; pairing it with a percentage of the total in the same log line makes a partial cache-engagement regression visible without a dedicated benchmark. Also confirmed the two reporting paths' denominators (scan.files.length vs result.scannedFileCount) were actually equal before reusing the same formatting in both, rather than assuming.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-19T19:33:11Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-19T19:44:02Z_
