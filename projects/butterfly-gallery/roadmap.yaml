@@ -438,7 +438,7 @@ tasks:
   - id: t-014
     milestone: m4
     title: "Implement and catalog Gallery motion actors against final production geometry"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -483,9 +483,31 @@ tasks:
       occlude motion cleanly; the left butterfly loop remains independently
       composable; the robot reads correctly while partially hidden by the dynamic
       pile; reduced-motion/visibility gating remains required when integrated.
+
+      Submitted the 7 image-to-video ArtJobs the animation shot list calls for (5
+      upper-runway carry passes, 1 left-foreground butterfly loop, 1 lower-right
+      robot loop) at priority 0 via POST /api/art/enqueue, using the real
+      production PNGs (runway-background.png, gallery-butterfly-start.png,
+      robot-sift-start.png) fetched over HTTPS as first-frame references. All 7
+      confirmed PENDING via GET /api/art/queue/:id immediately after submission:
+      job ids 28739 (runway string tow), 28740 (runway team carry), 28741 (runway
+      solo struggler), 28742 (runway clean cross), 28743 (runway rare fumble),
+      28744 (left butterfly loop), 28745 (lower-right robot loop). Full catalog
+      in projects/butterfly-gallery/ANIMATION-JOB-CATALOG.md. Prior superseded
+      jobs 28725-28732 were not touched or revived.
+
+      Splitting per AGENTS.md's scope-decomposition move: this task's own title
+      ("Implement and catalog") is fully satisfied by the submission + catalog
+      above, but actually splicing the finished clips into the Vue page cannot
+      happen until these async priority-0 renders complete behind the existing
+      backlog. t-033 (new task) carries the original note's acceptance criteria
+      forward unchanged and owns the Vue integration once all 7 jobs report DONE.
+      This note's original "Acceptance" criteria above apply to t-033, not to
+      this now-closed task.
     claimed_by: claude-scheduled-20260919T123845Z-butterflygallery-t014
     claimed_at: '2026-09-19T12:38:46Z'
-    updated: '2026-09-19T12:38:46Z'
+    updated: '2026-09-19T12:44:00Z'
+    implementation_pr: 'silasfelinus/conductor#4748'
 
   - id: t-015
     milestone: m4
