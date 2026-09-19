@@ -557,19 +557,35 @@ tasks:
   - id: t-018
     milestone: m5
     title: "Harden large-library performance with pagination, thumbnails, incremental hashing, and bounded scans"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-010
-    note: >
+    note: >-
       Assume the archive becomes large enough that full-image grids and
       re-hashing every byte on every request are unacceptable. Use thumbnails,
       indexed filters, incremental size/mtime checks before hashes, bounded
       concurrency, and resumable scans.
+
+      Implemented the landable core: scanArchiveRoot() now accepts an optional knownFiles
+      cache (relativePath -> {contentHash, fileSize, fileMtimeMs, metadata}) and skips re-
+      reading/re-hashing a file whose current stat (size+mtime) matches the cache exactly;
+      loadKnownArchiveFiles() builds this from the live ArchiveEntry ledger and
+      reconcileArtArchive.ts (the scheduled/repeated-scan CLI) now uses it, reporting a new
+      "served from cache" count. File processing is also bounded-concurrent (default 8)
+      instead of fully sequential. Verified: vue-tsc clean, eslint clean, test:art-archive-
+      scanner (3 new assertions: cache-hit trust, cache-miss on stat mismatch, concurrency-vs-
+      sequential result parity), test:art-archive-reconciler, and test:art-archive-reconcile-
+      cli (contract regexes updated to match the new source) all pass. Pagination for the
+      admin browse endpoint already existed (t-009); thumbnails and resumable scans are real,
+      larger, separate design surfaces (an image-resizing pipeline/storage convention;
+      persisted scan-cursor state) -- deferring both to follow-on tasks rather than a same-
+      pass extension. PR: silasfelinus/kind_robots (branch worker/art-archive-t018-claude-
+      scheduled-2026-09-19T0740Z).
     claimed_by: claude-scheduled-2026-09-19T0740Z-art-archive-t018
     claimed_at: '2026-09-19T07:39:41Z'
-    updated: '2026-09-19T07:39:41Z'
+    updated: '2026-09-19T07:46:58Z'
 
   - id: t-019
     milestone: m5
