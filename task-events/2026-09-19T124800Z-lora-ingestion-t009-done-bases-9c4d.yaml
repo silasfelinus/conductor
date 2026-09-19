@@ -1,0 +1,23 @@
+version: 1
+project: lora-ingestion
+task: t-009
+operation: done
+owner: worker
+session: 2026-09-19T122600Z-lora-ingestion-t009-bases-9c4d
+updated: '2026-09-19T12:48:00Z'
+verify_pr: silasfelinus/kind_robots#2882
+note: >-
+  Completed after the original downloader/import pair landed as kind_robots#2877 and
+  conductor#4737, then Silas spotted the remaining base-filter drift. kind_robots#2882
+  replaced the five hardcoded Discover base choices with the shared catalog-aligned
+  taxonomy and added CI coverage against both model scanners. All 47 checks passed,
+  including TypeScript and the Model download taxonomy contract.
+learning:
+  kind: software
+  stakes: reversible
+  passes: 1
+  failure_category: quality
+  lesson: >-
+    Capability filters must derive from the same taxonomy as the scanner/downloader;
+    a separate hand-curated UI list silently fell behind Krea, Flux.2, ZImage, Qwen,
+    and other supported families.
