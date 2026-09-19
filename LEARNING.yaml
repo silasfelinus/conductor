@@ -15122,3 +15122,20 @@ records:
     verify pixel alignment pre-merge (this repo's post-Vercel-migration
     state) -- flag it as a documented follow-up rather than guessing at
     border-image slice values blind.
+- date: 2026-09-19
+  project: butterfly-gallery
+  task: t-026
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Once a fixture provider and a real-backed provider both implement the
+    same read contract (ButterflyGalleryFeedProvider here), a plain
+    Object.keys().sort() shape-equality check across representative
+    field-presence variants (nulls, missing optional fields, nested objects)
+    is enough to catch a future field drop/rename on either side -- no need
+    for a heavier structural-diff library. Comparing sorted key lists rather
+    than deep-equal values keeps the test focused on shape parity, not
+    incidental value differences between fixture and real data.
