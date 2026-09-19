@@ -781,21 +781,21 @@ tasks:
   - id: t-023
     milestone: m5
     title: "Harden privacy, maturity, and navigation boundaries"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on:
       - t-002
       - t-022
-    note: >
-      Verify the Plan project placement does not make private ArtImages public.
-      Require admin authorization plus mature-content permission for the gallery
-      data surface. Test direct-route access, API access, thumbnails, metadata,
-      and Resource/collection links for no private-content bleed.
+    note: |-
+      Verify the Plan project placement does not make private ArtImages public. Require admin authorization plus mature-content permission for the gallery data surface. Test direct-route access, API access, thumbnails, metadata, and Resource/collection links for no private-content bleed.
+
+
+      Hardened the Art Archive entries feed used by Butterfly Gallery so admin privilege alone cannot expose mature/private archive metadata: the endpoint now also requires the account's server-authoritative mature-content opt-in via viewerShowsMature. Direct non-admin access remains blocked by requireAdminApiUser; failed maturity checks return 403 before any archive rows or ArtImage metadata are queried.
     claimed_by: openai-scheduled-2026-09-19T032006Z-butterfly-gallery-t023-a11
     claimed_at: '2026-09-19T03:20:06Z'
-    updated: '2026-09-19T03:20:06Z'
+    updated: '2026-09-19T03:23:50Z'
 
   - id: t-024
     milestone: m5

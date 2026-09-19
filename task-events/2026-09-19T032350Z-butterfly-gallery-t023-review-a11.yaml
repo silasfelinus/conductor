@@ -1,9 +1,0 @@
-version: 1
-project: butterfly-gallery
-task: t-023
-operation: review
-owner: worker
-session: openai-scheduled-2026-09-19T032006Z-butterfly-gallery-t023-a11
-updated: '2026-09-19T03:23:50Z'
-note: >-
-  Hardened the Art Archive entries feed used by Butterfly Gallery so admin privilege alone cannot expose mature/private archive metadata: the endpoint now also requires the account's server-authoritative mature-content opt-in via viewerShowsMature. Direct non-admin access remains blocked by requireAdminApiUser; failed maturity checks return 403 before any archive rows or ArtImage metadata are queried.
