@@ -15191,3 +15191,21 @@ records:
     ~480px). Citing what was already correct, with file/line evidence,
     kept the diff scoped to the two genuine gaps instead of re-touching
     working code.
+- date: 2026-09-19
+  project: butterfly-gallery
+  task: t-030
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A kaizen task that says "audit other endpoints for the same pattern" is
+    worth doing literally and narrowly: grepping every server/api/admin
+    GET route for ArtImage/mature-flagged model usage found exactly one
+    real match (the entries/[id].get.ts detail route, a natural companion
+    to the listing endpoint already fixed) in a few minutes, versus a much
+    larger effort auditing every route by hand. Worth checking mutation
+    routes' response shape too, not just GET routes -- a PATCH/POST that
+    echoes back more fields than it needs is the same leak in a different
+    shape.
