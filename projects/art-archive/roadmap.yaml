@@ -905,3 +905,27 @@ tasks:
       persisted state) and only build real checkpoint/cursor tracking if
       that measurement shows the walk itself, not the hashing, is the actual
       bottleneck at scale.
+
+  - id: t-031
+    milestone: m2
+    title: "Surface t-023's resource-match reporting in the t-024 admin import endpoint"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-023
+    note: >-
+      Kaizen from t-023 (kind_robots#2869): the CLI entrypoint
+      (utils/scripts/importArtArchive.ts) now runs matchArchiveResources()
+      per file and prints checkpoint/LoRA candidates and unmatched evidence
+      to the console, but the admin-gated endpoint from t-024
+      (server/api/admin/art-archive/import.post.ts) calls
+      importArchiveImporter.ts's importArchiveScan() directly and never
+      touches the matcher at all -- an admin using the endpoint (the whole
+      point of t-024: reconciling without shell access) gets zero
+      resource-match visibility. Extend importArchiveScan() (or add a
+      thin wrapper) to also run matchArchiveResources() per file and
+      include a per-file match summary (candidates + confidence/evidence,
+      unmatched evidence) in the JSON response/summary object, mirroring
+      what the CLI already reports, so Silas can see match quality via the
+      endpoint before t-007 starts applying anything automatically.
