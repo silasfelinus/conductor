@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-19T20:27:27Z
+Generated: 2026-09-19T20:34:44Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1074**
-- Outcomes: blocked: 18, cancelled: 2, done: 1054
+- Closed tasks recorded: **1075**
+- Outcomes: blocked: 18, cancelled: 2, done: 1055
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -44,7 +44,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kind-economy | 10 | 100% |
 | kind-robots | 65 | 98% |
 | kindrobots-unraid | 9 | 100% |
-| lora-ingestion | 2 | 100% |
+| lora-ingestion | 3 | 100% |
 | mandarin-tutor | 14 | 93% |
 | media-watchlist | 12 | 100% |
 | mermaids-of-venice | 3 | 100% |
@@ -71,13 +71,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1057 | 99% |
+| software | 1058 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
-| quality | 37 |
+| quality | 38 |
 | transient | 17 |
 | actionable | 17 |
 | scope | 3 |
@@ -86,13 +86,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - project `coat-dance` — 11% success over 9 closed tasks; aim the next kaizen task here
 - kind `content` — 47% success over 17 closed tasks; aim the next kaizen task here
-- failure category `quality` — 37 occurrences; look for the shared cause across its records
+- failure category `quality` — 38 occurrences; look for the shared cause across its records
 - failure category `transient` — 17 occurrences; look for the shared cause across its records
 - failure category `actionable` — 17 occurrences; look for the shared cause across its records
 - failure category `scope` — 3 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-09-19 `lora-ingestion/t-009` — Pass 1 (conductor PR #4737) had 3 real Python test failures from an unfinished lora-import->model-import/checkpoints-path rename plus a handoff-template violation; pass 2 (kind_robots#2894) additionally collapsed the Civitai base-model dropdown from an exhaustive version list into 14 supported/other families per Silas's explicit feedback ('I don't need 10 different versions of SD') -- future UI filters over an upstream enum should model the family a user picks, not the transport values, from the start.
 - 2026-09-19 `mandarin-tutor/t-025` — An optional feature Silas did not select should close as a no-op rather than remain waiting on a dependency that will eventually satisfy and trigger WAITING_WITH_SATISFIED_DEPS.
 - 2026-09-19 `mandarin-tutor/t-026` — t-022's buildMandarinLesson() already computed a teachability: 'structural'|'vocabulary' field, which made the coverage-gap audit almost free -- the real design decision was keeping vocabulary-only lessons out of the issues/byCode tally entirely (a separate coverage section) so an honest, source-faithful lesson is never mistaken for a bug or fails --strict.
 - 2026-09-19 `mandarin-tutor/t-024` — kind_robots#2891 merged (all 49 checks green) but the roadmap task sat at status: review on main -- state reconciliation caught it via a direct PR read (state showing merged/closed) rather than trusting the roadmap's own claimed_by/status snapshot. Session-start sweeps should verify a review-status task's actual PR state, not just its roadmap fields, when select_role.py's own GitHub reachability is degraded.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-19 `art-archive/t-032` — A third caller (this dry-run endpoint) reimplemented the same matchArchiveResources() aggregation t-037 was already filed to consolidate between the CLI and the t-031 import endpoint -- widen an existing consolidation task's scope instead of filing a near-duplicate kaizen task when a new PR reintroduces the same pattern.
 - 2026-09-19 `art-archive/t-031` — Extending an existing admin endpoint to surface an already-built pure helper (matchArchiveResources, from t-023) is a clean, single-file, additive change when the helper's signature is reused as-is -- no new abstraction needed for a reporting-only slice.
 - 2026-09-19 `art-archive/t-035` — The task was written as conditional ("if large originals turn out to be common"), but this sandbox has no way to measure real archive file sizes (private archive root lives on Silas's Unraid host, not reachable here, and ArchiveEntry stores no fileSize field). Built the medium cache unconditionally instead of blocking on an unmeasurable premise -- it mirrors the existing thumbnail-cache architecture exactly, is low-risk/reversible, and never hurts even if large originals turn out to be rare. Worth considering whether ArchiveEntry should record fileSize at scan time so a future session actually could measure this.
-- 2026-09-19 `butterfly-gallery/t-016` — A task's original approach can go stale without its own status changing -- t-016 said to build the runway using the procedural Butterfly Scouts DOM/CSS renderer, but Silas's same-day update to ANIMATION-SHOT-LIST.md switched the canonical runway approach to AI-video (LTX/WAN) and explicitly forbade that substitution. Caught by reading the production motion contract directly rather than trusting the task note; flagged needs-human (soft) instead of building the now-wrong thing or silently reinterpreting scope across three related tasks (t-016/t-031/t-033).
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-19T20:27:27Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-19T20:34:44Z_
