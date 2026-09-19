@@ -546,7 +546,7 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Implement ambient peekaboo butterfly traffic"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -1043,7 +1043,7 @@ tasks:
   - id: t-031
     milestone: m4
     title: "Gate the animation-slot elements' future motion assets on visibility/prefers-reduced-motion, not just CSS class toggles"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -1146,8 +1146,8 @@ tasks:
   - id: t-034
     milestone: m4
     title: "Document the video-enqueue payload's required renderScale field in ANIMATION-SHOT-LIST.md or a shared submission helper"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -1168,3 +1168,6 @@ tasks:
       pattern but for the video engine) so future video-job submissions
       don't have to re-derive the payload shape from server source each
       time.
+    claimed_by: openai-scheduled-2026-09-19T131712Z-butterfly-gallery-t034-a11
+    claimed_at: '2026-09-19T13:17:12Z'
+    updated: '2026-09-19T13:17:12Z'
