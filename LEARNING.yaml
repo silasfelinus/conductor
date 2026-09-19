@@ -15440,3 +15440,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Extending an existing admin endpoint to surface an already-built pure helper (matchArchiveResources, from t-023) is a clean, single-file, additive change when the helper's signature is reused as-is -- no new abstraction needed for a reporting-only slice."
+- date: 2026-09-19
+  project: art-archive
+  task: t-032
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A third caller (this dry-run endpoint) reimplemented the same matchArchiveResources() aggregation t-037 was already filed to consolidate between the CLI and the t-031 import endpoint -- widen an existing consolidation task's scope instead of filing a near-duplicate kaizen task when a new PR reintroduces the same pattern."
