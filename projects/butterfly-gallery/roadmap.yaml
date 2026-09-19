@@ -872,11 +872,11 @@ tasks:
   - id: t-028
     milestone: m3
     title: "Wire the generated room/frame/pile/bins/window art into the stage once rendered"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >
+    note: >-
       Follow-on from t-011 (kind_robots#2840): 5 ArtJobs (ids 28711-28715,
       priority 200, projectSlug butterfly-gallery) were queued for the static
       room/window/frame/bins/pile assets, targeting public/images/butterfly-gallery/
@@ -890,9 +890,14 @@ tasks:
       status via GET /api/art/queue/:id (or the admin queue UI) before
       starting; if any job is still PENDING/RUNNING, wire only the ones that
       are DONE and leave a note for the rest.
+
+      Worker (Claude, scheduled conductor run): implemented, verified (vue-tsc, eslint,
+      prettier, layout-contract, kr-class-coverage all clean), and opened kind_robots#2859.
+      Setting status: review.
     claimed_by: claude-scheduled-20260919T013146Z-bg-t028
     claimed_at: '2026-09-19T01:31:47Z'
-    updated: '2026-09-19T01:31:47Z'
+    updated: '2026-09-19T01:40:42Z'
+    implementation_pr: 'silasfelinus/kind_robots#2859'
 
   - id: t-029
     milestone: m5
