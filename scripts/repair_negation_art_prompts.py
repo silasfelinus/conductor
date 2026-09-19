@@ -50,13 +50,34 @@ Usage:
   python scripts/repair_negation_art_prompts.py                  # audit only
   python scripts/repair_negation_art_prompts.py --show 20        # with diffs
   python scripts/repair_negation_art_prompts.py --apply          # PATCH prompts
-  python scripts/repair_negation_art_prompts.py --apply --render 40
-  python scripts/repair_negation_art_prompts.py --kind reward --apply
+  python scripts/repair_negation_art_prompts.py --apply --render # ...and re-render
+  python scripts/repair_negation_art_prompts.py --apply --render --limit 40
+  python scripts/repair_negation_art_prompts.py --kind reward --apply --render
 
-Rendering is throttled on purpose: the shared ArtJob queue completed 8 jobs in
-the 24h before this was written, with 232 already pending. `--render` takes an
-explicit count and there is no "all". Re-renders use preserveOriginal so the
-old image stays in the record's art history.
+`--render` queues EVERY repaired record by default. An earlier draft capped it,
+on a misread of /api/art/queue/stats: its `windowThroughput` groups jobs by
+CREATION time, so "DONE: 8" means eight of the jobs created today have finished,
+not that the renderer managed eight all day. Measured from completion
+timestamps the relay turns one around every 3-4 minutes -- ~120 on the day this
+was written -- so a full pass is a couple of days of queue time, and a queue
+left half empty between batches is slower than one kept full. Silas,
+2026-09-19: "do not cap renders, that's just silly. we should be filling the
+queue so it doesn't sit idle between generations." `--limit` still exists for
+a deliberate smoke test.
+
+Priority is the lever that makes this safe to bulk-queue (see
+kind_robots utils/artJobPriority.ts). The relay claims by `priority DESC, id
+ASC`. Interactive work -- a human clicking Generate and waiting -- enters at
+100, and a repair must not outrank that. The stale bulk lanes (Facet catalog,
+daily-dream coverage) sit at 0 and below. So repairs land in between, high
+enough to keep the renderer busy ahead of a four-day-old backlog and low
+enough that a person waiting on a redo still wins:
+
+  reward   60   the cards an owner actually looks at
+  others   40
+
+Re-renders use preserveOriginal, so the old image stays in the record's art
+history rather than being destroyed.
 
 Environment:
   KR_API_TOKEN   required for --apply / --render
@@ -260,6 +281,13 @@ KINDS: dict[str, dict[str, str]] = {
 # subtler (a desk lamp in a fantasy scene, a painted caption on a quirk card).
 ORDER = ("reward", "facet", "character", "scenario", "dream", "bot", "achievement", "resource")
 
+# Between /api/art/enqueue's interactive default (100) and the bulk lanes (0 and
+# below). See the note in the module docstring: a repair should keep the relay
+# busy ahead of a four-day-old Facet-catalog backlog without ever making a human
+# who just clicked Generate wait behind 1,156 of them.
+RENDER_PRIORITY = {"reward": 60}
+DEFAULT_RENDER_PRIORITY = 40
+
 
 def http_json(method: str, url: str, body: Any = None, timeout: int = 300):
     data = json.dumps(body).encode() if body is not None else None
@@ -331,7 +359,8 @@ def patch_prompt(kind: str, row_id: int, prompt: str) -> bool:
     return True
 
 
-def enqueue_render(kind: str, row: dict[str, Any], prompt: str) -> Optional[int]:
+def enqueue_render(kind: str, row: dict[str, Any], prompt: str,
+                   priority: Optional[int] = None) -> Optional[int]:
     body = {
         "engine": "krea2",
         "promptString": prompt,
@@ -340,6 +369,9 @@ def enqueue_render(kind: str, row: dict[str, Any], prompt: str) -> Optional[int]
         "isPublic": bool(row.get("isPublic", True)),
         "isMature": bool(row.get("isMature", False)),
         "designer": "negation-repair",
+        "priority": RENDER_PRIORITY.get(kind, DEFAULT_RENDER_PRIORITY)
+        if priority is None
+        else priority,
         "entityArt": {
             "entityType": kind,
             "entityId": row["id"],
@@ -363,8 +395,12 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
     parser.add_argument("--kind", choices=ORDER, action="append",
                         help="limit to one entity kind (repeatable)")
     parser.add_argument("--apply", action="store_true", help="PATCH the repaired prompts")
-    parser.add_argument("--render", type=int, default=0, metavar="N",
-                        help="also enqueue up to N re-renders, in ORDER priority")
+    parser.add_argument("--render", action="store_true",
+                        help="also enqueue a re-render for every repaired record")
+    parser.add_argument("--limit", type=int, default=0, metavar="N",
+                        help="cap --render at N jobs (default: no cap)")
+    parser.add_argument("--priority", type=int, default=None, metavar="P",
+                        help="override the per-kind render priority (-1000..1000)")
     parser.add_argument("--show", type=int, default=0, metavar="N",
                         help="print N before/after pairs")
     args = parser.parse_args(list(argv) if argv is not None else None)
@@ -433,7 +469,7 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
         return 1 if findings else 0
 
     writable = [f for f in findings if not f["remaining"]]
-    patched = failed = 0
+    patched = failed = refused = 0
     for finding in writable:
         if patch_prompt(finding["kind"], finding["row"]["id"], finding["after"]):
             patched += 1
@@ -442,22 +478,26 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
     print(f"\nPatched {patched} prompt(s); {failed} failed; {len(unclean)} skipped.")
 
     if args.render:
+        cap = args.limit or len(writable)
         rendered = 0
         for kind in ORDER:
-            if rendered >= args.render:
-                break
             for finding in writable:
-                if rendered >= args.render:
+                if rendered >= cap:
                     break
                 if finding["kind"] != kind:
                     continue
-                job = enqueue_render(kind, finding["row"], finding["after"])
+                job = enqueue_render(kind, finding["row"], finding["after"], args.priority)
                 if job:
                     rendered += 1
-                    print(f"  queued job {job} for {kind}/{finding['row']['id']} {label(finding['row'])}")
-        print(f"Enqueued {rendered} re-render(s).")
+                    if rendered % 25 == 0:
+                        print(f"  ... {rendered} queued")
+                else:
+                    refused += 1
+            if rendered >= cap:
+                break
+        print(f"Enqueued {rendered} re-render(s); {refused} refused.")
 
-    return 1 if failed else 0
+    return 1 if failed or refused else 0
 
 
 if __name__ == "__main__":
