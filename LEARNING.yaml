@@ -15224,3 +15224,20 @@ records:
     was a clean, additive, single-endpoint PR that merged with zero review
     friction. The remaining two slices stayed correctly scoped out rather than
     padding this PR.
+- date: '2026-09-19'
+  project: butterfly-gallery
+  task: t-032
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A kaizen task filed from a PR body's own suggestion, claimed and
+    implemented in the same session as the PR it came from, landed
+    cleanly: reading five sibling route files to extract their shared
+    guard shape (admin gate -> invalid-id 400 -> missing-entry 404 ->
+    mutation) before writing the contract test, then adversarially
+    verifying the test actually fails when a guard is removed, caught
+    what a superficial "checks that the routes exist" test would have
+    missed.
