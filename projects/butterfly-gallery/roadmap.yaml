@@ -546,14 +546,14 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Implement ambient peekaboo butterfly traffic"
-    status: ready
+    status: needs-human
     owner: null
     passes: 0
     stakes: reversible
     depends_on:
       - t-010
       - t-014
-    note: >
+    note: >-
       Implement the long upper runway scheduler from APPROVED-STAGE-SPEC.md
       after t-014 is released from its production-geometry hold. Reuse/extract
       the existing Butterfly Scouts DOM/CSS renderer rather than playing
@@ -564,6 +564,23 @@ tasks:
       background-area character animation. No static butterfly silhouettes or
       robots appear in the warehouse backdrop. Pause when hidden and suppress
       under reduced motion.
+
+      FOR SILAS: t-016 as written now conflicts with your own 2026-09-19 update to ANIMATION-
+      SHOT-LIST.md. t-016's note says to build the upper-runway ambient traffic using the
+      procedural Butterfly Scouts DOM/CSS renderer; the shot list you updated today says the
+      opposite -- runway butterflies must be smaller versions of the illustrated Gallery
+      butterfly (gallery-butterfly-start.png), animated via LTX/WAN/image-to-video, and
+      explicitly 'do not substitute the procedural Butterfly Scouts DOM/CSS renderer' for this
+      feature. t-033 already covers splicing the 7 rendered motion-actor clips (jobs
+      28739-28745, still PENDING as of this check) into the runway/left-loop/robot-loop slots,
+      including reduced-motion/visibility gating. TO APPROVE: pick one -- (a) close t-016 as
+      superseded by t-033 (and t-031's gating audit), or (b) narrow t-016 to just the
+      randomized clip-selection/scheduling logic across the 5 runway clips once t-033 lands,
+      and change depends_on from [t-010, t-014] to [t-033]. I did not implement or close it
+      myself since this changes task structure across three related tasks (t-016/t-031/t-033)
+      rather than being a single-task call. Did not consume a retry pass -- never claimed.
+    updated: '2026-09-19T13:37:42Z'
+    soft_gate: true
 
   - id: t-017
     milestone: m4
