@@ -1122,3 +1122,21 @@ tasks:
     claimed_at: '2026-09-19T12:40:19Z'
     updated: '2026-09-19T12:50:35Z'
     implementation_pr: 'silasfelinus/kind_robots#2883'
+
+  - id: t-037
+    milestone: m2
+    title: "Extract resource-match report aggregation into a shared pure helper for CLI and admin endpoint"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from t-031 (kind_robots#2885): the admin import endpoint
+      (server/api/admin/art-archive/import.post.ts) now computes its own
+      filesWithMatchEvidence/unmatchedModels summary counts inline, right
+      after utils/scripts/importArtArchive.ts's CLI computes the same kind of
+      summary from the same matchArchiveResources() output independently.
+      Extract the aggregation (candidate/evidence counting, unmatched-model
+      tallying) into one shared pure helper both callers use, so the CLI and
+      the admin endpoint cannot silently drift in what counts as "matched"
+      or "unmatched" as the matcher evolves.
