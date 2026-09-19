@@ -871,8 +871,8 @@ tasks:
   - id: t-028
     milestone: m4
     title: "Surface queued preset-job status inline in the curation board"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-016
@@ -885,6 +885,9 @@ tasks:
       list keyed by the archiveEntryId/archivePresetId tags already written
       onto the payload) so the board itself reflects job status, once real
       usage shows which actionTypes admins actually reach for.
+    claimed_by: claude-scheduled-20260919T093227Z-artarchive-t028-b1
+    claimed_at: '2026-09-19T09:32:27Z'
+    updated: '2026-09-19T09:32:27Z'
 
   - id: t-029
     milestone: m5
