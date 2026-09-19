@@ -37,6 +37,19 @@ Gallery butterfly, animated through LTX/WAN or the current image-to-video path.
 Do not invent dimensions or alternate backgrounds. Use the actual production
 asset/crop for the target slot as the first-frame/context image.
 
+## Video enqueue payload contract
+
+For `POST /api/art/enqueue` video jobs using `engine: ltx` or `engine: wan`, the
+caller must send the dimensional/render fields explicitly. A `presetId` does
+**not** fill them in server-side; it is descriptive metadata, not a substitute
+for the request dimensions.
+
+In particular, always supply numeric `width`, `height`, `duration`, and
+`renderScale` values derived from the actual production slot/reference being
+animated. Do not omit `renderScale` merely because the request also names a
+preset. Keep the Butterfly Gallery queue rule below unchanged: new motion jobs
+remain priority 0.
+
 ## A. Upper runway passes
 
 Use `runway-background.png` as the static scene and
