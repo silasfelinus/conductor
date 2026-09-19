@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-19T04:55:22Z
+Generated: 2026-09-19T04:59:43Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1049**
-- Outcomes: blocked: 16, cancelled: 1, done: 1032
+- Closed tasks recorded: **1050**
+- Outcomes: blocked: 17, cancelled: 1, done: 1032
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -24,7 +24,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | art-archive | 15 | 100% |
 | art-generator-connect | 3 | 100% |
 | brainstorm | 26 | 96% |
-| butterfly-gallery | 25 | 100% |
+| butterfly-gallery | 26 | 96% |
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 39 | 100% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1032 | 99% |
+| software | 1033 | 99% |
 
 ## Failure categories
 
@@ -79,7 +79,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 |---|---|
 | quality | 33 |
 | transient | 17 |
-| actionable | 15 |
+| actionable | 16 |
 | scope | 3 |
 
 ## Kaizen targets
@@ -88,11 +88,12 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - kind `content` — 47% success over 17 closed tasks; aim the next kaizen task here
 - failure category `quality` — 33 occurrences; look for the shared cause across its records
 - failure category `transient` — 17 occurrences; look for the shared cause across its records
-- failure category `actionable` — 15 occurrences; look for the shared cause across its records
+- failure category `actionable` — 16 occurrences; look for the shared cause across its records
 - failure category `scope` — 3 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-09-19 `butterfly-gallery/t-014` — A tight cluster of ArtJobs changing status within seconds of each other is at least as likely to be a deliberate administrative/human action as a queue-system glitch -- do not requeue or otherwise "correct" it without first checking for very recent out-of-band human steering beyond CONTROL.md and the task's own note. When a corrective action is needed, prefer the narrowest reversible one (a cancel-shaped action) over one whose semantics you have not read closely (DELETE removed the ArtJob rows outright rather than restoring CANCELLED status).
 - 2026-09-19 `butterfly-gallery/t-032` — A kaizen task filed from a PR body's own suggestion, claimed and implemented in the same session as the PR it came from, landed cleanly: reading five sibling route files to extract their shared guard shape (admin gate -> invalid-id 400 -> missing-entry 404 -> mutation) before writing the contract test, then adversarially verifying the test actually fails when a guard is removed, caught what a superficial "checks that the routes exist" test would have missed.
 - 2026-09-19 `butterfly-gallery/t-029` — A kaizen task that names three independent follow-on slices (setProcessed, collections, markNeedsReview) is fine to land as separate, smaller PRs one at a time rather than waiting to bundle all three -- markNeedsReview alone was a clean, additive, single-endpoint PR that merged with zero review friction. The remaining two slices stayed correctly scoped out rather than padding this PR.
 - 2026-09-19 `butterfly-gallery/t-030` — A kaizen task that says "audit other endpoints for the same pattern" is worth doing literally and narrowly: grepping every server/api/admin GET route for ArtImage/mature-flagged model usage found exactly one real match (the entries/[id].get.ts detail route, a natural companion to the listing endpoint already fixed) in a few minutes, versus a much larger effort auditing every route by hand. Worth checking mutation routes' response shape too, not just GET routes -- a PATCH/POST that echoes back more fields than it needs is the same leak in a different shape.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-19 `butterfly-gallery/t-026` — Once a fixture provider and a real-backed provider both implement the same read contract (ButterflyGalleryFeedProvider here), a plain Object.keys().sort() shape-equality check across representative field-presence variants (nulls, missing optional fields, nested objects) is enough to catch a future field drop/rename on either side -- no need for a heavier structural-diff library. Comparing sorted key lists rather than deep-equal values keeps the test focused on shape parity, not incidental value differences between fixture and real data.
 - 2026-09-19 `butterfly-gallery/t-028` — Wiring rendered ArtImage assets into placeholder CSS shapes reads cleanly when each replacement keeps the prior gradient/color as a literal CSS fallback layer (multi-background for gradients, `background: <color> url(...) center / cover no-repeat` shorthand for solid colors) rather than swapping the property outright -- a failed image load then degrades to the exact prior look with no extra code. Where a solid color carries semantic meaning (the five preset-bin variants: error/warning/accent/ success/info), `background-blend-mode: multiply` layers the art texture over the color instead of replacing it, preserving the color-coding. Border-thickness-sensitive replacements (a picture-frame graphic meant to become an actual `border-image`) are safer left as a `background` layer behind the existing CSS border when there is no PR-preview infra to verify pixel alignment pre-merge (this repo's post-Vercel-migration state) -- flag it as a documented follow-up rather than guessing at border-image slice values blind.
 - 2026-09-19 `butterfly-gallery/t-022` — A task whose note implies broad scope ("a real art-archive-backed adapter swaps in later under t-022" -- from a sibling task's note, not t-022's own) is worth deliberately re-scoping to what the task's own title actually promises (here: the feed) plus only the sub-pieces with a clean 1:1 real-endpoint mapping, rather than either inventing unreviewed infrastructure (a schema migration, an id-resolution endpoint) to cover every implied piece or silently dropping them. Filing the honest gap as its own task (t-029) kept the delivered slice verifiable and reversible. Separately: real Nuxt-runtime code (anything importing stores/utils.ts, which pulls in stores/userStore.ts's snapshotLoader.ts) cannot be statically imported by a module a plain-tsx contract test also imports -- it crashes on import.meta.glob outside Vite. Keep the Nuxt-runtime-backed implementation in its own module and install it via a client plugin (setXFeedProvider()/setXActionAdapter() at app startup) rather than wiring it as the fixture module's own default.
-- 2026-09-18 `butterfly-gallery/t-027` — When one bin/action kind in a family that's otherwise uniform (here: five of six ButterflyGalleryActionAdapter-backed bin kinds both mutate local state and persist through the adapter) silently skips the adapter call, grep the sibling switch statement (persistBinOutcome) for the same case rather than assuming a local-only mutation (applyBinOutcome's entry.matchState write) was a deliberate design choice -- it was a silent no-op instead, exactly the kind of gap a future real adapter swap (t-022) would otherwise inherit unnoticed.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-19T04:55:22Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-19T04:59:43Z_
