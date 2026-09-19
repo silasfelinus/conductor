@@ -15476,3 +15476,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Three independent inline aggregations of the same matchArchiveResources() output (CLI, admin import endpoint, admin dry-run endpoint) had already drifted in shape (confidenceCounts only tracked by one of the three) before any bug appeared -- extracting the aggregation into one pure helper the moment a second caller duplicates it is cheaper than waiting for a third to also duplicate it and only then noticing the drift."
+- date: 2026-09-19
+  project: mandarin-tutor
+  task: t-024
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: quality
+  lesson: "kind_robots#2891 merged (all 49 checks green) but the roadmap task sat at status: review on main -- state reconciliation caught it via a direct PR read (state showing merged/closed) rather than trusting the roadmap's own claimed_by/status snapshot. Session-start sweeps should verify a review-status task's actual PR state, not just its roadmap fields, when select_role.py's own GitHub reachability is degraded."
