@@ -641,7 +641,41 @@ broken, so it is safe to run before you are sure the mount is fixed.
 ### Triage: two cmd windows pop up every 3-5 minutes (2026-09-19)
 
 **Symptom.** Silas, 2026-09-19: *"I'm still getting two cmd popups about every
-3-5 minutes."* Confirmed burst at 05:26.
+3-5 minutes."* Confirmed bursts at 05:26 and 05:36.
+
+**RESOLVED 2026-09-19, and the popups were the small half of it.** Root cause
+was a PowerShell **parse error** in `healthcheck.ps1`: three `Write-Log "$name: ..."`
+lines in `Restart-Supervised`. PowerShell reads `$name:` as a scope- or
+drive-qualified variable (the `$env:PATH` / `$script:foo` syntax), so it raised
+`InvalidVariableReferenceWithDrive` and **refused to load the file at all**.
+
+A parse error fails the whole script, not one line, so the consequences were
+total and completely silent:
+
+- The watchdog did nothing from **2026-09-08 00:36 until 2026-09-19** -- 11 days
+  with ComfyUI unsupervised. Its log's last entry is a normal, *complete* run
+  (through the `render watchdog:` line), so it does not read as a crash; it just
+  stops.
+- Every 5-minute trigger still fired and still launched. Task Scheduler recorded
+  `action "wscript.exe" with return code 2147942401` -- that is
+  `HRESULT_FROM_WIN32(1)`, i.e. plain exit code 1, which is what
+  `powershell.exe -File` returns when the file will not parse.
+- `LastTaskResult: 1` alongside a healthy `NextRunTime` and `NumberOfMissedRuns: 0`.
+  The task looked perfectly scheduled the entire time.
+- **The popups were this failing run.** Registered as `powershell.exe -File ...`
+  under "Interactive only", each doomed 5-minute launch flashed a console on the
+  desktop. They were the only outward sign the watchdog was dead.
+
+Two guards were missing and now exist: `tests/test_powershell_variable_interpolation.py`
+catches `$var:` in every `.ps1` here (the existing ASCII and brace-balance guards
+could not -- the file was valid ASCII and perfectly balanced, it simply did not
+parse), and the registration snippet above now points at the `.vbs` wrapper.
+
+**The lesson worth keeping:** a silent log and a green-looking Task Scheduler
+entry are compatible with a script that has never run. `LastTaskResult` and the
+`Microsoft-Windows-TaskScheduler/Operational` event log are the fields that
+tell the truth; the sections below were written before that was understood, and
+are kept because the reasoning still applies when the cause is different.
 
 **Start here — one command, no waiting.** The watchdog writes a timestamped
 heartbeat line on *every* tick, so the cheapest possible test is whether the

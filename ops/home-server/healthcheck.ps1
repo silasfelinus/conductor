@@ -478,7 +478,7 @@ function Restart-Supervised($name) {
     # restart itself probably failed - and killing every surviving engine would
     # leave the box with none at all, which is strictly worse than an orphan.
     if (-not $newPid) {
-        Write-Log "$name: pm2 did not report a pid after the restart - skipping the orphan sweep rather than killing blind"
+        Write-Log "${name}: pm2 did not report a pid after the restart - skipping the orphan sweep rather than killing blind"
         return
     }
 
@@ -491,11 +491,11 @@ function Restart-Supervised($name) {
         if (-not $still) { continue }
         if ([string]$still.CommandLine -notmatch 'main\.py') { continue }
 
-        Write-Log "$name: pm2 restart left engine pid $oldPid alive (pm2 now reports $newPid) - force-killing the orphan"
+        Write-Log "${name}: pm2 restart left engine pid $oldPid alive (pm2 now reports $newPid) - force-killing the orphan"
         try {
             Stop-Process -Id $oldPid -Force -ErrorAction Stop
         } catch {
-            Write-Log "$name: could not kill orphaned pid $oldPid ($($_.Exception.Message))"
+            Write-Log "${name}: could not kill orphaned pid $oldPid ($($_.Exception.Message))"
         }
     }
 }
