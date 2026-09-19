@@ -1156,3 +1156,21 @@ tasks:
       t-031 import endpoint this task already targets. Scope now covers three call sites, not
       two.
     updated: '2026-09-19T15:30:04Z'
+
+  - id: t-038
+    milestone: m4
+    title: "Surface actionType on the admin curation board's job-status badge"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-034
+    note: >-
+      Kaizen from t-034 (kind_robots#2887): actionType is now tagged durably
+      on the ArtJob payload and returned by GET
+      /api/admin/art-archive/entries/jobs (ArchiveEntryJobStatus.actionType),
+      but pages/admin/art-archive.vue's job-status badge still only shows
+      "Job {{status}}" -- it never displays what action the job actually
+      ran. Surface actionType in the badge (e.g. its title/tooltip, or
+      appended to the label), now that it is durably available without a
+      live preset lookup.
