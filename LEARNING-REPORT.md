@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-19T15:51:08Z
+Generated: 2026-09-19T16:03:25Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1068**
-- Outcomes: blocked: 18, cancelled: 1, done: 1049
+- Closed tasks recorded: **1069**
+- Outcomes: blocked: 18, cancelled: 1, done: 1050
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -21,7 +21,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | animation-studio | 2 | 50% |
 | appmaker | 11 | 100% |
 | approval-portal | 2 | 0% |
-| art-archive | 29 | 100% |
+| art-archive | 30 | 100% |
 | art-generator-connect | 3 | 100% |
 | brainstorm | 26 | 96% |
 | butterfly-gallery | 29 | 93% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1051 | 99% |
+| software | 1052 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-19 `art-archive/t-034` — Tagging a new durable field onto an existing payload builder (mirroring how archiveEntryId/archivePresetId were already tagged) is a clean, low-risk change when every consumer already reads the payload generically -- no schema migration needed, just thread the field through the read path and the frontend type.
 - 2026-09-19 `art-archive/t-032` — A third caller (this dry-run endpoint) reimplemented the same matchArchiveResources() aggregation t-037 was already filed to consolidate between the CLI and the t-031 import endpoint -- widen an existing consolidation task's scope instead of filing a near-duplicate kaizen task when a new PR reintroduces the same pattern.
 - 2026-09-19 `art-archive/t-031` — Extending an existing admin endpoint to surface an already-built pure helper (matchArchiveResources, from t-023) is a clean, single-file, additive change when the helper's signature is reused as-is -- no new abstraction needed for a reporting-only slice.
 - 2026-09-19 `art-archive/t-035` — The task was written as conditional ("if large originals turn out to be common"), but this sandbox has no way to measure real archive file sizes (private archive root lives on Silas's Unraid host, not reachable here, and ArchiveEntry stores no fileSize field). Built the medium cache unconditionally instead of blocking on an unmeasurable premise -- it mirrors the existing thumbnail-cache architecture exactly, is low-risk/reversible, and never hurts even if large originals turn out to be rare. Worth considering whether ArchiveEntry should record fileSize at scan time so a future session actually could measure this.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-19 `art-archive/t-036` — A tracked counter (ArchiveScanResult.cacheHitCount) that is only ever printed as a raw number is easy to skim past when it silently regresses; pairing it with a percentage of the total in the same log line makes a partial cache-engagement regression visible without a dedicated benchmark. Also confirmed the two reporting paths' denominators (scan.files.length vs result.scannedFileCount) were actually equal before reusing the same formatting in both, rather than assuming.
 - 2026-09-19 `lora-ingestion/t-009` — Capability filters must derive from the same taxonomy as the scanner/downloader; a separate hand-curated UI list silently fell behind Krea, Flux.2, ZImage, Qwen, and other supported families.
 - 2026-09-19 `art-archive/t-030` — Before building a titled feature (persisted scan checkpoints), the Worker benchmarked the underlying assumption first and found a hidden cache-correctness bug instead (float vs truncated-integer mtime comparison defeating the existing hash cache); fixing that made the walk cheap enough that checkpoint tracking wasn't needed at all -- measure before building is cheaper than building the wrong thing.
-- 2026-09-19 `art-archive/t-029` — The task note assumed full-size archive images already rendered and only thumbnails were missing ('the admin browse endpoint already returns a thumbnailPath field, but it just falls back to the full-size ArtImage.path'). Reading the actual serving path (nuxt.config.ts, server/api, Dockerfile) showed nothing ever served raw archive bytes over HTTP at all -- ArtImage.path/ArchiveEntry.relativePath for an archive row is only a filesystem path relative to the private, non-web-served PRIVATE_PATH root, so both the thumbnail AND full-size <img> bindings were dead links before this task. Worth checking a task note's stated premise against the actual code path before implementing narrowly to it -- a byte-serving route turned out to be the real prerequisite, not an assumption safe to inherit.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-19T15:51:08Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-19T16:03:25Z_
