@@ -2586,5 +2586,23 @@ tasks:
   claimed_at: '2026-09-19T11:45:00Z'
   updated: '2026-09-19T12:08:00Z'
 
+- id: t-112
+  milestone: m6
+  title: Replace Vue-private prompt-context discovery with an explicit EntityArtManager identity contract
+  status: ready
+  gate_human: false
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: |-
+    Kaizen from kind-robots/t-111 (kind_robots#2878): prompt suggestion still tries
+    managerContextFromVue first, reading Vue's private __vueParentComponent property from
+    DOM nodes. t-111 added stable data-art-model/data-model-id/data-model-slug/data-art-subject
+    attributes so the public DOM fallback is now reliable. Follow through by making that
+    explicit identity contract the primary path for EntityArtManager prompt context and
+    reducing or removing the private-Vue dependency where it is no longer needed. Keep the
+    workspace-project and selected-scenario fallbacks for surfaces that do not render
+    EntityArtManager identity attributes, and preserve the existing prompt/slot behavior.
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
