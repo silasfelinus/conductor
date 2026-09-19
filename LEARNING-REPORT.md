@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-19T06:32:05Z
+Generated: 2026-09-19T06:41:03Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1051**
-- Outcomes: blocked: 17, cancelled: 1, done: 1033
+- Closed tasks recorded: **1052**
+- Outcomes: blocked: 17, cancelled: 1, done: 1034
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -21,7 +21,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | animation-studio | 2 | 50% |
 | appmaker | 11 | 100% |
 | approval-portal | 2 | 0% |
-| art-archive | 16 | 100% |
+| art-archive | 17 | 100% |
 | art-generator-connect | 3 | 100% |
 | brainstorm | 26 | 96% |
 | butterfly-gallery | 26 | 96% |
@@ -71,13 +71,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1034 | 99% |
+| software | 1035 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
-| quality | 33 |
+| quality | 34 |
 | transient | 17 |
 | actionable | 16 |
 | scope | 3 |
@@ -86,13 +86,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - project `coat-dance` — 11% success over 9 closed tasks; aim the next kaizen task here
 - kind `content` — 47% success over 17 closed tasks; aim the next kaizen task here
-- failure category `quality` — 33 occurrences; look for the shared cause across its records
+- failure category `quality` — 34 occurrences; look for the shared cause across its records
 - failure category `transient` — 17 occurrences; look for the shared cause across its records
 - failure category `actionable` — 16 occurrences; look for the shared cause across its records
 - failure category `scope` — 3 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-09-19 `art-archive/t-015` — Reviewer rejected pass 1 for a deterministic verifyDisabledAffordances failure (a batch-scoped Clear button used :disabled instead of v-if with no selection); the retry matched the existing correct pattern already in the same file, landed clean on the second pass, and merged as kind_robots#2866 -- a reminder that this project's PRs should run the full Contract verifiers suite locally before pushing, not just feature-scoped test scripts.
 - 2026-09-19 `art-archive/t-026` — Extracting a duplicated union-narrowing guard into one shared helper (narrowToPngMetadata) removes the exact TypeScript-compile-error class kind_robots#2824 hit, since the next module reading .a1111/.comfy can no longer re-derive the guard incorrectly by hand.
 - 2026-09-19 `butterfly-gallery/t-014` — A tight cluster of ArtJobs changing status within seconds of each other is at least as likely to be a deliberate administrative/human action as a queue-system glitch -- do not requeue or otherwise "correct" it without first checking for very recent out-of-band human steering beyond CONTROL.md and the task's own note. When a corrective action is needed, prefer the narrowest reversible one (a cancel-shaped action) over one whose semantics you have not read closely (DELETE removed the ArtJob rows outright rather than restoring CANCELLED status).
 - 2026-09-19 `butterfly-gallery/t-032` — A kaizen task filed from a PR body's own suggestion, claimed and implemented in the same session as the PR it came from, landed cleanly: reading five sibling route files to extract their shared guard shape (admin gate -> invalid-id 400 -> missing-entry 404 -> mutation) before writing the contract test, then adversarially verifying the test actually fails when a guard is removed, caught what a superficial "checks that the routes exist" test would have missed.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-19 `butterfly-gallery/t-023` — A clean first-pass security-hardening fix: gating GET /api/admin/art-archive/entries behind viewerShowsMature() (in addition to the existing requireAdminApiUser check) closed a real gap where admin privilege alone could expose mature/private archive metadata to an admin who hadn't opted into mature content. Worth checking other admin-only listing endpoints touching mature/private rows for the same "admin != opted-in-to-mature" gap.
 - 2026-09-19 `butterfly-gallery/t-021` — A layout-contract grid-cols rejection and a kr-class-coverage rejection can hide behind each other in the same CI job when it runs multiple checks sequentially: fixing the first (viewport-breakpoint grid-cols -> auto-fit/minmax) can reveal a second, unrelated violation (kr-text-black-md, an undefined size in the kr-text-black-* family) that was masked by the job failing early on the first check. Re-run the full job after a fix rather than assuming the next CI run will be clean just because the specific violation named in the rejection was addressed.
 - 2026-09-19 `butterfly-gallery/t-026` — Once a fixture provider and a real-backed provider both implement the same read contract (ButterflyGalleryFeedProvider here), a plain Object.keys().sort() shape-equality check across representative field-presence variants (nulls, missing optional fields, nested objects) is enough to catch a future field drop/rename on either side -- no need for a heavier structural-diff library. Comparing sorted key lists rather than deep-equal values keeps the test focused on shape parity, not incidental value differences between fixture and real data.
-- 2026-09-19 `butterfly-gallery/t-028` — Wiring rendered ArtImage assets into placeholder CSS shapes reads cleanly when each replacement keeps the prior gradient/color as a literal CSS fallback layer (multi-background for gradients, `background: <color> url(...) center / cover no-repeat` shorthand for solid colors) rather than swapping the property outright -- a failed image load then degrades to the exact prior look with no extra code. Where a solid color carries semantic meaning (the five preset-bin variants: error/warning/accent/ success/info), `background-blend-mode: multiply` layers the art texture over the color instead of replacing it, preserving the color-coding. Border-thickness-sensitive replacements (a picture-frame graphic meant to become an actual `border-image`) are safer left as a `background` layer behind the existing CSS border when there is no PR-preview infra to verify pixel alignment pre-merge (this repo's post-Vercel-migration state) -- flag it as a documented follow-up rather than guessing at border-image slice values blind.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-19T06:32:05Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-19T06:41:03Z_
