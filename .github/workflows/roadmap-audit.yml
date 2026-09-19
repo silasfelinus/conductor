@@ -49,6 +49,44 @@ jobs:
 
       - name: Generate portfolio audit
         run: python scripts/audit_roadmaps.py --json ROADMAP-AUDIT.json --markdown ROADMAP-AUDIT.md
+
+      # audit_roadmaps.py intentionally generates reports without exiting non-zero so
+      # scheduled audits can persist their findings. On pull requests, however, an
+      # "error" must be a merge gate; otherwise CONTROL_PRIORITY_DRIFT and similar
+      # deterministic defects can be detected here, still pass CI, merge, and only
+      # wake up the six-hour oversight email later.
+      - name: Fail pull request on structural roadmap errors
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import sys
+
+          with open("ROADMAP-AUDIT.json", encoding="utf-8") as handle:
+              report = json.load(handle)
+
+          errors = [
+              finding
+              for finding in report.get("findings", [])
+              if finding.get("severity") == "error"
+          ]
+          if errors:
+              for finding in errors:
+                  code = finding.get("code", "ROADMAP_AUDIT_ERROR")
+                  project = finding.get("project", "_global")
+                  task = finding.get("task")
+                  location = f"{project}/{task}" if task else project
+                  message = finding.get("message", "Structural roadmap audit error")
+                  print(f"::error title={code}::{location}: {message}")
+              print(
+                  f"Roadmap audit found {len(errors)} structural error(s); refusing to merge.",
+                  file=sys.stderr,
+              )
+              sys.exit(1)
+
+          print("OK: roadmap audit found 0 structural errors.")
+          PY
       - name: Persist initial audit snapshot on the audit branch
         if: github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'worker/roadmap-audit-2026-07-12'
         run: |
