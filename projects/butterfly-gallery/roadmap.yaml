@@ -722,7 +722,7 @@ tasks:
   - id: t-022
     milestone: m5
     title: "Integrate the real art-archive private image feed"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -748,15 +748,24 @@ tasks:
       in Vite-only import.meta.glob code). New contract test added and wired into CI. vue-
       tsc/eslint/prettier all clean; all existing butterfly-gallery contract tests still pass.
       silasfelinus/kind_robots#2858 open, CI pending.
+
+      Merged silasfelinus/kind_robots#2858 (squash a76e0239): real art-archive-backed feed
+      provider (admin entries API, extended additively for
+      thumbnail/mature/public/prompt/checkpoint/generationMetadata/folderCollection) plus
+      setRating/trash/restore wired to the real rate/quarantine/restore endpoints.
+      setProcessed/addToCollection/removeFromCollection/markNeedsReview remain fixture no-ops
+      pending t-029 (real persistence design). All 52 kind_robots CI checks green,
+      mergeable_state clean, additive-only API change. New contract test wired into contract-
+      tests.yml.
     claimed_by: claude-scheduled-20260919T003229Z-butterfly-gallery-t022
     claimed_at: '2026-09-19T00:32:30Z'
-    updated: '2026-09-19T00:48:31Z'
+    updated: '2026-09-19T00:56:54Z'
     implementation_pr: 'silasfelinus/kind_robots#2858'
 
   - id: t-023
     milestone: m5
     title: "Harden privacy, maturity, and navigation boundaries"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -803,7 +812,7 @@ tasks:
   - id: t-026
     milestone: m1
     title: "Add a fixture/adapter shape-parity contract for the Butterfly Gallery pile feed"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -877,7 +886,7 @@ tasks:
   - id: t-029
     milestone: m5
     title: "Real persistence for setProcessed/collections/markNeedsReview"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
