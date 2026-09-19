@@ -148,7 +148,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 50
   stakes: reversible
   note: |-
@@ -181,11 +181,30 @@ tasks:
     recurring task stuck at status: claimed after its own note already documented
     kind_robots#2813 merged clean. Re-arming to ready per the established recurring-task
     precedent; no code change.
-  updated: '2026-09-19T23:33:02Z'
+
+    Cycle (2026-09-19): audited the newer server-engine surface
+    (server/utils/storybookRuns.ts, stores/storybookRunStore.ts) per the last cycle's own
+    next-lead pointer. Found a real bug: storybookRunStore.ts's readyToResolve computed only
+    trusted the server's canEndOnDemand for endless runs; every budgeted run recomputed
+    locally from turnIndex > turnBudget, ignoring canEndOnDemand entirely -- so a budgeted
+    Taskmaster run that finished its quest early (questDone(quest) && currentChapter >
+    minTurns, server/utils/storybookRuns.ts) never surfaced its 'See your ending' button,
+    forcing the reader through padding turns after the real work was done. This violates
+    storybook-reading.vue's own documented contract ('the store's readyToResolve is the
+    server's word ... never a local guess'). Fixed the computed to always defer to
+    canEndOnDemand once a run is active, and extended
+    utils/scripts/verifyStorybookRunStore.mjs to pin it (confirmed via git-stash round trip:
+    new check fails pre-fix, passes post-fix). Verified: test:storybook-run-store,
+    test:storybook-taskmaster-safety, eslint, vue-tsc all clean. Merged kind_robots#2906
+    (squash afe0341), all 47 checks green, mergeable_state clean. Re-arming to ready per
+    established recurring-task convention. Kaizen for next cycle: sweep storybook-
+    table.vue/storybook-ending.vue for the same 'server owns the numbers' pattern violation
+    -- this cycle only found the one instance.
+  updated: '2026-09-19T23:47:46Z'
   owner: worker
   claimed_by: 2026-09-19T-conductor-sweep-storybook-t010
   claimed_at: '2026-09-19T23:33:02Z'
-  implementation_pr: 'silasfelinus/kind_robots#2813'
+  implementation_pr: 'silasfelinus/kind_robots#2906'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
