@@ -15312,3 +15312,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A regex negative-lookahead across a multi-line [\\s\\S]*? span cannot reliably prove a token is ABSENT from a function body -- it only checks one anchor point, not every position -- so it passed trivially on a first attempt to verify runDryRun() never calls a write path. Brace-matched extraction of the actual function source span, then a plain substring search on that extracted text, is the sound way to assert absence; also caught a false positive from a console.log string that literally contained the text of a forbidden call name as documentation, not an actual invocation. Separately: read the existing write-path code (importArchiveFile's hardcoded isPublic=false/isMature=true) before assuming a 'verify no privacy leakage' task needs new machinery -- the invariant was already there and already tested by test:art-archive-importer."
+- date: 2026-09-19
+  project: art-archive
+  task: t-028
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "archiveEntryId/archivePresetId were already tagged onto every ArtJob payload for provenance (t-016) but never read back for display -- worth checking whether a 'surface X status' kaizen task can be satisfied entirely by reading data already being written, before assuming a new write path or schema field is needed. Also: a full production Docker build check can take ~15 minutes on this repo's PRs, well past the point most other checks finish -- worth budgeting for it rather than assuming CI is stuck when 53/54 checks are green and one is still running."
