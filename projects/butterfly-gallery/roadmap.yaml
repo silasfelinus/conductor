@@ -438,7 +438,7 @@ tasks:
   - id: t-014
     milestone: m4
     title: "Implement and catalog Gallery motion actors against final production geometry"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -483,9 +483,31 @@ tasks:
       occlude motion cleanly; the left butterfly loop remains independently
       composable; the robot reads correctly while partially hidden by the dynamic
       pile; reduced-motion/visibility gating remains required when integrated.
+
+      Submitted the 7 image-to-video ArtJobs the animation shot list calls for (5
+      upper-runway carry passes, 1 left-foreground butterfly loop, 1 lower-right
+      robot loop) at priority 0 via POST /api/art/enqueue, using the real
+      production PNGs (runway-background.png, gallery-butterfly-start.png,
+      robot-sift-start.png) fetched over HTTPS as first-frame references. All 7
+      confirmed PENDING via GET /api/art/queue/:id immediately after submission:
+      job ids 28739 (runway string tow), 28740 (runway team carry), 28741 (runway
+      solo struggler), 28742 (runway clean cross), 28743 (runway rare fumble),
+      28744 (left butterfly loop), 28745 (lower-right robot loop). Full catalog
+      in projects/butterfly-gallery/ANIMATION-JOB-CATALOG.md. Prior superseded
+      jobs 28725-28732 were not touched or revived.
+
+      Splitting per AGENTS.md's scope-decomposition move: this task's own title
+      ("Implement and catalog") is fully satisfied by the submission + catalog
+      above, but actually splicing the finished clips into the Vue page cannot
+      happen until these async priority-0 renders complete behind the existing
+      backlog. t-033 (new task) carries the original note's acceptance criteria
+      forward unchanged and owns the Vue integration once all 7 jobs report DONE.
+      This note's original "Acceptance" criteria above apply to t-033, not to
+      this now-closed task.
     claimed_by: claude-scheduled-20260919T123845Z-butterflygallery-t014
     claimed_at: '2026-09-19T12:38:46Z'
-    updated: '2026-09-19T12:38:46Z'
+    updated: '2026-09-19T12:44:00Z'
+    implementation_pr: 'silasfelinus/conductor#4748'
 
   - id: t-015
     milestone: m4
@@ -1066,3 +1088,83 @@ tasks:
     claimed_at: '2026-09-19T04:31:23Z'
     updated: '2026-09-19T04:43:32Z'
     implementation_pr: 'silasfelinus/kind_robots#2865'
+
+  - id: t-033
+    milestone: m4
+    title: "Integrate rendered Gallery motion actor clips into runway/left-loop/robot-loop once ArtJobs complete"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-014
+    note: >-
+      Follow-on from t-014 (this project's ANIMATION-JOB-CATALOG.md): 7
+      Butterfly Gallery motion ArtJobs were submitted at priority 0 (the
+      deliberate lowest queue band) and confirmed PENDING at submission time.
+      Job ids: 28739 (runway string tow), 28740 (runway team carry), 28741
+      (runway solo struggler), 28742 (runway clean cross), 28743 (runway rare
+      fumble), 28744 (left foreground butterfly loop), 28745 (lower-right
+      robot loop). Full prompts, dimensions, engine, and preset for each are
+      recorded in projects/butterfly-gallery/ANIMATION-JOB-CATALOG.md.
+
+      STEP 1 -- before doing anything else, GET /api/art/queue/:id for each
+      of the 7 job ids above. If ANY are still PENDING/RUNNING, this task is
+      NOT YET ACTIONABLE: do not attempt partial integration. Update this
+      note with "last checked <date>: jobs <ids> still PENDING/RUNNING",
+      leave status: ready, and move on to other work WITHOUT consuming a
+      pass or a retry -- per AGENTS.md's Failure Triage, checking and finding
+      it not-yet-ready is not a quality/scope failure.
+
+      STEP 2 -- once ALL 7 report DONE (or FAILED): for any FAILED job, note
+      here exactly which shot failed and that a fresh, scoped priority-0
+      resubmission of that one shot may be needed -- never revive/reuse the
+      old superseded jobs 28725-28732 as a substitute. For every DONE job,
+      proceed to integration.
+
+      STEP 3 -- splice the finished clips into pages/butterfly-gallery.vue's
+      existing reserved animation-slot elements (data-animation-slot=
+      "butterfly-runway", "foreground-butterfly", "foreground-robot") per
+      t-014's own acceptance criteria, carried over unchanged here:
+      - No unrelated living actors baked into the static background.
+      - Runway clips must fit the real horizontal runway window.
+      - The central funnel may occlude runway motion cleanly.
+      - The left butterfly loop remains independently composable (its own
+        layer, not fused into the runway or funnel imagery).
+      - The lower-right robot loop must read correctly while partially
+        hidden behind the live, dynamic foreground picture pile (t-005's
+        pile is a separate DOM layer in front of it).
+      - Reduced-motion/visibility gating is required: pause/suppress all
+        integrated clips under prefers-reduced-motion and when off-screen
+        (see t-031, which depends on this task and audits exactly this).
+
+      Verify with the project's normal suite (vue-tsc, eslint, prettier,
+      layout-contract, kr-class-coverage) plus whatever visual check is
+      actually possible in the session's environment; note clearly what was
+      verified vs. assumed.
+    updated: '2026-09-19T12:41:00Z'
+
+  - id: t-034
+    milestone: m4
+    title: "Document the video-enqueue payload's required renderScale field in ANIMATION-SHOT-LIST.md or a shared submission helper"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from t-014 (conductor#4748): ANIMATION-SHOT-LIST.md and the
+      roadmap's own payload description (task prompt) both describe
+      POST /api/art/enqueue's video-job shape but omit that `renderScale` is
+      a required numeric field for `engine: ltx`/`wan` requests independent
+      of whatever `presetId` is also supplied -- kind_robots'
+      server/api/art/enqueue.post.ts does not derive width/height/duration/
+      renderScale from `presetId` server-side; `presetId` is descriptive
+      metadata only, and every dimensional field must be supplied directly
+      by the caller. This had to be re-derived by reading enqueue.post.ts
+      directly rather than trusting the shot list. Either add a short note
+      to ANIMATION-SHOT-LIST.md (or wherever future Butterfly Gallery/other
+      video-ArtJob submissions get their payload contract from) documenting
+      this, or better, commit a small reusable submission helper script to
+      kind_robots (mirroring utils/scripts/enqueueButterflyGalleryArt.ts's
+      pattern but for the video engine) so future video-job submissions
+      don't have to re-derive the payload shape from server source each
+      time.
