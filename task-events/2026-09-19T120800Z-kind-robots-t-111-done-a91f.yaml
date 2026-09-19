@@ -1,0 +1,14 @@
+version: 1
+project: kind-robots
+task: t-111
+operation: done
+session: openai-chat-20260919-reward-prompt-a91f
+updated: '2026-09-19T12:08:00Z'
+note: >-
+  Merged silasfelinus/kind_robots#2878 (squash 8eddee1774fa66cb3ff665f9a0ee04b329f611e0).
+  Root cause: the prompt-suggest plugin could only identify this Reward through Vue's private
+  __vueParentComponent hook; the stable DOM fallback had no model identity because EntityArtManager
+  emitted none. EntityArtManager now exposes data-art-model/data-model-id/data-model-slug/data-art-subject,
+  so managerContextFromPage resolves the Reward and sibling entities reliably. Regression coverage
+  now pins that contract. All 48 PR workflow runs completed successfully, including Entity Art
+  Manager Contract, TypeScript Type Check, and Contract Tests.
