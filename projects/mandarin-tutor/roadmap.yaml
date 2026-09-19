@@ -638,3 +638,28 @@ tasks:
     claimed_at: '2026-09-19T19:32:41Z'
     updated: '2026-09-19T19:48:57Z'
     implementation_pr: 'silasfelinus/kind_robots#2892'
+
+  - id: t-027
+    milestone: m5
+    title: "FOR SILAS: visually accept the COMPREHENSION slice at phone/tablet/desktop widths"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-022
+      - t-023
+      - t-024
+      - t-026
+    gate_human: true
+    soft_gate: true
+    note: >-
+      FOR SILAS: the selected m5 COMPREHENSION work is implemented: per-word teaching pages,
+      the soft learn-before-drill flow, comprehension + SRS-weighted recall points, the
+      phonetic-series browser, and the lesson-coverage audit. The optional phonetic-series
+      completion bonus was not selected and is closed as a no-op in t-025. This is the same
+      final target-environment visual acceptance gate used for the original m1-m4 closeout:
+      confirm the evolved Mandarin experience at phone, tablet, and desktop widths before m5
+      and the reopened project are marked finished. No publish, billing, DNS, secret, or
+      destructive production action is attached to this gate.
+    updated: '2026-09-19T20:00:00Z'
