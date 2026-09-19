@@ -1175,7 +1175,7 @@ tasks:
   - id: t-038
     milestone: m4
     title: "Surface actionType on the admin curation board's job-status badge"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1189,6 +1189,14 @@ tasks:
       ran. Surface actionType in the badge (e.g. its title/tooltip, or
       appended to the label), now that it is durably available without a
       live preset lookup.
+
+      Merged kind_robots#2888 (squash 795a3d7). Appended actionType to the job-status badge's
+      visible label and tooltip in pages/admin/art-archive.vue, when present. Verified: eslint
+      clean, vue-tsc --noEmit clean, npm run test:contracts-db-free 364/364, and full CI (48
+      checks incl. Contract verifiers, TypeScript, layout-contract, GitGuardian) green before
+      merge. Pre-existing prettier warning on this file confirmed unrelated (reproduces on
+      main).
     claimed_by: claude-scheduled-20260919T161012Z-art-archive-t038
     claimed_at: '2026-09-19T16:10:13Z'
-    updated: '2026-09-19T16:10:13Z'
+    updated: '2026-09-19T16:23:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#2888'
