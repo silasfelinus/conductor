@@ -469,7 +469,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 52
     stakes: reversible
@@ -490,7 +490,15 @@ tasks:
       and the PR's own CI (vue-tsc, eslint, layout-contract, lint-ratchet, kr-class-coverage)
       already covered it clean/unchanged. No model-builder-specific regression audit warranted
       -- re-arming to ready.
-    updated: '2026-09-19T23:30:53Z'
+
+      Cycle 72 (checked through 2026-09-19T23:31:56Z): one fresh commit touched the tracked
+      surface since the prior 2026-09-17T23:29:25Z audit -- kind_robots@db3c3245
+      (fix(navigation): move admin-gated tabs out of Plan into the Admin channel), whose only
+      model-builder-scoped change was a 1-line channel field flip in content/model-builder.md
+      (plan -> admin), part of an 11-tab repo-wide navigation reclassification. No
+      functional/behavioral change to model-builder code, store, API, or schema. No model-
+      builder-specific regression audit warranted -- re-arming to ready.
+    updated: '2026-09-19T23:31:57Z'
     owner: worker
     claimed_by: 2026-09-19T-conductor-sweep-t029c72
     claimed_at: '2026-09-19T23:30:53Z'
