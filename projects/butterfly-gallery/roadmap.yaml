@@ -965,3 +965,20 @@ tasks:
       Do each independently; they don't depend on one another. See
       stores/helpers/butterflyGalleryArtArchiveActionAdapter.ts's header
       comment for the full context.
+
+  - id: t-030
+    milestone: m5
+    title: "Audit other admin-only listing endpoints for the same admin-privilege-without-mature-opt-in gap fixed in t-023"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Kaizen from t-023 (kind_robots#2861): GET /api/admin/art-archive/entries only
+      required requireAdminApiUser, so an admin who hadn't opted into mature content
+      could still see mature/private archive metadata through admin privilege alone.
+      Fixed by also gating on viewerShowsMature(auth.user). Grep server/api/admin/**
+      for other listing/detail endpoints that touch mature- or private-flagged models
+      (ArtImage, ArchiveEntry, and similar) and confirm each one applies the same
+      viewerShowsMature (or visibilityWhere/canViewWithMaturity) gate, not just an
+      admin check.

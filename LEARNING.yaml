@@ -15156,3 +15156,19 @@ records:
     was masked by the job failing early on the first check. Re-run the full
     job after a fix rather than assuming the next CI run will be clean just
     because the specific violation named in the rejection was addressed.
+- date: 2026-09-19
+  project: butterfly-gallery
+  task: t-023
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A clean first-pass security-hardening fix: gating GET
+    /api/admin/art-archive/entries behind viewerShowsMature() (in addition to
+    the existing requireAdminApiUser check) closed a real gap where admin
+    privilege alone could expose mature/private archive metadata to an
+    admin who hadn't opted into mature content. Worth checking other
+    admin-only listing endpoints touching mature/private rows for the same
+    "admin != opted-in-to-mature" gap.
