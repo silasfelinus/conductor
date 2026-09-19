@@ -567,7 +567,7 @@ tasks:
   - id: t-024
     milestone: m5
     title: "Sound-family index: browse the catalog by phonetic series"
-    status: ready
+    status: claimed
     owner: worker
     passes: 1
     stakes: reversible
@@ -582,9 +582,9 @@ tasks:
       pages/play/mandarin/sound-families.vue renders its own <h1>, violating the one-header
       rule. Fix posted on the PR: delete the <h1>, keep the eyebrow/description/badges.
       status: ready, passes: 1, retry_context set.
-    claimed_by: openai-scheduled-2026-09-19T182001Z-mandarin-tutor-t024-a11
-    claimed_at: '2026-09-19T18:20:01Z'
-    updated: '2026-09-19T18:31:44Z'
+    claimed_by: openai-scheduled-2026-09-19T191659Z-mandarin-tutor-t024-a12
+    claimed_at: '2026-09-19T19:16:59Z'
+    updated: '2026-09-19T19:16:59Z'
     retry_context: 'pass 1 failed (quality): kind_robots#2891 (t-024, sound-family index) failed CIs layout-contract check -- pages/play/mandarin/sound-families.vue renders its own <h1>One sound clue, many characters</h1> inside the page header, violating the one-header rule (interface-vision/DESIGN-BRIEF.md rule 1: the shell renders the title from content frontmatter, a page component never does). Do differently: delete the <h1> line; keep the eyebrow line, description paragraph, and badge row as-is (see pages/play/mandarin/learn/[key].vue for the established no-title header pattern). Full detail and exact fix posted as a review comment on kind_robots#2891.'
 
   - id: t-025
