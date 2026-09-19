@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-19T03:33:19Z
+Generated: 2026-09-19T03:49:59Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1045**
-- Outcomes: blocked: 16, cancelled: 1, done: 1028
+- Closed tasks recorded: **1046**
+- Outcomes: blocked: 16, cancelled: 1, done: 1029
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -24,7 +24,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | art-archive | 15 | 100% |
 | art-generator-connect | 3 | 100% |
 | brainstorm | 26 | 96% |
-| butterfly-gallery | 21 | 100% |
+| butterfly-gallery | 22 | 100% |
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 39 | 100% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1028 | 99% |
+| software | 1029 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-19 `butterfly-gallery/t-024` — Before implementing a "tune performance/responsive" task, audit what earlier tasks already covered: t-004/t-009/t-022 had already wired cursor pagination and thumbnailPath-vs-displayPath correctly, so t-024's real remaining gaps were narrower than its title suggested -- auto (rather than manual-click) prefetch, and a true phone-width breakpoint below the existing 900px one (whose rail clamp() minimums didn't shrink further, leaving almost nothing for the center art-display under ~480px). Citing what was already correct, with file/line evidence, kept the diff scoped to the two genuine gaps instead of re-touching working code.
 - 2026-09-19 `butterfly-gallery/t-023` — A clean first-pass security-hardening fix: gating GET /api/admin/art-archive/entries behind viewerShowsMature() (in addition to the existing requireAdminApiUser check) closed a real gap where admin privilege alone could expose mature/private archive metadata to an admin who hadn't opted into mature content. Worth checking other admin-only listing endpoints touching mature/private rows for the same "admin != opted-in-to-mature" gap.
 - 2026-09-19 `butterfly-gallery/t-021` — A layout-contract grid-cols rejection and a kr-class-coverage rejection can hide behind each other in the same CI job when it runs multiple checks sequentially: fixing the first (viewport-breakpoint grid-cols -> auto-fit/minmax) can reveal a second, unrelated violation (kr-text-black-md, an undefined size in the kr-text-black-* family) that was masked by the job failing early on the first check. Re-run the full job after a fix rather than assuming the next CI run will be clean just because the specific violation named in the rejection was addressed.
 - 2026-09-19 `butterfly-gallery/t-026` — Once a fixture provider and a real-backed provider both implement the same read contract (ButterflyGalleryFeedProvider here), a plain Object.keys().sort() shape-equality check across representative field-presence variants (nulls, missing optional fields, nested objects) is enough to catch a future field drop/rename on either side -- no need for a heavier structural-diff library. Comparing sorted key lists rather than deep-equal values keeps the test focused on shape parity, not incidental value differences between fixture and real data.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-18 `art-archive/t-025` — When a task's target type is an untyped Record<string, unknown> (ArtJobPayloadRecord), check which concrete payload shape the field names actually mirror (here: A1111's flat fields, not a COMFY engine's built workflow graph) and say so explicitly in the PR rather than silently assuming the merge covers every engine.
 - 2026-09-18 `butterfly-gallery/t-018` — A new component this repo's test:component-reachability check can't reach (not mounted anywhere from app.vue/pages/layouts/content) fails CI deterministically regardless of how clean the rest of the diff is. A "scoped slice" that adds a component should mount it behind even a minimal admin toggle in the same PR, not defer wiring to a following slice -- the reachability check is a hard invariant on every PR, not advisory.
 - 2026-09-18 `kind-robots/t-110` — A container-log "Data too long for column" truncation warning is worth escalating immediately, not just noting: it means writes are already succeeding with silently corrupted data. This one (imagePath, since kind_robots#2814) escalated from a warning to hard ArtJob write failures (HTTP 500) within two days once enough long static-path values accumulated. When one column in a family of otherwise-consistent columns (13 other imagePath fields already at VarChar(764)) is the odd one left at Prisma's implicit VarChar(191) default, that inconsistency is itself the signal to check for -- grep every same-named column across the schema before assuming a single reported failure is isolated.
-- 2026-09-18 `art-archive/t-013` — A field can be filterable and displayed in an admin browser for a while before anyone notices nothing ever writes it -- when a task note says "expose fast rating actions" for a field that already exists in the schema and the read path, check the write path specifically before assuming only UI wiring is missing.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-19T03:33:19Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-19T03:49:59Z_
