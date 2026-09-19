@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-19T00:53:14Z
+Generated: 2026-09-19T01:01:14Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1040**
-- Outcomes: blocked: 16, cancelled: 1, done: 1023
+- Closed tasks recorded: **1041**
+- Outcomes: blocked: 16, cancelled: 1, done: 1024
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -24,7 +24,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | art-archive | 15 | 100% |
 | art-generator-connect | 3 | 100% |
 | brainstorm | 26 | 96% |
-| butterfly-gallery | 16 | 100% |
+| butterfly-gallery | 17 | 100% |
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 39 | 100% |
@@ -71,13 +71,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1023 | 99% |
+| software | 1024 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
-| quality | 31 |
+| quality | 32 |
 | transient | 17 |
 | actionable | 15 |
 | scope | 3 |
@@ -86,13 +86,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - project `coat-dance` — 11% success over 9 closed tasks; aim the next kaizen task here
 - kind `content` — 47% success over 17 closed tasks; aim the next kaizen task here
-- failure category `quality` — 31 occurrences; look for the shared cause across its records
+- failure category `quality` — 32 occurrences; look for the shared cause across its records
 - failure category `transient` — 17 occurrences; look for the shared cause across its records
 - failure category `actionable` — 15 occurrences; look for the shared cause across its records
 - failure category `scope` — 3 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-09-19 `butterfly-gallery/t-022` — A task whose note implies broad scope ("a real art-archive-backed adapter swaps in later under t-022" -- from a sibling task's note, not t-022's own) is worth deliberately re-scoping to what the task's own title actually promises (here: the feed) plus only the sub-pieces with a clean 1:1 real-endpoint mapping, rather than either inventing unreviewed infrastructure (a schema migration, an id-resolution endpoint) to cover every implied piece or silently dropping them. Filing the honest gap as its own task (t-029) kept the delivered slice verifiable and reversible. Separately: real Nuxt-runtime code (anything importing stores/utils.ts, which pulls in stores/userStore.ts's snapshotLoader.ts) cannot be statically imported by a module a plain-tsx contract test also imports -- it crashes on import.meta.glob outside Vite. Keep the Nuxt-runtime-backed implementation in its own module and install it via a client plugin (setXFeedProvider()/setXActionAdapter() at app startup) rather than wiring it as the fixture module's own default.
 - 2026-09-18 `butterfly-gallery/t-027` — When one bin/action kind in a family that's otherwise uniform (here: five of six ButterflyGalleryActionAdapter-backed bin kinds both mutate local state and persist through the adapter) silently skips the adapter call, grep the sibling switch statement (persistBinOutcome) for the same case rather than assuming a local-only mutation (applyBinOutcome's entry.matchState write) was a deliberate design choice -- it was a silent no-op instead, exactly the kind of gap a future real adapter swap (t-022) would otherwise inherit unnoticed.
 - 2026-09-18 `art-archive/t-025` — When a task's target type is an untyped Record<string, unknown> (ArtJobPayloadRecord), check which concrete payload shape the field names actually mirror (here: A1111's flat fields, not a COMFY engine's built workflow graph) and say so explicitly in the PR rather than silently assuming the merge covers every engine.
 - 2026-09-18 `butterfly-gallery/t-018` — A new component this repo's test:component-reachability check can't reach (not mounted anywhere from app.vue/pages/layouts/content) fails CI deterministically regardless of how clean the rest of the diff is. A "scoped slice" that adds a component should mount it behind even a minimal admin toggle in the same PR, not defer wiring to a following slice -- the reachability check is a hard invariant on every PR, not advisory.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-18 `storybook/t-049` — A stale status: claimed with a note saying "releasing the claim" is a real drift, not just a stale note -- always re-check whether the described outcome actually landed in the status field before trusting the note. Separately: GitHub MCP create_or_update_file's content parameter is plain text, never pre-base64-encoded -- passing already-encoded content silently writes the base64 string itself as file content; verify a push by re-fetching real content, not just the tool's size/sha response.
 - 2026-09-18 `butterfly-gallery/t-015` — Before building a first-visit-intro state machine from scratch, check whether an earlier task already scaffolded it -- t-003/t-012 had already wired the intro status, session-storage marker, and completeIntro()/replayIntro() into the store; this task only needed to replace one placeholder line (`gallery.completeIntro()` called immediately with no animation) with real DOM orchestration. Route every exit path (Skip, Escape, hard timeout, reduced-motion change, unmount) through one idempotent finish function so a multi-exit motion sequence can never strand the page mid-animation.
 - 2026-09-18 `butterfly-gallery/t-013` — A shot-list/job-manifest task that hands off actual asset generation to a later task (t-014) should stay docs-only and cross-check every subject against the project's own locked visual contract (APPROVED-STAGE-SPEC.md here) rather than inventing new motion language -- kept this PR reviewable in one pass with zero round-trips.
-- 2026-09-18 `butterfly-gallery/t-017` — When a CSS animation targets a property an inline style already sets for layout (e.g. pileStyle()'s inline `transform: translateX(...) rotate(...)`), animate the standalone `scale`/`translate`/`rotate` CSS properties instead of `transform` -- they compose independently with the inline `transform` rather than clobbering it for the animation's duration. This codebase already used this pattern for .pile-card's hover lift (`translate: 0 -14px` rather than `transform: translateY(-14px)`) before this task extended it to a selection-pop keyframe.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-19T00:53:14Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-19T01:01:14Z_
