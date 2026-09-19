@@ -995,8 +995,8 @@ tasks:
   - id: t-032
     milestone: m5
     title: "Surface t-019's dry-run reconciliation report via an admin-gated endpoint"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-019
@@ -1014,6 +1014,9 @@ tasks:
       container. Must remain provably write-free -- reuse or mirror
       utils/scripts/verifyReconcileArtArchiveCli.mjs's brace-extraction
       technique to assert the endpoint's handler never calls a write path.
+    claimed_by: openai-scheduled-2026-09-19T152101Z-art-archive-t032-a11
+    claimed_at: '2026-09-19T15:21:01Z'
+    updated: '2026-09-19T15:21:01Z'
 
   - id: t-033
     milestone: m4
