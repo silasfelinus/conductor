@@ -187,7 +187,9 @@ class SupervisorTests(unittest.TestCase):
         self.media.start_lora_watcher()
 
         self.assertTrue(started.get("started"))
-        self.assertEqual(started["name"], "lora-import")
+        # Renamed lora-import -> model-import in lora-ingestion/t-009, when the watcher
+        # stopped being LoRA-only. relay_media_agent.py is the source of truth.
+        self.assertEqual(started["name"], "model-import")
         self.assertIs(started["target"], self.media._supervised_lora_watch)
 
     def test_missing_config_still_skips_the_watcher_quietly(self):

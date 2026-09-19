@@ -56,8 +56,12 @@ def test_default_paths_are_unchanged():
     # exactly as it does today.
     apps = load()
     assert apps["kr-relay"]["env"]["LORA_ROOT"] == "Z:/ai/models/Lora"
+    # 2026-09-19: the default moved from the WebUI-era `Stable-diffusion` folder to
+    # `checkpoints` when the watched-import lane was generalized from LoRAs to
+    # checkpoints (lora-ingestion/t-009). ecosystem.config.js is the source of truth;
+    # this assertion follows it rather than pinning the retired path.
     assert apps["kr-download"]["env"]["KR_CHECKPOINT_DIR"] == (
-        "Z:/ai/models/Stable-diffusion"
+        "Z:/ai/models/checkpoints"
     )
     assert apps["kr-relay"]["env"]["KR_SHARE_PROBE_PATH"] == "Z:/ai/models"
 

@@ -200,13 +200,13 @@ tasks:
 - id: t-009
   milestone: m2
   title: Generalize model discovery/download and watched imports beyond LoRA-only routing
-  status: ready
+  status: review
   owner: worker
   stakes: reversible
   passes: 1
-  claimed_by: 2026-09-19T104700Z-lora-ingestion-t009-7f3c
-  claimed_at: '2026-09-19T10:47:00Z'
-  updated: '2026-09-19T11:31:26Z'
+  claimed_by: 2026-09-19T122600Z-lora-ingestion-t009-bases-9c4d
+  claimed_at: '2026-09-19T12:26:00Z'
+  updated: '2026-09-19T12:33:00Z'
   note: |-
     Silas-directed 2026-09-19: audit the downloader against the full Resource model taxonomy, preserve automatic Lora/import ingestion, add equivalent checkpoint/import ingestion, and stop routing every non-CHECKPOINT download into the LoRA directory. Keep Civitai discovery aligned with the Resource types it can actually supply and with ComfyUI's canonical model directories.
 
@@ -216,4 +216,6 @@ tasks:
     failures from an unfinished lora-import->model-import/checkpoints-path rename, plus a
     PR-handoff-template violation. See retry_context. kind_robots#2877 companion PR is green
     and unaffected.
+
+    Follow-up from Silas on the merged downloader work: the Discover base-model filter was still hardcoded to five families. Replaced it with a grouped taxonomy covering every generation/base family recognized by the LoRA/model catalog, including Krea 2, Flux.2, ZImage, Qwen, video/multimodal families, and all SD/SDXL variants. Added a contract that cross-checks the UI list against scan_loras.py BASEMODEL_MAP and scan_models.py FOLDER_BASE_HINTS so future catalog families cannot disappear from Discover silently.
   retry_context: 'pass 1 failed (quality): kind_robots/conductor#4737 renamed the lora-import watcher thread/log tag to ''model-import'' and changed KR_CHECKPOINT_DIR''s default from Z:/ai/models/Stable-diffusion to Z:/ai/models/checkpoints (ops/home-server/lora_import_agent.py, relay_download_agent.py) but did not update three pre-existing tests that still assert the old values: tests/test_home_server_share_root.py::test_default_paths_are_unchanged, tests/test_lora_watcher_share_resilience.py::SupervisorTests::test_start_lora_watcher_uses_the_supervisor_not_the_raw_loop, and tests/test_relay_log_timestamps.py::test_log_line_is_one_readable_local_time -- Python test suite fails with 3 real assertion errors on conductor PR #4737. The PR body also fails Validate Worker PR handoff: it uses ### What changed instead of the required ### What changed / what I produced heading and omits ### How I verified and ### Kaizen suggestion entirely. Do differently: update the three listed tests to assert the new model-import tag and the new Z:/ai/models/checkpoints KR_CHECKPOINT_DIR default (matching the intentional rename already in this diff), and rewrite the PR body to use the exact AGENTS.md handoff headings before re-requesting review. kind_robots#2877 (the companion PR) is green; only conductor#4737 needs the retry.'
