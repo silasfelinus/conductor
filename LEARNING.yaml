@@ -15539,3 +15539,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Closed as a duplicate of t-179: both tasks asked for the same pm2 restart_time trend-alerting fix, filed the same day from the same comfyui crash-loop incident chain. Two sessions independently filed kaizen/incident-response tasks for the same underlying gap without cross-checking existing ready tasks first -- worth a quick grep of the target project's roadmap for matching titles/notes before filing a new task from an incident, not just from PR history."
+- date: 2026-09-19
+  project: kind-robots
+  task: t-113
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "First pass, tiny scoped diff (+32/-0, one file, kind_robots#2903). Cross-repo pickup from a conductor session worked cleanly end-to-end: claim on conductor, implement+verify in the kind_robots checkout, review transition, merge, close. Verified the new expectOrder() assertion actually catches a regression (manually reordered the source, confirmed the failure message, reverted) rather than trusting that adding an assertion alone proves it works."
