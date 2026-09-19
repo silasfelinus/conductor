@@ -1855,7 +1855,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: "Polish every reachable Kind Robots surface page-by-page"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -1896,8 +1896,20 @@ tasks:
     Merged silasfelinus/kind_robots#2897 as 6859baca34421ac9f7b8bf1aaa5ee39e6e10d149 from exact head 43ffee038232541b7e308e340eddda20c47240fc. Shared gallery Cards now use tighter gaps and frames, hide below-art description/meta chrome, and keep titles on the art; Reward rarity is a gem icon in gallery view and the synthetic general collection label is suppressed. All 48 exact-head PR workflow runs completed successfully, including TypeScript Type Check, Layout Contract, Gallery Progressive Rendering Contract, Schema Migration Parity, and Contract Tests; Gallery consistency passed inside Contract Tests. Production is self-hosted and was not deployed by this session. Return the recurring visual-polish task to ready for the next screenshot-directed slice.
 
     Screenshot-directed Achievements redesign: removed the permanent three-column Earned/Leaderboard/Undiscovered layout, made achievement rows container-responsive at one to three cards, placed the leaderboard as an achievement-sized peer in the last available slot of the first earned row, and moved undiscovered achievements below earned content. Also compacted achievement cards and shrank the layout/lint ratchets for the fixed violations.
-  updated: '2026-09-19T21:49:00Z'
-  implementation_pr: 'silasfelinus/kind_robots#2784'
+
+    2026-09-19: Merged kind_robots#2899 (worker/interface-vision-t-105-achievements-20260919-8d2c),
+    screenshot-directed Achievements polish. Diff verified against merge-base (excluding an
+    unrelated main-side merge of kind-robots/t-112 that briefly showed as noise in a plain
+    origin/main diff): 7 files, +295/-199 -- replaced the fixed Earned/Leaderboard/Undiscovered
+    three-column layout with a single vertical flow (earned cards first, leaderboard as a
+    peer card in the first row, undiscovered below), CSS container queries (1/2/3 cards per
+    row) replacing the old viewport-keyed lg:grid-cols-3 split, and a real Achievement type
+    replacing an `as any` cast on record.createdAt. New verifyAchievementCatalog.ts assertions
+    pin the flow order, container-query breakpoints, leaderboard cell placement, and card
+    sizing. All 49 kind_robots CI checks green, mergeable_state clean. Re-armed to ready per
+    the recurring-task convention.
+  updated: '2026-09-19T21:33:55Z'
+  implementation_pr: 'silasfelinus/kind_robots#2899'
   approved_by_human: true
   owner: worker
   claimed_by: 2026-09-19T213400Z-interface-vision-t105-achievements-8d2c
