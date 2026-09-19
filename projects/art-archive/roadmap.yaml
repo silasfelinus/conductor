@@ -940,7 +940,7 @@ tasks:
   - id: t-030
     milestone: m5
     title: "Make large-archive scans resumable across process restarts"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -959,9 +959,32 @@ tasks:
       persisted state) and only build real checkpoint/cursor tracking if
       that measurement shows the walk itself, not the hashing, is the actual
       bottleneck at scale.
+
+      Merged kind_robots#2876 (2026-09-19). Not the originally-titled feature (persisted scan
+      checkpoint/cursor state) -- benchmarking this task's own gating question (synthetic
+      20k/60k-file tree, cold hash-everything scan vs warm knownFiles-cache scan) surfaced a
+      real, previously-undetected bug: scanArchiveRoot()'s cache-hit check compared a live
+      fs.stat().mtimeMs (sub-millisecond float on any POSIX filesystem with nanosecond mtimes)
+      against known.fileMtimeMs, which is always an integer (ScannedArchiveFile.fileMtime is a
+      JS Date; loadKnownArchiveFiles() reads it back from the DB via .getTime()) -- so the
+      comparison almost never matched and every repeat scan silently re-hashed every unchanged
+      file's full bytes, defeating t-018's entire incremental-hash cache in production. Fixed
+      by truncating the live side to whole milliseconds before comparing (no DB/schema change
+      needed -- ArchiveEntry.fileMtime is already DATETIME(3)). Re-ran the benchmark after the
+      fix: 0/N cache hits became 100% cache hits, and the warm (walk-only) pass ran ~2.4x
+      faster than the cold pass using tiny 2KB placeholder files -- real archive images are
+      far larger, and hashing cost scales with file size while walk/stat cost doesn't, so the
+      real-world gap should be substantially larger. This directly answers t-030's own
+      question: with the cache actually working, a restarted scan's re-walk of already-known
+      files is cheap, so the walk itself is not the bottleneck at scale -- persisted
+      checkpoint/cursor state is not warranted by this measurement. No access to a real
+      archive (PRIVATE_PATH is Unraid-only, confirmed unavailable in every sandbox per t-019's
+      own note) to validate against production scale; revisit if a real production scan shows
+      otherwise. All kind_robots checks green before merge (merged by a concurrent Reviewer
+      session, silasfelinus, 2026-09-19T11:33:59Z).
     claimed_by: claude-scheduled-20260919T110617Z-artarchive-t030
     claimed_at: '2026-09-19T11:06:25Z'
-    updated: '2026-09-19T11:14:27Z'
+    updated: '2026-09-19T11:34:54Z'
     implementation_pr: 'silasfelinus/kind_robots#2876'
 
   - id: t-031
