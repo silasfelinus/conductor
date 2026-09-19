@@ -806,21 +806,30 @@ tasks:
   - id: t-024
     milestone: m5
     title: "Tune large-queue performance and responsive composition"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on:
       - t-009
       - t-017
-    note: >
+    note: >-
       Paginate/virtualize queue reads, use thumbnails rather than originals,
       prefetch only a small next-item window, pause unnecessary animation, and
       keep the stage useful across desktop/tablet/mobile. On constrained widths,
       bins may become drawers/trays without losing action parity.
+
+      Merged kind_robots#2862: auto-prefetch (watch-based, small next page once visiblePile
+      dips under a 24-entry buffer above the 18-card render cap) plus a max-width:540px
+      breakpoint converting preset-rail/right-rail into horizontal scrollable bottom trays so
+      bins keep full action parity on phone widths where the old clamp() rail minimums didn't
+      shrink. Thumbnails/pagination were already correct from t-004/t-009/t-022. vue-
+      tsc/eslint/prettier/layout-contract/kr-class-coverage all clean; live phone-width visual
+      check deferred to t-025's existing human gate (no working local DB / no deploy of this
+      branch to verify against).
     claimed_by: conductor-agent-20260919-bg-t024
     claimed_at: '2026-09-19T03:32:15Z'
-    updated: '2026-09-19T03:39:40Z'
+    updated: '2026-09-19T03:45:45Z'
     implementation_pr: 'silasfelinus/kind_robots#2862'
 
   - id: t-025
