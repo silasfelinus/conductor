@@ -48,6 +48,15 @@ milestones:
     weight: 10
     status: done
 
+  # Opened 2026-09-19 on Silas's in-session request to evolve the project beyond the
+  # flashcard trainer m1-m4 delivered. Weights of m1-m4 are deliberately left untouched --
+  # they are a closed, accepted record -- so the project now reads ~77% (100 of 130) rather
+  # than the weights being retro-fitted to make a reopened project look finished.
+  - id: m5
+    title: "COMPREHENSION — teach the character before you drill it"
+    weight: 30
+    status: in-progress
+
 tasks:
   - id: t-001
     milestone: m1
@@ -401,3 +410,172 @@ tasks:
       Full history: projects/mandarin-tutor/HISTORY.md#t-021
     updated: '2026-09-11T09:55:48Z'
     approved_by_human: true
+
+  # ---------------------------------------------------------------------------
+  # m5 COMPREHENSION — added 2026-09-19 from Silas's reopening request.
+  #
+  # Verbatim ask: "i want an evolution of the mandarin project. we curently have a pretty
+  # good flashcard system. like, really developed. And I want something eventually closer
+  # to duolingo, but I don't want to recreate duolingo, as that is both insistent and
+  # focused on interactions, notifications, nudges, etc. I want something that actually
+  # trains people to learn mandarin. My interest is academic and I REALLY love learning how
+  # the symbols represent different ideas. Like, how shuo (speak) and teach have the same
+  # pinyin. I want a tutorial page for each of the words that we teach, and a system where
+  # we only show flashcards after showing the instruction that shows the pinyin plus what
+  # each aspect represents, with historical info. We should also add a point system, which
+  # may require a user upgrade to the schema."
+  #
+  # Two design decisions Silas made in the same session, when asked:
+  #   * The learn-before-drill gate is SOFT. Un-lessoned cards sort to the back of the study
+  #     queue and the card offers "Learn this first", but nothing ever blocks a drill. He
+  #     explicitly did not want the hard gate (a fresh account facing an empty deck) or
+  #     per-deck gating flags.
+  #   * Points reward LESSON COMPREHENSION + RECALL, weighted by SRS difficulty, so
+  #     re-drilling an easy card earns almost nothing and real recall of a lapsed card earns
+  #     a lot. He explicitly did NOT select daily streaks / daily point targets -- that is
+  #     the Duolingo nagging mechanic his own request rules out -- and did not select the
+  #     phonetic-series completion bonus (filed as t-025, waiting, not ready).
+  #
+  # Note on the example in the ask: 说 shuō (speak) and 教 jiāo/jiào (teach) do not in fact
+  # share a pinyin reading, so the request should not be implemented as a homophone feature
+  # alone. The structural pattern Silas is describing is the PHONETIC SERIES -- families of
+  # characters built on a shared sound component, e.g. 青 qīng giving 请 qǐng, 清 qīng,
+  # 情 qíng, 晴 qíng, or 兑 duì giving 说 shuō and 税 shuì. That relationship is already in
+  # every card's `components` array as `role: 'phonetic'` (sourced from Make Me a Hanzi's
+  # etymology.phonetic) and has never been surfaced or grouped. It is the highest-value
+  # academic payoff available from data the project already holds, so t-022 makes it a
+  # first-class part of every lesson and t-024 turns it into a browsable index. Lessons also
+  # surface true homophone groups separately, so the "same pinyin" observation is answered
+  # honestly rather than conflated with the sound-component relationship.
+
+  - id: t-022
+    milestone: m5
+    title: "Teach the word first: per-word lesson pages with pinyin anatomy, component roles, and phonetic series"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      The component/etymology data m2 already fetches (Make Me a Hanzi decomposition,
+      etymology.semantic / etymology.phonetic, dictionary radical, IDS leaves) is currently
+      buried behind a `<details>` labelled "Parts & history" that only opens AFTER the learner
+      has been drilled. Silas's request inverts that: instruction first, flashcard second.
+
+      Build `utils/mandarinLesson.ts` as a pure derivation over a MandarinCard plus the rest of
+      the catalog, producing: (1) pinyin anatomy per syllable -- initial, final, tone number,
+      tone contour, and the third-tone sandhi already computed by
+      `parsePinyinToneTargets`; (2) per-character component roles saying what each piece
+      CONTRIBUTES (semantic field, sound clue, indexing radical, structural leaf, or explicitly
+      unresolved), reusing the honest "the source makes no claim here" fallbacks
+      `server/utils/mandarinCharacterData.ts` already writes rather than inventing mnemonics;
+      (3) the character's phonetic series -- other catalog cards sharing the same
+      `role: 'phonetic'` glyph, which is the 青 → 请/清/情/晴 relationship Silas actually means;
+      (4) true homophone groups, same pinyin syllable with and without tone, kept visually and
+      structurally distinct from (3); and (5) the existing history string with its source line.
+
+      Ship it at `/play/mandarin/learn/<key>`. This requires moving `pages/play/mandarin.vue`
+      to `pages/play/mandarin/index.vue` -- the URL is unchanged, but Nuxt makes a sibling
+      `mandarin.vue` a parent route needing `<NuxtPage />` the moment a `mandarin/` directory
+      exists. `utils/projectPlacements.ts` and `content/channels/plan/mandarin.md` reference
+      the route string, not the file, so neither needs touching.
+
+      No schema and no writes in this task -- it is pure derivation plus a read-only page, so
+      it is verifiable by self-test without a database. Gating and points are t-023.
+      Add `utils/scripts/verifyMandarinLesson.test.ts` in the established pure-function style
+      (see verifyMandarinSrs.test.ts) and wire it into contract-tests.yml alongside the other
+      mandarin self-tests.
+
+  - id: t-023
+    milestone: m5
+    title: "Soft-gate drilling on comprehension and add the Mandarin point ledger"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-022
+    note: >-
+      Silas chose the SOFT gate explicitly: un-lessoned cards sort to the back of the study
+      queue and the study card offers "Learn this first" with a link to t-022's lesson page,
+      but a learner who insists can still drill. Nothing blocks mid-session, and a fresh
+      account must never face an empty deck.
+
+      Schema, additive, following every other Mandarin model's established pattern -- plain
+      `userId` scalar, no relation added to the already-crowded User model, no native Json
+      column: `MandarinLessonProgress` (userId, cardKey, viewedAt, completedAt, unique on
+      userId+cardKey) and `MandarinPointEvent` (append-only ledger: userId, cardKey, reason,
+      amount, balanceAfter, refType/refId, mirroring KarmaTransaction's shape) plus
+      `MandarinLearnerProfile` (userId unique, totalPoints, lessonsCompleted, cardsLearned) as
+      the denormalized current-state summary derived from the ledger, exactly as
+      MandarinCardProgress summarizes MandarinReviewEvent.
+
+      Silas said the point system "may require a user upgrade to the schema" -- the upgrade
+      belongs in this per-domain profile row, NOT in a new User column. `User` already carries
+      questPoints, karma, mana, tokens and earnedTokens; a sixth global balance for one study
+      surface would be the wrong place, would collide with the kind-economy ledgers, and would
+      not be reversible.
+
+      Award rules, per Silas's selection (lesson comprehension + recall, nothing else):
+      points for completing a lesson, and points for a recall rating WEIGHTED BY SRS
+      DIFFICULTY, so re-drilling a card at a long interval earns near zero and genuinely
+      recalling a lapsed card earns a lot. Deliberately NOT in scope: daily streaks, daily
+      point targets, notifications, or any nudge mechanic -- Silas ruled those out by name in
+      the reopening request ("insistent and focused on interactions, notifications, nudges").
+
+  - id: t-024
+    milestone: m5
+    title: "Sound-family index: browse the catalog by phonetic series"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-022
+    note: >-
+      Once t-022 computes a card's phonetic series, the same derivation supports the inverse
+      view: an index of every sound component in the catalog (兑, 青, 马, 可 ...) with its
+      family underneath, showing how one sound component threads through many characters and
+      where the sound drifted. This is the browsable form of the thing Silas said he REALLY
+      loves about the writing system, and it is the natural entry point for an academic
+      learner who wants to read outward from a component rather than drill a deck.
+
+      Keep it honest: only assert a phonetic relationship the pinned Make Me a Hanzi source
+      actually claims (`etymology.phonetic`), never one inferred from a shared-looking shape,
+      and show the modern readings side by side so a drifted family (说 shuō / 税 shuì) reads
+      as the interesting case it is rather than as a data error.
+
+  - id: t-025
+    milestone: m5
+    title: "Phonetic-series completion bonus"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-024
+    note: >-
+      NOT SELECTED BY SILAS, deliberately parked rather than dropped. Offered in the
+      2026-09-19 reopening conversation as a fourth point-earning rule -- a bonus for learning
+      every member of a sound family -- and he selected only "lesson comprehension + recall".
+      Filed `waiting` on t-024 so it is a real option once the sound-family index exists and he
+      can see what a completed family actually looks like, rather than an agent quietly
+      shipping a reward rule he did not ask for. Do not flip this to `ready` without Silas.
+
+  - id: t-026
+    milestone: m5
+    title: "Audit that every catalog card can produce a usable lesson"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-022
+    note: >-
+      m2's provenance audit (t-011) checks the catalog's source data. This checks the new
+      teaching layer on top of it: for every card in the live catalog, does t-022's derivation
+      produce a lesson a human could actually learn from -- pinyin anatomy that parses, at
+      least one component with a stated role, a history line that is either a real source claim
+      or an explicit no-claim, and no lesson whose only content is "the source makes no claim".
+
+      The last case is the interesting one. A card that decomposes into nothing teachable is
+      not a bug in the derivation, it is a card that should either be enriched from a second
+      source or shown as a vocabulary item rather than a structural lesson. The audit's job is
+      to report how many of those exist and which they are, so the coverage gap is a number
+      Silas can look at instead of something a learner discovers one dead lesson at a time.
+      Follow `auditMandarinCatalog.ts`'s shape: a `--self-test` mode for CI plus a live mode.
