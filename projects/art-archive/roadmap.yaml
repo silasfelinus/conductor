@@ -509,19 +509,26 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Queue additional or replacement ArtJobs from imported images with editable provenance"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-014
-    note: >
+    note: >-
       Imported ArtImages have no original ArtJob, so build a narrow adapter that
       creates a normal durable ArtJob from the stored prompt/settings/resource
       provenance plus the chosen preset. Replacement must not remove the source
       file until a new ArtImage is delivered and verified.
+
+      Implemented: buildArchiveEnqueuePayload() + POST /api/admin/art-
+      archive/entries/[id]/enqueue, wired into the curation board's preset buttons (deferred
+      in t-015). Never touches the entry's file/isActive state -- only creates a new ArtJob,
+      satisfying the 'no removal until verified' requirement by construction. Verified
+      locally: new unit test (5 assertions), vue-tsc, eslint, disabled-affordances/kr-class-
+      coverage/layout-contract all clean. Opened kind_robots#2868.
     claimed_by: claude-2026-09-19T063500Z-art-archive-t016-a1
     claimed_at: '2026-09-19T06:31:38Z'
-    updated: '2026-09-19T06:31:38Z'
+    updated: '2026-09-19T06:40:50Z'
 
   - id: t-017
     milestone: m5
