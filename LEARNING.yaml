@@ -15258,3 +15258,12 @@ records:
     prefer the narrowest reversible one (a cancel-shaped action) over one
     whose semantics you have not read closely (DELETE removed the ArtJob
     rows outright rather than restoring CANCELLED status).
+- date: 2026-09-19
+  project: art-archive
+  task: t-026
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Extracting a duplicated union-narrowing guard into one shared helper (narrowToPngMetadata) removes the exact TypeScript-compile-error class kind_robots#2824 hit, since the next module reading .a1111/.comfy can no longer re-derive the guard incorrectly by hand."
