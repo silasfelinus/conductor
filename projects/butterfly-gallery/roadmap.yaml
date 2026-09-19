@@ -1060,11 +1060,11 @@ tasks:
   - id: t-031
     milestone: m4
     title: "Gate the animation-slot elements' future motion assets on visibility/prefers-reduced-motion, not just CSS class toggles"
-    status: ready
+    status: waiting
     owner: null
     passes: 0
     stakes: reversible
-    depends_on: t-014
+    depends_on: t-033
     note: |-
       Kaizen from t-024 (kind_robots#2862): the page's `data-animation-slot`
       containers (butterfly-runway, foreground-robot, foreground-butterfly,
@@ -1076,6 +1076,18 @@ tasks:
       short-lived/`v-if`-gated CSS animations in pages/butterfly-gallery.vue
       already avoid this by construction. Depends on t-014 actually landing
       motion content first; nothing to verify against until then.
+
+      2026-09-19: dependency corrected from t-014 to t-033. t-014 itself
+      split its Vue-integration acceptance criteria off into t-033 (see
+      t-014's own closing note and t-033's note, which explicitly names this
+      task as auditing its result) and only submitted async ArtJobs -- it
+      never landed any motion content in the page. select_role.py/
+      resolve_deps.py surfaced this task as `ready` once t-014 reached
+      `done`, but there is nothing to gate yet: t-033 (the actual clip
+      splice) is still `ready`/not started, and its own 7 ArtJobs
+      (28739-28745) are still PENDING as of this check. Re-flipped to
+      `waiting` on the correct dependency; `resolve_deps.py` will surface it
+      again once t-033 actually completes.
 
   - id: t-032
     milestone: m5
@@ -1158,7 +1170,14 @@ tasks:
       layout-contract, kr-class-coverage) plus whatever visual check is
       actually possible in the session's environment; note clearly what was
       verified vs. assumed.
-    updated: '2026-09-19T12:41:00Z'
+
+      last checked 2026-09-19: jobs 28739, 28740, 28741, 28742, 28743, 28744,
+      28745 still PENDING (GET /api/art/queue/:id for each). Not yet
+      actionable per STEP 1; leaving status: ready, no pass consumed. Also
+      corrected t-031's depends_on from t-014 to this task (t-033), since
+      t-014 only submitted the ArtJobs and split the actual Vue splice off
+      to this task -- t-031 had nothing real to gate on yet.
+    updated: '2026-09-19T14:35:00Z'
 
   - id: t-034
     milestone: m4
