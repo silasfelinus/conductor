@@ -15503,3 +15503,12 @@ records:
   outcome: cancelled
   failure_category: null
   lesson: "An optional feature Silas did not select should close as a no-op rather than remain waiting on a dependency that will eventually satisfy and trigger WAITING_WITH_SATISFIED_DEPS."
+- date: 2026-09-19
+  project: lora-ingestion
+  task: t-009
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: quality
+  lesson: "Pass 1 (conductor PR #4737) had 3 real Python test failures from an unfinished lora-import->model-import/checkpoints-path rename plus a handoff-template violation; pass 2 (kind_robots#2894) additionally collapsed the Civitai base-model dropdown from an exhaustive version list into 14 supported/other families per Silas's explicit feedback ('I don't need 10 different versions of SD') -- future UI filters over an upstream enum should model the family a user picks, not the transport values, from the start."
