@@ -2560,10 +2560,10 @@ tasks:
 - id: t-111
   milestone: m6
   title: Fix EntityArtManager prompt suggestion failing to identify Reward records
-  status: ready
+  status: claimed
   gate_human: false
   stakes: reversible
-  owner: null
+  owner: worker
   passes: 0
   note: |-
     Filed 2026-09-19 from Silas's direct report on the Rewards encounter surface:
@@ -2579,6 +2579,9 @@ tasks:
     durable Reward id/slug to resolve. Fix the generic EntityArtManager identity
     contract rather than adding a Reward-only special case, and extend the prompt
     suggestion contract test so this regression is pinned.
+  claimed_by: openai-chat-20260919-reward-prompt-a91f
+  claimed_at: '2026-09-19T11:45:00Z'
+  updated: '2026-09-19T11:45:00Z'
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
