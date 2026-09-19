@@ -1029,7 +1029,7 @@ tasks:
   - id: t-032
     milestone: m5
     title: "Add a contract test for archive curation mutation routes' invalid-id/missing-entry/state-update behavior"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1042,6 +1042,15 @@ tasks:
       contract test (following the existing contract-tests.yml pattern) that
       covers this behavior across the archive curation mutation routes so a
       future endpoint in this family gets the same coverage for free.
+
+      Merged silasfelinus/kind_robots#2865: DB-free shape contract
+      (verifyArtArchiveCurationMutationGuards.test.ts) verifying admin gate -> invalid-id 400
+      -> missing-entry 404 -> state update ordering, plus the shared success/error response
+      envelope, across
+      rate.patch.ts/quarantine.post.ts/restore.post.ts/collections.patch.ts/needs-
+      review.post.ts. All 47 required kind_robots CI checks green (Build production image,
+      non-required, still running at merge time). Local vue-tsc/eslint also clean.
     claimed_by: claude-scheduled-20260919T043200Z-butterfly-gallery-t032
     claimed_at: '2026-09-19T04:31:23Z'
-    updated: '2026-09-19T04:33:49Z'
+    updated: '2026-09-19T04:43:32Z'
+    implementation_pr: 'silasfelinus/kind_robots#2865'
