@@ -951,7 +951,7 @@ tasks:
   - id: t-029
     milestone: m5
     title: "Real persistence for setProcessed/collections/markNeedsReview"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -965,9 +965,18 @@ tasks:
 
 
       Implemented a scoped t-029 slice: a real admin needs-review endpoint persists ArchiveEntry.matchState=AMBIGUOUS and the Butterfly Gallery action adapter now calls it. setProcessed and collection persistence remain for continuation.
+
+      Merged silasfelinus/kind_robots#2864 (squash ae41ef4): new POST
+      /api/admin/art-archive/entries/[id]/needs-review.post.ts (admin-gated,
+      validates id, 404s on missing entry, sets matchState=AMBIGUOUS) plus
+      markNeedsReview wired in butterflyGalleryArtArchiveActionAdapter.ts. All 49
+      kind_robots CI checks green, mergeable_state clean, additive-only API change.
+      setProcessed and addToCollection/removeFromCollection remain fixture-backed
+      no-ops for a future task.
     claimed_by: openai-scheduled-2026-09-19T041529Z-butterfly-gallery-t029-a11
     claimed_at: '2026-09-19T04:15:29Z'
-    updated: '2026-09-19T04:21:00Z'
+    updated: '2026-09-19T04:26:30Z'
+    implementation_pr: 'silasfelinus/kind_robots#2864'
 
   - id: t-030
     milestone: m5
@@ -1016,3 +1025,20 @@ tasks:
       short-lived/`v-if`-gated CSS animations in pages/butterfly-gallery.vue
       already avoid this by construction. Depends on t-014 actually landing
       motion content first; nothing to verify against until then.
+
+  - id: t-032
+    milestone: m5
+    title: "Add a contract test for archive curation mutation routes' invalid-id/missing-entry/state-update behavior"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: |-
+      Kaizen from t-029 (kind_robots#2864): the new needs-review endpoint (and
+      its siblings rate.patch.ts/quarantine.post.ts/restore.post.ts/
+      collections.patch.ts from t-022/t-029) each hand-roll the same
+      invalid-id / missing-entry / successful-state-update checks with no
+      shared contract test exercising them together. Add one focused server
+      contract test (following the existing contract-tests.yml pattern) that
+      covers this behavior across the archive curation mutation routes so a
+      future endpoint in this family gets the same coverage for free.
