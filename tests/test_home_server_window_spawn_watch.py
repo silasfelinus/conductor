@@ -137,12 +137,26 @@ class PopupTriageDocsTests(unittest.TestCase):
     def test_the_triage_section_starts_with_the_cheap_correlation(self):
         """The heartbeat line already answers this without any new tooling."""
         idx = self.text.index("Triage: two cmd windows pop up")
-        section = self.text[idx:idx + 4000]
+        # Wide enough to span the RESOLVED root-cause block added 2026-09-19
+        # ahead of the original triage steps.
+        section = self.text[idx:idx + 9000]
         self.assertIn("healthcheck.log", section)
         self.assertIn("tick as", section)
         # The anchoring gotcha: a real 5-minute tick need not land on :00/:05.
         self.assertIn("05:26", section)
         self.assertIn("watch-window-spawn.ps1", section)
+
+    def test_the_triage_section_records_the_confirmed_root_cause(self):
+        """The popups were a parse error, not a scheduling quirk.
+
+        Without this the section reads as an open question and the next person
+        re-derives an 11-day outage from scratch.
+        """
+        idx = self.text.index("Triage: two cmd windows pop up")
+        section = self.text[idx:idx + 9000]
+        self.assertIn("parse error", section)
+        self.assertIn("2147942401", section)
+        self.assertIn("2026-09-08 00:36", section)
 
 
 if __name__ == "__main__":
