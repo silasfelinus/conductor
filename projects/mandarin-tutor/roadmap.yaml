@@ -567,8 +567,8 @@ tasks:
   - id: t-024
     milestone: m5
     title: "Sound-family index: browse the catalog by phonetic series"
-    status: review
-    owner: worker
+    status: done
+    owner: null
     passes: 1
     stakes: reversible
     depends_on: t-022
@@ -584,10 +584,15 @@ tasks:
       status: ready, passes: 1, retry_context set.
 
       Retry addresses the reviewer layout finding and the subsequent TypeScript route-inference failure on kind_robots#2891; waiting for fresh CI on exact head 1a706fb3414faabb0a59e7bc303302d8882faf8b.
+
+      State reconciliation (2026-09-19, Reviewer sweep): kind_robots#2891 was already merged
+      (all 49 checks green, merged_by silasfelinus) but the roadmap task was still status:
+      review on main -- flipping to done.
     claimed_by: openai-scheduled-2026-09-19T191659Z-mandarin-tutor-t024-a12
     claimed_at: '2026-09-19T19:16:59Z'
-    updated: '2026-09-19T19:21:00Z'
-    retry_context: 'pass 1 failed (quality): kind_robots#2891 (t-024, sound-family index) failed CIs layout-contract check -- pages/play/mandarin/sound-families.vue renders its own <h1>One sound clue, many characters</h1> inside the page header, violating the one-header rule (interface-vision/DESIGN-BRIEF.md rule 1: the shell renders the title from content frontmatter, a page component never does). Do differently: delete the <h1> line; keep the eyebrow line, description paragraph, and badge row as-is (see pages/play/mandarin/learn/[key].vue for the established no-title header pattern). Full detail and exact fix posted as a review comment on kind_robots#2891.'
+    updated: '2026-09-19T19:30:47Z'
+    retry_context: null
+    implementation_pr: 'silasfelinus/kind_robots#2891'
 
   - id: t-025
     milestone: m5
