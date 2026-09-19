@@ -430,7 +430,7 @@ tasks:
   - id: t-014
     milestone: m4
     title: "Implement and catalog Gallery motion actors against final production geometry"
-    status: ready
+    status: needs-human
     owner: null
     passes: 0
     stakes: reversible
@@ -537,7 +537,16 @@ tasks:
       submitting. Re-arming to ready; picked up butterfly-gallery/t-030 instead this session.
       A future cycle should re-check 28728-28732 and, once all 8 are DONE, verify + catalog
       per t-014's existing NEXT ACTIONABLE STEP.
-    updated: '2026-09-19T04:52:00Z'
+
+      Roadmap state reconciliation: status corrected from 'ready' to 'needs-human' to match
+      this task's own already-recorded SILAS HOLD (2026-09-18, relaying Moseley) -- production
+      butterfly-background compositing dimensions are not yet locked, and the task's own note
+      explicitly says 'Keep t-014 waiting' and 'Do not poll, requeue, or submit replacement
+      animation ArtJobs while this task is waiting.' No implementation attempted this session;
+      this is a status-only correction so the task stops surfacing as pickable ready work
+      until Silas confirms the final static gallery assets and production geometry.
+    updated: '2026-09-19T08:38:10Z'
+    soft_gate: false
 
   - id: t-015
     milestone: m4
