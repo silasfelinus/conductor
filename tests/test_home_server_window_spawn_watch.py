@@ -146,6 +146,29 @@ class PopupTriageDocsTests(unittest.TestCase):
         self.assertIn("05:26", section)
         self.assertIn("watch-window-spawn.ps1", section)
 
+    def test_the_wrapper_is_not_claimed_to_hide_what_it_does_not(self):
+        """The false claim this file shipped on 2026-09-19 and then measured.
+
+        The original text asserted that healthcheck-hidden.vbs's
+        `shell.Run(..., 0, True)` hides PowerShell "and every child it shells
+        out to". A 15-minute watch caught all three ticks of a task registered
+        to the wrapper opening TWO visible session-1 consoles each -- the
+        watchdog's own, and its Start-Job child's -- with the default terminal
+        already set to Windows Console Host, so the terminal application was
+        ruled out rather than assumed.
+
+        Pinned because an untested claim in a runbook is worse than no claim:
+        it stops the next reader from measuring.
+        """
+        self.assertNotIn(
+            "so PowerShell and every child it shells out to (pm2.cmd, node.exe) run\non a hidden console",
+            self.text,
+            "the measured-false hiding claim is back in the README",
+        )
+        self.assertIn("MEASURED 2026-09-19, and it does NOT hide the console", self.text)
+        # The session-0 evidence is what makes the logon-type advice checkable.
+        self.assertIn("session 0 - session 0, not visible", self.text)
+
     def test_the_triage_section_records_the_confirmed_root_cause(self):
         """The popups were a parse error, not a scheduling quirk.
 

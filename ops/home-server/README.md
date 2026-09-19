@@ -119,12 +119,35 @@ schtasks /Create /SC MINUTE /MO 5 /TN "AI-Backends-Healthcheck" `
 ```
 
 `wscript.exe` is a GUI-subsystem host and the wrapper calls `shell.Run(..., 0,
-True)`, so PowerShell and every child it shells out to (pm2.cmd, node.exe) run
-on a hidden console. Point the task at `powershell.exe` directly instead and you
-get a console window on the desktop **on every 5-minute tick** — which is
-exactly the popup complaint in the triage section below. That is why the wrapper
-exists; it was added on 2026-08-29 and this snippet went on recommending the
-popup form regardless, which is how a fixed problem stayed unfixed on the box.
+True)`, which asks for a hidden window. Prefer it over pointing the task at
+`powershell.exe` directly — but **do not expect it to hide anything.**
+
+> **MEASURED 2026-09-19, and it does NOT hide the console.** An earlier version
+> of this section claimed the wrapper hides PowerShell and every child it shells
+> out to. That is false on this box, and it was written without being tested.
+> `watch-window-spawn.ps1` over 15 minutes caught all three ticks of a task
+> registered to the wrapper, each opening **two** visible consoles in session 1:
+>
+> ```
+> 15:16:03  POPUP  owner: powershell.exe -NoProfile ... -File healthcheck.ps1
+>                  parent: wscript.exe healthcheck-hidden.vbs
+>                  parent: svchost.exe -k netsvcs -p -s Schedule
+> 15:16:06  POPUP  owner: powershell.exe -Version 5.1 -s -NoLogo -NoProfile
+>                  parent: powershell.exe ... healthcheck.ps1
+> ```
+>
+> The second is the `Start-Job` child that bounds `pm2 jlist` (conductor/t-177).
+> The first is the watchdog's own console, which the wrapper was supposed to
+> hide and does not.
+>
+> **The default terminal application was ruled out**, not assumed. Windows
+> Terminal ignores `SW_HIDE`, so it was the leading suspect; Silas set
+> Settings > System > For developers > Terminal to "Windows Console Host" and
+> the trace above was captured AFTER that change. Same two popups per tick.
+>
+> What DOES make a window impossible is session 0 — the same trace caught
+> `conhost.exe pid 6728 in session 0 - session 0, not visible`. See the logon-type
+> note below, including why that is not a free win here.
 
 If you already registered the direct-PowerShell form, repoint it in place rather
 than deleting and recreating (that keeps the schedule and run history):

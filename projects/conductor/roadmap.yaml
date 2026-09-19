@@ -3412,6 +3412,28 @@ tasks:
     itself does not hide what it claims to (see the separate Windows-11 default-terminal
     question, and ops/home-server/README.md, which still asserts that it does).
 
+    CONFOUNDER RESOLVED -- IT WAS NOT THE TERMINAL. A 15-minute watch run at 15:14-15:29,
+    AFTER the default terminal was set to Windows Console Host, caught all three ticks of a
+    task registered to the wrapper, each opening TWO visible consoles in session 1:
+
+    15:16:03  POPUP  owner: powershell.exe -NoProfile ... -File healthcheck.ps1
+    15:16:06  POPUP  owner: powershell.exe -Version 5.1 -s -NoLogo -NoProfile
+                     parent: powershell.exe ... healthcheck.ps1
+
+    Same pair at 15:21 and 15:26 (summary: 3x -NoProfile, 3x -Version). The `-Version 5.1
+    -s -NoLogo -NoProfile` process IS the Start-Job child -- that is exactly how PowerShell
+    5.1 spawns a background job. So THIS TASK IS CONFIRMED, and the wrapper failing to hide
+    the parent console is a second, separate defect (README corrected in the same PR).
+
+    Those two popups per tick, every five minutes, are precisely the original report: "two
+    cmd popups about every 3-5 minutes".
+
+    Also measured in the same run: 33 of the 40 popups were pm2's own pidusage metrics poll
+    (`powershell.exe -c gwmi win32_process ...` from pm2/lib/Daemon.js) firing every ~30
+    seconds -- a separate and much more frequent source, filed as t-181.
+
+    Superseded reasoning kept below for the record.
+
     CONFOUNDER CHANGED AFTER THAT TRACE (2026-09-19, later the same day). The box's
     default terminal application was Windows Terminal when the trace above was captured.
     Windows Terminal ignores the SW_HIDE that healthcheck-hidden.vbs passes via
@@ -3576,6 +3598,52 @@ tasks:
 
     Note the ordering trap: report freshness BEFORE content. A watchdog whose log is stale
     is not reporting good news, it is not reporting.
+  updated: '2026-09-19T00:00:00Z'
+
+- id: t-181
+  milestone: m2
+  title: "pm2's pidusage metrics poll opens a visible PowerShell console every ~30 seconds -- 33 of 40 desktop popups in a measured 15-minute window"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Measured on ferngrotto 2026-09-19, 15:14-15:29, with watch-window-spawn.ps1. Of 40 new
+    visible consoles in 15 minutes, 33 were this:
+
+    powershell.exe -c gwmi win32_process -Filter 'ProcessId=... '
+      | select CreationDate,KernelModeTime,ParentProcessId,ProcessId,UserModeTime,WorkingSetSize
+      parent: node.exe C:\...\node_modules\pm2\lib\Daemon.js
+
+    That field list is `pidusage`'s signature -- the library pm2 uses to fill the cpu and
+    memory columns in `pm2 status`. On Windows it shells out to PowerShell, pm2's daemon
+    polls it roughly every 30 seconds, and each poll is a new powershell.exe, a new
+    conhost.exe, and a new window on the desktop. It is unrelated to healthcheck.ps1
+    (t-177) and continues under Windows Console Host.
+
+    THE STRUCTURAL FIX IS SESSION 0. The same trace caught `conhost.exe pid 6728 in session
+    0 - session 0, not visible`, which is the proof: a console created in session 0 cannot
+    appear on the desktop. Running pm2 as a Windows service instead of at logon puts the
+    daemon and everything it spawns there, and removes this entire class of popup
+    permanently -- pidusage, pm2.cmd, and any future child alike.
+
+    IT IS NOT A FREE WIN, and any implementation has to clear three things this repo has
+    already been burned by:
+
+      1. pm2's daemon is PER-USER. A daemon in a session the watchdog cannot reach is what
+         produced `WATCHDOG BLIND` on 2026-08-27, with healthcheck.ps1 logging
+         "pm2 apps: NONE VISIBLE" while ComfyUI died unattended. Verify after any change by
+         reading the next tick: `Get-Content logs\healthcheck.log -Tail 5` must show
+         `tick as <user> - pm2 apps: comfyui, ...`.
+      2. Mapped drive letters belong to one logon session -- see "Why you cannot just have
+         a service fix this for you" in ops/home-server/README.md. The pipeline is supposed
+         to be on UNC paths already; confirm before relying on it.
+      3. README.md already records that pm2-installer's service failed to start on this box
+         without `npm run configure`.
+
+    Cosmetic in isolation. Worth doing because it also fixes the "pm2 is started at logon
+    rather than as a service" fragility that healthcheck.ps1's own port-squatter alert text
+    already tells the reader to go check.
   updated: '2026-09-19T00:00:00Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
