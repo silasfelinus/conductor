@@ -181,17 +181,23 @@ module.exports = {
         // surface immediately through /history; this only widens the ceiling
         // for accepted jobs that are still producing no final output yet.
         GEN_TIMEOUT: process.env.GEN_TIMEOUT || '7200',
-        // LoRA auto-import watcher (embedded thread). Unset LORA_ROOT to disable.
+        // Model auto-import watcher (embedded thread): manual drops in either
+        // inbox are sorted + cataloged without sharing kr-download's queue.
+        MODEL_ROOT: process.env.MODEL_ROOT || KR_MODEL_ROOT,
         LORA_ROOT: process.env.LORA_ROOT || `${KR_MODEL_ROOT}/Lora`,
         LORA_IMPORT_DIR:
           process.env.LORA_IMPORT_DIR || `${KR_MODEL_ROOT}/Lora/import`,
+        CHECKPOINT_IMPORT_DIR:
+          process.env.CHECKPOINT_IMPORT_DIR || `${KR_MODEL_ROOT}/checkpoints/import`,
         CIVITAI_TOKEN: process.env.CIVITAI_TOKEN || '',
         LORA_POLL_SECONDS: process.env.LORA_POLL_SECONDS || '20',
         // SCAN_SCRIPT/IMPORT_SCRIPT are intentionally NOT set here: the agent
         // defaults to the vendored copies in ops/home-server/lora-catalog/,
         // which run from LOCAL disk in this checkout — never over the Z: mount.
         // Keep the scanner's sqlite cache on LOCAL disk, not the SMB share.
-        CACHE_DB: process.env.CACHE_DB || `${LOG_DIR}/.lora-cache.sqlite`
+        CACHE_DB: process.env.CACHE_DB || `${LOG_DIR}/.lora-cache.sqlite`,
+        MODEL_CACHE_DB:
+          process.env.MODEL_CACHE_DB || `${LOG_DIR}/.model-cache.sqlite`
       },
       out_file: `${LOG_DIR}/kr-relay.out.log`,
       error_file: `${LOG_DIR}/kr-relay.err.log`,
@@ -204,9 +210,9 @@ module.exports = {
     },
 
     // kr-download — pull-based model download agent. The companion to kr-relay:
-    // it claims queued LoRA/checkpoint downloads (from the Discover browser) via
+    // it claims queued file-backed model downloads (from the Discover browser) via
     // /api/lora/download/claim, fetches the file onto the engine's model dir
-    // (loras vs Stable-diffusion, chosen by the row's resourceType), catalogs it
+    // (canonical Comfy directory chosen by ResourceType), catalogs it
     // as a Resource, and reports the outcome. Reuses relay_agent's token + HTTP.
     //
     // Reuses KR_RELAY_TOKEN (already set for kr-relay). Optionally, for gated
@@ -234,9 +240,10 @@ module.exports = {
       env: {
         KR_RELAY_TOKEN: process.env.KR_RELAY_TOKEN || '',
         KR_BASE_URL: 'https://kindrobots.org',
+        KR_MODEL_ROOT: process.env.KR_MODEL_ROOT || KR_MODEL_ROOT,
         KR_LORA_DIR: process.env.KR_LORA_DIR || `${KR_MODEL_ROOT}/Lora`,
         KR_CHECKPOINT_DIR:
-          process.env.KR_CHECKPOINT_DIR || `${KR_MODEL_ROOT}/Stable-diffusion`,
+          process.env.KR_CHECKPOINT_DIR || `${KR_MODEL_ROOT}/checkpoints`,
         // Windows picks stdout's encoding from the console codepage (cp1252)
         // whenever stdout is a pipe -- which it always is under pm2. Any
         // non-cp1252 character in a log line then raises UnicodeEncodeError
