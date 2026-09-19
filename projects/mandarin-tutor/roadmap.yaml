@@ -451,7 +451,7 @@ tasks:
   - id: t-022
     milestone: m5
     title: "Teach the word first: per-word lesson pages with pinyin anatomy, component roles, and phonetic series"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -484,6 +484,23 @@ tasks:
       Add `utils/scripts/verifyMandarinLesson.test.ts` in the established pure-function style
       (see verifyMandarinSrs.test.ts) and wire it into contract-tests.yml alongside the other
       mandarin self-tests.
+
+      DONE 2026-09-19. Shipped utils/mandarinLesson.ts (pure lesson derivation: pinyin anatomy
+      per syllable with tone contour and third-tone sandhi; per-character component roles
+      rendered as full sentences that state what a piece does AND what it does not claim;
+      phonetic series built from role:'phonetic' components, with drifted families flagged
+      rather than hidden; true homophone groups split into exact-reading and tone-variant
+      buckets; and a teachability verdict that reports 'vocabulary' instead of padding a bare
+      IDS dump into a fake explanation), the tutorial page at /play/mandarin/learn/<key>, GET
+      /api/mandarin/lessons/[key] (public and cacheable, like GET /api/mandarin), and the
+      required pages/play/mandarin.vue -> pages/play/mandarin/index.vue move plus ?card= deep-
+      link return path. Added MandarinComponent.character (additive, optional) so a multi-
+      character word's pieces attribute to the right character instead of being label-parsed.
+      Verified: vue-tsc exit 0; new test:mandarin-lesson self-test wired into contract-
+      tests.yml, all assertions passing; layout contract holds with no new violations; page-
+      backdrop passed.
+    updated: '2026-09-19T12:27:02Z'
+    implementation_pr: 'silasfelinus/kind_robots#2880'
 
   - id: t-023
     milestone: m5
