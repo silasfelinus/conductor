@@ -15241,3 +15241,20 @@ records:
     verifying the test actually fails when a guard is removed, caught
     what a superficial "checks that the routes exist" test would have
     missed.
+- date: '2026-09-19'
+  project: butterfly-gallery
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: blocked
+  failure_category: actionable
+  lesson: >-
+    A tight cluster of ArtJobs changing status within seconds of each other
+    is at least as likely to be a deliberate administrative/human action as
+    a queue-system glitch -- do not requeue or otherwise "correct" it without
+    first checking for very recent out-of-band human steering beyond
+    CONTROL.md and the task's own note. When a corrective action is needed,
+    prefer the narrowest reversible one (a cancel-shaped action) over one
+    whose semantics you have not read closely (DELETE removed the ArtJob
+    rows outright rather than restoring CANCELLED status).
