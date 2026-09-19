@@ -898,7 +898,7 @@ tasks:
   - id: t-029
     milestone: m5
     title: "Generate real thumbnails for archive-sourced images"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -918,9 +918,23 @@ tasks:
       written. A large legacy archive's grid view is the actual pain point
       this fixes -- full-size images in a grid of dozens/hundreds of
       thumbnails is the "unacceptable" case t-018's own note named.
+
+      Merged kind_robots#2875 (2026-09-19): real thumbnail generation
+      (server/utils/artArchiveThumbnails.ts, 480px WebP q82, cached under a dot-prefixed .art-
+      archive-thumbnails/ subtree keyed on ArchiveEntry id, invalidated by comparing cache
+      mtime against the entry's own fileMtime -- same trust rule as the scanner's own known-
+      file cache). Also added the byte-serving route this required: nothing previously served
+      archive bytes over HTTP at all, so imagePath/thumbnailPath were unreachable raw
+      filesystem paths -- server/api/admin/art-archive/entries/[id]/file.get.ts (admin-gated,
+      root-confined via the existing artArchiveFileOps.ts helper) now serves the original or,
+      with ?variant=thumbnail, the cached downscaled copy. entries/index.get.ts,
+      entries/[id].get.ts, and the admin grid/detail Vue template were updated to actually use
+      it -- the grid now renders thumbnailPath instead of the full-size imagePath. New
+      contract test (test:art-archive-thumbnails) wired into CI. All 54 kind_robots checks
+      green, mergeable_state clean.
     claimed_by: claude-scheduled-20260919T102924Z-artarchive-t029
     claimed_at: '2026-09-19T10:29:25Z'
-    updated: '2026-09-19T10:42:29Z'
+    updated: '2026-09-19T10:56:39Z'
     implementation_pr: 'silasfelinus/kind_robots#2875'
 
   - id: t-030
@@ -1033,3 +1047,21 @@ tasks:
       -- "Confirm archive-preset ArtJobs are safe to always tag engine:
       'A1111'" -- from the same t-027/t-016 investigation. Both are kept;
       this one moved to the next free id rather than either being dropped.)
+
+  - id: t-035
+    milestone: m5
+    title: "Add a medium-sized cached preview for the archive detail panel"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-029
+    note: >-
+      Kaizen from t-029 (kind_robots#2875): the admin detail panel's larger
+      preview always requests the full-size original via
+      entries/[id]/file.get.ts, which could be slow on first paint for a
+      very large source file. Add a "medium" cached variant (~1200px,
+      reusing artArchiveThumbnails.ts's same dot-prefixed cache-folder
+      pattern and mtime-based invalidation) and serve it from the detail
+      panel instead of the untouched original, if large originals turn out
+      to be common in the imported archive.
