@@ -2557,6 +2557,28 @@ tasks:
   claimed_at: '2026-09-18T19:29:52Z'
 
 
+- id: t-111
+  milestone: m6
+  title: Fix EntityArtManager prompt suggestion failing to identify Reward records
+  status: ready
+  gate_human: false
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: |-
+    Filed 2026-09-19 from Silas's direct report on the Rewards encounter surface:
+    clicking "Suggest prompt" inside "Generate Reward replacement" changes the button
+    to "Could not identify record" instead of generating a prompt.
+
+    Initial code diagnosis: plugins/entity-art-prompt-suggest.client.ts discovers the
+    active entity through Vue's private __vueParentComponent DOM hook, then falls back
+    to stable data attributes or a pathname-shaped model reference. Reward encounters
+    select their record from the Reward store using ?rewardId / ?reward query state,
+    and EntityArtManager does not currently expose its entity identity as data
+    attributes. When the private Vue hook is unavailable, the plugin therefore has no
+    durable Reward id/slug to resolve. Fix the generic EntityArtManager identity
+    contract rather than adding a Reward-only special case, and extend the prompt
+    suggestion contract test so this regression is pinned.
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
-
