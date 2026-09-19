@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-09-19T04:44:46.727177+00:00",
+  "generated_at": "2026-09-19T11:09:50.541402+00:00",
   "summary": {
     "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 8,
+    "roadmap_warnings": 9,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -12,8 +12,8 @@
   },
   "openai_scheduled_agent": {
     "overdue": false,
-    "last_activity": "2026-09-19T04:18:32+00:00",
-    "hours_since": 0.44,
+    "last_activity": "2026-09-19T10:18:29+00:00",
+    "hours_since": 0.86,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "OpenAI coordination activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit."
@@ -30,23 +30,30 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-09-19T04:44:46.727182+00:00",
+    "generated_at": "2026-09-19T11:09:50.541408+00:00",
     "summary": {
       "roadmaps": 54,
       "active_projects": 21,
       "continuous_projects": 3,
-      "tasks": 1594,
-      "ready": 36,
-      "waiting": 55,
-      "needs_human": 42,
-      "in_progress": 2,
-      "done": 1443,
+      "tasks": 1603,
+      "ready": 33,
+      "waiting": 54,
+      "needs_human": 44,
+      "in_progress": 3,
+      "done": 1453,
       "errors": 0,
-      "warnings": 8,
-      "info": 26
+      "warnings": 9,
+      "info": 27
     },
     "errors": [],
     "warnings": [
+      {
+        "severity": "warning",
+        "code": "SOFT_NEEDS_HUMAN",
+        "project": "butterfly-gallery",
+        "task": "t-014",
+        "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
+      },
       {
         "severity": "warning",
         "code": "POSSIBLY_UNNECESSARY_GATE",
