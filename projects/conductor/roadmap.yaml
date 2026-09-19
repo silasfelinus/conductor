@@ -3454,5 +3454,28 @@ tasks:
     correlation) before picking this up. Do not implement blind.
   updated: '2026-09-19T20:35:53Z'
 
+- id: t-178
+  milestone: m2
+  title: 'Alert on pm2 restart_time climbing as a trend, not just within-tick, so a slowly-growing crash loop surfaces before a human notices consoles flashing'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from PR #4786 (2026-09-19): the ComfyUI crash loop that #4781's watchdog
+    repair drove into existence climbed pm2's `restart_time` counter for `comfyui`
+    from 779 to 794 in 35 minutes, but nothing tracks that counter as a trend --
+    healthcheck.ps1's existing CRASH LOOP branch only alerts on restarts moving
+    within a single tick, so a counter climbing slowly over weeks (as this one did,
+    reaching 779 before anyone looked) never trips anything. `pm2 status` shows the
+    count only to someone who happens to look at it.
+
+    Add a check (in healthcheck.ps1's own tick loop, or a separate lightweight
+    script polling `pm2 jlist`) that flags a restart count above a threshold, or
+    growing week-over-week, and logs/alerts on it the same way the existing CRASH
+    LOOP branch does. This would have surfaced the pre-existing unhealthy state
+    before #4781's fix landed on top of it and made things briefly worse.
+  updated: '2026-09-19T21:30:00Z'
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
