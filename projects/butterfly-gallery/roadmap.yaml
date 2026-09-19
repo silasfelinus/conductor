@@ -679,7 +679,7 @@ tasks:
   - id: t-021
     milestone: m5
     title: "Add batch selection and batch-action confirmation"
-    status: ready
+    status: claimed
     owner: worker
     passes: 2
     stakes: reversible
@@ -721,9 +721,9 @@ tasks:
       forbids. Reproduced identically reading the branch directly, not a CI flake. Full detail
       and fix pattern posted on kind_robots#2857. status: ready, passes: 1, retry_context set
       below.
-    claimed_by: openai-scheduled-2026-09-19T001719Z-butterfly-gallery-t021-a11
-    claimed_at: '2026-09-19T00:17:19Z'
-    updated: '2026-09-19T01:46:55Z'
+    claimed_by: openai-scheduled-2026-09-19T021506Z-butterfly-gallery-pr2857-a12
+    claimed_at: '2026-09-19T02:15:06Z'
+    updated: '2026-09-19T02:15:06Z'
     implementation_pr: 'silasfelinus/kind_robots#2857'
     retry_context: 'pass 2 failed (quality): kind_robots#2857 fixed the pass-1 layout-contract grid-cols violation correctly, but the same commit introduced an undefined kr-* class -- components/art/ButterflyGalleryBatchControls.vue:5 uses kr-text-black-md, which has no matching rule in assets/css/tailwind.css (only -lg/-xl/-sm/-xs/-2xl/-base exist in that family). Caught by re-running the layout-contract job''s later test:kr-class-coverage step after confirming the grid-cols fix itself is clean (189/189 unchanged, verified locally against the exact commit). Do differently: swap to kr-text-black-base (or another defined size), then run npm run test:kr-class-coverage locally before pushing. Push the fix to the same branch/PR (#2857).'
 
