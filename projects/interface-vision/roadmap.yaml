@@ -1855,7 +1855,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: "Polish every reachable Kind Robots surface page-by-page"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -1894,7 +1894,9 @@ tasks:
     Screenshot-directed gallery density slice: tighten shared card spacing and frames, remove below-art description/meta from Cards mode, make built-in Cards image-first, and render Reward rarity as an icon while suppressing the synthetic general collection label.
 
     Merged silasfelinus/kind_robots#2897 as 6859baca34421ac9f7b8bf1aaa5ee39e6e10d149 from exact head 43ffee038232541b7e308e340eddda20c47240fc. Shared gallery Cards now use tighter gaps and frames, hide below-art description/meta chrome, and keep titles on the art; Reward rarity is a gem icon in gallery view and the synthetic general collection label is suppressed. All 48 exact-head PR workflow runs completed successfully, including TypeScript Type Check, Layout Contract, Gallery Progressive Rendering Contract, Schema Migration Parity, and Contract Tests; Gallery consistency passed inside Contract Tests. Production is self-hosted and was not deployed by this session. Return the recurring visual-polish task to ready for the next screenshot-directed slice.
-  updated: '2026-09-19T21:34:00Z'
+
+    Screenshot-directed Achievements redesign: removed the permanent three-column Earned/Leaderboard/Undiscovered layout, made achievement rows container-responsive at one to three cards, placed the leaderboard as an achievement-sized peer in the last available slot of the first earned row, and moved undiscovered achievements below earned content. Also compacted achievement cards and shrank the layout/lint ratchets for the fixed violations.
+  updated: '2026-09-19T21:49:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2784'
   approved_by_human: true
   owner: worker
