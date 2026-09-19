@@ -638,7 +638,7 @@ tasks:
   - id: t-020
     milestone: m5
     title: "Cross-width visual acceptance of the admin archive workflow"
-    status: claimed
+    status: needs-human
     owner: worker
     passes: 0
     stakes: reversible
@@ -646,13 +646,17 @@ tasks:
     depends_on:
       - t-015
       - t-018
-    note: >
+    note: >-
       Final user-facing acceptance gate for phone/tablet/desktop admin layout
       after the main curation workflow is deployed and can be exercised against
       real archive data.
+
+      FOR SILAS: Live-verified pages/admin/art-archive.vue on kindrobots.org at phone/tablet/desktop widths (390px/768px/1280px) via a disposable cypress-* admin test login (created, granted admin+mature access, screenshotted, then fully deleted afterward -- 0 remaining). Screenshots confirm no horizontal overflow and no crushed controls at any width: the filter/search panel, the batch-selection curation board (rating + drag/drop preset targets), and the paginated grid + detail pane all reflow cleanly. kind_robots' own test:layout-contract and test:disabled-affordances checks both pass with zero violations for this file, so no code changes were needed -- no PR opened in kind_robots.
+      Limitation: production currently has 0 rows in ArchiveEntry (t-019 ran a dry-run reconciliation only; the real bulk import via t-024's endpoint hasn't been triggered yet), so only the empty-state UI was exercised live -- the populated grid with real thumbnails and actual drag/drop-over-real-cards interaction could not be visually confirmed against live data. Worth a quick re-check at all three widths once the real import has run.
+      TO APPROVE: if the above is acceptable, set approved_by_human: true and status: done on art-archive/t-020. Nothing else in this roadmap depends_on t-020 -- it is the standalone m5 acceptance gate, not a blocker for other tasks.
     claimed_by: claude-web-20260919T093219Z-artarchive-t020-a1
     claimed_at: '2026-09-19T09:32:20Z'
-    updated: '2026-09-19T09:32:20Z'
+    updated: '2026-09-19T09:42:27Z'
 
   - id: t-021
     milestone: m2
