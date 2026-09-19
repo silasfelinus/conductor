@@ -413,7 +413,7 @@ tasks:
     milestone: m4
     title: "Render and catalog reusable butterfly motion clips"
     status: waiting
-    owner: worker
+    owner: null
     passes: 0
     stakes: reversible
     depends_on: t-013
@@ -425,11 +425,14 @@ tasks:
       robot can be partially occluded by the dynamic foreground pile and the top
       passes fit the full horizontal runway while disappearing behind the funnel.
 
-      BLOCKED/CANCELLED FOR NOW (2026-09-18, Silas relaying Moseley): do not render
-      these assets until the exact production dimensions of the butterfly
-      background/compositing surface are known. Clips generated before that lock
-      are not reusable enough to justify the work. Return this task to ready only
-      after those dimensions are recorded for the implementation.
+      SILAS HOLD (2026-09-18, relaying Moseley): the remaining animation renders were
+      intentionally cancelled because the exact production dimensions for the butterfly
+      background/compositing surface are not yet locked. A scheduled worker subsequently
+      treated five CANCELLED Stage-2 jobs (28728-28732) as transient failures and requeued
+      them; conductor PR #4712 was closed unmerged as superseded by this direction. Do not
+      treat those requeues, or already-generated clips, as authorization to continue. Keep
+      t-014 waiting until the production dimensions are recorded, then reassess what should
+      be regenerated against the real geometry.
 
       Worker (Claude, scheduled conductor run): submitted the full t-014 pipeline live. Stage
       1 (keyframe stills, krea2 engine, priority 200, all completed within this session): A1
@@ -488,9 +491,7 @@ tasks:
       submitting. Re-arming to ready; picked up butterfly-gallery/t-030 instead this session.
       A future cycle should re-check 28728-28732 and, once all 8 are DONE, verify + catalog
       per t-014's existing NEXT ACTIONABLE STEP.
-    claimed_by: conductor-agent-20260919-t014-check
-    claimed_at: '2026-09-19T03:50:15Z'
-    updated: '2026-09-19T03:50:22Z'
+    updated: '2026-09-19T04:52:00Z'
 
   - id: t-015
     milestone: m4
