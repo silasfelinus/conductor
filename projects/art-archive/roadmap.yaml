@@ -599,7 +599,7 @@ tasks:
   - id: t-019
     milestone: m5
     title: "Run production dry-run reconciliation and verify zero privacy leakage before bulk import"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -607,15 +607,33 @@ tasks:
       - t-007
       - t-008
       - t-017
-    note: >
+    note: >-
       Before applying the first large import, report counts for files,
       duplicates, folder collections, exact/high-confidence/ambiguous Resource
       matches, and proposed ArtImage writes. Verify every proposed ArtImage and
       folder ArtCollection is private+mature and that ordinary SFW Resource
       galleries do not expose linked archive images.
+
+      Implemented a --dry-run mode for reconcileArtArchive.ts (kind_robots#2871): reports the
+      same new/changed/moved/copied/missing plan counts plus per-file resource-match evidence
+      (t-023) via the pure planner and matchArchiveResources, with zero Prisma writes
+      (verified by a static contract check that brace-extracts runDryRun's body and confirms
+      it never calls reconcileArchiveScan/importArchiveFile/create/update/delete). Also
+      audited every consumer of ArtImage.checkpointResourceId/LoraResources for the privacy-
+      leakage concern in this task's note: server/api/resources/[id]/gallery.get.ts already
+      runs every checkpoint/LoRA-use query through buildArtImageWhere(access), the same site-
+      wide visibility filter every other private ArtImage goes through, so a non-admin/non-
+      owning viewer cannot see a private+mature archive image via a Resource gallery. The
+      importer's own privacy invariant (isPublic=false/isMature=true forced on every write) is
+      unchanged and already durably enforced by test:art-archive-importer. Actually running
+      --dry-run against the real archive needs PRIVATE_PATH (only mounted on the Unraid
+      container, not this sandbox) -- next step for whoever has that shell access:
+      PRIVATE_PATH=/app/private npx tsx utils/scripts/reconcileArtArchive.ts --dry-run, before
+      the first bulk import.
     claimed_by: claude-scheduled-20260919T084459Z-artarchive-t019-a1
     claimed_at: '2026-09-19T08:45:00Z'
-    updated: '2026-09-19T08:54:03Z'
+    updated: '2026-09-19T09:02:02Z'
+    implementation_pr: 'silasfelinus/kind_robots#2871'
 
   - id: t-020
     milestone: m5
@@ -932,3 +950,26 @@ tasks:
       unmatched evidence) in the JSON response/summary object, mirroring
       what the CLI already reports, so Silas can see match quality via the
       endpoint before t-007 starts applying anything automatically.
+
+  - id: t-032
+    milestone: m5
+    title: "Surface t-019's dry-run reconciliation report via an admin-gated endpoint"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-019
+    note: >-
+      Kaizen from t-019 (kind_robots#2871): reconcileArtArchive.ts's new
+      --dry-run mode reports new/changed/moved/copied/missing plan counts
+      plus resource-match evidence with zero database writes, but it is
+      CLI-only -- there is still no way to preview a reconciliation pass
+      without shell access to the production container, which is the exact
+      gap t-024 closed for the (real) import path. Add an admin-gated
+      endpoint (matching t-024's server/api/admin/art-archive/import.post.ts
+      convention) that runs the same read-only plan + resource-match report
+      and returns it as JSON, so Silas can preview counts and resource-match
+      quality before the first bulk import without exec'ing into the
+      container. Must remain provably write-free -- reuse or mirror
+      utils/scripts/verifyReconcileArtArchiveCli.mjs's brace-extraction
+      technique to assert the endpoint's handler never calls a write path.

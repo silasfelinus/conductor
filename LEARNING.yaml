@@ -15303,3 +15303,12 @@ records:
   outcome: done
   failure_category: quality
   lesson: "Reviewer rejected pass 1 for a static contract-verifier regex whose source-order assumption (UNMATCHED before evidence.name/evidence.hash) did not match formatOutcome()'s real build order (name -> hash -> weight -> UNMATCHED), even though the runtime output was already correct -- a reminder that a new regex-based contract check needs to be verified against the actual source it's asserting on, not just against the expected rendered string. The retry's one-line regex fix (matching the real order) landed clean on pass 2."
+- date: 2026-09-19
+  project: art-archive
+  task: t-019
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A regex negative-lookahead across a multi-line [\\s\\S]*? span cannot reliably prove a token is ABSENT from a function body -- it only checks one anchor point, not every position -- so it passed trivially on a first attempt to verify runDryRun() never calls a write path. Brace-matched extraction of the actual function source span, then a plain substring search on that extracted text, is the sound way to assert absence; also caught a false positive from a console.log string that literally contained the text of a forbidden call name as documentation, not an actual invocation. Separately: read the existing write-path code (importArchiveFile's hardcoded isPublic=false/isMature=true) before assuming a 'verify no privacy leakage' task needs new machinery -- the invariant was already there and already tested by test:art-archive-importer."
