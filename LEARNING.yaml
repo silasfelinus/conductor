@@ -15431,3 +15431,12 @@ records:
     thumbnail-cache architecture exactly, is low-risk/reversible, and never hurts even if large
     originals turn out to be rare. Worth considering whether ArchiveEntry should record fileSize at
     scan time so a future session actually could measure this.
+- date: 2026-09-19
+  project: art-archive
+  task: t-031
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Extending an existing admin endpoint to surface an already-built pure helper (matchArchiveResources, from t-023) is a clean, single-file, additive change when the helper's signature is reused as-is -- no new abstraction needed for a reporting-only slice."
