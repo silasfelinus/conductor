@@ -872,7 +872,7 @@ tasks:
   - id: t-028
     milestone: m3
     title: "Wire the generated room/frame/pile/bins/window art into the stage once rendered"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -894,9 +894,12 @@ tasks:
       Worker (Claude, scheduled conductor run): implemented, verified (vue-tsc, eslint,
       prettier, layout-contract, kr-class-coverage all clean), and opened kind_robots#2859.
       Setting status: review.
+
+      Merged kind_robots#2859. All 5 rendered assets (room/window/frame/bins/pile) wired into
+      the stage with graceful CSS fallbacks. Closing to done.
     claimed_by: claude-scheduled-20260919T013146Z-bg-t028
     claimed_at: '2026-09-19T01:31:47Z'
-    updated: '2026-09-19T01:40:42Z'
+    updated: '2026-09-19T01:44:52Z'
     implementation_pr: 'silasfelinus/kind_robots#2859'
 
   - id: t-029
