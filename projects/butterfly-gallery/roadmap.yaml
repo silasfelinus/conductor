@@ -722,22 +722,36 @@ tasks:
   - id: t-022
     milestone: m5
     title: "Integrate the real art-archive private image feed"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on:
       - t-004
       - t-009
-    note: >
+    note: >-
       EXTERNAL DEPENDENCY: art-archive must expose the private/mature ArtImage
       read/action contract. Swap the fixture adapter onto that real provider,
       preserving admin auth and mature-viewer gating. Do not query PRIVATE_PATH
       directly from Butterfly Gallery and do not duplicate ArchiveEntry scanner
       logic. Mark ready when the art-archive API seam exists.
+
+      Implemented the real art-archive-backed feed provider (GET /api/admin/art-
+      archive/entries, extended additively for
+      thumbnail/mature/public/prompt/checkpoint/generationMetadata/folderCollection) plus
+      setRating/trash/restore through the existing rate/quarantine/restore endpoints.
+      setProcessed/addToCollection/removeFromCollection/markNeedsReview stay fixture no-ops
+      (no real persistence exists for them yet: no curated-flag field, no slug->id seam for
+      collections, no matchState-mutation endpoint) -- filed as t-029 rather than improvised.
+      Real provider/adapter installed via a new client plugin (not the fixture modules' own
+      default) so the existing contract tests keep working under plain tsx (performFetch pulls
+      in Vite-only import.meta.glob code). New contract test added and wired into CI. vue-
+      tsc/eslint/prettier all clean; all existing butterfly-gallery contract tests still pass.
+      silasfelinus/kind_robots#2858 open, CI pending.
     claimed_by: claude-scheduled-20260919T003229Z-butterfly-gallery-t022
     claimed_at: '2026-09-19T00:32:30Z'
-    updated: '2026-09-19T00:32:30Z'
+    updated: '2026-09-19T00:48:31Z'
+    implementation_pr: 'silasfelinus/kind_robots#2858'
 
   - id: t-023
     milestone: m5
