@@ -1207,7 +1207,7 @@ tasks:
   - id: t-039
     milestone: m2
     title: "Add a dedicated verify script for the admin import.post.ts endpoint"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1222,6 +1222,11 @@ tasks:
       matchArchiveResources, assert the response shape and the
       filesWithMatchEvidence/unmatchedModels aggregation), so all three call
       sites have equivalent contract coverage.
-    updated: '2026-09-19T17:32:56Z'
+
+      Implemented as utils/scripts/verifyArtArchiveImportEndpoint.mjs, mirroring
+      verifyArtArchiveDryRunEndpoint.mjs's static source-contract shape. Verified locally
+      against the real endpoint source before pushing. Merged kind_robots#2890.
+    updated: '2026-09-19T17:40:06Z'
     claimed_by: claude-scheduled-20260919T173500Z-art-archive-t039
     claimed_at: '2026-09-19T17:32:56Z'
+    implementation_pr: 'silasfelinus/kind_robots#2890'
