@@ -714,8 +714,8 @@ tasks:
   - id: t-022
     milestone: m5
     title: "Integrate the real art-archive private image feed"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on:
@@ -727,6 +727,9 @@ tasks:
       preserving admin auth and mature-viewer gating. Do not query PRIVATE_PATH
       directly from Butterfly Gallery and do not duplicate ArchiveEntry scanner
       logic. Mark ready when the art-archive API seam exists.
+    claimed_by: claude-scheduled-20260919T003229Z-butterfly-gallery-t022
+    claimed_at: '2026-09-19T00:32:30Z'
+    updated: '2026-09-19T00:32:30Z'
 
   - id: t-023
     milestone: m5
