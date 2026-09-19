@@ -475,9 +475,9 @@ tasks:
   - id: t-015
     milestone: m4
     title: "Build the drag/drop curation board with preset modifier targets"
-    status: review
+    status: ready
     owner: worker
-    passes: 0
+    passes: 1
     stakes: reversible
     depends_on:
       - t-010
@@ -487,9 +487,17 @@ tasks:
 
 
       Implemented the first curation-board slice in Kind Robots: batch thumbnail selection, rating and recoverable-delete targets with explicit destructive confirmation and partial-failure retention, plus persisted preset targets loaded from the existing archive preset API. Durable preset execution remains intentionally owned by t-016 rather than inventing a second render queue.
+
+      Reviewer rejection (pass 1, quality): kind_robots#2866's 'Contract verifiers' CI check
+      fails -- verifyDisabledAffordances.ts flags pages/admin/art-archive.vue:30 (curation-
+      board Clear button rendered disabled with no subject when nothing is selected),
+      violating the standing Silas rule against blanked-out options. Not transient --
+      reproduced by CI on the current head commit, deterministic. Posted specific fix on
+      kind_robots#2866. status: ready, passes: 1, retry_context set below.
     claimed_by: openai-scheduled-2026-09-19T051828Z-art-archive-t015-a11
     claimed_at: '2026-09-19T05:18:28Z'
-    updated: '2026-09-19T05:25:00Z'
+    updated: '2026-09-19T05:30:22Z'
+    retry_context: 'pass 1 failed (quality): kind_robots#2866''s disabled-affordance contract fails -- pages/admin/art-archive.vue:30''s curation-board ''Clear'' button uses :disabled="!archive.selectedCount" instead of v-if="archive.selectedCount". This is a standing repo rule (Silas, 2026-08-10: we don''t need to see an option if it isn''t pertinent) enforced by verifyDisabledAffordances.ts, and the button has no subject with zero selected. Do differently: replace :disabled="!archive.selectedCount" with v-if="archive.selectedCount" on that button (matching the pattern already used correctly elsewhere in the file, e.g. the per-image rating Clear button which has no such guard because it always has a subject); run npm run test:disabled-affordances locally before pushing the retry.'
 
   - id: t-016
     milestone: m4
