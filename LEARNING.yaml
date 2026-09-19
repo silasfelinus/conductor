@@ -15339,3 +15339,15 @@ records:
   outcome: done
   failure_category: null
   lesson: "The task note assumed full-size archive images already rendered and only thumbnails were missing ('the admin browse endpoint already returns a thumbnailPath field, but it just falls back to the full-size ArtImage.path'). Reading the actual serving path (nuxt.config.ts, server/api, Dockerfile) showed nothing ever served raw archive bytes over HTTP at all -- ArtImage.path/ArchiveEntry.relativePath for an archive row is only a filesystem path relative to the private, non-web-served PRIVATE_PATH root, so both the thumbnail AND full-size <img> bindings were dead links before this task. Worth checking a task note's stated premise against the actual code path before implementing narrowly to it -- a byte-serving route turned out to be the real prerequisite, not an assumption safe to inherit."
+- date: 2026-09-19
+  project: art-archive
+  task: t-030
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Before building a titled feature (persisted scan checkpoints), the Worker benchmarked the underlying
+    assumption first and found a hidden cache-correctness bug instead (float vs truncated-integer mtime
+    comparison defeating the existing hash cache); fixing that made the walk cheap enough that checkpoint
+    tracking wasn't needed at all -- measure before building is cheaper than building the wrong thing.

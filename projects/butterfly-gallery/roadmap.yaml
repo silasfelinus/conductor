@@ -39,23 +39,31 @@ notes_from_silas: |
   not generate or catalog reusable butterfly motion assets until those dimensions
   are locked.
 
-  MOTION DIRECTION UPDATE (2026-09-19, Silas): the canonical Kind Robots
-  "rainbow butterfly" is the existing Butterfly Scouts renderer already live in
-  Kind Robots, especially components/screenfx/butterfly-animation.vue: two
-  abstract translucent gradient wing lobes around a tiny dark body, with motion
-  doing most of the butterfly reading. Do NOT reinterpret these as Disney-like,
-  illustrated, anthropomorphic, or detailed cartoon insects. Prefer reusing or
-  extracting the existing DOM/CSS butterfly renderer for Butterfly Gallery
-  runway traffic and the left foreground perch loop so the visual identity stays
-  exact and automatically matches runtime geometry.
+  MOTION DIRECTION UPDATE (2026-09-19, superseding the earlier same-day
+  procedural-butterfly note): Butterfly Gallery has its own illustrated mascot
+  reference at /images/butterfly-gallery/gallery-butterfly-start.png. It remains
+  recognizably in the same rainbow-butterfly universe as Butterfly Scouts but has
+  more personality for close-up/perched behavior. Use that illustrated butterfly
+  as the visual source for BOTH the left foreground loop and the smaller runway
+  carry/tow animations. Do not force the procedural Butterfly Scouts DOM/CSS
+  renderer into this feature.
 
-  Do not generate against guessed backgrounds or dimensions. Silas is manually
-  installing the approved static Gallery assets on the media server under
-  /images/butterfly-gallery. Any remaining generated animation that needs a
-  background plate (most likely the lower-right robot loop) must wait until those
-  production assets are installed, then use the exact final image/crop and target
-  dimensions as its first frame/reference. The existing blank-state CSS loop is
-  preferred over generated video unless a later visual review says otherwise.
+  The approved static assets are now installed and served by the media server at
+  /images/butterfly-gallery. Animation jobs may now be submitted using the exact
+  production runway/background image and target crop/dimensions as the first
+  frame/reference. For runway animations, use runway-background.png as the static
+  scene and gallery-butterfly-start.png as the butterfly reference, adding blank
+  portrait/frame props for carry/tow behavior. For the lower-right robot loop, use
+  robot-sift-start.png plus the exact lower-right production crop. The existing
+  blank-state CSS loop may remain unless visual review later prefers generated
+  motion.
+
+  RENDER PRIORITY OVERRIDE (2026-09-19, Silas): the art queue still has a large
+  backlog from prior work. Butterfly Gallery ANIMATION jobs may be submitted now
+  but MUST use the lowest ArtJob priority band, priority 0. The queue is ordered
+  by priority descending, so these jobs intentionally sit behind priority-100,
+  priority-200, and other elevated work. Do not promote them merely because the
+  Butterfly Gallery project itself is high priority for agent work.
 
   Keep butterfly-gallery HIGH priority until complete and order it immediately
   ahead of art-archive for agent pickup. Art generated for this project uses
@@ -430,123 +438,51 @@ tasks:
   - id: t-014
     milestone: m4
     title: "Implement and catalog Gallery motion actors against final production geometry"
-    status: needs-human
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
+    approved_by_human: true
     depends_on: t-013
     note: >-
-      WAITING ON SILAS TO INSTALL/CONFIRM THE FINAL STATIC GALLERY ASSETS AND
-      PRODUCTION GEOMETRY. Do not poll, requeue, or submit replacement animation
-      ArtJobs while this task is waiting.
+      HUMAN GATE CLEARED 2026-09-19: Silas confirmed the renamed production
+      assets are installed and served from /images/butterfly-gallery, and
+      explicitly authorized animation submissions at the LOWEST queue priority.
 
-      2026-09-19 scope correction: generated butterfly video clips are no longer
-      the preferred implementation. Butterfly Gallery should reuse/extract the
-      canonical Butterfly Scouts DOM/CSS visual grammar from
-      components/screenfx/butterfly-animation.vue for the upper runway actors and
-      left foreground butterfly. These butterflies are intentionally abstract:
-      paired translucent rainbow gradient wing lobes plus a tiny dark body, not
-      detailed cartoon insects. Carrying/towing art should be composed as runtime
-      DOM/SVG/CSS around those actors so it fits the real runway at any width and
-      can disappear behind the funnel without baking warehouse scenery into a
-      clip.
+      Use the illustrated Gallery butterfly at
+      /images/butterfly-gallery/gallery-butterfly-start.png as the animation
+      model. For upper-runway clips, use the actual
+      /images/butterfly-gallery/runway-background.png as the background/first
+      frame context and preserve its real aspect ratio/crop. Generate several
+      short variants with smaller butterflies carrying/towing blank portraits:
+      solo carry, string tow, team carry, struggler, and an occasional fumble.
+      These should be image-to-video work (LTX or WAN as appropriate), not a
+      procedural DOM recreation of Butterfly Scouts.
 
-      The lower-right Kind Robot may still use a generated looping animation, but
-      only after the final stage asset is installed; use the exact lower-right
-      production background crop and exact target dimensions as the first
-      frame/reference, and preserve the layer contract where the real dynamic
-      picture pile occludes the robot. The central blank-state loop should remain
-      the existing lightweight CSS/DOM animation unless visual acceptance later
-      calls for a replacement.
+      For the left foreground loop, animate gallery-butterfly-start.png as a
+      close-up fly/hover/perch/idle/reset behavior. For the lower-right loop,
+      animate /images/butterfly-gallery/robot-sift-start.png against the exact
+      production lower-right crop so the live foreground pile can layer in front
+      of it. The central blank state can remain the existing CSS/DOM motion unless
+      visual acceptance requests a generated replacement.
 
-      Previously generated Stage-2 butterfly videos and cancelled/requeued jobs
-      28725-28732 are reference material only, not approved production assets and
-      not authorization to continue rendering. Do not burn GPU time checking or
-      reviving them merely because their queue state changes.
+      QUEUE POLICY: every NEW Butterfly Gallery animation ArtJob from this task
+      must be submitted at priority 0. Kind Robots claims PENDING jobs by priority
+      descending, so priority 0 is deliberately beneath the current backlog's
+      elevated work. Do not reuse the old priority-200 setting and do not raise
+      these jobs later just because the project itself is high-priority agent
+      work.
 
-      Once Silas confirms the static assets are installed and the actual runway,
-      left-actor, and lower-right geometry can be measured, implement and catalog
-      the approved motion actors against that real geometry. Verify the robot can
-      be partially occluded by the dynamic foreground pile and the runtime
-      butterfly passes traverse the full horizontal runway while disappearing
-      behind the funnel.
+      Prior Stage-2 jobs 28725-28732 and their old butterfly keyframes are
+      superseded visual references. Do not revive/requeue them as production
+      assets. New jobs should use the newly installed production PNGs and the
+      updated illustrated Gallery butterfly direction.
 
-      SILAS HOLD (2026-09-18, relaying Moseley): the remaining animation renders were
-      intentionally cancelled because the exact production dimensions for the butterfly
-      background/compositing surface are not yet locked. A scheduled worker subsequently
-      treated five CANCELLED Stage-2 jobs (28728-28732) as transient failures and requeued
-      them; conductor PR #4712 was closed unmerged as superseded by this direction. Do not
-      treat those requeues, or already-generated clips, as authorization to continue. Keep
-      t-014 waiting until the production dimensions are recorded, then reassess what should
-      be regenerated against the real geometry.
-
-      Worker (Claude, scheduled conductor run): submitted the full t-014 pipeline live. Stage
-      1 (keyframe stills, krea2 engine, priority 200, all completed within this session): A1
-      runway-string-tow=ArtJob 28717->ArtImage 28430, A2 runway-team-carry=28718->28431, A3
-      runway-solo-struggle=28719->28432, A4 runway-clean-cross=28720->28433, A5 runway-drop-
-      gag=28721->28434, B1 left-butterfly-perch-loop=28722->28435, C1 robot-picture-sift-
-      loop=28723->28436, D1 blank-state-idle-loop=28724->28437. Viewed all 8: on-concept,
-      text-free, correct cel-shaded rainbow-butterfly/Kind-Robot mascot style, flat white
-      (non-transparent) background -- krea2 did not honor the transparency request, matching
-      ANIMATION-SHOT-LIST.md's own documented fallback ('render against a flat removable key
-      background and record the limitation'). Stage 2 (image-to-video, LTX engine, using each
-      keyframe as firstImageBase64, priority 200, mp4 output, renderScale 1): A1=ArtJob 28725,
-      A2=28726, A3=28727, A4=28728, A5=28729, B1=28730, C1=28731, D1=28732. Durations/loop
-      flags follow the shot list exactly (A*=non-looping 3.0-4.0s per shot, B1/C1/D1=looping
-      6-8s). All 8 were still PENDING/RUNNING (one at a time, single relay) when this session
-      ended. GET /api/art/queue/stats confirmed this is the same chronic single-GPU render-
-      backend capacity issue documented across ai-art-academy/t-045, coloring-book/t-022, and
-      storybook/t-049 (queueDepth PENDING=680, oldestPending ~75h as of this session) -- and
-      LTX/WAN video renders are documented at 1-4 hours EACH on top of queue wait (see
-      kind_robots utils/videoPresets.ts timeoutSeconds budgets), so completing all 8 clips
-      serially is a multi-hour-to-multi-day operation, not something any single session can
-      finish. Not a bug in this task or the submission -- transient render-backend capacity,
-      no pass consumed. NEXT ACTIONABLE STEP: a future cycle should GET
-      /api/art/queue/28725..28732, and for each DONE job read artImageId, GET
-      /api/art/image/<id> to confirm the clip actually satisfies the acceptance checklist
-      (runway passes traverse the full runway and disappear behind the funnel; left butterfly
-      stays independently composable; robot reads correctly when partially occluded; blank-
-      state motion is gentle with no fake art; no baked warehouse backdrop or UI; provenance
-      intact), then catalog the accepted clips with stable identities (matching the job keys
-      above) in code -- store helper + reference in pages/butterfly-gallery.vue's reserved
-      animation-layer slots (data-animation-slot="butterfly-runway"/"foreground-
-      robot"/foreground-butterfly-slot/blank-state loop, per t-010's note) -- run vue-
-      tsc/eslint, and open the kind_robots PR. Re-render only a specific FAILED/rejected job
-      rather than the whole batch. No duplicate-submission risk: every job id is recorded
-      here. Re-arming to ready, releasing the claim.
-
-      Checked all 8 Stage-2 video jobs this session: 28725=DONE (artImageId 28439),
-      28726=RUNNING, 28727-28732=still PENDING. Same single-GPU capacity bottleneck as before
-      -- transient, no pass consumed, not re-submitting. Re-arming to ready; a future cycle
-      should re-check 28726-28732 and, once all 8 are DONE, verify + catalog per the NEXT
-      ACTIONABLE STEP above.
-
-      Re-checked render jobs this session (2026-09-19): 28725=DONE (artImageId 28439),
-      28726=DONE (artImageId 28440), 28727=RUNNING, 28728-28732=PENDING. Same single-GPU
-      render-backend capacity bottleneck as before -- transient, no pass consumed, not re-
-      submitting. Re-arming to ready; picking up butterfly-gallery/t-028 instead this session
-      since its 5 ArtJobs (28711-28715) are all DONE and ready to wire in. A future cycle
-      should re-check 28727-28732 and, once all 8 are DONE, verify + catalog per t-014's
-      existing NEXT ACTIONABLE STEP.
-
-      Re-checked render jobs this session (2026-09-19): 28725=DONE (artImageId 28439),
-      28726=DONE (artImageId 28440), 28727=DONE (artImageId 28441), 28728=RUNNING,
-      28729-28732=PENDING. Queue stats: PENDING=687, staleRunningCount=1 (28728),
-      oldestPending age ~86h (coloring-book job, unrelated project) -- same chronic single-GPU
-      render-backend bottleneck as prior cycles. Not a bug, no pass consumed, not re-
-      submitting. Re-arming to ready; picked up butterfly-gallery/t-030 instead this session.
-      A future cycle should re-check 28728-28732 and, once all 8 are DONE, verify + catalog
-      per t-014's existing NEXT ACTIONABLE STEP.
-
-      Roadmap state reconciliation: status corrected from 'ready' to 'needs-human' to match
-      this task's own already-recorded SILAS HOLD (2026-09-18, relaying Moseley) -- production
-      butterfly-background compositing dimensions are not yet locked, and the task's own note
-      explicitly says 'Keep t-014 waiting' and 'Do not poll, requeue, or submit replacement
-      animation ArtJobs while this task is waiting.' No implementation attempted this session;
-      this is a status-only correction so the task stops surfacing as pickable ready work
-      until Silas confirms the final static gallery assets and production geometry.
-    updated: '2026-09-19T08:38:10Z'
-    soft_gate: false
+      Acceptance: animated background scenes must not bake in unrelated living
+      actors; runway clips must fit the real horizontal window; the funnel may
+      occlude motion cleanly; the left butterfly loop remains independently
+      composable; the robot reads correctly while partially hidden by the dynamic
+      pile; reduced-motion/visibility gating remains required when integrated.
 
   - id: t-015
     milestone: m4
