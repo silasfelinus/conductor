@@ -39,6 +39,24 @@ notes_from_silas: |
   not generate or catalog reusable butterfly motion assets until those dimensions
   are locked.
 
+  MOTION DIRECTION UPDATE (2026-09-19, Silas): the canonical Kind Robots
+  "rainbow butterfly" is the existing Butterfly Scouts renderer already live in
+  Kind Robots, especially components/screenfx/butterfly-animation.vue: two
+  abstract translucent gradient wing lobes around a tiny dark body, with motion
+  doing most of the butterfly reading. Do NOT reinterpret these as Disney-like,
+  illustrated, anthropomorphic, or detailed cartoon insects. Prefer reusing or
+  extracting the existing DOM/CSS butterfly renderer for Butterfly Gallery
+  runway traffic and the left foreground perch loop so the visual identity stays
+  exact and automatically matches runtime geometry.
+
+  Do not generate against guessed backgrounds or dimensions. Silas is manually
+  installing the approved static Gallery assets on the media server under
+  /images/butterfly-gallery. Any remaining generated animation that needs a
+  background plate (most likely the lower-right robot loop) must wait until those
+  production assets are installed, then use the exact final image/crop and target
+  dimensions as its first frame/reference. The existing blank-state CSS loop is
+  preferred over generated video unless a later visual review says otherwise.
+
   Keep butterfly-gallery HIGH priority until complete and order it immediately
   ahead of art-archive for agent pickup. Art generated for this project uses
   ArtJob priority 200, matching Daily Dream art and outranking the Resource/LoRA
@@ -411,19 +429,47 @@ tasks:
 
   - id: t-014
     milestone: m4
-    title: "Render and catalog reusable butterfly motion clips"
-    status: ready
+    title: "Implement and catalog Gallery motion actors against final production geometry"
+    status: waiting
     owner: null
     passes: 0
     stakes: reversible
     depends_on: t-013
     note: >-
-      Generate, inspect, and catalog the approved reusable motion assets with
-      stable identities and transparent/composable presentation where supported:
-      top-runway butterfly/art passes, left foreground butterfly loop,
-      lower-right robot-sifting loop, and blank-state display loop. Verify the
-      robot can be partially occluded by the dynamic foreground pile and the top
-      passes fit the full horizontal runway while disappearing behind the funnel.
+      WAITING ON SILAS TO INSTALL/CONFIRM THE FINAL STATIC GALLERY ASSETS AND
+      PRODUCTION GEOMETRY. Do not poll, requeue, or submit replacement animation
+      ArtJobs while this task is waiting.
+
+      2026-09-19 scope correction: generated butterfly video clips are no longer
+      the preferred implementation. Butterfly Gallery should reuse/extract the
+      canonical Butterfly Scouts DOM/CSS visual grammar from
+      components/screenfx/butterfly-animation.vue for the upper runway actors and
+      left foreground butterfly. These butterflies are intentionally abstract:
+      paired translucent rainbow gradient wing lobes plus a tiny dark body, not
+      detailed cartoon insects. Carrying/towing art should be composed as runtime
+      DOM/SVG/CSS around those actors so it fits the real runway at any width and
+      can disappear behind the funnel without baking warehouse scenery into a
+      clip.
+
+      The lower-right Kind Robot may still use a generated looping animation, but
+      only after the final stage asset is installed; use the exact lower-right
+      production background crop and exact target dimensions as the first
+      frame/reference, and preserve the layer contract where the real dynamic
+      picture pile occludes the robot. The central blank-state loop should remain
+      the existing lightweight CSS/DOM animation unless visual acceptance later
+      calls for a replacement.
+
+      Previously generated Stage-2 butterfly videos and cancelled/requeued jobs
+      28725-28732 are reference material only, not approved production assets and
+      not authorization to continue rendering. Do not burn GPU time checking or
+      reviving them merely because their queue state changes.
+
+      Once Silas confirms the static assets are installed and the actual runway,
+      left-actor, and lower-right geometry can be measured, implement and catalog
+      the approved motion actors against that real geometry. Verify the robot can
+      be partially occluded by the dynamic foreground pile and the runtime
+      butterfly passes traverse the full horizontal runway while disappearing
+      behind the funnel.
 
       SILAS HOLD (2026-09-18, relaying Moseley): the remaining animation renders were
       intentionally cancelled because the exact production dimensions for the butterfly
@@ -538,9 +584,13 @@ tasks:
       - t-010
       - t-014
     note: >
-      Implement the long upper runway scheduler from APPROVED-STAGE-SPEC.md:
-      varied butterfly+art passes travel across the full horizontal window and
-      are clipped/occluded behind the central funnel. This is the ONLY
+      Implement the long upper runway scheduler from APPROVED-STAGE-SPEC.md
+      after t-014 is released from its production-geometry hold. Reuse/extract
+      the existing Butterfly Scouts DOM/CSS renderer rather than playing
+      AI-generated butterfly videos: varied butterfly+art passes should travel
+      across the real runtime width, be clipped by the runway surface, and be
+      occluded behind the central funnel. Carrying frames/strings may be DOM/SVG
+      companions to the canonical butterfly actor. This is the ONLY
       background-area character animation. No static butterfly silhouettes or
       robots appear in the warehouse backdrop. Pause when hidden and suppress
       under reduced motion.

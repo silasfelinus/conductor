@@ -1,134 +1,133 @@
 # Butterfly Gallery Animation Shot List
 
-Status: implementation contract for `butterfly-gallery/t-013`
+Status: implementation contract for `butterfly-gallery/t-013`, corrected by Silas 2026-09-19
 
-This file translates `APPROVED-STAGE-SPEC.md` and `MOTION-STORYBOARD.md` into reusable animation-creator jobs. It does not redefine the first-visit intro or the DOM stretch-and-snap selected-image transition. All actors remain separate composable layers. No living thing is baked into the static warehouse background.
+This file translates `APPROVED-STAGE-SPEC.md` and `MOTION-STORYBOARD.md` into reusable motion actors. It does not redefine the first-visit intro or the DOM stretch-and-snap selected-image transition. All actors remain separate composable layers. No living thing is baked into the static warehouse background.
+
+## 2026-09-19 canonical butterfly correction
+
+The Kind Robots rainbow butterfly already has a canonical live implementation.
+
+Use the visual grammar from `components/screenfx/butterfly-animation.vue` and the existing butterfly helpers/store:
+
+- two simple asymmetric translucent wing lobes;
+- radial-gradient rainbow color, with related/complementary wing tones;
+- a tiny dark body;
+- fast CSS wing flapping;
+- runtime heading/bank/bob/fade motion;
+- abstract luminous silhouette rather than a detailed illustrated insect.
+
+This is the look visible in the Butterfly Scouts screensaver. It is intentional. Do **not** reinterpret Butterfly Gallery butterflies as Disney-like, anthropomorphic, face-bearing, highly detailed, or conventional cartoon butterflies.
+
+For Butterfly Gallery, prefer extracting/reusing this DOM/CSS renderer and choreographing it inside the Gallery's own clipped animation surfaces. This guarantees the mascot stays visually canonical and lets motion use the real runtime dimensions instead of guessing a video canvas.
+
+## Production geometry hold
+
+Silas is manually installing the approved static Gallery assets on the media server under `/images/butterfly-gallery`.
+
+Do not submit replacement motion jobs against guessed room/window geometry.
+
+Any remaining generated animation that needs a background plate must wait until the final production asset is installed, then use the **exact final image/crop and exact target dimensions as the first frame/reference**.
+
+Previously submitted Stage-2 video jobs 28725-28732, including cancelled/requeued jobs, are reference material only. They are not approved production animation and must not be polled, revived, or resubmitted merely because their queue state changes.
 
 ## Shared production rules
 
-- Visual language: bright minimalist Saturday-morning-cartoon / cel-shaded Kind Robots warehouse, crisp silhouettes, cheerful rainbow butterfly palette, no photorealism.
-- Every mascot clip must be reusable without text, labels, UI chrome, example gallery art, or a baked warehouse background.
-- Prefer transparent/composable output where the animation backend supports it. If transparency is unavailable, render against a flat removable key background and record that limitation with the job.
-- Preserve a stable actor identity across variants. Butterflies are rainbow Kind Robots mascots, not generic realistic insects. The robot is the established friendly Kind Robot mascot.
-- Keep motion readable at small sizes. Avoid particle showers, camera moves, zooms, cuts, or scenery motion.
-- Runway clips are discrete non-looping passes. Left-butterfly, robot, and blank-state assets are loops with clean reset points.
-- Reduced-motion mode does not play these clips. Runtime visibility/pause behavior belongs to later implementation tasks.
-- Generated project art uses ArtJob priority **200**. Do not use the Resource/LoRA preview-refill priority lane.
+- User sorting must remain fully usable with every mascot layer absent.
+- Butterflies are runtime DOM/CSS actors derived from the canonical Butterfly Scouts implementation unless Silas explicitly approves a different approach.
+- No butterfly or robot is baked into the warehouse background.
+- Runtime butterfly actors may carry/tow separate DOM/SVG/CSS picture-frame props.
+- Runway actors must clip inside the real runway and disappear behind the central funnel by ordinary layer/overflow rules.
+- The lower-right robot remains behind the dynamic foreground image pile.
+- Reduced-motion mode suppresses mascot motion.
+- Pause or stop ambient actors when the Gallery is hidden.
+- Do not use generated example user art inside decorative frames.
 
 ## Job family A: upper runway passes
 
-Canvas contract: wide transparent/composable strip suitable for the long horizontal runway. Actor and carried frame stay vertically compact enough to clear the runway. Motion traverses the full canvas so the runtime can clip it and occlude the middle behind the convex funnel.
+**Implementation:** runtime DOM/CSS/SVG choreography, not pre-rendered butterfly videos.
 
-### A1 — String tow
+The actor surface is the actual `data-animation-slot="butterfly-runway"` runtime box. Motion paths derive from its measured width/height.
 
-**Job key:** `butterfly-gallery/runway-string-tow-v1`
+### A1: String tow
 
-**Motion:** one rainbow butterfly flies steadily across frame while towing a small empty picture frame on a visibly taut string. The frame lags, sways once, then settles. No crash or stop.
+One canonical rainbow butterfly crosses the full runway while towing a small blank picture frame on a string. The frame lags and sways once before settling.
 
-**Duration target:** 3.0–4.0 s, non-looping.
+Target duration: 3 to 4 seconds, non-looping event.
 
-**Variants:** left-to-right and right-to-left. Mirror at runtime only if the frame/string geometry remains believable; otherwise render both directions.
+### A2: Team carry
 
-### A2 — Team carry
+Two canonical butterflies carry one blank frame together. Their wing motion remains independent; the shared frame bobs slightly out of sync, then stabilizes.
 
-**Job key:** `butterfly-gallery/runway-team-carry-v1`
+Target duration: 3 to 4 seconds, non-looping event.
 
-**Motion:** two rainbow butterflies carry one empty frame together, briefly bob out of sync, correct themselves, and continue cleanly across the runway.
+### A3: Solo struggler
 
-**Duration target:** 3.0–4.0 s, non-looping.
+One canonical butterfly carries an oversized blank frame, dips under the apparent weight, recovers altitude, and completes the crossing.
 
-### A3 — Solo struggler
+Target duration: 3.5 to 4.5 seconds, non-looping event.
 
-**Job key:** `butterfly-gallery/runway-solo-struggle-v1`
+### A4: Clean cross
 
-**Motion:** one determined butterfly carries an oversized empty frame. It dips under the weight, flaps hard, recovers altitude, and completes the crossing. Comedic effort, not distress.
+One canonical butterfly escorts or lightly carries a modest blank frame in a smooth competent pass.
 
-**Duration target:** 3.5–4.5 s, non-looping.
+Target duration: 2.5 to 3.5 seconds, non-looping event.
 
-### A4 — Clean cross
+### A5: Rare failed/drop gag
 
-**Job key:** `butterfly-gallery/runway-clean-cross-v1`
+One or two canonical butterflies carry a blank frame. The frame slips downward near mid-pass, exits the clipped runway cleanly, and the butterflies recover.
 
-**Motion:** one butterfly escorts or lightly carries a modest empty frame in a smooth, competent crossing. This is the quiet baseline pass so every runway event is not a gag.
-
-**Duration target:** 2.5–3.5 s, non-looping.
-
-### A5 — Rare failed/drop gag
-
-**Job key:** `butterfly-gallery/runway-drop-gag-v1`
-
-**Motion:** one or two butterflies carry an empty frame; the frame slips downward out of their grasp near mid-pass, the butterflies make one startled correction beat, then continue/recover. The dropped frame exits the asset cleanly rather than exploding or leaving debris.
-
-**Duration target:** 3.0–4.0 s, non-looping.
-
-**Runtime frequency:** rare. The scheduler, not the asset, controls rarity.
+Target duration: 3 to 4 seconds, non-looping event. Runtime scheduler controls rarity.
 
 ## Job family B: left foreground butterfly
 
-Canvas contract: transparent/composable actor layer sized for the air above the five left bins. No bin art or warehouse scenery in the clip.
+**Implementation:** runtime DOM/CSS actor derived from the same canonical Butterfly Scouts wing renderer.
 
-### B1 — Fly, hover, perch, idle, reset
+Canvas/surface: the existing `foreground-butterfly-slot` above the left bins.
 
-**Job key:** `butterfly-gallery/left-butterfly-perch-loop-v1`
+### B1: Fly, hover, perch, idle, reset
 
-**Motion beats:** enter from outside the layer; flap into position; hover for a beat; settle/perch on an implied invisible edge; small wing/antenna idle; lift off and exit/reset gracefully.
+Enter from outside the slot, flap into position, hover, settle on an implied edge, idle calmly with wing movement, then lift off/reset.
 
-**Duration target:** 5–8 s seamless logical loop, with at least one calm 1–2 s idle segment.
+Target duration: 5 to 8 seconds logical loop with a calm idle segment.
 
-**Constraint:** do not make the butterfly continuously orbit the bins. The loop should feel intermittent even when repeated with runtime pauses.
+Do not make the butterfly constantly orbit the bins. Runtime pauses may make the repeated loop feel intermittent.
 
 ## Job family C: lower-right Kind Robot
 
-Canvas contract: transparent/composable lower-right actor. Compose the robot so its lower body and hands may be partially hidden by the dynamic foreground image pile without destroying the readable upper-body action.
+**Implementation:** generated loop is acceptable here because the robot has richer authored action than the abstract butterflies.
 
-### C1 — Picture sift loop
+Do not generate until the final Gallery stage asset is installed and the exact lower-right target crop and dimensions are known.
 
-**Job key:** `butterfly-gallery/robot-picture-sift-loop-v1`
+Use the exact final production background crop as first frame/reference so lighting, perspective, palette, and environment match the page. The real dynamic picture pile remains a separate foreground DOM layer and must occlude the robot.
 
-**Motion beats:** robot reaches down behind the implied pile; lifts a simple blank picture/card; examines it with a small head tilt; lowers it; shuffles/reaches for another; returns to neutral.
+### C1: Picture sift loop
 
-**Duration target:** 6–10 s loop.
+Robot reaches down behind the implied pile, lifts a simple blank picture/card, examines it with a small head tilt, lowers it, shuffles/reaches for another, and returns to neutral.
 
-**Constraint:** cards are neutral placeholders only, with no generated user artwork, text, logos, or baked pile. The real pile is DOM UI in front of this layer.
+Target duration: 6 to 10 seconds loop.
+
+No generated user artwork, text, logos, or baked pile.
 
 ## Job family D: central blank-state display
 
-Canvas contract: central-frame interior only. This is not a mascot requirement and must disappear immediately when a real ArtImage is selected.
+**Implementation:** keep the existing lightweight CSS/DOM blank-state loop unless Silas later rejects it in visual acceptance.
 
-### D1 — Gentle gallery idle
+This state disappears immediately whenever a real ArtImage is selected.
 
-**Job key:** `butterfly-gallery/blank-state-idle-loop-v1`
+The motion should remain calm, low-contrast, and abstract, with no mascot, fake art, or loading-spinner semantics.
 
-**Motion:** sparse abstract picture-card outlines or soft rings drift subtly within the frame, then return to their starting composition. Calm, low-contrast, unmistakably intentional idle state rather than a loading spinner.
+## Runtime acceptance handoff
 
-**Duration target:** 6–10 s seamless loop.
+`t-014` remains waiting until Silas confirms the production Gallery assets are installed and real geometry can be measured.
 
-**Constraint:** no butterflies, robot, words, loading icon, fake artwork, or attention-grabbing pulse.
+When released, t-014 must verify:
 
-## Animation-creator queue manifest
-
-Create one animation-creator job for each key below. `priority: 200` is mandatory for every generated Butterfly Gallery asset.
-
-| Job key | Mode | Priority | Output intent |
-| --- | --- | ---: | --- |
-| `butterfly-gallery/runway-string-tow-v1` | non-looping | 200 | upper runway pass |
-| `butterfly-gallery/runway-team-carry-v1` | non-looping | 200 | upper runway pass |
-| `butterfly-gallery/runway-solo-struggle-v1` | non-looping | 200 | upper runway pass |
-| `butterfly-gallery/runway-clean-cross-v1` | non-looping | 200 | upper runway baseline |
-| `butterfly-gallery/runway-drop-gag-v1` | non-looping | 200 | rare upper runway gag |
-| `butterfly-gallery/left-butterfly-perch-loop-v1` | loop | 200 | left foreground actor |
-| `butterfly-gallery/robot-picture-sift-loop-v1` | loop | 200 | lower-right actor behind pile |
-| `butterfly-gallery/blank-state-idle-loop-v1` | loop | 200 | empty central display |
-
-For each queued job, persist the job key, prompt/version, source/reference asset IDs if used, backend/workflow identity, output path/asset ID, and render result so `t-014` can inspect and catalog attempts without guessing provenance.
-
-## Acceptance handoff to t-014
-
-`t-013` is complete when this shot/job contract exists and the animation-creator queue has an unambiguous manifest. `t-014` owns generation, inspection, rejection/rerender decisions, and cataloging of the actual clips. It must verify:
-
-- runway passes can traverse the full runway and disappear behind the funnel;
-- the left butterfly remains independently composable above the bins;
-- the robot reads correctly when partially occluded by the real foreground pile;
-- blank-state motion is gentle and contains no fake user art;
-- no generated clip contains a static warehouse backdrop or baked UI;
-- every accepted asset retains reproducible job/provenance metadata.
+- the canonical butterfly renderer is reused/extracted rather than visually reinterpreted;
+- runway paths are computed from the real runtime slot dimensions;
+- butterfly+frame props clip cleanly at the runway bounds and behind the funnel;
+- the left butterfly is independently composable above the left bins;
+- the lower-right robot matches the final production stage and reads correctly while partially occluded by the real foreground pile;
+- blank-state motion remains lightweight and disappears when art is selected;
+- no generated motion contains static butterflies/robots in the warehouse backdrop;
+- hidden/reduced-motion states stop the relevant animation work.
