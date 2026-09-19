@@ -557,7 +557,7 @@ tasks:
   - id: t-018
     milestone: m5
     title: "Harden large-library performance with pagination, thumbnails, incremental hashing, and bounded scans"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -583,9 +583,18 @@ tasks:
       persisted scan-cursor state) -- deferring both to follow-on tasks rather than a same-
       pass extension. PR: silasfelinus/kind_robots (branch worker/art-archive-t018-claude-
       scheduled-2026-09-19T0740Z).
+
+      Merged kind_robots#2870: incremental hashing (knownFiles cache, skips re-read/re-hash of
+      stat-unchanged files) + bounded concurrency (default 8) in scanArchiveRoot(), wired into
+      reconcileArtArchive.ts (the CLI meant for repeated/scheduled runs) via a new
+      loadKnownArchiveFiles() helper. Pagination/indexed filters for the admin browse endpoint
+      already existed (t-009). Verified: vue-tsc, eslint, and all relevant test:art-archive-*
+      scripts pass; 47/47 kind_robots CI checks green. Thumbnails and resumable scans deferred
+      to t-029/t-030 (real, separate design surfaces) rather than a same-pass extension.
     claimed_by: claude-scheduled-2026-09-19T0740Z-art-archive-t018
     claimed_at: '2026-09-19T07:39:41Z'
-    updated: '2026-09-19T07:46:58Z'
+    updated: '2026-09-19T07:54:18Z'
+    implementation_pr: 'silasfelinus/kind_robots#2870'
 
   - id: t-019
     milestone: m5
@@ -842,3 +851,50 @@ tasks:
       list keyed by the archiveEntryId/archivePresetId tags already written
       onto the payload) so the board itself reflects job status, once real
       usage shows which actionTypes admins actually reach for.
+
+  - id: t-029
+    milestone: m5
+    title: "Generate real thumbnails for archive-sourced images"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-018
+    note: >-
+      Deferred scope from t-018 (kind_robots#2870): the admin browse endpoint
+      already returns a thumbnailPath field, but it just falls back to the
+      full-size ArtImage.path -- nothing actually generates a downscaled
+      image. Design and implement a real thumbnail pipeline for
+      archive-sourced images: pick an image-resizing approach (existing
+      project convention if one exists elsewhere in kind_robots, otherwise a
+      lightweight library), a storage path/naming convention alongside the
+      original file, and a trigger point (at import time in
+      importArchiveFile(), or lazily on first browse request). Must not
+      touch/copy/derive from files outside the archive's own read path, and
+      must preserve the existing private+mature invariants for anything
+      written. A large legacy archive's grid view is the actual pain point
+      this fixes -- full-size images in a grid of dozens/hundreds of
+      thumbnails is the "unacceptable" case t-018's own note named.
+
+  - id: t-030
+    milestone: m5
+    title: "Make large-archive scans resumable across process restarts"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-018
+    note: >-
+      Deferred scope from t-018 (kind_robots#2870): scanArchiveRoot() now
+      skips re-hashing unchanged files via the knownFiles cache, but a scan
+      of a very large archive that gets killed mid-walk (process restart,
+      OOM, container recycle) still restarts from nothing -- there is no
+      persisted cursor/checkpoint of which files/subtrees were already
+      walked in the current pass. Design what "resumable" means here first
+      (a full re-walk of the directory tree is comparatively cheap once
+      hashing is cached via t-018's work -- the walk-order/readdir cost may
+      already be small enough that this isn't worth building; confirm with a
+      rough timing measurement against a real large archive before adding
+      persisted state) and only build real checkpoint/cursor tracking if
+      that measurement shows the walk itself, not the hashing, is the actual
+      bottleneck at scale.
