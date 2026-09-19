@@ -32,6 +32,13 @@ notes_from_silas: |
   Build functional behavior first, then static art direction, then motion. Do
   not block useful curation work on final animation assets.
 
+  MOTION ASSET HOLD (2026-09-18, Silas relaying Moseley): butterfly animation
+  rendering is cancelled for now. Generated clips are not useful until the exact
+  production dimensions for the butterfly background/compositing surface are
+  known. Keep the existing storyboard/shot list as planning references, but do
+  not generate or catalog reusable butterfly motion assets until those dimensions
+  are locked.
+
   Keep butterfly-gallery HIGH priority until complete and order it immediately
   ahead of art-archive for agent pickup. Art generated for this project uses
   ArtJob priority 200, matching Daily Dream art and outranking the Resource/LoRA
@@ -405,7 +412,7 @@ tasks:
   - id: t-014
     milestone: m4
     title: "Render and catalog reusable butterfly motion clips"
-    status: ready
+    status: waiting
     owner: worker
     passes: 0
     stakes: reversible
@@ -417,6 +424,12 @@ tasks:
       lower-right robot-sifting loop, and blank-state display loop. Verify the
       robot can be partially occluded by the dynamic foreground pile and the top
       passes fit the full horizontal runway while disappearing behind the funnel.
+
+      BLOCKED/CANCELLED FOR NOW (2026-09-18, Silas relaying Moseley): do not render
+      these assets until the exact production dimensions of the butterfly
+      background/compositing surface are known. Clips generated before that lock
+      are not reusable enough to justify the work. Return this task to ready only
+      after those dimensions are recorded for the implementation.
 
       Worker (Claude, scheduled conductor run): submitted the full t-014 pipeline live. Stage
       1 (keyframe stills, krea2 engine, priority 200, all completed within this session): A1
