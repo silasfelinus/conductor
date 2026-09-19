@@ -843,8 +843,8 @@ tasks:
   - id: t-027
     milestone: m4
     title: "Add an integration check that a merged preset payload survives COMFY workflow construction"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-025
@@ -861,6 +861,9 @@ tasks:
       krea2), so t-015's curation board (or any future "apply preset"
       endpoint) has a real signal if the flat-payload merge and the
       graph-building step ever drift apart.
+    claimed_by: claude-scheduled-20260919T090720Z-artarchive-t027-a1
+    claimed_at: '2026-09-19T09:07:21Z'
+    updated: '2026-09-19T09:07:21Z'
 
   - id: t-028
     milestone: m4
