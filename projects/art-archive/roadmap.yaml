@@ -974,8 +974,8 @@ tasks:
   - id: t-031
     milestone: m2
     title: "Surface t-023's resource-match reporting in the t-024 admin import endpoint"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-023
@@ -994,6 +994,9 @@ tasks:
       unmatched evidence) in the JSON response/summary object, mirroring
       what the CLI already reports, so Silas can see match quality via the
       endpoint before t-007 starts applying anything automatically.
+    claimed_by: openai-scheduled-2026-09-19T142003Z-art-archive-t031-a11
+    claimed_at: '2026-09-19T14:20:03Z'
+    updated: '2026-09-19T14:20:03Z'
 
   - id: t-032
     milestone: m5
