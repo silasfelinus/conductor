@@ -15458,3 +15458,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Tagging a new durable field onto an existing payload builder (mirroring how archiveEntryId/archivePresetId were already tagged) is a clean, low-risk change when every consumer already reads the payload generically -- no schema migration needed, just thread the field through the read path and the frontend type."
+- date: 2026-09-19
+  project: art-archive
+  task: t-038
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Once a field is durably tagged on a payload and surfaced by its read endpoint (t-034), wiring it into a display badge is a one-line template change -- the bulk of the work was already done by the field's original plumbing, not the UI surface."
