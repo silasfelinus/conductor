@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-19T14:00:01Z
+Generated: 2026-09-19T14:09:30Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1063**
-- Outcomes: blocked: 17, cancelled: 1, done: 1045
+- Closed tasks recorded: **1066**
+- Outcomes: blocked: 18, cancelled: 1, done: 1047
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -21,10 +21,10 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | animation-studio | 2 | 50% |
 | appmaker | 11 | 100% |
 | approval-portal | 2 | 0% |
-| art-archive | 26 | 100% |
+| art-archive | 27 | 100% |
 | art-generator-connect | 3 | 100% |
 | brainstorm | 26 | 96% |
-| butterfly-gallery | 27 | 96% |
+| butterfly-gallery | 29 | 93% |
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 39 | 100% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1046 | 99% |
+| software | 1049 | 99% |
 
 ## Failure categories
 
@@ -79,7 +79,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 |---|---|
 | quality | 36 |
 | transient | 17 |
-| actionable | 16 |
+| actionable | 17 |
 | scope | 3 |
 
 ## Kaizen targets
@@ -88,11 +88,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - kind `content` — 47% success over 17 closed tasks; aim the next kaizen task here
 - failure category `quality` — 36 occurrences; look for the shared cause across its records
 - failure category `transient` — 17 occurrences; look for the shared cause across its records
-- failure category `actionable` — 16 occurrences; look for the shared cause across its records
+- failure category `actionable` — 17 occurrences; look for the shared cause across its records
 - failure category `scope` — 3 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-09-19 `art-archive/t-035` — The task was written as conditional ("if large originals turn out to be common"), but this sandbox has no way to measure real archive file sizes (private archive root lives on Silas's Unraid host, not reachable here, and ArchiveEntry stores no fileSize field). Built the medium cache unconditionally instead of blocking on an unmeasurable premise -- it mirrors the existing thumbnail-cache architecture exactly, is low-risk/reversible, and never hurts even if large originals turn out to be rare. Worth considering whether ArchiveEntry should record fileSize at scan time so a future session actually could measure this.
+- 2026-09-19 `butterfly-gallery/t-016` — A task's original approach can go stale without its own status changing -- t-016 said to build the runway using the procedural Butterfly Scouts DOM/CSS renderer, but Silas's same-day update to ANIMATION-SHOT-LIST.md switched the canonical runway approach to AI-video (LTX/WAN) and explicitly forbade that substitution. Caught by reading the production motion contract directly rather than trusting the task note; flagged needs-human (soft) instead of building the now-wrong thing or silently reinterpreting scope across three related tasks (t-016/t-031/t-033).
+- 2026-09-19 `butterfly-gallery/t-034` — A docs-only PR handoff can still fail "Validate Worker PR handoff" on a single missing heading (here, "### Notes for reviewer") even when every other required section is present and the content itself is correct -- the Reviewer edited the PR body directly to add the missing heading rather than kicking the whole task back to the Worker for a retry, since it was a template gap, not a quality/scope problem with the diff.
 - 2026-09-19 `butterfly-gallery/t-014` — The shot list/task-note description of the video-enqueue payload omitted that renderScale is required for engine ltx/wan independent of presetId (the server never derives dimensional defaults from a preset id) -- reading the actual server route source before submitting caught this before it caused a rejected request; worth documenting the full required-field contract once rather than re-deriving it from source each time (see t-034).
 - 2026-09-19 `art-archive/t-036` — A tracked counter (ArchiveScanResult.cacheHitCount) that is only ever printed as a raw number is easy to skim past when it silently regresses; pairing it with a percentage of the total in the same log line makes a partial cache-engagement regression visible without a dedicated benchmark. Also confirmed the two reporting paths' denominators (scan.files.length vs result.scannedFileCount) were actually equal before reusing the same formatting in both, rather than assuming.
 - 2026-09-19 `lora-ingestion/t-009` — Capability filters must derive from the same taxonomy as the scanner/downloader; a separate hand-curated UI list silently fell behind Krea, Flux.2, ZImage, Qwen, and other supported families.
@@ -100,9 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-19 `art-archive/t-029` — The task note assumed full-size archive images already rendered and only thumbnails were missing ('the admin browse endpoint already returns a thumbnailPath field, but it just falls back to the full-size ArtImage.path'). Reading the actual serving path (nuxt.config.ts, server/api, Dockerfile) showed nothing ever served raw archive bytes over HTTP at all -- ArtImage.path/ArchiveEntry.relativePath for an archive row is only a filesystem path relative to the private, non-web-served PRIVATE_PATH root, so both the thumbnail AND full-size <img> bindings were dead links before this task. Worth checking a task note's stated premise against the actual code path before implementing narrowly to it -- a byte-serving route turned out to be the real prerequisite, not an assumption safe to inherit.
 - 2026-09-19 `art-archive/t-027` — Reviewed and merged another session's stalled work (REVIEWING marker 46+ minutes past its 20-minute TTL, PR untouched since): the task's original premise (an integration check against COMFY workflow construction) did not match the actual code path, and the Worker correctly pivoted to testing the real risk (a JSON storage round trip) instead of building a test for a code path that doesn't exist -- worth trusting a Worker's documented investigation over a task's original wording when the two conflict, provided the PR explains why. Separately: the Worker's own kaizen task and this session's own concurrent kaizen task both independently claimed the same next_free_task_id (t-033) because each was computed against a different stale view of origin/main -- a real collision, caught only because merging the second PR surfaced a git conflict at the same file location, not by the id-reuse detector alone (it validates the final merged state, not concurrent claims in flight). Resolved by keeping both entries and renumbering the later one to t-034 rather than dropping either.
 - 2026-09-19 `art-archive/t-028` — archiveEntryId/archivePresetId were already tagged onto every ArtJob payload for provenance (t-016) but never read back for display -- worth checking whether a 'surface X status' kaizen task can be satisfied entirely by reading data already being written, before assuming a new write path or schema field is needed. Also: a full production Docker build check can take ~15 minutes on this repo's PRs, well past the point most other checks finish -- worth budgeting for it rather than assuming CI is stuck when 53/54 checks are green and one is still running.
-- 2026-09-19 `art-archive/t-019` — A regex negative-lookahead across a multi-line [\s\S]*? span cannot reliably prove a token is ABSENT from a function body -- it only checks one anchor point, not every position -- so it passed trivially on a first attempt to verify runDryRun() never calls a write path. Brace-matched extraction of the actual function source span, then a plain substring search on that extracted text, is the sound way to assert absence; also caught a false positive from a console.log string that literally contained the text of a forbidden call name as documentation, not an actual invocation. Separately: read the existing write-path code (importArchiveFile's hardcoded isPublic=false/isMature=true) before assuming a 'verify no privacy leakage' task needs new machinery -- the invariant was already there and already tested by test:art-archive-importer.
-- 2026-09-19 `art-archive/t-023` — Reviewer rejected pass 1 for a static contract-verifier regex whose source-order assumption (UNMATCHED before evidence.name/evidence.hash) did not match formatOutcome()'s real build order (name -> hash -> weight -> UNMATCHED), even though the runtime output was already correct -- a reminder that a new regex-based contract check needs to be verified against the actual source it's asserting on, not just against the expected rendered string. The retry's one-line regex fix (matching the real order) landed clean on pass 2.
-- 2026-09-19 `art-archive/t-018` — A task note listing five things (thumbnails, indexed filters, incremental hashing, bounded concurrency, resumable scans) was not one task -- two of the five (indexed filters, bounded concurrency) were already done or a small addition, and two more (real thumbnails, resumable scans) are genuinely separate, larger design surfaces (an image-resizing pipeline; persisted scan-cursor state). Landing the one clearly-scoped, testable core (incremental size/mtime caching) and splitting the rest into two named follow-on tasks (t-029, t-030) kept this a same-session, first-pass close instead of a half-finished multi-part PR. Also: vue-tsc caught a real nullable-field bug (ArchiveEntry.fileSize/fileMtime are Int?/DateTime? for pre-t-003 rows) that a hand-review of the Prisma schema before writing the cache-loader would have caught first -- worth checking a model's actual nullability before assuming a field is always populated.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-19T14:00:01Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-19T14:09:30Z_
