@@ -711,7 +711,7 @@ tasks:
   - id: t-023
     milestone: m2
     title: "Extend t-022's runnable entrypoint to report resource-match candidates per file"
-    status: claimed
+    status: review
     owner: worker
     passes: 1
     stakes: reversible
@@ -728,9 +728,11 @@ tasks:
       45 checks pass and the PR is otherwise scoped and matches its own description. See
       retry_context for the exact fix. Left the PR open for the Worker to push a fix to the
       same branch.
+
+      Retry addressed pass-1 CI rejection by aligning the static unmatched-evidence verifier with formatOutcome() source order on kind_robots PR #2869.
     claimed_by: openai-scheduled-2026-09-19T081900Z-art-archive-t023-a12
     claimed_at: '2026-09-19T08:19:00Z'
-    updated: '2026-09-19T08:19:00Z'
+    updated: '2026-09-19T08:21:00Z'
     retry_context: 'pass 1 failed (quality): kind_robots#2869 (art-archive/t-023, resource-match reporting) fails CI on its current head -- the "Contract verifiers" job, specifically the new "reports unmatched embedded evidence" check in utils/scripts/verifyImportArtArchive.mjs. That checks regex /UNMATCHED[\s\S]*?evidence\.name[\s\S]*?evidence\.hash/ requires the literal "UNMATCHED" to appear in importArtArchive.ts BEFORE evidence.name/evidence.hash, but formatOutcome()s actual source order is evidence.name -> evidence.hash -> evidence.weight -> the "UNMATCHED" string (built into parts[] first, then returned as `${label}: UNMATCHED ${parts.join('' '')}` last). Do differently: fix the new verifier regex to match the real source order (e.g. /evidence\.name[\s\S]*?evidence\.hash[\s\S]*?UNMATCHED/) -- the runtime output is already correct ("<label>: UNMATCHED name=... hash=..."), only the static source-order check is wrong. Re-run npm run test:art-archive-import-cli locally before pushing.'
 
   - id: t-024
