@@ -729,8 +729,8 @@ tasks:
   - id: t-026
     milestone: m2
     title: "Add a shared ExtractedArchiveMetadata narrowing helper"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-021
@@ -746,6 +746,9 @@ tasks:
       `artArchiveMetadata.ts`) and have all three call sites use it, so the
       next module that reads `.a1111`/`.comfy` can't reintroduce the same
       unnarrowed-union compile error.
+    claimed_by: claude-scheduled-2026-09-19T-worker-t026-a1
+    claimed_at: '2026-09-19T05:34:10Z'
+    updated: '2026-09-19T05:34:10Z'
 
   - id: t-027
     milestone: m4
