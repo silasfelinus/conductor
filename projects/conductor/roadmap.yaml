@@ -3445,7 +3445,14 @@ tasks:
     syntax-checked here. That is the main reason this was not attempted in the filing
     session: a parse error in the watchdog leaves a hung ComfyUI unattended, which is the
     failure this script exists to prevent.
-  updated: '2026-09-19T00:00:00Z'
+
+    2026-09-19: conductor#4781 (merged) found and fixed the actual root cause -- a
+    PowerShell parse error in Restart-Supervised's $name: interpolation (not this task's
+    per-tick-children theory). The popups were that parse failure's doomed launches, not a
+    windowless-launch gap. This task's theory is UNTESTED against the fix and may be moot;
+    per the PR's own flag, confirm popups have actually stopped (via healthcheck.log tick
+    correlation) before picking this up. Do not implement blind.
+  updated: '2026-09-19T20:35:53Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
