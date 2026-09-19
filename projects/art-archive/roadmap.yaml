@@ -599,8 +599,8 @@ tasks:
   - id: t-019
     milestone: m5
     title: "Run production dry-run reconciliation and verify zero privacy leakage before bulk import"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on:
@@ -613,6 +613,9 @@ tasks:
       matches, and proposed ArtImage writes. Verify every proposed ArtImage and
       folder ArtCollection is private+mature and that ordinary SFW Resource
       galleries do not expose linked archive images.
+    claimed_by: claude-scheduled-20260919T084459Z-artarchive-t019-a1
+    claimed_at: '2026-09-19T08:45:00Z'
+    updated: '2026-09-19T08:45:00Z'
 
   - id: t-020
     milestone: m5
