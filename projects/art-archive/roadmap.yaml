@@ -974,7 +974,7 @@ tasks:
   - id: t-031
     milestone: m2
     title: "Surface t-023's resource-match reporting in the t-024 admin import endpoint"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -983,9 +983,14 @@ tasks:
       Kaizen from t-023 (kind_robots#2869): the CLI entrypoint (utils/scripts/importArtArchive.ts) now runs matchArchiveResources() per file and prints checkpoint/LoRA candidates and unmatched evidence to the console, but the admin-gated endpoint from t-024 (server/api/admin/art-archive/import.post.ts) calls importArchiveImporter.ts's importArchiveScan() directly and never touches the matcher at all -- an admin using the endpoint (the whole point of t-024: reconciling without shell access) gets zero resource-match visibility. Extend importArchiveScan() (or add a thin wrapper) to also run matchArchiveResources() per file and include a per-file match summary (candidates + confidence/evidence, unmatched evidence) in the JSON response/summary object, mirroring what the CLI already reports, so Silas can see match quality via the endpoint before t-007 starts applying anything automatically.
 
       Implemented admin import resource-match reporting on a scoped Kind Robots worker branch; opening PR after canonical review transition.
+
+      Reviewer merged kind_robots#2885 (squash 2839703) — all 48 checks green, mergeable_state
+      clean, diff scoped to exactly the admin-endpoint resource-match reporting t-031 asked
+      for (additive JSON fields only, no schema change). Closed to done.
     claimed_by: openai-scheduled-2026-09-19T142003Z-art-archive-t031-a11
     claimed_at: '2026-09-19T14:20:03Z'
-    updated: '2026-09-19T14:22:03Z'
+    updated: '2026-09-19T14:29:10Z'
+    implementation_pr: 'silasfelinus/kind_robots#2885'
 
   - id: t-032
     milestone: m5
