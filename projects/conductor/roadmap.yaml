@@ -3490,7 +3490,7 @@ tasks:
 - id: t-178
   milestone: m2
   title: 'Alert on pm2 restart_time climbing as a trend, not just within-tick, so a slowly-growing crash loop surfaces before a human notices consoles flashing'
-  status: ready
+  status: done
   owner: null
   passes: 0
   stakes: reversible
@@ -3508,7 +3508,14 @@ tasks:
     growing week-over-week, and logs/alerts on it the same way the existing CRASH
     LOOP branch does. This would have surfaced the pre-existing unhealthy state
     before #4781's fix landed on top of it and made things briefly worse.
-  updated: '2026-09-19T21:30:00Z'
+
+    Duplicate of conductor/t-179 -- both ask for the same fix (alert on pm2 restart_time as
+    a trend, not just within-tick), both filed 2026-09-19 from the same comfyui crash-loop
+    incident chain (PR #4781's watchdog repair driving restart_time from 779->794, fixed in
+    PR #4786). t-179 has the fuller incident narrative and was filed first; closing t-178 as
+    done (no separate implementation needed) rather than leaving both ready to avoid
+    duplicate work landing twice. See t-179 for the tracked scope.
+  updated: '2026-09-19T22:39:38Z'
 
 - id: t-179
   milestone: m2
