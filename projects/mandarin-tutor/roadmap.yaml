@@ -597,18 +597,21 @@ tasks:
   - id: t-025
     milestone: m5
     title: "Phonetic-series completion bonus"
-    status: waiting
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     depends_on: t-024
     note: >-
-      NOT SELECTED BY SILAS, deliberately parked rather than dropped. Offered in the
-      2026-09-19 reopening conversation as a fourth point-earning rule -- a bonus for learning
-      every member of a sound family -- and he selected only "lesson comprehension + recall".
-      Filed `waiting` on t-024 so it is a real option once the sound-family index exists and he
-      can see what a completed family actually looks like, rather than an agent quietly
-      shipping a reward rule he did not ask for. Do not flip this to `ready` without Silas.
+      NOT SELECTED BY SILAS. Offered in the 2026-09-19 reopening conversation as a fourth
+      point-earning rule -- a bonus for learning every member of a sound family -- and he
+      selected only "lesson comprehension + recall". The original task deliberately parked
+      this behind t-024 so the idea stayed visible until the sound-family index existed. That
+      dependency is now complete, and leaving the declined option at `waiting` would violate
+      the roadmap dependency contract and retrigger portfolio oversight. Closed as a no-op,
+      not implemented; preserve this note as the historical option and only reopen/create
+      implementation work if Silas explicitly asks for the bonus later.
+    updated: '2026-09-19T19:56:00Z'
 
   - id: t-026
     milestone: m5
