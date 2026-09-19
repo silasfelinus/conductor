@@ -1080,7 +1080,7 @@ tasks:
   - id: t-036
     milestone: m5
     title: "Report the archive scanner's cache-hit rate prominently in dry-run output"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1096,6 +1096,15 @@ tasks:
       of this kind (or any other cause of the cache silently not engaging)
       is visible from an ordinary dry-run instead of requiring someone to
       notice a scan running slower than expected.
+
+      Merged kind_robots#2883 (squash 00c607e): reconcileArtArchive.ts's --dry-run and real-
+      run reporting blocks now print the cache-hit percentage (N/M, P.P%) alongside the
+      existing raw count, closing the visibility gap t-030's fix left. Verified: eslint/vue-
+      tsc clean, verifyReconcileArtArchiveCli.mjs (12/12 static contract checks incl. the
+      existing /served from cache/ regex), verifyArtArchiveScanner.test.ts,
+      verifyArtArchiveReconciler.test.ts all pass. Kaizen deferred: no new gap surfaced by
+      this small, scoped fix.
     claimed_by: claude-scheduled-20260919T124018Z-artarchive-t036
     claimed_at: '2026-09-19T12:40:19Z'
-    updated: '2026-09-19T12:40:19Z'
+    updated: '2026-09-19T12:50:35Z'
+    implementation_pr: 'silasfelinus/kind_robots#2883'
