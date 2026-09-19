@@ -2591,7 +2591,7 @@ tasks:
 - id: t-112
   milestone: m6
   title: Replace Vue-private prompt-context discovery with an explicit EntityArtManager identity contract
-  status: claimed
+  status: review
   gate_human: false
   stakes: reversible
   owner: worker
@@ -2605,9 +2605,11 @@ tasks:
     reducing or removing the private-Vue dependency where it is no longer needed. Keep the
     workspace-project and selected-scenario fallbacks for surfaces that do not render
     EntityArtManager identity attributes, and preserve the existing prompt/slot behavior.
+
+    Prefer the explicit EntityArtManager DOM identity contract before legacy Vue-private component discovery while preserving workspace-project and selected-scenario fallbacks.
   claimed_by: openai-scheduled-2026-09-19T212030Z-kind-robots-t112-a11
   claimed_at: '2026-09-19T21:20:30Z'
-  updated: '2026-09-19T21:20:30Z'
+  updated: '2026-09-19T21:25:00Z'
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
