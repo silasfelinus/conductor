@@ -873,3 +873,43 @@ tasks:
       status via GET /api/art/queue/:id (or the admin queue UI) before
       starting; if any job is still PENDING/RUNNING, wire only the ones that
       are DONE and leave a note for the rest.
+
+  - id: t-029
+    milestone: m5
+    title: "Real persistence for setProcessed/collections/markNeedsReview"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-022
+    note: >
+      Kaizen from t-022 (kind_robots#2858): the real art-archive-backed feed
+      provider and action adapter wired up setRating/trash/restore (clean 1:1
+      mappings onto entries/[id]/rate.patch.ts, quarantine.post.ts,
+      restore.post.ts) but left three ButterflyGalleryActionAdapter methods on
+      the fixture-backed no-op because no real persistence path exists for
+      them yet:
+
+      1. setProcessed -- ArchiveEntry has no curated/processed flag. Needs an
+      additive migration (e.g. a `curationProcessed Boolean @default(false)`
+      column, following the isActive-flag convention already documented in
+      prisma/art-archive.prisma) plus a small admin endpoint to set it,
+      mirroring rate.patch.ts's shape.
+
+      2. addToCollection/removeFromCollection -- the real endpoint
+      (entries/[id]/collections.patch.ts) takes numeric ArtCollection ids, but
+      ButterflyGalleryActionAdapter's contract takes a `collection: string`
+      (currently the collection slug). Needs either a slug->id resolution
+      endpoint/lookup or a contract change to pass ids directly -- check
+      whether Butterfly Gallery's own UI already has collection ids available
+      at the call site before assuming a lookup is required.
+
+      3. markNeedsReview -- no admin endpoint mutates ArchiveEntry.matchState
+      directly today; matchState changes currently only happen via the
+      resource-matching pipeline. Needs a small admin endpoint (e.g. a
+      needs-review.post.ts setting matchState to a value that surfaces in the
+      match-review queue) plus the adapter wiring.
+
+      Do each independently; they don't depend on one another. See
+      stores/helpers/butterflyGalleryArtArchiveActionAdapter.ts's header
+      comment for the full context.
