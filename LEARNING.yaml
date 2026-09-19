@@ -15467,3 +15467,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Once a field is durably tagged on a payload and surfaced by its read endpoint (t-034), wiring it into a display badge is a one-line template change -- the bulk of the work was already done by the field's original plumbing, not the UI surface."
+- date: 2026-09-19
+  project: art-archive
+  task: t-037
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Three independent inline aggregations of the same matchArchiveResources() output (CLI, admin import endpoint, admin dry-run endpoint) had already drifted in shape (confidenceCounts only tracked by one of the three) before any bug appeared -- extracting the aggregation into one pure helper the moment a second caller duplicates it is cheaper than waiting for a third to also duplicate it and only then noticing the drift."
