@@ -15521,3 +15521,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "First pass, tiny scoped diff (+4/-4, one file), matched exactly what the PR described when diffed against the stated base. Reordering a fallback chain to prefer an explicit DOM identity contract over legacy private-Vue introspection is the kind of change worth a source-contract test pinning the order, not just relying on behavioral test coverage -- filed as kind-robots/t-113."
+- date: 2026-09-19
+  project: interface-vision
+  task: t-105
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Recurring polish cycle (Achievements surface): the PR backed its screenshot-directed layout claims with source-level contract assertions (flow order, container-query breakpoints, leaderboard cell placement) rather than relying on the visual description alone -- worth holding as the bar for future screenshot-directed t-105 slices, since a contract test catches a future regression a screenshot never will."
