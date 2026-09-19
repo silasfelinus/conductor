@@ -679,7 +679,7 @@ tasks:
   - id: t-021
     milestone: m5
     title: "Add batch selection and batch-action confirmation"
-    status: review
+    status: done
     owner: worker
     passes: 2
     stakes: reversible
@@ -723,11 +723,17 @@ tasks:
       below.
 
       Retry pass 2 addressed the exact retry_context on kind_robots#2857 by replacing undefined kr-text-black-md with the existing kr-text-black-base token; CI rerun is required before merge.
+
+      Merged kind_robots#2857: final t-021 UI slice (filtered-queue multi-select, batch preset
+      application, destructive/generation-backed confirmation, partial-failure result
+      display). Both retry rounds' fixes verified: layout-contract grid-cols (auto-fit/minmax
+      pattern) and kr-text-black-base token, 47/47 CI green, mergeable_state clean. Closing to
+      done.
     claimed_by: openai-scheduled-2026-09-19T021506Z-butterfly-gallery-pr2857-a12
     claimed_at: '2026-09-19T02:15:06Z'
-    updated: '2026-09-19T02:17:10Z'
+    updated: '2026-09-19T02:54:47Z'
     implementation_pr: 'silasfelinus/kind_robots#2857'
-    retry_context: 'pass 2 failed (quality): kind_robots#2857 fixed the pass-1 layout-contract grid-cols violation correctly, but the same commit introduced an undefined kr-* class -- components/art/ButterflyGalleryBatchControls.vue:5 uses kr-text-black-md, which has no matching rule in assets/css/tailwind.css (only -lg/-xl/-sm/-xs/-2xl/-base exist in that family). Caught by re-running the layout-contract job''s later test:kr-class-coverage step after confirming the grid-cols fix itself is clean (189/189 unchanged, verified locally against the exact commit). Do differently: swap to kr-text-black-base (or another defined size), then run npm run test:kr-class-coverage locally before pushing. Push the fix to the same branch/PR (#2857).'
+    retry_context: ''
 
   - id: t-022
     milestone: m5
