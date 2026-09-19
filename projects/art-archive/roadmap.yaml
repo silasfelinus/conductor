@@ -683,22 +683,19 @@ tasks:
   - id: t-023
     milestone: m2
     title: "Extend t-022's runnable entrypoint to report resource-match candidates per file"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-022
-    note: >
-      t-006 shipped matchArchiveResources() but nothing calls it yet outside
-      its own self-test -- t-022's entrypoint imports the scanner and t-005's
-      importer; once it exists, extend it (or the importer call site) to also
-      run matchArchiveResources() per file and print/report each file's
-      checkpoint/LoRA candidates, confidence tier, and any unmatched evidence,
-      so Silas can see real match quality against the actual archive before
-      t-007 starts applying anything automatically.
+    note: |-
+      t-006 shipped matchArchiveResources() but nothing calls it yet outside its own self-test -- t-022's entrypoint imports the scanner and t-005's importer; once it exists, extend it (or the importer call site) to also run matchArchiveResources() per file and print/report each file's checkpoint/LoRA candidates, confidence tier, and any unmatched evidence, so Silas can see real match quality against the actual archive before t-007 starts applying anything automatically.
+
+
+      Extended the runnable Art Archive import CLI to invoke matchArchiveResources for each imported file, report checkpoint/LoRA candidate resource ids with confidence/evidence, preserve unmatched embedded evidence, and summarize match coverage. Updated the existing CLI contract verifier. Implementation branch is ready for PR review.
     claimed_by: openai-scheduled-2026-09-19T072214Z-art-archive-t023-a11
     claimed_at: '2026-09-19T07:22:14Z'
-    updated: '2026-09-19T07:22:14Z'
+    updated: '2026-09-19T07:28:00Z'
 
   - id: t-024
     milestone: m2
