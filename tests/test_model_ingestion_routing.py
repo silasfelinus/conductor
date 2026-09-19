@@ -108,3 +108,23 @@ def test_generic_scanner_catalogs_file_backed_components():
         "upscaler",
         "upscale_models",
     )
+
+
+def test_checkpoint_import_root_preserves_checkpoint_context(tmp_path):
+    sys.path.insert(0, str(CATALOG))
+    for name in ("scan_models", "scan_loras"):
+        sys.modules.pop(name, None)
+    try:
+        mod = importlib.import_module("scan_models")
+    finally:
+        sys.path.pop(0)
+
+    inbox = tmp_path / "models" / "checkpoints" / "import"
+    inbox.mkdir(parents=True)
+    dropped = inbox / "plain-model.ckpt"
+    dropped.write_bytes(b"checkpoint fixture")
+
+    entry, _meta = mod.build_entry(dropped, inbox, None, no_hash=True)
+
+    assert entry.kind == "checkpoint"
+    assert entry.comfy_folder == "checkpoints"
