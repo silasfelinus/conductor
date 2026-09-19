@@ -806,21 +806,31 @@ tasks:
   - id: t-024
     milestone: m5
     title: "Tune large-queue performance and responsive composition"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on:
       - t-009
       - t-017
-    note: >
+    note: >-
       Paginate/virtualize queue reads, use thumbnails rather than originals,
       prefetch only a small next-item window, pause unnecessary animation, and
       keep the stage useful across desktop/tablet/mobile. On constrained widths,
       bins may become drawers/trays without losing action parity.
+
+      Merged kind_robots#2862: auto-prefetch (watch-based, small next page once visiblePile
+      dips under a 24-entry buffer above the 18-card render cap) plus a max-width:540px
+      breakpoint converting preset-rail/right-rail into horizontal scrollable bottom trays so
+      bins keep full action parity on phone widths where the old clamp() rail minimums didn't
+      shrink. Thumbnails/pagination were already correct from t-004/t-009/t-022. vue-
+      tsc/eslint/prettier/layout-contract/kr-class-coverage all clean; live phone-width visual
+      check deferred to t-025's existing human gate (no working local DB / no deploy of this
+      branch to verify against).
     claimed_by: conductor-agent-20260919-bg-t024
     claimed_at: '2026-09-19T03:32:15Z'
-    updated: '2026-09-19T03:32:15Z'
+    updated: '2026-09-19T03:45:45Z'
+    implementation_pr: 'silasfelinus/kind_robots#2862'
 
   - id: t-025
     milestone: m5
@@ -985,3 +995,23 @@ tasks:
       (ArtImage, ArchiveEntry, and similar) and confirm each one applies the same
       viewerShowsMature (or visibilityWhere/canViewWithMaturity) gate, not just an
       admin check.
+
+  - id: t-031
+    milestone: m4
+    title: "Gate the animation-slot elements' future motion assets on visibility/prefers-reduced-motion, not just CSS class toggles"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-014
+    note: |-
+      Kaizen from t-024 (kind_robots#2862): the page's `data-animation-slot`
+      containers (butterfly-runway, foreground-robot, foreground-butterfly,
+      blank-state) are still empty placeholders pending t-014's motion clips.
+      Once t-014 lands real video/CSS motion in them, confirm none of it runs
+      continuously regardless of viewport visibility or prefers-reduced-motion
+      -- an IntersectionObserver-gated pause (or a plain <video> element's own
+      `autoplay` tied to intersection) may be needed the way the current
+      short-lived/`v-if`-gated CSS animations in pages/butterfly-gallery.vue
+      already avoid this by construction. Depends on t-014 actually landing
+      motion content first; nothing to verify against until then.
