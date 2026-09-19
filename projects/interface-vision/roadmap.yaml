@@ -1855,7 +1855,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: "Polish every reachable Kind Robots surface page-by-page"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -1918,12 +1918,11 @@ tasks:
     Merged silasfelinus/kind_robots#2901 as 96af023a418074cd24b220bce1040f5b66cce81e from exact head 5e6dae2cd88500d570390408c5e42b2aa5a36480. The Giving page root now also uses kr-panel-section, so the full Giving surface has an opaque base-100 panel background, border, padding, rounded corners, and shadow instead of letting text visually merge into the page backdrop art. The implementation diff was exactly one line (+1/-1) and all 47 exact-head PR workflow runs completed successfully, including TypeScript Type Check, Layout Contract, Schema Migration Parity, Facet Catalog Contract, Project Architecture Contract, and the full Contract Tests suite. No donation/cart/subscription behavior changed. Production is self-hosted and was not deployed by this session. Return the recurring visual-polish task to ready for the next screenshot-driven slice.
 
     Screenshot-directed Giftshop rebuild: removed the customer-visible staging/demo banners and text-only Prints/Tokens/Support teaser row; replaced them with aligned, actionable cards for real live offers (tokens, AMF direct/add-on giving, supporter plans, Mermaids PDF), surfaced the existing print/shirt/sticker/mug catalog as product-specific art mockups using storefront-featured art or the KR logo fallback, retained the existing curated featured-print cart path, sourced print prices from the canonical cart catalog instead of a placeholder constant, and made the cart summary content-height/sticky instead of stretching into a blank full-height column. Physical POD cards deliberately navigate to Art rather than enabling new purchases because Printful vendor submission remains the documented digital-storefront/t-040 human gate (no account/API key/real variant ids). Added Giftshop contract coverage for removal of staging language, live-offer action alignment, POD mockups/status honesty, and non-stretched cart layout.
-  updated: '2026-09-19T22:55:00Z'
+
+    Merged silasfelinus/kind_robots#2902 as 2c19ab951fcef49ebb3992e2ed3a5aaf144f6180 from exact head 779c00332c3b3381ced9cdce58e4cc826c048712. Replaced the customer-visible Giftshop scaffold with aligned live-offer cards for tokens, AMF direct/add-on giving, supporter plans, and Mermaids; surfaced the canonical print/shirt/sticker/mug catalog with product-specific storefront-art mockups; retained the existing featured-print cart path while sourcing the real catalog price; removed staging/demo copy; and made the Cart Nest content-height with container-responsive desktop columns. Physical shirt/sticker/mug checkout remains intentionally gated because digital-storefront/t-040 still needs a Printful account/API key and real variant ids. All 48 exact-head workflow runs completed successfully, including Giftshop Checkout Contract, TypeScript Type Check, Layout Contract, Project Architecture Contract, Schema Migration Parity, Facet Catalog Contract, and the full Contract Tests suite. Production is self-hosted and was not deployed by this session. Return the recurring visual-polish task to ready for the next screenshot-driven slice.
+  updated: '2026-09-19T23:05:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2899'
   approved_by_human: true
-  owner: worker
-  claimed_by: 2026-09-19T224500Z-interface-vision-t105-giftshop-real-8a4c
-  claimed_at: '2026-09-19T22:45:00Z'
 
 - id: t-106
   milestone: m6
