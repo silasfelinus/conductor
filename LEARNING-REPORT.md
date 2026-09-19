@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-19T14:39:31Z
+Generated: 2026-09-19T15:33:46Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1067**
-- Outcomes: blocked: 18, cancelled: 1, done: 1048
+- Closed tasks recorded: **1068**
+- Outcomes: blocked: 18, cancelled: 1, done: 1049
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -21,7 +21,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | animation-studio | 2 | 50% |
 | appmaker | 11 | 100% |
 | approval-portal | 2 | 0% |
-| art-archive | 28 | 100% |
+| art-archive | 29 | 100% |
 | art-generator-connect | 3 | 100% |
 | brainstorm | 26 | 96% |
 | butterfly-gallery | 29 | 93% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1050 | 99% |
+| software | 1051 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-19 `art-archive/t-032` — A third caller (this dry-run endpoint) reimplemented the same matchArchiveResources() aggregation t-037 was already filed to consolidate between the CLI and the t-031 import endpoint -- widen an existing consolidation task's scope instead of filing a near-duplicate kaizen task when a new PR reintroduces the same pattern.
 - 2026-09-19 `art-archive/t-031` — Extending an existing admin endpoint to surface an already-built pure helper (matchArchiveResources, from t-023) is a clean, single-file, additive change when the helper's signature is reused as-is -- no new abstraction needed for a reporting-only slice.
 - 2026-09-19 `art-archive/t-035` — The task was written as conditional ("if large originals turn out to be common"), but this sandbox has no way to measure real archive file sizes (private archive root lives on Silas's Unraid host, not reachable here, and ArchiveEntry stores no fileSize field). Built the medium cache unconditionally instead of blocking on an unmeasurable premise -- it mirrors the existing thumbnail-cache architecture exactly, is low-risk/reversible, and never hurts even if large originals turn out to be rare. Worth considering whether ArchiveEntry should record fileSize at scan time so a future session actually could measure this.
 - 2026-09-19 `butterfly-gallery/t-016` — A task's original approach can go stale without its own status changing -- t-016 said to build the runway using the procedural Butterfly Scouts DOM/CSS renderer, but Silas's same-day update to ANIMATION-SHOT-LIST.md switched the canonical runway approach to AI-video (LTX/WAN) and explicitly forbade that substitution. Caught by reading the production motion contract directly rather than trusting the task note; flagged needs-human (soft) instead of building the now-wrong thing or silently reinterpreting scope across three related tasks (t-016/t-031/t-033).
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-19 `lora-ingestion/t-009` — Capability filters must derive from the same taxonomy as the scanner/downloader; a separate hand-curated UI list silently fell behind Krea, Flux.2, ZImage, Qwen, and other supported families.
 - 2026-09-19 `art-archive/t-030` — Before building a titled feature (persisted scan checkpoints), the Worker benchmarked the underlying assumption first and found a hidden cache-correctness bug instead (float vs truncated-integer mtime comparison defeating the existing hash cache); fixing that made the walk cheap enough that checkpoint tracking wasn't needed at all -- measure before building is cheaper than building the wrong thing.
 - 2026-09-19 `art-archive/t-029` — The task note assumed full-size archive images already rendered and only thumbnails were missing ('the admin browse endpoint already returns a thumbnailPath field, but it just falls back to the full-size ArtImage.path'). Reading the actual serving path (nuxt.config.ts, server/api, Dockerfile) showed nothing ever served raw archive bytes over HTTP at all -- ArtImage.path/ArchiveEntry.relativePath for an archive row is only a filesystem path relative to the private, non-web-served PRIVATE_PATH root, so both the thumbnail AND full-size <img> bindings were dead links before this task. Worth checking a task note's stated premise against the actual code path before implementing narrowly to it -- a byte-serving route turned out to be the real prerequisite, not an assumption safe to inherit.
-- 2026-09-19 `art-archive/t-027` — Reviewed and merged another session's stalled work (REVIEWING marker 46+ minutes past its 20-minute TTL, PR untouched since): the task's original premise (an integration check against COMFY workflow construction) did not match the actual code path, and the Worker correctly pivoted to testing the real risk (a JSON storage round trip) instead of building a test for a code path that doesn't exist -- worth trusting a Worker's documented investigation over a task's original wording when the two conflict, provided the PR explains why. Separately: the Worker's own kaizen task and this session's own concurrent kaizen task both independently claimed the same next_free_task_id (t-033) because each was computed against a different stale view of origin/main -- a real collision, caught only because merging the second PR surfaced a git conflict at the same file location, not by the id-reuse detector alone (it validates the final merged state, not concurrent claims in flight). Resolved by keeping both entries and renumbering the later one to t-034 rather than dropping either.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-19T14:39:31Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-19T15:33:46Z_
