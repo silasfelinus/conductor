@@ -557,7 +557,7 @@ tasks:
   - id: t-018
     milestone: m5
     title: "Harden large-library performance with pagination, thumbnails, incremental hashing, and bounded scans"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -583,9 +583,18 @@ tasks:
       persisted scan-cursor state) -- deferring both to follow-on tasks rather than a same-
       pass extension. PR: silasfelinus/kind_robots (branch worker/art-archive-t018-claude-
       scheduled-2026-09-19T0740Z).
+
+      Merged kind_robots#2870: incremental hashing (knownFiles cache, skips re-read/re-hash of
+      stat-unchanged files) + bounded concurrency (default 8) in scanArchiveRoot(), wired into
+      reconcileArtArchive.ts (the CLI meant for repeated/scheduled runs) via a new
+      loadKnownArchiveFiles() helper. Pagination/indexed filters for the admin browse endpoint
+      already existed (t-009). Verified: vue-tsc, eslint, and all relevant test:art-archive-*
+      scripts pass; 47/47 kind_robots CI checks green. Thumbnails and resumable scans deferred
+      to t-029/t-030 (real, separate design surfaces) rather than a same-pass extension.
     claimed_by: claude-scheduled-2026-09-19T0740Z-art-archive-t018
     claimed_at: '2026-09-19T07:39:41Z'
-    updated: '2026-09-19T07:46:58Z'
+    updated: '2026-09-19T07:54:18Z'
+    implementation_pr: 'silasfelinus/kind_robots#2870'
 
   - id: t-019
     milestone: m5
