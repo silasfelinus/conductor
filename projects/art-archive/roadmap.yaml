@@ -940,7 +940,7 @@ tasks:
   - id: t-030
     milestone: m5
     title: "Make large-archive scans resumable across process restarts"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -959,9 +959,16 @@ tasks:
       persisted state) and only build real checkpoint/cursor tracking if
       that measurement shows the walk itself, not the hashing, is the actual
       bottleneck at scale.
+
+      2026-09-19 Reviewer: merged kind_robots#2876 (squash d1ceaf9). Fixed a real mtime-
+      precision cache-hit bug in scanArchiveRoot() (float mtimeMs vs truncated integer never
+      matched, so every rescan re-hashed every file) rather than building the originally-
+      titled checkpoint/cursor feature -- the PR's own benchmark shows a warm re-walk is cheap
+      once the cache actually engages, answering this task's own gating question. All checks
+      green, mergeable_state clean.
     claimed_by: claude-scheduled-20260919T110617Z-artarchive-t030
     claimed_at: '2026-09-19T11:06:25Z'
-    updated: '2026-09-19T11:14:27Z'
+    updated: '2026-09-19T11:34:19Z'
     implementation_pr: 'silasfelinus/kind_robots#2876'
 
   - id: t-031
