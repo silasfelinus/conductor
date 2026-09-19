@@ -987,3 +987,22 @@ tasks:
       container. Must remain provably write-free -- reuse or mirror
       utils/scripts/verifyReconcileArtArchiveCli.mjs's brace-extraction
       technique to assert the endpoint's handler never calls a write path.
+
+  - id: t-033
+    milestone: m4
+    title: "Persist archive-preset actionType on the ArtJob row (or its payload) independent of the preset row"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-028
+    note: >-
+      Kaizen from t-028 (kind_robots#2873): the new job-status board relies
+      on archivePresetId to resolve an actionType for display, but that only
+      works for as long as the referenced ArchiveActionPreset still exists --
+      an admin can edit or delete a preset later, silently orphaning the
+      historical actionType for any job that already ran under it. Add
+      actionType as its own tagged field on the ArtJob payload (matching how
+      archiveEntryId/archivePresetId are already tagged in
+      buildArchiveEnqueuePayload.ts), so a future report/aggregation by
+      action type doesn't depend on presets never being edited or deleted.
