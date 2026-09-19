@@ -683,8 +683,8 @@ tasks:
   - id: t-023
     milestone: m2
     title: "Extend t-022's runnable entrypoint to report resource-match candidates per file"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-022
@@ -696,6 +696,9 @@ tasks:
       checkpoint/LoRA candidates, confidence tier, and any unmatched evidence,
       so Silas can see real match quality against the actual archive before
       t-007 starts applying anything automatically.
+    claimed_by: openai-scheduled-2026-09-19T072214Z-art-archive-t023-a11
+    claimed_at: '2026-09-19T07:22:14Z'
+    updated: '2026-09-19T07:22:14Z'
 
   - id: t-024
     milestone: m2
