@@ -1855,7 +1855,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: "Polish every reachable Kind Robots surface page-by-page"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -1908,7 +1908,9 @@ tasks:
     pin the flow order, container-query breakpoints, leaderboard cell placement, and card
     sizing. All 49 kind_robots CI checks green, mergeable_state clean. Re-armed to ready per
     the recurring-task convention.
-  updated: '2026-09-19T22:02:00Z'
+
+    Screenshot-driven Themes follow-up: the gallery retained themeStore.showCustom and edit-form state after the old add-theme/theme-manager UI was retired, but nothing in the live page rendered that state. Restored a live Theme Creator using the existing store/API paths and added a persistent Creator toggle to the current Theme Gallery. Shared-theme Edit now opens the same creator. The creator supports color editing, name/vibe/tagline/scheme, public/apply-after-save toggles, randomize/reset, preview, create/update, and a live palette sample without replacing the gallery layout Silas said already looks good.
+  updated: '2026-09-19T22:12:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2899'
   approved_by_human: true
   owner: worker
