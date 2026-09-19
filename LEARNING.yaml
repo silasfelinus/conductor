@@ -15485,3 +15485,12 @@ records:
   outcome: done
   failure_category: quality
   lesson: "kind_robots#2891 merged (all 49 checks green) but the roadmap task sat at status: review on main -- state reconciliation caught it via a direct PR read (state showing merged/closed) rather than trusting the roadmap's own claimed_by/status snapshot. Session-start sweeps should verify a review-status task's actual PR state, not just its roadmap fields, when select_role.py's own GitHub reachability is degraded."
+- date: 2026-09-19
+  project: mandarin-tutor
+  task: t-026
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "t-022's buildMandarinLesson() already computed a teachability: 'structural'|'vocabulary' field, which made the coverage-gap audit almost free -- the real design decision was keeping vocabulary-only lessons out of the issues/byCode tally entirely (a separate coverage section) so an honest, source-faithful lesson is never mistaken for a bug or fails --strict."
