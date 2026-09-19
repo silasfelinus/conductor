@@ -2626,7 +2626,7 @@ tasks:
 - id: t-113
   milestone: m6
   title: Add a source-contract assertion pinning that entity-art managerContext() checks the explicit DOM identity path before managerContextFromVue
-  status: claimed
+  status: review
   gate_human: false
   stakes: reversible
   owner: worker
@@ -2641,9 +2641,10 @@ tasks:
     hook without any test catching it. Add a focused assertion (in
     verifyEntityArtPromptSuggest.ts or a sibling contract test) that the explicit path's
     source position precedes managerContextFromVue's, per the PR's own suggested follow-up.
-  updated: '2026-09-19T22:36:23Z'
+  updated: '2026-09-19T22:38:28Z'
   claimed_by: 2026-09-19T20987Z-kr-t113-manager-context-assert
   claimed_at: '2026-09-19T22:36:23Z'
+  implementation_pr: 'silasfelinus/kind_robots#2903'
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
