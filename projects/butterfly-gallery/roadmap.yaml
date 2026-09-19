@@ -951,8 +951,8 @@ tasks:
   - id: t-029
     milestone: m5
     title: "Real persistence for setProcessed/collections/markNeedsReview"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-022
@@ -987,6 +987,9 @@ tasks:
       Do each independently; they don't depend on one another. See
       stores/helpers/butterflyGalleryArtArchiveActionAdapter.ts's header
       comment for the full context.
+    claimed_by: openai-scheduled-2026-09-19T041529Z-butterfly-gallery-t029-a11
+    claimed_at: '2026-09-19T04:15:29Z'
+    updated: '2026-09-19T04:15:29Z'
 
   - id: t-030
     milestone: m5
