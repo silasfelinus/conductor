@@ -405,7 +405,7 @@ tasks:
   - id: t-014
     milestone: m4
     title: "Render and catalog reusable butterfly motion clips"
-    status: claimed
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
@@ -458,9 +458,17 @@ tasks:
       -- transient, no pass consumed, not re-submitting. Re-arming to ready; a future cycle
       should re-check 28726-28732 and, once all 8 are DONE, verify + catalog per the NEXT
       ACTIONABLE STEP above.
-    claimed_by: claude-scheduled-20260919T013002Z-bg-t014
-    claimed_at: '2026-09-19T01:30:03Z'
-    updated: '2026-09-19T01:30:03Z'
+
+      Re-checked render jobs this session (2026-09-19): 28725=DONE (artImageId 28439),
+      28726=DONE (artImageId 28440), 28727=RUNNING, 28728-28732=PENDING. Same single-GPU
+      render-backend capacity bottleneck as before -- transient, no pass consumed, not re-
+      submitting. Re-arming to ready; picking up butterfly-gallery/t-028 instead this session
+      since its 5 ArtJobs (28711-28715) are all DONE and ready to wire in. A future cycle
+      should re-check 28727-28732 and, once all 8 are DONE, verify + catalog per t-014's
+      existing NEXT ACTIONABLE STEP.
+    claimed_by: ''
+    claimed_at: ''
+    updated: '2026-09-19T01:31:19Z'
 
   - id: t-015
     milestone: m4
