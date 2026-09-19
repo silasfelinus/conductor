@@ -15139,3 +15139,20 @@ records:
     for a heavier structural-diff library. Comparing sorted key lists rather
     than deep-equal values keeps the test focused on shape parity, not
     incidental value differences between fixture and real data.
+- date: 2026-09-19
+  project: butterfly-gallery
+  task: t-021
+  kind: software
+  stakes: reversible
+  passes: 2
+  outcome: done
+  failure_category: quality
+  lesson: >-
+    A layout-contract grid-cols rejection and a kr-class-coverage rejection
+    can hide behind each other in the same CI job when it runs multiple
+    checks sequentially: fixing the first (viewport-breakpoint grid-cols ->
+    auto-fit/minmax) can reveal a second, unrelated violation
+    (kr-text-black-md, an undefined size in the kr-text-black-* family) that
+    was masked by the job failing early on the first check. Re-run the full
+    job after a fix rather than assuming the next CI run will be clean just
+    because the specific violation named in the rejection was addressed.
