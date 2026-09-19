@@ -15267,3 +15267,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Extracting a duplicated union-narrowing guard into one shared helper (narrowToPngMetadata) removes the exact TypeScript-compile-error class kind_robots#2824 hit, since the next module reading .a1111/.comfy can no longer re-derive the guard incorrectly by hand."
+- date: 2026-09-19
+  project: art-archive
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: quality
+  lesson: "Reviewer rejected pass 1 for a deterministic verifyDisabledAffordances failure (a batch-scoped Clear button used :disabled instead of v-if with no selection); the retry matched the existing correct pattern already in the same file, landed clean on the second pass, and merged as kind_robots#2866 -- a reminder that this project's PRs should run the full Contract verifiers suite locally before pushing, not just feature-scoped test scripts."
