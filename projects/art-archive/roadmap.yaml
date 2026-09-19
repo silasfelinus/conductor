@@ -475,20 +475,21 @@ tasks:
   - id: t-015
     milestone: m4
     title: "Build the drag/drop curation board with preset modifier targets"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on:
       - t-010
       - t-014
-    note: >
-      Let the admin drag selected art onto visible action targets such as Rate
-      1-5, Delete, Add to collection, and named regeneration presets. Batch
-      actions must preview scope and report partial failures clearly.
+    note: |-
+      Let the admin drag selected art onto visible action targets such as Rate 1-5, Delete, Add to collection, and named regeneration presets. Batch actions must preview scope and report partial failures clearly.
+
+
+      Implemented the first curation-board slice in Kind Robots: batch thumbnail selection, rating and recoverable-delete targets with explicit destructive confirmation and partial-failure retention, plus persisted preset targets loaded from the existing archive preset API. Durable preset execution remains intentionally owned by t-016 rather than inventing a second render queue.
     claimed_by: openai-scheduled-2026-09-19T051828Z-art-archive-t015-a11
     claimed_at: '2026-09-19T05:18:28Z'
-    updated: '2026-09-19T05:18:28Z'
+    updated: '2026-09-19T05:25:00Z'
 
   - id: t-016
     milestone: m4
