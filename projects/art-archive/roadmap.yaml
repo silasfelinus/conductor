@@ -898,7 +898,7 @@ tasks:
   - id: t-029
     milestone: m5
     title: "Generate real thumbnails for archive-sourced images"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -918,9 +918,23 @@ tasks:
       written. A large legacy archive's grid view is the actual pain point
       this fixes -- full-size images in a grid of dozens/hundreds of
       thumbnails is the "unacceptable" case t-018's own note named.
+
+      Merged kind_robots#2875 (2026-09-19): real thumbnail generation
+      (server/utils/artArchiveThumbnails.ts, 480px WebP q82, cached under a dot-prefixed .art-
+      archive-thumbnails/ subtree keyed on ArchiveEntry id, invalidated by comparing cache
+      mtime against the entry's own fileMtime -- same trust rule as the scanner's own known-
+      file cache). Also added the byte-serving route this required: nothing previously served
+      archive bytes over HTTP at all, so imagePath/thumbnailPath were unreachable raw
+      filesystem paths -- server/api/admin/art-archive/entries/[id]/file.get.ts (admin-gated,
+      root-confined via the existing artArchiveFileOps.ts helper) now serves the original or,
+      with ?variant=thumbnail, the cached downscaled copy. entries/index.get.ts,
+      entries/[id].get.ts, and the admin grid/detail Vue template were updated to actually use
+      it -- the grid now renders thumbnailPath instead of the full-size imagePath. New
+      contract test (test:art-archive-thumbnails) wired into CI. All 54 kind_robots checks
+      green, mergeable_state clean.
     claimed_by: claude-scheduled-20260919T102924Z-artarchive-t029
     claimed_at: '2026-09-19T10:29:25Z'
-    updated: '2026-09-19T10:42:29Z'
+    updated: '2026-09-19T10:56:39Z'
     implementation_pr: 'silasfelinus/kind_robots#2875'
 
   - id: t-030
