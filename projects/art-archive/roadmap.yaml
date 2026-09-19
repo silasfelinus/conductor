@@ -976,3 +976,47 @@ tasks:
       container. Must remain provably write-free -- reuse or mirror
       utils/scripts/verifyReconcileArtArchiveCli.mjs's brace-extraction
       technique to assert the endpoint's handler never calls a write path.
+
+  - id: t-033
+    milestone: m4
+    title: "Confirm archive-preset ArtJobs are safe to always tag engine: 'A1111'"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    soft_gate: true
+    depends_on: t-016
+    note: >-
+      FOR SILAS: Investigating t-027 (kind_robots#2872) found that
+      server/api/admin/art-archive/entries/[id]/enqueue.post.ts (t-016's
+      "apply preset" endpoint) hardcodes `engine: 'A1111'` on every ArtJob it
+      creates, regardless of what engine/checkpoint family the archived
+      image was originally generated with. It never calls enqueue.post.ts's
+      buildJobPayload() or builds a COMFY workflow graph.
+
+      What this means: an archive-preset job built from an image whose
+      original checkpoint is Flux/Krea2/Zimage/Flux2-family (a COMFY-only
+      pipeline, per utils/checkpointProfiles.ts -- those families aren't
+      classic A1111-compatible SD1.5/SDXL/Pony/Illustrious checkpoints)
+      would be submitted to the relay as an A1111 job carrying that
+      checkpoint's name. Whether that renders correctly, fails outright, or
+      silently mismatches depends on what the actual A1111 relay backend
+      does with an unrecognized/incompatible checkpoint name -- not
+      something a code read alone can settle without risking a real GPU job
+      submission.
+
+      TO APPROVE: either (a) confirm this is a known, intentional limitation
+      (e.g. "archive images are only ever SD-family checkpoints in
+      practice, or a mismatched job just fails cleanly and that's
+      acceptable") and close this with a note saying so, or (b) direct a
+      future task to add real engine-family detection to
+      buildArchiveEnqueuePayload()/the enqueue endpoint so a COMFY-family
+      archived checkpoint gets a real COMFY workflow instead of a flat A1111
+      payload. Given this touches real GPU job dispatch (the same relay
+      that conductor/t-165 and t-167 document as prone to hanging on
+      malformed jobs), a live-testable fix should not be attempted without
+      your input on which path is actually correct here.
+
+      What unblocks when he does: closing this either confirms t-016/t-025's
+      existing archive-preset path as-is, or unblocks a properly-scoped
+      follow-on task for real engine-family dispatch.
