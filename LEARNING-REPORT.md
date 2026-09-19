@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-19T09:01:53Z
+Generated: 2026-09-19T09:07:41Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1055**
-- Outcomes: blocked: 17, cancelled: 1, done: 1037
+- Closed tasks recorded: **1056**
+- Outcomes: blocked: 17, cancelled: 1, done: 1038
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -21,7 +21,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | animation-studio | 2 | 50% |
 | appmaker | 11 | 100% |
 | approval-portal | 2 | 0% |
-| art-archive | 20 | 100% |
+| art-archive | 21 | 100% |
 | art-generator-connect | 3 | 100% |
 | brainstorm | 26 | 96% |
 | butterfly-gallery | 26 | 96% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1038 | 99% |
+| software | 1039 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-19 `art-archive/t-019` — A regex negative-lookahead across a multi-line [\s\S]*? span cannot reliably prove a token is ABSENT from a function body -- it only checks one anchor point, not every position -- so it passed trivially on a first attempt to verify runDryRun() never calls a write path. Brace-matched extraction of the actual function source span, then a plain substring search on that extracted text, is the sound way to assert absence; also caught a false positive from a console.log string that literally contained the text of a forbidden call name as documentation, not an actual invocation. Separately: read the existing write-path code (importArchiveFile's hardcoded isPublic=false/isMature=true) before assuming a 'verify no privacy leakage' task needs new machinery -- the invariant was already there and already tested by test:art-archive-importer.
 - 2026-09-19 `art-archive/t-023` — Reviewer rejected pass 1 for a static contract-verifier regex whose source-order assumption (UNMATCHED before evidence.name/evidence.hash) did not match formatOutcome()'s real build order (name -> hash -> weight -> UNMATCHED), even though the runtime output was already correct -- a reminder that a new regex-based contract check needs to be verified against the actual source it's asserting on, not just against the expected rendered string. The retry's one-line regex fix (matching the real order) landed clean on pass 2.
 - 2026-09-19 `art-archive/t-018` — A task note listing five things (thumbnails, indexed filters, incremental hashing, bounded concurrency, resumable scans) was not one task -- two of the five (indexed filters, bounded concurrency) were already done or a small addition, and two more (real thumbnails, resumable scans) are genuinely separate, larger design surfaces (an image-resizing pipeline; persisted scan-cursor state). Landing the one clearly-scoped, testable core (incremental size/mtime caching) and splitting the rest into two named follow-on tasks (t-029, t-030) kept this a same-session, first-pass close instead of a half-finished multi-part PR. Also: vue-tsc caught a real nullable-field bug (ArchiveEntry.fileSize/fileMtime are Int?/DateTime? for pre-t-003 rows) that a hand-review of the Prisma schema before writing the cache-loader would have caught first -- worth checking a model's actual nullability before assuming a field is always populated.
 - 2026-09-19 `art-archive/t-016` — The narrow-adapter framing worked cleanly here: buildArchiveEnqueuePayload() only builds a base ArtJob payload from ArtImage fields and merges the chosen preset via t-025's existing applyArchivePresetToPayload, so the endpoint itself stayed thin glue code. The 'no premature file removal' requirement needed no new schema/tracking field at all -- it falls out for free from the endpoint never calling any file-mutating or isActive-touching code path.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-19 `butterfly-gallery/t-032` — A kaizen task filed from a PR body's own suggestion, claimed and implemented in the same session as the PR it came from, landed cleanly: reading five sibling route files to extract their shared guard shape (admin gate -> invalid-id 400 -> missing-entry 404 -> mutation) before writing the contract test, then adversarially verifying the test actually fails when a guard is removed, caught what a superficial "checks that the routes exist" test would have missed.
 - 2026-09-19 `butterfly-gallery/t-029` — A kaizen task that names three independent follow-on slices (setProcessed, collections, markNeedsReview) is fine to land as separate, smaller PRs one at a time rather than waiting to bundle all three -- markNeedsReview alone was a clean, additive, single-endpoint PR that merged with zero review friction. The remaining two slices stayed correctly scoped out rather than padding this PR.
 - 2026-09-19 `butterfly-gallery/t-030` — A kaizen task that says "audit other endpoints for the same pattern" is worth doing literally and narrowly: grepping every server/api/admin GET route for ArtImage/mature-flagged model usage found exactly one real match (the entries/[id].get.ts detail route, a natural companion to the listing endpoint already fixed) in a few minutes, versus a much larger effort auditing every route by hand. Worth checking mutation routes' response shape too, not just GET routes -- a PATCH/POST that echoes back more fields than it needs is the same leak in a different shape.
-- 2026-09-19 `butterfly-gallery/t-024` — Before implementing a "tune performance/responsive" task, audit what earlier tasks already covered: t-004/t-009/t-022 had already wired cursor pagination and thumbnailPath-vs-displayPath correctly, so t-024's real remaining gaps were narrower than its title suggested -- auto (rather than manual-click) prefetch, and a true phone-width breakpoint below the existing 900px one (whose rail clamp() minimums didn't shrink further, leaving almost nothing for the center art-display under ~480px). Citing what was already correct, with file/line evidence, kept the diff scoped to the two genuine gaps instead of re-touching working code.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-19T09:01:53Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-19T09:07:41Z_
