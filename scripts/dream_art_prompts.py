@@ -94,12 +94,20 @@ CAST_DIRECTION = (
     "body shapes, and gender presentations"
 )
 
+# Stated as adjectives, not exclusions. This used to read "an unpeopled frame,
+# the subject stands alone with no bystanders, no onlookers, and no crowd",
+# which names three kinds of people to an engine that cannot act on the word
+# "no" -- Krea 2 renders at cfg 1, where the ComfyUI negative prompt is inert.
+# "unpeopled" was the only part of it that worked; the tail after it was
+# commissioning the very crowd the 2026-08-08 sweep existed to remove. Silas
+# found the leftovers still rendering on 2026-09-19, six weeks later.
 UNPEOPLED = (
-    "an unpeopled frame, the subject stands alone with no bystanders, "
-    "no onlookers, and no crowd"
+    "an unpeopled frame, the subject alone, the space around it bare and deserted"
 )
 
-NO_TEXT = "unmarked surfaces, free of text"
+# Same rule, text instead of people: naming text to a Qwen-lineage model is how
+# you order lettering. Describe the surface, not the absence.
+NO_TEXT = "every surface bare and unmarked"
 CARD_FRAMING = "vertical 2:3 portrait composition"
 MAX_PROMPT_CHARS = 1400
 
@@ -256,8 +264,12 @@ def reward_prompt(name: str, reward_type: str, look: str, grants: str,
             f"the effect itself is the subject: {grants}" if grants else "",
             _world_context(world_title, vibe_line),
             CARD_FRAMING,
-            "tight centered composition on the effect, at most one pair of hands entering "
-            "frame at the edge to work it, no full figure, no faces, no onlookers",
+            # "no full figure, no faces, no onlookers" put three people nouns in
+            # positive conditioning on 68 SKILL rewards. The positive form of
+            # the same intent is a crop: say where the frame stops.
+            "tight centered composition on the effect, cropped close so that only one "
+            "pair of hands enters at the very edge of the frame to work it, "
+            "everything beyond that crop outside the picture",
             f"rendered with the weight given a {rarity} ability" if rarity else "",
             style,
             NO_TEXT,

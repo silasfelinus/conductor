@@ -31,14 +31,17 @@ SIZE = "2048x2732"
 # Front-loading this block was collapsing non-cosmic concepts into generic
 # posters (see IMAGE-GEN-QUALITY-REVIEW.md 2a). "full-bleed, edge to edge, no
 # border" is stated positively because negatives are inert on the cfg=1
+# engine. It was NOT, until 2026-09-19: the suffix below ended with nine
+# "no ..." clauses, three of them text nouns, on the engine this comment
+# names. The comment was right and the code did the opposite.
 # distilled-model path (Krea 2 Turbo, same as Flux before it).
 STYLE_SUFFIX = (
     "Render this as a premium full-color graphic-horror illustration for the Monster Recast "
     "coloring book: thick confident black outlines, extremely detailed but readable shapes, "
     "flat bounded color fills, hard-edged secondary color shapes instead of gradients, strong "
-    "readable silhouette, serious theatrical camp, original character design. One single scene, "
-    "one full-bleed image filling the whole frame edge to edge with no border, no framing panel, "
-    "no comic panels, no collage, no contact sheet, and no readable text, logo, or watermark."
+    "readable silhouette, serious theatrical camp, original character design. One single scene as "
+    "one full-bleed image, the artwork running off all four edges of the picture, every surface "
+    "in it bare and unmarked."
 )
 
 

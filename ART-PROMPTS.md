@@ -60,6 +60,53 @@
 >    contract means "the last bug is gone", never "this prompt is good".
 >    `server/utils/artPromptContract.ts` now rejects the evidenced offenders as
 >    `art-direction-jargon`, scoped to the caption-conditioned engines.
+>
+> 5. **A rule against negations does not exempt the sentence that enforces it
+>    — and a threshold is not a rule.** Added 2026-09-19, and it is rule 3
+>    catching its own authors. Rule 3 was written on 2026-08-25. The clause
+>    written on 2026-08-08 to stop the crowds reads *"an unpeopled frame, the
+>    subject stands alone with **no bystanders, no onlookers, and no crowd**"* —
+>    three kinds of people, on the engine this file says cannot hear a "no".
+>    Nobody went back and re-read the fix. It kept shipping for six weeks, in
+>    `artJobNormalization.ts`, `dream_art_prompts.py` and
+>    `repair_queued_cast_prompts.py`, and the crowds kept arriving. Silas found
+>    the leftovers from the card end, the same way every one of these has been
+>    found: *"I'm still seeing some objects stuck with bad art."*
+>
+>    Three things made it survive, and all three generalize:
+>
+>    - **The word that worked and the words that didn't were in the same
+>      breath.** `unpeopled` is the whole of the intent. Everything after it
+>      was undoing it. A clause that is half positive reads as positive.
+>    - **The gate counted instead of judging.** `artPromptContract.ts` rejected
+>      a pile of more than four *text* nouns, so three *people* nouns were not
+>      a violation, and neither was a suggested prompt ending "no readable
+>      text, no logo, no watermark, no collage" — three text nouns, one under
+>      the line. A threshold says the fifth one is the problem. The first one
+>      is the problem.
+>    - **The test suite certified it. Again.** `verifyArtPromptContract.ts`
+>      asserted the repaired ladle prompt returns NO violations, commented
+>      *"three exclusions is under the pile threshold"* — thirty lines below
+>      the note explaining that the v4 taxonomy clause reached production the
+>      exact same way. Writing down that a fixture certified the last bug does
+>      not stop a fixture certifying the next one.
+>
+>    The measurement, when it was finally taken: **1,156 of 4,445 live
+>    `artPrompt`s (26%) told Krea what not to draw.** 319 of 351 Rewards —
+>    91% — named people they did not want. So: no exclusions, none, and say so
+>    in a gate rather than in a document. `scripts/repair_negation_art_prompts.py`
+>    is the cleanup, and `artPromptContract.ts` rule 7 is the gate.
+>
+> 6. **The card text is not art direction.** Same day, same object. Reward
+>    393's render carried a complete visual caption *and then* ninety words of
+>    its own rules text — `ITEM. COMMON. A modest ring that lets the wearer
+>    understand and speak with animals...` — because `kreaSemanticPrompt.ts`
+>    stripped the database **label** and kept the **value**. Krea painted the
+>    paragraph. Silas: *"it looks like our suggested prompt included the entire
+>    text of what the ring does, which is exactly wrong for a krea 2 prompt."*
+>    Description, effect, flavour text, backstory and pitch are what the thing
+>    DOES. Species, class, role, presentation, genre and theme are what it
+>    LOOKS LIKE. Only the second kind belongs in a caption.
 
 > The daily-dream pipeline enforces the first two automatically in
 > `scripts/dream_art_prompts.py`. Hand-written prompts in this file should follow

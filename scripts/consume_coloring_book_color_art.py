@@ -53,10 +53,15 @@ INKED_STYLE = (
 
 COLOR_SUFFIX = (
     f" Render this as a finished inked-comic coloring-book design master, portrait 2:3: {INKED_STYLE}. "
+    # Positive form throughout. This ended in eleven "no ..." clauses -- four of
+    # them text nouns -- on krea2, whose negative prompt is inert at cfg 1, so
+    # every one of those words was positive conditioning on a model from the
+    # strongest open text-rendering lineage available. The garbled fake title
+    # text IMAGE-GEN-QUALITY-REVIEW.md recorded in this lane is what that buys.
     "One coherent full-bleed scene, clear hands and contact points, and enough closed shapes to "
-    "support a later faithful line-art conversion. Fill the frame edge to edge. No border, no "
-    "comic panels, no collage, no contact sheet, no readable text, no watermark, no signature, "
-    "no brand marks, no soft airbrush haze, no painterly blur, no photographic rendering."
+    "support a later faithful line-art conversion. The artwork runs off all four edges of the "
+    "picture as one continuous image, every surface in it bare and unmarked, hard-edged ink "
+    "throughout, drawn and printed rather than photographed."
 )
 
 LOGO_SUFFIX = (

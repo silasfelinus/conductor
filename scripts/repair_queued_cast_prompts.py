@@ -82,9 +82,12 @@ CAST_REPLACEMENT = (
     "cast the people who appear naturally across many species, ages, body sizes, "
     "body shapes, and gender presentations"
 )
+# Adjectives, not exclusions: see the note on UNPEOPLED in dream_art_prompts.py.
+# This replacement text shipped in 2026-08-08 naming three kinds of people to an
+# engine whose negative prompt is inert, which is how the crowd it was written
+# to remove kept arriving.
 UNPEOPLED_REPLACEMENT = (
-    "an unpeopled frame — the subject stands alone with no bystanders, "
-    "onlookers, or crowd"
+    "an unpeopled frame, the subject alone, the space around it bare and deserted"
 )
 
 # Subjects that are objects by definition. These win over PEOPLE_WORDS, because

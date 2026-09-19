@@ -51,11 +51,21 @@ def test_item_prompt_states_the_frame_is_empty_of_people():
     assert dap.UNPEOPLED in dap.reward_prompt(**LADLE)
 
 
-def test_skill_prompt_makes_the_effect_the_subject_and_bans_full_figures():
+def test_skill_prompt_makes_the_effect_the_subject_and_crops_out_the_figure():
+    """The effect is the subject and the figure is CROPPED OUT, not forbidden.
+
+    This test used to assert `"no full figure" in prompt` and `"no onlookers"
+    in prompt` -- it certified the bug. Krea 2 runs at cfg 1, where the
+    ComfyUI negative prompt is inert, so those three people nouns landed in
+    positive conditioning and it drew them. A test that pins the exact wording
+    of an exclusion is a test that keeps the exclusion alive.
+    """
     prompt = dap.reward_prompt(**SEASONING)
     assert prompt.startswith("Nanite Seasoning, a single practiced technique caught mid-use")
-    assert "no full figure" in prompt
-    assert "no onlookers" in prompt
+    assert "cropped close" in prompt
+    assert "one pair of hands enters at the very edge" in prompt
+    for banned in ("no full figure", "no faces", "no onlookers"):
+        assert banned not in prompt, f"{banned!r} commissions what it names on a cfg-1 engine"
 
 
 def test_skill_prompt_survives_a_legacy_proposal_with_no_look_field():
@@ -180,7 +190,37 @@ def test_no_builder_asks_for_a_card(prompt_fn):
     assert "card" not in prompt_fn().lower()
 
 
-def test_text_exclusion_is_one_short_clause_not_a_noun_list():
-    for banned in ("lettering", "logos", "watermark", "signature"):
-        assert banned not in dap.NO_TEXT
-    assert dap.NO_TEXT.lower().count("text") == 1
+def test_the_text_direction_names_no_text_at_all():
+    """Describe the surface; never name what must not be on it.
+
+    This asserted `NO_TEXT.lower().count("text") == 1` -- "say it once" rather
+    than "do not say it". One is still one more than zero on a Qwen-lineage
+    model running at cfg 1, where the negative prompt is inert and every noun
+    in the positive prompt is a candidate to draw.
+    """
+    for banned in ("text", "lettering", "logo", "logos", "watermark", "signature", "caption"):
+        assert banned not in dap.NO_TEXT.lower(), (
+            f"{banned!r} in the text direction is an order for {banned}"
+        )
+    assert dap.NO_TEXT, "the direction still has to say what the surface looks like"
+
+
+def test_the_unpeopled_direction_names_no_people_at_all():
+    """The 2026-08-08 anti-crowd clause was itself a cast list.
+
+    "an unpeopled frame, the subject stands alone with no bystanders, no
+    onlookers, and no crowd" is three people nouns in positive conditioning.
+    It is why Rewards kept rendering as crowds for six weeks after the sweep
+    that was supposed to stop it.
+    """
+    import re
+
+    text = dap.UNPEOPLED.lower()
+    # Word-boundary matching, because "unpeopled" is the one word that carries
+    # the intent without naming anyone -- a substring check finds "people"
+    # inside it and rejects the correct answer.
+    for banned in ("bystanders?", "onlookers?", "crowds?", "figures?", "faces?", "persons?", "people"):
+        assert not re.search(rf"\b{banned}\b", text), (
+            f"{banned!r} in the unpeopled direction is an order for it"
+        )
+    assert "unpeopled" in text
