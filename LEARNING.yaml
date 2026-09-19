@@ -15285,3 +15285,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "The narrow-adapter framing worked cleanly here: buildArchiveEnqueuePayload() only builds a base ArtJob payload from ArtImage fields and merges the chosen preset via t-025's existing applyArchivePresetToPayload, so the endpoint itself stayed thin glue code. The 'no premature file removal' requirement needed no new schema/tracking field at all -- it falls out for free from the endpoint never calling any file-mutating or isActive-touching code path."
+- date: 2026-09-19
+  project: art-archive
+  task: t-018
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A task note listing five things (thumbnails, indexed filters, incremental hashing, bounded concurrency, resumable scans) was not one task -- two of the five (indexed filters, bounded concurrency) were already done or a small addition, and two more (real thumbnails, resumable scans) are genuinely separate, larger design surfaces (an image-resizing pipeline; persisted scan-cursor state). Landing the one clearly-scoped, testable core (incremental size/mtime caching) and splitting the rest into two named follow-on tasks (t-029, t-030) kept this a same-session, first-pass close instead of a half-finished multi-part PR. Also: vue-tsc caught a real nullable-field bug (ArchiveEntry.fileSize/fileMtime are Int?/DateTime? for pre-t-003 rows) that a hand-review of the Prisma schema before writing the cache-loader would have caught first -- worth checking a model's actual nullability before assuming a field is always populated."
