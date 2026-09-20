@@ -37,6 +37,14 @@ class ComfyRestartHandoffTests(unittest.TestCase):
         self.assertLess(reap, restart)
         self.assertIn("Stop-Process -Id $oldPid -Force", self.block)
 
+    def test_old_engine_death_is_verified_not_inferred_from_a_free_port(self):
+        verify = self.block.index("$oldEnginesGone = $false")
+        refusal = self.block.index("old ComfyUI pid(s) are still alive after cleanup")
+        restart = self.block.rindex("& pm2 restart $name")
+        self.assertLess(verify, refusal)
+        self.assertLess(refusal, restart)
+        self.assertIn("$remaining = @(Get-ComfyEnginePids $port)", self.block)
+
     def test_port_must_be_free_before_replacement_launch(self):
         port_check = self.block.index("$portReleased = $false")
         restart = self.block.rindex("& pm2 restart $name")
@@ -54,6 +62,13 @@ class ComfyRestartHandoffTests(unittest.TestCase):
         restart = self.block.rindex("& pm2 restart $name")
         self.assertLess(owner_guard, refusal)
         self.assertLess(refusal, restart)
+
+    def test_engine_process_filter_is_scoped_to_the_comfy_port(self):
+        helper_start = self.source.index("function Get-ComfyEnginePids($port) {")
+        helper_end = self.source.index("function Restart-Supervised($name) {")
+        helper = self.source[helper_start:helper_end]
+        self.assertIn("Test-IsComfyEngine $_ $port", helper)
+        self.assertIn("--port", helper)
 
     def test_non_comfy_apps_keep_the_simple_pm2_restart_path(self):
         prefix = self.block[: self.block.index("$target = $targets")]
