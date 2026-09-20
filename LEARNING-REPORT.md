@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-20T18:24:08Z
+Generated: 2026-09-20T18:32:19Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1085**
-- Outcomes: blocked: 18, cancelled: 2, done: 1065
+- Closed tasks recorded: **1086**
+- Outcomes: blocked: 18, cancelled: 2, done: 1066
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -55,7 +55,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | newsfeed | 20 | 100% |
 | packmaker | 10 | 100% |
 | rainbow-butterflies | 21 | 100% |
-| ruler-hooked | 15 | 100% |
+| ruler-hooked | 16 | 100% |
 | scene-animator | 2 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1068 | 99% |
+| software | 1069 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-20 `ruler-hooked/t-029` — A game's existing closed Effect grammar (counters/sliders/flags, additive and reducer-applied) is usually wide enough to carry a brand-new subsystem (here: a spendable currency, gear ownership, and kingdom investment) with zero save-shape changes -- check for that reuse before reaching for a new save field or a bespoke mutation path. Also: when a value must feed a purely-derived function that's called from multiple sites (game logic AND the Vue display, here timingProfileFor), snapshot it onto the state object at construction time rather than threading it as a new parameter everywhere -- every existing call site picks it up for free and the visual/logic paths can't diverge.
 - 2026-09-20 `interface-vision/t-137` — A per-bucket ratchet that compares only aggregate COUNT (not membership) lets a same-bucket substitution slip through silently; when entries are stable identifiers with no natural churn (bare file paths, unlike ESLint's line:column), add an explicit membership check alongside the count check rather than assuming count-only is sufficient everywhere the shared ratchetBaseline.ts pattern is reused.
 - 2026-09-20 `ruler-hooked/t-028` — Reused an existing Prisma model (Character/ExpressionMedia) instead of inventing a parallel portrait/expression schema, per the task's explicit instruction to build on the audit's character-parity item -- worth checking for an already-fitting model before adding new columns/tables on any 'we need a character system' task. Separately: running `prettier --write` on an edited file reformats the WHOLE file, not just the touched lines; several ruler-hooked files were already prettier-non-compliant on main before this task, so a naive --write pass would have bundled a large unrelated reflow into the diff. Checked each edited file's original formatting via `git show HEAD:<file>` before trusting --write's output, and reverted/reapplied surgically where it over-reformatted -- worth doing this check by default on any repo where prettier compliance isn't already a green baseline.
 - 2026-09-20 `interface-vision/t-139` — Clean first-pass follow-on from t-138: mirroring an already-established, already-CI-verified pattern (character-card.vue/reward-card.vue's pending-prop wiring) onto sibling components, and running the specific architecture/contract scripts the prior cycle's failure had already named (verify-project-architecture.mjs, verifyGalleryAdoption.ts, verifyNarrativeKit.ts) before pushing rather than after, avoided repeating the same CI round-trip. Also correctly recognized when the pattern did NOT apply (server-card.vue has no art plate) instead of forcing a fit -- worth noting as a positive example of scope discipline for future 'do the same thing on N siblings' tasks.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-19 `kind-robots/t-113` — First pass, tiny scoped diff (+32/-0, one file, kind_robots#2903). Cross-repo pickup from a conductor session worked cleanly end-to-end: claim on conductor, implement+verify in the kind_robots checkout, review transition, merge, close. Verified the new expectOrder() assertion actually catches a regression (manually reordered the source, confirmed the failure message, reverted) rather than trusting that adding an assertion alone proves it works.
 - 2026-09-19 `conductor/t-178` — Closed as a duplicate of t-179: both tasks asked for the same pm2 restart_time trend-alerting fix, filed the same day from the same comfyui crash-loop incident chain. Two sessions independently filed kaizen/incident-response tasks for the same underlying gap without cross-checking existing ready tasks first -- worth a quick grep of the target project's roadmap for matching titles/notes before filing a new task from an incident, not just from PR history.
 - 2026-09-19 `interface-vision/t-105` — Recurring polish cycle (Achievements surface): the PR backed its screenshot-directed layout claims with source-level contract assertions (flow order, container-query breakpoints, leaderboard cell placement) rather than relying on the visual description alone -- worth holding as the bar for future screenshot-directed t-105 slices, since a contract test catches a future regression a screenshot never will.
-- 2026-09-19 `kind-robots/t-112` — First pass, tiny scoped diff (+4/-4, one file), matched exactly what the PR described when diffed against the stated base. Reordering a fallback chain to prefer an explicit DOM identity contract over legacy private-Vue introspection is the kind of change worth a source-contract test pinning the order, not just relying on behavioral test coverage -- filed as kind-robots/t-113.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-20T18:24:08Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-20T18:32:19Z_
