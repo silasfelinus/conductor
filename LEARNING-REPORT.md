@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-20T11:17:04Z
+Generated: 2026-09-20T11:36:42Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1083**
-- Outcomes: blocked: 18, cancelled: 2, done: 1063
+- Closed tasks recorded: **1084**
+- Outcomes: blocked: 18, cancelled: 2, done: 1064
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -55,7 +55,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | newsfeed | 20 | 100% |
 | packmaker | 10 | 100% |
 | rainbow-butterflies | 21 | 100% |
-| ruler-hooked | 14 | 100% |
+| ruler-hooked | 15 | 100% |
 | scene-animator | 2 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1066 | 99% |
+| software | 1067 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-20 `ruler-hooked/t-028` — Reused an existing Prisma model (Character/ExpressionMedia) instead of inventing a parallel portrait/expression schema, per the task's explicit instruction to build on the audit's character-parity item -- worth checking for an already-fitting model before adding new columns/tables on any 'we need a character system' task. Separately: running `prettier --write` on an edited file reformats the WHOLE file, not just the touched lines; several ruler-hooked files were already prettier-non-compliant on main before this task, so a naive --write pass would have bundled a large unrelated reflow into the diff. Checked each edited file's original formatting via `git show HEAD:<file>` before trusting --write's output, and reverted/reapplied surgically where it over-reformatted -- worth doing this check by default on any repo where prettier compliance isn't already a green baseline.
 - 2026-09-20 `interface-vision/t-139` — Clean first-pass follow-on from t-138: mirroring an already-established, already-CI-verified pattern (character-card.vue/reward-card.vue's pending-prop wiring) onto sibling components, and running the specific architecture/contract scripts the prior cycle's failure had already named (verify-project-architecture.mjs, verifyGalleryAdoption.ts, verifyNarrativeKit.ts) before pushing rather than after, avoided repeating the same CI round-trip. Also correctly recognized when the pattern did NOT apply (server-card.vue has no art plate) instead of forcing a fit -- worth noting as a positive example of scope discipline for future 'do the same thing on N siblings' tasks.
 - 2026-09-20 `interface-vision/t-138` — A local eslint/prettier/vue-tsc-clean pass is not the same as a repo-architecture-clean pass -- the first CI push placed a new composable at root composables/ (forbidden by verify-project-architecture.mjs) and had a Facets surface reference the wrong art-request mechanism (caught by verifyFacetCatalogMaintenance.ts's ArtJob-vs-YAML assertion), neither of which vue-tsc/eslint/prettier would ever catch. Both were real, CI only found them because the coordinating session polled check runs directly rather than trusting the worker subagent's own 'verified' claim; fixed in one follow-up push and merged clean on the second CI run. Kaizen -- before wiring a new shared composable/store into an unfamiliar surface, grep for the repo's own architecture-contract script (verify-project-architecture.mjs / verify*Contract.ts naming pattern here) and run it locally first, not just the generic lint/type suite.
 - 2026-09-20 `conductor/t-179` — A command-prohibition contract test that does a bare substring match ('pm2 restart' not in source.lower()) against a whole script file will keep tripping on harmless advisory prose that happens to contain both words contiguously (two separate Write-Warning messages did, in two separate retry passes) -- match actual command-invocation syntax instead of any co-occurrence of the words, or a trivial wording fix keeps re-triggering the same false positive at a different line.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-19 `interface-vision/t-105` — Recurring polish cycle (Achievements surface): the PR backed its screenshot-directed layout claims with source-level contract assertions (flow order, container-query breakpoints, leaderboard cell placement) rather than relying on the visual description alone -- worth holding as the bar for future screenshot-directed t-105 slices, since a contract test catches a future regression a screenshot never will.
 - 2026-09-19 `kind-robots/t-112` — First pass, tiny scoped diff (+4/-4, one file), matched exactly what the PR described when diffed against the stated base. Reordering a fallback chain to prefer an explicit DOM identity contract over legacy private-Vue introspection is the kind of change worth a source-contract test pinning the order, not just relying on behavioral test coverage -- filed as kind-robots/t-113.
 - 2026-09-19 `lora-ingestion/t-009` — Pass 1 (conductor PR #4737) had 3 real Python test failures from an unfinished lora-import->model-import/checkpoints-path rename plus a handoff-template violation; pass 2 (kind_robots#2894) additionally collapsed the Civitai base-model dropdown from an exhaustive version list into 14 supported/other families per Silas's explicit feedback ('I don't need 10 different versions of SD') -- future UI filters over an upstream enum should model the family a user picks, not the transport values, from the start.
-- 2026-09-19 `mandarin-tutor/t-025` — An optional feature Silas did not select should close as a no-op rather than remain waiting on a dependency that will eventually satisfy and trigger WAITING_WITH_SATISFIED_DEPS.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-20T11:17:04Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-20T11:36:42Z_
