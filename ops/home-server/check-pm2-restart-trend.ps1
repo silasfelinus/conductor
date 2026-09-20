@@ -50,7 +50,22 @@ $snapshotJson = (& pm2 jlist 2>$null | & node $helper)
 if ($LASTEXITCODE -ne 0 -or -not $snapshotJson) {
     throw 'Unable to obtain normalized PM2 process snapshot.'
 }
-$processes = @($snapshotJson | ConvertFrom-Json)
+# Windows PowerShell 5.1's ConvertFrom-Json emits a JSON ARRAY as a single
+# object rather than enumerating it, so `foreach` over the result iterates once
+# with $process bound to the whole array. Every $process.<field> is then member
+# enumeration returning Object[], not a scalar.
+#
+# 2026-09-20, on a box running four apps: the pre-fix `[int]$process.restart_time`
+# read a property no element had, which member-enumerates to nothing, so
+# [int]$null scored 0 restarts for everything and the check silently never
+# advised. Correcting the path to pm2_env.restart_time then made it read all
+# four values at once and the [int] cast threw outright - visible only because
+# healthcheck-runner.ps1 wraps this in try/catch (which is exactly why that
+# wrapper exists).
+#
+# healthcheck.ps1 has always piped this same helper through ForEach-Object for
+# this reason. Match it.
+$processes = @($snapshotJson | ConvertFrom-Json | ForEach-Object { $_ })
 $now = [DateTimeOffset]::UtcNow
 $state = Read-State
 
@@ -71,10 +86,16 @@ foreach ($process in $processes) {
     # ComfyUI's measured 234-second boot pm2 manages about 1.25 restarts per
     # tick. Slow loops are exactly what this trend check is for, and it was
     # silent for all of them.
+    # Cast defensively. A scalar is what this must be, and anything else means
+    # the enumeration above regressed - skip that app rather than throw the
+    # whole check away, and say so.
     $restarts = 0
-    if ($process.pm2_env -and $null -ne $process.pm2_env.restart_time) {
-        $restarts = [int]$process.pm2_env.restart_time
+    $rawRestarts = if ($process.pm2_env) { $process.pm2_env.restart_time } else { $null }
+    if ($rawRestarts -is [array]) {
+        Write-Warning "Skipping '$name': restart_time came back as a collection, so the pm2 snapshot was not enumerated."
+        continue
     }
+    if ($null -ne $rawRestarts) { $restarts = [int]$rawRestarts }
     $entry = $state[$name]
 
     if (-not $entry) {
