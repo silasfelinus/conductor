@@ -1366,30 +1366,62 @@ foreach ($t in $targets) {
         }
 
         Write-Log "$($t.Name): health probe failed ($($t.Url)) - restarting via pm2"
+
+        # Was a watchdog restart already awaiting a verdict? If so, that restart
+        # did not fix it, and THAT is the thing worth an email.
+        $pendingKey = "restartpending_$($t.Name)"
+        $priorPending = ''
+        if ($alertState.ContainsKey($pendingKey)) { $priorPending = [string]$alertState[$pendingKey] }
+
         Restart-Supervised $t.Name
 
-        # Confirm whether it came back before deciding what to say, then alert
-        # (rate-limited by the cooldown).
-        Start-Sleep -Seconds 8
-        $recovered = $false
-        try {
-            $after = Invoke-WebRequest -Uri $t.Url -TimeoutSec 20 -UseBasicParsing
-            if ($after.StatusCode -eq 200) { $recovered = $true }
-        } catch { $recovered = $false }
+        $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+        $alertState[$pendingKey] = $stamp
+        Save-AlertState $alertState
 
-        if (Test-AlertDue $alertState $t.Name) {
-            $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
-            if ($recovered) {
-                Send-Alert "WARNING: $($t.Name) was hung on $hostName - auto-restarted" `
-                    "The $($t.Name) backend stopped answering $($t.Url) and the health watchdog restarted it via pm2. It is answering again as of $stamp. No action needed unless this repeats."
-            } else {
-                Send-Alert "DOWN: $($t.Name) on $hostName - restart did not recover" `
-                    "The $($t.Name) backend stopped answering $($t.Url); the watchdog ran 'pm2 restart $($t.Name)' at $stamp but it is still not responding. This one likely needs a look (GPU/driver, disk, crash-loop). Check pm2 logs and logs\healthcheck.log on $hostName."
-            }
-            $alertState[$t.Name] = $stamp
-            Save-AlertState $alertState
+        # 2026-09-20: this used to sleep EIGHT SECONDS, probe once, and email
+        # "restart did not recover" if that probe failed. ComfyUI takes ~234
+        # seconds to bind its port, so the answer was structurally always "did
+        # not recover" - the alert fired on every watchdog restart of this app
+        # whether or not it recovered, and its verdict carried no information.
+        # Observed 14:27:57 that day: the DOWN email went out 13 seconds after
+        # the replacement was launched, while Silas was mid-migration and the
+        # engine was simply still booting.
+        #
+        # A slow-booting engine cannot be judged on a stopwatch the tick itself
+        # is holding. Record that a restart is awaiting a verdict and let a
+        # LATER tick decide with a real probe - the same startup-grace and
+        # progress logic above already knows how to wait properly. The sleep
+        # also blocked the tick for no gain.
+        if (-not $priorPending) {
+            Write-Log "$($t.Name): restarted; a full boot takes minutes, so recovery is judged on a later tick rather than seconds from now"
         } else {
-            Write-Log "$($t.Name): restart alert suppressed (within $($cooldownMinutes)-min cooldown)"
+            Write-Log "$($t.Name): STILL DOWN - a watchdog restart at $priorPending did not bring it back, and it has been restarted again"
+            if (Test-AlertDue $alertState $t.Name) {
+                Send-Alert "DOWN: $($t.Name) on $hostName - a previous watchdog restart did not recover it" `
+                    "The $($t.Name) backend stopped answering $($t.Url). The watchdog restarted it at $priorPending, gave it a full startup grace to come up, found it still not answering, and restarted it again at $stamp.`n`nUnlike the old 8-second check, this verdict is real: the engine was given time to boot and did not. Likely causes are a boot that hangs rather than crashes (a model share that is slow, unreachable, or under heavy copy load blocks folder_paths at startup with no error line), GPU/driver, or disk.`n`nStart with the last line the boot reached:`n  Get-Content logs\comfyui.err.log -Tail 30`n`nIf the share is the cause, leave the app STOPPED ('pm2 stop $($t.Name)') until it is healthy again - the watchdog never fights a deliberate stop, and restarting into a blocked scan only starts another doomed boot."
+                $alertState[$t.Name] = $stamp
+                Save-AlertState $alertState
+            } else {
+                Write-Log "$($t.Name): restart alert suppressed (within $($cooldownMinutes)-min cooldown)"
+            }
+        }
+    } else {
+        # Answering. If a watchdog restart was awaiting a verdict, this is it.
+        $pendingKey = "restartpending_$($t.Name)"
+        $pendingSince = ''
+        if ($alertState.ContainsKey($pendingKey)) { $pendingSince = [string]$alertState[$pendingKey] }
+        if ($pendingSince) {
+            $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+            Write-Log "$($t.Name): answering again - the watchdog restart at $pendingSince recovered it"
+            $alertState[$pendingKey] = ''
+            Save-AlertState $alertState
+            if (Test-AlertDue $alertState "recovered-$($t.Name)") {
+                Send-Alert "RECOVERED: $($t.Name) on $hostName is answering again" `
+                    "The $($t.Name) backend stopped answering $($t.Url) and the watchdog restarted it at $pendingSince. It is answering again as of $stamp. No action needed unless this repeats."
+                $alertState["recovered-$($t.Name)"] = $stamp
+                Save-AlertState $alertState
+            }
         }
     }
 }

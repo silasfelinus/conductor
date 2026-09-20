@@ -1164,6 +1164,58 @@ forty seconds, and what pushed the crash past `min_uptime` in the first place.
 Not yet measured; `python -X importtime` against the module is the next
 instrument. Fixing it shrinks every failure window here by roughly 6x.
 
+### The DOWN alert that fires on every restart (2026-09-20)
+
+**Symptom.** An email saying the watchdog restarted comfyui *"but it is still
+not responding. This one likely needs a look (GPU/driver, disk, crash-loop)."*
+
+**Ignore that verdict on comfyui — it was structurally always the same.** The
+old code did:
+
+```powershell
+Restart-Supervised $t.Name
+Start-Sleep -Seconds 8
+$recovered = <one probe>
+```
+
+Eight seconds, against an engine whose measured boot is **234 seconds**. From
+healthcheck.log that day: replacement launched 14:27:44, DOWN email sent
+14:27:57 — thirteen seconds later. The alert fired on every watchdog restart of
+this app whether or not it recovered, so it carried no information and trained
+you to ignore a channel that should mean something.
+
+**The real cause that day was ordinary and the alert actively hid it.** Silas
+was copying ~2,200 LoRA files off the model share, so ComfyUI's boot-time
+`folder_paths` scan crawled and the engine never bound its port. Nothing was
+wrong with the GPU, the disk, or pm2. The correct response was `pm2 stop
+comfyui` until the copy finished — which the alert's three suggested causes
+point away from.
+
+**Fix.** A slow-booting engine cannot be judged on a stopwatch the tick itself
+is holding. The watchdog now records that a restart is awaiting a verdict
+(`restartpending_<app>` in the alert state) and lets a LATER tick decide with a
+real probe, using the same startup-grace and progress logic that already knows
+how to wait. `DOWN` is sent only when a previous watchdog restart was given a
+full grace and the engine still is not answering — and that email names the
+hanging-boot case and the `pm2 stop` remedy. A tick that finds it answering
+sends `RECOVERED` and clears the flag. Dropping the sleep also stops each
+restart from blocking the tick for eight seconds.
+
+**A boot that hangs leaves no error line**, which is what makes this class hard:
+`comfyui.err.log` shows a normal startup that simply stops. Read the LAST line
+the boot reached rather than searching for an exception:
+
+```powershell
+Get-Content logs\comfyui.err.log -Tail 30
+Measure-Command { Get-ChildItem \\192.168.7.172\pc\ai\models\loras | Measure-Object }
+```
+
+A `loras` listing is ~2,233 files and takes about 3.6s warm. Much longer, or a
+hang, means the share — and while the share is degraded or under copy load,
+leave the app stopped. **The watchdog never fights a deliberate `pm2 stop`**
+(`stopped` is exempt in both the status branches and the orphan sweep), so a
+stopped app stays stopped and stays quiet.
+
 ### Why no fixed timeout works here (2026-09-20)
 
 Silas, moving the models off the network drive: *"we should be concentrating our
