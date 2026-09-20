@@ -1264,7 +1264,14 @@ tasks:
       RUNNING 1, latestDoneAt 2026-09-20T13:53:14Z (throughput is live), oldestPending job
       23040 from 2026-09-15 (~5 days). Priority-0 band simply has not come up yet. Not yet
       actionable per STEP 1; leaving status: ready, no pass/retry consumed.
-    updated: '2026-09-20T13:53:56Z'
+
+      last checked 2026-09-20 (scheduled conductor Agent run, later in the day): jobs
+      28739,28740,28741,28742,28743,28744,28745 re-checked via GET /api/art/queue/:id using
+      KR_API_TOKEN -- all 200, all still status: PENDING. The 2026-09-20 KR_API_TOKEN 401
+      blocker noted above is resolved (token works fine for this admin-gated read now); the
+      jobs themselves simply have not been claimed off the priority-0 queue yet. Not yet
+      actionable per STEP 1; leaving status: ready, no pass/retry consumed.
+    updated: '2026-09-20T19:58:12Z'
 
   - id: t-034
     milestone: m4
