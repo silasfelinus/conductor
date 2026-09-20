@@ -11430,3 +11430,72 @@ Claude-Session: https://claude.ai/code/session_0181bM37f5aQ5TKo2QWhXh48
 - Four separate small PRs (#4879 status-check, #4880 implementation, #4881 review, #4882 done+kaizen+learning) for what was really two units of work — could have combined #4881's review-status bookkeeping into the close-out that immediately followed it, since both landed in the same run with no real review gap between them. Minor CI/PR overhead, not a correctness issue.
 
 **Kaizen task:** conductor/t-186 — add a regression guard so no `ops/home-server/*.ps1` script can reintroduce a direct `pm2 restart/stop comfyui` call outside the shared lib, closing the class of gap t-184's manual audit had to find by hand.
+
+---
+
+## 2026-09-20 — The clean audit that was rendering garbage (Facet subject repair)
+
+Silas, looking at the Facet cards the negation-repair pass had just produced: *"what the hell is
+with the facets that have recently been generated? Octopus, ocelot, axolotl? The prompts make no
+sense and the images reflect that"* — then, with a screenshot: *"I don't know why those species
+were redone anyway, we had great examples for human dwarf elf, etc, at least I thought we did.
+Also, the alignment section, which was going to be a challenge to draw, is coming up with plain
+images and text, which is a real no no."*
+
+**Answering the question under the question first: nothing was lost.** Every re-render carried
+`preserveOriginal: true`, so `archiveCurrentEntityArt` kept the curated image in entity art
+history. The human/dwarf/elf art was never even touched — those 93 SPECIES jobs were still
+PENDING. 40 Facets that HAD been overwritten were restored with
+`POST /api/art/entities/facet/:id/promote`, verified old-vs-new on one contact sheet before
+promoting anything.
+
+**What the contact sheet showed, and why it settles the argument.** Old: rich saturated house
+style. New: a plain figure on a beige background, or literal walls of garbled lettering
+(`"Erce exist rules. I wrote of several theral of then."`). Octopus → a red plush blob with three
+hearts stuck to it, because the prompt opened *"Three hearts, nine brains, infinite arms."*
+Axolotl → a frog. Ocelot → a housecat. Platypus → a toad.
+
+**Root cause, in two layers.**
+
+1. **149 prompts named no subject.** They were the Facet's `description` — card copy, written as
+   a joke — pasted whole, plus a generic taxonomy clause, with the Facet's own title nowhere in
+   them. This is ART-PROMPTS.md rule 6 and rule 2 together.
+2. **The producer could not fix them, because it did not recognize them.**
+   `buildFacetIdentityPrompt` returns an unrecognized stored prompt verbatim, and two clause
+   shapes were missing from its signature list: a creature clause someone had reworded as an
+   instruction (97 Facets), and — the one worth remembering — **147 Facets that OUR OWN REPAIR
+   de-registered**. `repair_negation_art_prompts.py` strips the jargon the contract bans, and two
+   of those phrases sit INSIDE registered v4 tails (`"... readable tools, unmistakable
+   silhouette, workplace cues."`). Stripping truncated the tail; the text-exclusion replacement
+   got appended after it. An `endsWith()` match failed from both ends.
+
+**A repair that edits a producer's boilerplate can silently orphan the cohort that boilerplate
+identified.** That is new, and it is the generalizable half.
+
+**Why the audit missed all of it.** Rule 7 was applied correctly — the audit read the CLIP node,
+not `promptString` — and reported 0 violations across 4,442 prompts. It had to: the contract
+catches what a prompt *contains*. Whether a prompt names its subject is a property of what it
+*lacks*. This is now ART-PROMPTS.md rule 8, with
+`scripts/check_facet_prompt_subjects.py` asking that question every session.
+
+**Acted, not escalated** (per Silas, 2026-09-19: *"This is way to much micromanaging... just make
+prompts that work"*):
+
+- Queue paused for the duration, then resumed.
+- **346 jobs cancelled** that would have replaced curated art with a subject-less prompt —
+  92 SPECIES among them (Human, Dwarf, Elf, Orc), plus 23 more carrying an app wrapper
+  (`"Kind Robots premium Builder illustration for Reward Types: Magic"`).
+- **40 Facets restored** from art history.
+- **328 Facet artPrompts rewritten**: creature rows lead with their own title now; the 162
+  abstract rows (ALIGNMENT, PERSONALITY, QUIRK, BACKSTORY) got hand-authored concrete scenes in
+  the house style the good 142 already use — one sentence, physical subject, no title, no jargon.
+- **25 re-queued** — only the Facets with no curated original to fall back on.
+- kind-robots#2937: containment matching, the missing clauses registered, and the two app
+  wrappers added to the contract, with the narrowness asserted both ways.
+
+**Still open for Silas:** the 4 GENDER and 3 DREAM_TYPE prompts I rewrote are identity-adjacent
+and were authored to keep their inclusive intent while dropping the jargon and the conditional.
+Worth a look when the renders land — that is a wording call I am happy to take direction on.
+
+---
+_Generated by [Claude Code](https://claude.ai/code/session_01V76RDnnwqqAxSUqZxTYpRZ)_
