@@ -15603,3 +15603,21 @@ records:
     rather than after, avoided repeating the same CI round-trip. Also correctly recognized when the
     pattern did NOT apply (server-card.vue has no art plate) instead of forcing a fit -- worth noting
     as a positive example of scope discipline for future 'do the same thing on N siblings' tasks."
+- date: 2026-09-20
+  project: ruler-hooked
+  task: t-028
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Reused an existing Prisma model (Character/ExpressionMedia) instead of inventing a
+    parallel portrait/expression schema, per the task's explicit instruction to build on the
+    audit's character-parity item -- worth checking for an already-fitting model before adding
+    new columns/tables on any 'we need a character system' task. Separately: running
+    `prettier --write` on an edited file reformats the WHOLE file, not just the touched lines;
+    several ruler-hooked files were already prettier-non-compliant on main before this task, so a
+    naive --write pass would have bundled a large unrelated reflow into the diff. Checked each
+    edited file's original formatting via `git show HEAD:<file>` before trusting --write's output,
+    and reverted/reapplied surgically where it over-reformatted -- worth doing this check by
+    default on any repo where prettier compliance isn't already a green baseline."
