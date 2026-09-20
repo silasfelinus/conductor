@@ -2279,7 +2279,7 @@ tasks:
 - id: t-138
   milestone: m6
   title: Pending-art placeholder contract so queued art never reads as broken
-  status: claimed
+  status: done
   passes: 0
   stakes: reversible
   owner: worker
@@ -2309,6 +2309,26 @@ tasks:
 
     Related: kind-robots/t-101 adds requested_at to the queue entries, which would let a placeholder
     say how long something has been waiting. Useful but not required -- do not block on it.
-  updated: '2026-09-20T08:58:24Z'
+
+    Shipped: stores/artRequestStore.ts (generic src-keyed pending/failed ledger),
+    composables/useArtPendingState.ts, components/art/art-pending-placeholder.vue (shared
+    calm 'art is on its way' / 'couldn't load' treatment), plugins/missing-image-
+    reporter.client.ts now writes into the shared store on any broken <img> capture. Wired
+    into kr-art-plate.vue (via kr-entity-card-body.vue -> character-card, reward-card
+    explicitly; bot/scenario/dream/server-card have the prop plumbing but don't yet compute
+    it themselves), kr-gallery.vue (via facet-gallery.vue using the existing
+    facetArtRequestStore), and narrative-ingredient-card.vue (the Storybook surface that
+    prompted this task). Deliberately left for follow-up: bot/scenario/dream/server-card
+    computing their own pending prop; Storybook's non-Facet ingredients only get the
+    automatic broken-image path, not an explicit request trigger. kind-robots/t-101
+    (requested_at) not implemented, per task note not required. Verified: eslint + prettier
+    clean on touched files, full-repo vue-tsc 0 errors, all 50 kind_robots CI checks green
+    (including verify-project-architecture.mjs and verifyFacetCatalogMaintenance.ts, both of
+    which caught real issues in the first pass -- composables/ at repo root is forbidden by
+    this repo's architecture contract, and the Facets wiring needed to stay off the YAML-
+    art-request path -- both fixed and re-verified before merge). No live browser/dev-server
+    check was possible (no .env/database in the sandbox).
+  updated: '2026-09-20T09:40:43Z'
   claimed_by: 2026-09-20T09:05:00Z-iv-t138-ac9c25
   claimed_at: '2026-09-20T08:58:24Z'
+  implementation_pr: 'silasfelinus/kind_robots#2919'
