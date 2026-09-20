@@ -104,6 +104,38 @@ if ($env:ENGINE_STARTUP_GRACE_MINUTES) {
     [int]::TryParse($env:ENGINE_STARTUP_GRACE_MINUTES, [ref]$engineStartupGraceMinutes) | Out-Null
 }
 
+# The grace above is a FLOOR, not the whole answer, because no fixed number can
+# track a boot time that moves. 2026-09-19 it was 167 seconds; 2026-09-20 it was
+# 234, with 201.7s of that a single custom node scanning ~2,200 LoRA files over
+# SMB. Whatever the number is, a slow day can exceed it - and past the grace a
+# failed probe is read as "hung" and the engine is RESTARTED, which does not
+# rescue a booting engine, it kills one and starts the boot over. That is the
+# 2026-09-19 incident verbatim, and a fixed margin only postpones it.
+#
+# So past the floor, ask whether the process is doing anything rather than how
+# old it is: Win32_Process CPU and I/O counters advancing between ticks means it
+# is working (an SMB directory walk moves the I/O counters even while the HTTP
+# port is not up yet). A wedged process moves neither.
+#
+# The ceiling bounds the extension, so a livelock cannot buy grace forever.
+$engineStartupCeilingMinutes = 20
+if ($env:ENGINE_STARTUP_CEILING_MINUTES) {
+    [int]::TryParse($env:ENGINE_STARTUP_CEILING_MINUTES, [ref]$engineStartupCeilingMinutes) | Out-Null
+}
+
+# Consecutive ticks with ANY restart that count as a crash loop, for loops too
+# slow to trip $crashLoopRestarts within a single tick.
+#
+# $crashLoopRestarts needs 3 restarts INSIDE one 5-minute tick. At a 234-second
+# boot pm2 manages about 1.25, so the per-tick gate is inversely sensitive to
+# boot time: the slower the boot, the less likely it is to fire. On 2026-09-20
+# it fired only because that stretch was cycling at ~75s. A loop that restarts
+# once per tick, forever, is still a loop.
+$slowLoopTicks = 3
+if ($env:SLOW_LOOP_TICKS) {
+    [int]::TryParse($env:SLOW_LOOP_TICKS, [ref]$slowLoopTicks) | Out-Null
+}
+
 # The interpreter pm2 launches the engine with (ecosystem.config.js
 # COMFY_BASE_PYTHON). Used to recognise our own engine when the command line
 # carries only a relative 'main.py' - see Invoke-PortReclaim.
@@ -419,6 +451,26 @@ function Test-IsComfyEngine($cim, $port) {
 # engines - and Invoke-PortReclaim could not cover for it, because it needs a
 # live port owner and finds none while every copy is mid-boot. See README.md,
 # "the SLOW crash loop that pm2 never gives up on".
+# A fingerprint of how much work a process has done. CPU time alone is not
+# enough: an engine blocked on an SMB read burns little CPU while its I/O
+# counters climb steadily, and that is precisely the slow-boot case this has to
+# tell apart from a wedge. Returns $null when the pid is gone.
+function Get-EngineProgress($enginePid) {
+    if (-not $enginePid) { return $null }
+    $proc = Get-CimInstance Win32_Process -Filter "ProcessId = $enginePid" -ErrorAction SilentlyContinue
+    if (-not $proc) { return $null }
+
+    $cpu = [double]0
+    foreach ($field in @('UserModeTime', 'KernelModeTime')) {
+        if ($null -ne $proc.$field) { $cpu += [double]$proc.$field }
+    }
+    $io = [double]0
+    foreach ($field in @('ReadOperationCount', 'WriteOperationCount', 'OtherOperationCount')) {
+        if ($null -ne $proc.$field) { $io += [double]$proc.$field }
+    }
+    return "$([int]$enginePid)|$cpu|$io"
+}
+
 function Invoke-OrphanSweep($target, $expectedPid) {
     if (-not $orphanSweepEnabled) { return }
 
@@ -1146,7 +1198,39 @@ foreach ($t in $targets) {
         Invoke-OrphanSweep $t $pm2Pid
     }
 
-    if ($restartDelta -ge $crashLoopRestarts) {
+    # Sample progress every tick so the probe block below has a baseline to
+    # compare against. Read the previous value BEFORE writing this one.
+    $progressKey = "progress_$($t.Name)"
+    $prevProgress = [string]$alertState[$progressKey]
+    $nowProgress = Get-EngineProgress $pm2Pid
+    $engineMadeProgress = $false
+    if ($nowProgress) {
+        # Same pid, different counters = it did work since the last tick. A
+        # changed pid means a restart, which says nothing about progress.
+        if ($prevProgress -and $prevProgress.Split('|')[0] -eq $nowProgress.Split('|')[0] -and
+            $prevProgress -ne $nowProgress) {
+            $engineMadeProgress = $true
+        }
+        $alertState[$progressKey] = $nowProgress
+        Save-AlertState $alertState
+    }
+
+    # Consecutive ticks in which pm2 restarted this app at all. Resets the
+    # moment a tick passes with no restart, so an ordinary deploy or a single
+    # watchdog restart never accumulates.
+    $slowLoopKey = "slowloop_$($t.Name)"
+    $slowLoopCount = 0
+    if ($alertState.ContainsKey($slowLoopKey)) { $slowLoopCount = [int]$alertState[$slowLoopKey] }
+    if ($restartDelta -ge 1) { $slowLoopCount++ } else { $slowLoopCount = 0 }
+    $alertState[$slowLoopKey] = $slowLoopCount
+    Save-AlertState $alertState
+
+    $slowLoopTripped = $slowLoopCount -ge $slowLoopTicks
+    if ($slowLoopTripped -and $restartDelta -lt $crashLoopRestarts) {
+        Write-Log "$($t.Name): SLOW CRASH LOOP - restarting every tick for $slowLoopCount consecutive ticks (counter now $restartCount); too slow for the per-tick gate but a loop all the same"
+    }
+
+    if ($restartDelta -ge $crashLoopRestarts -or $slowLoopTripped) {
         Write-Log "$($t.Name): CRASH LOOPING - pm2 restart count climbed $prevRestarts->$restartCount since the last tick"
         $portNote = Get-PortOwnerReport $t.Port $pm2Pid
         if ($portNote) { Write-Log "$($t.Name): $portNote" }
@@ -1264,6 +1348,21 @@ foreach ($t in $targets) {
         if ($null -ne $engineAgeMinutes -and $engineAgeMinutes -lt $engineStartupGraceMinutes) {
             Write-Log "$($t.Name): probe failed, but pm2's engine (pid $pm2Pid) is only $([math]::Round($engineAgeMinutes,1)) min old - inside the $engineStartupGraceMinutes-min startup grace, so it is still booting rather than hung; probing next tick"
             continue
+        }
+
+        # Past the floor, but still demonstrably working. A boot that outruns
+        # the grace is a slow boot, not a wedge, and restarting it is the
+        # 2026-09-19 incident: the watchdog killing a booting engine and
+        # starting the boot over, forever. Bounded by the ceiling so a livelock
+        # cannot extend this indefinitely.
+        if ($engineMadeProgress -and $null -ne $engineAgeMinutes -and
+            $engineAgeMinutes -lt $engineStartupCeilingMinutes) {
+            Write-Log "$($t.Name): probe failed and pm2's engine (pid $pm2Pid) is $([math]::Round($engineAgeMinutes,1)) min old, past the $engineStartupGraceMinutes-min grace - but its CPU/IO counters advanced since the last tick, so it is working (a slow boot), not wedged; probing next tick (ceiling $engineStartupCeilingMinutes min)"
+            continue
+        }
+
+        if ($null -ne $engineAgeMinutes -and $engineAgeMinutes -ge $engineStartupCeilingMinutes) {
+            Write-Log "$($t.Name): pm2's engine (pid $pm2Pid) is $([math]::Round($engineAgeMinutes,1)) min old, past the $engineStartupCeilingMinutes-min ceiling - restarting whether or not it looks busy"
         }
 
         Write-Log "$($t.Name): health probe failed ($($t.Url)) - restarting via pm2"

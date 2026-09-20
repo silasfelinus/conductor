@@ -57,7 +57,24 @@ $state = Read-State
 foreach ($process in $processes) {
     if (-not $process.name) { continue }
     $name = [string]$process.name
-    $restarts = [int]$process.restart_time
+    # pm2-jlist-snapshot.js nests this under pm2_env, exactly as pm2 jlist does.
+    # 2026-09-20: this read $process.restart_time - the TOP level, where the
+    # projection has never put it. PowerShell returns $null for a missing
+    # property rather than raising, [int]$null is 0, and so every app scored 0
+    # restarts forever: 0 never reaches $AbsoluteRestartThreshold (25) and the
+    # delta of 0-0 never reaches $WindowRestartDelta (10). The check has never
+    # once advised, including on a box sitting at 89 restarts.
+    #
+    # That matters most for the failure this check exists to catch. The
+    # per-tick crash-loop gate in healthcheck.ps1 needs $crashLoopRestarts (3)
+    # restarts INSIDE one 5-minute tick, which a slow boot cannot produce - at
+    # ComfyUI's measured 234-second boot pm2 manages about 1.25 restarts per
+    # tick. Slow loops are exactly what this trend check is for, and it was
+    # silent for all of them.
+    $restarts = 0
+    if ($process.pm2_env -and $null -ne $process.pm2_env.restart_time) {
+        $restarts = [int]$process.pm2_env.restart_time
+    }
     $entry = $state[$name]
 
     if (-not $entry) {

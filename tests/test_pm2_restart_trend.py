@@ -22,10 +22,45 @@ def test_restart_trend_check_is_advisory_only() -> None:
 def test_restart_trend_uses_normalized_restart_time_and_slow_window() -> None:
     source = _source()
     assert "pm2-jlist-snapshot.js" in source
-    assert "[int]$process.restart_time" in source
+    assert "[int]$process.pm2_env.restart_time" in source
     assert "[int]$WindowHours = 168" in source
     assert "[int]$WindowRestartDelta = 10" in source
     assert "[int]$AbsoluteRestartThreshold = 25" in source
+
+
+def test_restart_trend_reads_the_path_the_projection_actually_emits() -> None:
+    """Derive the expected field path from pm2-jlist-snapshot.js rather than
+    restating it, so the two files cannot drift apart again.
+
+    2026-09-20: this check read `$process.restart_time` -- the top level, where
+    the projection has never put it. PowerShell yields $null for a missing
+    property instead of raising and [int]$null is 0, so every app scored 0
+    restarts: 0 never reaches the absolute threshold (25) and a 0-0 delta never
+    reaches the trend threshold (10). The check had never advised once, on a box
+    that reached 89 restarts. The previous version of this test asserted the
+    broken path was present, which pinned the bug in place.
+    """
+    import json
+    import subprocess
+
+    projected = json.loads(
+        subprocess.run(
+            ["node", str(HOME_SERVER / "pm2-jlist-snapshot.js")],
+            input=json.dumps(
+                [{"name": "comfyui", "pm2_env": {"status": "online", "restart_time": 89}}]
+            ),
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout
+    )[0]
+
+    assert "restart_time" not in projected, "projection must not expose it at the top level"
+    assert projected["pm2_env"]["restart_time"] == 89
+
+    source = _source()
+    assert "$process.pm2_env.restart_time" in source
+    assert "[int]$process.restart_time" not in source, "the top-level read always yields 0"
 
 
 def test_restart_trend_persists_baseline_and_deduplicates_alerts() -> None:
