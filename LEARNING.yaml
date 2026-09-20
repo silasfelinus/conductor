@@ -15683,3 +15683,23 @@ records:
     extracting a function pinned by source-contract tests out of a production Windows watchdog
     script) can't be behaviorally verified in a sandbox with no PowerShell, only syntax-checked
     by CI after the fact.
+- date: '2026-09-20'
+  project: conductor
+  task: t-185
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Moving a pinned function out of one file into a shared, dot-sourced library is safe to do
+    blind-to-runtime (no PowerShell available in this sandbox) as long as every consumer of the
+    moved code is re-verified structurally: not just "does the new file parse" but "does each
+    caller still have every free variable/function the moved code references in scope at the
+    point it dot-sources the library" (here: Write-Log, $comfyDir, $comfyPython). Equally
+    important: a file moved into a new subdirectory can silently drop out of a checker that
+    globs non-recursively even when the CI *workflow's* own path-trigger filter still fires on
+    it -- the workflow ran, reported green, and would have kept doing so while quietly no
+    longer checking the one file that just moved. Grep for every place a repo re-derives "which
+    files does this check cover" (a Get-ChildItem, a glob(), an rglob()) whenever adding a
+    subdirectory to a previously-flat file layout, not just the CI trigger definition.
