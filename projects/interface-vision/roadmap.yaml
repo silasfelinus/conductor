@@ -1855,7 +1855,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: "Polish every reachable Kind Robots surface page-by-page"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -1930,12 +1930,11 @@ tasks:
     Merged silasfelinus/kind_robots#2908 as 935668f8e329865a07cff0d9e9ca4745299a0bc5 from exact head a91f2d8bda6001eb2ff464e5dfdcc78eaf4c643c. The Video Generator default setup is now substantially denser: compact engine/preset controls, two-row motion prompt, optional LoRA browser collapsed by default, visibility paired with format/timing controls, and the runtime status strip placed beside Generate. Optional LoRA/advanced/result content expands only when needed, targeting roughly one desktop viewport for the normal setup path instead of 2-3 screens. All 47 exact-head workflow runs completed successfully, including TypeScript Type Check, Layout Contract, MDC Scroll Ownership, Schema Migration Parity, Facet Catalog Contract, Art Prompt + Icon Safety, and the full Contract Tests suite. No generation, preset, upload, LoRA, privacy, mana, polling, or API behavior changed. Production is self-hosted and was not deployed by this session. Return the recurring visual-polish task to ready for the next screenshot-driven slice.
 
     Screenshot-directed Art Generator density and SDXL image-to-image repair. Root cause: the art LoRA picker removed its height cap when expanded, so LoRAs grew the whole page; the generator also spent permanent height on a full-width maturity band, Destination controls, and an empty Latest Result panel. Separately, the front-end LoRA compatibility helper returned zero for every sdxl-img2img LoRA even though the server-side resolver explicitly supports SDXL/COMFY/GENERIC LoRAs, and artStore omitted sdxl-img2img from both Comfy routing requirement and serverCanUseEngine, producing the false "Comfy cannot run SDXL from an image" warning and allowing engine fallback. Changes: LoRAs now scroll within a 14rem compact / 24rem taller bounded panel, with a visible compact Mature toggle in its header; SDXL img2img now mirrors server LoRA compatibility and is preserved/routed as a Comfy engine; automatic routing no longer emits a false preferred-server incompatibility warning, while an explicitly pinned incompatible server disables Generate and explains the conflict; Destination is collapsed by default, prompt/settings/panel spacing is tighter, Facets use compact copy, and the empty Latest Result placeholder no longer consumes a viewport before any render exists. Added regression coverage for maturity placement, bounded LoRA scrolling, img2img compatibility/routing, progressive Destination, and no empty result slab. No API shape, database, mana, generation preset values, or production data changed.
-  updated: '2026-09-20T00:48:00Z'
+
+    Reviewer merged silasfelinus/kind_robots#2910 at exact head 837c4c2d09da5f9ecca379b5c423351b9e27f602 after all exact-head Actions completed successfully. Art Generator density was reduced, LoRA browsing is bounded, and SDXL image-to-image now stays on the compatible Comfy lane. Re-arm this recurring page-polish task for the next screenshot-directed slice.
+  updated: '2026-09-20T01:25:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2899'
   approved_by_human: true
-  owner: worker
-  claimed_by: 2026-09-20T003200Z-interface-vision-t105-artgen-density-7f3c
-  claimed_at: '2026-09-20T00:32:00Z'
 
 - id: t-106
   milestone: m6
