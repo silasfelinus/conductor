@@ -301,7 +301,22 @@ tasks:
     own closing step, and it also clears a currently-failing CI assertion
     (`test_current_project_lifecycle.py`) that flags any `active` project sitting with
     zero open tasks.
+
+    Rechecked 2026-09-20 (scheduled Conductor sweep): live Playwright verification is now
+    possible from this sandbox (see AGENTS.md's model-builder/t-031 cypress-test-user
+    pattern), but /plan/watchlist is ADMIN-gated (content/channels/admin/watchlist.md:
+    requiredRole: ADMIN) -- a fresh cypress-* test user (Role: USER) hit the page and was
+    client-side redirected to /?access=denied after a brief 'Loading page... Looking for /'
+    state (expected access-control behavior, not a bug). Granting a throwaway test account
+    ADMIN is outside routine agent authority (privilege escalation), so this sandbox cannot
+    render the actual authenticated admin content at any width. Confirmed no unrelated
+    regression: the redirect and access-denied behavior work correctly. Test user cypress-
+    watchlistcheck created and cleaned up via /api/users/cypress-cleanup, no residue. TO
+    APPROVE (unchanged from 2026-09-07): Silas still needs to open /plan/watchlist himself,
+    signed in as admin, at phone/tablet/desktop widths to actually accept the visual state
+    -- this cannot be done from an unprivileged sandbox session.
   depends_on: t-019
+  updated: '2026-09-20T10:10:34Z'
 - id: t-019
   milestone: m4
   title: Fix the Media Watchlist failing to load, and stop masking the real cause
