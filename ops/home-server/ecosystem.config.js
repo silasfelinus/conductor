@@ -100,10 +100,12 @@ module.exports = {
         // Because it never bound the port, kr-relay's claims had nowhere to
         // go and the art queue drained into FAILED.
         //
-        // Note the 26s: it is under this app's min_uptime (30s), so pm2
-        // counted every restart as unstable and would have given up at
-        // max_restarts (50) and parked the app in `errored` -- silently, with
-        // no console left to notice.
+        // Note the 26s: min_uptime was 30000 at the time, so pm2 counted
+        // every restart as unstable and would have given up at max_restarts
+        // (50 then) and parked the app in `errored` -- silently, with no
+        // console left to notice. Both numbers changed on 2026-09-20 (see
+        // below): a 26s crash still scores unstable against the 300s bar, so
+        // the reasoning holds, but do not read the old values as current.
         //
         // If a custom node ever raises on a FILE read rather than a print,
         // add PYTHONUTF8: '1' as well (that also switches open()'s default
