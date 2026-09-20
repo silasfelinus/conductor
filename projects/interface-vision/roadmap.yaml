@@ -1765,7 +1765,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -1788,7 +1788,9 @@ tasks:
     Merged silasfelinus/kind_robots#2912 (medium-xs text family survey codemod, discovery-
     only, no runtime changes) -- all 46 checks green, mergeable_state clean. Re-arming
     recurring umbrella to ready for the next bounded slice.
-  updated: '2026-09-20T07:18:39Z'
+
+    Prepared the medium-xs survey helper for the eventual runtime migration by adding a fail-closed --write path that refuses until .kr-text-medium-xs exists, preserves unrelated class tokens, and can remain bounded to exact-only candidates. Implementation branch head 5e1ae4a9357977b359162168d5575d03b02a69e7.
+  updated: '2026-09-20T07:25:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2912'
   retry_context: ''
   owner: worker
