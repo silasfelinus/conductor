@@ -3652,6 +3652,47 @@ tasks:
     rather than as a service" fragility that healthcheck.ps1's own port-squatter alert text
     already tells the reader to go check.
   updated: '2026-09-19T00:00:00Z'
+- id: t-182
+  milestone: m2
+  title: 'FOR SILAS: KR_API_TOKEN now fails every admin-gated Kind Robots call -- sync the new value into conductor'
+  status: needs-human
+  owner: null
+  passes: 0
+  stakes: reversible
+  gate_human: false
+  soft_gate: true
+  note: |
+    FOR SILAS: as of this session (2026-09-20), every admin-gated Kind Robots API call made
+    with the conductor repo's current `KR_API_TOKEN` value returns 401 "Invalid or expired
+    token." Confirmed reproducible on two independent endpoints and header shapes:
+      - `python scripts/fetch_todos.py` -- 401, skips the todo check.
+      - `GET /api/art/queue/:id` (butterfly-gallery/t-033's own gating check) -- 401 with
+        `Authorization: Bearer`, `x-api-key`, and `x-admin-token` all tried, and again on retry.
+    Non-admin Kind Robots reads with the same token still work fine this session
+    (`check_project_scaffold_drift.py`, `check_live_facet_coverage.py` both succeeded), so this
+    is not a network/outage issue -- it is specific to the admin/beta-admin auth path
+    (`requireMachineUser`/`requireAdminApiUser` in kind_robots' `server/utils/authGuard.ts`).
+
+    Most likely explanation: this is the token rotation the standing security-flag escalation
+    asked for (root TALKBACK.md, first filed 2026-09-16, re-flagged 2026-09-17 and 2026-09-19 --
+    the exposed value was confirmed still LIVE as recently as 2026-09-19's session). If Silas
+    rotated `BETA_ADMIN_TOKEN`/`ADMIN_TOKEN` at the kind_robots source between 2026-09-19 and
+    now, that resolves the exposure -- but the conductor-side `KR_API_TOKEN` secret (feeding
+    this session's environment and, presumably, the scheduled GitHub Actions workflows) was not
+    updated to match, so it is now the old, correctly-rejected value.
+
+    TO APPROVE: if this was an intentional rotation, update the `KR_API_TOKEN` secret used by
+    conductor sessions/workflows to the new value, then this task can close (any session can
+    verify by re-running `python scripts/fetch_todos.py` and confirming no 401). If this was
+    NOT an intentional rotation, say so and this needs a different diagnosis -- something else
+    changed in the admin auth path.
+
+    WHAT UNBLOCKS: `fetch_todos.py`, `complete_todo.py`, `check_project_scaffold_drift.py`'s
+    admin-side calls, ArtJob queue polling (`consume_art_queue_core.py` and everything that
+    depends on it -- roughly 40 scripts reference `KR_API_TOKEN`), and directly,
+    butterfly-gallery/t-033 (left at `status: ready`, its own STEP 1 check is blocked by this,
+    no pass/retry consumed per AGENTS.md's Failure Triage -- actionable category).
+  updated: '2026-09-20T00:36:11Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
