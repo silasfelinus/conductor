@@ -3542,8 +3542,8 @@ tasks:
 - id: t-179
   milestone: m2
   title: 'Nothing watches pm2 restart_time as a TREND -- a count that climbs to 779 over weeks trips no alert, and reviving a watchdog onto an already-sick engine is how 2026-09-19 happened'
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >-
@@ -3569,7 +3569,9 @@ tasks:
     the session sweep when a count exceeds an absolute threshold (say 50) or grows week over
     week. Advisory, never a gate. Related: check_engine_heartbeat.py already reads engine
     liveness from the CI side and could carry this.
-  updated: '2026-09-19T00:00:00Z'
+  updated: '2026-09-20T03:19:57Z'
+  claimed_by: openai-scheduled-2026-09-20T031957Z-conductor-t179-a11
+  claimed_at: '2026-09-20T03:19:57Z'
 
 - id: t-180
   milestone: m2
