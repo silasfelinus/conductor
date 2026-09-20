@@ -670,7 +670,7 @@ tasks:
 - id: t-028
   milestone: m4
   title: Build the advisor and the opening — someone to meet, a reason to be here
-  status: claimed
+  status: done
   gate_human: false
   owner: worker
   stakes: reversible
@@ -697,9 +697,31 @@ tasks:
     Build on the audit's character-parity item rather than inventing a parallel system: seed real
     Character entities, map the existing content slugs, and define portrait/expression requirements
     so the art has a schema to target.
-  updated: '2026-09-20T10:57:06Z'
+
+    Built and merged (kind_robots PR #2924, squash 5318f0bf): (1) a once-per-reign opening
+    (utils/rulerHooked/opening.ts, ruler-hooked-opening.vue) hosted in t-024's centered
+    setup window, RunSave gains typed openingSeen (schema v5->v6, migrated); (2) a standing
+    advisor -- Quill, the Steward -- seeded as a real CharacterRef
+    (utils/rulerHooked/advisor.ts, ruler-hooked-advisor.vue), a pure deterministic
+    currentAdvisorLine() reacting to endings/catches/escapes/kingdom-health, and ruler-
+    hooked-card.vue now credits the advisor as narrator whenever a card has no authored
+    characters (t-030's future narrator seat); (3) ruler stuff -- ruler-hooked-reign-
+    review.vue: identity, plain-language kingdomHealth read, and choiceLog history.
+    Character-art schema (utils/rulerHooked/characterArt.ts): 4 expressions, portrait path
+    convention with graceful fallback, ArtJob prompt builder -- no art rendered this session
+    (render queue backlog, explicitly out of scope). scripts/seed_ruler_hooked_characters.ts
+    seeds all 12 ruler-hooked CharacterRefs (advisor + existing 11) into real
+    Character/ExpressionMedia rows, sourced from content.ts; dry-run only, --write not run
+    against production this session (additive/idempotent, safe whenever someone with DB
+    access runs it). Verified: vue-tsc, eslint (scoped), prettier (new files), kr-class-
+    coverage, layout-contract, all 4 utils/rulerHooked/*.selftest.ts
+    (engine/game/encounter/new advisor.selftest.ts) -- 49/49 CI checks green. Deferred:
+    portrait art generation, t-030 (kingdom decisions) itself -- advisor built as its
+    narrator seat only.
+  updated: '2026-09-20T11:32:23Z'
   claimed_by: claude-scheduled-20260920T105706Z-rulerhooked-t028
   claimed_at: '2026-09-20T10:57:06Z'
+  implementation_pr: 'silasfelinus/kind_robots#2924'
 - id: t-029
   milestone: m4
   title: Fishing rewards, treasures, and a shop worth spending them in
