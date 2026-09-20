@@ -1271,7 +1271,11 @@ tasks:
       blocker noted above is resolved (token works fine for this admin-gated read now); the
       jobs themselves simply have not been claimed off the priority-0 queue yet. Not yet
       actionable per STEP 1; leaving status: ready, no pass/retry consumed.
-    updated: '2026-09-20T19:58:12Z'
+
+      last checked 2026-09-20: jobs 28739, 28740, 28741, 28742, 28743, 28744, 28745 still
+      PENDING (verified via GET /api/art/queue/:id for each). Task remains not-yet-actionable;
+      leaving status: ready, no pass consumed per AGENTS.md Failure Triage.
+    updated: '2026-09-20T21:51:40Z'
 
   - id: t-034
     milestone: m4
