@@ -185,7 +185,14 @@ def world_prompt(title: str, idea: str, vibe_line: str, vibe_art: str = "",
         CARD_FRAMING,
         "wide establishing view with a strong foreground anchor, clear middle ground, "
         "and deep atmospheric background",
-        "the setting is the subject; any figures present are incidental to the place",
+        # Stated as a fact about the frame, never as a condition on one. Krea
+        # cannot evaluate "any figures present" any more than it can evaluate
+        # "no" -- and because the phrase has no leading when/if,
+        # artPromptContract's CONDITIONAL_PATTERNS never matched it either. 103
+        # dream records carried it past every check before anyone looked at a
+        # picture (2026-09-20).
+        "the landscape dominates the frame, a few distant figures near the "
+        "horizon giving it scale",
         style or style_for_world(title),
         NO_TEXT,
     )
@@ -204,8 +211,9 @@ def location_prompt(title: str, art_direction: str, known_for: str,
         f"staged at its most telling moment: {_clean(best_scene)}" if best_scene else "",
         _world_context(world_title, vibe_line),
         CARD_FRAMING,
-        "architectural establishing shot, the environment is the subject and any figures "
-        "present are small and incidental, included only for scale",
+        # Same fix as world_prompt above: a fact, not a condition.
+        "architectural establishing shot, the environment fills the frame, a few "
+        "distant figures near the horizon giving it scale",
         style or style_for_world(world_title),
         NO_TEXT,
     )

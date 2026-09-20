@@ -101,11 +101,23 @@ def test_only_scenario_prompt_injects_cast_direction():
 
 
 def test_world_prompt_keeps_the_setting_as_subject():
+    """The landscape leads, stated as a fact about the frame.
+
+    This used to assert "any figures present are incidental to the place".
+    That is a conditional -- Krea can no more evaluate "present" than it can
+    evaluate "no" -- and because the phrase carries no leading when/if,
+    artPromptContract's CONDITIONAL_PATTERNS never matched it. 103 dream
+    records shipped it past every check (2026-09-20), found by looking at
+    pictures rather than by any gate.
+    """
     prompt = dap.world_prompt(
         "Choir of the Drowned Kingdom", "A submerged kingdom sings.",
         "Sea-gods sing.", "a submerged amphitheater of coral columns")
-    assert "the setting is the subject" in prompt
-    assert "any figures present are incidental" in prompt
+    assert "the landscape dominates the frame" in prompt
+    assert "distant figures near the horizon giving it scale" in prompt
+    # The intent survives; the condition must not come back.
+    assert "any figures present" not in prompt
+    assert "only for scale" not in prompt
 
 
 def test_location_prompt_keeps_figures_incidental_to_the_architecture():
@@ -113,8 +125,10 @@ def test_location_prompt_keeps_figures_incidental_to_the_architecture():
         "The Sunken Cantata", "a submerged amphitheater of coral columns",
         "drowned acoustics", "a hymn unravels a listener",
         "Choir of the Drowned Kingdom", "Sea-gods sing.")
-    assert "the environment is the subject" in prompt
-    assert "figures present are small and incidental" in prompt
+    assert "the environment fills the frame" in prompt
+    assert "distant figures near the horizon giving it scale" in prompt
+    assert "any figures present" not in prompt
+    assert "only for scale" not in prompt
     assert dap.CAST_DIRECTION not in prompt
 
 
