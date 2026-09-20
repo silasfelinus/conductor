@@ -3817,7 +3817,7 @@ tasks:
 - id: t-185
   milestone: m2
   title: 'Extract Restart-Supervised into a shared module so restore-shares.ps1 can route its direct `pm2 restart comfyui` through the safe stop/reap/verify/start handoff'
-  status: review
+  status: done
   passes: 0
   stakes: reversible
   note: |-
@@ -3825,10 +3825,40 @@ tasks:
     t-184 documented this as a known, tracked gap (see the comment at that line) rather than fixing it blind, because `Restart-Supervised` and its three helpers (Get-ComfyEnginePids, Get-PortListenerPid, Test-IsComfyEngine) currently live inside healthcheck.ps1, and tests/test_healthcheck_restart_handoff.py pins their exact function-body location and source strings within that file. Moving them into a shared dot-sourceable script (e.g. ops/home-server/lib/Restart-ComfySupervised.ps1) that both healthcheck.ps1 and restore-shares.ps1 import is real cross-file surgery on the production render-host watchdog -- update the pinned tests to read the new shared file instead of hunting for the function inline, verify healthcheck.ps1's four existing call sites still resolve the function via dot-source, and lean on the repo's windows-latest PowerShell syntax-check CI job for what this sandbox cannot verify locally (no PowerShell available here). Wire restore-shares.ps1's line 318 restart through the shared function once it exists, keeping its existing pm2-lists-comfyui gate unchanged.
 
     Connector-only implementation pass inspected the required healthcheck.ps1, restore-shares.ps1, and pinned restart-handoff tests. The safe extraction requires replacing a large contiguous function block inside healthcheck.ps1; this connector exposes whole-file replacement but no line-range patch mutation, and AGENTS.md forbids reconstructing a large file from truncated reads. No code was changed. Returning to ready without consuming a pass so a shell-capable worker can perform the cross-file extraction safely.
-  updated: '2026-09-20T22:02:30Z'
+
+    Merged silasfelinus/conductor#4880 (squash 483dcc9): extracted Restart-Supervised and
+    its three helpers into ops/home-server/lib/Restart-ComfySupervised.ps1, dot-sourced by
+    both healthcheck.ps1 (unchanged behavior, four existing call sites) and restore-
+    shares.ps1 (now uses the safe stop/reap/verify/start handoff instead of a direct pm2
+    restart). Test-PowerShellSyntax.ps1 gained -Recurse so the new lib/ file is actually
+    parse-checked. All CI green (PowerShell syntax parse, CodeQL, GitGuardian); full Python
+    suite 2131 passed.
+  updated: '2026-09-20T22:05:03Z'
   owner: worker
   claimed_by: claude-conductor-scheduled-20260920-t185
   claimed_at: '2026-09-20T21:53:40Z'
+  implementation_pr: 'silasfelinus/conductor#4880'
+
+- id: t-186
+  milestone: m2
+  title: 'Add a regression guard so no ops/home-server/*.ps1 script can reintroduce a direct pm2 restart/stop comfyui call outside lib/Restart-ComfySupervised.ps1'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from t-185 (silasfelinus/conductor#4880, 2026-09-20): t-184's audit had to
+    hand-grep every ops/home-server/*.ps1 for pm2 restart/stop/start shapes to find the one
+    gap (restore-shares.ps1) that bypassed the safe stop/reap/verify/start handoff -- a
+    one-time, manual sweep that a future script (a new remediation tool, a manual on-box
+    fix) could just as easily reintroduce without anyone noticing, since nothing currently
+    stops a new `& pm2 restart comfyui` / `& pm2 stop comfyui` from being added straight into
+    a script instead of routed through the now-shared Restart-Supervised in
+    lib/Restart-ComfySupervised.ps1. Add a small Python contract test (alongside the existing
+    tests/test_powershell_variable_interpolation.py-style source-text guards) that greps
+    every *.ps1 under ops/home-server/ (recursively, excluding lib/Restart-ComfySupervised.ps1
+    itself) for a direct `pm2 (restart|stop) comfyui` invocation and fails if one is found,
+    so the next such gap is caught in CI rather than by the next manual audit.
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
