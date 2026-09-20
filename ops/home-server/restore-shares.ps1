@@ -314,6 +314,18 @@ if ($credentialFailures.Count) { Write-Log "missing stored credential: $($creden
 if ($restored.Count -and -not $Check) {
     $jlist = (& pm2 jlist 2>&1) -join ''
     if ($jlist -match '"name"\s*:\s*"comfyui"') {
+        # KNOWN GAP (conductor/t-184 audit, conductor/t-185 tracks the fix): this
+        # is a direct `pm2 restart comfyui`, not healthcheck.ps1's
+        # Restart-Supervised. It does not stop-reap-verify-then-start, so it can
+        # reintroduce the two-engines-fighting-over-8188 race PR #4869 fixed for
+        # the watchdog's own four call sites, if an old comfyui somehow survives
+        # this script's restart kill. Lower exposure than those sites (this
+        # script's usual trigger is a fresh reboot, when no old engine is left to
+        # survive), but not zero -- it can also be run manually against a live
+        # session. Restart-Supervised lives in healthcheck.ps1 and isn't shared
+        # with this script; extracting it is real cross-file surgery on the
+        # production watchdog that this session declined to do blind. See
+        # conductor/t-185.
         Write-Log "restarting comfyui so folder_paths rebuilds its cached filename lists"
         & pm2 restart comfyui | Out-Null
     } else {
