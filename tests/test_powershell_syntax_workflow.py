@@ -63,6 +63,16 @@ class PowerShellSyntaxWorkflowTests(unittest.TestCase):
         self.assertIn("NO .ps1 FILES FOUND", text)
         self.assertIn("ParseFile", text)
 
+    def test_the_checker_recurses_into_subfolders(self):
+        """conductor/t-185: lib/Restart-ComfySupervised.ps1 lives one level
+        below ops/home-server/. The workflow's own paths filter still
+        triggers on it (ops/home-server/**.ps1), but the checker's own
+        Get-ChildItem call must also descend into subfolders, or a .ps1 moved
+        into one is a silent, permanently-green coverage hole even while the
+        workflow keeps running."""
+        text = CHECKER.read_text(encoding="utf-8")
+        self.assertIn("-Recurse", text)
+
     def test_the_paths_filter_covers_every_ps1_in_the_repo(self):
         """The filter is a cost control; it must not become a coverage hole."""
         ps1_files = _repo_ps1_files()

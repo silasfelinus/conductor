@@ -80,6 +80,14 @@ function Write-Log($msg) {
     Write-Host $line
 }
 
+# Restart-Supervised (conductor/t-185): the same stop/reap/verify/start
+# handoff healthcheck.ps1's watchdog uses for comfyui, shared here so this
+# script's post-remap restart can't reintroduce the two-engines-fighting-
+# over-8188 race PR #4869 fixed for the watchdog's own call sites. Dot-source
+# after Write-Log is defined, so Restart-Supervised's logging calls resolve to
+# THIS script's own Write-Log (file + console), not healthcheck.ps1's.
+. (Join-Path $PSScriptRoot 'lib\Restart-ComfySupervised.ps1')
+
 function Trim-Log {
     try {
         if (-not (Test-Path $logFile)) { return }
@@ -314,20 +322,15 @@ if ($credentialFailures.Count) { Write-Log "missing stored credential: $($creden
 if ($restored.Count -and -not $Check) {
     $jlist = (& pm2 jlist 2>&1) -join ''
     if ($jlist -match '"name"\s*:\s*"comfyui"') {
-        # KNOWN GAP (conductor/t-184 audit, conductor/t-185 tracks the fix): this
-        # is a direct `pm2 restart comfyui`, not healthcheck.ps1's
-        # Restart-Supervised. It does not stop-reap-verify-then-start, so it can
-        # reintroduce the two-engines-fighting-over-8188 race PR #4869 fixed for
-        # the watchdog's own four call sites, if an old comfyui somehow survives
-        # this script's restart kill. Lower exposure than those sites (this
-        # script's usual trigger is a fresh reboot, when no old engine is left to
-        # survive), but not zero -- it can also be run manually against a live
-        # session. Restart-Supervised lives in healthcheck.ps1 and isn't shared
-        # with this script; extracting it is real cross-file surgery on the
-        # production watchdog that this session declined to do blind. See
-        # conductor/t-185.
+        # conductor/t-185: routed through the shared Restart-Supervised handoff
+        # (stop pm2, reap only positively-identified old-engine pids, verify
+        # both the process and the port listener are gone, only then start the
+        # replacement) instead of a direct `pm2 restart comfyui`, so a fresh-
+        # reboot old engine that somehow survives this script's cleanup cannot
+        # collide with the replacement over port 8188/comfyui.db/the GPU the
+        # way PR #4869 fixed for healthcheck.ps1's own four call sites.
         Write-Log "restarting comfyui so folder_paths rebuilds its cached filename lists"
-        & pm2 restart comfyui | Out-Null
+        Restart-Supervised 'comfyui' 8188
     } else {
         Write-Log "pm2 did not list comfyui from this session - not restarting it."
         Write-Log "  pm2's daemon is per-user; if the engines run under another account,"
