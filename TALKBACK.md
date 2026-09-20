@@ -11415,3 +11415,18 @@ Claude-Session: https://claude.ai/code/session_0181bM37f5aQ5TKo2QWhXh48
 - Nothing notable — this was a small, well-scoped audit task that landed cleanly.
 
 **Kaizen task:** conductor/t-185 — extract `Restart-Supervised` (and its three helpers) into a shared dot-sourceable file so `restore-shares.ps1` can route its direct `pm2 restart comfyui` through the same safe handoff. Filed directly from this session's own audit finding rather than as a separate end-of-cycle kaizen slot, since the finding and the follow-up task are the same piece of work.
+
+## 2026-09-20 | Agent(Claude, scheduled conductor run) | conductor/t-185 + butterfly-gallery/t-033 | pattern
+
+**Decision:** conductor/t-185 merged (PR #4880, squash 483dcc9) — self-audited and self-merged in one scheduled run (role: worker, no separate reviewer session available). butterfly-gallery/t-033 checked and correctly left `ready` (all 7 motion ArtJobs still PENDING).
+
+**What was good:**
+- t-184's own audit had deliberately declined this exact extraction the prior cycle because a connector-only session couldn't safely do cross-file surgery on a source-contract-pinned production watchdog script with only whole-file replacement available. This session had real Read/Edit tools, so did the extraction properly: moved `Restart-Supervised` and its three helpers into `ops/home-server/lib/Restart-ComfySupervised.ps1`, verified byte-for-byte against the original via diff review (not just "looks right"), and confirmed every free variable/function the moved code references (`Write-Log`, `$comfyDir`, `$comfyPython`) is still in scope at each caller via PowerShell's dot-source scope-merging semantics.
+- Caught a real second-order gap while extracting: `Test-PowerShellSyntax.ps1`'s `Get-ChildItem` was non-recursive, so the new `lib/` file would have been invisible to the CI parse-check even though the workflow's own `ops/home-server/**.ps1` path-trigger still fired on it — a quietly-passing CI that had stopped checking the file that mattered. Fixed with `-Recurse` and added a regression test (`test_the_checker_recurses_into_subfolders`) rather than just fixing the one instance.
+- Full local pytest suite run before every push (2131 passed), plus every existing pinned contract test updated to match the new file layout rather than deleted/loosened, plus new tests for the dot-sourcing wiring itself.
+- butterfly-gallery/t-033 followed its own STEP 1 instruction exactly: checked all 7 ArtJob ids live via the API before touching anything, found them still PENDING, and updated the note without consuming a pass or claiming — correctly recognized as "not yet actionable" rather than forced.
+
+**What to improve:**
+- Four separate small PRs (#4879 status-check, #4880 implementation, #4881 review, #4882 done+kaizen+learning) for what was really two units of work — could have combined #4881's review-status bookkeeping into the close-out that immediately followed it, since both landed in the same run with no real review gap between them. Minor CI/PR overhead, not a correctness issue.
+
+**Kaizen task:** conductor/t-186 — add a regression guard so no `ops/home-server/*.ps1` script can reintroduce a direct `pm2 restart/stop comfyui` call outside the shared lib, closing the class of gap t-184's manual audit had to find by hand.
