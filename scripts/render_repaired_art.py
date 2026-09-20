@@ -49,6 +49,7 @@ import sys
 import urllib.error
 import urllib.request
 from collections import Counter
+from datetime import date, timedelta
 from pathlib import Path
 from typing import Any, Optional
 
@@ -71,6 +72,35 @@ DETAIL = {
 ORDER = ("reward", "facet", "dream", "scenario", "bot", "achievement", "resource", "character")
 RENDER_PRIORITY = {"reward": 60}
 DEFAULT_RENDER_PRIORITY = 40
+
+# The entityArt slot each kind writes its ONE main image into. Every kind in
+# this manifest uses `imagePath` except bot, whose primary slot is
+# `avatarImage` (server/utils/entityArt.ts). Sending `imagePath` for a bot is
+# refused with 400 "Invalid bot image field." -- and because the first repair
+# pass died before it reached a single bot, all 64 of them hit that for the
+# first time here.
+PRIMARY_FIELD = {"bot": "avatarImage"}
+DEFAULT_PRIMARY_FIELD = "imagePath"
+
+# /api/art/queue paginates by `page`, NOT by `skip`, and caps `pageSize`/`limit`
+# at 200 (server/api/art/queue/index.get.ts). Both halves of that bit:
+#
+#   - a limit=1000 read answers "200 of 1132 job(s)" and looks complete;
+#   - a `skip=` parameter is not read at all, so a skip-driven walk re-reads
+#     page one forever. It never terminates and never repeats a job id, so it
+#     looks like a slow endpoint rather than a loop.
+#
+# The response carries its own `pagination.hasNextPage`, which is what the walk
+# is driven off now rather than any arithmetic on this side.
+QUEUE_PAGE = 200
+
+# DONE is ordered `updatedAt desc` (PENDING is `priority desc, id asc`, which
+# is not a date order at all). So for DONE only, the walk can stop once a whole
+# page predates the repair pass -- 14,979 rows is 75 large reads for jobs that
+# cannot match. Applied only when the WHOLE page is below the cutoff, so a
+# change to that ordering degrades to the full walk rather than truncating it.
+QUEUE_LOOKBACK_DAYS = 3
+DATE_ORDERED_STATUSES = {"DONE"}
 
 
 def http_json(method: str, url: str, body: Any = None, timeout: int = 180):
@@ -102,25 +132,100 @@ def http_json(method: str, url: str, body: Any = None, timeout: int = 180):
         return 0, {"message": str(error)}
 
 
-def already_queued() -> set[tuple[str, int]]:
-    """(entityType, entityId) pairs that already hold a negation-repair job."""
+def queue_cutoff(manifest: dict[str, Any]) -> str:
+    """The earliest createdAt a negation-repair job could have."""
+    try:
+        day = date.fromisoformat(str(manifest.get("generated") or ""))
+    except ValueError:
+        return ""
+    return (day - timedelta(days=QUEUE_LOOKBACK_DAYS)).isoformat()
+
+
+def already_queued(cutoff: str = "") -> set[tuple[str, int]]:
+    """(entityType, entityId) pairs that already hold a negation-repair job.
+
+    Two things made the first version of this return an empty set and say
+    nothing about it, so every run looked like a clean first run:
+
+    - `designer` is not a top-level payload key. The enqueue endpoint files it
+      under `payload.save.designer`, so `payload["designer"]` was always None
+      and the `!= "negation-repair"` test skipped every job there was.
+    - `limit` is capped at 200 server-side. A `limit=1000` read answers "200 of
+      1132 job(s)" with a 200-row body, so even a correct designer test would
+      have seen a sixth of the queue.
+    """
     seen: set[tuple[str, int]] = set()
     for status in ("PENDING", "RUNNING", "DONE"):
-        code, payload = http_json("GET", f"{KR_BASE_URL}/api/art/queue?limit=1000&status={status}")
-        if code != 200:
-            print(f"  (could not read {status} jobs: {code} {str(payload)[:120]})", file=sys.stderr)
-            continue
-        for job in (payload.get("data") or {}).get("jobs") or []:
-            art = ((job.get("payload") or {}).get("entityArt")) or {}
-            if (job.get("payload") or {}).get("designer") != "negation-repair":
-                continue
-            kind, row_id = art.get("entityType"), art.get("entityId")
-            if kind and isinstance(row_id, int):
-                seen.add((kind, row_id))
+        page = 1
+        while True:
+            code, payload = http_json(
+                "GET",
+                f"{KR_BASE_URL}/api/art/queue?pageSize={QUEUE_PAGE}&page={page}&status={status}",
+            )
+            if code != 200:
+                print(f"  (could not read {status} jobs: {code} {str(payload)[:120]})", file=sys.stderr)
+                break
+            data = payload.get("data") or {}
+            jobs = data.get("jobs") or []
+            if not jobs:
+                break
+            for job in jobs:
+                job_payload = job.get("payload") or {}
+                save = job_payload.get("save") or {}
+                if save.get("designer") != "negation-repair":
+                    continue
+                art = job_payload.get("entityArt") or {}
+                kind, row_id = art.get("entityType"), art.get("entityId")
+                if kind and isinstance(row_id, int):
+                    seen.add((kind, row_id))
+            if not (data.get("pagination") or {}).get("hasNextPage"):
+                break
+            if (
+                cutoff
+                and status in DATE_ORDERED_STATUSES
+                and all((job.get("updatedAt") or "") < cutoff for job in jobs)
+            ):
+                break
+            page += 1
     return seen
 
 
+# /api/facets/:id resolves a SLUG, not a numeric id: "/api/facets/3d-render"
+# answers 200 and "/api/facets/1417" answers 404 "Facet not found." for the
+# same row. The manifest stores numeric ids, so the detail route refused all
+# 575 facets -- reported per record as "no artPrompt on the live record", which
+# reads like missing data rather than a wrong URL. The repair script never hit
+# this because it works from the paged list, which carries artPrompt on every
+# row; so does this, now.
+_FACET_ROWS: Optional[dict[int, dict[str, Any]]] = None
+
+
+def facet_rows() -> dict[int, dict[str, Any]]:
+    global _FACET_ROWS
+    if _FACET_ROWS is not None:
+        return _FACET_ROWS
+    rows: dict[int, dict[str, Any]] = {}
+    skip = 0
+    while True:
+        code, payload = http_json("GET", f"{KR_BASE_URL}/api/facets?take=250&skip={skip}")
+        batch = ((payload.get("data") if code == 200 else None) or [])
+        if not batch:
+            break
+        before = len(rows)
+        for row in batch:
+            if isinstance(row.get("id"), int):
+                rows[row["id"]] = row
+        # An endpoint that ignored `skip` would hand back the same page forever.
+        if len(rows) == before:
+            break
+        skip += 250
+    _FACET_ROWS = rows
+    return rows
+
+
 def fetch_prompt(kind: str, row_id: int) -> Optional[dict[str, Any]]:
+    if kind == "facet":
+        return facet_rows().get(row_id)
     status, payload = http_json("GET", f"{KR_BASE_URL}{DETAIL[kind]}/{row_id}")
     if status != 200:
         return None
@@ -161,7 +266,7 @@ def main(argv=None) -> int:
     print(f"Selected: {len(targets)}  {Counter(k for k, _ in targets).most_common()}")
 
     if args.skip_queued and args.apply:
-        seen = already_queued()
+        seen = already_queued(queue_cutoff(manifest))
         before = len(targets)
         targets = [t for t in targets if t not in seen]
         if before != len(targets):
@@ -192,7 +297,7 @@ def main(argv=None) -> int:
             "entityArt": {
                 "entityType": kind,
                 "entityId": row_id,
-                "field": "imagePath",
+                "field": PRIMARY_FIELD.get(kind, DEFAULT_PRIMARY_FIELD),
                 # Keep the old image in the record's art history.
                 "preserveOriginal": True,
                 "mode": "recreate",

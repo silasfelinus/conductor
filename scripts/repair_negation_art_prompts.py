@@ -184,6 +184,69 @@ CARD_COMPOSITION = re.compile(
     r"\b(?:2:3\s+)?(?:vertical\s+)?(?:portrait\s+)?card composition\b", re.I
 )
 
+# Contract rule "format-vocabulary", the other half of it. `CARD_COMPOSITION`
+# above rewrites the FRAMING ("2:3 portrait card composition"); seven Reward
+# prompts also name the card as an OBJECT a few clauses later -- "rare-tier
+# ability card illustration", "uncommon-tier treasure card illustration". Fixing
+# only the framing left all seven still rejected, because the contract flags
+# `(?:treasure|ability|item|reward)[- ]card` on its own evidence: rewards came
+# back as literal cards with a title bar and a rules box.
+#
+# Removed rather than substituted, unlike the framing. The aspect ratio in
+# "2:3 portrait card composition" is real direction worth keeping; "rare-tier"
+# is a database rarity and "ability card illustration" is the artefact the
+# picture would be printed on. Neither describes anything visible, and each of
+# these prompts already carries its full subject, lighting and style tail.
+TIER_CARD_CLAUSE = re.compile(
+    r"[,;.]?\s*(?:[a-z]+-tier\s+)?(?:ability|treasure|item|reward)[- ]card"
+    r"(?:\s+(?:illustration|art|artwork))?\.?",
+    re.I,
+)
+
+# Rule 3 in a place the clause anchors could not see. `_clause` starts at `^`,
+# a `,;.` separator, or whitespace -- and a negation opening a parenthetical
+# has `(` in front of it, which is none of those. Two Rewards survived the
+# whole pass that way: 424's "(no specific copyrighted character -- just
+# classic comic styling)" and 249's "(no readable text)". Krea reads both
+# parentheses as ordinary words, so "no readable text" is still an order for
+# lettering whatever bracket it sits in.
+#
+# The half after the dash is real direction, so it is kept rather than dropped
+# with the rest: 424 means "classic comic styling", and that survives.
+NEGATED_PARENTHETICAL = re.compile(rf"\s*\(\s*(?P<inner>{NEG}\b[^)]*)\)", re.I)
+PAREN_PIVOT = re.compile(r"\s*(?:\u2014|\u2013|--)\s*")
+PAREN_FILLER = re.compile(r"^(?:just|only|simply|merely)\s+", re.I)
+
+
+def strip_negated_parenthetical(text: str) -> str:
+    def replace(match: re.Match[str]) -> str:
+        halves = PAREN_PIVOT.split(match.group("inner"), maxsplit=1)
+        if len(halves) == 2 and halves[1].strip():
+            kept = PAREN_FILLER.sub("", halves[1].strip())
+            if kept:
+                return f", {kept}"
+        return ""
+
+    return NEGATED_PARENTHETICAL.sub(replace, text)
+
+
+# Contract rule "vague-brand-style". Three dream prompts still end "cohesive
+# Kind Robots visual style", which the contract rejects because it carries no
+# visual information -- and all three are the thin, logline-only prompts that
+# rule 4 warns are exactly where a boilerplate clause becomes the whole prompt.
+#
+# The replacement is not invented: it is the tail this catalog already uses
+# most often on its own illustrated entities, and it answers the contract's
+# own instruction to write the medium, linework, colour and surface out.
+BRAND_STYLE_CLAUSE = re.compile(
+    r"\b(?:(?:rich|cohesive|friendly)\s+)?Kind Robots\s+(?:visual\s+)?(?:style|language)\b",
+    re.I,
+)
+BRAND_STYLE_REPLACEMENT = (
+    "detailed mature western animation illustration, confident ink-like "
+    "linework, dimensional forms, rich controlled color, tactile surface texture"
+)
+
 WRAPPER_CLAUSE = re.compile(
     r"(?:"
     r"Illustrate the Facet concept[^.]*\.?"
@@ -251,14 +314,30 @@ def tidy(text: str) -> str:
     return text.strip()
 
 
-def violations(prompt: str) -> list[str]:
+# A `resource` row's artPrompt is LoRA trigger text, not a picture: it is never
+# sent to Krea on its own, and its words are the trained concept rather than a
+# description of a frame. resource/3590 "detailed_notrigger" reads "extremely
+# detailed (no trigger) - sliders.ntcai.xyz", where "(no trigger)" is catalog
+# bookkeeping that matches the row's own name -- deleting it would say the LoRA
+# has a trigger word. Same carve-out the six "Movie Poster page" / "vintage
+# comic book cover" rows get from the format rules: a format noun (or here a
+# negation) is a bug when it names the artefact the image is printed ON, and
+# metadata when it names the row.
+PROSE_EXEMPT_KINDS = {"resource"}
+
+
+def violations(prompt: str, kind: Optional[str] = None) -> list[str]:
     found = [name for name, pattern, _, _ in RULES if pattern.search(prompt or "")]
-    if CARD_COMPOSITION.search(prompt or ""):
+    if CARD_COMPOSITION.search(prompt or "") or TIER_CARD_CLAUSE.search(prompt or ""):
         found.append("format-vocabulary")
+    if kind not in PROSE_EXEMPT_KINDS and NEGATED_PARENTHETICAL.search(prompt or ""):
+        found.append("negated-parenthetical")
+    if BRAND_STYLE_CLAUSE.search(prompt or ""):
+        found.append("vague-brand-style")
     return found
 
 
-def repair(prompt: str) -> str:
+def repair(prompt: str, kind: Optional[str] = None) -> str:
     """Remove every offending clause, then restate the intent positively."""
     text = prompt or ""
     restore: list[str] = []
@@ -266,6 +345,11 @@ def repair(prompt: str) -> str:
     # A substitution, not a removal: the aspect ratio is real direction and only
     # the word "card" is the bug.
     text = CARD_COMPOSITION.sub("vertical 2:3 portrait composition", text)
+    # The card as an object, though, has no geometry worth keeping.
+    text = TIER_CARD_CLAUSE.sub("", text)
+    text = BRAND_STYLE_CLAUSE.sub(BRAND_STYLE_REPLACEMENT, text)
+    if kind not in PROSE_EXEMPT_KINDS:
+        text = strip_negated_parenthetical(text)
 
     for _name, pattern, replacement, already in RULES:
         if not pattern.search(text):
@@ -313,6 +397,8 @@ ORDER = ("reward", "facet", "character", "scenario", "dream", "bot", "achievemen
 # who just clicked Generate wait behind 1,156 of them.
 RENDER_PRIORITY = {"reward": 60}
 DEFAULT_RENDER_PRIORITY = 40
+PRIMARY_FIELD = {"bot": "avatarImage"}
+DEFAULT_PRIMARY_FIELD = "imagePath"
 
 
 def http_json(method: str, url: str, body: Any = None, timeout: int = 300):
@@ -401,7 +487,9 @@ def enqueue_render(kind: str, row: dict[str, Any], prompt: str,
         "entityArt": {
             "entityType": kind,
             "entityId": row["id"],
-            "field": "imagePath",
+            # bot's primary slot is avatarImage, not imagePath; sending the
+            # latter is refused with 400 "Invalid bot image field."
+            "field": PRIMARY_FIELD.get(kind, DEFAULT_PRIMARY_FIELD),
             # The crowd images stay in object history rather than being destroyed.
             "preserveOriginal": True,
             "mode": "recreate",
@@ -451,11 +539,11 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
             if not prompt:
                 continue
             scanned += 1
-            found = violations(prompt)
+            found = violations(prompt, kind)
             if not found:
                 continue
-            fixed = repair(prompt)
-            remaining = violations(fixed)
+            fixed = repair(prompt, kind)
+            remaining = violations(fixed, kind)
             for rule in found:
                 by_rule[rule] = by_rule.get(rule, 0) + 1
             findings.append({
