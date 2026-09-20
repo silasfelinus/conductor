@@ -1188,6 +1188,11 @@ Get-ScheduledTask -TaskName *health* | Select-Object -ExpandProperty Actions
     Select-Object ExecutionTimeLimit, MultipleInstances
 ```
 
+**This check is now automated** (conductor/t-180) — see "Automated: watchdog
+liveness check" below for registration. The manual commands here still work
+for a one-off look; the automated version is what emails you instead of
+waiting for someone to run them.
+
 `LastTaskResult` is the field that matters, and **a non-zero one alongside a
 healthy `NextRunTime` is the trap**: the task is firing on schedule and failing
 every time, which from the outside looks identical to a task that works.
@@ -1245,6 +1250,7 @@ everywhere.
 | Render-engine banner at the top of the daily digest | GitHub Actions | A daily positive assertion of health, so absence of an alert means something |
 | `check_render_box.py` engine-heartbeat gate | GitHub Actions | "Queue idle" no longer reads as UP |
 | `healthcheck.ps1` crash-loop + `errored` detection | this box | A climbing pm2 restart counter, and pm2 giving up entirely |
+| `check-watchdog-liveness.ps1` via its own Task Scheduler entry (conductor/t-180) | this box | The watchdog itself going silent -- non-zero `LastTaskResult`, or a stale `healthcheck.log` -- the exact 2026-09-08..09-19 gap none of the rows above catch, since the engine itself stayed healthy the whole time |
 
 The first row is the important one: it runs **off the box**, so it survives the
 exact failure that made this outage invisible. It alerts on transition and then
@@ -1260,6 +1266,41 @@ KR_API_TOKEN=... python scripts/check_engine_heartbeat.py
 Exit 0 healthy, 1 a real problem, 2 unresolved (no token / API unreachable).
 2 is deliberately not 1: a broken credential must never look like a broken
 render box.
+
+### Automated: watchdog liveness check
+
+`check-watchdog-liveness.ps1` reads the two signals in "Check the Task
+Scheduler entry first" above — `LastTaskResult` on `AI-Backends-Healthcheck`,
+and how long ago `healthcheck.log` last wrote — and emails if either looks
+wrong. It never restarts anything; it only reports.
+
+It is deliberately a separate script from `healthcheck.ps1` and defines
+everything it needs itself, so a parse error or a hang in `healthcheck.ps1`
+cannot also take this down — the exact failure class it exists to catch.
+Register it as its **own** Task Scheduler entry, not as part of the existing
+one, for the same reason:
+
+```powershell
+schtasks /Create /SC MINUTE /MO 15 /TN "AI-Backends-Watchdog-Liveness" `
+  /TR "wscript.exe \"C:\path\to\conductor\ops\home-server\check-watchdog-liveness-hidden.vbs\""
+```
+
+It reuses the same Brevo env vars as the main watchdog (`BREVO_API_KEY`,
+`ALERT_TO`/`DIGEST_TO`, `ALERT_FROM`/`DIGEST_FROM`) — nothing new to
+configure if alerts are already set up. With no `BREVO_API_KEY` set it still
+runs and updates its own state file, it just doesn't email. Two settings
+control sensitivity, both optional:
+
+```powershell
+setx WATCHDOG_STALE_MINUTES "30"              # log older than this = a finding
+setx WATCHDOG_ALERT_COOLDOWN_MINUTES "60"     # min gap between repeat emails
+```
+
+State lives in `logs\watchdog-liveness-state.json`, separate from the main
+watchdog's `logs\alert-state.json` so the two scripts never contend for the
+same file. A repeat alert is suppressed within the cooldown; recovery clears
+it immediately so a future break alerts promptly rather than waiting out a
+cooldown window that started before the fix.
 
 ## Reboot-readiness check (`preflight.ps1`)
 
