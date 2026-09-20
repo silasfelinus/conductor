@@ -1184,14 +1184,47 @@ tick. At a 234-second boot pm2 manages about 1.25. The per-tick gate is
 **inversely sensitive to boot time**: the slower the boot, the less likely it is
 to notice the loop. It fired on 09-20 only because that stretch cycled at ~75s.
 
-**And the guard meant to cover that had never worked.**
-`check-pm2-restart-trend.ps1` read `$process.restart_time`, but
+**And the guard meant to cover that had never worked — for two stacked
+reasons.** `check-pm2-restart-trend.ps1` read `$process.restart_time`, but
 `pm2-jlist-snapshot.js` nests it under `pm2_env`. PowerShell returns `$null` for
 a missing property rather than raising, `[int]$null` is `0`, so every app scored
 zero restarts forever — never reaching the absolute threshold (25) or the trend
-delta (10). On a box sitting at 89 restarts it read 0. `tests/test_pm2_restart_trend.py`
-asserted the broken path was *present*, pinning it in place; that test now
-derives the expected path from the projection's own output instead.
+delta (10). On a box sitting at 89 restarts it read 0.
+
+Correcting the path alone was not enough, and the box said so immediately:
+
+```
+Cannot convert the "System.Object[]" value of type "System.Object[]" to type "System.Int32".
++         $restarts = [int]$process.pm2_env.restart_time
+```
+
+**Windows PowerShell 5.1's `ConvertFrom-Json` emits a JSON array as ONE object
+rather than enumerating it.** `foreach ($process in $processes)` therefore ran
+once with `$process` bound to the whole four-app array, and every
+`$process.<field>` was member enumeration returning `Object[]`. That is also why
+the first read scored 0 rather than erroring: the missing top-level property
+member-enumerated to nothing. Fixing the path turned a silent wrong answer into
+a loud one.
+
+`healthcheck.ps1` consumes the same helper and has always piped it through
+`ForEach-Object` for exactly this reason (`$pm2List | ForEach-Object { $_.name }`).
+The trend check now matches it, and extracts a scalar before casting so an
+unexpected shape skips that app with a warning instead of throwing the whole
+check away. Note what saved the watchdog here: `healthcheck-runner.ps1` runs this
+check inside a `try/catch` precisely so an advisory cannot take health recovery
+down with it, and it did its job.
+
+**The same trap bites interactive commands.** A one-liner like
+`pm2 jlist | node pm2-jlist-snapshot.js | ConvertFrom-Json | Where-Object { $_.name -eq 'comfyui' }`
+prints one row whose every field is an array (`restarts : {2, 3, 0, 0}`) rather
+than the one app asked for. Add `| ForEach-Object { $_ }` after
+`ConvertFrom-Json`.
+
+`tests/test_pm2_restart_trend.py` asserted the broken path was *present*,
+pinning it in place. It now derives the expected field path from the
+projection's own output and the enumeration requirement from `healthcheck.ps1`,
+so neither can drift again — and it strips comment lines before checking for
+forbidden patterns, since these files quote the broken code they replaced.
 
 **The rule.** Where a threshold would have to track boot time, measure the thing
 directly instead:
