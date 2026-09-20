@@ -1302,7 +1302,28 @@ tasks:
       Alexandria/Unraid, so the controls appear once the Unraid User Script (scripts/unraid-
       user-script.sh -> scripts/deploy-unraid.sh) pulls the new image. Nothing here touches
       prisma/, so there is no migration in this deploy.
-    updated: '2026-09-20T12:32:36Z'
+
+      Session investigation 2026-09-20 (soft, no status change -- still a hard human gate
+      pending Alexandria deploy): both production runs that failed (workflow runs 35507938021,
+      35508317136, both before this investigation) hit HTTP 400 'Maximum call stack size
+      exceeded' from scanArchiveRoot()'s walk(). Root-caused to TWO independent stack-overflow
+      classes in server/utils/artArchiveScanner.ts: (1) kind_robots#2933 (already merged same
+      day, ~5h before the failures were diagnosed) fixed files.push(...(await walk(...)))
+      spreading a whole subtree's file list as call arguments -- overflows V8's argument-
+      spread limit on a large subtree. (2) kind_robots#2936 (opened this session) fixes the
+      separate, still-present issue that walk() itself is recursive per subdirectory with no
+      depth/cycle guard -- resolveConfined() only rejects paths that resolve OUTSIDE the root,
+      so an in-bounds symlink loop or a sufficiently deep tree would still overflow the call
+      stack even after #2933. #2936 rewrites walk() as an iterative explicit-stack traversal
+      and adds a regression test for the symlink-cycle case; vue-tsc/eslint/prettier-ratchet
+      all clean, all 14 scanner self-test assertions pass locally. NEITHER PR is deployed to
+      production yet -- kind_robots merge != Unraid deploy (needs a Force Update on Alexandria
+      per AGENTS.md). FOR SILAS: once both PRs are merged AND a Force Update has run, re-
+      trigger the Art Archive Production Import workflow (push a new ops/art-archive-import-
+      requests/*.json marker, or workflow_dispatch with mode=dry-run first) to see if the scan
+      now completes. If it still 400s after that, the failure is something else and needs
+      fresh logs.
+    updated: '2026-09-20T23:11:07Z'
     approved_by_human: true
     owner: worker
     claimed_by: 2026-09-20T112500Z-art-archive-t041-chatgpt-fix1
