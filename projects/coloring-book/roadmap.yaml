@@ -174,7 +174,7 @@ tasks:
   title: Monster Recast book 1 production pass — 36 final color/BW pairs
   passes: 0
   stakes: reversible
-  updated: '2026-09-20T01:57:38Z'
+  updated: '2026-09-20T01:57:49Z'
   depends_on: t-021
   note: >-
     Recurring Monster Recast book 1 production pass — 36 final color/BW pairs (depends_on t-021). Full cycle-by-cycle history through cycle 23 (2026-09-17) archived to projects/coloring-book/T022-HISTORY.md — see that file and t-022-run-log.md for every past recovery attempt and status check.
@@ -220,10 +220,22 @@ tasks:
     unchanged, still needs-human) for the underlying relay issues, now compounded by the
     admin-auth blocker in t-182. No unblocked slice this cycle; re-arming to ready
     (recurring), releasing the claim.
+
+    Cycle 27 (2026-09-20, scheduled Conductor sweep): KR_API_TOKEN admin auth confirmed
+    restored (conductor/t-182 closed). Re-ran coloring_queue_status.py for all three books:
+    unchanged from cycle 26 -- Monster Recast mr-008 (job 26356), Hollywood Recast hwr-008
+    (job 25421), Kind Robots kr-006 (job 25419) remain the sole recovery candidates,
+    recommended_action recover-existing-jobs. With admin auth working again, confirmed via
+    direct GET /api/art/queue/:id that all three jobs are still PENDING with no updatedAt
+    movement since 2026-09-16/17 (26356: 2026-09-17T03:39:10Z, 25421: 2026-09-16T06:47:31Z,
+    25419: 2026-09-16T05:44:47Z) -- did not attempt resubmission since the underlying relay
+    gates are unchanged. Re-verified conductor/t-165, conductor/t-167, and coloring-
+    book/t-039 are all still status: needs-human via audit_human_gates.py -- no change. No
+    unblocked slice this cycle. Re-arming to ready (recurring), releasing the claim.
   run_log: projects/coloring-book/t-022-run-log.md
   recurring: true
   implementation_pr: 'silasfelinus/conductor#4482'
-  status: claimed
+  status: ready
   owner: worker
   claimed_by: claude-scheduled-20260920T0200Z-cb-t022
   claimed_at: '2026-09-20T01:57:38Z'
