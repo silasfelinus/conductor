@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-20T10:11:44Z
+Generated: 2026-09-20T10:13:58Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1082**
-- Outcomes: blocked: 18, cancelled: 2, done: 1062
+- Closed tasks recorded: **1083**
+- Outcomes: blocked: 18, cancelled: 2, done: 1063
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -39,7 +39,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-impropriety-calendar | 1 | 0% |
 | humboldt-scoop | 1 | 100% |
 | humboldt-scoop-cms | 21 | 95% |
-| interface-vision | 138 | 100% |
+| interface-vision | 139 | 100% |
 | kapowarr | 52 | 100% |
 | kind-economy | 10 | 100% |
 | kind-robots | 67 | 99% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1065 | 99% |
+| software | 1066 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-20 `interface-vision/t-139` — Clean first-pass follow-on from t-138: mirroring an already-established, already-CI-verified pattern (character-card.vue/reward-card.vue's pending-prop wiring) onto sibling components, and running the specific architecture/contract scripts the prior cycle's failure had already named (verify-project-architecture.mjs, verifyGalleryAdoption.ts, verifyNarrativeKit.ts) before pushing rather than after, avoided repeating the same CI round-trip. Also correctly recognized when the pattern did NOT apply (server-card.vue has no art plate) instead of forcing a fit -- worth noting as a positive example of scope discipline for future 'do the same thing on N siblings' tasks.
 - 2026-09-20 `interface-vision/t-138` — A local eslint/prettier/vue-tsc-clean pass is not the same as a repo-architecture-clean pass -- the first CI push placed a new composable at root composables/ (forbidden by verify-project-architecture.mjs) and had a Facets surface reference the wrong art-request mechanism (caught by verifyFacetCatalogMaintenance.ts's ArtJob-vs-YAML assertion), neither of which vue-tsc/eslint/prettier would ever catch. Both were real, CI only found them because the coordinating session polled check runs directly rather than trusting the worker subagent's own 'verified' claim; fixed in one follow-up push and merged clean on the second CI run. Kaizen -- before wiring a new shared composable/store into an unfamiliar surface, grep for the repo's own architecture-contract script (verify-project-architecture.mjs / verify*Contract.ts naming pattern here) and run it locally first, not just the generic lint/type suite.
 - 2026-09-20 `conductor/t-179` — A command-prohibition contract test that does a bare substring match ('pm2 restart' not in source.lower()) against a whole script file will keep tripping on harmless advisory prose that happens to contain both words contiguously (two separate Write-Warning messages did, in two separate retry passes) -- match actual command-invocation syntax instead of any co-occurrence of the words, or a trivial wording fix keeps re-triggering the same false positive at a different line.
 - 2026-09-20 `conductor/t-180` — First pass, small self-contained diff (one new .ps1, one .vbs wrapper, README, 8 source-contract tests). The suggested-shape note in the task itself (read LastTaskResult + log-write age, OR them together) mapped directly onto a testable design once mirrored against an existing sibling check's structure (check-pm2-restart-trend.ps1 from the same day's t-179) -- reusing a proven pattern (own state file, own cooldown, never restart) made verification-before-push fast even though the script itself can't run in this sandbox.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-19 `kind-robots/t-112` — First pass, tiny scoped diff (+4/-4, one file), matched exactly what the PR described when diffed against the stated base. Reordering a fallback chain to prefer an explicit DOM identity contract over legacy private-Vue introspection is the kind of change worth a source-contract test pinning the order, not just relying on behavioral test coverage -- filed as kind-robots/t-113.
 - 2026-09-19 `lora-ingestion/t-009` — Pass 1 (conductor PR #4737) had 3 real Python test failures from an unfinished lora-import->model-import/checkpoints-path rename plus a handoff-template violation; pass 2 (kind_robots#2894) additionally collapsed the Civitai base-model dropdown from an exhaustive version list into 14 supported/other families per Silas's explicit feedback ('I don't need 10 different versions of SD') -- future UI filters over an upstream enum should model the family a user picks, not the transport values, from the start.
 - 2026-09-19 `mandarin-tutor/t-025` — An optional feature Silas did not select should close as a no-op rather than remain waiting on a dependency that will eventually satisfy and trigger WAITING_WITH_SATISFIED_DEPS.
-- 2026-09-19 `mandarin-tutor/t-026` — t-022's buildMandarinLesson() already computed a teachability: 'structural'|'vocabulary' field, which made the coverage-gap audit almost free -- the real design decision was keeping vocabulary-only lessons out of the issues/byCode tally entirely (a separate coverage section) so an honest, source-faithful lesson is never mistaken for a bug or fails --strict.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-20T10:11:44Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-20T10:13:58Z_
