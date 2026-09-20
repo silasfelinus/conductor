@@ -97,7 +97,7 @@ tasks:
 - id: t-003
   milestone: m1
   title: "Create source-video beat map template"
-  status: needs-human
+  status: done
   passes: 0
   stakes: reversible
   depends_on:
@@ -115,7 +115,12 @@ tasks:
     TO APPROVE: read through the table (or at least the "Structural read" section and a sample of rows) and confirm the beat boundaries and descriptions feel right, or leave notes on what to adjust -- rows 3/5's "blurred figure" read as motion blur of you, not a second performer, is the one interpretive call most worth double-checking against your own memory of the performance. Set approved_by_human: true and status: done, or edit the note with corrections.
 
     What unblocks when you do: t-004 (section-by-section creative treatment) can start for real -- it was blocked on this table existing. Generation Method is deliberately left blank throughout, pending t-006's render-environment tool inventory.
-  updated: '2026-09-17T11:48:10Z'
+
+    State reconciliation (session sweep): approved_by_human=true was already set (Silas
+    approved the timestamped beat map per the note's own TO APPROVE instruction) but status
+    never flipped to done. Reconciling per docs/state-reconciliation.md; t-004 remains
+    blocked pending its own separate work.
+  updated: '2026-09-20T07:53:51Z'
   approved_by_human: true
   owner: worker
   claimed_by: claude-scheduled-20260917T1140Z-coatdance-t003
