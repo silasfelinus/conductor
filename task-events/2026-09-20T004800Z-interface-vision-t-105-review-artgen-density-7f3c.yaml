@@ -1,0 +1,8 @@
+version: 1
+project: interface-vision
+task: t-105
+operation: review
+session: 2026-09-20T003200Z-interface-vision-t105-artgen-density-7f3c
+updated: '2026-09-20T00:48:00Z'
+note: >-
+  Screenshot-directed Art Generator density and SDXL image-to-image repair. Root cause: the art LoRA picker removed its height cap when expanded, so LoRAs grew the whole page; the generator also spent permanent height on a full-width maturity band, Destination controls, and an empty Latest Result panel. Separately, the front-end LoRA compatibility helper returned zero for every sdxl-img2img LoRA even though the server-side resolver explicitly supports SDXL/COMFY/GENERIC LoRAs, and artStore omitted sdxl-img2img from both Comfy routing requirement and serverCanUseEngine, producing the false "Comfy cannot run SDXL from an image" warning and allowing engine fallback. Changes: LoRAs now scroll within a 14rem compact / 24rem taller bounded panel, with a visible compact Mature toggle in its header; SDXL img2img now mirrors server LoRA compatibility and is preserved/routed as a Comfy engine; automatic routing no longer emits a false preferred-server incompatibility warning, while an explicitly pinned incompatible server disables Generate and explains the conflict; Destination is collapsed by default, prompt/settings/panel spacing is tighter, Facets use compact copy, and the empty Latest Result placeholder no longer consumes a viewport before any render exists. Added regression coverage for maturity placement, bounded LoRA scrolling, img2img compatibility/routing, progressive Destination, and no empty result slab. No API shape, database, mana, generation preset values, or production data changed.
