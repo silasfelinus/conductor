@@ -3581,7 +3581,7 @@ tasks:
 - id: t-180
   milestone: m2
   title: 'A scheduled task that fires and fails every 5 minutes is invisible: nothing reads LastTaskResult or the healthcheck log-write age'
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -3612,9 +3612,10 @@ tasks:
 
     Note the ordering trap: report freshness BEFORE content. A watchdog whose log is stale
     is not reporting good news, it is not reporting.
-  updated: '2026-09-20T05:06:39Z'
+  updated: '2026-09-20T05:10:32Z'
   claimed_by: claude-worker-2026-09-20T0515Z-conductor-t180
   claimed_at: '2026-09-20T05:06:39Z'
+  implementation_pr: 'silasfelinus/conductor#4818'
 
 - id: t-181
   milestone: m2
@@ -3719,6 +3720,30 @@ tasks:
     2026-09-17 and 2026-09-19): the exposed value is no longer live. butterfly-
     gallery/t-033's STEP 1 check is unblocked.
   updated: '2026-09-20T01:13:27Z'
+
+- id: t-183
+  milestone: m2
+  title: 'Kaizen from t-180: check whether check-watchdog-liveness.ps1s 30-minute staleness threshold is well-tuned against the 5-minute watchdog cadence'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  implementation_pr: 'silasfelinus/conductor#4818'
+  note: >-
+    Kaizen from conductor/t-180 (PR #4818, merged 2026-09-20). check-watchdog-liveness.ps1
+    treats a healthcheck.log write age over $WATCHDOG_STALE_MINUTES (default 30) as a
+    finding, against a watchdog that ticks every 5 minutes. That is a 6-tick grace window,
+    chosen without any real-world data on this box's actual tick jitter (a slow pm2 jlist
+    call, a delayed Task Scheduler trigger, etc.).
+
+    Once check-watchdog-liveness.ps1 has been registered and running for a while (see
+    ops/home-server/README.md's "Automated: watchdog liveness check" for registration),
+    check logs/healthcheck.log's actual tick-to-tick interval distribution on the real box
+    and decide whether 30 minutes is meaningfully looser than necessary (a tighter default,
+    e.g. 15, would catch a dead watchdog in 3 ticks instead of 6) or whether it is already
+    the right margin for observed jitter. Either confirm the current default with evidence,
+    or ship a smaller default -- this is a tuning pass, not a redesign.
+  updated: '2026-09-20T05:25:00Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
