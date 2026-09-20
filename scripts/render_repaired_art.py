@@ -82,17 +82,25 @@ DEFAULT_RENDER_PRIORITY = 40
 PRIMARY_FIELD = {"bot": "avatarImage"}
 DEFAULT_PRIMARY_FIELD = "imagePath"
 
-# /api/art/queue caps `limit` at 200 whatever is asked for -- a limit=1000 read
-# silently answers with the first 200 of 1,132 and looks complete.
+# /api/art/queue paginates by `page`, NOT by `skip`, and caps `pageSize`/`limit`
+# at 200 (server/api/art/queue/index.get.ts). Both halves of that bit:
+#
+#   - a limit=1000 read answers "200 of 1132 job(s)" and looks complete;
+#   - a `skip=` parameter is not read at all, so a skip-driven walk re-reads
+#     page one forever. It never terminates and never repeats a job id, so it
+#     looks like a slow endpoint rather than a loop.
+#
+# The response carries its own `pagination.hasNextPage`, which is what the walk
+# is driven off now rather than any arithmetic on this side.
 QUEUE_PAGE = 200
 
-# Paging all 14,979 DONE jobs to find repair jobs among them costs 75 large
-# reads and several minutes, for rows that cannot possibly match: no
-# negation-repair job predates the pass the manifest records. The cutoff gives
-# the read a floor. It is only applied when a WHOLE page is older than it, so
-# an unordered endpoint degrades to the full walk rather than stopping early on
-# one stale row.
+# DONE is ordered `updatedAt desc` (PENDING is `priority desc, id asc`, which
+# is not a date order at all). So for DONE only, the walk can stop once a whole
+# page predates the repair pass -- 14,979 rows is 75 large reads for jobs that
+# cannot match. Applied only when the WHOLE page is below the cutoff, so a
+# change to that ordering degrades to the full walk rather than truncating it.
 QUEUE_LOOKBACK_DAYS = 3
+DATE_ORDERED_STATUSES = {"DONE"}
 
 
 def http_json(method: str, url: str, body: Any = None, timeout: int = 180):
@@ -148,16 +156,17 @@ def already_queued(cutoff: str = "") -> set[tuple[str, int]]:
     """
     seen: set[tuple[str, int]] = set()
     for status in ("PENDING", "RUNNING", "DONE"):
-        skip = 0
+        page = 1
         while True:
             code, payload = http_json(
                 "GET",
-                f"{KR_BASE_URL}/api/art/queue?limit={QUEUE_PAGE}&skip={skip}&status={status}",
+                f"{KR_BASE_URL}/api/art/queue?pageSize={QUEUE_PAGE}&page={page}&status={status}",
             )
             if code != 200:
                 print(f"  (could not read {status} jobs: {code} {str(payload)[:120]})", file=sys.stderr)
                 break
-            jobs = (payload.get("data") or {}).get("jobs") or []
+            data = payload.get("data") or {}
+            jobs = data.get("jobs") or []
             if not jobs:
                 break
             for job in jobs:
@@ -169,11 +178,15 @@ def already_queued(cutoff: str = "") -> set[tuple[str, int]]:
                 kind, row_id = art.get("entityType"), art.get("entityId")
                 if kind and isinstance(row_id, int):
                     seen.add((kind, row_id))
-            if len(jobs) < QUEUE_PAGE:
+            if not (data.get("pagination") or {}).get("hasNextPage"):
                 break
-            if cutoff and all((job.get("createdAt") or "") < cutoff for job in jobs):
+            if (
+                cutoff
+                and status in DATE_ORDERED_STATUSES
+                and all((job.get("updatedAt") or "") < cutoff for job in jobs)
+            ):
                 break
-            skip += QUEUE_PAGE
+            page += 1
     return seen
 
 

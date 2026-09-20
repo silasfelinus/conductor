@@ -85,76 +85,104 @@ def test_the_dedupe_check_reads_the_designer_where_enqueue_files_it(monkeypatch)
     }
 
     def fake(method, url, body=None, timeout=180):
-        if "status=PENDING&" in url or url.endswith("status=PENDING"):
-            return 200, {"data": {"jobs": [job, other]}}
-        return 200, {"data": {"jobs": []}}
+        if "status=PENDING" in url:
+            return 200, {"data": {"jobs": [job, other], "pagination": {"hasNextPage": False}}}
+        return 200, {"data": {"jobs": [], "pagination": {"hasNextPage": False}}}
 
     monkeypatch.setattr(rra, "http_json", fake)
     assert rra.already_queued() == {("reward", 235)}
 
 
-def test_the_queue_read_pages_past_the_two_hundred_row_cap(monkeypatch):
-    """`limit` is capped at 200 server-side; limit=1000 answers "200 of 1132"."""
-    pages = {}
-    for page in range(2):
-        pages[page * rra.QUEUE_PAGE] = [
-            {
-                "payload": {
-                    "save": {"designer": "negation-repair"},
-                    "entityArt": {"entityType": "facet", "entityId": page * 1000 + n},
-                }
-            }
-            for n in range(rra.QUEUE_PAGE)
-        ]
+def test_the_queue_walk_pages_by_page_not_skip(monkeypatch):
+    """`/api/art/queue` reads `page`, and ignores `skip` entirely.
+
+    A skip-driven walk therefore re-reads page one forever: the row count never
+    drops below the page size, so the loop never ends, and because it never
+    repeats a job *id* within a page it reads as a slow endpoint rather than as
+    a loop. Two runs hung on this before it was spotted in the handler source.
+    """
+    urls = []
 
     def fake(method, url, body=None, timeout=180):
+        urls.append(url)
         if "status=PENDING" not in url:
-            return 200, {"data": {"jobs": []}}
-        skip = int(url.split("skip=")[1].split("&")[0])
-        return 200, {"data": {"jobs": pages.get(skip, [])}}
+            return 200, {"data": {"jobs": [], "pagination": {"hasNextPage": False}}}
+        page = int(url.split("page=")[1].split("&")[0])
+        if page > 2:
+            return 200, {"data": {"jobs": [], "pagination": {"hasNextPage": False}}}
+        return 200, {
+            "data": {
+                "jobs": [
+                    {
+                        "payload": {
+                            "save": {"designer": "negation-repair"},
+                            "entityArt": {"entityType": "facet", "entityId": page * 100 + n},
+                        }
+                    }
+                    for n in range(3)
+                ],
+                "pagination": {"hasNextPage": page < 2},
+            }
+        }
 
     monkeypatch.setattr(rra, "http_json", fake)
     seen = rra.already_queued()
-    assert len(seen) == 2 * rra.QUEUE_PAGE
-    assert ("facet", 1000) in seen
+    assert not any("skip=" in url for url in urls)
+    assert [u for u in urls if "status=PENDING" in u] == [
+        f"{rra.KR_BASE_URL}/api/art/queue?pageSize={rra.QUEUE_PAGE}&page=1&status=PENDING",
+        f"{rra.KR_BASE_URL}/api/art/queue?pageSize={rra.QUEUE_PAGE}&page=2&status=PENDING",
+    ]
+    assert ("facet", 100) in seen and ("facet", 202) in seen
 
 
 def test_the_done_walk_stops_below_the_manifest_date(monkeypatch):
     """14,979 DONE jobs is 75 large reads for rows that cannot match.
 
-    No negation-repair job predates the pass the manifest records, so the walk
-    gets a floor. The whole page has to be below it -- one stale row in an
-    unordered page must not end the read early.
+    Only DONE is ordered by date (`updatedAt desc`); PENDING is ordered
+    `priority desc, id asc`, so the cutoff must not be applied there or it
+    would truncate the walk at the first low-priority page.
     """
     cutoff = rra.queue_cutoff({"generated": "2026-09-20"})
     assert cutoff == "2026-09-17"
+    assert rra.DATE_ORDERED_STATUSES == {"DONE"}
 
-    fresh = [
-        {
-            "createdAt": "2026-09-19T23:00:00.000Z",
-            "payload": {
-                "save": {"designer": "negation-repair"},
-                "entityArt": {"entityType": "bot", "entityId": n},
-            },
-        }
-        for n in range(rra.QUEUE_PAGE)
-    ]
-    stale = [{"createdAt": "2026-08-01T00:00:00.000Z", "payload": {}}] * rra.QUEUE_PAGE
-    mixed = [dict(stale[0]) for _ in range(rra.QUEUE_PAGE - 1)] + [fresh[0]]
-    reads = []
+    fresh = {"updatedAt": "2026-09-19T23:00:00.000Z", "payload": {}}
+    stale = {"updatedAt": "2026-08-01T00:00:00.000Z", "payload": {}}
+    pages = {1: [fresh, stale], 2: [stale, stale], 3: [stale, stale]}
+    read = []
 
     def fake(method, url, body=None, timeout=180):
-        if "status=PENDING" not in url:
-            return 200, {"data": {"jobs": []}}
-        skip = int(url.split("skip=")[1].split("&")[0])
-        reads.append(skip)
-        return 200, {"data": {"jobs": [fresh, mixed, stale, fresh][skip // rra.QUEUE_PAGE]}}
+        if "status=DONE" not in url:
+            return 200, {"data": {"jobs": [], "pagination": {"hasNextPage": False}}}
+        page = int(url.split("page=")[1].split("&")[0])
+        read.append(page)
+        return 200, {"data": {"jobs": pages.get(page, []), "pagination": {"hasNextPage": True}}}
 
     monkeypatch.setattr(rra, "http_json", fake)
-    seen = rra.already_queued(cutoff)
-    # Page 1 is mixed, so the walk continues; page 2 is wholly stale and ends it.
-    assert reads == [0, rra.QUEUE_PAGE, 2 * rra.QUEUE_PAGE]
-    assert ("bot", 0) in seen
+    rra.already_queued(cutoff)
+    # Page 1 is mixed so the walk continues; page 2 is wholly stale and ends it.
+    assert read == [1, 2]
+
+
+def test_a_mixed_page_does_not_end_the_done_walk(monkeypatch):
+    """One stale row in an otherwise current page must not truncate the read."""
+    cutoff = rra.queue_cutoff({"generated": "2026-09-20"})
+    read = []
+
+    def fake(method, url, body=None, timeout=180):
+        if "status=DONE" not in url:
+            return 200, {"data": {"jobs": [], "pagination": {"hasNextPage": False}}}
+        page = int(url.split("page=")[1].split("&")[0])
+        read.append(page)
+        rows = [
+            {"updatedAt": "2026-08-01T00:00:00.000Z", "payload": {}},
+            {"updatedAt": "2026-09-19T00:00:00.000Z", "payload": {}},
+        ]
+        return 200, {"data": {"jobs": rows, "pagination": {"hasNextPage": page < 3}}}
+
+    monkeypatch.setattr(rra, "http_json", fake)
+    rra.already_queued(cutoff)
+    assert read == [1, 2, 3]
 
 
 def test_an_unreadable_manifest_date_falls_back_to_the_full_walk():
