@@ -18,7 +18,7 @@ function Read-State {
         }
         return $state
     } catch {
-        Write-Warning "Ignoring unreadable PM2 restart trend state: $($_.Exception.Message)"
+        Write-Warning "Ignoring unreadable restart-trend state: $($_.Exception.Message)"
         return @{}
     }
 }
