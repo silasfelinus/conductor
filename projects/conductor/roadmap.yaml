@@ -3544,7 +3544,7 @@ tasks:
   title: 'Nothing watches pm2 restart_time as a TREND -- a count that climbs to 779 over weeks trips no alert, and reviving a watchdog onto an already-sick engine is how 2026-09-19 happened'
   status: ready
   owner: worker
-  passes: 1
+  passes: 2
   stakes: reversible
   note: >-
     healthcheck.ps1's CRASH LOOP branch alerts only when pm2's restart_time moves within a
@@ -3573,10 +3573,10 @@ tasks:
     Reviewer 2026-09-20: CI red on PR #4813 (pytest failure + PR-handoff-template check
     failure), both real bugs -- see retry_context and PR comment. Rolled back to ready for a
     retry.
-  updated: '2026-09-20T03:52:37Z'
+  updated: '2026-09-20T04:53:02Z'
   claimed_by: openai-scheduled-2026-09-20T031957Z-conductor-t179-a11
   claimed_at: '2026-09-20T03:19:57Z'
-  retry_context: 'pass 1 failed (CI, PR #4813, worker/conductor-t-179-openai-scheduled-2026-09-20T031957Z-conductor-t179-a11): (1) tests/test_pm2_restart_trend.py::test_restart_trend_check_is_advisory_only fails because check-pm2-restart-trend.ps1s own comment "Ignoring unreadable PM2 restart trend state" contains the substring "pm2 restart" once lowercased, tripping assert "pm2 restart" not in source.lower(). Reword the comment (e.g. "Ignoring unreadable restart-trend state") or tighten the assertion to match an actual command invocation, not any substring. (2) "Validate Worker PR handoff" fails: PR body used ## Task / ## What changed / ## Verification / ## Stakes / ## Flags / ## Kaizen / ## Reviewer notes (h2, some reworded) instead of the exact required h3 headings from scripts/check_pr_handoff_template.py: ### Task, ### What changed / what I produced, ### How I verified, ### Stakes, ### Kaizen suggestion, ### Notes for reviewer. Fix both, run pytest tests/test_pm2_restart_trend.py and pipe the PR body through check_pr_handoff_template.py locally before repushing to the same branch/PR.'
+  retry_context: 'pass 2 failed (CI, PR #4813, worker/conductor-t-179-openai-scheduled-2026-09-20T031957Z-conductor-t179-a11, head d8bd961): tests/test_pm2_restart_trend.py::test_restart_trend_check_is_advisory_only still fails -- the pass-1 fix reworded the unreadable-state comment but check-pm2-restart-trend.ps1 line 98 still emits Write-Warning "PM2 restart advisory: $name has $restarts total restarts ($delta since baseline)." which contains the literal substring "pm2 restart" once lowercased, tripping the same assertion at a different location. Reword the Write-Warning message so "pm2" and "restart" are never contiguous (e.g. drop "PM2" from the message text entirely, since the script and log context already identify it as a PM2 check -- "Restart-trend advisory: $name has..." has no pm2 restart substring). Run pytest tests/test_pm2_restart_trend.py locally against the exact file before repushing; grep -i "pm2 restart" ops/home-server/check-pm2-restart-trend.ps1 must return nothing. The "Validate Worker PR handoff" failure on this PR (job 106019883382) is stale -- it validated an earlier PR-body snapshot with h2 headings before the h3-heading fix landed; the current PR body already passes that check (job 106019955339) and needs no further change.'
 
 - id: t-180
   milestone: m2
