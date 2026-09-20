@@ -148,7 +148,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 50
   stakes: reversible
   note: |-
@@ -231,11 +231,42 @@ tasks:
     (showEnding gates on isComplete+ending, not canEndOnDemand). No bypass found -- the
     abandon path was already fine, as cycle 75's kaizen suspected. No Kind Robots mutation
     this cycle. Re-arming to ready per established recurring-task convention.
-  updated: '2026-09-20T13:57:02Z'
+
+    Cycle 78 (real fix): read server/utils/storybookNarration.ts end-to-end (1117 lines,
+    never previously audited in this task's history) plus its dependency
+    server/utils/structuredCompletion.ts (130 lines, also never audited).
+    storybookNarration.ts itself held up under scrutiny -- traced the inventoryRemove/held-
+    slug validation looseness (validateStorybookNarration allows removing a slug that is
+    merely offered, not actually held) against applyInventoryChange()'s spend(), which
+    idempotently no-ops on a slug not in the real inventory, so it is not a live bug. Found
+    a genuine one in structuredCompletion.ts instead: completeStructured()'s own docstring
+    promises 'An AbortError keeps its name so callers can decline to retry a timeout', but
+    the catch block wrapped a real AbortError in new Error(...), which always names itself
+    Error. generateStorybookTurn() is the one caller that depends on the preserved name (it
+    retries once on any failure except firstError.name === 'AbortError', specifically so a
+    reader who already waited out a 20s timeout does not wait through a second one) -- so
+    every real narration timeout was silently retried, doubling the wait, exactly the
+    outcome both files' comments say should never happen. Fixed by assigning .name =
+    'AbortError' on the wrapped error before throwing. Added
+    utils/scripts/verifyStructuredCompletionAbortNameGuard.ts (mocks global.fetch, no
+    network) confirming a real AbortError keeps its name/message/cause and a non-abort
+    failure is not relabeled; confirmed it fails pre-fix and passes post-fix via git stash.
+    Wired into package.json and contract-tests.yml. Verified: eslint clean, prettier --check
+    clean, vue-tsc --noEmit repo-wide exit 0, test:storybook-narration and test:davinci-
+    narration both pass unchanged. Merged as silasfelinus/kind_robots#2928 (squash 9f70fb0),
+    all 49 checks green, mergeable_state clean before merge. Re-arming to ready per this
+    task's established recurring-polish convention. Kaizen for next cycle:
+    commentBackfillGeneration.ts still hand-rolls its own OpenAI strict-mode JSON-schema
+    call rather than using completeStructured() -- this module's own header comment says it
+    replaced three such call sites (davinciNarration.ts, brainstormProvider.ts -- now
+    removed -- and commentBackfillGeneration.ts) but only two were ever actually migrated.
+    Worth checking whether it carries the same or a similar AbortError-naming gap, and
+    migrating it to completeStructured() if so.
+  updated: '2026-09-20T14:18:58Z'
   owner: worker
   claimed_by: claude-scheduled-20260920T140500Z-storybook-t010
   claimed_at: '2026-09-20T13:57:02Z'
-  implementation_pr: 'silasfelinus/kind_robots#2913'
+  implementation_pr: 'silasfelinus/kind_robots#2928'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
