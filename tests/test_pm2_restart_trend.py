@@ -2,7 +2,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "ops" / "home-server" / "check-pm2-restart-trend.ps1"
+HOME_SERVER = ROOT / "ops" / "home-server"
+SCRIPT = HOME_SERVER / "check-pm2-restart-trend.ps1"
 
 
 def _source() -> str:
@@ -34,3 +35,12 @@ def test_restart_trend_persists_baseline_and_deduplicates_alerts() -> None:
     assert "last_alert_restart_time" in source
     assert "Set-Content -LiteralPath $StatePath" in source
     assert "$restarts -gt [int]$entry.last_alert_restart_time" in source
+
+
+def test_watchdog_tick_runs_restart_trend_without_making_it_health_critical() -> None:
+    runner = (HOME_SERVER / "healthcheck-runner.ps1").read_text(encoding="utf-8")
+    wrapper = (HOME_SERVER / "healthcheck-hidden.vbs").read_text(encoding="utf-8")
+    assert "& $healthcheck" in runner
+    assert "& $restartTrend" in runner
+    assert "try {" in runner and "catch {" in runner
+    assert "healthcheck-runner.ps1" in wrapper
