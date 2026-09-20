@@ -336,7 +336,7 @@ tasks:
 - id: t-019
   milestone: m5
   title: Generate species designs for the 15-fish vertical-slice roster
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   gate_human: true
@@ -381,7 +381,34 @@ tasks:
     (not flagged). Re-arming to ready rather than closing -- a future session should check
     this single remaining species once the corrected render lands via auto-art-generate.yml
     and close this task if it passes.
-  updated: '2026-09-20T07:59:39Z'
+
+    Cycle (2026-09-20 scheduled Conductor sweep): re-checked choirfish per convention before
+    doing work. Confirmed via direct image fetch (media.acrocatranch.com/images/ruler-
+    hooked/fish/choirfish/bestiary.webp, Last-Modified 2026-08-30, predating the #4577 fix)
+    and visual inspection that the render is still the single ornate fish -- #4577's fix
+    never actually landed a corrected render. Root cause found: #4577 rewrote the prompt
+    directly in art-prompts.yaml (a downstream, one-off staged copy) rather than the
+    roster's own silhouette field in vertical-slice.yaml, which
+    build_ruler_hooked_art_queue.py treats as the single source of truth -- so the fix was
+    never durable, and the staged entry itself is gone from the file now (either consumed by
+    a prior submission that rendered the OLD text, or never actually submitted -- unclear
+    which, but either way there was no ruler-hooked-fish-choirfish entry in art-prompts.yaml
+    at session start). Fixed durably this time: rewrote vertical-slice.yaml's choirfish
+    silhouette to explicitly describe three individual fish (first/second/third,
+    red/blue/gold throat patches) instead of only in aggregate, kept the distinction field
+    positive-only (avoided repeating the earlier negation mistake -- this engine runs at cfg
+    1, where negations land as positive conditioning), and re-staged a fresh ruler-hooked-
+    fish-choirfish entry into art-prompts.yaml via build_ruler_hooked_art_queue.py's own
+    fish_entries()+render_block() (single-entry only -- the script's own --write would
+    have staged 84 unrelated other entries across the whole project, out of scope, so
+    appended just this one by hand). Validated: contract_violations() clean,
+    check_ruler_hooked_docs.py OK, repair_art_prompt_yaml.py does not flag the new entry,
+    YAML re-parses (37 requests, 15 fish). auto-art-generate.yml will submit this to the
+    ArtJob queue on merge to main. check_render_box.py currently reports the render box DOWN
+    (same conductor/t-165 and t-167 relay-wedge class), so the job will queue but not render
+    until the box recovers -- not actionable further this cycle. Re-arming to ready; a
+    future session should check the new render once it lands.
+  updated: '2026-09-20T08:00:38Z'
   owner: worker
   claimed_by: claude-scheduled-20260920T075932Z-rh-t019-choirfish
   claimed_at: '2026-09-20T07:59:39Z'
