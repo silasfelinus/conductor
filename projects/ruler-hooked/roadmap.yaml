@@ -917,7 +917,7 @@ tasks:
 - id: t-034
   milestone: m4
   title: Simulate the ruler-hooked treasure/gear/shop economy before tuning it further
-  status: claimed
+  status: review
   gate_human: false
   owner: worker
   stakes: reversible
@@ -938,6 +938,18 @@ tasks:
     decide whether the simulated curve needs retuning, then push any resulting numeric
     changes back into `economy.ts` -- the YAML is the design/simulation layer, `economy.ts`
     remains the live source of truth the game actually reads.
-  updated: '2026-09-20T18:57:30Z'
+
+    Implemented: projects/ruler-hooked/data/economy.yaml (mirrors kind_robots
+    economy.ts/fish.ts numbers) + simulate_economy.py (Cthulhuquarium-pattern deterministic
+    sim). Expected income 2.0274 coins/turn (turn = one resolved catch, not one cast --
+    escape rate isn't a modeled number anywhere in the live game, documented as an explicit
+    assumption in the file). Turns to afford: Reinforced Rod 20, Silk Line 45, Balanced Lure
+    79, Riverbank Market 30, Lakeside Shrine 40, Festival Fund 35, Watch Patrol 37; all gear
+    144, all kingdom 141, everything 284. Added --check-drift, which regex-diffs
+    economy.yaml against the live TypeScript and exits 1 on mismatch (self-tested: confirmed
+    it catches an injected mismatch); confirmed clean against the current kind_robots
+    checkout. No numeric changes pushed back to economy.ts this cycle -- task's own note
+    says that waits on Silas actually playing the shop and reading the pacing curve.
+  updated: '2026-09-20T18:59:59Z'
   claimed_by: claude-scheduled-20260920-rh-t034
   claimed_at: '2026-09-20T18:57:30Z'

@@ -1,0 +1,124 @@
+# Ruler Is Hooked — Economy v1 (data-driven, tunable without a deploy)
+#
+# companion to: ../data/simulate_economy.py (the sim that reads this file)
+#
+# Follows the house pattern from Cthulhuquarium's data/economy.yaml +
+# simulate_economy.py (ruler-hooked/t-034, kaizen from t-029). This file
+# MIRRORS numbers that live in kind_robots — it is a design/simulation
+# layer, not the live source of truth. The game reads:
+#   - utils/rulerHooked/economy.ts   (TREASURE_BY_RARITY, GEAR_CATALOG,
+#     KINGDOM_CATALOG)
+#   - utils/rulerHooked/fish.ts      (rarityWeight, the per-catch draw)
+# If those change, re-sync this file by hand (there is no automated sync);
+# `simulate_economy.py --check-drift` fails loudly if the numbers here
+# stop matching the live TypeScript, so a silent mismatch can't happen.
+#
+# schema_version bumps only on a structural change to this file's shape,
+# not on every number tweak.
+schema_version: 1
+status: draft-v1 # t-029's own "Flags for Reviewer": costs/odds are a first-pass guess, unplayed by Silas
+source_synced_from:
+  repo: silasfelinus/kind_robots
+  files:
+    - utils/rulerHooked/economy.ts
+    - utils/rulerHooked/fish.ts
+  as_of: '2026-09-20' # date this file was last hand-synced against those two
+
+# ---------------------------------------------------------------------------
+# What one "turn" means in this simulation. Read this before trusting any
+# number below.
+#
+# The live game's fishing loop is: hook a fish (weighted rarity draw,
+# fish.ts's `pickFish`) -> play a timing-bar minigame per beat -> the fight
+# resolves LANDED or ESCAPED (encounter.ts). Coins are only awarded by
+# `rollTreasure` inside `resolveFishingCatch`, which fires once per
+# encounter regardless of outcome in the current code path (the preview
+# draw), but only a LANDED fish is what a player experiences as "a catch".
+#
+# ESCAPE probability is not a number anywhere in the data -- it depends on
+# player skill at the timing-bar minigame (band width, sweep speed, gear
+# bonuses), not on a fixed rate. There is nothing to simulate it against
+# without inventing a skill assumption this file has no basis for.
+#
+# So: one "turn" here = one resolved catch (one `resolveFishingCatch` call,
+# one treasure roll), NOT one fishing attempt/cast. This deliberately
+# ignores the escape case entirely rather than guessing an escape rate --
+# it answers "how fast do coins accrue per fish actually landed", which is
+# the number this task's own note asks for (turns to afford each shop
+# item), not "how fast does a specific skill level land fish". If a future
+# task adds a real, data-backed escape/miss rate, fold it in here as an
+# explicit `turns_per_catch_multiplier` rather than editing the treasure
+# math below.
+# ---------------------------------------------------------------------------
+fishing:
+  turn_definition: one_resolved_catch_not_one_cast_attempt
+
+# ---------------------------------------------------------------------------
+# Rarity draw weights -- mirrors fish.ts's `rarityWeight` used by `pickFish`.
+# The live game weights by `baseWeight` per-species when set, and by
+# availability (which species are unlocked for the current save's kingdom
+# state) -- both are per-save, dynamic, and out of scope for this economy
+# layer. This file uses the flat rarityWeight table as the whole-roster
+# approximation: "if every rarity tier were equally reachable," which is
+# the right question for tuning treasure income by rarity, not the right
+# question for tuning species-unlock pacing (that is t-019/t-027's job).
+# ---------------------------------------------------------------------------
+rarity_draw_weights:
+  COMMON: 60
+  UNCOMMON: 30
+  RARE: 14
+  EPIC: 6
+  LEGENDARY: 2
+  MYTHIC: 1
+
+# ---------------------------------------------------------------------------
+# Treasure odds -- verbatim copy of TREASURE_BY_RARITY in economy.ts.
+# `chance` is the probability a landed catch of that rarity also yields
+# coins; `min`/`max` is the coin range if it hits (uniform, per
+# `rollTreasure`'s `min + round(rng.next() * span)`).
+# ---------------------------------------------------------------------------
+treasure_by_rarity:
+  COMMON: { chance: 0.12, min: 2, max: 6 }
+  UNCOMMON: { chance: 0.18, min: 4, max: 10 }
+  RARE: { chance: 0.25, min: 8, max: 18 }
+  EPIC: { chance: 0.35, min: 15, max: 30 }
+  LEGENDARY: { chance: 0.45, min: 25, max: 50 }
+  MYTHIC: { chance: 0.6, min: 40, max: 80 }
+
+# ---------------------------------------------------------------------------
+# Gear -- verbatim copy of GEAR_CATALOG in economy.ts. Coins-only,
+# one-time, permanent (a save flag). Gear changes catch DIFFICULTY
+# (band width / sweep speed), not treasure odds -- it has no numeric
+# effect on this file's income math, only on the escape rate this file
+# deliberately does not model (see `fishing.turn_definition` above).
+# ---------------------------------------------------------------------------
+gear_catalog:
+  - id: reinforced-rod
+    name: Reinforced Rod
+    cost: 40
+  - id: silk-line
+    name: Silk Line
+    cost: 90
+  - id: balanced-lure
+    name: Balanced Lure
+    cost: 160
+
+# ---------------------------------------------------------------------------
+# Kingdom investment -- verbatim copy of KINGDOM_CATALOG in economy.ts.
+# Coins-only, spends into kingdomHealth sliders (no coin return -- this is
+# a pure sink, same economic role as Cthulhuquarium's unlock_cost, not an
+# investment that pays itself back).
+# ---------------------------------------------------------------------------
+kingdom_catalog:
+  - id: riverbank-market
+    name: Riverbank Market
+    cost: 60
+  - id: lakeside-shrine
+    name: Lakeside Shrine
+    cost: 80
+  - id: festival-fund
+    name: Festival Fund
+    cost: 70
+  - id: watch-patrol
+    name: Watch Patrol
+    cost: 75
