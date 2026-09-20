@@ -917,7 +917,7 @@ tasks:
 - id: t-034
   milestone: m4
   title: Simulate the ruler-hooked treasure/gear/shop economy before tuning it further
-  status: review
+  status: done
   gate_human: false
   owner: worker
   stakes: reversible
@@ -950,6 +950,27 @@ tasks:
     it catches an injected mismatch); confirmed clean against the current kind_robots
     checkout. No numeric changes pushed back to economy.ts this cycle -- task's own note
     says that waits on Silas actually playing the shop and reading the pacing curve.
-  updated: '2026-09-20T18:59:59Z'
+
+    Merged silasfelinus/conductor#4867 (squash 2821c4b).
+  updated: '2026-09-20T19:04:40Z'
   claimed_by: claude-scheduled-20260920-rh-t034
   claimed_at: '2026-09-20T18:57:30Z'
+  implementation_pr: 'silasfelinus/conductor#4867'
+
+- id: t-035
+  milestone: m4
+  title: Extend simulate_economy.py to model a chosen purchase order and a combined "fully kitted out" curve
+  status: ready
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Kaizen from t-034 (silasfelinus/conductor#4867). The simulator currently reports
+    independent "turns to afford" thresholds per gear/kingdom item from zero coins,
+    which is the right first pass but doesn't model a real playthrough where earlier
+    purchases consume coins before later ones. Once Silas has played the shop and given
+    a pacing read (t-034's own note: costs/odds are still an unplayed first-pass guess),
+    extend projects/ruler-hooked/data/simulate_economy.py to take a purchase order
+    (e.g. cheapest-first, gear-first, kingdom-first) and report a single combined
+    "turns to fully kitted out" curve reflecting actual coin spend along the way,
+    alongside (not replacing) the existing independent-threshold report.
