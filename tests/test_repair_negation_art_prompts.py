@@ -252,3 +252,83 @@ def test_every_new_family_comes_out_as_readable_prose():
         assert not re.search(r"[,;]\s*[,;.]", fixed)
         assert not re.search(r"\b(?:with|and|or)\s*[,.;]", fixed)
         assert "  " not in fixed
+
+
+# ── The conditional family (2026-09-20) ─────────────────────────────────────
+#
+# Rule 1's other half, and the one the gate could never see. 103 dream prompts
+# said "any figures present are small and incidental, included only for scale".
+# That is a conditional -- Krea can no more evaluate "present" than it can
+# evaluate "no" -- but artPromptContract's CONDITIONAL_PATTERNS anchors on a
+# LEADING when/if/unless, and this phrasing has no conditional word in front of
+# it. So 101 of the 103 passed every check while handing the model a decision.
+
+SCALE_FIGURES = (
+    "architectural establishing shot, the environment is the subject and any figures "
+    "present are small and incidental, included only for scale, cinematic photorealism"
+)
+
+SETTING_IS_SUBJECT = (
+    "wide key art, the setting is the subject; any figures present are incidental to "
+    "the place, and deep atmospheric background"
+)
+
+# Lore the daily-dream producer concatenated into the caption, carrying its own
+# conditional. Dream 5755 and Reward 2934 -- sentences written for a reader.
+LORE_ORCHARD = (
+    "A long green basin where a migrating orchard settles only when the cassowary "
+    "flock chooses to scratch, nest, and scatter seed among the exposed root-mounds"
+)
+LORE_STONE = (
+    "A palm-sized grey stone split cleanly in half, a hairline vein of blue light "
+    "running along the fracture only when both halves touch"
+)
+
+
+def test_figures_for_scale_becomes_a_fact_about_the_frame():
+    assert "conditional-instruction" in rn.violations(SCALE_FIGURES)
+    fixed = rn.repair(SCALE_FIGURES)
+    assert "any figures present" not in fixed.lower()
+    assert "only for scale" not in fixed.lower()
+    # The intent survives: a wide landscape usually DOES want distant figures.
+    assert "distant figures" in fixed
+    assert "cinematic photorealism" in fixed
+    assert not rn.violations(fixed)
+
+
+def test_the_longer_setting_phrasing_is_caught_too():
+    assert "conditional-instruction" in rn.violations(SETTING_IS_SUBJECT)
+    fixed = rn.repair(SETTING_IS_SUBJECT)
+    assert "any figures present" not in fixed.lower()
+    assert "deep atmospheric background" in fixed
+    assert not rn.violations(fixed)
+
+
+def test_lore_conditionals_keep_both_halves_of_the_picture():
+    """"X only when Y" becomes "X as Y".
+
+    Only the joint is rewritten. Both sides are real visual information --
+    an orchard uprooting, a flock walking beside it; a split stone, a vein of
+    light -- and deleting either would lose half the image.
+    """
+    orchard = rn.repair(LORE_ORCHARD)
+    assert "only when" not in orchard.lower()
+    assert "migrating orchard settles as the cassowary flock chooses" in orchard
+    assert "root-mounds" in orchard
+
+    stone = rn.repair(LORE_STONE)
+    assert "only when" not in stone.lower()
+    assert "vein of blue light" in stone and "both halves touch" in stone
+    for fixed in (orchard, stone):
+        assert not rn.violations(fixed)
+
+
+def test_an_ordinary_when_is_not_a_conditional():
+    """The rule is pinned to the "only when/only if" joint, not to "when".
+
+    "a market at dusk when the lanterns are lit" describes a scene. Rewriting
+    every "when" in the catalog would flatten ordinary prose.
+    """
+    scene = "a market at dusk when the lanterns are lit, warm crowded stalls"
+    assert "conditional-instruction" not in rn.violations(scene)
+    assert rn.repair(scene) == scene
