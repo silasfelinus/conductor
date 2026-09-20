@@ -41,7 +41,13 @@ $ErrorActionPreference = 'Stop'
 
 if (-not $Path) { $Path = $PSScriptRoot }
 
-$files = @(Get-ChildItem -Path $Path -Filter '*.ps1' -File | Sort-Object Name)
+# -Recurse: this used to stop at $Path's own top level, so a .ps1 moved into a
+# subfolder (e.g. lib/Restart-ComfySupervised.ps1, conductor/t-185) would be
+# skipped by this checker even though the powershell-syntax workflow's own
+# paths filter (ops/home-server/**.ps1) still triggered the run - a green
+# check that had quietly stopped checking the new file, the same shape of gap
+# this whole script exists to close for the workflow's coverage.
+$files = @(Get-ChildItem -Path $Path -Filter '*.ps1' -File -Recurse | Sort-Object FullName)
 
 if ($files.Count -eq 0) {
     # A glob that silently matches nothing would "pass" forever.
@@ -49,8 +55,10 @@ if ($files.Count -eq 0) {
     exit 1
 }
 
-Write-Host "PowerShell $($PSVersionTable.PSVersion) parsing $($files.Count) file(s) in $Path"
+Write-Host "PowerShell $($PSVersionTable.PSVersion) parsing $($files.Count) file(s) under $Path"
 Write-Host ''
+
+$basePath = (Resolve-Path $Path).Path.TrimEnd('\', '/')
 
 $failed = 0
 foreach ($file in $files) {
@@ -59,18 +67,23 @@ foreach ($file in $files) {
     [void][System.Management.Automation.Language.Parser]::ParseFile(
         $file.FullName, [ref]$tokens, [ref]$errors)
 
+    $label = $file.FullName
+    if ($label.StartsWith($basePath)) {
+        $label = $label.Substring($basePath.Length).TrimStart('\', '/')
+    }
+
     if ($errors -and $errors.Count -gt 0) {
         $failed++
-        Write-Host "FAIL  $($file.Name) - $($errors.Count) parse error(s)"
+        Write-Host "FAIL  $label - $($errors.Count) parse error(s)"
         foreach ($err in $errors) {
             $start = $err.Extent.StartLineNumber
             $col = $err.Extent.StartColumnNumber
-            Write-Host "        $($file.Name):${start}:${col}  $($err.Message)"
+            Write-Host "        ${label}:${start}:${col}  $($err.Message)"
             Write-Host "          > $($err.Extent.Text)"
         }
         Write-Host ''
     } else {
-        Write-Host "ok    $($file.Name)"
+        Write-Host "ok    $label"
     }
 }
 

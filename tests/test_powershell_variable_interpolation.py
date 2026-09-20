@@ -24,7 +24,11 @@ import unittest
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-PS1_FILES = sorted((REPO / "ops" / "home-server").glob("*.ps1"))
+# Recursive (conductor/t-185): lib/Restart-ComfySupervised.ps1 lives one level
+# below ops/home-server/ and needs this same "$var:" parse-error guard -- a
+# non-recursive glob would silently stop covering any .ps1 moved into a
+# subfolder.
+PS1_FILES = sorted((REPO / "ops" / "home-server").rglob("*.ps1"))
 
 # Scope modifiers and PowerShell drive qualifiers that legitimately precede a
 # colon in a variable reference.
@@ -64,12 +68,14 @@ class PowerShellInterpolationTests(unittest.TestCase):
 
     def test_restart_supervised_logging_stays_delimited(self):
         """Restart-Supervised may add logs, but `$name:` must never return."""
-        text = (REPO / "ops" / "home-server" / "healthcheck.ps1").read_text(
-            encoding="utf-8"
-        )
-        start = text.index("function Restart-Supervised($name) {")
-        end = text.index("function Invoke-PortReclaim($target, $expectedPid) {")
-        restart = text[start:end]
+        # conductor/t-185: Restart-Supervised now lives in the shared
+        # lib/Restart-ComfySupervised.ps1, dot-sourced by both healthcheck.ps1
+        # and restore-shares.ps1.
+        text = (
+            REPO / "ops" / "home-server" / "lib" / "Restart-ComfySupervised.ps1"
+        ).read_text(encoding="utf-8")
+        start = text.index("function Restart-Supervised($name, $port) {")
+        restart = text[start:]
         self.assertNotIn('"$name:', restart)
         self.assertIn('"${name}:', restart)
 
