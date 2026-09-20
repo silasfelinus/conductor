@@ -1,0 +1,44 @@
+name: Art Archive Production Import
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'ops/art-archive-import-requests/**'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Run mode'
+        required: true
+        default: dry-run
+        type: choice
+        options:
+          - dry-run
+          - import
+
+permissions:
+  contents: read
+
+concurrency:
+  group: art-archive-production-import
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      KR_API_BASE: https://kindrobots.org
+      KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Art Archive reconciliation
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${{ github.event_name }}" == "push" || "${{ inputs.mode }}" == "import" ]]; then
+            python3 scripts/run_art_archive_production_import.py
+          else
+            python3 scripts/run_art_archive_production_import.py --dry-run-only
+          fi
