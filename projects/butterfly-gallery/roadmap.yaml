@@ -1250,7 +1250,14 @@ tasks:
       band in a 1400+ deep backlog, not stuck/wedged -- distinct from the conductor/t-165 and
       t-167 relay-wedge incidents. No action needed beyond continued waiting; not yet
       actionable per STEP 1, no pass/retry consumed.
-    updated: '2026-09-20T10:58:31Z'
+
+      last checked 2026-09-20T11:54:23Z: jobs 28739-28745 still PENDING (GET
+      /api/art/queue/:id, admin token, all 7). Render box is back UP (check_render_box.py:
+      Comfy heartbeat healthy, 2 renders completed in the last 6h) -- the conductor/t-165
+      relay-wedge condition previously blocking this has cleared, but these 7 priority-0 jobs
+      simply have not reached the front of the queue yet. Not yet actionable per STEP 1;
+      leaving status: ready, no pass/retry consumed.
+    updated: '2026-09-20T11:54:24Z'
 
   - id: t-034
     milestone: m4
