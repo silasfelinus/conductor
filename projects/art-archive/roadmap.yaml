@@ -1230,3 +1230,76 @@ tasks:
     claimed_by: claude-scheduled-20260919T173500Z-art-archive-t039
     claimed_at: '2026-09-19T17:32:56Z'
     implementation_pr: 'silasfelinus/kind_robots#2890'
+
+  - id: t-040
+    milestone: m5
+    title: "Give the admin archive page Dry Run and Import controls"
+    status: review
+    owner: worker
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-024
+      - t-032
+    note: >-
+      Filed 2026-09-20 from Silas's question "where are we on the adult private
+      import project?". The endpoints shipped without a caller: t-024 added
+      POST /api/admin/art-archive/import and t-032 added POST
+      /api/admin/art-archive/dry-run, and t-039 gave both verify coverage, but
+      nothing in stores/ or pages/ ever called either one. The only way to
+      ingest the production archive was a shell on the container with
+      PRIVATE_PATH set -- which is exactly what blocked t-019 from finishing its
+      own job and left production at 0 ArchiveEntry rows.
+
+      Adds runDryRun()/runImport() to stores/artArchiveStore.ts and an
+      "Ingest from the media server" panel to pages/admin/art-archive.vue: Dry
+      Run reports scanned/new/changed/moved/copied/unchanged/missing counts,
+      cache hits, scan issues, per-confidence Resource match tiers, and the
+      unresolved-model count; Import stays disabled until a dry run has
+      reported, then takes an explicit confirmation, and afterwards shows
+      created/reused images and collections plus any per-file failures.
+      Contract pinned by utils/scripts/verifyArtArchiveIngestionControls.mjs
+      (registered as test:art-archive-ingestion-controls and added to
+      contract-tests.yml), which asserts the store owns both fetches, the page
+      makes no direct API call, and the write endpoint is never one click away.
+    updated: '2026-09-20T00:00:00Z'
+
+  - id: t-041
+    milestone: m5
+    title: "Run the first real production import of the private archive and record the result"
+    status: needs-human
+    owner: worker
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    depends_on:
+      - t-040
+    note: >-
+      The step the whole project was for, and the one nobody filed. t-019's
+      title reads like this task but its implementation built the --dry-run
+      mode and the privacy audit instead; its own note says running against the
+      real /app/private mount needed shell access the agent did not have, and it
+      was closed anyway. t-020 then confirmed from the live site that production
+      held 0 ArchiveEntry rows, and kind_robots#2885 recorded explicitly that no
+      production import had been run. Nothing since has changed that, so 36 of
+      38 tasks are done and none of the files under
+      /mnt/user/pc/kindrobots/private have entered the database.
+
+      FOR SILAS: with t-040 merged, this needs no shell. On kindrobots.org go to
+      /admin/art-archive and press Dry Run. Read the report: filesScanned, the
+      new/changed/moved/copied/unchanged/missing plan, scan issues, how many
+      files carry Resource match evidence, and the unresolved-model count.
+      Unresolved checkpoints and LoRAs are expected and do not block -- they are
+      preserved as evidence and collected by t-021's backlog. If the counts look
+      right, press Import and confirm. Every row is written isPublic=false and
+      isMature=true; the import is idempotent, so a second run after adding
+      missing Resources is safe.
+
+      TO CLOSE: paste the dry-run and import numbers into this note and set
+      approved_by_human: true and status: done. Then re-open t-020's visual
+      acceptance against the populated grid at 390/768/1280px -- its own note
+      flags that it could only exercise the empty state. t-033 (archive preset
+      ArtJobs hardcoding engine 'A1111' against the COMFY-only direction) is a
+      real bug but does not block this: scanning, importing, rating, collecting,
+      moving, and Resource matching are all independent of regeneration.
+    updated: '2026-09-20T00:00:00Z'
