@@ -1217,7 +1217,18 @@ tasks:
       confirmed PENDING at 2026-09-19T12:40:58Z, roughly 17h with zero movement at the
       deliberate priority-0 band). Not yet actionable per STEP 1; leaving status: ready, no
       pass/retry consumed.
-    updated: '2026-09-20T05:55:24Z'
+
+      last checked 2026-09-20T06:59Z: jobs 28739,28740,28741,28742,28743,28744,28745 still
+      PENDING (GET /api/art/queue/:id, admin token, all 7; unchanged since 2026-09-19T12:40Z,
+      ~18h with zero movement). check_render_box.py now confirms root cause directly: render
+      box DOWN -- Comfy heartbeat last seen 409 minutes ago (2026-09-20T00:09:43Z), kr-relay
+      not reporting. /api/art/queue/stats shows a stale RUNNING claim (ArtJob 28763, claimedBy
+      'Silas-PC', claimed 2026-09-20T00:08:15Z) that never completed, and latestDoneAt stalled
+      at 2026-09-19T23:44:16Z -- consistent with the box going down right around that stale
+      claim. This is the same recurring relay-wedge class tracked at conductor/t-165 and t-167
+      (hard needs-human), not a new independent defect. Not yet actionable per STEP 1; leaving
+      status: ready, no pass/retry consumed.
+    updated: '2026-09-20T06:59:42Z'
 
   - id: t-034
     milestone: m4
