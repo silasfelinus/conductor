@@ -15621,3 +15621,16 @@ records:
     edited file's original formatting via `git show HEAD:<file>` before trusting --write's output,
     and reverted/reapplied surgically where it over-reformatted -- worth doing this check by
     default on any repo where prettier compliance isn't already a green baseline."
+- date: 2026-09-20
+  project: interface-vision
+  task: t-137
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A per-bucket ratchet that compares only aggregate COUNT (not membership) lets a same-bucket
+    substitution slip through silently; when entries are stable identifiers with no natural churn (bare
+    file paths, unlike ESLint's line:column), add an explicit membership check alongside the count check
+    rather than assuming count-only is sufficient everywhere the shared ratchetBaseline.ts pattern is
+    reused.
