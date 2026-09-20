@@ -725,7 +725,7 @@ tasks:
 - id: t-029
   milestone: m4
   title: Fishing rewards, treasures, and a shop worth spending them in
-  status: claimed
+  status: review
   gate_human: false
   owner: worker
   stakes: reversible
@@ -750,9 +750,30 @@ tasks:
     worth, whether gear is permanent) are cheap to change on paper and expensive to change in a
     save format. Cthulhuquarium's data/economy.yaml + simulate_economy.py pattern -- tunable
     constants plus a simulation proving the curve -- is the house precedent and worth copying here.
-  updated: '2026-09-20T17:58:04Z'
+
+    Implemented and opened kind_robots#2934: treasure drop (rarity-scaled odds/coin range,
+    rolled after all existing rng draws in resolveFishingCatch so it never perturbs an
+    existing seed's fish/size/quality outcome), a GEAR_CATALOG (permanent band-width/sweep-
+    speed upgrades snapshotted onto FishingEncounter from save.flags at buildEncounter time,
+    so the visual timing bar and game-logic resolution never diverge), and a KINGDOM_CATALOG
+    (spends coins to move the real kingdomHealth sliders directly, per Silas's own note --
+    no parallel currency). Both purchase paths spend through the existing closed Effect
+    reducer (applyEffects.ts) -- counters for coins, flags for owned gear, sliders for
+    kingdom investment -- no new save-mutation path. New Shop UI (ruler-hooked-shop.vue)
+    wired into ruler-hooked-game.vue behind a coin-balance button, same modal pattern as
+    existing dialogs. Deliberately deferred: a 'second chance' gear effect (would touch the
+    fight state machine, not just the timing-bar profile) -- left for a follow-up rather
+    than implemented speculatively. Verified: all 5 ruler-hooked selftests pass (new
+    economy.selftest.ts covers treasure determinism/rarity scaling, gear-bonus summation,
+    and purchase-via-applyEffect), vue-tsc clean, eslint clean, kr-class-coverage clean
+    (fixed one undefined class reference), layout-contract clean, prettier-ratchet clean
+    (new files formatted; pre-existing edited files left at prior formatting per the
+    ratchet's forward-only contract). Not verified: live browser/visual check of the Shop
+    modal (no PR-preview environment).
+  updated: '2026-09-20T18:19:32Z'
   claimed_by: claude-scheduled-20260920-rh-t029
   claimed_at: '2026-09-20T17:58:04Z'
+  implementation_pr: 'silasfelinus/kind_robots#2934'
 - id: t-030
   milestone: m4
   title: Make the kingdom visible and its decisions image-led
