@@ -449,42 +449,27 @@ function Invoke-OrphanSweep($target, $expectedPid) {
 }
 
 # ---------------------------------------------------------------------------
-# Restart via pm2, then MAKE SURE the old engine actually died.
+# Serialized ComfyUI restart
 #
-# 2026-09-08: `pm2 pid comfyui` reported 8980, a process that no longer existed,
-# while THREE real ComfyUI engines ran as children of the pm2 daemon. Every
-# `pm2 restart` therefore signalled a corpse, killed nothing, and spawned one
-# more copy. Four watchdog restarts across one night stacked engines onto a 12GB
-# card; the survivor held port 8188 and the comfyui.db lock, so each new copy
-# spent ~45 seconds loading 60 custom nodes only to exit on 'Port 8188 is
-# already in use'. That is the ~60-90 second restart cycle in the log.
+# PM2's Windows kill path is not a safe handoff boundary for this engine.
+# Several incidents have shown `pm2 restart comfyui` returning after its kill
+# timed out while the old Python process was still alive, then immediately
+# spawning a replacement. The two engines then compete for port 8188,
+# comfyui.db, and the same GPU.
 #
-# kill_timeout is 15s in ecosystem.config.js. A ComfyUI blocked in CUDA init or
-# on an SMB read against the model share outlives that, and pm2's Windows kill
-# then gives up quietly and starts the new copy anyway - same outcome, orphan
-# either way. Reporting it is not enough: nothing else on this box reaps them.
+# The old watchdog mitigated that by reaping the survivor eight seconds AFTER
+# the replacement had launched. That shortened the collision but still made an
+# overlap part of the recovery algorithm.
 #
-# So: snapshot the engines before the restart, and afterwards force-kill any
-# that survived and are not the pid pm2 now reports.
+# For ComfyUI, stop PM2 first, reap only processes positively identified as this
+# engine, verify the listener is gone, and only then start the replacement.
+# Non-Comfy PM2 apps keep the ordinary restart path.
 function Get-ComfyEnginePids {
     @(Get-CimInstance -ClassName Win32_Process -Filter "Name='python.exe'" -ErrorAction SilentlyContinue |
         Where-Object { [string]$_.CommandLine -match 'main\.py' } |
         Select-Object -ExpandProperty ProcessId)
 }
 
-# Restart ComfyUI without ever launching the replacement on top of the old
-# engine. pm2 restart is unsafe as the first operation on this Windows host:
-# pm2 can time out killing a Python process that is blocked in CUDA or an SMB
-# read and still launch its replacement. For several incidents that created two
-# ComfyUI engines at once, with both competing for port 8188, comfyui.db and the
-# same GPU. The old implementation tried to reap the survivor eight seconds
-# AFTER starting the replacement, which reduced the duration of the overlap but
-# guaranteed that an overlap still happened.
-#
-# Stop first, then verify the engine and its listener are gone, force-reaping
-# only processes that still look like this ComfyUI, and only then let pm2 start
-# the replacement. A restart deliberately interrupts any in-flight render
-# already;
 function Restart-Supervised($name) {
     if ($name -ne 'comfyui') {
         & pm2 restart $name | Out-Null
@@ -503,10 +488,9 @@ function Restart-Supervised($name) {
         return
     }
 
-    # pm2 may return from stop after its Windows kill timeout while the Python
-    # process is still alive. With the pm2 app now deliberately stopped, every
-    # surviving ComfyUI process is unsupervised and can be reaped before a new
-    # one exists.
+    # pm2 may return from stop after its Windows kill timeout while Python is
+    # still alive. With the app deliberately stopped, a surviving ComfyUI is
+    # unsupervised and can be reaped before any replacement exists.
     foreach ($oldPid in @(Get-ComfyEnginePids)) {
         $still = Get-CimInstance -ClassName Win32_Process -Filter "ProcessId = $oldPid" -ErrorAction SilentlyContinue
         if (-not $still) { continue }
@@ -520,32 +504,29 @@ function Restart-Supervised($name) {
         }
     }
 
-    # The port is the final authority. An engine can escape the process snapshot
-    # during a race, but it cannot bind 8188 invisibly. If a ComfyUI still owns
-    # the listener, reap it while pm2 is stopped. If some unrelated process owns
-    # the port, leave it alone and refuse the restart instead of manufacturing a
-    # predictable crash loop.
+    # The listening port is the final authority. A process can escape the
+    # snapshot during a race, but it cannot bind 8188 invisibly.
     $ownerPid = Get-PortListenerPid $port
     if ($ownerPid) {
         $owner = Get-CimInstance -ClassName Win32_Process -Filter "ProcessId = $ownerPid" -ErrorAction SilentlyContinue
         if (Test-IsComfyEngine $owner $port) {
-            Write-Log "${name}: safe restart - port $port is still held by old ComfyUI ownerPid $ownerPid; force-killing it before replacement launch"
+            Write-Log "${name}: safe restart - port $port is still held by old ComfyUI pid $ownerPid; force-killing it before replacement launch"
             try {
                 Stop-Process -Id $ownerPid -Force -ErrorAction Stop
             } catch {
                 Write-Log "${name}: could not kill old port owner pid $ownerPid ($($_.Exception.Message))"
             }
         } else {
-            Write-Log "${name}: REFUSIND safe restart - port $port is held by unrelated pid $ownerPid; starting ComfyUI would only crash-loop"
+            Write-Log "${name}: REFUSING safe restart - port $port is held by unrelated pid $ownerPid; starting ComfyUI would only crash-loop"
             return
         }
     }
 
-    # Give Windows a bounded moment to release the listening socket. Do not
-    # start the replacement until the port is actually free.
+    # Give Windows a bounded moment to release the listener. Never launch the
+    # replacement while the port is still occupied.
     $portReleased = $false
     for ($i = 0; $i -lt 10; $i++) {
-        if (-not (Get-PortListenerPid $port) {
+        if (-not (Get-PortListenerPid $port)) {
             $portReleased = $true
             break
         }
@@ -554,11 +535,30 @@ function Restart-Supervised($name) {
     if (-not $portReleased) {
         $stuckPid = Get-PortListenerPid $port
         $ownerText = if ($stuckPid) { " by pid $stuckPid" } else { "" }
-        Write-Log "${name}: REFUSIND safe restart - port $port is still occupied$ownerText after cleanup"
+        Write-Log "${name}: REFUSING safe restart - port $port is still occupied$ownerText after cleanup"
         return
     }
 
-    Write-Log "${name}: safe restart - old engine gone and port $portÉìÍÑÉÑ¥¹ÉÁ±µ¹Ð(Á´ÈÉÍÑÉÐ¹µð=ÕÐµ9Õ±°(¥ 1MQa%Q=µ¹À¤ì(]É¥Ñµ1½í¹µôèÉÁ±µ¹ÐÍÑÉÐ¥±¡Á´Èá¥Ð1MQa%Q=¤(ÉÑÕÉ¸(ô((Á´ÈÉ½ÉÌÑ¡¹ÜÁ¥½É½µåU$¥ÌÉä¸Q¡¥Ì¥Ì¥¹Ñ¥Ñä(ÙÉ¥¥Ñ¥½¸½¹±äìÑ¡¹½Éµ°ÍÑÉÑÕÀµÉ±½¥½Ý¹ÌÉ¥¹ÍÌ¸(MÑÉÐµM±ÀµM½¹Ìà(¹ÝA¥ôÀ(m¥¹ÑtèéQÉåAÉÍ  Á´ÈÁ¥¹µ¤¹QÉ¥´ ¤°mÉt¹ÝA¥¤ð=ÕÐµ9Õ±°(¥ ¹ÝA¥¤ì(]É¥Ñµ1½í¹µôèÍÉÍÑÉÐ±Õ¹¡ÍÕÁÉÙ¥ÍÉÁ±µ¹ÐÁ¥¹ÝA¥(ô±Íì(]É¥Ñµ1½í¹µôèÁ´È¥¹½ÐÉÁ½ÉÐÉÁ±µ¹ÐÁ¥ÑÈÍÉÍÑÉÐ(ô)ô(function Invoke-PortReclaim($target, $expectedPid) {
+    Write-Log "${name}: safe restart - old engine gone and port $port free; starting replacement"
+    & pm2 restart $name | Out-Null
+    if ($LASTEXITCODE -ne 0) {
+        Write-Log "${name}: replacement start failed (pm2 exit $LASTEXITCODE)"
+        return
+    }
+
+    # PM2 records the new pid before ComfyUI is ready. This is identity
+    # verification only; the normal startup-grace logic owns readiness.
+    Start-Sleep -Seconds 8
+    $newPid = 0
+    [int]::TryParse("$(& pm2 pid $name)".Trim(), [ref]$newPid) | Out-Null
+    if ($newPid) {
+        Write-Log "${name}: safe restart launched supervised replacement pid $newPid"
+    } else {
+        Write-Log "${name}: pm2 did not report a replacement pid after safe restart"
+    }
+}
+
+function Invoke-PortReclaim($target, $expectedPid) {
     if (-not $reclaimEnabled) {
         Write-Log "$($target.Name): port reclaim is disabled (COMFY_PORT_RECLAIM=0) - leaving the squatter alone"
         return $false
