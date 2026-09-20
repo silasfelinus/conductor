@@ -148,7 +148,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 50
   stakes: reversible
   note: |-
@@ -200,11 +200,27 @@ tasks:
     established recurring-task convention. Kaizen for next cycle: sweep storybook-
     table.vue/storybook-ending.vue for the same 'server owns the numbers' pattern violation
     -- this cycle only found the one instance.
-  updated: '2026-09-20T02:58:29Z'
-  owner: worker
+
+    Cycle 76: audited storybook-table.vue and storybook-ending.vue per last cycle's kaizen
+    (both clean, no server-owns-the-numbers violation). Found the same class of bug one
+    level up: reset() and openStory() in storybookRunStore.ts never cleared canEndOnDemand,
+    so a finished run that had earned early resolution left the flag true, and a freshly-
+    opened run (created status: ACTIVE immediately) would read readyToResolve from the run
+    it replaced until its own first turn payload arrived -- 'see your ending' could show on
+    turn one of a brand-new story. Fixed both clear sites and extended
+    verifyStorybookRunStore.mjs with two checks pinning them (confirmed via git-stash round
+    trip: fail pre-fix, pass post-fix). vue-tsc, eslint, prettier, test:storybook-run-store,
+    test:storybook-taskmaster-safety all clean. Merged kind_robots#2913, all checks green,
+    mergeable_state clean. Re-arming to ready per established recurring-task convention.
+    Kaizen for next cycle: audit storybook-storymaker.vue's other leaveRun() call site (the
+    abandon path) for the same class of stale-flag issue -- it already routes through
+    reset() so is likely fine, but worth confirming no other run-scoped ref bypasses
+    reset()/openStory() entirely.
+  updated: '2026-09-20T03:09:38Z'
+  owner: null
   claimed_by: claude-scheduled-20260920T025828Z-sb-t010
   claimed_at: '2026-09-20T02:58:29Z'
-  implementation_pr: 'silasfelinus/kind_robots#2906'
+  implementation_pr: 'silasfelinus/kind_robots#2913'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
