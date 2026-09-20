@@ -472,46 +472,93 @@ function Get-ComfyEnginePids {
         Select-Object -ExpandProperty ProcessId)
 }
 
+# Restart ComfyUI without ever launching the replacement on top of the old
+# engine. pm2 restart is unsafe as the first operation on this Windows host:
+# pm2 can time out killing a Python process that is blocked in CUDA or an SMB
+# read and still launch its replacement. For several incidents that created two
+# ComfyUI engines at once, with both competing for port 8188, comfyui.db and the
+# same GPU. The old implementation tried to reap the survivor eight seconds
+# AFTER starting the replacement, which reduced the duration of the overlap but
+# guaranteed that an overlap still happened.
+#
+# Stop first, then verify the engine and its listener are gone, force-reaping
+# only processes that still look like this ComfyUI, and only then let pm2 start
+# the replacement. A restart deliberately interrupts any in-flight render
+# already;
 function Restart-Supervised($name) {
-    $before = @()
-    if ($name -eq 'comfyui') { $before = Get-ComfyEnginePids }
-
-    & pm2 restart $name | Out-Null
-    if ($name -ne 'comfyui') { return }
-
-    # pm2 reports 'online' well before the engine is up; 8s is only long enough
-    # for the new pid to be recorded, which is all we need to spare it.
-    Start-Sleep -Seconds 8
-    $newPid = 0
-    [int]::TryParse("$(& pm2 pid $name)".Trim(), [ref]$newPid) | Out-Null
-
-    # Never sweep blind. If pm2 cannot tell us which pid is now ITS engine, the
-    # restart itself probably failed - and killing every surviving engine would
-    # leave the box with none at all, which is strictly worse than an orphan.
-    if (-not $newPid) {
-        Write-Log "${name}: pm2 did not report a pid after the restart - skipping the orphan sweep rather than killing blind"
+    if ($name -ne 'comfyui') {
+        & pm2 restart $name | Out-Null
         return
     }
 
-    foreach ($oldPid in $before) {
-        if ($newPid -and ([int]$oldPid -eq $newPid)) { continue }
+    $target = $targets |
+        Where-Object { $_.Name -eq $name } |
+        Select-Object -First 1
+    $port = if ($target -and $target.Port) { [int]$target.Port } else { 8188 }
 
-        # Re-read the process rather than trusting the snapshot: Windows recycles
-        # pids, and we must never kill whatever inherited the number.
+    Write-Log "${name}: safe restart - stopping pm2 before reaping the old engine"
+    & pm2 stop $name | Out-Null
+    if ($LASTEXITCODE -ne 0) {
+        Write-Log "${name}: pm2 stop failed (exit $LASTEXITCODE) - REFUSING to start a replacement on top of an engine pm2 may still own"
+        return
+    }
+
+    # pm2 may return from stop after its Windows kill timeout while the Python
+    # process is still alive. With the pm2 app now deliberately stopped, every
+    # surviving ComfyUI process is unsupervised and can be reaped before a new
+    # one exists.
+    foreach ($oldPid in @(Get-ComfyEnginePids)) {
         $still = Get-CimInstance -ClassName Win32_Process -Filter "ProcessId = $oldPid" -ErrorAction SilentlyContinue
         if (-not $still) { continue }
-        if ([string]$still.CommandLine -notmatch 'main\.py') { continue }
+        if (-not (Test-IsComfyEngine $still $port)) { continue }
 
-        Write-Log "${name}: pm2 restart left engine pid $oldPid alive (pm2 now reports $newPid) - force-killing the orphan"
+        Write-Log "${name}: safe restart - force-killing surviving old engine pid $oldPid before replacement launch"
         try {
             Stop-Process -Id $oldPid -Force -ErrorAction Stop
         } catch {
-            Write-Log "${name}: could not kill orphaned pid $oldPid ($($_.Exception.Message))"
+            Write-Log "${name}: could not kill surviving old engine pid $oldPid ($($_.Exception.Message))"
         }
     }
-}
 
-function Invoke-PortReclaim($target, $expectedPid) {
+    # The port is the final authority. An engine can escape the process snapshot
+    # during a race, but it cannot bind 8188 invisibly. If a ComfyUI still owns
+    # the listener, reap it while pm2 is stopped. If some unrelated process owns
+    # the port, leave it alone and refuse the restart instead of manufacturing a
+    # predictable crash loop.
+    $ownerPid = Get-PortListenerPid $port
+    if ($ownerPid) {
+        $owner = Get-CimInstance -ClassName Win32_Process -Filter "ProcessId = $ownerPid" -ErrorAction SilentlyContinue
+        if (Test-IsComfyEngine $owner $port) {
+            Write-Log "${name}: safe restart - port $port is still held by old ComfyUI ownerPid $ownerPid; force-killing it before replacement launch"
+            try {
+                Stop-Process -Id $ownerPid -Force -ErrorAction Stop
+            } catch {
+                Write-Log "${name}: could not kill old port owner pid $ownerPid ($($_.Exception.Message))"
+            }
+        } else {
+            Write-Log "${name}: REFUSIND safe restart - port $port is held by unrelated pid $ownerPid; starting ComfyUI would only crash-loop"
+            return
+        }
+    }
+
+    # Give Windows a bounded moment to release the listening socket. Do not
+    # start the replacement until the port is actually free.
+    $portReleased = $false
+    for ($i = 0; $i -lt 10; $i++) {
+        if (-not (Get-PortListenerPid $port) {
+            $portReleased = $true
+            break
+        }
+        Start-Sleep -Seconds 1
+    }
+    if (-not $portReleased) {
+        $stuckPid = Get-PortListenerPid $port
+        $ownerText = if ($stuckPid) { " by pid $stuckPid" } else { "" }
+        Write-Log "${name}: REFUSIND safe restart - port $port is still occupied$ownerText after cleanup"
+        return
+    }
+
+    Write-Log "${name}: safe restart - old engine gone and port $portÉìÍÑÉÑ¥¹ÉÁ±µ¹Ð(Á´ÈÉÍÑÉÐ¹µð=ÕÐµ9Õ±°(¥ 1MQa%Q=µ¹À¤ì(]É¥Ñµ1½í¹µôèÉÁ±µ¹ÐÍÑÉÐ¥±¡Á´Èá¥Ð1MQa%Q=¤(ÉÑÕÉ¸(ô((Á´ÈÉ½ÉÌÑ¡¹ÜÁ¥½É½µåU$¥ÌÉä¸Q¡¥Ì¥Ì¥¹Ñ¥Ñä(ÙÉ¥¥Ñ¥½¸½¹±äìÑ¡¹½Éµ°ÍÑÉÑÕÀµÉ±½¥½Ý¹ÌÉ¥¹ÍÌ¸(MÑÉÐµM±ÀµM½¹Ìà(¹ÝA¥ôÀ(m¥¹ÑtèéQÉåAÉÍ  Á´ÈÁ¥¹µ¤¹QÉ¥´ ¤°mÉt¹ÝA¥¤ð=ÕÐµ9Õ±°(¥ ¹ÝA¥¤ì(]É¥Ñµ1½í¹µôèÍÉÍÑÉÐ±Õ¹¡ÍÕÁÉÙ¥ÍÉÁ±µ¹ÐÁ¥¹ÝA¥(ô±Íì(]É¥Ñµ1½í¹µôèÁ´È¥¹½ÐÉÁ½ÉÐÉÁ±µ¹ÐÁ¥ÑÈÍÉÍÑÉÐ(ô)ô(function Invoke-PortReclaim($target, $expectedPid) {
     if (-not $reclaimEnabled) {
         Write-Log "$($target.Name): port reclaim is disabled (COMFY_PORT_RECLAIM=0) - leaving the squatter alone"
         return $false
