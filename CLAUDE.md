@@ -70,6 +70,20 @@ At the start of every session, before responding to any task, run a conductor sw
      `python scripts/archive_done_task_notes.py --all`, which moves done-task notes into
      `projects/<slug>/HISTORY.md` verified byte-for-byte under AGENTS.md's archival carve-out. No
      network/token needed.
+   - `python scripts/check_facet_prompt_subjects.py` — asks the one question
+     `server/utils/artPromptContract.ts` structurally cannot: not whether a live Facet prompt
+     breaks a rule, but whether it says anything to draw. The negation-repair pass closed with a
+     clean CLIP-node audit — 0 violations across 4,442 prompts — while rendering a plush blob for
+     "Octopus", a frog for "Axolotl" and walls of garbled lettering for the ALIGNMENT cards
+     (Silas, 2026-09-20: *"The prompts make no sense and the images reflect that"*). 149 prompts
+     were the Facet's description pasted whole with its own title nowhere in them, which no
+     pattern in a contract can detect, because it is a property of what the prompt LACKS. Flags
+     NO SUBJECT (a producer-generated prompt that never names its Facet), APP WRAPPER (product
+     and builder labels Krea paints as card text), and CARD COPY (description pasted verbatim —
+     a smell, reported but never blocking). Hand-authored concrete scenes that deliberately skip
+     the title are correct and are never flagged. Advisory; exit 1 is a prompt to go look at the
+     cards, and the answer is still a contact sheet, never the audit. Needs `KR_API_TOKEN`; exits
+     2 (unresolved, not clean) without it.
    - `python scripts/check_priority_queue_starvation.py` — `projects/priority.yaml` is the
      deterministic worker pickup order, but nothing else reports how deep a session had to walk
      it before finding a `status: ready` task (conductor/t-149, filed 2026-09-11: the first six

@@ -174,6 +174,56 @@
 >    text was gone, and the marker negation planted in the request had gone
 >    with it. Only one of those two was supposed to disappear.
 
+> 8. **A prompt that breaks no rule can still say nothing to draw.** Added
+>    2026-09-20, hours after rule 7, and it is rule 5 with the last word taken
+>    off. The negation-repair pass finished with a live audit reporting **0
+>    violations across 4,442 prompts** — measured in the CLIP node, per rule 7,
+>    so the measurement was sound. The pictures were garbage. Silas: *"what the
+>    hell is with the facets that have recently been generated? Octopus,
+>    ocelot, axolotl? The prompts make no sense and the images reflect that"*
+>    and, on the alignment cards, *"coming up with plain images and text, which
+>    is a real no no."*
+>
+>    149 Facet prompts were the Facet's **description** pasted whole — the card
+>    copy, which is written as a joke — plus a generic taxonomy clause, with
+>    the Facet's own **title nowhere in them**. Facet 290 "Octopus" read
+>    *"Three hearts, nine brains, infinite arms. Has been something else so
+>    long they forgot which one they started as."* and rendered a plush blob
+>    with three hearts stuck to it. 285 "Axolotl" rendered a frog. 335
+>    "Ocelot" rendered a housecat. The 17 ALIGNMENT cards rendered walls of
+>    garbled lettering, because a paragraph of aphorism handed to a
+>    text-specialist lineage is a request for text.
+>
+>    Every one of those passed `artPromptContract.ts` cleanly. It has to: the
+>    contract catches negations, conditionals, jargon, format nouns and app
+>    wrappers — things a prompt *contains*. Whether the prompt names its
+>    subject is a property of what it *lacks*, and no pattern finds that.
+>    **A green contract means the last bug is gone. It never means the prompt
+>    is good.** `scripts/check_facet_prompt_subjects.py` now asks the only
+>    question the contract structurally cannot, and the answer is still a
+>    contact sheet.
+>
+>    Underneath it, rule 4's own warning fired again from the other side.
+>    `generate_facet_art_v4.ts` returns an unrecognized stored prompt
+>    **verbatim**, so a producer clause missing from its signature list freezes
+>    that cohort forever. Two escaped: a creature clause someone had reworded
+>    as an instruction (97 Facets), and — this is the part worth remembering —
+>    **147 Facets that our own repair de-registered.** The jargon this contract
+>    bans sits INSIDE two registered v4 tails, so stripping it truncated them,
+>    and the text-exclusion replacement got appended after them; an
+>    `endsWith()` match then failed from both ends. A repair that edits a
+>    producer's boilerplate can silently orphan the cohort that boilerplate
+>    identified. kind-robots#2937 matches by containment now, and
+>    `check_facet_prompt_subjects.py` keeps the two clause lists in step.
+>
+>    The recovery is the other half of the lesson: **`preserveOriginal: true`
+>    meant nothing was lost.** Every clobbered Facet still had its curated
+>    image in entity art history, and `POST
+>    /api/art/entities/facet/:id/promote` put 40 of them back. Before
+>    promoting anything, pull both versions into one contact sheet and look —
+>    old-vs-new is the only way to know which direction the repair actually
+>    went.
+
 > The daily-dream pipeline enforces the first two automatically in
 > `scripts/dream_art_prompts.py`. Hand-written prompts in this file should follow
 > the same shape. The inclusive-casting direction below still applies — but only
