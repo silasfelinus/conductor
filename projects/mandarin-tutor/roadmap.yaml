@@ -667,7 +667,7 @@ tasks:
   - id: t-028
     milestone: m5
     title: "Guided course: an introduction, then one teaching card at a time"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -720,3 +720,27 @@ tasks:
       on 2026-09-19 and predates this task. Silas should accept the guided course as part of
       the same visual pass rather than accepting the old front door and then being handed a
       different one.
+
+      DONE 2026-09-20. The guided course is now the front door at /play/mandarin; the
+      workspace moved to /play/mandarin/browse unchanged, with a link back, and the course's
+      start screen also points at t-024's /play/mandarin/sound-families.
+      utils/mandarinCourse.ts (pure) turns a lesson into a sequence -- five beats with empty
+      ones dropped, so a word the source asserts nothing structural about, or with no sound
+      family in the catalog, loses those screens rather than showing them blank. teachability
+      is deliberately NOT the pieces test; having components is. MANDARIN_COURSE_INTRO is the
+      orientation: characters are not pictures (氵+青 -> 清), a tone is a letter of the syllable
+      (ma x4), learn the family not the character (青 -> 请/清/情/晴), and an explicit statement
+      that nothing here is timed, streaked or notified -- a self-test asserts that last line
+      keeps saying it. An already-learned word collapses to a single recall beat, so the
+      course becomes a review session. Progress counts WORDS not steps, so the bar does not
+      lurch on longer runs. The recall beat advances by rating only. Lessons derive client-
+      side via the new store.lessonFor() so no round trip is paid per screen, and
+      store.rateCard() splits rating from cursor-advancing so the course cannot have the deck
+      moved underneath it. Session length is 8 words. Verified: all 51 CI checks green
+      including TypeScript, Contract verifiers, layout-contract and Build production image;
+      new test:mandarin-course wired into contract-tests.yml; no regressions in
+      t-022/t-023/t-026. The ESLint ratchet caught a real unused import mid-review and it was
+      fixed before merge. NOT verified: no browser ran this -- how the course feels at
+      phone/tablet/desktop widths is t-027's gate, which now covers this front door too.
+    updated: '2026-09-20T10:45:52Z'
+    implementation_pr: 'silasfelinus/kind_robots#2922'
