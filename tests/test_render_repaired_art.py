@@ -117,3 +117,46 @@ def test_the_queue_read_pages_past_the_two_hundred_row_cap(monkeypatch):
     seen = rra.already_queued()
     assert len(seen) == 2 * rra.QUEUE_PAGE
     assert ("facet", 1000) in seen
+
+
+def test_the_done_walk_stops_below_the_manifest_date(monkeypatch):
+    """14,979 DONE jobs is 75 large reads for rows that cannot match.
+
+    No negation-repair job predates the pass the manifest records, so the walk
+    gets a floor. The whole page has to be below it -- one stale row in an
+    unordered page must not end the read early.
+    """
+    cutoff = rra.queue_cutoff({"generated": "2026-09-20"})
+    assert cutoff == "2026-09-17"
+
+    fresh = [
+        {
+            "createdAt": "2026-09-19T23:00:00.000Z",
+            "payload": {
+                "save": {"designer": "negation-repair"},
+                "entityArt": {"entityType": "bot", "entityId": n},
+            },
+        }
+        for n in range(rra.QUEUE_PAGE)
+    ]
+    stale = [{"createdAt": "2026-08-01T00:00:00.000Z", "payload": {}}] * rra.QUEUE_PAGE
+    mixed = [dict(stale[0]) for _ in range(rra.QUEUE_PAGE - 1)] + [fresh[0]]
+    reads = []
+
+    def fake(method, url, body=None, timeout=180):
+        if "status=PENDING" not in url:
+            return 200, {"data": {"jobs": []}}
+        skip = int(url.split("skip=")[1].split("&")[0])
+        reads.append(skip)
+        return 200, {"data": {"jobs": [fresh, mixed, stale, fresh][skip // rra.QUEUE_PAGE]}}
+
+    monkeypatch.setattr(rra, "http_json", fake)
+    seen = rra.already_queued(cutoff)
+    # Page 1 is mixed, so the walk continues; page 2 is wholly stale and ends it.
+    assert reads == [0, rra.QUEUE_PAGE, 2 * rra.QUEUE_PAGE]
+    assert ("bot", 0) in seen
+
+
+def test_an_unreadable_manifest_date_falls_back_to_the_full_walk():
+    assert rra.queue_cutoff({}) == ""
+    assert rra.queue_cutoff({"generated": "not a date"}) == ""

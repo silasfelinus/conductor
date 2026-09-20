@@ -49,6 +49,7 @@ import sys
 import urllib.error
 import urllib.request
 from collections import Counter
+from datetime import date, timedelta
 from pathlib import Path
 from typing import Any, Optional
 
@@ -85,6 +86,14 @@ DEFAULT_PRIMARY_FIELD = "imagePath"
 # silently answers with the first 200 of 1,132 and looks complete.
 QUEUE_PAGE = 200
 
+# Paging all 14,979 DONE jobs to find repair jobs among them costs 75 large
+# reads and several minutes, for rows that cannot possibly match: no
+# negation-repair job predates the pass the manifest records. The cutoff gives
+# the read a floor. It is only applied when a WHOLE page is older than it, so
+# an unordered endpoint degrades to the full walk rather than stopping early on
+# one stale row.
+QUEUE_LOOKBACK_DAYS = 3
+
 
 def http_json(method: str, url: str, body: Any = None, timeout: int = 180):
     """Returns (status, payload). A 4xx comes back as a value, not an exception.
@@ -115,7 +124,16 @@ def http_json(method: str, url: str, body: Any = None, timeout: int = 180):
         return 0, {"message": str(error)}
 
 
-def already_queued() -> set[tuple[str, int]]:
+def queue_cutoff(manifest: dict[str, Any]) -> str:
+    """The earliest createdAt a negation-repair job could have."""
+    try:
+        day = date.fromisoformat(str(manifest.get("generated") or ""))
+    except ValueError:
+        return ""
+    return (day - timedelta(days=QUEUE_LOOKBACK_DAYS)).isoformat()
+
+
+def already_queued(cutoff: str = "") -> set[tuple[str, int]]:
     """(entityType, entityId) pairs that already hold a negation-repair job.
 
     Two things made the first version of this return an empty set and say
@@ -152,6 +170,8 @@ def already_queued() -> set[tuple[str, int]]:
                 if kind and isinstance(row_id, int):
                     seen.add((kind, row_id))
             if len(jobs) < QUEUE_PAGE:
+                break
+            if cutoff and all((job.get("createdAt") or "") < cutoff for job in jobs):
                 break
             skip += QUEUE_PAGE
     return seen
@@ -233,7 +253,7 @@ def main(argv=None) -> int:
     print(f"Selected: {len(targets)}  {Counter(k for k, _ in targets).most_common()}")
 
     if args.skip_queued and args.apply:
-        seen = already_queued()
+        seen = already_queued(queue_cutoff(manifest))
         before = len(targets)
         targets = [t for t in targets if t not in seen]
         if before != len(targets):
