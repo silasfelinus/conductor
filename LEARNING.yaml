@@ -15634,3 +15634,19 @@ records:
     file paths, unlike ESLint's line:column), add an explicit membership check alongside the count check
     rather than assuming count-only is sufficient everywhere the shared ratchetBaseline.ts pattern is
     reused.
+- date: 2026-09-20
+  project: ruler-hooked
+  task: t-029
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A game's existing closed Effect grammar (counters/sliders/flags, additive and reducer-applied)
+    is usually wide enough to carry a brand-new subsystem (here: a spendable currency, gear ownership,
+    and kingdom investment) with zero save-shape changes -- check for that reuse before reaching for a
+    new save field or a bespoke mutation path. Also: when a value must feed a purely-derived function
+    that's called from multiple sites (game logic AND the Vue display, here timingProfileFor), snapshot
+    it onto the state object at construction time rather than threading it as a new parameter everywhere
+    -- every existing call site picks it up for free and the visual/logic paths can't diverge.

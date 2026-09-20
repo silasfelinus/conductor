@@ -725,7 +725,7 @@ tasks:
 - id: t-029
   milestone: m4
   title: Fishing rewards, treasures, and a shop worth spending them in
-  status: review
+  status: done
   gate_human: false
   owner: worker
   stakes: reversible
@@ -770,7 +770,9 @@ tasks:
     (new files formatted; pre-existing edited files left at prior formatting per the
     ratchet's forward-only contract). Not verified: live browser/visual check of the Shop
     modal (no PR-preview environment).
-  updated: '2026-09-20T18:19:32Z'
+
+    Merged: silasfelinus/kind_robots#2934 (squash b3d48ba).
+  updated: '2026-09-20T18:25:13Z'
   claimed_by: claude-scheduled-20260920-rh-t029
   claimed_at: '2026-09-20T17:58:04Z'
   implementation_pr: 'silasfelinus/kind_robots#2934'
@@ -912,3 +914,28 @@ tasks:
     beyond just a narrower/faster band. This is explicitly a follow-up polish layer, not a
     blocker on t-032's re-audit gate.
   updated: '2026-09-17T00:00:00Z'
+- id: t-034
+  milestone: m4
+  title: Simulate the ruler-hooked treasure/gear/shop economy before tuning it further
+  status: ready
+  gate_human: false
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Kaizen from t-029 (silasfelinus/kind_robots#2934), which shipped the first pass of
+    treasure drops, a gear catalog, and a kingdom shop -- all with by-eye costs/odds, not
+    simulated the way Cthulhuquarium's `data/economy.yaml` + `simulate_economy.py` pattern
+    was (this task's own note pointed at that precedent).
+
+    DO: author `projects/ruler-hooked/data/economy.yaml` mirroring the treasure-drop table,
+    GEAR_CATALOG, and KINGDOM_CATALOG already live in kind_robots'
+    `utils/rulerHooked/economy.ts` (read from there as the source of current numbers, not
+    reinvented), plus a `simulate_economy.py` that plays out N turns of fishing against
+    those numbers and reports the coin-accrual curve and how many turns each gear/kingdom
+    item takes to afford. Once Silas has actually played the shop (see t-029's own
+    "Flags for Reviewer": costs/odds are a first-pass guess), use his read on pacing to
+    decide whether the simulated curve needs retuning, then push any resulting numeric
+    changes back into `economy.ts` -- the YAML is the design/simulation layer, `economy.ts`
+    remains the live source of truth the game actually reads.
+  updated: '2026-09-20T18:30:00Z'
