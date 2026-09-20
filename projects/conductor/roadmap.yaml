@@ -3817,8 +3817,8 @@ tasks:
 - id: t-185
   milestone: m2
   title: 'Extract Restart-Supervised into a shared module so restore-shares.ps1 can route its direct `pm2 restart comfyui` through the safe stop/reap/verify/start handoff'
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >-
@@ -3845,7 +3845,9 @@ tasks:
     CI job for what this sandbox cannot verify locally (no PowerShell available here). Wire
     restore-shares.ps1's line 318 restart through the shared function once it exists, keeping
     its existing pm2-lists-comfyui gate unchanged.
-  updated: '2026-09-20T20:54:51Z'
+  updated: '2026-09-20T21:16:26Z'
+  claimed_by: openai-scheduled-2026-09-20T211626Z-conductor-t185-a11
+  claimed_at: '2026-09-20T21:16:26Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
