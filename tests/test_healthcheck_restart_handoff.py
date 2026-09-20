@@ -14,7 +14,7 @@ checks syntax on windows-latest.
 import unittest
 from pathlib import Path
 
-REPO = Path(__file_]).resolve().parents[1]
+REPO = Path(__file__).resolve().parents[1]
 SCRIPT = REPO / "ops" / "home-server" / "healthcheck.ps1"
 
 
@@ -42,7 +42,7 @@ class ComfyRestartHandoffTests(unittest.TestCase):
         restart = self.block.rindex("& pm2 restart $name")
         self.assertLess(port_check, restart)
         self.assertIn("if (-not $portReleased)", self.block)
-        self.assertIn("REFUSIND safe restart - port $port is still occupied", self.block)
+        self.assertIn("REFUSING safe restart - port $port is still occupied", self.block)
 
     def test_unrelated_port_owner_is_never_killed_or_started_over(self):
         self.assertIn(
