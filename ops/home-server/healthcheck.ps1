@@ -80,9 +80,15 @@ $orphanSweepEnabled = $true
 if ($env:COMFY_ORPHAN_SWEEP -eq '0') { $orphanSweepEnabled = $false }
 
 # How long a second engine must have been alive before the sweep will end it.
-# A pm2 restart legitimately has two processes for a moment; five minutes is far
-# past any handover and still inside one tick of noticing.
-$orphanGraceMinutes = 5
+# A pm2 restart legitimately has two processes for a moment, so this must stay
+# comfortably ABOVE a full boot or the sweep starts killing engines that are
+# merely slow to come up.
+#
+# 2026-09-20: a boot on this box measured 234 seconds - 12:36:03 to the bind
+# attempt at 12:39:57 - of which 201.7s was one custom node (was-node-suite).
+# Five minutes left only 66 seconds of margin over that. Eight gives ~4 minutes
+# and is still inside two ticks of noticing.
+$orphanGraceMinutes = 8
 if ($env:COMFY_ORPHAN_GRACE_MINUTES) {
     [int]::TryParse($env:COMFY_ORPHAN_GRACE_MINUTES, [ref]$orphanGraceMinutes) | Out-Null
 }
@@ -394,34 +400,57 @@ function Test-IsComfyEngine($cim, $port) {
 # own actions can be said to have fixed it.
 #
 # Root cause, as far as it has been established: pm2 on Windows cannot reliably
-# kill ComfyUI inside kill_timeout (15s in ecosystem.config.js). A process
-# blocked in CUDA init or on an SMB read outlives that, pm2 gives up SILENTLY,
-# and starts the replacement anyway. That is pm2 behaviour we do not control.
-# What we can do is notice the survivor within one tick and end it.
+# kill ComfyUI inside kill_timeout. A process blocked in CUDA init, on an SMB
+# read, or part-way through a slow custom-node import outlives it, pm2 gives up
+# SILENTLY, and starts the replacement anyway. That is pm2 behaviour we do not
+# control. What we can do is notice the survivor within one tick and end it.
 #
-# Deliberately narrow. An engine is only swept when ALL of these hold:
-#   * pm2 says this app is 'online' AND reports a pid that is itself a live
-#     ComfyUI - if pm2's own bookkeeping is broken, this stays out of the way
-#     and Invoke-PortReclaim owns the crash-loop case instead
-#   * the candidate is a different pid, and looks like our engine
-#   * it has been alive longer than $orphanGraceMinutes, so a legitimate
-#     handover mid-restart is never mistaken for an orphan
+# An engine is swept when ALL of these hold:
+#   * it is not the pid pm2 is supervising, and it looks like our engine
+#   * it has been alive longer than $orphanGraceMinutes, so a boot in progress
+#     is never mistaken for an orphan (that grace MUST stay above a full boot)
+#   * the app is not deliberately 'stopped' - checked at the call site
+#
+# It deliberately does NOT require pm2 to be healthy. It used to: the old
+# contract read "pm2 says this app is 'online' AND reports a pid that is itself
+# a live ComfyUI", deferring the rest to Invoke-PortReclaim. 2026-09-20 showed
+# that backwards. pm2 reports pid 0 throughout 'waiting restart', which is most
+# of a crash loop, so the sweep stood down in exactly the state that stacks
+# engines - and Invoke-PortReclaim could not cover for it, because it needs a
+# live port owner and finds none while every copy is mid-boot. See README.md,
+# "the SLOW crash loop that pm2 never gives up on".
 function Invoke-OrphanSweep($target, $expectedPid) {
     if (-not $orphanSweepEnabled) { return }
-    if (-not $expectedPid) { return }
 
-    $keeper = Get-CimInstance -ClassName Win32_Process -Filter "ProcessId = $expectedPid" -ErrorAction SilentlyContinue
-    if (-not $keeper -or -not (Test-IsComfyEngine $keeper $target.Port)) {
-        # pm2's recorded pid is not a live engine. That is the crash-loop shape
-        # (2026-09-08: `pm2 pid comfyui` said 8980, a process that no longer
-        # existed, while three real engines ran). Killing on a broken reference
-        # is how you end up with none at all - leave it to the port reclaim.
-        return
+    # The pid to PRESERVE. 0 means pm2 is supervising no live engine at all, in
+    # which case every engine running is unsupervised and all of them are fair
+    # game (subject to the grace period below).
+    $keeperPid = 0
+    if ($expectedPid) {
+        $keeper = Get-CimInstance -ClassName Win32_Process -Filter "ProcessId = $expectedPid" -ErrorAction SilentlyContinue
+        if ($keeper -and (Test-IsComfyEngine $keeper $target.Port)) {
+            $keeperPid = [int]$expectedPid
+        }
     }
 
-    foreach ($cim in @(Get-CimInstance -ClassName Win32_Process -Filter "Name='python.exe'" -ErrorAction SilentlyContinue)) {
-        if ([int]$cim.ProcessId -eq [int]$expectedPid) { continue }
-        if (-not (Test-IsComfyEngine $cim $target.Port)) { continue }
+    # The 2026-09-08 fear - that killing against a broken pm2 reference leaves
+    # the box with NO engine - is answered by the grace period below, not by
+    # standing down: a boot in progress is never swept, so the worst case is
+    # one restart_delay with nothing running. See the header for why standing
+    # down was the more expensive mistake.
+    $candidates = @(Get-CimInstance -ClassName Win32_Process -Filter "Name='python.exe'" -ErrorAction SilentlyContinue |
+        Where-Object {
+            (-not ($keeperPid -and [int]$_.ProcessId -eq $keeperPid)) -and (Test-IsComfyEngine $_ $target.Port)
+        })
+    if ($candidates.Count -eq 0) { return }
+
+    # Only worth a line when there is actually something to judge - otherwise
+    # this prints on every tick of a box with no engine running at all.
+    if ($keeperPid -eq 0) {
+        Write-Log "$($target.Name): pm2 is supervising no live engine, and $($candidates.Count) engine(s) are running - any past the $orphanGraceMinutes-min grace is a previous generation"
+    }
+
+    foreach ($cim in $candidates) {
 
         $ageMinutes = $null
         if ($cim.CreationDate) {
@@ -432,13 +461,14 @@ function Invoke-OrphanSweep($target, $expectedPid) {
             continue
         }
 
-        Write-Log "$($target.Name): ORPHAN SWEEP - killing engine pid $($cim.ProcessId), which pm2 does not supervise (pm2's pid is $expectedPid)"
+        $keeperNote = if ($keeperPid) { "pm2's pid is $keeperPid" } else { 'pm2 is supervising no engine' }
+        Write-Log "$($target.Name): ORPHAN SWEEP - killing engine pid $($cim.ProcessId), which pm2 does not supervise ($keeperNote)"
         try {
             Stop-Process -Id $cim.ProcessId -Force -ErrorAction Stop
             $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
             if (Test-AlertDue $alertState "orphan-sweep-$($target.Name)") {
                 Send-Alert "SWEPT: an unsupervised $($target.Name) engine was running on $hostName" `
-                    "pid $($cim.ProcessId) was a second $($target.Name) engine that pm2 was not supervising (pm2's own pid is $expectedPid). It has been killed at $stamp.`n`nCommand line: $($cim.CommandLine)`n`nA second engine shares the GPU, and if it holds port 8188 or the comfyui.db lock, pm2's copy cannot start at all. These are left behind when a pm2 stop/restart/delete fails to kill the process inside kill_timeout - pm2 gives up silently and starts the replacement anyway. No action needed unless this recurs often, which would mean something is creating them faster than one per tick."
+                    "pid $($cim.ProcessId) was a second $($target.Name) engine that pm2 was not supervising ($keeperNote). It has been killed at $stamp.`n`nCommand line: $($cim.CommandLine)`n`nA second engine shares the GPU, and if it holds port 8188 or the comfyui.db lock, pm2's copy cannot start at all. These are left behind when a pm2 stop/restart/delete fails to kill the process inside kill_timeout - pm2 gives up silently and starts the replacement anyway. No action needed unless this recurs often, which would mean something is creating them faster than one per tick."
                 $alertState["orphan-sweep-$($target.Name)"] = $stamp
                 Save-AlertState $alertState
             }
@@ -1094,6 +1124,28 @@ foreach ($t in $targets) {
         }
     }
 
+    # --- Orphan sweep, BEFORE every branch that continues -------------------
+    # 2026-09-20: this call used to sit at the bottom of this loop, below the
+    # crash-loop, errored, stopped and 'not online' branches - all of which
+    # `continue`. So it ran only when pm2 read 'online' AND the restart counter
+    # was calm: never in the states that actually PRODUCE orphans. From that
+    # day's healthcheck.log:
+    #
+    #   12:26:03  comfyui: CRASH LOOPING - restart count climbed 82->86
+    #   12:31:06  comfyui: ORPHAN SWEEP - killing engine pid 20492
+    #   12:36:03  comfyui: pm2 status is 'waiting restart' - in transition
+    #
+    # The 12:31 sweep ran by luck - pm2 happened to read 'online' with a calm
+    # counter for that one tick. 12:26 and 12:36 skipped it, and the loop ran
+    # on for another 49 minutes and 9 more doomed 4-minute boots.
+    #
+    # 'stopped' stays exempt: a deliberate `pm2 stop` (to free the GPU) must
+    # never be fought, and an engine a human starts by hand afterwards is not
+    # an orphan.
+    if ($status.status -ne 'stopped') {
+        Invoke-OrphanSweep $t $pm2Pid
+    }
+
     if ($restartDelta -ge $crashLoopRestarts) {
         Write-Log "$($t.Name): CRASH LOOPING - pm2 restart count climbed $prevRestarts->$restartCount since the last tick"
         $portNote = Get-PortOwnerReport $t.Port $pm2Pid
@@ -1151,9 +1203,9 @@ foreach ($t in $targets) {
         continue
     }
 
-    # Before probing: is anything ELSE running as this engine? A second copy
-    # answers /system_stats perfectly well, so the probe below cannot see it.
-    Invoke-OrphanSweep $t $pm2Pid
+    # The orphan sweep used to live here. It now runs above, before the
+    # status branches, because a second copy answers /system_stats perfectly
+    # well AND because the states that create orphans never reach this line.
 
     $ok = $false
     try {
