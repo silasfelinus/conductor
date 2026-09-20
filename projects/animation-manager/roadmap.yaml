@@ -136,10 +136,14 @@ tasks:
 
       Added today's connector-native dated pitch artifact for Moiré Weave Engine. It uses emergent interference from two near-frequency gratings rather than particles, explicit band geometry, thin-film color simulation, or mirrored symmetry. The artifact is intentionally not yet claimed as consolidated into canonical PITCHES.yaml; that requires scripts/consume_animation_pitches.py --live on a shell-capable path after merge.
       RECONCILED 2026-09-04 (conductor scheduled Agent run, shell-capable session): task had sat at status: review since 2026-08-30T15:32:35Z (5 days) with no open PR referencing it -- exactly the connector-only-Worker gap the note above flagged, now closed by a shell-capable session. Ran `scripts/consume_animation_pitches.py` (dry run first): staged `2026-08-30T15-31-30Z-moire-weave-engine.yaml` at priority 28, `check_animation_novelty.py --strict` reported no collisions across all 28 pitches. Ran `--live`: moire-weave-engine consolidated into PITCHES.yaml, orphaned artifact file removed. moire-weave-engine is now visible to check_animation_novelty.py and t-007's "highest-priority unbuilt pitch" pick. Re-arming to ready per the recurring-task convention; clearing the stale claim fields.
-    status: claimed
+
+      Pitch merged (kind_robots... wait conductor PR #4862, squash 03fe5a0c): Crease Fold
+      Atlas consolidated into PITCHES.yaml at priority 29. Re-arming per recurring-task
+      convention.
+    status: ready
     claimed_by: claude-scheduled-2026-09-20-t006-pitch
     claimed_at: '2026-09-20T16:56:26Z'
-    updated: '2026-09-20T16:56:26Z'
+    updated: '2026-09-20T17:00:21Z'
 
   - id: t-007
     milestone: m5
