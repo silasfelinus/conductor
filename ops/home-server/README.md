@@ -1164,6 +1164,56 @@ forty seconds, and what pushed the crash past `min_uptime` in the first place.
 Not yet measured; `python -X importtime` against the module is the next
 instrument. Fixing it shrinks every failure window here by roughly 6x.
 
+### Why no fixed timeout works here (2026-09-20)
+
+Silas, moving the models off the network drive: *"we should be concentrating our
+work on making sure that long delays don't retrigger the early fire bugs."*
+Right question. Boot time on this box is not a constant — 167s on 09-19, 234s on
+09-20, ~75s during some stretches of the same afternoon — and **every guard
+whose threshold was pinned to it failed in one of two directions.**
+
+**Early fire.** Past `$engineStartupGraceMinutes`, a failed probe reads as
+"hung" and the engine is restarted. Restarting a *booting* engine does not
+rescue it, it starts the boot over, and the loop sustains itself. That is the
+09-19 incident verbatim: the watchdog was repaired after 11 days dead and
+immediately drove ComfyUI into a crash loop. The fix then was a 5-minute grace
+— which on 09-20 left 66 seconds of margin.
+
+**Never fires.** `$crashLoopRestarts` needs 3 restarts *inside* one 5-minute
+tick. At a 234-second boot pm2 manages about 1.25. The per-tick gate is
+**inversely sensitive to boot time**: the slower the boot, the less likely it is
+to notice the loop. It fired on 09-20 only because that stretch cycled at ~75s.
+
+**And the guard meant to cover that had never worked.**
+`check-pm2-restart-trend.ps1` read `$process.restart_time`, but
+`pm2-jlist-snapshot.js` nests it under `pm2_env`. PowerShell returns `$null` for
+a missing property rather than raising, `[int]$null` is `0`, so every app scored
+zero restarts forever — never reaching the absolute threshold (25) or the trend
+delta (10). On a box sitting at 89 restarts it read 0. `tests/test_pm2_restart_trend.py`
+asserted the broken path was *present*, pinning it in place; that test now
+derives the expected path from the projection's own output instead.
+
+**The rule.** Where a threshold would have to track boot time, measure the thing
+directly instead:
+
+| Guard | Was | Now |
+|---|---|---|
+| Startup grace | age < 5 min | age < 5 min, **or** CPU/IO counters advanced since the last tick, up to a 20-min ceiling |
+| Crash loop | 3 restarts in one tick | that, **or** any restart on 3 consecutive ticks |
+| Restart trend | read a field that does not exist | reads `pm2_env.restart_time` |
+
+`Get-EngineProgress` fingerprints `KernelModeTime + UserModeTime` **and** the
+three `Win32_Process` I/O counters. CPU alone is not enough: an engine walking
+an SMB directory burns almost no CPU while its I/O counters climb steadily, and
+that is exactly the case that has to be told apart from a wedge. The comparison
+requires the same pid — a changed pid means a restart, which says nothing about
+progress. The ceiling bounds it so a livelock cannot buy grace indefinitely.
+
+Moving the models local makes boots fast again, which makes these settings
+safe-but-sluggish rather than dangerous — an orphan lingers a few minutes longer
+than it needs to. The dangerous direction is the slow one, and that is the
+direction a degrading share pushes.
+
 ### Triage: "something keeps resetting" — heartbeats arriving minutes apart (2026-09-06, open)
 
 **Symptom.** ComfyUI, the relay, or "something" appears to restart on its own.
