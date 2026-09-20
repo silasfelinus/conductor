@@ -1189,7 +1189,21 @@ tasks:
       last checked 2026-09-19: jobs 28739-28745 still PENDING (all 7 confirmed via GET
       /api/art/queue/:id); task not yet actionable per this task's own STEP 1 instruction, no
       pass/retry consumed.
-    updated: '2026-09-19T22:32:53Z'
+
+      last checked 2026-09-20: STEP 1 verification blocked -- GET /api/art/queue/:id for jobs
+      28739-28745 now returns 401 "Invalid or expired token" using the current KR_API_TOKEN,
+      reproducible across x-api-key/Authorization-Bearer/x-admin-token header shapes and on
+      retry. This is new: the same token succeeded for non-admin Kind Robots reads this
+      session (check_project_scaffold_drift.py, check_live_facet_coverage.py) but every admin-
+      gated call fails identically (fetch_todos.py also 401'd). Most likely explanation:
+      KR_API_TOKEN was rotated at the source (resolving the 2026-09-16 transcript-exposure
+      security flag) but the conductor secret was not updated to the new value. Not actionable
+      from this session -- no agent can read/set secrets. Leaving status: ready per this
+      task's own STEP 1 instruction; no pass/retry consumed (actionable-category blocker, not
+      quality/scope). See root TALKBACK.md for the full write-up and conductor/t-182 for the
+      tracking task (corrected from an earlier miscite of t-181, an unrelated pm2/PowerShell
+      task).
+    updated: '2026-09-20T00:36:20Z'
 
   - id: t-034
     milestone: m4
