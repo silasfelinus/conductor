@@ -3661,7 +3661,7 @@ tasks:
   stakes: reversible
   gate_human: false
   soft_gate: true
-  note: |
+  note: >-
     FOR SILAS: as of this session (2026-09-20), every admin-gated Kind Robots API call made
     with the conductor repo's current `KR_API_TOKEN` value returns 401 "Invalid or expired
     token." Confirmed reproducible on two independent endpoints and header shapes:
@@ -3692,7 +3692,14 @@ tasks:
     depends on it -- roughly 40 scripts reference `KR_API_TOKEN`), and directly,
     butterfly-gallery/t-033 (left at `status: ready`, its own STEP 1 check is blocked by this,
     no pass/retry consumed per AGENTS.md's Failure Triage -- actionable category).
-  updated: '2026-09-20T00:36:11Z'
+
+    Corroborated independently: conductor PR #4801 (merged directly by Silas, same day)
+    documents that during the 2026-09-19 --render pass, "KR_API_TOKEN expired partway
+    through the render half: 746 of 1,154 jobs reached the queue, 408 were refused with a
+    401." This confirms the token genuinely changed/expired on 2026-09-19 mid-run,
+    consistent with this task's rotation theory, and gives a concrete timestamp for when it
+    happened rather than just this session's downstream symptom.
+  updated: '2026-09-20T00:41:36Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
