@@ -3780,8 +3780,8 @@ tasks:
 - id: t-184
   milestone: m2
   title: 'Kaizen from PR #4869: make Restart-Supervised the single recovery handoff so stop/reap/verify/start never drifts across call sites'
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   implementation_pr: 'silasfelinus/conductor#4869'
@@ -3800,7 +3800,9 @@ tasks:
     restart`/`pm2 stop`+`pm2 start comfyui`-shaped call outside `Restart-Supervised` in
     ops/home-server/*.ps1, and either route it through `Restart-Supervised` or document why
     it's a deliberate exception. Small, reversible; no new behavior if none are found.
-  updated: '2026-09-20T20:05:00Z'
+  updated: '2026-09-20T20:54:51Z'
+  claimed_by: claude-scheduled-20260920T205451Z-t184
+  claimed_at: '2026-09-20T20:54:51Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
