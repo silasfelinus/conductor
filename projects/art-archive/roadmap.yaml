@@ -1234,7 +1234,7 @@ tasks:
   - id: t-040
     milestone: m5
     title: "Give the admin archive page Dry Run and Import controls"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1262,7 +1262,16 @@ tasks:
       (registered as test:art-archive-ingestion-controls and added to
       contract-tests.yml), which asserts the store owns both fetches, the page
       makes no direct API call, and the write endpoint is never one click away.
-    updated: '2026-09-20T00:00:00Z'
+
+      Merged kind_robots#2923. artArchiveStore gained runDryRun()/runImport();
+      pages/admin/art-archive.vue gained the 'Ingest from the media server' panel with a dry-
+      run-first, confirm-then-write Import. Contract pinned by
+      utils/scripts/verifyArtArchiveIngestionControls.mjs (test:art-archive-ingestion-
+      controls, wired into contract-tests.yml). Verified before push: new contract test,
+      eslint, vue-tsc --noEmit, test:layout-contract, test:disabled-affordances all clean.
+      t-041 is now unblocked and waiting on Silas.
+    updated: '2026-09-20T11:12:41Z'
+    implementation_pr: 'silasfelinus/kind_robots#2923'
 
   - id: t-041
     milestone: m5
