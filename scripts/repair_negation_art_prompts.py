@@ -165,6 +165,25 @@ JARGON_CLAUSE = re.compile(
     re.I,
 )
 
+# Contract rule 2, the half this script can repair mechanically. "2:3 portrait
+# card composition" is framing language to a person and a trading CARD to a
+# caption-conditioned model -- three rewards came back as literal cards with a
+# title bar and a rules box full of invented text. The geometry is the part
+# worth keeping, so the format noun is dropped and the shape stays.
+#
+# Deliberately ONLY this phrasing. The other format hits in the live catalog are
+# not mistakes: rewards 249 and 284 and scenarios 159 and 175 depict a wanted
+# poster because a wanted poster is what is in the picture, and six Resource
+# rows ("Movie Poster", "vintage comic book cover") are LoRA trigger text where
+# the format IS the concept being trained. Rewriting those would remove the
+# subject. A format noun is only a bug when it names the artefact the image is
+# printed ON rather than the thing the image is OF, and no regex can tell those
+# apart -- so this one is pinned to the phrasing with rendered evidence behind
+# it.
+CARD_COMPOSITION = re.compile(
+    r"\b(?:2:3\s+)?(?:vertical\s+)?(?:portrait\s+)?card composition\b", re.I
+)
+
 WRAPPER_CLAUSE = re.compile(
     r"(?:"
     r"Illustrate the Facet concept[^.]*\.?"
@@ -233,13 +252,20 @@ def tidy(text: str) -> str:
 
 
 def violations(prompt: str) -> list[str]:
-    return [name for name, pattern, _, _ in RULES if pattern.search(prompt or "")]
+    found = [name for name, pattern, _, _ in RULES if pattern.search(prompt or "")]
+    if CARD_COMPOSITION.search(prompt or ""):
+        found.append("format-vocabulary")
+    return found
 
 
 def repair(prompt: str) -> str:
     """Remove every offending clause, then restate the intent positively."""
     text = prompt or ""
     restore: list[str] = []
+
+    # A substitution, not a removal: the aspect ratio is real direction and only
+    # the word "card" is the bug.
+    text = CARD_COMPOSITION.sub("vertical 2:3 portrait composition", text)
 
     for _name, pattern, replacement, already in RULES:
         if not pattern.search(text):
