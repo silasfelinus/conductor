@@ -15588,3 +15588,18 @@ records:
     before wiring a new shared composable/store into an unfamiliar surface, grep for the repo's own
     architecture-contract script (verify-project-architecture.mjs / verify*Contract.ts naming
     pattern here) and run it locally first, not just the generic lint/type suite."
+- date: 2026-09-20
+  project: interface-vision
+  task: t-139
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Clean first-pass follow-on from t-138: mirroring an already-established, already-CI-verified
+    pattern (character-card.vue/reward-card.vue's pending-prop wiring) onto sibling components, and
+    running the specific architecture/contract scripts the prior cycle's failure had already named
+    (verify-project-architecture.mjs, verifyGalleryAdoption.ts, verifyNarrativeKit.ts) before pushing
+    rather than after, avoided repeating the same CI round-trip. Also correctly recognized when the
+    pattern did NOT apply (server-card.vue has no art plate) instead of forcing a fit -- worth noting
+    as a positive example of scope discipline for future 'do the same thing on N siblings' tasks."
