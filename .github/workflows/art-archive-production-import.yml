@@ -39,6 +39,11 @@ jobs:
         shell: bash
         run: |
           set -uo pipefail
+          # GitHub's bash wrapper enables errexit before this script starts. Disable it
+          # while the reconciliation command runs so a non-zero result can still be
+          # captured and persisted by the receipt step below. The final step turns that
+          # captured result back into a failing workflow after the receipt is recorded.
+          set +e
           log_path="${RUNNER_TEMP}/art-archive-import.log"
           if [[ "${{ github.event_name }}" == "push" || "${{ inputs.mode }}" == "import" ]]; then
             python3 scripts/run_art_archive_production_import.py 2>&1 | tee "${log_path}"
@@ -47,6 +52,7 @@ jobs:
             python3 scripts/run_art_archive_production_import.py --dry-run-only 2>&1 | tee "${log_path}"
             exit_code=${PIPESTATUS[0]}
           fi
+          set -e
           echo "log_path=${log_path}" >> "${GITHUB_OUTPUT}"
           echo "exit_code=${exit_code}" >> "${GITHUB_OUTPUT}"
 
