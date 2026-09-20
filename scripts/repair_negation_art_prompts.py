@@ -263,6 +263,43 @@ WRAPPER_CLAUSE = re.compile(
     re.I,
 )
 
+# Rule 1, the family the gate cannot see. ~103 dream and scenario prompts say
+# "any figures present are small and incidental, included only for scale". That
+# is a conditional -- Krea can no more evaluate "present" than it can evaluate
+# "no" -- but `CONDITIONAL_PATTERNS` in artPromptContract.ts anchors on a
+# LEADING when/if/unless, and this phrasing has no conditional word in front of
+# it. So it passed every check while telling the model to decide something.
+#
+# Substituted rather than deleted: the intent is real and worth keeping. A wide
+# landscape usually does want a couple of distant figures for scale. It just has
+# to be stated as a fact about the frame instead of a condition on one.
+SCALE_FIGURE_CLAUSE = re.compile(
+    r"[,;.]?\s*(?:and\s+)?(?:the\s+)?(?:setting|environment)\s+is\s+the\s+subject[;,]?\s*"
+    r"any figures?\s+present\s+(?:are|is)[^,.;]*"
+    r"(?:[,;]\s*included only for scale)?"
+    r"|[,;.]?\s*any figures?\s+present\s+(?:are|is)[^,.;]*"
+    r"(?:[,;]\s*included only for scale)?",
+    re.I,
+)
+SCALE_FIGURE_REPLACEMENT = (
+    "the landscape dominates the frame, a few distant figures near the horizon "
+    "giving it scale"
+)
+
+# Lore that arrived in the caption carrying its own conditional. The daily-dream
+# producer concatenates a location's description into the prompt, so a sentence
+# written for a reader -- "a migrating orchard settles only when the cassowary
+# flock chooses", "a vein of blue light running along the fracture only when
+# both halves touch" -- becomes art direction. Krea renders the words.
+#
+# Only the conditional JOINT is rewritten, not the clause around it: both halves
+# are real visual information and deleting either loses the picture. "X only
+# when Y" becomes "X as Y", which states one outcome and keeps both subjects.
+LORE_CONDITIONAL = re.compile(
+    r"\s+only\s+(?:when|if)\s+", re.I
+)
+LORE_CONDITIONAL_REPLACEMENT = " as "
+
 RULES: tuple[tuple[str, re.Pattern[str], Optional[str], re.Pattern[str]], ...] = (
     # (rule name, clause to remove, positive replacement to ensure, "already said it" test)
     (
@@ -334,6 +371,8 @@ def violations(prompt: str, kind: Optional[str] = None) -> list[str]:
         found.append("negated-parenthetical")
     if BRAND_STYLE_CLAUSE.search(prompt or ""):
         found.append("vague-brand-style")
+    if SCALE_FIGURE_CLAUSE.search(prompt or "") or LORE_CONDITIONAL.search(prompt or ""):
+        found.append("conditional-instruction")
     return found
 
 
@@ -348,6 +387,8 @@ def repair(prompt: str, kind: Optional[str] = None) -> str:
     # The card as an object, though, has no geometry worth keeping.
     text = TIER_CARD_CLAUSE.sub("", text)
     text = BRAND_STYLE_CLAUSE.sub(BRAND_STYLE_REPLACEMENT, text)
+    text = SCALE_FIGURE_CLAUSE.sub(", " + SCALE_FIGURE_REPLACEMENT, text)
+    text = LORE_CONDITIONAL.sub(LORE_CONDITIONAL_REPLACEMENT, text)
     if kind not in PROSE_EXEMPT_KINDS:
         text = strip_negated_parenthetical(text)
 
