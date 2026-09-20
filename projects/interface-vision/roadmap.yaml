@@ -1765,7 +1765,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -1784,11 +1784,15 @@ tasks:
     Bounded consistency survey slice: added a discovery-only codemod for the still-hand-rolled font-medium text-xs family. No runtime classes changed; the tool quantifies candidates before opening a shared primitive.
 
     Bounded consistency survey slice: added a discovery-only codemod for the still-hand-rolled font-medium text-xs family. No runtime classes changed; the tool quantifies candidates before opening a shared primitive.
-  updated: '2026-09-20T02:29:00Z'
-  implementation_pr: 'silasfelinus/kind_robots#2809'
+
+    Merged silasfelinus/kind_robots#2912 (medium-xs text family survey codemod, discovery-
+    only, no runtime changes) -- all 46 checks green, mergeable_state clean. Re-arming
+    recurring umbrella to ready for the next bounded slice.
+  updated: '2026-09-20T02:55:05Z'
+  implementation_pr: 'silasfelinus/kind_robots#2912'
   retry_context: ''
-  owner: worker
-  claimed_by: openai-scheduled-2026-09-20T021954Z-interface-vision-t104-a11
+  owner: null
+  claimed_by: null
   claimed_at: '2026-09-20T02:19:54Z'
 
 - id: t-123
