@@ -2259,7 +2259,7 @@ tasks:
 - id: t-137
   milestone: m5
   title: Ratchet Prettier formatting onto the front end instead of one repo-wide reformat
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -2291,11 +2291,16 @@ tasks:
     rather than changing the shared helper, since eslint's line:column entries would false-
     positive under exact-set comparison). No files reformatted -- this PR only adds the gate
     and baseline. Rearming to ready (recurring) for the next bounded reformat slice.
-  updated: '2026-09-20T15:52:13Z'
+
+    PR silasfelinus/kind_robots#2930 merged (squash 150274b): bounded reformat slice for the
+    types/ ratchet bucket (coloringBookPackage.ts, coloringBookStudio.ts, ruler-hooked.ts --
+    pure union-type line-wrapping, no behavior change). Baseline re-recorded: types/ bucket
+    3 -> 0, total 1097 -> 1094. Rearming to ready (recurring) for the next bounded slice.
+  updated: '2026-09-20T15:59:45Z'
   owner: worker
   claimed_by: claude-scheduled-2026-09-20T155213-t137-types
   claimed_at: '2026-09-20T15:52:13Z'
-  implementation_pr: 'silasfelinus/kind_robots#2929'
+  implementation_pr: 'silasfelinus/kind_robots#2930'
 - id: t-138
   milestone: m6
   title: Pending-art placeholder contract so queued art never reads as broken
