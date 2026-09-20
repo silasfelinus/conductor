@@ -1,4 +1,4 @@
-updated: "2026-09-04T21:29:34+00:00"
+updated: "2026-09-20T16:56:52+00:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -1360,3 +1360,57 @@ pitches:
       - pointer phase bending and click-triggered palette changes remain optional, rate-limited, and never block underlying page input
       - reduced-motion mode removes grating translation and rotation and avoids temporal shimmer while retaining a coherent static composition
       - active texture count, grating resolution, and per-frame work remain bounded regardless of viewport size or elapsed session time
+
+  - id: crease-fold-atlas
+    title: Crease Fold Atlas
+    status: pitched
+    priority: 29
+    surprise: >
+      A flat grid of paper panels hinges itself along scored crease lines into a recognizable
+      folded form -- a crane, a box, a star -- then patiently unfolds flat again and refolds
+      into a different shape, as if an invisible hand were working through a fixed set of
+      diagrams from a folding book.
+    passive_loop: >
+      A fixed panel mesh (a small set of rigid quadrilaterals sharing hinge edges) holds a
+      deterministic sequence of named fold states. Each hinge angle eases from its current
+      value toward the next state's target angle over a slow multi-second span using per-hinge
+      timing offsets, so creases do not all move in lockstep -- the sheet visibly ripples
+      closed rather than snapping. Once a target shape is reached it holds, lit as a settled
+      object, for a long pause before the sequence begins easing toward the next named shape
+      in a small fixed rotation.
+    optional_interaction: >
+      Pointer proximity to a hinge nudges that hinge's angle a few degrees off its current
+      resting value and lets it spring back, so the sheet feels physically present without
+      ever overriding the autonomous fold sequence. A click advances immediately to the next
+      fold target through the same eased transition used autonomously, rate-limited so rapid
+      clicks cannot skip more than one step per transition window.
+    technique: >
+      CSS 3D transforms on a small DOM/SVG panel mesh (each panel a transform-origin-pinned
+      element along its shared hinge edge), or an equivalent WebGL rigid-hinge mesh if panel
+      count grows. Fold state is a named array of per-hinge target angles; interpolation is a
+      per-hinge eased lerp keyed on a shared timestamp with a small deterministic phase offset
+      per hinge index, never a physics solver.
+    reduced_motion: >
+      Hold on one settled folded shape with no autonomous transitions; allow only an extremely
+      slow shading/light breathing cycle. Pointer hinge-nudge and click-advance are disabled
+      while reduced motion is active.
+    performance_risk: >
+      Naive per-frame recomputation of every panel's full 3D transform chain from the root can
+      get expensive as panel count grows since a hinge near the root moves every panel beyond
+      it. Cap panel count, precompute the static hinge topology once, and update only
+      accumulated transform matrices along the changed chain rather than the whole mesh every
+      frame.
+    novelty: >
+      No existing pitch performs piecewise-rigid hinge folding of a shared panel mesh between
+      named target shapes. Tapestry Loom advects thread across a woven surface, Marble Run
+      Contraption and Strandbeest Migration animate jointed mechanisms but not a flat sheet
+      folding closed on itself, and Paper Lantern Weather uses paper-craft silhouettes
+      drifting in a wind field rather than crease-hinge geometry. Kaleidoscope Bloom and Moire
+      Weave Engine both reorganize an existing image via rotation/reflection or interference,
+      never a mesh changing its own 3D folded topology over time.
+    acceptance:
+      - the panel mesh reaches each named fold target with no visible seam gap or panel interpenetration
+      - hinge easing uses per-hinge phase offsets so the fold visibly ripples rather than moving as one rigid block
+      - the sequence cycles through at least three distinct named shapes before repeating, holding each for a readable pause
+      - pointer hinge-nudge and click-advance never desynchronize the autonomous sequence's next target
+      - reduced-motion mode holds one settled folded shape with no hinge transitions and no shimmer
