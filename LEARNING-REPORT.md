@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-20T21:04:49Z
+Generated: 2026-09-20T21:09:01Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1087**
-- Outcomes: blocked: 18, cancelled: 2, done: 1067
+- Closed tasks recorded: **1088**
+- Outcomes: blocked: 18, cancelled: 2, done: 1068
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 39 | 100% |
-| conductor | 123 | 100% |
+| conductor | 124 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 51 | 98% |
 | davinci | 8 | 100% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1070 | 99% |
+| software | 1071 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-20 `conductor/t-184` — When a task's own scope note offers a binary choice ("route it through X, or document why it's a deliberate exception") and a real gap is found that isn't actually deliberate, a third outcome -- document the gap honestly as a known, tracked issue and file a properly- scoped follow-up task -- is often the right call, especially when the "correct" fix (here: extracting a function pinned by source-contract tests out of a production Windows watchdog script) can't be behaviorally verified in a sandbox with no PowerShell, only syntax-checked by CI after the fact.
 - 2026-09-20 `ruler-hooked/t-034` — When a "simulate the economy" task's live game has a skill-dependent success/failure step (here: the timing-bar minigame's LANDED/ESCAPED outcome) with no fixed probability anywhere in the data, don't invent a number to fill the gap -- define the simulation's unit of time around the step that IS fully data-driven (one resolved catch, not one cast attempt) and say so explicitly in the file. A `--check-drift` mode that regex-diffs a hand-synced data file against its live TypeScript source, self-tested by injecting a real mismatch and confirming it's caught, is worth adding whenever a design/simulation layer duplicates numbers a developer could otherwise edit in only one of the two places by mistake.
 - 2026-09-20 `ruler-hooked/t-029` — A game's existing closed Effect grammar (counters/sliders/flags, additive and reducer-applied) is usually wide enough to carry a brand-new subsystem (here: a spendable currency, gear ownership, and kingdom investment) with zero save-shape changes -- check for that reuse before reaching for a new save field or a bespoke mutation path. Also: when a value must feed a purely-derived function that's called from multiple sites (game logic AND the Vue display, here timingProfileFor), snapshot it onto the state object at construction time rather than threading it as a new parameter everywhere -- every existing call site picks it up for free and the visual/logic paths can't diverge.
 - 2026-09-20 `interface-vision/t-137` — A per-bucket ratchet that compares only aggregate COUNT (not membership) lets a same-bucket substitution slip through silently; when entries are stable identifiers with no natural churn (bare file paths, unlike ESLint's line:column), add an explicit membership check alongside the count check rather than assuming count-only is sufficient everywhere the shared ratchetBaseline.ts pattern is reused.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-20 `conductor/t-179` — A command-prohibition contract test that does a bare substring match ('pm2 restart' not in source.lower()) against a whole script file will keep tripping on harmless advisory prose that happens to contain both words contiguously (two separate Write-Warning messages did, in two separate retry passes) -- match actual command-invocation syntax instead of any co-occurrence of the words, or a trivial wording fix keeps re-triggering the same false positive at a different line.
 - 2026-09-20 `conductor/t-180` — First pass, small self-contained diff (one new .ps1, one .vbs wrapper, README, 8 source-contract tests). The suggested-shape note in the task itself (read LastTaskResult + log-write age, OR them together) mapped directly onto a testable design once mirrored against an existing sibling check's structure (check-pm2-restart-trend.ps1 from the same day's t-179) -- reusing a proven pattern (own state file, own cooldown, never restart) made verification-before-push fast even though the script itself can't run in this sandbox.
 - 2026-09-19 `kind-robots/t-113` — First pass, tiny scoped diff (+32/-0, one file, kind_robots#2903). Cross-repo pickup from a conductor session worked cleanly end-to-end: claim on conductor, implement+verify in the kind_robots checkout, review transition, merge, close. Verified the new expectOrder() assertion actually catches a regression (manually reordered the source, confirmed the failure message, reverted) rather than trusting that adding an assertion alone proves it works.
-- 2026-09-19 `conductor/t-178` — Closed as a duplicate of t-179: both tasks asked for the same pm2 restart_time trend-alerting fix, filed the same day from the same comfyui crash-loop incident chain. Two sessions independently filed kaizen/incident-response tasks for the same underlying gap without cross-checking existing ready tasks first -- worth a quick grep of the target project's roadmap for matching titles/notes before filing a new task from an incident, not just from PR history.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-20T21:04:49Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-20T21:09:01Z_
