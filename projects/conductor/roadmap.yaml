@@ -3784,7 +3784,7 @@ tasks:
   owner: worker
   passes: 0
   stakes: reversible
-  implementation_pr: 'silasfelinus/conductor#4869'
+  implementation_pr: 'silasfelinus/conductor#4876'
   note: >-
     Kaizen from PR #4869 (merged 2026-09-20), which serialized ComfyUI's watchdog restart
     (stop pm2 first, reap only positively-identified old engine pids, verify both the pid
@@ -3808,7 +3808,7 @@ tasks:
     sandbox to behaviorally verify a cross-file refactor of the production watchdog). Filed
     conductor/t-185 to do the extraction properly. All four healthcheck.ps1 call sites
     confirmed already routing through Restart-Supervised as expected.
-  updated: '2026-09-20T21:00:25Z'
+  updated: '2026-09-20T21:00:53Z'
   claimed_by: claude-scheduled-20260920T205451Z-t184
   claimed_at: '2026-09-20T20:54:51Z'
 
