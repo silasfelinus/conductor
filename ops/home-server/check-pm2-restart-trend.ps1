@@ -95,7 +95,7 @@ foreach ($process in $processes) {
             window_hours = $WindowHours
             reason = $reason
         }
-        Write-Warning "PM2 restart advisory: $name has $restarts total restarts ($delta since baseline)."
+        Write-Warning "Restart-trend advisory: $name has $restarts total restarts ($delta since baseline)."
         $entry.last_alert_restart_time = $restarts
     }
 
