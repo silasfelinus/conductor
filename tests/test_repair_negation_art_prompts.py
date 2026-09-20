@@ -101,3 +101,42 @@ def test_repair_never_leaves_punctuation_debris():
         assert not re.search(r",\s*,|\.\s*,|,\s*\.|\s,|\s\.", fixed), fixed
         assert not fixed.startswith((",", ".", ";"))
         assert fixed == fixed.strip()
+
+
+# Reward 2742 and 17 others. "2:3 portrait card composition" is framing language
+# to a person and a trading CARD to a caption-conditioned model.
+CARD_FRAMED = (
+    "Tide Telemetry, a hull's stress lines rendered as luminous starchart "
+    "constellations, 2:3 portrait card composition, museum-like object study"
+)
+
+# Reward 249. A wanted poster is what is IN the picture, not the artefact the
+# picture is printed on.
+WANTED_POSTER = (
+    "A wanted-poster-style emblem glowing with notoriety, gritty noir tones with "
+    "one hot accent, crisp bold linework, dangerous prestige, simple background."
+)
+
+# Resource 3461. LoRA trigger text, where the format IS the concept.
+LORA_TRIGGER = "Movie Poster page"
+
+
+def test_card_composition_keeps_the_geometry_and_drops_the_card():
+    assert "format-vocabulary" in rn.violations(CARD_FRAMED)
+    fixed = rn.repair(CARD_FRAMED)
+    assert "card composition" not in fixed.lower()
+    assert "vertical 2:3 portrait composition" in fixed
+    assert "luminous starchart constellations" in fixed
+    assert not rn.violations(fixed)
+
+
+def test_a_format_noun_that_is_the_subject_is_left_alone():
+    """A poster IN the frame is not a request to render a poster.
+
+    No regex separates "the artefact this image is printed on" from "the thing
+    this image is of", so the rule is pinned to the one phrasing with rendered
+    evidence behind it. Rewriting these would delete the subject.
+    """
+    for prompt in (WANTED_POSTER, LORA_TRIGGER):
+        assert not rn.violations(prompt)
+        assert rn.repair(prompt) == prompt
