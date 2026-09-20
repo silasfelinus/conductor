@@ -11430,6 +11430,7 @@ Claude-Session: https://claude.ai/code/session_0181bM37f5aQ5TKo2QWhXh48
 - Four separate small PRs (#4879 status-check, #4880 implementation, #4881 review, #4882 done+kaizen+learning) for what was really two units of work — could have combined #4881's review-status bookkeeping into the close-out that immediately followed it, since both landed in the same run with no real review gap between them. Minor CI/PR overhead, not a correctness issue.
 
 **Kaizen task:** conductor/t-186 — add a regression guard so no `ops/home-server/*.ps1` script can reintroduce a direct `pm2 restart/stop comfyui` call outside the shared lib, closing the class of gap t-184's manual audit had to find by hand.
+
 ---
 
 ## 2026-09-20 — The clean audit that was rendering garbage (Facet subject repair)
