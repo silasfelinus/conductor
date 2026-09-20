@@ -15578,13 +15578,13 @@ records:
   passes: 0
   outcome: done
   failure_category: null
-  lesson: A local eslint/prettier/vue-tsc-clean pass is not the same as a repo-architecture-clean
+  lesson: "A local eslint/prettier/vue-tsc-clean pass is not the same as a repo-architecture-clean
     pass -- the first CI push placed a new composable at root composables/ (forbidden by
     verify-project-architecture.mjs) and had a Facets surface reference the wrong art-request
     mechanism (caught by verifyFacetCatalogMaintenance.ts's ArtJob-vs-YAML assertion), neither of
     which vue-tsc/eslint/prettier would ever catch. Both were real, CI only found them because the
     coordinating session polled check runs directly rather than trusting the worker subagent's own
-    "verified" claim; fixed in one follow-up push and merged clean on the second CI run. Kaizen:
+    'verified' claim; fixed in one follow-up push and merged clean on the second CI run. Kaizen --
     before wiring a new shared composable/store into an unfamiliar surface, grep for the repo's own
     architecture-contract script (verify-project-architecture.mjs / verify*Contract.ts naming
-    pattern here) and run it locally first, not just the generic lint/type suite.
+    pattern here) and run it locally first, not just the generic lint/type suite."
