@@ -784,7 +784,7 @@ tasks:
 - id: t-031
   milestone: m4
   title: Grow the fish roster past the 15-species vertical slice
-  status: claimed
+  status: ready
   gate_human: false
   owner: worker
   stakes: reversible
@@ -808,9 +808,20 @@ tasks:
     Cthulhuquarium, and cthulhuquarium/t-065 delivered 119 fish plates. Some of the roster this task
     would commission may already be drawn, and the two games are supposed to share a bestiary --
     cthulhuquarium/t-022 is the open handshake task.
-  updated: '2026-09-20T13:03:13Z'
+
+    Shipped item (3) this cycle: silasfelinus/kind_robots#2927 replaces the Fishopedia
+    badge's raw '0/15 discovered' denominator with a discovered-only count label, so the
+    vertical-slice roster size no longer reads as an unfinished catalog. Verified: eslint,
+    prettier, full-project vue-tsc, test:layout-contract, and test:kr-class-coverage all
+    clean; no browser/visual check possible in this non-interactive session. Items (1)
+    decide the real catalog target and (2) expand the roster with art remain open -- (2) is
+    blocked on t-027's art dependency (t-019's species-design renders) and (1) is a product
+    decision for Silas, not something this slice should force. Re-arming to ready for the
+    remaining scope.
+  updated: '2026-09-20T13:04:05Z'
   claimed_by: claude-scheduled-20260920T-ruler-hooked-t031
   claimed_at: '2026-09-20T13:03:13Z'
+  implementation_pr: 'silasfelinus/kind_robots#2927'
 - id: t-032
   milestone: m4
   title: 'FOR SILAS: re-audit Ruler Hooked once the vertical slice is real'
