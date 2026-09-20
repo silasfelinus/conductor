@@ -3542,9 +3542,9 @@ tasks:
 - id: t-179
   milestone: m2
   title: 'Nothing watches pm2 restart_time as a TREND -- a count that climbs to 779 over weeks trips no alert, and reviving a watchdog onto an already-sick engine is how 2026-09-19 happened'
-  status: review
+  status: claimed
   owner: worker
-  passes: 0
+  passes: 2
   stakes: reversible
   note: >-
     healthcheck.ps1's CRASH LOOP branch alerts only when pm2's restart_time moves within a
@@ -3569,15 +3569,20 @@ tasks:
     the session sweep when a count exceeds an absolute threshold (say 50) or grows week over
     week. Advisory, never a gate. Related: check_engine_heartbeat.py already reads engine
     liveness from the CI side and could carry this.
-  updated: '2026-09-20T03:24:30Z'
-  claimed_by: openai-scheduled-2026-09-20T031957Z-conductor-t179-a11
-  claimed_at: '2026-09-20T03:19:57Z'
+
+    Reviewer 2026-09-20: CI red on PR #4813 (pytest failure + PR-handoff-template check
+    failure), both real bugs -- see retry_context and PR comment. Rolled back to ready for a
+    retry.
+  updated: '2026-09-20T06:01:16Z'
+  claimed_by: claude-scheduled-2026-09-20T0600Z-conductor-t179-pass3
+  claimed_at: '2026-09-20T06:01:16Z'
+  retry_context: 'pass 2 failed (CI, PR #4813, worker/conductor-t-179-openai-scheduled-2026-09-20T031957Z-conductor-t179-a11, head d8bd961): tests/test_pm2_restart_trend.py::test_restart_trend_check_is_advisory_only still fails -- the pass-1 fix reworded the unreadable-state comment but check-pm2-restart-trend.ps1 line 98 still emits Write-Warning "PM2 restart advisory: $name has $restarts total restarts ($delta since baseline)." which contains the literal substring "pm2 restart" once lowercased, tripping the same assertion at a different location. Reword the Write-Warning message so "pm2" and "restart" are never contiguous (e.g. drop "PM2" from the message text entirely, since the script and log context already identify it as a PM2 check -- "Restart-trend advisory: $name has..." has no pm2 restart substring). Run pytest tests/test_pm2_restart_trend.py locally against the exact file before repushing; grep -i "pm2 restart" ops/home-server/check-pm2-restart-trend.ps1 must return nothing. The "Validate Worker PR handoff" failure on this PR (job 106019883382) is stale -- it validated an earlier PR-body snapshot with h2 headings before the h3-heading fix landed; the current PR body already passes that check (job 106019955339) and needs no further change.'
 
 - id: t-180
   milestone: m2
   title: 'A scheduled task that fires and fails every 5 minutes is invisible: nothing reads LastTaskResult or the healthcheck log-write age'
-  status: ready
-  owner: null
+  status: done
+  owner: worker
   passes: 0
   stakes: reversible
   note: >-
@@ -3607,7 +3612,10 @@ tasks:
 
     Note the ordering trap: report freshness BEFORE content. A watchdog whose log is stale
     is not reporting good news, it is not reporting.
-  updated: '2026-09-19T00:00:00Z'
+  updated: '2026-09-20T05:10:32Z'
+  claimed_by: claude-worker-2026-09-20T0515Z-conductor-t180
+  claimed_at: '2026-09-20T05:06:39Z'
+  implementation_pr: 'silasfelinus/conductor#4818'
 
 - id: t-181
   milestone: m2
@@ -3712,6 +3720,30 @@ tasks:
     2026-09-17 and 2026-09-19): the exposed value is no longer live. butterfly-
     gallery/t-033's STEP 1 check is unblocked.
   updated: '2026-09-20T01:13:27Z'
+
+- id: t-183
+  milestone: m2
+  title: 'Kaizen from t-180: check whether check-watchdog-liveness.ps1s 30-minute staleness threshold is well-tuned against the 5-minute watchdog cadence'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  implementation_pr: 'silasfelinus/conductor#4818'
+  note: >-
+    Kaizen from conductor/t-180 (PR #4818, merged 2026-09-20). check-watchdog-liveness.ps1
+    treats a healthcheck.log write age over $WATCHDOG_STALE_MINUTES (default 30) as a
+    finding, against a watchdog that ticks every 5 minutes. That is a 6-tick grace window,
+    chosen without any real-world data on this box's actual tick jitter (a slow pm2 jlist
+    call, a delayed Task Scheduler trigger, etc.).
+
+    Once check-watchdog-liveness.ps1 has been registered and running for a while (see
+    ops/home-server/README.md's "Automated: watchdog liveness check" for registration),
+    check logs/healthcheck.log's actual tick-to-tick interval distribution on the real box
+    and decide whether 30 minutes is meaningfully looser than necessary (a tighter default,
+    e.g. 15, would catch a dead watchdog in 3 ticks instead of 6) or whether it is already
+    the right margin for observed jitter. Either confirm the current default with evidence,
+    or ship a smaller default -- this is a tuning pass, not a redesign.
+  updated: '2026-09-20T05:25:00Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'

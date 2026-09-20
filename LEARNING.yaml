@@ -15548,3 +15548,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "First pass, tiny scoped diff (+32/-0, one file, kind_robots#2903). Cross-repo pickup from a conductor session worked cleanly end-to-end: claim on conductor, implement+verify in the kind_robots checkout, review transition, merge, close. Verified the new expectOrder() assertion actually catches a regression (manually reordered the source, confirmed the failure message, reverted) rather than trusting that adding an assertion alone proves it works."
+- date: 2026-09-20
+  project: conductor
+  task: t-180
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "First pass, small self-contained diff (one new .ps1, one .vbs wrapper, README, 8 source-contract tests). The suggested-shape note in the task itself (read LastTaskResult + log-write age, OR them together) mapped directly onto a testable design once mirrored against an existing sibling check's structure (check-pm2-restart-trend.ps1 from the same day's t-179) -- reusing a proven pattern (own state file, own cooldown, never restart) made verification-before-push fast even though the script itself can't run in this sandbox."

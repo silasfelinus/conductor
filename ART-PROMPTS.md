@@ -107,6 +107,41 @@
 >    Description, effect, flavour text, backstory and pitch are what the thing
 >    DOES. Species, class, role, presentation, genre and theme are what it
 >    LOOKS LIKE. Only the second kind belongs in a caption.
+>
+> 7. **`payload.promptString` is not what renders — read the CLIP node.** Added
+>    2026-09-20, and it is this file's own method turned on the tooling. The
+>    negation-repair pass queued 1,152 jobs, and every one of them had the
+>    entity's `Description`, `Effect` and `Flavor text` sitting in
+>    `payload.promptString` — rule 6, apparently reproduced at scale. It was
+>    escalated as exactly that.
+>
+>    It was wrong. `buildKrea2WorkflowFromRequest` runs the prompt through
+>    `buildKreaSemanticPrompt` before it reaches the graph, which is where
+>    kind-robots#2896 strips the card text back out. The measurement that
+>    settled it: across 1,135 queued jobs, **1,132 carried the block in
+>    `payload.promptString` and 0 carried it in the CLIP node.** The metadata
+>    was dirty; the render was always clean.
+>
+>    Two things generalize, and they pull in opposite directions:
+>
+>    - **A job payload has several prompt-shaped fields and only one of them is
+>      the prompt.** `promptString`, `basePromptString`,
+>      `provenance.normalizedPrompt` and `workflow[…].inputs.text` can all
+>      differ on the same job. Only the last is sent to ComfyUI. Reading any of
+>      the others tells you what some layer *recorded*, not what will be drawn.
+>      Rule 5 says a document is not a gate; a prompt audit that reads
+>      `promptString` is auditing a document.
+>    - **The false alarm had a real bug underneath it.** The contract gate on
+>      `/api/art/enqueue` was reading `promptString` too, so it refused 13
+>      records over phrases — `"when the scene"`, `"no single person should"` —
+>      that existed only in an entity's rules paragraph and were never
+>      rendered. The field being the wrong one to read was true; the
+>      *conclusion* drawn from it was not. Finding an alarm unfounded is not
+>      the end of the investigation, because whatever produced the false signal
+>      is usually still a defect somewhere. kind-robots#2914 is that fix.
+>
+>    The check is cheap and there is no excuse for skipping it: pull the job,
+>    find the `CLIPTextEncode` node, read `inputs.text`. That is the picture.
 
 > The daily-dream pipeline enforces the first two automatically in
 > `scripts/dream_art_prompts.py`. Hand-written prompts in this file should follow
