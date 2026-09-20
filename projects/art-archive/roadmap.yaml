@@ -1276,7 +1276,7 @@ tasks:
   - id: t-041
     milestone: m5
     title: "Run the first real production import of the private archive and record the result"
-    status: review
+    status: needs-human
     passes: 0
     stakes: reversible
     gate_human: true
@@ -1290,7 +1290,19 @@ tasks:
       Silas explicitly directed this session to fix the private archive import rather than merely report on it. Human gate cleared for the reversible private production import; proceed through the authenticated Kind Robots admin API and record aggregate dry-run/import results without exposing private filenames or secrets.
 
       Added an agent-safe production import runner plus GitHub Actions workflow using Conductor's existing KR_API_TOKEN secret. The first-import request marker will trigger the workflow on merge; it runs dry-run first, refuses zero-file or scanner-issue imports, performs the idempotent production import, verifies every listed ArchiveEntry remains private+mature, and logs only aggregate counts.
-    updated: '2026-09-20T11:33:00Z'
+
+      ROUTE UPDATE 2026-09-20: the page now lives at /art-archive, not /admin/art-archive.
+      kind_robots#2926 moved pages/admin/art-archive.vue to pages/art-archive.vue and
+      registered content/channels/admin/art-archive.md, so the Art Archive is a real Admin-
+      channel nav link (sort 73, between Curation Studio and LoRA Triage) instead of a URL you
+      had to already know. Silas, 2026-09-20: 'If the path exists, it should be a nav link in
+      admin channel. If I can't reach it via /art-archive if admin, you aren't fully
+      connected.' Every step above reads the same -- just start from the Admin channel's Art
+      Archive tab rather than typing a URL. Note also that merge is not deploy: production is
+      Alexandria/Unraid, so the controls appear once the Unraid User Script (scripts/unraid-
+      user-script.sh -> scripts/deploy-unraid.sh) pulls the new image. Nothing here touches
+      prisma/, so there is no migration in this deploy.
+    updated: '2026-09-20T12:32:36Z'
     approved_by_human: true
     owner: worker
     claimed_by: 2026-09-20T112500Z-art-archive-t041-chatgpt-fix1
