@@ -2310,10 +2310,10 @@ tasks:
 - id: t-138
   milestone: m6
   title: Pending-art placeholder contract so queued art never reads as broken
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
-  owner: null
+  owner: worker
   note: >-
     Filed 2026-09-14 from Silas's art-pipeline assessment. This is the one interface-shaped slice
     of that pipeline -- the plumbing stays on kind-robots, only the placeholder belongs here.
@@ -2340,4 +2340,6 @@ tasks:
 
     Related: kind-robots/t-101 adds requested_at to the queue entries, which would let a placeholder
     say how long something has been waiting. Useful but not required -- do not block on it.
-  updated: '2026-09-14T10:30:00Z'
+  updated: '2026-09-20T08:58:24Z'
+  claimed_by: 2026-09-20T09:05:00Z-iv-t138-ac9c25
+  claimed_at: '2026-09-20T08:58:24Z'
