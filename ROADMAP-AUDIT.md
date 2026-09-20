@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-09-19T13:56:40.825646+00:00`
+Generated: `2026-09-20T14:16:12.128112+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **54** roadmaps, **22** active + **3** continuous projects, **1614** tasks
-- **39 ready**, **53 waiting**, **43 needs-human**, **2 claimed/review**, **1461 done**
-- Findings: **1 errors**, **8 warnings**, **27 informational**
+- **54** roadmaps, **22** active + **3** continuous projects, **1630** tasks
+- **30 ready**, **53 waiting**, **47 needs-human**, **1 claimed/review**, **1483 done**
+- Findings: **0 errors**, **8 warnings**, **27 informational**
 
 ## Project inventory
 
@@ -16,27 +16,27 @@ This is a conservative structural audit. It reports suspicious state; it does no
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `cthulhuquarium` | active | software | 0 | 1 | 5 | 0 | 71 / 77 |
 | 2 | `kind-economy` | active | software | 0 | 2 | 4 | 0 | 21 / 27 |
-| 3 | `butterfly-gallery` | active | software | 3 | 0 | 1 | 0 | 30 / 34 |
-| 4 | `art-archive` | active | software | 4 | 0 | 1 | 1 | 30 / 36 |
-| 5 | `mandarin-tutor` | active | software | 2 | 1 | 0 | 0 | 23 / 26 |
-| 6 | `interface-vision` | continuous | software | 3 | 1 | 0 | 1 | 134 / 139 |
+| 3 | `butterfly-gallery` | active | software | 1 | 1 | 2 | 0 | 30 / 34 |
+| 4 | `art-archive` | active | software | 0 | 0 | 3 | 0 | 38 / 41 |
+| 5 | `mandarin-tutor` | active | software | 0 | 0 | 1 | 0 | 27 / 28 |
+| 6 | `interface-vision` | continuous | software | 3 | 1 | 0 | 0 | 136 / 140 |
 | 7 | `coloring-book` | active | software | 1 | 9 | 1 | 0 | 36 / 47 |
 | 8 | `humboldt-scoop-cms` | active | software | 0 | 0 | 4 | 0 | 35 / 39 |
 | 9 | `digital-storefront` | active | software | 0 | 2 | 2 | 0 | 40 / 44 |
-| 10 | `kind-robots` | active | software | 1 | 0 | 2 | 0 | 109 / 112 |
+| 10 | `kind-robots` | active | software | 0 | 0 | 3 | 0 | 111 / 114 |
 | 11 | `rainbow-butterflies` | active | software | 0 | 0 | 3 | 0 | 50 / 53 |
 | 12 | `scene-animator` | active | software | 0 | 0 | 1 | 0 | 10 / 11 |
 | 13 | `text-generation` | active | software | 0 | 0 | 1 | 0 | 8 / 9 |
 | 14 | `kindrobots-unraid` | active | software | 0 | 6 | 1 | 0 | 14 / 21 |
 | 15 | `model-builder` | active | software | 1 | 0 | 0 | 0 | 44 / 45 |
 | 16 | `lora-ingestion` | active | infrastructure | 0 | 0 | 1 | 0 | 8 / 9 |
-| 17 | `conductor` | active | software | 1 | 0 | 2 | 0 | 174 / 177 |
-| 18 | `storybook` | active | software | 4 | 2 | 1 | 0 | 48 / 55 |
-| 19 | `coat-dance` | active | content | 1 | 0 | 1 | 0 | 2 / 10 |
+| 17 | `conductor` | active | software | 3 | 0 | 2 | 0 | 178 / 183 |
+| 18 | `storybook` | active | software | 3 | 2 | 1 | 1 | 48 / 55 |
+| 19 | `coat-dance` | active | content | 1 | 0 | 0 | 0 | 3 / 10 |
 | 20 | `conductor-app` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
 | 21 | `appmaker` | active | software | 1 | 0 | 0 | 0 | 14 / 15 |
 | 22 | `media-watchlist` | active | software | 1 | 0 | 0 | 0 | 18 / 19 |
-| 23 | `ruler-hooked` | active | software | 8 | 1 | 0 | 0 | 24 / 33 |
+| 23 | `ruler-hooked` | active | software | 7 | 1 | 0 | 0 | 25 / 33 |
 | 24 | `animation-manager` | continuous | software | 2 | 0 | 0 | 0 | 15 / 17 |
 | 25 | `dream-cycle` | continuous | software | 4 | 0 | 0 | 0 | 27 / 31 |
 | — | `ai-art-academy` | finished | software | 0 | 0 | 0 | 0 | 79 / 79 |
@@ -71,9 +71,9 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 ## Findings by severity
 
-### Error (1)
+### Error (0)
 
-- **CONTROL_PRIORITY_DRIFT** — `_global`: CONTROL.md priority band ['cthulhuquarium', 'kind-economy', 'butterfly-gallery', 'art-archive', 'interface-vision', 'coloring-book', 'humboldt-scoop-cms', 'digital-storefront', 'kind-robots', 'rainbow-butterflies'] does not match priority.yaml prefix ['cthulhuquarium', 'kind-economy', 'butterfly-gallery', 'art-archive', 'mandarin-tutor', 'interface-vision', 'coloring-book', 'humboldt-scoop-cms', 'digital-storefront', 'kind-robots'].
+_None._
 
 ### Warning (8)
 
