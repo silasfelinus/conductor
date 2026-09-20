@@ -1,0 +1,9 @@
+version: 1
+project: art-archive
+task: t-041
+operation: review
+owner: worker
+session: 2026-09-20T112500Z-art-archive-t041-chatgpt-fix1
+updated: '2026-09-20T11:33:00Z'
+note: >-
+  Added an agent-safe production import runner plus GitHub Actions workflow using Conductor's existing KR_API_TOKEN secret. The first-import request marker will trigger the workflow on merge; it runs dry-run first, refuses zero-file or scanner-issue imports, performs the idempotent production import, verifies every listed ArchiveEntry remains private+mature, and logs only aggregate counts.
