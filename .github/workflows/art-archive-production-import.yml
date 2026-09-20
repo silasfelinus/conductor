@@ -17,7 +17,7 @@ on:
           - import
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: art-archive-production-import
@@ -30,15 +30,149 @@ jobs:
     env:
       KR_API_BASE: https://kindrobots.org
       KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+      TASK_SESSION: 2026-09-20T112500Z-art-archive-t041-chatgpt-fix1
     steps:
       - uses: actions/checkout@v4
 
       - name: Run Art Archive reconciliation
+        id: reconcile
+        shell: bash
+        run: |
+          set -uo pipefail
+          log_path="${RUNNER_TEMP}/art-archive-import.log"
+          if [[ "${{ github.event_name }}" == "push" || "${{ inputs.mode }}" == "import" ]]; then
+            python3 scripts/run_art_archive_production_import.py 2>&1 | tee "${log_path}"
+            exit_code=${PIPESTATUS[0]}
+          else
+            python3 scripts/run_art_archive_production_import.py --dry-run-only 2>&1 | tee "${log_path}"
+            exit_code=${PIPESTATUS[0]}
+          fi
+          echo "log_path=${log_path}" >> "${GITHUB_OUTPUT}"
+          echo "exit_code=${exit_code}" >> "${GITHUB_OUTPUT}"
+
+      - name: Record production result in Conductor
+        if: github.event_name == 'push' || inputs.mode == 'import'
+        env:
+          RECONCILE_EXIT_CODE: ${{ steps.reconcile.outputs.exit_code }}
+          RECONCILE_LOG_PATH: ${{ steps.reconcile.outputs.log_path }}
         shell: bash
         run: |
           set -euo pipefail
-          if [[ "${{ github.event_name }}" == "push" || "${{ inputs.mode }}" == "import" ]]; then
-            python3 scripts/run_art_archive_production_import.py
-          else
-            python3 scripts/run_art_archive_production_import.py --dry-run-only
-          fi
+          event_path="$(python3 - <<'PY'
+          import json
+          import os
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          run_id = os.environ["GITHUB_RUN_ID"]
+          session = os.environ["TASK_SESSION"]
+          exit_code = int(os.environ.get("RECONCILE_EXIT_CODE") or "1")
+          log_path = Path(os.environ["RECONCILE_LOG_PATH"])
+          lines = log_path.read_text(encoding="utf-8", errors="replace").splitlines()
+
+          def prefixed_json(prefix):
+              for line in lines:
+                  if line.startswith(prefix):
+                      return json.loads(line[len(prefix):])
+              return None
+
+          dry = prefixed_json("dry-run: ")
+          imported = prefixed_json("import: ")
+          privacy = prefixed_json("privacy-verification: ")
+
+          verified = (
+              exit_code == 0
+              and isinstance(dry, dict)
+              and isinstance(imported, dict)
+              and isinstance(privacy, dict)
+              and privacy.get("archiveEntries", 0) > 0
+              and privacy.get("entriesChecked") == privacy.get("archiveEntries")
+              and privacy.get("allCheckedEntriesPrivate") is True
+              and privacy.get("allCheckedEntriesMature") is True
+          )
+
+          run_url = (
+              f"https://github.com/{os.environ['GITHUB_REPOSITORY']}"
+              f"/actions/runs/{run_id}"
+          )
+
+          if verified:
+              operation = "done"
+              note = (
+                  f"Production import workflow run {run_id} succeeded. "
+                  f"Dry-run: filesScanned={dry.get('filesScanned')}, "
+                  f"new={dry.get('new')}, changed={dry.get('changed')}, "
+                  f"moved={dry.get('moved')}, copied={dry.get('copied')}, "
+                  f"unchanged={dry.get('unchanged')}, missing={dry.get('missing')}, "
+                  f"scanIssueCount={dry.get('scanIssueCount')}, "
+                  f"filesWithMatchEvidence={dry.get('filesWithMatchEvidence')}, "
+                  f"unmatchedModels={dry.get('unmatchedModels')}. "
+                  f"Import: filesScanned={imported.get('filesScanned')}, "
+                  f"imagesCreated={imported.get('imagesCreated')}, "
+                  f"imagesReused={imported.get('imagesReused')}, "
+                  f"collectionsCreated={imported.get('collectionsCreated')}, "
+                  f"collectionsReused={imported.get('collectionsReused')}, "
+                  f"filesWithMatchEvidence={imported.get('filesWithMatchEvidence')}, "
+                  f"unmatchedModels={imported.get('unmatchedModels')}. "
+                  f"Privacy verification checked {privacy.get('entriesChecked')}/"
+                  f"{privacy.get('archiveEntries')} ArchiveEntry rows: all private=true "
+                  f"and mature=true. Run: {run_url}"
+              )
+          else:
+              operation = "ready"
+              note = (
+                  f"Production import workflow run {run_id} did not reach verified "
+                  f"completion (runner exit code {exit_code}). No private filenames or "
+                  f"credentials are copied into this task note. Inspect the exact run and "
+                  f"repair/retry: {run_url}"
+              )
+
+          event = {
+              "version": 1,
+              "project": "art-archive",
+              "task": "t-041",
+              "operation": operation,
+              "session": session,
+              "approved_by_human": True,
+              "updated": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+              "note": note,
+          }
+          if verified:
+              event["learning"] = (
+                  "Production data operations should emit a machine-readable aggregate "
+                  "receipt back into Conductor so completion is verifiable without "
+                  "exposing credentials or private filenames."
+              )
+
+          stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H%M%SZ")
+          path = Path("task-events") / (
+              f"{stamp}-art-archive-t041-{operation}-production-run-{run_id}.yaml"
+          )
+          path.write_text(json.dumps(event, indent=2) + "\n", encoding="utf-8")
+          print(path)
+          PY
+          )"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "${event_path}"
+          git commit -m "art-archive/t-041: record production import run ${GITHUB_RUN_ID}"
+
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              break
+            fi
+            if [[ "${attempt}" == "3" ]]; then
+              echo "Failed to push Art Archive result event after 3 attempts" >&2
+              exit 1
+            fi
+            sleep 2
+          done
+
+      - name: Fail workflow when reconciliation failed
+        if: (github.event_name == 'push' || inputs.mode == 'import') && steps.reconcile.outputs.exit_code != '0'
+        shell: bash
+        run: |
+          echo "Art Archive reconciliation did not complete successfully; result event recorded above." >&2
+          exit 1
