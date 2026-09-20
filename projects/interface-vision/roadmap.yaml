@@ -2336,7 +2336,7 @@ tasks:
 - id: t-139
   milestone: m6
   title: Wire the pending-art placeholder into bot/scenario/dream/server-card
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -2354,7 +2354,25 @@ tasks:
     useArtPendingState for the entity's art src, pass `pending` down). Scoped
     deliberately small -- four near-identical one-line additions, not a redesign.
     Verify with eslint/prettier on touched files plus a vue-tsc pass, same as t-138.
+
+    Shipped: components/bots/bot-card.vue, components/scenarios/scenario-card.vue,
+    components/dreams/dream-card.vue now each import utils/useArtPendingState.ts and compute
+    attemptedArtSrc via the same resolveArtVariantSource(source, variant, fallback).src ||
+    fallback chain kr-art-plate.vue itself uses, passing :pending="artPending" through kr-
+    entity-card-body -- matching character-card.vue/reward-card.vue's pattern exactly.
+    components/servers/server-card.vue was deliberately skipped: it renders with :show-
+    image="false" and has no art plate, so the pattern doesn't apply. No changes to kr-
+    entity-card-body.vue, kr-art-plate.vue, the store, or the composable. Incidental: bot-
+    card.vue had pre-existing prettier drift on main, cleaned up as a byproduct of touching
+    the file (confirmed pre-existing via stash-and-check, no logic change). Verified: eslint
+    clean on touched files (one pre-existing no-empty finding in dream-card.vue confirmed
+    present on main before this change), prettier --check clean, verify-project-
+    architecture.mjs passes, verifyGalleryAdoption.ts passes (5/5), verifyNarrativeKit.ts
+    passes, full vue-tsc --noEmit 0 errors, and independently confirmed via the GitHub API
+    (not just the implementing agent's self-report) that all 48 CI checks completed with
+    conclusion success before the PR merged.
   claimed_by: 2026-09-20T09:52:00Z-iv-t139-85752f
   claimed_at: '2026-09-20T09:52:18Z'
-  updated: '2026-09-20T09:52:18Z'
+  updated: '2026-09-20T10:07:02Z'
+  implementation_pr: 'silasfelinus/kind_robots#2921'
 
