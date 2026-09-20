@@ -3780,7 +3780,7 @@ tasks:
 - id: t-184
   milestone: m2
   title: 'Kaizen from PR #4869: make Restart-Supervised the single recovery handoff so stop/reap/verify/start never drifts across call sites'
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -3800,7 +3800,15 @@ tasks:
     restart`/`pm2 stop`+`pm2 start comfyui`-shaped call outside `Restart-Supervised` in
     ops/home-server/*.ps1, and either route it through `Restart-Supervised` or document why
     it's a deliberate exception. Small, reversible; no new behavior if none are found.
-  updated: '2026-09-20T20:54:51Z'
+
+    Audit complete: only one direct pm2-restart-comfyui call found outside Restart-
+    Supervised (ops/home-server/restore-shares.ps1:318). Documented inline as a known,
+    tracked gap rather than a blind extraction of Restart-Supervised into a shared module
+    (pinned by tests/test_healthcheck_restart_handoff.py; no PowerShell available in this
+    sandbox to behaviorally verify a cross-file refactor of the production watchdog). Filed
+    conductor/t-185 to do the extraction properly. All four healthcheck.ps1 call sites
+    confirmed already routing through Restart-Supervised as expected.
+  updated: '2026-09-20T21:00:25Z'
   claimed_by: claude-scheduled-20260920T205451Z-t184
   claimed_at: '2026-09-20T20:54:51Z'
 
