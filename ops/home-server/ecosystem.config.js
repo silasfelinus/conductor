@@ -113,9 +113,36 @@ module.exports = {
       },
       autorestart: true,
       restart_delay: 5000,
-      max_restarts: 50,
-      min_uptime: 30000,
-      kill_timeout: 15000,
+      // These three are sized against a MEASURED boot, not a guess. On
+      // 2026-09-20 a full start took 234 seconds -- 12:36:03 to the bind
+      // attempt at 12:39:57 -- of which 201.7s was one custom node
+      // (was-node-suite-comfyui). Re-measure them if that number changes:
+      // "Import times for custom nodes" at the tail of every boot is the
+      // number to read.
+      //
+      // max_restarts/min_uptime: min_uptime was 30000, i.e. 8x SHORTER than a
+      // boot. Every doomed start therefore lived long enough to be scored
+      // STABLE, unstable_restarts stayed pinned at 2 while restart_time
+      // reached 89, and pm2 never approached max_restarts. The app could not
+      // reach 'errored', which is the terminal state healthcheck.ps1 treats as
+      // its cue to reclaim the port -- so the one automatic recovery path was
+      // unreachable and the loop was infinite by construction. It ran 49
+      // minutes and 9 doomed 4-minute boots before a human stopped it.
+      //
+      // Above the boot time, a start that dies on the port scores unstable as
+      // it should, and 6 of them park the app in ~25 minutes instead of never.
+      // Parking is not a dead end here: healthcheck.ps1's 'errored' branch
+      // calls Invoke-PortReclaim, which kills the squatter and restarts. Loud
+      // and recovered beats quiet and looping.
+      max_restarts: 6,
+      min_uptime: 300000,
+      // kill_timeout was 15000. A process 200 seconds deep in a custom-node
+      // import does not die in 15, so pm2's Windows kill gave up SILENTLY and
+      // started the replacement anyway -- and that survivor, holding port 8188
+      // and the comfyui.db lock, is what every replacement then died against.
+      // One failed kill is all it takes to start the loop, so the cheapest
+      // place to stop it is to let the kill finish.
+      kill_timeout: 60000,
       out_file: `${LOG_DIR}/comfyui.out.log`,
       error_file: `${LOG_DIR}/comfyui.err.log`,
       merge_logs: true,

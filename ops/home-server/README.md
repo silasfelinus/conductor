@@ -1023,6 +1023,147 @@ resurrect restores the CURRENT ecosystem definition - a stale `dump.pm2` also
 brings back the venv-python launcher, whose redirector spawns a visible console
 that `windowsHide` cannot suppress.
 
+### Triage: the SLOW crash loop that pm2 never gives up on (2026-09-20)
+
+**Symptom.** Silas: *"something happens where it fails, then a second process
+starts, and they fight for ports. it keeps happening, and we keep thinking
+it's fixed."* Renders keep working the whole time.
+
+**This is the same shape as the 09-02 and 09-06 entries above and it behaves
+completely differently, because the crash is SLOW.** That one difference
+disables both automatic recoveries, and it is the reason this recurrence
+outlived every fix that came before it.
+
+```
+min_uptime:        30000   (30 seconds)
+boot to the error: ~234 seconds
+restart_time:      89
+unstable_restarts: 2
+```
+
+ComfyUI lived nearly four minutes before failing, i.e. **8x over `min_uptime`**,
+so pm2 scored all 89 restarts as *stable*. `unstable_restarts` stayed pinned at
+2, `max_restarts` was never approached, and the app could not reach `errored`
+— which is the terminal state `healthcheck.ps1` treats as its cue to reclaim
+the port. **The loop was infinite by construction.** Every earlier incident
+burned out at `max_restarts` and went quiet; this one simply never stopped.
+
+Read `min_uptime` against a measured boot, not against a guess. The 09-02 entry
+reasons from a 26-second crash and its conclusions do not transfer.
+
+**Cause, in order.**
+
+1. Something makes pm2 restart the engine.
+2. The kill misses. `kill_timeout` was 15s; a process 200 seconds deep in a
+   custom-node import does not die in 15, so pm2 gave up silently and started
+   the replacement anyway. **One failed kill is all it takes.**
+3. The survivor holds 8188, the `comfyui.db` lock and the GPU — and serves
+   renders perfectly, so every external signal stays green.
+4. Each replacement boots for four minutes, hits `Could not acquire lock on
+   database` and `Port 8188 is already in use`, and exits. pm2 restarts it.
+   Forever.
+
+**Why the watchdog did not stop it, though it was running and correct.**
+`Invoke-OrphanSweep` sat at the BOTTOM of the per-target loop, below four
+branches that `continue`: crash-looping, errored, stopped, and any status that
+is not `online`. **So it ran only when pm2 read `online` and the restart
+counter was calm — never in the states that produce orphans.** From the log:
+
+```
+12:26:03  comfyui: CRASH LOOPING - restart count climbed 82->86
+12:26:03  comfyui: nothing is listening on port 8188
+12:31:06  comfyui: ORPHAN SWEEP - killing engine pid 20492
+12:36:03  comfyui: pm2 status is 'waiting restart' - in transition
+```
+
+The 12:31 sweep fired by luck. 12:26 and 12:36 skipped it, and the loop ran on
+for another 49 minutes. A second defect compounded it: the sweep opened with
+`if (-not $expectedPid) { return }`, and pm2 reports pid 0 for the whole of
+`waiting restart` — so it also stood down whenever it *was* reached in that
+state, and the stale engine it declined to kill was the thing blocking pm2's
+next start.
+
+`Invoke-PortReclaim` is not a backstop for this either: it needs a live port
+owner to act on, and at 12:26 it correctly found none because every copy was
+mid-boot. Detecting `CRASH LOOPING` and then doing nothing is the observed
+behaviour.
+
+**Diagnose.** The import-times block at the tail of every boot is the fastest
+read, and nothing else reports it:
+
+```powershell
+Select-String -Path logs\comfyui.err.log -Pattern 'seconds: .*custom_nodes' |
+  Select-Object -Last 30
+```
+
+Then the two numbers that decide whether pm2 can ever give up:
+
+```powershell
+pm2 jlist | node pm2-jlist-snapshot.js | ConvertFrom-Json |
+  Where-Object { $_.name -eq 'comfyui' } |
+  Select-Object pid, @{n='status';e={$_.pm2_env.status}},
+    @{n='restarts';e={$_.pm2_env.restart_time}},
+    @{n='unstable';e={$_.pm2_env.unstable_restarts}}
+```
+
+Pipe through `pm2-jlist-snapshot.js`, not straight into `ConvertFrom-Json`:
+PowerShell 5.1 is case-insensitive and throws on pm2's `username`/`USERNAME`
+pair. **`restarts` climbing while `unstable` stands still is the whole
+diagnosis** — it means pm2 considers every one of those starts a success and
+will never stop.
+
+**Recover.**
+
+```powershell
+cd D:\code\conductor\ops\home-server
+pm2 stop comfyui
+Get-CimInstance Win32_Process |
+  Where-Object { $_.Name -like 'python*' -and $_.CommandLine -like '*main.py*' } |
+  Select-Object ProcessId, @{n='Started';e={$_.CreationDate}}
+# taskkill /PID <each survivor> /F
+netstat -ano | findstr :8188        # must print no LISTENING line
+pm2 delete comfyui
+pm2 start ecosystem.config.js --only comfyui
+pm2 save
+```
+
+A changed pm2 **id** is the tell that the definition was actually replaced
+(here 5 -> 7, with the restart counter back at 0).
+
+**Guards.** Three, all landed 2026-09-20:
+
+- `ecosystem.config.js` now sizes `min_uptime` (300s), `max_restarts` (6) and
+  `kill_timeout` (60s) against the measured boot. A doomed start scores
+  unstable as it should and parks the app in ~25 minutes, where the `errored`
+  branch reclaims the port instead of looping silently forever.
+- `Invoke-OrphanSweep` runs **before** every branch that continues, exempting
+  only a deliberate `pm2 stop`, and no longer stands down when pm2 owns no live
+  engine — in that state every engine past the grace period is a previous
+  generation by definition.
+- `$orphanGraceMinutes` is 8, which must stay above a full boot or the sweep
+  starts killing engines that are merely slow to start.
+- `tests/test_healthcheck_orphan_sweep_ordering.py` locks the ordering, the
+  pid-0 behaviour and all four numbers, because every one of them is a silent
+  failure when wrong.
+
+**Still open: the 234-second boot itself.**
+
+```
+201.7 seconds: D:\comfy\comfy-fast\custom_nodes\was-node-suite-comfyui
+  4.2 seconds: comfyui-easy-use
+  1.1 seconds: comfyui-manager
+  ...everything else: 0.0-0.6 seconds
+```
+
+**One custom node is 86% of the boot.** A normal WAS Node Suite import is
+5-20 seconds. It is the amplifier behind all of the above: it is what makes a
+kill miss its timeout, what makes each doomed boot cost four minutes instead of
+forty seconds, and what pushed the crash past `min_uptime` in the first place.
+`was_suite_config.json` was checked and is entirely local paths with
+`run_requirements: false`, so the obvious SMB explanation is **ruled out**.
+Not yet measured; `python -X importtime` against the module is the next
+instrument. Fixing it shrinks every failure window here by roughly 6x.
+
 ### Triage: "something keeps resetting" — heartbeats arriving minutes apart (2026-09-06, open)
 
 **Symptom.** ComfyUI, the relay, or "something" appears to restart on its own.
