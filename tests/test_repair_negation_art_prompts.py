@@ -140,3 +140,115 @@ def test_a_format_noun_that_is_the_subject_is_left_alone():
     for prompt in (WANTED_POSTER, LORA_TRIGGER):
         assert not rn.violations(prompt)
         assert rn.repair(prompt) == prompt
+
+
+# ── The families the 2026-09-19 pass left behind ────────────────────────────
+#
+# All five fixtures below are the real stored text on 2026-09-20, taken from
+# the records the live contract refused when the outstanding 408 re-renders
+# were queued. Each one is a family the repair script had no rule for, so the
+# audit read "Violating: 0" while the enqueue endpoint answered 422.
+
+# Reward 2835 and six others. CARD_COMPOSITION rewrote the framing at the front
+# and left the card as an OBJECT further down, so all seven stayed rejected.
+TIER_CARD = (
+    "Thorn-Tide Boarding, a field of thorned singing coral parting around an "
+    "invisible passage, 2:3 portrait card composition, tight centered composition "
+    "on the effect, uncommon-tier ability card illustration, glowing volumetric "
+    "light emanating from the effect itself"
+)
+
+# Dream 5262, 5481, 5636. Rule 4's shape exactly: a logline-only prompt where
+# the boilerplate clause IS most of the prompt.
+BRAND_STYLE = (
+    "establishing key art for The Lucky Ladle: Every bowl tastes like a fate "
+    "someone else was supposed to have. cohesive Kind Robots visual style, "
+    "cinematic light with intent, every surface bare and unmarked"
+)
+
+# Reward 424. A negation opening a parenthetical: "(" is not ^, a separator, or
+# whitespace, so no clause anchor could reach it.
+PARENTHETICAL_PEOPLE = (
+    "A glossy vintage comic book displayed reverently, bold retro cover-art "
+    "energy (no specific copyrighted character — just classic comic styling), "
+    "protective sleeve gleaming."
+)
+
+# Reward 249, the text half of the same blind spot.
+PARENTHETICAL_TEXT = (
+    "A wanted-poster-style emblem glowing with notoriety, a name implied in "
+    "dramatic lettering-shapes (no readable text), surrounded by both reaching "
+    "helpful hands and lurking threats."
+)
+
+# Resource 3590 "detailed_notrigger". Catalog bookkeeping, not a picture.
+LORA_NO_TRIGGER = "extremely detailed (no trigger) - sliders.ntcai.xyz"
+
+
+def test_the_card_as_an_object_goes_even_though_the_framing_was_substituted():
+    assert "format-vocabulary" in rn.violations(TIER_CARD)
+    fixed = rn.repair(TIER_CARD)
+    assert "ability card" not in fixed.lower()
+    assert "uncommon-tier" not in fixed.lower()
+    # The geometry the framing rule preserves is still preserved.
+    assert "vertical 2:3 portrait composition" in fixed
+    # And the picture survives both removals.
+    assert "thorned singing coral" in fixed
+    assert "glowing volumetric light" in fixed
+    assert not rn.violations(fixed)
+
+
+def test_brand_style_becomes_medium_linework_colour_and_surface():
+    assert "vague-brand-style" in rn.violations(BRAND_STYLE)
+    fixed = rn.repair(BRAND_STYLE)
+    assert "kind robots" not in fixed.lower()
+    for word in ("illustration", "linework", "color", "texture"):
+        assert word in fixed.lower()
+    assert "The Lucky Ladle" in fixed
+    assert not rn.violations(fixed)
+
+
+def test_a_negation_in_brackets_is_still_a_negation():
+    assert "negated-parenthetical" in rn.violations(PARENTHETICAL_PEOPLE)
+    fixed = rn.repair(PARENTHETICAL_PEOPLE)
+    assert "copyrighted character" not in fixed
+    # The half after the dash is real direction and is kept.
+    assert "classic comic styling" in fixed
+    assert "vintage comic book" in fixed
+    assert "(" not in fixed and ")" not in fixed
+    assert not rn.violations(fixed)
+
+
+def test_a_bracketed_text_exclusion_goes_without_taking_its_sentence():
+    assert "negated-parenthetical" in rn.violations(PARENTHETICAL_TEXT)
+    fixed = rn.repair(PARENTHETICAL_TEXT)
+    assert "no readable text" not in fixed.lower()
+    assert "dramatic lettering-shapes" in fixed
+    assert "reaching helpful hands" in fixed
+    assert ", ," not in fixed and " ," not in fixed
+
+
+def test_lora_metadata_is_not_prose_and_is_left_alone():
+    """"(no trigger)" names the row, it does not describe a frame.
+
+    Deleting it would assert the opposite of what the LoRA's own name
+    ("detailed_notrigger") says. Same carve-out the "Movie Poster page" rows
+    get from the format rules.
+    """
+    assert not rn.violations(LORA_NO_TRIGGER, "resource")
+    assert rn.repair(LORA_NO_TRIGGER, "resource") == LORA_NO_TRIGGER
+
+
+def test_every_new_family_comes_out_as_readable_prose():
+    """Rule 5's lesson: a rule that passes its own gate can still leave debris.
+
+    The point of the repair is a prompt a person would read as sentences, so
+    assert the shape rather than only the absence of the banned words.
+    """
+    for prompt in (TIER_CARD, BRAND_STYLE, PARENTHETICAL_PEOPLE, PARENTHETICAL_TEXT):
+        fixed = rn.repair(prompt)
+        assert fixed
+        assert fixed == fixed.strip()
+        assert not re.search(r"[,;]\s*[,;.]", fixed)
+        assert not re.search(r"\b(?:with|and|or)\s*[,.;]", fixed)
+        assert "  " not in fixed
