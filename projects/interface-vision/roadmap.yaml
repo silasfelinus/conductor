@@ -2332,3 +2332,26 @@ tasks:
   claimed_by: 2026-09-20T09:05:00Z-iv-t138-ac9c25
   claimed_at: '2026-09-20T08:58:24Z'
   implementation_pr: 'silasfelinus/kind_robots#2919'
+
+- id: t-139
+  milestone: m6
+  title: Wire the pending-art placeholder into bot/scenario/dream/server-card
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: null
+  note: >-
+    Kaizen follow-on from t-139's predecessor, t-138 (silasfelinus/kind_robots#2919).
+    That PR built the shared pending-art treatment (stores/artRequestStore.ts,
+    utils/useArtPendingState.ts, components/art/art-pending-placeholder.vue) and wired
+    it into kr-art-plate.vue via kr-entity-card-body.vue, but only character-card.vue
+    and reward-card.vue compute and pass their own `pending` prop -- the ask that
+    prompted t-138 in the first place. bot-card.vue, scenario-card.vue, dream-card.vue,
+    and server-card.vue already receive the prop plumbing through
+    kr-entity-card-body.vue for free; each just needs the same small,
+    isolated addition character-card.vue/reward-card.vue already demonstrate (read
+    useArtPendingState for the entity's art src, pass `pending` down). Scoped
+    deliberately small -- four near-identical one-line additions, not a redesign.
+    Verify with eslint/prettier on touched files plus a vue-tsc pass, same as t-138.
+
