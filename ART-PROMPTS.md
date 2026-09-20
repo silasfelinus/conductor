@@ -138,10 +138,41 @@
 >      rendered. The field being the wrong one to read was true; the
 >      *conclusion* drawn from it was not. Finding an alarm unfounded is not
 >      the end of the investigation, because whatever produced the false signal
->      is usually still a defect somewhere. kind-robots#2914 is that fix.
+>      is usually still a defect somewhere.
 >
 >    The check is cheap and there is no excuse for skipping it: pull the job,
 >    find the `CLIPTextEncode` node, read `inputs.text`. That is the picture.
+>
+>    **And then it took three PRs, because this rule kept catching its own
+>    fix.** Worth writing down in full, because each attempt looked finished:
+>
+>    - **kind-robots#2914** pointed the gate at
+>      `extractRenderRequest(payload).prompt`. A **no-op**: that helper takes
+>      `promptString` first and only falls back to the CLIP node — right for
+>      edit and requeue, which want the caller's request, useless for a gate.
+>      Production came up reporting the new commit and refused the same 13
+>      records with the same quotes. I had trusted a neighbouring comment that
+>      said the other endpoint "gates the string ComfyUI receives" instead of
+>      reading the function it named, which is the same mistake as trusting
+>      `promptString`, one level up.
+>    - **kind-robots#2915** added `extractWorkflowPrompt()`, which reads the
+>      graph and ignores `promptString`. Correct for the render, and it
+>      silently dropped the authoring signal: `buildKreaSemanticPrompt`
+>      **sanitizes**, rewriting `a red cube, no bystanders, plain ground` to
+>      `a red cube, plain ground` before the CLIP node. Gating only the graph
+>      therefore accepts a prompt whose author wrote a negation, and leaves it
+>      in the stored `artPrompt` to be re-sent forever — the exact condition
+>      this pass spent 1,154 records cleaning up.
+>    - **kind-robots#2917** gates both: `basePromptString` before entity
+>      context is composed in (the author's own text, which a producer can
+>      actually fix) and the graph after the sanitizer (what gets drawn).
+>
+>    Two things to carry forward. **Merged is not deployed is not working** —
+>    `/api/version` reported the right commit while the behaviour was
+>    unchanged, and only a live probe told the difference. And **read the whole
+>    probe result, not the headline**: #2915 looked fixed because the entity
+>    text was gone, and the marker negation planted in the request had gone
+>    with it. Only one of those two was supposed to disappear.
 
 > The daily-dream pipeline enforces the first two automatically in
 > `scripts/dream_art_prompts.py`. Hand-written prompts in this file should follow
