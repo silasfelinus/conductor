@@ -663,3 +663,60 @@ tasks:
       and the reopened project are marked finished. No publish, billing, DNS, secret, or
       destructive production action is attached to this gate.
     updated: '2026-09-19T20:00:00Z'
+
+  - id: t-028
+    milestone: m5
+    title: "Guided course: an introduction, then one teaching card at a time"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-022
+    note: >-
+      Silas, 2026-09-20: "i want a real front end interface. We start, are given an
+      introduction, then shown cards that give info, basically, a streamlined teaching
+      interface. do you grok?"
+
+      m5 gave the project a teaching LAYER (t-022's lesson derivation), a reference page
+      for it, and a sound-family browser (t-024). What it did not give is a front door.
+      `/play/mandarin` opened onto a TOOL -- two interaction modes, four workspace views, a
+      deck picker, a gallery -- which is the right shape for someone who already knows what
+      they want and the wrong shape for someone who wants to be taught. A newcomer had to
+      make three choices before the app taught them anything.
+
+      Build the guided course as the front door. Silas made two decisions when asked:
+        * The guided flow BECOMES `/play/mandarin`; the existing workspace moves to
+          `/play/mandarin/browse`, unchanged and one click away, and the start screen also
+          points at `/play/mandarin/sound-families`. Nothing is removed -- the deck picker,
+          search, gallery, custom sets and free drilling all keep working, they just stop
+          being the first thing a newcomer sees. He rejected both alternatives (course on a
+          separate route, and replacing the workspace outright).
+        * A word's teaching run is FIVE BEATS with empty beats auto-skipped: meet it, how it
+          sounds, what each piece does, who shares its sound, recall it. A word whose source
+          asserts nothing structural, or that no other catalog card shares a sound component
+          with, silently drops those beats rather than showing an empty screen -- padding
+          would teach the learner that the course pads, which is exactly what t-022's honesty
+          contract exists to avoid. He rejected the always-three-beats and pick-your-depth
+          alternatives.
+
+      The orientation sequence is the "introduction" he asked for by name, and it should do
+      real work rather than be a welcome mat: the biggest obstacle for an English-speaking
+      beginner is believing characters are pictures of their meanings, and every card after
+      that belief is gone is easier to read. Its last screen should state out loud that
+      nothing here is timed, streaked, or notified -- he asked for something "closer to
+      duolingo" but explicitly not "insistent and focused on interactions, notifications,
+      nudges", and saying so is cheaper than a learner waiting for a nag that never comes.
+
+      Three constraints worth stating up front. The course must NOT fetch a lesson per
+      screen: `buildMandarinLesson` is pure and lives in `utils/`, so derive lessons
+      client-side from the already-loaded catalog and keep `GET /api/mandarin/lessons/[key]`
+      for the standalone reference page, which is public, cacheable and server-renderable.
+      The recall beat must advance by rating only -- a card a learner can Continue past
+      without answering is not a recall test. And an already-learned word's run collapses to
+      a single recall beat, which is what turns the course into a review session once a deck
+      is learned instead of making someone re-read a lesson to reach a card they know.
+
+      NOTE ON t-027: that human-acceptance gate was written against the m5 slice as it stood
+      on 2026-09-19 and predates this task. Silas should accept the guided course as part of
+      the same visual pass rather than accepting the old front door and then being handed a
+      different one.
