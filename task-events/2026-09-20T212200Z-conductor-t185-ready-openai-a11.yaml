@@ -1,0 +1,8 @@
+version: 1
+project: conductor
+task: t-185
+operation: ready
+session: openai-scheduled-2026-09-20T211626Z-conductor-t185-a11
+updated: '2026-09-20T21:22:00Z'
+note: >-
+  Connector-only implementation pass inspected the required healthcheck.ps1, restore-shares.ps1, and pinned restart-handoff tests. The safe extraction requires replacing a large contiguous function block inside healthcheck.ps1; this connector exposes whole-file replacement but no line-range patch mutation, and AGENTS.md forbids reconstructing a large file from truncated reads. No code was changed. Returning to ready without consuming a pass so a shell-capable worker can perform the cross-file extraction safely.
