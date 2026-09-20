@@ -11382,3 +11382,22 @@ Claude-Session: https://claude.ai/code/session_0181bM37f5aQ5TKo2QWhXh48
 - Fixed locally in `verifyPrettierRatchet.ts` (`substitutedRatchetBuckets`) rather than changing the shared `ratchetBaseline.ts`, specifically to avoid an unrequested behavior change to the working ESLint ratchet -- flagging here in case a future session wants to generalize the shared helper to accept an optional membership-checking mode instead of duplicating the pattern a third time.
 
 **Kaizen task:** deferred -- the Worker's own kaizen suggestion (land the first bounded reformat slice against the new ratchet, e.g. `types/`) is reasonable future recurring work under t-137 itself; no new task filed since it's already covered by the existing recurring task re-arming to `ready`.
+
+## 2026-09-20 | Reviewer → Worker | conductor (ops/home-server) | critique
+
+**Decision:** merged (PR #4869, `fix: prevent overlapping ComfyUI watchdog restarts`)
+
+**Failure category:** n/a — clean first pass, `select_role.py` self-assigned reviewer role for a single open `worker/*` branch, all 24 CI checks green.
+
+**What was good:**
+- Correct causal fix rather than a symptom patch: `Restart-Supervised` now stops pm2 first, reaps only positively-identified old-engine pids (scoped by port match via `Test-IsComfyEngine` + `--port`), verifies the pid set is actually empty (poll, not a single check), verifies the port listener is free, and only then starts the replacement — closing the exact window (pm2's Windows kill timing out silently and launching a replacement anyway) that caused the two-engines-fighting-over-8188 failure.
+- Conservative failure mode throughout: every verification step that doesn't clear in time causes the function to refuse and log rather than guess — an unrelated port owner is never killed, and a stuck old engine is never started over. Since all four call sites (`share-watchdog`, crash-loop, liveness-failure, port-reclaim recovery) are watchdog-tick-driven, a refused restart this tick just retries next tick rather than silently failing.
+- New `tests/test_healthcheck_restart_handoff.py` pins ordering (stop-before-start, reap-before-start, verify-before-start) and the non-comfyui pass-through path; existing `test_powershell_variable_interpolation.py` was updated to scope its regression check to the changed function rather than an exact line count, so it won't false-positive on legitimate future edits to the same block.
+- Handoff template fully filled, stakes correctly called reversible (no secrets/DNS/billing/destructive-data changes), and the PR body was explicit that CI was still running at open time rather than presenting an unverified state as done.
+
+**What to improve:**
+- The PR's own "Notes for reviewer" already flagged the sharpest edge (booting-but-not-yet-bound engines can pass a port-only check) and handled it correctly by checking the pid set first, port second — nothing left to add here.
+
+**Kaizen task:** conductor/t-184 — audit for any other watchdog recovery path in `ops/home-server/*.ps1` that shells out to `pm2 restart`/`stop`+`start` for the comfyui target directly, outside `Restart-Supervised`, since only paths that funnel through this one function get today's fix automatically.
+
+**Pattern note:** a second, independently-authored PR (#4870, `claude/gifted-ride-3yh0zd`, from a same-day interactive Silas troubleshooting session) was open concurrently and touches the same file (`ops/home-server/healthcheck.ps1`) for a related but distinct defect (orphan-sweep ordering and pm2 restart-scoring calibration, not the restart-handoff serialization this PR fixes). The two PRs' diff hunks don't overlap by line range, so this merge should not conflict it — left #4870 untouched since it reads as still-active, human-directed work outside this session's scope, not a worker/* branch awaiting review.

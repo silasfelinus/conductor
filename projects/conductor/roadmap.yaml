@@ -3777,5 +3777,30 @@ tasks:
     or ship a smaller default -- this is a tuning pass, not a redesign.
   updated: '2026-09-20T05:25:00Z'
 
+- id: t-184
+  milestone: m2
+  title: 'Kaizen from PR #4869: make Restart-Supervised the single recovery handoff so stop/reap/verify/start never drifts across call sites'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  implementation_pr: 'silasfelinus/conductor#4869'
+  note: >-
+    Kaizen from PR #4869 (merged 2026-09-20), which serialized ComfyUI's watchdog restart
+    (stop pm2 first, reap only positively-identified old engine pids, verify both the pid
+    set and the port are clear, only then start the replacement) to stop the recurring
+    two-engines-fighting-over-port-8188 failure. `Restart-Supervised` is called from four
+    sites in ops/home-server/healthcheck.ps1 (share-watchdog recovery, crash-loop recovery,
+    liveness-failure recovery, and port-reclaim recovery), and all four now benefit from the
+    fix automatically since they all funnel through this one function.
+
+    The risk is future recovery paths bypassing it: a future watchdog change that shells out
+    to `pm2 restart comfyui` directly (as the pre-fix code effectively did) would silently
+    reintroduce the overlap bug in just that one path. Audit for any such direct `pm2
+    restart`/`pm2 stop`+`pm2 start comfyui`-shaped call outside `Restart-Supervised` in
+    ops/home-server/*.ps1, and either route it through `Restart-Supervised` or document why
+    it's a deliberate exception. Small, reversible; no new behavior if none are found.
+  updated: '2026-09-20T20:05:00Z'
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
