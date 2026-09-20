@@ -3542,7 +3542,7 @@ tasks:
 - id: t-179
   milestone: m2
   title: 'Nothing watches pm2 restart_time as a TREND -- a count that climbs to 779 over weeks trips no alert, and reviving a watchdog onto an already-sick engine is how 2026-09-19 happened'
-  status: ready
+  status: claimed
   owner: worker
   passes: 2
   stakes: reversible
@@ -3573,9 +3573,9 @@ tasks:
     Reviewer 2026-09-20: CI red on PR #4813 (pytest failure + PR-handoff-template check
     failure), both real bugs -- see retry_context and PR comment. Rolled back to ready for a
     retry.
-  updated: '2026-09-20T04:53:02Z'
-  claimed_by: openai-scheduled-2026-09-20T031957Z-conductor-t179-a11
-  claimed_at: '2026-09-20T03:19:57Z'
+  updated: '2026-09-20T06:01:16Z'
+  claimed_by: claude-scheduled-2026-09-20T0600Z-conductor-t179-pass3
+  claimed_at: '2026-09-20T06:01:16Z'
   retry_context: 'pass 2 failed (CI, PR #4813, worker/conductor-t-179-openai-scheduled-2026-09-20T031957Z-conductor-t179-a11, head d8bd961): tests/test_pm2_restart_trend.py::test_restart_trend_check_is_advisory_only still fails -- the pass-1 fix reworded the unreadable-state comment but check-pm2-restart-trend.ps1 line 98 still emits Write-Warning "PM2 restart advisory: $name has $restarts total restarts ($delta since baseline)." which contains the literal substring "pm2 restart" once lowercased, tripping the same assertion at a different location. Reword the Write-Warning message so "pm2" and "restart" are never contiguous (e.g. drop "PM2" from the message text entirely, since the script and log context already identify it as a PM2 check -- "Restart-trend advisory: $name has..." has no pm2 restart substring). Run pytest tests/test_pm2_restart_trend.py locally against the exact file before repushing; grep -i "pm2 restart" ops/home-server/check-pm2-restart-trend.ps1 must return nothing. The "Validate Worker PR handoff" failure on this PR (job 106019883382) is stale -- it validated an earlier PR-body snapshot with h2 headings before the h3-heading fix landed; the current PR body already passes that check (job 106019955339) and needs no further change.'
 
 - id: t-180
