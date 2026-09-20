@@ -3817,37 +3817,15 @@ tasks:
 - id: t-185
   milestone: m2
   title: 'Extract Restart-Supervised into a shared module so restore-shares.ps1 can route its direct `pm2 restart comfyui` through the safe stop/reap/verify/start handoff'
-  status: claimed
-  owner: worker
+  status: ready
   passes: 0
   stakes: reversible
-  note: >-
-    Found by the t-184 audit (2026-09-20): ops/home-server/restore-shares.ps1:318 calls
-    `& pm2 restart comfyui` directly, bypassing healthcheck.ps1's `Restart-Supervised`
-    (added by PR #4869 to stop the recurring two-engines-fighting-over-port-8188 failure).
-    This script runs standalone at logon (or manually) to rebuild folder_paths' cached
-    filename lists after remapping shares, so it does not share process/functions with
-    healthcheck.ps1 today. Exposure is lower than the four watchdog call sites t-184 fixed
-    (this script's usual trigger is a fresh reboot, when no old engine survives to fight
-    over the port) but not zero -- it can also be run manually against a live session where
-    an old engine could still be alive when pm2's Windows kill times out silently.
+  note: |-
+    Found by the t-184 audit (2026-09-20): ops/home-server/restore-shares.ps1:318 calls `& pm2 restart comfyui` directly, bypassing healthcheck.ps1's `Restart-Supervised` (added by PR #4869 to stop the recurring two-engines-fighting-over-port-8188 failure). This script runs standalone at logon (or manually) to rebuild folder_paths' cached filename lists after remapping shares, so it does not share process/functions with healthcheck.ps1 today. Exposure is lower than the four watchdog call sites t-184 fixed (this script's usual trigger is a fresh reboot, when no old engine survives to fight over the port) but not zero -- it can also be run manually against a live session where an old engine could still be alive when pm2's Windows kill times out silently.
+    t-184 documented this as a known, tracked gap (see the comment at that line) rather than fixing it blind, because `Restart-Supervised` and its three helpers (Get-ComfyEnginePids, Get-PortListenerPid, Test-IsComfyEngine) currently live inside healthcheck.ps1, and tests/test_healthcheck_restart_handoff.py pins their exact function-body location and source strings within that file. Moving them into a shared dot-sourceable script (e.g. ops/home-server/lib/Restart-ComfySupervised.ps1) that both healthcheck.ps1 and restore-shares.ps1 import is real cross-file surgery on the production render-host watchdog -- update the pinned tests to read the new shared file instead of hunting for the function inline, verify healthcheck.ps1's four existing call sites still resolve the function via dot-source, and lean on the repo's windows-latest PowerShell syntax-check CI job for what this sandbox cannot verify locally (no PowerShell available here). Wire restore-shares.ps1's line 318 restart through the shared function once it exists, keeping its existing pm2-lists-comfyui gate unchanged.
 
-    t-184 documented this as a known, tracked gap (see the comment at that line) rather than
-    fixing it blind, because `Restart-Supervised` and its three helpers (Get-ComfyEnginePids,
-    Get-PortListenerPid, Test-IsComfyEngine) currently live inside healthcheck.ps1, and
-    tests/test_healthcheck_restart_handoff.py pins their exact function-body location and
-    source strings within that file. Moving them into a shared dot-sourceable script (e.g.
-    ops/home-server/lib/Restart-ComfySupervised.ps1) that both healthcheck.ps1 and
-    restore-shares.ps1 import is real cross-file surgery on the production render-host
-    watchdog -- update the pinned tests to read the new shared file instead of hunting for
-    the function inline, verify healthcheck.ps1's four existing call sites still resolve the
-    function via dot-source, and lean on the repo's windows-latest PowerShell syntax-check
-    CI job for what this sandbox cannot verify locally (no PowerShell available here). Wire
-    restore-shares.ps1's line 318 restart through the shared function once it exists, keeping
-    its existing pm2-lists-comfyui gate unchanged.
-  updated: '2026-09-20T21:16:26Z'
-  claimed_by: openai-scheduled-2026-09-20T211626Z-conductor-t185-a11
-  claimed_at: '2026-09-20T21:16:26Z'
+    Connector-only implementation pass inspected the required healthcheck.ps1, restore-shares.ps1, and pinned restart-handoff tests. The safe extraction requires replacing a large contiguous function block inside healthcheck.ps1; this connector exposes whole-file replacement but no line-range patch mutation, and AGENTS.md forbids reconstructing a large file from truncated reads. No code was changed. Returning to ready without consuming a pass so a shell-capable worker can perform the cross-file extraction safely.
+  updated: '2026-09-20T21:22:00Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
