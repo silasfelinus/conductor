@@ -15557,3 +15557,16 @@ records:
   outcome: done
   failure_category: null
   lesson: "First pass, small self-contained diff (one new .ps1, one .vbs wrapper, README, 8 source-contract tests). The suggested-shape note in the task itself (read LastTaskResult + log-write age, OR them together) mapped directly onto a testable design once mirrored against an existing sibling check's structure (check-pm2-restart-trend.ps1 from the same day's t-179) -- reusing a proven pattern (own state file, own cooldown, never restart) made verification-before-push fast even though the script itself can't run in this sandbox."
+- date: 2026-09-20
+  project: conductor
+  task: t-179
+  kind: software
+  stakes: reversible
+  passes: 2
+  outcome: done
+  failure_category: quality
+  lesson: A command-prohibition contract test that does a bare substring match ('pm2 restart' not in source.lower())
+    against a whole script file will keep tripping on harmless advisory prose that happens to contain
+    both words contiguously (two separate Write-Warning messages did, in two separate retry passes) --
+    match actual command-invocation syntax instead of any co-occurrence of the words, or a trivial wording
+    fix keeps re-triggering the same false positive at a different line.
