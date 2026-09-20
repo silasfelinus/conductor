@@ -2259,7 +2259,7 @@ tasks:
 - id: t-137
   milestone: m5
   title: Ratchet Prettier formatting onto the front end instead of one repo-wide reformat
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -2276,10 +2276,26 @@ tasks:
     PR #2918 merged after exact-head CI completed successfully; rearm recurring Prettier-ratchet work for the next bounded slice.
 
     Released immediately after live workflow failure detection preempted worker role; no implementation started.
-  updated: '2026-09-20T15:16:57Z'
+
+    PR silasfelinus/kind_robots#2929 merged (squash 3c4b94d): verifyPrettierRatchet.ts
+    (reusing ratchetBaseline.ts, same shape as verifyLintRatchet.ts) buckets unformatted
+    files by top-level directory and refuses growth on --update. Initial baseline recorded
+    with the repo's pinned Prettier via node_modules (not npx-latest): 1097 files across 20
+    directories. Wired into contract-tests.yml. Also excluded utils/scripts/*-ratchet-
+    baseline.json from Prettier itself (self-referential bootstrap bug: the baseline's own
+    JSON.stringify formatting always differs from Prettier's, so it would otherwise flag
+    itself as newly-unformatted right after every --update). Review-claim caught a real gap
+    before merge: grownRatchetBuckets() only compares bucket length, so a same-bucket
+    substitution (fix one file, break a different one, count unchanged) would have slipped
+    through -- fixed with a local substitutedRatchetBuckets() membership check (kept local
+    rather than changing the shared helper, since eslint's line:column entries would false-
+    positive under exact-set comparison). No files reformatted -- this PR only adds the gate
+    and baseline. Rearming to ready (recurring) for the next bounded reformat slice.
+  updated: '2026-09-20T15:39:59Z'
   owner: worker
   claimed_by: claude-scheduled-20260920T1500Z-iv-t137
   claimed_at: '2026-09-20T15:16:57Z'
+  implementation_pr: 'silasfelinus/kind_robots#2929'
 - id: t-138
   milestone: m6
   title: Pending-art placeholder contract so queued art never reads as broken
