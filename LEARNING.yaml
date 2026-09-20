@@ -15703,3 +15703,19 @@ records:
     longer checking the one file that just moved. Grep for every place a repo re-derives "which
     files does this check cover" (a Get-ChildItem, a glob(), an rglob()) whenever adding a
     subdirectory to a previously-flat file layout, not just the CI trigger definition.
+- date: '2026-09-20'
+  project: conductor
+  task: t-186
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A "grep every *.ps1 for a banned direct-call shape" regression guard needs a self-test
+    proving it actually fires on a synthetic reintroduction, not just that today's files happen
+    to be clean -- otherwise a regex that silently stops matching (a refactor, an escaping
+    mistake) looks identical to "the gap stays closed" until the next manual audit finds it the
+    hard way again. Comment-only references to the banned pattern (several files here
+    legitimately explain in prose why they no longer call it that way) also need an explicit
+    skip, or the guard flags its own documentation.
