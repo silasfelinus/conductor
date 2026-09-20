@@ -262,7 +262,22 @@ tasks:
     removed -- and commentBackfillGeneration.ts) but only two were ever actually migrated.
     Worth checking whether it carries the same or a similar AbortError-naming gap, and
     migrating it to completeStructured() if so.
-  updated: '2026-09-20T14:18:58Z'
+
+    Cycle 79 (2026-09-20, scheduled Conductor sweep): followed up on cycle 78's kaizen --
+    read server/utils/commentBackfillGeneration.ts and its sibling
+    server/utils/commentBackfillAnthropic.ts end to end. Neither implements
+    AbortController/AbortSignal at all (plain fetch with no timeout logic), so neither can
+    carry the completeStructured()-adjacent AbortError-renaming bug fixed in cycle 78's
+    structuredCompletion.ts fix -- that specific concern does not apply. Confirmed via grep
+    (no AbortController/AbortError/signal: matches in either file) and a full read of
+    commentBackfillGeneration.ts (1194 lines). Both files are one-off backfill tooling only
+    reachable via utils/scripts/exportCommentBackfillPlans.ts and exportFacetDraftPlan.ts
+    (kind_robots#1769's manual comment-backfill run) -- no live route currently calls them,
+    so migrating them to completeStructured() would be a correctness-neutral consistency
+    refactor on dormant code, not a bug fix; deferring rather than spending a cycle's scope
+    on it. No code change this cycle. No Kind Robots mutation. Re-arming to ready per
+    established recurring-polish convention.
+  updated: '2026-09-20T20:01:27Z'
   owner: worker
   claimed_by: claude-scheduled-20260920T140500Z-storybook-t010
   claimed_at: '2026-09-20T13:57:02Z'
