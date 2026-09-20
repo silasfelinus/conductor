@@ -15650,3 +15650,20 @@ records:
     that's called from multiple sites (game logic AND the Vue display, here timingProfileFor), snapshot
     it onto the state object at construction time rather than threading it as a new parameter everywhere
     -- every existing call site picks it up for free and the visual/logic paths can't diverge.
+- date: 2026-09-20
+  project: ruler-hooked
+  task: t-034
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    When a "simulate the economy" task's live game has a skill-dependent success/failure step
+    (here: the timing-bar minigame's LANDED/ESCAPED outcome) with no fixed probability anywhere
+    in the data, don't invent a number to fill the gap -- define the simulation's unit of time
+    around the step that IS fully data-driven (one resolved catch, not one cast attempt) and say
+    so explicitly in the file. A `--check-drift` mode that regex-diffs a hand-synced data file
+    against its live TypeScript source, self-tested by injecting a real mismatch and confirming
+    it's caught, is worth adding whenever a design/simulation layer duplicates numbers a
+    developer could otherwise edit in only one of the two places by mistake.

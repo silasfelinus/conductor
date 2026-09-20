@@ -956,3 +956,21 @@ tasks:
   claimed_by: claude-scheduled-20260920-rh-t034
   claimed_at: '2026-09-20T18:57:30Z'
   implementation_pr: 'silasfelinus/conductor#4867'
+
+- id: t-035
+  milestone: m4
+  title: Extend simulate_economy.py to model a chosen purchase order and a combined "fully kitted out" curve
+  status: ready
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Kaizen from t-034 (silasfelinus/conductor#4867). The simulator currently reports
+    independent "turns to afford" thresholds per gear/kingdom item from zero coins,
+    which is the right first pass but doesn't model a real playthrough where earlier
+    purchases consume coins before later ones. Once Silas has played the shop and given
+    a pacing read (t-034's own note: costs/odds are still an unplayed first-pass guess),
+    extend projects/ruler-hooked/data/simulate_economy.py to take a purchase order
+    (e.g. cheapest-first, gear-first, kingdom-first) and report a single combined
+    "turns to fully kitted out" curve reflecting actual coin spend along the way,
+    alongside (not replacing) the existing independent-threshold report.
