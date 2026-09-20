@@ -15667,3 +15667,19 @@ records:
     against its live TypeScript source, self-tested by injecting a real mismatch and confirming
     it's caught, is worth adding whenever a design/simulation layer duplicates numbers a
     developer could otherwise edit in only one of the two places by mistake.
+- date: '2026-09-20'
+  project: conductor
+  task: t-184
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    When a task's own scope note offers a binary choice ("route it through X, or document why
+    it's a deliberate exception") and a real gap is found that isn't actually deliberate, a
+    third outcome -- document the gap honestly as a known, tracked issue and file a properly-
+    scoped follow-up task -- is often the right call, especially when the "correct" fix (here:
+    extracting a function pinned by source-contract tests out of a production Windows watchdog
+    script) can't be behaviorally verified in a sandbox with no PowerShell, only syntax-checked
+    by CI after the fact.
