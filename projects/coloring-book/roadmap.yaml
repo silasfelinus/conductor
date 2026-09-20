@@ -174,7 +174,7 @@ tasks:
   title: Monster Recast book 1 production pass — 36 final color/BW pairs
   passes: 0
   stakes: reversible
-  updated: '2026-09-19T22:35:36Z'
+  updated: '2026-09-20T00:40:13Z'
   depends_on: t-021
   note: >-
     Recurring Monster Recast book 1 production pass — 36 final color/BW pairs (depends_on t-021). Full cycle-by-cycle history through cycle 23 (2026-09-17) archived to projects/coloring-book/T022-HISTORY.md — see that file and t-022-run-log.md for every past recovery attempt and status check.
@@ -207,6 +207,19 @@ tasks:
     conductor/t-167, and coloring-book/t-039 are all still status: needs-human via
     audit_human_gates.py -- no change since cycle 24. No unblocked slice this cycle. Re-
     arming to ready (recurring), releasing the claim.
+
+    Cycle 26 (2026-09-20, scheduled Conductor sweep): render box UP per check_render_box.py
+    (media.acrocatranch.com answered, no throughput/heartbeat data -- see conductor/t-182,
+    admin-gated Kind Robots endpoints including /api/art/queue/stats now 401).
+    coloring_queue_status.py for monster-recast still shows the same single recovery
+    candidate mr-008 (job 26356), recommended_action recover-existing-jobs -- but the actual
+    recovery step (GET /api/art/queue/26356 to confirm current job state before any
+    resubmission) also hit the same 401 "Invalid or expired token" documented in
+    conductor/t-182, so no recovery attempt was made this cycle (would be unsafe to resubmit
+    blind). Still gated on conductor/t-165, conductor/t-167, and coloring-book/t-039 (all
+    unchanged, still needs-human) for the underlying relay issues, now compounded by the
+    admin-auth blocker in t-182. No unblocked slice this cycle; re-arming to ready
+    (recurring), releasing the claim.
   run_log: projects/coloring-book/t-022-run-log.md
   recurring: true
   implementation_pr: 'silasfelinus/conductor#4482'
