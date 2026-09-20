@@ -462,12 +462,18 @@ function Invoke-OrphanSweep($target, $expectedPid) {
 # overlap part of the recovery algorithm.
 #
 # For ComfyUI, stop PM2 first, reap only processes positively identified as this
-# engine, verify the listener is gone, and only then start the replacement.
-# Non-Comfy PM2 apps keep the ordinary restart path.
-function Get-ComfyEnginePids {
-    @(Get-CimInstance -ClassName Win32_Process -Filter "Name='python.exe'" -ErrorAction SilentlyContinue |
-        Where-Object { [string]$_.CommandLine -match 'main\.py' } |
-        Select-Object -ExpandProperty ProcessId)
+# engine, verify both the old process and listener are gone, and only then start
+# the replacement. Non-Comfy PM2 apps keep the ordinary restart path.
+function Get-ComfyEnginePids($port) {
+    @(
+        Get-CimInstance -ClassName Win32_Process -Filter "Name='python.exe'" -ErrorAction SilentlyContinue |
+            Where-Object {
+                $cmd = [string]$_.CommandLine
+                (Test-IsComfyEngine $_ $port) -and
+                    ($cmd -match "(^|\s)--port\s+$([regex]::Escape([string]$port))(\s|$)")
+            } |
+            Select-Object -ExpandProperty ProcessId
+    )
 }
 
 function Restart-Supervised($name) {
@@ -491,11 +497,7 @@ function Restart-Supervised($name) {
     # pm2 may return from stop after its Windows kill timeout while Python is
     # still alive. With the app deliberately stopped, a surviving ComfyUI is
     # unsupervised and can be reaped before any replacement exists.
-    foreach ($oldPid in @(Get-ComfyEnginePids)) {
-        $still = Get-CimInstance -ClassName Win32_Process -Filter "ProcessId = $oldPid" -ErrorAction SilentlyContinue
-        if (-not $still) { continue }
-        if (-not (Test-IsComfyEngine $still $port)) { continue }
-
+    foreach ($oldPid in @(Get-ComfyEnginePids $port)) {
         Write-Log "${name}: safe restart - force-killing surviving old engine pid $oldPid before replacement launch"
         try {
             Stop-Process -Id $oldPid -Force -ErrorAction Stop
@@ -504,8 +506,28 @@ function Restart-Supervised($name) {
         }
     }
 
-    # The listening port is the final authority. A process can escape the
-    # snapshot during a race, but it cannot bind 8188 invisibly.
+    # A kill request is not proof of death. A booting engine may not own the
+    # port yet, so checking only 8188 could say "free" while an old Python is
+    # still alive and about to bind it. Do not start until the old engine set is
+    # actually empty.
+    $oldEnginesGone = $false
+    for ($i = 0; $i -lt 10; $i++) {
+        $remaining = @(Get-ComfyEnginePids $port)
+        if ($remaining.Count -eq 0) {
+            $oldEnginesGone = $true
+            break
+        }
+        Start-Sleep -Seconds 1
+    }
+    if (-not $oldEnginesGone) {
+        $remaining = @(Get-ComfyEnginePids $port)
+        Write-Log "${name}: REFUSING safe restart - old ComfyUI pid(s) are still alive after cleanup: $($remaining -join ', ')"
+        return
+    }
+
+    # The listening port is the second authority. A manually launched ComfyUI
+    # could escape the --port process filter above, but it cannot bind 8188
+    # invisibly.
     $ownerPid = Get-PortListenerPid $port
     if ($ownerPid) {
         $owner = Get-CimInstance -ClassName Win32_Process -Filter "ProcessId = $ownerPid" -ErrorAction SilentlyContinue
