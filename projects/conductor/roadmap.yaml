@@ -3780,7 +3780,7 @@ tasks:
 - id: t-184
   milestone: m2
   title: 'Kaizen from PR #4869: make Restart-Supervised the single recovery handoff so stop/reap/verify/start never drifts across call sites'
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -3808,7 +3808,9 @@ tasks:
     sandbox to behaviorally verify a cross-file refactor of the production watchdog). Filed
     conductor/t-185 to do the extraction properly. All four healthcheck.ps1 call sites
     confirmed already routing through Restart-Supervised as expected.
-  updated: '2026-09-20T21:00:53Z'
+
+    PR #4876 merged (squash f06ddf2), CI green (26/26 checks). Done.
+  updated: '2026-09-20T21:04:24Z'
   claimed_by: claude-scheduled-20260920T205451Z-t184
   claimed_at: '2026-09-20T20:54:51Z'
 

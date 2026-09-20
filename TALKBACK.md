@@ -11401,3 +11401,17 @@ Claude-Session: https://claude.ai/code/session_0181bM37f5aQ5TKo2QWhXh48
 **Kaizen task:** conductor/t-184 — audit for any other watchdog recovery path in `ops/home-server/*.ps1` that shells out to `pm2 restart`/`stop`+`start` for the comfyui target directly, outside `Restart-Supervised`, since only paths that funnel through this one function get today's fix automatically.
 
 **Pattern note:** a second, independently-authored PR (#4870, `claude/gifted-ride-3yh0zd`, from a same-day interactive Silas troubleshooting session) was open concurrently and touches the same file (`ops/home-server/healthcheck.ps1`) for a related but distinct defect (orphan-sweep ordering and pm2 restart-scoring calibration, not the restart-handoff serialization this PR fixes). The two PRs' diff hunks don't overlap by line range, so this merge should not conflict it — left #4870 untouched since it reads as still-active, human-directed work outside this session's scope, not a worker/* branch awaiting review.
+
+## 2026-09-20 | Agent(Claude, scheduled conductor run) | conductor/t-184 | pattern
+
+**Decision:** merged (PR #4876, squash f06ddf2) — self-audited and self-merged in one scheduled run (role: worker, no separate reviewer session available).
+
+**What was good:**
+- Audit was exhaustive rather than a spot-check: grepped every `.ps1` under `ops/home-server/` for `pm2 restart|stop|start` shapes (not just the obvious `Restart-Supervised` callers), confirmed all four watchdog call sites already route through it, and found the one real gap (`restore-shares.ps1:318`) that a narrower grep on just `healthcheck.ps1` would have missed entirely.
+- Declined a blind cross-file refactor (extracting `Restart-Supervised` into a shared module) given `tests/test_healthcheck_restart_handoff.py` pins its exact location/text inside `healthcheck.ps1` and this sandbox has no PowerShell to behaviorally verify Windows-specific process control beyond CI's syntax check. Documented the gap inline instead and filed conductor/t-185 with the concrete extraction plan, rather than either skipping the finding or risking the production render-host watchdog on an unverified refactor.
+- Full local test suite (`PYTHONPATH=.:scripts pytest tests/ -q`) run before pushing, plus the two most relevant test files targeted first; all 26 CI checks (including the windows-latest PowerShell syntax parse) came back green before merge.
+
+**What to improve:**
+- Nothing notable — this was a small, well-scoped audit task that landed cleanly.
+
+**Kaizen task:** conductor/t-185 — extract `Restart-Supervised` (and its three helpers) into a shared dot-sourceable file so `restore-shares.ps1` can route its direct `pm2 restart comfyui` through the same safe handoff. Filed directly from this session's own audit finding rather than as a separate end-of-cycle kaizen slot, since the finding and the follow-up task are the same piece of work.
