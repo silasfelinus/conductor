@@ -3842,7 +3842,7 @@ tasks:
 - id: t-186
   milestone: m2
   title: 'Add a regression guard so no ops/home-server/*.ps1 script can reintroduce a direct pm2 restart/stop comfyui call outside lib/Restart-ComfySupervised.ps1'
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -3861,7 +3861,7 @@ tasks:
     so the next such gap is caught in CI rather than by the next manual audit.
   claimed_by: claude-sweep-2026-09-20T-conductor-t186
   claimed_at: '2026-09-20T22:57:19Z'
-  updated: '2026-09-20T22:57:19Z'
+  updated: '2026-09-20T23:01:13Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
