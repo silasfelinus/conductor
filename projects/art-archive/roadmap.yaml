@@ -1276,7 +1276,7 @@ tasks:
   - id: t-041
     milestone: m5
     title: "Run the first real production import of the private archive and record the result"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     gate_human: true
@@ -1288,7 +1288,9 @@ tasks:
       TO CLOSE: paste the dry-run and import numbers into this note and set approved_by_human: true and status: done. Then re-open t-020's visual acceptance against the populated grid at 390/768/1280px -- its own note flags that it could only exercise the empty state. t-033 (archive preset ArtJobs hardcoding engine 'A1111' against the COMFY-only direction) is a real bug but does not block this: scanning, importing, rating, collecting, moving, and Resource matching are all independent of regeneration.
 
       Silas explicitly directed this session to fix the private archive import rather than merely report on it. Human gate cleared for the reversible private production import; proceed through the authenticated Kind Robots admin API and record aggregate dry-run/import results without exposing private filenames or secrets.
-    updated: '2026-09-20T11:26:00Z'
+
+      Added an agent-safe production import runner plus GitHub Actions workflow using Conductor's existing KR_API_TOKEN secret. The first-import request marker will trigger the workflow on merge; it runs dry-run first, refuses zero-file or scanner-issue imports, performs the idempotent production import, verifies every listed ArchiveEntry remains private+mature, and logs only aggregate counts.
+    updated: '2026-09-20T11:33:00Z'
     approved_by_human: true
     owner: worker
     claimed_by: 2026-09-20T112500Z-art-archive-t041-chatgpt-fix1
