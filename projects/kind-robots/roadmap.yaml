@@ -2646,5 +2646,53 @@ tasks:
   claimed_at: '2026-09-19T22:36:23Z'
   implementation_pr: 'silasfelinus/kind_robots#2903'
 
+- id: t-114
+  milestone: m6
+  title: 'Decide how much entity context (Krea 2 / cfg-1 engines) belongs in the positive
+    art prompt before the 1,152 queued negation-repair jobs render'
+  status: needs-human
+  gate_human: true
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: |-
+    FOR SILAS: filed from a root TALKBACK.md escalation (2026-09-20, Krea 2 prompt-repair
+    render pass) -- the repair pass's own queued renders would re-commission the exact bug
+    the pass exists to fix, because /api/art/enqueue composes the final prompt from the
+    entity AFTER the caption is repaired.
+
+    What was produced: server/api/art/enqueue.post.ts:451 calls buildEntityArtPrompt()
+    whenever entityArt is present, and server/utils/entityArt.ts:1177 appends, in order,
+    'Compose this as <framing> for the following <entity>.', every contextLines() line
+    (Name, Type, Rarity, Description, Effect, Flavor text, Existing art prompt -- the
+    caption repeated verbatim), then artContextRules('entity'), which itself ends 'Use
+    the entity context for identity and continuity, not as a checklist and not as text
+    to render.' Sampled 200 of the 1,152 pending negation-repair jobs: 200/200 contain
+    that full block, so what will actually render includes the caption AND the raw
+    Description/Effect/Flavor text/'Existing art prompt' fields at cfg 1 -- ART-PROMPTS.md
+    rule 6 (Description/Effect/Flavor/backstory describe what the thing DOES, not what it
+    looks like) plus a rule-3 negation ('not as text to render') in positive conditioning.
+    It is also why 11 of 21 outstanding Rewards cannot be queued at all: their stored
+    prompts are clean, but the composed entity-context block trips the contract validator
+    on phrases like 'only when'/'only if'/'not two people who' that live only in the
+    context, not the stored prompt.
+
+    TO APPROVE: pick one of (a) drop contextLines()/artContextRules() for distilled/
+    cfg-1 engines (Krea 2) only, keeping them for instruction-following engines, (b) keep
+    identity-only lines (Name, Type, Species, Genre) and drop the prose lines
+    (Description, Effect, Flavor text, Existing art prompt), or (c) leave it as-is if the
+    context block is doing something useful that isn't visible from this session -- or
+    describe a different approach. Whichever way it goes, the 1,152 already-queued
+    negation-repair jobs must be re-queued once buildEntityArtPrompt changes, since the
+    composite prompt is frozen into the job payload at enqueue time
+    (scripts/render_repaired_art.py re-queues from the manifest in one pass). The render
+    box/relay is currently down (conductor/t-165, t-167), so nothing has rendered yet --
+    there is no burned GPU time to undo, only a decision to make before it comes back.
+
+    What unblocks when Silas decides: buildEntityArtPrompt() gets the chosen change, the
+    1,152 queued jobs get re-queued from the manifest, and the 11 blocked Rewards can be
+    resubmitted.
+  updated: '2026-09-20T03:00:00Z'
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
