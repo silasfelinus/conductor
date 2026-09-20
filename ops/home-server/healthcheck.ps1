@@ -449,65 +449,134 @@ function Invoke-OrphanSweep($target, $expectedPid) {
 }
 
 # ---------------------------------------------------------------------------
-# Restart via pm2, then MAKE SURE the old engine actually died.
+# Serialized ComfyUI restart
 #
-# 2026-09-08: `pm2 pid comfyui` reported 8980, a process that no longer existed,
-# while THREE real ComfyUI engines ran as children of the pm2 daemon. Every
-# `pm2 restart` therefore signalled a corpse, killed nothing, and spawned one
-# more copy. Four watchdog restarts across one night stacked engines onto a 12GB
-# card; the survivor held port 8188 and the comfyui.db lock, so each new copy
-# spent ~45 seconds loading 60 custom nodes only to exit on 'Port 8188 is
-# already in use'. That is the ~60-90 second restart cycle in the log.
+# PM2's Windows kill path is not a safe handoff boundary for this engine.
+# Several incidents have shown `pm2 restart comfyui` returning after its kill
+# timed out while the old Python process was still alive, then immediately
+# spawning a replacement. The two engines then compete for port 8188,
+# comfyui.db, and the same GPU.
 #
-# kill_timeout is 15s in ecosystem.config.js. A ComfyUI blocked in CUDA init or
-# on an SMB read against the model share outlives that, and pm2's Windows kill
-# then gives up quietly and starts the new copy anyway - same outcome, orphan
-# either way. Reporting it is not enough: nothing else on this box reaps them.
+# The old watchdog mitigated that by reaping the survivor eight seconds AFTER
+# the replacement had launched. That shortened the collision but still made an
+# overlap part of the recovery algorithm.
 #
-# So: snapshot the engines before the restart, and afterwards force-kill any
-# that survived and are not the pid pm2 now reports.
-function Get-ComfyEnginePids {
-    @(Get-CimInstance -ClassName Win32_Process -Filter "Name='python.exe'" -ErrorAction SilentlyContinue |
-        Where-Object { [string]$_.CommandLine -match 'main\.py' } |
-        Select-Object -ExpandProperty ProcessId)
+# For ComfyUI, stop PM2 first, reap only processes positively identified as this
+# engine, verify both the old process and listener are gone, and only then start
+# the replacement. Non-Comfy PM2 apps keep the ordinary restart path.
+function Get-ComfyEnginePids($port) {
+    @(
+        Get-CimInstance -ClassName Win32_Process -Filter "Name='python.exe'" -ErrorAction SilentlyContinue |
+            Where-Object {
+                $cmd = [string]$_.CommandLine
+                (Test-IsComfyEngine $_ $port) -and
+                    ($cmd -match "(^|\s)--port\s+$([regex]::Escape([string]$port))(\s|$)")
+            } |
+            Select-Object -ExpandProperty ProcessId
+    )
 }
 
 function Restart-Supervised($name) {
-    $before = @()
-    if ($name -eq 'comfyui') { $before = Get-ComfyEnginePids }
-
-    & pm2 restart $name | Out-Null
-    if ($name -ne 'comfyui') { return }
-
-    # pm2 reports 'online' well before the engine is up; 8s is only long enough
-    # for the new pid to be recorded, which is all we need to spare it.
-    Start-Sleep -Seconds 8
-    $newPid = 0
-    [int]::TryParse("$(& pm2 pid $name)".Trim(), [ref]$newPid) | Out-Null
-
-    # Never sweep blind. If pm2 cannot tell us which pid is now ITS engine, the
-    # restart itself probably failed - and killing every surviving engine would
-    # leave the box with none at all, which is strictly worse than an orphan.
-    if (-not $newPid) {
-        Write-Log "${name}: pm2 did not report a pid after the restart - skipping the orphan sweep rather than killing blind"
+    if ($name -ne 'comfyui') {
+        & pm2 restart $name | Out-Null
         return
     }
 
-    foreach ($oldPid in $before) {
-        if ($newPid -and ([int]$oldPid -eq $newPid)) { continue }
+    $target = $targets |
+        Where-Object { $_.Name -eq $name } |
+        Select-Object -First 1
+    $port = if ($target -and $target.Port) { [int]$target.Port } else { 8188 }
 
-        # Re-read the process rather than trusting the snapshot: Windows recycles
-        # pids, and we must never kill whatever inherited the number.
-        $still = Get-CimInstance -ClassName Win32_Process -Filter "ProcessId = $oldPid" -ErrorAction SilentlyContinue
-        if (-not $still) { continue }
-        if ([string]$still.CommandLine -notmatch 'main\.py') { continue }
+    Write-Log "${name}: safe restart - stopping pm2 before reaping the old engine"
+    & pm2 stop $name | Out-Null
+    if ($LASTEXITCODE -ne 0) {
+        Write-Log "${name}: pm2 stop failed (exit $LASTEXITCODE) - REFUSING to start a replacement on top of an engine pm2 may still own"
+        return
+    }
 
-        Write-Log "${name}: pm2 restart left engine pid $oldPid alive (pm2 now reports $newPid) - force-killing the orphan"
+    # pm2 may return from stop after its Windows kill timeout while Python is
+    # still alive. With the app deliberately stopped, a surviving ComfyUI is
+    # unsupervised and can be reaped before any replacement exists.
+    foreach ($oldPid in @(Get-ComfyEnginePids $port)) {
+        Write-Log "${name}: safe restart - force-killing surviving old engine pid $oldPid before replacement launch"
         try {
             Stop-Process -Id $oldPid -Force -ErrorAction Stop
         } catch {
-            Write-Log "${name}: could not kill orphaned pid $oldPid ($($_.Exception.Message))"
+            Write-Log "${name}: could not kill surviving old engine pid $oldPid ($($_.Exception.Message))"
         }
+    }
+
+    # A kill request is not proof of death. A booting engine may not own the
+    # port yet, so checking only 8188 could say "free" while an old Python is
+    # still alive and about to bind it. Do not start until the old engine set is
+    # actually empty.
+    $oldEnginesGone = $false
+    for ($i = 0; $i -lt 10; $i++) {
+        $remaining = @(Get-ComfyEnginePids $port)
+        if ($remaining.Count -eq 0) {
+            $oldEnginesGone = $true
+            break
+        }
+        Start-Sleep -Seconds 1
+    }
+    if (-not $oldEnginesGone) {
+        $remaining = @(Get-ComfyEnginePids $port)
+        Write-Log "${name}: REFUSING safe restart - old ComfyUI pid(s) are still alive after cleanup: $($remaining -join ', ')"
+        return
+    }
+
+    # The listening port is the second authority. A manually launched ComfyUI
+    # could escape the --port process filter above, but it cannot bind 8188
+    # invisibly.
+    $ownerPid = Get-PortListenerPid $port
+    if ($ownerPid) {
+        $owner = Get-CimInstance -ClassName Win32_Process -Filter "ProcessId = $ownerPid" -ErrorAction SilentlyContinue
+        if (Test-IsComfyEngine $owner $port) {
+            Write-Log "${name}: safe restart - port $port is still held by old ComfyUI pid $ownerPid; force-killing it before replacement launch"
+            try {
+                Stop-Process -Id $ownerPid -Force -ErrorAction Stop
+            } catch {
+                Write-Log "${name}: could not kill old port owner pid $ownerPid ($($_.Exception.Message))"
+            }
+        } else {
+            Write-Log "${name}: REFUSING safe restart - port $port is held by unrelated pid $ownerPid; starting ComfyUI would only crash-loop"
+            return
+        }
+    }
+
+    # Give Windows a bounded moment to release the listener. Never launch the
+    # replacement while the port is still occupied.
+    $portReleased = $false
+    for ($i = 0; $i -lt 10; $i++) {
+        if (-not (Get-PortListenerPid $port)) {
+            $portReleased = $true
+            break
+        }
+        Start-Sleep -Seconds 1
+    }
+    if (-not $portReleased) {
+        $stuckPid = Get-PortListenerPid $port
+        $ownerText = if ($stuckPid) { " by pid $stuckPid" } else { "" }
+        Write-Log "${name}: REFUSING safe restart - port $port is still occupied$ownerText after cleanup"
+        return
+    }
+
+    Write-Log "${name}: safe restart - old engine gone and port $port free; starting replacement"
+    & pm2 restart $name | Out-Null
+    if ($LASTEXITCODE -ne 0) {
+        Write-Log "${name}: replacement start failed (pm2 exit $LASTEXITCODE)"
+        return
+    }
+
+    # PM2 records the new pid before ComfyUI is ready. This is identity
+    # verification only; the normal startup-grace logic owns readiness.
+    Start-Sleep -Seconds 8
+    $newPid = 0
+    [int]::TryParse("$(& pm2 pid $name)".Trim(), [ref]$newPid) | Out-Null
+    if ($newPid) {
+        Write-Log "${name}: safe restart launched supervised replacement pid $newPid"
+    } else {
+        Write-Log "${name}: pm2 did not report a replacement pid after safe restart"
     }
 }
 

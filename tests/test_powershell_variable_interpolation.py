@@ -62,13 +62,16 @@ class PowerShellInterpolationTests(unittest.TestCase):
             "WHOLE file:\n" + "\n".join(offenders),
         )
 
-    def test_the_three_healthcheck_lines_stay_fixed(self):
-        """The exact regression: Restart-Supervised's orphan-sweep logging."""
+    def test_restart_supervised_logging_stays_delimited(self):
+        """Restart-Supervised may add logs, but `$name:` must never return."""
         text = (REPO / "ops" / "home-server" / "healthcheck.ps1").read_text(
             encoding="utf-8"
         )
-        self.assertNotIn('"$name:', text)
-        self.assertEqual(text.count('"${name}:'), 3)
+        start = text.index("function Restart-Supervised($name) {")
+        end = text.index("function Invoke-PortReclaim($target, $expectedPid) {")
+        restart = text[start:end]
+        self.assertNotIn('"$name:', restart)
+        self.assertIn('"${name}:', restart)
 
 
 if __name__ == "__main__":
