@@ -148,7 +148,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 50
   stakes: reversible
   note: |-
@@ -216,7 +216,22 @@ tasks:
     abandon path) for the same class of stale-flag issue -- it already routes through
     reset() so is likely fine, but worth confirming no other run-scoped ref bypasses
     reset()/openStory() entirely.
-  updated: '2026-09-20T07:03:38Z'
+
+    Cycle 77: followed up on cycle 75's kaizen (audit storybook-storymaker.vue's abandon
+    leaveRun() call site for the same stale-canEndOnDemand-flag class of bug). Traced the
+    full call graph in kind_robots main (post-#2913/#2915, commit 7fb4ca6): the only two
+    leaveRun() call sites are storybook-storymaker.vue's playAgain()/newTable() and
+    storybook-reading.vue's leave() (the abandon path) -- both call runStore.leaveRun(),
+    which is a thin wrapper around reset(), which already clears canEndOnDemand.value (line
+    320). Checked every other run.value mutation site in storybookRunStore.ts for the same
+    bypass risk: openStory() sets canEndOnDemand=false immediately after run.value (line
+    426), loadRun() sets it from readyToResolve immediately after (line 470), the turn-
+    payload merge at line 334 sets it from the same payload three lines later, and
+    resolveRun()'s status->COMPLETE mutation at line 562 correctly leaves it alone
+    (showEnding gates on isComplete+ending, not canEndOnDemand). No bypass found -- the
+    abandon path was already fine, as cycle 75's kaizen suspected. No Kind Robots mutation
+    this cycle. Re-arming to ready per established recurring-task convention.
+  updated: '2026-09-20T07:03:50Z'
   owner: worker
   claimed_by: claude-scheduled-20260920T065928Z-storybook-t010
   claimed_at: '2026-09-20T07:03:38Z'
