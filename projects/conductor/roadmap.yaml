@@ -3000,7 +3000,20 @@ tasks:
     essentially concurrent with the stale claim). Noting the claimant name is 'Silas-PC'
     rather than the usual automated relay claimant, in case that means hands-on diagnosis is
     already underway. No action taken beyond recording.
-  updated: '2026-09-17T13:34:17Z'
+
+    Cross-reference (scheduled Conductor session, 2026-09-20T06:59Z, from the
+    sweep/butterfly-gallery/t-033 cycle): check_render_box.py now gives a direct, non-
+    inferred DOWN confirmation -- Comfy heartbeat last seen 2026-09-20T00:09:43Z (409
+    minutes ago at check time), kr-relay not reporting at all. /api/art/queue/stats
+    corroborates: staleRunning has exactly one entry, ArtJob 28763 claimed by 'Silas-PC' at
+    2026-09-20T00:08:15Z and never completed, latestDoneAt frozen at 2026-09-19T23:44:16Z
+    (throughput was healthy right up to that point: 120 imagesCreatedInWindow, DONE dropped
+    from PENDING=2207 on 09-17 to PENDING=1342 now). Reading together: the box was draining
+    the backlog normally, then something wedged mid-job on 28763 around 00:08-00:09Z and the
+    relay has not recovered since (~7h at check time). Same incident class as this task's
+    own history, not a new defect. No action taken -- still requires hands-on-the-box
+    diagnosis.
+  updated: '2026-09-20T06:59:54Z'
 
 - id: t-168
   milestone: m2
