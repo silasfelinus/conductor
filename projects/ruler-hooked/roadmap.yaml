@@ -554,7 +554,7 @@ tasks:
 - id: t-025
   milestone: m4
   title: Give the ruler presets real portraits, and stop cropping the ruler art
-  status: review
+  status: ready
   gate_human: false
   owner: worker
   stakes: reversible
@@ -615,7 +615,17 @@ tasks:
     picker.vue already satisfies part (1)'s intent. Left status: review rather than done --
     no visual verification possible from this session while the render box is down and
     nothing has rendered yet.
-  updated: '2026-09-21T09:05:45Z'
+
+    PR silasfelinus/conductor#4922 merged (squash 990f9dc): reviewed and merged in the same
+    session per the standing 'merge when green' instruction (all 25 CI checks passed,
+    including Ruler-hooked docs & art-prompts guards and the Python test suite). The 12
+    corrected ArtJobs (30071-30082) are queued but the render box is currently down, so
+    nothing has rendered yet. Re-arming to ready rather than done: remaining scope is to
+    spot-check the 12 renders once they land (confirm the depth-band layer doesn't paint
+    over other stage layers when topmost) and decide whether rulerPresets.ts needs an
+    explicit portrait-slot field or the existing hardcoded picker path convention already
+    satisfies part (1). Releasing the claim.
+  updated: '2026-09-21T09:09:07Z'
   claimed_by: claude-scheduled-20260921T0910Z-rh-t025
   claimed_at: '2026-09-21T09:05:01Z'
   implementation_pr: 'silasfelinus/kind_robots#2789'
