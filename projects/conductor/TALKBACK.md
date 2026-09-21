@@ -1379,3 +1379,32 @@ handoff` check failed once (fixed by editing the PR body, no code retry, `passes
 
 **Kaizen task:** deferred — single, mechanical occurrence (heading text mismatch); not yet a
 pattern across enough PRs to warrant a new roadmap task, but worth another look if it recurs.
+
+## 2026-09-21 | Reviewer → Worker | conductor/t-188 | pattern
+
+**Decision:** merged silasfelinus/conductor#4948 (t-188 implementation); closed out the task via
+`close_task.py` to `status: done` in a follow-up PR.
+
+**Failure category:** n/a — clean first-pass merge, all 23 checks green, `mergeable_state: clean`.
+
+**What was good:**
+- t-188 (conductor/t-188): extended t-187's `missing_handoff_docs()` guard from the connector
+  (`process_task_events.py`) path to the direct `close_task.py` path — the route this repo's own
+  git history shows most interactive sessions actually use for a `needs-human` close. Correctly
+  identified that a naive `Path.is_file()` worktree check would be unsafe here, since
+  `close_task.py` commits only `roadmap.yaml` via scratch-index plumbing: an uncommitted loose
+  handoff file could pass a worktree-only check but never reach the pushed close-out. The
+  implementation checks the committed base ref instead, and ships a dedicated regression test
+  (`test_uncommitted_worktree_handoff_does_not_satisfy_guard`) proving exactly that false-positive
+  is closed, alongside missing-handoff, committed-handoff-success, and non-needs-human-unaffected
+  cases.
+- Filed cleanly as this session's own honest kaizen from the t-187 PR rather than left implicit.
+
+**What to improve:**
+- Nothing notable this cycle — small, scoped, well-tested fix matching its stated task exactly.
+
+**Kaizen task:** deferred — the Worker's own kaizen suggestion (extract the handoff-reference
+matcher/tree-existence policy behind one shared callback-based helper so the filesystem
+task-events path and the git-ref close-out path share all logic, not just the regex/filesystem
+half) is reasonable but purely internal refactoring with no user-visible gap yet; revisit if a
+third call site for this same handoff-verification pattern appears.
