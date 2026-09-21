@@ -148,8 +148,8 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
-  passes: 50
+  status: ready
+  passes: 51
   stakes: reversible
   note: |-
     Recurring Storybook front-end polish task (de-facto recurring: re-armed to ready after each merge per the established TALKBACK 2026-08-24 precedent rather than closed done). Full cycle-by-cycle history through the 2026-09-16 state-reconciliation note archived to projects/storybook/T010-HISTORY.md — see that file for every past cycle's specific find/fix (screenshot-driven layout passes, verifyStorybookTable.mjs / contract-check additions, the felt-table redesign, etc.).
@@ -302,11 +302,46 @@ tasks:
     51 checks green, mergeable_state clean before merge. Re-arming to ready per this task's
     established recurring-polish convention. Kaizen for next cycle: storybookRuns.ts (1425
     lines) is the largest never-audited surface in this task's history -- a good next read.
-  updated: '2026-09-21T01:58:41Z'
+
+    Cycle 81 (2026-09-21, scheduled Conductor sweep): read server/utils/storybookRuns.ts
+    end-to-end (1425 lines, never previously audited) via a dedicated review pass. Found a
+    genuine one: the default narrator called generateStorybookTurn(request) with no second
+    argument, so options.finalTurn was always false regardless of request.isFinalTurn --
+    while buildStorybookSystemPrompt() reads request.isFinalTurn directly and tells the
+    model, in prose, to return an empty choices array on the real final turn. A model that
+    obeyed that closing instruction failed the schema/validator (still requiring 2-4
+    choices) instead of completing the story. verifyStorybookPlayLoop.ts's stub narrator
+    reads isFinalTurn directly and bypasses generateStorybookTurn entirely, so this was
+    untested. Fixed by exporting the default narrator as defaultStorybookNarrator and
+    forwarding { finalTurn: request.isFinalTurn }. Added
+    utils/scripts/verifyStorybookFinalTurnNarratorGuard.ts (mocks global.fetch, no
+    network -- and, after one CI-caught fix, no database either: the first push broke
+    contract-tests.yml's DB-free job because importing storybookRuns.ts initializes Prisma,
+    fixed by the same dummy-DATABASE_URL + dynamic-import pattern
+    verifyStorybookQuestDoubleApplyGuard.ts already established). Confirmed it fails
+    pre-fix via git-stash round trip. Wired into package.json and contract-tests.yml.
+    Verified: eslint clean, prettier --check clean, vue-tsc --noEmit repo-wide exit 0,
+    test:storybook-narration/test:storybook-quest-double-apply-guard/test:storybook-run-
+    store/test:storybook-character-gating all unchanged/passing. Merged as
+    silasfelinus/kind_robots#2945 (squash a4821b5), all 50 checks green, mergeable_state
+    clean before merge.
+
+    Same audit surfaced two more real bugs in storybookRuns.ts, deliberately left out of
+    this PR to keep it scoped: a concurrency gap in submitStoryTurn (no unique constraint
+    on LifeChoice(lifeRunId, chapter) and no conditional update, so a retried/concurrent
+    request can double-write a turn and lose inventory/quest state), and a post-final "Ask
+    for it again" path that regresses readyToResolve and can persist an off-budget extra
+    turn. Filed as storybook/t-056 and t-057 with full repro detail rather than folding
+    into this cycle's note. Re-arming to ready per this task's established recurring-polish
+    convention. Kaizen for next cycle: t-056 (the concurrency gap) is the more severe of
+    the two filed tasks and a natural next pick, though it needs a scratch-database
+    regression test (mirroring verifyStorybookPlayLoop.ts) rather than a pure-function
+    guard, since the bug is inherently about two concurrent Prisma transactions.
+  updated: '2026-09-21T02:41:00Z'
   owner: worker
   claimed_by: claude-scheduled-20260921T015840Z-storybook-t010-audit
   claimed_at: '2026-09-21T01:58:41Z'
-  implementation_pr: 'silasfelinus/kind_robots#2943'
+  implementation_pr: 'silasfelinus/kind_robots#2945'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
@@ -1374,3 +1409,86 @@ tasks:
   claimed_by: claude-scheduled-20260918T033500Z-storybook-t055
   claimed_at: '2026-09-18T03:31:53Z'
   implementation_pr: 'silasfelinus/kind_robots#2817'
+
+- id: t-056
+  milestone: m7
+  title: "submitStoryTurn has no concurrency guard -- a retried/duplicate turn request can double-write state and lose inventory/quest changes"
+  status: ready
+  stakes: reversible
+  passes: 0
+  owner: null
+  note: |-
+    Found auditing storybookRuns.ts for the first time (t-010 cycle 79, 2026-09-21).
+
+    submitStoryTurn() (server/utils/storybookRuns.ts) reads `run` once at the top via
+    getStoryRunForUser() and checks `input.turnIndex !== run.currentChapter` against that
+    stale snapshot. The eventual write -- tx.lifeChoice.create({ chapter: run.currentChapter,
+    ... }) and tx.lifeRun.update({ currentChapter: nextTurnIndex, ... }) -- happens only
+    after an `await narrateImpl(...)` round-trip (an LLM call), with nothing re-validating
+    run.currentChapter inside the transaction.
+
+    LifeChoice has no unique constraint on (lifeRunId, chapter) -- prisma/schema.prisma only
+    has non-unique @@index([lifeRunId]) / @@index([chapter]). So two concurrent (or
+    client-retried, e.g. after a request timeout) requests for the same turnIndex will both
+    pass the stale check, both narrate, and both commit: two LifeChoice rows at the same
+    chapter, lifeStat.upsert(... increment: delta) applied twice (double-counted axis values
+    that decide the ending), and inventory/questLedger computed from the same pre-transaction
+    snapshot in both requests, so whichever transaction commits last silently overwrites
+    (loses) the other's inventory/quest changes.
+
+    FIX: make the advance conditional, e.g.
+    tx.lifeRun.updateMany({ where: { id: run.id, currentChapter: run.currentChapter },
+    data: {...} }) and treat count === 0 as a conflict (re-fetch and either replay or
+    reject the stale request), or add @@unique([lifeRunId, chapter]) to LifeChoice and
+    catch the constraint violation as the idempotency signal (an additive index --
+    AGENTS.md's migration rules allow this without a human gate).
+
+    Write a regression test that drives two concurrent submitStoryTurn() calls for the
+    same run/turnIndex against a scratch database (mirroring
+    utils/scripts/verifyStorybookPlayLoop.ts's seed/cleanup pattern) and asserts only one
+    LifeChoice row and one stat increment survive.
+  updated: '2026-09-21T02:30:00Z'
+
+- id: t-057
+  milestone: m7
+  title: "Post-final 'Ask for it again' regresses readyToResolve and can generate an off-budget extra turn"
+  status: ready
+  stakes: reversible
+  passes: 0
+  owner: null
+  note: |-
+    Found auditing storybookRuns.ts for the first time (t-010 cycle 79, 2026-09-21).
+
+    After the true final move (isFinalTurn true), submitStoryTurn's transaction sets
+    pendingTurn: null and advances currentChapter, but never changes run.status -- it stays
+    'ACTIVE'. The frontend's completion flag is purely status === 'COMPLETE'
+    (stores/storybookRunStore.ts), so at this point the reading UI legitimately still shows
+    "This scene never arrived. [Ask for it again]" (components/storybook/storybook-reading.vue),
+    wired to submitMove(null) -> the null-move branch in submitStoryTurn.
+
+    BUG A: that branch's readyToResolve formula is
+    `(isEndless || questDone(quest)) && run.currentChapter > minTurns` -- it drops the
+    "budgeted run past its turn budget" case every other branch includes (compare the
+    replay branch and the main branch, both of which OR in
+    `run.currentChapter > turnBudget` / `isFinalTurn`). For a non-endless, non-taskmaster
+    run past its budget, this evaluates false even though `isFinalTurn: true` is reported
+    in the same response object -- an internally contradictory payload that flips the
+    reader's canEndOnDemand back to false after they already earned the ending, hiding the
+    button that lets them resolve/collect it.
+
+    BUG B: narrateInto() (called by this same null-move branch) has no finality handling
+    at all -- unlike the main branch's explicit `nextPending = isFinalTurn ? null : {...}`,
+    it unconditionally persists a brand-new pendingTurn regardless of
+    args.turnBudget/args.turnIndex. So the post-final "Ask for it again" click regenerates
+    and PERSISTS a scene at turnIndex = turnBudget + 1, past the run's configured budget.
+    If the narrator doesn't strictly honor the final-turn prose instruction (see t-010
+    cycle 79's other fix, the finalTurn wiring bug) and returns real choices, the reader
+    can pick one and submitStoryTurn's main branch will process it as an ordinary turn --
+    a genuine extra LifeChoice row and LifeStat increments beyond turnBudget.
+
+    FIX: align the null-move branch's readyToResolve formula with the other two branches
+    (OR in the budget-exceeded/isFinalTurn case), and have narrateInto (or its one caller
+    in the null-move branch) refuse to regenerate/persist a scene when
+    `args.turnBudget !== null && args.turnIndex >= args.turnBudget`, returning the
+    terminal state instead.
+  updated: '2026-09-21T02:30:00Z'

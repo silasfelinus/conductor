@@ -15741,3 +15741,27 @@ records:
     (dummy DATABASE_URL set before a dynamic import), not a source refactor, but it cost a
     full CI round-trip to discover contract-tests.yml's "Contract verifiers" job is
     genuinely DB-free and doesn't set one.
+- date: '2026-09-21'
+  project: storybook
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Cycle 81 of the recurring storybook/t-010 bug-hunt: a system prompt and its schema/
+    validator can silently disagree about the SAME condition when they read it from two
+    different places. buildStorybookSystemPrompt() read request.isFinalTurn directly to
+    tell the model "return an empty choices array," while the schema/validator decided the
+    choice-count rule from a separate options.finalTurn the caller had to remember to pass
+    -- and the one production call site never did. The lesson generalizes: when a prompt
+    and its own response contract both depend on the same boolean, derive the contract's
+    flag FROM the prompt's input at the call site that builds both, rather than accepting
+    it as a second, independently-suppliable parameter that can drift from the first.
+    Also: forgot the DATABASE_URL-at-import-time gotcha from cycle 80's own lesson while
+    writing this cycle's own guard script (a static import of storybookRuns.ts, which
+    initializes Prisma) -- had to relearn it via a live CI failure on the first push,
+    despite it being spelled out in the immediately preceding LEARNING.yaml entry. Reading
+    the prior cycle's own lesson before writing a new guard script would have caught this
+    before pushing, not after.
