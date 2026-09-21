@@ -1,0 +1,14 @@
+version: 1
+project: conductor
+task: t-177
+operation: ready
+session: 2026-09-21T224300Z-conductor-t177-ps51-a11
+updated: '2026-09-21T22:43:00Z'
+note: >-
+  REOPENED 2026-09-21 after Silas acknowledged the active conductor security flag and explicitly said "fix".
+  The windowless-process change merged in PR #4901 regressed Windows PowerShell 5.1: ProcessStartInfo.ArgumentList
+  is unavailable on the .NET Framework runtime used by SILAS-PC, and ErrorActionPreference=SilentlyContinue hides
+  the missing-property failure. The helper therefore starts cmd.exe without the intended /d /c pm2.cmd jlist
+  arguments, waits 60 seconds, kills it, and emits the hourly WATCHDOG BLIND alert. Fix the helper to use a
+  PowerShell-5.1-compatible Arguments path with correct Windows argument quoting, add a regression guard against
+  ArgumentList, and preserve CreateNoWindow plus the existing bounded timeout.
