@@ -11544,3 +11544,42 @@ green on both heads before merge.
 **Kaizen task:** deferred — no fresh systematic weakness surfaced; `check_facet_prompt_subjects.py`
 already is this cycle's kaizen-shaped output (a permanent session-startup check against exactly
 the gap that let 149 bad prompts through a green contract).
+
+## 2026-09-21 | Reviewer → Worker | conductor/none + ruler-hooked/t-037 | pattern
+
+**Decision:** merged silasfelinus/conductor#4941 (rescue-only doc PR); left `ruler-hooked/t-037`'s
+roadmap state untouched (`needs-human`, `soft_gate: true`) since it was already correct once the
+doc exists.
+
+**Failure category:** n/a — no roadmap task was rejected; this is a process-gap finding, not a
+Worker-quality rejection.
+
+**What was good:**
+- The connector-only fallback itself (writing a full patch/test handoff doc rather than risking a
+  whole-file rewrite of a large script from paged reads) followed AGENTS.md's cross-repo section
+  correctly in spirit.
+
+**What to improve — pattern:**
+- A task-events entry queued a `needs-human`/`soft_gate` transition for `ruler-hooked/t-037` whose
+  note claimed a handoff file had been "preserved" at a specific path — but that commit
+  (`86af117` → applied by `45333d3`) only added the task-events YAML, never the file itself. The
+  real file existed only on a separate, unmerged branch
+  (`worker/ruler-hooked-t-037-openai-scheduled-2026-09-21T122311Z-ruler-hooked-t037-a11`) whose
+  merge-base predated the soft-gate event, and which also carried an unrelated
+  `ops/home-server/RENDER-BOX-STATUS` flip and a stale roadmap edit reverting the task back to
+  `status: claimed` — i.e. two instances of the same automated cycle diverged on the same task
+  without either one seeing the other's state. This is the mirror image of the documented
+  "same-session post-compaction collision" (a wrap-up describing an outcome later made false by a
+  newer merge) — here a wrap-up claimed an outcome that was never true in the first place. No data
+  was lost (the branch still had the real file, and it happened to still be around to rescue), but
+  it worked out by luck rather than by design.
+- Rescued only the doc file into a clean PR (`#4941`); did not merge the stray branch's
+  `RENDER-BOX-STATUS` flip (that file is auto-managed by `auto-art-generate.yml`, not something a
+  task branch should hand-edit) or its reverted roadmap state (main's `needs-human`/`soft_gate` was
+  already the correct terminal state once the doc landed). Triggered `branch-janitor.yml` with
+  `force_delete_branches` to remove the now-superseded worker branch, since session credentials
+  403 on ref deletion as documented.
+
+**Kaizen task:** conductor/t-187 — require a connector-fallback handoff file to actually be present
+in the same commit/tree as the needs-human transition that names it, instead of trusting the note
+text alone.
