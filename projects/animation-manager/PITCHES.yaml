@@ -789,7 +789,7 @@ pitches:
 
   - id: geode-bloom
     title: Geode Bloom
-    status: pitched
+    status: candidate
     priority: 20
     surprise: >
       A dark hollow geode cross-section fills the desktop; faceted crystal clusters nucleate
@@ -829,10 +829,26 @@ pitches:
       - startup and clipped Screen FX surfaces both render
       - no resource leaks across repeated mounts
       - concurrent cluster cap and per-cluster facet cap hold under continuous nucleation
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/geode-bloom.vue
+        pull_request: silasfelinus/kind_robots#2407
+        catalog_registration_pull_request: silasfelinus/kind_robots#2410
+        verification:
+          - TypeScript Type Check
+          - Contract Tests
+        notes: >-
+          Bookkeeping fix (conductor scheduled Agent run, animation-manager/t-007 cycle,
+          2026-09-21): this pitch was actually shipped on 2026-09-05 (PR #2407 for the
+          component, PR #2410 for the animationCatalog.ts registration -- both merged,
+          all CI green) but this entry was never promoted past status: pitched and never
+          got a builds: section, unlike every other shipped/candidate pitch. Confirmed
+          both files are live in the kind_robots checkout before writing this entry.
 
   - id: candlelit-reliquary
     title: Candlelit Reliquary
-    status: pitched
+    status: candidate
     priority: 21
     surprise: >
       A row of slender tapers burns on a stone ledge, each flame guttering slightly in an
@@ -897,6 +913,33 @@ pitches:
       - wax pool height visibly grows on drip events and visibly relaxes between them, never resetting instantly and never growing without bound
       - pointer flame-bend and click-triggered forced drip never block underlying page input, and the forced-drip click is rate-limited to once per candle relight cycle
       - concurrent wax-run pool size and per-candle height-map bin count stay fixed regardless of viewport size or elapsed session time
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/candlelit-reliquary.vue
+        pull_request: silasfelinus/kind_robots#2962
+        verification:
+          - eslint
+          - prettier
+          - vue-tsc (full project)
+          - test:animation-catalog
+          - test:animation-component-attempts
+          - test:layout-contract
+          - check_animation_novelty.py --strict
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
+        notes: >-
+          Four candles burn independently on staggered timers; wax drips deposit into a
+          per-candle fixed-size (8-bin) height map that smooths toward its neighbors and
+          decays slightly every frame, so the pool visibly grows on drip events and
+          visibly relaxes between them without ever resetting instantly or growing
+          without bound. A shared, capped (16) in-flight drip pool serves all candles.
+          Burn-down triggers a brief gutter fade then a ~2s eased taper-rise back to full
+          height before the flame relights and the burn timer resets. Pointer proximity
+          bends nearby flames away with a spring-back; a click on a candle forces one
+          immediate drip, rate-limited to once per relight cycle via a per-candle flag
+          cleared on relight. Reduced motion renders one static frame (varied candle
+          heights, modest pools, fixed glow shapes, only a slow brightness drift).
 
   - id: frost-window-etching
     title: Frost Window Etching
