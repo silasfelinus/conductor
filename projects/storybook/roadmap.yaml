@@ -1656,8 +1656,8 @@ tasks:
 - id: t-060
   milestone: m7
   title: Implement real Play Again board retention (t-059's deferred path)
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >-
@@ -1673,3 +1673,6 @@ tasks:
     `clearTable()`'s full reset, which should still clear it. Verify by hand: build a
     board, finish a run, click Play Again, confirm the board is actually still dealt.
     Not gated -- reversible UI/store change, same pattern as t-059.
+  claimed_by: 2026-09-21T2050Z-storybook-t060-scheduled
+  claimed_at: '2026-09-21T20:56:13Z'
+  updated: '2026-09-21T20:56:13Z'
