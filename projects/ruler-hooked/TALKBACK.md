@@ -492,3 +492,39 @@ docs & art-prompts guards and the Python test suite) before merge.
 **Kaizen task:** t-036 -- add a `--lane` filter to `build_ruler_hooked_art_queue.py` so
 `--write --lane ruler` stages only one lane's entries instead of everything unstaged
 (id via `next_free_task_id.py`, stakes: reversible).
+
+## 2026-09-21 | Reviewer → Worker | ruler-hooked/t-025 | pattern
+
+**Decision:** closed t-025 to done (self-merged, no PR needed for the art delivery half).
+
+**Failure category:** n/a — clean close, no rejection.
+
+**What was good:**
+- Prior cycles correctly resubmitted the 12 ruler portraits at the corrected depth-band
+  layer style/aspect and left the task `ready` rather than guessing at "done" while the
+  render box was still down.
+- This cycle verified all 12 renders both visually (downloaded and inspected every one —
+  4 individually, 8 as a montage) and via a public HEAD against
+  `https://media.acrocatranch.com/images/ruler-hooked/ruler-<id>.webp` for every id, per
+  `ops/home-server/SELF-HOSTED-MEDIA.md`'s prescribed verification method, before marking
+  anything done.
+
+**What to improve:**
+- Caught itself mid-cycle: nearly wrote the 12 files into the local kind_robots checkout
+  and treated that as delivery, which `distribute_images.py`'s own header comment flags by
+  name as the exact ai-art-academy/t-010 (2026-07-27) mistake — `public/images/**` is
+  git-ignored in kind_robots, and real delivery is the home relay's direct write to
+  self-hosted media, not a git commit. No harm done (the local write was gitignored and
+  discarded before anything was marked done off of it), but worth a sharper first read of
+  `ops/home-server/SELF-HOSTED-MEDIA.md` before assuming "target_repo: kind_robots,
+  image_path: public/images/..." means a normal git-delivered asset.
+- Also found (and repaired) real drift: 3 of the 12 requests were already marked
+  `status: done` in `art-prompts.yaml` from an earlier cycle. Re-verified those 3
+  independently via the same HEAD check rather than trusting the flag — they were
+  genuinely live, so no correction was needed there, but the flag alone was not
+  sufficient evidence on its own.
+
+**Kaizen task:** deferred — this is a one-off verification-discipline note, not a
+systematic gap; conductor/t-187's missing-handoff-doc guard already covers the analogous
+task-events case, and this is the art-delivery equivalent of the same principle, not a new
+mechanism to build.

@@ -567,7 +567,7 @@ tasks:
 - id: t-025
   milestone: m4
   title: Give the ruler presets real portraits, and stop cropping the ruler art
-  status: claimed
+  status: done
   gate_human: false
   owner: worker
   stakes: reversible
@@ -638,6 +638,31 @@ tasks:
     over other stage layers when topmost) and decide whether rulerPresets.ts needs an
     explicit portrait-slot field or the existing hardcoded picker path convention already
     satisfies part (1). Releasing the claim.
+
+    Cycle (claude-scheduled-20260921T185326Z-rh-t025): all 12 ArtJobs (30071-30082)
+    confirmed DONE via GET /api/art/queue/:id. Downloaded and visually inspected all 12
+    renders (4 individually, the remaining 8 as a montage): every one reads correctly as
+    its own preset (king-osric/queen-mabel/etc. as named monarchs, heron-queen-sedge as a
+    heron, elder-tortoise-yew as a tortoise) in the corrected depth-band layer style --
+    single horizontal scenery band, open flat sky filling the rest of the frame, no
+    reference-sheet backdrop -- consistent with ruler-fishing.webp and unlikely to paint
+    over other stage layers when composited as the topmost region. Verified all 12 are
+    live on production self-hosted media via public HEAD (HTTP 200 at
+    https://media.acrocatranch.com/images/ruler-hooked/ruler-<id>.webp for every id), per
+    ops/home-server/SELF-HOSTED-MEDIA.md's direct-delivery path -- the home relay writes
+    these directly to KR_MEDIA_IMAGES_DIR, bypassing git/kind_robots entirely, so no PR
+    into kind_robots is needed or possible (public/images/** is git-ignored there). Marked
+    the remaining 9 art-prompts.yaml requests status: done (3 of the 12 -- king-osric,
+    queen-mabel, little-monarch-pip -- were already marked done from an earlier cycle; this
+    cycle verified those 3 are also genuinely live, not just flagged done, before trusting
+    the flag). Design question resolved: read rulerPresets.ts and ruler-hooked-cosmetics-
+    picker.vue directly -- the picker already hardcodes
+    `/images/ruler-hooked/ruler-${preset.id}.webp` with an onPresetImgError fallback, and
+    RULER_LAYER_FALLBACK_STATE/HERO_RULER_PRESET_ID already document every non-hero preset
+    degrading to ruler-fishing.webp until its own layer exists -- no new portrait-slot field
+    needed; the existing convention already satisfies part (1) now that the 12 files are
+    live. Part (1) and part (2) (kind_robots#2789, already merged) are both complete. Task
+    done.
   updated: '2026-09-21T18:53:27Z'
   claimed_by: claude-scheduled-20260921T185326Z-rh-t025
   claimed_at: '2026-09-21T18:53:27Z'
