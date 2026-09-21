@@ -3911,6 +3911,43 @@ tasks:
   claimed_at: '2026-09-21T14:20:38Z'
   updated: '2026-09-21T14:51:11Z'
   implementation_pr: 'silasfelinus/conductor#4948'
+- id: t-189
+  milestone: m2
+  title: 'FOR SILAS: KR_API_TOKEN exposed again in a session transcript -- rotate it, and harden kr_token_set.sh against a fourth unsafe shell shape'
+  status: needs-human
+  owner: null
+  passes: 0
+  stakes: reversible
+  gate_human: false
+  soft_gate: false
+  security_flag: true
+  note: >-
+    FOR SILAS: this session's own diagnostic command printed the full live `KR_API_TOKEN`
+    value into its transcript while rechecking butterfly-gallery/t-033's ArtJob queue
+    status -- see root TALKBACK.md, 2026-09-21 security-flag entry, for the full
+    write-up. This is the fourth recurrence of this incident class (conductor/t-116,
+    t-128, and the 2026-09-16 root-TALKBACK entry that led to the 2026-09-20 rotation),
+    and this time it is the token that was rotated on 2026-09-20 specifically to resolve
+    that earlier exposure.
+
+    What happened: a malformed presence check (`export $(grep -q KR_API_TOKEN <<< "$(env)"
+    && true)`) collapsed to a bare `export` with no arguments, which bash prints as every
+    exported variable in `declare -x NAME="value"` form -- a third, previously undocumented
+    unsafe shape distinct from the `${VAR:-...}` and `${VAR:+...}`+mismatched-`sed` cases
+    hard rule 15 already warns about.
+
+    TO APPROVE: rotate `KR_API_TOKEN` at the source (kind_robots admin/token-issuing
+    surface) again, and update the conductor-side secret to match once done -- then set
+    `approved_by_human: true` and `status: done` (or leave a note if a different action is
+    wanted). No agent can rotate secrets (hard rule 5).
+
+    WHAT UNBLOCKS: closes this security-flag cycle the same way the 2026-09-16 one closed
+    via conductor/t-182. As a secondary, non-blocking follow-up once this is acknowledged:
+    harden `scripts/kr_token_set.sh`'s docstring to call out the no-argument
+    `export`/`env`/`set` shape alongside the two patterns it already documents.
+  claimed_by: null
+  claimed_at: null
+  updated: '2026-09-21T18:00:00Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
