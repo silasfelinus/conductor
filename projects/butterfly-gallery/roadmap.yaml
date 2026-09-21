@@ -1344,7 +1344,13 @@ tasks:
       28739,28740,28741,28742,28743,28744,28745 still PENDING (verified via GET
       /api/art/queue/:id for each, admin token). Not yet actionable per STEP 1; leaving
       status: ready, no pass/retry consumed.
-    updated: '2026-09-21T13:55:12Z'
+
+      last checked 2026-09-21T15:03Z: jobs 28739-28745 still PENDING. Queue backlog is
+      draining (PENDING depth down to 572 from 2207+ on 2026-09-17; oldestPending still
+      coloring-book/23040, age ~6d); render box UP and healthy (17 completions/6h). Priority-0
+      jobs remain queued behind this backlog per t-165/t-167's known relay-wedge/backlog gate,
+      not a defect in this task. No pass consumed.
+    updated: '2026-09-21T15:03:54Z'
 
   - id: t-034
     milestone: m4
