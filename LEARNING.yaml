@@ -15765,3 +15765,24 @@ records:
     despite it being spelled out in the immediately preceding LEARNING.yaml entry. Reading
     the prior cycle's own lesson before writing a new guard script would have caught this
     before pushing, not after.
+- date: '2026-09-21'
+  project: conductor
+  task: t-177
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Start-Job is not a free way to bound a call: PowerShell 5.1 backs a background job
+    with a real second powershell.exe process, confirmed by direct process trace popping
+    its own visible console on the desktop every tick regardless of the parent task's own
+    window state or how it was launched. When "run this with a timeout" is the actual
+    requirement on Windows, System.Diagnostics.Process with CreateNoWindow=$true/
+    UseShellExecute=$false plus a manual WaitForExit(timeout)+Kill() gets the same bounded
+    guarantee without a second process or its console. This sandbox has no PowerShell by
+    default, but the official Linux pwsh tarball is fetchable through the agent proxy and
+    is enough to AST-parse every .ps1 in the repo and exercise new process-launching logic
+    against real child processes (stdin/stdout, timeout+kill, non-deadlocking large
+    output) -- a meaningfully stronger verification bar than syntax-parsing alone for a
+    change to a production watchdog this sandbox cannot otherwise observe running.
