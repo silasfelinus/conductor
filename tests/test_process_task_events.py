@@ -1104,6 +1104,71 @@ class TaskEventProcessorTests(unittest.TestCase):
         ledger = yaml.safe_load((self.root / "LEARNING.yaml").read_text(encoding="utf-8"))
         self.assertEqual(ledger["records"], [])
 
+    def test_needs_human_note_claiming_missing_handoff_doc_is_held(self):
+        # conductor/t-187: a needs-human note claiming a handoff doc was
+        # "preserved" at a path that isn't actually in this commit/tree must not
+        # land on the roadmap -- the event stays queued for a later run instead.
+        event = self.write_event(
+            "needs-human-missing-handoff.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "needs-human",
+                "soft_gate": True,
+                "note": "Preserved a handoff at projects/demo/docs/t-001-handoff.md.",
+            },
+        )
+
+        with self.assertRaisesRegex(ValueError, "handoff doc"):
+            MODULE.process(event, dry_run=False)
+
+        self.assertTrue(event.exists())
+        self.assertEqual(self.roadmap()["tasks"][0]["status"], "ready")
+
+    def test_needs_human_note_with_handoff_doc_present_applies_normally(self):
+        (self.root / "projects" / "demo" / "docs").mkdir(parents=True)
+        (self.root / "projects" / "demo" / "docs" / "t-001-handoff.md").write_text(
+            "# handoff\n", encoding="utf-8"
+        )
+        event = self.write_event(
+            "needs-human-present-handoff.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "needs-human",
+                "soft_gate": True,
+                "note": "Preserved a handoff at projects/demo/docs/t-001-handoff.md.",
+            },
+        )
+
+        result = MODULE.process(event, dry_run=False)
+
+        self.assertEqual(result, "demo/t-001: needs-human")
+        self.assertFalse(event.exists())
+        task = self.roadmap()["tasks"][0]
+        self.assertEqual(task["status"], "needs-human")
+        self.assertTrue(task["soft_gate"])
+
+    def test_needs_human_note_without_handoff_reference_is_unaffected(self):
+        event = self.write_event(
+            "needs-human-no-handoff.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "needs-human",
+                "soft_gate": True,
+                "note": "Stuck on an unclear architectural direction, no handoff doc involved.",
+            },
+        )
+
+        result = MODULE.process(event, dry_run=False)
+
+        self.assertEqual(result, "demo/t-001: needs-human")
+        self.assertFalse(event.exists())
+
     def test_done_with_merged_verify_pr_applies_normally(self):
         roadmap = self.roadmap()
         roadmap["tasks"][0]["status"] = "review"

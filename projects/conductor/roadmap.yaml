@@ -3864,7 +3864,7 @@ tasks:
 - id: t-187
   milestone: m2
   title: Require a connector-fallback handoff file to land in the same commit/event that sets a task needs-human, not just be named in the note
-  status: ready
+  status: done
   owner: null
   passes: 0
   stakes: reversible
@@ -3886,6 +3886,27 @@ tasks:
   claimed_by: null
   claimed_at: null
   updated: '2026-09-21T13:00:00Z'
+- id: t-188
+  milestone: m2
+  title: Extend t-187's missing-handoff-doc guard to the direct close_task.py path, not just task-events
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from t-187 (2026-09-21): the missing_handoff_docs() check added to
+    validate_task_events.py and process_task_events.py only guards the task-events
+    (connector) path to a needs-human transition. A session closing a task directly with
+    `close_task.py <project> <task-id> needs-human --append-note "...preserved at
+    projects/<slug>/docs/*.md..."` -- the path most interactive Claude sessions actually use,
+    per this repo's own git history of close: commits -- never goes through either check, so
+    the same false-claim failure mode t-187 fixed for the connector path is still open here.
+    Add the same missing_handoff_docs() guard (importable from process_task_events.py) to
+    close_task.py's needs-human transition, holding/refusing the write the same way, before
+    it pushes its close-out commit.
+  claimed_by: null
+  claimed_at: null
+  updated: '2026-09-21T14:00:00Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'

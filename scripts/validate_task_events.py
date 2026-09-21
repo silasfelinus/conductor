@@ -25,6 +25,7 @@ from process_task_events import (  # noqa: E402
     TASK_RE,
     continuous_improvement_fields,
     extract_pr_references,
+    missing_handoff_docs,
     require_string,
 )
 
@@ -96,6 +97,15 @@ def validate(path: Path) -> str | None:
     note = event.get("note")
     if note is not None and (not isinstance(note, str) or not note.strip()):
         return "note must be a non-empty string when supplied"
+
+    if operation == "needs-human":
+        # conductor/t-187: catch at PR time what process_task_events.py also
+        # holds at apply time -- a needs-human note claiming a handoff doc was
+        # preserved at a projects/<slug>/docs/*.md path, when that file isn't
+        # actually in this commit/tree.
+        missing = missing_handoff_docs(note, ROOT)
+        if missing:
+            return f"needs-human note references handoff doc(s) not present in this commit/tree: {', '.join(missing)}"
 
     learning = event.get("learning")
     if learning is not None:

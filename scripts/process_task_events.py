@@ -51,6 +51,15 @@ ALLOWED_OPERATIONS = {
 }
 CLOSED_OPERATIONS = {"done", "blocked"}
 
+# conductor/t-187: a needs-human note can *claim* a connector-fallback handoff
+# doc was "preserved" at this kind of path without the file actually landing in
+# the same commit/tree (ruler-hooked/t-037, 2026-09-21 -- the note said the file
+# existed, but only the roadmap edit did; the real file sat on an unrelated,
+# unmerged branch and was rescued back onto main only by luck). Matched against
+# the event's own note text, not the task's accumulated note, in both
+# validate_task_events.py (PR time) and process_task_events.py (apply time).
+HANDOFF_DOC_RE = re.compile(r"projects/[a-z0-9][a-z0-9-]*/docs/[A-Za-z0-9_.-]+\.md")
+
 
 class TaskEventCollision(Exception):
     """A claim (or later transition) that lost a race to another session.
@@ -106,6 +115,19 @@ def require_string(event: dict[str, Any], key: str, pattern: re.Pattern[str] | N
     if pattern and not pattern.fullmatch(value):
         raise ValueError(f"event field {key!r} contains unsupported characters")
     return value
+
+
+def missing_handoff_docs(note: Any, root: Path) -> list[str]:
+    """Return every `projects/<slug>/docs/*.md` path `note` references that is
+    not actually present under `root`, or `[]` if `note` isn't a string or
+    references none. Pure aside from the read-only `is_file()` stat."""
+    if not isinstance(note, str):
+        return []
+    return [
+        match.group(0)
+        for match in HANDOFF_DOC_RE.finditer(note)
+        if not (root / match.group(0)).is_file()
+    ]
 
 
 def continuous_improvement_fields(event: dict[str, Any]) -> tuple[int, str] | None:
@@ -655,6 +677,20 @@ def process(path: Path, dry_run: bool) -> str:
             effective_event["note"] = note
             effective_event["soft_gate"] = True
             effective_operation = "needs-human"
+
+    # conductor/t-187: a needs-human note claiming a connector-fallback handoff
+    # doc was "preserved" at a projects/<slug>/docs/*.md path must have that file
+    # actually present in this commit/tree -- otherwise hold the event (raise,
+    # leave it queued) rather than land an unverifiable claim on the roadmap.
+    if effective_operation == "needs-human":
+        missing = missing_handoff_docs(effective_event.get("note"), ROOT)
+        if missing:
+            raise ValueError(
+                f"{project}/{task_id}: needs-human note references handoff doc(s) "
+                f"not present in this commit/tree: {', '.join(missing)} -- add the "
+                "file in the same commit/event as this transition, or drop the "
+                "reference (conductor/t-187)"
+            )
 
     # Compute everything (transition + learning validation) before writing anything,
     # so an invalid learning payload can't leave a half-applied, now-unrepeatable
