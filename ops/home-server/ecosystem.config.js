@@ -38,6 +38,24 @@ const LOG_DIR = `${__dirname}/logs`
 // then restart pm2 from a NEW shell so it inherits the variable.
 const KR_SHARE_ROOT = process.env.KR_SHARE_ROOT || 'Z:'
 const KR_MODEL_ROOT = process.env.KR_MODEL_ROOT || `${KR_SHARE_ROOT}/ai/models`
+// Where the ENGINE actually reads models from, which since the 2026-09 migration
+// is no longer the share. LoRAs moved local 2026-09-20 and checkpoints +
+// diffusion_models on 2026-09-21; extra_model_paths.yaml's `comfyui_local`
+// section (is_default: true) searches these ahead of their share twins.
+//
+// This is deliberately a SEPARATE constant from KR_MODEL_ROOT rather than a
+// redefinition of it, because two different questions are being asked:
+//   KR_MODEL_ROOT        - "is the share alive?"  (probe target, must stay UNC)
+//   KR_ENGINE_MODEL_ROOT - "where do models live?" (writes, scans, imports)
+// Collapsing them moves the share probe onto local disk, where it can never
+// fail, which silently disarms the gate that exists to stop the relay claiming
+// jobs against a dead share (2026-08-28: ~2700 jobs burned that way).
+//
+// The local tree mirrors the share's layout on purpose: Resource.localPath in
+// kind_robots is RELATIVE to the model root, so the catalog keeps resolving
+// only while the directory structure under the new root matches the old one.
+const KR_ENGINE_MODEL_ROOT =
+  process.env.KR_ENGINE_MODEL_ROOT || 'D:/comfy/comfy-fast/models'
 const KR_MEDIA_IMAGES_DIR =
   process.env.KR_MEDIA_IMAGES_DIR || `${KR_SHARE_ROOT}/kindrobots/images`
 // ----------------------------------------------------------------------------
@@ -190,6 +208,9 @@ module.exports = {
         // relay claims, ComfyUI fails at model load, the queue counts an
         // attempt, and PENDING drains into FAILED at ~5/min -- 71 jobs on
         // 2026-08-26 while every health signal stayed green. Unset to disable.
+        // PINNED TO THE SHARE on purpose - must never follow the engine root
+        // local. The whole point is to ask whether the SHARE is readable; a
+        // probe against local disk passes while the share is dead.
         KR_SHARE_PROBE_PATH: process.env.KR_SHARE_PROBE_PATH || KR_MODEL_ROOT,
         KR_SHARE_PROBE_SECONDS: process.env.KR_SHARE_PROBE_SECONDS || '30',
         // 2026-08-28: a directory listing alone passed on a share that was
@@ -212,12 +233,18 @@ module.exports = {
         GEN_TIMEOUT: process.env.GEN_TIMEOUT || '7200',
         // Model auto-import watcher (embedded thread): manual drops in either
         // inbox are sorted + cataloged without sharing kr-download's queue.
-        MODEL_ROOT: process.env.MODEL_ROOT || KR_MODEL_ROOT,
-        LORA_ROOT: process.env.LORA_ROOT || `${KR_MODEL_ROOT}/Lora`,
+        // LOCAL, not the share (changed 2026-09-21). An import inbox has to sit
+        // where the engine READS, or a sorted-and-catalogued model lands
+        // somewhere ComfyUI no longer looks: a LoRA dropped in the share's
+        // inbox has been invisible to renders since the loras: declaration was
+        // removed on 2026-09-20, catalogued and unusable, with no error.
+        MODEL_ROOT: process.env.MODEL_ROOT || KR_ENGINE_MODEL_ROOT,
+        LORA_ROOT: process.env.LORA_ROOT || `${KR_ENGINE_MODEL_ROOT}/Lora`,
         LORA_IMPORT_DIR:
-          process.env.LORA_IMPORT_DIR || `${KR_MODEL_ROOT}/Lora/import`,
+          process.env.LORA_IMPORT_DIR || `${KR_ENGINE_MODEL_ROOT}/Lora/import`,
         CHECKPOINT_IMPORT_DIR:
-          process.env.CHECKPOINT_IMPORT_DIR || `${KR_MODEL_ROOT}/checkpoints/import`,
+          process.env.CHECKPOINT_IMPORT_DIR ||
+          `${KR_ENGINE_MODEL_ROOT}/checkpoints/import`,
         CIVITAI_TOKEN: process.env.CIVITAI_TOKEN || '',
         LORA_POLL_SECONDS: process.env.LORA_POLL_SECONDS || '20',
         // SCAN_SCRIPT/IMPORT_SCRIPT are intentionally NOT set here: the agent
@@ -269,10 +296,17 @@ module.exports = {
       env: {
         KR_RELAY_TOKEN: process.env.KR_RELAY_TOKEN || '',
         KR_BASE_URL: 'https://kindrobots.org',
-        KR_MODEL_ROOT: process.env.KR_MODEL_ROOT || KR_MODEL_ROOT,
-        KR_LORA_DIR: process.env.KR_LORA_DIR || `${KR_MODEL_ROOT}/Lora`,
+        // LOCAL, not the share (changed 2026-09-21) - same reason as the relay's
+        // import dirs above. kr-download fetches a model and catalogs it; if it
+        // writes to the share, the Resource row is correct and the file is
+        // somewhere the engine does not read. The env KEY stays KR_MODEL_ROOT
+        // because that is the name relay_download_agent.py reads; the VALUE is
+        // the engine root, not the probe root.
+        KR_MODEL_ROOT: process.env.KR_MODEL_ROOT || KR_ENGINE_MODEL_ROOT,
+        KR_LORA_DIR: process.env.KR_LORA_DIR || `${KR_ENGINE_MODEL_ROOT}/Lora`,
         KR_CHECKPOINT_DIR:
-          process.env.KR_CHECKPOINT_DIR || `${KR_MODEL_ROOT}/checkpoints`,
+          process.env.KR_CHECKPOINT_DIR ||
+          `${KR_ENGINE_MODEL_ROOT}/checkpoints`,
         // Windows picks stdout's encoding from the console codepage (cp1252)
         // whenever stdout is a pipe -- which it always is under pm2. Any
         // non-cp1252 character in a log line then raises UnicodeEncodeError
