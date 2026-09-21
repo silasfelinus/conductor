@@ -38,6 +38,7 @@ from pathlib import Path
 from typing import Any, Optional
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from art_prompt_conditional_check import conditional_instruction_violations  # noqa: E402
 from dream_art_prompts import (  # noqa: E402
     character_prompt,
     location_prompt,
@@ -656,6 +657,27 @@ def build_records(proposal: dict, slug: str, pdate: str, dry_run: bool) -> tuple
 
     def queue_art(element_slug: str, element_kind: str, label: str, art_prompt: str,
                   target_endpoint: str, target_id: Optional[int]) -> None:
+        # dream-cycle/t-028: catch a conditional-instruction prompt here, at
+        # build time, instead of letting it reach kind_robots' own contract
+        # (server/utils/artPromptContract.ts) and 422 at ArtJob submission —
+        # by then it is stuck in art-prompts.yaml re-failing every scheduled
+        # run until a human notices. Recorded as an ordinary failed API call
+        # so it flows through the existing partial-failure rollback path
+        # (never a half-built bundle, never a queued request that can't work).
+        violations = conditional_instruction_violations(art_prompt)
+        if violations:
+            message = (
+                f"art_prompt for {label!r} ({element_slug}) fails the "
+                f"conditional-instruction contract: {'; '.join(violations)}"
+            )
+            print(f"  FAIL 0 QUEUE {target_endpoint} ({label}): {message}",
+                  file=sys.stderr)
+            results.append({"endpoint": target_endpoint, "status": 0, "ok": False,
+                            "label": f"art_prompt contract: {label}", "id": None,
+                            "delete_base": None, "created": False, "adopted": False,
+                            "message": message})
+            return
+
         # Art attaches to the created entity's own imagePath (a Dream for the
         # world/locations, or the real Character/Bot/Reward/Scenario row) — not
         # to a shadow dream's PitchSheet. The durable request carries the target

@@ -156,11 +156,11 @@ PROPOSAL = {
 }
 
 
-def write_proposal_file(backlog: Path) -> Path:
+def write_proposal_file(backlog: Path, proposal: dict = PROPOSAL) -> Path:
     fm = ("---\nslug: test-dream\ntitle: Test Dream\ntype: dream\nstatus: outline\n"
           "narrator: 'no'\nproposal: true\nproposal_date: '2020-01-01'\nbuilt_pr: null\n---\n")
     body = ("\n## The idea\nA world.\n\n## Notes from Silas\n- (leave notes here)\n\n"
-            f"## Build log\n- proposed\n\n<!-- proposal-data\n{json.dumps(PROPOSAL)}\n-->\n")
+            f"## Build log\n- proposed\n\n<!-- proposal-data\n{json.dumps(proposal)}\n-->\n")
     p = backlog / "2020-01-01-test-dream.md"
     p.write_text(fm + body, encoding="utf-8")
     return p
@@ -284,6 +284,31 @@ def test_total_failure_rolls_back_nothing_and_leaves_unbuilt(env, monkeypatch):
     assert outcome["status"] == "failed"
     assert fake.deletes == []                        # nothing was created, nothing to undo
     assert "<!-- built-data" not in path.read_text()
+
+
+def test_conditional_instruction_in_art_prompt_fails_loud_and_rolls_back(env, monkeypatch):
+    """dream-cycle/t-028: a conditional phrase in an authored field (here the
+    character's `look`) must be caught while the bundle is still being built,
+    never queued into art-prompts.yaml where it would only fail two digest
+    runs later against kind_robots' own server-side contract."""
+    backlog, art = env
+    bad_proposal = json.loads(json.dumps(PROPOSAL))  # deep copy
+    bad_proposal["characters"][0]["look"] = (
+        "a hairline vein of blue light along the fracture only when both halves touch"
+    )
+    path = write_proposal_file(backlog, bad_proposal)
+    fake = FakeAPI(fail_after=None)                  # every entity POST succeeds
+    monkeypatch.setattr(bdr, "http_json", fake)
+
+    outcome = bdr.run_build("2020-01-01", dry_run=False)
+
+    assert outcome["status"] == "failed"
+    assert outcome["retry"] is True
+    assert "conditional-instruction" in path.read_text(encoding="utf-8")
+    assert len(fake.deletes) > 0                      # the entities already created got rolled back
+    assert "<!-- built-data" not in path.read_text()   # never marked built
+    assert art.read_text() == "requests:\n"            # nothing queued for a failed build
+
 
 def test_real_entities_link_to_world_without_retired_genre_dream(env, monkeypatch):
     backlog, _ = env
