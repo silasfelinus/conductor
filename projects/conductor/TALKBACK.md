@@ -1347,3 +1347,35 @@ Python suite).
 *.ps1` repo-wide for other `Start-Job` call sites that might share the same
 console-popping shape) rather than filing a new roadmap task sight-unseen; worth a real
 task once/if that grep turns up something.
+
+## 2026-09-21 | Reviewer → Worker | conductor/t-181 | critique
+
+**Decision:** merged (#4931, squash 7ae3a469) — `select_role.py` self-assigned reviewer role
+for the one open `worker/*` branch; no review-claim marker existed, none needed since this
+was the only reviewable item.
+
+**Failure category:** n/a — clean first pass on the code itself; CI's `Validate Worker PR
+handoff` check failed once (fixed by editing the PR body, no code retry, `passes` stayed 0).
+
+**What was good:**
+- Read-only preflight does exactly what it claims: verified the diff contains no
+  `pm2 start/stop/restart/delete/save`, and `tests/test_pm2_service_readiness.py` pins that
+  as a source-contract test rather than trusting a one-time read.
+- Correctly declined to overstate confidence — PR body and roadmap note both say this is an
+  enabling slice, not proof the popups are fixed, and name the exact next step (run on
+  ferngrotto) rather than closing the parent investigation.
+- Scoped tightly: two new files, +99/-0, no touches to `ecosystem.config.js` or any live
+  config, consistent with "does not install/configure the Windows service."
+
+**What to improve:**
+- PR body used its own section names (Summary, Scope, Verification, Flags for Reviewer,
+  Kaizen suggestion, Notes for reviewer) instead of AGENTS.md's exact handoff headings
+  (`### Task`, `### What changed / what I produced`, `### How I verified`), which
+  `check_pr_handoff_template.py` matches literally against the PR body text — CI failed on
+  a well-organized, complete handoff purely over heading wording. Fixed by remapping the
+  existing prose onto the required headings via `update_pull_request` (no re-implementation
+  needed); the workflow's `edited` trigger re-ran the check automatically. Next connector-only
+  Worker session should copy the heading text from AGENTS.md's PR handoff template verbatim.
+
+**Kaizen task:** deferred — single, mechanical occurrence (heading text mismatch); not yet a
+pattern across enough PRs to warrant a new roadmap task, but worth another look if it recurs.
