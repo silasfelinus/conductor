@@ -1362,17 +1362,30 @@ Do not parallelize it. The link is 1 GbE (~112 MB/s) and a single disk already
 reads at 109, so one sequential stream saturates the wire; concurrent jobs add
 seek contention and buy nothing.
 
-**Check the pools before trusting a disk-share copy.** The disk shares summed to
-~860GB against the ~981GB `/mnt/user` reports, because anything the mover has
-not yet relocated still sits on the cache pool and appears in the union but on
-no `/mnt/diskN`. A disk-share-only copy skips those files silently. Run `mover`
-first, or sweep `/mnt/*/pc/ai/models` excluding `/mnt/disk` and copy the
-remainder separately.
+**Check the pools before trusting a disk-share copy.** Anything the mover has
+not yet relocated sits on the cache pool: it appears in the `/mnt/user` union
+but on no `/mnt/diskN`, so a disk-share-only copy skips it silently. The check
+is one command, because `/mnt/user0` is the same union with the pools excluded:
+
+```
+du -sh /mnt/user/pc/ai/models/checkpoints /mnt/user0/pc/ai/models/checkpoints
+```
+
+Equal sizes mean the array holds everything and the disk shares are complete.
+They were equal here on 2026-09-21 (581G checkpoints, 271G diffusion_models),
+so nothing needed a `mover` run first.
+
+**A union total is only comparable to a disk sum from the same moment.** The
+tier plan's 650GB/331GB figures were measured BEFORE the duplicate sweep, and
+comparing them against a post-sweep disk-share sum produced an apparent ~120GB
+of missing files that had simply been deleted (650-581=69, 331-271=60). Re-`du`
+both sides before concluding anything is unaccounted for - the cheap explanation
+for a gap is usually that the two numbers are from different days.
 
 **Check free space first - steps 2 and 3 do not automatically fit.** D: is
 1862.5GB total and the LoRAs (422GB) already landed there. Checkpoints plus
-diffusion_models is another ~981GB by the union's own accounting, so whether it
-fits depends on what else has been cleared off the drive first (a ~400GB Steam
+diffusion_models is another ~852GB after the duplicate sweep, so whether it fits
+depends on what else has been cleared off the drive first (a ~400GB Steam
 library was being moved out for exactly this reason). Robocopy will happily run
 the disk to zero, and ComfyUI needs room on D: for outputs and `comfyui.db`.
 Confirm the headroom before starting the pass, not after it stalls.
