@@ -3890,7 +3890,7 @@ tasks:
 - id: t-188
   milestone: m2
   title: Extend t-187's missing-handoff-doc guard to the direct close_task.py path, not just task-events
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -3898,9 +3898,14 @@ tasks:
     Kaizen from t-187 (2026-09-21): the missing_handoff_docs() check added to validate_task_events.py and process_task_events.py only guards the task-events (connector) path to a needs-human transition. A session closing a task directly with `close_task.py <project> <task-id> needs-human --append-note "...preserved at projects/<slug>/docs/*.md..."` -- the path most interactive Claude sessions actually use, per this repo's own git history of close: commits -- never goes through either check, so the same false-claim failure mode t-187 fixed for the connector path is still open here. Add the same missing_handoff_docs() guard (importable from process_task_events.py) to close_task.py's needs-human transition, holding/refusing the write the same way, before it pushes its close-out commit.
 
     Implementation ready on worker/conductor-t-188-openai-scheduled-2026-09-21T142038Z-conductor-t188-a11: direct close_task needs-human transitions now reject referenced fallback handoff docs absent from the committed base tree, with regression coverage including the uncommitted-worktree false-positive case.
+
+    Merged PR #4948: close_task.py now guards direct needs-human handoffs against missing
+    committed docs, matching t-187's connector-path check. All CI green (23 checks),
+    reviewed and merged by Reviewer session.
   claimed_by: openai-scheduled-2026-09-21T142038Z-conductor-t188-a11
   claimed_at: '2026-09-21T14:20:38Z'
-  updated: '2026-09-21T14:31:00Z'
+  updated: '2026-09-21T14:51:11Z'
+  implementation_pr: 'silasfelinus/conductor#4948'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
