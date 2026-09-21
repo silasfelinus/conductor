@@ -1325,17 +1325,57 @@ share**:
 
 **19x, from one directory.** All 26 remaining UNC declarations together now cost
 less than eleven seconds, which settles the question the tier plan was built
-around: the planned steps 2 and 3 (checkpoints 650GB, diffusion_models 331GB)
-were **not needed** and were not done. They would have bought nothing for boot
-time.
+around - *for boot time*. The planned steps 2 and 3 (checkpoints 650GB,
+diffusion_models 331GB) buy nothing there and were not done for that reason.
 
-That matters more than it looks, because the share is slower than anyone
-assumed. A local `dd` on alexandria with no parity check running read at
-**27.9 MB/s** off `/mnt/user` - so the remaining ~1.1TB would have taken roughly
-eleven hours to copy for no boot benefit. The network was never the constraint:
-both NICs negotiate gigabit and the route is correct; SMB was simply delivering
-what the array could produce. Whether that 27.9 MB/s is shfs overhead or a sick
-disk is still open, and is the more important question left on this box.
+They are still being done, for a different one. Boot enumerates a directory
+once; every generation then READS the model it picked, and at share speed a
+6.9GB checkpoint takes about four minutes to load before the first step runs
+(Silas, 2026-09-21: *"load times are an issue and it will affect later gens"*).
+Startup cost and per-generation cost are separate budgets, and moving the bytes
+only ever addressed the second one. Do not read the boot result as a reason to
+leave the big directories remote.
+
+### The share is four times faster if you skip /mnt/user (2026-09-21)
+
+A local `dd` on alexandria with no parity check running read at **27.9 MB/s**
+off `/mnt/user`. The same file read directly off the disk holding it:
+
+```
+/mnt/user/...             27.9 MB/s
+/mnt/disk13/...            109 MB/s     <- same file, same box, no parity check
+```
+
+**It is shfs overhead, not a sick disk** - the FUSE union layer costs roughly
+4x, and the drive underneath is healthy. No SMART investigation needed.
+
+The operational consequence is that bulk copies should come off the **disk
+shares** (`\\192.168.7.172\disk13\...`), not the user share. That turns the
+~1.1TB of steps 2 and 3 from roughly eleven hours into under three. Two caveats:
+Unraid only exports disk shares when *Settings -> Global Share Settings ->
+Enable disk shares* is Yes or Auto, and a `pc/ai/models` tree is spread across
+most of the array (16 disks hold checkpoints, 11 hold diffusion_models), so the
+copy is one pass per disk merging into the same destination - `/E`, never
+`/MIR`, which would delete the previous disk's files on each pass.
+
+Do not parallelize it. The link is 1 GbE (~112 MB/s) and a single disk already
+reads at 109, so one sequential stream saturates the wire; concurrent jobs add
+seek contention and buy nothing.
+
+**Check the pools before trusting a disk-share copy.** The disk shares summed to
+~860GB against the ~981GB `/mnt/user` reports, because anything the mover has
+not yet relocated still sits on the cache pool and appears in the union but on
+no `/mnt/diskN`. A disk-share-only copy skips those files silently. Run `mover`
+first, or sweep `/mnt/*/pc/ai/models` excluding `/mnt/disk` and copy the
+remainder separately.
+
+**Check free space first - steps 2 and 3 do not automatically fit.** D: is
+1862.5GB total and the LoRAs (422GB) already landed there. Checkpoints plus
+diffusion_models is another ~981GB by the union's own accounting, so whether it
+fits depends on what else has been cleared off the drive first (a ~400GB Steam
+library was being moved out for exactly this reason). Robocopy will happily run
+the disk to zero, and ComfyUI needs room on D: for outputs and `comfyui.db`.
+Confirm the headroom before starting the pass, not after it stalls.
 
 **The rule this confirms.** Boot cost is file COUNT per declared directory.
 LoRAs were 3,858 of roughly 4,900 files; everything else is big files in small
@@ -1345,7 +1385,11 @@ numbers and is nearly free to enumerate. Move the count, not the bytes.
 `ENGINE_STARTUP_CEILING_MINUTES=240` and `COMFY_ORPHAN_GRACE_MINUTES=240` were
 set while boots ran for hours. On a sub-minute boot a 240-minute ceiling means a
 genuine wedge sits unnoticed for four hours - the exact failure the ceiling
-exists to bound. `setx VAR ""` restores the defaults.
+exists to bound. Set them back to the in-code defaults explicitly -
+`ENGINE_STARTUP_GRACE_MINUTES=5`, `ENGINE_STARTUP_CEILING_MINUTES=20`,
+`COMFY_ORPHAN_GRACE_MINUTES=8`. `setx VAR ""` does NOT clear a variable; it
+fails outright with `ERROR: Invalid syntax.` and leaves the old value in place,
+which looks like a revert and is not one.
 
 **pm2 did not come back immediately after the reboot.** Four consecutive
 `pm2 status` calls showed an empty table (the first spawning a fresh daemon)
