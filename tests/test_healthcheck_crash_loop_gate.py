@@ -209,12 +209,14 @@ class HealthcheckScriptTests(unittest.TestCase):
         self.assertNotIn("$psi.ArgumentList", code)
         self.assertIn("function ConvertTo-NativeArgumentString", self.source)
         self.assertIn(
-            "$psi.Arguments = ConvertTo-NativeArgumentString $resolvedArgs",
+            "$resolvedArgumentString = ConvertTo-NativeArgumentString $resolvedArgs",
             self.source,
         )
+        self.assertIn("$psi.Arguments = $resolvedArgumentString", self.source)
+        self.assertIn("$resolvedArgumentString = '/d /s /c \"' + $batchCommand + '\"'", self.source)
         self.assertLess(
             self.source.index("function ConvertTo-NativeArgumentString"),
-            self.source.index("$psi.Arguments = ConvertTo-NativeArgumentString"),
+            self.source.index("$psi.Arguments = $resolvedArgumentString"),
         )
 
     def test_transitional_states_still_skip_the_probe(self):
