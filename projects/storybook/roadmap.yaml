@@ -1653,3 +1653,23 @@ tasks:
   claimed_by: claude-scheduled-20260921T195808Z-sb-t059
   claimed_at: '2026-09-21T19:58:09Z'
   implementation_pr: 'silasfelinus/kind_robots#2958'
+- id: t-060
+  milestone: m7
+  title: Implement real Play Again board retention (t-059's deferred path)
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from t-059 (2026-09-21): that task fixed the misleading "Play again with
+    this table" claim by correcting the copy/comment rather than implementing actual
+    board retention, since the retention behavior itself needs a product decision. If
+    Silas wants it shipped, t-059's own note has a concrete implementation sketch:
+    lift `board` (components/storybook/storybook-table.vue, ~line 344) into
+    `storybookRunStore` (or another place that survives the Table's remount), capture
+    it in `playAgain()` (components/storybook/storybook-storymaker.vue) before
+    `leaveRun()` clears the run, and seed `StorybookTable` from it on mount via the
+    same per-slot deck lookups `seedFromQuery()` already uses -- distinct from
+    `clearTable()`'s full reset, which should still clear it. Verify by hand: build a
+    board, finish a run, click Play Again, confirm the board is actually still dealt.
+    Not gated -- reversible UI/store change, same pattern as t-059.
