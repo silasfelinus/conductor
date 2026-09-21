@@ -1680,39 +1680,15 @@ tasks:
 - id: t-061
   milestone: m7
   title: Rewrite seedFromQuery()'s five deep-link lookups on cardForSlug(), updating the deep-link guard's regexes in the same change
-  status: review
-  owner: worker
+  status: done
   passes: 0
   stakes: reversible
-  note: >-
-    Kaizen from t-060 (2026-09-21, kind_robots PR #2960): that task added
-    cardForSlug()/playCardIfAbsent()/seedFromPlayAgain() to
-    components/storybook/storybook-table.vue, structurally parallel to the five
-    per-slot lookups seedFromQuery() already hand-rolls for
-    `?location=`/`?character=`/`?facet=`/`?reward=`/`?scenario=` -- but
-    deliberately left seedFromQuery() itself untouched, because
-    utils/scripts/verifyStorybookTableDeepLinkGuard.mjs regex-pins its literal
-    body (e.g. `toggleCard('place', toPlaceCard(dream))`,
-    `toggleCard('genre', card)` with the exact `withGenreLock(...)` two-line
-    shape). Rewriting seedFromQuery() on top of cardForSlug() would remove real
-    duplication, but only lands cleanly if the guard's regexes are updated in
-    the same PR to match the new call shapes -- otherwise it's an
-    unrelated-guard failure for no functional gain. Verify: the guard still
-    passes, and a manual trace confirms each of the five deep-link cases
-    resolves to the same card (including the genre-lock skip) as before.
-    Not gated -- reversible refactor, no behavior change intended.
+  note: |-
+    Kaizen from t-060 (2026-09-21, kind_robots PR #2960): that task added cardForSlug()/playCardIfAbsent()/seedFromPlayAgain() to components/storybook/storybook-table.vue, structurally parallel to the five per-slot lookups seedFromQuery() already hand-rolls for `?location=`/`?character=`/`?facet=`/`?reward=`/`?scenario=` -- but deliberately left seedFromQuery() itself untouched, because utils/scripts/verifyStorybookTableDeepLinkGuard.mjs regex-pins its literal body (e.g. `toggleCard('place', toPlaceCard(dream))`, `toggleCard('genre', card)` with the exact `withGenreLock(...)` two-line shape). Rewriting seedFromQuery() on top of cardForSlug() would remove real duplication, but only lands cleanly if the guard's regexes are updated in the same PR to match the new call shapes -- otherwise it's an unrelated-guard failure for no functional gain. Verify: the guard still passes, and a manual trace confirms each of the five deep-link cases resolves to the same card (including the genre-lock skip) as before. Not gated -- reversible refactor, no behavior change intended.
+    Implemented and pushed silasfelinus/kind_robots#2961: seedFromQuery() rewritten on cardForSlug()/playCardIfAbsent() instead of five hand-rolled per-slot lookups; verifyStorybookTableDeepLinkGuard.mjs's regexes updated in the same PR (genre-lock assertion moved to check cardForSlug()'s body, since withGenreLock() now lives there). Verified: vue-tsc, eslint, prettier all clean; the deep-link guard passes against the new code and correctly fails when the refactor is reverted (negative control); verifyStorybookTable.mjs and verifyStorybookPlayAgainBoardGuard.mjs still pass unchanged. No behavior change intended or found by manual trace -- every slot starts empty at mount so playCardIfAbsent()'s already-placed skip is a no-op for all 5 seed cases.
 
-    Implemented and pushed silasfelinus/kind_robots#2961: seedFromQuery() rewritten on
-    cardForSlug()/playCardIfAbsent() instead of five hand-rolled per-slot lookups;
-    verifyStorybookTableDeepLinkGuard.mjs's regexes updated in the same PR (genre-lock
-    assertion moved to check cardForSlug()'s body, since withGenreLock() now lives there).
-    Verified: vue-tsc, eslint, prettier all clean; the deep-link guard passes against the
-    new code and correctly fails when the refactor is reverted (negative control);
-    verifyStorybookTable.mjs and verifyStorybookPlayAgainBoardGuard.mjs still pass
-    unchanged. No behavior change intended or found by manual trace -- every slot starts
-    empty at mount so playCardIfAbsent()'s already-placed skip is a no-op for all 5 seed
-    cases.
+    Merged silasfelinus/kind_robots#2961 (squash f1bac288): seedFromQuery() now reuses cardForSlug()/playCardIfAbsent(), and the deep-link contract was updated with the refactor. Exact-head Storybook Deep Link, Play Again Board, Contract Tests, TypeScript, Layout, Project Architecture, Generated Client Parity, and Schema Migration Parity workflows all completed successfully before merge.
   claimed_by: claude-scheduled-20260921T215559Z-storybook-t061
   claimed_at: '2026-09-21T21:56:02Z'
-  updated: '2026-09-21T22:07:52Z'
+  updated: '2026-09-21T22:19:15Z'
   implementation_pr: 'silasfelinus/kind_robots#2961'

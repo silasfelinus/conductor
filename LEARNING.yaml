@@ -15982,3 +15982,14 @@ records:
     lifecycle was traced should re-verify each named call site is still mounted/alive
     at the point the sketch assumes, not just implement the call graph as literally
     stated.
+- date: '2026-09-21'
+  project: storybook
+  task: t-061
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Shared slug-to-card resolution removes duplicated deep-link lookup logic while keeping gate
+    behavior in one load-bearing helper; update literal contract guards in the same scoped refactor when
+    they intentionally pin the old implementation shape.
