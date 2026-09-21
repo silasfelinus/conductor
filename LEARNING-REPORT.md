@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-21T03:11:33Z
+Generated: 2026-09-21T03:16:08Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1093**
-- Outcomes: blocked: 18, cancelled: 2, done: 1073
+- Closed tasks recorded: **1094**
+- Outcomes: blocked: 18, cancelled: 2, done: 1074
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -55,7 +55,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | newsfeed | 20 | 100% |
 | packmaker | 10 | 100% |
 | rainbow-butterflies | 21 | 100% |
-| ruler-hooked | 17 | 100% |
+| ruler-hooked | 18 | 100% |
 | scene-animator | 2 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1076 | 99% |
+| software | 1077 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-21 `ruler-hooked/t-035` — Reviewed and merged silasfelinus/conductor#4899 (a concurrent session's clean, well-scoped, self-verified additive change). Its only red check, "Validate Worker PR handoff", was a missing "### Kaizen suggestion" heading in the PR body -- not a code defect. Fixed by editing the PR description directly (the workflow re-runs on `edited`, not just `synchronize`) rather than asking the Worker session to push a fix for a description-only gap. A stale failed check run from before the edit persisted in the check-runs list alongside the new passing one for the same head SHA; a status script must key off the latest run per check name; startTime, not just conclusion, when a check can legitimately re-run on the same commit.
 - 2026-09-21 `conductor/t-177` — Start-Job is not a free way to bound a call: PowerShell 5.1 backs a background job with a real second powershell.exe process, confirmed by direct process trace popping its own visible console on the desktop every tick regardless of the parent task's own window state or how it was launched. When "run this with a timeout" is the actual requirement on Windows, System.Diagnostics.Process with CreateNoWindow=$true/ UseShellExecute=$false plus a manual WaitForExit(timeout)+Kill() gets the same bounded guarantee without a second process or its console. This sandbox has no PowerShell by default, but the official Linux pwsh tarball is fetchable through the agent proxy and is enough to AST-parse every .ps1 in the repo and exercise new process-launching logic against real child processes (stdin/stdout, timeout+kill, non-deadlocking large output) -- a meaningfully stronger verification bar than syntax-parsing alone for a change to a production watchdog this sandbox cannot otherwise observe running.
 - 2026-09-21 `storybook/t-010` — Cycle 81 of the recurring storybook/t-010 bug-hunt: a system prompt and its schema/ validator can silently disagree about the SAME condition when they read it from two different places. buildStorybookSystemPrompt() read request.isFinalTurn directly to tell the model "return an empty choices array," while the schema/validator decided the choice-count rule from a separate options.finalTurn the caller had to remember to pass -- and the one production call site never did. The lesson generalizes: when a prompt and its own response contract both depend on the same boolean, derive the contract's flag FROM the prompt's input at the call site that builds both, rather than accepting it as a second, independently-suppliable parameter that can drift from the first. Also: forgot the DATABASE_URL-at-import-time gotcha from cycle 80's own lesson while writing this cycle's own guard script (a static import of storybookRuns.ts, which initializes Prisma) -- had to relearn it via a live CI failure on the first push, despite it being spelled out in the immediately preceding LEARNING.yaml entry. Reading the prior cycle's own lesson before writing a new guard script would have caught this before pushing, not after.
 - 2026-09-21 `storybook/t-010` — Cycle 80 of the recurring storybook/t-010 bug-hunt: applyQuestProposal()'s idempotency check ("clicking twice must not create two to-dos") only keyed on the SAME proposal id being re-applied, but a needs-info checkpoint stays activeCheckpoint() across turns and can accumulate more than one unapplied proposal before any is accepted -- and the UI renders every unapplied proposal with its own independent Accept button. The write-back guarantee needs to be keyed on the CHECKPOINT, not the proposal, whenever a ledger/queue lets more than one pending item point at the same underlying real-world write. Also: a module that mixes pure logic with a Prisma-backed write path (storybookQuest.ts) forces every consumer, including a pure-logic test, to pay the module-level DATABASE_URL check at import time -- the fix was the existing verifyChildMaturityRestriction.ts pattern (dummy DATABASE_URL set before a dynamic import), not a source refactor, but it cost a full CI round-trip to discover contract-tests.yml's "Contract verifiers" job is genuinely DB-free and doesn't set one.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-20 `ruler-hooked/t-034` — When a "simulate the economy" task's live game has a skill-dependent success/failure step (here: the timing-bar minigame's LANDED/ESCAPED outcome) with no fixed probability anywhere in the data, don't invent a number to fill the gap -- define the simulation's unit of time around the step that IS fully data-driven (one resolved catch, not one cast attempt) and say so explicitly in the file. A `--check-drift` mode that regex-diffs a hand-synced data file against its live TypeScript source, self-tested by injecting a real mismatch and confirming it's caught, is worth adding whenever a design/simulation layer duplicates numbers a developer could otherwise edit in only one of the two places by mistake.
 - 2026-09-20 `ruler-hooked/t-029` — A game's existing closed Effect grammar (counters/sliders/flags, additive and reducer-applied) is usually wide enough to carry a brand-new subsystem (here: a spendable currency, gear ownership, and kingdom investment) with zero save-shape changes -- check for that reuse before reaching for a new save field or a bespoke mutation path. Also: when a value must feed a purely-derived function that's called from multiple sites (game logic AND the Vue display, here timingProfileFor), snapshot it onto the state object at construction time rather than threading it as a new parameter everywhere -- every existing call site picks it up for free and the visual/logic paths can't diverge.
 - 2026-09-20 `interface-vision/t-137` — A per-bucket ratchet that compares only aggregate COUNT (not membership) lets a same-bucket substitution slip through silently; when entries are stable identifiers with no natural churn (bare file paths, unlike ESLint's line:column), add an explicit membership check alongside the count check rather than assuming count-only is sufficient everywhere the shared ratchetBaseline.ts pattern is reused.
-- 2026-09-20 `ruler-hooked/t-028` — Reused an existing Prisma model (Character/ExpressionMedia) instead of inventing a parallel portrait/expression schema, per the task's explicit instruction to build on the audit's character-parity item -- worth checking for an already-fitting model before adding new columns/tables on any 'we need a character system' task. Separately: running `prettier --write` on an edited file reformats the WHOLE file, not just the touched lines; several ruler-hooked files were already prettier-non-compliant on main before this task, so a naive --write pass would have bundled a large unrelated reflow into the diff. Checked each edited file's original formatting via `git show HEAD:<file>` before trusting --write's output, and reverted/reapplied surgically where it over-reformatted -- worth doing this check by default on any repo where prettier compliance isn't already a green baseline.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-21T03:11:33Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-21T03:16:08Z_
