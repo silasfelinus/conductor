@@ -1060,16 +1060,14 @@ tasks:
 - id: t-037
   milestone: m5
   title: Add a --list-lanes summary to build_ruler_hooked_art_queue.py
-  status: claimed
-  owner: worker
+  status: needs-human
   stakes: reversible
   passes: 0
-  note: >-
-    Kaizen from t-036 (silasfelinus/conductor#4937), which added --lane <name> to scope
-    --write/--check to one lane at a time. Deciding *which* lane to work still means
-    running a full dry-run and eyeballing the output. Add a --list-lanes flag that prints
-    each lane's staged-vs-not-yet-staged entry counts in one short table, so a session can
-    see at a glance which lane has unstaged work before choosing one to build/check.
+  note: |-
+    Kaizen from t-036 (silasfelinus/conductor#4937), which added --lane <name> to scope --write/--check to one lane at a time. Deciding *which* lane to work still means running a full dry-run and eyeballing the output. Add a --list-lanes flag that prints each lane's staged-vs-not-yet-staged entry counts in one short table, so a session can see at a glance which lane has unstaged work before choosing one to build/check.
+
+    Connector-only implementation inspected the exact main() flow and preserved an exact patch/test handoff at projects/ruler-hooked/docs/t-037-list-lanes-handoff.md. The required edit is inside a large existing script; this connector only supports whole-file replacement, and AGENTS.md forbids reconstructing that file from paged/truncated reads. No production/API work is involved. Apply the handoff with a line-patch-capable worker, then return this task to ready/review as appropriate.
   claimed_by: openai-scheduled-2026-09-21T122311Z-ruler-hooked-t037-a11
   claimed_at: '2026-09-21T12:23:11Z'
-  updated: '2026-09-21T12:23:11Z'
+  updated: '2026-09-21T12:31:00Z'
+  soft_gate: true
