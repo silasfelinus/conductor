@@ -634,8 +634,830 @@ function Invoke-HiddenProcess($filePath, $argumentList, $timeoutSeconds, $standa
     $resolvedFile = $filePath
     $resolvedArgs = @()
     if ($argumentList) { $resolvedArgs = @($argumentList) }
-    if ($filePath -match '\.(cmd|bat)$') {
-        $resolvedArgs = @('/d', '/c', $filePath) + $resolvedArgs
+    $resolvedArgumentString = $null
+
+    if ($filePath -match '\.(cmd|bat)    $psi = New-Object System.Diagnostics.ProcessStartInfo
+    $psi.FileName = $resolvedFile
+
+    # SILAS-PC runs Windows PowerShell 5.1 on .NET Framework, where
+    # ProcessStartInfo.ArgumentList does not exist. With SilentlyContinue at
+    # script scope, trying to Add() there fails invisibly and leaves cmd.exe
+    # with no /d /c pm2.cmd jlist arguments, so it waits until our 60-second
+    # timeout and the watchdog reports itself blind. Build the legacy
+    # ProcessStartInfo.Arguments string explicitly instead. The quoting helper
+    # follows CommandLineToArgvW/CRT rules: backslashes before a quote are
+    # doubled, and trailing backslashes inside a quoted argument are doubled
+    # before the closing quote.
+    if ($null -eq $resolvedArgumentString) {
+        $resolvedArgumentString = ConvertTo-NativeArgumentString $resolvedArgs
+    }
+    $psi.Arguments = $resolvedArgumentString
+    $psi.UseShellExecute = $false
+    $psi.CreateNoWindow = $true
+    $psi.RedirectStandardOutput = $true
+    $psi.RedirectStandardError = $true
+    if ($null -ne $standardInputText) { $psi.RedirectStandardInput = $true }
+
+    $proc = New-Object System.Diagnostics.Process
+    $proc.StartInfo = $psi
+    try {
+        [void]$proc.Start()
+    } catch {
+        return [pscustomobject]@{ Output = "failed to start $filePath`: $($_.Exception.Message)"; ExitCode = -1; TimedOut = $false }
+    }
+
+    # Read async, started before the wait, so a chatty child cannot deadlock
+    # on a full pipe buffer while nobody is draining it.
+    $stdoutTask = $proc.StandardOutput.ReadToEndAsync()
+    $stderrTask = $proc.StandardError.ReadToEndAsync()
+    if ($null -ne $standardInputText) {
+        $proc.StandardInput.Write($standardInputText)
+        $proc.StandardInput.Close()
+    }
+
+    $exited = $proc.WaitForExit($timeoutSeconds * 1000)
+    if (-not $exited) {
+        try { $proc.Kill() } catch {}
+        $proc.Dispose()
+        return [pscustomobject]@{ Output = "$filePath did not respond within $timeoutSeconds seconds"; ExitCode = -1; TimedOut = $true }
+    }
+
+    $output = $stdoutTask.Result + $stderrTask.Result
+    $exitCode = $proc.ExitCode
+    $proc.Dispose()
+    return [pscustomobject]@{ Output = $output; ExitCode = $exitCode; TimedOut = $false }
+}
+
+# --- pm2 visibility ----------------------------------------------------------
+# Read pm2's process list ONCE, and distinguish "pm2 says this app is stopped"
+# from "pm2 told us nothing at all". They are not the same, and conflating them
+# silently disabled this entire watchdog.
+#
+# Windows PowerShell 5.1's ConvertFrom-Json treats object keys case-insensitively.
+# PM2 jlist includes the process environment, where Windows can legitimately
+# contain both username and USERNAME. Parsing the raw jlist therefore throws on
+# valid PM2 JSON. Project the list through Node first, keeping only name/status;
+# Node is already a PM2 dependency and its JSON parser preserves case-distinct
+# keys. PowerShell only sees the small collision-free snapshot.
+$pm2List = $null
+$pm2Error = ''
+$pm2Command = Get-Command 'pm2.cmd' -CommandType Application -ErrorAction SilentlyContinue |
+    Select-Object -First 1
+if (-not $pm2Command) {
+    $pm2Command = Get-Command 'pm2' -CommandType Application -ErrorAction SilentlyContinue |
+        Select-Object -First 1
+}
+
+if (-not $pm2Command) {
+    $pm2Error = 'pm2 executable is not visible to the scheduled task'
+} else {
+    # Bounded, because an unbounded call here can wedge the whole watchdog.
+    # 'pm2 jlist' talks to the per-user pm2 daemon over a local socket and will
+    # sit there indefinitely if that daemon is unresponsive, or has to be
+    # spawned for an account that has none.
+    #
+    # This task runs with MultipleInstances=IgnoreNew and a 72-hour
+    # ExecutionTimeLimit (verified on Silas-PC 2026-09-02), which is the worst
+    # possible combination for a hang here: the stuck run is not killed for
+    # three days, and every 5-minute trigger in the meantime is silently
+    # SKIPPED rather than started. One hang therefore stops the watchdog
+    # completely - not for one tick, for days - while Task Scheduler keeps
+    # reporting a healthy NextRunTime and the log says nothing at all, because
+    # the tick line below is never reached. A bounded call is what keeps a bad
+    # minute from becoming a bad weekend.
+    $pm2Invoke = Invoke-HiddenProcess $pm2Command.Source @('jlist') $pm2TimeoutSeconds $null
+    if ($pm2Invoke.TimedOut) {
+        $pm2ExitCode = -1
+        $pm2Raw = "pm2 jlist did not respond within $pm2TimeoutSeconds seconds"
+    } else {
+        $pm2Raw = [string]$pm2Invoke.Output
+        $pm2ExitCode = [int]$pm2Invoke.ExitCode
+    }
+
+    if ($pm2ExitCode -ne 0) {
+        $pm2Error = "pm2 jlist exited $pm2ExitCode`: $($pm2Raw.Trim())"
+    } elseif ([string]::IsNullOrWhiteSpace($pm2Raw)) {
+        $pm2Error = 'pm2 jlist returned no output'
+    } else {
+        $snapshotHelper = Join-Path $PSScriptRoot 'pm2-jlist-snapshot.js'
+        $nodeCommand = Get-Command 'node.exe' -CommandType Application -ErrorAction SilentlyContinue |
+            Select-Object -First 1
+        if (-not $nodeCommand) {
+            $nodeCommand = Get-Command 'node' -CommandType Application -ErrorAction SilentlyContinue |
+                Select-Object -First 1
+        }
+
+        if (-not $nodeCommand) {
+            $pm2Error = 'node executable is not visible to the scheduled task'
+        } elseif (-not (Test-Path -LiteralPath $snapshotHelper)) {
+            $pm2Error = "pm2 snapshot helper is missing: $snapshotHelper"
+        } else {
+            $snapshotInvoke = Invoke-HiddenProcess $nodeCommand.Source @($snapshotHelper) $pm2TimeoutSeconds $pm2Raw
+            $pm2Snapshot = [string]$snapshotInvoke.Output
+            $snapshotExitCode = [int]$snapshotInvoke.ExitCode
+            if ($snapshotInvoke.TimedOut) {
+                $pm2Error = "pm2 jlist snapshot did not respond within $pm2TimeoutSeconds seconds"
+            } elseif ($snapshotExitCode -ne 0) {
+                $pm2Error = "pm2 jlist snapshot failed ($snapshotExitCode): $($pm2Snapshot.Trim())"
+            } else {
+                try {
+                    $pm2List = $pm2Snapshot | ConvertFrom-Json
+                } catch {
+                    $pm2Error = "safe pm2 snapshot could not be decoded: $($_.Exception.Message)"
+                }
+            }
+        }
+    }
+}
+
+$pm2Names = @()
+if ($pm2List) { $pm2Names = @($pm2List | ForEach-Object { $_.name } | Where-Object { $_ }) }
+$pm2Visible = $pm2Names.Count -gt 0
+
+# Heartbeat. Previously a healthy tick wrote NOTHING, so an empty log could not
+# be told apart from a task that never ran -- which is precisely the question
+# that mattered on 2026-08-27. One line per tick, ~288/day, trimmed below.
+Write-Log "tick as $($env:USERNAME) - pm2 apps: $(if ($pm2Visible) { $pm2Names -join ', ' } else { 'NONE VISIBLE' })"
+
+# Account for the time since the previous tick before anything else uses it.
+# Written every run, so the very next tick after a gap is the one that names it.
+$tickNow = Get-Date
+$previousTick = $null
+if ($alertState.ContainsKey('last_tick_at')) {
+    $parsedTick = [datetime]::MinValue
+    if ([datetime]::TryParse([string]$alertState['last_tick_at'], [ref]$parsedTick)) {
+        $previousTick = $parsedTick
+    }
+}
+$alertState['last_tick_at'] = $tickNow.ToString('yyyy-MM-dd HH:mm:ss')
+Save-AlertState $alertState
+
+if ($previousTick -and ($tickNow - $previousTick).TotalMinutes -ge $tickGapAlertMinutes) {
+    $gapMinutes = [math]::Round(($tickNow - $previousTick).TotalMinutes, 1)
+    $gapFrom = $previousTick.ToString('yyyy-MM-dd HH:mm:ss')
+    $transitions = Get-PowerTransitions $previousTick
+    $sleeps = @($transitions | Where-Object { $_.Id -eq 42 })
+    $wakes = @($transitions | Where-Object { $_.Id -eq 107 })
+
+    if ($sleeps.Count -gt 0 -or $wakes.Count -gt 0) {
+        $detail = "$($sleeps.Count) sleep + $($wakes.Count) resume event(s)"
+        if ($wakes.Count -gt 0) {
+            $detail = "$detail, last resume $($wakes[-1].TimeCreated.ToString('yyyy-MM-dd HH:mm:ss'))"
+        }
+        Write-Log "GAP of $gapMinutes min since $gapFrom - the BOX SLEPT ($detail); the watchdog was frozen, not stopped"
+        if (Test-AlertDue $alertState 'box-slept') {
+            $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+            Send-Alert "SLEEP: $hostName suspended for $gapMinutes minutes" `
+                "This watchdog ran at $gapFrom and not again until $stamp - a gap of $gapMinutes minutes - and the Windows System log attributes it to sleep, not to a stopped task ($detail).`n`nThat matters because this box is a server. While it is suspended nothing renders, the relay posts no heartbeat (so off-box checks read the engine as SILENT), SMB mappings to the model share can come back stale, and ComfyUI keeps a CUDA context and cached folder_paths listings across a cycle it never learns about. Several incidents already written up in ops/home-server/README.md have that shape.`n`nConfirm what is putting it to sleep:`n  powercfg /lastwake`n  powercfg /requests`n  powercfg /q SCHEME_CURRENT SUB_SLEEP`n`nStop it, if this box is meant to stay up:`n  powercfg /change standby-timeout-ac 0`n  powercfg /change hibernate-timeout-ac 0`n  powercfg /change disk-timeout-ac 0`n(monitor-timeout-ac can stay non-zero - a dark screen is not a suspended box.)"
+            $alertState['box-slept'] = $stamp
+            Save-AlertState $alertState
+        }
+    } else {
+        # No sleep event across the gap, so the box was up and this task was
+        # not. That is the 2026-09-01 failure, and it is worth saying out loud
+        # rather than leaving as a hole in the log.
+        Write-Log "GAP of $gapMinutes min since $gapFrom with NO Kernel-Power sleep/resume event - the box was awake and this task did not run; check Task Scheduler history for AI-Backends-Healthcheck"
+    }
+}
+
+if (-not $pm2Visible) {
+    $watchdogExitCode = 2
+    $reason = if ($pm2Error) { $pm2Error } else { 'pm2 returned an empty process list' }
+    Write-Log "pm2 unavailable ($reason) - backend liveness checks are BLIND; remaining checks continue; run will exit 2"
+    if (Test-AlertDue $alertState 'pm2-invisible') {
+        $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+        Send-Alert "WATCHDOG BLIND on $hostName - pm2 unavailable" `
+            "healthcheck.ps1 ran at $stamp on $hostName as user '$($env:USERNAME)' but PM2 could not provide a usable process list ($reason). Backend liveness checks cannot safely run. Share/render checks will still run where possible, and this watchdog invocation will exit 2 instead of falsely reporting success. If pm2 is not found, verify the task's Run as account and PATH; PM2's daemon is per-user."
+        $alertState['pm2-invisible'] = $stamp
+        Save-AlertState $alertState
+    }
+}
+
+# --- Share watchdog ----------------------------------------------------------
+# Runs FIRST, because both watchdogs below misread a dead model mount.
+#
+# On 2026-08-26 alexandria rebooted several times during a disk replacement.
+# Every SMB mapping on this box went Unavailable, and ComfyUI kept answering
+# /system_stats with a 200 the whole time - so the liveness probe was happy,
+# while every render died at 'hostbuf_file_reader_read failed' and the queue
+# drained PENDING into FAILED at ~5/min. The render watchdog below WOULD have
+# fired on that spike and restarted comfyui straight back into the dead mount,
+# repeatedly, achieving nothing.
+#
+# This block: detects the dead share, optionally remaps it, and - the part that
+# actually matters - restarts comfyui once the share RETURNS. ComfyUI caches
+# folder_paths' filename lists and does not re-enumerate just because the mount
+# came back; without that restart it keeps failing reads against names it cached
+# while the share was down. That is the step whose omission made this look
+# intermittent on both 2026-08-25 and 2026-08-26.
+#
+# Config (setx, then open a NEW shell):
+#   setx KR_SHARE_PROBE_PATH "Z:\ai\models"          REM what to probe
+#   setx KR_SHARE_UNC        "\\192.168.7.172\pc"     REM optional: remap target
+# KR_SHARE_UNC is only usable when the probe path starts with a drive letter.
+# Leave it unset to detect and alert without touching the mapping. The remap
+# needs credentials in Credential Manager (cmdkey /add) - see README.
+$shareProbePath = if ($env:KR_SHARE_PROBE_PATH) { $env:KR_SHARE_PROBE_PATH } else { 'Z:\ai\models' }
+$shareUnc = $env:KR_SHARE_UNC
+
+function Test-ShareReadable($path) {
+    # Enumerate; do not settle for Test-Path. A stale SMB handle can satisfy
+    # Test-Path and still fail every read - that exact split (ComfyUI holding a
+    # dead handle while an interactive 'dir' said the path did not exist) is
+    # what made the 2026-08-25 outage so hard to name. An empty directory is
+    # readable and must pass: enumerating nothing is not an error.
+    if (-not $path) { return $false }
+    try {
+        $null = Get-ChildItem -LiteralPath $path -Force -ErrorAction Stop |
+            Select-Object -First 1
+        return $true
+    } catch {
+        return $false
+    }
+}
+
+function Repair-ShareMapping($path, $unc) {
+    if (-not $unc) { return $false }
+    if ($path -notmatch '^([A-Za-z]:)') {
+        Write-Log "share watchdog: $path is not a drive letter - cannot remap"
+        return $false
+    }
+    $letter = $Matches[1]
+    Write-Log "share watchdog: remapping $letter to $unc"
+    # stdin from NUL on purpose. 'net use' prompts for a username when no
+    # credential is cached, and a Task Scheduler run has no console to answer
+    # with - it would block until the task timeout instead of failing. With
+    # stdin closed it returns an error immediately and we alert instead.
+    & cmd.exe /c "net use $letter /delete /y < NUL" 2>&1 | Out-Null
+    & cmd.exe /c "net use $letter $unc /persistent:yes < NUL" 2>&1 | Out-Null
+    return (Test-ShareReadable $path)
+}
+
+$shareOk = $true
+# Set when this tick's share-recovery block below restarts comfyui, so the
+# ordinary liveness probe further down does not immediately restart it again
+# before it has finished starting up (a real double-restart observed
+# 2026-08-28: pm2 marks a just-restarted process 'online' well before
+# ComfyUI's own HTTP server is actually answering /system_stats).
+$comfyuiJustRestarted = $false
+if ($shareProbePath) {
+    $shareOk = Test-ShareReadable $shareProbePath
+    $sharePrev = if ($alertState.ContainsKey('share_state')) { [string]$alertState['share_state'] } else { 'ok' }
+    $shareStamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+
+    if (-not $shareOk) {
+        Write-Log "share watchdog: $shareProbePath is NOT readable"
+        if (Repair-ShareMapping $shareProbePath $shareUnc) {
+            $shareOk = $true
+            Write-Log "share watchdog: remap restored $shareProbePath"
+        }
+    }
+
+    if ($shareOk) {
+        if ($sharePrev -eq 'down') {
+            Write-Log "share watchdog: share is back - restarting comfyui to rebuild folder_paths"
+            Restart-Supervised 'comfyui'
+            $comfyuiJustRestarted = $true
+            Send-Alert "RECOVERED: model share is back on $hostName - comfyui restarted" `
+                "The model share $shareProbePath was unreadable and is now answering again as of $shareStamp on $hostName. comfyui has been restarted so folder_paths rebuilds its cached filename lists - without that it would keep failing reads against the names it cached while the share was down. Renders should resume on the next claim. No action needed unless this repeats."
+        }
+        $alertState['share_state'] = 'ok'
+        Save-AlertState $alertState
+    } else {
+        $alertState['share_state'] = 'down'
+        Save-AlertState $alertState
+        if (Test-AlertDue $alertState 'share-watchdog') {
+            $remapNote = if ($shareUnc) { "An automatic remap to $shareUnc was attempted and did not restore it." } else { "No KR_SHARE_UNC is configured, so no remap was attempted." }
+            Send-Alert "MODEL SHARE DOWN on $hostName - renders are paused" `
+                "The model share $shareProbePath is unreadable as of $shareStamp on $hostName. $remapNote ComfyUI will keep answering its API while failing every render, so treat a green /system_stats as meaningless here. kr-relay's own share gate should be holding claims (look for 'NOT claiming jobs' in its log); if that gate is not armed, the pending queue is being converted into failures right now. Check the NAS is up and the mapping is present (net use)."
+            $alertState['share-watchdog'] = $shareStamp
+            Save-AlertState $alertState
+        } else {
+            Write-Log "share watchdog: alert suppressed (within $($cooldownMinutes)-min cooldown)"
+        }
+    }
+}
+
+foreach ($t in $targets) {
+    if (-not $pm2Visible) { continue }
+
+    # The share watchdog above may have just restarted this exact process for
+    # the model-share recovery (see $comfyuiJustRestarted). Give it this tick
+    # to finish starting up instead of racing it: pm2 reports 'online' almost
+    # immediately on restart, well before ComfyUI's HTTP server is actually
+    # answering, so probing right away would see a false hang and restart it
+    # again for no reason. The regular 5-minute cadence is plenty of warm-up
+    # time before the next tick's probe.
+    if ($t.Name -eq 'comfyui' -and $comfyuiJustRestarted) {
+        Write-Log "$($t.Name): skipping liveness probe this tick - just restarted by the share watchdog"
+        continue
+    }
+
+    # Only police processes pm2 believes are online - a deliberate `pm2 stop`
+    # (e.g. freeing the GPU) must not be fought by the watchdog. Reuses the
+    # single $pm2List read above rather than shelling out per target: three
+    # `pm2 jlist` calls per tick was wasteful, and worse, each one could fail
+    # independently and be silently swallowed.
+    $entry = $pm2List |
+        Where-Object { $_.name -eq $t.Name } |
+        Select-Object -First 1
+    $status = $entry | Select-Object -ExpandProperty pm2_env -ErrorAction SilentlyContinue
+
+    # The OS pid pm2 believes it is supervising, or 0 when it is running none.
+    # Only used to answer "is the process holding the port ours?" below.
+    $pm2Pid = 0
+    if ($entry -and $entry.PSObject.Properties['pid'] -and $null -ne $entry.pid) {
+        $pm2Pid = [int]$entry.pid
+    }
+
+    if (-not $status) {
+        Write-Log "$($t.Name): not in pm2's list - not started on this box?"
+        continue
+    }
+
+    # --- Crash-loop detection ------------------------------------------------
+    # A crash loop is neither a hang nor a stop, and until 2026-09-02 this
+    # watchdog had no way to say so. ComfyUI died ~26s into every start (a
+    # custom node's emoji hit a cp1252 stdout; see ecosystem.config.js), so
+    # pm2 cycled it forever. At any single 5-minute tick its status reads
+    # 'online' most of the time and 'waiting restart' the rest, and the old
+    # blanket 'not online -> leave it alone' treated the second case as a
+    # deliberate 'pm2 stop'.
+    #
+    # The restart COUNTER is the honest signature: it climbs whatever the
+    # status says at the instant we look. Compare it against the previous
+    # tick.
+    #
+    # This also catches the end state, which is worse than the loop. With
+    # min_uptime 30s and max_restarts 50, pm2 gives up after ~26 minutes and
+    # parks the app in 'errored' - at which point the recycling console you
+    # were using to notice the problem disappears and the box goes quiet
+    # rather than green.
+    $restartCount = -1
+    if ($status.PSObject.Properties['restart_time'] -and $null -ne $status.restart_time) {
+        $restartCount = [int]$status.restart_time
+    }
+    $restartKey = "restarts_$($t.Name)"
+    $prevRestarts = -1
+    if ($alertState.ContainsKey($restartKey)) {
+        [int]::TryParse([string]$alertState[$restartKey], [ref]$prevRestarts) | Out-Null
+    }
+    if ($restartCount -ge 0) {
+        $alertState[$restartKey] = $restartCount
+        Save-AlertState $alertState
+    }
+
+    $restartDelta = 0
+    if ($restartCount -ge 0 -and $prevRestarts -ge 0 -and $restartCount -ge $prevRestarts) {
+        $restartDelta = $restartCount - $prevRestarts
+    }
+
+    # --- Replaced without a pm2 restart -------------------------------------
+    # restart_time counts only the restarts pm2 PERFORMED. A process replaced
+    # any other way -- the pm2 daemon itself restarting, a `pm2 resurrect`, a
+    # reboot -- moves the process start time forward while leaving that counter
+    # exactly where it was, so every check above stays silent.
+    #
+    # 2026-09-06: kr-relay read `restarts 0` with 44 minutes of uptime, against
+    # an app created 2026-09-02 and a fresh "polling https://kindrobots.org"
+    # line in its own log at 02:39:12 -- the same minute a 143-minute hole in
+    # the off-box heartbeat series closed. Nothing had crashed. Something had
+    # replaced the process, three times in two days, and pm2's own counter was
+    # structurally unable to say so.
+    $startedKey = "started_$($t.Name)"
+    $currentStart = -1
+    if ($entry -and $entry.PSObject.Properties['pm_uptime'] -and $null -ne $entry.pm_uptime) {
+        $currentStart = [double]$entry.pm_uptime
+    }
+    $previousStart = -1
+    if ($alertState.ContainsKey($startedKey)) {
+        $parsedStart = 0.0
+        if ([double]::TryParse([string]$alertState[$startedKey], [ref]$parsedStart)) {
+            $previousStart = $parsedStart
+        }
+    }
+    if ($currentStart -gt 0) {
+        $alertState[$startedKey] = $currentStart
+        Save-AlertState $alertState
+    }
+
+    if ($currentStart -gt 0 -and $previousStart -gt 0 -and
+        $currentStart -gt $previousStart -and $restartDelta -eq 0) {
+        $startedAt = ([datetimeoffset]::FromUnixTimeMilliseconds([long]$currentStart)).LocalDateTime
+        $startedText = $startedAt.ToString('yyyy-MM-dd HH:mm:ss')
+        Write-Log "$($t.Name): REPLACED WITHOUT A PM2 RESTART - process now started $startedText while pm2's restart count stayed at $restartCount; the daemon was restarted, resurrected, or the box rebooted"
+        if (Test-AlertDue $alertState "replaced-$($t.Name)") {
+            $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+            Send-Alert "REPLACED: $($t.Name) on $hostName restarted, but not by pm2" `
+                "$($t.Name) is running a process that started at $startedText, newer than the one seen at the previous tick, while pm2's restart counter did not move (still $restartCount). pm2 did not do this: it was a pm2 daemon restart, a 'pm2 resurrect', a logoff, or a reboot.`n`nThat matters because nothing else reports it. The crash-loop and errored checks read the restart counter, which stands still through exactly this event, and the app comes back looking healthy with a clean history. Off the box it shows only as a hole in the heartbeat series.`n`nWhat replaced it:`n  (Get-CimInstance Win32_OperatingSystem).LastBootUpTime`n  Get-WinEvent -MaxEvents 20 -FilterHashtable @{LogName='System'; Id=6005,6006,6008,1074,41} |`n    Format-Table TimeCreated, Id, Message -AutoSize`n`n6005 is the event log starting (a boot), 6006 a clean shutdown, 6008 an unexpected one, 1074 a shutdown someone or something requested (it names the process), 41 a kernel power fault. If none of those line up, the pm2 daemon went down on its own - check whether it is started at logon rather than as a service, since a logoff takes every app with it."
+            $alertState["replaced-$($t.Name)"] = $stamp
+            Save-AlertState $alertState
+        }
+    }
+
+    # --- How long after a boot did this app come back? ----------------------
+    # The reboot is not the interesting number. The RECOVERY LAG is.
+    #
+    # 2026-09-06, from the System log and kr-relay's own: the box restarted at
+    # 00:16:37 and finished booting at 00:17:12 -- and kr-relay did not start
+    # until 02:39:12. Two hours and twenty-two minutes of a machine that was up,
+    # awake and idle, rendering nothing. That is the 143-minute hole in the
+    # off-box heartbeat series almost exactly, and it is a far worse fault than
+    # the restart that preceded it.
+    #
+    # The 09-05 02:49 restart, by contrast, had the relay back in 88 seconds.
+    # Same box, same week: sometimes the engines return immediately and
+    # sometimes they do not come back at all until a human signs in. Nothing
+    # measured the difference, so nobody could know which kind of reboot had
+    # just happened.
+    #
+    # Reported once per app per boot, at the first tick where the app is running
+    # -- never on a later manual restart, which would otherwise read as an
+    # enormous lag against a boot from hours ago.
+    if ($bootTime -and $currentStart -gt 0) {
+        $bootStamp = $bootTime.ToString('yyyy-MM-dd HH:mm:ss')
+        $recoveredKey = "bootrecovered_$($t.Name)"
+        if ([string]$alertState[$recoveredKey] -ne $bootStamp) {
+            $alertState[$recoveredKey] = $bootStamp
+            Save-AlertState $alertState
+
+            $bootStartedAt = ([datetimeoffset]::FromUnixTimeMilliseconds([long]$currentStart)).LocalDateTime
+            $lagMinutes = [math]::Round(($bootStartedAt - $bootTime).TotalMinutes, 1)
+            if ($lagMinutes -ge $bootRecoveryMinutes) {
+                Write-Log "$($t.Name): SLOW RECOVERY - box booted $bootStamp, this app did not start until $($bootStartedAt.ToString('yyyy-MM-dd HH:mm:ss')) - $lagMinutes minutes of nothing"
+                if (Test-AlertDue $alertState "bootlag-$($t.Name)") {
+                    $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+                    Send-Alert "SLOW RECOVERY: $($t.Name) took $lagMinutes min to come back after $hostName rebooted" `
+                        "$hostName finished booting at $bootStamp. $($t.Name) did not start until $($bootStartedAt.ToString('yyyy-MM-dd HH:mm:ss')) - $lagMinutes minutes later, during which the box was up and idle and nothing rendered.`n`nA reboot on its own is survivable; this is the part that is not. If pm2 is started at LOGON (pm2-windows-startup, README Option B) then a machine sitting at the sign-in screen runs nothing at all, however long it sits there. An update-initiated restart can sign the last user back in automatically and recover in about a minute, while a plain 'shutdown /r' does not - which is how the same box can recover in 88 seconds one night and 142 minutes the next.`n`nThe durable fix is README Option A: pm2 as a real Windows service, which comes back at BOOT with no sign-in. Run 'npm run configure' before 'npm run setup' - the field note in the README explains why that order matters.`n`nThen verify with ops\\home-server\\preflight.ps1, which exists to answer exactly this question before the next reboot asks it for you."
+                    $alertState["bootlag-$($t.Name)"] = $stamp
+                    Save-AlertState $alertState
+                }
+            } else {
+                Write-Log "$($t.Name): came back $lagMinutes min after the boot at $bootStamp"
+            }
+        }
+    }
+
+    # --- Orphan sweep, BEFORE every branch that continues -------------------
+    # 2026-09-20: this call used to sit at the bottom of this loop, below the
+    # crash-loop, errored, stopped and 'not online' branches - all of which
+    # `continue`. So it ran only when pm2 read 'online' AND the restart counter
+    # was calm: never in the states that actually PRODUCE orphans. From that
+    # day's healthcheck.log:
+    #
+    #   12:26:03  comfyui: CRASH LOOPING - restart count climbed 82->86
+    #   12:31:06  comfyui: ORPHAN SWEEP - killing engine pid 20492
+    #   12:36:03  comfyui: pm2 status is 'waiting restart' - in transition
+    #
+    # The 12:31 sweep ran by luck - pm2 happened to read 'online' with a calm
+    # counter for that one tick. 12:26 and 12:36 skipped it, and the loop ran
+    # on for another 49 minutes and 9 more doomed 4-minute boots.
+    #
+    # 'stopped' stays exempt: a deliberate `pm2 stop` (to free the GPU) must
+    # never be fought, and an engine a human starts by hand afterwards is not
+    # an orphan.
+    if ($status.status -ne 'stopped') {
+        Invoke-OrphanSweep $t $pm2Pid
+    }
+
+    # Sample progress every tick so the probe block below has a baseline to
+    # compare against. Read the previous value BEFORE writing this one.
+    $progressKey = "progress_$($t.Name)"
+    $prevProgress = [string]$alertState[$progressKey]
+    $nowProgress = Get-EngineProgress $pm2Pid
+    $engineMadeProgress = $false
+    if ($nowProgress) {
+        # Same pid, different counters = it did work since the last tick. A
+        # changed pid means a restart, which says nothing about progress.
+        if ($prevProgress -and $prevProgress.Split('|')[0] -eq $nowProgress.Split('|')[0] -and
+            $prevProgress -ne $nowProgress) {
+            $engineMadeProgress = $true
+        }
+        $alertState[$progressKey] = $nowProgress
+        Save-AlertState $alertState
+    }
+
+    # Consecutive ticks in which pm2 restarted this app at all. Resets the
+    # moment a tick passes with no restart, so an ordinary deploy or a single
+    # watchdog restart never accumulates.
+    $slowLoopKey = "slowloop_$($t.Name)"
+    $slowLoopCount = 0
+    if ($alertState.ContainsKey($slowLoopKey)) { $slowLoopCount = [int]$alertState[$slowLoopKey] }
+    if ($restartDelta -ge 1) { $slowLoopCount++ } else { $slowLoopCount = 0 }
+    $alertState[$slowLoopKey] = $slowLoopCount
+    Save-AlertState $alertState
+
+    $slowLoopTripped = $slowLoopCount -ge $slowLoopTicks
+    if ($slowLoopTripped -and $restartDelta -lt $crashLoopRestarts) {
+        Write-Log "$($t.Name): SLOW CRASH LOOP - restarting every tick for $slowLoopCount consecutive ticks (counter now $restartCount); too slow for the per-tick gate but a loop all the same"
+    }
+
+    if ($restartDelta -ge $crashLoopRestarts -or $slowLoopTripped) {
+        Write-Log "$($t.Name): CRASH LOOPING - pm2 restart count climbed $prevRestarts->$restartCount since the last tick"
+        $portNote = Get-PortOwnerReport $t.Port $pm2Pid
+        if ($portNote) { Write-Log "$($t.Name): $portNote" }
+
+        # Act before reporting. A crash loop against a squatted port is the one
+        # case here with a known, safe remedy, and the reclaim sends its own
+        # (more useful) email when it fires.
+        if (Invoke-PortReclaim $t $pm2Pid) { continue }
+
+        if (Test-AlertDue $alertState "crashloop-$($t.Name)") {
+            $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+            Send-Alert "CRASH LOOP: $($t.Name) on $hostName is restarting repeatedly" `
+                "pm2's restart count for $($t.Name) went from $prevRestarts to $restartCount in one 5-minute tick as of $stamp on $hostName - it is dying and being restarted continuously, not hung. Restarting it again will not help; read the startup error. Run 'pm2 logs $($t.Name) --err --lines 200' and look for the FIRST exception, not the last - and note that a port collision produces no exception at all, only a one-line [ERROR] before the process exits, which is what the port check below is for. If pm2 gives up (max_restarts) the app parks in 'errored' and this alert stops, so do not read silence as recovery.`n`nPort check: $portNote"
+            $alertState["crashloop-$($t.Name)"] = $stamp
+            Save-AlertState $alertState
+        }
+        continue
+    }
+
+    if ($status.status -eq 'errored') {
+        # pm2 has given up on it. Nothing will restart it, and no further
+        # symptom will appear on its own - the single most silent failure
+        # state a backend can be in.
+        Write-Log "$($t.Name): pm2 status is 'errored' - pm2 has GIVEN UP restarting it"
+        $portNote = Get-PortOwnerReport $t.Port $pm2Pid
+        if ($portNote) { Write-Log "$($t.Name): $portNote" }
+
+        # 'errored' is the terminal state - pm2 will do nothing further on its
+        # own - so this is the last place a reclaim can help without a human.
+        if (Invoke-PortReclaim $t $pm2Pid) { continue }
+
+        if (Test-AlertDue $alertState "errored-$($t.Name)") {
+            $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+            Send-Alert "ERRORED: $($t.Name) on $hostName - pm2 stopped trying" `
+                "pm2 has marked $($t.Name) 'errored' as of $stamp on $hostName, which means it exceeded max_restarts and pm2 will NOT restart it again. Nothing further will happen without a human. Read 'pm2 logs $($t.Name) --err --lines 200' for the startup failure, fix it, then 'pm2 restart <ecosystem file> --only $($t.Name) --update-env'.`n`nPort check: $portNote"
+            $alertState["errored-$($t.Name)"] = $stamp
+            Save-AlertState $alertState
+        }
+        continue
+    }
+
+    if ($status.status -eq 'stopped') {
+        # The one genuinely deliberate state: someone ran 'pm2 stop', e.g. to
+        # free the GPU. Never fight that.
+        Write-Log "$($t.Name): pm2 status is 'stopped' - deliberate, leaving it alone"
+        continue
+    }
+
+    if ($status.status -ne 'online') {
+        # launching / waiting restart / one-launch-status: in transition. Not
+        # an alarm on its own (the counter above owns that), but do not probe
+        # a process that is not up yet.
+        Write-Log "$($t.Name): pm2 status is '$($status.status)' - in transition, probing next tick"
+        continue
+    }
+
+    # The orphan sweep used to live here. It now runs above, before the
+    # status branches, because a second copy answers /system_stats perfectly
+    # well AND because the states that create orphans never reach this line.
+
+    $ok = $false
+    try {
+        $resp = Invoke-WebRequest -Uri $t.Url -TimeoutSec 20 -UseBasicParsing
+        if ($resp.StatusCode -eq 200) { $ok = $true }
+    } catch { $ok = $false }
+
+    # 20 seconds is a fine budget for a HUNG process and a poor one for a BUSY
+    # one. ComfyUI serves its API from the same loop that runs the sampler, so a
+    # heavy step - or a model read across the share - can push /system_stats
+    # past 20s on a box that is working exactly as intended. Restarting then
+    # kills a render in progress and, because pm2's kill has been unreliable
+    # here, leaves an orphan behind (see Restart-Supervised). Ask twice, with
+    # room the second time: a busy engine answers, a wedged one still does not.
+    if (-not $ok) {
+        Write-Log "$($t.Name): health probe missed 20s - retrying with a 60s budget before calling it hung"
+        Start-Sleep -Seconds 5
+        try {
+            $retry = Invoke-WebRequest -Uri $t.Url -TimeoutSec 60 -UseBasicParsing
+            if ($retry.StatusCode -eq 200) {
+                $ok = $true
+                Write-Log "$($t.Name): answered on the retry - busy, not hung; leaving it alone"
+            }
+        } catch { $ok = $false }
+    }
+
+    if (-not $ok) {
+        # A young engine is BOOTING, not hung.
+        #
+        # 2026-09-19: this watchdog was repaired after 11 days dead and
+        # immediately drove ComfyUI into a crash loop. pm2 reports 'online'
+        # within seconds of spawning the process, and the check above only
+        # skips non-online states, so the probe ran against an engine that had
+        # not finished starting. ComfyUI took 167 SECONDS to come up that day
+        # (14:11:32 start, ComfyUI-Manager's "All startup tasks have been
+        # completed" at 14:14:19) against a budget of 20s plus a 60s retry.
+        #
+        # The restart that follows does not rescue a hung engine, it kills a
+        # booting one and starts the boot over - and the loop sustains itself:
+        # pm2's restart counter climbed 779 -> 794 in the 35 minutes after the
+        # repair, every restart re-ran ~60 custom nodes (each spawning a
+        # console on the desktop, which is how Silas noticed), and two engines
+        # racing port 8188 meant whichever lost exited and was restarted again.
+        #
+        # A genuinely crash-looping engine is always young and so is always
+        # spared here. That is correct: restarting a crash-looping process does
+        # not help, and the CRASH LOOP detection above already owns that case
+        # and alerts on it.
+        $engineAgeMinutes = $null
+        if ($pm2Pid) {
+            $engineProc = Get-CimInstance Win32_Process -Filter "ProcessId = $pm2Pid" -ErrorAction SilentlyContinue
+            if ($engineProc -and $engineProc.CreationDate) {
+                $engineAgeMinutes = ((Get-Date) - $engineProc.CreationDate).TotalMinutes
+            }
+        }
+        if ($null -ne $engineAgeMinutes -and $engineAgeMinutes -lt $engineStartupGraceMinutes) {
+            Write-Log "$($t.Name): probe failed, but pm2's engine (pid $pm2Pid) is only $([math]::Round($engineAgeMinutes,1)) min old - inside the $engineStartupGraceMinutes-min startup grace, so it is still booting rather than hung; probing next tick"
+            continue
+        }
+
+        # Past the floor, but still demonstrably working. A boot that outruns
+        # the grace is a slow boot, not a wedge, and restarting it is the
+        # 2026-09-19 incident: the watchdog killing a booting engine and
+        # starting the boot over, forever. Bounded by the ceiling so a livelock
+        # cannot extend this indefinitely.
+        if ($engineMadeProgress -and $null -ne $engineAgeMinutes -and
+            $engineAgeMinutes -lt $engineStartupCeilingMinutes) {
+            Write-Log "$($t.Name): probe failed and pm2's engine (pid $pm2Pid) is $([math]::Round($engineAgeMinutes,1)) min old, past the $engineStartupGraceMinutes-min grace - but its CPU/IO counters advanced since the last tick, so it is working (a slow boot), not wedged; probing next tick (ceiling $engineStartupCeilingMinutes min)"
+            continue
+        }
+
+        if ($null -ne $engineAgeMinutes -and $engineAgeMinutes -ge $engineStartupCeilingMinutes) {
+            Write-Log "$($t.Name): pm2's engine (pid $pm2Pid) is $([math]::Round($engineAgeMinutes,1)) min old, past the $engineStartupCeilingMinutes-min ceiling - restarting whether or not it looks busy"
+        }
+
+        Write-Log "$($t.Name): health probe failed ($($t.Url)) - restarting via pm2"
+
+        # Was a watchdog restart already awaiting a verdict? If so, that restart
+        # did not fix it, and THAT is the thing worth an email.
+        $pendingKey = "restartpending_$($t.Name)"
+        $priorPending = ''
+        if ($alertState.ContainsKey($pendingKey)) { $priorPending = [string]$alertState[$pendingKey] }
+
+        Restart-Supervised $t.Name
+
+        $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+        $alertState[$pendingKey] = $stamp
+        Save-AlertState $alertState
+
+        # 2026-09-20: this used to sleep EIGHT SECONDS, probe once, and email
+        # "restart did not recover" if that probe failed. ComfyUI takes ~234
+        # seconds to bind its port, so the answer was structurally always "did
+        # not recover" - the alert fired on every watchdog restart of this app
+        # whether or not it recovered, and its verdict carried no information.
+        # Observed 14:27:57 that day: the DOWN email went out 13 seconds after
+        # the replacement was launched, while Silas was mid-migration and the
+        # engine was simply still booting.
+        #
+        # A slow-booting engine cannot be judged on a stopwatch the tick itself
+        # is holding. Record that a restart is awaiting a verdict and let a
+        # LATER tick decide with a real probe - the same startup-grace and
+        # progress logic above already knows how to wait properly. The sleep
+        # also blocked the tick for no gain.
+        if (-not $priorPending) {
+            Write-Log "$($t.Name): restarted; a full boot takes minutes, so recovery is judged on a later tick rather than seconds from now"
+        } else {
+            Write-Log "$($t.Name): STILL DOWN - a watchdog restart at $priorPending did not bring it back, and it has been restarted again"
+            if (Test-AlertDue $alertState $t.Name) {
+                Send-Alert "DOWN: $($t.Name) on $hostName - a previous watchdog restart did not recover it" `
+                    "The $($t.Name) backend stopped answering $($t.Url). The watchdog restarted it at $priorPending, gave it a full startup grace to come up, found it still not answering, and restarted it again at $stamp.`n`nUnlike the old 8-second check, this verdict is real: the engine was given time to boot and did not. Likely causes are a boot that hangs rather than crashes (a model share that is slow, unreachable, or under heavy copy load blocks folder_paths at startup with no error line), GPU/driver, or disk.`n`nStart with the last line the boot reached:`n  Get-Content logs\comfyui.err.log -Tail 30`n`nIf the share is the cause, leave the app STOPPED ('pm2 stop $($t.Name)') until it is healthy again - the watchdog never fights a deliberate stop, and restarting into a blocked scan only starts another doomed boot."
+                $alertState[$t.Name] = $stamp
+                Save-AlertState $alertState
+            } else {
+                Write-Log "$($t.Name): restart alert suppressed (within $($cooldownMinutes)-min cooldown)"
+            }
+        }
+    } else {
+        # Answering. If a watchdog restart was awaiting a verdict, this is it.
+        $pendingKey = "restartpending_$($t.Name)"
+        $pendingSince = ''
+        if ($alertState.ContainsKey($pendingKey)) { $pendingSince = [string]$alertState[$pendingKey] }
+        if ($pendingSince) {
+            $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+            Write-Log "$($t.Name): answering again - the watchdog restart at $pendingSince recovered it"
+            $alertState[$pendingKey] = ''
+            Save-AlertState $alertState
+            if (Test-AlertDue $alertState "recovered-$($t.Name)") {
+                Send-Alert "RECOVERED: $($t.Name) on $hostName is answering again" `
+                    "The $($t.Name) backend stopped answering $($t.Url) and the watchdog restarted it at $pendingSince. It is answering again as of $stamp. No action needed unless this repeats."
+                $alertState["recovered-$($t.Name)"] = $stamp
+                Save-AlertState $alertState
+            }
+        }
+    }
+}
+
+# --- Render-failure watchdog -------------------------------------------------
+# The liveness probes above catch a ComfyUI that stops ANSWERING. They do NOT
+# catch a ComfyUI that answers fine but fails every render (a bad model/encoder
+# config, a corrupt checkpoint, a broken custom node) - the API stays 200 while
+# the ArtJob queue quietly fills with FAILED. This block watches the pipeline's
+# own scoreboard (/api/art/queue/stats) and reacts to a burst of new failures
+# that are NOT accompanied by new successes.
+#
+# Policy (set with Silas 2026-07-24): EMAIL ALWAYS on a detected spike (he wants
+# to know every time, even asleep), but RESTART comfyui at most once per cooldown
+# (a restart won't fix a config bug, so hammering it is pointless - one nudge in
+# case it's a transient GPU/driver wedge, then leave it for a human).
+#
+# Detection uses per-tick DELTAS of the all-time DONE/FAILED counts, so it is
+# self-normalizing: re-enqueueing failures (FAILED drops) yields a negative delta
+# and never false-alarms; only NEW failures outpacing NEW successes trip it.
+$krBase = if ($env:KR_BASE_URL) { $env:KR_BASE_URL.TrimEnd('/') } else { 'https://kindrobots.org' }
+$krToken = $env:KR_API_TOKEN
+
+$failSpikeThreshold = 5
+if ($env:FAILURE_SPIKE_THRESHOLD) {
+    [int]::TryParse($env:FAILURE_SPIKE_THRESHOLD, [ref]$failSpikeThreshold) | Out-Null
+}
+
+if (-not $krToken) {
+    Write-Log "render watchdog skipped (no KR_API_TOKEN set)"
+} else {
+    $stats = $null
+    try {
+        $stats = Invoke-RestMethod -Uri "$krBase/api/art/queue/stats" -TimeoutSec 30 `
+            -Headers @{ 'Authorization' = "Bearer $krToken"; 'accept' = 'application/json' }
+    } catch {
+        Write-Log "render watchdog: stats fetch FAILED ($($_.Exception.Message))"
+    }
+
+    if ($stats -and $stats.data -and $stats.data.queueDepth) {
+        $depth = $stats.data.queueDepth
+        $done = 0; $failed = 0
+        if ($depth.PSObject.Properties['DONE'])   { $done   = [int]$depth.DONE }
+        if ($depth.PSObject.Properties['FAILED']) { $failed = [int]$depth.FAILED }
+
+        $haveBaseline = $alertState.ContainsKey('render_last_done') -and $alertState.ContainsKey('render_last_failed')
+        $lastDone = 0; $lastFailed = 0
+        if ($haveBaseline) {
+            [int]::TryParse([string]$alertState['render_last_done'], [ref]$lastDone) | Out-Null
+            [int]::TryParse([string]$alertState['render_last_failed'], [ref]$lastFailed) | Out-Null
+        }
+
+        # Always roll the baseline forward for the next tick.
+        $alertState['render_last_done'] = $done
+        $alertState['render_last_failed'] = $failed
+
+        if ($haveBaseline) {
+            $deltaDone = $done - $lastDone
+            $deltaFailed = $failed - $lastFailed
+            Write-Log "render watchdog: DONE $lastDone->$done (+$deltaDone), FAILED $lastFailed->$failed (+$deltaFailed)"
+
+            # Spike = a meaningful burst of NEW failures that outnumber NEW successes.
+            if (($deltaFailed -ge $failSpikeThreshold) -and ($deltaFailed -gt $deltaDone)) {
+                $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+
+                # EMAIL ALWAYS (not cooldown-gated). Naturally self-limits: emails
+                # stop once failures stop accruing (delta returns to ~0).
+                Send-Alert "RENDER FAILURES: +$deltaFailed failed on $hostName (only +$deltaDone done)" `
+                    "The art pipeline logged $deltaFailed new FAILED job(s) and only $deltaDone new DONE since the last check (all-time totals now DONE=$done FAILED=$failed) as of $stamp on $hostName. ComfyUI is still answering its API, so this is a RENDER failure, not a hang. The model share $shareProbePath is $(if ($shareOk) { 'readable' } else { 'NOT READABLE - that is almost certainly the cause; see the share watchdog alert' }). If the share is fine, check the newest FAILED job's error (bad model/encoder/checkpoint or a broken custom node). See /api/art/queue/stats recentFailed and pm2 logs."
+
+                # RESTART comfyui at most once per cooldown, in case it's a wedged
+                # GPU/driver state a restart can shake loose - but never while the
+                # model share is down. On 2026-08-26 a dead mount produced exactly
+                # this spike shape (+failures, no successes) with ComfyUI answering
+                # normally; restarting it back into an unreadable share fixes
+                # nothing and just churns the GPU. The share watchdog above owns
+                # that case and restarts comfyui when the mount actually returns.
+                # A deliberate `pm2 stop comfyui` must not be fought. The
+                # liveness probe already honours this (see "pm2 status is
+                # 'stopped' - deliberate" above); this block did not, and
+                # `pm2 restart` on a stopped app STARTS it - so stopping the
+                # engine to work on the box bought at most one cooldown before
+                # the watchdog put it back (2026-09-08).
+                $comfyEntry = $pm2List | Where-Object { $_.name -eq 'comfyui' } | Select-Object -First 1
+                $comfyPm2Env = $comfyEntry | Select-Object -ExpandProperty pm2_env -ErrorAction SilentlyContinue
+                if ($comfyPm2Env -and $comfyPm2Env.status -eq 'stopped') {
+                    Write-Log "render watchdog: comfyui restart suppressed (pm2 status is 'stopped' - deliberate, leaving it alone)"
+                } elseif (-not $shareOk) {
+                    Write-Log "render watchdog: comfyui restart suppressed (model share is down - see share watchdog)"
+                } elseif (Test-AlertDue $alertState 'render-watchdog-restart') {
+                    Write-Log "render watchdog: failure spike (+$deltaFailed) - restarting comfyui via pm2"
+                    Restart-Supervised 'comfyui'
+                    $alertState['render-watchdog-restart'] = $stamp
+                } else {
+                    Write-Log "render watchdog: comfyui restart suppressed (within $($cooldownMinutes)-min cooldown)"
+                }
+            }
+        } else {
+            Write-Log "render watchdog: baseline set (DONE=$done FAILED=$failed) - deltas start next tick"
+        }
+
+        Save-AlertState $alertState
+    }
+}
+
+Trim-Log
+exit $watchdogExitCode
+) {
+        # cmd.exe /c has a second layer of quote parsing beyond normal argv
+        # splitting. Wrap the entire command in one outer pair of quotes so a
+        # batch path containing spaces survives that parser, while the inner
+        # arguments still use the same Windows argv quoting rules.
+        $batchCommand = ConvertTo-NativeArgumentString (@($filePath) + $resolvedArgs)
+        $resolvedArgumentString = '/d /s /c "' + $batchCommand + '"'
         $resolvedFile = 'cmd.exe'
     }
 
