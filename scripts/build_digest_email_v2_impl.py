@@ -155,7 +155,7 @@ def proposal_section(
     mode = str(proposal.get("display_mode") or "art-rich")
     show_art = mode in {"art-rich", "current-art-rich"}
     heading = (
-        "✨ Just built this cycle"
+        "🖼️ Previous pitch, now generated"
         if mode == "current-art-rich"
         else ("🖼️ Previous completed output" if show_art else "✨ Just built this cycle")
     )
@@ -426,7 +426,7 @@ def build_payload(digest: dict[str, Any]) -> dict[str, Any]:
     pitch_html = next_pitch_section(digest.get("next_dream_proposal"))
     middle = operational_html + pitch_html
 
-    # Place health and tomorrow's pitch directly after the fresh creative output.
+    # Place health and the next text pitch directly after the previous pitch's generated output.
     # If a build failed so there is no fresh output, put them immediately after
     # the digest title rather than silently dropping either section.
     current = digest.get("current_dream_output")
