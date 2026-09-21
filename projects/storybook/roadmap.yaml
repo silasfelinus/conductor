@@ -1602,7 +1602,7 @@ tasks:
 - id: t-059
   milestone: m7
   title: "Fix or downgrade the false claim that Play Again keeps the reader's Table board dealt"
-  status: claimed
+  status: review
   stakes: reversible
   passes: 0
   note: >-
@@ -1634,7 +1634,14 @@ tasks:
 
     Not blocking t-037 (guard migration) -- filed separately per AGENTS.md scope discipline.
     No PR/implementation attempted yet.
-  updated: '2026-09-21T19:58:09Z'
+
+    PR opened: silasfelinus/kind_robots#2958 -- fix(storybook): stop claiming Play Again
+    retains the dealt table. Went with option (b) (correct the misleading comment/copy)
+    rather than implementing full board retention, per AGENTS.md scope discipline for an
+    unattended session -- see PR body for the full rationale and verification (eslint clean,
+    prettier ratchet shrank by one file, full npm run test:storybook suite green).
+  updated: '2026-09-21T20:03:09Z'
   owner: worker
   claimed_by: claude-scheduled-20260921T195808Z-sb-t059
   claimed_at: '2026-09-21T19:58:09Z'
+  implementation_pr: 'silasfelinus/kind_robots#2958'
