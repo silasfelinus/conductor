@@ -15786,3 +15786,21 @@ records:
     against real child processes (stdin/stdout, timeout+kill, non-deadlocking large
     output) -- a meaningfully stronger verification bar than syntax-parsing alone for a
     change to a production watchdog this sandbox cannot otherwise observe running.
+- date: '2026-09-21'
+  project: ruler-hooked
+  task: t-035
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Reviewed and merged silasfelinus/conductor#4899 (a concurrent session's clean,
+    well-scoped, self-verified additive change). Its only red check, "Validate Worker
+    PR handoff", was a missing "### Kaizen suggestion" heading in the PR body -- not a
+    code defect. Fixed by editing the PR description directly (the workflow re-runs on
+    `edited`, not just `synchronize`) rather than asking the Worker session to push a
+    fix for a description-only gap. A stale failed check run from before the edit
+    persisted in the check-runs list alongside the new passing one for the same head
+    SHA; a status script must key off the latest run per check name; startTime, not
+    just conclusion, when a check can legitimately re-run on the same commit.
