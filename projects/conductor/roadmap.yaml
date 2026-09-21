@@ -3754,26 +3754,31 @@ tasks:
 - id: t-183
   milestone: m2
   title: 'Kaizen from t-180: check whether check-watchdog-liveness.ps1s 30-minute staleness threshold is well-tuned against the 5-minute watchdog cadence'
-  status: ready
+  status: needs-human
   owner: null
   passes: 0
   stakes: reversible
   implementation_pr: 'silasfelinus/conductor#4818'
   note: >-
-    Kaizen from conductor/t-180 (PR #4818, merged 2026-09-20). check-watchdog-liveness.ps1
-    treats a healthcheck.log write age over $WATCHDOG_STALE_MINUTES (default 30) as a
-    finding, against a watchdog that ticks every 5 minutes. That is a 6-tick grace window,
-    chosen without any real-world data on this box's actual tick jitter (a slow pm2 jlist
-    call, a delayed Task Scheduler trigger, etc.).
+    FOR SILAS: check-watchdog-liveness.ps1's 30-minute staleness threshold needs tuning
+    data this session cannot gather -- it lives in logs/healthcheck.log on the Silas-PC home
+    server box (gitignored, no remote/API access exists for it; see ops/home-server/README.md).
 
-    Once check-watchdog-liveness.ps1 has been registered and running for a while (see
-    ops/home-server/README.md's "Automated: watchdog liveness check" for registration),
-    check logs/healthcheck.log's actual tick-to-tick interval distribution on the real box
-    and decide whether 30 minutes is meaningfully looser than necessary (a tighter default,
-    e.g. 15, would catch a dead watchdog in 3 ticks instead of 6) or whether it is already
-    the right margin for observed jitter. Either confirm the current default with evidence,
-    or ship a smaller default -- this is a tuning pass, not a redesign.
-  updated: '2026-09-20T05:25:00Z'
+    What's needed: on the box, run `Get-Content logs\healthcheck.log -Tail 200` (or similar)
+    and look at the actual tick-to-tick interval distribution against the 5-minute watchdog
+    cadence. Decide whether WATCHDOG_STALE_MINUTES=30 (a 6-tick grace window) is meaningfully
+    looser than observed jitter warrants, or whether a tighter value (e.g. 15, a 3-tick window)
+    would still avoid false positives while catching a dead watchdog sooner.
+
+    TO APPROVE: either (a) confirm 30 is fine as-is and set approved_by_human: true, status: done
+    with a one-line note saying so, or (b) tell the next session the new value to set via
+    `setx WATCHDOG_STALE_MINUTES <n>` on the box (ops/home-server/README.md line ~1914), and it
+    will make that edit and close this out.
+
+    Nothing else depends on this -- it's a tuning pass, not a redesign, and the current 30-minute
+    default keeps working safely in the meantime. Filed soft (other work continues in parallel).
+  updated: '2026-09-21T15:05:48Z'
+  soft_gate: true
 
 - id: t-184
   milestone: m2
