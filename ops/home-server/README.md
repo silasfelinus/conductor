@@ -1216,6 +1216,74 @@ leave the app stopped. **The watchdog never fights a deliberate `pm2 stop`**
 (`stopped` is exempt in both the status branches and the orphan sweep), so a
 stopped app stays stopped and stays quiet.
 
+### ComfyUI cannot finish a boot during a bulk copy off the share (2026-09-20)
+
+**Symptom.** The engine is `online` in pm2, holding ~1.2GB, at 0% CPU, and the
+watchdog reports it as a healthy slow boot tick after tick — while
+`comfyui.err.log` has produced no line in over two hours and `Starting server`
+never appears. Off-box, the COMFY heartbeat goes DOWN and stays there.
+
+**Cause.** Every path declared in `extra_model_paths.yaml` is a directory scan
+at startup. With ~500GB copying off `//192.168.7.172`, those scans stop
+completing. Observed: pid 11912 ran **150 minutes** past its last log line
+without binding 8188.
+
+**Waiting does not work, and that is the point worth remembering.** The boot
+cannot complete while the copy runs, so the watchdog's ceiling eventually
+restarts it and the next boot does not finish either. Raising the ceiling only
+lengthens the treadmill. This is the one case in this file where the
+slow-boot guards are working perfectly and the answer is still elsewhere.
+
+**Boot cost is driven by file COUNT per declared directory, not by size.**
+Measured warm and uncontended via `folder_paths.get_filename_list`:
+
+| type | files | scan |
+|---|---|---|
+| loras | 2,233 | 3.6s |
+| checkpoints | 58 | 0.3s |
+| vae | 23 | 0.0s |
+| upscale_models | 10 | 0.0s |
+
+LoRAs are 40x the file count and 12x the scan cost of checkpoints, which is why
+`was-node-suite-comfyui` alone imported in 201.7s even on a healthy share. The
+two goals pull apart: **boot speed** favours moving LoRAs (many small files),
+**render speed** favours moving checkpoints (few enormous ones).
+
+And the saving is **per declared directory, not per file relocated** — moving
+half the LoRAs local saves nothing at boot while the UNC `loras:` entry is
+still declared and still enumerated. Only un-declaring a path removes its cost.
+
+**Options, in the order they were considered:**
+
+1. Let the copy finish and throttle the remainder (`robocopy /IPG:n`), leaving
+   the config alone. Slower copy, working engine. **This is what Silas chose on
+   2026-09-20**, since the run in flight was only the Lora folder.
+2. Drop the UNC block so the boot touches nothing remote. Fastest boot, but
+   models not yet copied go missing, and a full local set is not always
+   possible — *"I cannot just have models on the local drive. I don't have the
+   space."*
+3. Stop the engine until the copy finishes. Correct and unacceptable when the
+   copy runs for ten hours.
+
+**Known blind spot in the progress guard.** `Get-EngineProgress` counts I/O
+from the WHOLE process, so any background thread keeps a stalled boot looking
+alive. During this incident the counters read:
+
+```
+ReadOperationCount   33199 -> 33199   (frozen)
+OtherOperationCount 568033 -> 568198  (+165)
+```
+
+Nothing was being read; only ancillary operations moved, almost certainly
+ComfyUI-Manager's thread and pm2's IPC. The guard correctly reported "counters
+advanced" and drew the wrong conclusion from it. A process with a heartbeat
+thread can therefore never be judged wedged before the ceiling. No fix is
+attempted here, because the right discriminator is not obvious from one
+sample — read/write ops alone may miss a genuine directory enumeration — and
+guessing at it would repeat the mistake this file keeps recording. **Until it
+is understood, the ceiling is the only real bound**, so keep it within the
+time you are willing to lose to a false "still booting".
+
 ### Why no fixed timeout works here (2026-09-20)
 
 Silas, moving the models off the network drive: *"we should be concentrating our
