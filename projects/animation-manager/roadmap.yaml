@@ -370,3 +370,29 @@ tasks:
       Kaizen from t-006 (Reviewer, conductor PR #1449, 2026-07-29): the session's isolated `pytest` tool (installed via `uv tool install`) had no `yaml` dependency, so `pytest` failed to collect any test touching PyYAML-based scripts (consume_animation_pitches, check_animation_novelty)
 
       Full history: projects/animation-manager/HISTORY.md#t-017
+
+  - id: t-018
+    milestone: m6
+    title: "Promote a shipped pitch's PITCHES.yaml entry (status + builds:) in the same cycle it ships, not as a follow-up"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from t-007 (Worker, kind_robots PR #2962, 2026-09-21): geode-bloom (priority
+      20) shipped for real on 2026-09-05 -- component PR #2407 and catalog-registration
+      PR #2410, both merged, all CI green -- but its PITCHES.yaml entry was never
+      promoted past status: pitched and never got a builds: section, unlike every other
+      shipped/candidate pitch. It sat that way for over two weeks and was only caught
+      because this cycle happened to read the pitch queue in priority order and noticed
+      geode-bloom (priority 20, ostensibly still "pitched"/unbuilt) actually had a live
+      component file and catalog entry already.
+      DO: when t-007's own recurring cycle ships a build, treat the PITCHES.yaml
+      promotion edit (status -> candidate, plus a builds: entry with the PR reference(s)
+      and verification list) as part of the same commit that records the roadmap note --
+      not a "come back and update this later" TODO. If a future cycle finds another gap
+      like this, add a hard check to check_animation_novelty.py or a small companion
+      script that cross-references PITCHES.yaml build entries against
+      stores/animationCatalog.ts registrations and flags any catalog entry with no
+      matching builds: record.
+    updated: '2026-09-21T23:20:00Z'
