@@ -15931,3 +15931,17 @@ records:
     ref (not just the worktree) since close_task.py's scratch-index plumbing commits only
     roadmap.yaml -- a worktree-only check would have let an uncommitted handoff file pass
     while still stranding it outside the pushed close-out.
+- date: '2026-09-21'
+  project: ruler-hooked
+  task: t-025
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: art-prompts.yaml requests targeting kind_robots ship via the home relay's direct
+    self-hosted media path (ops/home-server/SELF-HOSTED-MEDIA.md), never through a
+    kind_robots git commit -- public/images/** is git-ignored there. A prior cycle almost
+    wrote the renders into the local kind_robots checkout as "delivery"; verifying with a
+    public HEAD against media.acrocatranch.com instead (matching what the doc already
+    prescribes) is the correct and only proof of landing.
