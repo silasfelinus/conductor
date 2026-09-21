@@ -636,7 +636,16 @@ function Invoke-HiddenProcess($filePath, $argumentList, $timeoutSeconds, $standa
     if ($argumentList) { $resolvedArgs = @($argumentList) }
     $resolvedArgumentString = $null
 
-    if ($filePath -match '\.(cmd|bat)    $psi = New-Object System.Diagnostics.ProcessStartInfo
+    if ($filePath -match '\.(cmd|bat)$') {
+        # cmd.exe /c has a second layer of quote parsing beyond normal argv
+        # splitting. Wrap the complete batch invocation in one outer pair of
+        # quotes so a path containing spaces survives that parser.
+        $batchCommand = ConvertTo-NativeArgumentString (@($filePath) + $resolvedArgs)
+        $resolvedArgumentString = '/d /s /c "' + $batchCommand + '"'
+        $resolvedFile = 'cmd.exe'
+    }
+
+    $psi = New-Object System.Diagnostics.ProcessStartInfo
     $psi.FileName = $resolvedFile
 
     # SILAS-PC runs Windows PowerShell 5.1 on .NET Framework, where
@@ -644,10 +653,7 @@ function Invoke-HiddenProcess($filePath, $argumentList, $timeoutSeconds, $standa
     # script scope, trying to Add() there fails invisibly and leaves cmd.exe
     # with no /d /c pm2.cmd jlist arguments, so it waits until our 60-second
     # timeout and the watchdog reports itself blind. Build the legacy
-    # ProcessStartInfo.Arguments string explicitly instead. The quoting helper
-    # follows CommandLineToArgvW/CRT rules: backslashes before a quote are
-    # doubled, and trailing backslashes inside a quoted argument are doubled
-    # before the closing quote.
+    # ProcessStartInfo.Arguments string explicitly instead.
     if ($null -eq $resolvedArgumentString) {
         $resolvedArgumentString = ConvertTo-NativeArgumentString $resolvedArgs
     }
@@ -663,7 +669,7 @@ function Invoke-HiddenProcess($filePath, $argumentList, $timeoutSeconds, $standa
     try {
         [void]$proc.Start()
     } catch {
-        return [pscustomobject]@{ Output = "failed to start $filePath`: $($_.Exception.Message)"; ExitCode = -1; TimedOut = $false }
+        return [pscustomobject]@{ Output = "failed to start ${filePath}: $($_.Exception.Message)"; ExitCode = -1; TimedOut = $false }
     }
 
     # Read async, started before the wait, so a chatty child cannot deadlock
