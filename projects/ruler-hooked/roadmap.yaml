@@ -1035,7 +1035,7 @@ tasks:
 - id: t-036
   milestone: m5
   title: Add a --lane filter to build_ruler_hooked_art_queue.py
-  status: review
+  status: done
   owner: worker
   stakes: reversible
   passes: 0
@@ -1048,6 +1048,11 @@ tasks:
     shipped. Add `--lane <name>` so `--write --lane ruler` (or any other lane) stages only
     that lane's entries, matching the deliberate per-lane scoping this project's cycles
     already practice by hand.
+
+    Merged silasfelinus/conductor#4937 (squash 8cda0c6). All 25 CI checks green. --lane
+    filter added, verified against ruler/fish lanes plus unfiltered dry-run/--check; full
+    local suite 2163 passed, 30 skipped.
   claimed_by: claude-scheduled-20260921-rh-t036
   claimed_at: '2026-09-21T11:55:37Z'
-  updated: '2026-09-21T11:59:48Z'
+  updated: '2026-09-21T12:03:42Z'
+  implementation_pr: 'silasfelinus/conductor#4937'
