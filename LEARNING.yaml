@@ -15823,3 +15823,26 @@ records:
     davinci-seed-verify.yml workflow -- confirmed that workflow actually executed for
     this head SHA (not just inferred from a generic "verify" check name) before relying
     on it as the test evidence for a concurrency fix.
+- date: 2026-09-21
+  project: dream-cycle
+  task: t-028
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Merged silasfelinus/conductor#4913: build_dream_records.py's queue_art() now runs
+    every assembled art_prompt through the same conditional-instruction check
+    build_ruler_hooked_art_queue.py already used, extracted into shared
+    scripts/art_prompt_conditional_check.py so the regex lives in exactly one Python
+    place instead of a third copy. A violation is recorded as an ordinary failed
+    API-call entry rather than a bare exception, so it rides the existing
+    partial-failure rollback path for free -- the whole bundle rolls back and stays
+    unbuilt for the next sweep, and nothing reaches art-prompts.yaml where it would
+    otherwise re-fail a scheduled digest run silently. General lesson: when a
+    validation gap is found downstream (here, kind_robots' server-side 422), check
+    whether the same build script already has a partial-failure/rollback mechanism
+    before reaching for a bare raise -- routing the new check through the existing
+    failure shape (a synthetic entry in the results list) is less code and gets
+    atomic rollback for free.
