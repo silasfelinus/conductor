@@ -1,0 +1,178 @@
+# LOCAL-ONLY VARIANT - use while the model share is unusable.
+#
+# 2026-09-20: Silas began copying ~500GB off //192.168.7.172 onto local disk.
+# Every path declared under the UNC `comfyui:` key is a directory scan at
+# startup, and with the link saturated by the copy those scans stopped
+# completing: pid 11912 ran 150 minutes without reaching "Starting server",
+# genuinely doing I/O the whole time (the watchdog's progress guard correctly
+# spared it) but never finishing. Waiting it out does not work - the boot
+# cannot complete while the copy runs, so the watchdog's ceiling just restarts
+# it and the next boot does not finish either.
+#
+# This file is the same config with the UNC block removed. ComfyUI's built-in
+# defaults already resolve every model type under D:/comfy/comfy-fast/models,
+# so nothing local is lost by dropping it - only the models still living on
+# the share become invisible until they are copied.
+#
+# USE:
+#   copy D:\comfy\comfy-fast\extra_model_paths.yaml D:\comfy\comfy-fast\extra_model_paths.unc.yaml
+#   copy D:\code\conductor\ops\home-server\extra_model_paths.local-only.yaml D:\comfy\comfy-fast\extra_model_paths.yaml
+#   pm2 restart comfyui
+#
+# REVERT once the copy is done and the share is quiet (or better: re-audit the
+# UNC block away entirely, which is the point of the migration):
+#   copy D:\comfy\comfy-fast\extra_model_paths.unc.yaml D:\comfy\comfy-fast\extra_model_paths.yaml
+#   pm2 restart comfyui
+#
+# A render asking for a model that has not been copied yet fails with a
+# missing-model error. That is the trade: some renders instead of none.
+#
+# ---------------------------------------------------------------------------
+# ComfyUI model path map for the render box (Silas-PC).
+#
+# THIS IS A REFERENCE COPY. The live file ComfyUI reads is
+#   D:\comfy\comfy-fast\extra_model_paths.yaml
+# Copy this over it (back the old one up first) and restart comfyui. It is
+# tracked here because it is load-bearing for every render and was previously
+# knowable only by RDP-ing into the box.
+#
+# Audited 2026-08-26 against a full `dir Z:\ai\models` (60 directories).
+# Three classes of change, all verified against that listing:
+#
+# 1. REMOVED paths that do not exist. Harmless to ComfyUI (it skips them) but
+#    they are noise that reads like configuration:
+#      models/SDXL          models/Flux (x3)     models/LCM
+#      models/clip          models/loras         models/LyCORIS
+#      model/LLM            <- singular "model", a typo for models/LLM
+#
+# 2. REMOVED case-duplicates. SMB is case-insensitive and this tree was already
+#    merged to single casing (case_merge.py), so these resolved to the SAME
+#    directory as their lowercase twin. ComfyUI scanned each one twice and
+#    listed every file twice in the node dropdowns:
+#      models/IPAdapter == models/ipadapter
+#      models/VAE       == models/vae
+#      models/ControlNet == models/controlnet
+#    This is the one change with a measurable effect: every path here is a
+#    directory scan across SMB on each folder_paths refresh. Cutting the
+#    duplicates cuts that I/O, which is exactly the I/O that fails first when
+#    the mount degrades.
+#
+# 3. ADDED directories that exist on the share and map to real ComfyUI folder
+#    keys but were never declared, so their contents were invisible:
+#      audio_encoders  classifiers  diffusers  model_patches
+#      photomaker      style_models vae_approx
+#    Plus text_encoders as its own key -- it was reachable only through the
+#    legacy `clip` alias, which is what node 3 (CLIPTextEncode) resolves
+#    through. Declaring it directly is what that node actually wants on
+#    ComfyUI 0.28.
+#
+# NOT added, deliberately:
+#   models/vae~   -- debris. Created 2026-08-25 19:14, seven minutes before
+#                    disk13 dropped off the bus; it also bumped the parent
+#                    mtime, which is what made folder_paths re-enumerate a
+#                    half-readable share and cache a truncated model list.
+#                    Check it holds nothing unique, then delete it.
+#   models/VAE-approx -- distinct directory from vae_approx (hyphen vs
+#                    underscore, NOT a case-dupe). It is the A1111 layout;
+#                    ComfyUI's key is vae_approx.
+#   models/text, models/ollama, models/opencv, models/BLIP, models/Deforum,
+#   models/adetailer, models/sams, models/ultralytics, models/yolo_world,
+#   models/facerestore_models, models/Codeformer, models/GFPGAN, models/LDSR,
+#   models/svd, models/hunyuan, models/karlo, models/annotator,
+#   models/clip_interrogator, models/prompt_generator, models/liveportrait,
+#   models/animatediff_models, models/animatediff_motion_lora, models/FloweR,
+#   models/faceswaplab, models/RAFT, models/rembg, models/torch_deepdanbooru,
+#   models/TTS  -- real directories, but owned by custom nodes / A1111 that
+#                    find them their own way. Declaring them here would add
+#                    scans without adding anything ComfyUI can use.
+#
+# PATH STYLE: base_path is a UNC path, matching what kr-relay now runs on.
+# As of 2026-08-27 the relay reports
+#   share gate armed on //192.168.7.172/pc/ai/models
+# so KR_SHARE_ROOT has already moved off the drive letter. ComfyUI reads THIS
+# file, not ecosystem.config.js, so leaving it on Z: would split the two: the
+# relay would happily claim jobs against a UNC path it can read while ComfyUI
+# failed them against a letter it cannot. A mapped drive letter belongs to one
+# Windows logon session and has to be re-established by hand after every NAS
+# reboot; a UNC path has nothing to lose.
+#
+# Two requirements before copying this over:
+#   1. cmdkey must hold the credential for the host, or ComfyUI cannot
+#      authenticate without the mapping to lean on:
+#        cmdkey /add:192.168.7.172 /user:silasfelinus /pass
+#   2. restart ComfyUI afterwards. folder_paths caches its filename lists and
+#      will not re-enumerate just because the paths changed.
+#
+# To stay on the drive letter instead, set base_path back to Z:/ai -- one line,
+# nothing else here depends on it. Note the IP: if the NAS ever takes a
+# different DHCP lease this breaks, so either reserve it or use //alexandria/pc.
+#
+# Switching does NOT remove the need to restart ComfyUI when a share returns
+# after an outage -- folder_paths caches regardless. healthcheck.ps1's share
+# watchdog now does that restart automatically.
+#
+# ---------------------------------------------------------------------------
+# LOCAL-FIRST (added 2026-09-08, for the model migration to D:)
+#
+# `comfyui_local` declares the copies that scripts/sync-comfy-models.ps1 pulls
+# onto Ferngrotto's own disk. Both sections list the same filenames, so search
+# ORDER decides which copy is opened -- and a local NVMe read beats an SMB read
+# by enough to matter on every model load.
+#
+# How ComfyUI actually orders them (folder_paths.add_model_folder_path):
+#   is_default: true  -> insert at position 0
+#   otherwise         -> append
+# Sections are processed top to bottom. So the ONLY section carrying
+# `is_default: true` here is the local one, which puts every local directory
+# ahead of its share twin no matter where the sections sit in the file.
+#
+# Do NOT put `is_default: true` on the share section as well. Two defaults make
+# priority depend on file order (last one processed lands at 0), and worse, each
+# LINE inside an is_default block also inserts at 0 -- so a four-line block is
+# searched in reverse of how it reads. Written this way, order is explicit and
+# the blocks read in the order they are searched.
+#
+# A file present locally shadows the share copy completely. That is the point,
+# but it also means a truncated local file wins over a good remote one: on
+# 2026-09-08 a corrupt GGUF unet (`ValueError: GGUF magic invalid`) failed every
+# Krea2 render in under a second, which is what fed healthcheck.ps1's render
+# watchdog the failure spike that then restarted ComfyUI all night. After any
+# sync, verify the magic bytes, not just the byte count.
+#
+# The local section covers exactly the five categories sync-comfy-models.ps1
+# can place (unet, clip, vae, checkpoints, loras) plus their aliases. Everything
+# else -- controlnet, upscale, ipadapter, embeddings, the lot -- resolves to the
+# share only, which is correct: those are small or rarely read.
+#
+# NOT declared locally, deliberately: a `ferngrotto:` section with
+# `base_path: D:/comfy/comfy-fast/models` and bare `unet: unet` entries. It
+# resolves to the same directories as `comfyui_local`, but by a different
+# string (`...\models\unet` vs `...\models/unet`), and the dedupe in
+# add_model_folder_path compares strings -- so the same directory is added
+# twice, scanned twice, and every local file appears twice in the node
+# dropdowns. One local section, one spelling.
+
+comfyui_local:
+  base_path: D:/comfy/comfy-fast
+  is_default: true
+
+  checkpoints: |
+    models/checkpoints
+
+  diffusion_models: |
+    models/unet
+
+  unet: |
+    models/unet
+
+  clip: |
+    models/text_encoders
+
+  text_encoders: |
+    models/text_encoders
+
+  vae: |
+    models/vae
+
+  loras: |
+    models/loras
