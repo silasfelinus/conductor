@@ -1,0 +1,9 @@
+version: 1
+project: interface-vision
+task: t-137
+operation: rearm
+owner: worker
+session: openai-scheduled-2026-09-21T172052Z-interface-vision-t137-a11
+updated: '2026-09-21T17:25:00Z'
+note: >-
+  Connector-only cycle verified PR #2956's follow-up finding against current main: the Prettier ratchet already runs in Contract Tests, but its baseline now has 33 newly-unformatted files from unrelated merges. This transport cannot run the repository-pinned Prettier or safely regenerate the exact-membership baseline, so no hand-formatted/baseline-forged slice was attempted. Re-armed without consuming a pass.
