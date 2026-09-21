@@ -15719,3 +15719,25 @@ records:
     hard way again. Comment-only references to the banned pattern (several files here
     legitimately explain in prose why they no longer call it that way) also need an explicit
     skip, or the guard flags its own documentation.
+- date: '2026-09-21'
+  project: storybook
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Cycle 80 of the recurring storybook/t-010 bug-hunt: applyQuestProposal()'s idempotency
+    check ("clicking twice must not create two to-dos") only keyed on the SAME proposal id
+    being re-applied, but a needs-info checkpoint stays activeCheckpoint() across turns and
+    can accumulate more than one unapplied proposal before any is accepted -- and the UI
+    renders every unapplied proposal with its own independent Accept button. The write-back
+    guarantee needs to be keyed on the CHECKPOINT, not the proposal, whenever a ledger/queue
+    lets more than one pending item point at the same underlying real-world write. Also: a
+    module that mixes pure logic with a Prisma-backed write path (storybookQuest.ts) forces
+    every consumer, including a pure-logic test, to pay the module-level DATABASE_URL check
+    at import time -- the fix was the existing verifyChildMaturityRestriction.ts pattern
+    (dummy DATABASE_URL set before a dynamic import), not a source refactor, but it cost a
+    full CI round-trip to discover contract-tests.yml's "Contract verifiers" job is
+    genuinely DB-free and doesn't set one.
