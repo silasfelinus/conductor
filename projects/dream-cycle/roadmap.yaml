@@ -456,11 +456,11 @@ tasks:
 - id: t-028
   milestone: m5
   title: Add a local conditional-instruction pre-check to Daily Dream art_prompt authoring
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-09-21T07:01:32Z'
+  updated: '2026-09-21T07:05:54Z'
   note: >-
     workflow-medic finding, 2026-09-10: daily-digest.yml failed 2 runs in a row
     (#101, #102) because the-drowned-compact/t-2026-09-09's Split Vow reward item
@@ -490,8 +490,13 @@ tasks:
     instead of duplicating the regex). New tests: tests/test_art_prompt_conditional_check.py
     + one full run_build rollback test in tests/test_build_dream_records.py. Full suite:
     2160 passed, 30 skipped. PR incoming on worker/dream-cycle-t028.
+
+    Merged: silasfelinus/conductor#4913 (implementation, squash 8d968f4) and #4914 (review
+    bookkeeping, squash 7a9432d). All CI green on both (24 + 25 checks). Full local suite
+    before opening the PR: 2160 passed, 30 skipped.
   claimed_by: claude-scheduled-20260921T0700Z-dreamcycle-t028
   claimed_at: '2026-09-21T07:00:50Z'
+  implementation_pr: 'silasfelinus/conductor#4913'
 - id: t-029
   milestone: m5
   title: Seed the AGE/BUILD/HAIR/ORIGIN embodiment Facets into the live catalog
