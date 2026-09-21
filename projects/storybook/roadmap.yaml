@@ -1680,8 +1680,8 @@ tasks:
 - id: t-061
   milestone: m7
   title: Rewrite seedFromQuery()'s five deep-link lookups on cardForSlug(), updating the deep-link guard's regexes in the same change
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >-
@@ -1701,3 +1701,6 @@ tasks:
     passes, and a manual trace confirms each of the five deep-link cases
     resolves to the same card (including the genre-lock skip) as before.
     Not gated -- reversible refactor, no behavior change intended.
+  claimed_by: claude-scheduled-20260921T215559Z-storybook-t061
+  claimed_at: '2026-09-21T21:56:02Z'
+  updated: '2026-09-21T21:56:02Z'
