@@ -68,14 +68,14 @@ def test_art_rich_section_renders_images_and_pending_art_slot():
     assert "Art queued" in html
 
 
-def test_just_built_section_has_no_image_boxes_at_all():
+def test_legacy_just_built_mode_stays_text_only():
     module = load_module()
     html = module.proposal_section(
         "ignored",
         {
             "title": "Just Built",
             "idea": "Idea",
-            "display_mode": "current-art-rich",
+            "display_mode": "just-built",
             "assets": assets(submitted=True),
         },
     )
@@ -119,7 +119,7 @@ def test_payload_leads_with_just_built_then_health_then_tomorrow_pitch():
             "slug": "current",
             "title": "Current Just Built",
             "idea": "Fresh output.",
-            "display_mode": "just-built",
+            "display_mode": "current-art-rich",
             "assets": assets(submitted=True),
         },
         "next_dream_proposal": {
