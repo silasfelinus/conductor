@@ -165,8 +165,16 @@ comfyui:
   vae_approx: |
     models/vae_approx
 
-  loras: |
-    models/Lora
+  # loras: MOVED LOCAL 2026-09-20. Deliberately absent, not commented out as a
+  # reminder - see the local block below.
+  #
+  # models/Lora was 3,858 of roughly 4,900 files under this base_path, and every
+  # declared path is a directory scan at startup. That one entry was most of a
+  # 234-second boot, and under copy load it stopped completing at all. Copying
+  # the files local fixes nothing while the UNC path is still declared, because
+  # the scan is a property of the declaration.
+  #
+  # Restore this entry ONLY if the local set is removed.
 
   embeddings: |
     models/embeddings
@@ -239,5 +247,10 @@ comfyui_local:
   vae: |
     models/vae
 
+  # models/loras (lowercase) was an empty folder that never held anything. The
+  # real set is models/Lora, mirroring the share's own layout - which matters
+  # beyond tidiness: Resource.localPath in kind_robots is RELATIVE to the model
+  # root ('SDXL/foo.safetensors', 'ARCHIVE/bar/baz.safetensors'), so the catalog
+  # only keeps resolving while the tree under the new root matches the old one.
   loras: |
-    models/loras
+    models/Lora

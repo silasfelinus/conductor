@@ -1233,6 +1233,82 @@ leave the app stopped. **The watchdog never fights a deliberate `pm2 stop`**
 (`stopped` is exempt in both the status branches and the orphan sweep), so a
 stopped app stays stopped and stays quiet.
 
+### Moving models off the share: what has to move together (2026-09-20)
+
+Measured on alexandria, `/mnt/user/pc/ai/models` = **1.7T**:
+
+| dir | GB | files | what it costs |
+|---|---|---|---|
+| checkpoints | 650 | 59 | disk + render reads. Boot: nothing |
+| **Lora** | 422 | **3,858** | disk + essentially the whole boot cost |
+| diffusion_models | 331 | 27 | disk. Boot: nothing |
+| text_encoders | 144 | 23 | disk. Boot: nothing |
+| unet | 73 | 9 | disk. Boot: nothing |
+| wildcards | 0.003 | 645 | free on disk, real boot cost |
+| Stable-diffusion | 0.2 | 95 | free, small boot cost |
+| hypernetworks | 3 | 82 | free, small boot cost |
+
+**LoRAs are 3,858 of roughly 4,900 files.** Everything that made boots slow is one
+directory; the 1.2TB of big-file directories is nearly free to enumerate. So
+"move the models local" is the wrong frame — move the FILE COUNT local and leave
+the bytes where they are, unless render bandwidth is the goal.
+
+**Copying the files changes nothing on its own.** The scan is a property of the
+DECLARATION in `extra_model_paths.yaml`, not of where the bytes live. A UNC
+`loras: models/Lora` entry is enumerated at every startup whether or not a local
+copy exists. The entry has to go.
+
+**The tree structure is load-bearing.** `Resource.localPath` in kind_robots is
+RELATIVE to the model root — `SDXL/foo.safetensors`,
+`ARCHIVE/CyberRealistic_Pony/bar.safetensors` — set from `e.relpath` in
+`scan_loras.py` and `e.target_rel` in `scan_models.py`. Mirror the share's layout
+under the new root (`D:/comfy/comfy-fast/models/Lora`, not `.../Lora`) and every
+catalog row keeps resolving untouched. Flatten it and the catalog orphans. Copy
+with `robocopy /E`.
+
+**Repoint the import agent in the same phase as the files, not later.** From
+`ecosystem.config.js`, everything derives from one constant:
+
+```
+KR_MODEL_ROOT  ->  MODEL_ROOT, LORA_ROOT (${KR_MODEL_ROOT}/Lora),
+                   LORA_IMPORT_DIR, CHECKPOINT_IMPORT_DIR,
+                   KR_LORA_DIR + KR_CHECKPOINT_DIR (kr-download),
+                   and KR_SHARE_PROBE_PATH
+```
+
+That is a clean one-variable repoint **once everything is local**. During a
+partial migration it is a trap: set `KR_MODEL_ROOT` local while checkpoints are
+still remote and the checkpoint inbox moves too. Move only what matches the
+phase. For LoRAs alone:
+
+```powershell
+setx LORA_ROOT        "D:/comfy/comfy-fast/models/Lora"
+setx LORA_IMPORT_DIR  "D:/comfy/comfy-fast/models/Lora/import"
+setx KR_LORA_DIR      "D:/comfy/comfy-fast/models/Lora"
+pm2 restart ecosystem.config.js --only kr-relay --update-env
+pm2 restart ecosystem.config.js --only kr-download --update-env
+```
+
+`CATALOG_OUT` and `CACHE_DB` follow `LORA_ROOT` automatically. Leave
+`MODEL_ROOT` and `CHECKPOINT_IMPORT_DIR` alone until checkpoints actually move,
+or new LoRAs get filed where ComfyUI no longer looks.
+
+**`KR_SHARE_PROBE_PATH` defaults to `KR_MODEL_ROOT`.** Repoint that root at a
+local disk and the share watchdog starts probing a directory that always
+succeeds — share-down detection stops working without saying so. Pin it
+explicitly while anything remains on the share:
+
+```powershell
+setx KR_SHARE_PROBE_PATH "\\192.168.7.172\pc\ai\models"
+```
+
+**Capacity, for reference.** D: is 1862.5GB total. Copying all 1.7T leaves ~16GB
+free, which is not viable once ComfyUI writes outputs and `comfyui.db`. Moving
+only the file-count directories (everything except checkpoints,
+diffusion_models, text_encoders, unet) costs ~524GB and fixes the boot; the big
+four are optional render-speed upside, in that order, stopping while the free
+space is still comfortable.
+
 ### ComfyUI cannot finish a boot during a bulk copy off the share (2026-09-20)
 
 **Symptom.** The engine is `online` in pm2, holding ~1.2GB, at 0% CPU, and the
