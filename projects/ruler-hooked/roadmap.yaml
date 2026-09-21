@@ -643,7 +643,7 @@ tasks:
 - id: t-027
   milestone: m4
   title: Show the fish — catch reveal art and an image-first Fishopedia
-  status: claimed
+  status: review
   gate_human: false
   owner: worker
   stakes: reversible
@@ -666,9 +666,15 @@ tasks:
     species tagged `games: [cthulhuquarium, ruler-hooked]` under the shared bestiary -- check
     utils/rulerHooked/fish.ts's cross-game entries against what cthulhuquarium/t-065 delivered
     before commissioning anything new, since some of this roster may already be drawn.
-  updated: '2026-09-21T08:08:53Z'
+
+    Implemented via kind_robots#2949: fish bestiary art now shown in the catch-reveal card
+    and image-first Fishopedia (lock-icon sealed card for undiscovered species, no new art
+    needed). vue-tsc/eslint/prettier/kr-class-coverage/layout-contract/prettier-ratchet all
+    clean.
+  updated: '2026-09-21T08:09:27Z'
   claimed_by: claude-scheduled-20260921T080852Z-rh-t027
   claimed_at: '2026-09-21T08:08:53Z'
+  implementation_pr: 'silasfelinus/kind_robots#2949'
 - id: t-028
   milestone: m4
   title: Build the advisor and the opening — someone to meet, a reason to be here
