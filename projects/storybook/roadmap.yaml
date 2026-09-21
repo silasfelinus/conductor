@@ -1506,3 +1506,61 @@ tasks:
   claimed_by: openai-scheduled-2026-09-21T031604Z-storybook-t057-a11
   claimed_at: '2026-09-21T03:16:04Z'
   soft_gate: true
+
+- id: t-058
+  milestone: m7
+  title: "Decide whether the new run engine should ever attach fresh in-scene art, and wire it up if so"
+  status: ready
+  stakes: reversible
+  passes: 0
+  note: |-
+    Found auditing storybook-reading.vue (t-010 cycle 82, 2026-09-21, kind_robots PR
+    #2955 -- fixed the narrower mismatched-chapter display bug there: sceneArt no
+    longer falls back to a previous chapter's art when the current one has none yet).
+
+    That fix only stops the WRONG art from showing. It surfaced a bigger, separate
+    question: does the new run engine (server/api/storybook/runs/**,
+    stores/storybookRunStore.ts, components/storybook/storybook-reading.vue) ever
+    attach fresh scene art to a run AT ALL as turns are played?
+
+    Traced the full path and found no wiring:
+    - stores/storybookRunStore.ts's `art` ref is set exactly twice: to `[]` in
+      openStory()/reset(), and from the server's response in loadRun(). No other
+      action (submitMove/chooseOption/writeMove/playCard/resolveRun) ever assigns to
+      `art.value`.
+    - server/api/storybook/runs/[id]/turn.post.ts's response (submitStoryTurn's
+      result) never includes an `art` field at all -- server/utils/storybookRuns.ts
+      has zero references to Art/ArtJob/LifeRunArt anywhere in the file.
+    - The one place art DOES get attached to a LifeRun -- POST
+      /api/storybook/life/runs/[id]/art.post.ts (attachLifeRunArt), fed by the
+      client enqueuing a job through the shared /api/art/enqueue narrativeContext
+      pipeline and then calling this route once it resolves -- is wired up only in
+      the legacy components/storybook/storybook-life-run.vue, not in
+      storybook-reading.vue or storybookRunStore.ts.
+
+    Net effect: for a run actually played through the new engine (storymaker ->
+    reading), `art` is whatever `run.Art` (a LifeRunArt[] relation) happened to hold
+    at the moment the run was loaded/opened -- almost certainly empty for a run that
+    has never gone through the legacy art-attach path -- and it never grows during a
+    live reading session no matter how many turns are played. KrArtPlate in
+    storybook-reading.vue is therefore likely dead weight for real new-engine runs
+    today, not a working feature with one display bug.
+
+    Two ways this resolves, and only Silas/product intent can pick:
+    (a) in-scene art for the new engine is not meant to exist yet (a future
+    feature) -- in which case remove or clearly gate the KrArtPlate rendering path
+    in storybook-reading.vue so it is not silently dead code, and drop this task's
+    scope to "clarify intent + remove/gate dead code"; or
+    (b) it IS meant to work -- in which case wire the same
+    enqueue-job/poll/attach-on-completion flow storybook-life-run.vue already uses
+    (via narrativeArtJobsHelper.ts / persistedNarrativeArtJobsHelper.ts) into the
+    new engine: enqueue art for pendingTurn.artPrompt after each turn narrates,
+    attach it via the life/runs/[id]/art.post.ts route (or a new engine-scoped
+    route if the LifeRunArt model needs a matching one), and have the store refresh
+    `art.value` (or push the new entry) once the job resolves so sceneArt actually
+    has something fresh to show turn over turn.
+
+    Filed as its own task rather than folded into t-010's cycle 82 PR per AGENTS.md
+    scope discipline -- this is a real design decision plus nontrivial wiring, not a
+    same-cycle polish fix.
+  updated: '2026-09-21T16:15:00Z'
