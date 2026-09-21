@@ -3403,8 +3403,7 @@ tasks:
 - id: t-177
   milestone: m2
   title: 'healthcheck.ps1 opens console processes per tick (Start-Job + pm2.cmd + node.exe) with no explicit windowless launch -- harden only if repointing the task at the .vbs wrapper does not stop the popups'
-  status: review
-  owner: worker
+  status: done
   passes: 0
   stakes: reversible
   note: |-
@@ -3434,7 +3433,9 @@ tasks:
 
     Implementation on worker/conductor-t-177-ps51-a11 replaces ProcessStartInfo.ArgumentList with a Windows PowerShell 5.1-compatible Arguments string built by an explicit Windows argv quoting helper. It preserves CreateNoWindow, redirected async output, stdin, and the 60-second kill-on-timeout path. Added a regression test that forbids executable use of ArgumentList and pins the PS5.1-compatible path.
 
-  updated: '2026-09-21T22:55:00Z'
+    FIXED 2026-09-21 in PR #4970 (squash f237758). The PR #4901 windowless helper used ProcessStartInfo.ArgumentList, which is unavailable on the Windows PowerShell 5.1/.NET Framework runtime used by SILAS-PC. With ErrorActionPreference=SilentlyContinue, that runtime API failure was hidden and cmd.exe received no pm2 command, so every watchdog probe hit its 60-second timeout and the 60-minute alert cooldown produced the hourly WATCHDOG BLIND mail. The helper now uses the PS5.1-compatible Arguments property with explicit Windows argv quoting plus the required cmd.exe /d /s /c outer quoting for batch paths. CI now runs the helper itself on Windows PowerShell 5.1 with a spaced .cmd path and spaced argument, in addition to parsing every ops PowerShell file. Final PR head 7f3be2d was current with main and all 24 checks completed without failure; Python suite 2180 passed, 29 skipped.
+
+  updated: '2026-09-21T23:24:00Z'
   claimed_by: 2026-09-21T224900Z-conductor-t177-ps51-a11
   claimed_at: '2026-09-21T22:49:00Z'
   implementation_pr: 'silasfelinus/conductor#4901'
