@@ -56,3 +56,23 @@ def test_daily_dream_sidecars_warn_without_manufacturing_a_failed_digest_run():
     email_block = workflow.split("- name: Email via Brevo", 1)[1]
     email_block = email_block.split("\n  creative-revision:", 1)[0]
     assert "continue-on-error" not in email_block
+
+
+def test_delayed_schedule_cannot_resend_after_watchdog_replacement_succeeds():
+    workflow = DIGEST.read_text(encoding="utf-8")
+
+    assert "delivery-guard:" in workflow
+    assert "Suppress a delayed duplicate delivery" in workflow
+    assert "GITHUB_RUN_ID" in workflow
+    assert '.actor.login == "github-actions[bot]"' in workflow
+    assert '.conclusion == "success"' in workflow
+    assert "needs: delivery-guard" in workflow
+    assert "needs.delivery-guard.outputs.should_run == 'true'" in workflow
+    assert "Human workflow_dispatch is explicit" in workflow
+
+
+def test_digest_gives_priority_art_a_bounded_same_cycle_window():
+    workflow = DIGEST.read_text(encoding="utf-8")
+
+    assert "submit_daily_dream_art.py --wait-timeout 300" in workflow
+    assert "continue-on-error: true" in workflow
