@@ -1060,8 +1060,8 @@ tasks:
 - id: t-037
   milestone: m5
   title: Add a --list-lanes summary to build_ruler_hooked_art_queue.py
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   stakes: reversible
   passes: 0
   note: >-
@@ -1070,3 +1070,6 @@ tasks:
     running a full dry-run and eyeballing the output. Add a --list-lanes flag that prints
     each lane's staged-vs-not-yet-staged entry counts in one short table, so a session can
     see at a glance which lane has unstaged work before choosing one to build/check.
+  claimed_by: openai-scheduled-2026-09-21T122311Z-ruler-hooked-t037-a11
+  claimed_at: '2026-09-21T12:23:11Z'
+  updated: '2026-09-21T12:23:11Z'
