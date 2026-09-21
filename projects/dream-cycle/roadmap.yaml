@@ -685,3 +685,27 @@ tasks:
     ever disagree about whether the post-email failure step exists. Scope this to
     daily-digest.yml's contract tests specifically; a repo-wide version of this
     guard is out of scope for one kaizen task.
+
+- id: t-032
+  milestone: null
+  title: Catch a conditional-instruction art_prompt at proposal-authoring time, not just at build time
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-09-21T07:00:00Z'
+  note: >
+    Kaizen from t-028 (conductor#4913, merged 2026-09-21): build_dream_records.py's
+    queue_art() now rejects a conditional-instruction art_prompt at build time, via
+    the shared scripts/art_prompt_conditional_check.py, and rolls the whole bundle
+    back so nothing bad reaches art-prompts.yaml. That is still one step later than
+    it could be: a steering proposal with a bad field (e.g. a character's `look`)
+    only fails once the hourly build sweep actually attempts it, rather than when
+    the proposal itself is authored or validated. check_dream_creative_contract.py
+    already validates every open steering proposal in the backlog before it is
+    eligible to build (proposals.validate_proposal, story-diversity checks, etc.) --
+    wire the same conditional_instruction_violations() check into that validation
+    path (scanning whatever free-text fields feed dream_art_prompts.py's builders:
+    look, role_drive, carries, scene, setup, grants, best_used_when) so a bad
+    proposal is flagged and fixable the moment it's written, not silently retried
+    build after build. Reversible, no schema changes.
