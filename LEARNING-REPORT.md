@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-21T12:06:37Z
+Generated: 2026-09-21T12:09:28Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1098**
-- Outcomes: blocked: 18, cancelled: 2, done: 1078
+- Closed tasks recorded: **1099**
+- Outcomes: blocked: 18, cancelled: 2, done: 1079
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -55,7 +55,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | newsfeed | 20 | 100% |
 | packmaker | 10 | 100% |
 | rainbow-butterflies | 21 | 100% |
-| ruler-hooked | 19 | 100% |
+| ruler-hooked | 20 | 100% |
 | scene-animator | 2 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1081 | 99% |
+| software | 1082 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-21 `ruler-hooked/t-036` — A tooling gap that already caused a real incident (t-025 restaging 81 unrelated entries alongside 12 intended ones) is worth fixing proactively once filed as a kaizen, even when nobody has hit it a second time yet -- add scoping flags (--lane, --only, etc.) to any staging/build script whose full-sweep default can silently widen a targeted change.
 - 2026-09-21 `conductor/t-181` — Merged #4931 (read-only pm2 service-migration preflight + pinned test) on first pass, but the Worker PR body used its own section names (Summary, Scope, Verification) instead of the exact AGENTS.md handoff headings (Task, What changed / what I produced, How I verified), which check_pr_handoff_template.py matches literally -- CI failed even though the content was complete and well-organized. Fixed by remapping the existing prose onto the required headings via update_pull_request rather than asking for a re-submission; the fix retriggered the same check via the workflow's `edited` trigger. Connector-only Worker sessions drafting a handoff body should copy the exact heading text from AGENTS.md's PR handoff template, not paraphrase it.
 - 2026-09-21 `ruler-hooked/t-027` — Merged silasfelinus/kind_robots#2949 (catch-reveal art + image-first Fishopedia): the task's own art dependency (t-019) was still 1/15 species short (choirfish's corrected re-render pending), but 14/15 bestiary images already existed and the UI change didn't need to wait for the last one -- the broken-image-safe <img> pattern already established in ruler-hooked-cosmetics-picker.vue (hide on @error instead of a broken-image icon) made shipping against a mostly-complete asset set safe. General lesson: a task blocked on "the art isn't all done yet" is often still workable once the display layer degrades gracefully per-asset --  check whether the existing broken-image/fallback convention in the codebase covers the gap before treating partial asset completion as a hard blocker. Also worth noting: running `prettier --write` on a whole pre-existing file that predates the repo's prettier adoption reformats far more than the actual change (this repo tracks such files in a documented ratchet, `verifyPrettierRatchet.ts`) -- reverting and hand-editing to match the file's existing style kept the diff scoped to the 9 lines actually added.
 - 2026-09-21 `dream-cycle/t-028` — Merged silasfelinus/conductor#4913: build_dream_records.py's queue_art() now runs every assembled art_prompt through the same conditional-instruction check build_ruler_hooked_art_queue.py already used, extracted into shared scripts/art_prompt_conditional_check.py so the regex lives in exactly one Python place instead of a third copy. A violation is recorded as an ordinary failed API-call entry rather than a bare exception, so it rides the existing partial-failure rollback path for free -- the whole bundle rolls back and stays unbuilt for the next sweep, and nothing reaches art-prompts.yaml where it would otherwise re-fail a scheduled digest run silently. General lesson: when a validation gap is found downstream (here, kind_robots' server-side 422), check whether the same build script already has a partial-failure/rollback mechanism before reaching for a bare raise -- routing the new check through the existing failure shape (a synthetic entry in the results list) is less code and gets atomic rollback for free.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-21 `storybook/t-010` — Cycle 81 of the recurring storybook/t-010 bug-hunt: a system prompt and its schema/ validator can silently disagree about the SAME condition when they read it from two different places. buildStorybookSystemPrompt() read request.isFinalTurn directly to tell the model "return an empty choices array," while the schema/validator decided the choice-count rule from a separate options.finalTurn the caller had to remember to pass -- and the one production call site never did. The lesson generalizes: when a prompt and its own response contract both depend on the same boolean, derive the contract's flag FROM the prompt's input at the call site that builds both, rather than accepting it as a second, independently-suppliable parameter that can drift from the first. Also: forgot the DATABASE_URL-at-import-time gotcha from cycle 80's own lesson while writing this cycle's own guard script (a static import of storybookRuns.ts, which initializes Prisma) -- had to relearn it via a live CI failure on the first push, despite it being spelled out in the immediately preceding LEARNING.yaml entry. Reading the prior cycle's own lesson before writing a new guard script would have caught this before pushing, not after.
 - 2026-09-21 `storybook/t-010` — Cycle 80 of the recurring storybook/t-010 bug-hunt: applyQuestProposal()'s idempotency check ("clicking twice must not create two to-dos") only keyed on the SAME proposal id being re-applied, but a needs-info checkpoint stays activeCheckpoint() across turns and can accumulate more than one unapplied proposal before any is accepted -- and the UI renders every unapplied proposal with its own independent Accept button. The write-back guarantee needs to be keyed on the CHECKPOINT, not the proposal, whenever a ledger/queue lets more than one pending item point at the same underlying real-world write. Also: a module that mixes pure logic with a Prisma-backed write path (storybookQuest.ts) forces every consumer, including a pure-logic test, to pay the module-level DATABASE_URL check at import time -- the fix was the existing verifyChildMaturityRestriction.ts pattern (dummy DATABASE_URL set before a dynamic import), not a source refactor, but it cost a full CI round-trip to discover contract-tests.yml's "Contract verifiers" job is genuinely DB-free and doesn't set one.
 - 2026-09-20 `conductor/t-186` — A "grep every *.ps1 for a banned direct-call shape" regression guard needs a self-test proving it actually fires on a synthetic reintroduction, not just that today's files happen to be clean -- otherwise a regex that silently stops matching (a refactor, an escaping mistake) looks identical to "the gap stays closed" until the next manual audit finds it the hard way again. Comment-only references to the banned pattern (several files here legitimately explain in prose why they no longer call it that way) also need an explicit skip, or the guard flags its own documentation.
-- 2026-09-20 `conductor/t-185` — Moving a pinned function out of one file into a shared, dot-sourced library is safe to do blind-to-runtime (no PowerShell available in this sandbox) as long as every consumer of the moved code is re-verified structurally: not just "does the new file parse" but "does each caller still have every free variable/function the moved code references in scope at the point it dot-sources the library" (here: Write-Log, $comfyDir, $comfyPython). Equally important: a file moved into a new subdirectory can silently drop out of a checker that globs non-recursively even when the CI *workflow's* own path-trigger filter still fires on it -- the workflow ran, reported green, and would have kept doing so while quietly no longer checking the one file that just moved. Grep for every place a repo re-derives "which files does this check cover" (a Get-ChildItem, a glob(), an rglob()) whenever adding a subdirectory to a previously-flat file layout, not just the CI trigger definition.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-21T12:06:37Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-21T12:09:28Z_
