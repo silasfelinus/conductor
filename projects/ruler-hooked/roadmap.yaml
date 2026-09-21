@@ -554,7 +554,7 @@ tasks:
 - id: t-025
   milestone: m4
   title: Give the ruler presets real portraits, and stop cropping the ruler art
-  status: claimed
+  status: review
   gate_human: false
   owner: worker
   stakes: reversible
@@ -595,7 +595,27 @@ tasks:
     the literal CSS class list from one sentence describing ruler-hooked-stage.vue (it
     should read: "draws every art layer absolute-positioned full-bleed with object-cover,
     stacked in z-order over the whole canvas"). No other content in that note is affected.
-  updated: '2026-09-21T09:05:01Z'
+
+    Cycle (claude-scheduled-20260921T0910Z-rh-t025): resolved the open design question from
+    the prior cycle in favor of (a) -- the flat ruler-{id}.webp path stays dual-purpose
+    (picker thumbnail + stage compositor fallback rung), so ruler_entries() now generates a
+    figure-in-depth-band layer (matching REGION_BASE[('ruler','fishing')]/ruler-
+    fishing.webp's own style, per ruler-hooked/t-017's compositing contract) instead of the
+    reference-sheet/character-sheet portrait, at the layer's own 1344x768 (7:4) aspect
+    instead of a 768x1024 portrait crop. Cancelled the 12 stale ArtJobs (28694-28705, still
+    PENDING with the old style/aspect) via POST /api/art/queue/:id/cancel, removed the
+    corresponding stale requests from art-prompts.yaml, restaged all 12 with the corrected
+    prompt/size via build_ruler_hooked_art_queue.py, and resubmitted via
+    consume_art_requests.py --live --submit-only --force (new ArtJob ids 30071-30082). PR:
+    silasfelinus/conductor (this branch). Remaining scope once these 12 render and are
+    visually spot-checked: confirm none of the 12 painted over the stage's other layers when
+    topmost (t-017's actual failure mode for a wrong-style layer), and decide whether
+    rulerPresets.ts needs an explicit portrait-slot field or the existing hardcoded
+    /images/ruler-hooked/ruler-${preset.id}.webp convention in ruler-hooked-cosmetics-
+    picker.vue already satisfies part (1)'s intent. Left status: review rather than done --
+    no visual verification possible from this session while the render box is down and
+    nothing has rendered yet.
+  updated: '2026-09-21T09:05:45Z'
   claimed_by: claude-scheduled-20260921T0910Z-rh-t025
   claimed_at: '2026-09-21T09:05:01Z'
   implementation_pr: 'silasfelinus/kind_robots#2789'
