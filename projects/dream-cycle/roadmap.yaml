@@ -456,12 +456,12 @@ tasks:
 - id: t-028
   milestone: m5
   title: Add a local conditional-instruction pre-check to Daily Dream art_prompt authoring
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-09-21T07:00:50Z'
-  note: >
+  updated: '2026-09-21T07:01:32Z'
+  note: >-
     workflow-medic finding, 2026-09-10: daily-digest.yml failed 2 runs in a row
     (#101, #102) because the-drowned-compact/t-2026-09-09's Split Vow reward item
     carried an art_prompt with a conditional clause ("...a hairline vein of blue
@@ -483,6 +483,13 @@ tasks:
     digest runs later. Reversible, no schema changes; a good candidate to share
     logic with build_ruler_hooked_art_queue.py's existing check rather than
     duplicating the regex a third time.
+
+    Implemented: shared conditional-instruction check
+    (scripts/art_prompt_conditional_check.py), wired into build_dream_records.py's
+    queue_art() choke point and build_ruler_hooked_art_queue.py (refactored to import
+    instead of duplicating the regex). New tests: tests/test_art_prompt_conditional_check.py
+    + one full run_build rollback test in tests/test_build_dream_records.py. Full suite:
+    2160 passed, 30 skipped. PR incoming on worker/dream-cycle-t028.
   claimed_by: claude-scheduled-20260921T0700Z-dreamcycle-t028
   claimed_at: '2026-09-21T07:00:50Z'
 - id: t-029
