@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-21T14:13:23Z
+Generated: 2026-09-21T14:59:07Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1100**
-- Outcomes: blocked: 18, cancelled: 2, done: 1080
+- Closed tasks recorded: **1101**
+- Outcomes: blocked: 18, cancelled: 2, done: 1081
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 39 | 100% |
-| conductor | 129 | 100% |
+| conductor | 130 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 51 | 98% |
 | davinci | 8 | 100% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1083 | 99% |
+| software | 1084 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-21 `conductor/t-188` — t-187's missing_handoff_docs() guard only covered the connector (task-events) needs-human path; the direct close_task.py path most interactive sessions actually use was still unguarded. Extended the same check there, verifying against the committed base ref (not just the worktree) since close_task.py's scratch-index plumbing commits only roadmap.yaml -- a worktree-only check would have let an uncommitted handoff file pass while still stranding it outside the pushed close-out.
 - 2026-09-21 `conductor/t-187` — A needs-human note can claim a connector-fallback handoff doc was "preserved" at a projects/<slug>/docs/*.md path without the file actually landing in the same commit/tree (ruler-hooked/t-037 rescue, 2026-09-21) -- it worked out by luck that time. Added a missing_handoff_docs() check to both validate_task_events.py (PR time) and process_task_events.py (apply time) that holds/rejects a needs-human event whose note references such a path when the file isn't actually present, instead of trusting the claim.
 - 2026-09-21 `ruler-hooked/t-036` — A tooling gap that already caused a real incident (t-025 restaging 81 unrelated entries alongside 12 intended ones) is worth fixing proactively once filed as a kaizen, even when nobody has hit it a second time yet -- add scoping flags (--lane, --only, etc.) to any staging/build script whose full-sweep default can silently widen a targeted change.
 - 2026-09-21 `conductor/t-181` — Merged #4931 (read-only pm2 service-migration preflight + pinned test) on first pass, but the Worker PR body used its own section names (Summary, Scope, Verification) instead of the exact AGENTS.md handoff headings (Task, What changed / what I produced, How I verified), which check_pr_handoff_template.py matches literally -- CI failed even though the content was complete and well-organized. Fixed by remapping the existing prose onto the required headings via update_pull_request rather than asking for a re-submission; the fix retriggered the same check via the workflow's `edited` trigger. Connector-only Worker sessions drafting a handoff body should copy the exact heading text from AGENTS.md's PR handoff template, not paraphrase it.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-21 `ruler-hooked/t-035` — Reviewed and merged silasfelinus/conductor#4899 (a concurrent session's clean, well-scoped, self-verified additive change). Its only red check, "Validate Worker PR handoff", was a missing "### Kaizen suggestion" heading in the PR body -- not a code defect. Fixed by editing the PR description directly (the workflow re-runs on `edited`, not just `synchronize`) rather than asking the Worker session to push a fix for a description-only gap. A stale failed check run from before the edit persisted in the check-runs list alongside the new passing one for the same head SHA; a status script must key off the latest run per check name; startTime, not just conclusion, when a check can legitimately re-run on the same commit.
 - 2026-09-21 `conductor/t-177` — Start-Job is not a free way to bound a call: PowerShell 5.1 backs a background job with a real second powershell.exe process, confirmed by direct process trace popping its own visible console on the desktop every tick regardless of the parent task's own window state or how it was launched. When "run this with a timeout" is the actual requirement on Windows, System.Diagnostics.Process with CreateNoWindow=$true/ UseShellExecute=$false plus a manual WaitForExit(timeout)+Kill() gets the same bounded guarantee without a second process or its console. This sandbox has no PowerShell by default, but the official Linux pwsh tarball is fetchable through the agent proxy and is enough to AST-parse every .ps1 in the repo and exercise new process-launching logic against real child processes (stdin/stdout, timeout+kill, non-deadlocking large output) -- a meaningfully stronger verification bar than syntax-parsing alone for a change to a production watchdog this sandbox cannot otherwise observe running.
 - 2026-09-21 `storybook/t-010` — Cycle 81 of the recurring storybook/t-010 bug-hunt: a system prompt and its schema/ validator can silently disagree about the SAME condition when they read it from two different places. buildStorybookSystemPrompt() read request.isFinalTurn directly to tell the model "return an empty choices array," while the schema/validator decided the choice-count rule from a separate options.finalTurn the caller had to remember to pass -- and the one production call site never did. The lesson generalizes: when a prompt and its own response contract both depend on the same boolean, derive the contract's flag FROM the prompt's input at the call site that builds both, rather than accepting it as a second, independently-suppliable parameter that can drift from the first. Also: forgot the DATABASE_URL-at-import-time gotcha from cycle 80's own lesson while writing this cycle's own guard script (a static import of storybookRuns.ts, which initializes Prisma) -- had to relearn it via a live CI failure on the first push, despite it being spelled out in the immediately preceding LEARNING.yaml entry. Reading the prior cycle's own lesson before writing a new guard script would have caught this before pushing, not after.
-- 2026-09-21 `storybook/t-010` — Cycle 80 of the recurring storybook/t-010 bug-hunt: applyQuestProposal()'s idempotency check ("clicking twice must not create two to-dos") only keyed on the SAME proposal id being re-applied, but a needs-info checkpoint stays activeCheckpoint() across turns and can accumulate more than one unapplied proposal before any is accepted -- and the UI renders every unapplied proposal with its own independent Accept button. The write-back guarantee needs to be keyed on the CHECKPOINT, not the proposal, whenever a ledger/queue lets more than one pending item point at the same underlying real-world write. Also: a module that mixes pure logic with a Prisma-backed write path (storybookQuest.ts) forces every consumer, including a pure-logic test, to pay the module-level DATABASE_URL check at import time -- the fix was the existing verifyChildMaturityRestriction.ts pattern (dummy DATABASE_URL set before a dynamic import), not a source refactor, but it cost a full CI round-trip to discover contract-tests.yml's "Contract verifiers" job is genuinely DB-free and doesn't set one.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-21T14:13:23Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-21T14:59:07Z_
