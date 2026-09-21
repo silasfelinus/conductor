@@ -1598,3 +1598,40 @@ tasks:
     scope discipline -- this is a real design decision plus nontrivial wiring, not a
     same-cycle polish fix.
   updated: '2026-09-21T16:15:00Z'
+
+- id: t-059
+  milestone: m7
+  title: "Fix or downgrade the false claim that Play Again keeps the reader's Table board dealt"
+  status: ready
+  stakes: reversible
+  passes: 0
+  note: >-
+    Found during t-037's guard-migration triage (conductor scheduled sweep, 2026-09-21):
+    components/storybook/storybook-storymaker.vue's playAgain() carries a comment saying it
+    "Deliberately drops the reader back on the Table with their board still dealt rather than
+    silently opening a second run: the same cards with a different length or narrator is the
+    common second play." That intent is not actually implemented. playAgain() only calls
+    runStore.leaveRun() (clears the run store). The Table's own selection state --
+    components/storybook/storybook-table.vue's `board` ref (~line 344, mode/genre/place/hero/
+    company/narrator/thread/treasures) -- is a plain component-local ref with no persistence
+    (no localStorage/sessionStorage/store-lift found in either file). storybook-storymaker.vue's
+    template is a single v-if/v-else-if/v-else chain across StorybookEnding/StorybookReading/
+    StorybookTable, so leaving a run to fall back into the v-else branch unmounts and
+    re-mounts a fresh StorybookTable instance -- its board resets to defaults (only the base
+    mode card, everything else empty) exactly like navigating in cold. Confirmed onMounted()
+    only calls seedFromQuery() (deep-link params) and fetch calls, never anything that
+    restores a prior board from the just-left run.
+
+    DO ONE OF: (a) actually implement board retention across Play Again -- lift `board` (or
+    just the prior run's originating StorybookBoard) into a place that survives the Table's
+    remount (e.g. the run store itself, since it already outlives the Table instance) and
+    have StorybookTable seed from it when present, distinct from a full `newTable()` reset
+    which should still clear it; or (b) if board retention isn't meant to ship yet, correct
+    playAgain()'s comment (and StorybookEnding's "Play again" label/copy if it makes the same
+    promise) to stop claiming behavior that doesn't exist -- a misleading comment is a real
+    defect even before any user notices the UX gap. Whichever path, verify by hand: build a
+    board, finish a run, click Play Again, and confirm what actually happens to the board.
+
+    Not blocking t-037 (guard migration) -- filed separately per AGENTS.md scope discipline.
+    No PR/implementation attempted yet.
+  updated: '2026-09-21T18:00:00Z'
