@@ -3890,8 +3890,8 @@ tasks:
 - id: t-188
   milestone: m2
   title: Extend t-187's missing-handoff-doc guard to the direct close_task.py path, not just task-events
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >-
@@ -3905,9 +3905,9 @@ tasks:
     Add the same missing_handoff_docs() guard (importable from process_task_events.py) to
     close_task.py's needs-human transition, holding/refusing the write the same way, before
     it pushes its close-out commit.
-  claimed_by: null
-  claimed_at: null
-  updated: '2026-09-21T14:00:00Z'
+  claimed_by: openai-scheduled-2026-09-21T142038Z-conductor-t188-a11
+  claimed_at: '2026-09-21T14:20:38Z'
+  updated: '2026-09-21T14:20:38Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
