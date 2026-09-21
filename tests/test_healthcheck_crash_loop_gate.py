@@ -193,6 +193,30 @@ class HealthcheckScriptTests(unittest.TestCase):
             self.source,
         )
 
+    def test_hidden_process_arguments_work_on_windows_powershell_51(self):
+        """The production watchdog runs under Windows PowerShell 5.1.
+
+        .NET Framework's ProcessStartInfo has no ArgumentList property. PR #4901
+        used that newer API while the script suppresses non-terminating errors,
+        so the argument-add failures were invisible and cmd.exe started with no
+        pm2 command at all. Pin the PS5.1-compatible Arguments path so a Linux/
+        PowerShell-7-only verification cannot reintroduce the same outage.
+        """
+        code = "\n".join(
+            line for line in self.source.splitlines()
+            if not line.lstrip().startswith("#")
+        )
+        self.assertNotIn("$psi.ArgumentList", code)
+        self.assertIn("function ConvertTo-NativeArgumentString", self.source)
+        self.assertIn(
+            "$psi.Arguments = ConvertTo-NativeArgumentString $resolvedArgs",
+            self.source,
+        )
+        self.assertLess(
+            self.source.index("function ConvertTo-NativeArgumentString"),
+            self.source.index("$psi.Arguments = ConvertTo-NativeArgumentString"),
+        )
+
     def test_transitional_states_still_skip_the_probe(self):
         """Probing a process mid-launch produces a false hang and a pointless
         restart -- the double-restart observed 2026-08-28."""
