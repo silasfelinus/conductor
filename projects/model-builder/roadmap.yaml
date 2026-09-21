@@ -469,7 +469,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 52
     stakes: reversible
@@ -547,10 +547,18 @@ tasks:
       silasfelinus/kind_robots#2742 having merged 2026-09-15. Flagged by
       check_pr_merged_drift.py. Flipping to ready per the established recurring-task
       convention; claimed_by/owner left as-is.
-    updated: '2026-09-21T00:57:21Z'
-    owner: reviewer
+
+      Cycle 78 (checked through 2026-09-21T01:00Z): zero fresh commits on any tracked surface
+      (components/model-builder/**, stores/modelBuilderStore.ts, server/api/model-builder/**,
+      prisma/model-builder.prisma, content/model-builder*.md) since the prior
+      2026-09-20T13:59Z audit (checked via GitHub commits API, path-filtered). Nearest
+      content/ activity in the window (9687cf9, Facets-gallery landing fix) does not touch a
+      model-builder path. No model-builder-specific regression audit warranted -- verified no-
+      op, re-arming to ready.
+    updated: '2026-09-21T00:58:22Z'
+    owner: worker
     claimed_by: claude-scheduled-20260921T005721Z-mb-t029
-    claimed_at: '2026-09-21T00:57:21Z'
+    claimed_at: '2026-09-21T01:00:00Z'
 
   - id: t-030
     milestone: m6
