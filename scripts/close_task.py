@@ -41,6 +41,7 @@ from git_plumbing import (  # noqa: E402
     resolve_ref,
     run_git,
 )
+from process_task_events import missing_handoff_docs  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 PROJECTS_DIR = ROOT / "projects"
@@ -201,6 +202,27 @@ def close(
         if before is None:
             raise CloseError(f"ERROR: {path} not found on {base_ref}")
         after = apply_close(before, task_id, status, extra_fields, append_note, force)
+
+        # conductor/t-188: close_task is the direct/local sibling of the connector
+        # task-events path. Apply the same t-187 invariant here: a needs-human note
+        # must not claim a fallback handoff exists unless that document is already in
+        # the tree this close-out is based on. Check the resulting task note so both
+        # --append-note and --set note= are covered, while unrelated statuses remain
+        # unaffected. `missing_handoff_docs` is shared with the task-event processor so
+        # the path contract cannot drift between the two transition mechanisms.
+        if status == "needs-human":
+            after_doc = yaml.safe_load(after) or {}
+            after_task = find_task(after_doc, task_id)
+            missing = missing_handoff_docs(
+                after_task.get("note") if after_task else None,
+                ROOT,
+            )
+            if missing:
+                raise CloseError(
+                    f"ERROR: {project}/{task_id}: needs-human note references missing "
+                    f"handoff document(s): {', '.join(missing)}. Commit the handoff "
+                    "document before closing the task."
+                )
 
         if dry_run:
             print(
