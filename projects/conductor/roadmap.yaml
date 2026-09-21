@@ -3520,7 +3520,6 @@ tasks:
     windowless-launch gap. This task's theory is UNTESTED against the fix and may be moot;
     per the PR's own flag, confirm popups have actually stopped (via healthcheck.log tick
     correlation) before picking this up. Do not implement blind.
-  updated: '2026-09-21T22:49:00Z'
     REOPENED/CLAIMED 2026-09-21 by direct Silas request after he acknowledged the active
     conductor security flag: the PR #4901 windowless ProcessStartInfo helper uses
     ArgumentList, which is unavailable in Windows PowerShell 5.1's .NET Framework runtime.
@@ -3531,6 +3530,7 @@ tasks:
     Arguments string with explicit Windows quoting and add a regression test that forbids
     the unsupported ArgumentList API in executable code.
 
+  updated: '2026-09-21T22:49:00Z'
   claimed_by: 2026-09-21T224900Z-conductor-t177-ps51-a11
   claimed_at: '2026-09-21T22:49:00Z'
   implementation_pr: 'silasfelinus/conductor#4901'
