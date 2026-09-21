@@ -308,12 +308,6 @@ THE_RULER = RULER_BY_ID[HERO_RULER_ID]["look"] + (
     ", a battered fishing rod held with total unearned confidence"
 )
 
-RULER_FRAME = (
-    "seated in profile on a worn wooden fishing perch at the edge of a lake, rod "
-    "out over the water, entirely at peace, full figure visible against a simple "
-    "soft painted backdrop, character sheet framing, consistent side-on pose"
-)
-
 LAKESIDE = (
     "a wide storybook lake behind a small castle, reeds and a worn wooden fishing "
     "perch in the foreground, forested far bank, a village edge and castle grounds "
@@ -830,16 +824,22 @@ def fish_entries() -> list[dict]:
 def ruler_entries() -> list[dict]:
     """One piece per ruler preset, at the `ruler` layer's own framing.
 
-    Three jobs at once: the swappable ruler asset, the reference sheet the
-    character creator is built against, and the guarantee that the range exists
-    as art rather than only as an intention in a design doc.
+    ruler-hooked/t-025: this flat path serves two jobs -- the cosmetics picker's
+    thumbnail, and (per ruler-hooked/t-017's compositing contract) a fallback rung
+    for the `ruler` region's own full-bleed layer in ruler-hooked-stage.vue, which
+    draws every art layer object-cover, stacked in z-order over the whole canvas.
+    A reference-sheet portrait with a solid painted backdrop would paint over every
+    layer behind it whenever the ruler layer is topmost, so this uses the same
+    figure-in-depth-band style as REGION_BASE[("ruler", "fishing")]/ruler-fishing.webp
+    -- full figure, own depth band, rest of the frame empty -- at the layer's own
+    1344x768 (7:4) aspect instead of a portrait crop.
     """
     entries: list[dict] = []
     for preset in RULER_PRESETS:
         body = (
-            f"The player-character ruler of a comedic fantasy kingdom, who would "
-            f"rather fish than rule: {preset['look']}, holding a battered fishing "
-            f"rod with total unearned confidence. {RULER_FRAME}"
+            f"{preset['look']}, holding a battered fishing rod with total "
+            f"unearned confidence, seated in profile on a fishing perch, line "
+            f"in the water, entirely at peace"
         )
         entries.append(
             make_entry(
@@ -850,8 +850,8 @@ def ruler_entries() -> list[dict]:
                 # render fine but land where the picker never looks for it.
                 image_path=f"public/images/ruler-hooked/ruler-{preset['id']}.webp",
                 label=f"Ruler Hooked ruler preset: {preset['title']} ({preset['id']})",
-                size=PORTRAIT,
-                prompt=f"{body}. {STYLE_TAIL}. {NO_TEXT}",
+                size=WIDE,
+                prompt=f"{body}. {LAYER_TAIL}. {STYLE_TAIL}. {NO_TEXT}",
                 priority=CONCEPT_PRIORITY,
                 lane="ruler",
             )
