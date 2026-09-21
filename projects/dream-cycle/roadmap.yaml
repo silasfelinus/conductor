@@ -456,11 +456,11 @@ tasks:
 - id: t-028
   milestone: m5
   title: Add a local conditional-instruction pre-check to Daily Dream art_prompt authoring
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-09-10T19:31:38Z'
+  updated: '2026-09-21T07:00:50Z'
   note: >
     workflow-medic finding, 2026-09-10: daily-digest.yml failed 2 runs in a row
     (#101, #102) because the-drowned-compact/t-2026-09-09's Split Vow reward item
@@ -483,6 +483,8 @@ tasks:
     digest runs later. Reversible, no schema changes; a good candidate to share
     logic with build_ruler_hooked_art_queue.py's existing check rather than
     duplicating the regex a third time.
+  claimed_by: claude-scheduled-20260921T0700Z-dreamcycle-t028
+  claimed_at: '2026-09-21T07:00:50Z'
 - id: t-029
   milestone: m5
   title: Seed the AGE/BUILD/HAIR/ORIGIN embodiment Facets into the live catalog
