@@ -1309,6 +1309,50 @@ diffusion_models, text_encoders, unet) costs ~524GB and fixes the boot; the big
 four are optional render-speed upside, in that order, stopping while the free
 space is still comfortable.
 
+### Outcome: moving ONLY the LoRAs fixed it (2026-09-21)
+
+Measured on a quiet box, LoRAs local at `D:/comfy/comfy-fast/models/Lora`, the
+UNC `loras:` declaration removed, and **every other model directory still on the
+share**:
+
+```
+10.5 seconds: was-node-suite-comfyui      <- was 201.7
+ 6.6 seconds: comfyui-easy-use
+ 2.8 seconds: ComfyUI-Crystools
+02:02:08  Starting server
+02:02:27  got prompt
+```
+
+**19x, from one directory.** All 26 remaining UNC declarations together now cost
+less than eleven seconds, which settles the question the tier plan was built
+around: the planned steps 2 and 3 (checkpoints 650GB, diffusion_models 331GB)
+were **not needed** and were not done. They would have bought nothing for boot
+time.
+
+That matters more than it looks, because the share is slower than anyone
+assumed. A local `dd` on alexandria with no parity check running read at
+**27.9 MB/s** off `/mnt/user` - so the remaining ~1.1TB would have taken roughly
+eleven hours to copy for no boot benefit. The network was never the constraint:
+both NICs negotiate gigabit and the route is correct; SMB was simply delivering
+what the array could produce. Whether that 27.9 MB/s is shfs overhead or a sick
+disk is still open, and is the more important question left on this box.
+
+**The rule this confirms.** Boot cost is file COUNT per declared directory.
+LoRAs were 3,858 of roughly 4,900 files; everything else is big files in small
+numbers and is nearly free to enumerate. Move the count, not the bytes.
+
+**Revert the emergency timeouts afterwards.** `ENGINE_STARTUP_GRACE_MINUTES=30`,
+`ENGINE_STARTUP_CEILING_MINUTES=240` and `COMFY_ORPHAN_GRACE_MINUTES=240` were
+set while boots ran for hours. On a sub-minute boot a 240-minute ceiling means a
+genuine wedge sits unnoticed for four hours - the exact failure the ceiling
+exists to bound. `setx VAR ""` restores the defaults.
+
+**pm2 did not come back immediately after the reboot.** Four consecutive
+`pm2 status` calls showed an empty table (the first spawning a fresh daemon)
+before all four apps appeared at once with restart counts of 0. The logon-start
+resurrect works, but not instantly - consistent with the SLOW RECOVERY section
+above, and the reason `preflight.ps1` exists.
+
 ### ComfyUI cannot finish a boot during a bulk copy off the share (2026-09-20)
 
 **Symptom.** The engine is `online` in pm2, holding ~1.2GB, at 0% CPU, and the
