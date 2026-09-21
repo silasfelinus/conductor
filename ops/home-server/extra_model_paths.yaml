@@ -124,7 +124,12 @@
 
 comfyui:
   base_path: //192.168.7.172/pc/ai
-  is_default: true
+  # NO is_default here - removed 2026-09-21. It was set on BOTH sections, which
+  # the header comment above explicitly warns against: two defaults each insert
+  # at position 0, so priority came down to which section PyYAML happened to
+  # process last. Local won only because comfyui_local sits second in the file;
+  # reordering the sections would have inverted local-first silently, with no
+  # error and no log line. The share block appends, which is what it should do.
 
   checkpoints: |
     models/checkpoints
@@ -232,8 +237,14 @@ comfyui_local:
   checkpoints: |
     models/checkpoints
 
+  # models/diffusion_models added 2026-09-21, when the share's own
+  # diffusion_models tree (271GB, 27 files) was copied local. The share block
+  # declares BOTH models/diffusion_models and models/unet under this key, so the
+  # local block has to carry both or the copied files resolve to nothing and
+  # every one of them keeps being read over SMB.
   diffusion_models: |
     models/unet
+    models/diffusion_models
 
   unet: |
     models/unet
