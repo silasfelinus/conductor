@@ -1019,3 +1019,19 @@ tasks:
   claimed_at: '2026-09-21T02:47:53Z'
   updated: '2026-09-21T03:12:32Z'
   implementation_pr: 'silasfelinus/conductor#4899'
+- id: t-036
+  milestone: m5
+  title: Add a --lane filter to build_ruler_hooked_art_queue.py
+  status: ready
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Kaizen from t-025 (silasfelinus/conductor#4922). `--write` has no lane filter, so
+    "stage the one lane I just fixed" and "stage everything not yet staged" are the same
+    command -- t-025's first attempt to restage 12 corrected `ruler` entries also staged
+    81 unrelated concept/fish/reward/ending/card entries this task's own prior cycle had
+    deliberately left unstaged, caught only by eyeballing `git diff --stat` before it
+    shipped. Add `--lane <name>` so `--write --lane ruler` (or any other lane) stages only
+    that lane's entries, matching the deliberate per-lane scoping this project's cycles
+    already practice by hand.
