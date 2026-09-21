@@ -3403,134 +3403,38 @@ tasks:
 - id: t-177
   milestone: m2
   title: 'healthcheck.ps1 opens console processes per tick (Start-Job + pm2.cmd + node.exe) with no explicit windowless launch -- harden only if repointing the task at the .vbs wrapper does not stop the popups'
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
-  note: >-
-    CONFIRMED 2026-09-19 by direct process trace -- do NOT close as moot. An earlier
-    reading of this session called it moot twice on the theory that the .vbs wrapper hides
-    the whole process tree. watch-window-spawn.ps1 disproved that. At 14:11:03, with the
-    task already registered to the wrapper:
-
-    start: powershell.exe pid 17896 (parent 25732 = wscript healthcheck-hidden.vbs)
-    start: powershell.exe pid 27484 (parent pid 17896)   <- the Start-Job child
-    start: cmd.exe        pid 26704 (parent pid 27484)   <- pm2.cmd inside it
-    POPUP: new console (conhost.exe pid 24620) owner: pid 27484
-
-    So the Start-Job child powershell.exe opens its OWN visible console in session 1, and
-    so does the parent healthcheck powershell (conhost 28268, owner pid 17896). The
-    wrapper's shell.Run(..., 0, True) does not suppress either. Two separate findings live
-    here: the children need an explicit windowless launch (this task), and the wrapper
-    itself does not hide what it claims to (see the separate Windows-11 default-terminal
-    question, and ops/home-server/README.md, which still asserts that it does).
-
-    CONFOUNDER RESOLVED -- IT WAS NOT THE TERMINAL. A 15-minute watch run at 15:14-15:29,
-    AFTER the default terminal was set to Windows Console Host, caught all three ticks of a
-    task registered to the wrapper, each opening TWO visible consoles in session 1:
-
-    15:16:03  POPUP  owner: powershell.exe -NoProfile ... -File healthcheck.ps1
-    15:16:06  POPUP  owner: powershell.exe -Version 5.1 -s -NoLogo -NoProfile
+  note: |-
+    CONFIRMED 2026-09-19 by direct process trace -- do NOT close as moot. An earlier reading of this session called it moot twice on the theory that the .vbs wrapper hides the whole process tree. watch-window-spawn.ps1 disproved that. At 14:11:03, with the task already registered to the wrapper:
+    start: powershell.exe pid 17896 (parent 25732 = wscript healthcheck-hidden.vbs) start: powershell.exe pid 27484 (parent pid 17896)   <- the Start-Job child start: cmd.exe        pid 26704 (parent pid 27484)   <- pm2.cmd inside it POPUP: new console (conhost.exe pid 24620) owner: pid 27484
+    So the Start-Job child powershell.exe opens its OWN visible console in session 1, and so does the parent healthcheck powershell (conhost 28268, owner pid 17896). The wrapper's shell.Run(..., 0, True) does not suppress either. Two separate findings live here: the children need an explicit windowless launch (this task), and the wrapper itself does not hide what it claims to (see the separate Windows-11 default-terminal question, and ops/home-server/README.md, which still asserts that it does).
+    CONFOUNDER RESOLVED -- IT WAS NOT THE TERMINAL. A 15-minute watch run at 15:14-15:29, AFTER the default terminal was set to Windows Console Host, caught all three ticks of a task registered to the wrapper, each opening TWO visible consoles in session 1:
+    15:16:03  POPUP  owner: powershell.exe -NoProfile ... -File healthcheck.ps1 15:16:06  POPUP  owner: powershell.exe -Version 5.1 -s -NoLogo -NoProfile
                      parent: powershell.exe ... healthcheck.ps1
 
-    Same pair at 15:21 and 15:26 (summary: 3x -NoProfile, 3x -Version). The `-Version 5.1
-    -s -NoLogo -NoProfile` process IS the Start-Job child -- that is exactly how PowerShell
-    5.1 spawns a background job. So THIS TASK IS CONFIRMED, and the wrapper failing to hide
-    the parent console is a second, separate defect (README corrected in the same PR).
-
-    Those two popups per tick, every five minutes, are precisely the original report: "two
-    cmd popups about every 3-5 minutes".
-
-    Also measured in the same run: 33 of the 40 popups were pm2's own pidusage metrics poll
-    (`powershell.exe -c gwmi win32_process ...` from pm2/lib/Daemon.js) firing every ~30
-    seconds -- a separate and much more frequent source, filed as t-181.
-
+    Same pair at 15:21 and 15:26 (summary: 3x -NoProfile, 3x -Version). The `-Version 5.1 -s -NoLogo -NoProfile` process IS the Start-Job child -- that is exactly how PowerShell 5.1 spawns a background job. So THIS TASK IS CONFIRMED, and the wrapper failing to hide the parent console is a second, separate defect (README corrected in the same PR).
+    Those two popups per tick, every five minutes, are precisely the original report: "two cmd popups about every 3-5 minutes".
+    Also measured in the same run: 33 of the 40 popups were pm2's own pidusage metrics poll (`powershell.exe -c gwmi win32_process ...` from pm2/lib/Daemon.js) firing every ~30 seconds -- a separate and much more frequent source, filed as t-181.
     Superseded reasoning kept below for the record.
-
-    CONFOUNDER CHANGED AFTER THAT TRACE (2026-09-19, later the same day). The box's
-    default terminal application was Windows Terminal when the trace above was captured.
-    Windows Terminal ignores the SW_HIDE that healthcheck-hidden.vbs passes via
-    shell.Run(..., 0, True), which plausibly explains every popup in that trace including
-    the Start-Job child's. Silas then set Settings > System > For developers > Terminal to
-    "Windows Console Host". If the popups stop, this task's fix is belt-and-braces rather
-    than necessary, and the real defect was the wrapper's claim being true only under the
-    classic console host.
-
-    So: RE-RUN watch-window-spawn.ps1 for 15 minutes before doing any work here. Close as
-    resolved-by-configuration if no conhost POPUP names a healthcheck descendant; keep and
-    fix if one still does. Do not close it on the reasoning alone -- that reasoning has
-    been wrong twice on this exact question today, in both directions.
-
+    CONFOUNDER CHANGED AFTER THAT TRACE (2026-09-19, later the same day). The box's default terminal application was Windows Terminal when the trace above was captured. Windows Terminal ignores the SW_HIDE that healthcheck-hidden.vbs passes via shell.Run(..., 0, True), which plausibly explains every popup in that trace including the Start-Job child's. Silas then set Settings > System > For developers > Terminal to "Windows Console Host". If the popups stop, this task's fix is belt-and-braces rather than necessary, and the real defect was the wrapper's claim being true only under the classic console host.
+    So: RE-RUN watch-window-spawn.ps1 for 15 minutes before doing any work here. Close as resolved-by-configuration if no conhost POPUP names a healthcheck descendant; keep and fix if one still does. Do not close it on the reasoning alone -- that reasoning has been wrong twice on this exact question today, in both directions.
     Original filing follows.
+    Filed from Silas's 2026-09-19 report: two cmd windows popping on ferngrotto every 3-5 minutes, with a confirmed burst at 05:26.
+    ALREADY FIXED IN THAT SESSION (ops/home-server PR): README.md documented registering "AI-Backends-Healthcheck" as `/TR "powershell ... -File healthcheck.ps1"`, which under "Interactive only" logon mode puts a visible console on the desktop every 5-minute tick. healthcheck-hidden.vbs has existed since 2026-08-29 to prevent exactly that (wscript is GUI-subsystem, and shell.Run(..., 0, True) hides the console its children inherit) but no setup snippet ever pointed at it. The snippet now registers the wrapper and carries a `schtasks /Change` line for a box already on the popup form. Also added ops/home-server/watch-window-spawn.ps1 (keys on conhost.exe starts -- one new visible console is one new conhost.exe -- and reports the owning parent chain with redacted command lines) plus a triage section whose FIRST step is free: compare the burst times against the `tick as ...` heartbeat lines in logs\healthcheck.log.
+    THIS TASK IS THE REMAINING, UNPROVEN HALF. If repointing the task at the wrapper does NOT stop the popups, the windows are coming from the watchdog's CHILDREN rather than from the task's own window, and each tick creates several console processes with no explicit windowless launch: a `Start-Job` child powershell.exe bounding `pm2 jlist`, `pm2` itself (pm2.cmd is a BATCH file, so cmd.exe) at healthcheck.ps1:468 and :475, and node.exe for the pm2-jlist-snapshot.js projection. The fix would be to route those through System.Diagnostics.ProcessStartInfo with CreateNoWindow = $true and UseShellExecute = $false.
+    DO NOT DO THIS SPECULATIVELY, and do not start it without evidence from either the healthcheck.log correlation or watch-window-spawn.ps1. Three constraints make this riskier than it looks:
+    (1) The Start-Job wrapper is BOUNDED ON PURPOSE. An unresponsive pm2 daemon used to hang the whole run, and with MultipleInstances=IgnoreNew plus a 72-hour ExecutionTimeLimit one hang silently skipped every 5-minute trigger for DAYS while Task Scheduler kept reporting a healthy NextRunTime (healthcheck.ps1:625-640). Any replacement must keep the timeout, the exit code, and the "empty output" vs "error" distinction -- conflating those two once disabled this watchdog entirely (2026-08-27).
+    (2) `pm2 jlist` output includes the full process environment and is LARGE. A WaitForExit-then-read on a redirected pipe will deadlock when the pipe buffer fills; read stdout asynchronously (ReadToEndAsync, then WaitForExit(ms)).
+    (3) tests/test_healthcheck_crash_loop_gate.py and tests/test_home_server_share_watchdog.py currently PIN the Start-Job mechanism by name ("Wait-Job $pm2Job -Timeout $pm2TimeoutSeconds", "Stop-Job $pm2Job", "$exe jlist" read exactly once per tick). Those assertions encode the invariant "cannot hang forever" and "read pm2 once per tick", not the implementation -- update them to pin the new bounded windowless call rather than deleting them.
+    No PowerShell is available in the Conductor sandbox, so healthcheck.ps1 cannot be syntax-checked here. That is the main reason this was not attempted in the filing session: a parse error in the watchdog leaves a hung ComfyUI unattended, which is the failure this script exists to prevent.
+    2026-09-19: conductor#4781 (merged) found and fixed the actual root cause -- a PowerShell parse error in Restart-Supervised's $name: interpolation (not this task's per-tick-children theory). The popups were that parse failure's doomed launches, not a windowless-launch gap. This task's theory is UNTESTED against the fix and may be moot; per the PR's own flag, confirm popups have actually stopped (via healthcheck.log tick correlation) before picking this up. Do not implement blind. REOPENED/CLAIMED 2026-09-21 by direct Silas request after he acknowledged the active conductor security flag: the PR #4901 windowless ProcessStartInfo helper uses ArgumentList, which is unavailable in Windows PowerShell 5.1's .NET Framework runtime. Because healthcheck.ps1 suppresses non-terminating errors, the argument-add failures are hidden; cmd.exe starts without /d /c pm2.cmd jlist, waits for redirected input/exit, and hits the 60-second timeout. This exactly matches the WATCHDOG BLIND emails beginning immediately after #4901. Preserve CreateNoWindow and the timeout, but use a PS5.1-safe Arguments string with explicit Windows quoting and add a regression test that forbids the unsupported ArgumentList API in executable code.
 
-    Filed from Silas's 2026-09-19 report: two cmd windows popping on ferngrotto every
-    3-5 minutes, with a confirmed burst at 05:26.
+    Implementation on worker/conductor-t-177-ps51-a11 replaces ProcessStartInfo.ArgumentList with a Windows PowerShell 5.1-compatible Arguments string built by an explicit Windows argv quoting helper. It preserves CreateNoWindow, redirected async output, stdin, and the 60-second kill-on-timeout path. Added a regression test that forbids executable use of ArgumentList and pins the PS5.1-compatible path.
 
-    ALREADY FIXED IN THAT SESSION (ops/home-server PR): README.md documented registering
-    "AI-Backends-Healthcheck" as `/TR "powershell ... -File healthcheck.ps1"`, which under
-    "Interactive only" logon mode puts a visible console on the desktop every 5-minute
-    tick. healthcheck-hidden.vbs has existed since 2026-08-29 to prevent exactly that
-    (wscript is GUI-subsystem, and shell.Run(..., 0, True) hides the console its children
-    inherit) but no setup snippet ever pointed at it. The snippet now registers the wrapper
-    and carries a `schtasks /Change` line for a box already on the popup form. Also added
-    ops/home-server/watch-window-spawn.ps1 (keys on conhost.exe starts -- one new visible
-    console is one new conhost.exe -- and reports the owning parent chain with redacted
-    command lines) plus a triage section whose FIRST step is free: compare the burst times
-    against the `tick as ...` heartbeat lines in logs\healthcheck.log.
-
-    THIS TASK IS THE REMAINING, UNPROVEN HALF. If repointing the task at the wrapper does
-    NOT stop the popups, the windows are coming from the watchdog's CHILDREN rather than
-    from the task's own window, and each tick creates several console processes with no
-    explicit windowless launch: a `Start-Job` child powershell.exe bounding `pm2 jlist`,
-    `pm2` itself (pm2.cmd is a BATCH file, so cmd.exe) at healthcheck.ps1:468 and :475, and
-    node.exe for the pm2-jlist-snapshot.js projection. The fix would be to route those
-    through System.Diagnostics.ProcessStartInfo with CreateNoWindow = $true and
-    UseShellExecute = $false.
-
-    DO NOT DO THIS SPECULATIVELY, and do not start it without evidence from either the
-    healthcheck.log correlation or watch-window-spawn.ps1. Three constraints make this
-    riskier than it looks:
-
-    (1) The Start-Job wrapper is BOUNDED ON PURPOSE. An unresponsive pm2 daemon used to
-    hang the whole run, and with MultipleInstances=IgnoreNew plus a 72-hour
-    ExecutionTimeLimit one hang silently skipped every 5-minute trigger for DAYS while Task
-    Scheduler kept reporting a healthy NextRunTime (healthcheck.ps1:625-640). Any
-    replacement must keep the timeout, the exit code, and the "empty output" vs "error"
-    distinction -- conflating those two once disabled this watchdog entirely (2026-08-27).
-
-    (2) `pm2 jlist` output includes the full process environment and is LARGE. A
-    WaitForExit-then-read on a redirected pipe will deadlock when the pipe buffer fills;
-    read stdout asynchronously (ReadToEndAsync, then WaitForExit(ms)).
-
-    (3) tests/test_healthcheck_crash_loop_gate.py and
-    tests/test_home_server_share_watchdog.py currently PIN the Start-Job mechanism by name
-    ("Wait-Job $pm2Job -Timeout $pm2TimeoutSeconds", "Stop-Job $pm2Job", "$exe jlist" read
-    exactly once per tick). Those assertions encode the invariant "cannot hang forever" and
-    "read pm2 once per tick", not the implementation -- update them to pin the new bounded
-    windowless call rather than deleting them.
-
-    No PowerShell is available in the Conductor sandbox, so healthcheck.ps1 cannot be
-    syntax-checked here. That is the main reason this was not attempted in the filing
-    session: a parse error in the watchdog leaves a hung ComfyUI unattended, which is the
-    failure this script exists to prevent.
-
-    2026-09-19: conductor#4781 (merged) found and fixed the actual root cause -- a
-    PowerShell parse error in Restart-Supervised's $name: interpolation (not this task's
-    per-tick-children theory). The popups were that parse failure's doomed launches, not a
-    windowless-launch gap. This task's theory is UNTESTED against the fix and may be moot;
-    per the PR's own flag, confirm popups have actually stopped (via healthcheck.log tick
-    correlation) before picking this up. Do not implement blind.
-    REOPENED/CLAIMED 2026-09-21 by direct Silas request after he acknowledged the active
-    conductor security flag: the PR #4901 windowless ProcessStartInfo helper uses
-    ArgumentList, which is unavailable in Windows PowerShell 5.1's .NET Framework runtime.
-    Because healthcheck.ps1 suppresses non-terminating errors, the argument-add failures are
-    hidden; cmd.exe starts without /d /c pm2.cmd jlist, waits for redirected input/exit, and
-    hits the 60-second timeout. This exactly matches the WATCHDOG BLIND emails beginning
-    immediately after #4901. Preserve CreateNoWindow and the timeout, but use a PS5.1-safe
-    Arguments string with explicit Windows quoting and add a regression test that forbids
-    the unsupported ArgumentList API in executable code.
-
-  updated: '2026-09-21T22:49:00Z'
+  updated: '2026-09-21T22:55:00Z'
   claimed_by: 2026-09-21T224900Z-conductor-t177-ps51-a11
   claimed_at: '2026-09-21T22:49:00Z'
   implementation_pr: 'silasfelinus/conductor#4901'
