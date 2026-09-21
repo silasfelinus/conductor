@@ -148,7 +148,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 50
   stakes: reversible
   note: |-
@@ -277,11 +277,36 @@ tasks:
     refactor on dormant code, not a bug fix; deferring rather than spending a cycle's scope
     on it. No code change this cycle. No Kind Robots mutation. Re-arming to ready per
     established recurring-polish convention.
-  updated: '2026-09-21T01:37:19Z'
+
+    Cycle 80: read server/utils/storybookQuest.ts end-to-end (523 lines, never previously
+    audited in this task's history) plus server/utils/storybookGating.ts and
+    server/utils/storybookCollection.ts (both clean, no bugs found). Found a genuine one in
+    storybookQuest.ts: applyQuestProposal()'s own contract promises 'clicking twice must not
+    create two to-dos', but the idempotency check only keyed on the SAME proposal id being
+    re-applied. A needs-info checkpoint stays activeCheckpoint() across turns, so it can
+    accumulate more than one unapplied proposal before the reader accepts any of them, and
+    storybook-reading.vue renders every unapplied proposal with its own independent Accept
+    button (v-for="proposal in quest.proposals"). Applying two different proposals naming
+    the same checkpoint ran performWriteBack twice -- two AGENT todos for one needs-human
+    decision, or a duplicate appended note on one HONEYDO todo. Fixed by adding
+    priorAppliedProposalForCheckpoint() and using it in applyQuestProposal to carry over the
+    earlier write's result instead of writing back again. Added
+    utils/scripts/verifyStorybookQuestDoubleApplyGuard.ts (pure-function guard, no database
+    -- storybookQuest.ts also owns the Prisma-backed write path, so the guard follows the
+    verifyChildMaturityRestriction.ts pattern: set a dummy DATABASE_URL and dynamic-import
+    after, so it runs in contract-tests.yml's DB-free job). Confirmed it fails pre-fix via
+    git-stash round trip. Wired into package.json (test:storybook-quest-double-apply-guard,
+    plus the test:storybook aggregate) and contract-tests.yml. Verified: eslint clean,
+    prettier --check clean, vue-tsc --noEmit repo-wide exit 0, test:storybook-taskmaster-
+    safety unchanged/passing. Merged as silasfelinus/kind_robots#2943 (squash d509746), all
+    51 checks green, mergeable_state clean before merge. Re-arming to ready per this task's
+    established recurring-polish convention. Kaizen for next cycle: storybookRuns.ts (1425
+    lines) is the largest never-audited surface in this task's history -- a good next read.
+  updated: '2026-09-21T01:37:35Z'
   owner: worker
   claimed_by: claude-scheduled-20260921T0114Z-storybook-t010
   claimed_at: '2026-09-21T01:37:19Z'
-  implementation_pr: 'silasfelinus/kind_robots#2928'
+  implementation_pr: 'silasfelinus/kind_robots#2943'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
