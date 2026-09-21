@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-21T07:06:07Z
+Generated: 2026-09-21T07:10:04Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1095**
-- Outcomes: blocked: 18, cancelled: 2, done: 1075
+- Closed tasks recorded: **1096**
+- Outcomes: blocked: 18, cancelled: 2, done: 1076
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -33,7 +33,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | cthulhuquarium | 51 | 98% |
 | davinci | 8 | 100% |
 | digital-storefront | 29 | 100% |
-| dream-cycle | 24 | 100% |
+| dream-cycle | 25 | 100% |
 | ecosystem-map | 5 | 100% |
 | global-ui | 13 | 100% |
 | humboldt-impropriety-calendar | 1 | 0% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1078 | 99% |
+| software | 1079 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-21 `dream-cycle/t-028` — Merged silasfelinus/conductor#4913: build_dream_records.py's queue_art() now runs every assembled art_prompt through the same conditional-instruction check build_ruler_hooked_art_queue.py already used, extracted into shared scripts/art_prompt_conditional_check.py so the regex lives in exactly one Python place instead of a third copy. A violation is recorded as an ordinary failed API-call entry rather than a bare exception, so it rides the existing partial-failure rollback path for free -- the whole bundle rolls back and stays unbuilt for the next sweep, and nothing reaches art-prompts.yaml where it would otherwise re-fail a scheduled digest run silently. General lesson: when a validation gap is found downstream (here, kind_robots' server-side 422), check whether the same build script already has a partial-failure/rollback mechanism before reaching for a bare raise -- routing the new check through the existing failure shape (a synthetic entry in the results list) is less code and gets atomic rollback for free.
 - 2026-09-21 `storybook/t-056` — Merged silasfelinus/kind_robots#2948, a clean concurrency-guard fix for submitStoryTurn: a conditional updateMany keyed on the narrated chapter replaces an unconditional write after an LLM round-trip, so a losing race replays the winner's committed turn (buildReplayedTurnResult) instead of double-writing LifeChoice/ LifeStat rows. Full CI green including the new regression test in verifyStorybookPlayLoop.ts (two concurrent submitStoryTurn calls, asserts exactly one LifeChoice row and one stat increment survive) run via the path-triggered davinci-seed-verify.yml workflow -- confirmed that workflow actually executed for this head SHA (not just inferred from a generic "verify" check name) before relying on it as the test evidence for a concurrency fix.
 - 2026-09-21 `ruler-hooked/t-035` — Reviewed and merged silasfelinus/conductor#4899 (a concurrent session's clean, well-scoped, self-verified additive change). Its only red check, "Validate Worker PR handoff", was a missing "### Kaizen suggestion" heading in the PR body -- not a code defect. Fixed by editing the PR description directly (the workflow re-runs on `edited`, not just `synchronize`) rather than asking the Worker session to push a fix for a description-only gap. A stale failed check run from before the edit persisted in the check-runs list alongside the new passing one for the same head SHA; a status script must key off the latest run per check name; startTime, not just conclusion, when a check can legitimately re-run on the same commit.
 - 2026-09-21 `conductor/t-177` — Start-Job is not a free way to bound a call: PowerShell 5.1 backs a background job with a real second powershell.exe process, confirmed by direct process trace popping its own visible console on the desktop every tick regardless of the parent task's own window state or how it was launched. When "run this with a timeout" is the actual requirement on Windows, System.Diagnostics.Process with CreateNoWindow=$true/ UseShellExecute=$false plus a manual WaitForExit(timeout)+Kill() gets the same bounded guarantee without a second process or its console. This sandbox has no PowerShell by default, but the official Linux pwsh tarball is fetchable through the agent proxy and is enough to AST-parse every .ps1 in the repo and exercise new process-launching logic against real child processes (stdin/stdout, timeout+kill, non-deadlocking large output) -- a meaningfully stronger verification bar than syntax-parsing alone for a change to a production watchdog this sandbox cannot otherwise observe running.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-20 `conductor/t-185` — Moving a pinned function out of one file into a shared, dot-sourced library is safe to do blind-to-runtime (no PowerShell available in this sandbox) as long as every consumer of the moved code is re-verified structurally: not just "does the new file parse" but "does each caller still have every free variable/function the moved code references in scope at the point it dot-sources the library" (here: Write-Log, $comfyDir, $comfyPython). Equally important: a file moved into a new subdirectory can silently drop out of a checker that globs non-recursively even when the CI *workflow's* own path-trigger filter still fires on it -- the workflow ran, reported green, and would have kept doing so while quietly no longer checking the one file that just moved. Grep for every place a repo re-derives "which files does this check cover" (a Get-ChildItem, a glob(), an rglob()) whenever adding a subdirectory to a previously-flat file layout, not just the CI trigger definition.
 - 2026-09-20 `conductor/t-184` — When a task's own scope note offers a binary choice ("route it through X, or document why it's a deliberate exception") and a real gap is found that isn't actually deliberate, a third outcome -- document the gap honestly as a known, tracked issue and file a properly- scoped follow-up task -- is often the right call, especially when the "correct" fix (here: extracting a function pinned by source-contract tests out of a production Windows watchdog script) can't be behaviorally verified in a sandbox with no PowerShell, only syntax-checked by CI after the fact.
 - 2026-09-20 `ruler-hooked/t-034` — When a "simulate the economy" task's live game has a skill-dependent success/failure step (here: the timing-bar minigame's LANDED/ESCAPED outcome) with no fixed probability anywhere in the data, don't invent a number to fill the gap -- define the simulation's unit of time around the step that IS fully data-driven (one resolved catch, not one cast attempt) and say so explicitly in the file. A `--check-drift` mode that regex-diffs a hand-synced data file against its live TypeScript source, self-tested by injecting a real mismatch and confirming it's caught, is worth adding whenever a design/simulation layer duplicates numbers a developer could otherwise edit in only one of the two places by mistake.
-- 2026-09-20 `ruler-hooked/t-029` — A game's existing closed Effect grammar (counters/sliders/flags, additive and reducer-applied) is usually wide enough to carry a brand-new subsystem (here: a spendable currency, gear ownership, and kingdom investment) with zero save-shape changes -- check for that reuse before reaching for a new save field or a bespoke mutation path. Also: when a value must feed a purely-derived function that's called from multiple sites (game logic AND the Vue display, here timingProfileFor), snapshot it onto the state object at construction time rather than threading it as a new parameter everywhere -- every existing call site picks it up for free and the visual/logic paths can't diverge.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-21T07:06:07Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-21T07:10:04Z_
