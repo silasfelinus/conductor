@@ -3403,7 +3403,7 @@ tasks:
 - id: t-177
   milestone: m2
   title: 'healthcheck.ps1 opens console processes per tick (Start-Job + pm2.cmd + node.exe) with no explicit windowless launch -- harden only if repointing the task at the .vbs wrapper does not stop the popups'
-  status: done
+  status: claimed
   owner: worker
   passes: 0
   stakes: reversible
@@ -3520,9 +3520,19 @@ tasks:
     windowless-launch gap. This task's theory is UNTESTED against the fix and may be moot;
     per the PR's own flag, confirm popups have actually stopped (via healthcheck.log tick
     correlation) before picking this up. Do not implement blind.
-  updated: '2026-09-21T03:07:12Z'
-  claimed_by: claude-scheduled-20260921T025320Z-conductor-t177
-  claimed_at: '2026-09-21T02:53:20Z'
+  updated: '2026-09-21T22:49:00Z'
+    REOPENED/CLAIMED 2026-09-21 by direct Silas request after he acknowledged the active
+    conductor security flag: the PR #4901 windowless ProcessStartInfo helper uses
+    ArgumentList, which is unavailable in Windows PowerShell 5.1's .NET Framework runtime.
+    Because healthcheck.ps1 suppresses non-terminating errors, the argument-add failures are
+    hidden; cmd.exe starts without /d /c pm2.cmd jlist, waits for redirected input/exit, and
+    hits the 60-second timeout. This exactly matches the WATCHDOG BLIND emails beginning
+    immediately after #4901. Preserve CreateNoWindow and the timeout, but use a PS5.1-safe
+    Arguments string with explicit Windows quoting and add a regression test that forbids
+    the unsupported ArgumentList API in executable code.
+
+  claimed_by: 2026-09-21T224900Z-conductor-t177-ps51-a11
+  claimed_at: '2026-09-21T22:49:00Z'
   implementation_pr: 'silasfelinus/conductor#4901'
 
 - id: t-178
