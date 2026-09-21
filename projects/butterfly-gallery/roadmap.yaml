@@ -1361,7 +1361,19 @@ tasks:
       2026-09-19T12:40Z, ~57h). Queue continues draining (PENDING depth 301, down from 552 at
       17:10Z; latestDoneAt live at 21:56:35Z). Priority-0 band has not come up yet. Not yet
       actionable per STEP 1; leaving status: ready, no pass/retry consumed.
-    updated: '2026-09-21T21:57:05Z'
+
+      last checked 2026-09-21T23:5{}Z (scheduled conductor Agent run): jobs 28739-28745 still
+      PENDING (GET /api/art/queue/:id, admin token, all 7; unchanged since
+      2026-09-19T12:40:48Z, ~66h). /api/art/queue/stats: PENDING depth 194 (down from 301 at
+      21:57Z), RUNNING 1, latestDoneAt live (2026-09-21T23:53:44Z), oldestPending still
+      coloring-book/23040 (~6.4d). Queue continues draining steadily; priority-0 band has not
+      come up yet. Also closes the secondary follow-up noted in this session's earlier
+      security-flag TALKBACK entry: the null-status result that prompted that flag was a bug
+      in that diagnostic script (it read body.status instead of the actual
+      body.data.job.status), not an API defect -- the /api/art/queue/:id response shape is
+      unchanged and correct. Not yet actionable per STEP 1; leaving status: ready, no
+      pass/retry consumed.
+    updated: '2026-09-21T23:54:23Z'
 
   - id: t-034
     milestone: m4
