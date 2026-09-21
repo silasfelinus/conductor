@@ -244,6 +244,37 @@ class ValidateTaskEventsTests(unittest.TestCase):
         error = MODULE.validate(event)
         self.assertIn("note must be a non-empty string", error)
 
+    def test_needs_human_note_claiming_missing_handoff_doc_is_rejected(self):
+        event = self.write_event(
+            "needs-human-missing-handoff.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "needs-human",
+                "note": "Preserved a handoff at projects/demo/docs/t-001-handoff.md.",
+            },
+        )
+        error = MODULE.validate(event)
+        self.assertIn("handoff doc", error)
+
+    def test_needs_human_note_with_handoff_doc_present_is_accepted(self):
+        (self.root / "projects" / "demo" / "docs").mkdir(parents=True)
+        (self.root / "projects" / "demo" / "docs" / "t-001-handoff.md").write_text(
+            "# handoff\n", encoding="utf-8"
+        )
+        event = self.write_event(
+            "needs-human-present-handoff.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "needs-human",
+                "note": "Preserved a handoff at projects/demo/docs/t-001-handoff.md.",
+            },
+        )
+        self.assertIsNone(MODULE.validate(event))
+
     def test_verify_pr_well_formed_is_accepted(self):
         event = self.write_event(
             "verify-pr-ok.yaml",

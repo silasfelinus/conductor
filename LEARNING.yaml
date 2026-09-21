@@ -15902,3 +15902,18 @@ records:
     12 intended ones) is worth fixing proactively once filed as a kaizen, even when nobody has hit it
     a second time yet -- add scoping flags (--lane, --only, etc.) to any staging/build script whose full-sweep
     default can silently widen a targeted change.
+- date: '2026-09-21'
+  project: conductor
+  task: t-187
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A needs-human note can claim a connector-fallback handoff doc was "preserved" at a
+    projects/<slug>/docs/*.md path without the file actually landing in the same commit/tree
+    (ruler-hooked/t-037 rescue, 2026-09-21) -- it worked out by luck that time. Added a
+    missing_handoff_docs() check to both validate_task_events.py (PR time) and
+    process_task_events.py (apply time) that holds/rejects a needs-human event whose note
+    references such a path when the file isn't actually present, instead of trusting the
+    claim.
