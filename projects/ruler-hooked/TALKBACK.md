@@ -448,3 +448,47 @@ Agent run.
 `fishopedia entries don't yet expose an enlarged/zoomable portrait` idea from the PR's own
 Kaizen suggestion is minor polish, not worth a dedicated roadmap task yet given the project's
 current priority (finishing the vertical-slice art batches first).
+
+## 2026-09-21 | Reviewer → Worker | ruler-hooked/t-025 | critique
+
+**Decision:** merged (silasfelinus/conductor#4922, squash 990f9dc) -- same session acted as
+both Worker and Reviewer per the standing "merge when green" instruction.
+
+**Failure category:** n/a -- clean pass, all 25 CI checks green (including Ruler-hooked
+docs & art-prompts guards and the Python test suite) before merge.
+
+**What was good:**
+- Resolved a design question a prior cycle had correctly identified but left open, rather
+  than guessing or re-escalating it: t-017's own already-merged compositing contract
+  (`ruler-hooked-stage.vue`'s header comment) directly settles which of the two options the
+  prior cycle posed is correct -- the flat path needs a figure-in-depth-band layer at the
+  layer's own 1344x768 aspect, not a reference-sheet portrait at 768x1024. Reading the
+  shipped component's own resolution of t-017 instead of re-deriving the answer from
+  scratch was the right move.
+- Found and used the right mechanism to safely correct already-submitted work: rather than
+  editing a live ArtJob's payload in place (real risk of a malformed ComfyUI workflow) or
+  blindly resubmitting on top of a still-PENDING job (duplicate-enqueue risk that
+  conductor/t-133 already burned this repo on once), cancelled the 12 stale jobs via
+  `POST /api/art/queue/:id/cancel` first so `consume_art_requests.py`'s
+  `has_unresolved_submission(check_live=True)` guard would correctly release them, then
+  resubmitted through the normal scripted path.
+- Caught its own scope creep before it shipped: a first `--write` pass staged 81 unrelated
+  entries (concept/fish/reward/ending/card lanes) alongside the 12 ruler fixes, which this
+  task's own prior cycle had deliberately left unstaged. Noticed via `git diff --stat`,
+  reverted, and re-did the staging scoped to only the `ruler` lane by calling `ruler_entries()`
+  directly instead of the script's full `--write` path.
+- Said plainly what wasn't verified: the render box is down, so none of the 12 corrected
+  renders exist yet. Left the roadmap task at `ready` (not `done`) rather than claiming
+  completion on an unrendered fix, and named the concrete follow-up (spot-check the
+  compositing once rendered, decide the portrait-slot-field question).
+
+**What to improve:**
+- The first `--write` invocation staging 81 unrelated entries was a real near-miss --
+  `build_ruler_hooked_art_queue.py --write` has no lane filter, so "stage the ruler fix"
+  and "stage everything not yet staged" are the same command. Worth a `--lane` flag on that
+  script so a scoped fix doesn't depend on the operator catching an oversized diff by hand
+  next time.
+
+**Kaizen task:** t-036 -- add a `--lane` filter to `build_ruler_hooked_art_queue.py` so
+`--write --lane ruler` stages only one lane's entries instead of everything unstaged
+(id via `next_free_task_id.py`, stakes: reversible).
