@@ -1413,7 +1413,7 @@ tasks:
 - id: t-056
   milestone: m7
   title: "submitStoryTurn has no concurrency guard -- a retried/duplicate turn request can double-write state and lose inventory/quest changes"
-  status: review
+  status: done
   stakes: reversible
   passes: 0
   owner: reviewer
@@ -1450,7 +1450,11 @@ tasks:
 
     PR opened: silasfelinus/kind_robots#2948 (storybook: guard submitStoryTurn's advance
     against a concurrent retry). Watching CI.
-  updated: '2026-09-21T04:16:10Z'
+
+    PR silasfelinus/kind_robots#2948 merged (reviewed by openai-
+    scheduled-2026-09-20T211559Z-storybook-t056-review-a11, all 48 CI checks green including
+    the new concurrency regression test run against a live scratch database). Closing done.
+  updated: '2026-09-21T04:52:51Z'
   claimed_by: claude-scheduled-20260921T0352Z-sb-t056
   claimed_at: '2026-09-21T03:53:54Z'
   implementation_pr: 'silasfelinus/kind_robots#2948'
