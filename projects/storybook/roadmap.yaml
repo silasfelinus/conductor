@@ -148,7 +148,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: ready
   passes: 51
   stakes: reversible
   note: |-
@@ -337,11 +337,37 @@ tasks:
     the two filed tasks and a natural next pick, though it needs a scratch-database
     regression test (mirroring verifyStorybookPlayLoop.ts) rather than a pure-function
     guard, since the bug is inherently about two concurrent Prisma transactions.
-  updated: '2026-09-21T15:56:23Z'
+
+    Cycle 82 (2026-09-21, scheduled Conductor sweep): read components/storybook/storybook-
+    reading.vue end to end. Found a real display bug: sceneArt fell back to
+    runStore.art[runStore.art.length - 1] (the last art entry regardless of chapter)
+    whenever the current chapter had no art yet -- showing a PREVIOUS scene's illustration
+    next to the CURRENT scene's narrative text, contradicting the computed's own comment
+    ('drawn from what the run actually holds for this chapter ... an empty frame is worse
+    than no frame'). Fixed by dropping the cross-chapter fallback; added
+    utils/scripts/verifyStorybookSceneArtChapterMatchGuard.mjs (confirmed fails pre-fix via
+    git-stash round trip), wired into package.json and contract-tests.yml. Verified: eslint
+    clean on touched files, npm run test (vue-tsc --noEmit) exit 0, test:storybook-scene-
+    art-chapter-match-guard and test:storybook-run-store both green. Merged as
+    silasfelinus/kind_robots#2955 (squash a42e89a), all checks green, mergeable_state clean
+    before merge. Same audit surfaced a bigger, separate gap: the new run engine
+    (storybookRunStore.ts / server/api/storybook/runs/**) never attaches fresh in-scene art
+    to a run at all as turns are played -- the only enqueue/attach wiring in the codebase
+    (life/runs/[id]/art.post.ts, attachLifeRunArt) is exclusive to the legacy storybook-
+    life-run.vue component. Filed as storybook/t-058 (status: ready) rather than folding
+    into this cycle's PR, since it needs a product decision (dead code to remove/gate vs. a
+    real feature to wire up) before any implementation. Re-arming to ready per this task's
+    established recurring-polish convention. Kaizen for next cycle: storybookStore.ts (the
+    legacy store, 1125 lines) remains unaudited but is slated for deletion by t-037 --
+    probably not worth a full audit pass; a better next target is
+    stores/helpers/narrativeArtJobsHelper.ts or components/storybook/storybook-life-run.vue
+    itself (958+ lines, never audited by this task, and now directly relevant given t-058's
+    finding).
+  updated: '2026-09-21T16:16:19Z'
   owner: worker
   claimed_by: claude-scheduled-20260921T155529Z-sweep
   claimed_at: '2026-09-21T15:56:23Z'
-  implementation_pr: 'silasfelinus/kind_robots#2945'
+  implementation_pr: 'silasfelinus/kind_robots#2955'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
