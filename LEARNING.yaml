@@ -15846,3 +15846,27 @@ records:
     before reaching for a bare raise -- routing the new check through the existing
     failure shape (a synthetic entry in the results list) is less code and gets
     atomic rollback for free.
+- date: 2026-09-21
+  project: ruler-hooked
+  task: t-027
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Merged silasfelinus/kind_robots#2949 (catch-reveal art + image-first Fishopedia):
+    the task's own art dependency (t-019) was still 1/15 species short (choirfish's
+    corrected re-render pending), but 14/15 bestiary images already existed and the
+    UI change didn't need to wait for the last one -- the broken-image-safe <img>
+    pattern already established in ruler-hooked-cosmetics-picker.vue (hide on @error
+    instead of a broken-image icon) made shipping against a mostly-complete asset set
+    safe. General lesson: a task blocked on "the art isn't all done yet" is often
+    still workable once the display layer degrades gracefully per-asset --  check
+    whether the existing broken-image/fallback convention in the codebase covers the
+    gap before treating partial asset completion as a hard blocker. Also worth
+    noting: running `prettier --write` on a whole pre-existing file that predates the
+    repo's prettier adoption reformats far more than the actual change (this repo
+    tracks such files in a documented ratchet, `verifyPrettierRatchet.ts`) --
+    reverting and hand-editing to match the file's existing style kept the diff
+    scoped to the 9 lines actually added.
