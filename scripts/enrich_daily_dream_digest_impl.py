@@ -288,15 +288,19 @@ def _completed_payload(
     built_on = _built_date(proposal)
     built_label = built_on.isoformat() if built_on else "an unknown date"
     payload["display_mode"] = display_mode
-    if display_mode == "art-rich":
+    if display_mode == "current-art-rich":
+        payload["calendar_label"] = (
+            f"Just built {built_label} from the {proposal['proposal_date']} proposal. "
+            "Its priority art is shown below as soon as each render is available."
+        )
+    elif display_mode == "art-rich":
         payload["calendar_label"] = (
             f"Previous completed bundle; built {built_label} "
             f"from the {proposal['proposal_date']} proposal"
         )
     else:
         payload["calendar_label"] = (
-            f"Just built {built_label} from the {proposal['proposal_date']} proposal. "
-            "Its art belongs to the next digest cycle."
+            f"Just built {built_label} from the {proposal['proposal_date']} proposal."
         )
     return payload
 
@@ -327,12 +331,13 @@ def enrich_digest(
     current = completed[-1] if completed else None
     previous = completed[-2] if len(completed) >= 2 else None
 
-    # The newest completed bundle was just built this cycle. Do not spend network
-    # probes or reserve visual space for its art: the six ArtJobs were only just
-    # submitted. The older completed bundle is the art-rich section and gets the
-    # public-path probes because its renders have had a full cycle to settle.
+    # The newest completed bundle is the showcase. Its ArtJobs are priority 200
+    # and the workflow gives them a bounded render window before this enrichment
+    # runs, so probe the real media paths now. Any job that is still rendering is
+    # represented honestly as a queued placeholder instead of hiding all six
+    # current images until tomorrow.
     output["current_dream_output"] = (
-        _completed_payload(current, display_mode="just-built", probe_images=False)
+        _completed_payload(current, display_mode="current-art-rich", probe_images=probe_images)
         if current else None
     )
     output["previous_dream_output"] = (
