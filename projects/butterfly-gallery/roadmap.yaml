@@ -1320,7 +1320,16 @@ tasks:
       ok:false since 2026-09-21T08:22:53Z (~35min at check time), consistent with the
       recurring relay-accept-hang class already tracked hard needs-human at conductor/t-165
       and t-167. Not yet actionable per STEP 1; leaving status: ready, no pass/retry consumed.
-    updated: '2026-09-21T08:57:29Z'
+
+      last checked 2026-09-21T09:58Z: jobs 28739,28740,28741,28742,28743,28744,28745 still
+      PENDING (GET /api/art/queue/:id, admin token, all 7; unchanged since 2026-09-19T12:40Z,
+      ~45h with zero movement). check_render_box.py now reports render box UP
+      (media.acrocatranch.com HTTP 404, 12 renders completed in the last 6h; Comfy heartbeat
+      ok:false only briefly, under the 10-minute alarm threshold) -- box has recovered from
+      the prior DOWN state, but these 7 priority-0 (lowest band) jobs have not yet been
+      reached by the queue. Not yet actionable per STEP 1; leaving status: ready, no
+      pass/retry consumed.
+    updated: '2026-09-21T09:58:22Z'
 
   - id: t-034
     milestone: m4
