@@ -1333,7 +1333,13 @@ tasks:
       last checked 2026-09-21: jobs 28739, 28740, 28741, 28742, 28743, 28744, 28745 still
       PENDING (queried GET /api/art/queue/:id for each). Task remains not-yet-actionable per
       STEP 1; leaving status: ready, no pass consumed.
-    updated: '2026-09-21T10:56:20Z'
+
+      last checked 2026-09-21 (scheduled conductor Agent run): jobs 28739-28745 still PENDING,
+      unchanged since 2026-09-19T12:40Z (~57h, GET /api/art/queue/:id, admin token, all 7).
+      check_render_box.py confirms render box UP (Comfy heartbeat healthy, 12 renders
+      completed in last 6h) -- not a wedge, priority-0 band simply hasn't come up yet in the
+      queue. Not yet actionable per STEP 1; leaving status: ready, no pass/retry consumed.
+    updated: '2026-09-21T11:54:53Z'
 
   - id: t-034
     milestone: m4
