@@ -2259,7 +2259,7 @@ tasks:
 - id: t-137
   milestone: m5
   title: Ratchet Prettier formatting onto the front end instead of one repo-wide reformat
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -2311,8 +2311,12 @@ tasks:
     bounded slice.
 
     Connector-only cycle inspected the live 1081-file Prettier baseline after the prior three bounded slices. No safe next formatting slice was applied because this transport cannot execute the repository-pinned Prettier or regenerate the membership baseline, and hand-editing the baseline would defeat t-137's exact-set regression guard. Re-armed without consuming a pass; no implementation branch was created.
-  updated: '2026-09-21T00:05:17Z'
-  implementation_pr: 'silasfelinus/kind_robots#2932'
+
+    Bounded reformat slice cycle 4: tests/contracts (8 files, verified content-preservation
+    by diffing tsx output before/after + eslint clean). Baseline 1081 -> 1073, 14 -> 13
+    directories. Rearming to ready (recurring) for the next bounded slice.
+  updated: '2026-09-21T00:11:41Z'
+  implementation_pr: 'silasfelinus/kind_robots#2939'
   owner: worker
   claimed_by: claude-scheduled-2026-09-20T2359Z-iv137
   claimed_at: '2026-09-20T23:59:40Z'
