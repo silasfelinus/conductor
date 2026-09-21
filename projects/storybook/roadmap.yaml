@@ -1452,10 +1452,10 @@ tasks:
 - id: t-057
   milestone: m7
   title: "Post-final 'Ask for it again' regresses readyToResolve and can generate an off-budget extra turn"
-  status: ready
+  status: claimed
   stakes: reversible
   passes: 0
-  owner: null
+  owner: worker
   note: |-
     Found auditing storybookRuns.ts for the first time (t-010 cycle 79, 2026-09-21).
 
@@ -1491,4 +1491,6 @@ tasks:
     in the null-move branch) refuse to regenerate/persist a scene when
     `args.turnBudget !== null && args.turnIndex >= args.turnBudget`, returning the
     terminal state instead.
-  updated: '2026-09-21T02:30:00Z'
+  updated: '2026-09-21T03:16:04Z'
+  claimed_by: openai-scheduled-2026-09-21T031604Z-storybook-t057-a11
+  claimed_at: '2026-09-21T03:16:04Z'
