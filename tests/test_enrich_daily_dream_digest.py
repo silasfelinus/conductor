@@ -178,8 +178,15 @@ def test_completed_selection_uses_build_order_not_proposal_date(tmp_path):
     assert result["previous_dream_output"]["title"] == "Built Earlier"
 
 
-def test_current_output_probes_current_art_and_keeps_unfinished_slots_queued(tmp_path):
+def test_current_output_probes_current_art_and_promotes_a_live_render(tmp_path, monkeypatch):
     current = proposal(tmp_path / "current.md", "2026-07-30", built=True)
+    seen = []
+
+    def exists(url):
+        seen.append(url)
+        return url.endswith("/hero.webp")
+
+    monkeypatch.setattr(enrich, "_url_exists", exists)
     result = enrich.enrich_digest(
         {}, [current], today=date(2026, 7, 31), probe_images=True
     )
@@ -187,8 +194,9 @@ def test_current_output_probes_current_art_and_keeps_unfinished_slots_queued(tmp
         row for row in result["current_dream_output"]["assets"]
         if row["key"] == "character"
     )
-    assert hero["image_url"] == ""
-    assert hero["art_status"] == "queued"
+    assert hero["image_url"].endswith("/hero.webp")
+    assert hero["art_status"] == "ready"
+    assert any(url.endswith("/hero.webp") for url in seen)
     assert result["previous_dream_output"] is None
 
 
