@@ -3655,7 +3655,7 @@ tasks:
 - id: t-181
   milestone: m2
   title: "pm2's pidusage metrics poll opens a visible PowerShell console every ~30 seconds -- 33 of 40 desktop popups in a measured 15-minute window"
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -3683,9 +3683,15 @@ tasks:
     Cosmetic in isolation. Worth doing because it also fixes the "pm2 is started at logon rather than as a service" fragility that healthcheck.ps1's own port-squatter alert text already tells the reader to go check.
 
     Added a read-only pm2 service-migration preflight and source-contract tests. It blocks the session-0 switch unless PM2_HOME is unified at C:\ProgramData\pm2\home with dump.pm2 present, KR_SHARE_ROOT is an explicit readable UNC path with ai/models reachable, and the current daemon sees comfyui and kr-relay. The actual service installation remains a physical/admin host action and is not performed by this connector-only session.
-  updated: '2026-09-21T10:23:00Z'
+
+    Merged #4931 (squash 7ae3a46): read-only pm2 service-migration preflight script + pinned
+    test. Reviewed by Claude session; fixed PR body to match AGENTS.md handoff template
+    (CI's check_pr_handoff_template.py was failing on non-matching headings) before merge.
+    Next step is running the preflight on ferngrotto.
+  updated: '2026-09-21T10:53:57Z'
   claimed_by: openai-scheduled-2026-09-21T101611Z-conductor-t181-a11
   claimed_at: '2026-09-21T10:16:11Z'
+  implementation_pr: 'silasfelinus/conductor#4931'
 - id: t-182
   milestone: m2
   title: 'FOR SILAS: KR_API_TOKEN now fails every admin-gated Kind Robots call -- sync the new value into conductor'
