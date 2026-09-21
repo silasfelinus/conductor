@@ -88,24 +88,45 @@ jobs:
           today="$(date -u +%F)"
           runs="$(gh api --method GET             "repos/${GITHUB_REPOSITORY}/actions/workflows/daily-digest.yml/runs"             -f branch=main             -f per_page=30)"
 
-          prior="$(
-            jq -c               --arg today "$today"               --argjson current "${GITHUB_RUN_ID}" '
-                [.workflow_runs[]
-                  | select(.id != $current)
-                  | select(.created_at | startswith($today))
-                  | select(
-                      .event == "schedule"
-                      or (.event == "workflow_dispatch" and .actor.login == "github-actions[bot]")
-                    )
-                  | select(.status != "completed" or .conclusion == "success")]
-                | sort_by(.created_at)
-                | last // empty
-              ' <<<"$runs"
+          # Look only backward. More importantly, a workflow can conclude
+          # "success" with its digest job skipped by this very guard, so workflow
+          # conclusion alone is not proof that mail was or will be sent. Confirm
+          # the actual digest job is queued/running or completed successfully.
+          candidate_ids="$(
+            jq -r --arg today "$today" --argjson current "${GITHUB_RUN_ID}" '
+              [.workflow_runs[]
+                | select(.id < $current)
+                | select(.created_at | startswith($today))
+                | select(
+                    .event == "schedule"
+                    or (.event == "workflow_dispatch" and .actor.login == "github-actions[bot]")
+                  )]
+              | sort_by(.created_at)
+              | reverse
+              | .[].id
+            ' <<<"$runs"
           )"
+
+          prior=""
+          for run_id in $candidate_ids; do
+            jobs="$(gh api --method GET "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}/jobs" -f per_page=100)"
+            digest_claim="$(
+              jq -r '
+                [.jobs[]
+                  | select(.name == "digest")
+                  | select(.status != "completed" or .conclusion == "success")]
+                | length
+              ' <<<"$jobs"
+            )"
+            if [ "$digest_claim" -gt 0 ]; then
+              prior="$run_id"
+              break
+            fi
+          done
 
           if [ -n "$prior" ]; then
             echo "should_run=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::Today's Daily Dream digest already has a live/successful automated run; suppressing this delayed duplicate. Prior run: $(jq -r '.html_url' <<<"$prior")"
+            echo "::notice::Today's Daily Dream digest is already claimed by automated run ${prior}; suppressing this delayed duplicate."
           else
             echo "should_run=true" >> "$GITHUB_OUTPUT"
           fi
