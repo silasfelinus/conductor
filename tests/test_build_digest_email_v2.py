@@ -68,7 +68,7 @@ def test_art_rich_section_renders_images_and_pending_art_slot():
     assert "Art queued" in html
 
 
-def test_just_built_section_has_no_image_boxes_at_all():
+def test_legacy_just_built_mode_stays_text_only():
     module = load_module()
     html = module.proposal_section(
         "ignored",
@@ -87,6 +87,24 @@ def test_just_built_section_has_no_image_boxes_at_all():
     assert "No image space is reserved here" in html
 
 
+def test_current_art_rich_section_shows_latest_images_and_queue_placeholders():
+    module = load_module()
+    html = module.proposal_section(
+        "ignored",
+        {
+            "title": "Current",
+            "idea": "Idea",
+            "display_mode": "current-art-rich",
+            "assets": assets(submitted=True),
+        },
+    )
+    assert "Previous pitch, now generated" in html
+    assert "Previous completed output" not in html
+    assert "5/6 latest asset images ready" in html
+    assert "height:190px" in html
+    assert "Art queued" in html
+
+
 def test_payload_leads_with_just_built_then_health_then_tomorrow_pitch():
     module = load_module()
     digest = {
@@ -101,7 +119,7 @@ def test_payload_leads_with_just_built_then_health_then_tomorrow_pitch():
             "slug": "current",
             "title": "Current Just Built",
             "idea": "Fresh output.",
-            "display_mode": "just-built",
+            "display_mode": "current-art-rich",
             "assets": assets(submitted=True),
         },
         "next_dream_proposal": {
@@ -128,8 +146,9 @@ def test_payload_leads_with_just_built_then_health_then_tomorrow_pitch():
     assert html.index("Render engine DOWN") < html.index("Detailed error review")
     assert html.index("Detailed error review") < html.index("Tomorrow’s pitch")
     assert html.index("Tomorrow’s pitch") < html.index("Tomorrow Is Weird")
-    assert html.index("Tomorrow Is Weird") < html.index("Previous With Art")
+    assert "Previous With Art" not in html
     assert "Steering becomes a visible promise." in html
+    assert "5/6 latest asset images ready" in html
     assert "height:90px" not in html
 
 

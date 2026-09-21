@@ -26,3 +26,34 @@ def test_pending_selector_excludes_other_sources_and_completed_rows():
         "dream-a",
         "dream-b",
     ]
+
+
+def test_wait_for_daily_dream_jobs_uses_one_global_deadline():
+    states = {
+        101: [{"status": "QUEUED"}, {"status": "DONE"}],
+        102: [{"status": "DONE"}],
+        103: [{"status": "FAILED"}],
+        104: [{"status": "RUNNING"}, {"status": "RUNNING"}],
+    }
+    now = [0.0]
+
+    def fetch(job_id, timeout=10):
+        rows = states[job_id]
+        return rows.pop(0) if len(rows) > 1 else rows[0]
+
+    def sleep(seconds):
+        now[0] += seconds
+
+    done, failed, pending = submit.wait_for_daily_dream_jobs(
+        {job_id: str(job_id) for job_id in states},
+        timeout=6,
+        fetch_job=fetch,
+        poll_seconds=5,
+        sleeper=sleep,
+        clock=lambda: now[0],
+    )
+
+    assert done == {101, 102}
+    assert failed == {103: "FAILED"}
+    assert pending == {104}
+    assert now[0] == 6

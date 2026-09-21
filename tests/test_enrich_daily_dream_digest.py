@@ -138,7 +138,7 @@ def test_digest_roles_are_next_proposal_then_two_completed_generations(tmp_path)
     assert result["next_dream_proposal"]["title"] == "Next Steering Proposal"
     assert result["next_dream_proposal"]["built"] is False
     assert result["current_dream_output"]["title"] == "Just Built"
-    assert result["current_dream_output"]["display_mode"] == "just-built"
+    assert result["current_dream_output"]["display_mode"] == "current-art-rich"
     assert result["previous_dream_output"]["title"] == "Previous Art Rich"
     assert result["previous_dream_output"]["display_mode"] == "art-rich"
     assert "tomorrow_proposal" not in result
@@ -178,8 +178,15 @@ def test_completed_selection_uses_build_order_not_proposal_date(tmp_path):
     assert result["previous_dream_output"]["title"] == "Built Earlier"
 
 
-def test_current_output_does_not_probe_or_claim_unattached_art_ready(tmp_path):
+def test_current_output_probes_current_art_and_promotes_a_live_render(tmp_path, monkeypatch):
     current = proposal(tmp_path / "current.md", "2026-07-30", built=True)
+    seen = []
+
+    def exists(url):
+        seen.append(url)
+        return url.endswith("/hero.webp")
+
+    monkeypatch.setattr(enrich, "_url_exists", exists)
     result = enrich.enrich_digest(
         {}, [current], today=date(2026, 7, 31), probe_images=True
     )
@@ -187,8 +194,9 @@ def test_current_output_does_not_probe_or_claim_unattached_art_ready(tmp_path):
         row for row in result["current_dream_output"]["assets"]
         if row["key"] == "character"
     )
-    assert hero["image_url"] == ""
-    assert hero["art_status"] == "queued"
+    assert hero["image_url"].endswith("/hero.webp")
+    assert hero["art_status"] == "ready"
+    assert any(url.endswith("/hero.webp") for url in seen)
     assert result["previous_dream_output"] is None
 
 
@@ -232,7 +240,7 @@ def test_scenario_queue_entry_uses_builder_suffix(tmp_path):
     assert scenario["request_id"] == "scene"
 
 
-def test_only_one_completed_bundle_is_current_not_art_rich(tmp_path):
+def test_only_one_completed_bundle_is_current_art_rich(tmp_path):
     current = proposal(
         tmp_path / "current.md",
         "2026-07-30",
@@ -243,8 +251,9 @@ def test_only_one_completed_bundle_is_current_not_art_rich(tmp_path):
         {}, [current], today=date(2026, 7, 31), probe_images=False
     )
     assert result["current_dream_output"]["title"] == "First Completed"
+    assert result["current_dream_output"]["display_mode"] == "current-art-rich"
     assert result["previous_dream_output"] is None
-    assert "no earlier completed bundle" in result["daily_dream_output_status"]
+    assert result["daily_dream_output_status"] == "ready"
 
 
 def test_asset_summaries_are_composed_not_a_single_stem_fragment(tmp_path):

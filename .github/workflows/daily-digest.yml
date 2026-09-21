@@ -23,9 +23,10 @@ name: daily-digest
 # topped up by the hourly Conductor Agent sessions (see CLAUDE.md, session
 # startup step 7) and the digest falls back to its mechanical log banner.
 #
-# The morning email itself shows the older completed bundle with art first, followed by
-# the bundle just built in a compact no-image layout. Today's newly authored proposal
-# is intentionally not a third showcase section.
+# The morning email showcases the bundle just built. Its six priority-200 ArtJobs get
+# a bounded same-cycle render window, then the digest probes the live image paths and
+# shows whatever is ready (with honest queue placeholders for the rest). Today's newly
+# authored proposal remains a compact text-only preview because it has not been built yet.
 
 on:
   schedule:
@@ -53,8 +54,86 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  digest:
+  delivery-guard:
+    # GitHub can deliver the nominal 15:30 UTC schedule hours late. If the
+    # hourly watchdog already dispatched and completed today's replacement,
+    # that delayed schedule is not a second Daily Dream cycle; it is a zombie
+    # copy of the first trigger. Human workflow_dispatch runs remain explicit
+    # operator actions and are never suppressed here.
     if: ${{ github.event_name != 'push' }}
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+    outputs:
+      should_run: ${{ steps.guard.outputs.should_run }}
+    steps:
+      - name: Suppress a delayed duplicate delivery
+        id: guard
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          # A human-triggered dispatch is an intentional resend/dry-run. The
+          # duplicate we need to suppress is either the scheduled run itself or
+          # an automated watchdog dispatch from github-actions[bot].
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.actor }}" != "github-actions[bot]" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::Human workflow_dispatch is explicit; duplicate suppression is bypassed."
+            exit 0
+          fi
+
+          today="$(date -u +%F)"
+          runs="$(gh api --method GET             "repos/${GITHUB_REPOSITORY}/actions/workflows/daily-digest.yml/runs"             -f branch=main             -f per_page=30)"
+
+          # Look only backward. More importantly, a workflow can conclude
+          # "success" with its digest job skipped by this very guard, so workflow
+          # conclusion alone is not proof that mail was or will be sent. Confirm
+          # the actual digest job is queued/running or completed successfully.
+          candidate_ids="$(
+            jq -r --arg today "$today" --argjson current "${GITHUB_RUN_ID}" '
+              [.workflow_runs[]
+                | select(.id < $current)
+                | select(.created_at | startswith($today))
+                | select(
+                    .event == "schedule"
+                    or (.event == "workflow_dispatch" and .actor.login == "github-actions[bot]")
+                  )]
+              | sort_by(.created_at)
+              | reverse
+              | .[].id
+            ' <<<"$runs"
+          )"
+
+          prior=""
+          for run_id in $candidate_ids; do
+            jobs="$(gh api --method GET "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}/jobs" -f per_page=100)"
+            digest_claim="$(
+              jq -r '
+                [.jobs[]
+                  | select(.name == "digest")
+                  | select(.status != "completed" or .conclusion == "success")]
+                | length
+              ' <<<"$jobs"
+            )"
+            if [ "$digest_claim" -gt 0 ]; then
+              prior="$run_id"
+              break
+            fi
+          done
+
+          if [ -n "$prior" ]; then
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Today's Daily Dream digest is already claimed by automated run ${prior}; suppressing this delayed duplicate."
+          else
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  digest:
+    needs: delivery-guard
+    if: ${{ github.event_name != 'push' && needs.delivery-guard.outputs.should_run == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -97,11 +176,11 @@ jobs:
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
 
-      - name: Submit Daily Dream ArtJobs
+      - name: Submit Daily Dream ArtJobs and give priority renders a head start
         id: daily_dream_art
         if: ${{ steps.daily_dream_build.outcome == 'success' }}
         continue-on-error: true
-        run: python scripts/submit_daily_dream_art.py
+        run: python scripts/submit_daily_dream_art.py --wait-timeout 300
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
           KR_MEDIA_ORIGIN: https://media.acrocatranch.com
