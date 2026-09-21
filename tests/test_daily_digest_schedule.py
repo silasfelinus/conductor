@@ -64,7 +64,9 @@ def test_delayed_schedule_cannot_resend_after_watchdog_replacement_succeeds():
     assert "delivery-guard:" in workflow
     assert "Suppress a delayed duplicate delivery" in workflow
     assert "GITHUB_RUN_ID" in workflow
+    assert "select(.id < $current)" in workflow
     assert '.actor.login == "github-actions[bot]"' in workflow
+    assert 'select(.name == "digest")' in workflow
     assert '.conclusion == "success"' in workflow
     assert "needs: delivery-guard" in workflow
     assert "needs.delivery-guard.outputs.should_run == 'true'" in workflow
