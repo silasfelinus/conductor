@@ -3655,32 +3655,19 @@ tasks:
 - id: t-181
   milestone: m2
   title: "pm2's pidusage metrics poll opens a visible PowerShell console every ~30 seconds -- 33 of 40 desktop popups in a measured 15-minute window"
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
-  note: >-
-    Measured on ferngrotto 2026-09-19, 15:14-15:29, with watch-window-spawn.ps1. Of 40 new
-    visible consoles in 15 minutes, 33 were this:
-
+  note: |-
+    Measured on ferngrotto 2026-09-19, 15:14-15:29, with watch-window-spawn.ps1. Of 40 new visible consoles in 15 minutes, 33 were this:
     powershell.exe -c gwmi win32_process -Filter 'ProcessId=... '
       | select CreationDate,KernelModeTime,ParentProcessId,ProcessId,UserModeTime,WorkingSetSize
       parent: node.exe C:\...\node_modules\pm2\lib\Daemon.js
 
-    That field list is `pidusage`'s signature -- the library pm2 uses to fill the cpu and
-    memory columns in `pm2 status`. On Windows it shells out to PowerShell, pm2's daemon
-    polls it roughly every 30 seconds, and each poll is a new powershell.exe, a new
-    conhost.exe, and a new window on the desktop. It is unrelated to healthcheck.ps1
-    (t-177) and continues under Windows Console Host.
-
-    THE STRUCTURAL FIX IS SESSION 0. The same trace caught `conhost.exe pid 6728 in session
-    0 - session 0, not visible`, which is the proof: a console created in session 0 cannot
-    appear on the desktop. Running pm2 as a Windows service instead of at logon puts the
-    daemon and everything it spawns there, and removes this entire class of popup
-    permanently -- pidusage, pm2.cmd, and any future child alike.
-
-    IT IS NOT A FREE WIN, and any implementation has to clear three things this repo has
-    already been burned by:
+    That field list is `pidusage`'s signature -- the library pm2 uses to fill the cpu and memory columns in `pm2 status`. On Windows it shells out to PowerShell, pm2's daemon polls it roughly every 30 seconds, and each poll is a new powershell.exe, a new conhost.exe, and a new window on the desktop. It is unrelated to healthcheck.ps1 (t-177) and continues under Windows Console Host.
+    THE STRUCTURAL FIX IS SESSION 0. The same trace caught `conhost.exe pid 6728 in session 0 - session 0, not visible`, which is the proof: a console created in session 0 cannot appear on the desktop. Running pm2 as a Windows service instead of at logon puts the daemon and everything it spawns there, and removes this entire class of popup permanently -- pidusage, pm2.cmd, and any future child alike.
+    IT IS NOT A FREE WIN, and any implementation has to clear three things this repo has already been burned by:
 
       1. pm2's daemon is PER-USER. A daemon in a session the watchdog cannot reach is what
          produced `WATCHDOG BLIND` on 2026-08-27, with healthcheck.ps1 logging
@@ -3693,10 +3680,10 @@ tasks:
       3. README.md already records that pm2-installer's service failed to start on this box
          without `npm run configure`.
 
-    Cosmetic in isolation. Worth doing because it also fixes the "pm2 is started at logon
-    rather than as a service" fragility that healthcheck.ps1's own port-squatter alert text
-    already tells the reader to go check.
-  updated: '2026-09-21T10:16:11Z'
+    Cosmetic in isolation. Worth doing because it also fixes the "pm2 is started at logon rather than as a service" fragility that healthcheck.ps1's own port-squatter alert text already tells the reader to go check.
+
+    Added a read-only pm2 service-migration preflight and source-contract tests. It blocks the session-0 switch unless PM2_HOME is unified at C:\ProgramData\pm2\home with dump.pm2 present, KR_SHARE_ROOT is an explicit readable UNC path with ai/models reachable, and the current daemon sees comfyui and kr-relay. The actual service installation remains a physical/admin host action and is not performed by this connector-only session.
+  updated: '2026-09-21T10:23:00Z'
   claimed_by: openai-scheduled-2026-09-21T101611Z-conductor-t181-a11
   claimed_at: '2026-09-21T10:16:11Z'
 - id: t-182
