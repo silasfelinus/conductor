@@ -1765,7 +1765,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   recurring: true
@@ -1792,7 +1792,9 @@ tasks:
     Prepared the medium-xs survey helper for the eventual runtime migration by adding a fail-closed --write path that refuses until .kr-text-medium-xs exists, preserves unrelated class tokens, and can remain bounded to exact-only candidates. Implementation branch head 5e1ae4a9357977b359162168d5575d03b02a69e7.
 
     Reviewed and merged silasfelinus/kind_robots#2916 at exact head 5e1ae4a9357977b359162168d5575d03b02a69e7 after all returned exact-head workflow runs completed successfully. The fail-closed medium-xs migration helper is now on main; return the recurring consistency umbrella to ready for the next bounded slice.
-  updated: '2026-09-21T15:17:06Z'
+
+    Bounded consistency slice adds a dry-run-first codemod for the remaining hand-rolled badge badge-error badge-sm shape, migrating onto the existing kr-badge-sm base while preserving badge-error and any extra utilities. No runtime classes changed in this slice.
+  updated: '2026-09-21T15:24:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2912'
   retry_context: ''
   owner: worker
