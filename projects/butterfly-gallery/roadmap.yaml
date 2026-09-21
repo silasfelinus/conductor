@@ -1302,7 +1302,18 @@ tasks:
       last checked 2026-09-21T04:57Z: jobs 28739,28740,28741,28742,28743,28744,28745 still
       PENDING (GET /api/art/queue/:id, admin token, all 7). Not yet actionable per STEP 1;
       leaving status: ready, no pass/retry consumed.
-    updated: '2026-09-21T04:57:50Z'
+
+      last checked 2026-09-21T05:54Z: jobs 28739,28740,28741,28742,28743,28744,28745 still
+      PENDING (GET /api/art/queue/:id, admin token, all 7; unchanged since 2026-09-19T12:40Z,
+      ~41h with zero movement). /api/art/queue/stats: PENDING depth 759, RUNNING 1,
+      latestDoneAt 2026-09-20T19:15:00Z (~11h stale despite check_render_box.py reporting
+      Comfy heartbeat healthy 0.5min ago and queue idle); one recentFailed job (30014) at
+      2026-09-21T05:50:49Z with error 'ComfyUI POST /prompt failed ... No accepted prompt for
+      client ... appeared within 120.0s' -- consistent with the recurring relay-accept-hang
+      class already tracked hard needs-human at conductor/t-165 and t-167, not a new
+      independent defect. Not yet actionable per STEP 1; leaving status: ready, no pass/retry
+      consumed.
+    updated: '2026-09-21T05:55:10Z'
 
   - id: t-034
     milestone: m4
