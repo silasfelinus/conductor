@@ -15917,3 +15917,17 @@ records:
     process_task_events.py (apply time) that holds/rejects a needs-human event whose note
     references such a path when the file isn't actually present, instead of trusting the
     claim.
+- date: '2026-09-21'
+  project: conductor
+  task: t-188
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: t-187's missing_handoff_docs() guard only covered the connector (task-events)
+    needs-human path; the direct close_task.py path most interactive sessions actually use
+    was still unguarded. Extended the same check there, verifying against the committed base
+    ref (not just the worktree) since close_task.py's scratch-index plumbing commits only
+    roadmap.yaml -- a worktree-only check would have let an uncommitted handoff file pass
+    while still stranding it outside the pushed close-out.
