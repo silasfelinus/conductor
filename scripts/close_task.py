@@ -41,7 +41,7 @@ from git_plumbing import (  # noqa: E402
     resolve_ref,
     run_git,
 )
-from process_task_events import missing_handoff_docs  # noqa: E402
+from process_task_events import HANDOFF_DOC_RE, missing_handoff_docs  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 PROJECTS_DIR = ROOT / "projects"
@@ -141,6 +141,25 @@ def assert_local_branch_safe(branch: str, remote_ref: str) -> None:
         )
 
 
+def missing_handoff_docs_at_ref(note: object, ref: str) -> list[str]:
+    """Apply t-187's handoff guard to the committed tree `close_task` will extend.
+
+    `missing_handoff_docs()` is intentionally reused as the shared filesystem/path
+    contract. The extra ref read is load-bearing here: a handoff that exists only as an
+    uncommitted worktree file must not make a close-out safe, because scratch-index
+    close_task commits only roadmap.yaml and would leave that file behind.
+    """
+    if not isinstance(note, str):
+        return []
+    referenced = [match.group(0) for match in HANDOFF_DOC_RE.finditer(note)]
+    missing_on_disk = set(missing_handoff_docs(note, ROOT))
+    return [
+        path
+        for path in referenced
+        if path in missing_on_disk or read_file_at_ref(ROOT, ref, path) is None
+    ]
+
+
 def close(
     project: str,
     task_id: str,
@@ -204,18 +223,17 @@ def close(
         after = apply_close(before, task_id, status, extra_fields, append_note, force)
 
         # conductor/t-188: close_task is the direct/local sibling of the connector
-        # task-events path. Apply the same t-187 invariant here: a needs-human note
-        # must not claim a fallback handoff exists unless that document is already in
-        # the tree this close-out is based on. Check the resulting task note so both
-        # --append-note and --set note= are covered, while unrelated statuses remain
-        # unaffected. `missing_handoff_docs` is shared with the task-event processor so
-        # the path contract cannot drift between the two transition mechanisms.
+        # task-events path. Apply the same t-187 invariant here before the scratch
+        # commit is created. Checking the resulting task note covers both --append-note
+        # and --set note=. Checking base_ref, not merely the worktree, ensures a loose
+        # uncommitted handoff file cannot falsely satisfy a close that commits only the
+        # roadmap and strands the handoff outside the pushed tree.
         if status == "needs-human":
             after_doc = yaml.safe_load(after) or {}
             after_task = find_task(after_doc, task_id)
-            missing = missing_handoff_docs(
+            missing = missing_handoff_docs_at_ref(
                 after_task.get("note") if after_task else None,
-                ROOT,
+                base_ref,
             )
             if missing:
                 raise CloseError(
