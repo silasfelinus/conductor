@@ -245,7 +245,7 @@ def test_only_one_completed_bundle_is_current_art_rich(tmp_path):
     assert result["current_dream_output"]["title"] == "First Completed"
     assert result["current_dream_output"]["display_mode"] == "current-art-rich"
     assert result["previous_dream_output"] is None
-    assert "no earlier completed bundle" in result["daily_dream_output_status"]
+    assert result["daily_dream_output_status"] == "ready"
 
 
 def test_asset_summaries_are_composed_not_a_single_stem_fragment(tmp_path):
