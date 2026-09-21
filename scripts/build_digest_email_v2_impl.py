@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Build the Daily Dream digest around the morning's creative handoff.
 
-The bundle built this morning is text/facet-forward and leads the email. Operational
-health follows it, so failures stay visible without making the digest open on bad news.
-Today's freshly authored proposal is then shown as a compact preview of tomorrow's
-build. The older completed bundle remains art-rich because its six renders have had a
-full cycle to finish.
+The bundle built this morning is the art-rich lead. Its priority renders get a bounded
+same-cycle window before this renderer runs, so completed images appear immediately and
+any stragglers show honest queue placeholders. Operational health follows it, then
+today's freshly authored proposal appears as a compact preview of tomorrow's build.
+Older completed bundles stay out of the email; the digest is a handoff, not an archive.
 """
 
 from __future__ import annotations
@@ -153,8 +153,12 @@ def proposal_section(
         return ""
 
     mode = str(proposal.get("display_mode") or "art-rich")
-    show_art = mode == "art-rich"
-    heading = "🖼️ Previous completed output" if show_art else "✨ Just built this cycle"
+    show_art = mode in {"art-rich", "current-art-rich"}
+    heading = (
+        "✨ Just built this cycle"
+        if mode == "current-art-rich"
+        else ("🖼️ Previous completed output" if show_art else "✨ Just built this cycle")
+    )
     title = esc(proposal.get("title"))
     idea = esc(proposal.get("idea"))
     assets = proposal.get("assets") if isinstance(proposal.get("assets"), list) else []
@@ -233,10 +237,15 @@ def proposal_section(
 
     if show_art:
         ready = sum(asset.get("art_status") == "ready" for asset in assets)
+        art_context = (
+            "latest asset images ready when this digest was assembled; unfinished slots remain queued."
+            if mode == "current-art-rich"
+            else "asset images ready from this completed bundle."
+        )
         art_line = (
             f'<p style="color:#334155;background:#f8fafc;border-left:4px solid #64748b;'
             f'padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px">'
-            f'🖼️ {ready}/{len(assets)} asset images ready; this is the art-bearing output from the prior cycle.</p>'
+            f'🖼️ {ready}/{len(assets)} {esc(art_context)}</p>'
         ) if assets else ""
     else:
         submitted = sum(bool(asset.get("art_job_id")) for asset in assets)
@@ -382,12 +391,12 @@ def engine_banner(digest: dict[str, Any]) -> str:
 
 def build_payload(digest: dict[str, Any]) -> dict[str, Any]:
     # Reuse the legacy project/activity shell, but make the morning's completed
-    # bundle its first creative section. The prior art-rich output can still
-    # follow later as visual history.
+    # bundle its first and only completed creative showcase. Previous bundles
+    # remain in digest JSON for diagnostics but are not repeated in the email.
     legacy.proposal_section = proposal_section
     legacy_digest = dict(digest)
     legacy_digest["tomorrow_proposal"] = digest.get("current_dream_output")
-    legacy_digest["yesterday_output"] = digest.get("previous_dream_output")
+    legacy_digest["yesterday_output"] = None
 
     # The legacy shell used to put the written container review before the
     # digest title. Suppress that copy here and reinsert it with the rest of the
