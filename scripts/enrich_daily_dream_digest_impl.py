@@ -350,12 +350,8 @@ def enrich_digest(
     output.pop("tomorrow_proposal", None)
     output.pop("yesterday_output", None)
 
-    if previous:
+    if current:
         output["daily_dream_output_status"] = "ready"
-    elif current:
-        output["daily_dream_output_status"] = (
-            "The first current bundle exists, but there is no earlier completed bundle for the art-rich section yet."
-        )
     else:
         output["daily_dream_output_status"] = "No completed Daily Dream bundle exists yet."
 
