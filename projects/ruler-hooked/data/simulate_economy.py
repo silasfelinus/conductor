@@ -73,6 +73,63 @@ def run_curve(income_per_turn: float) -> list[dict]:
     return rows
 
 
+# Purchase orders a real playthrough might follow (ruler-hooked/t-035, kaizen
+# from t-034: the independent per-item "turns to afford from zero" report
+# above doesn't model a real playthrough, where buying one item first delays
+# every later purchase by the coins it consumed). Each entry maps a name to a
+# function ordering the combined gear+kingdom item list; "cheapest-first" is
+# the greedy-optimal order for reaching "everything" soonest, the other two
+# are named, plausible playstyles rather than optimality claims.
+def _cheapest_first(gear: list[dict], kingdom: list[dict]) -> list[dict]:
+    return sorted(gear + kingdom, key=lambda item: item["cost"])
+
+
+def _gear_first(gear: list[dict], kingdom: list[dict]) -> list[dict]:
+    return sorted(gear, key=lambda item: item["cost"]) + sorted(kingdom, key=lambda item: item["cost"])
+
+
+def _kingdom_first(gear: list[dict], kingdom: list[dict]) -> list[dict]:
+    return sorted(kingdom, key=lambda item: item["cost"]) + sorted(gear, key=lambda item: item["cost"])
+
+
+PURCHASE_ORDERS = {
+    "cheapest-first": _cheapest_first,
+    "gear-first": _gear_first,
+    "kingdom-first": _kingdom_first,
+}
+
+
+def simulate_purchase_order(items: list[dict], income_per_turn: float) -> dict:
+    """Play out one purchase order against actual coin spend: coins accrue
+    every turn, and each item in `items` (already in purchase order) is
+    bought as soon as the running balance covers its cost, spending that
+    balance immediately -- so a later item's wait reflects the coins the
+    earlier ones actually consumed, not an independent from-zero threshold.
+
+    Returns each item's purchase turn and running spend, plus the turn the
+    whole list was fully kitted out. `turn` is 1-indexed and open-ended: if
+    TURNS isn't enough to afford everything, the remaining items report
+    `turn: None` and the total is reported as not reached within TURNS."""
+    coins = 0.0
+    purchases = []
+    remaining = list(items)
+    turn = 0
+    while remaining and turn < TURNS:
+        turn += 1
+        coins += income_per_turn
+        # A turn's income may cover more than one remaining item (e.g. two
+        # cheap kingdom buildings back to back), so drain what's affordable
+        # before moving to the next turn rather than capping at one buy/turn.
+        while remaining and coins >= remaining[0]["cost"]:
+            item = remaining.pop(0)
+            coins -= item["cost"]
+            purchases.append({"item": item, "turn": turn, "coins_remaining": round(coins, 1)})
+    for item in remaining:
+        purchases.append({"item": item, "turn": None, "coins_remaining": None})
+    fully_kitted_turn = purchases[-1]["turn"] if remaining == [] else None
+    return {"purchases": purchases, "fully_kitted_turn": fully_kitted_turn}
+
+
 def check_drift(kind_robots_path: pathlib.Path, econ: dict) -> list[str]:
     """Best-effort regex extraction of the live TypeScript numbers this
     file mirrors, compared against economy.yaml. Not a TS parser -- if the
@@ -193,6 +250,28 @@ def main() -> None:
     print(f"All gear ({all_gear_cost} coins): {turns_to_afford(all_gear_cost, income_per_turn)} turns")
     print(f"All kingdom items ({all_kingdom_cost} coins): {turns_to_afford(all_kingdom_cost, income_per_turn)} turns")
     print(f"Everything ({everything_cost} coins): {turns_to_afford(everything_cost, income_per_turn)} turns")
+
+    print()
+    print(
+        "Combined purchase-order curve (reflects actual coin spend along the "
+        "way, alongside the independent thresholds above rather than "
+        "replacing them):"
+    )
+    for order_name, order_fn in PURCHASE_ORDERS.items():
+        ordered_items = order_fn(econ["gear_catalog"], econ["kingdom_catalog"])
+        result = simulate_purchase_order(ordered_items, income_per_turn)
+        print(f"  [{order_name}]")
+        for purchase in result["purchases"]:
+            item = purchase["item"]
+            turn = purchase["turn"]
+            if turn is None:
+                print(f"    {item['name']} (cost {item['cost']}): not reached within {TURNS} turns")
+            else:
+                print(f"    {item['name']} (cost {item['cost']}): turn {turn}, {purchase['coins_remaining']} coins left")
+        if result["fully_kitted_turn"] is not None:
+            print(f"    -> fully kitted out at turn {result['fully_kitted_turn']}")
+        else:
+            print(f"    -> not fully kitted out within {TURNS} turns")
 
 
 if __name__ == "__main__":
