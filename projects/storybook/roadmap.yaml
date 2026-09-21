@@ -1413,10 +1413,10 @@ tasks:
 - id: t-056
   milestone: m7
   title: "submitStoryTurn has no concurrency guard -- a retried/duplicate turn request can double-write state and lose inventory/quest changes"
-  status: ready
+  status: claimed
   stakes: reversible
   passes: 0
-  owner: null
+  owner: reviewer
   note: |-
     Found auditing storybookRuns.ts for the first time (t-010 cycle 79, 2026-09-21).
 
@@ -1447,7 +1447,9 @@ tasks:
     same run/turnIndex against a scratch database (mirroring
     utils/scripts/verifyStorybookPlayLoop.ts's seed/cleanup pattern) and asserts only one
     LifeChoice row and one stat increment survive.
-  updated: '2026-09-21T02:30:00Z'
+  updated: '2026-09-21T03:53:54Z'
+  claimed_by: claude-scheduled-20260921T0352Z-sb-t056
+  claimed_at: '2026-09-21T03:53:54Z'
 
 - id: t-057
   milestone: m7
