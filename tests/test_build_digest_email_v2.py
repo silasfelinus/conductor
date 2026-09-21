@@ -98,7 +98,7 @@ def test_current_art_rich_section_shows_latest_images_and_queue_placeholders():
             "assets": assets(submitted=True),
         },
     )
-    assert "Just built this cycle" in html
+    assert "Previous pitch, now generated" in html
     assert "Previous completed output" not in html
     assert "5/6 latest asset images ready" in html
     assert "height:190px" in html
