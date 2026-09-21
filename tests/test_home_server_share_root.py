@@ -51,18 +51,44 @@ def model_paths(apps):
     return set(re.findall(r"\S*/ai/models/\S*|\S*/kindrobots/images\S*", blob))
 
 
-def test_default_paths_are_unchanged():
-    # The override must be opt-in: an unset KR_SHARE_ROOT keeps the box working
-    # exactly as it does today.
+def test_engine_paths_default_to_local_disk():
+    # 2026-09-21: the models moved off the share (LoRAs 2026-09-20, checkpoints
+    # and diffusion_models 2026-09-21), so everything that WRITES or SCANS has
+    # to follow them. An import inbox left on the share sorts and catalogs a
+    # model into a directory ComfyUI no longer reads -- a LoRA dropped there has
+    # been invisible to renders since the `loras:` declaration was removed, with
+    # a correct Resource row and no error anywhere.
     apps = load()
-    assert apps["kr-relay"]["env"]["LORA_ROOT"] == "Z:/ai/models/Lora"
+    assert apps["kr-relay"]["env"]["LORA_ROOT"] == "D:/comfy/comfy-fast/models/Lora"
+    assert apps["kr-relay"]["env"]["LORA_IMPORT_DIR"] == (
+        "D:/comfy/comfy-fast/models/Lora/import"
+    )
+    assert apps["kr-relay"]["env"]["CHECKPOINT_IMPORT_DIR"] == (
+        "D:/comfy/comfy-fast/models/checkpoints/import"
+    )
     # 2026-09-19: the default moved from the WebUI-era `Stable-diffusion` folder to
     # `checkpoints` when the watched-import lane was generalized from LoRAs to
     # checkpoints (lora-ingestion/t-009). ecosystem.config.js is the source of truth;
     # this assertion follows it rather than pinning the retired path.
     assert apps["kr-download"]["env"]["KR_CHECKPOINT_DIR"] == (
-        "Z:/ai/models/checkpoints"
+        "D:/comfy/comfy-fast/models/checkpoints"
     )
+
+
+def test_share_probe_stays_on_the_share():
+    # The probe answers "is the SHARE alive?", which is a different question
+    # from "where do models live?". Pointing it at local disk makes it pass
+    # unconditionally and silently disarms the gate that stops the relay
+    # claiming jobs against a dead share -- ~2700 jobs burned that way on
+    # 2026-08-28 when a weaker (scandir-only) gate stayed green.
+    apps = load()
+    assert apps["kr-relay"]["env"]["KR_SHARE_PROBE_PATH"] == "Z:/ai/models"
+
+
+def test_share_probe_does_not_follow_the_engine_root():
+    # Moving the engine's models must not drag the probe along with them.
+    apps = load({"KR_ENGINE_MODEL_ROOT": "E:/elsewhere/models"})
+    assert apps["kr-relay"]["env"]["LORA_ROOT"] == "E:/elsewhere/models/Lora"
     assert apps["kr-relay"]["env"]["KR_SHARE_PROBE_PATH"] == "Z:/ai/models"
 
 
@@ -83,7 +109,9 @@ def test_media_dir_follows_the_same_share_root():
 
 
 def test_model_root_can_be_overridden_independently_of_the_share():
-    # The models and the media share do not have to move together.
+    # The models and the media share do not have to move together. Since
+    # 2026-09-21 KR_MODEL_ROOT steers the SHARE-side paths (the probe above);
+    # the engine's own directories are KR_ENGINE_MODEL_ROOT's job.
     apps = load({"KR_MODEL_ROOT": "//alexandria/models"})
-    assert apps["kr-relay"]["env"]["LORA_ROOT"] == "//alexandria/models/Lora"
+    assert apps["kr-relay"]["env"]["KR_SHARE_PROBE_PATH"] == "//alexandria/models"
     assert apps["kr-relay"]["env"]["KR_MEDIA_IMAGES_DIR"].startswith("Z:")
