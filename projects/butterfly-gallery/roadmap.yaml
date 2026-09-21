@@ -1279,7 +1279,14 @@ tasks:
       last checked 2026-09-20 (session-start sweep): jobs 28739-28745 still PENDING (all 7
       rechecked via GET /api/art/queue/:id, submitted at priority 0 over 24h ago). Not yet
       actionable per STEP 1; leaving status: ready, no pass/retry consumed.
-    updated: '2026-09-20T22:54:18Z'
+
+      last checked 2026-09-21 (scheduled conductor Agent run): jobs
+      28739,28740,28741,28742,28743,28744,28745 still PENDING (verified via GET
+      /api/art/queue/:id for each, admin token). /api/art/queue/stats: PENDING depth 761 (down
+      from 1248 on 2026-09-20), latestDoneAt 2026-09-20T19:15Z (throughput live),
+      oldestPending job 23040 unchanged (~6 days). Priority-0 band still has not come up. Not
+      yet actionable per STEP 1; leaving status: ready, no pass/retry consumed.
+    updated: '2026-09-21T00:59:40Z'
 
   - id: t-034
     milestone: m4
