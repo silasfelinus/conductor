@@ -3861,5 +3861,31 @@ tasks:
   claimed_at: '2026-09-20T22:57:19Z'
   updated: '2026-09-20T23:11:36Z'
 
+- id: t-187
+  milestone: m2
+  title: Require a connector-fallback handoff file to land in the same commit/event that sets a task needs-human, not just be named in the note
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from the ruler-hooked/t-037 rescue (silasfelinus/conductor#4941, 2026-09-21):
+    a queued task-events entry flipped t-037 to status: needs-human/soft_gate: true with a
+    note claiming a handoff doc had been "preserved" at
+    projects/ruler-hooked/docs/t-037-list-lanes-handoff.md -- but that commit never actually
+    added the file, only the roadmap note text. The real file existed only on an unmerged,
+    unrelated worker branch (whose own roadmap edit had reverted the task back to status:
+    claimed against a stale base, a second, independent problem). Reviewer rescued just the
+    doc into #4941 so the existing note became true after the fact, but this worked by luck
+    -- a differently-timed cycle could have left the note permanently false with nothing to
+    catch it. Add a check (task-events processor or a small CI/test-suite guard) that a
+    needs-human transition whose note references a projects/<slug>/docs/<task-id>-*.md
+    handoff path actually has that file present in the same commit/tree before applying the
+    transition -- reject or hold the event otherwise, rather than landing an unverifiable
+    claim on the roadmap.
+  claimed_by: null
+  claimed_at: null
+  updated: '2026-09-21T13:00:00Z'
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
