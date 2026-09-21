@@ -45,6 +45,17 @@ Usage:
     python scripts/build_ruler_hooked_art_queue.py --write    # stage into art-prompts.yaml
     python scripts/build_ruler_hooked_art_queue.py --check    # exit 1 if staging is stale
     python scripts/build_ruler_hooked_art_queue.py --include-layers --write
+    python scripts/build_ruler_hooked_art_queue.py --write --lane ruler   # stage one lane only
+
+LANE FILTER (ruler-hooked/t-036). `--write` with no `--lane` stages every not-yet-
+staged entry across every lane -- fine for a fresh full build, but "stage the one
+lane I just fixed" and "stage everything not yet staged" used to be the same
+command, so a targeted fix could accidentally sweep in unrelated, deliberately
+unstaged entries from other lanes too (ruler-hooked/t-025's first attempt did
+exactly this: restaging 12 corrected `ruler` entries also staged 81 unrelated
+concept/fish/reward/ending/card entries, caught only by eyeballing `git diff
+--stat` before it shipped). Pass `--lane <name>` to scope `--write`/`--check` to
+one lane at a time; omit it for the old stage-everything behavior.
 """
 
 from __future__ import annotations
@@ -79,6 +90,11 @@ SQUARE = "1024x1024"
 
 TARGET_REPO = "silasfelinus/kind_robots"
 PAGE_URL = "https://kindrobots.org/plan/projects/ruler-hooked"
+
+# Every lane value an *_entries() function can hand to make_entry() -- kept as one
+# set so --lane's choices and this being out of sync fail loudly instead of
+# silently accepting a lane that never matches anything.
+LANES = {"concept", "fish", "ruler", "reward", "ending", "card", "layer"}
 MEDIA_ORIGIN = "https://media.acrocatranch.com"
 
 # Concept art goes ahead of the mandarin-tutor curriculum backlog (priority 80)
@@ -1123,6 +1139,7 @@ def layer_entries(regions: dict[str, dict[str, list[str]]]) -> list[dict]:
 
 
 def make_entry(*, request_id, image_path, label, size, prompt, priority, lane) -> dict:
+    assert lane in LANES, f"unknown lane {lane!r}; add it to LANES"
     return {
         "id": request_id,
         "source": "ruler-hooked",
@@ -1290,6 +1307,12 @@ def main() -> int:
         help="also emit the region/state/time environment matrix (see the "
         "LAYER FORMAT CONFLICT note in this script's docstring first)",
     )
+    parser.add_argument(
+        "--lane",
+        choices=sorted(LANES),
+        help="only build/stage/check entries from this lane (default: all lanes). "
+        "'layer' entries are only produced when --include-layers is also passed.",
+    )
     args = parser.parse_args()
 
     content_ts = find_content_bundle()
@@ -1306,12 +1329,16 @@ def main() -> int:
         entries += layer_entries(read_regions(content_ts))
     assert_contract(entries)
 
+    if args.lane:
+        entries = [e for e in entries if e["lane"] == args.lane]
+
     text = ART_PROMPTS.read_text(encoding="utf-8")
     existing = staged_ids(text)
     fresh = [e for e in entries if e["id"] not in existing]
 
+    lane_suffix = f" (lane={args.lane})" if args.lane else ""
     print(f"source bundle: {content_ts}")
-    print(f"built {len(entries)} entr(ies); {len(fresh)} not yet staged")
+    print(f"built {len(entries)} entr(ies){lane_suffix}; {len(fresh)} not yet staged")
     for entry in fresh:
         print(f"  + {entry['id']}  [{entry['lane']}, {entry['size']}]")
 
