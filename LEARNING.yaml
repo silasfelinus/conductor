@@ -15945,3 +15945,20 @@ records:
     wrote the renders into the local kind_robots checkout as "delivery"; verifying with a
     public HEAD against media.acrocatranch.com instead (matching what the doc already
     prescribes) is the correct and only proof of landing.
+- date: '2026-09-21'
+  project: storybook
+  task: t-059
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: When a task's own note offers a scoped, safe path (correct a misleading
+    comment/label) alongside a larger, design-dependent path (implement real
+    persistence behavior), an unattended scheduled session should take the scoped
+    path rather than invent unreviewed product behavior -- storybook/t-059's note
+    explicitly sanctioned this ("if board retention isn't meant to ship yet, correct
+    the comment instead"), which made the call low-risk. A future cycle should treat
+    the task's own concrete implementation sketch (lift board into storybookRunStore,
+    seed StorybookTable from it via the same seedFromQuery() lookup pattern) as the
+    starting point if board retention becomes something Silas actually wants shipped.

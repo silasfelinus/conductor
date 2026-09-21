@@ -1602,7 +1602,7 @@ tasks:
 - id: t-059
   milestone: m7
   title: "Fix or downgrade the false claim that Play Again keeps the reader's Table board dealt"
-  status: review
+  status: done
   stakes: reversible
   passes: 0
   note: >-
@@ -1640,8 +1640,36 @@ tasks:
     rather than implementing full board retention, per AGENTS.md scope discipline for an
     unattended session -- see PR body for the full rationale and verification (eslint clean,
     prettier ratchet shrank by one file, full npm run test:storybook suite green).
-  updated: '2026-09-21T20:03:09Z'
+
+    Merged silasfelinus/kind_robots#2958 (squash b5ff0ae). All 47 CI checks green,
+    mergeable_state clean before merge. Verified: eslint clean, prettier ratchet shrank by
+    one file (no bucket grew), full npm run test:storybook suite green, vue-tsc typecheck
+    clean. Went with option (b) (correct the misleading comment/copy) rather than
+    implementing full board retention -- see PR body for rationale. Kaizen:
+    storybook/t-059's own note has a concrete implementation sketch for board retention if
+    Silas wants it shipped as a follow-up.
+  updated: '2026-09-21T20:11:39Z'
   owner: worker
   claimed_by: claude-scheduled-20260921T195808Z-sb-t059
   claimed_at: '2026-09-21T19:58:09Z'
   implementation_pr: 'silasfelinus/kind_robots#2958'
+- id: t-060
+  milestone: m7
+  title: Implement real Play Again board retention (t-059's deferred path)
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from t-059 (2026-09-21): that task fixed the misleading "Play again with
+    this table" claim by correcting the copy/comment rather than implementing actual
+    board retention, since the retention behavior itself needs a product decision. If
+    Silas wants it shipped, t-059's own note has a concrete implementation sketch:
+    lift `board` (components/storybook/storybook-table.vue, ~line 344) into
+    `storybookRunStore` (or another place that survives the Table's remount), capture
+    it in `playAgain()` (components/storybook/storybook-storymaker.vue) before
+    `leaveRun()` clears the run, and seed `StorybookTable` from it on mount via the
+    same per-slot deck lookups `seedFromQuery()` already uses -- distinct from
+    `clearTable()`'s full reset, which should still clear it. Verify by hand: build a
+    board, finish a run, click Play Again, confirm the board is actually still dealt.
+    Not gated -- reversible UI/store change, same pattern as t-059.
