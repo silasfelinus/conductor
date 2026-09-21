@@ -290,7 +290,7 @@ def _completed_payload(
     payload["display_mode"] = display_mode
     if display_mode == "current-art-rich":
         payload["calendar_label"] = (
-            f"Just built {built_label} from the {proposal['proposal_date']} proposal. "
+            f"Generated from the {proposal['proposal_date']} pitch; built {built_label}. "
             "Its priority art is shown below as soon as each render is available."
         )
     elif display_mode == "art-rich":
