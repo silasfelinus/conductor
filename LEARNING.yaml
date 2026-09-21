@@ -15804,3 +15804,22 @@ records:
     persisted in the check-runs list alongside the new passing one for the same head
     SHA; a status script must key off the latest run per check name; startTime, not
     just conclusion, when a check can legitimately re-run on the same commit.
+- date: '2026-09-21'
+  project: storybook
+  task: t-056
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    Merged silasfelinus/kind_robots#2948, a clean concurrency-guard fix for
+    submitStoryTurn: a conditional updateMany keyed on the narrated chapter replaces an
+    unconditional write after an LLM round-trip, so a losing race replays the winner's
+    committed turn (buildReplayedTurnResult) instead of double-writing LifeChoice/
+    LifeStat rows. Full CI green including the new regression test in
+    verifyStorybookPlayLoop.ts (two concurrent submitStoryTurn calls, asserts exactly
+    one LifeChoice row and one stat increment survive) run via the path-triggered
+    davinci-seed-verify.yml workflow -- confirmed that workflow actually executed for
+    this head SHA (not just inferred from a generic "verify" check name) before relying
+    on it as the test evidence for a concurrency fix.
