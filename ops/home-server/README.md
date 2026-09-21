@@ -1336,31 +1336,111 @@ Startup cost and per-generation cost are separate budgets, and moving the bytes
 only ever addressed the second one. Do not read the boot result as a reason to
 leave the big directories remote.
 
-### The share is four times faster if you skip /mnt/user (2026-09-21)
+### The slow copy was a wireless mesh hop, not the array (2026-09-21)
 
-A local `dd` on alexandria with no parity check running read at **27.9 MB/s**
-off `/mnt/user`. The same file read directly off the disk holding it:
+Every copy off this share ran at 11-12 MB/s for weeks - Explorer during the
+LoRA move, robocopy, the user share, the disk shares, all of it. The cause was
+a **wireless eero mesh backhaul sitting in the middle of the network path**:
 
 ```
-/mnt/user/...             27.9 MB/s
-/mnt/disk13/...            109 MB/s     <- same file, same box, no parity check
+alexandria -> switch -> eero ~~(wifi)~~ eero -> switch -> ferngrotto
 ```
 
-**It is shfs overhead, not a sick disk** - the FUSE union layer costs roughly
-4x, and the drive underneath is healthy. No SMART investigation needed.
+Re-cabling switch-to-switch, removing the mesh from the path entirely:
 
-The operational consequence is that bulk copies should come off the **disk
-shares** (`\\192.168.7.172\disk13\...`), not the user share. That turns the
-~1.1TB of steps 2 and 3 from roughly eleven hours into under three. Two caveats:
-Unraid only exports disk shares when *Settings -> Global Share Settings ->
-Enable disk shares* is Yes or Auto, and a `pc/ai/models` tree is spread across
-most of the array (16 disks hold checkpoints, 11 hold diffusion_models), so the
-copy is one pass per disk merging into the same destination - `/E`, never
-`/MIR`, which would delete the previous disk's files on each pass.
+```
+11.4 MB/s   ->   97.1 MB/s      8.5x, same disks, same SMB, same everything
+```
 
-Do not parallelize it. The link is 1 GbE (~112 MB/s) and a single disk already
-reads at 109, so one sequential stream saturates the wire; concurrent jobs add
-seek contention and buy nothing.
+That turned steps 2 and 3 from a 20-hour copy into 2.5 hours. Nothing on
+either machine was ever misconfigured.
+
+**The mistake that cost three hours: local `dd` does not measure a network
+copy.** A `dd` on alexandria read 27.9 MB/s off `/mnt/user` and 109 MB/s off
+`/mnt/disk13`, so shfs was blamed and the disk shares were exported to bypass
+it (see below). Both numbers were real and both were irrelevant: they measured
+what the ARRAY can produce locally, while the copy was limited by a hop neither
+figure touched. Over SMB the disk shares delivered the same 12 MB/s as the user
+share, because 12 MB/s was never the array's number. **Measure the transport
+you are actually going to use, end to end, before optimising anything behind
+it.**
+
+**The signature to recognise.** Two symptoms together identify a capped path:
+
+* **Flat throughput.** 12.29, 12.08, 11.86 MB/s across samples. A degraded
+  cable or packet loss gives *jitter*; a rock-steady ceiling means something in
+  the path is running at that speed on purpose. ~12 MB/s is ~98 Mbps, which is
+  100BASE-TX saturation - so look for a 100 Mbps hop even when both endpoints
+  report 1 Gbps, because `Get-NetAdapter` and `ethtool` only ever describe the
+  link to the nearest switch.
+* **Latency inflation at that throughput.** 11 MB/s on a real gigabit link is
+  9% utilisation and should show sub-millisecond ping. Seeing queuing delay
+  there means the pipe's true capacity is about what you are already pushing.
+
+**`ping` is the cheap test, and it is decisive for a wireless hop:**
+
+```
+ping <host> -n 20
+```
+
+Sub-millisecond and steady is wired. 3-15ms with visible variance between lines
+is WiFi in the path. Here it went from `time=4ms ... time=10ms ... time=3ms` to
+`time<1ms` on every line the moment the mesh came out.
+
+**Two robocopy behaviours this exposed**, both of which make a copy look
+healthier than it is:
+
+* **Windows preallocates the destination to full size when a copy opens it.**
+  A file reads as complete while it is still filling, so summing
+  `Get-ChildItem ... Length` reports bytes that have not arrived. A
+  size-based progress watcher is useless here; read
+  `\Network Interface(*)\Bytes Received/sec` instead. `Get-Process robocopy`
+  is worth no more than "it exists" - watch its CPU column climb, or the
+  counter.
+* **`/R:2 /W:5` abandons a file after ~10 seconds of link loss**, logs one
+  error, and moves on. With `/NFL /NDL` that error scrolls past in a summary
+  nobody reads, and the copy finishes with holes in it. Any run that spanned a
+  cable change or a share hiccup needs a second pass - cheap, because robocopy
+  skips what already matches.
+
+#### The disk-share export (kept, but it bought nothing)
+
+Exporting the individual disks was the wrong fix for this problem. It is
+documented because it is now in place on alexandria and has to be cleaned up,
+and because the enable path is genuinely non-obvious.
+
+*Settings -> Global Share Settings -> Enable disk shares* was ALREADY `yes`
+(`shareDisk="yes"` in `/boot/config/share.cfg`) while `testparm -s` listed zero
+disk shares. The global toggle only makes disks appear on the Shares page; each
+disk still needs its own SMB export. Rather than clicking 17 of them, the
+stanzas went into `/boot/config/smb-extra.conf`, which Unraid includes verbatim:
+
+```
+for d in /mnt/disk[0-9]*; do n=$(basename "$d"); printf '[%s]\n   path = %s\n   browseable = yes\n   public = yes\n   writeable = no\n\n' "$n" "$d"; done >> /boot/config/smb-extra.conf
+smbcontrol all reload-config
+```
+
+Three things that file demands:
+
+* **It had no trailing newline** (19 bytes, `min protocol = SMB2`). Appending
+  without `printf '\n'` first produces `min protocol = SMB2[disk1]` and breaks
+  both.
+* **`smbcontrol all reload-config`, not a Samba restart** - it re-reads config
+  in place, so ComfyUI's open handles on the share survive.
+* **Clean up by RESTORING the backup, never `rm`** - deleting the file silently
+  drops `min protocol = SMB2` and re-allows SMB1.
+
+`writeable = no` is load-bearing: a read-only export cannot bypass Unraid's
+allocation and split-level rules, which is why disk shares default to off.
+
+Do not parallelize a multi-disk copy. The link is 1 GbE (~112 MB/s) and a
+single disk reads at 109, so one sequential stream saturates the wire;
+concurrent jobs add seek contention and buy nothing.
+
+The tree is spread across most of the array (16 disks hold checkpoints, 11 hold
+diffusion_models), so a disk-share copy is one pass per disk merging into the
+same destination - `/E`, never `/MIR`, which would delete the previous disk's
+files on each pass.
 
 **Check the pools before trusting a disk-share copy.** Anything the mover has
 not yet relocated sits on the cache pool: it appears in the `/mnt/user` union
@@ -1384,7 +1464,8 @@ for a gap is usually that the two numbers are from different days.
 
 **Check free space first - steps 2 and 3 do not automatically fit.** D: is
 1862.5GB total and the LoRAs (422GB) already landed there. Checkpoints plus
-diffusion_models is another ~852GB after the duplicate sweep, so whether it fits
+diffusion_models is another ~852GB after the duplicate sweep (1247.5GB was free
+when the copy started, so it fit with ~395GB to spare), so whether it fits
 depends on what else has been cleared off the drive first (a ~400GB Steam
 library was being moved out for exactly this reason). Robocopy will happily run
 the disk to zero, and ComfyUI needs room on D: for outputs and `comfyui.db`.
