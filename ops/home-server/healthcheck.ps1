@@ -584,6 +584,52 @@ Write-Log "run starting as $($env:USERNAME)"
 # routed through cmd.exe /c; CreateNoWindow still applies to that whole
 # child chain, which is why pm2.cmd's own node.exe never got a console of
 # its own in the trace either.
+function ConvertTo-NativeArgumentString($arguments) {
+    $quoted = @()
+    foreach ($argument in @($arguments)) {
+        $text = [string]$argument
+        if ($text.Length -gt 0 -and $text -notmatch '[\s"]') {
+            $quoted += $text
+            continue
+        }
+
+        $builder = New-Object System.Text.StringBuilder
+        [void]$builder.Append([char]'"')
+        $backslashes = 0
+
+        foreach ($ch in $text.ToCharArray()) {
+            if ($ch -eq [char]'\') {
+                $backslashes++
+                continue
+            }
+
+            if ($ch -eq [char]'"') {
+                if ($backslashes -gt 0) {
+                    [void]$builder.Append([char]'\', ($backslashes * 2))
+                }
+                [void]$builder.Append([char]'\')
+                [void]$builder.Append([char]'"')
+                $backslashes = 0
+                continue
+            }
+
+            if ($backslashes -gt 0) {
+                [void]$builder.Append([char]'\', $backslashes)
+                $backslashes = 0
+            }
+            [void]$builder.Append($ch)
+        }
+
+        if ($backslashes -gt 0) {
+            [void]$builder.Append([char]'\', ($backslashes * 2))
+        }
+        [void]$builder.Append([char]'"')
+        $quoted += $builder.ToString()
+    }
+
+    return ($quoted -join ' ')
+}
+
 function Invoke-HiddenProcess($filePath, $argumentList, $timeoutSeconds, $standardInputText) {
     $resolvedFile = $filePath
     $resolvedArgs = @()
@@ -595,7 +641,17 @@ function Invoke-HiddenProcess($filePath, $argumentList, $timeoutSeconds, $standa
 
     $psi = New-Object System.Diagnostics.ProcessStartInfo
     $psi.FileName = $resolvedFile
-    foreach ($a in $resolvedArgs) { [void]$psi.ArgumentList.Add($a) }
+
+    # SILAS-PC runs Windows PowerShell 5.1 on .NET Framework, where
+    # ProcessStartInfo.ArgumentList does not exist. With SilentlyContinue at
+    # script scope, trying to Add() there fails invisibly and leaves cmd.exe
+    # with no /d /c pm2.cmd jlist arguments, so it waits until our 60-second
+    # timeout and the watchdog reports itself blind. Build the legacy
+    # ProcessStartInfo.Arguments string explicitly instead. The quoting helper
+    # follows CommandLineToArgvW/CRT rules: backslashes before a quote are
+    # doubled, and trailing backslashes inside a quoted argument are doubled
+    # before the closing quote.
+    $psi.Arguments = ConvertTo-NativeArgumentString $resolvedArgs
     $psi.UseShellExecute = $false
     $psi.CreateNoWindow = $true
     $psi.RedirectStandardOutput = $true
