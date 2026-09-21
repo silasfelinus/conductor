@@ -1765,7 +1765,7 @@ tasks:
 - id: t-104
   milestone: m5
   title: "Drive live front-end consistency onto shared kr-* components and composition rules"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -1796,12 +1796,11 @@ tasks:
     Bounded consistency slice adds a dry-run-first codemod for the remaining hand-rolled badge badge-error badge-sm shape, migrating onto the existing kr-badge-sm base while preserving badge-error and any extra utilities. No runtime classes changed in this slice.
 
     State reconciliation after the prior slice merged: kind_robots#2954 is merged and there is no open reviewer target, but recurring interface-vision/t-104 remained status: review. Rearm the recurring consistency umbrella so the next bounded slice can be selected normally.
-  updated: '2026-09-21T19:22:50Z'
+
+    Reviewer merged Kind Robots PR #2957 at b46b91f7f3c9601631b48bf252b707cdfa02e7ed after all exact-head Actions completed successfully. Recurring consistency sweep is ready for its next bounded slice.
+  updated: '2026-09-21T20:19:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2912'
   retry_context: ''
-  owner: worker
-  claimed_by: openai-scheduled-2026-09-21T191812Z-interface-vision-t104-a11
-  claimed_at: '2026-09-21T19:18:12Z'
 
 - id: t-123
   milestone: m5
