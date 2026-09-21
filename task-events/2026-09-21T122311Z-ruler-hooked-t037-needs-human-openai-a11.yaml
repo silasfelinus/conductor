@@ -1,0 +1,10 @@
+version: 1
+project: ruler-hooked
+task: t-037
+operation: needs-human
+owner: worker
+session: openai-scheduled-2026-09-21T122311Z-ruler-hooked-t037-a11
+soft_gate: true
+updated: '2026-09-21T12:31:00Z'
+note: >-
+  Connector-only implementation inspected the exact main() flow and preserved an exact patch/test handoff at projects/ruler-hooked/docs/t-037-list-lanes-handoff.md. The required edit is inside a large existing script; this connector only supports whole-file replacement, and AGENTS.md forbids reconstructing that file from paged/truncated reads. No production/API work is involved. Apply the handoff with a line-patch-capable worker, then return this task to ready/review as appropriate.
