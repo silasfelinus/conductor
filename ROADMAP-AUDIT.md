@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-09-20T14:16:12.128112+00:00`
+Generated: `2026-09-21T16:29:41.009818+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **54** roadmaps, **22** active + **3** continuous projects, **1630** tasks
-- **30 ready**, **53 waiting**, **47 needs-human**, **1 claimed/review**, **1483 done**
-- Findings: **0 errors**, **8 warnings**, **27 informational**
+- **54** roadmaps, **22** active + **3** continuous projects, **1643** tasks
+- **26 ready**, **53 waiting**, **50 needs-human**, **1 claimed/review**, **1497 done**
+- Findings: **0 errors**, **8 warnings**, **29 informational**
 
 ## Project inventory
 
@@ -19,7 +19,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 3 | `butterfly-gallery` | active | software | 1 | 1 | 2 | 0 | 30 / 34 |
 | 4 | `art-archive` | active | software | 0 | 0 | 3 | 0 | 38 / 41 |
 | 5 | `mandarin-tutor` | active | software | 0 | 0 | 1 | 0 | 27 / 28 |
-| 6 | `interface-vision` | continuous | software | 3 | 1 | 0 | 0 | 136 / 140 |
+| 6 | `interface-vision` | continuous | software | 2 | 1 | 0 | 1 | 136 / 140 |
 | 7 | `coloring-book` | active | software | 1 | 9 | 1 | 0 | 36 / 47 |
 | 8 | `humboldt-scoop-cms` | active | software | 0 | 0 | 4 | 0 | 35 / 39 |
 | 9 | `digital-storefront` | active | software | 0 | 2 | 2 | 0 | 40 / 44 |
@@ -30,15 +30,15 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 14 | `kindrobots-unraid` | active | software | 0 | 6 | 1 | 0 | 14 / 21 |
 | 15 | `model-builder` | active | software | 1 | 0 | 0 | 0 | 44 / 45 |
 | 16 | `lora-ingestion` | active | infrastructure | 0 | 0 | 1 | 0 | 8 / 9 |
-| 17 | `conductor` | active | software | 3 | 0 | 2 | 0 | 178 / 183 |
-| 18 | `storybook` | active | software | 3 | 2 | 1 | 1 | 48 / 55 |
+| 17 | `conductor` | active | software | 0 | 0 | 3 | 0 | 185 / 188 |
+| 18 | `storybook` | active | software | 5 | 2 | 2 | 0 | 49 / 58 |
 | 19 | `coat-dance` | active | content | 1 | 0 | 0 | 0 | 3 / 10 |
 | 20 | `conductor-app` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
 | 21 | `appmaker` | active | software | 1 | 0 | 0 | 0 | 14 / 15 |
 | 22 | `media-watchlist` | active | software | 1 | 0 | 0 | 0 | 18 / 19 |
-| 23 | `ruler-hooked` | active | software | 7 | 1 | 0 | 0 | 25 / 33 |
+| 23 | `ruler-hooked` | active | software | 5 | 1 | 1 | 0 | 30 / 37 |
 | 24 | `animation-manager` | continuous | software | 2 | 0 | 0 | 0 | 15 / 17 |
-| 25 | `dream-cycle` | continuous | software | 4 | 0 | 0 | 0 | 27 / 31 |
+| 25 | `dream-cycle` | continuous | software | 4 | 0 | 0 | 0 | 28 / 32 |
 | — | `ai-art-academy` | finished | software | 0 | 0 | 0 | 0 | 79 / 79 |
 | — | `alexa-integration` | paused | software | 0 | 0 | 1 | 0 | 21 / 22 |
 | — | `animation-studio` | retired | software | 0 | 3 | 0 | 0 | 4 / 8 |
@@ -86,7 +86,7 @@ _None._
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-017`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-018`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 
-### Info (27)
+### Info (29)
 
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-064`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-079`: approved_by_human is set on a task that is not human-gated.
@@ -114,6 +114,8 @@ _None._
 - **INACTIVE_PROJECT_HAS_READY_TASKS** — `mural-design`: Inactive project retains 1 ready task(s); harmless but misleading in generated status.
 - **APPROVAL_WITHOUT_GATE** — `mural-design` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **NEEDS_HUMAN_NOTE_FORMAT** — `rainbow-butterflies` / `t-014`: needs-human note does not use the AGENTS.md FOR SILAS action format.
+- **NEEDS_HUMAN_NOTE_FORMAT** — `ruler-hooked` / `t-037`: needs-human note does not use the AGENTS.md FOR SILAS action format.
+- **NEEDS_HUMAN_NOTE_FORMAT** — `storybook` / `t-057`: needs-human note does not use the AGENTS.md FOR SILAS action format.
 - **MISSING_GOAL** — `text-generation`: Roadmap has no friendly goal/definition of done.
 
 ## Interpretation rules
