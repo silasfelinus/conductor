@@ -746,6 +746,23 @@ windowless launch). Prove it before changing the watchdog's process handling:
 that code is bounded on purpose, and an unbounded rewrite of it wedged this
 watchdog for days once already.
 
+**RESOLVED 2026-09-21 (conductor/t-177).** Confirmed by process trace that
+repointing the task alone does not stop the second popup: `Start-Job`'s
+backing `powershell.exe -Version 5.1 -s -NoLogo -NoProfile` process opens its
+own console regardless of the parent task's registration. `healthcheck.ps1`
+no longer uses `Start-Job` for the pm2 read at all -- both the `pm2 jlist`
+call and the `pm2-jlist-snapshot.js` call now go through a small
+`Invoke-HiddenProcess` helper (`System.Diagnostics.Process` with
+`CreateNoWindow = $true`, `UseShellExecute = $false`), keeping the same
+bounded-timeout guarantee (`$pm2TimeoutSeconds`, still killed and disposed
+rather than left to leak on a hang) without a second PowerShell process. A
+`.cmd`/`.bat` target is routed through `cmd.exe /c` because `CreateProcess`
+cannot launch a batch file directly; `CreateNoWindow` still applies to that
+whole child chain, which is consistent with the trace only ever showing one
+new console owned by the `Start-Job` child, not a separate one for `cmd.exe`
+or `node.exe`. The first popup (the watchdog's own console, which the
+wrapper claims to hide and does not) is unrelated and still open.
+
 **Naming the culprit exactly**, when the log correlation above is not conclusive:
 
 ```powershell

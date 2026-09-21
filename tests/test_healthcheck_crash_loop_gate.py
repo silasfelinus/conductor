@@ -150,7 +150,7 @@ class HealthcheckScriptTests(unittest.TestCase):
     def test_pm2_jlist_cannot_hang_forever(self):
         """An unbounded jlist wedges the whole watchdog for every future run."""
         self.assertIn("$pm2TimeoutSeconds", self.source)
-        self.assertIn("Wait-Job $pm2Job -Timeout $pm2TimeoutSeconds", self.source)
+        self.assertIn("$proc.WaitForExit($timeoutSeconds * 1000)", self.source)
         self.assertIn("did not respond within", self.source)
         self.assertNotIn("(& $pm2Command.Source jlist 2>&1 | Out-String)", self.source)
 
@@ -160,9 +160,38 @@ class HealthcheckScriptTests(unittest.TestCase):
         self.assertIn("$pm2TimeoutSeconds = 60", self.source)
 
     def test_a_timed_out_job_is_stopped_and_reaped(self):
-        """Otherwise every 5-minute run leaks a PowerShell job."""
-        self.assertIn("Stop-Job $pm2Job", self.source)
-        self.assertIn("Remove-Job $pm2Job -Force", self.source)
+        """Otherwise every 5-minute run leaks a live child process.
+
+        Start-Job (which this replaced, conductor/t-177) leaked a PowerShell
+        job on timeout without Stop-Job/Remove-Job; Invoke-HiddenProcess's
+        equivalent is killing and disposing the .NET Process object.
+        """
+        self.assertIn("try { $proc.Kill() } catch {}", self.source)
+        self.assertIn("$proc.Dispose()", self.source)
+
+    def test_pm2_jlist_and_its_snapshot_run_without_a_console_window(self):
+        """conductor/t-177: Start-Job's backing powershell.exe (and the
+        cmd.exe/node.exe children it launched) popped a visible console on
+        the desktop every 5-minute tick, confirmed by direct process trace.
+        Invoke-HiddenProcess must launch every child with no console and
+        must be the thing actually used for both the pm2 jlist call and the
+        node snapshot-helper call -- not just defined and left unused.
+        """
+        self.assertIn("$psi.CreateNoWindow = $true", self.source)
+        self.assertIn("$psi.UseShellExecute = $false", self.source)
+        code = "\n".join(
+            line for line in self.source.splitlines()
+            if not line.lstrip().startswith("#")
+        )
+        self.assertNotIn("Start-Job", code, "only the explanatory comment may mention it")
+        self.assertIn(
+            "Invoke-HiddenProcess $pm2Command.Source @('jlist') $pm2TimeoutSeconds $null",
+            self.source,
+        )
+        self.assertIn(
+            "Invoke-HiddenProcess $nodeCommand.Source @($snapshotHelper) $pm2TimeoutSeconds $pm2Raw",
+            self.source,
+        )
 
     def test_transitional_states_still_skip_the_probe(self):
         """Probing a process mid-launch produces a false hang and a pointless
