@@ -411,7 +411,7 @@ def build_payload(digest: dict[str, Any]) -> dict[str, Any]:
     # Old history is intentionally suppressed. The digest is a handoff, not an
     # archive dump.
     status = str(digest.get("daily_dream_output_status") or "")
-    if status and not digest.get("previous_dream_output"):
+    if status and status != "ready" and not digest.get("current_dream_output"):
         marker = '<h2 style="margin-bottom:2px">✨ Just built this cycle</h2>'
         note = (
             f'<p style="color:#92400e;background:#fffbeb;padding:8px 12px;'
