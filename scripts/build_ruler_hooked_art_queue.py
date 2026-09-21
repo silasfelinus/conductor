@@ -56,6 +56,9 @@ from pathlib import Path
 
 import yaml
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from art_prompt_conditional_check import conditional_instruction_violations  # noqa: E402
+
 REPO = Path(__file__).resolve().parent.parent
 ART_PROMPTS = REPO / "projects" / "art-prompts.yaml"
 
@@ -1161,17 +1164,6 @@ NEGATION_CLAUSE = re.compile(
     r"\bno[ -](?:readable |visible |legible |written |accidental )?([a-z][a-z-]*)",
     re.I,
 )
-CONDITIONAL_PATTERNS = [
-    r"\bonly (?:when|if)\b",
-    r"\bwhen (?:the )?(?:subject|scene|context)\b",
-    r"\b(?:if|unless) (?:the )?(?:subject|scene|context|prompt)\b",
-    r"\bwhere (?:appropriate|relevant|applicable)\b",
-    r"\bas (?:needed|appropriate)\b",
-    r"\b(?:when|if|where|whenever|unless)\s+(?:any\s+|some\s+|the\s+|no\s+)?"
-    r"(?:figures?|people|persons?|characters?|humans?|robots?|creatures?|bystanders?|"
-    r"crowds?|onlookers?)\s+(?:do\s+|are\s+|is\s+)?"
-    r"(?:appear|present|shown|show up|included|visible|featured|depicted)\b",
-]
 FORMAT_PATTERNS = [
     r"\b(?:trading[- ])?card (?:illustration|artwork|composition|art)\b",
     r"\b(?:treasure|ability|item|reward)[- ]card\b",
@@ -1220,12 +1212,7 @@ def banned_tokens(prompt: str) -> list[str]:
 
 def contract_violations(prompt: str) -> list[str]:
     """Every reason kind_robots' enqueue endpoint would 422 this prompt."""
-    found: list[str] = []
-
-    for pattern in CONDITIONAL_PATTERNS:
-        match = re.search(pattern, prompt, re.I)
-        if match:
-            found.append(f"conditional-instruction: {match.group(0)!r}")
+    found: list[str] = list(conditional_instruction_violations(prompt))
 
     for pattern in FORMAT_PATTERNS:
         match = re.search(pattern, prompt, re.I)
