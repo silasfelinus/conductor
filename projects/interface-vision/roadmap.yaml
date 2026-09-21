@@ -2264,7 +2264,7 @@ tasks:
 - id: t-137
   milestone: m5
   title: Ratchet Prettier formatting onto the front end instead of one repo-wide reformat
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -2328,11 +2328,10 @@ tasks:
     slightly on re-measurement since the baseline was last recorded, unrelated to this
     slice). Rearming to ready (recurring) for the next bounded slice (next-smallest bucket:
     content, 10 files).
-  updated: '2026-09-21T17:20:52Z'
+
+    Connector-only cycle verified PR #2956's follow-up finding against current main: the Prettier ratchet already runs in Contract Tests, but its baseline now has 33 newly-unformatted files from unrelated merges. This transport cannot run the repository-pinned Prettier or safely regenerate the exact-membership baseline, so no hand-formatted/baseline-forged slice was attempted. Re-armed without consuming a pass.
+  updated: '2026-09-21T17:25:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2956'
-  owner: worker
-  claimed_by: openai-scheduled-2026-09-21T172052Z-interface-vision-t137-a11
-  claimed_at: '2026-09-21T17:20:52Z'
 - id: t-138
   milestone: m6
   title: Pending-art placeholder contract so queued art never reads as broken
