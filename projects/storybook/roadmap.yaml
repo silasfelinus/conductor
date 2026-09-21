@@ -1452,10 +1452,9 @@ tasks:
 - id: t-057
   milestone: m7
   title: "Post-final 'Ask for it again' regresses readyToResolve and can generate an off-budget extra turn"
-  status: claimed
+  status: needs-human
   stakes: reversible
   passes: 0
-  owner: worker
   note: |-
     Found auditing storybookRuns.ts for the first time (t-010 cycle 79, 2026-09-21).
 
@@ -1491,6 +1490,9 @@ tasks:
     in the null-move branch) refuse to regenerate/persist a scene when
     `args.turnBudget !== null && args.turnIndex >= args.turnBudget`, returning the
     terminal state instead.
-  updated: '2026-09-21T03:16:04Z'
+
+    Connector-only session verified both post-final retry bugs against current kind_robots/main and preserved the exact small patch plus regression-test plan in projects/storybook/docs/t-057-post-final-retry-guard.md. The available connector only supports whole-file replacement for existing files; server/utils/storybookRuns.ts is large, and connector-worker rules forbid reconstructing it from paged/truncated reads. No target code was overwritten. A shell-capable worker should apply the preserved patch on the intended worker branch, run Storybook contracts/typecheck/lint, and merge normally. Soft tooling gate; other roadmap work may continue.
+  updated: '2026-09-21T03:20:00Z'
   claimed_by: openai-scheduled-2026-09-21T031604Z-storybook-t057-a11
   claimed_at: '2026-09-21T03:16:04Z'
+  soft_gate: true

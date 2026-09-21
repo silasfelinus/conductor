@@ -1,9 +1,0 @@
-version: 1
-project: storybook
-task: t-057
-operation: needs-human
-session: openai-scheduled-2026-09-21T031604Z-storybook-t057-a11
-soft_gate: true
-updated: '2026-09-21T03:20:00Z'
-note: >-
-  Connector-only session verified both post-final retry bugs against current kind_robots/main and preserved the exact small patch plus regression-test plan in projects/storybook/docs/t-057-post-final-retry-guard.md. The available connector only supports whole-file replacement for existing files; server/utils/storybookRuns.ts is large, and connector-worker rules forbid reconstructing it from paged/truncated reads. No target code was overwritten. A shell-capable worker should apply the preserved patch on the intended worker branch, run Storybook contracts/typecheck/lint, and merge normally. Soft tooling gate; other roadmap work may continue.
