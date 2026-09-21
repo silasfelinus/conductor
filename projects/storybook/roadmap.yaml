@@ -1680,7 +1680,7 @@ tasks:
 - id: t-061
   milestone: m7
   title: Rewrite seedFromQuery()'s five deep-link lookups on cardForSlug(), updating the deep-link guard's regexes in the same change
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -1701,6 +1701,18 @@ tasks:
     passes, and a manual trace confirms each of the five deep-link cases
     resolves to the same card (including the genre-lock skip) as before.
     Not gated -- reversible refactor, no behavior change intended.
+
+    Implemented and pushed silasfelinus/kind_robots#2961: seedFromQuery() rewritten on
+    cardForSlug()/playCardIfAbsent() instead of five hand-rolled per-slot lookups;
+    verifyStorybookTableDeepLinkGuard.mjs's regexes updated in the same PR (genre-lock
+    assertion moved to check cardForSlug()'s body, since withGenreLock() now lives there).
+    Verified: vue-tsc, eslint, prettier all clean; the deep-link guard passes against the
+    new code and correctly fails when the refactor is reverted (negative control);
+    verifyStorybookTable.mjs and verifyStorybookPlayAgainBoardGuard.mjs still pass
+    unchanged. No behavior change intended or found by manual trace -- every slot starts
+    empty at mount so playCardIfAbsent()'s already-placed skip is a no-op for all 5 seed
+    cases.
   claimed_by: claude-scheduled-20260921T215559Z-storybook-t061
   claimed_at: '2026-09-21T21:56:02Z'
-  updated: '2026-09-21T21:56:02Z'
+  updated: '2026-09-21T22:07:52Z'
+  implementation_pr: 'silasfelinus/kind_robots#2961'
