@@ -15890,3 +15890,15 @@ records:
     the workflow's `edited` trigger. Connector-only Worker sessions drafting
     a handoff body should copy the exact heading text from AGENTS.md's PR
     handoff template, not paraphrase it.
+- date: '2026-09-21'
+  project: ruler-hooked
+  task: t-036
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A tooling gap that already caused a real incident (t-025 restaging 81 unrelated entries alongside
+    12 intended ones) is worth fixing proactively once filed as a kaizen, even when nobody has hit it
+    a second time yet -- add scoping flags (--lane, --only, etc.) to any staging/build script whose full-sweep
+    default can silently widen a targeted change.
