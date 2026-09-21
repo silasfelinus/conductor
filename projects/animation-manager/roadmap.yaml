@@ -185,9 +185,41 @@ tasks:
       this cycle out. test:animation-catalog now reports 49 effects/62 components resolved
       (was 48/61); test:animation-component-attempts, vue-tsc, eslint all clean. Re-armed to
       ready per the recurring-task convention.
-    status: claimed
-    updated: '2026-09-21T22:56:32Z'
-    implementation_pr: 'silasfelinus/kind_robots#2410'
+
+      Cycle (conductor scheduled Agent run, session claude-
+      scheduled-20260921T225631Z-am-t007): re-checked before doing work (per convention) --
+      all six original candidate-tier pitches remain awaiting Reaction-evidence promotion, no
+      live DB access in this sandbox (SPEC.md standing sandbox-access-gap). Checked
+      PITCHES.yaml for the next unbuilt (pitched-tier) entry and found a bookkeeping gap:
+      geode-bloom (priority 20) is actually fully shipped (kind_robots PR #2407 component, PR
+      #2410 catalog registration, both confirmed merged and live in this checkout) but its
+      PITCHES.yaml entry was never updated past status: pitched and carries no builds: section
+      -- unlike every other shipped/candidate pitch. Fixed geode-bloom's bookkeeping (status
+      -> candidate, added its builds: entry reflecting the two merged PRs) and built the true
+      next unbuilt pitch, candlelit-reliquary (priority 21): components/screenfx/candlelit-
+      reliquary.vue -- tapers burn down on a stone ledge with wick-flicker flames, wax drips
+      accumulate into a per-candle fixed-size height-map pool that smooths toward its
+      neighbors and slowly decays each frame (grows on drip events, relaxes between them,
+      never resets instantly), a burned-down candle gutters out and eases a fresh taper back
+      up over ~2s before relighting, pointer proximity bends nearby flames, and clicking a
+      candle forces one rate-limited wax drip per relight cycle. Reduced-motion renders one
+      static frame with only a slow glow drift. Candle count, per-candle pool bin count, and
+      the shared in-flight drip pool are all fixed regardless of viewport or session time, per
+      the pitch's own performance-risk note. Verified: eslint clean, prettier clean on both
+      changed files (confirmed the animationCatalog.ts formatting drift flagged elsewhere in
+      the file already exists on kind_robots main before this change, via git stash + prettier
+      --check, and left it untouched per the davinci/t-025 convention), full-project vue-tsc
+      --noEmit exit 0, test:animation-catalog (50 effects, 63 components resolved) and
+      test:animation-component-attempts both pass, test:layout-contract holds with zero new
+      violations, check_animation_novelty.py --strict reports no collision across all 29
+      pitches. Manual browser smoke matrix deferred per the standing sandbox-access-gap tag,
+      same as every prior build in this project. kind_robots PR #2962 opened from
+      claude/laughing-pascal-2pws0e; merging once CI is green. PITCHES.yaml's candlelit-
+      reliquary promoted pitched -> candidate with its build entry, committed alongside this
+      roadmap update.
+    status: ready
+    updated: '2026-09-21T23:08:20Z'
+    implementation_pr: 'silasfelinus/kind_robots#2962'
     owner: worker
     claimed_by: claude-scheduled-20260921T225631Z-am-t007
     claimed_at: '2026-09-21T22:56:32Z'
@@ -338,3 +370,29 @@ tasks:
       Kaizen from t-006 (Reviewer, conductor PR #1449, 2026-07-29): the session's isolated `pytest` tool (installed via `uv tool install`) had no `yaml` dependency, so `pytest` failed to collect any test touching PyYAML-based scripts (consume_animation_pitches, check_animation_novelty)
 
       Full history: projects/animation-manager/HISTORY.md#t-017
+
+  - id: t-018
+    milestone: m6
+    title: "Promote a shipped pitch's PITCHES.yaml entry (status + builds:) in the same cycle it ships, not as a follow-up"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from t-007 (Worker, kind_robots PR #2962, 2026-09-21): geode-bloom (priority
+      20) shipped for real on 2026-09-05 -- component PR #2407 and catalog-registration
+      PR #2410, both merged, all CI green -- but its PITCHES.yaml entry was never
+      promoted past status: pitched and never got a builds: section, unlike every other
+      shipped/candidate pitch. It sat that way for over two weeks and was only caught
+      because this cycle happened to read the pitch queue in priority order and noticed
+      geode-bloom (priority 20, ostensibly still "pitched"/unbuilt) actually had a live
+      component file and catalog entry already.
+      DO: when t-007's own recurring cycle ships a build, treat the PITCHES.yaml
+      promotion edit (status -> candidate, plus a builds: entry with the PR reference(s)
+      and verification list) as part of the same commit that records the roadmap note --
+      not a "come back and update this later" TODO. If a future cycle finds another gap
+      like this, add a hard check to check_animation_novelty.py or a small companion
+      script that cross-references PITCHES.yaml build entries against
+      stores/animationCatalog.ts registrations and flags any catalog entry with no
+      matching builds: record.
+    updated: '2026-09-21T23:20:00Z'
