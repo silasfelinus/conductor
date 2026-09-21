@@ -584,18 +584,80 @@ Write-Log "run starting as $($env:USERNAME)"
 # routed through cmd.exe /c; CreateNoWindow still applies to that whole
 # child chain, which is why pm2.cmd's own node.exe never got a console of
 # its own in the trace either.
+function ConvertTo-NativeArgumentString($arguments) {
+    $quoted = @()
+    foreach ($argument in @($arguments)) {
+        $text = [string]$argument
+        if ($text.Length -gt 0 -and $text -notmatch '[\s"]') {
+            $quoted += $text
+            continue
+        }
+
+        $builder = New-Object System.Text.StringBuilder
+        [void]$builder.Append([char]'"')
+        $backslashes = 0
+
+        foreach ($ch in $text.ToCharArray()) {
+            if ($ch -eq [char]'\') {
+                $backslashes++
+                continue
+            }
+
+            if ($ch -eq [char]'"') {
+                if ($backslashes -gt 0) {
+                    [void]$builder.Append([char]'\', ($backslashes * 2))
+                }
+                [void]$builder.Append([char]'\')
+                [void]$builder.Append([char]'"')
+                $backslashes = 0
+                continue
+            }
+
+            if ($backslashes -gt 0) {
+                [void]$builder.Append([char]'\', $backslashes)
+                $backslashes = 0
+            }
+            [void]$builder.Append($ch)
+        }
+
+        if ($backslashes -gt 0) {
+            [void]$builder.Append([char]'\', ($backslashes * 2))
+        }
+        [void]$builder.Append([char]'"')
+        $quoted += $builder.ToString()
+    }
+
+    return ($quoted -join ' ')
+}
+
 function Invoke-HiddenProcess($filePath, $argumentList, $timeoutSeconds, $standardInputText) {
     $resolvedFile = $filePath
     $resolvedArgs = @()
     if ($argumentList) { $resolvedArgs = @($argumentList) }
+    $resolvedArgumentString = $null
+
     if ($filePath -match '\.(cmd|bat)$') {
-        $resolvedArgs = @('/d', '/c', $filePath) + $resolvedArgs
+        # cmd.exe /c has a second layer of quote parsing beyond normal argv
+        # splitting. Wrap the complete batch invocation in one outer pair of
+        # quotes so a path containing spaces survives that parser.
+        $batchCommand = ConvertTo-NativeArgumentString (@($filePath) + $resolvedArgs)
+        $resolvedArgumentString = '/d /s /c "' + $batchCommand + '"'
         $resolvedFile = 'cmd.exe'
     }
 
     $psi = New-Object System.Diagnostics.ProcessStartInfo
     $psi.FileName = $resolvedFile
-    foreach ($a in $resolvedArgs) { [void]$psi.ArgumentList.Add($a) }
+
+    # SILAS-PC runs Windows PowerShell 5.1 on .NET Framework, where
+    # ProcessStartInfo.ArgumentList does not exist. With SilentlyContinue at
+    # script scope, trying to Add() there fails invisibly and leaves cmd.exe
+    # with no /d /c pm2.cmd jlist arguments, so it waits until our 60-second
+    # timeout and the watchdog reports itself blind. Build the legacy
+    # ProcessStartInfo.Arguments string explicitly instead.
+    if ($null -eq $resolvedArgumentString) {
+        $resolvedArgumentString = ConvertTo-NativeArgumentString $resolvedArgs
+    }
+    $psi.Arguments = $resolvedArgumentString
     $psi.UseShellExecute = $false
     $psi.CreateNoWindow = $true
     $psi.RedirectStandardOutput = $true
@@ -607,7 +669,7 @@ function Invoke-HiddenProcess($filePath, $argumentList, $timeoutSeconds, $standa
     try {
         [void]$proc.Start()
     } catch {
-        return [pscustomobject]@{ Output = "failed to start $filePath`: $($_.Exception.Message)"; ExitCode = -1; TimedOut = $false }
+        return [pscustomobject]@{ Output = "failed to start ${filePath}: $($_.Exception.Message)"; ExitCode = -1; TimedOut = $false }
     }
 
     # Read async, started before the wait, so a chatty child cannot deadlock

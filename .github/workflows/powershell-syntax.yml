@@ -36,3 +36,9 @@ jobs:
         # 5.1 rejects, which would let the exact class of bug through again.
         shell: powershell
         run: .\ops\home-server\Test-PowerShellSyntax.ps1
+      - name: Exercise hidden-process helper on Windows PowerShell 5.1
+        # This is a runtime compatibility check, not another parser pass. It
+        # catches .NET API mismatches such as ProcessStartInfo.ArgumentList,
+        # which exists under pwsh/.NET but not Windows PowerShell 5.1.
+        shell: powershell
+        run: .\ops\home-server\Test-HiddenProcessCompatibility.ps1
