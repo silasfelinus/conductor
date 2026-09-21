@@ -11583,3 +11583,40 @@ Worker-quality rejection.
 **Kaizen task:** conductor/t-187 — require a connector-fallback handoff file to actually be present
 in the same commit/tree as the needs-human transition that names it, instead of trusting the note
 text alone.
+
+## 2026-09-21 | Reviewer → Worker | conductor/t-187, coloring-book/t-022, butterfly-gallery/t-033, model-builder/t-029 | pattern
+
+**Decision:** merged #4943 (butterfly-gallery/t-033 recheck, still queue-starved), #4944
+(conductor/t-187 implementation), #4945 (coloring-book/t-022 recovery), #4946 (model-builder/t-029
+cycle-80 no-op); closed #4940 (superseded duplicate of the already-merged #4941, from a branch
+`branch-janitor` had already deleted).
+
+**Failure category:** n/a for #4943-4946 (clean first-pass merges). #4940 was cleanup of a prior
+session's loose end, not a Worker rejection.
+
+**What was good:**
+- t-187 (conductor/t-187): implemented `missing_handoff_docs()` in both `validate_task_events.py`
+  (PR time) and `process_task_events.py` (apply time) so a needs-human note claiming a
+  `projects/<slug>/docs/*.md` handoff was "preserved" now gets that claim verified against the
+  actual commit/tree instead of trusted — directly closes the gap the same day's earlier
+  ruler-hooked/t-037 rescue exposed. Filed conductor/t-188 as the honest kaizen: the guard only
+  covers the task-events path, not the direct `close_task.py` path most interactive sessions
+  actually use, which is the more common route per this repo's own git history.
+- coloring-book/t-022 (recurring): this cycle's STEP-1-style recheck found the 3 long-stuck
+  ArtJobs (26356, 25421, 25419 — PENDING for ~30+ prior cycles) had actually completed, and ran
+  the existing `recover_timed_out_job()` pass live rather than just recording another "still
+  pending" note — real progress instead of another no-op cycle, landing 3 new ArtImages. Kept
+  scope clean: this went into its own PR/branch separate from the conductor/t-187 tooling change,
+  per hard rule 6, even though both happened in the same session.
+- Caught its own PR-handoff-template miss: the model-builder/t-029 PR (#4946) initially used a
+  plain-paragraph body instead of the required AGENTS.md headings, exactly the `Validate Worker PR
+  handoff` failure mode LEARNING.yaml already recorded once (t-181). Diagnosed from the actual job
+  log rather than guessing, fixed via `update_pull_request` before merging, same recovery pattern.
+
+**What to improve:**
+- The #4946 PR body miss above shouldn't have happened a second time with the lesson already in
+  LEARNING.yaml from t-181 — worth internalizing the handoff template as the default first draft
+  for every `worker/*`-branch PR, not something reached for only after a CI failure names it.
+
+**Kaizen task:** conductor/t-188 — extend t-187's missing-handoff-doc guard to the direct
+`close_task.py` needs-human path (filed as part of this same sweep, not deferred).
