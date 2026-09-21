@@ -834,7 +834,7 @@ tasks:
 - id: t-037
   milestone: m7
   title: "Delete the client-side beat loop and rewrite its ~25 verifyStorybook*Guard scripts"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-036, t-052]
@@ -937,7 +937,15 @@ tasks:
     However, chasing category (3)'s deep-link/query-seeding parity question (does StorybookStorymaker/storybookRunStore have an equivalent to storybook-page.vue's seedFromQuery()?) surfaced a live product bug, not just a guard-migration risk: dream-narration.vue, reward-encounter.vue, and facet-profile.vue each navigateTo('/storybook', { query: { location|reward|character } }) with no legacy=1, so all three CTAs land on the NEW engine by default -- and storybook-storymaker.vue/storybook-table.vue have zero route.query/useRoute handling (confirmed via grep). The query param is silently dropped today, in production, for any reader using these three real CTAs. Filed as storybook/t-055 (new task, ready, stakes: reversible) rather than folding new-engine feature work into this already-large cutover task, per AGENTS.md scope discipline -- t-055 also directly unblocks category (3)'s ~10 verifyStorybook*Guard rewrites once it lands, since there would then be a real new-engine behavior to pin instead of a doomed-legacy one.
 
     Still no safe bounded code-deletion slice this cycle for t-037 itself: the LEGACY-ONLY (8 guards + storybookLibraryHelper.ts) and SETUP/DEEP-LINK (10 guards) categories both remain blocked on decisions/work outside this task's own scope (the former on deciding whether the bulk cutover is one PR or has a further sub-slice; the latter on t-055 landing first). No Kind Robots mutation this cycle. Releasing the claim, re-arming to ready.
-  updated: '2026-09-21T18:04:33Z'
+
+    Investigated the next bounded slice (conductor scheduled sweep) before touching any file. Read the C6 authoritative guard list (projects/storybook/docs/storymaker-redesign.md) against the current kind_robots tree and traced three of the remaining storybookStore.ts-pinning guards to their new-engine equivalents:
+
+    - verifyStorybookRestartScenarioFrameGuard (protects storybookLibraryHelper.ts's restartInput() forwarding scenario: bible.scenario): the new engine's playAgain() (components/storybook/storybook-storymaker.vue) just calls runStore.leaveRun() and drops back to the Table -- there is no automatic rebuild-and-resubmit of a prior bible, so this specific hazard (a silent field-forwarding bug in an auto-restart function) has no new-engine code to attach to yet. Separately found: playAgain()'s own comment claims the reader returns "with their board still dealt", but storybook-table.vue's board ref (~line 344) is a fresh component-local ref with no persistence (no localStorage/sessionStorage/store-lift found), and the parent's v-if/v-else-if/v-else chain unmounts/remounts StorybookTable on every transition -- so the board is actually cleared on Play Again today, contradicting its own comment. Filed as storybook/t-059 rather than fixed here; out of this task's scope (guard migration, not new-engine feature work).
+    - verifyStorybookDuplicateResumeGuard (protects storybookLibraryHelper.ts's duplicateStory() resuming art polling on the copy): searched the whole new-engine surface (storybookRunStore.ts, storybook-storymaker.vue, storybook-table.vue) for "duplicate" -- no matches anywhere. The "Duplicate story" feature itself was not rebuilt in the new engine; there is nothing to rewrite this guard against.
+    - verifyStorybookSeedQueryRaceGuard (protects a route.query race between storybook-page.vue's seedFromQuery() and storybook-library-page.vue's updateStoryQuery(), both mutating query on the same mount): confirmed updateStoryQuery()'s call site is gated on storyStore.session (the OLD useStorybookStore()), which the new engine never populates -- StorybookStorymaker uses useStorybookRunStore() exclusively. The race structurally cannot fire once ?legacy=1 is gone. storybook-table.vue's own seedFromQuery() (added t-055) has no sibling component racing on route.query in the new tree.
+
+    All three guards' hazards are legacy-architecture-specific with no new-engine code to attach a rewritten assertion to right now -- recommend deleting them alongside storybookLibraryHelper.ts/storybook-page.vue when those files are actually removed, rather than force-migrating them to a vacuous assertion against unrelated files. Did not touch these three guards or the files they protect; no pass consumed (investigation only). Remaining unexamined slices: verifyStorybookLibrarySessionConsistencyGuard, verifyStorybookRestartInputCompletenessGuard, verifyStorybookRestoreIdempotencyGuard, verifyStorybookSessionLibrary, verifyStorybookStudio, verifyNarrativeArtPersistence (large -- spans 6+ shared narrative-art files beyond storybookStore.ts itself, likely its own multi-cycle slice), verifyStorybookConfirmArmScopeGuard, verifyStorybookLibraryMountReopenGuard, verifyStorybookLibraryNewStoryConfirmGuard, verifyStorybookAnswerInputPreservationGuard, verifyStorybookComposerImeCompositionGuard. Re-arming to ready; releasing the claim.
+  updated: '2026-09-21T18:05:27Z'
   owner: worker
   claimed_by: claude-scheduled-20260921T1800Z-sb-t037-investigate
   claimed_at: '2026-09-21T18:04:33Z'
@@ -1590,3 +1598,40 @@ tasks:
     scope discipline -- this is a real design decision plus nontrivial wiring, not a
     same-cycle polish fix.
   updated: '2026-09-21T16:15:00Z'
+
+- id: t-059
+  milestone: m7
+  title: "Fix or downgrade the false claim that Play Again keeps the reader's Table board dealt"
+  status: ready
+  stakes: reversible
+  passes: 0
+  note: >-
+    Found during t-037's guard-migration triage (conductor scheduled sweep, 2026-09-21):
+    components/storybook/storybook-storymaker.vue's playAgain() carries a comment saying it
+    "Deliberately drops the reader back on the Table with their board still dealt rather than
+    silently opening a second run: the same cards with a different length or narrator is the
+    common second play." That intent is not actually implemented. playAgain() only calls
+    runStore.leaveRun() (clears the run store). The Table's own selection state --
+    components/storybook/storybook-table.vue's `board` ref (~line 344, mode/genre/place/hero/
+    company/narrator/thread/treasures) -- is a plain component-local ref with no persistence
+    (no localStorage/sessionStorage/store-lift found in either file). storybook-storymaker.vue's
+    template is a single v-if/v-else-if/v-else chain across StorybookEnding/StorybookReading/
+    StorybookTable, so leaving a run to fall back into the v-else branch unmounts and
+    re-mounts a fresh StorybookTable instance -- its board resets to defaults (only the base
+    mode card, everything else empty) exactly like navigating in cold. Confirmed onMounted()
+    only calls seedFromQuery() (deep-link params) and fetch calls, never anything that
+    restores a prior board from the just-left run.
+
+    DO ONE OF: (a) actually implement board retention across Play Again -- lift `board` (or
+    just the prior run's originating StorybookBoard) into a place that survives the Table's
+    remount (e.g. the run store itself, since it already outlives the Table instance) and
+    have StorybookTable seed from it when present, distinct from a full `newTable()` reset
+    which should still clear it; or (b) if board retention isn't meant to ship yet, correct
+    playAgain()'s comment (and StorybookEnding's "Play again" label/copy if it makes the same
+    promise) to stop claiming behavior that doesn't exist -- a misleading comment is a real
+    defect even before any user notices the UX gap. Whichever path, verify by hand: build a
+    board, finish a run, click Play Again, and confirm what actually happens to the board.
+
+    Not blocking t-037 (guard migration) -- filed separately per AGENTS.md scope discipline.
+    No PR/implementation attempted yet.
+  updated: '2026-09-21T18:00:00Z'
