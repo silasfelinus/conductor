@@ -1676,3 +1676,28 @@ tasks:
   claimed_by: 2026-09-21T2050Z-storybook-t060-scheduled
   claimed_at: '2026-09-21T20:56:13Z'
   updated: '2026-09-21T21:28:01Z'
+
+- id: t-061
+  milestone: m7
+  title: Rewrite seedFromQuery()'s five deep-link lookups on cardForSlug(), updating the deep-link guard's regexes in the same change
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from t-060 (2026-09-21, kind_robots PR #2960): that task added
+    cardForSlug()/playCardIfAbsent()/seedFromPlayAgain() to
+    components/storybook/storybook-table.vue, structurally parallel to the five
+    per-slot lookups seedFromQuery() already hand-rolls for
+    `?location=`/`?character=`/`?facet=`/`?reward=`/`?scenario=` -- but
+    deliberately left seedFromQuery() itself untouched, because
+    utils/scripts/verifyStorybookTableDeepLinkGuard.mjs regex-pins its literal
+    body (e.g. `toggleCard('place', toPlaceCard(dream))`,
+    `toggleCard('genre', card)` with the exact `withGenreLock(...)` two-line
+    shape). Rewriting seedFromQuery() on top of cardForSlug() would remove real
+    duplication, but only lands cleanly if the guard's regexes are updated in
+    the same PR to match the new call shapes -- otherwise it's an
+    unrelated-guard failure for no functional gain. Verify: the guard still
+    passes, and a manual trace confirms each of the five deep-link cases
+    resolves to the same card (including the genre-lock skip) as before.
+    Not gated -- reversible refactor, no behavior change intended.

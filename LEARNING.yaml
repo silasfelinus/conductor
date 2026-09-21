@@ -15962,3 +15962,23 @@ records:
     the task's own concrete implementation sketch (lift board into storybookRunStore,
     seed StorybookTable from it via the same seedFromQuery() lookup pattern) as the
     starting point if board retention becomes something Silas actually wants shipped.
+- date: 2026-09-21
+  project: storybook
+  task: t-060
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    t-059's implementation sketch (lift board into storybookRunStore, capture
+    it in playAgain() before leaveRun() clears the run, seed StorybookTable from it
+    via the same per-slot deck lookups seedFromQuery() uses) held up exactly as
+    written -- the one real design decision it left open was WHERE the capture could
+    actually happen. playAgain() runs on the Ending screen, long after the Table
+    (and its local board ref) has unmounted, so the board has to be recorded earlier,
+    at the moment openStory() actually succeeds, not read fresh at playAgain() time.
+    A future task inheriting a sketch written before the surrounding component
+    lifecycle was traced should re-verify each named call site is still mounted/alive
+    at the point the sketch assumes, not just implement the call graph as literally
+    stated.
