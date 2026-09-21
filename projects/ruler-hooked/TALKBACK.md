@@ -407,3 +407,44 @@ across this project's TALKBACK history; no new roadmap task filed.
 as well as `synchronize` means a PR-body-only defect (missing template section, typo) can be
 fixed by editing the description directly -- no new commit needed, and no need to hand it
 back to the Worker session for a defect that isn't in the code.
+
+## 2026-09-21 | Reviewer (self-merged) | ruler-hooked/t-027 | audit
+
+**Decision:** merged -- silasfelinus/kind_robots#2949 (catch-reveal art + image-first
+Fishopedia), squash 5d51bbe, self-implemented and self-reviewed in one scheduled Conductor
+Agent run.
+
+**Failure category:** n/a -- clean first pass, all 48 CI checks green (including the
+~7-minute, 393-step "Contract verifiers" suite) before merge.
+
+**What was good:**
+- Treated the task's stated art dependency (t-019, still 1/15 species short at claim time)
+  as a soft blocker rather than a hard one: 14/15 bestiary images already existed, and the
+  codebase's own established convention (`ruler-hooked-cosmetics-picker.vue`'s hide-on-`
+  @error` pattern for a preset whose art layer may not exist yet) generalizes cleanly to
+  "one image might still be stale, not broken." Reused that exact pattern instead of
+  inventing a new one.
+- Caught its own mistake before it shipped: `npx tsx utils/scripts/verifyKrClassCoverage.ts`
+  flagged an undefined `kr-catch-reveal-img` hook class the Worker had added out of habit
+  with no matching CSS rule -- fixed before the PR opened, not left for a Reviewer round.
+- Noticed and reverted a `prettier --write` run that reformatted the whole pre-existing
+  `fish.ts` (478 changed lines) instead of just the ~9 lines actually added, once `git diff
+  --stat` surfaced the size mismatch. Re-applied the same edit by hand in the file's existing
+  (pre-prettier-adoption) compact style instead, keeping the diff scoped and avoiding a
+  large, unrelated-looking reformat riding along with a small feature change --
+  `verifyPrettierRatchet.ts` confirmed the file was already a known, tracked ratchet
+  exception, not a discipline gap this PR introduced.
+- Verified rather than assumed: ran vue-tsc, eslint, prettier --check, kr-class-coverage,
+  layout-contract, and the prettier ratchet locally before pushing; confirmed via `curl` that
+  the specific `/images/ruler-hooked/fish/<slug>/bestiary.webp` URLs the new code depends on
+  actually resolve in production, rather than trusting the roadmap note's claim alone.
+
+**What to improve:**
+- Nothing notable this cycle -- small, correctly-scoped PR; explicitly said in the PR body
+  what was and wasn't verified (no live browser render, since this run had no interactive
+  session) rather than blurring the two.
+
+**Kaizen task:** deferred -- no fresh systematic weakness surfaced this cycle; the
+`fishopedia entries don't yet expose an enlarged/zoomable portrait` idea from the PR's own
+Kaizen suggestion is minor polish, not worth a dedicated roadmap task yet given the project's
+current priority (finishing the vertical-slice art batches first).
