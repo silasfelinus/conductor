@@ -574,6 +574,64 @@ try {
 # after it means the pm2 block hung.
 Write-Log "run starting as $($env:USERNAME)"
 
+# Run a child process with no console window and a bounded wait. Start-Job
+# was tried first for pm2 jlist and rejected: PowerShell 5.1 backs a
+# background job with a real second powershell.exe process (confirmed by
+# process trace, conductor/t-177 -- "-Version 5.1 -s -NoLogo -NoProfile"),
+# and that process pops its own visible console on the desktop every tick
+# no matter how the healthcheck.ps1 host itself was launched. CreateProcess
+# cannot launch a .cmd/.bat file directly, so a batch target (pm2.cmd) is
+# routed through cmd.exe /c; CreateNoWindow still applies to that whole
+# child chain, which is why pm2.cmd's own node.exe never got a console of
+# its own in the trace either.
+function Invoke-HiddenProcess($filePath, $argumentList, $timeoutSeconds, $standardInputText) {
+    $resolvedFile = $filePath
+    $resolvedArgs = @()
+    if ($argumentList) { $resolvedArgs = @($argumentList) }
+    if ($filePath -match '\.(cmd|bat)$') {
+        $resolvedArgs = @('/d', '/c', $filePath) + $resolvedArgs
+        $resolvedFile = 'cmd.exe'
+    }
+
+    $psi = New-Object System.Diagnostics.ProcessStartInfo
+    $psi.FileName = $resolvedFile
+    foreach ($a in $resolvedArgs) { [void]$psi.ArgumentList.Add($a) }
+    $psi.UseShellExecute = $false
+    $psi.CreateNoWindow = $true
+    $psi.RedirectStandardOutput = $true
+    $psi.RedirectStandardError = $true
+    if ($null -ne $standardInputText) { $psi.RedirectStandardInput = $true }
+
+    $proc = New-Object System.Diagnostics.Process
+    $proc.StartInfo = $psi
+    try {
+        [void]$proc.Start()
+    } catch {
+        return [pscustomobject]@{ Output = "failed to start $filePath`: $($_.Exception.Message)"; ExitCode = -1; TimedOut = $false }
+    }
+
+    # Read async, started before the wait, so a chatty child cannot deadlock
+    # on a full pipe buffer while nobody is draining it.
+    $stdoutTask = $proc.StandardOutput.ReadToEndAsync()
+    $stderrTask = $proc.StandardError.ReadToEndAsync()
+    if ($null -ne $standardInputText) {
+        $proc.StandardInput.Write($standardInputText)
+        $proc.StandardInput.Close()
+    }
+
+    $exited = $proc.WaitForExit($timeoutSeconds * 1000)
+    if (-not $exited) {
+        try { $proc.Kill() } catch {}
+        $proc.Dispose()
+        return [pscustomobject]@{ Output = "$filePath did not respond within $timeoutSeconds seconds"; ExitCode = -1; TimedOut = $true }
+    }
+
+    $output = $stdoutTask.Result + $stderrTask.Result
+    $exitCode = $proc.ExitCode
+    $proc.Dispose()
+    return [pscustomobject]@{ Output = $output; ExitCode = $exitCode; TimedOut = $false }
+}
+
 # --- pm2 visibility ----------------------------------------------------------
 # Read pm2's process list ONCE, and distinguish "pm2 says this app is stopped"
 # from "pm2 told us nothing at all". They are not the same, and conflating them
@@ -611,26 +669,14 @@ if (-not $pm2Command) {
     # reporting a healthy NextRunTime and the log says nothing at all, because
     # the tick line below is never reached. A bounded call is what keeps a bad
     # minute from becoming a bad weekend.
-    $pm2Raw = ''
-    $pm2ExitCode = 0
-    $pm2Job = Start-Job -ScriptBlock {
-        param($exe)
-        $text = (& $exe jlist 2>&1 | Out-String)
-        [pscustomobject]@{ Output = $text; ExitCode = $LASTEXITCODE }
-    } -ArgumentList $pm2Command.Source
-
-    if (Wait-Job $pm2Job -Timeout $pm2TimeoutSeconds) {
-        $pm2Result = Receive-Job $pm2Job | Select-Object -Last 1
-        if ($pm2Result) {
-            $pm2Raw = [string]$pm2Result.Output
-            if ($null -ne $pm2Result.ExitCode) { $pm2ExitCode = [int]$pm2Result.ExitCode }
-        }
-    } else {
-        Stop-Job $pm2Job -ErrorAction SilentlyContinue
+    $pm2Invoke = Invoke-HiddenProcess $pm2Command.Source @('jlist') $pm2TimeoutSeconds $null
+    if ($pm2Invoke.TimedOut) {
         $pm2ExitCode = -1
         $pm2Raw = "pm2 jlist did not respond within $pm2TimeoutSeconds seconds"
+    } else {
+        $pm2Raw = [string]$pm2Invoke.Output
+        $pm2ExitCode = [int]$pm2Invoke.ExitCode
     }
-    Remove-Job $pm2Job -Force -ErrorAction SilentlyContinue
 
     if ($pm2ExitCode -ne 0) {
         $pm2Error = "pm2 jlist exited $pm2ExitCode`: $($pm2Raw.Trim())"
@@ -650,9 +696,12 @@ if (-not $pm2Command) {
         } elseif (-not (Test-Path -LiteralPath $snapshotHelper)) {
             $pm2Error = "pm2 snapshot helper is missing: $snapshotHelper"
         } else {
-            $pm2Snapshot = ($pm2Raw | & $nodeCommand.Source $snapshotHelper 2>&1 | Out-String)
-            $snapshotExitCode = $LASTEXITCODE
-            if ($snapshotExitCode -ne 0) {
+            $snapshotInvoke = Invoke-HiddenProcess $nodeCommand.Source @($snapshotHelper) $pm2TimeoutSeconds $pm2Raw
+            $pm2Snapshot = [string]$snapshotInvoke.Output
+            $snapshotExitCode = [int]$snapshotInvoke.ExitCode
+            if ($snapshotInvoke.TimedOut) {
+                $pm2Error = "pm2 jlist snapshot did not respond within $pm2TimeoutSeconds seconds"
+            } elseif ($snapshotExitCode -ne 0) {
                 $pm2Error = "pm2 jlist snapshot failed ($snapshotExitCode): $($pm2Snapshot.Trim())"
             } else {
                 try {
