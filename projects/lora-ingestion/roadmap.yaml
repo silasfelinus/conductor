@@ -338,9 +338,9 @@ tasks:
 - id: t-012
   milestone: m4
   title: Polish art-generator random pools, facet picker placement, image sizes, and Krea 2 preset
-  status: review
+  status: ready
   owner: worker
-  passes: 0
+  passes: 1
   stakes: reversible
   gate_human: false
   note: |-
@@ -368,4 +368,5 @@ tasks:
   updated: '2026-09-22T07:29:00Z'
   claimed_by: 2026-09-22T000600-0700-lora-ingestion-t-012-openai-chat-a73c
   claimed_at: '2026-09-22T07:22:00Z'
+  retry_context: 'pass 1 failed (quality): kind_robots#2972''s ESLint lint-ratchet check went from 331->332 problems (no-useless-assignment: 9 -> 10), specifically new useless assignments in server/utils/artRandomPools.ts:293:7 and stores/storybookStore.ts:808:9. Everything else on the PR (all other contract checks, TypeScript, tests) is green. Do differently: remove the two useless assignments (or restructure so the assigned value is actually read) and re-run ''npm run test:lint-ratchet'' locally before pushing; do not touch unrelated ratchet counts.'
 
