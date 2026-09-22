@@ -655,11 +655,69 @@ tasks:
     stop live canaries, and retrying it every 6h against a currently-wedging relay only
     burns render-queue time without new diagnostic value. Still needs-human for relay
     access; no roadmap action needed elsewhere.
-  updated: '2026-09-15T19:33:35Z'
+
+    ROOT CAUSE IDENTIFIED 2026-09-22 (kind_robots PR #2976), from Silas noticing the
+    discrepancy from the other end: "there is a weird discrepancy between my comfy reported
+    models and my backend files ... it's still listed, but whenever we generate with it, we
+    get static." Two mechanisms, and the first one hides the second. (1) THE DROPDOWN IS NOT
+    ONE DIRECTORY. ComfyUI registers TWO roots under one category --
+    folder_names_and_paths["diffusion_models"] = ([models/unet, models/diffusion_models],
+    ...) -- and ComfyUI-GGUF's UnetLoaderGGUF builds its list from
+    get_filename_list("unet_gguf"), which reuses that same path list with a .gguf filter;
+    extra_model_paths.yaml appends more. get_filename_list_ collects into a set() keyed by
+    path RELATIVE to each root, so the same filename in two roots shows as ONE entry.
+    Meanwhile get_full_path walks the roots IN ORDER and returns the first hit, and
+    models\unet is FIRST -- so a stale or broken copy there silently shadows a good copy in
+    models\diffusion_models, and nothing in the UI says which one loads. sync-comfy-
+    models.ps1's manifest sends flux1-kontext-dev-Q5_K_M.gguf to models\unet, which is why
+    it is absent from a models\diffusion_models listing without being missing. (2) THE
+    STATIC IS A RIGHT-SIZED, NEVER-WRITTEN FILE. robocopy /J preallocates the whole
+    destination, so an interrupted copy leaves a file of EXACTLY the right length with
+    unwritten bytes in it. sync-comfy-models.ps1's Test-ModelHeader (added after the
+    2026-09-08 Krea 2 incident) reads four bytes, which catches an EARLY interruption --
+    wrong magic, GGUF magic invalid, fails in under a second. A LATE interruption leaves the
+    header and early tensors real: the model loads with NO ERROR, the unwritten tail
+    dequantises to zeros, the UNet predicts nothing, the sampler never denoises, and
+    VAEDecode returns the latent's own noise as a valid 1024x1024 image. The job reports
+    DONE. Every size check, the "already local" skip, and the 4-byte header check all pass
+    it, which is why re-running the sync never repaired it. THIS EXPLAINS THIS TASK'S OWN
+    STRONGEST EVIDENCE. mr-016 and mr-020 came back with byte-identical statistics
+    (mean_saturation 0.17, colorful_fraction 0.35, white_fraction 0.00) from two completely
+    different source images. That is not a per-image content problem and not a VAE-space
+    mismatch: it is the output no longer depending on the input at all, which is exactly
+    what a UNet contributing nothing produces. ArtJob 21693's plain no-LoRA repro fits the
+    same shape, and so does t-079's 5/5 identical-noise result -- one broken weights file
+    upstream of both branches, as this note's option (a) guessed. WHAT SHIPPED. kind_robots
+    PR #2976: Test-ZeroTail in sync-comfy-models.ps1 (all-zero last 1MB = preallocated-and-
+    unwritten; real quantised weights are never uniformly zero and GGUF padding is at most
+    31 bytes), wired into both the "already local" skip (recopy) and the post-copy gate
+    (refuse to promote); a SHADOWED report when ComfyUI would load a different directory's
+    copy than the one the script writes; and cleanup of leftover .kr-sync-tmp staging
+    partials, which ComfyUI lists as loadable models because recursive_search walks hidden
+    directories. Plus scripts/comfy-model-shadow-audit.ps1, read-only, which reports the
+    full search order per category, every shadowed name and which copy wins, bad magic, zero
+    tails, staging partials, and (with -ComfyUrl) dropdown names that resolve to no file.
+    FOR SILAS -- ONE COMMAND ON FERNGROTTO CONFIRMS OR REFUTES ALL OF THE ABOVE: cd
+    D:\code\kind_robots ; git pull ; .\scripts\comfy-model-shadow-audit.ps1 -Local
+    D:\comfy\comfy-fast\models -ComfyUrl http://127.0.0.1:8188 . A ZERO TAIL line naming
+    flux1-kontext-dev-Q5_K_M.gguf closes this task and t-079 together; the repair is
+    .\scripts\sync-comfy-models.ps1 -Local D:\comfy\comfy-fast\models -Tier image -Verify
+    -Yes (-Verify checksums against the share, which is what would have caught this
+    originally). NOTE ON THE NEW COPY: Silas said "I'm moving a new version into
+    diffusion_models" -- if a broken flux1-kontext-dev-*.gguf is sitting in models\unet,
+    that new copy will be IGNORED, because models\unet is searched first. Fix or delete the
+    models\unet copy, do not just add a second one. STILL needs-human: this is a diagnosis
+    plus a guard, not a verified repair -- nothing here has been run against the live
+    Ferngrotto tree, and the t-039/t-079 noise is only explained by it, not yet proven by
+    it. Keep both tasks open until the audit output is in hand. The second, independent
+    finding in this note -- art_quality.assess_file(path, "color") scoring pure static as
+    ok=True -- is untouched by any of this and still needs its own fix.
+  updated: '2026-09-22T08:33:56Z'
   owner: worker
   claimed_by: 2026-09-15T091200Z-coloring-book-t039-sampler9c2a
   claimed_at: '2026-09-15T09:19:00Z'
   soft_gate: true
+  implementation_pr: 'silasfelinus/kind_robots#2976'
 - id: t-040
   milestone: m4
   title: manage_coloring_book_production.py should surface the Pillow-missing fix inline instead of a bare ImportError
