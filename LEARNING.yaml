@@ -16142,3 +16142,22 @@ records:
   failure_category: null
   lesson: When a broad UI utility patch trips the lint ratchet, repair the newly introduced lint findings
     on the same branch and require exact-head Actions completion before treating the retry as done.
+- date: '2026-09-22'
+  project: storybook
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 51
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A file paused behind an upstream dependency (2026-09-12/13 TALKBACK note: don't polish
+    storybook-visual-setup.vue until t-034/t-035/t-036's card-driven redesign lands) can sit
+    unrevisited for over a week after the pause condition is actually met -- t-034/t-035/t-036
+    finished 2026-09-13, but nobody re-checked this file until this cycle (2026-09-22). The
+    fix itself (role="group" + aria-label on two ungrouped choice-button grids) matched a
+    pattern already fixed five times elsewhere in the project, confirmed to fail pre-fix via
+    a git-stash round trip on the component. Worth generalizing: a pause note tied to a
+    dependency's completion needs the same kind of staleness check this repo already runs for
+    claimed tasks and stale recurring tasks, or "paused pending X" quietly becomes "paused
+    forever" once X actually lands.
