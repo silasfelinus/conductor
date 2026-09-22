@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-22T10:12:50Z
+Generated: 2026-09-22T10:20:36Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1114**
-- Outcomes: blocked: 18, cancelled: 2, done: 1094
+- Closed tasks recorded: **1115**
+- Outcomes: blocked: 18, cancelled: 2, done: 1095
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -44,7 +44,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kind-economy | 10 | 100% |
 | kind-robots | 67 | 99% |
 | kindrobots-unraid | 9 | 100% |
-| lora-ingestion | 5 | 100% |
+| lora-ingestion | 6 | 100% |
 | mandarin-tutor | 14 | 93% |
 | media-watchlist | 12 | 100% |
 | mermaids-of-venice | 3 | 100% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1097 | 99% |
+| software | 1098 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-22 `lora-ingestion/t-012` — When a broad UI utility patch trips the lint ratchet, repair the newly introduced lint findings on the same branch and require exact-head Actions completion before treating the retry as done.
 - 2026-09-22 `lora-ingestion/t-011` — Two sessions independently implemented the same kaizen-filed fix (PowerShell paths-filter quote-only regex) within a ~30 minute window -- kind_robots#2969 (this task's own OpenAI Worker cycle, single/double-quote fix) and kind_robots#2970 (a different session, broader single/double/bare-scalar fix with a backreference guard), #2970 merging first. Discovered via #2969's PR showing mergeable_state=dirty on review; closed #2969 as redundant with a comment naming the superseding PR rather than resolving a conflict Reviewer has no push access to fix on a worker/* branch. No lost work -- the standard git-conflict backstop caught the collision as designed, just surfaced through PR mergeability instead of a rejected push.
 - 2026-09-22 `lora-ingestion/t-010` — A same-day Claude session (session_01HHrZmwjtwx3T7A7H94irfo) opened kind_robots#2967 (LoRA purpose typing + randomized art batches, Silas-directed, additive migration) and correctly stood down on the one red CI check rather than force-merging or silently ignoring it -- but a session that authors and reviews its own work has no second party to actually merge it once it stands down. A later scheduled Conductor sweep found the open, ready-to-merge PR, independently re-verified the "pre-existing, unrelated" claim (reproduced the regex/quoting bug directly against origin/main) and the migration's additive-only shape, then merged. Worth normalizing: an agent authoring a PR should still expect a distinct review/merge pass to pick it up promptly rather than assuming the standing-down comment alone gets it to main.
 - 2026-09-22 `conductor/t-190` — Implemented the zero-diff-close audit hint itself (roadmap_deps.zero_diff_close_hint, wired into run_worker.find_ready_task and next_ready_task.first_ready_task): an advisory audit_candidate/audit_candidate_reason field on the picked ready task, flagged when a done depends_on dependency's note mentions the ready task's own id. select_role.py inherits it for free via build_queue_summary(). Clean first-pass -- the pattern was already fully specified by the kaizen note itself (t-031/t-033), same "sibling task already proved the pattern" shape the note describes.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-22 `animation-manager/t-018` — When an animation build ships, promote its canonical PITCHES.yaml entry and record build provenance in the same cycle; verify canonical state before adding a second repair for an already-fixed bookkeeping gap.
 - 2026-09-22 `dream-cycle/t-032` — Before wiring a checker into a new call site from a task note's field list, trace the actual code path (build_dream_records.py's per-element art_prompt calls) rather than trusting the note verbatim -- three of the seven named fields (best_used_when, catch, local_rule) never reach an art_prompt at all and would have been false positives.
 - 2026-09-22 `dream-cycle/t-031` — Two independent test files asserting the same workflow-yaml policy can silently diverge if only one is edited later; route both through one shared assertion helper (tests/<module>.py, not test_-prefixed so pytest won't collect it) so the policy can only change in one place.
-- 2026-09-21 `storybook/t-061` — Shared slug-to-card resolution removes duplicated deep-link lookup logic while keeping gate behavior in one load-bearing helper; update literal contract guards in the same scoped refactor when they intentionally pin the old implementation shape.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-22T10:12:50Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-22T10:20:36Z_
