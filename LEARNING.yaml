@@ -16045,3 +16045,19 @@ records:
     notice the local kind_robots checkout has moved past what the roadmap note assumed.
     Worth checking the target repo's own recent commits/PRs, not just the live render
     queue, when a task's note describes external async work that might have completed.
+- date: 2026-09-22
+  project: butterfly-gallery
+  task: t-031
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A gating audit task can close with zero diff when the dependency it was waiting on
+    (t-033) already implemented the exact requirement in its own PR -- t-033's runway
+    splice used IntersectionObserver + document.hidden + prefers-reduced-motion with a
+    v-if unmount (not a CSS class toggle) specifically because its own note named t-031's
+    acceptance criteria up front. Worth checking whether an upstream task already
+    absorbed a downstream audit task's requirement before assuming the audit still needs
+    new code.
