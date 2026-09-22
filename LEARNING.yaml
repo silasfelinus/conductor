@@ -16028,3 +16028,20 @@ records:
   lesson: When an animation build ships, promote its canonical PITCHES.yaml entry and record build provenance
     in the same cycle; verify canonical state before adding a second repair for an already-fixed bookkeeping
     gap.
+- date: '2026-09-22'
+  project: butterfly-gallery
+  task: t-033
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A ready roadmap task can get its real implementation merged by a concurrent,
+    repo-scoped session (here kind_robots#2964) without that session ever touching the
+    conductor roadmap task it belongs to. check_pr_merged_drift.py only audits
+    claimed/review tasks, so a ready task whose implementation lands via a different
+    repo's session sits stale until a later sweep's STEP-1-style recheck happens to
+    notice the local kind_robots checkout has moved past what the roadmap note assumed.
+    Worth checking the target repo's own recent commits/PRs, not just the live render
+    queue, when a task's note describes external async work that might have completed.
