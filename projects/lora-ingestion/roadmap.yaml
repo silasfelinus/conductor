@@ -401,3 +401,20 @@ tasks:
   claimed_at: '2026-09-22T22:16:00Z'
   updated: '2026-09-22T22:51:57Z'
   implementation_pr: 'silasfelinus/conductor#5059'
+
+- id: t-014
+  milestone: m2
+  title: Add an automated parity check between the home-server vendored LoRA/model scanners and their kind_robots app-source originals
+  status: ready
+  owner: null
+  stakes: reversible
+  note: |-
+    Kaizen from t-013 (Reviewer, 2026-09-22). The vendored copies in
+    ops/home-server/lora-catalog/ (scan_loras.py, scan_models.py, import_catalog.py) had
+    silently drifted from their kind_robots app-source originals -- t-013 found the vendored
+    scan_loras.py was missing the Civitai tag category classifier entirely, with nothing
+    catching the gap until a downstream symptom (garbled preview classification) surfaced it.
+    Add a scripted diff/parity check (e.g. a CI job or a `check_vendored_scanner_parity.py`
+    comparing the shared logic surface between the two copies) so a scanner feature change in
+    kind_robots cannot land without the home-server executable copy following, and a stale
+    vendor copy fails loudly instead of drifting invisibly.

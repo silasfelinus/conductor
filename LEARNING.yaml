@@ -16231,3 +16231,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "test:lint-ratchet does NOT share test:prettier-ratchet's silent ambient-version-drift exposure: an unprovisioned npx eslint does resolve a different ambient version, but this repo's eslint.config.mjs unconditionally imports the Nuxt-generated .nuxt/eslint.config.mjs (only produced by nuxi prepare, part of npm ci's postinstall), so a bare npx eslint reproduction fails loud (ERR_MODULE_NOT_FOUND) before linting anything rather than silently misreporting a drifted count. Separately: pull_request_read's get_check_runs can serve stale cached in_progress status for a job that already completed (observed ~30 min stale here) -- cross-check with actions_get/get_workflow_job before treating a check as genuinely stuck."
+- date: 2026-09-22
+  project: lora-ingestion
+  task: t-013
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A vendored copy (ops/home-server's stdlib-only scanner) had silently drifted from its app-source original (kind_robots' scan_loras.py), losing the Civitai tag classifier with no test catching it -- because nothing asserted the two stayed in sync. Cross-repo duplication for a legitimate reason (no Node available on the home box) still needs an explicit parity check or scripted sync step, not just a one-time copy at authoring time, or the vendor copy rots invisibly until a downstream symptom (garbled classification/preview) surfaces it."
