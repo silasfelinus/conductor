@@ -23,6 +23,12 @@ original_already_satisfied = inspirations.already_satisfied
 
 
 def already_satisfied(entry):
+    # conductor/t-192: see consume_art_requests_to_media.py's identical guard
+    # -- a `force: true` entry must ignore the live media host too, since that
+    # branch never reaches original_already_satisfied() (and so never reaches
+    # its own regeneration_forced() check) at all.
+    if inspirations.regeneration_forced(entry):
+        return False
     if _is_kindrobots_media_target(entry, KIND_ROBOTS_REPO):
         return _media_exists(_image_path(entry, KIND_ROBOTS_REPO))
     return original_already_satisfied(entry)

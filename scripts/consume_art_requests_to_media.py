@@ -38,6 +38,14 @@ original_load_requests = requests.load_requests
 
 
 def already_satisfied(entry):
+    # conductor/t-192: a `force: true` entry must ignore whatever already sits
+    # at its destination, live media host included -- the whole point is a
+    # stale render (or stale media-host copy) from before the prompt fix must
+    # not count as fulfillment. Checked before the kind-robots-media branch,
+    # since that branch never reaches original_already_satisfied() (and so
+    # never reaches its own regeneration_forced() check) at all.
+    if requests.regeneration_forced(entry):
+        return False
     if _is_kindrobots_media_target(entry, KIND_ROBOTS_REPO):
         return _media_exists(_image_path(entry, KIND_ROBOTS_REPO))
     return original_already_satisfied(entry)

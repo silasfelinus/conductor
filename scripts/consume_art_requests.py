@@ -21,7 +21,11 @@ Everything goes THROUGH kind_robots (art-generator-connect routing policy):
 Reuses consume_art_queue's queue machinery so generation behaves identically.
 
 Dry-run by default. Idempotent: a request whose target image already exists in
-the checked-out repo is marked done and skipped rather than regenerated.
+the checked-out repo is marked done and skipped rather than regenerated --
+unless the entry carries `force: true` (set when a prompt was corrected and
+the entry re-staged to pending reusing the same image_path), in which case
+the existing file is ignored and a fresh render is submitted. See
+regeneration_forced().
 
 Env: KR_API_TOKEN (required for --live), KR_BASE_URL (default matches consume_art_queue).
 
@@ -143,13 +147,45 @@ def is_pending(entry):
     return str(entry.get("status") or "pending").strip().lower() == "pending"
 
 
+def regeneration_forced(entry):
+    """True when the entry itself asks already_satisfied() to ignore an
+    existing target file.
+
+    conductor/t-192: already_satisfied() == target_path(entry).exists() is
+    right for a brand-new request but silently wrong for a REGENERATION one
+    -- an entry that was `status: done` once, then staged back to `pending`
+    after its prompt was corrected, reusing the same image_path. The stale
+    file from the earlier render satisfies the naive existence check, so the
+    entry is marked done a second time with zero ArtJobs submitted (this
+    happened twice in a row to ruler-hooked's choirfish entry before anyone
+    traced the actual job history).
+
+    The staging edit that flips such an entry back to `pending` sets
+    `force: true` alongside it (and should also clear `last_art_job_id`, so
+    has_unresolved_submission() doesn't treat the superseded job as still
+    reserving the row -- see that function's own docstring). mark_done()
+    clears `force` again once the row is genuinely fulfilled, so this is not
+    a standing per-entry setting: it only spans the one regeneration cycle.
+    """
+    value = entry.get("force")
+    if isinstance(value, bool):
+        return value
+    return str(value or "").strip().lower() in ("true", "yes", "1")
+
+
 def target_path(entry):
     root = REPO_ROOTS.get(entry.get("target_repo"), ROOT)
     return root / str(entry.get("image_path"))
 
 
 def already_satisfied(entry):
-    """True when the target image already exists in the checked-out repo."""
+    """True when the target image already exists in the checked-out repo.
+
+    Always False for an entry staged with `force: true` (see
+    regeneration_forced()), regardless of what already sits at its path.
+    """
+    if regeneration_forced(entry):
+        return False
     try:
         return target_path(entry).exists()
     except OSError:
@@ -442,6 +478,26 @@ def set_request_field(text, req_id, field_name, value):
     return "".join(lines), True
 
 
+def clear_request_field(text, req_id, field_name):
+    """Remove a scalar field line from the requests: entry whose id == req_id,
+    if present. No-op (returns text, False) when the field or entry isn't
+    there. Mirrors set_request_field's block-scoped, comment-preserving edit.
+    """
+    lines = text.splitlines(keepends=True)
+    field_pat = re.compile(r"^(\s*)" + re.escape(field_name) + r':\s*.*$')
+
+    block = find_request_block(lines, req_id)
+    if block is None:
+        return text, False
+    start, end, _indent = block
+
+    for index in range(start + 1, end):
+        if field_pat.match(lines[index]):
+            del lines[index]
+            return "".join(lines), True
+    return text, False
+
+
 def record_submitted_job(req_id, job_id):
     """Durably record a submitted ArtJob id on its request entry before waiting.
 
@@ -463,7 +519,12 @@ def record_submitted_job(req_id, job_id):
 
 
 def mark_done(req_ids):
-    """Set status: done for each id (single read/write). Returns count changed."""
+    """Set status: done for each id (single read/write). Returns count changed.
+
+    Also clears `force` (see regeneration_forced()) on each id: once a row is
+    genuinely fulfilled, a leftover `force: true` would make already_satisfied()
+    ignore its own fresh render on every future run.
+    """
     if not req_ids:
         return 0
     text = ART_PROMPTS_FILE.read_text()
@@ -472,6 +533,7 @@ def mark_done(req_ids):
         text, did = set_request_status(text, req_id, "done")
         if did:
             changed += 1
+        text, _cleared = clear_request_field(text, req_id, "force")
     if changed:
         ART_PROMPTS_FILE.write_text(text)
     return changed
