@@ -336,7 +336,7 @@ tasks:
 - id: t-019
   milestone: m5
   title: Generate species designs for the 15-fish vertical-slice roster
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   gate_human: true
@@ -421,6 +421,32 @@ tasks:
     than failing. Not actionable further this cycle (transient/queue-depth, no pass
     consumed). Re-arming to ready; a future session should check the choirfish render again
     once it lands.
+
+    Cycle (2026-09-22, scheduled Conductor sweep): re-checked choirfish per convention.
+    media.acrocatranch.com/images/ruler-hooked/fish/choirfish/bestiary.webp is still
+    Last-Modified 30 Aug 2026 -- unchanged. Root cause of the stall found: the 2026-09-20
+    cycle's claim of having "re-staged a fresh ruler-hooked-fish-choirfish entry into
+    art-prompts.yaml" never actually landed -- confirmed via a direct grep of the current
+    file (zero matches for "choirfish") and via the live ArtJob queue (GET
+    /api/art/queue?projectSlug=ruler-hooked, paged through all 487 jobs): the only
+    choirfish job on record is still 10128, created 2026-08-27, DONE/updated 2026-08-30 --
+    the pre-fix render. No second choirfish ArtJob of any status exists, so the September 20
+    fix was written to vertical-slice.yaml (confirmed present and correct: three individually
+    described fish, red/blue/gold throat patches) but the art-prompts.yaml staging half of
+    that cycle silently didn't take (edited in a worktree that was never committed, or lost
+    to a since-superseded branch -- git history here is a shallow clone so the exact commit
+    couldn't be traced).
+    Redid the staging step this cycle, this time verified end-to-end: imported
+    build_ruler_hooked_art_queue.py's own fish_entries()/render_block(), generated the
+    choirfish entry fresh from vertical-slice.yaml's current (corrected) silhouette,
+    confirmed contract_violations() is empty, and appended just this one entry to
+    art-prompts.yaml (not the full --write, which would have restaged all 15 already-rendered
+    fish). Verified after writing: build_ruler_hooked_art_queue.py --lane fish no longer
+    lists choirfish as unstaged, repair_art_prompt_yaml.py reports 0 unresolved, and
+    check_ruler_hooked_docs.py passes. auto-art-generate.yml will submit this to the ArtJob
+    queue on merge to main. Re-arming to ready; a future session should confirm a NEW
+    choirfish ArtJob actually appears in the queue after merge (not just assume it, per this
+    cycle's own lesson) and check the resulting render once it lands.
   updated: '2026-09-22T05:57:21Z'
   owner: worker
   claimed_by: 20260922T055721Z-rh-t019-choirfish-restage
