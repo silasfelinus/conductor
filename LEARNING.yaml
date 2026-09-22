@@ -16204,3 +16204,12 @@ records:
     offender so the test can't silently pass by never matching anything) made the design
     decision fast rather than open-ended -- worth reaching for an existing guard's shape before
     inventing a new one when the repo already has this pattern established.
+- date: 2026-09-22
+  project: storybook
+  task: t-062
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The same UI logic duplicated across two files (storybook-visual-setup.vue and conductor/storybook-page.vue both build the same StorybookStartInput draft) let an a11y fix (role=group/aria-label on choice grids, t-010) land in only one copy; a narrow textual guard scoped to a single file can't catch its sibling never getting the fix -- when auditing a fix's completeness, grep for other files building the same store/type shape, not just the one the original task touched."
