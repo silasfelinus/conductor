@@ -697,12 +697,12 @@ tasks:
 - id: t-032
   milestone: null
   title: Catch a conditional-instruction art_prompt at proposal-authoring time, not just at build time
-  status: ready
+  status: review
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-09-21T07:00:00Z'
-  note: >
+  updated: '2026-09-22T01:07:35Z'
+  note: >-
     Kaizen from t-028 (conductor#4913, merged 2026-09-21): build_dream_records.py's
     queue_art() now rejects a conditional-instruction art_prompt at build time, via
     the shared scripts/art_prompt_conditional_check.py, and rolls the whole bundle
@@ -717,3 +717,11 @@ tasks:
     look, role_drive, carries, scene, setup, grants, best_used_when) so a bad
     proposal is flagged and fixable the moment it's written, not silently retried
     build after build. Reversible, no schema changes.
+
+    Implemented conditional_instruction_complaints() in build_dream_proposal_core.py, wired
+    into validate_proposal() so every caller (author_dream_proposal.py,
+    check_dream_creative_contract.py, apply_dream_revision.py, audit_dream_catalog.py,
+    repair_dream_prose_catalog.py) picks it up. Scoped to only the fields that actually feed
+    an art_prompt builder, verified against build_dream_records.py's queue_art() call sites.
+    Live backlog re-checked with check_dream_creative_contract.py --all-open: 5/5 pass, no
+    false positives. Full local suite: 2181 passed, 30 skipped. PR opening now.
