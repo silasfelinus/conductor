@@ -148,7 +148,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: ready
+  status: done
   passes: 51
   stakes: reversible
   note: |-
@@ -397,7 +397,12 @@ tasks:
     both reasonable next candidates.
 
     Reviewer verified and squash-merged silasfelinus/kind_robots#2981 at exact head d0a3622ac67792dffc176ed820ce628a50db52a0 (merge 9b6fb0a01f3a5e4cf326ae47557aaed94fd3642a). TypeScript, Contract Tests, Layout Contract, Project Architecture, Generated Client Parity, Schema Migration Parity, and the Storybook contract checks completed successfully. Re-arming this de-facto recurring polish task with operation ready because the roadmap task is not declared recurring:true.
-  updated: '2026-09-22T12:25:20Z'
+
+    Merged: kind_robots#2981 (squash d0a3622..., after a Prettier-ratchet fix push d0a3622).
+    Both grids' role="group"+aria-label fix and the dedicated regression guard are live on
+    kind_robots main. Kaizen filed as storybook/t-062.
+  updated: '2026-09-22T12:24:02Z'
+  implementation_pr: 'silasfelinus/kind_robots#2981'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
