@@ -3952,7 +3952,7 @@ tasks:
 - id: t-192
   milestone: m2
   title: 'already_satisfied() treats an existing destination file as proof a regeneration request is fulfilled, without ever generating anything'
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -3995,10 +3995,30 @@ tasks:
     generation, not just regeneration. Write a regression test using ruler-hooked's
     choirfish case (existing stale file + status flipped pending + no matching new
     ArtJob) as the failing fixture before changing behavior.
-  updated: '2026-09-22T16:06:10Z'
+  updated: '2026-09-22T16:09:19Z'
   claimed_by: 2026-09-22T-conductor-agent-c-t192-already-satisfied-force
   claimed_at: '2026-09-22T16:04:05Z'
   implementation_pr: 'silasfelinus/conductor#5033'
+- id: t-193
+  milestone: m2
+  title: Add a contract test that every already_satisfied() override in the art-request family respects regeneration_forced()
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from t-192 (silasfelinus/conductor#5033, 2026-09-22). The choirfish
+    regeneration bug's actual production entrypoint was `consume_art_requests_to_media.py`'s
+    `already_satisfied()` wrapper, not the `consume_art_requests.py` function the original
+    task note named -- that wrapper bypasses the underlying function entirely for a
+    kind_robots media target and does a live HEAD check instead, so a fix scoped to only the
+    "obvious" module would have shipped green and left the real bug live. Found this time by
+    grepping for the pattern by hand; worth making structural. Add a small contract test
+    (mirroring the shape of e.g. `test_capture_group_guards.py`'s repo-wide scan pattern) that
+    greps `scripts/*.py` for every function/override named `already_satisfied` (or assigned to
+    `.already_satisfied`) and asserts each one either calls `regeneration_forced()`/
+    `original_already_satisfied()` or is explicitly allow-listed with a comment explaining why
+    not. This closes the gap for the NEXT override, not just today's four call sites.
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'

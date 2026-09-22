@@ -16161,3 +16161,27 @@ records:
     dependency's completion needs the same kind of staleness check this repo already runs for
     claimed tasks and stale recurring tasks, or "paused pending X" quietly becomes "paused
     forever" once X actually lands.
+- date: '2026-09-22'
+  project: conductor
+  task: t-192
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    already_satisfied() == target_path(entry).exists() conflated two different questions:
+    "has this ever rendered" and "does what's on disk answer the CURRENT pending request."
+    They only diverge on a regeneration request (status flipped done -> pending after a
+    prompt fix, reusing the same image_path), which is rare enough that the bug went
+    undetected through the entire life of consume_art_requests.py/consume_art_inspirations.py
+    -- until it silently ate two consecutive regeneration attempts on the same entry
+    (ruler-hooked's choirfish) before anyone traced the actual job history. The fix (an
+    explicit force: true per-entry field, cleared once fulfilled) generalizes: an idempotency
+    check keyed on "does the output already exist" needs an explicit signal for "this
+    specific pending cycle invalidates that output," because file/media existence alone
+    cannot distinguish stale from current. Also load-bearing: this codebase's identical logic
+    sometimes has TWO code paths (target_path().exists() vs. a live media-host HEAD check for
+    kind_robots targets via consume_art_requests_to_media.py's wrapper) that look like one
+    function from the caller's side -- a fix to the "obvious" one silently misses the
+    production entrypoint a scheduled workflow actually calls.
