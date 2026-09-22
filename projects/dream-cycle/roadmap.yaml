@@ -697,11 +697,11 @@ tasks:
 - id: t-032
   milestone: null
   title: Catch a conditional-instruction art_prompt at proposal-authoring time, not just at build time
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-09-21T07:00:00Z'
+  updated: '2026-09-22T01:07:12Z'
   note: >
     Kaizen from t-028 (conductor#4913, merged 2026-09-21): build_dream_records.py's
     queue_art() now rejects a conditional-instruction art_prompt at build time, via
@@ -717,3 +717,5 @@ tasks:
     look, role_drive, carries, scene, setup, grants, best_used_when) so a bad
     proposal is flagged and fixable the moment it's written, not silently retried
     build after build. Reversible, no schema changes.
+  claimed_by: claude-scheduled-20260922T010711Z-dream-cycle-t032
+  claimed_at: '2026-09-22T01:07:12Z'
