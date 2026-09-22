@@ -712,7 +712,42 @@ tasks:
     it. Keep both tasks open until the audit output is in hand. The second, independent
     finding in this note -- art_quality.assess_file(path, "color") scoring pure static as
     ok=True -- is untouched by any of this and still needs its own fix.
-  updated: '2026-09-22T08:33:56Z'
+
+    CORRECTION AND CONFIRMATION FROM SILAS, same session 2026-09-22, on reading the above:
+    "the files are in models/unet in the alexandria server....and we should not be double
+    dipping, those should be moved to ferngrotto." So the shadowing root actually in play is
+    NOT a local models\unet copy -- it is the ALEXANDRIA SHARE's models/unet, reached
+    through an extra_model_paths.yaml entry that ComfyUI appends to the very same ordered
+    search list as the two local roots. The mechanism above is unchanged and is in fact the
+    explanation for the whole "why does Comfy think it exists" question: one category,
+    several roots, a listing deduped by relative path into a set(), and resolution by first-
+    os.path.isfile-wins. The Kontext model was never on Ferngrotto's disk at all. It is
+    listed because the share is in the search path, and every render that resolves it pulls
+    ~8GB over SMB on each load -- the same ~370s-per-job reload sync-comfy-models.ps1 was
+    written to end (see its own header, 2026-09-06 vs 2026-09-08: ~63 jobs/hour down to
+    ~8.5). WHAT THIS DOES AND DOES NOT SETTLE. It settles the listing mystery completely. It
+    does NOT by itself settle the static, and it moves the suspect: the corrupt-or-unwritten
+    file would be the copy ON THE SHARE, or a local partial shadowing it, rather than
+    necessarily a local one. comfy-model-shadow-audit.ps1 walks every configured root
+    including the share, so a single run still answers it either way -- but it must be run
+    WITHOUT -SkipRemote to check the share copy, since that is the copy loading today. A
+    second commit on kind_robots#2976 adds -SkipRemote, a progress line per root (a
+    recursive listing of a 200GB+ SMB share takes minutes and otherwise reads as a hang),
+    and a verdict section naming every share root still in ComfyUI's search path. THE MOVE
+    SILAS ASKED FOR, in order, because the order matters: (1) .\scripts\sync-comfy-
+    models.ps1 -Local D:\comfy\comfy-fast\models -Tier image -Verify -Yes -- -Verify
+    checksums each file against the share, which is the check that would have caught an
+    unwritten copy originally and is worth the full read here. (2) Run one Kontext render
+    and confirm it is a real image, not static. (3) Only then -PruneRemote, which DELETES
+    the share copy -- do not run it before a render has proven the local copy good. (4)
+    Remove the Alexandria entry from Ferngrotto's extra_model_paths.yaml, or ComfyUI keeps
+    offering names that no longer resolve anywhere, which is this whole bug again from the
+    opposite direction. Keeping a copy in both places is the double-dipping Silas is ending,
+    and it is also precisely what lets one copy silently shadow the other. STILL needs-
+    human: nothing here has been run against the live tree. What would close this task and
+    ai-art-academy/t-079 together is the audit output naming flux1-kontext-dev-Q5_K_M.gguf,
+    or a clean local Kontext render after the move.
+  updated: '2026-09-22T08:40:12Z'
   owner: worker
   claimed_by: 2026-09-15T091200Z-coloring-book-t039-sampler9c2a
   claimed_at: '2026-09-15T09:19:00Z'
