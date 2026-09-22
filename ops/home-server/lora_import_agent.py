@@ -36,6 +36,7 @@ Config:
   MODEL_CACHE_DB           generic scanner sqlite cache (prefer local disk)
 """
 
+import json
 import os
 import subprocess
 import sys
@@ -57,7 +58,10 @@ CHECKPOINT_IMPORT_DIR = os.environ.get(
     "CHECKPOINT_IMPORT_DIR",
     os.path.join(MODEL_ROOT, "checkpoints", "import") if MODEL_ROOT else "",
 ).strip()
-CIVITAI_TOKEN = os.environ.get("CIVITAI_TOKEN", "").strip()
+CIVITAI_TOKEN = (
+    os.environ.get("CIVITAI_TOKEN", "").strip()
+    or os.environ.get("KR_CIVITAI_TOKEN", "").strip()
+)
 LORA_POLL_SECONDS = float(os.environ.get("LORA_POLL_SECONDS", "20"))
 PYTHON = os.environ.get("PYTHON", sys.executable)
 
@@ -167,10 +171,18 @@ def run(cmd, timeout):
     return True
 
 
-def import_catalog(catalog):
+def import_catalog(catalog, result_out=None):
+    """Upsert one scanner catalog and queue previews for blind image models.
+
+    The JSON result is also the handoff contract used by kr-download: it returns
+    the canonical Resource ids after the scanner has moved/enriched the file.
+    """
     if not os.path.isfile(catalog):
         log(f"no catalog produced at {catalog} — nothing to import")
-        return False
+        return None
+    result_out = result_out or os.path.join(
+        os.path.dirname(catalog), "import-result.json"
+    )
     cmd = [
         PYTHON,
         IMPORT_SCRIPT,
@@ -182,22 +194,33 @@ def import_catalog(catalog):
         "--upsert",
         "--batch-size",
         "10",
+        "--queue-previews",
+        "--result-out",
+        result_out,
     ]
-    return run(cmd, timeout=900)
+    if not run(cmd, timeout=900):
+        return None
+    try:
+        with open(result_out, encoding="utf-8") as handle:
+            return json.load(handle)
+    except (OSError, ValueError) as error:
+        log(f"could not read import result {result_out}: {error}")
+        return None
 
 
-def process_lora_batch():
-    os.makedirs(CATALOG_OUT, exist_ok=True)
+def process_lora_folder(folder, out_dir):
+    """Run the canonical LoRA scanner/importer for one filesystem inbox."""
+    os.makedirs(out_dir, exist_ok=True)
     cmd = [
         PYTHON,
         SCAN_SCRIPT,
-        LORA_IMPORT_DIR,
+        folder,
         "--organize",
         "move",
         "--dest",
         LORA_ROOT,
         "--out",
-        CATALOG_OUT,
+        out_dir,
         "--workers",
         "2",
     ]
@@ -206,23 +229,27 @@ def process_lora_batch():
     if CACHE_DB:
         cmd += ["--cache", CACHE_DB]
     if not run(cmd, timeout=1800):
-        log("LoRA scan failed — leaving files for the next cycle")
-        return False
-    return import_catalog(os.path.join(CATALOG_OUT, "lora-catalog.json"))
+        log(f"LoRA scan failed for {folder} — leaving files for retry")
+        return None
+    return import_catalog(
+        os.path.join(out_dir, "lora-catalog.json"),
+        os.path.join(out_dir, "import-result.json"),
+    )
 
 
-def process_model_batch():
-    os.makedirs(MODEL_CATALOG_OUT, exist_ok=True)
+def process_model_folder(folder, out_dir):
+    """Run the canonical checkpoint/model scanner/importer for one inbox."""
+    os.makedirs(out_dir, exist_ok=True)
     cmd = [
         PYTHON,
         MODEL_SCAN_SCRIPT,
-        CHECKPOINT_IMPORT_DIR,
+        folder,
         "--organize",
         "move",
         "--dest",
         MODEL_ROOT,
         "--out",
-        MODEL_CATALOG_OUT,
+        out_dir,
         "--workers",
         "2",
         "--hash-workers",
@@ -233,9 +260,20 @@ def process_model_batch():
     if MODEL_CACHE_DB:
         cmd += ["--cache", MODEL_CACHE_DB]
     if not run(cmd, timeout=3600):
-        log("checkpoint/model scan failed — leaving files for the next cycle")
-        return False
-    return import_catalog(os.path.join(MODEL_CATALOG_OUT, "models-catalog.json"))
+        log(f"checkpoint/model scan failed for {folder} — leaving files for retry")
+        return None
+    return import_catalog(
+        os.path.join(out_dir, "models-catalog.json"),
+        os.path.join(out_dir, "import-result.json"),
+    )
+
+
+def process_lora_batch():
+    return process_lora_folder(LORA_IMPORT_DIR, CATALOG_OUT)
+
+
+def process_model_batch():
+    return process_model_folder(CHECKPOINT_IMPORT_DIR, MODEL_CATALOG_OUT)
 
 
 def missing_config():
