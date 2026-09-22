@@ -1773,7 +1773,7 @@ tasks:
 - id: t-062
   milestone: m4
   title: Audit the remainder of storybook-visual-setup.vue (cast/role-assigner section and form-validation UX) for the same polish-cycle issues
-  status: review
+  status: done
   passes: 0
   stakes: reversible
   note: |-
@@ -1792,5 +1792,34 @@ tasks:
   owner: worker
   claimed_by: 2026-09-22T-conductor-agent-sb-t062-1790096088
   claimed_at: '2026-09-22T16:54:49Z'
-  updated: '2026-09-22T17:03:45Z'
+  updated: '2026-09-22T17:17:34Z'
   implementation_pr: 'silasfelinus/kind_robots#2983'
+
+- id: t-063
+  milestone: m4
+  title: Re-baseline or shrink the kind_robots Prettier ratchet (npm run test:prettier-ratchet), currently failing on plain main
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: |-
+    Kaizen from t-062 (2026-09-22, kind_robots PR #2983). `npm run test:prettier-ratchet`
+    (utils/scripts/verifyPrettierRatchet.ts) fails on kind_robots' plain `main` with no
+    changes applied -- confirmed by stashing this cycle's edits and re-running it against
+    origin/main directly (~1077 unformatted files across 12 directories, reported as "+30
+    worse" against its own stored baseline). None of the files it lists were touched by
+    t-062's PR, so this is pre-existing repo-wide drift, not a regression this or any
+    single recent PR introduced.
+
+    As currently shaped the ratchet can't cleanly answer "did *this* PR make things worse"
+    without a human manually diffing the reported file list against the PR's own changed
+    files -- which defeats the point of an automated ratchet. Two options worth weighing:
+    (a) run `npm run test:prettier-ratchet -- --update` to accept the current count as the
+    new baseline (loses the ability to catch the specific files already drifted, but
+    restores the gate's usefulness going forward), or (b) actually claw the drift down with
+    `npx prettier --write` on the listed files in bounded batches, verifying each batch
+    doesn't break anything, then re-baseline once clean. Check whether this gate runs in
+    kind_robots CI (grep contract-tests.yml or equivalent) and whether it is currently
+    green there despite this local reproduction -- if CI is passing while local fails,
+    there may be a baseline-file sync issue between the committed baseline and what CI
+    actually checks out, worth understanding before assuming (a) or (b) is sufficient.
+  owner: null
