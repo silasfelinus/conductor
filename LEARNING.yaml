@@ -15993,3 +15993,15 @@ records:
   lesson: Shared slug-to-card resolution removes duplicated deep-link lookup logic while keeping gate
     behavior in one load-bearing helper; update literal contract guards in the same scoped refactor when
     they intentionally pin the old implementation shape.
+- date: '2026-09-22'
+  project: dream-cycle
+  task: t-031
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Two independent test files asserting the same workflow-yaml policy can silently
+    diverge if only one is edited later; route both through one shared assertion helper
+    (tests/<module>.py, not test_-prefixed so pytest won't collect it) so the policy can
+    only change in one place.
