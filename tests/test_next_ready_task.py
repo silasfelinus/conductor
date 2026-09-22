@@ -324,6 +324,59 @@ def test_daily_gated_task_not_yet_touched_today_is_claimable(tmp_path: Path, mon
     assert result["task_id"] == "t-013"
 
 
+def test_zero_diff_close_audit_candidate_is_surfaced(tmp_path: Path, monkeypatch) -> None:
+    # conductor/t-190: a done dependency whose note names this task's id is
+    # worth flagging as a likely zero-diff close, advisory only -- selection
+    # order and claimability are unchanged.
+    projects_dir = configure_repo(tmp_path, monkeypatch)
+    write_yaml(projects_dir / "priority.yaml", "order:\n  - butterfly-gallery\n")
+    write_yaml(
+        tmp_path / "project-overrides.yaml",
+        "overrides:\n  - slug: butterfly-gallery\n    status: active\n",
+    )
+    write_project(
+        projects_dir,
+        "butterfly-gallery",
+        """- id: t-033
+  title: Runway motion clip gating
+  status: done
+  note: "Also satisfies t-031's acceptance criteria (visibility/reduced-motion gating)."
+- id: t-031
+  title: Audit runway motion gating
+  status: ready
+  depends_on: t-033
+""",
+    )
+
+    result = selector.first_ready_task(selector.load_priority_order(), selector.load_workable_overrides())
+
+    assert result is not None
+    assert result["task_id"] == "t-031"
+    assert result["audit_candidate"] == "likely a zero-diff close"
+    assert "t-033" in result["audit_candidate_reason"]
+
+
+def test_zero_diff_close_audit_candidate_none_for_ordinary_task(tmp_path: Path, monkeypatch) -> None:
+    projects_dir = configure_repo(tmp_path, monkeypatch)
+    write_yaml(projects_dir / "priority.yaml", "order:\n  - alpha\n")
+    write_yaml(tmp_path / "project-overrides.yaml", "overrides:\n  - slug: alpha\n    status: active\n")
+    write_project(
+        projects_dir,
+        "alpha",
+        """- id: t-001
+  title: Alpha task
+  status: ready
+  stakes: reversible
+""",
+    )
+
+    result = selector.first_ready_task(selector.load_priority_order(), selector.load_workable_overrides())
+
+    assert result is not None
+    assert result["audit_candidate"] is None
+    assert result["audit_candidate_reason"] is None
+
+
 def test_continuous_project_runs_when_active_queue_is_empty(tmp_path: Path, monkeypatch) -> None:
     projects_dir = configure_repo(tmp_path, monkeypatch)
     write_yaml(projects_dir / "priority.yaml", "order:\n  - forever\n  - finite\n")

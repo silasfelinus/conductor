@@ -64,6 +64,47 @@ def test_find_ready_task_reconsiders_umbrella_once_delegate_is_done():
     assert result["task_id"] == "t-017"
 
 
+def test_find_ready_task_flags_zero_diff_close_audit_candidate():
+    # conductor/t-190: a done dependency whose note names this task's id is
+    # worth flagging as a likely zero-diff close, advisory only.
+    roadmaps = [
+        roadmap(
+            "butterfly-gallery",
+            [
+                {
+                    "id": "t-033",
+                    "title": "Runway motion clip gating",
+                    "status": "done",
+                    "note": "Also satisfies t-031's acceptance criteria (visibility/reduced-motion gating).",
+                },
+                {
+                    "id": "t-031",
+                    "title": "Audit runway motion gating",
+                    "status": "ready",
+                    "depends_on": "t-033",
+                },
+            ],
+        )
+    ]
+
+    result = run_worker.find_ready_task(["butterfly-gallery"], roadmaps)
+
+    assert result is not None
+    assert result["task_id"] == "t-031"
+    assert result["audit_candidate"] == "likely a zero-diff close"
+    assert "t-033" in result["audit_candidate_reason"]
+
+
+def test_find_ready_task_audit_candidate_none_for_ordinary_task():
+    roadmaps = [roadmap("alpha", [{"id": "t-001", "title": "Alpha task", "status": "ready"}])]
+
+    result = run_worker.find_ready_task(["alpha"], roadmaps)
+
+    assert result is not None
+    assert result["audit_candidate"] is None
+    assert result["audit_candidate_reason"] is None
+
+
 def test_find_ready_task_skips_daily_gated_task_already_recorded_today():
     # conductor/t-123: a same-day-gated recurring task (e.g. mermaids-of-venice/t-013)
     # whose note already records today's Pacific-date outcome must not be surfaced

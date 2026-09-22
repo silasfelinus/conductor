@@ -39,6 +39,7 @@ except ImportError:
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from daily_gate import already_recorded_today  # noqa: E402
 from roadmap_claims import remaining_scope_delegate_open  # noqa: E402
+from roadmap_deps import zero_diff_close_hint  # noqa: E402
 from project_lifecycle import (  # noqa: E402
     WORKABLE_PROJECT_STATUSES,
     lifecycle_status,
@@ -120,11 +121,14 @@ def find_ready_task(
                 # would just repeat work an earlier session already did this cycle
                 # (conductor/t-123). Skip to the next candidate instead.
                 continue
+            hint = zero_diff_close_hint(task, tasks_by_id)
             return {
                 'project': roadmap.get('_project'),
                 'task_id': task.get('id'),
                 'title': task.get('title'),
                 'roadmap_path': roadmap.get('_path'),
+                'audit_candidate': 'likely a zero-diff close' if hint else None,
+                'audit_candidate_reason': hint.get('reason') if hint else None,
             }
 
     return None
