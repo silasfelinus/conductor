@@ -338,7 +338,7 @@ tasks:
 - id: t-012
   milestone: m4
   title: Polish art-generator random pools, facet picker placement, image sizes, and Krea 2 preset
-  status: ready
+  status: claimed
   owner: worker
   passes: 1
   stakes: reversible
@@ -365,8 +365,8 @@ tasks:
     maturity rules, and keep this as a reversible front-end/server utility change.
 
     Implementation is scoped on the Kind Robots worker branch: random source-explicit LoRA/Facet/object controls, compact persisted artPrompt context, upward Facet picker, checkpoint-aware dimension selects, and removal of the misleading 16-step Krea 2 preset.
-  updated: '2026-09-22T07:29:00Z'
-  claimed_by: 2026-09-22T000600-0700-lora-ingestion-t-012-openai-chat-a73c
-  claimed_at: '2026-09-22T07:22:00Z'
+  updated: '2026-09-22T08:16:55Z'
+  claimed_by: openai-scheduled-2026-09-22T081655Z-lora-ingestion-t012-a11
+  claimed_at: '2026-09-22T08:16:55Z'
   retry_context: 'pass 1 failed (quality): kind_robots#2972''s ESLint lint-ratchet check went from 331->332 problems (no-useless-assignment: 9 -> 10), specifically new useless assignments in server/utils/artRandomPools.ts:293:7 and stores/storybookStore.ts:808:9. Everything else on the PR (all other contract checks, TypeScript, tests) is green. Do differently: remove the two useless assignments (or restructure so the assigned value is actually read) and re-run ''npm run test:lint-ratchet'' locally before pushing; do not touch unrelated ratchet counts.'
 
