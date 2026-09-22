@@ -1060,7 +1060,7 @@ tasks:
   - id: t-031
     milestone: m4
     title: "Gate the animation-slot elements' future motion assets on visibility/prefers-reduced-motion, not just CSS class toggles"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1088,9 +1088,46 @@ tasks:
       (28739-28745) are still PENDING as of this check. Re-flipped to
       `waiting` on the correct dependency; `resolve_deps.py` will surface it
       again once t-033 actually completes.
+
+      2026-09-22: Audit complete. Read pages/butterfly-gallery.vue at kind_robots commit
+      446a915 (PR #2964, t-033's runway splice) end to end for all four
+      data-animation-slot elements.
+
+      butterfly-runway (the only slot with live motion content): correctly gated on
+      all three required signals -- IntersectionObserver visibility
+      (runwayIntersecting), tab visibility (document.hidden via visibilitychange),
+      and prefers-reduced-motion (matchMedia + change listener) -- combined in
+      evaluateRunwayCycle(). Crucially the clip <img> itself is behind
+      `v-if="runwayCyclingEnabled && runwayClip"`, so when any gate fails the
+      element is fully unmounted rather than merely toggled via a CSS class --
+      exactly what this task's title asks for, not the weaker "just a CSS class
+      toggle" pattern. The CSS `@media (prefers-reduced-motion: reduce)` rule for
+      .runway-clip only silences the 260ms fade-in transition, which is harmless
+      since the element is already unmounted by the JS gate in that case.
+
+      foreground-butterfly and foreground-robot slots: still empty placeholders,
+      no motion content yet (28744/28745 failed upstream in ComfyUI and were
+      resubmitted as jobs 30193/30194, tracked by t-035). Nothing to audit until
+      that content lands. t-035's own note already specifies the identical
+      IntersectionObserver + visibilitychange + prefers-reduced-motion pattern as
+      its acceptance criteria ("following t-033's own runway implementation...
+      as the pattern"), so the gating requirement this task exists to enforce is
+      already carried forward into that task rather than needing t-031 to stay
+      open and re-fire later.
+
+      blank-state slot (pre-existing, not part of t-014/t-033's new motion
+      assets): its orbit/icon CSS animations are gated by `@media
+      (prefers-reduced-motion: reduce)` and only render inside a v-else branch
+      (no selected image) -- this is the same "short-lived/v-if-gated" case the
+      original t-024 kaizen note itself called out as already fine by
+      construction, not in scope for this task.
+
+      No code change needed -- t-033 already implemented the exact gating this
+      task was written to require. Closing as done.
     claimed_by: 2026-09-22T035354Z-t031-motion-gate
     claimed_at: '2026-09-22T03:53:54Z'
-    updated: '2026-09-22T03:53:54Z'
+    updated: '2026-09-22T03:56:15Z'
+    implementation_pr: 'silasfelinus/kind_robots#2964'
 
   - id: t-032
     milestone: m5
