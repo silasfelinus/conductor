@@ -374,27 +374,13 @@ tasks:
   - id: t-018
     milestone: m6
     title: "Promote a shipped pitch's PITCHES.yaml entry (status + builds:) in the same cycle it ships, not as a follow-up"
-    status: claimed
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
-    note: >-
-      Kaizen from t-007 (Worker, kind_robots PR #2962, 2026-09-21): geode-bloom (priority
-      20) shipped for real on 2026-09-05 -- component PR #2407 and catalog-registration
-      PR #2410, both merged, all CI green -- but its PITCHES.yaml entry was never
-      promoted past status: pitched and never got a builds: section, unlike every other
-      shipped/candidate pitch. It sat that way for over two weeks and was only caught
-      because this cycle happened to read the pitch queue in priority order and noticed
-      geode-bloom (priority 20, ostensibly still "pitched"/unbuilt) actually had a live
-      component file and catalog entry already.
-      DO: when t-007's own recurring cycle ships a build, treat the PITCHES.yaml
-      promotion edit (status -> candidate, plus a builds: entry with the PR reference(s)
-      and verification list) as part of the same commit that records the roadmap note --
-      not a "come back and update this later" TODO. If a future cycle finds another gap
-      like this, add a hard check to check_animation_novelty.py or a small companion
-      script that cross-references PITCHES.yaml build entries against
-      stores/animationCatalog.ts registrations and flags any catalog entry with no
-      matching builds: record.
-    updated: '2026-09-22T02:18:27Z'
+    note: |-
+      Kaizen from t-007 (Worker, kind_robots PR #2962, 2026-09-21): geode-bloom (priority 20) shipped for real on 2026-09-05 -- component PR #2407 and catalog-registration PR #2410, both merged, all CI green -- but its PITCHES.yaml entry was never promoted past status: pitched and never got a builds: section, unlike every other shipped/candidate pitch. It sat that way for over two weeks and was only caught because this cycle happened to read the pitch queue in priority order and noticed geode-bloom (priority 20, ostensibly still "pitched"/unbuilt) actually had a live component file and catalog entry already. DO: when t-007's own recurring cycle ships a build, treat the PITCHES.yaml promotion edit (status -> candidate, plus a builds: entry with the PR reference(s) and verification list) as part of the same commit that records the roadmap note -- not a "come back and update this later" TODO. If a future cycle finds another gap like this, add a hard check to check_animation_novelty.py or a small companion script that cross-references PITCHES.yaml build entries against stores/animationCatalog.ts registrations and flags any catalog entry with no matching builds: record.
+
+      Verified the concrete bookkeeping defect this task was filed for is already repaired on current main: projects/animation-manager/PITCHES.yaml now records geode-bloom as status candidate with a builds entry naming components/screenfx/geode-bloom.vue, implementation PR kind_robots#2407, catalog-registration PR kind_robots#2410, and verification. The task note itself now carries the standing same-cycle rule for future t-007 builds. No duplicate code change was warranted after the repair had already landed; closing the kaizen task against the verified canonical state.
+    updated: '2026-09-22T02:27:00Z'
     claimed_by: openai-scheduled-2026-09-22T021827Z-animation-manager-t018-a11
     claimed_at: '2026-09-22T02:18:27Z'

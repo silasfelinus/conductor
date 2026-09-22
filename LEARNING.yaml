@@ -16017,3 +16017,14 @@ records:
     the actual code path (build_dream_records.py's per-element art_prompt calls) rather than
     trusting the note verbatim -- three of the seven named fields (best_used_when, catch,
     local_rule) never reach an art_prompt at all and would have been false positives.
+- date: '2026-09-22'
+  project: animation-manager
+  task: t-018
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: When an animation build ships, promote its canonical PITCHES.yaml entry and record build provenance
+    in the same cycle; verify canonical state before adding a second repair for an already-fixed bookkeeping
+    gap.
