@@ -1798,7 +1798,7 @@ tasks:
 - id: t-063
   milestone: m4
   title: Re-baseline or shrink the kind_robots Prettier ratchet (npm run test:prettier-ratchet), currently failing on plain main
-  status: review
+  status: done
   passes: 0
   stakes: reversible
   note: |-
@@ -1822,7 +1822,33 @@ tasks:
     green there despite this local reproduction -- if CI is passing while local fails,
     there may be a baseline-file sync issue between the committed baseline and what CI
     actually checks out, worth understanding before assuming (a) or (b) is sufficient.
+
+    Closed done: PR #5045 merged. Root cause was a sandbox environment gap (no node_modules
+    -> npx resolved an unpinned prettier version), not real kind_robots drift -- the ratchet
+    holds clean on a properly-provisioned checkout (1043 files, -4). Documented the trap in
+    scripts/provision_kind_robots_deps.sh so it isn't rediscovered the same way.
   owner: worker
   claimed_by: 2026-09-22T175530Z-conductor-agent-sb-t063
   claimed_at: '2026-09-22T17:57:35Z'
-  updated: '2026-09-22T18:02:33Z'
+  updated: '2026-09-22T18:06:05Z'
+  implementation_pr: 'silasfelinus/conductor#5045'
+
+- id: t-064
+  milestone: m4
+  title: Check whether test:lint-ratchet has the same bare-npx version-drift exposure as test:prettier-ratchet did
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from t-063 (2026-09-22, silasfelinus/conductor#5045). That task found
+    `npm run test:prettier-ratchet` reported false "repo-wide drift" (+30 files, 8
+    directories) when reproduced in a sandbox with no node_modules installed -- `npx
+    prettier` silently resolved an ambient version (3.8.1) instead of the
+    lockfile-pinned one (3.9.6) that `npm ci`/real CI installs. `verifyLintRatchet.ts`
+    (test:lint-ratchet) shares the same shape (a ratchet script invoked via npx/npm
+    run, comparing live output against a committed baseline) and was not checked for
+    the same exposure. If it shares the vulnerability, add the same warning to
+    scripts/provision_kind_robots_deps.sh's docstring next to the prettier-ratchet
+    note already there; if not, note why it's safe (e.g. eslint resolves differently)
+    so the next session doesn't re-ask the question.
