@@ -796,6 +796,12 @@ def concept_entries(cast: list[dict[str, str]]) -> list[dict]:
 # variant: the species design itself, which every later variant (catch card, lake
 # context, silhouette) is derived from. Getting the design right once, first, is
 # what stops the two games drifting into near-duplicate species.
+# Singular "the whole creature" is correct for nearly every entry, but a species whose
+# silhouette is a multi-body composition (e.g. choirfish's trio) needs its own frame text
+# instead -- ruler-hooked/t-019 found the singular phrasing here silently overriding a
+# multi-body silhouette on every render regardless of how explicit the silhouette wording
+# was. Set a species-level `frame_override` in vertical-slice.yaml rather than editing this
+# shared constant.
 FISH_FRAME = (
     "a clean specimen study, the whole creature clearly visible in profile "
     "against soft open water, nothing else competing for attention in the frame"
@@ -817,11 +823,12 @@ def fish_entries() -> list[dict]:
         # `silhouette` and `distinction` are already written as visual direction --
         # use them verbatim rather than paraphrasing, so the roster stays the single
         # source and an edit there reaches the art without passing through a person.
+        frame = species.get("frame_override") or FISH_FRAME
         body = (
             f"{species['name']}, a fantastical freshwater fish in a comedic fantasy "
             f"kingdom: {species['silhouette']}. "
             f"{' '.join(str(species['distinction']).split())} "
-            f"{FISH_FRAME}"
+            f"{frame}"
         )
         entries.append(
             make_entry(

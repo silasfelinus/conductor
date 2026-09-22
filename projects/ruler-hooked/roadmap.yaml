@@ -447,6 +447,38 @@ tasks:
     queue on merge to main. Re-arming to ready; a future session should confirm a NEW
     choirfish ArtJob actually appears in the queue after merge (not just assume it, per this
     cycle's own lesson) and check the resulting render once it lands.
+
+    Cycle (2026-09-22, scheduled Conductor sweep, later same day): the #4991 re-stage DID land
+    this time and DID render -- `chore: auto-generate project art [skip ci]` (766b0b9,
+    2026-09-22T06:02:03Z) flipped the entry back to status: done, confirming a fresh ArtJob ran
+    against the fully-corrected three-fish silhouette. Downloaded and visually inspected the
+    result: still a single ornate fish, not three. This rules out "the silhouette wording wasn't
+    explicit enough" as the remaining cause -- the silhouette is now about as explicit as text
+    gets (first/second/third fish, individual colors) and it still collapsed to one fish.
+    Found the actual remaining root cause: FISH_FRAME, the frame-text constant shared by ALL 15
+    fish entries in build_ruler_hooked_art_queue.py, reads "a clean specimen study, THE WHOLE
+    CREATURE clearly visible in profile against soft open water" -- singular "the whole
+    creature" directly contradicts a three-body silhouette on every render, no matter how the
+    silhouette itself is worded, because it's appended after the silhouette/distinction text in
+    the same prompt. Confirmed choirfish is the only entry in vertical-slice.yaml that is a
+    multi-body composition (checked all 15 silhouette fields), so this never surfaced for any
+    other species. Fixed by adding an optional per-species `frame_override` field to the roster
+    schema (vertical-slice.yaml) and reading it in fish_entries() (`species.get("frame_override")
+    or FISH_FRAME`) instead of hardcoding FISH_FRAME -- keeps the roster as the single source of
+    truth and doesn't touch the other 14 species' prompts. choirfish's frame_override reads "all
+    three fish of the trio clearly visible together in profile against soft open water" instead
+    of "the whole creature". Re-generated the entry via fish_entries()/render_block(), verified
+    contract_violations() empty, repair_art_prompt_yaml.py 0 unresolved, check_ruler_hooked_docs.py
+    OK, and the local pytest suite (tests/test_art_prompt_conditional_check.py, 5 passed) after
+    fixing the sandbox's isolated pytest missing PyYAML (`uv tool install pytest --with pyyaml
+    --force`, per AGENTS.md's documented fix). Re-staged as status: pending in art-prompts.yaml.
+    Also audited the other two shared prompt-suffix constants (STYLE_TAIL, NO_TEXT) for the same
+    singular-creature contradiction -- clean, neither mentions creature count. Re-arming to
+    ready; a future session should confirm this render lands correctly (three distinct fish)
+    once auto-art-generate.yml processes it -- if it still fails despite the frame fix, the
+    remaining candidate is a genuine model limitation with multi-subject composition at this
+    engine/cfg setting, which would need a different mitigation (e.g. compositing three
+    single-fish renders) rather than another prompt-wording pass.
   updated: '2026-09-22T10:03:34Z'
   owner: worker
   claimed_by: 20260922T100500Z-rh-t019-choirfish-frame
