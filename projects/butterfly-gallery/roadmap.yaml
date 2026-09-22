@@ -1482,3 +1482,57 @@ tasks:
     claimed_at: '2026-09-19T13:17:12Z'
     updated: '2026-09-19T13:33:30Z'
     implementation_pr: 'silasfelinus/conductor#4751'
+
+  - id: t-035
+    milestone: m4
+    title: "Splice the resubmitted left-butterfly-loop and robot-loop clips into their reserved slots once ArtJobs 30193/30194 complete"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Follow-on from t-033: the two original ArtJobs for these shots (28744
+      left-butterfly loop, 28745 robot loop) FAILED with an identical
+      upstream ComfyUI error ("workflow error: node 314 (CLIPTextEncode):
+      hostbuf_file_reader_read failed") after t-033's runway shots (28739-
+      28743) had already succeeded and been spliced into kind_robots#2964.
+      Fresh priority-0 jobs were resubmitted 2026-09-22 with the same
+      prompts/negativePrompts/first-frame images as
+      ANIMATION-JOB-CATALOG.md sections B and C:
+        - 30193 (left-butterfly-loop resubmit, was 28744, first frame
+          gallery-butterfly-start.png, 768x768, 4s/16fps, loop: true)
+        - 30194 (robot-loop resubmit, was 28745, first frame
+          robot-sift-start.png, 768x768, 4s/16fps, loop: true)
+      Both confirmed PENDING via GET /api/art/queue/:id at submission.
+
+      STEP 1 -- GET /api/art/queue/:id for 30193 and 30194. If either is
+      still PENDING/RUNNING, this task is NOT YET ACTIONABLE: update this
+      note with "last checked <date>: still PENDING/RUNNING", leave status:
+      ready, and move on without consuming a pass -- same STEP 1 discipline
+      t-033 followed for its own 7 jobs.
+
+      STEP 2 -- once both report DONE (or FAILED): for any FAILED job, note
+      exactly which shot failed here; a second fresh resubmission may be
+      needed, never reviving 28744/28745/30193/30194 themselves as a
+      substitute. For any DONE job, resolve its artImageId via GET
+      /api/art/image/:id, confirm the resulting file is a real animated
+      webp (not a placeholder), then proceed to integration.
+
+      STEP 3 -- splice each finished clip into pages/butterfly-gallery.vue's
+      matching reserved slot (foreground-butterfly-slot for 30193,
+      robot-animation-slot for 30194), following t-033's own runway
+      implementation (kind_robots#2964) as the pattern: gate on
+      IntersectionObserver visibility, document.visibilitychange, and
+      prefers-reduced-motion. Acceptance criteria carried over from
+      t-014/t-033 unchanged:
+      - The left butterfly loop remains independently composable (its own
+        layer, not fused into the runway or funnel imagery).
+      - The lower-right robot loop must read correctly while partially
+        hidden behind the live, dynamic foreground picture pile (t-005's
+        pile is a separate DOM layer in front of it).
+
+      Verify with the project's normal suite (vue-tsc, eslint, prettier,
+      layout-contract, kr-class-coverage) plus whatever visual check is
+      actually possible in the session's environment; note clearly what was
+      verified vs. assumed.
+    updated: '2026-09-22T03:15:00Z'
