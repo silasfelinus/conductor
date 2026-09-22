@@ -43,7 +43,7 @@ milestones:
 - id: m2
   title: "Creative treatment and section plan"
   weight: 20
-  status: not-started
+  status: in-progress
 - id: m3
   title: "Pipeline tests and style frames"
   weight: 20
@@ -130,18 +130,50 @@ tasks:
 - id: t-004
   milestone: m2
   title: "Write section-by-section creative treatment"
-  status: blocked
-  owner:
+  status: needs-human
+  owner: worker
   passes: 0
   stakes: reversible
   gate_human: true
+  approved_by_human: false
   depends_on:
   - t-003
+  updated: '2026-09-22T11:05:00Z'
   note: >
     Propose a music-video structure that remixes the dance in sections: faithful
     reconstruction moments, animated transformations, impossible perspective shifts,
     silhouette/shadow passages, object-manipulation flourishes, and a final return
     to the human performer and coat. End at needs-human for Silas's creative approval.
+
+    State reconciliation (2026-09-22 scheduled Conductor Agent run): this task's own
+    `depends_on: t-003` was satisfied on 2026-09-20 (t-003 flipped `done` with
+    `approved_by_human: true`), but t-004 itself was left at `status: blocked` rather
+    than `waiting`/`ready` -- BRIEF.md's own text ("t-002 through t-009 stay
+    blocked/waiting until Silas answers") shows this project used "blocked" as an
+    informal synonym for "waiting on a dependency" before AGENTS.md's `waiting` status
+    existed as a distinct convention, not the formal iteration-budget-exhausted
+    meaning (passes: 0, no prior Worker attempt on record). `resolve_deps.py` only
+    promotes tasks literally marked `waiting`, so this task sat stale for two days
+    after its real blocker cleared. Reconciling status directly to reflect that the
+    dependency is met and the work below is complete.
+
+    FOR SILAS: the section-by-section creative treatment is written --
+    `projects/coat-dance/treatment/section-plan.md`. It groups the 38-row beat map
+    (`source/beatmap.md`) into 11 sections, each assigned one of the six approved
+    treatment modes (faithful reconstruction, animated transformation, impossible
+    perspective shift, silhouette/shadow passage, object-manipulation flourish,
+    return to the human performer and coat), grounded in specific rows/timestamps/
+    motion-energy numbers rather than generic mood guesses. The four sections
+    carrying the most specific creative claims: Section E (the row-16 coat-flourish
+    hinge), Section F (row 17's protected climax -- the beat map's own measured
+    energy peak, explicitly flagged not to trim/slow for pacing), Section H (row
+    31's image/body rhyme against the moai-statues photo), and Section I (the
+    recurring rows 26/31/34-36 "reaching toward the photograph" gesture, proposed as
+    one consistent motif). TO APPROVE: read the file (at minimum those four
+    sections), then set `approved_by_human: true` and `status: done` to approve as
+    written, or add corrections to this note. What unblocks when you do: t-005
+    (style-frame prompt pack) can start for real, using each section's proposed
+    treatment as its starting point instead of a blank slate.
 
 - id: t-005
   milestone: m3
