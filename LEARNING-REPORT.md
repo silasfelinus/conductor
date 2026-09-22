@@ -1,15 +1,15 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-22T12:26:59Z
+Generated: 2026-09-22T12:28:41Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1115**
-- Outcomes: blocked: 18, cancelled: 2, done: 1095
+- Closed tasks recorded: **1116**
+- Outcomes: blocked: 18, cancelled: 2, done: 1096
 - Success rate: **98%**
-- Average passes on successful tasks: **0.2**
+- Average passes on successful tasks: **0.3**
 
 ## By project
 
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | scene-animator | 2 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
-| storybook | 36 | 100% |
+| storybook | 37 | 100% |
 | storymaker | 1 | 100% |
 | superkate-hairstyle-ai | 18 | 100% |
 | superkate-services-calculator | 12 | 100% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1098 | 99% |
+| software | 1099 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-22 `storybook/t-010` — A file paused behind an upstream dependency (2026-09-12/13 TALKBACK note: don't polish storybook-visual-setup.vue until t-034/t-035/t-036's card-driven redesign lands) can sit unrevisited for over a week after the pause condition is actually met -- t-034/t-035/t-036 finished 2026-09-13, but nobody re-checked this file until this cycle (2026-09-22). The fix itself (role="group" + aria-label on two ungrouped choice-button grids) matched a pattern already fixed five times elsewhere in the project, confirmed to fail pre-fix via a git-stash round trip on the component. Worth generalizing: a pause note tied to a dependency's completion needs the same kind of staleness check this repo already runs for claimed tasks and stale recurring tasks, or "paused pending X" quietly becomes "paused forever" once X actually lands.
 - 2026-09-22 `lora-ingestion/t-012` — When a broad UI utility patch trips the lint ratchet, repair the newly introduced lint findings on the same branch and require exact-head Actions completion before treating the retry as done.
 - 2026-09-22 `lora-ingestion/t-011` — Two sessions independently implemented the same kaizen-filed fix (PowerShell paths-filter quote-only regex) within a ~30 minute window -- kind_robots#2969 (this task's own OpenAI Worker cycle, single/double-quote fix) and kind_robots#2970 (a different session, broader single/double/bare-scalar fix with a backreference guard), #2970 merging first. Discovered via #2969's PR showing mergeable_state=dirty on review; closed #2969 as redundant with a comment naming the superseding PR rather than resolving a conflict Reviewer has no push access to fix on a worker/* branch. No lost work -- the standard git-conflict backstop caught the collision as designed, just surfaced through PR mergeability instead of a rejected push.
 - 2026-09-22 `lora-ingestion/t-010` — A same-day Claude session (session_01HHrZmwjtwx3T7A7H94irfo) opened kind_robots#2967 (LoRA purpose typing + randomized art batches, Silas-directed, additive migration) and correctly stood down on the one red CI check rather than force-merging or silently ignoring it -- but a session that authors and reviews its own work has no second party to actually merge it once it stands down. A later scheduled Conductor sweep found the open, ready-to-merge PR, independently re-verified the "pre-existing, unrelated" claim (reproduced the regex/quoting bug directly against origin/main) and the migration's additive-only shape, then merged. Worth normalizing: an agent authoring a PR should still expect a distinct review/merge pass to pick it up promptly rather than assuming the standing-down comment alone gets it to main.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-22 `butterfly-gallery/t-033` — A ready roadmap task can get its real implementation merged by a concurrent, repo-scoped session (here kind_robots#2964) without that session ever touching the conductor roadmap task it belongs to. check_pr_merged_drift.py only audits claimed/review tasks, so a ready task whose implementation lands via a different repo's session sits stale until a later sweep's STEP-1-style recheck happens to notice the local kind_robots checkout has moved past what the roadmap note assumed. Worth checking the target repo's own recent commits/PRs, not just the live render queue, when a task's note describes external async work that might have completed.
 - 2026-09-22 `animation-manager/t-018` — When an animation build ships, promote its canonical PITCHES.yaml entry and record build provenance in the same cycle; verify canonical state before adding a second repair for an already-fixed bookkeeping gap.
 - 2026-09-22 `dream-cycle/t-032` — Before wiring a checker into a new call site from a task note's field list, trace the actual code path (build_dream_records.py's per-element art_prompt calls) rather than trusting the note verbatim -- three of the seven named fields (best_used_when, catch, local_rule) never reach an art_prompt at all and would have been false positives.
-- 2026-09-22 `dream-cycle/t-031` — Two independent test files asserting the same workflow-yaml policy can silently diverge if only one is edited later; route both through one shared assertion helper (tests/<module>.py, not test_-prefixed so pytest won't collect it) so the policy can only change in one place.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-22T12:26:59Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-22T12:28:41Z_
