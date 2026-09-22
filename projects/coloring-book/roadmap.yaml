@@ -838,6 +838,20 @@ tasks:
     just been removed for producing static. Not the cause of job 23052 (that went through
     the queue path), but a genuine silent-static generator on its own, now guarded by
     utils/scripts/verifyKontextTextEncoder.ts in contract-tests.
+
+    Cycle check-in (2026-09-22, scheduled Conductor Agent run, independent of the A/B
+    above): before reading this note's latest entries, ran a forced fresh generate-bw canary
+    against monster-recast/mr-001 (`manage_coloring_book_production.py --force --live`,
+    ArtJob 30650) to spot-check the queue path post-#2977. Confirmed the queued payload
+    carries node 11 DualCLIPLoader with the correct t5xxl_fp8_e4m3fn_scaled.safetensors (not
+    the GGUF T5) and node 59 UnetLoaderGGUF flux1-kontext-dev-Q5_K_M.gguf -- consistent with
+    this note's own conclusion that the T5 encoder is already fixed and the open question is
+    now the GGUF UNet path Silas is A/B-testing directly. ArtJob 30650 sat PENDING
+    (unstarted) for the ~15 minutes this session watched it, so it adds no new evidence
+    either way -- left queued as an ordinary recovery candidate for the next cycle rather
+    than a second signal on the open question. Not claiming anything new here: the T5 finding
+    and the #2977 fix were already established by the session immediately prior to this one;
+    recording this only so the next cycle doesn't re-run the same confirmatory check.
   updated: '2026-09-22T09:09:54Z'
   owner: worker
   claimed_by: 2026-09-15T091200Z-coloring-book-t039-sampler9c2a
