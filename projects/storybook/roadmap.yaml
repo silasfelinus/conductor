@@ -1798,7 +1798,7 @@ tasks:
 - id: t-063
   milestone: m4
   title: Re-baseline or shrink the kind_robots Prettier ratchet (npm run test:prettier-ratchet), currently failing on plain main
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   note: |-
@@ -1822,4 +1822,7 @@ tasks:
     green there despite this local reproduction -- if CI is passing while local fails,
     there may be a baseline-file sync issue between the committed baseline and what CI
     actually checks out, worth understanding before assuming (a) or (b) is sufficient.
-  owner: null
+  owner: worker
+  claimed_by: 2026-09-22T175530Z-conductor-agent-sb-t063
+  claimed_at: '2026-09-22T17:57:35Z'
+  updated: '2026-09-22T17:57:35Z'
