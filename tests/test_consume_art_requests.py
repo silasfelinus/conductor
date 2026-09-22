@@ -734,3 +734,166 @@ def test_main_adoption_leaves_the_request_pending(tmp_path, monkeypatch, capsys)
     # The row must still be pending on disk for distribute_images.py to resolve.
     rows = {r["id"]: r for r in cr.read_request_ledger()}
     assert rows["kind-robots-fox-image-abc123"]["status"] == "pending"
+
+
+# --- conductor/t-192: already_satisfied() must not trust a stale file on a
+# regeneration request -----------------------------------------------------
+
+
+def test_regeneration_forced_reads_force_field():
+    assert cr.regeneration_forced({"force": True}) is True
+    assert cr.regeneration_forced({"force": "true"}) is True
+    assert cr.regeneration_forced({"force": "Yes"}) is True
+    assert cr.regeneration_forced({"force": "1"}) is True
+    assert cr.regeneration_forced({}) is False
+    assert cr.regeneration_forced({"force": False}) is False
+    assert cr.regeneration_forced({"force": "false"}) is False
+    assert cr.regeneration_forced({"force": None}) is False
+
+
+def test_already_satisfied_ignores_an_existing_file_when_forced(tmp_path, monkeypatch):
+    """The choirfish bug, reduced to the one function that caused it:
+    already_satisfied() == target_path(entry).exists() has no way to tell a
+    brand-new pending request from a REGENERATION one reusing the same
+    image_path -- so a stale file from a prior (now-corrected) render reads as
+    'done' with zero ArtJobs ever submitted."""
+    monkeypatch.setattr(cr, "ROOT", tmp_path)
+    monkeypatch.setattr(cr, "REPO_ROOTS", {"silasfelinus/conductor": tmp_path})
+    stale = tmp_path / "public" / "images" / "ruler-hooked" / "fish" / "choirfish.webp"
+    stale.parent.mkdir(parents=True)
+    stale.write_bytes(b"stale render from the rejected prompt")
+
+    entry = {
+        "target_repo": "silasfelinus/conductor",
+        "image_path": "public/images/ruler-hooked/fish/choirfish.webp",
+    }
+    # Unforced: the pre-existing (correct) behavior for a first-time request.
+    assert cr.already_satisfied(entry) is True
+
+    # The staging edit that corrects the prompt and re-stages for regeneration.
+    entry["force"] = True
+    assert cr.already_satisfied(entry) is False
+
+
+def test_choirfish_regeneration_is_safe_to_resubmit(tmp_path, monkeypatch):
+    """Full reproduction of the ruler-hooked/t-019 choirfish scenario: a stale
+    file sits at image_path, status was flipped back to pending after the
+    prompt was fixed, and the staging edit both sets force: true and clears
+    last_art_job_id (the documented pairing -- see regeneration_forced()'s and
+    has_unresolved_submission()'s docstrings). Both already_satisfied() and
+    has_unresolved_submission() must agree the row is safe to submit again."""
+    monkeypatch.setattr(cr, "ROOT", tmp_path)
+    monkeypatch.setattr(cr, "REPO_ROOTS", {"silasfelinus/kind_robots": tmp_path})
+    stale = tmp_path / "public" / "images" / "ruler-hooked" / "fish" / "choirfish.webp"
+    stale.parent.mkdir(parents=True)
+    stale.write_bytes(b"stale render from the rejected prompt")
+
+    entry = {
+        "id": "ruler-hooked-fish-choirfish",
+        "status": "pending",
+        "target_repo": "silasfelinus/kind_robots",
+        "image_path": "public/images/ruler-hooked/fish/choirfish.webp",
+        "force": True,
+        "last_art_job_id": None,
+    }
+    assert cr.is_pending(entry) is True
+    assert cr.already_satisfied(entry) is False
+    assert cr.has_unresolved_submission(entry) is False
+
+
+def test_clear_request_field_removes_an_existing_line():
+    sample = SAMPLE.replace(
+        "- id: conductor-davinci-card-2e72bbc9\n",
+        "- id: conductor-davinci-card-2e72bbc9\n  force: true\n",
+    )
+    output, changed = cr.clear_request_field(sample, "conductor-davinci-card-2e72bbc9", "force")
+    assert changed is True
+    assert "force:" not in output
+    assert "prompt: a portrait of davinci" in output
+
+
+def test_clear_request_field_missing_field_is_noop():
+    output, changed = cr.clear_request_field(SAMPLE, "conductor-davinci-card-2e72bbc9", "force")
+    assert changed is False
+    assert output == SAMPLE
+
+
+def test_clear_request_field_missing_id_is_noop():
+    output, changed = cr.clear_request_field(SAMPLE, "nope-not-here", "force")
+    assert changed is False
+    assert output == SAMPLE
+
+
+def test_mark_done_clears_the_force_field(tmp_path, monkeypatch):
+    """Once a regenerated row is genuinely fulfilled, a leftover force: true
+    must not make already_satisfied() ignore its own fresh render forever."""
+    sample = SAMPLE.replace(
+        "- id: conductor-davinci-card-2e72bbc9\n",
+        "- id: conductor-davinci-card-2e72bbc9\n  force: true\n",
+    )
+    file = tmp_path / "art-prompts.yaml"
+    file.write_text(sample)
+    monkeypatch.setattr(cr, "ART_PROMPTS_FILE", file)
+
+    count = cr.mark_done(["conductor-davinci-card-2e72bbc9"])
+    assert count == 1
+
+    rows = {r["id"]: r for r in cr.yaml.safe_load(file.read_text())["requests"]}
+    davinci = rows["conductor-davinci-card-2e72bbc9"]
+    assert davinci["status"] == "done"
+    assert "force" not in davinci
+
+
+def test_mark_done_clears_force_only_for_the_ids_it_touches(tmp_path, monkeypatch):
+    sample = SAMPLE.replace(
+        '- id: "kind-robots-fox-image-abc123"\n',
+        '- id: "kind-robots-fox-image-abc123"\n  force: true\n',
+    )
+    file = tmp_path / "art-prompts.yaml"
+    file.write_text(sample)
+    monkeypatch.setattr(cr, "ART_PROMPTS_FILE", file)
+
+    count = cr.mark_done(["conductor-davinci-card-2e72bbc9"])
+    assert count == 1
+
+    rows = {r["id"]: r for r in cr.yaml.safe_load(file.read_text())["requests"]}
+    assert rows["kind-robots-fox-image-abc123"]["status"] == "pending"
+    assert rows["kind-robots-fox-image-abc123"]["force"] is True
+
+
+def test_main_resubmits_a_forced_entry_instead_of_marking_it_done_again(
+    tmp_path, monkeypatch, capsys
+):
+    """End-to-end: main() must queue a fresh render for a force: true entry
+    whose target file already exists, not silently mark it done a second time
+    the way the choirfish entry was (kind_robots auto-art-generate.yml runs
+    35693015563 and 35714383752)."""
+    sample = SAMPLE.replace(
+        '- id: "kind-robots-fox-image-abc123"\n',
+        '- id: "kind-robots-fox-image-abc123"\n  force: true\n',
+    )
+    ledger = tmp_path / "art-prompts.yaml"
+    ledger.write_text(sample)
+    monkeypatch.setattr(cr, "ART_PROMPTS_FILE", ledger)
+    monkeypatch.setattr(cr, "ROOT", tmp_path)
+    monkeypatch.setattr(cr, "KIND_ROBOTS_ROOT", tmp_path)
+    monkeypatch.setattr(
+        cr,
+        "REPO_ROOTS",
+        {"silasfelinus/conductor": tmp_path, "silasfelinus/kind_robots": tmp_path},
+    )
+    stale = tmp_path / "public" / "images" / "serendipity" / "a-fox.webp"
+    stale.parent.mkdir(parents=True)
+    stale.write_bytes(b"stale render")
+    monkeypatch.setattr(cr.consumer, "PROCESS_DIR", tmp_path / "process")
+    monkeypatch.setattr(cr.consumer, "KR_API_TOKEN", "")
+    monkeypatch.setattr(
+        sys, "argv", ["consume_art_requests.py", "--id-prefix", "kind-robots-fox"]
+    )
+
+    cr.main()
+
+    out = capsys.readouterr().out
+    assert "1 to generate" in out
+    assert "0 already-present" in out
+    assert "would queue public/images/serendipity/a-fox.webp" in out

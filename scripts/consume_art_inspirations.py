@@ -22,7 +22,10 @@ ever turned them into ArtJobs (ai-art-academy/t-009).
 
 Reuses consume_art_queue's queue machinery so generation behaves identically.
 Dry-run by default. Idempotent: an image whose target already exists in the
-checked-out repo is marked done and skipped rather than regenerated.
+checked-out repo is marked done and skipped rather than regenerated -- unless
+the entry carries `force: true` (see regeneration_forced()), matching
+consume_art_requests.py's identical escape hatch for a corrected prompt
+re-staged to pending under the same image_path.
 
 Env: KR_API_TOKEN (required for --live), KR_BASE_URL (default matches consume_art_queue).
 
@@ -94,12 +97,29 @@ def is_pending(entry):
     return str(entry.get("status") or "pending").strip().lower() == "pending"
 
 
+def regeneration_forced(entry):
+    """True when the entry itself asks already_satisfied() to ignore an
+    existing target file. Mirrors consume_art_requests.regeneration_forced()
+    -- see that function's docstring (conductor/t-192)."""
+    value = entry.get("force")
+    if isinstance(value, bool):
+        return value
+    return str(value or "").strip().lower() in ("true", "yes", "1")
+
+
 def target_path(entry):
     root = REPO_ROOTS.get(entry.get("target_repo"), ROOT)
     return root / str(entry.get("image_path"))
 
 
 def already_satisfied(entry):
+    """True when the target image already exists in the checked-out repo.
+
+    Always False for an entry staged with `force: true` (see
+    regeneration_forced()), regardless of what already sits at its path.
+    """
+    if regeneration_forced(entry):
+        return False
     try:
         return target_path(entry).exists()
     except OSError:
@@ -150,7 +170,39 @@ def set_image_status(text, image_path, new_status):
     return text, False
 
 
+def clear_image_field(text, image_path, field_name):
+    """Remove a scalar field line from the inspirations: image whose
+    image_path matches, if present. Mirrors set_image_status's block-scoped
+    match; no-op (returns text, False) when the field or image isn't there."""
+    lines = text.splitlines(keepends=True)
+    starts = [i for i, line in enumerate(lines) if ENTRY_START_PAT.match(line)]
+    field_pat = re.compile(r"^(\s*)" + re.escape(field_name) + r':\s*.*$')
+
+    for idx, start in enumerate(starts):
+        end = starts[idx + 1] if idx + 1 < len(starts) else len(lines)
+
+        matched = False
+        for j in range(start, end):
+            m = IMAGE_PATH_PAT.match(lines[j])
+            if m and m.group(1).strip().strip("'\"") == image_path:
+                matched = True
+                break
+        if not matched:
+            continue
+
+        for j in range(start, end):
+            if field_pat.match(lines[j]):
+                del lines[j]
+                return "".join(lines), True
+        return text, False
+
+    return text, False
+
+
 def mark_done(image_paths):
+    """Set status: done for each image_path (single read/write). Returns count
+    changed. Also clears `force` (see regeneration_forced()) on each one, the
+    same lifecycle as consume_art_requests.mark_done()."""
     if not image_paths:
         return 0
     text = ART_PROMPTS_FILE.read_text()
@@ -159,6 +211,7 @@ def mark_done(image_paths):
         text, did = set_image_status(text, image_path, "done")
         if did:
             changed += 1
+        text, _cleared = clear_image_field(text, image_path, "force")
     if changed:
         ART_PROMPTS_FILE.write_text(text)
     return changed
