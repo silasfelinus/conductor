@@ -32,7 +32,7 @@ import yaml
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from daily_gate import already_recorded_today  # noqa: E402
 from roadmap_claims import task_is_claimable  # noqa: E402
-from roadmap_deps import dependency_satisfied  # noqa: E402
+from roadmap_deps import dependency_satisfied, zero_diff_close_hint  # noqa: E402
 from project_lifecycle import load_project_overrides, ordered_workable_slugs  # noqa: E402
 
 
@@ -107,6 +107,7 @@ def first_ready_task(
                 # would just repeat work an earlier session already did this cycle
                 # (conductor/t-123). Skip to the next candidate instead.
                 continue
+            hint = zero_diff_close_hint(task, tasks_by_id)
             return {
                 "project": roadmap.get("project") or slug,
                 "kind": roadmap.get("kind"),
@@ -115,6 +116,8 @@ def first_ready_task(
                 "stakes": task.get("stakes"),
                 "path": str(PROJECTS_DIR / slug / "roadmap.yaml"),
                 "reclaimed_stale_claim": task.get("status") == "claimed",
+                "audit_candidate": "likely a zero-diff close" if hint else None,
+                "audit_candidate_reason": hint.get("reason") if hint else None,
             }
     return None
 
@@ -139,6 +142,8 @@ def main() -> int:
     print(f"roadmap: {result['path']}")
     if result.get("reclaimed_stale_claim"):
         print("note: reclaiming a stale claim (claimed_at older than CLAIM_TTL_MINUTES)")
+    if result.get("audit_candidate"):
+        print(f"audit candidate: {result['audit_candidate']} -- {result.get('audit_candidate_reason')}")
     print("Run scripts/claim_task.py before starting real work -- see this script's docstring.")
     return 0
 
