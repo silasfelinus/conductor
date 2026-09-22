@@ -3952,8 +3952,8 @@ tasks:
 - id: t-192
   milestone: m2
   title: 'already_satisfied() treats an existing destination file as proof a regeneration request is fulfilled, without ever generating anything'
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >-
@@ -3995,9 +3995,9 @@ tasks:
     generation, not just regeneration. Write a regression test using ruler-hooked's
     choirfish case (existing stale file + status flipped pending + no matching new
     ArtJob) as the failing fixture before changing behavior.
-  updated: '2026-09-22T15:15:00Z'
-  claimed_by: null
-  claimed_at: null
+  updated: '2026-09-22T16:04:05Z'
+  claimed_by: 2026-09-22T-conductor-agent-c-t192-already-satisfied-force
+  claimed_at: '2026-09-22T16:04:05Z'
   implementation_pr: null
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
