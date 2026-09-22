@@ -3899,5 +3899,55 @@ tasks:
   updated: '2026-09-22T05:05:55Z'
   implementation_pr: null
 
+- id: t-191
+  milestone: m2
+  title: 'PreToolUse hook: refuse a Bash command that can print a secret, instead of trusting the author to notice'
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  security_flag: true
+  note: >-
+    Requested directly by Silas (2026-09-22) after a session told him to paste a Civitai
+    token into a PowerShell window when the value was already sitting in `.env`. Four
+    sessions have now printed a live credential into their own tool output
+    (root TALKBACK.md 2026-08-12, 2026-08-13, 2026-09-16, 2026-09-21), plus the
+    2026-08-25 `.env` grep that AGENTS.md hard rule 15 is written around. Every one of
+    those authors knew the rule; the 2026-09-16 session cited the earlier incidents in
+    its own commit messages while writing the leak. Documentation has had four chances.
+
+    `.claude/hooks/block_secret_dump.py` is a PreToolUse guard on `Bash`, wired in
+    `.claude/settings.json`, so it binds every agent session in this repo rather than
+    only the one that read the manual. It refuses on what a command can PRINT, not on
+    whether it mentions a secret: a bare or substitution-collapsed
+    `export`/`env`/`set`/`printenv`/`declare`, a value-yielding expansion of a
+    secret-shaped name (`$VAR`, `${VAR}`, `${VAR:-x}`, `${VAR:0:8}`) reaching a printing
+    command or a here-string, an inline `export SECRET=value`, and a value-printing read
+    of a dotenv file. `curl -H "Authorization: Bearer $KR_API_TOKEN"` is left alone --
+    that value goes to a socket, not to stdout.
+
+    The allow list is load-bearing. `[ -n "$VAR" ]`, `${VAR:+PRESENT}`, `${#VAR}`,
+    `source .env`, `env -u NAME <cmd>`, `grep -c '^NAME=' .env` and the
+    `| sed 's/=.*/=<redacted>/'` form hard rule 15 prescribes all still work, because a
+    guard that refuses the patterns its own manual recommends just teaches the next
+    session to route around it. Each refusal names the safe alternative and never echoes
+    anything to the right of an `=`. Unparseable stdin fails open on purpose.
+
+    `tests/test_block_secret_dump.py` carries all five historical commands verbatim as
+    fixtures, asserts the wire format, asserts silence on allow (an explicit `allow`
+    would bypass the settings.json permission rules rather than defer to them), and
+    asserts `settings.json` still points at the hook -- a correct detector nothing calls
+    is worth nothing.
+
+    Scope notes: conductor only, since kind_robots has no `.claude/` directory at all;
+    and Bash only, so `Read` on a `.env` and a python one-liner that prints
+    `os.environ` are both still on the author. Covers the secondary, non-blocking
+    follow-up named in t-189 (document the no-argument `export`/`env`/`set` shape) by
+    enforcing it rather than describing it.
+  claimed_by: 2026-09-22T0630Z-conductor-t191
+  claimed_at: '2026-09-22T06:30:00Z'
+  updated: '2026-09-22T06:30:00Z'
+  implementation_pr: null
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'

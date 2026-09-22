@@ -42,6 +42,18 @@
           }
         ]
       }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/block_secret_dump.py\"",
+            "timeout": 10
+          }
+        ]
+      }
     ]
   }
 }
