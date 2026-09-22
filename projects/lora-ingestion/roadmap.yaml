@@ -376,8 +376,8 @@ tasks:
 - id: t-013
   milestone: m2
   title: Align LoRA/checkpoint imports through one enriched Resource path and queue a custom preview ArtJob
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   stakes: reversible
   note: |-
     Silas-directed 2026-09-22. Audit both watched-folder imports and Discover/DownloadRequest
@@ -386,3 +386,6 @@ tasks:
     LoRAs from Civitai tags into character/style/setting/etc. without overwriting HUMAN
     corrections, and queue one durable custom preview ArtJob whose completed ArtImage attaches
     back to the Resource. Re-scans/retries must not create duplicate preview jobs.
+  claimed_by: 2026-09-22T221600Z-openai-lora-t013-a61f
+  claimed_at: '2026-09-22T22:16:00Z'
+  updated: '2026-09-22T22:16:00Z'
