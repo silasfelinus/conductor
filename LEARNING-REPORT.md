@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-22T18:06:39Z
+Generated: 2026-09-22T18:10:24Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1119**
-- Outcomes: blocked: 18, cancelled: 2, done: 1099
+- Closed tasks recorded: **1120**
+- Outcomes: blocked: 18, cancelled: 2, done: 1100
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | scene-animator | 2 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
-| storybook | 38 | 100% |
+| storybook | 39 | 100% |
 | storymaker | 1 | 100% |
 | superkate-hairstyle-ai | 18 | 100% |
 | superkate-services-calculator | 12 | 100% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1102 | 99% |
+| software | 1103 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-22 `storybook/t-063` — A local reproduction of a ratchet/version-sensitive CI gate (npm run test:prettier-ratchet) that disagreed with the task note's own open question about CI health turned out to be a sandbox artifact: no node_modules installed meant npx silently resolved an ambient prettier version instead of the lockfile-pinned one npm ci/CI actually use, producing a false '+30 files worse' reading. Before trusting any bare npx/npm-run reproduction of a version-sensitive check, provision deps first (npm ci or the repo's existing provisioning script) and confirm the installed tool version matches the lockfile -- an uninstalled or mismatched toolchain can fabricate drift that was never real.
 - 2026-09-22 `storybook/t-062` — The same UI logic duplicated across two files (storybook-visual-setup.vue and conductor/storybook-page.vue both build the same StorybookStartInput draft) let an a11y fix (role=group/aria-label on choice grids, t-010) land in only one copy; a narrow textual guard scoped to a single file can't catch its sibling never getting the fix -- when auditing a fix's completeness, grep for other files building the same store/type shape, not just the one the original task touched.
 - 2026-09-22 `conductor/t-193` — A same-day kaizen (t-192 -> t-193) that turns "found this bug by hand-grepping" into a structural test is cheap and worth doing immediately rather than deferring: the guard here is ~150 lines, ran in under a tenth of a second, and directly encodes the exact investigative step (grep every already_satisfied definition, check each one) that closed the parent bug. Mirroring an existing guard's shape (test_home_server_pm2_comfyui_direct_call_guard.py: glob the relevant files, define a positive-match regex/parser, assert clean, then self-test the parser/regex against a known offender so the test can't silently pass by never matching anything) made the design decision fast rather than open-ended -- worth reaching for an existing guard's shape before inventing a new one when the repo already has this pattern established.
 - 2026-09-22 `conductor/t-192` — already_satisfied() == target_path(entry).exists() conflated two different questions: "has this ever rendered" and "does what's on disk answer the CURRENT pending request." They only diverge on a regeneration request (status flipped done -> pending after a prompt fix, reusing the same image_path), which is rare enough that the bug went undetected through the entire life of consume_art_requests.py/consume_art_inspirations.py -- until it silently ate two consecutive regeneration attempts on the same entry (ruler-hooked's choirfish) before anyone traced the actual job history. The fix (an explicit force: true per-entry field, cleared once fulfilled) generalizes: an idempotency check keyed on "does the output already exist" needs an explicit signal for "this specific pending cycle invalidates that output," because file/media existence alone cannot distinguish stale from current. Also load-bearing: this codebase's identical logic sometimes has TWO code paths (target_path().exists() vs. a live media-host HEAD check for kind_robots targets via consume_art_requests_to_media.py's wrapper) that look like one function from the caller's side -- a fix to the "obvious" one silently misses the production entrypoint a scheduled workflow actually calls.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-22 `lora-ingestion/t-010` — A same-day Claude session (session_01HHrZmwjtwx3T7A7H94irfo) opened kind_robots#2967 (LoRA purpose typing + randomized art batches, Silas-directed, additive migration) and correctly stood down on the one red CI check rather than force-merging or silently ignoring it -- but a session that authors and reviews its own work has no second party to actually merge it once it stands down. A later scheduled Conductor sweep found the open, ready-to-merge PR, independently re-verified the "pre-existing, unrelated" claim (reproduced the regex/quoting bug directly against origin/main) and the migration's additive-only shape, then merged. Worth normalizing: an agent authoring a PR should still expect a distinct review/merge pass to pick it up promptly rather than assuming the standing-down comment alone gets it to main.
 - 2026-09-22 `conductor/t-190` — Implemented the zero-diff-close audit hint itself (roadmap_deps.zero_diff_close_hint, wired into run_worker.find_ready_task and next_ready_task.first_ready_task): an advisory audit_candidate/audit_candidate_reason field on the picked ready task, flagged when a done depends_on dependency's note mentions the ready task's own id. select_role.py inherits it for free via build_queue_summary(). Clean first-pass -- the pattern was already fully specified by the kaizen note itself (t-031/t-033), same "sibling task already proved the pattern" shape the note describes.
 - 2026-09-22 `butterfly-gallery/t-035` — STEP-1-style async-dependency tasks (poll an ArtJob, act once DONE) go from not-yet-actionable to fully shippable in one pass once the upstream condition clears -- this task went claim -> verify DONE -> resolve artImageId -> splice -> full verify suite -> merged PR in a single session with zero back-and-forth, because the acceptance criteria and implementation pattern were already fully specified by the sibling task (t-033) it was explicitly modeled on. Confirms the t-190 kaizen (from t-031, same session): when a task's own note names the exact pattern a prior sibling task already proved, implementation is close to mechanical -- worth checking for that note-linkage before assuming a task needs open-ended design work.
-- 2026-09-22 `butterfly-gallery/t-031` — A gating audit task can close with zero diff when the dependency it was waiting on (t-033) already implemented the exact requirement in its own PR -- t-033's runway splice used IntersectionObserver + document.hidden + prefers-reduced-motion with a v-if unmount (not a CSS class toggle) specifically because its own note named t-031's acceptance criteria up front. Worth checking whether an upstream task already absorbed a downstream audit task's requirement before assuming the audit still needs new code.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-22T18:06:39Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-22T18:10:24Z_
