@@ -12,10 +12,14 @@ catalogs it as a Resource, and reports the outcome to
 
 Flow per claimed row:
   1. resolve a download URL (explicit downloadUrl, or Civitai by version id)
-  2. pick the canonical ComfyUI target dir from resourceType
+  2. stage LoRA/LyCORIS/checkpoint files beside their canonical model root
   3. stream the file to disk (atomic .part -> rename), hashing as we go
-  4. POST /api/resources to catalog it, capturing the new resourceId
-  5. POST .../complete with {success, resourceId} (or {success:false, error})
+  4. run the same scanner/importer as watched-folder drops, so Civitai metadata,
+     canonical local placement, LoRA category classification, Resource upsert,
+     and generated preview ArtJob behavior cannot drift between ingress paths
+  5. POST .../complete with the canonical Resource id
+
+Other file-backed resource types retain their direct category-root catalog path.
 
 Reuses relay_agent's log() / http_json() / auth token so the two agents share
 one convention. Auth is Authorization: Bearer <KR_RELAY_TOKEN>, which the lora
@@ -33,6 +37,7 @@ Run via pm2 as the `kr-download` app (see ecosystem.config.js). Env:
 import hashlib
 import os
 import re
+import shutil
 import socket
 import sys
 import time
@@ -40,6 +45,7 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
+import lora_import_agent as model_import
 import relay_agent as relay
 
 MODEL_ROOT = os.environ.get("KR_MODEL_ROOT", "Z:/ai/models").strip()
@@ -69,6 +75,7 @@ USER_AGENT = "kr-download/1.0 (+https://github.com/silasfelinus/kind_robots)"
 
 # Extensions a model file is expected to carry; anything else keeps its own.
 MODEL_EXTENSIONS = (".safetensors", ".ckpt", ".pt", ".pth", ".bin", ".gguf")
+SCANNER_RESOURCE_TYPES = {"LORA", "LYCORIS", "CHECKPOINT"}
 
 
 def target_dir(resource_type):
@@ -80,6 +87,64 @@ def target_dir(resource_type):
             f"resourceType {key!r} is not a downloadable model-file type"
         )
     return directory
+
+
+def scanner_staging_dir(request_id, resource_type):
+    """Per-request inbox whose parent preserves scanner classification context."""
+    key = str(resource_type or "LORA").upper()
+    if key in {"LORA", "LYCORIS"}:
+        return os.path.join(LORA_DIR, f".download-import-{int(request_id)}")
+    if key == "CHECKPOINT":
+        # scan_models includes root.parent.name in classification_path, so a
+        # child of checkpoints still reads as a checkpoint even before Civitai
+        # enrichment succeeds.
+        return os.path.join(CHECKPOINT_DIR, f".download-import-{int(request_id)}")
+    return target_dir(key)
+
+
+def scanner_work_dir(request_id):
+    return os.path.join(MODEL_ROOT, ".download-import-work", str(int(request_id)))
+
+
+def resource_id_from_import(result, request, file_hash):
+    resources = list((result or {}).get("resources") or [])
+    if not resources:
+        return None
+
+    version_id = request.get("civitaiModelVersionId")
+    if version_id:
+        for resource in resources:
+            if resource.get("civitaiModelVersionId") == version_id:
+                return resource.get("id")
+
+    for resource in resources:
+        if resource.get("hash") == file_hash:
+            return resource.get("id")
+
+    return resources[0].get("id")
+
+
+def catalog_with_scanner(request, staging_dir, file_hash):
+    """Canonical ingest path for LoRA/LyCORIS/checkpoint DownloadRequests."""
+    request_id = int(request["id"])
+    resource_type = str(request.get("resourceType") or "LORA").upper()
+    work_dir = scanner_work_dir(request_id)
+    if resource_type in {"LORA", "LYCORIS"}:
+        result = model_import.process_lora_folder(staging_dir, work_dir)
+    elif resource_type == "CHECKPOINT":
+        result = model_import.process_model_folder(staging_dir, work_dir)
+    else:
+        raise ValueError(f"no canonical scanner for {resource_type}")
+
+    if not result:
+        raise RuntimeError(f"{resource_type} scanner/importer did not return a result")
+
+    resource_id = resource_id_from_import(result, request, file_hash)
+    if not resource_id:
+        raise RuntimeError(
+            f"{resource_type} scanner/importer completed without a Resource id"
+        )
+    return int(resource_id), work_dir
 
 
 def claim_download():
@@ -242,14 +307,20 @@ def complete_download(request_id, success, resource_id=None, error=None):
 
 def process_download(request):
     request_id = request.get("id")
-    resource_type = request.get("resourceType") or "LORA"
+    resource_type = str(request.get("resourceType") or "LORA").upper()
     url = resolve_download_url(request)
     if not url:
         raise RuntimeError("no downloadUrl and no civitaiModelVersionId to fetch")
 
-    dest_dir = target_dir(resource_type)
+    use_scanner = resource_type in SCANNER_RESOURCE_TYPES
+    dest_dir = (
+        scanner_staging_dir(request_id, resource_type)
+        if use_scanner
+        else target_dir(resource_type)
+    )
     relay.log(
-        f"download {request_id}: {resource_type} <- {url} into {dest_dir}"
+        f"download {request_id}: {resource_type} <- {url} into "
+        f"{dest_dir}{' (scanner staging)' if use_scanner else ''}"
     )
 
     final_path, filename, size, file_hash = download_binary(request, url, dest_dir)
@@ -258,11 +329,27 @@ def process_download(request):
         f"({size / 1_048_576:.1f} MiB, sha256 {file_hash[:12]}…)"
     )
 
-    resource_id = catalog_resource(request, filename, filename, file_hash)
+    work_dir = None
+    if use_scanner:
+        resource_id, work_dir = catalog_with_scanner(
+            request, dest_dir, file_hash
+        )
+    else:
+        resource_id = catalog_resource(request, filename, filename, file_hash)
+
     complete_download(request_id, True, resource_id=resource_id)
-    relay.log(
-        f"download {request_id}: DONE (Resource {resource_id or 'existing'})"
-    )
+    relay.log(f"download {request_id}: DONE (Resource {resource_id})")
+
+    # These are request-scoped scratch paths only. Keep failed staging intact
+    # for inspection/retry, but clean successful scratch once the completion
+    # API has acknowledged the canonical Resource id.
+    if use_scanner:
+        try:
+            os.rmdir(dest_dir)
+        except OSError:
+            pass
+        if work_dir:
+            shutil.rmtree(work_dir, ignore_errors=True)
 
 
 def main():
