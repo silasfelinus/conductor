@@ -21,17 +21,34 @@
 # not reliably include it, which made recovery runs repeatedly fail once before
 # installing the same dependency by hand. Provision it here once, idempotently.
 #
-# ALSO REQUIRED before trusting a local `npm run test:prettier-ratchet` (or
-# test:lint-ratchet) reproduction (storybook/t-063, 2026-09-22): with no
-# node_modules present, `npx prettier ...` silently fetches/resolves whatever
-# ambient prettier version npx finds (measured: 3.8.1) instead of the
-# lockfile-pinned one (3.9.6) that `npm ci` — and therefore real CI — actually
-# installs. Different prettier versions disagree on formatting for some files,
-# which read as ~30 files of "repo-wide drift" across 8 unrelated directories
-# that no single PR introduced. After sourcing this script (so node_modules
+# ALSO REQUIRED before trusting a local `npm run test:prettier-ratchet`
+# reproduction (storybook/t-063, 2026-09-22): with no node_modules present,
+# `npx prettier ...` silently fetches/resolves whatever ambient prettier
+# version npx finds (measured: 3.8.1) instead of the lockfile-pinned one
+# (3.9.6) that `npm ci` — and therefore real CI — actually installs.
+# Different prettier versions disagree on formatting for some files, which
+# read as ~30 files of "repo-wide drift" across 8 unrelated directories that
+# no single PR introduced. After sourcing this script (so node_modules
 # matches the lockfile), the same ratchet run reports the gate holding clean.
 # Always provision deps here first, never take a bare `npx <tool>` reproduction
 # of a ratchet/version-sensitive gate at face value.
+#
+# `test:lint-ratchet` (verifyLintRatchet.ts) does NOT share this exposure
+# (checked storybook/t-064, 2026-09-22, reproduced directly rather than
+# assumed from the shared npx-spawnSync shape): an ambient `npx eslint` does
+# resolve a different version when node_modules is absent (measured: 10.1.0
+# vs. the lockfile-pinned ^10.2.0) — but this repo's eslint.config.mjs
+# unconditionally does `import withNuxt from './.nuxt/eslint.config.mjs'`,
+# a file `nuxi prepare` generates as part of `npm ci`'s postinstall (see the
+# CYPRESS_INSTALL_BINARY note above) and that does not exist in a fresh
+# checkout. So a bare `npx eslint` reproduction fails LOUD before it ever
+# lints a file — `Error [ERR_MODULE_NOT_FOUND]: Cannot find module
+# '.../.nuxt/eslint.config.mjs'` — which verifyLintRatchet.ts's `runEslint()`
+# surfaces as "ESLint produced no JSON output" rather than silently reporting
+# a drifted (and wrong) problem count the way an unprovisioned prettier run
+# does. Provisioning first is still required to get a real ratchet result at
+# all, but an unprovisioned lint-ratchet run cannot silently mislead the way
+# an unprovisioned prettier-ratchet run can — it just breaks visibly instead.
 #
 # Mirrors scripts/provision_node24.sh: idempotent, no root, no version manager,
 # no persistent host state (reruns cheaply in each fresh container).
