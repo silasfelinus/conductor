@@ -1836,8 +1836,8 @@ tasks:
 - id: t-064
   milestone: m4
   title: Check whether test:lint-ratchet has the same bare-npx version-drift exposure as test:prettier-ratchet did
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >-
@@ -1852,3 +1852,6 @@ tasks:
     scripts/provision_kind_robots_deps.sh's docstring next to the prettier-ratchet
     note already there; if not, note why it's safe (e.g. eslint resolves differently)
     so the next session doesn't re-ask the question.
+  claimed_by: 2026-09-22T19:55:22Z-storybook-t064-agentrun
+  claimed_at: '2026-09-22T19:55:22Z'
+  updated: '2026-09-22T19:55:22Z'
