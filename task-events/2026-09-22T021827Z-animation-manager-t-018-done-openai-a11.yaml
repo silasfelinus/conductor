@@ -1,0 +1,18 @@
+version: 1
+project: animation-manager
+task: t-018
+operation: done
+session: openai-scheduled-2026-09-22T021827Z-animation-manager-t018-a11
+updated: '2026-09-22T02:27:00Z'
+note: >-
+  Verified the concrete bookkeeping defect this task was filed for is already repaired on current main: projects/animation-manager/PITCHES.yaml now records geode-bloom as status candidate with a builds entry naming components/screenfx/geode-bloom.vue, implementation PR kind_robots#2407, catalog-registration PR kind_robots#2410, and verification. The task note itself now carries the standing same-cycle rule for future t-007 builds. No duplicate code change was warranted after the repair had already landed; closing the kaizen task against the verified canonical state.
+learning:
+  date: '2026-09-22'
+  project: animation-manager
+  task: t-018
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'When an animation build ships, promote its canonical PITCHES.yaml entry and record build provenance in the same cycle; verify canonical state before adding a second repair for an already-fixed bookkeeping gap.'
