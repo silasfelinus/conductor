@@ -229,3 +229,47 @@ tasks:
   claimed_by: 2026-09-19T131700-0700-lora-t009-family-filter-4c91
   claimed_at: '2026-09-19T13:17:00-07:00'
   implementation_pr: 'silasfelinus/kind_robots#2894'
+
+- id: t-010
+  milestone: m4
+  title: Type every LoRA by what it is FOR, and randomize art batches from those pools
+  status: review
+  owner: claude
+  stakes: reversible
+  note: >-
+    Silas-directed 2026-09-22: "identify their type, such as character, style,
+    setting, action, clothing, etc, and then be able to randomize them for art
+    generation, for example, asking for '{character} running in {style}, batch
+    10', should give ten different characters running in ten random styles for
+    the selected checkpoint." Auto-configure from Civitai where possible, and
+    make it editable from the Resource card or the LoRA editor. Also asked
+    whether random selection already works for other objects (character,
+    location, facet) -- it did not, for art generation.
+
+    Landed as one vertical slice on kind_robots: Resource.loraCategory +
+    loraCategorySource (additive migration, ten categories), a shared
+    classifier (utils/loraCategory.ts) mirrored into scan_loras.py so the
+    Civitai tags are read at the one moment they exist, category editing in
+    the LoRA editor and the triage page (with a suggest pass and bulk apply),
+    and a new POST /api/art/randomize that rolls a templated prompt into a
+    batch plan. server/utils/promptVariants.ts became the shared roll engine
+    for both the Challenge Center and art, dealing WITHOUT replacement so ten
+    variants genuinely give ten different values, with a replayable seed.
+    Facets, Characters and Scenarios answer placeholders too, so the
+    "other objects" half of the ask is covered.
+
+    SCHEMA-AFFECTING: prisma/migrations/20260922120000_add_lora_category.
+    Additive (two nullable columns + one index), so it is safe for the
+    unattended Alexandria deploy window.
+
+    FOR SILAS, after deploy: the pools start EMPTY -- every existing LoRA row
+    is unclassified, so {character} rolls nothing until the catalog is
+    classified. Run
+    `npm run backfill:lora-categories` (dry run first, then --apply; add
+    --fetch-tags with CIVITAI_TOKEN set to reach the Civitai tags the rows
+    never stored). Then use the triage page's "Suggest for all unclassified"
+    for whatever the heuristics could not reach. Hand corrections are stamped
+    HUMAN and are never overwritten by a later scan or backfill.
+  updated: '2026-09-22T05:40:00Z'
+  claimed_by: 2026-09-22T053000Z-lora-t010-type-randomization
+  claimed_at: '2026-09-22T05:30:00Z'
