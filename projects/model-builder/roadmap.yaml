@@ -469,7 +469,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 52
     stakes: reversible
@@ -607,7 +607,12 @@ tasks:
       the one commit in the window, 8305812 "fix(facet-art): make --requeue-curated idempotent
       against its own queue", touches only facet-art scripts, no model-builder path). No
       model-builder-specific regression audit warranted -- verified no-op, re-arming to ready.
-    updated: '2026-09-22T11:56:44Z'
+
+      Cycle 86 (checked through 2026-09-22T11:56:55Z): zero fresh commits on any repo path
+      since the prior 2026-09-22T10:56:24Z audit (checked via GitHub commits API, since-
+      filtered repo-wide, kind_robots default branch). No model-builder-specific regression
+      audit warranted -- verified no-op, re-arming to ready.
+    updated: '2026-09-22T11:57:00Z'
     owner: worker
     claimed_by: 2026-09-22T-conductor-agent-cycle86
     claimed_at: '2026-09-22T11:56:44Z'
