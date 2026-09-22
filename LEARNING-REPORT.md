@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-22T20:07:30Z
+Generated: 2026-09-22T20:10:37Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1120**
-- Outcomes: blocked: 18, cancelled: 2, done: 1100
+- Closed tasks recorded: **1121**
+- Outcomes: blocked: 18, cancelled: 2, done: 1101
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -59,7 +59,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | scene-animator | 2 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
-| storybook | 39 | 100% |
+| storybook | 40 | 100% |
 | storymaker | 1 | 100% |
 | superkate-hairstyle-ai | 18 | 100% |
 | superkate-services-calculator | 12 | 100% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1103 | 99% |
+| software | 1104 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-22 `storybook/t-064` — test:lint-ratchet does NOT share test:prettier-ratchet's silent ambient-version-drift exposure: an unprovisioned npx eslint does resolve a different ambient version, but this repo's eslint.config.mjs unconditionally imports the Nuxt-generated .nuxt/eslint.config.mjs (only produced by nuxi prepare, part of npm ci's postinstall), so a bare npx eslint reproduction fails loud (ERR_MODULE_NOT_FOUND) before linting anything rather than silently misreporting a drifted count. Separately: pull_request_read's get_check_runs can serve stale cached in_progress status for a job that already completed (observed ~30 min stale here) -- cross-check with actions_get/get_workflow_job before treating a check as genuinely stuck.
 - 2026-09-22 `storybook/t-063` — A local reproduction of a ratchet/version-sensitive CI gate (npm run test:prettier-ratchet) that disagreed with the task note's own open question about CI health turned out to be a sandbox artifact: no node_modules installed meant npx silently resolved an ambient prettier version instead of the lockfile-pinned one npm ci/CI actually use, producing a false '+30 files worse' reading. Before trusting any bare npx/npm-run reproduction of a version-sensitive check, provision deps first (npm ci or the repo's existing provisioning script) and confirm the installed tool version matches the lockfile -- an uninstalled or mismatched toolchain can fabricate drift that was never real.
 - 2026-09-22 `storybook/t-062` — The same UI logic duplicated across two files (storybook-visual-setup.vue and conductor/storybook-page.vue both build the same StorybookStartInput draft) let an a11y fix (role=group/aria-label on choice grids, t-010) land in only one copy; a narrow textual guard scoped to a single file can't catch its sibling never getting the fix -- when auditing a fix's completeness, grep for other files building the same store/type shape, not just the one the original task touched.
 - 2026-09-22 `conductor/t-193` — A same-day kaizen (t-192 -> t-193) that turns "found this bug by hand-grepping" into a structural test is cheap and worth doing immediately rather than deferring: the guard here is ~150 lines, ran in under a tenth of a second, and directly encodes the exact investigative step (grep every already_satisfied definition, check each one) that closed the parent bug. Mirroring an existing guard's shape (test_home_server_pm2_comfyui_direct_call_guard.py: glob the relevant files, define a positive-match regex/parser, assert clean, then self-test the parser/regex against a known offender so the test can't silently pass by never matching anything) made the design decision fast rather than open-ended -- worth reaching for an existing guard's shape before inventing a new one when the repo already has this pattern established.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-22 `lora-ingestion/t-011` — Two sessions independently implemented the same kaizen-filed fix (PowerShell paths-filter quote-only regex) within a ~30 minute window -- kind_robots#2969 (this task's own OpenAI Worker cycle, single/double-quote fix) and kind_robots#2970 (a different session, broader single/double/bare-scalar fix with a backreference guard), #2970 merging first. Discovered via #2969's PR showing mergeable_state=dirty on review; closed #2969 as redundant with a comment naming the superseding PR rather than resolving a conflict Reviewer has no push access to fix on a worker/* branch. No lost work -- the standard git-conflict backstop caught the collision as designed, just surfaced through PR mergeability instead of a rejected push.
 - 2026-09-22 `lora-ingestion/t-010` — A same-day Claude session (session_01HHrZmwjtwx3T7A7H94irfo) opened kind_robots#2967 (LoRA purpose typing + randomized art batches, Silas-directed, additive migration) and correctly stood down on the one red CI check rather than force-merging or silently ignoring it -- but a session that authors and reviews its own work has no second party to actually merge it once it stands down. A later scheduled Conductor sweep found the open, ready-to-merge PR, independently re-verified the "pre-existing, unrelated" claim (reproduced the regex/quoting bug directly against origin/main) and the migration's additive-only shape, then merged. Worth normalizing: an agent authoring a PR should still expect a distinct review/merge pass to pick it up promptly rather than assuming the standing-down comment alone gets it to main.
 - 2026-09-22 `conductor/t-190` — Implemented the zero-diff-close audit hint itself (roadmap_deps.zero_diff_close_hint, wired into run_worker.find_ready_task and next_ready_task.first_ready_task): an advisory audit_candidate/audit_candidate_reason field on the picked ready task, flagged when a done depends_on dependency's note mentions the ready task's own id. select_role.py inherits it for free via build_queue_summary(). Clean first-pass -- the pattern was already fully specified by the kaizen note itself (t-031/t-033), same "sibling task already proved the pattern" shape the note describes.
-- 2026-09-22 `butterfly-gallery/t-035` — STEP-1-style async-dependency tasks (poll an ArtJob, act once DONE) go from not-yet-actionable to fully shippable in one pass once the upstream condition clears -- this task went claim -> verify DONE -> resolve artImageId -> splice -> full verify suite -> merged PR in a single session with zero back-and-forth, because the acceptance criteria and implementation pattern were already fully specified by the sibling task (t-033) it was explicitly modeled on. Confirms the t-190 kaizen (from t-031, same session): when a task's own note names the exact pattern a prior sibling task already proved, implementation is close to mechanical -- worth checking for that note-linkage before assuming a task needs open-ended design work.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-22T20:07:30Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-22T20:10:37Z_
