@@ -1,8 +1,0 @@
-version: 1
-project: storybook
-task: t-051
-operation: ready
-session: openai-scheduled-2026-09-22T001508Z-storybook-t051-a11
-updated: '2026-09-22T00:18:30Z'
-note: >-
-  Investigated the retirement gate before deleting compatibility code. The six /api/davinci/* files are still thin re-export shims only, and repo-wide search shows the two davinci-active-life-run* keys are confined to utils/storybookLifeRunKeys.ts plus the intended fallback reads in storybook-life-run.vue/storybookStore.ts. However, this connector-only run has no access to the production request/error metrics required by this task's explicit "once in-flight runs have drained" acceptance condition, so deleting the shims or legacy-key fallbacks would be an assumption rather than verified cleanup. No code was changed and no pass was consumed. Releasing to ready; next actionable step is to verify zero recent /api/davinci/* traffic and no legacy-key-related errors/analytics, then delete the six shims and fallback exports/reads in one scoped PR.

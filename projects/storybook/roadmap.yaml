@@ -1359,10 +1359,9 @@ tasks:
 - id: t-051
   milestone: m5
   title: Delete the retired /api/davinci/* shim routes and legacy localStorage keys once in-flight runs have drained
-  status: claimed
+  status: ready
   stakes: reversible
   passes: 0
-  owner: worker
   note: |-
     Kaizen from t-026 (kind_robots PR #2774, 2026-09-16 scheduled Conductor session):
     that task moved the life engine's 6 API routes to /api/storybook/life/runs|endings/*
@@ -1377,9 +1376,9 @@ tasks:
     the LEGACY_LIFE_RUN_ID_KEY/LEGACY_LIFE_RUN_ART_JOBS_KEY fallback branches in
     components/storybook/storybook-life-run.vue and stores/storybookStore.ts, and the
     now-unused legacy exports from utils/storybookLifeRunKeys.ts.
-  updated: '2026-09-22T00:15:08Z'
-  claimed_by: openai-scheduled-2026-09-22T001508Z-storybook-t051-a11
-  claimed_at: '2026-09-22T00:15:08Z'
+
+    Investigated the retirement gate before deleting compatibility code. The six /api/davinci/* files are still thin re-export shims only, and repo-wide search shows the two davinci-active-life-run* keys are confined to utils/storybookLifeRunKeys.ts plus the intended fallback reads in storybook-life-run.vue/storybookStore.ts. However, this connector-only run has no access to the production request/error metrics required by this task's explicit "once in-flight runs have drained" acceptance condition, so deleting the shims or legacy-key fallbacks would be an assumption rather than verified cleanup. No code was changed and no pass was consumed. Releasing to ready; next actionable step is to verify zero recent /api/davinci/* traffic and no legacy-key-related errors/analytics, then delete the six shims and fallback exports/reads in one scoped PR.
+  updated: '2026-09-22T00:18:30Z'
 
 - id: t-055
   milestone: m7
