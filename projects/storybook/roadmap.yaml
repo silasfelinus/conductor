@@ -869,7 +869,7 @@ tasks:
 - id: t-037
   milestone: m7
   title: "Delete the client-side beat loop and rewrite its ~25 verifyStorybook*Guard scripts"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-036, t-052]
@@ -980,11 +980,21 @@ tasks:
     - verifyStorybookSeedQueryRaceGuard (protects a route.query race between storybook-page.vue's seedFromQuery() and storybook-library-page.vue's updateStoryQuery(), both mutating query on the same mount): confirmed updateStoryQuery()'s call site is gated on storyStore.session (the OLD useStorybookStore()), which the new engine never populates -- StorybookStorymaker uses useStorybookRunStore() exclusively. The race structurally cannot fire once ?legacy=1 is gone. storybook-table.vue's own seedFromQuery() (added t-055) has no sibling component racing on route.query in the new tree.
 
     All three guards' hazards are legacy-architecture-specific with no new-engine code to attach a rewritten assertion to right now -- recommend deleting them alongside storybookLibraryHelper.ts/storybook-page.vue when those files are actually removed, rather than force-migrating them to a vacuous assertion against unrelated files. Did not touch these three guards or the files they protect; no pass consumed (investigation only). Remaining unexamined slices: verifyStorybookLibrarySessionConsistencyGuard, verifyStorybookRestartInputCompletenessGuard, verifyStorybookRestoreIdempotencyGuard, verifyStorybookSessionLibrary, verifyStorybookStudio, verifyNarrativeArtPersistence (large -- spans 6+ shared narrative-art files beyond storybookStore.ts itself, likely its own multi-cycle slice), verifyStorybookConfirmArmScopeGuard, verifyStorybookLibraryMountReopenGuard, verifyStorybookLibraryNewStoryConfirmGuard, verifyStorybookAnswerInputPreservationGuard, verifyStorybookComposerImeCompositionGuard. Re-arming to ready; releasing the claim.
-  updated: '2026-09-22T22:01:17Z'
+
+    Cycle 26 (2026-09-22, scheduled Conductor Agent run, session 2026-09-22T220116Z-storybook-t037-hero-scenario-guard): picked up cycle 25's remaining-unexamined list before touching any file. Corrected two stale entries in that list against the live kind_robots tree: verifyStorybookAnswerInputPreservationGuard.mjs was already migrated to the new engine in an earlier slice (PR #2806, pins storybook-reading.vue/runStore.writeMove(), not the legacy store) -- it should never have carried over into "remaining unexamined". verifyStorybookLibraryMountReopenGuard.mjs and verifyStorybookComposerImeCompositionGuard.mjs never pinned the legacy store/page at all (they pin storybook-library-page.vue and narrative-response-composer.vue, both live new-engine files, from unrelated storybook/t-010 polish work) -- neither is in this task's scope.
+
+    Confirmed 7 more guards as LEGACY-ONLY (pin storybookStore.ts/storybook-page.vue/storybookLibraryHelper.ts directly, no new-engine equivalent, same bucket as cycle 24's original 8): verifyStorybookLibrarySessionConsistencyGuard, verifyStorybookRestartInputCompletenessGuard, verifyStorybookRestoreIdempotencyGuard, verifyStorybookSessionLibrary, verifyStorybookStudio, verifyStorybookConfirmArmScopeGuard, verifyStorybookLibraryNewStoryConfirmGuard. Also confirmed verifyStorybookSeedQueryCapGuard and verifyStorybookPickerRestoredSelectionGuard/verifyStorybookPickerSearchResetGuard are LEGACY-ONLY for a more specific reason than "unknown parity": they pin the old NarrativeIngredientMultiPicker widget's search-box/expand/selection-cap mechanics, and storybook-table.vue (grepped directly) has zero references to that widget or those concepts -- the new card-based Table has no equivalent UI to rewrite these against, so join the legacy-only bucket rather than bucket 3 (SETUP/DEEP-LINK). verifyStorybookCharacterDeepLinkGuard and verifyStorybookLocationDeepLinkGuard both hard-pin PAGE_PATH = components/conductor/storybook-page.vue directly (confirmed via grep for the PATH constants) -- also legacy-only for their "engine consumes it" half, though their CTA-side assertions (character-manager.vue / dream-narration.vue navigate correctly) remain live properties worth preserving in whatever guard covers those files after the legacy page is deleted.
+
+    Landed one real bounded slice rather than only investigating: verifyStorybookTableDeepLinkGuard.mjs (storybook/t-055's new-engine deep-link guard) only covered the three keys t-055 fixed a live bug for (location/facet/reward) -- but storybook-table.vue's seedFromQuery() has always also read ?character= (-> hero slot) and ?scenario= (-> thread slot), with zero guard coverage on the new-engine side for either. Extended the guard to assert both keys are read and resolved through cardForSlug()/playCardIfAbsent(), plus a withCharacterLock() gating check mirroring the existing genre-lock one (a locked character must not bypass the board's gate via a deep link). Verified non-vacuous (broke ?scenario= handling, confirmed the guard fails, restored and reconfirmed it passes), verified prettier/eslint clean using kind_robots' own lockfile-pinned toolchain (provisioned via conductor/scripts/provision_kind_robots_deps.sh, not an ambient npx resolution -- see storybook/t-063's prettier-version-drift finding), and ran the full verifyStorybookTable.mjs suite clean. PR: silasfelinus/kind_robots#2991 (open, CI pending at write time).
+
+    verifyStorybookObjectEntryLinks.mjs is a genuine split case worth flagging for the eventual bulk cutover: it checks facet-profile.vue/reward-encounter.vue/character-manager.vue/scenario-manager.vue CTAs (engine-agnostic, must survive) in the same file as a storybook-page.vue seedFromQuery() consumption check (legacy-only, must go). The bulk cutover should split this file rather than delete it outright, keeping the CTA-side assertions.
+
+    t-053 status check this cycle: still status=waiting (life-run.vue retirement not yet cleared) -- the bulk cutover of storybookStore.ts/storybook-page.vue/storybookLibraryHelper.ts + their ~13 confirmed-legacy-only guards remains blocked on that, not on any further per-guard investigation. Re-arming to ready (recurring multi-slice task); releasing the claim once PR #2991 merges.
+  updated: '2026-09-22T22:03:36Z'
   owner: worker
   claimed_by: 2026-09-22T220116Z-storybook-t037-hero-scenario-guard
   claimed_at: '2026-09-22T22:01:17Z'
-  implementation_pr: 'silasfelinus/kind_robots#2806'
+  implementation_pr: 'silasfelinus/kind_robots#2991'
 
 - id: t-052
   milestone: m7
