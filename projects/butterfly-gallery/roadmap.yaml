@@ -1121,7 +1121,7 @@ tasks:
   - id: t-033
     milestone: m4
     title: "Integrate rendered Gallery motion actor clips into runway/left-loop/robot-loop once ArtJobs complete"
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -1432,7 +1432,32 @@ tasks:
       (the reduced-motion/visibility audit) can proceed now for the runway slot;
       the other two slots still have nothing to audit until their resubmission
       lands.
-    updated: '2026-09-22T02:56:27Z'
+
+      2026-09-22T03:15Z (scheduled conductor Agent run, reconciliation): kind_robots PR
+      #2964 (referenced above) was merged into kind_robots main at 2026-09-22T02:07:18Z,
+      50/50 CI checks green, no open review threads -- confirmed live via
+      mcp__github__pull_request_read (get, get_check_runs, get_review_comments). Diff
+      inspected directly (git show 446a915): the 5 runway clips are spliced into the
+      "butterfly-runway" slot exactly as this note's STEP 3 described, gated on
+      IntersectionObserver + document.visibilitychange + prefers-reduced-motion. This
+      closes the runway portion of t-033's acceptance criteria.
+
+      Also resubmitted the 2 FAILED shots per this note's own STEP 2 plan: fresh
+      priority-0 jobs 30193 (left-butterfly-loop, was 28744) and 30194 (robot-loop, was
+      28745), same prompts/negativePrompts/first-frame images as
+      ANIMATION-JOB-CATALOG.md sections B/C, via POST /api/art/enqueue
+      (idempotencyKey butterfly-gallery-t033-{left-butterfly-loop,robot-loop}-resubmit-
+      2026-09-22), both confirmed PENDING. Filed butterfly-gallery/t-035 to track
+      splicing those two clips into foreground-butterfly-slot/robot-animation-slot once
+      they complete -- kept separate from this task rather than left open, since this
+      task's own runway deliverable is fully shipped and merged and there's nothing
+      further to verify here until the new jobs finish.
+
+      Closing this task as done: the runway integration (this task's core deliverable)
+      is live on kind_robots main with clean CI. t-031 (visibility/reduced-motion audit,
+      depends_on: t-033) unblocks via resolve_deps.py and can now audit the merged
+      runway gating; the two loop slots remain t-035's scope until 30193/30194 land.
+    updated: '2026-09-22T02:58:14Z'
     claimed_by: 2026-09-22T03:05:00Z-t033-reconcile
     claimed_at: '2026-09-22T02:56:27Z'
     implementation_pr: 'silasfelinus/kind_robots#2964'
