@@ -280,6 +280,13 @@ tasks:
     TypeScript, Contract verifiers (383 tests, including the three new steps), Replay
     migrations on MariaDB, Failed-migration repair, Generator + importer regression, Build
     production image, GitGuardian.
+
+    Independent reviewer close-out (same session, conductor scheduled sweep): re-verified the
+    above before this task's own close-out landed -- reproduced the powershell-syntax-
+    contract failure directly against origin/main (confirmed pre-existing/unrelated) and
+    audited migration.sql line-by-line (two nullable ADD COLUMN statements plus one CREATE
+    INDEX, no DROP/data rewrite) per AGENTS.md's Reviewer migration-audit requirement. Filed
+    the regex fix as lora-ingestion/t-011 (kaizen, ready).
   updated: '2026-09-22T06:04:56Z'
   claimed_by: 2026-09-22T053000Z-lora-t010-type-randomization
   claimed_at: '2026-09-22T05:30:00Z'
