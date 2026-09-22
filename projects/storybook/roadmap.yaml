@@ -869,7 +869,7 @@ tasks:
 - id: t-037
   milestone: m7
   title: "Delete the client-side beat loop and rewrite its ~25 verifyStorybook*Guard scripts"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-036, t-052]
@@ -990,7 +990,11 @@ tasks:
     verifyStorybookObjectEntryLinks.mjs is a genuine split case worth flagging for the eventual bulk cutover: it checks facet-profile.vue/reward-encounter.vue/character-manager.vue/scenario-manager.vue CTAs (engine-agnostic, must survive) in the same file as a storybook-page.vue seedFromQuery() consumption check (legacy-only, must go). The bulk cutover should split this file rather than delete it outright, keeping the CTA-side assertions.
 
     t-053 status check this cycle: still status=waiting (life-run.vue retirement not yet cleared) -- the bulk cutover of storybookStore.ts/storybook-page.vue/storybookLibraryHelper.ts + their ~13 confirmed-legacy-only guards remains blocked on that, not on any further per-guard investigation. Re-arming to ready (recurring multi-slice task); releasing the claim once PR #2991 merges.
-  updated: '2026-09-22T22:03:36Z'
+
+    Both companion PRs merged clean: silasfelinus/kind_robots#2991 (7f8935d) and
+    silasfelinus/conductor#5055 (03f705a). Re-arming to ready (recurring multi-slice task);
+    releasing the claim.
+  updated: '2026-09-22T22:08:32Z'
   owner: worker
   claimed_by: 2026-09-22T220116Z-storybook-t037-hero-scenario-guard
   claimed_at: '2026-09-22T22:01:17Z'
