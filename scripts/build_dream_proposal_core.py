@@ -15,6 +15,11 @@ try:
 except ModuleNotFoundError:  # imported as scripts.build_dream_proposal in pytest
     from scripts import dream_theme_diversity as theme_diversity
 
+try:
+    from art_prompt_conditional_check import conditional_instruction_violations
+except ModuleNotFoundError:  # imported as scripts.build_dream_proposal in pytest
+    from scripts.art_prompt_conditional_check import conditional_instruction_violations
+
 ROOT = Path(__file__).resolve().parent.parent
 BACKLOG = ROOT / "projects" / "dream-cycle/backlog"
 KR_BASE_URL = "https://kindrobots.org"
@@ -135,6 +140,55 @@ FIELDS = {
  "scenario": ("title", "setup"),
 }
 RECENT_THEME_LOOKBACK = 5
+
+# The exact free-text fields build_dream_records.py's queue_art() feeds into an
+# art_prompt builder (dream_art_prompts.py), keyed the same way as the proposal
+# dict itself (plural scope names, "vibe" singular). A conditional-instruction
+# phrase in one of these only reached kind_robots' own contract
+# (server/utils/artPromptContract.ts) at ArtJob submission time, by which point the
+# bundle is already built and the request sits stuck re-failing every scheduled run
+# until a human notices (dream-cycle/t-028). Not every free-text field is here --
+# only the ones that actually flow into an art_prompt; e.g. a location's
+# `local_rule` and a reward's `best_used_when`/`catch` feed card copy, not art.
+_CONDITIONAL_INSTRUCTION_FIELDS = {
+ "vibe": ("art_direction",),
+ "locations": ("art_direction", "known_for", "best_scene"),
+ "characters": ("look", "role_drive", "carries"),
+ "rewards": ("look", "grants"),
+ "scenarios": ("setup",),
+}
+
+
+def conditional_instruction_complaints(proposal: dict) -> list[str]:
+    """Every conditional-instruction phrase in a field that feeds an art_prompt.
+
+    Mirrors build_dream_records.py's queue_art() check (dream-cycle/t-032), but at
+    proposal-authoring/validation time instead of build time.
+    """
+    complaints: list[str] = []
+    if _text(proposal.get("idea")):
+        for violation in conditional_instruction_violations(str(proposal["idea"])):
+            complaints.append(f"idea {violation}")
+    vibe = proposal.get("vibe")
+    if isinstance(vibe, dict):
+        for field in _CONDITIONAL_INSTRUCTION_FIELDS["vibe"]:
+            text = vibe.get(field)
+            if isinstance(text, str):
+                for violation in conditional_instruction_violations(text):
+                    complaints.append(f"vibe.{field} {violation}")
+    for scope in ("locations", "characters", "rewards", "scenarios"):
+        rows = proposal.get(scope)
+        if not isinstance(rows, list):
+            continue
+        for i, row in enumerate(rows):
+            if not isinstance(row, dict):
+                continue
+            for field in _CONDITIONAL_INSTRUCTION_FIELDS[scope]:
+                text = row.get(field)
+                if isinstance(text, str):
+                    for violation in conditional_instruction_violations(text):
+                        complaints.append(f"{scope}[{i}].{field} {violation}")
+    return complaints
 
 
 def _target_date(now: datetime | None = None) -> str:
@@ -698,6 +752,7 @@ def validate_proposal(proposal: Any) -> list[str]:
         setup = str(proposal["scenarios"][0].get("setup") or "").casefold()
         for label, name in (("vibe",proposal["vibe"].get("title")),("location",proposal["locations"][0].get("title")),("character",proposal["characters"][0].get("name"))):
             if _text(name) and str(name).casefold() not in setup: bad.append(f"scenario setup must name the {label}: {name}")
+    bad += conditional_instruction_complaints(proposal)
     return bad
 
 

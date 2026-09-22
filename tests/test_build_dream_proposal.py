@@ -95,6 +95,31 @@ def test_validator_rejects_detached_scenario_and_wrong_counts():
     )
 
 
+def test_validator_catches_conditional_instruction_in_an_art_prompt_field():
+    # dream-cycle/t-032: fields that feed an art_prompt builder (dream_art_prompts.py)
+    # must fail validate_proposal, not just kind_robots' server-side contract at
+    # ArtJob submission time (dream-cycle/t-028).
+    proposal = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
+    proposal["characters"][0]["look"] = (
+        "a tall figure, visible only when the subject appears in frame"
+    )
+    problems = bdp.validate_proposal(proposal)
+    assert any(
+        "characters[0].look" in problem and "conditional-instruction" in problem
+        for problem in problems
+    )
+
+
+def test_validator_ignores_conditional_language_outside_art_prompt_fields():
+    # A reward's best_used_when/catch and a location's local_rule feed card copy,
+    # not art_prompt -- kind_robots' own contract never sees them, so
+    # validate_proposal should not flag them either.
+    proposal = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
+    proposal["rewards"][0]["best_used_when"] = "Only when the bearer needs it most."
+    problems = bdp.validate_proposal(proposal)
+    assert not any("conditional-instruction" in problem for problem in problems)
+
+
 def test_markdown_prints_seed_facets_and_six_sections():
     rendered = bdp.render_markdown(
         bdp.SAMPLE_PROPOSAL, "2026-07-31"
