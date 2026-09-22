@@ -16095,3 +16095,22 @@ records:
     select_role.py inherits it for free via build_queue_summary(). Clean first-pass --
     the pattern was already fully specified by the kaizen note itself (t-031/t-033),
     same "sibling task already proved the pattern" shape the note describes.
+- date: '2026-09-22'
+  project: lora-ingestion
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A same-day Claude session (session_01HHrZmwjtwx3T7A7H94irfo) opened kind_robots#2967
+    (LoRA purpose typing + randomized art batches, Silas-directed, additive migration) and
+    correctly stood down on the one red CI check rather than force-merging or silently
+    ignoring it -- but a session that authors and reviews its own work has no second party
+    to actually merge it once it stands down. A later scheduled Conductor sweep found the
+    open, ready-to-merge PR, independently re-verified the "pre-existing, unrelated" claim
+    (reproduced the regex/quoting bug directly against origin/main) and the migration's
+    additive-only shape, then merged. Worth normalizing: an agent authoring a PR should
+    still expect a distinct review/merge pass to pick it up promptly rather than assuming
+    the standing-down comment alone gets it to main.
