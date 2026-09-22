@@ -338,8 +338,7 @@ tasks:
 - id: t-012
   milestone: m4
   title: Polish art-generator random pools, facet picker placement, image sizes, and Krea 2 preset
-  status: claimed
-  owner: worker
+  status: done
   passes: 1
   stakes: reversible
   gate_human: false
@@ -365,7 +364,9 @@ tasks:
     maturity rules, and keep this as a reversible front-end/server utility change.
 
     Implementation is scoped on the Kind Robots worker branch: random source-explicit LoRA/Facet/object controls, compact persisted artPrompt context, upward Facet picker, checkpoint-aware dimension selects, and removal of the misleading 16-step Krea 2 preset.
-  updated: '2026-09-22T08:16:55Z'
+
+    Retry completed and merged as kind_robots#2972 at 2026-09-22T08:43:15Z. The lint-ratchet regression from pass 1 was repaired before merge; exact-head GitHub Actions on ca670db0e5a0d35643ef2ebbcb40808b8ab303a4 completed successfully, including TypeScript Type Check 35705843124, Contract Tests 35705843079, Layout Contract 35705843239, Art Prompt + Icon Safety 35705842988, Facet Catalog Contract 35705843228, Project Architecture Contract 35705843150, Generated Client Parity 35705843226, and Schema Migration Parity 35705843156. No deploy was triggered.
+  updated: '2026-09-22T10:17:45Z'
   claimed_by: openai-scheduled-2026-09-22T081655Z-lora-ingestion-t012-a11
   claimed_at: '2026-09-22T08:16:55Z'
   retry_context: 'pass 1 failed (quality): kind_robots#2972''s ESLint lint-ratchet check went from 331->332 problems (no-useless-assignment: 9 -> 10), specifically new useless assignments in server/utils/artRandomPools.ts:293:7 and stores/storybookStore.ts:808:9. Everything else on the PR (all other contract checks, TypeScript, tests) is green. Do differently: remove the two useless assignments (or restructure so the assigned value is actually read) and re-run ''npm run test:lint-ratchet'' locally before pushing; do not touch unrelated ratchet counts.'

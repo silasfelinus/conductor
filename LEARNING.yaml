@@ -16132,3 +16132,13 @@ records:
     resolving a conflict Reviewer has no push access to fix on a worker/* branch. No lost
     work -- the standard git-conflict backstop caught the collision as designed, just
     surfaced through PR mergeability instead of a rejected push.
+- date: '2026-09-22'
+  project: lora-ingestion
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: When a broad UI utility patch trips the lint ratchet, repair the newly introduced lint findings
+    on the same branch and require exact-head Actions completion before treating the retry as done.
