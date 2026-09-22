@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-22T03:54:30Z
+Generated: 2026-09-22T04:02:20Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1109**
-- Outcomes: blocked: 18, cancelled: 2, done: 1089
+- Closed tasks recorded: **1110**
+- Outcomes: blocked: 18, cancelled: 2, done: 1090
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -24,7 +24,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | art-archive | 32 | 100% |
 | art-generator-connect | 3 | 100% |
 | brainstorm | 26 | 96% |
-| butterfly-gallery | 30 | 93% |
+| butterfly-gallery | 31 | 94% |
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 39 | 100% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1092 | 99% |
+| software | 1093 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-22 `butterfly-gallery/t-031` — A gating audit task can close with zero diff when the dependency it was waiting on (t-033) already implemented the exact requirement in its own PR -- t-033's runway splice used IntersectionObserver + document.hidden + prefers-reduced-motion with a v-if unmount (not a CSS class toggle) specifically because its own note named t-031's acceptance criteria up front. Worth checking whether an upstream task already absorbed a downstream audit task's requirement before assuming the audit still needs new code.
 - 2026-09-22 `butterfly-gallery/t-033` — A ready roadmap task can get its real implementation merged by a concurrent, repo-scoped session (here kind_robots#2964) without that session ever touching the conductor roadmap task it belongs to. check_pr_merged_drift.py only audits claimed/review tasks, so a ready task whose implementation lands via a different repo's session sits stale until a later sweep's STEP-1-style recheck happens to notice the local kind_robots checkout has moved past what the roadmap note assumed. Worth checking the target repo's own recent commits/PRs, not just the live render queue, when a task's note describes external async work that might have completed.
 - 2026-09-22 `animation-manager/t-018` — When an animation build ships, promote its canonical PITCHES.yaml entry and record build provenance in the same cycle; verify canonical state before adding a second repair for an already-fixed bookkeeping gap.
 - 2026-09-22 `dream-cycle/t-032` — Before wiring a checker into a new call site from a task note's field list, trace the actual code path (build_dream_records.py's per-element art_prompt calls) rather than trusting the note verbatim -- three of the seven named fields (best_used_when, catch, local_rule) never reach an art_prompt at all and would have been false positives.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-21 `storybook/t-059` — When a task's own note offers a scoped, safe path (correct a misleading comment/label) alongside a larger, design-dependent path (implement real persistence behavior), an unattended scheduled session should take the scoped path rather than invent unreviewed product behavior -- storybook/t-059's note explicitly sanctioned this ("if board retention isn't meant to ship yet, correct the comment instead"), which made the call low-risk. A future cycle should treat the task's own concrete implementation sketch (lift board into storybookRunStore, seed StorybookTable from it via the same seedFromQuery() lookup pattern) as the starting point if board retention becomes something Silas actually wants shipped.
 - 2026-09-21 `ruler-hooked/t-025` — art-prompts.yaml requests targeting kind_robots ship via the home relay's direct self-hosted media path (ops/home-server/SELF-HOSTED-MEDIA.md), never through a kind_robots git commit -- public/images/** is git-ignored there. A prior cycle almost wrote the renders into the local kind_robots checkout as "delivery"; verifying with a public HEAD against media.acrocatranch.com instead (matching what the doc already prescribes) is the correct and only proof of landing.
 - 2026-09-21 `conductor/t-188` — t-187's missing_handoff_docs() guard only covered the connector (task-events) needs-human path; the direct close_task.py path most interactive sessions actually use was still unguarded. Extended the same check there, verifying against the committed base ref (not just the worktree) since close_task.py's scratch-index plumbing commits only roadmap.yaml -- a worktree-only check would have let an uncommitted handoff file pass while still stranding it outside the pushed close-out.
-- 2026-09-21 `conductor/t-187` — A needs-human note can claim a connector-fallback handoff doc was "preserved" at a projects/<slug>/docs/*.md path without the file actually landing in the same commit/tree (ruler-hooked/t-037 rescue, 2026-09-21) -- it worked out by luck that time. Added a missing_handoff_docs() check to both validate_task_events.py (PR time) and process_task_events.py (apply time) that holds/rejects a needs-human event whose note references such a path when the file isn't actually present, instead of trusting the claim.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-22T03:54:30Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-22T04:02:20Z_
