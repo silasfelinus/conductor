@@ -79,10 +79,16 @@ At the start of every session, before responding to any task, run a conductor sw
      were the Facet's description pasted whole with its own title nowhere in them, which no
      pattern in a contract can detect, because it is a property of what the prompt LACKS. Flags
      NO SUBJECT (a producer-generated prompt that never names its Facet), APP WRAPPER (product
-     and builder labels Krea paints as card text), and CARD COPY (description pasted verbatim —
-     a smell, reported but never blocking). Hand-authored concrete scenes that deliberately skip
-     the title are correct and are never flagged. Advisory; exit 1 is a prompt to go look at the
-     cards, and the answer is still a contact sheet, never the audit. Needs `KR_API_TOKEN`; exits
+     and builder labels Krea paints as card text), and CARD COPY (the Facet's description
+     appearing verbatim inside its own prompt). Hand-authored concrete scenes that deliberately
+     skip the title are correct and are never flagged. Advisory; exit 1 is a prompt to go look at
+     the cards, and the answer is still a contact sheet, never the audit. **CARD COPY was
+     unreachable until 2026-09-22** — it required the prompt to START with the description (every
+     producer since v2 puts the title first) AND to carry a registered taxonomy clause (which the
+     negation repair trims off), so the script reported "Every prompt names something to draw"
+     over 1,541 live prompts while 595 embedded their own description and Facet 810 "Martian
+     Colonization" was rendering its card copy as lettering. It is containment-based and blocking
+     now; a non-zero exit here is expected until the queue is re-run. Needs `KR_API_TOKEN`; exits
      2 (unresolved, not clean) without it.
    - `python scripts/check_priority_queue_starvation.py` — `projects/priority.yaml` is the
      deterministic worker pickup order, but nothing else reports how deep a session had to walk
