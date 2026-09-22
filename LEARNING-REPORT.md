@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-22T22:14:28Z
+Generated: 2026-09-22T22:58:12Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1121**
-- Outcomes: blocked: 18, cancelled: 2, done: 1101
+- Closed tasks recorded: **1122**
+- Outcomes: blocked: 18, cancelled: 2, done: 1102
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -44,7 +44,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kind-economy | 10 | 100% |
 | kind-robots | 67 | 99% |
 | kindrobots-unraid | 9 | 100% |
-| lora-ingestion | 6 | 100% |
+| lora-ingestion | 7 | 100% |
 | mandarin-tutor | 14 | 93% |
 | media-watchlist | 12 | 100% |
 | mermaids-of-venice | 3 | 100% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1104 | 99% |
+| software | 1105 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-22 `lora-ingestion/t-013` — A vendored copy (ops/home-server's stdlib-only scanner) had silently drifted from its app-source original (kind_robots' scan_loras.py), losing the Civitai tag classifier with no test catching it -- because nothing asserted the two stayed in sync. Cross-repo duplication for a legitimate reason (no Node available on the home box) still needs an explicit parity check or scripted sync step, not just a one-time copy at authoring time, or the vendor copy rots invisibly until a downstream symptom (garbled classification/preview) surfaces it.
 - 2026-09-22 `storybook/t-064` — test:lint-ratchet does NOT share test:prettier-ratchet's silent ambient-version-drift exposure: an unprovisioned npx eslint does resolve a different ambient version, but this repo's eslint.config.mjs unconditionally imports the Nuxt-generated .nuxt/eslint.config.mjs (only produced by nuxi prepare, part of npm ci's postinstall), so a bare npx eslint reproduction fails loud (ERR_MODULE_NOT_FOUND) before linting anything rather than silently misreporting a drifted count. Separately: pull_request_read's get_check_runs can serve stale cached in_progress status for a job that already completed (observed ~30 min stale here) -- cross-check with actions_get/get_workflow_job before treating a check as genuinely stuck.
 - 2026-09-22 `storybook/t-063` — A local reproduction of a ratchet/version-sensitive CI gate (npm run test:prettier-ratchet) that disagreed with the task note's own open question about CI health turned out to be a sandbox artifact: no node_modules installed meant npx silently resolved an ambient prettier version instead of the lockfile-pinned one npm ci/CI actually use, producing a false '+30 files worse' reading. Before trusting any bare npx/npm-run reproduction of a version-sensitive check, provision deps first (npm ci or the repo's existing provisioning script) and confirm the installed tool version matches the lockfile -- an uninstalled or mismatched toolchain can fabricate drift that was never real.
 - 2026-09-22 `storybook/t-062` — The same UI logic duplicated across two files (storybook-visual-setup.vue and conductor/storybook-page.vue both build the same StorybookStartInput draft) let an a11y fix (role=group/aria-label on choice grids, t-010) land in only one copy; a narrow textual guard scoped to a single file can't catch its sibling never getting the fix -- when auditing a fix's completeness, grep for other files building the same store/type shape, not just the one the original task touched.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-22 `lora-ingestion/t-012` — When a broad UI utility patch trips the lint ratchet, repair the newly introduced lint findings on the same branch and require exact-head Actions completion before treating the retry as done.
 - 2026-09-22 `lora-ingestion/t-011` — Two sessions independently implemented the same kaizen-filed fix (PowerShell paths-filter quote-only regex) within a ~30 minute window -- kind_robots#2969 (this task's own OpenAI Worker cycle, single/double-quote fix) and kind_robots#2970 (a different session, broader single/double/bare-scalar fix with a backreference guard), #2970 merging first. Discovered via #2969's PR showing mergeable_state=dirty on review; closed #2969 as redundant with a comment naming the superseding PR rather than resolving a conflict Reviewer has no push access to fix on a worker/* branch. No lost work -- the standard git-conflict backstop caught the collision as designed, just surfaced through PR mergeability instead of a rejected push.
 - 2026-09-22 `lora-ingestion/t-010` — A same-day Claude session (session_01HHrZmwjtwx3T7A7H94irfo) opened kind_robots#2967 (LoRA purpose typing + randomized art batches, Silas-directed, additive migration) and correctly stood down on the one red CI check rather than force-merging or silently ignoring it -- but a session that authors and reviews its own work has no second party to actually merge it once it stands down. A later scheduled Conductor sweep found the open, ready-to-merge PR, independently re-verified the "pre-existing, unrelated" claim (reproduced the regex/quoting bug directly against origin/main) and the migration's additive-only shape, then merged. Worth normalizing: an agent authoring a PR should still expect a distinct review/merge pass to pick it up promptly rather than assuming the standing-down comment alone gets it to main.
-- 2026-09-22 `conductor/t-190` — Implemented the zero-diff-close audit hint itself (roadmap_deps.zero_diff_close_hint, wired into run_worker.find_ready_task and next_ready_task.first_ready_task): an advisory audit_candidate/audit_candidate_reason field on the picked ready task, flagged when a done depends_on dependency's note mentions the ready task's own id. select_role.py inherits it for free via build_queue_summary(). Clean first-pass -- the pattern was already fully specified by the kaizen note itself (t-031/t-033), same "sibling task already proved the pattern" shape the note describes.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-22T22:14:28Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-22T22:58:12Z_
