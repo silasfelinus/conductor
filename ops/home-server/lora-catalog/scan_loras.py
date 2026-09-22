@@ -211,6 +211,8 @@ class LoraEntry:
     slug: str = ""
     civitaiModelId: int = 0     # Civitai model id, when matched by hash
     civitaiModelVersionId: int = 0  # Civitai model-version id, when matched
+    loraCategory: str = ""      # CHARACTER | STYLE | SETTING | ... (see classify)
+    loraCategorySource: str = ""  # CIVITAI | HEURISTIC
 
     # sort target
     group: str = ""             # base-model sort folder
@@ -224,6 +226,7 @@ class LoraEntry:
     needs_review: bool = True
     civitai_matched: bool = False
     archive_matched: bool = False
+    civitai_tags: list[str] = field(default_factory=list)
     trigger_words: list[str] = field(default_factory=list)
     network_module: str = ""
     notes: list[str] = field(default_factory=list)
@@ -391,6 +394,34 @@ def _matched(data: Any) -> bool:
     return bool(data) and data is not MISS and not data.get("__miss__")
 
 
+# A version name that is only a release designator -- "v1.0", "V2", "1.5",
+# "final", "beta" -- says nothing about WHICH LoRA the file is, and every model
+# on Civitai has one. Folding those into the label would rename the whole
+# catalog to no purpose, so only a version whose name is a real variant
+# ("disney", "mjv6", "anime") qualifies the model title.
+VERSION_DESIGNATOR = re.compile(
+    r"^(?:v(?:er(?:sion)?)?)?\s*[.\-_]?\s*\d+(?:[.\-_]\d+)*\s*"
+    r"(?:[a-z]{0,2})?$|^(?:final|beta|alpha|release|latest|old|new|fix(?:ed)?)$",
+    re.IGNORECASE,
+)
+
+
+def names_a_variant(version_name: str, model_name: str) -> bool:
+    """Whether a Civitai version name identifies WHICH LoRA a file is.
+
+    True only for a collection-style version ('disney', 'mjv6'), never for a
+    bare release designator and never when it merely restates the model title.
+    """
+    version_name = version_name.strip()
+    if not version_name:
+        return False
+    if version_name.lower() == model_name.strip().lower():
+        return False
+    if VERSION_DESIGNATOR.match(version_name):
+        return False
+    return bool(re.search(r"[A-Za-z]", version_name))
+
+
 def apply_civitai(entry: LoraEntry, data: Any) -> bool:
     """Fold a Civitai model-versions/by-hash response. Returns True if matched."""
     if not _matched(data):
@@ -407,12 +438,35 @@ def apply_civitai(entry: LoraEntry, data: Any) -> bool:
         if version_id:
             url += f"?modelVersionId={version_id}"
         entry.civitaiUrl = url
-    pretty = model.get("name") or data.get("name") or ""
-    if pretty:
-        entry.customLabel = pretty
+    # A Civitai "collection" model publishes several unrelated LoRAs as
+    # VERSIONS of one shared model row, so model.name is a bundle title and
+    # data.name is the only field that says which LoRA this file actually is.
+    # Preferring model.name stamped every version with the same label: Flux
+    # Lora Collection (xlabs) landed on both the disney and the mjv6 convert
+    # (Resources 2427/2429), and with no trainedWords to override it, finalize()
+    # below promoted that title to triggerWords/defaultTrigger/artPrompt on
+    # both. They then probed identically and rendered XLabs product packaging
+    # rather than anything Disney or Midjourney (2026-09-19).
+    #
+    # Keep the model name as the qualifier -- it is what a human recognises in
+    # the gallery -- but lead with the version so the two are never confused.
+    model_name = str(model.get("name") or "").strip()
+    version_name = str(data.get("name") or "").strip()
+    if model_name and names_a_variant(version_name, model_name):
+        entry.customLabel = f"{model_name} — {version_name}"
+    elif model_name or version_name:
+        entry.customLabel = model_name or version_name
     words = data.get("trainedWords") or []
     if isinstance(words, list):
         entry.trigger_words = [str(w) for w in words if w]
+    # A collection version with no trainedWords still says what it is in its
+    # own name. Civitai 637230 publishes seven XLabs LoRAs this way, and three
+    # of them -- Disney, Midjourney, Realism -- list no trained words at all.
+    # Without this, finalize() falls back to the label and the whole bundle
+    # title becomes the trigger, which is what sent Resources 2427 and 2429 to
+    # the renderer describing the package instead of the style (2026-09-19).
+    if not entry.trigger_words and names_a_variant(version_name, model_name):
+        entry.trigger_words = [version_name]
     imgs = data.get("images") or []
     if isinstance(imgs, list) and imgs and isinstance(imgs[0], dict):
         url = imgs[0].get("url")
@@ -426,6 +480,9 @@ def apply_civitai(entry: LoraEntry, data: Any) -> bool:
     mtype = (model.get("type") or "").lower()
     if mtype == "locon" or "lycoris" in mtype:
         entry.resourceType = "LYCORIS"
+    tags = model.get("tags")
+    if isinstance(tags, list):
+        entry.civitai_tags = [str(t).strip().lower() for t in tags if t]
     nsfw = model.get("nsfw")
     if nsfw is not None:
         entry.isMature = bool(nsfw)
@@ -614,6 +671,106 @@ def finalize(entry: LoraEntry) -> None:
         entry.customLabel = entry.name
     entry.slug = slugify(entry.customLabel or entry.name)
 
+    # After customLabel is settled, which is the only field it reads.
+    if not entry.loraCategory:
+        entry.loraCategory, entry.loraCategorySource = classify_category(entry)
+
+
+# ----------------------------------------------------------------------------
+# Category — what the LoRA is FOR
+# ----------------------------------------------------------------------------
+#
+# Mirrors utils/loraCategory.ts, which is the authority the app reads. It is
+# duplicated here rather than shared because this script is stdlib-only by
+# design and runs on the home box with no Node available -- and because THIS is
+# the only moment the Civitai tags exist. They are not stored on the Resource,
+# so a later backfill can only ever reach the weaker filename heuristics.
+#
+# Keep the two tables in step. utils/scripts/verifyLoraCategory.test.ts covers
+# the TypeScript side; tests/python/test_lora_category.py covers this one, and
+# asserts the two tables still agree word for word.
+
+CIVITAI_TAG_CATEGORIES: list[tuple[str, tuple[str, ...]]] = [
+    ("CHARACTER", ("character", "characters", "celebrity", "actor", "actress",
+                   "singer", "idol", "waifu")),
+    ("STYLE", ("style", "styles", "art style", "artstyle", "artist",
+               "aesthetic", "anime style", "painting style")),
+    ("SETTING", ("background", "backgrounds", "landscape", "scenery",
+                 "environment", "architecture", "buildings", "building",
+                 "interior", "city", "nature")),
+    ("ACTION", ("poses", "pose", "action", "motion", "dance", "dancing",
+                "gesture")),
+    ("CLOTHING", ("clothing", "clothes", "outfit", "costume", "dress",
+                  "uniform", "armor", "lingerie", "swimsuit", "fashion")),
+    ("OBJECT", ("vehicle", "vehicles", "car", "weapon", "weapons", "objects",
+                "object", "tool", "tools", "furniture", "food", "props",
+                "prop")),
+    ("CREATURE", ("animal", "animals", "creature", "creatures", "monster",
+                  "monsters", "dragon", "cat", "dog", "furry", "pokemon")),
+    ("DETAIL", ("detail", "details", "enhancer", "quality", "sharpness",
+                "skin", "eyes", "hands", "texture")),
+    ("CONCEPT", ("concept", "concepts", "abstract", "effect", "effects",
+                 "lighting")),
+]
+
+HEURISTIC_CATEGORIES: list[tuple[str, tuple[str, ...]]] = [
+    ("STYLE", ("style", "artstyle", "painterly", "watercolou?r", "oil painting",
+               "sketch", "lineart", "line art", "woodcut", "ukiyo-?e",
+               "impressionis[tm]", "art nouveau", "bauhaus", "cel ?shad\\w*",
+               "pixel ?art", "comic (?:book|art|style)", "cartoon",
+               "render style")),
+    ("CLOTHING", ("outfit", "costume", "clothing", "dress", "uniform",
+                  "armou?r", "kimono", "hoodie", "lingerie", "swimsuit",
+                  "cosplay")),
+    ("SETTING", ("background", "landscape", "scenery", "environment",
+                 "interior", "cityscape", "skyline", "architecture")),
+    ("ACTION", ("pose", "poses", "posing")),
+    ("CREATURE", ("creature", "monster", "dragon", "beast", "animal",
+                  "animals", "kaiju")),
+    ("OBJECT", ("vehicle", "mecha", "spaceship", "weapon", "firearm",
+                "furniture")),
+    ("DETAIL", ("detail", "details", "detailer", "add[_ -]?detail",
+                "skin texture", "hand fix", "eye fix")),
+    ("CONCEPT", ("concept",)),
+]
+
+
+def classify_category(entry: LoraEntry) -> tuple[str, str]:
+    """Return (category, source), or ("", "") when nothing matches.
+
+    Civitai tags first -- they are the only signal here that came from a person
+    describing the model, and the only way a character LoRA is ever classified
+    without one.
+
+    The heuristics that follow read the TITLE ONLY. They used to read the
+    description too, and a description is prose: the first live backfill
+    (2026-09-22) filed "Elvira - Mistress of the Dark" under CLOTHING because a
+    `dress` appeared in its blurb, and "Cute Animals" under STYLE for the same
+    reason. Nothing here guesses CHARACTER either -- a character LoRA is named
+    after the character, which no keyword table can see. Returning nothing is
+    the right answer there: unclassified is visible and rolls for nothing,
+    miscategorised is invisible and poisons a pool."""
+    tags = set(entry.civitai_tags or [])
+    for category, values in CIVITAI_TAG_CATEGORIES:
+        hit = tags & set(values)
+        if hit:
+            return category, "CIVITAI"
+
+    title = " ".join(
+        str(v).replace("_", " ")
+        for v in (entry.customLabel, entry.name)
+        if v
+    ).lower()
+    if not title.strip():
+        return "", ""
+
+    for category, patterns in HEURISTIC_CATEGORIES:
+        for pattern in patterns:
+            if re.search(r"(^|[^a-z0-9])" + pattern + r"($|[^a-z0-9])", title):
+                return category, "HEURISTIC"
+
+    return "", ""
+
 
 def to_resource(entry: LoraEntry) -> dict:
     """Import-ready subset. triggerWords/defaultTrigger require the planned
@@ -636,6 +793,8 @@ def to_resource(entry: LoraEntry) -> dict:
         "artPrompt": entry.defaultTrigger or None,
         "civitaiModelId": entry.civitaiModelId or None,
         "civitaiModelVersionId": entry.civitaiModelVersionId or None,
+        "loraCategory": entry.loraCategory or None,
+        "loraCategorySource": entry.loraCategorySource or None,
         "description": entry.description or None,
         "slug": entry.slug,
         "isPublic": False,
@@ -768,8 +927,14 @@ def main() -> int:
                     help="Output directory for catalog files (default: current dir)")
     ap.add_argument("--no-civitai", action="store_true", help="Skip Civitai lookups")
     ap.add_argument("--no-archive", action="store_true", help="Skip CivArchive fallback")
-    ap.add_argument("--civitai-token", default=os.environ.get("CIVITAI_TOKEN", ""),
-                    help="Civitai API token (or set CIVITAI_TOKEN)")
+    # Both names, because this project has two: the relay's gated downloads use
+    # KR_CIVITAI_TOKEN (see conductor ops/home-server/README.md's setx line),
+    # these catalog scripts have always used CIVITAI_TOKEN. Reading one means
+    # telling someone who already has the secret to copy it again.
+    ap.add_argument("--civitai-token",
+                    default=os.environ.get("CIVITAI_TOKEN")
+                    or os.environ.get("KR_CIVITAI_TOKEN", ""),
+                    help="Civitai API token (or set CIVITAI_TOKEN / KR_CIVITAI_TOKEN)")
     ap.add_argument("--workers", type=int, default=6, help="Concurrent lookups (default: 6)")
     ap.add_argument("--hash-workers", type=int, default=8,
                     help="Concurrent file hashers (default: 8). Raise for network "
