@@ -233,7 +233,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Type every LoRA by what it is FOR, and randomize art batches from those pools
-  status: review
+  status: done
   owner: claude
   stakes: reversible
   note: >-
@@ -270,6 +270,17 @@ tasks:
     never stored). Then use the triage page's "Suggest for all unclassified"
     for whatever the heuristics could not reach. Hand corrections are stamped
     HUMAN and are never overwritten by a later scan or backfill.
-  updated: '2026-09-22T05:40:00Z'
+
+    2026-09-22 closed: kind_robots#2967 merged. All 62 checks on the final head passed
+    except the pre-existing tests/python/test_powershell_syntax_contract.py::test_the_paths_
+    filter_covers_every_ps1_in_the_repo, which reproduces identically with the whole branch
+    stashed and is documented on the PR with a one-line proposed patch (its helper matches
+    only double-quoted .ps1 globs while powershell-syntax-contract.yml writes single quotes,
+    so it reads a coverage hole that does not exist). Green on this PR's own ground:
+    TypeScript, Contract verifiers (383 tests, including the three new steps), Replay
+    migrations on MariaDB, Failed-migration repair, Generator + importer regression, Build
+    production image, GitGuardian.
+  updated: '2026-09-22T06:04:56Z'
   claimed_by: 2026-09-22T053000Z-lora-t010-type-randomization
   claimed_at: '2026-09-22T05:30:00Z'
+  implementation_pr: 'silasfelinus/kind_robots#2967'
