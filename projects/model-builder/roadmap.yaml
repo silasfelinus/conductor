@@ -469,7 +469,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 52
     stakes: reversible
@@ -618,10 +618,15 @@ tasks:
       setup.vue narrator/structure choice grids), touches only components/storybook/storybook-
       visual-setup.vue and its own regression guard, no model-builder path. No model-builder-
       specific regression audit warranted -- verified no-op, re-arming to ready.
-    updated: '2026-09-22T13:57:55Z'
-    owner: worker
-    claimed_by: 2026-09-22T135752Z-conductor-agent-mb-t029
-    claimed_at: '2026-09-22T13:57:55Z'
+
+      Cycle 88 (checked through 2026-09-22T13:57:52Z): zero fresh commits repo-wide since the
+      prior 2026-09-22T12:57:39Z audit (checked via GitHub commits API, since-filtered repo-
+      wide, kind_robots default branch). No model-builder-specific regression audit warranted
+      -- verified no-op, re-arming to ready.
+    updated: '2026-09-22T13:58:02Z'
+    owner: null
+    claimed_by: null
+    claimed_at: null
 
   - id: t-030
     milestone: m6
