@@ -371,3 +371,18 @@ tasks:
   claimed_at: '2026-09-22T08:16:55Z'
   retry_context: 'pass 1 failed (quality): kind_robots#2972''s ESLint lint-ratchet check went from 331->332 problems (no-useless-assignment: 9 -> 10), specifically new useless assignments in server/utils/artRandomPools.ts:293:7 and stores/storybookStore.ts:808:9. Everything else on the PR (all other contract checks, TypeScript, tests) is green. Do differently: remove the two useless assignments (or restructure so the assigned value is actually read) and re-run ''npm run test:lint-ratchet'' locally before pushing; do not touch unrelated ratchet counts.'
 
+
+
+- id: t-013
+  milestone: m2
+  title: Align LoRA/checkpoint imports through one enriched Resource path and queue a custom preview ArtJob
+  status: ready
+  owner: null
+  stakes: reversible
+  note: |-
+    Silas-directed 2026-09-22. Audit both watched-folder imports and Discover/DownloadRequest
+    imports so LoRAs and checkpoints follow the same lifecycle: move into their canonical
+    local model directories, upsert the canonical Resource with Civitai provenance, classify
+    LoRAs from Civitai tags into character/style/setting/etc. without overwriting HUMAN
+    corrections, and queue one durable custom preview ArtJob whose completed ArtImage attaches
+    back to the Resource. Re-scans/retries must not create duplicate preview jobs.
