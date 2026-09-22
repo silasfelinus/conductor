@@ -1764,3 +1764,23 @@ tasks:
   claimed_at: '2026-09-21T21:56:02Z'
   updated: '2026-09-21T22:19:15Z'
   implementation_pr: 'silasfelinus/kind_robots#2961'
+
+- id: t-062
+  milestone: m4
+  title: Audit the remainder of storybook-visual-setup.vue (cast/role-assigner section and form-validation UX) for the same polish-cycle issues
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: |-
+    Kaizen from t-010 (2026-09-22, kind_robots PR #2981): that cycle fixed the "Narrator
+    voice" and "Shape of the tale" grids in components/storybook/storybook-visual-setup.vue,
+    which had individually meaningful, mutually-exclusive :aria-pressed choice buttons with
+    no role="group"/aria-label tying them together -- now fixed and guarded by
+    verifyStorybookVisualSetupChoiceGroupGuard.ts. The file's remaining unaudited surface
+    (the NarrativeIngredientMultiPicker cast section, NarrativeRoleAssigner, and whatever
+    setup-completion/validation UX follows) has not had the same pass. Also worth a quick
+    check: conductor/storybook-page.vue, the third file the 2026-09-12/13 TALKBACK pause
+    note grouped with this one and storybook-library-page.vue -- its pause condition
+    (t-034/t-035/t-036 landing) has also been met since 2026-09-13 and it may not have been
+    revisited since. Not gated -- reversible polish, same convention as this task's other
+    cycles.
