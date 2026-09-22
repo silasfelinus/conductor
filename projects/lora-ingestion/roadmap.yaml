@@ -280,7 +280,41 @@ tasks:
     TypeScript, Contract verifiers (383 tests, including the three new steps), Replay
     migrations on MariaDB, Failed-migration repair, Generator + importer regression, Build
     production image, GitGuardian.
+
+    Independent reviewer close-out (same session, conductor scheduled sweep): re-verified the
+    above before this task's own close-out landed -- reproduced the powershell-syntax-
+    contract failure directly against origin/main (confirmed pre-existing/unrelated) and
+    audited migration.sql line-by-line (two nullable ADD COLUMN statements plus one CREATE
+    INDEX, no DROP/data rewrite) per AGENTS.md's Reviewer migration-audit requirement. Filed
+    the regex fix as lora-ingestion/t-011 (kaizen, ready).
   updated: '2026-09-22T06:04:56Z'
   claimed_by: 2026-09-22T053000Z-lora-t010-type-randomization
   claimed_at: '2026-09-22T05:30:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2967'
+- id: t-011
+  milestone: m4
+  title: Fix the PowerShell-syntax-contract Python test's quote-only regex so it recognizes single-quoted workflow path globs
+  status: ready
+  passes: 0
+  stakes: reversible
+  note: |-
+    Kaizen from t-010's merge (kind_robots PR #2967). CI on that PR was red on
+    tests/python/test_powershell_syntax_contract.py::test_the_paths_filter_covers_every_ps1_in_the_repo
+    even though the diff touched no .ps1 file and no PowerShell workflow -- confirmed
+    independently on origin/main itself before merging past it (see t-010's note).
+
+    Root cause: utils/scripts/../tests/python/test_powershell_syntax_contract.py's
+    _ps1_path_patterns() only matches double-quoted globs:
+    `re.findall(r'^\s*-\s*"([^"]*\.ps1)"', text, re.M)`. .github/workflows/powershell-
+    syntax-contract.yml writes its `paths:` filter in single quotes
+    (`- 'scripts/**.ps1'`), so the regex finds nothing and the test wrongly asserts a
+    coverage hole that does not exist. It has stayed invisible because
+    python-scripts.yml only runs on scripts/**.py changes, and t-010 (scan_loras.py)
+    was the first thing in a while to touch one.
+
+    Fix: make the quote character optional in _ps1_path_patterns(), e.g.
+    `re.findall(r"""^\s*-\s*['"]([^'"]*\.ps1)['"]""", text, re.M)`. Verify by running
+    the test against main both before (red) and after (green) the fix, and confirm it
+    still correctly fails if a real .ps1 is added without updating the paths filter
+    (don't let the fix accidentally make the test unconditionally pass).
+  updated: '2026-09-22T06:04:48Z'
