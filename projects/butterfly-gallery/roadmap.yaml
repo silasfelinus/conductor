@@ -1121,8 +1121,8 @@ tasks:
   - id: t-033
     milestone: m4
     title: "Integrate rendered Gallery motion actor clips into runway/left-loop/robot-loop once ArtJobs complete"
-    status: claimed
-    owner: worker
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
     depends_on: t-014
@@ -1380,9 +1380,62 @@ tasks:
       (24h window: PENDING depth 165, latestDoneAt 2026-09-22T00:48:53Z live). Not yet
       actionable per STEP 1 (2 of 7 not yet DONE); leaving status: ready, no pass/retry
       consumed.
-    updated: '2026-09-22T01:53:07Z'
+
+      2026-09-22: STEP 1 -- GET /api/art/queue/:id for all 7 jobs (28739-28745):
+      5 reported DONE (28739, 28740, 28741, 28742, 28743, all runway shots), 2
+      reported FAILED (28744 left-butterfly loop, 28745 robot loop) -- error on
+      both: "ComfyUI reported a workflow error: node 314 (CLIPTextEncode):
+      hostbuf_file_reader_read failed". Actionable per STEP 2.
+
+      STEP 2 -- for the 2 FAILED jobs (28744, 28745): both failed with the exact
+      same ComfyUI-side file-read error on the CLIPTextEncode node, which reads
+      as upstream/infra rather than a prompt-content problem. Per this note's own
+      instruction, a fresh, scoped priority-0 resubmission of just those two
+      shots is the right next step -- NOT attempted in this pass (did not want
+      to hand-construct a POST /api/art/enqueue payload for a live render queue
+      without the original t-014 submission tooling in hand; the queue GET
+      response only exposes the already-expanded ComfyUI workflow, not the
+      high-level ltx request t-014 actually submitted). Do not revive
+      28725-28732 (still superseded) or 28744/28745 themselves as a substitute
+      for a fresh submission.
+
+      For the 5 DONE jobs: fetched each job's artImageId (30382-30386) via
+      GET /api/art/image/:id, resolved each to its imagePath under
+      /images/generated/2026/09/, and confirmed via direct HTTPS GET + `file`
+      that all 5 are real animated webp (RIFF/WEBP with an ANIM chunk), not
+      placeholders or partial renders.
+
+      STEP 3 -- spliced the 5 runway clips into pages/butterfly-gallery.vue's
+      "butterfly-runway" slot: they cycle one at a time (~3.4s per clip,
+      restarting each animated webp from frame 0 via a Vue :key swap), gated on
+      all three of IntersectionObserver visibility, document.visibilitychange,
+      and prefers-reduced-motion (satisfies t-031's acceptance criteria for this
+      slot directly). The two loop slots (foreground-butterfly-slot,
+      robot-animation-slot) are untouched -- still their original empty reserved
+      placeholders, since 28744/28745 produced nothing to splice.
+
+      Verified: eslint clean, prettier clean, vue-tsc clean for this file,
+      npm run test:layout-contract holds (no new violations), npm run
+      test:kr-class-coverage OK. Not verified: rendered pixels (no PR-preview
+      infra for kind_robots; needs a post-merge Force Update + the scheduled
+      responsive-layout-audit.yml check per AGENTS.md).
+
+      PR: silasfelinus/kind_robots#2964 (branch claude/laughing-pascal-el1eie).
+
+      Leaving status: ready (not done, no pass consumed -- this is the same
+      "partially actionable, blocked on external async work" shape as STEP 1's
+      own not-yet-actionable case, just discovered one step later). What's left
+      for the next cycle: once #2964 is merged and deployed, resubmit exactly
+      28744 and 28745 (fresh job ids, priority 0, same prompts/first-frames as
+      ANIMATION-JOB-CATALOG.md's B and C sections), then splice those two clips
+      into foreground-butterfly-slot/robot-animation-slot the same way. t-031
+      (the reduced-motion/visibility audit) can proceed now for the runway slot;
+      the other two slots still have nothing to audit until their resubmission
+      lands.
+    updated: '2026-09-22T02:02:15Z'
     claimed_by: 2026-09-22T-conductor-sweep-bg-t033
     claimed_at: '2026-09-22T01:53:07Z'
+    implementation_pr: 'silasfelinus/kind_robots#2964'
 
   - id: t-034
     milestone: m4
