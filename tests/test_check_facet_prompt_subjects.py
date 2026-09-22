@@ -113,10 +113,10 @@ def test_a_real_card_in_a_scene_is_not_a_wrapper():
     )
 
 
-def test_card_copy_is_reported_below_the_blocking_findings():
+def test_card_copy_is_reported_when_the_title_test_passes():
     """
     Title IS the description here, so the title test passes and the prompt is
-    still the joke pasted whole. Reported, but it never decides the exit code.
+    still the joke pasted whole. Card copy is the finding that catches it.
     """
     finding = check.inspect(
         facet(
@@ -179,3 +179,95 @@ def test_a_repair_truncated_tail_still_counts_as_generated():
 def test_empty_prompt_is_not_a_finding():
     assert check.inspect(facet(artPrompt=None)) is None
     assert check.inspect(facet(artPrompt="   ")) is None
+
+
+MARTIAN_DESCRIPTION = (
+    "The particular engineering and politics of settling Mars. Dust, radiation, "
+    "supply lag, and the question of whose law applies at that distance."
+)
+
+
+def test_title_led_card_copy_is_flagged():
+    """
+    Facet 810 exactly as stored on 2026-09-22, missing final period and all --
+    the shape that made Silas ask why this keeps happening.
+
+    Three separate conditions used to let it through. It leads with the TITLE,
+    not the description, so the old prefix test missed it. It carries no
+    registered taxonomy clause -- a repair pass trimmed the tail, which is where
+    the final period went -- so the provenance test missed it. And its title IS
+    in the prompt, so the no-subject test was right to stay quiet. All that is
+    left to draw is "Martian Colonization"; everything after it is a claim about
+    engineering and law, which Krea paints as lettering.
+    """
+    finding = check.inspect(
+        facet(
+            id=810,
+            title="Martian Colonization",
+            taxonomy="GENRE",
+            description=MARTIAN_DESCRIPTION,
+            artPrompt=(
+                "Martian Colonization. The particular engineering and politics of "
+                "settling Mars. Dust, radiation, supply lag, and the question of "
+                "whose law applies at that distance"
+            ),
+        )
+    )
+    assert finding is not None
+    assert finding["finding"] == "card-copy"
+
+
+def test_card_copy_no_longer_needs_a_registered_clause():
+    """
+    The provenance test is a whitelist, so it always lags the batch that broke.
+    Card copy has to be catchable without it, or the next producer version's
+    cohort is invisible for the six weeks it takes to notice from the pictures.
+    """
+    prompt = f"Octopus. {MARTIAN_DESCRIPTION}"
+    assert not any(clause in prompt for clause in check.GENERATED_CLAUSES)
+    finding = check.inspect(
+        facet(description=MARTIAN_DESCRIPTION, artPrompt=prompt)
+    )
+    assert finding is not None
+    assert finding["finding"] == "card-copy"
+
+
+def test_a_short_description_never_triggers_card_copy():
+    """
+    A description under the length floor is usually a restatement of the title,
+    and would match any prompt that happens to share the phrase.
+    """
+    assert (
+        check.inspect(
+            facet(
+                id=2201,
+                title="Burnished Copper",
+                taxonomy="MATERIAL",
+                description="Burnished copper.",
+                artPrompt=(
+                    "A single large form filling the picture, burnished copper, lit "
+                    "so the surface behaves the way it really does."
+                ),
+            )
+        )
+        is None
+    )
+
+
+def test_an_authored_prompt_sharing_no_description_text_is_clean():
+    """Rebuilding or flagging a hand-authored prompt would be the worse bug."""
+    assert (
+        check.inspect(
+            facet(
+                id=2411,
+                title="Batch-Made",
+                taxonomy="BACKSTORY",
+                description="Made in bulk, and every one of them knows it by now.",
+                artPrompt=(
+                    "A row of identical blank-eyed figures on a conveyor line under "
+                    "flat white light, all facing the same way except one."
+                ),
+            )
+        )
+        is None
+    )

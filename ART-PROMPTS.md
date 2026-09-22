@@ -224,6 +224,54 @@
 >    old-vs-new is the only way to know which direction the repair actually
 >    went.
 
+> 9. **A guard made of remembered strings can only catch a batch you have
+>    already seen.** Added 2026-09-22, and it is rule 8 arriving for the third
+>    time with the audit itself as the thing that failed. Silas, on Facet 810
+>    "Martian Colonization": *"Yet again I'm seeing krea prompts that are
+>    metaphors rather than literal ... Wtf? Why does this keep happening"*. Its
+>    live prompt was
+>
+>        Martian Colonization. The particular engineering and politics of
+>        settling Mars. Dust, radiation, supply lag, and the question of whose
+>        law applies at that distance
+>
+>    — the title, then the card copy, then nothing. Rule 8's own fix could not
+>    see it, and neither could rule 8's own audit, for the same reason: **both
+>    identify producer output by matching a clause a producer is known to have
+>    written.** That list is a memory of every batch already diagnosed from the
+>    pictures. This row's clause had been trimmed off by the negation repair —
+>    the missing final period is where the cut landed — so it matched nothing,
+>    read as hand-authored prose, and was handed back to Krea untouched on
+>    every queue, forever.
+>
+>    Measured on the live catalog the day it was reported: `artPrompt` on 1,541
+>    Facets, **595 of them containing the Facet's own description**, and
+>    `check_facet_prompt_subjects.py` printing *"Every prompt names something
+>    to draw."* Two conditions made its card-copy finding unreachable. It
+>    required the prompt to **start** with the description — every producer
+>    since v2 puts the title first, so 585 of the 595 never matched — and it
+>    additionally required a registered clause, so the rows a repair had
+>    trimmed, the ones in the worst shape, were the ones it was least able to
+>    see. The rule-8 entry above says the script "asks the only question the
+>    contract structurally cannot". It did not. It asked a question about
+>    provenance and reported on subjects.
+>
+>    What generalizes: **ask a property of the text, not a property of its
+>    history.** "Does this prompt contain the row's own description" needs no
+>    list, no clause table and no memory of v2 through v7, and it is true of a
+>    cohort nobody has looked at yet. `storedPromptIsCardCopy` in
+>    `kind_robots/utils/facetVisualLanguage.ts` is now the rebuild trigger
+>    alongside the clause whitelist, and the same containment test decides this
+>    script's exit code. The clause lists stay — they catch generated prompts
+>    that carry no description — but they are no longer the only way in.
+>
+>    A corollary worth keeping: **the rebuild is non-lossy, which is what makes
+>    it safe to apply in bulk.** `buildFacetIdentityPromptFrom` runs the
+>    description back through `depictableProse`, so a description that really
+>    does describe a picture survives and only the card copy is dropped. 72
+>    rows were newly reached; 726 genuinely authored prompts are still returned
+>    verbatim, because rebuilding one of those would be the worse bug.
+
 > The daily-dream pipeline enforces the first two automatically in
 > `scripts/dream_art_prompts.py`. Hand-written prompts in this file should follow
 > the same shape. The inclusive-casting direction below still applies — but only

@@ -38,9 +38,21 @@ Three findings, in descending confidence:
   Builder illustration for Reward Types: Magic"). Krea paints those as the
   title text of the card it decides it is drawing.
 
-  CARD COPY: the prompt begins with the Facet's description verbatim. On its
-  own that is only a smell, so it is reported at a lower level than the two
-  above and never alone decides the exit code.
+  CARD COPY: the Facet's description appears verbatim inside its artPrompt.
+  Card copy is written as a joke for a human reading a card; handed to a text
+  specialist it is a caption, and Krea paints captions. This is the finding
+  that actually fires on the live catalog, so it is blocking.
+
+  2026-09-22. This test used to require the prompt to START with the
+  description AND to carry a registered taxonomy clause. Every producer since
+  v2 puts the title first, and a repair pass trims the clause off the end, so
+  between them the two conditions made the finding unreachable: the script
+  reported "Every prompt names something to draw" across 1,541 live prompts
+  while 595 of them embedded their own description. Silas, on Facet 810
+  "Martian Colonization": "Yet again I'm seeing krea prompts that are
+  metaphors rather than literal ... Wtf? Why does this keep happening". It kept
+  happening because the audit written to catch it had the same bug it was
+  written to catch.
 
 Needs KR_API_TOKEN; exits 2 (unresolved, not clean) without it, matching
 check_project_scaffold_drift.py and check_live_facet_coverage.py.
@@ -50,9 +62,9 @@ Usage:
   python scripts/check_facet_prompt_subjects.py --json
   python scripts/check_facet_prompt_subjects.py --limit 20
 
-Exit codes: 0 = clean, 1 = at least one NO SUBJECT or APP WRAPPER finding,
-2 = unresolved (no token, or the catalog could not be read). Advisory: a
-non-zero exit is a prompt to go look at the cards, not a gate.
+Exit codes: 0 = clean, 1 = at least one finding, 2 = unresolved (no token, or
+the catalog could not be read). Advisory: a non-zero exit is a prompt to go
+look at the cards, not a gate.
 """
 from __future__ import annotations
 
@@ -162,6 +174,46 @@ def normalize(value: str) -> str:
     )
 
 
+# Below this a description is usually a restatement of the title ("Bright red.")
+# and would match any prompt sharing a phrase with it.
+MIN_CARD_COPY_LENGTH = 40
+# Compare on the opening only: a repair pass that trimmed the end -- which is
+# how Facet 810 lost both its taxonomy clause and its final period -- must not
+# also cost the match.
+CARD_COPY_MATCH_WINDOW = 120
+
+
+def carries_card_copy(prompt: str, description: str) -> bool:
+    """
+    True when the prompt contains the Facet's own description.
+
+    Two things were wrong with the test this replaces, and between them they
+    made every card-copy finding unreachable. It required the prompt to START
+    with the description, but every producer since v2 puts the TITLE first, so
+    585 of the 595 live prompts that embed their description never matched. And
+    it additionally required a registered taxonomy clause, which is what a
+    repair pass trims off -- so the rows in the worst shape were the ones it was
+    least able to see.
+
+    On 2026-09-22 this script therefore reported "Every prompt names something
+    to draw" across 1,541 live prompts while Facet 810 "Martian Colonization"
+    read "Martian Colonization. The particular engineering and politics of
+    settling Mars. Dust, radiation, supply lag, and the question of whose law
+    applies at that distance" -- the title plus undrawable card copy, which Krea
+    duly painted as lettering. That is the exact failure this file was written
+    to prevent (a green audit over bad prompts, docstring above), reproduced one
+    level up in the audit itself.
+
+    Containment, not prefix, and no provenance test at all: card copy inside a
+    prompt is a property of the text, so it is caught whoever assembled it and
+    whatever a later pass trimmed off the end.
+    """
+    copy = normalize(description).strip().rstrip(".!?")
+    if len(copy) < MIN_CARD_COPY_LENGTH:
+        return False
+    return copy[:CARD_COPY_MATCH_WINDOW] in normalize(prompt)
+
+
 def inspect(row: dict) -> dict | None:
     prompt = (row.get("artPrompt") or "").strip()
     if not prompt:
@@ -173,13 +225,13 @@ def inspect(row: dict) -> dict | None:
     wrapper = next((p.pattern for p in APP_WRAPPERS if p.search(prompt)), None)
     generated = any(clause in prompt for clause in GENERATED_CLAUSES)
     named = bool(title) and normalize(title) in flat
-    copy_led = bool(description) and flat.startswith(normalize(description)[:60])
+    card_copy = carries_card_copy(prompt, description)
 
     if wrapper:
         finding = "app-wrapper"
     elif generated and not named:
         finding = "no-subject"
-    elif copy_led and generated:
+    elif card_copy:
         finding = "card-copy"
     else:
         return None
@@ -219,7 +271,16 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
     findings = [f for f in (inspect(row) for row in rows) if f]
-    blocking = [f for f in findings if f["finding"] in ("no-subject", "app-wrapper")]
+    # card-copy used to be excluded here, on the grounds that a description at
+    # the head of a prompt is only a smell. It is not: the description IS the
+    # prompt for these rows, and carries_card_copy no longer fires on a prompt
+    # that merely mentions its subject. Facet 810 was card-copy and nothing
+    # else, so leaving it out is what let this script call the catalog clean.
+    blocking = [
+        f
+        for f in findings
+        if f["finding"] in ("no-subject", "app-wrapper", "card-copy")
+    ]
 
     if args.json:
         print(json.dumps({"checked": len(rows), "findings": findings}, indent=2))
@@ -233,7 +294,7 @@ def main(argv: list[str] | None = None) -> int:
     for kind, label in (
         ("no-subject", "NO SUBJECT — generated prompt, own title nowhere in it"),
         ("app-wrapper", "APP WRAPPER — application context Krea will paint as text"),
-        ("card-copy", "CARD COPY — prompt opens with the description verbatim (smell only)"),
+        ("card-copy", "CARD COPY — the Facet's description pasted into its own prompt"),
     ):
         group = [f for f in findings if f["finding"] == kind]
         if not group:
