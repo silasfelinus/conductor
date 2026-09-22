@@ -45,7 +45,15 @@ from datetime import datetime
 
 KR_BASE_URL = os.environ.get("KR_BASE_URL", "https://kindrobots.org").rstrip("/")
 KR_RELAY_TOKEN = os.environ.get("KR_RELAY_TOKEN", "").strip()
-LORA_ROOT = os.environ.get("LORA_ROOT", "").strip()
+LORA_ROOT = (
+    os.environ.get("LORA_ROOT", "").strip()
+    or os.environ.get("KR_LORA_DIR", "").strip()
+    or (
+        os.path.join(os.environ.get("KR_MODEL_ROOT", "").strip(), "Lora")
+        if os.environ.get("KR_MODEL_ROOT", "").strip()
+        else ""
+    )
+)
 MODEL_ROOT = os.environ.get(
     "MODEL_ROOT",
     os.environ.get("KR_MODEL_ROOT", "").strip()
