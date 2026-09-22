@@ -1060,8 +1060,8 @@ tasks:
   - id: t-031
     milestone: m4
     title: "Gate the animation-slot elements' future motion assets on visibility/prefers-reduced-motion, not just CSS class toggles"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-033
@@ -1088,6 +1088,9 @@ tasks:
       (28739-28745) are still PENDING as of this check. Re-flipped to
       `waiting` on the correct dependency; `resolve_deps.py` will surface it
       again once t-033 actually completes.
+    claimed_by: 2026-09-22T035354Z-t031-motion-gate
+    claimed_at: '2026-09-22T03:53:54Z'
+    updated: '2026-09-22T03:53:54Z'
 
   - id: t-032
     milestone: m5
