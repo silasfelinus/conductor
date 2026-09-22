@@ -275,7 +275,7 @@ tasks:
 
 - id: t-018
   title: "FOR SILAS: visually accept the Media Watchlist at phone/tablet/desktop widths to close the project out"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   soft_gate: true
@@ -316,7 +316,10 @@ tasks:
     signed in as admin, at phone/tablet/desktop widths to actually accept the visual state
     -- this cannot be done from an unprivileged sandbox session.
   depends_on: t-019
-  updated: '2026-09-20T10:10:34Z'
+  updated: '2026-09-22T11:05:10Z'
+  owner: worker
+  claimed_by: 20260922T-mw-t018-reconcile
+  claimed_at: '2026-09-22T11:05:10Z'
 - id: t-019
   milestone: m4
   title: Fix the Media Watchlist failing to load, and stop masking the real cause
