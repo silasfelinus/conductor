@@ -759,7 +759,61 @@ tasks:
     human: nothing here has been run against the live tree. What would close this task and
     ai-art-academy/t-079 together is the audit output naming flux1-kontext-dev-Q5_K_M.gguf,
     or a clean local Kontext render after the move.
-  updated: '2026-09-22T08:40:12Z'
+
+    DECISIVE EVIDENCE 2026-09-22, AND IT RULES OUT THE TEXT ENCODER. Read ArtJob 23052's
+    stored payload straight off the live API rather than reasoning from dates, because this
+    session had just talked itself into the wrong answer twice and the frozen graph settles
+    it outright. THE NUMBERS: createdAt 2026-09-15T18:18:19.912Z, status DONE, attempts 1,
+    engine COMFY, and the render is pure multicoloured static. Its frozen graph is node 6
+    CLIPTextEncode; node 10 VAELoader ae.safetensors; node 11 DualCLIPLoader with clip_name1
+    t5xxl_fp8_e4m3fn_scaled.safetensors and clip_name2 clip_l.safetensors, type flux, device
+    default; node 59 UnetLoaderGGUF with unet_name flux1-kontext-dev-Q5_K_M.gguf.
+    kind_robots#2750 ("Fix Kontext static regression by restoring its working T5 encoder")
+    merged 2026-09-15T08:17:47Z, TEN HOURS BEFORE this job was created. So this job carried
+    the CORRECT, post-fix safetensors T5 through the plain DualCLIPLoader, on its FIRST
+    attempt, with no frozen-graph staleness and no LoRA -- and still rendered static. WHAT
+    THAT KILLS. The GGUF T5 encoder is NOT the cause of the static that is still happening.
+    It is a real and sufficient explanation for the HISTORICAL evidence in this task and in
+    ai-art-academy/t-079 -- t-079's 5/5 on 2026-09-08, and mr-016, mr-020 and ArtJob 21693
+    on 2026-09-11 all predate #2750, and t-039's own recorded chain for 21693 names
+    t5-v1_1-xxl-encoder-Q5_K_S.gguf -- but it cannot explain job 23052, so either there were
+    two causes across this history or the encoder was a red herring for the earlier ones
+    too. Either way the encoder is fixed and is off the list for anything current. WHAT IT
+    ALSO WEAKENS: this session's own zero-tail/truncated-copy theory, recorded above. The
+    Alexandria share copy of flux1-kontext-dev-Q5_K_M.gguf is 8,419,501,344 bytes, a BYTE-
+    EXACT match for QuantStack/FLUX.1-Kontext-dev-GGUF's published size for that file, so it
+    is not a short copy. And the preallocated-but-unwritten failure mode is specific to a
+    robocopy /J DESTINATION; this file was downloaded to the share, never written by sync-
+    comfy-models.ps1, and an interrupted download truncates rather than preallocates. The
+    zero-tail guard shipped in kind_robots#2976 is still correct and still worth having --
+    it just is probably not what happened here. WHAT REMAINS, and it is now only two things.
+    (1) The share copy's bytes are corrupt despite the right length (SMB read errors, bit
+    rot, a bad resume). (2) ComfyUI-GGUF's UnetLoaderGGUF genuinely fails on this Kontext
+    quant at the relay's current ComfyUI/GGUF node version -- which is t-039's own suspect
+    (1) from 2026-09-11, "the Q5_K_M Kontext UNet itself being a bad or mismatched quant",
+    and is now the leading candidate rather than the last one standing. SILAS'S OWN A/B,
+    2026-09-22: "if i just switch the gguf for safetensors, it works, no static." Both arms
+    ran through the queue path, so both had the good T5; the only variables left between
+    them are GGUF-vs-safetensors and share-vs-local. He is copying models\unet to
+    Ferngrotto's local disk (~2 hours), which is the clean decisive test: same file, same
+    quant, local disk, correct T5. A clean render means the share bytes were bad; still
+    static means it is the GGUF loader path itself. IF IT IS THE GGUF PATH, THE FIX IS
+    ALREADY AVAILABLE AND NEEDS NO NEW CODE: flux1-dev-kontext_fp8_scaled.safetensors is
+    already present in Ferngrotto's models\diffusion_models, and buildKontextWorkflow's
+    unetName override routes a .safetensors name to core UNETLoader with weight_dtype
+    fp8_e4m3fn (added for exactly this question -- see the comment in
+    server/api/comfy/kontext/utils/workflow.ts). Switching the Kontext default is then a
+    one-line change plus a re-plan of any queued row still naming the GGUF, since a requeue
+    never re-derives a frozen graph. SEPARATE LIVE BUG FOUND WHILE CHASING THIS, now fixed
+    in kind_robots#2977: both DIRECT Kontext routes,
+    server/api/comfy/kontext/generate.post.ts:303 and kombine.post.ts:376, were still
+    calling fluxDualClipLoaderNode() -- the ordinary Flux pair, i.e. the GGUF T5 -- because
+    #2750 only fixed the queue builder and artJobRetry's normalizer. Seven days of POST
+    /api/comfy/kontext/generate and .../kombine built Kontext graphs on the encoder that had
+    just been removed for producing static. Not the cause of job 23052 (that went through
+    the queue path), but a genuine silent-static generator on its own, now guarded by
+    utils/scripts/verifyKontextTextEncoder.ts in contract-tests.
+  updated: '2026-09-22T09:09:54Z'
   owner: worker
   claimed_by: 2026-09-15T091200Z-coloring-book-t039-sampler9c2a
   claimed_at: '2026-09-15T09:19:00Z'
