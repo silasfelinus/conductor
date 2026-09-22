@@ -16005,3 +16005,15 @@ records:
     diverge if only one is edited later; route both through one shared assertion helper
     (tests/<module>.py, not test_-prefixed so pytest won't collect it) so the policy can
     only change in one place.
+- date: '2026-09-22'
+  project: dream-cycle
+  task: t-032
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Before wiring a checker into a new call site from a task note's field list, trace
+    the actual code path (build_dream_records.py's per-element art_prompt calls) rather than
+    trusting the note verbatim -- three of the seven named fields (best_used_when, catch,
+    local_rule) never reach an art_prompt at all and would have been false positives.
