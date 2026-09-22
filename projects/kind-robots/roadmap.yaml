@@ -2694,5 +2694,84 @@ tasks:
     resubmitted.
   updated: '2026-09-20T03:00:00Z'
 
+- id: t-115
+  milestone: m6
+  title: 'Stop the word "frame" reaching Krea where no frame is meant (body descriptions
+    rendering as empty picture frames)'
+  status: done
+  gate_human: false
+  stakes: reversible
+  owner: worker
+  passes: 0
+  note: >-
+    Reported by Silas 2026-09-21 from an ArtJob screenshot of the facet-catalog build:
+    "we've had some regression with some 'frame' references creating the wrong message.
+    Again". Facet "Wasted but Working" asked for "A thin frame with prominent collarbones
+    and hollow cheeks, clothes hanging loose, grip nonetheless firm" (ArtJob 30116) and
+    came back as a framed portrait hanging on a wall; "Rebuilt" asked for "An asymmetric
+    frame, one limb visibly different in length or make" (ArtJob 30117) and came back as
+    a woman holding an empty gilt picture frame. In both, the body the prompt describes
+    is gone and a frame is standing where it was.
+
+    Both prompts passed every rule in server/utils/artPromptContract.ts, because none of
+    them looks at ordinary concrete words -- the same shape as the "concrete focal
+    subject" and "unmistakable silhouette" findings, one vocabulary later.
+
+    "Frame" reaches the gate in three senses and only one is safe. ANATOMY (a person's
+    build) is the sense that shipped the bug: 11 live prompts, all from
+    utils/seeds/facetEmbodimentValues.ts. COMPOSITION (the picture's own boundary) is the
+    same bug with the same fix. OBJECT -- a real frame in the scene -- must keep working,
+    because the "gilded shimmer" swatch card IS a carved frame taking gold leaf.
+
+    THE "AGAIN" IS A CHAIN, and it is why this landed as a gate rather than a wording
+    pass. The contract's own rule-7 remedy text advised writing "an unpeopled frame", and
+    DEFAULT_UNPEOPLED_ART_DIRECTION in server/utils/artJobNormalization.ts emitted exactly
+    that phrase onto every object and product prompt in the app -- so the cure written for
+    the 2026-08-08 crowds was commissioning the frames. The ladle fixture in
+    verifyArtPromptContract.ts asserted an empty violation list on that wording the whole
+    time; that is the third separate bug the same fixture has certified on its way past
+    (see the 2026-08-08 people-negation note and v4's taxonomy clause).
+
+    Implementation (kind_robots PR #2965). New frame-noun rule scoped to the distilled
+    engines, like the jargon rule -- a chat model reads "frame" as framing and the rule
+    would only get in the way. It flags "frame" UNLESS the prompt establishes a real frame
+    object, judged prompt-wide rather than per sentence so the butterfly-gallery display
+    mount can open with "a single thick industrial display frame" and close with "nothing
+    hangs from the frame". Validated against all 1,738 live Facet prompts: 20 flagged,
+    every one a genuine anatomy or composition use; 7 allowed, every one a genuine object;
+    no false positives. Three words are deliberately NOT treated as frame-bearers because
+    each one excused a real bug during the rule's own test run -- "portrait" (an aspect
+    ratio here, exactly as the people-negation exclusions already note), "canvas" (a
+    medium) and "gallery"; "mirror" counts only as a noun, because "its bowl worn to a
+    mirror finish" excused the ladle fixture. Hyphenated compounds are excluded so the
+    "frame-tale tradition of the Arabian Nights" genre description survives -- a false
+    positive caught by verifyFacetContentQuality, which runs this contract over every
+    published description.
+
+    repairFramePrompt() migrates the phrasings already sitting in stored rows, since the
+    gate applies to requeues too and without it those rows would fail at claim time
+    forever (the failure mode LEGACY_ASSET_ART_DIRECTION exists to prevent). Composition
+    phrasings are generic patterns; the 11 anatomy prompts are listed exactly, matching
+    the seed corrections, so a seed re-run and a requeue arrive at the same text. Clears
+    all 20 live prompts and alters none of the 7 good ones.
+
+    Also fixed at source: the two v6 taxonomy clauses in utils/facetVisualLanguage.ts (v7
+    entries added, v6 strings KEPT in GENERATED_PROMPT_TAILS so no cohort is frozen --
+    verified both spellings still recognized), artContextRules, conductorArtPrompt, the
+    artAssetSuggest guidance, the art-card figureCount promptHint, page-backdrop framing,
+    the butterfly-gallery warehouse backdrop, facetBotTypeArtwork's "theatrical frame, no
+    text" (two violations in one line), and Neonpunk's published description. Conductor's
+    scripts/check_facet_prompt_subjects.py GENERATED_CLAUSES mirror is in step.
+
+    FOLLOW-UP, not blocking: the 11 embodiment cards still show the old renders. Pushing
+    the corrected prompts live is a seed re-run (utils/scripts/seedEmbodimentFacetCatalog.ts
+    upserts artPrompt on existing rows) followed by the facet art maintenance pass, which
+    re-queues on its own because the stored prompt no longer matches the painted one
+    (promptWasPainted). acrocatranch.com:5544 is outside the web sandbox's network policy,
+    so that run is Silas's or a host session's, not this one's.
+  updated: '2026-09-22T00:00:00Z'
+  implementation_pr: 'silasfelinus/kind_robots#2965'
+
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.

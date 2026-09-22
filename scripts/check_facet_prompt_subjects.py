@@ -94,6 +94,14 @@ GENERATED_CLAUSES = (
     "A person at full height doing something only someone like this would do",
     "A person at full height in the middle of this work",
     "A single large form filling the frame, made of this, lit so the colour and the surface behave the way they really do.",
+    # v7 (2026-09-21): "frame" -> "picture" in the two clauses that carried it.
+    # Krea paints "frame" as a physical picture frame whichever sense is meant
+    # (ArtJobs 30116/30117), so kind_robots' artPromptContract.ts now rejects it.
+    # Both spellings stay registered here for the same reason GENERATED_PROMPT_TAILS
+    # keeps its old entries: a clause this list does not know about is a cohort
+    # whose prompts read as hand-authored and are never reported.
+    "A single large form filling the picture, made of this, lit so the colour and the surface behave the way they really do.",
+    "One clear subject alone in the picture, large and plainly lit.",
     "A finished picture made this way, the medium and the linework and the palette and the lighting all plainly visible in it.",
     "One person seen from head to shoes, their face turned toward the light, standing in the place where they do this.",
     "A single treasured object resting alone, its materials and the light around it telling you how rare it is.",
