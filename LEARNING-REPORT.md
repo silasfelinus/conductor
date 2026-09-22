@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-22T05:06:24Z
+Generated: 2026-09-22T05:09:45Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1111**
-- Outcomes: blocked: 18, cancelled: 2, done: 1091
+- Closed tasks recorded: **1112**
+- Outcomes: blocked: 18, cancelled: 2, done: 1092
 - Success rate: **98%**
 - Average passes on successful tasks: **0.2**
 
@@ -28,7 +28,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
 | coloring-book | 39 | 100% |
-| conductor | 130 | 100% |
+| conductor | 131 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 51 | 98% |
 | davinci | 8 | 100% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1094 | 99% |
+| software | 1095 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-22 `conductor/t-190` — Implemented the zero-diff-close audit hint itself (roadmap_deps.zero_diff_close_hint, wired into run_worker.find_ready_task and next_ready_task.first_ready_task): an advisory audit_candidate/audit_candidate_reason field on the picked ready task, flagged when a done depends_on dependency's note mentions the ready task's own id. select_role.py inherits it for free via build_queue_summary(). Clean first-pass -- the pattern was already fully specified by the kaizen note itself (t-031/t-033), same "sibling task already proved the pattern" shape the note describes.
 - 2026-09-22 `butterfly-gallery/t-035` — STEP-1-style async-dependency tasks (poll an ArtJob, act once DONE) go from not-yet-actionable to fully shippable in one pass once the upstream condition clears -- this task went claim -> verify DONE -> resolve artImageId -> splice -> full verify suite -> merged PR in a single session with zero back-and-forth, because the acceptance criteria and implementation pattern were already fully specified by the sibling task (t-033) it was explicitly modeled on. Confirms the t-190 kaizen (from t-031, same session): when a task's own note names the exact pattern a prior sibling task already proved, implementation is close to mechanical -- worth checking for that note-linkage before assuming a task needs open-ended design work.
 - 2026-09-22 `butterfly-gallery/t-031` — A gating audit task can close with zero diff when the dependency it was waiting on (t-033) already implemented the exact requirement in its own PR -- t-033's runway splice used IntersectionObserver + document.hidden + prefers-reduced-motion with a v-if unmount (not a CSS class toggle) specifically because its own note named t-031's acceptance criteria up front. Worth checking whether an upstream task already absorbed a downstream audit task's requirement before assuming the audit still needs new code.
 - 2026-09-22 `butterfly-gallery/t-033` — A ready roadmap task can get its real implementation merged by a concurrent, repo-scoped session (here kind_robots#2964) without that session ever touching the conductor roadmap task it belongs to. check_pr_merged_drift.py only audits claimed/review tasks, so a ready task whose implementation lands via a different repo's session sits stale until a later sweep's STEP-1-style recheck happens to notice the local kind_robots checkout has moved past what the roadmap note assumed. Worth checking the target repo's own recent commits/PRs, not just the live render queue, when a task's note describes external async work that might have completed.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-21 `storybook/t-061` — Shared slug-to-card resolution removes duplicated deep-link lookup logic while keeping gate behavior in one load-bearing helper; update literal contract guards in the same scoped refactor when they intentionally pin the old implementation shape.
 - 2026-09-21 `storybook/t-060` — t-059's implementation sketch (lift board into storybookRunStore, capture it in playAgain() before leaveRun() clears the run, seed StorybookTable from it via the same per-slot deck lookups seedFromQuery() uses) held up exactly as written -- the one real design decision it left open was WHERE the capture could actually happen. playAgain() runs on the Ending screen, long after the Table (and its local board ref) has unmounted, so the board has to be recorded earlier, at the moment openStory() actually succeeds, not read fresh at playAgain() time. A future task inheriting a sketch written before the surrounding component lifecycle was traced should re-verify each named call site is still mounted/alive at the point the sketch assumes, not just implement the call graph as literally stated.
 - 2026-09-21 `storybook/t-059` — When a task's own note offers a scoped, safe path (correct a misleading comment/label) alongside a larger, design-dependent path (implement real persistence behavior), an unattended scheduled session should take the scoped path rather than invent unreviewed product behavior -- storybook/t-059's note explicitly sanctioned this ("if board retention isn't meant to ship yet, correct the comment instead"), which made the call low-risk. A future cycle should treat the task's own concrete implementation sketch (lift board into storybookRunStore, seed StorybookTable from it via the same seedFromQuery() lookup pattern) as the starting point if board retention becomes something Silas actually wants shipped.
-- 2026-09-21 `ruler-hooked/t-025` — art-prompts.yaml requests targeting kind_robots ship via the home relay's direct self-hosted media path (ops/home-server/SELF-HOSTED-MEDIA.md), never through a kind_robots git commit -- public/images/** is git-ignored there. A prior cycle almost wrote the renders into the local kind_robots checkout as "delivery"; verifying with a public HEAD against media.acrocatranch.com instead (matching what the doc already prescribes) is the correct and only proof of landing.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-22T05:06:24Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-22T05:09:45Z_
