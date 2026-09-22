@@ -275,7 +275,7 @@ tasks:
 
 - id: t-018
   title: "FOR SILAS: visually accept the Media Watchlist at phone/tablet/desktop widths to close the project out"
-  status: claimed
+  status: needs-human
   passes: 0
   stakes: reversible
   soft_gate: true
@@ -315,8 +315,17 @@ tasks:
     APPROVE (unchanged from 2026-09-07): Silas still needs to open /plan/watchlist himself,
     signed in as admin, at phone/tablet/desktop widths to actually accept the visual state
     -- this cannot be done from an unprivileged sandbox session.
+
+    Status reconciliation (2026-09-22 scheduled Conductor Agent run): this task already
+    carried soft_gate: true and a full FOR SILAS explanation (2026-09-20 recheck:
+    /plan/watchlist is ADMIN-gated, a cypress-* test user correctly hit access-denied,
+    granting a throwaway account ADMIN is outside routine agent authority) but status was
+    never flipped from ready to needs-human, so it kept resurfacing as agent-actionable work
+    with nothing left for an agent to do. Correcting status only -- no new investigation
+    performed, nothing has changed since the 2026-09-20 recheck. Still needs Silas to open
+    /plan/watchlist himself, signed in as admin, at phone/tablet/desktop widths.
   depends_on: t-019
-  updated: '2026-09-22T11:05:10Z'
+  updated: '2026-09-22T11:05:18Z'
   owner: worker
   claimed_by: 20260922T-mw-t018-reconcile
   claimed_at: '2026-09-22T11:05:10Z'
