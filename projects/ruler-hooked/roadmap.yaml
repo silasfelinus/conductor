@@ -336,7 +336,7 @@ tasks:
 - id: t-019
   milestone: m5
   title: Generate species designs for the 15-fish vertical-slice roster
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   gate_human: true
@@ -479,8 +479,65 @@ tasks:
     remaining candidate is a genuine model limitation with multi-subject composition at this
     engine/cfg setting, which would need a different mitigation (e.g. compositing three
     single-fish renders) rather than another prompt-wording pass.
-  updated: '2026-09-22T15:04:17Z'
-  owner: worker
+
+    Cycle (2026-09-22, scheduled Conductor Agent run): the "genuine model limitation" theory from
+    the immediately-prior cycle was wrong -- the frame_override fix from #5008 never actually got
+    a chance to prove or disprove itself. Found the real cause by tracing the auto-art-generate.yml
+    push-triggered run (35714383752, 2026-09-22T10:08:59Z) job-by-job: its "Submit + wait + verify
+    art requests" step logged `LIVE: 0 to generate, 1 already-present, via https://kindrobots.org /
+    already present, will mark done: public/images/ruler-hooked/fish/choirfish/bestiary.webp`.
+    consume_art_requests_to_media.py's already_satisfied() only checks whether the destination file
+    already exists on kind_robots -- it has no concept of "this pending request wants the existing
+    file regenerated." Since choirfish's bestiary.webp already existed from the original 2026-08-27
+    render, the re-staged status: pending request was short-circuited straight to done with ZERO new
+    ArtJob submitted, no different from every prior cycle back to the original silhouette fix (#4991
+    most likely hit the exact same short-circuit, never actually rendering the corrected silhouette
+    either -- "confirmed... a fresh ArtJob ran" in that cycle's note was an inference from status
+    flipping to done, not a checked ArtJob id, and this is why). Verified independently: the
+    ruler-hooked ArtJob queue's most recent 200 entries (ids up to 30082, spanning back to
+    2026-08-27) contain exactly one choirfish job -- 10128, the original pre-fix render -- and zero
+    choirfish jobs created after today's 10:08:56Z merge.
+
+    Second, compounding bug found in the same PR (#5008): its diff added the corrected
+    label/engine/size/negative_prompt/prompt fields as NEW lines inserted into the EXISTING
+    choirfish entry rather than replacing its old fields, producing one YAML mapping with each of
+    those five keys duplicated. PyYAML's safe_load silently keeps the LAST occurrence of a
+    duplicate key, and the old (pre-fix, "the whole creature clearly visible in profile", singular)
+    block was appended after the corrected one -- so even on the rare path where already_satisfied
+    wouldn't have short-circuited, the effective prompt in the committed file was still the
+    un-fixed original. repair_art_prompt_yaml.py and check_ruler_hooked_docs.py both passed anyway
+    because neither validates for duplicate mapping keys.
+
+    Fixed both: deduplicated the entry (kept only the frame_override-corrected block), confirmed
+    via `yaml.safe_load` that exactly one ruler-hooked-fish-choirfish entry exists with the trio
+    prompt, and re-verified with repair_art_prompt_yaml.py (0 unresolved) and
+    check_ruler_hooked_docs.py (OK). Then used the pipeline's own documented escape hatch for this
+    exact situation -- consume_art_requests_to_media.py's --force flag, whose docstring literally
+    says "Use after correcting a prompt, scoped with --id-prefix" -- scoped to just this one entry
+    (dry-run confirmed exactly 1 entry selected, 0 already-present) and ran it live:
+    `python scripts/consume_art_requests_to_media.py --id-prefix ruler-hooked-fish-choirfish --force
+    --live --timeout 300`. This queued a genuinely new ArtJob, 30651, this time carrying the
+    corrected trio prompt. It did not complete within the 300s wait -- checked directly via GET
+    /api/art/queue/30651 afterward: still PENDING, createdAt == updatedAt, i.e. the relay never
+    even started it in the ~5 minutes waited, consistent with the render-relay-hang class already
+    tracked hard needs-human at conductor/t-165 and t-167 (render box otherwise reported UP/healthy
+    via check_render_box.py throughout). Left the request at status: pending with
+    last_art_job_id: 30651 recorded so the next cycle's rescue pass (recover_finished_submissions)
+    picks it up once the job actually resolves, rather than re-submitting a duplicate.
+
+    A future session should: (1) check ArtJob 30651 directly and, once it lands, visually inspect
+    the render for the first time against a prompt that was actually correct end-to-end -- only
+    then does "genuine model limitation, needs compositing" become a live hypothesis again; (2) if
+    30651 is itself stuck/abandoned by the relay, treat it as more evidence for the t-165/t-167
+    relay-hang pattern rather than anything ruler-hooked-specific; (3) consider whether
+    consume_art_requests_to_media.py's file-existence-only already_satisfied() deserves a narrower
+    fix for the general regeneration case (e.g. treating a fresh pending->done transition with no
+    last_art_job_id bump as suspect) -- flagged here rather than changed now, since that function is
+    shared across five consumer scripts (consume_art_inspirations.py,
+    consume_art_inspirations_to_media.py, consume_art_requests.py, consume_art_requests_to_media.py)
+    and a behavior change there needs its own scoped task, not a rider on this one.
+  updated: '2026-09-22T15:11:34Z'
+  owner: null
   claimed_by: 2026-09-22T150416Z-conductor-agent-rh-t019-choirfish-regen
   claimed_at: '2026-09-22T15:04:17Z'
   implementation_pr: 'silasfelinus/conductor#5008'
