@@ -16213,3 +16213,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "The same UI logic duplicated across two files (storybook-visual-setup.vue and conductor/storybook-page.vue both build the same StorybookStartInput draft) let an a11y fix (role=group/aria-label on choice grids, t-010) land in only one copy; a narrow textual guard scoped to a single file can't catch its sibling never getting the fix -- when auditing a fix's completeness, grep for other files building the same store/type shape, not just the one the original task touched."
+- date: 2026-09-22
+  project: storybook
+  task: t-063
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A local reproduction of a ratchet/version-sensitive CI gate (npm run test:prettier-ratchet) that disagreed with the task note's own open question about CI health turned out to be a sandbox artifact: no node_modules installed meant npx silently resolved an ambient prettier version instead of the lockfile-pinned one npm ci/CI actually use, producing a false '+30 files worse' reading. Before trusting any bare npx/npm-run reproduction of a version-sensitive check, provision deps first (npm ci or the repo's existing provisioning script) and confirm the installed tool version matches the lockfile -- an uninstalled or mismatched toolchain can fabricate drift that was never real."

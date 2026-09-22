@@ -1832,3 +1832,23 @@ tasks:
   claimed_at: '2026-09-22T17:57:35Z'
   updated: '2026-09-22T18:06:05Z'
   implementation_pr: 'silasfelinus/conductor#5045'
+
+- id: t-064
+  milestone: m4
+  title: Check whether test:lint-ratchet has the same bare-npx version-drift exposure as test:prettier-ratchet did
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from t-063 (2026-09-22, silasfelinus/conductor#5045). That task found
+    `npm run test:prettier-ratchet` reported false "repo-wide drift" (+30 files, 8
+    directories) when reproduced in a sandbox with no node_modules installed -- `npx
+    prettier` silently resolved an ambient version (3.8.1) instead of the
+    lockfile-pinned one (3.9.6) that `npm ci`/real CI installs. `verifyLintRatchet.ts`
+    (test:lint-ratchet) shares the same shape (a ratchet script invoked via npx/npm
+    run, comparing live output against a committed baseline) and was not checked for
+    the same exposure. If it shares the vulnerability, add the same warning to
+    scripts/provision_kind_robots_deps.sh's docstring next to the prettier-ratchet
+    note already there; if not, note why it's safe (e.g. eslint resolves differently)
+    so the next session doesn't re-ask the question.
