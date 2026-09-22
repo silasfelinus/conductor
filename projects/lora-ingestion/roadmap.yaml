@@ -294,7 +294,7 @@ tasks:
 - id: t-011
   milestone: m4
   title: Fix the PowerShell-syntax-contract Python test's quote-only regex so it recognizes single-quoted workflow path globs
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   note: |-
@@ -317,4 +317,7 @@ tasks:
     the test against main both before (red) and after (green) the fix, and confirm it
     still correctly fails if a real .ps1 is added without updating the paths filter
     (don't let the fix accidentally make the test unconditionally pass).
-  updated: '2026-09-22T06:04:48Z'
+  updated: '2026-09-22T06:15:09Z'
+  owner: worker
+  claimed_by: openai-scheduled-2026-09-22T061509Z-lora-ingestion-t011-a11
+  claimed_at: '2026-09-22T06:15:09Z'
