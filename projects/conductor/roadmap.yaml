@@ -4002,8 +4002,8 @@ tasks:
 - id: t-193
   milestone: m2
   title: Add a contract test that every already_satisfied() override in the art-request family respects regeneration_forced()
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >-
@@ -4019,6 +4019,9 @@ tasks:
     `.already_satisfied`) and asserts each one either calls `regeneration_forced()`/
     `original_already_satisfied()` or is explicitly allow-listed with a comment explaining why
     not. This closes the gap for the NEXT override, not just today's four call sites.
+  claimed_by: 2026-09-22T-conductor-agent-c-t193-already-satisfied-guard
+  claimed_at: '2026-09-22T16:14:16Z'
+  updated: '2026-09-22T16:14:16Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
