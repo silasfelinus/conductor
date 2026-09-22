@@ -1526,7 +1526,7 @@ tasks:
   - id: t-035
     milestone: m4
     title: "Splice the resubmitted left-butterfly-loop and robot-loop clips into their reserved slots once ArtJobs 30193/30194 complete"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1575,6 +1575,44 @@ tasks:
       layout-contract, kr-class-coverage) plus whatever visual check is
       actually possible in the session's environment; note clearly what was
       verified vs. assumed.
-    updated: '2026-09-22T04:02:50Z'
+
+      2026-09-22: STEP 1 -- GET /api/art/queue/:id for 30193 and 30194: both DONE
+      (30193 updatedAt 2026-09-22T03:20:05Z, 30194 updatedAt 2026-09-22T03:42:54Z).
+      Actionable per STEP 2.
+
+      STEP 2 -- resolved artImageId via the job records themselves (30458 for
+      30193, 30459 for 30194), then GET /api/art/image/:id for each: imagePath
+      /images/generated/2026/09/artimage-30458-371b788b.webp and
+      artimage-30459-9fbf71cb.webp. Downloaded both and confirmed via Pillow
+      (768x768, 65 frames each) that both are real animated webp, not
+      placeholders -- matches ANIMATION-JOB-CATALOG.md's spec (768x768, 4s/16fps,
+      loop: true).
+
+      STEP 3 -- spliced artimage-30458 into foreground-butterfly-slot and
+      artimage-30459 into robot-animation-slot in pages/butterfly-gallery.vue.
+      Each slot mounts its one clip behind the same three-signal gate t-033
+      established for the runway slot (IntersectionObserver + document.hidden +
+      prefers-reduced-motion, v-if unmount not a CSS class toggle) via two new
+      IntersectionObserver instances and evaluateForegroundButterflyLoop()/
+      evaluateRobotLoop(). No cycling timer needed -- unlike the runway's 5
+      cycling stills, these are single always-looping clips (loop: true), so the
+      animated webp loops natively once mounted. Added .loop-clip CSS
+      (object-fit: contain, since the clips are square and the slots are not)
+      and included it in the existing prefers-reduced-motion media query
+      alongside .runway-clip.
+
+      Verified: vue-tsc clean, eslint clean, prettier clean,
+      npm run test:layout-contract holds (no new violations),
+      npm run test:kr-class-coverage OK. Not verified: rendered pixels (no
+      PR-preview infra for kind_robots; needs a post-merge Force Update + the
+      scheduled responsive-layout-audit.yml check per AGENTS.md).
+
+      PR: silasfelinus/kind_robots#2966 (branch claude/laughing-pascal-i2599o).
+
+      This closes out butterfly-gallery's t-014/t-033/t-035 motion-clip arc: all
+      7 original ArtJobs now have their content live in pages/butterfly-gallery.vue,
+      each independently gated per t-031's audited acceptance criteria.
+    updated: '2026-09-22T04:15:27Z'
     claimed_by: 2026-09-22T040249Z-t035-splice
     claimed_at: '2026-09-22T04:02:50Z'
+    implementation_pr: 'silasfelinus/kind_robots#2966'

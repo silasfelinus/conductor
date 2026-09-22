@@ -16061,3 +16061,21 @@ records:
     acceptance criteria up front. Worth checking whether an upstream task already
     absorbed a downstream audit task's requirement before assuming the audit still needs
     new code.
+- date: 2026-09-22
+  project: butterfly-gallery
+  task: t-035
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    STEP-1-style async-dependency tasks (poll an ArtJob, act once DONE) go from
+    not-yet-actionable to fully shippable in one pass once the upstream condition clears --
+    this task went claim -> verify DONE -> resolve artImageId -> splice -> full verify suite
+    -> merged PR in a single session with zero back-and-forth, because the acceptance
+    criteria and implementation pattern were already fully specified by the sibling task
+    (t-033) it was explicitly modeled on. Confirms the t-190 kaizen (from t-031, same
+    session): when a task's own note names the exact pattern a prior sibling task already
+    proved, implementation is close to mechanical -- worth checking for that note-linkage
+    before assuming a task needs open-ended design work.
