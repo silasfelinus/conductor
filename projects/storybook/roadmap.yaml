@@ -148,7 +148,7 @@ tasks:
 - id: t-010
   milestone: m4
   title: Polish and upgrade Storybook front-end surface
-  status: claimed
+  status: review
   passes: 51
   stakes: reversible
   note: |-
@@ -372,11 +372,34 @@ tasks:
     Prettier-formatted the file (the branch's first commit had a missing trailing newline
     and two over-long lines) as a second commit before opening the PR. All CI green. Re-
     arming to ready per established recurring-polish convention.
-  updated: '2026-09-22T11:57:45Z'
+
+    Cycle (this session, 2026-09-22): audited stores/helpers/narrativeArtJobsHelper.ts
+    (cycle 49's leftover lead) end-to-end -- found it already carefully race-hardened
+    (epoch-guarded poll chains), no actionable finding. Moved to the other cycle-49 lead,
+    storybook-visual-setup.vue: t-034/t-035/t-036 (the card-driven redesign this file was
+    paused behind) have all been status: done since 2026-09-13, so the 2026-09-12/13 pause
+    note's own condition for lifting is met, and the file is confirmed still live (rendered
+    by storybook-library-page.vue when no session is active). Found the 'Narrator voice' and
+    'Shape of the tale' grids -- each a set of individually meaningful, mutually-exclusive
+    :aria-pressed choice buttons -- with no role="group"/aria-label tying their own options
+    together, the same gap already closed at kr-choice-list.vue, narrative-role-
+    assigner.vue, brainstorm-manager.vue, storybook-page.vue's setup-progress nav, and this
+    project's own storybook-life-run.vue dimension grid. Fixed both grids (role="group" + a
+    matching aria-label) and added a dedicated regression guard,
+    verifyStorybookVisualSetupChoiceGroupGuard.ts + self-test, mirroring
+    verifyDaVinciDimensionGroupGuard.ts's shape -- confirmed to genuinely fail pre-fix via a
+    git-stash round trip on just the component, wired into package.json's test:storybook
+    aggregate and contract-tests.yml. eslint clean, vue-tsc --noEmit exit 0. Opened
+    silasfelinus/kind_robots#2981; will merge once CI is green. Kaizen for next cycle:
+    storybook-visual-setup.vue's remaining unaudited surface (the cast/role assigner section
+    below the two fixed grids, and its overall form-validation UX) and conductor/storybook-
+    page.vue (the third file the same 2026-09-12 pause note named, also now unblocked) are
+    both reasonable next candidates.
+  updated: '2026-09-22T12:07:20Z'
   owner: worker
   claimed_by: 2026-09-22T-conductor-agent-cycle-sb-t010
   claimed_at: '2026-09-22T11:57:45Z'
-  implementation_pr: 'silasfelinus/kind_robots#2968'
+  implementation_pr: 'silasfelinus/kind_robots#2981'
 - id: t-011
   milestone: m4
   title: Arrange the casting board by role instead of a uniform grid
