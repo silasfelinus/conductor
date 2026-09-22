@@ -2,6 +2,8 @@
 
 from pathlib import Path
 
+from tests.daily_digest_contract import assert_no_post_email_failure_step
+
 
 WORKFLOW = (
     Path(__file__).resolve().parents[1] / ".github" / "workflows" / "daily-digest.yml"
@@ -39,11 +41,4 @@ def test_daily_dream_failures_are_recorded_without_blocking_digest_delivery():
 
 def test_daily_dream_sidecar_failure_is_not_restored_after_email_delivery():
     text = WORKFLOW.read_text(encoding="utf-8")
-    email_pos = text.index("      - name: Email via Brevo")
-    creative_revision_pos = text.index("  creative-revision:", email_pos)
-    after_email = text[email_pos:creative_revision_pos]
-
-    assert "Fail after digest if Daily Dream cycle failed" not in text
-    assert "steps.daily_dream_author.outcome" not in after_email
-    assert "steps.daily_dream_build.outcome" not in after_email
-    assert 'exit "$failed"' not in after_email
+    assert_no_post_email_failure_step(text)
