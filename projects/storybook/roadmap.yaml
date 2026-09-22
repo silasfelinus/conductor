@@ -1557,7 +1557,7 @@ tasks:
 - id: t-058
   milestone: m7
   title: "Decide whether the new run engine should ever attach fresh in-scene art, and wire it up if so"
-  status: claimed
+  status: needs-human
   stakes: reversible
   passes: 0
   note: |-
@@ -1610,10 +1610,30 @@ tasks:
     Filed as its own task rather than folded into t-010's cycle 82 PR per AGENTS.md
     scope discipline -- this is a real design decision plus nontrivial wiring, not a
     same-cycle polish fix.
-  updated: '2026-09-22T09:57:40Z'
-  owner: reviewer
+
+    FOR SILAS: storybook/t-058 needs a product decision before any code changes. QUESTION:
+    should the new Storybook run engine ever attach fresh in-scene art as turns are played?
+    WHAT WAS FOUND: tracing the full data path (stores/storybookRunStore.ts,
+    server/api/storybook/runs/[id]/turn.post.ts, components/storybook/storybook-reading.vue)
+    shows art is never wired into the new engine at all -- KrArtPlate in storybook-
+    reading.vue only ever shows whatever art existed when the run was first loaded, and it
+    never grows as turns are played, unlike the legacy storybook-life-run.vue path which
+    does wire this up. TO APPROVE: pick (a) or (b) and note it here, or tell the next
+    session which to implement: (a) Not meant to exist yet -- remove or clearly gate the
+    KrArtPlate rendering path in storybook-reading.vue so it isn't silently dead code; scope
+    shrinks to clarify-intent-plus-remove-dead-code. (b) It IS meant to work -- wire the
+    same enqueue-job/poll/attach-on-completion flow storybook-life-run.vue already uses (via
+    narrativeArtJobsHelper.ts/persistedNarrativeArtJobsHelper.ts) into the new engine:
+    enqueue art for pendingTurn.artPrompt after each turn narrates, attach it via
+    life/runs/[id]/art.post.ts (or a new engine-scoped route if the LifeRunArt model needs
+    one), and have the store refresh art.value once the job resolves. What unblocks: once
+    you pick (a) or (b), the next Worker session implements the chosen path in one scoped
+    PR. Soft gate: other storybook work continues in parallel.
+  updated: '2026-09-22T09:58:13Z'
+  owner: worker
   claimed_by: 20260922T100000Z-sb-t058-triage
   claimed_at: '2026-09-22T09:57:40Z'
+  soft_gate: true
 
 - id: t-059
   milestone: m7
