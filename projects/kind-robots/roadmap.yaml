@@ -2773,5 +2773,80 @@ tasks:
   implementation_pr: 'silasfelinus/kind_robots#2965'
 
 
+- id: t-116
+  milestone: m6
+  title: 'Make --requeue-curated idempotent against its own in-flight jobs (two runs
+    queued 73 duplicate renders)'
+  status: done
+  gate_human: false
+  stakes: reversible
+  owner: worker
+  passes: 0
+  note: >-
+    Found 2026-09-22 while finishing the Krea "frame" repair (t-115). Silas ran
+    `npx tsx scripts/generate_facet_art.ts --write --requeue-curated` twice in a row. The
+    first run queued 380 jobs; the second queued 75 more and reported
+    `pendingReused: 1`. The queue held 452 PENDING facet-catalog jobs across only 379
+    distinct Facets -- 73 of them asking for a second render of a picture already
+    queued, at roughly a minute of GPU each.
+
+    ROOT CAUSE, and the split is the diagnosis. curatedPromptNeedsRender() asks "has a
+    picture been PAINTED from this text yet", which is deliberate and correct: the
+    painted image is the only honest answer to "is this card current", and preferring
+    it over the job payload is what caught 148 cards on 2026-09-15 whose payload said
+    the right thing and whose picture was made from a retired template. But it is
+    unanswerable for a job that has not rendered yet. So the function split by whether
+    the Facet already had art:
+
+      - never painted   -> fell through to the payload comparison, which DID see run
+                           1's job and its recorded prompt. 306 rows correctly skipped.
+      - already painted -> took the painted branch, which returns early and returns
+                           true every single run, because the in-flight job has painted
+                           nothing and nothing it does can change that answer. Those
+                           are the 73, every one a row with an existing render.
+
+    FIX (kind_robots PR #2978). A PENDING or RUNNING job's basePromptString is compared
+    against the curated text BEFORE the painted comparison, and an exact match
+    suppresses the re-queue. Ordering is the whole fix, so the test pins the ordering
+    rather than just the outcome: a Facet painted from older text still requeues when
+    nothing is in flight, does not requeue while a job carrying the same text is
+    pending, and DOES requeue when the in-flight job carries different text (the
+    prompt was edited again).
+
+    CLEANUP. scripts/cancel_duplicate_facet_jobs.ts cancels redundant PENDING
+    facet-catalog jobs -- oldest per Facet always kept, RUNNING never touched, and a
+    duplicate cancelled only when its promptString matches the kept job's exactly, so
+    two different intentions for one Facet are reported and left alone. It recomputes
+    rather than taking a list of ids, because the queue drains while you look at it:
+    the redundant set fell from 73 to 53 in the minutes between measuring and acting.
+    Run against live: 53 cancelled, 53/53 verified, leaving 379 pending across 379
+    Facets, exactly one each.
+
+    TWO SMALLER THINGS FIXED IN THE SAME PR, both found while verifying the above.
+
+    1. A title already ending in sentence punctuation gained a second period.
+       buildFacetIdentityPromptFrom appended "." unconditionally, so all 111 live
+       Facets with such a title opened their conditioning with "...turned to ruin..",
+       in the strongest position in a caption.
+
+    2. Two rows carried text mangled by an older negation-repair pass -- #1734
+       Principled ("does tioned afterward") and #540 ("Does tion it") -- from a pattern
+       that deleted `not men` out of `not mention` for want of a trailing word
+       boundary. Verified rather than assumed: the DESCRIPTIONS are intact, and the
+       damage is only in the derived artPrompt. Both prompts are recognized as legacy
+       generated text, so the producer rebuilds them from the intact description and
+       they self-heal on the next repair run -- no content guessing needed, and none
+       done. Exactly 2 rows repo-wide carry the signature.
+
+    PROCESS NOTE worth keeping. Changing a variable name in claim.post.ts and a
+    template literal in facetVisualLanguage.ts each broke a source-contract test that
+    pins the literal, and in both cases the pin lived in a verifier that reads a file
+    this change touched. Grepping utils/scripts/ for every verifier that reads a
+    changed file, BEFORE pushing, catches these in one pass; discovering them from CI
+    cost three rounds across t-115 and this task.
+  updated: '2026-09-22T09:00:00Z'
+  implementation_pr: 'silasfelinus/kind_robots#2978'
+
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
