@@ -469,7 +469,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 52
     stakes: reversible
@@ -628,8 +628,17 @@ tasks:
       commits repo-wide since the prior 2026-09-22T13:58:02Z audit (checked via GitHub commits
       API, since-filtered repo-wide, kind_robots default branch). No model-builder-specific
       regression audit warranted -- verified no-op, re-arming to ready.
-    updated: '2026-09-22T15:54:03Z'
-    owner: worker
+
+      Cycle 90 (checked through 2026-09-22T15:0*Z, scheduled Conductor Agent run): checked
+      kind_robots commits repo-wide since the prior 2026-09-22T14:58Z audit via the GitHub
+      API. Newest commit is still #2981 (a11y: storybook-visual-setup.vue choice grids,
+      2026-09-22T12:21:57Z), already covered by cycle 87 -- zero fresh commits on any tracked
+      model-builder surface (components/model-builder/**, stores/modelBuilderStore.ts,
+      server/api/model-builder/**, prisma/model-builder.prisma, content/model-builder*.md)
+      since the prior audit. No model-builder-specific regression audit warranted -- verified
+      no-op, re-arming to ready.
+    updated: '2026-09-22T15:54:11Z'
+    owner: null
     claimed_by: 2026-09-22T-conductor-agent-mb-t029-cycle90
     claimed_at: '2026-09-22T15:54:03Z'
 
