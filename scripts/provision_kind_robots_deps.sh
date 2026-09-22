@@ -21,6 +21,18 @@
 # not reliably include it, which made recovery runs repeatedly fail once before
 # installing the same dependency by hand. Provision it here once, idempotently.
 #
+# ALSO REQUIRED before trusting a local `npm run test:prettier-ratchet` (or
+# test:lint-ratchet) reproduction (storybook/t-063, 2026-09-22): with no
+# node_modules present, `npx prettier ...` silently fetches/resolves whatever
+# ambient prettier version npx finds (measured: 3.8.1) instead of the
+# lockfile-pinned one (3.9.6) that `npm ci` — and therefore real CI — actually
+# installs. Different prettier versions disagree on formatting for some files,
+# which read as ~30 files of "repo-wide drift" across 8 unrelated directories
+# that no single PR introduced. After sourcing this script (so node_modules
+# matches the lockfile), the same ratchet run reports the gate holding clean.
+# Always provision deps here first, never take a bare `npx <tool>` reproduction
+# of a ratchet/version-sensitive gate at face value.
+#
 # Mirrors scripts/provision_node24.sh: idempotent, no root, no version manager,
 # no persistent host state (reruns cheaply in each fresh container).
 #
