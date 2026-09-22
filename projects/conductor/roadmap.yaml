@@ -3949,5 +3949,56 @@ tasks:
   updated: '2026-09-22T10:20:40Z'
   implementation_pr: 'silasfelinus/conductor#5011'
 
+- id: t-192
+  milestone: m2
+  title: 'already_satisfied() treats an existing destination file as proof a regeneration request is fulfilled, without ever generating anything'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Filed from ruler-hooked/t-019 (2026-09-22): `consume_art_requests.py`'s
+    `already_satisfied(entry)` is `target_path(entry).exists()` -- true whenever a file
+    already sits at `image_path`, with no check for whether the CONTENT matches the
+    request's current prompt. Five consumer scripts share this function
+    (`consume_art_inspirations.py`, `consume_art_inspirations_to_media.py`,
+    `consume_art_requests.py`, `consume_art_requests_to_media.py`, and the
+    kind-robots-media variant overriding it via `_media_exists`). For a first-time
+    request this is correct and cheap. For a REGENERATION request -- an entry that was
+    already `status: done` once, then flipped back to `pending` after its prompt was
+    corrected, reusing the same `image_path` -- it is silently wrong: the request is
+    marked done and zero ArtJobs are ever submitted, because the stale file from the
+    prior render already satisfies the naive existence check. This produced two
+    consecutive false "it rendered and still failed" conclusions on ruler-hooked's
+    choirfish entry (kind_robots auto-art-generate.yml run 35693015563 and again
+    35714383752, both logging `already present, will mark done` with zero new ArtJobs)
+    before a session traced the actual job history and found it.
+
+    There IS a documented escape hatch -- `consume_art_requests.py --force
+    --id-prefix <id>` ("Use after correcting a prompt, scoped with --id-prefix") -- but
+    it is a manual CLI flag never wired into `auto-art-generate.yml`'s scheduled/push
+    runs, so nothing routes a routine "prompt got fixed, re-stage as pending" edit
+    through it automatically. The gap is specifically: the automated pipeline has no
+    way to tell "brand new pending request" from "pending request whose target file is
+    stale content from an earlier attempt."
+
+    Proposed fix (needs a design decision, not just a patch): give a request an
+    explicit marker for "this specific pending state wants forced regeneration even
+    though a file exists" -- e.g. a `force: true` field the staging edit sets alongside
+    `status: pending`, which `already_satisfied()` (or its caller) checks before the
+    file-existence short-circuit and clears once the request is genuinely fulfilled.
+    Simpler alternative: treat `last_art_job_id` unset/older-than-`updated` on a
+    `status: pending` row as a signal the file predates this pending cycle. Either way,
+    touch all four scripts' shared logic carefully -- this is production automation
+    running every 6 hours across every art lane (project art, missing-image repair,
+    Mandarin Tutor, Daily Dream), so a regression here silently stops ALL first-time
+    generation, not just regeneration. Write a regression test using ruler-hooked's
+    choirfish case (existing stale file + status flipped pending + no matching new
+    ArtJob) as the failing fixture before changing behavior.
+  updated: '2026-09-22T15:15:00Z'
+  claimed_by: null
+  claimed_at: null
+  implementation_pr: null
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
