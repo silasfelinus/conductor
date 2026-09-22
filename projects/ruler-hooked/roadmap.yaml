@@ -1217,3 +1217,25 @@ tasks:
   claimed_at: '2026-09-21T12:23:11Z'
   updated: '2026-09-21T12:31:00Z'
   soft_gate: true
+
+- id: t-038
+  milestone: m5
+  title: Author card-specific art keys and a Character/mood matrix for the top interrupt/arc-step cards
+  status: ready
+  stakes: reversible
+  passes: 0
+  owner: null
+  claimed_by: null
+  claimed_at: null
+  note: >-
+    Kaizen from t-030's decision-card slice (silasfelinus/kind_robots#2990), which taught
+    ruler-hooked-card.vue to render card.art / a featured character's portrait when either
+    exists, but almost no card in content.ts actually sets art: (only the one demo entry,
+    card-warlock-druid-north) and no character has a rendered portrait yet (the render
+    queue is 1400+ jobs deep per characterArt.ts's own note). The ladder is real but has
+    nothing to show for most cards today. Pick the highest-weight/most-frequently-drawn
+    interrupt and arc-step cards, author art: card-<id> keys for them per decks.md and
+    art-direction.md's card-art conventions, and submit the corresponding ArtRequests
+    (or character portrait prompts via characterPortraitPrompt()) through the normal art
+    pipeline so this cycle's UI change actually starts showing images rather than
+    degrading to the no-art rung every time.
