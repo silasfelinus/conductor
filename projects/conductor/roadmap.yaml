@@ -3864,5 +3864,40 @@ tasks:
   claimed_at: null
   updated: '2026-09-21T18:00:00Z'
 
+- id: t-190
+  milestone: m2
+  title: 'Have select_role.py/next_ready_task.py surface when a ready task''s named dependency already satisfies its acceptance criteria'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from butterfly-gallery/t-031 (2026-09-22, conductor#4984): t-031 was a pure
+    audit task ("confirm the runway motion clips are gated on visibility/reduced-motion,
+    not just a CSS class toggle") sitting on `depends_on: t-033`. When t-033 actually
+    landed, its own closing note and PR (kind_robots#2964) had already implemented the
+    exact IntersectionObserver + document.hidden + prefers-reduced-motion + v-if-unmount
+    gating t-031 existed to require -- because t-033's note named t-031's acceptance
+    criteria up front and built to it directly. t-031 closed with zero code diff once a
+    session actually read t-033's note and the merged diff.
+
+    This is likely a recurring shape wherever one task's note explicitly anticipates and
+    satisfies a sibling/dependent task's criteria (see also butterfly-gallery/t-035,
+    which now carries the same gating pattern forward for its own two slots). A ready
+    task whose `note:` or its dependency's `note:` already documents the acceptance
+    criteria as met is worth flagging distinctly from an ordinary unstarted `ready` task,
+    so a session doesn't have to rediscover this by hand each time.
+
+    Concretely: extend `select_role.py`'s ready-task surfacing (or add a small standalone
+    check) to scan a `ready` task's own `depends_on` chain for a `done` dependency whose
+    note text mentions the ready task's id (e.g. "t-031" appearing in t-033's note) and
+    flag it as "audit candidate: likely a zero-diff close" in the JSON output, without
+    changing selection order or auto-closing anything -- purely an advisory hint the
+    picking session can act on faster than re-deriving it from scratch.
+  claimed_by: null
+  claimed_at: null
+  updated: '2026-09-22T04:00:00Z'
+  implementation_pr: null
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
