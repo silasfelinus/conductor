@@ -1,6 +1,8 @@
 import re
 from pathlib import Path
 
+from tests.daily_digest_contract import assert_no_post_email_failure_step, post_email_block
+
 
 ROOT = Path(__file__).resolve().parent.parent
 HOURLY = ROOT / ".github" / "workflows" / "hourly-conductor.yml"
@@ -50,12 +52,9 @@ def test_daily_dream_sidecars_warn_without_manufacturing_a_failed_digest_run():
 
     assert "::warning::Daily Dream object build failed" in workflow
     assert "::warning::Daily Dream live composed-field verification found drift" in workflow
-    assert "Fail after digest if Daily Dream cycle failed" not in workflow
-    assert 'exit "$failed"' not in workflow
+    assert_no_post_email_failure_step(workflow)
 
-    email_block = workflow.split("- name: Email via Brevo", 1)[1]
-    email_block = email_block.split("\n  creative-revision:", 1)[0]
-    assert "continue-on-error" not in email_block
+    assert "continue-on-error" not in post_email_block(workflow)
 
 
 def test_delayed_schedule_cannot_resend_after_watchdog_replacement_succeeds():
