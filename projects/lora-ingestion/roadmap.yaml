@@ -338,7 +338,7 @@ tasks:
 - id: t-012
   milestone: m4
   title: Polish art-generator random pools, facet picker placement, image sizes, and Krea 2 preset
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -363,7 +363,9 @@ tasks:
     new schema columns. Add focused contracts for the source-explicit random placeholders
     and model-size choices, preserve the existing random-batch/LoRA compatibility and
     maturity rules, and keep this as a reversible front-end/server utility change.
-  updated: '2026-09-22T07:22:00Z'
+
+    Implementation is scoped on the Kind Robots worker branch: random source-explicit LoRA/Facet/object controls, compact persisted artPrompt context, upward Facet picker, checkpoint-aware dimension selects, and removal of the misleading 16-step Krea 2 preset.
+  updated: '2026-09-22T07:29:00Z'
   claimed_by: 2026-09-22T000600-0700-lora-ingestion-t-012-openai-chat-a73c
   claimed_at: '2026-09-22T07:22:00Z'
 
