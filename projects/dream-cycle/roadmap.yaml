@@ -665,11 +665,11 @@ tasks:
 - id: t-031
   milestone: null
   title: Guard against workflow-behavior contract drift when an intentional failure policy changes
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-09-16T22:05:00Z'
+  updated: '2026-09-22T00:59:21Z'
   note: >
     Kaizen from conductor#4519 (dream-cycle/t-006, merged 2026-09-16): removing
     daily-digest.yml's "Fail after digest if Daily Dream cycle failed" step (to
@@ -686,6 +686,8 @@ tasks:
     ever disagree about whether the post-email failure step exists. Scope this to
     daily-digest.yml's contract tests specifically; a repo-wide version of this
     guard is out of scope for one kaizen task.
+  claimed_by: claude-scheduled-20260922T005920Z-dream-cycle-t031
+  claimed_at: '2026-09-22T00:59:21Z'
 
 - id: t-032
   milestone: null
