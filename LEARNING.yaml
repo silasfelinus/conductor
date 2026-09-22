@@ -16185,3 +16185,22 @@ records:
     kind_robots targets via consume_art_requests_to_media.py's wrapper) that look like one
     function from the caller's side -- a fix to the "obvious" one silently misses the
     production entrypoint a scheduled workflow actually calls.
+- date: '2026-09-22'
+  project: conductor
+  task: t-193
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A same-day kaizen (t-192 -> t-193) that turns "found this bug by hand-grepping" into a
+    structural test is cheap and worth doing immediately rather than deferring: the guard here
+    is ~150 lines, ran in under a tenth of a second, and directly encodes the exact
+    investigative step (grep every already_satisfied definition, check each one) that closed
+    the parent bug. Mirroring an existing guard's shape
+    (test_home_server_pm2_comfyui_direct_call_guard.py: glob the relevant files, define a
+    positive-match regex/parser, assert clean, then self-test the parser/regex against a known
+    offender so the test can't silently pass by never matching anything) made the design
+    decision fast rather than open-ended -- worth reaching for an existing guard's shape before
+    inventing a new one when the repo already has this pattern established.
