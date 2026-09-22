@@ -3867,8 +3867,8 @@ tasks:
 - id: t-190
   milestone: m2
   title: 'Have select_role.py/next_ready_task.py surface when a ready task''s named dependency already satisfies its acceptance criteria'
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >-
@@ -3894,9 +3894,9 @@ tasks:
     flag it as "audit candidate: likely a zero-diff close" in the JSON output, without
     changing selection order or auto-closing anything -- purely an advisory hint the
     picking session can act on faster than re-deriving it from scratch.
-  claimed_by: null
-  claimed_at: null
-  updated: '2026-09-22T04:00:00Z'
+  claimed_by: 2026-09-22T0456Z-conductor-t190
+  claimed_at: '2026-09-22T04:57:06Z'
+  updated: '2026-09-22T04:57:06Z'
   implementation_pr: null
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
