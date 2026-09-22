@@ -1373,7 +1373,14 @@ tasks:
       body.data.job.status), not an API defect -- the /api/art/queue/:id response shape is
       unchanged and correct. Not yet actionable per STEP 1; leaving status: ready, no
       pass/retry consumed.
-    updated: '2026-09-21T23:54:23Z'
+
+      last checked 2026-09-22T00:59Z (scheduled conductor Agent run): jobs 28739 DONE, 28740
+      DONE, 28741 RUNNING, 28742-28745 PENDING (GET /api/art/queue/:id for each, admin token)
+      -- first movement since submission at 2026-09-19T12:40Z (~60h). Queue continues draining
+      (24h window: PENDING depth 165, latestDoneAt 2026-09-22T00:48:53Z live). Not yet
+      actionable per STEP 1 (2 of 7 not yet DONE); leaving status: ready, no pass/retry
+      consumed.
+    updated: '2026-09-22T01:00:38Z'
 
   - id: t-034
     milestone: m4
