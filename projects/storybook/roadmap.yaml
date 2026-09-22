@@ -869,7 +869,7 @@ tasks:
 - id: t-037
   milestone: m7
   title: "Delete the client-side beat loop and rewrite its ~25 verifyStorybook*Guard scripts"
-  status: claimed
+  status: review
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-036, t-052]
@@ -980,7 +980,7 @@ tasks:
     - verifyStorybookSeedQueryRaceGuard (protects a route.query race between storybook-page.vue's seedFromQuery() and storybook-library-page.vue's updateStoryQuery(), both mutating query on the same mount): confirmed updateStoryQuery()'s call site is gated on storyStore.session (the OLD useStorybookStore()), which the new engine never populates -- StorybookStorymaker uses useStorybookRunStore() exclusively. The race structurally cannot fire once ?legacy=1 is gone. storybook-table.vue's own seedFromQuery() (added t-055) has no sibling component racing on route.query in the new tree.
 
     All three guards' hazards are legacy-architecture-specific with no new-engine code to attach a rewritten assertion to right now -- recommend deleting them alongside storybookLibraryHelper.ts/storybook-page.vue when those files are actually removed, rather than force-migrating them to a vacuous assertion against unrelated files. Did not touch these three guards or the files they protect; no pass consumed (investigation only). Remaining unexamined slices: verifyStorybookLibrarySessionConsistencyGuard, verifyStorybookRestartInputCompletenessGuard, verifyStorybookRestoreIdempotencyGuard, verifyStorybookSessionLibrary, verifyStorybookStudio, verifyNarrativeArtPersistence (large -- spans 6+ shared narrative-art files beyond storybookStore.ts itself, likely its own multi-cycle slice), verifyStorybookConfirmArmScopeGuard, verifyStorybookLibraryMountReopenGuard, verifyStorybookLibraryNewStoryConfirmGuard, verifyStorybookAnswerInputPreservationGuard, verifyStorybookComposerImeCompositionGuard. Re-arming to ready; releasing the claim.
-  updated: '2026-09-22T22:01:17Z'
+  updated: '2026-09-22T22:01:39Z'
   owner: worker
   claimed_by: 2026-09-22T220116Z-storybook-t037-hero-scenario-guard
   claimed_at: '2026-09-22T22:01:17Z'
