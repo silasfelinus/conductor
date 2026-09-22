@@ -294,7 +294,7 @@ tasks:
 - id: t-011
   milestone: m4
   title: Fix the PowerShell-syntax-contract Python test's quote-only regex so it recognizes single-quoted workflow path globs
-  status: review
+  status: done
   passes: 0
   stakes: reversible
   note: |-
@@ -319,7 +319,18 @@ tasks:
     (don't let the fix accidentally make the test unconditionally pass).
 
     Fixed the PowerShell syntax contract parser to recognize both single- and double-quoted .ps1 workflow path globs, with a focused regression test covering both quote styles. Implementation branch worker/lora-ingestion-t-011-openai-scheduled-2026-09-22T061509Z-lora-ingestion-t011-a11.
-  updated: '2026-09-22T06:23:00Z'
+
+    Reconciled 2026-09-22T07:10Z: this task's own PR (kind_robots#2969, opened
+    2026-09-22T06:18:52Z by an OpenAI Worker cycle) was superseded by kind_robots#2970, an
+    independent same-bug fix from a different session that merged first
+    (2026-09-22T06:45:31Z) with broader coverage (accepts double-quoted, single-quoted, and
+    bare YAML scalars, plus a quote-backreference guard, vs. #2969's single/double-only
+    fix). #2969 showed mergeable_state=dirty against current main as a result; closed it as
+    redundant (comment posted) rather than resolving the conflict, since #2970 already fully
+    covers the fix. Closing done with implementation_pr pointing at the PR that actually
+    landed.
+  updated: '2026-09-22T06:58:48Z'
   owner: worker
   claimed_by: openai-scheduled-2026-09-22T061509Z-lora-ingestion-t011-a11
   claimed_at: '2026-09-22T06:15:09Z'
+  implementation_pr: 'silasfelinus/kind_robots#2970'
