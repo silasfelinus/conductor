@@ -469,7 +469,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 52
     stakes: reversible
@@ -637,10 +637,20 @@ tasks:
       server/api/model-builder/**, prisma/model-builder.prisma, content/model-builder*.md)
       since the prior audit. No model-builder-specific regression audit warranted -- verified
       no-op, re-arming to ready.
-    updated: '2026-09-22T17:56:38Z'
-    owner: worker
-    claimed_by: 2026-09-22T175530Z-conductor-agent-mb-t029-cycle91
-    claimed_at: '2026-09-22T17:56:38Z'
+
+      Cycle 91 (checked through 2026-09-22T17:31:14Z, scheduled Conductor Agent run): checked
+      kind_robots commits repo-wide since the prior 2026-09-22T15:54:11Z audit via the GitHub
+      API (7 commits: #2986 facet-art render-path fix, #2985 lora-type-randomization merge,
+      lora backfill-sweep progress-output fix, #2983 storybook-page.vue a11y choice-group
+      guard, #2980/#2982 facet card-copy rebuild fixes, #2984 art-archive ingest-token env
+      fix). None touch a tracked model-builder surface (components/model-builder/**,
+      stores/modelBuilderStore.ts, server/api/model-builder/**, prisma/model-builder.prisma,
+      content/model-builder*.md). No model-builder-specific regression audit warranted --
+      verified no-op, re-arming to ready.
+    updated: '2026-09-22T17:56:49Z'
+    owner: null
+    claimed_by: null
+    claimed_at: null
 
   - id: t-030
     milestone: m6
