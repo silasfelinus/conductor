@@ -393,6 +393,10 @@ def test_select_role_checks_both_default_repos():
     ), mock.patch.object(
         select_role.run_worker, "build_queue_summary", return_value=EMPTY_QUEUE
     ), mock.patch.object(
+        select_role.run_worker, "load_roadmaps", return_value=[]
+    ), mock.patch.object(
+        select_role, "find_due_daily_commitments", return_value=[]
+    ), mock.patch.object(
         select_role, "find_stale_recurring_tasks", return_value=[]
     ):
         select_role.select_role()
