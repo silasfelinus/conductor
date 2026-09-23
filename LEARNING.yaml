@@ -16305,3 +16305,13 @@ records:
   outcome: done
   failure_category: null
   lesson: "Creative cadence needs machine-readable release provenance at ship time: once Animation Manager dates and exact preview links were exposed in both the app and digest, a two-week build gap became immediately visible instead of hiding in prose history."
+
+- date: '2026-09-23'
+  project: art-archive
+  task: t-043
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Read both PRs before assuming a kaizen'd reconciliation task still needs code: kind_robots#3006 (the second of the two independent signed-capability schemes this task was filed to reconcile) already extracted the shared server/utils/signedMediaCapability.ts primitive and removed the duplicate attacher module itself, with its own added contract test (verifyArtArchiveSignedMedia.test.ts) enforcing 'one implementation, two key domains, one attacher' as part of its own green CI. The task only needed verification against live main (file listing + a code search for the removed duplicate's name) and a close-out, not a new PR -- closing tasks unread risks either duplicating work already done or missing that it's done at all."
