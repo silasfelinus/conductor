@@ -447,7 +447,7 @@ tasks:
 - id: t-016
   milestone: m2
   title: Feed check_vendored_scanner_parity.py's drift findings directly into resync_vendored_scanner.py
-  status: claimed
+  status: review
   owner: worker
   stakes: reversible
   note: |-
@@ -457,6 +457,8 @@ tasks:
     for a real re-sync or two, consider a --from-parity-report mode (or similar) that reads the
     parity checker's findings and re-syncs every drifted file in one command, instead of a human
     or agent having to read the parity report and hand-type one --file invocation per finding.
+
+    Added a parity-report mode to resync_vendored_scanner.py that consumes the checker's JSON findings, refuses unresolved/untracked entries, preserves the report ref, deduplicates filenames, and re-syncs all drifted scanners in one command; added focused tests.
   claimed_by: openai-scheduled-2026-09-23T011518Z-lora-ingestion-t016-a11
   claimed_at: '2026-09-23T01:15:18Z'
-  updated: '2026-09-23T01:15:18Z'
+  updated: '2026-09-23T01:21:00Z'
