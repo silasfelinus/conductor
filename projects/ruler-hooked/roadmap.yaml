@@ -1279,3 +1279,28 @@ tasks:
     (ArtRequest submission) -- all merged. Remaining scope: the other 19 card-lane entries
     are staged but not yet wired/submitted -- follow-on kaizen task ruler-hooked/t-039.
   updated: '2026-09-23T11:09:00Z'
+
+- id: t-039
+  milestone: m5
+  title: Spot-check the six t-038 card renders, then wire and submit the remaining 19 card-lane art requests
+  status: ready
+  owner: null
+  stakes: reversible
+  passes: 0
+  note: >-
+    Kaizen from t-038 (silasfelinus/conductor#5112, #5113, silasfelinus/kind_robots#3019).
+    t-038 fixed a real path-contract bug in build_ruler_hooked_art_queue.py's card lane
+    (image_path was public/images/ruler-hooked/cards/<id>.webp; cardArtPath() actually
+    resolves card.art to public/images/ruler-hooked/<key>.webp, no cards/ subdirectory)
+    and submitted the first six ArtRequests against the corrected path (bard-ballad,
+    duck-census, nix-warning, elope-1, envoy-1, bog-1 -- ArtJob ids 31526-31530, 31532).
+    All 25 card-lane entries are already staged in art-prompts.yaml.
+
+    DO: (1) once those six renders complete, confirm at least one actually resolves via
+    cardArtPath() in a real card render (or a direct fetch of
+    https://kindrobots.org/images/ruler-hooked/card-<id>.webp) before trusting the fix at
+    scale -- cheap insurance against a second path-contract mismatch. (2) Add art:
+    card-<id> to the remaining 19 cards in kind_robots utils/rulerHooked/content.ts (all
+    free-draw cards below weight 3, plus the three non-entry arc-step branches per arc).
+    (3) Submit their ArtRequests via consume_art_requests.py --live --submit-only
+    --id-prefix ruler-hooked-card-.
