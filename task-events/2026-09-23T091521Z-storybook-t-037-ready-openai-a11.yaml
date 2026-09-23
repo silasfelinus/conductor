@@ -1,8 +1,0 @@
-version: 1
-project: storybook
-task: t-037
-operation: ready
-session: openai-scheduled-2026-09-23T091521Z-storybook-t037-a11
-updated: '2026-09-23T09:24:00Z'
-note: >-
-  Cycle 28 dependency reconciliation: the previous cycle's conclusion that the bulk t-037 cutover is blocked on t-053 is backwards. t-053 explicitly depends_on t-037 because storybook-life-run.vue remains reachable only through storybook-visual-setup.vue until t-037 removes that legacy setup path. Therefore t-037 must proceed first, preserving only the life-only storybookStore exports consumed by storybook-life-run.vue; then t-053 can retire life-run.vue and its 13 Da Vinci guards. No code mutation this cycle because the claimed slice's latest handoff incorrectly described a circular blocker; corrected the implementation order instead of deleting code against that false premise. Next t-037 slice should perform the legacy setup/page/helper cutover and split-file guard trims already enumerated in cycles 26-27, while retaining the life-only store surface for t-053.
