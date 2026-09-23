@@ -336,7 +336,7 @@ tasks:
 - id: t-019
   milestone: m5
   title: Generate species designs for the 15-fish vertical-slice roster
-  status: claimed
+  status: needs-human
   passes: 0
   stakes: reversible
   gate_human: true
@@ -536,8 +536,31 @@ tasks:
     shared across five consumer scripts (consume_art_inspirations.py,
     consume_art_inspirations_to_media.py, consume_art_requests.py, consume_art_requests_to_media.py)
     and a behavior change there needs its own scoped task, not a rider on this one.
-  updated: '2026-09-23T08:00:02Z'
-  owner: worker
+
+    Cycle (2026-09-23, scheduled Conductor Agent sweep): checked ArtJob 30651 (the choirfish
+    re-render queued 2026-09-22 after the prompt was corrected and deduplicated in the
+    source YAML). It is DONE (completed 2026-09-22T18:57:44Z, resolved by the render-relay
+    recovering from the t-165/t-167 hang class this cycle). Downloaded and visually
+    inspected the result (media.acrocatranch.com/images/ruler-
+    hooked/fish/choirfish/bestiary.webp, artImageId 30520): it now correctly shows three
+    separate, individually-sized, individually-colored ribbon-finned fish (small red throat,
+    mid blue throat, larger gold throat) ascending in a line, matching the roster's trio
+    spec and its Cthulhuquarium Ichthyonomicon anchor -- PASSES. All 15/15 species in the
+    vertical-slice roster now confirmed passing.\n\nFOR SILAS: all 15 fish species designs
+    for the vertical-slice roster are done and pass agent-side review against docs/art-
+    direction.md and the shared Cthulhuquarium identity anchors -- see the roadmap note's
+    cycle-by-cycle history for what was checked and fixed (2 species needed prompt
+    corrections and re-renders: choirfish and the-pleasant-island, both now confirmed
+    correct). Renders live at https://kindrobots.org/images/ruler-
+    hooked/fish/<slug>/bestiary.webp for each of the 15 vertical-slice.yaml entries.\nTO
+    APPROVE: spot-check a few renders (the 6 shared-with-Cthulhuquarium species are the ones
+    most worth a look: choirfish, parlour-rustfish, errand-guppy, moebius-crab, lamplight-
+    angler, the-pleasant-island) and set approved_by_human: true and status: done, or leave
+    notes on what to regenerate.\nWhat unblocks when you do: the production art batches that
+    build on this bestiary variant (ruler-catch-card, ruler-silhouette, lake context per
+    docs/fish-ecology.md's art key convention).
+  updated: '2026-09-23T08:00:14Z'
+  owner: null
   claimed_by: 2026-09-23T080500Z-rh019-choirfish-verify
   claimed_at: '2026-09-23T08:00:02Z'
   implementation_pr: 'silasfelinus/conductor#5008'
