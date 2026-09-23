@@ -16277,3 +16277,12 @@ records:
   failure_category: null
   lesson: When a helper return shape grows, update both new-path coverage and pre-existing exact-dict
     assertions for unchanged/no-op paths in the same patch.
+- date: '2026-09-23'
+  project: art-archive
+  task: t-042
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: quality
+  lesson: "A repository-wide contract verifier (verifyContentVisibilityCoverage.ts) that reads only a query's own where clause has no way to recognize authorization that happens earlier, at capability-mint time, in a different file -- the new archive media route was correctly gated by a signed capability (verifyGalleryArchiveMedia(), itself downstream of buildArtImageWhere()) but still read as unguarded. The fix was naming the specific function in the scanner's recognized-checks list, not allowlisting the route -- allowlisting would have silently exempted the whole file from future scrutiny, while naming the function keeps the scanner honest about WHY it trusts this shape. Added a regression test against the scanner's own classifier (with synthetic source, not real files) so a plain unguarded read and an unrecognized check name both still fail -- otherwise the exception itself becomes the next silent gap. Also hit the Prettier ratchet on the same PR for unrelated pre-existing formatting drift in touched files; `npx prettier --write` on the flagged files was sufficient once `npm ci`/provision_kind_robots_deps.sh was actually run locally (a stale/incomplete local node_modules previously made a bare `npx prettier` resolve a different version than CI's pinned one and produced misleading extra violations)."
