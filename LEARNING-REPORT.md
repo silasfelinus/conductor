@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-23T09:09:39Z
+Generated: 2026-09-23T09:45:38Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1130**
-- Outcomes: blocked: 18, cancelled: 2, done: 1110
+- Closed tasks recorded: **1131**
+- Outcomes: blocked: 18, cancelled: 2, done: 1111
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -42,7 +42,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | interface-vision | 140 | 100% |
 | kapowarr | 52 | 100% |
 | kind-economy | 11 | 100% |
-| kind-robots | 67 | 99% |
+| kind-robots | 68 | 99% |
 | kindrobots-unraid | 9 | 100% |
 | lora-ingestion | 11 | 100% |
 | mandarin-tutor | 14 | 93% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1113 | 99% |
+| software | 1114 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-23 `kind-robots/t-117` — Its own unit tests caught a real bug in the first pass of a route-matching regex before it shipped: a trailing-boundary check used a negative lookahead against word/slash/hyphen characters, which let quantifier backtracking land on the harmless-looking '}' that closes a template-literal interpolation and falsely accept a call to a longer, different route. A positive whitelist of real string/call terminators (excluding template-syntax characters) fixed it. Worth remembering generally: a negative-lookahead boundary check on a backtracking character class is exploitable by the regex engine's own backtracking, not just by adversarial input -- a positive whitelist of real terminators is safer whenever the preceding token is a backtracking quantifier.
 - 2026-09-23 `art-archive/t-043` — Read both PRs before assuming a kaizen'd reconciliation task still needs code: kind_robots#3006 (the second of the two independent signed-capability schemes this task was filed to reconcile) already extracted the shared server/utils/signedMediaCapability.ts primitive and removed the duplicate attacher module itself, with its own added contract test (verifyArtArchiveSignedMedia.test.ts) enforcing 'one implementation, two key domains, one attacher' as part of its own green CI. The task only needed verification against live main (file listing + a code search for the removed duplicate's name) and a close-out, not a new PR -- closing tasks unread risks either duplicating work already done or missing that it's done at all.
 - 2026-09-23 `animation-manager/t-019` — Creative cadence needs machine-readable release provenance at ship time: once Animation Manager dates and exact preview links were exposed in both the app and digest, a two-week build gap became immediately visible instead of hiding in prose history.
 - 2026-09-23 `kind-economy/t-028` — A gap in check_project_scaffold_drift.py's sibling-check idea: nothing watches whether a server/api file that isn't reachable from any Vue page still makes sense to exist. Silas's own PR #2669 (2026-09-12) retired the mission-accrual admin page but left its backend (two API routes, a utils file, a regression test) live and orphaned for 11 days until the weekly site-audit gap-analysis pass caught it. Fix was straightforward once found: remove the four dead files, keep the Prisma model/migration in place (a destructive drop is out of scope for a reversible cleanup, AGENTS.md hard rule 10) with a schema comment explaining why. Separately: touching a schema comment still requires `prisma generate` -- the committed generated client is checked for parity against the schema, and forgetting the regen step fails CI on a diff that looks unrelated to the actual code change (verifyGeneratedClientParity flagged 4 stale files); the fix is mechanical (run prisma generate, commit the regenerated files) but easy to miss when the only edit is a comment.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-23 `lora-ingestion/t-015` — Closing the last manual step t-014 left: scripts/resync_vendored_scanner.py --file <name> now does the fix half of the drift-repair loop (fetch the kind_robots original, write it over the vendored copy, append a dated PROVENANCE.md note) that check_vendored_scanner_parity.py only detects. A detector alone still leaves a human/agent to hand-run cp + hand-edit a note every time it fires -- pairing a parity checker with a one-command fixer is what actually removes the toil, not just the risk of silent drift.
 - 2026-09-23 `lora-ingestion/t-014` — Closing the parity gap t-013 found: scripts/check_vendored_scanner_parity.py now fetches each kind_robots scanner original via the GitHub Contents API and diffs it byte-for-byte against the vendored copy, wired into the session sweep. A PROVENANCE.md comment documenting 'these should stay identical' is not itself a check -- the gap only closes once something actually compares the two on a recurring cadence, the same lesson check_pr_merged_drift.py and check_project_scaffold_drift.py already encode for their own domains.
 - 2026-09-22 `lora-ingestion/t-013` — A vendored copy (ops/home-server's stdlib-only scanner) had silently drifted from its app-source original (kind_robots' scan_loras.py), losing the Civitai tag classifier with no test catching it -- because nothing asserted the two stayed in sync. Cross-repo duplication for a legitimate reason (no Node available on the home box) still needs an explicit parity check or scripted sync step, not just a one-time copy at authoring time, or the vendor copy rots invisibly until a downstream symptom (garbled classification/preview) surfaces it.
-- 2026-09-22 `storybook/t-064` — test:lint-ratchet does NOT share test:prettier-ratchet's silent ambient-version-drift exposure: an unprovisioned npx eslint does resolve a different ambient version, but this repo's eslint.config.mjs unconditionally imports the Nuxt-generated .nuxt/eslint.config.mjs (only produced by nuxi prepare, part of npm ci's postinstall), so a bare npx eslint reproduction fails loud (ERR_MODULE_NOT_FOUND) before linting anything rather than silently misreporting a drifted count. Separately: pull_request_read's get_check_runs can serve stale cached in_progress status for a job that already completed (observed ~30 min stale here) -- cross-check with actions_get/get_workflow_job before treating a check as genuinely stuck.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-23T09:09:39Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-23T09:45:38Z_
