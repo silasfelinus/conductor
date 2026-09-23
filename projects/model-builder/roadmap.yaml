@@ -469,7 +469,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 52
     stakes: reversible
@@ -674,7 +674,16 @@ tasks:
       kind_robots#2998 (e0ab519, art-archive: make the import resumable and report progress as
       it runs), unrelated surface. No model-builder-specific regression audit warranted --
       verified no-op, re-arming to ready.
-    updated: '2026-09-23T03:54:19Z'
+
+      Cycle 95 (checked through 2026-09-23T03:54Z, scheduled Conductor Agent run): checked
+      kind_robots commits repo-wide since the prior 2026-09-23T00:56:34Z audit via local
+      checkout git log origin/main --since (path-filtered directly against components/model-
+      builder/**, stores/modelBuilderStore.ts, server/api/model-builder/**, prisma/model-
+      builder.prisma, content/model-builder*.md): zero results. Three new commits repo-wide
+      (kind_robots#2999 art-archive count-without-API, #3000 Facet prompt reword, #3001 art-
+      archive batched-import-linear), all unrelated surfaces. No model-builder-specific
+      regression audit warranted -- verified no-op, re-arming to ready.
+    updated: '2026-09-23T03:54:27Z'
     owner: worker
     claimed_by: 2026-09-23T035419-mb029-c95
     claimed_at: '2026-09-23T03:54:19Z'
