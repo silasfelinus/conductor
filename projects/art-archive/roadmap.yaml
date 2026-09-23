@@ -1383,3 +1383,26 @@ tasks:
     updated: '2026-09-23T07:17:01Z'
     implementation_pr: 'silasfelinus/kind_robots#3007'
 
+  - id: t-043
+    milestone: m5
+    title: "Reconcile the two independent signed archive-media capability schemes from kind_robots#3006 and #3007"
+    status: ready
+    passes: 0
+    stakes: reversible
+    owner: null
+    note: |-
+      Kaizen from t-042. #3007 (ArtImage/owner Gallery-oriented, merged as d8bd56e) and #3006
+      (ArchiveEntry/admin-oriented, still open as of this task's filing) each independently
+      built their own signed-capability-URL mechanism for the same underlying problem: an
+      authenticated JSON response minting a short-lived HMAC-signed URL so a plain <img> can
+      load PRIVATE_PATH-backed bytes without headers. #3007's landed first, so #3006 will need
+      to rebase onto main and now sits next to a second, differently-shaped implementation of
+      the same idea (artGalleryArchiveMedia.ts's id+variant+expiry scheme vs #3006's
+      entry-id+variant+expiry scheme gated on admin+mature). Read both once #3006 either merges
+      or is closed, and either consolidate onto one shared signing helper (both are HMAC over
+      id:variant:expiry with a derived key) or document precisely why they must stay separate
+      (different auth model: owner-of-row vs admin-only). Whichever wins, the loser's dead code
+      should be removed rather than left to double the surface a future security review has to
+      reason about.
+    updated: '2026-09-23T07:17:01Z'
+
