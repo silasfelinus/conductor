@@ -1,4 +1,4 @@
-updated: "2026-09-20T16:56:52+00:00"
+updated: "2026-09-23T00:15:42+00:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -1457,3 +1457,62 @@ pitches:
       - the sequence cycles through at least three distinct named shapes before repeating, holding each for a readable pause
       - pointer hinge-nudge and click-advance never desynchronize the autonomous sequence's next target
       - reduced-motion mode holds one settled folded shape with no hinge transitions and no shimmer
+
+  - id: bonsai-seasonal-growth
+    title: Bonsai Seasonal Growth
+    status: pitched
+    priority: 30
+    surprise: >
+      A potted bonsai tree on a stone ledge quietly grows through an entire year -- bare
+      winter branches bud, leaf out into full summer canopy, blush and drop autumn leaves one
+      at a time, then rest bare again -- with no season ever visibly jumping or resetting, as
+      if a whole year were compressed into one unbroken, endless afternoon.
+    passive_loop: >
+      A small fixed branch skeleton (a short trunk with a handful of named branch tips)
+      carries a per-tip leaf-cluster state that eases through four ordered phases -- bare,
+      budding, full canopy, and color-and-drop -- on a slow multi-minute cycle. Each tip's
+      phase transition is offset by a small deterministic delay keyed to its position (tips
+      further from the trunk lag slightly), so the whole tree never changes as one flat wash
+      of color; leaves within a cluster fade in/out and drift down individually during the
+      drop phase rather than the canopy vanishing as a block.
+    optional_interaction: >
+      Pointer proximity to a branch tip nudges its local leaf cluster to sway a few degrees
+      and settle back, independent of the phase clock. A click on the trunk nudges every tip's
+      phase forward by one small time increment together (not a hard season skip), rate-
+      limited so rapid clicks cannot outrun the drop animation already in flight for any tip.
+    technique: >
+      A small DOM/SVG or Canvas branch skeleton with per-tip leaf-cluster sprites (a handful
+      of rotated/scaled leaf shapes per cluster, not per-leaf DOM nodes at scale). Phase
+      progress is a single shared clock read by every tip with a small deterministic per-tip
+      phase offset, the same eased-lerp-with-phase-offset pattern used for hinge easing
+      elsewhere in this queue, applied here to per-cluster opacity/scale/hue instead of a
+      hinge angle. Leaf drop during the color-and-drop phase is a short, capped-count particle
+      fall (fixed max concurrent falling leaves) rather than simulating every leaf
+      individually at once.
+    reduced_motion: >
+      Hold on one settled phase (full canopy) with no autonomous phase progression; allow only
+      an extremely slow ambient leaf-sway breathing cycle. Pointer branch-nudge and click-
+      advance are disabled while reduced motion is active.
+    performance_risk: >
+      Naive per-frame recomputation of every leaf sprite's transform/opacity across the whole
+      tree, plus an uncapped leaf-drop particle count during the color-and-drop phase, can
+      spike badly as branch-tip count grows. Cap branch-tip and concurrent- falling-leaf
+      counts, precompute the static branch-skeleton geometry once, and update only the per-tip
+      cluster state that actually changed this frame rather than re-walking the whole tree.
+    novelty: >
+      No existing pitch grows or seasonally cycles a living plant structure. Clockwork
+      Greenhouse is the nearest neighbor but is explicitly mechanical/steampunk -- brass
+      stems, gear-driven pollination, a garden that "resets" rather than organically budding,
+      leafing, coloring, and dropping. Impossible Terrarium and Geode Bloom both grow
+      structure inside a container (gravity-paradox rooms, crystal facets) but neither is
+      organic plant growth with a seasonal leaf-state cycle. Kintsugi Weather and Frost Window
+      Etching both grow/repair a surface pattern but on glass/porcelain, not a branching plant
+      skeleton with per-tip phase offsets. This pitch's mechanic -- per-branch-tip phase-
+      offset easing through bud/leaf/color/drop states with capped individual leaf-drop
+      particles -- has no prior instance in the queue.
+    acceptance:
+      - every branch tip cycles through bare, budding, full canopy, and color-and-drop without a visible hard cut or flat all-at-once color change
+      - branch-tip phase offsets are visibly staggered by position so the tree never reads as one flat wash of color changing at once
+      - the color-and-drop phase sheds individual leaf sprites (capped concurrent count), not the whole canopy disappearing as a block
+      - pointer branch-tip nudge and trunk click-advance never desynchronize the autonomous phase clock for tips not directly interacted with
+      - reduced-motion mode holds one settled full-canopy phase with no phase progression and no leaf drop
