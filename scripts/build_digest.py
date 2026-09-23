@@ -14,6 +14,7 @@ that made them stale are long gone.
 Usage: python scripts/build_digest.py [--since "24 hours ago"]
 """
 import subprocess, sys, json, argparse, datetime, glob, os, re
+from urllib.parse import quote
 
 try:
     import yaml
@@ -154,6 +155,7 @@ KR_MEDIA_ORIGIN = os.environ.get(
 # The /daily-dream front page was removed from kind_robots; the digest no longer
 # links to it (the dream-cycle art still renders inline).
 DAILY_DREAM_PAGE = ""
+ANIMATION_PITCHES_PATH = "projects/animation-manager/PITCHES.yaml"
 
 
 def _public_url(rel):
@@ -259,6 +261,69 @@ def new_creations(limit=5):
     for m in re.finditer(r"^##\s+(\d{4}-\d{2}-\d{2})\s+—\s+(.+?)\s+\(`([^`]+)`", text, re.MULTILINE):
         entries.append(f"{m.group(2)} ({m.group(1)})")
     return list(reversed(entries))[:limit]
+
+
+def animation_release_status(now=None, pitches_path=ANIMATION_PITCHES_PATH):
+    """Latest shipped Animation Manager build plus a direct preview link.
+
+    The daily digest should make the creative cadence observable. A stale state is
+    intentionally still useful: it tells Silas exactly when the latest animation
+    shipped instead of silently implying the daily build loop ran.
+    """
+    now = now or datetime.datetime.now(_TZ)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=_TZ)
+
+    if not os.path.exists(pitches_path):
+        return {
+            "state": "unresolved",
+            "reason": "Animation Manager release ledger is unavailable.",
+        }
+
+    try:
+        data = yaml.safe_load(open(pitches_path, encoding="utf-8")) or {}
+    except (OSError, yaml.YAMLError) as error:
+        return {
+            "state": "unresolved",
+            "reason": f"Could not read Animation Manager release ledger: {error}",
+        }
+
+    releases = []
+    for pitch in data.get("pitches") or []:
+        if not isinstance(pitch, dict):
+            continue
+        for build in pitch.get("builds") or []:
+            if not isinstance(build, dict) or not build.get("released_at"):
+                continue
+            raw = str(build["released_at"])
+            try:
+                released = datetime.datetime.fromisoformat(raw.replace("Z", "+00:00"))
+            except ValueError:
+                continue
+            if released.tzinfo is None:
+                released = released.replace(tzinfo=datetime.timezone.utc)
+            releases.append((released, pitch, build))
+
+    if not releases:
+        return {
+            "state": "unresolved",
+            "reason": "No Animation Manager build has release provenance yet.",
+        }
+
+    released, pitch, build = max(releases, key=lambda item: item[0])
+    released_pacific = released.astimezone(_TZ)
+    age_hours = max(0.0, (now.astimezone(_TZ) - released_pacific).total_seconds() / 3600)
+    animation_id = str(pitch.get("id") or "")
+    return {
+        "state": "fresh" if age_hours <= 24 else "stale",
+        "id": animation_id,
+        "title": str(pitch.get("title") or animation_id),
+        "released_at": released.isoformat().replace("+00:00", "Z"),
+        "released_label": released_pacific.strftime("%b %-d, %Y at %-I:%M %p Pacific"),
+        "age_hours": round(age_hours, 1),
+        "try_url": f"{KR_BASE_URL}/build/animation-manager?effect={quote(animation_id)}&preview=1",
+        "pull_request": str(build.get("pull_request") or ""),
+    }
 
 
 def scan_branches():
@@ -439,6 +504,7 @@ def main():
         "daily_dream_page": DAILY_DREAM_PAGE,
         "art_highlights": art_highlights(),
         "new_creations": new_creations(),
+        "animation_release": animation_release_status(),
         "commits_since": (git("log", f"--since={args.since}", "--pretty=format:%h %s (%an)") or "").splitlines(),
         "merges_since": (git("log", f"--since={args.since}", "--merges", "--pretty=format:%h %s") or "").splitlines(),
         "activity_since": significant_activity(args.since),
