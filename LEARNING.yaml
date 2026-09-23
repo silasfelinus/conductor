@@ -16373,6 +16373,15 @@ records:
   failure_category: null
   lesson: "Two worker/* branches (worker/animation-manager-t019-final, superseded, and worker/animation-manager-t019-digest-final, the cleaned-up final version) sat with a merged PR (#5136) that select_role.py's own scan missed on the run that found the branches -- always re-check list_pull_requests by head branch before opening a new PR from an existing worker/* branch, since a PR can exist even when the role-selection script reports zero reviewable PRs."
 - date: '2026-09-23'
+  project: storybook
+  task: t-066
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Clean first-pass kaizen fix: a stale-comment cleanup task is fast to verify fully (guard's own test + prettier + a repo-wide grep for the deleted filenames) even without a full local eslint environment -- worth doing that full grep sweep rather than trusting the single file diff, since a header comment mentioning a deleted file can easily have a sibling reference elsewhere in the same file."
+- date: '2026-09-23'
   project: dream-cycle
   task: t-033
   kind: software

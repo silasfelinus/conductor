@@ -2013,7 +2013,7 @@ tasks:
 - id: t-066
   milestone: m7
   title: "Fix stale file references in verifyStorybookTableDeepLinkGuard.mjs's header comment"
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -2033,7 +2033,28 @@ tasks:
     deleted in the t-037 guard-cleanup pass. Verified via npm run test:storybook-table-deep-
     link-guard (passes) and prettier --check (clean); eslint not run locally (no
     node_modules in this sandbox), relying on CI.
-  updated: '2026-09-23T22:02:29Z'
+
+    Merged: silasfelinus/kind_robots#3028 (squash c918128).
+  updated: '2026-09-23T22:07:53Z'
   claimed_by: claude-scheduled-2026-09-23T-sweep-t066
   claimed_at: '2026-09-23T21:59:37Z'
   implementation_pr: 'silasfelinus/kind_robots#3028'
+
+- id: t-067
+  milestone: m7
+  title: "Sweep remaining verifyStorybook*.mjs guards for other stale post-cleanup references"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from t-066 (2026-09-23). t-066 fixed two stale references to
+    verifyStorybookLocationDeepLinkGuard.mjs/verifyStorybookCharacterDeepLinkGuard.mjs inside
+    verifyStorybookTableDeepLinkGuard.mjs -- both were only found because the whole file was
+    read, not just the single line the kaizen note pointed at. The t-037 guard-cleanup pass
+    (kind_robots#3023) deleted 23 guard scripts in one cycle; any surviving guard's header or
+    inline comments could still name one of those 23 deleted filenames the same way. DO: grep
+    the surviving utils/scripts/verifyStorybook*.mjs files for the 23 deleted filenames (listed
+    in kind_robots#3023's diff) and fix any other stale references found, the same way t-066
+    did -- comment-only, verified via each affected guard's own npm test:storybook-* script.
+  updated: '2026-09-23T22:07:53Z'
