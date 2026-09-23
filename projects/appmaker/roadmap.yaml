@@ -362,7 +362,7 @@ tasks:
 - id: t-015
   milestone: m4
   title: Build the squash-graduation executor (conductor script + kind_robots endpoint) that consumes graduate-request Todos
-  status: review
+  status: needs-human
   passes: 0
   stakes: irreversible
   gate_human: true
@@ -407,10 +407,15 @@ tasks:
     running). Will merge the code (reversible -- it only adds an admin-gated endpoint, does
     not touch any live repo by itself) once green, then close this task at needs-human for
     Silas to review the mechanism and approve/trigger the first real graduation.
-  updated: '2026-09-23T04:05:18Z'
+
+    FOR SILAS: The squash-graduation executor is built and merged -- silasfelinus/kind_robots#3002 (commit c1219a0). What it does: POST /api/appmaker/graduate-execute (admin-only) reads apps/<slug>/'s tree out of this conductor repo, pushes it as a single commit onto the target repo's default branch via the granted GitHub installation's token (handles both an empty and a non-empty target repo), then opens a PR in conductor removing apps/<slug>/. It only runs when an OPEN 'Graduate app <slug> to its own repo' Todo exists, and marks that Todo done only after the removal PR opens.
+
+    TO APPROVE: this endpoint has NOT been run against any real repo -- there is no live graduation Todo to test it against, and both writes (the target-repo push, the removal PR) are irreversible per this task's own gate_human. Please review server/utils/appmakerGithub.ts's three new functions (readConductorAppTree, squashPushAppToRepo, openConductorAppRemovalPr) and server/api/appmaker/graduate-execute.post.ts in kind_robots#3002, then either: (a) file a real graduate-request for an app you want to actually graduate and let a future cycle call the new endpoint and watch it closely, or (b) ask for a dry-run mode (log-only, no writes) to be added first if you'd rather validate the push/removal logic before a live run. Setting approved_by_human: true and status: done unblocks nothing further downstream (t-015 has no listed dependents), so this is purely 'is the mechanism trustworthy enough to point at a real repo.'
+  updated: '2026-09-23T04:11:05Z'
   owner: worker
   claimed_by: 2026-09-23T040434-t015-build
   claimed_at: '2026-09-23T04:04:35Z'
   implementation_pr: 'silasfelinus/kind_robots#3002'
+  soft_gate: false
 goal: Let a user turn an app idea into a working, maintainable project through AppMaker, from scaffold through a usable
   handoff.
