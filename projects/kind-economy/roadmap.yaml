@@ -583,3 +583,42 @@ tasks:
     This is a NEW nonprofit under a NEW name (Kind Robots is the future; Save One Human
     was the seed and is dissolved), so it is a fresh incorporation, not a revival. It
     also exists to be the place filing confirmations get recorded once they exist.
+
+- id: t-028
+  milestone: m2
+  title: "Restore or formally retire the orphaned mission-accrual admin dashboard page"
+  status: ready
+  owner:
+  updated: '2026-09-23T05:05:00Z'
+  passes: 0
+  stakes: reversible
+  note: >
+    Found by this session's weekly site-audit gap-analysis pass (2026-09-23, follow-up
+    to projects/global-ui/AUDIT-REPORT-2026-09-23.md, which covered the 22 finite active
+    projects but not the 3 continuous ones this pass added).
+
+    t-010 shipped `components/pages/mission-accrual-page.vue` as the admin-only
+    mission-share accrual dashboard (silasfelinus/kind_robots#1964), and interface-vision's
+    t-104/t-105 recurring polish notes (and a tailwind.css codemod-history comment, roughly
+    lines 1902-1908 and 2709-2715) cite it as a live example file as recently as slices
+    149/173. It no longer exists anywhere in the kind_robots checkout (Glob/grep across
+    pages/, components/, stores/ found nothing) while its full backing stack is still very
+    much alive: server/api/economy/mission-accrual.{get,post}.ts,
+    server/utils/missionAccrual.ts, the Prisma `MissionRemittance` model (migration
+    20260819160000_mission_remittance_ledger), and the regression test
+    utils/scripts/verifyMissionAccrual.test.ts (`npm run test:mission-accrual`), which
+    explicitly still documents itself as covering "kind-economy/t-010 (the admin-only
+    mission-share accrual dashboard)". Neither this roadmap nor interface-vision's records
+    any deliberate removal, so this reads like the page component was deleted (accident or
+    unlogged cleanup) while everything downstream of it — DB model, API, test, and the
+    roadmap prose describing it as existing — was left behind.
+
+    Two acceptable outcomes, either closes this task:
+    (a) Recreate the admin dashboard page wired to the still-live
+    server/api/economy/mission-accrual.* endpoints (small, reversible — the backend
+    contract already exists and is tested), or
+    (b) Confirm the dashboard is intentionally retired, then remove the now-orphaned
+    backend/DB surface (or repurpose it) and correct interface-vision's t-104/t-105 notes
+    and the tailwind.css codemod-history comments to stop citing a page that no longer
+    exists.
+    Either way, update this task's note with which outcome was chosen and why.
