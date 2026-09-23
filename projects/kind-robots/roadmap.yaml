@@ -2847,6 +2847,33 @@ tasks:
   updated: '2026-09-22T09:00:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2978'
 
+- id: t-117
+  milestone: m6
+  title: 'Flag server/api routes with no live caller, the way check_project_scaffold_drift.py flags orphaned project rows'
+  status: ready
+  gate_human: false
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: >-
+    Kaizen from kind-economy/t-028 (kind_robots#3008, 2026-09-23). Silas's own PR #2669
+    (2026-09-12) retired the mission-accrual admin page (components/pages/mission-accrual-page.vue)
+    but left its full backend live: server/api/economy/mission-accrual.{get,post}.ts,
+    server/utils/missionAccrual.ts, and utils/scripts/verifyMissionAccrual.test.ts sat
+    orphaned for 11 days, undetected by any existing CI check or scanner, until the weekly
+    site-audit gap-analysis pass caught it by chance while covering an unrelated project.
+
+    No script in this repo currently answers "does every server/api route have a live
+    caller somewhere in the app" -- conductor's check_project_scaffold_drift.py checks a
+    different thing (Conductor project rows vs Kind Robots project rows). Build a
+    script/contract test that, for each server/api/**/*.{get,post,put,delete}.ts file,
+    greps the rest of the repo (components/, stores/, server/, utils/) for a $fetch /
+    ofetch / useFetch call to its route path, and flags any route with zero matches as a
+    candidate orphan for human review (not auto-deletion -- a route can be intentionally
+    external-facing, e.g. a webhook, with no in-repo caller). False positives are expected
+    and fine; the goal is surfacing candidates within days, not the 11-day gap this cycle
+    hit, not eliminating false positives.
+  updated: '2026-09-23T08:12:00Z'
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
