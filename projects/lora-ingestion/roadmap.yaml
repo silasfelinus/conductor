@@ -425,4 +425,19 @@ tasks:
   claimed_by: 2026-09-22T235226Z-lora-ingestion-t014
   claimed_at: '2026-09-22T23:59:36Z'
   updated: '2026-09-23T00:04:35Z'
+- id: t-015
+  milestone: m2
+  title: Automate the vendored-scanner re-sync PROVENANCE.md still documents as a manual cp + hand-edited note
+  status: ready
+  owner: null
+  stakes: reversible
+  note: |-
+    Kaizen from t-014 (Worker, 2026-09-23). check_vendored_scanner_parity.py now detects
+    drift between ops/home-server/lora-catalog/{scan_loras,scan_models,import_catalog}.py
+    and their kind_robots originals, but fixing it is still the manual `cp` + hand-edited
+    "Re-synced" note PROVENANCE.md documents. Add a
+    `scripts/resync_vendored_scanner.py --file <name>` that fetches the current kind_robots
+    original via the same GitHub Contents API t-014 added, writes it over the local vendored
+    copy, and appends a dated "Re-synced" line to PROVENANCE.md automatically -- removing the
+    last manual step in the drift-repair loop t-013/t-014 built the detection half of.
   implementation_pr: 'silasfelinus/conductor#5063'
