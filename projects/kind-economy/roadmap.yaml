@@ -588,12 +588,12 @@ tasks:
 - id: t-028
   milestone: m2
   title: "Restore or formally retire the orphaned mission-accrual admin dashboard page"
-  status: review
+  status: done
   owner: worker
-  updated: '2026-09-23T06:05:40Z'
+  updated: '2026-09-23T08:14:48Z'
   passes: 0
   stakes: reversible
-  note: >
+  note: >-
     Found by this session's weekly site-audit gap-analysis pass (2026-09-23, follow-up
     to projects/global-ui/AUDIT-REPORT-2026-09-23.md, which covered the 22 finite active
     projects but not the 3 continuous ones this pass added).
@@ -623,5 +623,19 @@ tasks:
     and the tailwind.css codemod-history comments to stop citing a page that no longer
     exists.
     Either way, update this task's note with which outcome was chosen and why.
+
+    OUTCOME: (b) -- confirmed intentional retirement, cleaned up the orphaned backend. Git
+    history (silasfelinus/kind_robots#2669, merged 2026-09-12 by Silas himself, no agent
+    involved) showed the page was deliberately retired, not accidentally deleted as this
+    task's original note assumed -- its explanation was folded into about-page.vue instead.
+    Removed the four now-dead backend files (two API routes, missionAccrual.ts, its
+    regression test) and the dangling test:mission-accrual script in
+    silasfelinus/kind_robots#3008 (merged). Left the MissionRemittance Prisma table in place
+    -- a real append-only remittance log; dropping it needs an explicitly-approved
+    destructive migration, out of scope here (AGENTS.md hard rule 10) -- documented why on
+    the schema model itself. Corrected the stale tailwind.css codemod-history comments (same
+    PR) and interface-vision/t-104 + t-105's roadmap notes (silasfelinus/conductor#5090,
+    merged) that still cited mission-accrual-page.vue as a live example file.
   claimed_by: conductor-scheduled-20260923T055503Z-t028
   claimed_at: '2026-09-23T05:55:04Z'
+  implementation_pr: 'silasfelinus/kind_robots#3008'
