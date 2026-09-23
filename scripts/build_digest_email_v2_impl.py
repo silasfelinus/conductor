@@ -292,6 +292,50 @@ def next_pitch_section(proposal: dict[str, Any] | None) -> str:
     )
 
 
+def animation_release_section(digest: dict[str, Any]) -> str:
+    """Show the newest Animation Manager release directly under the Daily Dream."""
+
+    release = digest.get("animation_release")
+    if not isinstance(release, dict):
+        return ""
+
+    state = str(release.get("state") or "unresolved").lower()
+    if state == "unresolved":
+        reason = esc(release.get("reason") or "Release status unavailable.")
+        return (
+            '<div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:10px;'
+            'padding:12px 14px;margin:14px 0 18px;max-width:660px">'
+            '<h2 style="margin:0 0 4px">🎞️ Animation Manager</h2>'
+            f'<p style="color:#92400e;margin:4px 0">{reason}</p></div>'
+        )
+
+    title = esc(release.get("title") or release.get("id") or "Latest animation")
+    released_label = esc(release.get("released_label") or release.get("released_at") or "")
+    try_url = str(release.get("try_url") or "")
+    if state == "fresh":
+        headline = "🎞️ New Animation Manager release"
+        cadence = "A fresh screensaver shipped within the last 24 hours."
+        paper, rule, ink = "#eff6ff", "#3b82f6", "#1e3a8a"
+    else:
+        headline = "🎞️ Animation Manager cadence"
+        cadence = "No new screensaver shipped in the last 24 hours. This is the latest release."
+        paper, rule, ink = "#fffbeb", "#f59e0b", "#92400e"
+
+    button = (
+        f'<p>{legacy._button(try_url, f"▶ Try {title}", color="#7e22ce")}</p>'
+        if try_url else ""
+    )
+    return (
+        f'<div style="background:{paper};border:1px solid {rule};border-radius:10px;'
+        'padding:12px 14px;margin:14px 0 18px;max-width:660px">'
+        f'<h2 style="margin:0 0 4px">{headline}</h2>'
+        f'<p style="color:{ink};font-size:13px;margin:4px 0 7px">{cadence}</p>'
+        f'<p style="font-size:1.08em;color:#2e1065;margin:3px 0"><strong>{title}</strong></p>'
+        f'<p style="color:#475569;font-size:12px;margin:3px 0 8px">Released {released_label}</p>'
+        f'{button}</div>'
+    )
+
+
 ENGINE_BANNER_THEME = {
     "ok": ("#065f46", "#ecfdf5", "#10b981", "✅"),
     "down": ("#7f1d1d", "#fef2f2", "#ef4444", "⚠️"),
@@ -422,9 +466,10 @@ def build_payload(digest: dict[str, Any]) -> dict[str, Any]:
 
     review_renderer = getattr(legacy, "container_log_review_section", None)
     review_html = review_renderer(digest) if callable(review_renderer) else ""
+    animation_html = animation_release_section(digest)
     operational_html = engine_banner(digest) + container_log_banner(digest) + review_html
     pitch_html = next_pitch_section(digest.get("next_dream_proposal"))
-    middle = operational_html + pitch_html
+    middle = animation_html + operational_html + pitch_html
 
     # Place health and the next text pitch directly after the previous pitch's generated output.
     # If a build failed so there is no fresh output, put them immediately after
