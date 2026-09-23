@@ -2043,8 +2043,8 @@ tasks:
 - id: t-067
   milestone: m7
   title: "Sweep remaining verifyStorybook*.mjs guards for other stale post-cleanup references"
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >-
@@ -2057,4 +2057,6 @@ tasks:
     the surviving utils/scripts/verifyStorybook*.mjs files for the 23 deleted filenames (listed
     in kind_robots#3023's diff) and fix any other stale references found, the same way t-066
     did -- comment-only, verified via each affected guard's own npm test:storybook-* script.
-  updated: '2026-09-23T22:07:53Z'
+  updated: '2026-09-23T23:57:40Z'
+  claimed_by: claude-scheduled-2026-09-23T235641Z-storybook-t067
+  claimed_at: '2026-09-23T23:57:40Z'
