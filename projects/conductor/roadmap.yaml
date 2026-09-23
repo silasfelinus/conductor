@@ -4026,7 +4026,7 @@ tasks:
 - id: t-194
   milestone: m2
   title: Flag a daily_commitment task whose daily_last_checked has gone stale, the same way check_priority_queue_starvation.py flags a starved queue
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -4046,9 +4046,14 @@ tasks:
     tests/test_check_daily_commitment_staleness.py (13 tests, all pass), and wired it into
     CLAUDE.md's session-startup sweep list. Full local suite: 2328 passed / 30 skipped / 0
     failed. PR opened from claude/beautiful-carson-ccicuv.
+
+    Merged (silasfelinus/conductor#5116, squash f238f8e). All CI green (25 checks incl.
+    Python test suite, CodeQL, lint, roadmap validation), mergeable_state clean before
+    merge.
   claimed_by: 2026-09-23T115700Z-t194-a1
   claimed_at: '2026-09-23T12:01:33Z'
-  updated: '2026-09-23T12:07:25Z'
+  updated: '2026-09-23T12:11:43Z'
+  implementation_pr: 'silasfelinus/conductor#5116'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'

@@ -16345,3 +16345,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "build_ruler_hooked_art_queue.py's card lane had been silently staging every request at the wrong image_path (public/images/ruler-hooked/cards/<id>.webp with a cards/ subdirectory and no card- prefix) against cardArtPath()'s actual contract (public/images/ruler-hooked/card-<id>.webp, no subdirectory) since the lane was written -- caught only by reading the consuming component (cardArt.ts) directly rather than trusting the producing script's own naming. A staging script and its consumer having independently-plausible-looking but silently mismatched path conventions is a class of bug that unit tests over the staging script alone would never catch, since it never reads the consumer; worth checking both ends of any asset-path contract when adding a new art-queue lane, not just validating the producer's own output shape."
+- date: '2026-09-23'
+  project: conductor
+  task: t-194
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "check_priority_queue_starvation.py's shape (advisory, local-YAML-only, project_lifecycle-scoped, JSON+render dual output) is a reusable template for a new roadmap-health check -- following it exactly (rather than inventing new conventions) kept this addition small and immediately legible against the rest of scripts/check_*.py."
