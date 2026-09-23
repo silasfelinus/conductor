@@ -410,9 +410,9 @@ tasks:
   - id: t-021
     milestone: m5
     title: "Add a connector-safe append/registration helper for stores/animationCatalog.ts"
-    status: review
+    status: ready
     owner: worker
-    passes: 1
+    passes: 2
     stakes: reversible
     note: |-
       Kaizen from t-007's frost-window-etching cycle (kind_robots PR #3020, 2026-09-23). A connector-only Worker session can safely add a new components/screenfx/*.vue file but has no targeted patch operation for the large stores/animationCatalog.ts file, so it correctly declined to touch it rather than risk the project's prior catalog/file- truncation incident -- leaving the new effect unregistered (and therefore untryable, failing test:animation-catalog) until a follow-up session appended the entry by hand. Build a small, connector-safe helper (CLI script or documented append recipe, analogous to the existing pitch-consumer helper for PITCHES.yaml) that appends one well-formed ANIMATION_EFFECTS entry to the end of the array without reading/rewriting the whole file, so a daily Screen FX build can register its own catalog entry instead of stranding it for the next session.
@@ -425,7 +425,12 @@ tasks:
       two lint fixes. See retry_context and PR #3021 review comment.
 
       Retry addresses pass-1 retry_context exactly: removed the unnecessary template-literal quote escapes and replaced the literal double-space regex with an explicit {2} quantifier on kind_robots PR #3021. Awaiting fresh CI before merge.
+
+      Reviewer (Claude, scheduled run 2026-09-23): rejected pass 2 -- Prettier ratchet
+      regression on the same two new files (pass 1's ESLint fix itself is correct and
+      holds unchanged). Not a scope/architecture problem, just needs `prettier --write`.
+      See retry_context and PR #3021 review comment.
     claimed_by: openai-scheduled-2026-09-23T131750Z-animation-manager-t021-a11
     claimed_at: '2026-09-23T13:17:50Z'
-    updated: '2026-09-23T13:20:50Z'
-    retry_context: 'pass 1 failed (quality): kind_robots PR #3021 fails the "Contract verifiers" job''s ESLint ratchet gate -- the PR''s own two new files add 3 new lint violations. no-useless-escape (15->17) at utils/scripts/registerAnimationEffect.mjs:72 -- the line `const doubleQuotedId = ` + backtick + `id: \"${entry.id}\"` + backtick + ` escapes double quotes inside a backtick template literal, where they need no escaping. no-regex-spaces (37->38) at utils/scripts/registerAnimationEffect.test.mjs:47 -- the regex `/^  \{/` uses two literal spaces instead of `{2}`. Do differently: change line 72 to `id: \"${entry.id}\"` with the backslashes removed, and test.mjs:47 to `/^ {2}\{/`; run npm run test:lint-ratchet locally before repushing. See PR review comment: https://github.com/silasfelinus/kind_robots/pull/3021#issuecomment-5795212074'
+    updated: '2026-09-23T13:54:15Z'
+    retry_context: 'pass 2 failed (quality): kind_robots PR #3021 fails the "Contract verifiers" job''s Prettier ratchet gate -- the same two new files from pass 1''s lint fix are not Prettier-formatted (utils: 323 -> 324 unformatted files: utils/scripts/registerAnimationEffect.mjs, utils/scripts/registerAnimationEffect.test.mjs). Pass 1''s ESLint fix itself is correct and holds unchanged. Do differently: run `npx prettier --write utils/scripts/registerAnimationEffect.mjs utils/scripts/registerAnimationEffect.test.mjs`, then `npm run test:lint-ratchet && npm run test:prettier-ratchet` locally before repushing. See PR review comment: https://github.com/silasfelinus/kind_robots/pull/3021#issuecomment-5796118569'
