@@ -16354,3 +16354,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "check_priority_queue_starvation.py's shape (advisory, local-YAML-only, project_lifecycle-scoped, JSON+render dual output) is a reusable template for a new roadmap-health check -- following it exactly (rather than inventing new conventions) kept this addition small and immediately legible against the rest of scripts/check_*.py."
+- date: '2026-09-23'
+  project: animation-manager
+  task: t-021
+  kind: software
+  stakes: reversible
+  passes: 3
+  outcome: blocked
+  failure_category: quality
+  lesson: "Three straight passes failed on lint/format ratchet gates, not the actual helper design (which was accepted as correct from pass 1) -- pass 1 was ESLint escape/regex issues, pass 2 was Prettier on both new files, pass 3 was Prettier on only one of the two new files (a partial fix, not a fresh regression). A connector-only Worker session retrying a ratchet failure needs to actually run `npm run test:lint-ratchet && npm run test:prettier-ratchet` locally after its fix and read the output, not just apply a plausible-looking `prettier --write`/manual edit and repush blind -- the same gate class recurring three times on two small new files suggests the retry loop wasn't verifying its own fix before pushing."

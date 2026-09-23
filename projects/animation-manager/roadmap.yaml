@@ -410,9 +410,9 @@ tasks:
   - id: t-021
     milestone: m5
     title: "Add a connector-safe append/registration helper for stores/animationCatalog.ts"
-    status: claimed
-    owner: worker
-    passes: 2
+    status: blocked
+    owner: null
+    passes: 3
     stakes: reversible
     note: |-
       Kaizen from t-007's frost-window-etching cycle (kind_robots PR #3020, 2026-09-23). A connector-only Worker session can safely add a new components/screenfx/*.vue file but has no targeted patch operation for the large stores/animationCatalog.ts file, so it correctly declined to touch it rather than risk the project's prior catalog/file- truncation incident -- leaving the new effect unregistered (and therefore untryable, failing test:animation-catalog) until a follow-up session appended the entry by hand. Build a small, connector-safe helper (CLI script or documented append recipe, analogous to the existing pitch-consumer helper for PITCHES.yaml) that appends one well-formed ANIMATION_EFFECTS entry to the end of the array without reading/rewriting the whole file, so a daily Screen FX build can register its own catalog entry instead of stranding it for the next session.
@@ -430,7 +430,18 @@ tasks:
       regression on the same two new files (pass 1's ESLint fix itself is correct and
       holds unchanged). Not a scope/architecture problem, just needs `prettier --write`.
       See retry_context and PR #3021 review comment.
+
+      Reviewer (Claude, scheduled run 2026-09-23): rejected pass 3 -- Prettier ratchet
+      regression again, this time isolated to registerAnimationEffect.mjs only (the .test.mjs
+      file was correctly reformatted this round; ESLint ratchet holds clean at 330,
+      unchanged). This is the third pass to fail on the same formatting-gate class (pass 1:
+      ESLint escapes/regex; pass 2: Prettier on both new files; pass 3: Prettier on one of the
+      two). Iteration budget (AGENTS.md hard rule 3) exhausted at passes=3 -- routing to
+      status: blocked rather than a fourth retry. The underlying helper design itself has
+      looked correct since pass 1; whoever picks this back up just needs a clean npx prettier
+      --write pass verified locally before pushing. See kind_robots PR #3021 review comment:
+      https://github.com/silasfelinus/kind_robots/pull/3021#issuecomment-5798639381
     claimed_by: openai-scheduled-2026-09-23T141739Z-animation-manager-t021-a11
     claimed_at: '2026-09-23T14:17:39Z'
-    updated: '2026-09-23T14:17:39Z'
+    updated: '2026-09-23T16:30:40Z'
     retry_context: 'pass 2 failed (quality): kind_robots PR #3021 fails the "Contract verifiers" job''s Prettier ratchet gate -- the same two new files from pass 1''s lint fix are not Prettier-formatted (utils: 323 -> 324 unformatted files: utils/scripts/registerAnimationEffect.mjs, utils/scripts/registerAnimationEffect.test.mjs). Pass 1''s ESLint fix itself is correct and holds unchanged. Do differently: run `npx prettier --write utils/scripts/registerAnimationEffect.mjs utils/scripts/registerAnimationEffect.test.mjs`, then `npm run test:lint-ratchet && npm run test:prettier-ratchet` locally before repushing. See PR review comment: https://github.com/silasfelinus/kind_robots/pull/3021#issuecomment-5796118569'
