@@ -1357,22 +1357,15 @@ tasks:
   - id: t-042
     milestone: m5
     title: "Fix archive previews and owner-controlled private/mature visibility in the main Gallery"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Filed from Silas's 2026-09-22 Gallery report. Imported private ArtImages are
-      currently rendered from their PRIVATE_PATH-relative ArtImage.path as if it
-      were under public/images, so the request 404s and image-card falls back to
-      backtree.webp. Serve archive-backed ArtImage bytes through an authenticated,
-      root-confined owner/admin media route and make image-card use that route for
-      designer=art-archive rows. On the Gallery front, use the real persisted
-      maturity consent toggle and add an independent Private toggle that includes
-      the signed-in viewer's own private collections/images without exposing
-      somebody else's private rows. Both toggles must filter collection cards and
-      images consistently and maturity changes must refresh server-backed lists consistently.
+    note: |-
+      Filed from Silas's 2026-09-22 Gallery report. Imported private ArtImages are currently rendered from their PRIVATE_PATH-relative ArtImage.path as if it were under public/images, so the request 404s and image-card falls back to backtree.webp. Serve archive-backed ArtImage bytes through an authenticated, root-confined owner/admin media route and make image-card use that route for designer=art-archive rows. On the Gallery front, use the real persisted maturity consent toggle and add an independent Private toggle that includes the signed-in viewer's own private collections/images without exposing somebody else's private rows. Both toggles must filter collection cards and images consistently and maturity changes must refresh server-backed lists consistently.
+
+      Implementation is on kind_robots branch worker/art-archive-t-042-20260923t055430z. It adds an access-filtered PRIVATE_PATH archive media route, routes art-archive image cards through cached previews, replaces the Gallery's local maturity checkbox with the persisted maturity control, adds an owner-scoped Private toggle, covers mature image cards, refreshes Gallery data after maturity changes, and extends the maturity/privacy contract test.
     claimed_by: 2026-09-23T055430Z-art-archive-t042-gpt56-gallery
     claimed_at: '2026-09-23T05:54:30Z'
-    updated: '2026-09-23T05:54:30Z'
+    updated: '2026-09-23T06:00:00Z'
 
