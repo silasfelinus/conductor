@@ -471,7 +471,7 @@ tasks:
 - id: t-017
   milestone: m2
   title: Print a dry-run byte-delta summary before a multi-file parity-report resync
-  status: claimed
+  status: review
   owner: worker
   stakes: reversible
   note: |-
@@ -481,6 +481,8 @@ tasks:
     byte-delta (or line-delta) summary per file to --dry-run output for the parity-report
     path, so a human or agent reviewing a multi-file resync before applying it can tell a
     one-line provenance-comment change from a substantial content rewrite at a glance.
+
+    Added per-file current/source byte counts and signed byte deltas to parity-report dry runs, with regression coverage proving dry-run remains non-mutating.
   claimed_by: openai-scheduled-2026-09-23T021625Z-lora-ingestion-t017-a11
   claimed_at: '2026-09-23T02:16:25Z'
-  updated: '2026-09-23T02:16:25Z'
+  updated: '2026-09-23T02:20:30Z'
