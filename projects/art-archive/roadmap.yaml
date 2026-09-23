@@ -1386,7 +1386,7 @@ tasks:
   - id: t-043
     milestone: m5
     title: "Reconcile the two independent signed archive-media capability schemes from kind_robots#3006 and #3007"
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
     owner: null
@@ -1404,5 +1404,31 @@ tasks:
       (different auth model: owner-of-row vs admin-only). Whichever wins, the loser's dead code
       should be removed rather than left to double the surface a future security review has to
       reason about.
-    updated: '2026-09-23T07:17:01Z'
+
+      Reconciliation verified 2026-09-23 (conductor scheduled Agent run): #3006 merged
+      (squash, merged_at 2026-09-23T07:56:48Z) and its own diff already performs exactly the
+      consolidation this task asked for -- it extracted a single shared
+      server/utils/signedMediaCapability.ts primitive
+      (deriveMediaSigningKey/signMediaCapability/verifyMediaCapability) and rebuilt both
+      server/utils/artArchiveSignedMedia.ts (admin+mature over ArchiveEntry, KEY_LABEL 'kind-
+      robots/art-archive-media/v1') and server/utils/artGalleryArchiveMedia.ts (#3007's owner-
+      of-row over ArtImage) on top of it, each keeping its own key label so a signature for
+      one domain cannot replay against the other -- the 'different auth model' case this
+      task's note allowed for, but the code was consolidatable after all: same HMAC, different
+      labels, not two authorization models needing separate crypto. #3006 also removed the
+      duplicate attacher module (server/utils/artArchiveMediaPaths.ts, referenced only as a
+      forbidden pattern now) so all three archive-rendering endpoints
+      (server/api/art/image/index.get.ts, server/api/art/image/[id].get.ts,
+      server/api/art/collection/index.get.ts) route through the one shared
+      attachGalleryArchiveMediaPaths helper. utils/scripts/verifyArtArchiveSignedMedia.test.ts
+      (added in #3006, registered in package.json + contract-tests.yml, part of the PR's green
+      CI) directly enforces 'ONE implementation, TWO key domains' and 'ONE attacher, not two',
+      including asserting artArchiveMediaPaths.ts no longer exists. Independently confirmed
+      against live kind_robots@main: server/utils/ listing shows signedMediaCapability.ts +
+      both domain files present and artArchiveMediaPaths.ts absent; a repo-wide code search
+      for the old duplicate attacher name (attachArchiveMediaPaths) returns zero hits outside
+      the contract test's own negative assertion. No further code change needed -- closing as
+      done rather than opening a redundant PR.
+    updated: '2026-09-23T09:03:39Z'
+    implementation_pr: 'silasfelinus/kind_robots#3006'
 
