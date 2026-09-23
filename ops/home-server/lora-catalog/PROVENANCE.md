@@ -12,6 +12,22 @@ code that moves and catalogs them runs locally.
 Both scripts are pure Python stdlib (no pip deps, no kind_robots imports), so a
 straight file copy is all that's needed.
 
+## Parity check
+
+`scripts/check_vendored_scanner_parity.py` (in this repo) compares these three
+files byte-for-byte against their kind_robots originals via the GitHub Contents
+API and fails loudly (exit 1) on any drift, instead of leaving a silent gap for
+a downstream symptom to surface days later — this is how lora-ingestion/t-013's
+missing Civitai tag-category classifier was found (see that task's history).
+Run it as part of the regular Conductor session sweep, or directly:
+
+```
+python scripts/check_vendored_scanner_parity.py
+```
+
+Requires `GITHUB_TOKEN`/`GH_TOKEN` (kind_robots is private); without one it
+exits 2 (unresolved), not 0.
+
 ## Re-sync when the kind_robots tools change
 
 These are copies, so they can drift. Whenever `scripts/lora-catalog/scan_loras.py`,
