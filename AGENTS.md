@@ -706,6 +706,13 @@ role from live state on arrival:**
      commits, old enough (`--branch-stale-hours`, default 12h) that nobody's actively
      pushing to it. `branch_janitor.py` itself deliberately never auto-acts on this
      tier — see "If you're triaging stale branches" below.
+   - **`role: daily-creative`** — a ready recurring task explicitly marked
+     `daily_commitment: true` has not yet been checked on today's Pacific calendar date.
+     This lane exists for human-designated daily creative output, initially
+     `animation-manager/t-007`. It outranks weekly audit and ordinary ready-task pickup so a
+     busy finite backlog cannot starve the daily creation goal, but reviewer, workflow-medic,
+     pr-medic, and branch-medic still come first. Claim the specific task named in
+     `due_daily_commitments`, follow normal Worker/PR rules, and re-arm it when finished.
    - **`role: site-auditor`** — nothing to review/fix/triage, but the weekly site
      audit (`projects/global-ui/SITE-AUDIT-AGENT.md`) is overdue: no
      `AUDIT-REPORT-<date>.md` exists yet, or the newest one is `--audit-stale-days`
@@ -714,9 +721,10 @@ role from live state on arrival:**
      weekly instead of "whenever the queue happens to run dry." See "If you're doing
      the weekly site audit" below.
    - **`role: worker`** — none of the above, but a `ready` task exists.
-   - **`role: stale-recurring`** — no `ready` task from an active project, but a
-     `recurring: true` task (most often a `continuous`-lifecycle project's, e.g.
-     animation-manager/t-006) has gone `--recurring-stale-days` (default 3) or more
+   - **`role: stale-recurring`** — no ordinary `ready` task and no due daily
+     commitment won the cycle, but a `recurring: true` task (most often a
+     `continuous`-lifecycle project's, e.g. animation-manager/t-006) has gone
+     `--recurring-stale-days` (default 3) or more
      with no `RAN <date>`/`NO-OP <date>` note marker or `updated:` bump — the exact
      "sat `status: ready` unrun for two weeks with nothing flagging it" gap
      conductor/t-118 documents. Lowest-priority soft signal: it never preempts a
@@ -836,6 +844,15 @@ After doing the work and opening/merging the PR, set the task's `status` back to
 output that goes to Silas — the task itself just keeps cycling. A recurring task that
 produced nothing this cycle (e.g. pitch queue full) still re-arms to `ready`; note "no-op"
 in the PR. Recurring tasks don't count toward milestone progress.
+
+**Daily commitments** are the stricter recurring subset marked `daily_commitment: true`.
+They maintain two machine-readable Pacific-calendar dates on the task: set
+`daily_last_checked` after every completed daily attempt, including a legitimate no-op, and
+set `daily_last_completed` only when the promised creative output actually shipped. Do not
+advance `daily_last_completed` to make the selector green. For animation-manager/t-007,
+"a creation shipped" means the new Screen FX component merged, is registered in the catalog,
+and is tryable. If no buildable pitch can safely ship, record the reason, advance only
+`daily_last_checked`, re-arm, and let the digest's release-age signal remain visibly stale.
 
 ### If you're reviewing
 - Read the project's `kind` first.

@@ -37,8 +37,14 @@ priority, explicitly ordered Butterfly Gallery first. Keep this line and project
 in lockstep so CONTROL_PRIORITY_DRIFT is repaired rather than repeatedly emailed. -->
 
 
-**Continuous fallback order:** animation-manager, then dream-cycle. Finite `active` work
-always outranks `continuous` programs; dream-cycle remains the final idle fallback.
+**Daily creative commitments:** Daily Dream/digest delivery remains the top scheduled
+creative commitment. Immediately below it, animation-manager/t-007 gets one Pacific-calendar-day
+attempt to ship a genuinely new screensaver before ordinary backlog pickup. Review and broken-work
+recovery still outrank it. Its other research/maintenance tasks remain continuous fallback work.
+
+**Continuous fallback order:** animation-manager, then dream-cycle. Outside the explicit
+animation-manager/t-007 daily-commitment exception above, finite `active` work always outranks
+`continuous` programs; dream-cycle remains the final idle fallback.
 
 **Standing rules for all agents:** Respect each project's `kind`. Honor `depends_on` gates.
 Never expand product-types.yaml — pitch it. When unsure, do less and escalate to
@@ -70,11 +76,15 @@ Silas explicitly approves that concrete action too.
   the kind_robots front end (read-only). Conductor roadmap.yaml remains the
   authoritative agent task queue; milestones are the UI/voice progress layer and
   should not replace roadmap tasks.
-- Continuous lifecycle (2026-08-07): `continuous` is the explicit never-idle program
-  status. Continuous projects run only after every finite `active` project has no claimable
-  ready work. Initial continuous programs: animation-manager and dream-cycle, with dream-cycle
-  always last. The AI Art Academy autonomous test is concluded; Academy is finite active work
-  and must stop inventing polish/content tasks when its real roadmap queue empties.
+- Continuous lifecycle (2026-08-07; animation exception 2026-09-23): `continuous`
+  is the explicit never-idle program status. Continuous projects normally run only after every
+  finite `active` project has no claimable ready work. The explicit exception is
+  animation-manager/t-007: when its `daily_last_checked` predates today's Pacific calendar
+  date, select_role.py surfaces it as `daily-creative` ahead of ordinary backlog/audit work.
+  Review and broken-work recovery still come first. Other Animation Manager work and dream-cycle
+  retain normal continuous behavior, with dream-cycle always last. The AI Art Academy autonomous
+  test is concluded; Academy is finite active work and must stop inventing polish/content tasks
+  when its real roadmap queue empties.
 - Briefs are direction, not contracts (Silas, 2026-07-10): projects evolve. When
   Silas's later commits or direction supersede a design-brief detail (e.g. Monster
   Recast's 32-38 page homage pool replacing its original 28-page plan), run with

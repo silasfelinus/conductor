@@ -30,7 +30,7 @@ tracked as a conductor roadmap task that names the target PR, not as its own
 independent Worker/Reviewer cycle) — see AGENTS.md's "Cross-repo tasks"
 section.
 
-Eight roles, each backed by an existing piece of tooling this script composes
+Roles are backed by existing repo state and tooling this script composes
 rather than duplicates:
   - reviewer      — run_reviewer.py's open-worker/*-branch check (conductor only),
                     plus find_reviewable_claude_prs()'s check for any other open
@@ -58,6 +58,11 @@ rather than duplicates:
                     classifier, which deliberately never auto-acts on this
                     tier itself ("a human/session rescues it"); for other
                     repos it's the API-driven equivalent below
+  - daily-creative — a recurring task marked `daily_commitment: true`
+                    whose `daily_last_checked` is before today's Pacific
+                    calendar date. This is the explicit "make something today"
+                    lane: it outranks audits and ordinary backlog pickup, while
+                    review and broken-work recovery remain ahead of it.
   - site-auditor  — the weekly site audit (projects/global-ui/SITE-AUDIT-
                     AGENT.md) is overdue: no AUDIT-REPORT-<date>.md exists, or
                     the newest one is older than --audit-stale-days (default
@@ -112,12 +117,13 @@ reviewable; idle falls through last:
   2. failing_scheduled_workflow_count > 0     -> workflow-medic
   3. red_stale_pr_count > 0                   -> pr-medic
   4. stranded_branch_count > 0                -> branch-medic
-  5. site_audit_overdue                       -> site-auditor
-  6. ready_task exists                        -> worker
-  7. stale_recurring_task_count > 0           -> stale-recurring
-  8. none of the above                        -> idle
-  Then (conductor/t-115, extended by t-118): if the winner is worker/idle/
-  stale-recurring AND github_api_unreachable is true, downgrade that result to
+  5. due_daily_commitment_count > 0           -> daily-creative
+  6. site_audit_overdue                       -> site-auditor
+  7. ready_task exists                        -> worker
+  8. stale_recurring_task_count > 0           -> stale-recurring
+  9. none of the above                        -> idle
+  Then (conductor/t-115, extended by t-118/t-020): if the winner is daily-creative/
+  worker/idle/stale-recurring AND github_api_unreachable is true, downgrade that result to
   reviewer-uncertain — steps 1-4 above never got real GitHub-backed signal, so
   a roadmap-only winner by default isn't safe to trust as-is.
 
@@ -164,6 +170,7 @@ import urllib.parse
 import urllib.request
 from datetime import date, datetime, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 # Allow `python scripts/select_role.py` (sys.path[0] == scripts/) as well as
 # `import scripts.select_role` / `python -m scripts.select_role` (repo root on
@@ -744,6 +751,7 @@ def site_audit_status(
 # call the task not-stale.
 RECURRING_MARKER_RE = re.compile(r'\b(?:RAN|NO-OP)\s+(\d{4}-\d{2}-\d{2})')
 DEFAULT_RECURRING_STALE_DAYS = 3.0
+PACIFIC_TZ = ZoneInfo('America/Los_Angeles')
 
 
 def _extract_date(text: str) -> date | None:
@@ -783,6 +791,52 @@ def last_recurring_activity(task: dict) -> date | None:
             candidates.append(parsed)
 
     return max(candidates) if candidates else None
+
+
+def find_due_daily_commitments(
+    roadmaps: list[dict],
+    *,
+    today: date | None = None,
+) -> list[dict]:
+    """Return ready recurring tasks whose once-per-Pacific-day check is due.
+
+    A daily commitment carries two explicit dates:
+    - daily_last_checked: every completed daily attempt, including an honest no-op.
+    - daily_last_completed: only a successful creation/shipment.
+
+    Selection keys off last_checked so one impossible/no-op day does not monopolize
+    every session. Product reporting can still use last_completed/release provenance
+    to make a missed creation goal visible.
+    """
+    today = today or datetime.now(timezone.utc).astimezone(PACIFIC_TZ).date()
+    due: list[dict] = []
+
+    for roadmap in roadmaps:
+        project = roadmap.get('_project')
+        for task in roadmap.get('tasks', []):
+            if not isinstance(task, dict) or not task.get('daily_commitment'):
+                continue
+            if not task.get('recurring') or task.get('status') != 'ready':
+                continue
+
+            raw_checked = task.get('daily_last_checked')
+            last_checked = _extract_date(str(raw_checked)) if raw_checked is not None else None
+            if last_checked is not None and last_checked >= today:
+                continue
+
+            raw_completed = task.get('daily_last_completed')
+            last_completed = (
+                _extract_date(str(raw_completed)) if raw_completed is not None else None
+            )
+            due.append({
+                'project': project,
+                'task_id': task.get('id'),
+                'title': task.get('title'),
+                'last_checked': last_checked.isoformat() if last_checked else None,
+                'last_completed': last_completed.isoformat() if last_completed else None,
+            })
+
+    return due
 
 
 def find_stale_recurring_tasks(
@@ -873,7 +927,9 @@ def select_role(
     audit = site_audit_status(stale_days=audit_stale_days)
     queue = run_worker.build_queue_summary()
     ready_task = queue.get('ready_task')
-    stale_recurring = find_stale_recurring_tasks(run_worker.load_roadmaps(), stale_days=recurring_stale_days)
+    roadmaps = run_worker.load_roadmaps()
+    due_daily = find_due_daily_commitments(roadmaps)
+    stale_recurring = find_stale_recurring_tasks(roadmaps, stale_days=recurring_stale_days)
 
     if review_branches or reviewable_prs:
         role = 'reviewer'
@@ -903,6 +959,14 @@ def select_role(
         role = 'branch-medic'
         by_repo = ', '.join(sorted({b['repo'] for b in stranded}))
         reason = f'{len(stranded)} stranded branch(es) with unmerged work older than {branch_stale_hours}h ({by_repo})'
+    elif due_daily:
+        role = 'daily-creative'
+        task = due_daily[0]
+        reason = (
+            f'daily creative commitment due: {task.get("project")}/{task.get("task_id")} '
+            f'(last checked {task.get("last_checked") or "never"}; '
+            f'last completed {task.get("last_completed") or "never"})'
+        )
     elif audit['overdue']:
         role = 'site-auditor'
         if audit['last_report'] is None:
@@ -958,7 +1022,7 @@ def select_role(
     # worker/idle -- it needs the same downgrade for the same reason.
     underlying_role = role
     underlying_reason = reason
-    if role in ('worker', 'idle', 'stale-recurring') and github_api_unreachable:
+    if role in ('daily-creative', 'worker', 'idle', 'stale-recurring') and github_api_unreachable:
         role = 'reviewer-uncertain'
         reason = (
             f'GitHub API was unreachable ({github_api_unreachable_detail}) — the '
@@ -988,6 +1052,8 @@ def select_role(
         'site_audit_overdue': audit['overdue'],
         'site_audit_last_report': audit['last_report'],
         'site_audit_days_since': audit['days_since'],
+        'due_daily_commitment_count': len(due_daily),
+        'due_daily_commitments': due_daily,
         'ready_task': ready_task,
         'projects_with_ready_tasks': queue.get('projects_with_ready_tasks', []),
         'projects_needing_human': queue.get('projects_needing_human', []),
