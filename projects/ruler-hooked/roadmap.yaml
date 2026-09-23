@@ -996,9 +996,9 @@ tasks:
 - id: t-030
   milestone: m4
   title: Make the kingdom visible and its decisions image-led
-  status: ready
+  status: claimed
   gate_human: false
-  owner: null
+  owner: worker
   stakes: reversible
   passes: 0
   note: >-
@@ -1025,9 +1025,9 @@ tasks:
 
     Shipped this cycle (2026-09-22, scheduled Conductor Agent run): item (2)'s decision-card slice -- kind_robots#2990 (merged). ruler-hooked-card.vue rendered every card as title/body/buttons only, ignoring the per-card art: card-<id> key decks.md already defines and the characters: slugs every card can list. Added utils/rulerHooked/cardArt.ts (an image-candidate ladder: card's own art -> featured/relaying-advisor character's neutral portrait -> plain fallback -> none, mirroring the existing region and advisor degrade ladders) and wired it into ruler-hooked-card.vue + ruler-hooked-game.vue (passes the advisor's slug through for characterless cards). New utils/rulerHooked/cardArt.selftest.ts added to .github/workflows/ruler-hooked.yml. No new art or backend work needed -- every rung already has a defined asset-path contract, this just makes the renderer use it. Verified: all 6 ruler-hooked selftests pass, full-project vue-tsc clean, eslint clean, prettier-ratchet and lint-ratchet both hold (no regression). No browser/visual check possible non-interactively -- no art has actually rendered yet for any rung (render queue backlog, tracked at conductor/t-165 and t-167), so this is a code-path verification, not a pixel one.
     Remaining scope, still open: item (1) a dedicated kingdom view (a place to go read realm state / what changed / what's going badly, reusing the existing composited Stage as its centerpiece rather than a second representation) and item (3) populace presence. Sequence note from the original task stands: prove the card shape by hand first (done, this cycle), then the authoring/generation pipeline before writing a full deck -- not attempted here, out of this slice's scope. Re-arming to ready for the remaining scope.
-  updated: '2026-09-23T21:52:18Z'
-  claimed_by: null
-  claimed_at: null
+  updated: '2026-09-23T22:15:43Z'
+  claimed_by: openai-scheduled-2026-09-23T221543Z-ruler-hooked-t030-a11
+  claimed_at: '2026-09-23T22:15:43Z'
   implementation_pr: 'silasfelinus/kind_robots#2990'
 - id: t-031
   milestone: m4
