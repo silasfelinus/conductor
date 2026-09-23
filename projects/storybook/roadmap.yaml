@@ -869,7 +869,7 @@ tasks:
 - id: t-037
   milestone: m7
   title: "Delete the client-side beat loop and rewrite its ~25 verifyStorybook*Guard scripts"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-036, t-052]
@@ -1080,11 +1080,17 @@ tasks:
     page/component cutover from cycle 29's plan remains the next slice, still pending the
     export-notice timing call. Re-arming to ready (recurring multi-slice task); releasing
     the claim.
-  updated: '2026-09-23T19:57:31Z'
+
+    Cycle 31 (2026-09-23T20:01Z, scheduled Conductor Agent run): bounded slice migrating verifyStorybookObjectEntryLinks.mjs off the legacy storybook-page.vue. That guard's receiving-side assertion (that seedFromQuery() seeds a card from each query key) was pinning a dead end -- storybook-page.vue is reachable only at ?legacy=1 now, and the equivalent new-engine coverage already exists in full in verifyStorybookTableDeepLinkGuard.mjs (all 5 keys, cardForSlug()/playCardIfAbsent() resolution, genre/character gating, query clearing, mount ordering). Kept the guard's still-live, still-uncovered half: that facet-profile.vue/reward-encounter.vue/character-manager.vue/scenario-manager.vue's CTAs still fire and navigate to /storybook with the right query key. No production code touched. Verified: node utils/scripts/verifyStorybookObjectEntryLinks.mjs PASS; npm run test:storybook (17-guard aggregate) all PASS; eslint clean; prettier clean. All 27 kind_robots CI checks green, squash-merged as silasfelinus/kind_robots#3025.
+
+    Filed storybook/t-066 for a small kaizen: verifyStorybookTableDeepLinkGuard.mjs's header comment still points at verifyStorybookLocationDeepLinkGuard.mjs and verifyStorybookCharacterDeepLinkGuard.mjs, both deleted in the cycle-30 guard-cleanup pass (kind_robots#3023) -- stale reference, not a functional issue.
+
+    Remaining verifyStorybook*Guard scope: verifyStorybookActiveStoryResumeGuard.ts still functionally imports storybookLibraryHelper.ts/storybookStore.ts (the legacy library-resume behavior) and cannot migrate to a new-engine equivalent -- it is destined for deletion alongside the beat loop itself, not rewrite, so it stays blocked on the same t-065 (export-notice-timing) gate as the destructive cutover. No other guard files referencing the legacy store/helper/pages were found this cycle. Re-arming to ready (recurring multi-slice task); releasing the claim.
+  updated: '2026-09-23T20:01:50Z'
   owner: reviewer
   claimed_by: 20260923T195730Z-storybook-t037-cycle31
   claimed_at: '2026-09-23T19:57:31Z'
-  implementation_pr: 'silasfelinus/kind_robots#3023'
+  implementation_pr: 'silasfelinus/kind_robots#3025'
 
 - id: t-052
   milestone: m7
@@ -2003,3 +2009,21 @@ tasks:
     once the window Silas names has passed.
   updated: '2026-09-23T16:25:27Z'
   implementation_pr: 'silasfelinus/conductor#5050'
+
+- id: t-066
+  milestone: m7
+  title: "Fix stale file references in verifyStorybookTableDeepLinkGuard.mjs's header comment"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from t-037 cycle 31 (2026-09-23, silasfelinus/kind_robots#3025). The header
+    comment in utils/scripts/verifyStorybookTableDeepLinkGuard.mjs still reads "see
+    verifyStorybookLocationDeepLinkGuard.mjs and verifyStorybookCharacterDeepLinkGuard.mjs
+    for that half of the contract" -- both of those files were deleted in the cycle-30
+    guard-cleanup pass (kind_robots#3023). Not a functional issue (the comment doesn't
+    affect the guard's assertions), just a stale pointer that will confuse the next person
+    reading it. Update the comment to reflect that the legacy-side guards are gone and the
+    new-engine side (this file) is now the only coverage for those query keys.
+  updated: '2026-09-23T20:05:00Z'
