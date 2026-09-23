@@ -244,3 +244,71 @@ def test_animation_release_section_calls_out_stale_daily_cadence():
     assert "Animation Manager cadence" in html
     assert "No new screensaver shipped in the last 24 hours" in html
     assert "Try Geode Bloom" in html
+
+
+def test_animation_release_section_links_fresh_screensaver():
+    module = load_module()
+    html = module.animation_release_section(
+        {
+            "animation_release": {
+                "state": "fresh",
+                "title": "Candlelit Reliquary",
+                "released_label": "Sep 21, 2026 at 4:12 PM Pacific",
+                "age_hours": 6,
+                "try_url": "https://kindrobots.org/build/animation-manager?effect=candlelit-reliquary&preview=1",
+            }
+        }
+    )
+
+    assert "New screensaver today" in html
+    assert "Candlelit Reliquary" in html
+    assert "Try this screensaver" in html
+    assert "effect=candlelit-reliquary&amp;preview=1" not in html
+    assert "effect=candlelit-reliquary&preview=1" in html
+
+
+def test_animation_release_section_calls_out_stale_daily_cadence():
+    module = load_module()
+    html = module.animation_release_section(
+        {
+            "animation_release": {
+                "state": "stale",
+                "title": "Geode Bloom",
+                "released_label": "Sep 5, 2026 at 12:55 AM Pacific",
+                "age_hours": 432,
+                "try_url": "https://kindrobots.org/build/animation-manager?effect=geode-bloom&preview=1",
+            }
+        }
+    )
+
+    assert "No new screensaver shipped in the last 24 hours" in html
+    assert "Geode Bloom" in html
+    assert "18.0 days ago" in html
+    assert "Try this screensaver" in html
+
+
+def test_payload_places_animation_immediately_after_daily_dream_output():
+    module = load_module()
+    digest = {
+        "current_dream_output": {
+            "slug": "current",
+            "title": "Current Just Built",
+            "idea": "Fresh output.",
+            "display_mode": "current-art-rich",
+            "assets": assets(submitted=True),
+        },
+        "animation_release": {
+            "state": "fresh",
+            "title": "Candlelit Reliquary",
+            "released_label": "Sep 21, 2026 at 4:12 PM Pacific",
+            "age_hours": 6,
+            "try_url": "https://kindrobots.org/build/animation-manager?effect=candlelit-reliquary&preview=1",
+        },
+        "render_engine": {"state": "ok", "reason": "healthy"},
+        "container_logs": {"state": "clean"},
+    }
+
+    html = module.build_payload(digest)["htmlContent"]
+
+    assert html.index("Current Just Built") < html.index("New screensaver today")
+    assert html.index("New screensaver today") < html.index("Render engine healthy")
