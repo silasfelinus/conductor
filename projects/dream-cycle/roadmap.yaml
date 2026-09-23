@@ -758,8 +758,8 @@ tasks:
 - id: t-033
   milestone: m2
   title: Add roadmap tracking for the server/api/dream-relations/ surface (DreamRelation CRUD)
-  status: claimed
-  owner: worker
+  status: done
+  owner: null
   stakes: reversible
   note: >-
     Found by the 2026-09-23 weekly site audit's directory-level orphan pass:
@@ -773,6 +773,14 @@ tasks:
     this is a documentation gap, not a code defect. Add a task/note describing the
     DreamRelation feature (what it does, where it's used) so future sessions working on
     Dream narration/gallery surfaces have roadmap context for it.
-  claimed_by: claude-scheduled-2026-09-23T-sweep-dc-t033
-  claimed_at: '2026-09-23T22:04:59Z'
-  updated: '2026-09-23T22:04:59Z'
+
+    DreamRelation feature documentation (roadmap-tracking gap, per the task's own scope):
+
+    WHAT IT IS: a typed edge between two Dream rows (fromDreamId, toDreamId, relationType: IS_A|APPEARS_IN|CONTAINS|RELATED|INSPIRED_BY, optional note), backed by the DreamRelation Prisma model. Full CRUD lives at server/api/dream-relations/: index.get.ts (list, filterable by dreamId/fromDreamId/toDreamId/relationType), index.post.ts (create-or-upsert-note, requireApiUser + assertDreamAccess: mutate on the from-side, view on the to-side per audit finding P6 MEDIUM), and [id].delete.ts (delete, requireApiUser + assertDreamAccess: mutate on the from-side). index.ts holds shared helpers (dreamRelationTypes, parseDreamRelationType, dreamRelationSelect, getDreamRelationId). All three handlers are correctly auth-guarded; this is not a security gap.
+
+    CORRECTION to the audit's 'wired into real UI' characterization -- verified by reading the three named consumers directly, not assumed: (1) components/dreams/dream-relationship-gallery.vue does NOT call this API at all -- its 'Connected'/'Available' modes compute connectivity client-side by comparing shared Scenario/Character/Reward/ArtCollection ids (dreamsAreConnected()), entirely independent of the DreamRelation table. (2) stores/dailyDreamArchiveStore.ts only imports the DreamRelation TYPE for its DailyDreamArchiveEntry.RelationsFrom/RelationsTo fields; it never calls the dream-relations endpoints. (3) The actual read wiring is server/api/dreams/daily-archive.get.ts, which Prisma-includes RelationsFrom/RelationsTo (scoped to the public-archive object set) -- a different endpoint than the dedicated GET above, feeding the daily archive store's typed shape. (4) workspace-narrator.vue's only hit is a comment referencing dream-relationship-gallery.vue, not this API.
+
+    THE REAL GAP: repo-wide grep for '/api/dream-relations' (client-side) and for prisma.dreamRelation.create/upsert (anywhere outside the POST handler itself) both return zero results. Nothing in the live application -- no UI, no script, no seeder -- ever creates a DreamRelation row. The write side (POST/DELETE) is fully built and guarded but has no caller; the read side that IS wired (daily-archive.get.ts) can therefore only ever surface an empty RelationsFrom/RelationsTo today. This is a complete, correctly-guarded, currently-dormant feature, not a documentation-only gap -- worth a follow-up task if Dream-to-Dream relationships (e.g. sequel/prequel, shared-cast cross-links) are wanted as a real feature, since the backend groundwork already exists.
+  claimed_by: null
+  claimed_at: null
+  updated: '2026-09-23T22:05:18Z'
