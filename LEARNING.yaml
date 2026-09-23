@@ -16335,3 +16335,13 @@ records:
   outcome: done
   failure_category: quality
   lesson: "Pass 1's only defect was test isolation, not the feature: adding find_due_daily_commitments() to select_role.py changed live selection outcomes for the same roadmap data test_github_api_unreachable_surfaced_when_real_requests_fail asserted against, and that test didn't mock run_worker.load_roadmaps or the new finder the way its sibling test_remote_refresh_failure_does_not_crash_selection already did. Any new selection signal that reads load_roadmaps() needs every existing test exercising select_role() end-to-end re-checked for the same missing mock, not just the tests written for the new feature itself. Separately: this session's own PR-body edits tripped scripts/check_pr_handoff_template.py's required-heading check twice (dropped Kaizen suggestion, then dropped Notes for reviewer) while iterating the body by hand -- worth diffing a PR-body edit against the full AGENTS.md handoff heading list before pushing it, not just eyeballing the new content."
+
+- date: '2026-09-23'
+  project: ruler-hooked
+  task: t-038
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "build_ruler_hooked_art_queue.py's card lane had been silently staging every request at the wrong image_path (public/images/ruler-hooked/cards/<id>.webp with a cards/ subdirectory and no card- prefix) against cardArtPath()'s actual contract (public/images/ruler-hooked/card-<id>.webp, no subdirectory) since the lane was written -- caught only by reading the consuming component (cardArt.ts) directly rather than trusting the producing script's own naming. A staging script and its consumer having independently-plausible-looking but silently mismatched path conventions is a class of bug that unit tests over the staging script alone would never catch, since it never reads the consumer; worth checking both ends of any asset-path contract when adding a new art-queue lane, not just validating the producer's own output shape."
