@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-23T08:08:06Z
+Generated: 2026-09-23T08:18:57Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1127**
-- Outcomes: blocked: 18, cancelled: 2, done: 1107
+- Closed tasks recorded: **1128**
+- Outcomes: blocked: 18, cancelled: 2, done: 1108
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -41,7 +41,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | humboldt-scoop-cms | 21 | 95% |
 | interface-vision | 140 | 100% |
 | kapowarr | 52 | 100% |
-| kind-economy | 10 | 100% |
+| kind-economy | 11 | 100% |
 | kind-robots | 67 | 99% |
 | kindrobots-unraid | 9 | 100% |
 | lora-ingestion | 11 | 100% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1110 | 99% |
+| software | 1111 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-23 `kind-economy/t-028` — A gap in check_project_scaffold_drift.py's sibling-check idea: nothing watches whether a server/api file that isn't reachable from any Vue page still makes sense to exist. Silas's own PR #2669 (2026-09-12) retired the mission-accrual admin page but left its backend (two API routes, a utils file, a regression test) live and orphaned for 11 days until the weekly site-audit gap-analysis pass caught it. Fix was straightforward once found: remove the four dead files, keep the Prisma model/migration in place (a destructive drop is out of scope for a reversible cleanup, AGENTS.md hard rule 10) with a schema comment explaining why. Separately: touching a schema comment still requires `prisma generate` -- the committed generated client is checked for parity against the schema, and forgetting the regen step fails CI on a diff that looks unrelated to the actual code change (verifyGeneratedClientParity flagged 4 stale files); the fix is mechanical (run prisma generate, commit the regenerated files) but easy to miss when the only edit is a comment.
 - 2026-09-23 `art-archive/t-042` — A repository-wide contract verifier (verifyContentVisibilityCoverage.ts) that reads only a query's own where clause has no way to recognize authorization that happens earlier, at capability-mint time, in a different file -- the new archive media route was correctly gated by a signed capability (verifyGalleryArchiveMedia(), itself downstream of buildArtImageWhere()) but still read as unguarded. The fix was naming the specific function in the scanner's recognized-checks list, not allowlisting the route -- allowlisting would have silently exempted the whole file from future scrutiny, while naming the function keeps the scanner honest about WHY it trusts this shape. Added a regression test against the scanner's own classifier (with synthetic source, not real files) so a plain unguarded read and an unrecognized check name both still fail -- otherwise the exception itself becomes the next silent gap. Also hit the Prettier ratchet on the same PR for unrelated pre-existing formatting drift in touched files; `npx prettier --write` on the flagged files was sufficient once `npm ci`/provision_kind_robots_deps.sh was actually run locally (a stale/incomplete local node_modules previously made a bare `npx prettier` resolve a different version than CI's pinned one and produced misleading extra violations).
 - 2026-09-23 `lora-ingestion/t-017` — When a helper return shape grows, update both new-path coverage and pre-existing exact-dict assertions for unchanged/no-op paths in the same patch.
 - 2026-09-23 `lora-ingestion/t-016` — resync_vendored_scanner.py's --from-parity-report mode closes the last manual step in the parity-check-then-fix loop; the PR itself was correct and every code check passed on the first push. The one thing that blocked merge was the PR body using a non-AGENTS.md section layout, caught by check_pr_handoff_template.py -- editing the PR body in place (no re-implementation needed) was the right-sized fix, not a full retry cycle.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-22 `storybook/t-064` — test:lint-ratchet does NOT share test:prettier-ratchet's silent ambient-version-drift exposure: an unprovisioned npx eslint does resolve a different ambient version, but this repo's eslint.config.mjs unconditionally imports the Nuxt-generated .nuxt/eslint.config.mjs (only produced by nuxi prepare, part of npm ci's postinstall), so a bare npx eslint reproduction fails loud (ERR_MODULE_NOT_FOUND) before linting anything rather than silently misreporting a drifted count. Separately: pull_request_read's get_check_runs can serve stale cached in_progress status for a job that already completed (observed ~30 min stale here) -- cross-check with actions_get/get_workflow_job before treating a check as genuinely stuck.
 - 2026-09-22 `storybook/t-063` — A local reproduction of a ratchet/version-sensitive CI gate (npm run test:prettier-ratchet) that disagreed with the task note's own open question about CI health turned out to be a sandbox artifact: no node_modules installed meant npx silently resolved an ambient prettier version instead of the lockfile-pinned one npm ci/CI actually use, producing a false '+30 files worse' reading. Before trusting any bare npx/npm-run reproduction of a version-sensitive check, provision deps first (npm ci or the repo's existing provisioning script) and confirm the installed tool version matches the lockfile -- an uninstalled or mismatched toolchain can fabricate drift that was never real.
 - 2026-09-22 `storybook/t-062` — The same UI logic duplicated across two files (storybook-visual-setup.vue and conductor/storybook-page.vue both build the same StorybookStartInput draft) let an a11y fix (role=group/aria-label on choice grids, t-010) land in only one copy; a narrow textual guard scoped to a single file can't catch its sibling never getting the fix -- when auditing a fix's completeness, grep for other files building the same store/type shape, not just the one the original task touched.
-- 2026-09-22 `conductor/t-193` — A same-day kaizen (t-192 -> t-193) that turns "found this bug by hand-grepping" into a structural test is cheap and worth doing immediately rather than deferring: the guard here is ~150 lines, ran in under a tenth of a second, and directly encodes the exact investigative step (grep every already_satisfied definition, check each one) that closed the parent bug. Mirroring an existing guard's shape (test_home_server_pm2_comfyui_direct_call_guard.py: glob the relevant files, define a positive-match regex/parser, assert clean, then self-test the parser/regex against a known offender so the test can't silently pass by never matching anything) made the design decision fast rather than open-ended -- worth reaching for an existing guard's shape before inventing a new one when the repo already has this pattern established.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-23T08:08:06Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-23T08:18:57Z_
