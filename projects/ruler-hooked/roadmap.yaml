@@ -1244,10 +1244,10 @@ tasks:
 - id: t-038
   milestone: m5
   title: Author card-specific art keys and a Character/mood matrix for the top interrupt/arc-step cards
-  status: claimed
+  status: done
   stakes: reversible
   passes: 0
-  owner: worker
+  owner: null
   claimed_by: 2026-09-23T110000Z-rh038
   claimed_at: '2026-09-23T11:01:27Z'
   note: >-
@@ -1262,4 +1262,20 @@ tasks:
     (or character portrait prompts via characterPortraitPrompt()) through the normal art
     pipeline so this cycle's UI change actually starts showing images rather than
     degrading to the no-art rung every time.
-  updated: '2026-09-23T11:01:27Z'
+
+    Implemented: fixed build_ruler_hooked_art_queue.py's card-lane image_path bug (was
+    writing to public/images/ruler-hooked/cards/<id>.webp; cardArtPath() in kind_robots
+    utils/rulerHooked/cardArt.ts actually resolves card.art to /images/ruler-
+    hooked/<key>.webp, no cards/ subdirectory -- a render at the old path would never have
+    been found by the UI). Staged all 25 card-lane entries into art-prompts.yaml. Wired art:
+    card-<id> onto the six highest-weight/most-frequently-drawn cards not yet covered: the
+    three weight-3 free-draw cards (bard-ballad, duck-census, nix-warning, alongside the
+    existing weight-3 card-warlock-druid-north demo entry) and each arc's entry-point step
+    (elope-1, envoy-1, bog-1 -- the card gating whether that arc's branch content is ever
+    seen). Submitted --submit-only ArtRequests for those six (ArtJob ids 31526-31530,
+    31532); they stay status: pending in art-prompts.yaml until a later cycle finds the
+    rendered media live. PRs: silasfelinus/conductor#5112 (script fix + staging),
+    silasfelinus/kind_robots#3019 (content.ts art: keys), silasfelinus/conductor#5113
+    (ArtRequest submission) -- all merged. Remaining scope: the other 19 card-lane entries
+    are staged but not yet wired/submitted -- follow-on kaizen task ruler-hooked/t-039.
+  updated: '2026-09-23T11:09:00Z'
