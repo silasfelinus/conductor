@@ -54,6 +54,49 @@ def test_parity_report_resyncs_each_unique_drift_file(tmp_path):
     assert "parity report drift" in text
 
 
+def test_parity_report_dry_run_reports_byte_deltas_without_writing(tmp_path):
+    vendor_dir, provenance = setup_vendor(tmp_path)
+    old_loras = (vendor_dir / "scan_loras.py").read_bytes()
+    old_models = (vendor_dir / "scan_models.py").read_bytes()
+    old_provenance = provenance.read_text()
+    originals = {
+        "scan_loras.py": "tiny\n",
+        "scan_models.py": "a much longer replacement model scanner\n",
+    }
+    report = {
+        "ref": "main",
+        "findings": [
+            {"file": "scan_loras.py", "shape": "content-drift"},
+            {"file": "scan_models.py", "shape": "content-drift"},
+        ],
+        "unresolved": [],
+    }
+
+    result = resync_mod.resync_from_parity_report(
+        report,
+        token="fake-token",
+        vendor_dir=vendor_dir,
+        provenance_path=provenance,
+        fetcher=make_fetcher(originals),
+        dry_run=True,
+    )
+
+    assert result["ok"] is True
+    by_file = {item["file"]: item for item in result["results"]}
+    for file_name, original in originals.items():
+        item = by_file[file_name]
+        current_size = len((f"old {file_name}\n").encode("utf-8"))
+        source_size = len(original.encode("utf-8"))
+        assert item["current_bytes"] == current_size
+        assert item["source_bytes"] == source_size
+        assert item["byte_delta"] == source_size - current_size
+        assert item["dry_run"] is True
+
+    assert (vendor_dir / "scan_loras.py").read_bytes() == old_loras
+    assert (vendor_dir / "scan_models.py").read_bytes() == old_models
+    assert provenance.read_text() == old_provenance
+
+
 def test_parity_report_uses_report_ref_unless_overridden(tmp_path):
     vendor_dir, provenance = setup_vendor(tmp_path)
     seen_refs = []
