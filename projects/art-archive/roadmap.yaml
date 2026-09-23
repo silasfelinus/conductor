@@ -1357,7 +1357,7 @@ tasks:
   - id: t-042
     milestone: m5
     title: "Fix archive previews and owner-controlled private/mature visibility in the main Gallery"
-    status: ready
+    status: review
     passes: 0
     stakes: reversible
     note: |-
@@ -1366,6 +1366,13 @@ tasks:
       Implementation is on kind_robots branch worker/art-archive-t-042-20260923t055430z. It adds an access-filtered PRIVATE_PATH archive media route, routes art-archive image cards through cached previews, replaces the Gallery's local maturity checkbox with the persisted maturity control, adds an owner-scoped Private toggle, covers mature image cards, refreshes Gallery data after maturity changes, and extends the maturity/privacy contract test.
 
       Pass 1 failed (quality) on kind_robots#3007 exact head 10f6654cac44cba80ad3c147fab47ec8de8c7c65. Content Visibility Coverage run 35825635576 fails because the new capability-authorized ArtImage read is not recognized by the repository-wide visibility verifier; Contract Tests run 35825635538 also fails the Prettier ratchet. Retry must preserve the signed capability design while teaching the visibility contract to prove that narrow authorization (without allowlisting the route), add regression coverage that an unguarded ArtImage read still fails, format touched files, and rerun actual CI checks. Reviewer session openai-scheduled-2026-09-23T062035Z-art-archive-pr3007-a11.
-    updated: '2026-09-23T06:25:00Z'
+
+      Pushed kind_robots#3007 ce9692d: taught verifyContentVisibilityCoverage.ts to recognize
+      verifyGalleryArchiveMedia() as a per-object capability check (privacy+maturity), added a
+      regression test against the scanner's own classifier, and formatted the 3 files the
+      Prettier ratchet flagged. Local verification: vue-tsc clean, eslint ratchet unchanged
+      (330, same as CI), prettier ratchet holds (no directory worse), full test:contracts-db-
+      free green (394/394). Awaiting fresh CI on the pushed commit.
+    updated: '2026-09-23T07:10:25Z'
     implementation_pr: 'silasfelinus/kind_robots#3007'
 
