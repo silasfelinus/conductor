@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-09-23T17:11:56.941033+00:00",
+  "generated_at": "2026-09-23T21:34:59.804325+00:00",
   "summary": {
     "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 9,
+    "roadmap_warnings": 10,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -12,8 +12,8 @@
   },
   "openai_scheduled_agent": {
     "overdue": false,
-    "last_activity": "2026-09-23T14:20:35+00:00",
-    "hours_since": 2.86,
+    "last_activity": "2026-09-23T21:22:00+00:00",
+    "hours_since": 0.22,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "OpenAI coordination activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit."
@@ -30,23 +30,30 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-09-23T17:11:56.941037+00:00",
+    "generated_at": "2026-09-23T21:34:59.804331+00:00",
     "summary": {
       "roadmaps": 54,
       "active_projects": 22,
       "continuous_projects": 3,
-      "tasks": 1678,
+      "tasks": 1681,
       "ready": 18,
       "waiting": 52,
-      "needs_human": 58,
-      "in_progress": 0,
+      "needs_human": 59,
+      "in_progress": 2,
       "done": 1534,
       "errors": 0,
-      "warnings": 9,
+      "warnings": 10,
       "info": 29
     },
     "errors": [],
     "warnings": [
+      {
+        "severity": "warning",
+        "code": "DUPLICATE_YAML_KEY",
+        "project": "coloring-book",
+        "task": null,
+        "message": "Duplicate key 'updated' at line 637 \u2014 YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one."
+      },
       {
         "severity": "warning",
         "code": "POSSIBLY_UNNECESSARY_GATE",
