@@ -1353,3 +1353,23 @@ tasks:
     owner: worker
     claimed_by: 2026-09-20T112500Z-art-archive-t041-chatgpt-fix1
     claimed_at: '2026-09-20T11:26:00Z'
+
+  - id: t-042
+    milestone: m5
+    title: "Fix archive previews and owner-controlled private/mature visibility in the main Gallery"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Filed from Silas's 2026-09-22 Gallery report. Imported private ArtImages are
+      currently rendered from their PRIVATE_PATH-relative ArtImage.path as if it
+      were under public/images, so the request 404s and image-card falls back to
+      backtree.webp. Serve archive-backed ArtImage bytes through an authenticated,
+      root-confined owner/admin media route and make image-card use that route for
+      designer=art-archive rows. On the Gallery front, use the real persisted
+      maturity consent toggle and add an independent Private toggle that includes
+      the signed-in viewer's own private collections/images without exposing
+      somebody else's private rows. Both toggles must filter collection cards and
+      images consistently and maturity changes must refresh server-backed lists consistently.
+
