@@ -391,11 +391,11 @@ tasks:
   - id: t-019
     milestone: m5
     title: "Surface animation ship dates and try links in Animation Manager and daily digest"
-    status: review
+    status: done
     owner: worker
     claimed_by: 20260923T075900Z-animation-manager-t019-openai-a73c
     claimed_at: '2026-09-23T07:59:00Z'
-    updated: '2026-09-23T07:59:00Z'
+    updated: '2026-09-23T08:17:36Z'
     passes: 0
     stakes: reversible
     implementation_pr: 'silasfelinus/kind_robots#3011'
@@ -408,3 +408,25 @@ tasks:
       release provenance machine-readable.
       Digest + release ledger implementation is in review on this companion Conductor PR;
       Kind Robots deep-link/date UI is in PR #3011.
+      DONE 2026-09-23: Kind Robots #3011 merged at a01cc487 and Conductor #5100
+      merged at 06412c9. Animation Manager now shows verified release dates, exact-effect
+      preview deep links work, and the daily digest reports the newest animation plus an
+      explicit fresh/stale 24-hour cadence state.
+
+  - id: t-020
+    milestone: m5
+    title: "Make the animation build lane a daily creative commitment"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Silas, 2026-09-23: Animation Manager should be treated almost as importantly as
+      the Daily Dream/digest creation lane, just south of it, with a goal of making one
+      genuinely new screensaver every Pacific calendar day. The current continuous-fallback
+      and three-day stale-recurring rules are too weak and have already allowed multi-week
+      gaps. Promote animation-manager/t-007 to an explicit daily creative commitment that
+      preempts ordinary backlog pickup when due, while keeping review and broken-work
+      recovery ahead of it. Other Animation Manager maintenance/research stays continuous
+      fallback work. Encode the rule in selection logic, tests, CONTROL/AGENTS guidance,
+      and project priority metadata rather than relying on agent memory.
