@@ -468,3 +468,24 @@ tasks:
     claimed_at: '2026-09-23T14:17:39Z'
     updated: '2026-09-23T16:30:40Z'
     retry_context: 'pass 2 failed (quality): kind_robots PR #3021 fails the "Contract verifiers" job''s Prettier ratchet gate -- the same two new files from pass 1''s lint fix are not Prettier-formatted (utils: 323 -> 324 unformatted files: utils/scripts/registerAnimationEffect.mjs, utils/scripts/registerAnimationEffect.test.mjs). Pass 1''s ESLint fix itself is correct and holds unchanged. Do differently: run `npx prettier --write utils/scripts/registerAnimationEffect.mjs utils/scripts/registerAnimationEffect.test.mjs`, then `npm run test:lint-ratchet && npm run test:prettier-ratchet` locally before repushing. See PR review comment: https://github.com/silasfelinus/kind_robots/pull/3021#issuecomment-5796118569'
+
+  - id: t-022
+    milestone: m5
+    title: "Wire daily_last_completed advancement to a same-commit PITCHES.yaml release entry"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from conductor PR #5136 (2026-09-23): Frost Window Etching shipped via
+      kind_robots PR #3020 and t-007's daily_last_completed correctly advanced to
+      2026-09-23, but PITCHES.yaml's release ledger was never updated in the same cycle --
+      the digest kept surfacing Candlelit Reliquary as the newest release, and the gap was
+      only caught because a new regression test (tests/test_animation_daily_release_ledger.py)
+      now enforces the two stay in sync. That test guards against the symptom recurring but
+      doesn't prevent the root cause: nothing currently reminds whoever advances
+      daily_last_completed to also record the build in PITCHES.yaml the same cycle. Update
+      the daily-creative workflow (AGENTS.md's daily-commitment convention and/or
+      select_role.py's daily-creative role output) to make advancing daily_last_completed
+      and adding the matching PITCHES.yaml builds entry a single documented step, so this
+      can't silently split across cycles again.
