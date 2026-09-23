@@ -4023,6 +4023,23 @@ tasks:
   claimed_at: '2026-09-22T16:14:16Z'
   updated: '2026-09-22T16:19:16Z'
   implementation_pr: 'silasfelinus/conductor#5036'
+- id: t-194
+  milestone: m2
+  title: Flag a daily_commitment task whose daily_last_checked has gone stale, the same way check_priority_queue_starvation.py flags a starved queue
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from animation-manager/t-020 (silasfelinus/conductor#5108, 2026-09-23). The new
+    `daily-creative` role in select_role.py (find_due_daily_commitments()) surfaces a task
+    the moment its `daily_last_checked` predates today's Pacific date, but nothing currently
+    distinguishes "checked today, honest no-op" from "a session claimed it and stalled, or
+    nobody ran the role in days" -- both look identical from the roadmap alone once a session
+    is mid-claim. Add a small advisory check (mirroring check_priority_queue_starvation.py's
+    shape) that flags a `daily_commitment: true` task if `daily_last_checked` is more than
+    N days stale relative to today, or if `claimed_at` is older than a normal session's
+    lifetime with no corresponding PR. Advisory only -- never gates selection.
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
