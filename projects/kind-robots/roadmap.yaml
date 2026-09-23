@@ -2850,7 +2850,7 @@ tasks:
 - id: t-117
   milestone: m6
   title: 'Flag server/api routes with no live caller, the way check_project_scaffold_drift.py flags orphaned project rows'
-  status: claimed
+  status: done
   gate_human: false
   stakes: reversible
   owner: worker
@@ -2873,9 +2873,29 @@ tasks:
     external-facing, e.g. a webhook, with no in-repo caller). False positives are expected
     and fine; the goal is surfacing candidates within days, not the 11-day gap this cycle
     hit, not eliminating false positives.
-  updated: '2026-09-23T09:09:08Z'
+
+    Implemented and merged: utils/scripts/auditServerApiCallers.ts (kind_robots#3013, squash
+    6682ea6). Derives each server/api/**/*.{get,post,put,delete,patch}.ts route's URL path
+    (handling [id]/[...slug] dynamic segments and index.* collapsing) and greps the app
+    source (components/, stores/, server/, utils/, plus pages/, plugins/, layouts/,
+    composables/, middleware/ -- broadened beyond the four roots this task named after
+    finding real callers in pages/ and plugins/ during development) for a plausible caller.
+    Advisory by default (exit 0, --strict to gate); wired into contract-tests.yml as a non-
+    blocking 'tee to artifact' step mirroring the existing channel-artwork-audit pattern,
+    plus a normal blocking unit test (test:server-api-callers-audit) pinning the route-
+    derivation/matcher logic. Verified: vue-tsc clean, eslint clean, prettier clean, unit
+    test passes, full local test:contracts-db-free run (398/398) passes. Ran against live
+    main: 553 routes checked, 124 candidate orphans surfaced (not acted on -- that's the
+    next human-review step, e.g. stripe/webhook, v1/agent/*, auth/first-party/* look
+    plausibly legitimate). PR CI: all checks green except comment-contract, which was
+    independently confirmed failing identically on main itself before this PR merged (live
+    GET /api/characters and /api/bots 503 against a real backend -- a pre-existing,
+    unrelated infra issue, not caused by this diff) -- merged past it per AGENTS.md's base-
+    branch-red handling.
+  updated: '2026-09-23T09:41:40Z'
   claimed_by: agent-20260923T093000Z-kr-t117
   claimed_at: '2026-09-23T09:09:08Z'
+  implementation_pr: 'silasfelinus/kind_robots#3013'
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
