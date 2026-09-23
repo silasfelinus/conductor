@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-09-22T15:00:22.726983+00:00`
+Generated: `2026-09-23T15:04:54.466097+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **54** roadmaps, **22** active + **3** continuous projects, **1657** tasks
-- **19 ready**, **52 waiting**, **55 needs-human**, **1 claimed/review**, **1515 done**
+- **54** roadmaps, **22** active + **3** continuous projects, **1677** tasks
+- **17 ready**, **52 waiting**, **57 needs-human**, **2 claimed/review**, **1534 done**
 - Findings: **0 errors**, **9 warnings**, **29 informational**
 
 ## Project inventory
@@ -15,30 +15,30 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
 | 1 | `cthulhuquarium` | active | software | 0 | 1 | 5 | 0 | 71 / 77 |
-| 2 | `kind-economy` | active | software | 0 | 2 | 4 | 0 | 21 / 27 |
+| 2 | `kind-economy` | active | software | 0 | 2 | 4 | 0 | 22 / 28 |
 | 3 | `butterfly-gallery` | active | software | 0 | 0 | 2 | 0 | 33 / 35 |
-| 4 | `art-archive` | active | software | 0 | 0 | 3 | 0 | 38 / 41 |
+| 4 | `art-archive` | active | software | 0 | 0 | 3 | 0 | 40 / 43 |
 | 5 | `mandarin-tutor` | active | software | 0 | 0 | 1 | 0 | 27 / 28 |
 | 6 | `interface-vision` | continuous | software | 3 | 1 | 0 | 0 | 136 / 140 |
 | 7 | `coloring-book` | active | software | 1 | 9 | 1 | 0 | 36 / 47 |
 | 8 | `humboldt-scoop-cms` | active | software | 0 | 0 | 4 | 0 | 35 / 39 |
 | 9 | `digital-storefront` | active | software | 0 | 2 | 2 | 0 | 40 / 44 |
-| 10 | `kind-robots` | active | software | 0 | 0 | 3 | 0 | 113 / 116 |
+| 10 | `kind-robots` | active | software | 0 | 0 | 3 | 0 | 114 / 117 |
 | 11 | `rainbow-butterflies` | active | software | 0 | 0 | 3 | 0 | 50 / 53 |
 | 12 | `scene-animator` | active | software | 0 | 0 | 1 | 0 | 10 / 11 |
 | 13 | `text-generation` | active | software | 0 | 0 | 1 | 0 | 8 / 9 |
 | 14 | `kindrobots-unraid` | active | software | 0 | 6 | 1 | 0 | 14 / 21 |
-| 15 | `model-builder` | active | software | 0 | 0 | 0 | 1 | 44 / 45 |
-| 16 | `lora-ingestion` | active | infrastructure | 0 | 0 | 1 | 0 | 11 / 12 |
-| 17 | `conductor` | active | software | 0 | 0 | 4 | 0 | 187 / 191 |
-| 18 | `storybook` | active | software | 3 | 2 | 4 | 0 | 53 / 62 |
+| 15 | `model-builder` | active | software | 1 | 0 | 0 | 0 | 44 / 45 |
+| 16 | `lora-ingestion` | active | infrastructure | 0 | 0 | 1 | 0 | 16 / 17 |
+| 17 | `conductor` | active | software | 0 | 0 | 4 | 0 | 190 / 194 |
+| 18 | `storybook` | active | software | 1 | 2 | 4 | 1 | 56 / 64 |
 | 19 | `coat-dance` | active | content | 1 | 0 | 1 | 0 | 3 / 10 |
 | 20 | `conductor-app` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
-| 21 | `appmaker` | active | software | 1 | 0 | 0 | 0 | 14 / 15 |
+| 21 | `appmaker` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
 | 22 | `media-watchlist` | active | software | 0 | 0 | 1 | 0 | 18 / 19 |
-| 23 | `ruler-hooked` | active | software | 4 | 1 | 1 | 0 | 31 / 37 |
-| 24 | `animation-manager` | continuous | software | 2 | 0 | 0 | 0 | 16 / 18 |
-| 25 | `dream-cycle` | continuous | software | 2 | 0 | 0 | 0 | 30 / 32 |
+| 23 | `ruler-hooked` | active | software | 3 | 1 | 2 | 0 | 33 / 39 |
+| 24 | `animation-manager` | continuous | software | 2 | 0 | 0 | 1 | 18 / 21 |
+| 25 | `dream-cycle` | continuous | software | 3 | 0 | 0 | 0 | 30 / 33 |
 | — | `ai-art-academy` | finished | software | 0 | 0 | 0 | 0 | 79 / 79 |
 | — | `alexa-integration` | paused | software | 0 | 0 | 1 | 0 | 21 / 22 |
 | — | `animation-studio` | retired | software | 0 | 3 | 0 | 0 | 4 / 8 |
