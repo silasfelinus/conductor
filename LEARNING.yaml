@@ -16249,3 +16249,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Closing the parity gap t-013 found: scripts/check_vendored_scanner_parity.py now fetches each kind_robots scanner original via the GitHub Contents API and diffs it byte-for-byte against the vendored copy, wired into the session sweep. A PROVENANCE.md comment documenting 'these should stay identical' is not itself a check -- the gap only closes once something actually compares the two on a recurring cadence, the same lesson check_pr_merged_drift.py and check_project_scaffold_drift.py already encode for their own domains."
+- date: 2026-09-23
+  project: lora-ingestion
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Closing the last manual step t-014 left: scripts/resync_vendored_scanner.py --file <name> now does the fix half of the drift-repair loop (fetch the kind_robots original, write it over the vendored copy, append a dated PROVENANCE.md note) that check_vendored_scanner_parity.py only detects. A detector alone still leaves a human/agent to hand-run cp + hand-edit a note every time it fires -- pairing a parity checker with a one-command fixer is what actually removes the toil, not just the risk of silent drift."
