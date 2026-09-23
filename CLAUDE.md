@@ -101,6 +101,17 @@ At the start of every session, before responding to any task, run a conductor sw
      exit 1 only past a threshold depth (default 3) so ordinary one/two-project fall-through
      stays quiet, or if literally nothing in the whole order has claimable work. No network/token
      needed.
+   - `python scripts/check_vendored_scanner_parity.py` — the home-server vendored LoRA/model
+     scanners (`ops/home-server/lora-catalog/scan_loras.py`, `scan_models.py`,
+     `import_catalog.py`) are supposed to be a straight byte-for-byte copy of their kind_robots
+     originals at `scripts/lora-catalog/` (per that directory's `PROVENANCE.md`), but nothing
+     checked that until now (lora-ingestion/t-013, 2026-09-22: the vendored `scan_loras.py` was
+     missing the Civitai tag category classifier entirely, and the gap was only caught by a
+     downstream symptom — garbled preview classification). Fetches each kind_robots original via
+     the GitHub Contents API and diffs it against the local vendored copy. Exit 1 on any drift
+     (with a diff snippet and the `PROVENANCE.md` re-sync command); the fix is always re-copying
+     the file, never hand-editing the vendored side to match. Needs `GITHUB_TOKEN`/`GH_TOKEN`
+     (kind_robots is private); exits 2 (unresolved, not clean) without it.
    Treat exit 1 (or 3) from any of these as a reconciliation prompt, not permission to bypass a genuine gate. The
    four roadmap-reading commands intentionally exclude paused, retired, and finished projects unless
    `--include-inactive` is supplied; `check_live_facet_coverage.py` reads live records rather than roadmaps and
