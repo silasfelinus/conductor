@@ -1,0 +1,13 @@
+version: 1
+project: art-archive
+task: t-042
+operation: review
+session: 2026-09-23T055430Z-art-archive-t042-gpt56-gallery
+updated: '2026-09-23T06:00:00Z'
+note: >-
+  Implementation is on kind_robots branch worker/art-archive-t-042-20260923t055430z.
+  It adds an access-filtered PRIVATE_PATH archive media route, routes art-archive
+  image cards through cached previews, replaces the Gallery's local maturity
+  checkbox with the persisted maturity control, adds an owner-scoped Private
+  toggle, covers mature image cards, refreshes Gallery data after maturity
+  changes, and extends the maturity/privacy contract test.
