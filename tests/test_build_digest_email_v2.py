@@ -130,6 +130,13 @@ def test_payload_leads_with_just_built_then_health_then_tomorrow_pitch():
             "edit_link": "https://example.com/pitch",
             "assets": assets(),
         },
+        "animation_release": {
+            "state": "fresh",
+            "id": "candlelit-reliquary",
+            "title": "Candlelit Reliquary",
+            "released_label": "Sep 21, 2026 at 4:12 PM Pacific",
+            "try_url": "https://kindrobots.org/build/animation-manager?effect=candlelit-reliquary&preview=1",
+        },
         "render_engine": {"state": "down", "reason": "ComfyUI is unreachable."},
         "container_logs": {
             "state": "findings",
@@ -142,7 +149,8 @@ def test_payload_leads_with_just_built_then_health_then_tomorrow_pitch():
     payload = module.build_payload(digest)
     html = payload["htmlContent"]
 
-    assert html.index("Current Just Built") < html.index("Render engine DOWN")
+    assert html.index("Current Just Built") < html.index("New Animation Manager release")
+    assert html.index("New Animation Manager release") < html.index("Render engine DOWN")
     assert html.index("Render engine DOWN") < html.index("Detailed error review")
     assert html.index("Detailed error review") < html.index("Tomorrow’s pitch")
     assert html.index("Tomorrow’s pitch") < html.index("Tomorrow Is Weird")
@@ -196,3 +204,43 @@ def test_payload_does_not_render_older_recent_history():
     payload = module.build_payload(digest)
     assert "Too Old" not in payload["htmlContent"]
     assert "Earlier completed bundles" not in payload["htmlContent"]
+
+
+def test_animation_release_section_links_directly_to_preview():
+    module = load_module()
+    html = module.animation_release_section(
+        {
+            "animation_release": {
+                "state": "fresh",
+                "id": "candlelit-reliquary",
+                "title": "Candlelit Reliquary",
+                "released_label": "Sep 21, 2026 at 4:12 PM Pacific",
+                "try_url": "https://kindrobots.org/build/animation-manager?effect=candlelit-reliquary&preview=1",
+            }
+        }
+    )
+
+    assert "New Animation Manager release" in html
+    assert "Candlelit Reliquary" in html
+    assert "Try Candlelit Reliquary" in html
+    assert "effect=candlelit-reliquary&amp;preview=1" not in html
+    assert "effect=candlelit-reliquary&preview=1" in html
+
+
+def test_animation_release_section_calls_out_stale_daily_cadence():
+    module = load_module()
+    html = module.animation_release_section(
+        {
+            "animation_release": {
+                "state": "stale",
+                "id": "geode-bloom",
+                "title": "Geode Bloom",
+                "released_label": "Sep 5, 2026 at 12:55 AM Pacific",
+                "try_url": "https://kindrobots.org/build/animation-manager?effect=geode-bloom&preview=1",
+            }
+        }
+    )
+
+    assert "Animation Manager cadence" in html
+    assert "No new screensaver shipped in the last 24 hours" in html
+    assert "Try Geode Bloom" in html
