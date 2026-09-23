@@ -588,12 +588,12 @@ tasks:
 - id: t-028
   milestone: m2
   title: "Restore or formally retire the orphaned mission-accrual admin dashboard page"
-  status: review
+  status: done
   owner: worker
-  updated: '2026-09-23T06:05:40Z'
+  updated: '2026-09-23T08:13:37Z'
   passes: 0
   stakes: reversible
-  note: >
+  note: >-
     Found by this session's weekly site-audit gap-analysis pass (2026-09-23, follow-up
     to projects/global-ui/AUDIT-REPORT-2026-09-23.md, which covered the 22 finite active
     projects but not the 3 continuous ones this pass added).
@@ -623,5 +623,20 @@ tasks:
     and the tailwind.css codemod-history comments to stop citing a page that no longer
     exists.
     Either way, update this task's note with which outcome was chosen and why.
+
+    Reviewer close-out (scheduled Conductor Agent sweep): reviewed and merged
+    kind_robots#3008 (squash 4b9775c). CI initially failed on verifyGeneratedClientParity --
+    the PR's MissionRemittance schema-comment edit wasn't followed by a prisma generate, so
+    the committed generated client
+    (prisma/generated/prisma/{browser,client,internal/class}.ts and
+    models/MissionRemittance.ts) drifted from the schema. Fixed by running prisma generate
+    and pushing the 4 regenerated files (doc-comment-only diff, confirmed matched the schema
+    change exactly) directly to the worker branch. Also hit a transient infra cancellation
+    on the unrelated 'No retired provider references' check (Checkout step hung then
+    cancelled after ~2.5min, never reached the verification step) -- re-ran via
+    rerun_failed_jobs and it passed clean on retry, consistent with the same shared-runner
+    congestion pattern already logged in root TALKBACK.md this session. All 55 checks green
+    after both fixes; merged.
   claimed_by: conductor-scheduled-20260923T055503Z-t028
   claimed_at: '2026-09-23T05:55:04Z'
+  implementation_pr: 'silasfelinus/kind_robots#3008'
