@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-23T01:03:39Z
+Generated: 2026-09-23T01:07:10Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1123**
-- Outcomes: blocked: 18, cancelled: 2, done: 1103
+- Closed tasks recorded: **1124**
+- Outcomes: blocked: 18, cancelled: 2, done: 1104
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -44,7 +44,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kind-economy | 10 | 100% |
 | kind-robots | 67 | 99% |
 | kindrobots-unraid | 9 | 100% |
-| lora-ingestion | 8 | 100% |
+| lora-ingestion | 9 | 100% |
 | mandarin-tutor | 14 | 93% |
 | media-watchlist | 12 | 100% |
 | mermaids-of-venice | 3 | 100% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1106 | 99% |
+| software | 1107 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-23 `lora-ingestion/t-015` — Closing the last manual step t-014 left: scripts/resync_vendored_scanner.py --file <name> now does the fix half of the drift-repair loop (fetch the kind_robots original, write it over the vendored copy, append a dated PROVENANCE.md note) that check_vendored_scanner_parity.py only detects. A detector alone still leaves a human/agent to hand-run cp + hand-edit a note every time it fires -- pairing a parity checker with a one-command fixer is what actually removes the toil, not just the risk of silent drift.
 - 2026-09-23 `lora-ingestion/t-014` — Closing the parity gap t-013 found: scripts/check_vendored_scanner_parity.py now fetches each kind_robots scanner original via the GitHub Contents API and diffs it byte-for-byte against the vendored copy, wired into the session sweep. A PROVENANCE.md comment documenting 'these should stay identical' is not itself a check -- the gap only closes once something actually compares the two on a recurring cadence, the same lesson check_pr_merged_drift.py and check_project_scaffold_drift.py already encode for their own domains.
 - 2026-09-22 `lora-ingestion/t-013` — A vendored copy (ops/home-server's stdlib-only scanner) had silently drifted from its app-source original (kind_robots' scan_loras.py), losing the Civitai tag classifier with no test catching it -- because nothing asserted the two stayed in sync. Cross-repo duplication for a legitimate reason (no Node available on the home box) still needs an explicit parity check or scripted sync step, not just a one-time copy at authoring time, or the vendor copy rots invisibly until a downstream symptom (garbled classification/preview) surfaces it.
 - 2026-09-22 `storybook/t-064` — test:lint-ratchet does NOT share test:prettier-ratchet's silent ambient-version-drift exposure: an unprovisioned npx eslint does resolve a different ambient version, but this repo's eslint.config.mjs unconditionally imports the Nuxt-generated .nuxt/eslint.config.mjs (only produced by nuxi prepare, part of npm ci's postinstall), so a bare npx eslint reproduction fails loud (ERR_MODULE_NOT_FOUND) before linting anything rather than silently misreporting a drifted count. Separately: pull_request_read's get_check_runs can serve stale cached in_progress status for a job that already completed (observed ~30 min stale here) -- cross-check with actions_get/get_workflow_job before treating a check as genuinely stuck.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-22 `conductor/t-192` — already_satisfied() == target_path(entry).exists() conflated two different questions: "has this ever rendered" and "does what's on disk answer the CURRENT pending request." They only diverge on a regeneration request (status flipped done -> pending after a prompt fix, reusing the same image_path), which is rare enough that the bug went undetected through the entire life of consume_art_requests.py/consume_art_inspirations.py -- until it silently ate two consecutive regeneration attempts on the same entry (ruler-hooked's choirfish) before anyone traced the actual job history. The fix (an explicit force: true per-entry field, cleared once fulfilled) generalizes: an idempotency check keyed on "does the output already exist" needs an explicit signal for "this specific pending cycle invalidates that output," because file/media existence alone cannot distinguish stale from current. Also load-bearing: this codebase's identical logic sometimes has TWO code paths (target_path().exists() vs. a live media-host HEAD check for kind_robots targets via consume_art_requests_to_media.py's wrapper) that look like one function from the caller's side -- a fix to the "obvious" one silently misses the production entrypoint a scheduled workflow actually calls.
 - 2026-09-22 `storybook/t-010` — A file paused behind an upstream dependency (2026-09-12/13 TALKBACK note: don't polish storybook-visual-setup.vue until t-034/t-035/t-036's card-driven redesign lands) can sit unrevisited for over a week after the pause condition is actually met -- t-034/t-035/t-036 finished 2026-09-13, but nobody re-checked this file until this cycle (2026-09-22). The fix itself (role="group" + aria-label on two ungrouped choice-button grids) matched a pattern already fixed five times elsewhere in the project, confirmed to fail pre-fix via a git-stash round trip on the component. Worth generalizing: a pause note tied to a dependency's completion needs the same kind of staleness check this repo already runs for claimed tasks and stale recurring tasks, or "paused pending X" quietly becomes "paused forever" once X actually lands.
 - 2026-09-22 `lora-ingestion/t-012` — When a broad UI utility patch trips the lint ratchet, repair the newly introduced lint findings on the same branch and require exact-head Actions completion before treating the retry as done.
-- 2026-09-22 `lora-ingestion/t-011` — Two sessions independently implemented the same kaizen-filed fix (PowerShell paths-filter quote-only regex) within a ~30 minute window -- kind_robots#2969 (this task's own OpenAI Worker cycle, single/double-quote fix) and kind_robots#2970 (a different session, broader single/double/bare-scalar fix with a backreference guard), #2970 merging first. Discovered via #2969's PR showing mergeable_state=dirty on review; closed #2969 as redundant with a comment naming the superseding PR rather than resolving a conflict Reviewer has no push access to fix on a worker/* branch. No lost work -- the standard git-conflict backstop caught the collision as designed, just surfaced through PR mergeability instead of a rejected push.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-23T01:03:39Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-23T01:07:10Z_
