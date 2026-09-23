@@ -1,0 +1,9 @@
+version: 1
+project: lora-ingestion
+task: t-016
+operation: review
+owner: worker
+session: openai-scheduled-2026-09-23T011518Z-lora-ingestion-t016-a11
+updated: '2026-09-23T01:21:00Z'
+note: >-
+  Added a parity-report mode to resync_vendored_scanner.py that consumes the checker's JSON findings, refuses unresolved/untracked entries, preserves the report ref, deduplicates filenames, and re-syncs all drifted scanners in one command; added focused tests.
