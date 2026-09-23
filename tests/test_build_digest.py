@@ -167,3 +167,50 @@ def test_animation_manager_build_ledger_has_release_provenance():
                 missing.append(f"{pitch['id']} v{build.get('version', '?')}")
 
     assert missing == []
+
+
+def write_animation_pitches(tmp_path, released_at="2026-09-23T15:00:00Z"):
+    path = tmp_path / "projects" / "animation-manager" / "PITCHES.yaml"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(textwrap.dedent(f"""\
+        pitches:
+          - id: candlelit-reliquary
+            title: Candlelit Reliquary
+            status: candidate
+            builds:
+              - version: 1
+                status: candidate
+                pull_request: silasfelinus/kind_robots#2962
+                released_at: '{released_at}'
+    """))
+    return path
+
+
+def test_animation_release_status_reports_fresh_latest_build(tmp_path):
+    path = write_animation_pitches(tmp_path)
+    now = build_digest.datetime.datetime(
+        2026, 9, 23, 11, 0, tzinfo=build_digest._TZ
+    )
+
+    release = build_digest.animation_release_status(now=now, pitches_path=str(path))
+
+    assert release["state"] == "fresh"
+    assert release["id"] == "candlelit-reliquary"
+    assert release["title"] == "Candlelit Reliquary"
+    assert release["pull_request"] == "silasfelinus/kind_robots#2962"
+    assert release["try_url"].endswith(
+        "/build/animation-manager?effect=candlelit-reliquary&preview=1"
+    )
+
+
+def test_animation_release_status_makes_missed_daily_goal_visible(tmp_path):
+    path = write_animation_pitches(tmp_path, released_at="2026-09-05T07:55:56Z")
+    now = build_digest.datetime.datetime(
+        2026, 9, 23, 11, 0, tzinfo=build_digest._TZ
+    )
+
+    release = build_digest.animation_release_status(now=now, pitches_path=str(path))
+
+    assert release["state"] == "stale"
+    assert release["id"] == "candlelit-reliquary"
+    assert release["age_hours"] > 24
