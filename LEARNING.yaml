@@ -16372,3 +16372,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Two worker/* branches (worker/animation-manager-t019-final, superseded, and worker/animation-manager-t019-digest-final, the cleaned-up final version) sat with a merged PR (#5136) that select_role.py's own scan missed on the run that found the branches -- always re-check list_pull_requests by head branch before opening a new PR from an existing worker/* branch, since a PR can exist even when the role-selection script reports zero reviewable PRs."
+- date: '2026-09-23'
+  project: dream-cycle
+  task: t-033
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The weekly site audit's orphan-directory pass correctly found server/api/dream-relations/ was undocumented, but its 'wired into real UI' read was wrong -- always trace named consumer files' actual fetch/import calls (not just their filenames appearing near the feature) before repeating an audit's wiring claim. Here, the named UI files only read DreamRelation via a Prisma include on a different endpoint, and a repo-wide grep for the write endpoints and prisma.dreamRelation.create/upsert found zero callers anywhere -- the CRUD surface is fully built and guarded but currently has no caller at all, live or seeded."
