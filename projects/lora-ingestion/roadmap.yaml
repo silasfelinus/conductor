@@ -405,7 +405,7 @@ tasks:
 - id: t-014
   milestone: m2
   title: Add an automated parity check between the home-server vendored LoRA/model scanners and their kind_robots app-source originals
-  status: review
+  status: done
   owner: worker
   stakes: reversible
   note: |-
@@ -418,6 +418,11 @@ tasks:
     comparing the shared logic surface between the two copies) so a scanner feature change in
     kind_robots cannot land without the home-server executable copy following, and a stale
     vendor copy fails loudly instead of drifting invisibly.
+
+    Implemented and merged: scripts/check_vendored_scanner_parity.py
+    (silasfelinus/conductor#5063), wired into CLAUDE.md's session-sweep list. Verified clean
+    against the live repos at merge time.
   claimed_by: 2026-09-22T235226Z-lora-ingestion-t014
   claimed_at: '2026-09-22T23:59:36Z'
-  updated: '2026-09-23T00:00:20Z'
+  updated: '2026-09-23T00:04:35Z'
+  implementation_pr: 'silasfelinus/conductor#5063'
