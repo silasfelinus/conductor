@@ -6,6 +6,7 @@ finished in project-overrides.yaml (mermaids-of-venice, pinball-hero,
 career-transition, ecosystem-map, global-ui, davinci, superkate-hairstyle-ai,
 among others) -- build_digest.py never read project-overrides.yaml at all.
 """
+import datetime
 import json
 import textwrap
 
@@ -103,3 +104,66 @@ def test_main_excludes_paused_and_finished_projects_from_digest(tmp_path, monkey
     assert payload["all_needs_attention"] == [
         "kind-robots/t-001: Do the thing (needs-human)"
     ]
+
+
+def test_animation_release_status_uses_latest_shipped_build(tmp_path):
+    pitches = tmp_path / "PITCHES.yaml"
+    pitches.write_text(textwrap.dedent("""\
+        pitches:
+          - id: older
+            title: Older Effect
+            builds:
+              - version: 1
+                released_at: '2026-09-20T12:00:00Z'
+                pull_request: silasfelinus/kind_robots#100
+          - id: newest-effect
+            title: Newest Effect
+            builds:
+              - version: 1
+                released_at: '2026-09-22T23:00:00Z'
+                pull_request: silasfelinus/kind_robots#200
+    """))
+
+    now = datetime.datetime(2026, 9, 23, 8, 0, tzinfo=build_digest._TZ)
+    status = build_digest.animation_release_status(now=now, pitches_path=str(pitches))
+
+    assert status["state"] == "fresh"
+    assert status["id"] == "newest-effect"
+    assert status["title"] == "Newest Effect"
+    assert status["try_url"].endswith(
+        "/build/animation-manager?effect=newest-effect&preview=1"
+    )
+    assert status["pull_request"] == "silasfelinus/kind_robots#200"
+
+
+def test_animation_release_status_reports_stale_daily_cadence(tmp_path):
+    pitches = tmp_path / "PITCHES.yaml"
+    pitches.write_text(textwrap.dedent("""\
+        pitches:
+          - id: latest
+            title: Latest Effect
+            builds:
+              - version: 1
+                released_at: '2026-09-20T12:00:00Z'
+    """))
+
+    now = datetime.datetime(2026, 9, 23, 8, 0, tzinfo=build_digest._TZ)
+    status = build_digest.animation_release_status(now=now, pitches_path=str(pitches))
+
+    assert status["state"] == "stale"
+    assert status["id"] == "latest"
+    assert status["age_hours"] > 24
+
+
+def test_animation_manager_build_ledger_has_release_provenance():
+    pitches = build_digest.yaml.safe_load(
+        open(build_digest.ANIMATION_PITCHES_PATH, encoding="utf-8")
+    )["pitches"]
+
+    missing = []
+    for pitch in pitches:
+        for build in pitch.get("builds") or []:
+            if not build.get("released_at"):
+                missing.append(f"{pitch['id']} v{build.get('version', '?')}")
+
+    assert missing == []
