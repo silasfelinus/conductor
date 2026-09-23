@@ -869,7 +869,7 @@ tasks:
 - id: t-037
   milestone: m7
   title: "Delete the client-side beat loop and rewrite its ~25 verifyStorybook*Guard scripts"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-036, t-052]
@@ -1041,10 +1041,10 @@ tasks:
     - Update (read storybookStore.ts/storybook-page.vue source text, will break once those shrink/disappear): utils/scripts/verifyNarrativeRoles.ts, utils/scripts/verifyGalleryIndexHydration.ts, utils/scripts/verifyNarrativeKit.ts, utils/scripts/verifyNarrativeStreamingTextIsolationGuard.mjs (pins weaveBeat, being deleted), utils/scripts/verifyStorybookActiveStoryResumeGuard.ts (imports type StorybookSession, being deleted) -- not yet individually traced line-by-line this cycle, do that before touching.
     - Remove dead `.github/workflows/storybook-*-contract.yml` `paths:` entries for every deleted guard file (per the design doc's own instruction).
     - Full verification: provision_kind_robots_deps.sh, vue-tsc, eslint, the full guard/contract suite -- do not trust a plausible-looking diff.
-  updated: '2026-09-23T15:02:41Z'
+  updated: '2026-09-23T15:57:22Z'
   owner: worker
-  claimed_by: claude-scheduled-2026-09-23T140000Z-storybook-t037-cutover
-  claimed_at: '2026-09-23T14:56:31Z'
+  claimed_by: claude-scheduled-2026-09-23T160500Z-storybook-t037-guard-cleanup
+  claimed_at: '2026-09-23T15:57:22Z'
 
 - id: t-052
   milestone: m7
