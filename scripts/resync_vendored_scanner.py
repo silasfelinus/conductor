@@ -79,8 +79,17 @@ def resync(
 
     vendored_path = vendor_dir / file_name
     current_bytes = vendored_path.read_bytes() if vendored_path.exists() else None
+    current_size = len(current_bytes) if current_bytes is not None else 0
+    source_size = len(original_bytes)
     if current_bytes == original_bytes:
-        return {"ok": True, "changed": False, "file": file_name}
+        return {
+            "ok": True,
+            "changed": False,
+            "file": file_name,
+            "current_bytes": current_size,
+            "source_bytes": source_size,
+            "byte_delta": 0,
+        }
 
     note_date = today or dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d")
     reason_text = f" for {reason}" if reason else ""
@@ -100,6 +109,9 @@ def resync(
         "provenance_path": str(provenance_path),
         "note": note_line.strip(),
         "dry_run": dry_run,
+        "current_bytes": current_size,
+        "source_bytes": source_size,
+        "byte_delta": source_size - current_size,
     }
 
 
@@ -208,10 +220,18 @@ def main() -> None:
         if not result["ok"]:
             print(f"ERROR: {result['error']}")
             sys.exit(2)
-        changed = [item["file"] for item in result["results"] if item.get("changed")]
+        changed = [item for item in result["results"] if item.get("changed")]
         verb = "Would re-sync" if args.dry_run else "Re-synced"
         if changed:
-            print(f"{verb} {', '.join(changed)} from kind_robots@{result['ref']}.")
+            print(f"{verb} {', '.join(item['file'] for item in changed)} from kind_robots@{result['ref']}.")
+            if args.dry_run:
+                for item in changed:
+                    delta = item["byte_delta"]
+                    sign = "+" if delta >= 0 else ""
+                    print(
+                        f"  {item['file']}: {item['current_bytes']} -> {item['source_bytes']} bytes "
+                        f"({sign}{delta} bytes)"
+                    )
         else:
             print(f"Parity report has no drift requiring a re-sync against kind_robots@{result['ref']}.")
         sys.exit(0)
