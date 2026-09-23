@@ -32,7 +32,20 @@ exits 2 (unresolved), not 0.
 
 These are copies, so they can drift. Whenever `scripts/lora-catalog/scan_loras.py`,
 `scan_models.py`, or `import_catalog.py` change in kind_robots (e.g. new catalog
-fields), refresh them here:
+fields), refresh them here with `scripts/resync_vendored_scanner.py` (in this repo) —
+it fetches the current kind_robots original via the same GitHub Contents API
+`check_vendored_scanner_parity.py` uses, writes it over the local vendored copy, and
+appends a dated "Re-synced" note below automatically:
+
+```
+python scripts/resync_vendored_scanner.py --file scan_loras.py --reason "<why>"
+```
+
+Requires `GITHUB_TOKEN`/`GH_TOKEN` (kind_robots is private), same as the parity
+checker. Run `check_vendored_scanner_parity.py` afterward to confirm the drift is
+gone, and commit the updated vendored file plus this note together.
+
+The manual equivalent, if the script can't run (e.g. no token available):
 
 ```
 cp <kind_robots>/scripts/lora-catalog/scan_loras.py      ops/home-server/lora-catalog/
