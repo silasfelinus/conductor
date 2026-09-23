@@ -2013,7 +2013,7 @@ tasks:
 - id: t-066
   milestone: m7
   title: "Fix stale file references in verifyStorybookTableDeepLinkGuard.mjs's header comment"
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -2026,6 +2026,14 @@ tasks:
     affect the guard's assertions), just a stale pointer that will confuse the next person
     reading it. Update the comment to reflect that the legacy-side guards are gone and the
     new-engine side (this file) is now the only coverage for those query keys.
-  updated: '2026-09-23T21:59:37Z'
+
+    Implementation pushed: silasfelinus/kind_robots#3028 (worker/storybook-t-066). Fixed
+    both stale references (file header + t-037 extension note) to
+    verifyStorybookLocationDeepLinkGuard.mjs/verifyStorybookCharacterDeepLinkGuard.mjs, both
+    deleted in the t-037 guard-cleanup pass. Verified via npm run test:storybook-table-deep-
+    link-guard (passes) and prettier --check (clean); eslint not run locally (no
+    node_modules in this sandbox), relying on CI.
+  updated: '2026-09-23T22:02:29Z'
   claimed_by: claude-scheduled-2026-09-23T-sweep-t066
   claimed_at: '2026-09-23T21:59:37Z'
+  implementation_pr: 'silasfelinus/kind_robots#3028'
