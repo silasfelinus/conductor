@@ -143,7 +143,30 @@ tasks:
 
       Pitch merged (conductor PR TBD): Bonsai Seasonal Growth consolidated into PITCHES.yaml
       at priority 30. Re-arming per recurring-task convention.
-    status: claimed
+
+      RAN 2026-09-23 (~16:56 UTC, conductor scheduled Agent run, session
+      claude-scheduled-20260923T165621Z-am-t006-pendulum): PITCHES.yaml's `updated` timestamp
+      was 2026-09-23T00:15:42Z (Pacific day 09-22) and the buildable (status: pitched) queue
+      was at 10 (not above twelve), so neither no-op condition applied. Added
+      `pendulum-wave-garden` (a row of pendulum bobs on incrementally longer threads, each
+      swinging on a closed-form period with no physics integration, drifting from unison
+      through a traveling wave and back to exact unison at a computed instant -- the classic
+      pendulum-wave setup), checked against all 30 existing pitches. Distinct from
+      harmonograph-sand-table (two coupled pendulums tracing one continuously decaying curve
+      into a persistent sand buffer -- a single stylus path, never resynchronizing), celestial
+      mobile (rigid-body constraint-solver balance physics), zoetrope-lantern-drum (discrete
+      pose sampling by rotation angle, no oscillation), and moire-weave-engine (a beat-like
+      pattern from static interfering gratings, never moving bodies) -- no existing pitch or
+      shipped effect drives many independent bodies from closed-form deterministic phase
+      functions that provably resynchronize. Appended directly to PITCHES.yaml as a surgical
+      text insertion (verified via `git diff` that only the new entry and the top-level
+      `updated` timestamp changed, no reformatting of existing entries) rather than via
+      `scripts/consume_animation_pitches.py`, since that script's own purpose was already
+      satisfied by a targeted local append; assigned priority 31. `check_animation_novelty.py
+      --strict` reported no collisions at or above the 0.2 threshold across all 31 pitches.
+      `validate_roadmaps.py` clean. Brings the buildable queue to 11. No kind_robots code
+      touched (pitch-only) -- re-arming to ready per the recurring-task convention.
+    status: ready
     claimed_by: claude-scheduled-20260923T165621Z-am-t006-pendulum
     claimed_at: '2026-09-23T16:56:22Z'
     updated: '2026-09-23T16:56:22Z'

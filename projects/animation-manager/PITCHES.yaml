@@ -1,4 +1,4 @@
-updated: "2026-09-23T00:15:42+00:00"
+updated: "2026-09-23T16:56:00+00:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -1538,3 +1538,59 @@ pitches:
       - the color-and-drop phase sheds individual leaf sprites (capped concurrent count), not the whole canopy disappearing as a block
       - pointer branch-tip nudge and trunk click-advance never desynchronize the autonomous phase clock for tips not directly interacted with
       - reduced-motion mode holds one settled full-canopy phase with no phase progression and no leaf drop
+
+  - id: pendulum-wave-garden
+    title: Pendulum Wave Garden
+    status: pitched
+    priority: 31
+    surprise: >
+      A tidy row of identical-looking pendulum bobs starts swinging in perfect unison, then
+      quietly drifts apart into a slow traveling ripple, a doubled wave, and a tangle that looks
+      like chaos -- before snapping back into exact unison at a single, precisely timed instant,
+      as if the whole row had never lost the beat.
+    passive_loop: >
+      Each bob hangs on a thread whose length is incremented by a small fixed step from its
+      neighbor's, so the row's swing periods form an arithmetic progression -- the classic
+      pendulum-wave setup. Every bob's angle is a closed-form function of elapsed time and its
+      own fixed period (no per-frame physics integration, no accumulated state), so the whole
+      row drifts from unison through a traveling-wave pattern, a visibly doubled wave at the
+      cycle's midpoint, and apparent tangle, then returns to exact unison at a single computed
+      instant with zero drift, forever repeating.
+    optional_interaction: >
+      Pointer proximity to a bob nudges its instantaneous phase a few degrees off its
+      closed-form value and lets it ease back in, without touching any other bob's phase
+      function. A click restarts the shared clock back to the unison instant so the whole cycle
+      replays from the top, rate-limited so rapid clicks cannot restart mid-ease.
+    technique: >
+      A Canvas row of N pendulum bobs. Each bob's swing angle is computed directly as
+      amplitude * cos(2*pi * t / T_i), where T_i is that bob's fixed period derived once from
+      its incrementally longer thread length -- never a simulated or integrated physics state,
+      so there is nothing to accumulate drift and the resynchronization instant is exact every
+      cycle by construction. Bob count and thread-length step are fixed constants.
+    reduced_motion: >
+      Hold at the unison instant (every bob vertical, matching phase) with no autonomous
+      progression; allow only an extremely slow ambient sway. Pointer bob-nudge and
+      click-restart are disabled while reduced motion is active.
+    performance_risk: >
+      Recomputing one cosine per bob per frame is cheap at any reasonable row length, but an
+      uncapped bob count (or rendering each bob as its own DOM element rather than a canvas
+      draw call) could still scale badly. Cap bob count, render on a single canvas, and
+      precompute the fixed period array once rather than re-deriving thread lengths per frame.
+    novelty: >
+      No existing pitch drives many independent bodies from closed-form, deterministic phase
+      functions with no physics integration. Harmonograph Sand Table couples exactly two
+      pendulums into a single continuously traced curve etched into a persistent sand buffer --
+      one stylus, one path, never resynchronizing; this pitch has no trace buffer and no stylus,
+      only a row of independently swinging bobs whose collective silhouette is the whole
+      picture. Celestial Mobile balances rigid hanging arms through a constraint solver, not
+      closed-form independent oscillators. Zoetrope Lantern Drum samples discrete fixed poses by
+      rotation angle rather than continuous oscillation. Moire Weave Engine produces its
+      beat-like pattern from static interfering gratings, never moving bodies. This pitch's
+      mechanic -- an arithmetic-progression row of closed-form pendulum periods that provably
+      resynchronizes to exact unison -- has no prior instance in the queue.
+    acceptance:
+      - the row of bobs starts in visible unison and drifts into a visibly traveling wave pattern with no snap or discontinuity
+      - the row returns to exact unison at its computed period with no visible drift, since every bob's phase is a closed-form function of elapsed time rather than accumulated simulation
+      - a clearly readable doubled/split wave pattern appears at the cycle's midpoint between unison instants
+      - pointer bob-nudge and click-restart never desynchronize the closed-form phase function of any bob not directly interacted with
+      - reduced-motion mode holds one static unison frame with no oscillation
