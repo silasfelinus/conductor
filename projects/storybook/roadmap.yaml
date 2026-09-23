@@ -1963,4 +1963,43 @@ tasks:
   claimed_by: 2026-09-22T19:55:22Z-storybook-t064-agentrun
   claimed_at: '2026-09-22T19:55:22Z'
   updated: '2026-09-22T20:07:08Z'
+
+- id: t-065
+  milestone: m7
+  title: "FOR SILAS: confirm the legacy-export notice window is long enough before t-037's destructive beat-loop cutover lands"
+  status: needs-human
+  soft_gate: true
+  passes: 0
+  stakes: reversible
+  depends_on: t-037
+  note: >-
+    Kaizen from t-037 cycle 29-30 (2026-09-23, silasfelinus/kind_robots#3023 merged --
+    guard-deletion slice only, no production code touched).
+
+    FOR SILAS: t-037 (Delete the client-side beat loop...) has a fully investigated,
+    ready-to-execute plan to delete the legacy Storybook beat-loop code
+    (storybook-page.vue, storybookStore.ts's legacy exports, storybook-visual-setup.vue,
+    storybookLibraryHelper.ts, the legacy library/export UI in storybook-library-page.vue)
+    and the ~29 guard scripts protecting it (23 already deleted in kind_robots#3023 as a
+    safe first slice -- pure CI/test cleanup, zero production impact).
+
+    What it contains: the remaining destructive slice removes a reader's ONLY way to
+    export old localStorage-only beat-loop story sessions (recent-stories library,
+    Duplicate/Export/Restart buttons at ?legacy=1). t-052 added a dismissible warning
+    banner for this on 2026-09-21 20:31 (-07:00). As of this note (2026-09-23), that
+    notice has been live for roughly 2 days. The underlying localStorage bytes are not
+    wiped by the deletion -- only the app's UI/JS path to read them goes away -- but it
+    is a real functional access loss for any reader who hasn't exported yet.
+
+    TO APPROVE: there's no stated policy on how long is "long enough." Reply with either
+    (a) a specific date/duration after which it's fine to proceed, or (b) "proceed now" /
+    "wait N more days" directly. Once you give a number, set t-065's note with your
+    answer and status: done (approved_by_human not required -- this is a timing
+    judgment, not a gate reopen) so a future cycle can execute t-037's already-written
+    plan without re-litigating this question.
+
+    What unblocks when he does: t-037's next cycle executes the READY-TO-EXECUTE PLAN
+    recorded in its own note (cycle 29) -- the actual store/component/page deletion --
+    once the window Silas names has passed.
+  updated: '2026-09-23T16:25:27Z'
   implementation_pr: 'silasfelinus/conductor#5050'
