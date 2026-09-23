@@ -1283,7 +1283,7 @@ tasks:
 - id: t-039
   milestone: m5
   title: Spot-check the six t-038 card renders, then wire and submit the remaining 19 card-lane art requests
-  status: claimed
+  status: done
   owner: worker
   stakes: reversible
   passes: 0
@@ -1304,6 +1304,46 @@ tasks:
     free-draw cards below weight 3, plus the three non-entry arc-step branches per arc).
     (3) Submit their ArtRequests via consume_art_requests.py --live --submit-only
     --id-prefix ruler-hooked-card-.
+
+    (1) Verified: fetched https://kindrobots.org/images/ruler-hooked/card-bard-ballad.webp
+    directly -- real WEBP body (RIFF/WEBP header), 200, matching the ArtImage record's
+    imagePath (/images/ruler-hooked/card-bard-ballad.webp) exactly. The t-038 path-contract
+    fix holds at scale; a deliberately-fake path correctly 404s with the standard "Image not
+    found" JSON error, confirming the contrast.
+
+    (2) Found the roadmap note's "19" was already stale by the time this cycle ran: checked
+    kind_robots utils/rulerHooked/content.ts directly and only 18 cards were missing `art:`
+    (warlock-druid-north already had it wired from an earlier pass, just never submitted).
+    Added art: 'card-<id>' to all 18 (harvest-festival, rival-angler, warlock-return,
+    druid-sanctuary, tax-season, guard-captain-wall, smuggler-dock, rival-angler-2,
+    robin-ash-garden, nix-riddle, sunken-cache, golden-hour-catch, elope-blessing,
+    elope-defiance, envoy-generous, envoy-tough, bog-accept, bog-refuse). Verified via a
+    line-indexed insertion script (first attempt had an index bug that silently dropped
+    sibling `deck:`/`kind:` lines -- caught by reviewing the diff before committing, reverted,
+    and rewrote it with a correct line pointer before re-running). Confirmed the resulting
+    diff was 18 pure additions, nothing else touched. eslint/vue-tsc/prettier all clean.
+    Opened and pushed silasfelinus/kind_robots#3022.
+
+    (3) Checked art-prompts.yaml directly rather than trusting the note: 24 of the 25
+    card-lane requests (including warlock-druid-north) were already status: done -- later
+    cycles beyond this note's last update had already generated and delivered them, so
+    "submit the remaining 19" was mostly moot. Only nix-riddle (status: pending) actually
+    needed submission. Its first --live attempt failed the prompt contract's
+    [people-negation] guard on the card's own "not quite a fish, not quite a person" body
+    text (the negated noun lands in positive conditioning on an engine with no working
+    negative-prompt channel). Corrected the prompt to a positive-only phrasing ("taking a
+    form all its own" in place of the negation) and resubmitted successfully -- ArtJob 31556,
+    ArtImage 240046, confirmed reachable at
+    https://kindrobots.org/images/ruler-hooked/card-nix-riddle.webp (200, image/webp,
+    94344 bytes). All 25 card-lane entries are now status: done in art-prompts.yaml, and all
+    25 have art: wired in content.ts once kind_robots#3022 merges. distribute_images.py
+    correctly classifies these as RETAIN (relay/media-path delivery, not git) -- matching
+    every other ruler-hooked render in this sandbox; no git-committed binary asset was
+    expected or needed.
+
+    Scope fully closed. No follow-on task filed -- t-039's own three DO items are complete
+    and nothing new surfaced.
   claimed_by: claude-scheduled-2026-09-23T140000Z-rh-t039
   claimed_at: '2026-09-23T14:00:14Z'
-  updated: '2026-09-23T14:00:14Z'
+  implementation_pr: 'silasfelinus/kind_robots#3022'
+  updated: '2026-09-23T14:25:00Z'
