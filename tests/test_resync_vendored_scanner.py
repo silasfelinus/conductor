@@ -59,7 +59,14 @@ def test_resync_no_change_when_already_matching(tmp_path):
         fetcher=make_fetcher({"scan_loras.py": "print('same')\n"}),
     )
 
-    assert result == {"ok": True, "changed": False, "file": "scan_loras.py"}
+    assert result == {
+        "ok": True,
+        "changed": False,
+        "file": "scan_loras.py",
+        "current_bytes": 14,
+        "source_bytes": 14,
+        "byte_delta": 0,
+    }
     assert provenance_path.read_text(encoding="utf-8") == "# header\n"
 
 
