@@ -384,5 +384,39 @@ tasks:
     Full history: projects/kindrobots-unraid/HISTORY.md#t-021
   updated: '2026-09-14T10:29:54Z'
 
+- id: t-022
+  milestone: m4
+  title: 'Alexandria netdata: new critical out_of_disk_space_time alert + btrfs allocation warning'
+  status: needs-human
+  soft_gate: true
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    FOR SILAS: `check_container_log_drift.py` (this session, reading
+    `ops/home-server/CONTAINER-LOG-DIGEST.json`) surfaced two NEW netdata health
+    signatures on Alexandria, both first seen 2026-09-23 around 02:11-02:12
+    Pacific: a `level=critical` alert on `instance=disk_space./` with
+    `alert=out_of_disk_space_time` (netdata's predictive "will run out of disk
+    space soon" alarm on the root filesystem), and a `level=warning` alert on
+    `instance=btrfs.<redacted>` with `alert=btrfs_allocated` (a btrfs allocated-space
+    utilization warning). Neither has a prior baseline in the digest, so this is a
+    first occurrence, not a recurring known-noisy signature.
+
+    This session has no host shell/SSH access to Alexandria to check actual disk
+    usage (`df`/`btrfs filesystem usage`) or identify what's consuming space, so
+    it cannot triage further or say whether this is urgent. Given hard rule 14
+    (secrets/config live under `.secrets/`, not `/mnt/user/pc`) and general
+    disk-hygiene practice, likely candidates worth checking first: ArtJob output
+    accumulation, container log growth, or a stalled cleanup job -- but this is a
+    guess, not a diagnosis.
+
+    TO APPROVE: check actual free space on Alexandria's root/btrfs volume(s) directly
+    (e.g. `df -h`, `btrfs filesystem usage /`). If genuinely low, free space or
+    expand storage; if it's a false-positive from a transient spike, no roadmap
+    action needed -- just note it here so the check doesn't re-flag identically.
+    Nothing unblocks downstream; this is a standalone observability finding.
+  updated: '2026-09-23T18:10:00Z'
+
 goal: Run Kind Robots reliably on the Unraid/home infrastructure, with deployment, storage, networking, GPU services,
   and recovery procedures kept reproducible.
