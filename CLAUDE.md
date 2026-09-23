@@ -112,6 +112,14 @@ At the start of every session, before responding to any task, run a conductor sw
      (with a diff snippet and the `PROVENANCE.md` re-sync command); the fix is always re-copying
      the file, never hand-editing the vendored side to match. Needs `GITHUB_TOKEN`/`GH_TOKEN`
      (kind_robots is private); exits 2 (unresolved, not clean) without it.
+   - `python scripts/check_daily_commitment_staleness.py` — `select_role.py`'s `daily-creative`
+     role surfaces a `daily_commitment: true` task the moment its `daily_last_checked` predates
+     today's Pacific date, but nothing distinguished "checked today, honest no-op" from "a
+     session claimed it and stalled" or "nobody ran the role in days" (conductor/t-194, kaizen
+     from animation-manager/t-020, 2026-09-23). Flags STALE CHECK (`daily_last_checked` missing
+     or 2+ days stale) and STALLED CLAIM (`status: claimed` past the normal 90-minute claim TTL).
+     Advisory only; exit 1 when at least one daily_commitment task is flagged. No network/token
+     needed.
    Treat exit 1 (or 3) from any of these as a reconciliation prompt, not permission to bypass a genuine gate. The
    four roadmap-reading commands intentionally exclude paused, retired, and finished projects unless
    `--include-inactive` is supplied; `check_live_facet_coverage.py` reads live records rather than roadmaps and
