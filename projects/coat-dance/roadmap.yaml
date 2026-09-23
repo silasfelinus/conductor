@@ -249,8 +249,8 @@ tasks:
 - id: t-010
   milestone: m1
   title: "Polish and upgrade Coat Dance front-end surface"
-  status: claimed
-  owner: worker
+  status: ready
+  owner: null
   passes: 0
   stakes: reversible
   note: >-
@@ -280,7 +280,20 @@ tasks:
     unanswered, and the sandbox still has no ffmpeg/librosa/mediapipe ('which ffmpeg' fails,
     both Python imports fail). No agent-actionable scope exists on this task until Silas
     answers BRIEF.md and t-003 clears. Re-armed to ready.
-  updated: '2026-09-23T07:58:47Z'
+
+    Re-checked before doing any work (per convention), scheduled Conductor Agent sweep
+    2026-09-23T08:00Z. Corrected a stale claim this task's note had been carrying since
+    2026-09-04: t-003 (source-video beat map) is NOT still needs-human -- it reached status:
+    done on 2026-09-20 with a real, timestamped beat map (38 sections, full 0:00-5:32
+    runtime, Silas-approved) at projects/coat-dance/source/beatmap.md. However, that table's
+    Candidate AI Treatment column is explicitly a first-pass idea per section, pending
+    t-004's real section-by-section creative treatment -- t-004 is still status: needs-human
+    (gate_human: true, depends_on t-003, unapproved), so step (4) (evolve the interactive
+    slot with real per-section AI treatment behavior) remains blocked, just on a different,
+    now-correct task than the note previously named. Steps (1)-(3) remain confirmed done. No
+    agent-actionable scope exists on this task until Silas approves t-004's creative
+    treatment. Re-armed to ready; will stay a genuine no-op until t-004 clears.
+  updated: '2026-09-23T07:58:54Z'
   claimed_by: 2026-09-23T080000Z-coatdance-t010-recheck
   claimed_at: '2026-09-23T07:58:47Z'
 goal: Develop Coat Dance into its intended polished creative work, with the roadmap’s authored concept, assets, and 
