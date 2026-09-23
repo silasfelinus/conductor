@@ -444,6 +444,10 @@ def test_github_api_unreachable_surfaced_when_real_requests_fail():
     ), mock.patch.object(
         select_role.run_worker, "build_queue_summary", return_value=EMPTY_QUEUE
     ), mock.patch.object(
+        select_role.run_worker, "load_roadmaps", return_value=[]
+    ), mock.patch.object(
+        select_role, "find_due_daily_commitments", return_value=[]
+    ), mock.patch.object(
         select_role, "find_stale_recurring_tasks", return_value=[]
     ), mock.patch(
         "urllib.request.urlopen",
