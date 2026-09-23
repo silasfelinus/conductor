@@ -1283,8 +1283,8 @@ tasks:
 - id: t-039
   milestone: m5
   title: Spot-check the six t-038 card renders, then wire and submit the remaining 19 card-lane art requests
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   stakes: reversible
   passes: 0
   note: >-
@@ -1304,3 +1304,6 @@ tasks:
     free-draw cards below weight 3, plus the three non-entry arc-step branches per arc).
     (3) Submit their ArtRequests via consume_art_requests.py --live --submit-only
     --id-prefix ruler-hooked-card-.
+  claimed_by: claude-scheduled-2026-09-23T140000Z-rh-t039
+  claimed_at: '2026-09-23T14:00:14Z'
+  updated: '2026-09-23T14:00:14Z'
