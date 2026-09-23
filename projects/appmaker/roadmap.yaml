@@ -362,7 +362,7 @@ tasks:
 - id: t-015
   milestone: m4
   title: Build the squash-graduation executor (conductor script + kind_robots endpoint) that consumes graduate-request Todos
-  status: claimed
+  status: review
   passes: 0
   stakes: irreversible
   gate_human: true
@@ -395,9 +395,22 @@ tasks:
     the first blob/tree/commit let you create the initial ref directly, or does
     the repo need an initial commit via the regular Contents API first) before
     implementing.
-  updated: '2026-09-23T04:04:35Z'
+
+    Built the squash-graduation executor:
+    readConductorAppTree()/squashPushAppToRepo()/openConductorAppRemovalPr() in
+    appmakerGithub.ts, wired into admin-only Todo-gated POST /api/appmaker/graduate-execute.
+    Verified: new guard self-test + contract, all existing appmaker guard scripts, eslint,
+    prettier, and a full vue-tsc --noEmit all pass clean. Not invoked against any real
+    installation -- both writes are real, irreversible external-repo mutations (hard rule 2:
+    drafts not live actions at this stakes level), and there is no open graduation Todo to
+    test against in this sandbox anyway. PR: silasfelinus/kind_robots#3002 (open, CI
+    running). Will merge the code (reversible -- it only adds an admin-gated endpoint, does
+    not touch any live repo by itself) once green, then close this task at needs-human for
+    Silas to review the mechanism and approve/trigger the first real graduation.
+  updated: '2026-09-23T04:05:18Z'
   owner: worker
   claimed_by: 2026-09-23T040434-t015-build
   claimed_at: '2026-09-23T04:04:35Z'
+  implementation_pr: 'silasfelinus/kind_robots#3002'
 goal: Let a user turn an app idea into a working, maintainable project through AppMaker, from scaffold through a usable
   handoff.
