@@ -471,8 +471,8 @@ tasks:
 - id: t-017
   milestone: m2
   title: Print a dry-run byte-delta summary before a multi-file parity-report resync
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   stakes: reversible
   note: |-
     Kaizen from t-016 (Worker, 2026-09-23). resync_vendored_scanner.py --from-parity-report
@@ -481,3 +481,6 @@ tasks:
     byte-delta (or line-delta) summary per file to --dry-run output for the parity-report
     path, so a human or agent reviewing a multi-file resync before applying it can tell a
     one-line provenance-comment change from a substantial content rewrite at a glance.
+  claimed_by: openai-scheduled-2026-09-23T021625Z-lora-ingestion-t017-a11
+  claimed_at: '2026-09-23T02:16:25Z'
+  updated: '2026-09-23T02:16:25Z'
