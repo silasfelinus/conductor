@@ -56,6 +56,7 @@ def _patched(
     stranded_branches=(),
     audit_status=None,
     queue_summary=None,
+    daily_commitments=(),
     stale_recurring_tasks=(),
 ):
     """One combined patch context covering all eight signals, each defaulted
@@ -79,6 +80,9 @@ def _patched(
             select_role.run_worker, "build_queue_summary", return_value=queue_summary or EMPTY_QUEUE
         ),
         mock.patch.object(select_role.run_worker, "load_roadmaps", return_value=[]),
+        mock.patch.object(
+            select_role, "find_due_daily_commitments", return_value=list(daily_commitments)
+        ),
         mock.patch.object(
             select_role, "find_stale_recurring_tasks", return_value=list(stale_recurring_tasks)
         ),
@@ -199,6 +203,60 @@ def test_branch_medic_outranks_audit_and_worker():
     assert "silasfelinus/kind_robots" in result["reason"]
 
 
+def test_daily_creative_outranks_site_audit_and_worker():
+    with _apply(_patched(
+        daily_commitments=[{
+            "project": "animation-manager",
+            "task_id": "t-007",
+            "title": "Build a new screensaver",
+            "last_checked": "2026-09-22",
+            "last_completed": "2026-09-21",
+        }],
+        audit_status=AUDIT_OVERDUE,
+        queue_summary=SOME_READY_TASK,
+    )):
+        result = select_role.select_role(github_token="fake-token")
+
+    assert result["role"] == "daily-creative"
+    assert "animation-manager/t-007" in result["reason"]
+    assert result["due_daily_commitment_count"] == 1
+    assert result["site_audit_overdue"] is True
+    assert result["ready_task"]["task_id"] == "t-002"
+
+
+def test_branch_medic_outranks_daily_creative():
+    with _apply(_patched(
+        stranded_branches=[{"repo": "silasfelinus/kind_robots", "branch": "worker/orphan"}],
+        daily_commitments=[{
+            "project": "animation-manager",
+            "task_id": "t-007",
+            "title": "Build a new screensaver",
+            "last_checked": "2026-09-22",
+            "last_completed": "2026-09-21",
+        }],
+    )):
+        result = select_role.select_role(github_token="fake-token")
+
+    assert result["role"] == "branch-medic"
+    assert result["due_daily_commitment_count"] == 1
+
+
+def test_daily_creative_downgrades_when_github_signals_are_unverified():
+    with _apply(_patched(
+        daily_commitments=[{
+            "project": "animation-manager",
+            "task_id": "t-007",
+            "title": "Build a new screensaver",
+            "last_checked": "2026-09-22",
+            "last_completed": "2026-09-21",
+        }],
+    )):
+        result = select_role.select_role(github_token="")
+
+    assert result["role"] == "reviewer-uncertain"
+    assert result["underlying_role"] == "daily-creative"
+
+
 def test_site_auditor_outranks_worker_when_overdue():
     with _apply(_patched(audit_status=AUDIT_OVERDUE, queue_summary=SOME_READY_TASK)):
         result = select_role.select_role()
@@ -305,6 +363,10 @@ def test_remote_refresh_failure_does_not_crash_selection():
         select_role, "site_audit_status", return_value=AUDIT_NOT_OVERDUE
     ), mock.patch.object(
         select_role.run_worker, "build_queue_summary", return_value=EMPTY_QUEUE
+    ), mock.patch.object(
+        select_role.run_worker, "load_roadmaps", return_value=[]
+    ), mock.patch.object(
+        select_role, "find_due_daily_commitments", return_value=[]
     ), mock.patch.object(
         select_role, "find_stale_recurring_tasks", return_value=[]
     ):
@@ -1025,6 +1087,77 @@ def test_find_stranded_branches_routes_local_repo_to_local_and_others_to_remote(
     assert remote_fn.call_args.args[0] == "silasfelinus/kind_robots"
     repos_seen = {b["repo"] for b in stranded}
     assert repos_seen == {"silasfelinus/conductor", "silasfelinus/kind_robots"}
+
+
+# --- daily creative commitments: animation-manager/t-020 -----------------
+
+
+def test_find_due_daily_commitments_flags_unchecked_pacific_day():
+    roadmaps = [
+        _recurring_roadmap("animation-manager", [{
+            "id": "t-007",
+            "title": "Build a new screensaver",
+            "recurring": True,
+            "daily_commitment": True,
+            "status": "ready",
+            "daily_last_checked": "2026-09-22",
+            "daily_last_completed": "2026-09-21",
+        }])
+    ]
+
+    due = select_role.find_due_daily_commitments(
+        roadmaps, today=date(2026, 9, 23)
+    )
+
+    assert due == [{
+        "project": "animation-manager",
+        "task_id": "t-007",
+        "title": "Build a new screensaver",
+        "last_checked": "2026-09-22",
+        "last_completed": "2026-09-21",
+    }]
+
+
+def test_find_due_daily_commitments_ignores_task_checked_today():
+    roadmaps = [
+        _recurring_roadmap("animation-manager", [{
+            "id": "t-007",
+            "recurring": True,
+            "daily_commitment": True,
+            "status": "ready",
+            "daily_last_checked": "2026-09-23",
+            "daily_last_completed": "2026-09-21",
+        }])
+    ]
+
+    assert select_role.find_due_daily_commitments(
+        roadmaps, today=date(2026, 9, 23)
+    ) == []
+
+
+def test_find_due_daily_commitments_ignores_blocked_or_nonrecurring_tasks():
+    roadmaps = [
+        _recurring_roadmap("animation-manager", [
+            {
+                "id": "t-007",
+                "recurring": True,
+                "daily_commitment": True,
+                "status": "claimed",
+                "daily_last_checked": "2026-09-22",
+            },
+            {
+                "id": "t-008",
+                "recurring": False,
+                "daily_commitment": True,
+                "status": "ready",
+                "daily_last_checked": "2026-09-22",
+            },
+        ])
+    ]
+
+    assert select_role.find_due_daily_commitments(
+        roadmaps, today=date(2026, 9, 23)
+    ) == []
 
 
 # --- stale-recurring: last_recurring_activity / find_stale_recurring_tasks -
