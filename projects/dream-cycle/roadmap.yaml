@@ -755,3 +755,21 @@ tasks:
   claimed_by: claude-scheduled-20260922T010711Z-dream-cycle-t032
   claimed_at: '2026-09-22T01:07:12Z'
   implementation_pr: 'silasfelinus/conductor#4978'
+- id: t-033
+  milestone: m2
+  title: Add roadmap tracking for the server/api/dream-relations/ surface (DreamRelation CRUD)
+  status: ready
+  owner: null
+  stakes: reversible
+  note: >-
+    Found by the 2026-09-23 weekly site audit's directory-level orphan pass:
+    server/api/dream-relations/ (index.get.ts list, index.post.ts create, [id].delete.ts
+    revoke) implements the DreamRelation Prisma model (prisma/schema.prisma) -- edges
+    between two Dreams with a relationType -- and is wired into real UI
+    (components/dreams/dream-relationship-gallery.vue,
+    components/dreams/dream-narration.vue, components/navigation/workspace-narrator.vue,
+    stores/dailyDreamArchiveStore.ts), but is named nowhere in this roadmap. Read all
+    three handlers -- the surface looks complete and correctly guarded (requireApiUser);
+    this is a documentation gap, not a code defect. Add a task/note describing the
+    DreamRelation feature (what it does, where it's used) so future sessions working on
+    Dream narration/gallery surfaces have roadmap context for it.
