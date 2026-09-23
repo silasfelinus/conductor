@@ -410,7 +410,7 @@ tasks:
   - id: t-021
     milestone: m5
     title: "Add a connector-safe append/registration helper for stores/animationCatalog.ts"
-    status: ready
+    status: claimed
     owner: worker
     passes: 2
     stakes: reversible
@@ -430,7 +430,7 @@ tasks:
       regression on the same two new files (pass 1's ESLint fix itself is correct and
       holds unchanged). Not a scope/architecture problem, just needs `prettier --write`.
       See retry_context and PR #3021 review comment.
-    claimed_by: openai-scheduled-2026-09-23T131750Z-animation-manager-t021-a11
-    claimed_at: '2026-09-23T13:17:50Z'
-    updated: '2026-09-23T13:54:15Z'
+    claimed_by: openai-scheduled-2026-09-23T141739Z-animation-manager-t021-a11
+    claimed_at: '2026-09-23T14:17:39Z'
+    updated: '2026-09-23T14:17:39Z'
     retry_context: 'pass 2 failed (quality): kind_robots PR #3021 fails the "Contract verifiers" job''s Prettier ratchet gate -- the same two new files from pass 1''s lint fix are not Prettier-formatted (utils: 323 -> 324 unformatted files: utils/scripts/registerAnimationEffect.mjs, utils/scripts/registerAnimationEffect.test.mjs). Pass 1''s ESLint fix itself is correct and holds unchanged. Do differently: run `npx prettier --write utils/scripts/registerAnimationEffect.mjs utils/scripts/registerAnimationEffect.test.mjs`, then `npm run test:lint-ratchet && npm run test:prettier-ratchet` locally before repushing. See PR review comment: https://github.com/silasfelinus/kind_robots/pull/3021#issuecomment-5796118569'
