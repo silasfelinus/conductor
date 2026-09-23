@@ -155,8 +155,8 @@ tasks:
     stakes: reversible
     recurring: true
     daily_commitment: true
-    daily_last_checked: '2026-09-21'
-    daily_last_completed: '2026-09-21'
+    daily_last_checked: '2026-09-23'
+    daily_last_completed: '2026-09-23'
     depends_on:
       - t-003
       - t-004
@@ -407,3 +407,22 @@ tasks:
       test_select_role.py) reads correctly and is not being re-litigated -- this is scoped to
       the one missing mock.
     retry_context: 'pass 1 failed (quality): the new find_due_daily_commitments()/daily-creative role change (scripts/select_role.py) breaks tests/test_select_role.py::test_github_api_unreachable_surfaced_when_real_requests_fail deterministically -- that test does not mock run_worker.load_roadmaps or select_role.find_due_daily_commitments, so it reads the real live projects/animation-manager/roadmap.yaml this same PR edits; with t-007''s daily_last_checked (2026-09-21) now before today, find_due_daily_commitments() returns a real hit and the role comes back ''daily-creative'' instead of the asserted ''idle''. Confirmed via full local run: 1 failed, 2314 passed, 30 skipped. Do differently: mock select_role.run_worker.load_roadmaps and select_role.find_due_daily_commitments in that test the same way test_remote_refresh_failure_does_not_crash_selection (same file, ~line 367) already does, so the assertion is not coupled to live roadmap state that changes day to day; then re-run the full suite (PYTHONPATH=scripts:. pytest -q from repo root, after uv tool install pytest --with pyyaml --force) and confirm 0 failed before repushing.'
+  - id: t-021
+    milestone: m5
+    title: "Add a connector-safe append/registration helper for stores/animationCatalog.ts"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from t-007's frost-window-etching cycle (kind_robots PR #3020, 2026-09-23).
+      A connector-only Worker session can safely add a new components/screenfx/*.vue file
+      but has no targeted patch operation for the large stores/animationCatalog.ts file, so
+      it correctly declined to touch it rather than risk the project's prior catalog/file-
+      truncation incident -- leaving the new effect unregistered (and therefore untryable,
+      failing test:animation-catalog) until a follow-up session appended the entry by hand.
+      Build a small, connector-safe helper (CLI script or documented append recipe,
+      analogous to the existing pitch-consumer helper for PITCHES.yaml) that appends one
+      well-formed ANIMATION_EFFECTS entry to the end of the array without reading/rewriting
+      the whole file, so a daily Screen FX build can register its own catalog entry instead
+      of stranding it for the next session.
