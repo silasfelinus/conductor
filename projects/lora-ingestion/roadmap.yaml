@@ -447,7 +447,7 @@ tasks:
 - id: t-016
   milestone: m2
   title: Feed check_vendored_scanner_parity.py's drift findings directly into resync_vendored_scanner.py
-  status: review
+  status: done
   owner: worker
   stakes: reversible
   note: |-
@@ -459,6 +459,25 @@ tasks:
     or agent having to read the parity report and hand-type one --file invocation per finding.
 
     Added a parity-report mode to resync_vendored_scanner.py that consumes the checker's JSON findings, refuses unresolved/untracked entries, preserves the report ref, deduplicates filenames, and re-syncs all drifted scanners in one command; added focused tests.
+
+    Reviewer (2026-09-23): merged #5074. CI was all-green except a PR-handoff template check
+    (Worker's body was missing required AGENTS.md headings); fixed by editing the PR body in
+    place to the full handoff template, no code changes needed. Squash-merged to main at
+    22f725b.
   claimed_by: openai-scheduled-2026-09-23T011518Z-lora-ingestion-t016-a11
   claimed_at: '2026-09-23T01:15:18Z'
-  updated: '2026-09-23T01:21:00Z'
+  updated: '2026-09-23T01:54:00Z'
+  implementation_pr: 'silasfelinus/conductor#5074'
+- id: t-017
+  milestone: m2
+  title: Print a dry-run byte-delta summary before a multi-file parity-report resync
+  status: ready
+  owner: null
+  stakes: reversible
+  note: |-
+    Kaizen from t-016 (Worker, 2026-09-23). resync_vendored_scanner.py --from-parity-report
+    now re-syncs every drifted vendored file in one command, but --dry-run only prints which
+    files it *would* re-sync, not how much each one would actually change. Add a small
+    byte-delta (or line-delta) summary per file to --dry-run output for the parity-report
+    path, so a human or agent reviewing a multi-file resync before applying it can tell a
+    one-line provenance-comment change from a substantial content rewrite at a glance.
