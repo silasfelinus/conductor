@@ -153,3 +153,17 @@ def test_animation_release_status_reports_stale_daily_cadence(tmp_path):
     assert status["state"] == "stale"
     assert status["id"] == "latest"
     assert status["age_hours"] > 24
+
+
+def test_animation_manager_build_ledger_has_release_provenance():
+    pitches = build_digest.yaml.safe_load(
+        open(build_digest.ANIMATION_PITCHES_PATH, encoding="utf-8")
+    )["pitches"]
+
+    missing = []
+    for pitch in pitches:
+        for build in pitch.get("builds") or []:
+            if not build.get("released_at"):
+                missing.append(f"{pitch['id']} v{build.get('version', '?')}")
+
+    assert missing == []
