@@ -1357,7 +1357,7 @@ tasks:
   - id: t-042
     milestone: m5
     title: "Fix archive previews and owner-controlled private/mature visibility in the main Gallery"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -1373,6 +1373,13 @@ tasks:
       Prettier ratchet flagged. Local verification: vue-tsc clean, eslint ratchet unchanged
       (330, same as CI), prettier ratchet holds (no directory worse), full test:contracts-db-
       free green (394/394). Awaiting fresh CI on the pushed commit.
-    updated: '2026-09-23T07:10:25Z'
+
+      kind_robots#3007 merged (squash d8bd56e). Fixed CI on the pushed retry:
+      verifyContentVisibilityCoverage.ts now recognizes verifyGalleryArchiveMedia() as a per-
+      object capability check (both privacy and maturity), with a regression test
+      (verifyContentVisibilityCoverage.test.ts) pinning that an unrecognized/absent check
+      still fails; also formatted the 3 Prettier-ratchet-flagged files. All 53 kind_robots
+      checks green (including Contract verifiers), squash-merged.
+    updated: '2026-09-23T07:17:01Z'
     implementation_pr: 'silasfelinus/kind_robots#3007'
 
