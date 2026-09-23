@@ -869,7 +869,7 @@ tasks:
 - id: t-037
   milestone: m7
   title: "Delete the client-side beat loop and rewrite its ~25 verifyStorybook*Guard scripts"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-036, t-052]
@@ -994,8 +994,20 @@ tasks:
     Both companion PRs merged clean: silasfelinus/kind_robots#2991 (7f8935d) and
     silasfelinus/conductor#5055 (03f705a). Re-arming to ready (recurring multi-slice task);
     releasing the claim.
-  updated: '2026-09-23T07:58:00Z'
-  owner: worker
+
+    Cycle 27 (session 20260923T075757Z-storybook-t037-narrart-persist): closed out cycle 25's last remaining-unexamined item, verifyNarrativeArtPersistence.mjs (flagged then as "large -- spans 6+ shared narrative-art files beyond storybookStore.ts itself, likely its own multi-cycle slice"). Investigation only this cycle; no kind_robots code touched.
+
+    What the guard actually pins, traced line by line: it asserts across 10 files -- utils/narrativeArtProfiles.ts, utils/narrativeArtJobs.ts, stores/helpers/narrativeArtJobsHelper.ts, stores/artStore.ts, server/api/art/enqueue.post.ts, server/api/art/queue/narrative.get.ts, utils/narrativeTurns.ts, components/narrative/narrative-art-status.vue, plus TWO beat-loop-specific checks: a `for (const storePath of [storyStorePath])` includesAll loop against stores/storybookStore.ts, and a components/conductor/storybook-page.vue includesAll block. The taskmasterStore.ts leg of that loop was already dropped in storybook/t-047 (2026-09-14) per the guard's own comment.
+
+    Confirmed the first 8 files are NOT beat-loop scope -- they are the shared narrative-art job pipeline (centralized four-step Krea profile, enqueue idempotency/dedupe key, authenticated recovery-before-resubmit, poll-attempt cap with resume messaging) that components/storybook/storybook-life-run.vue -- the still-live "life" shape component, t-053's scope, currently status: waiting -- depends on directly: it imports createPersistedNarrativeArtJobsController() from stores/helpers/persistedNarrativeArtJobsHelper.ts (which wraps narrativeArtJobsHelper.ts) at its own component level (line 802) and calls POST /api/storybook/life/runs/[id]/art (attachLifeRunArt, server/utils/davinci.ts) directly -- it does NOT go through storybookStore.ts's art functions at all. So 8 of this guard's 10 pinned files protect code that survives t-037 and t-053 both; touching them here would be out of scope, not a legacy rewrite.
+
+    The beat-loop-specific remainder -- the storyStorePath loop (asserting storybookStore.ts keeps `art?: NarrativeArtJobState`, createPersistedNarrativeArtJobsController(), updateBeatArt, requestBeatArt, resumeNarrativeArtJobs, resumeEntries, retryBeatArt, the finale/opening ternaries), the adjacent `!storyStore.includes('await requestBeatArt(')` non-blocking-narration assertion, the persist()-writer try/catch-swallow check on storyStore, and the storybook-page.vue NarrativeArtStatus-slot checks -- genuinely has no new-engine code to attach a rewritten assertion to. Verified two ways: (1) grepped storybookRunStore.ts/storybook-reading.vue/storybook-storymaker.vue/storybook-table.vue repo-wide for NarrativeArtStatus, narrativeArtJobsHelper, retryBeatArt, requestBeatArt, updateBeatArt, resumeNarrativeArtJobs, enqueueArtGeneration, art.status -- zero matches in any new-engine file; (2) cross-checked against storybook/t-058 (filed 2026-09-21, still status: needs-human, unresolved), whose own independent trace concluded the same thing from the server side: server/utils/storybookRuns.ts's narrateInto() only stores pendingTurn.artPrompt as a string and never enqueues/attaches art, submitStoryTurn's response never includes an art field, and storybookRunStore.ts's `art` ref is only ever set from the server's initial load response or cleared to [] -- never grown as turns are played. t-058 is exactly the product decision (does new-engine in-scene art exist at all, yes/no) that would have to land before this guard's beat-loop remainder could be rewritten against anything real; forcing a rewrite now would mean fabricating an invariant for a feature t-058 says may not exist.
+
+    Disposition: verifyNarrativeArtPersistence.mjs is a SPLIT case, same shape as verifyStorybookObjectEntryLinks.mjs (cycle 26) -- most of the file (8 of 10 pinned paths) is live shared infrastructure t-037 must not touch; only the storyStorePath loop + the 3 adjacent storyStore/storybook-page.vue checks are LEGACY-ONLY and join the existing bucket (verifyStorybookLibraryPhantomSessionGuard and the ~14 others already confirmed across cycles 24/26) to be deleted -- not rewritten -- alongside storybookStore.ts's beat-loop remnants and storybook-page.vue in the eventual bulk cutover PR. Whoever does that cutover should trim only those specific lines out of verifyNarrativeArtPersistence.mjs, not delete the file: the profiles/jobs/controller/artStore/enqueue/recovery/turns/status-component assertions must keep running against storybook-life-run.vue's still-live pipeline.
+
+    This closes out cycle 25's remaining-unexamined list in full -- cycle 26 already resolved the other ten names on that list (one already migrated, two never in scope, seven confirmed legacy-only); this cycle resolves the eleventh and last, verifyNarrativeArtPersistence. No further per-guard investigation is independently pickable right now: what remains under t-037 is the bulk legacy cutover itself, still blocked on t-053 (status: waiting, life-run.vue retirement not cleared), and the split-file trims (this guard, verifyStorybookObjectEntryLinks.mjs) that ride along with that same cutover. No Kind Robots mutation this cycle -- investigation only, no pass consumed. Re-arming to ready; releasing the claim.
+  updated: '2026-09-23T07:58:31Z'
+  owner: null
   claimed_by: 20260923T075757Z-storybook-t037-narrart-persist
   claimed_at: '2026-09-23T07:58:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2991'
