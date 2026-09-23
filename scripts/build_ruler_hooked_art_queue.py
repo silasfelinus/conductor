@@ -1106,7 +1106,12 @@ def card_entries(content_ts: Path) -> list[dict]:
         entries.append(
             make_entry(
                 request_id=f"ruler-hooked-card-{card['id']}",
-                image_path=f"public/images/ruler-hooked/cards/{card['id']}.webp",
+                # cardArtPath() (utils/rulerHooked/cardArt.ts) resolves `card.art`
+                # (the `card-<id>` key decks.md authors) to
+                # /images/ruler-hooked/<key>.webp -- no `cards/` subdirectory, and
+                # the `card-` prefix is part of the filename, not a folder. Must
+                # match that contract exactly or a rendered image never resolves.
+                image_path=f"public/images/ruler-hooked/card-{card['id']}.webp",
                 label=f"Ruler Hooked card: {title}",
                 size=WIDE,
                 prompt=f"{prompt_body}. {STYLE_TAIL}. {NO_TEXT}",
