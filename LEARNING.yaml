@@ -16267,3 +16267,13 @@ records:
   outcome: done
   failure_category: null
   lesson: "resync_vendored_scanner.py's --from-parity-report mode closes the last manual step in the parity-check-then-fix loop; the PR itself was correct and every code check passed on the first push. The one thing that blocked merge was the PR body using a non-AGENTS.md section layout, caught by check_pr_handoff_template.py -- editing the PR body in place (no re-implementation needed) was the right-sized fix, not a full retry cycle."
+- date: '2026-09-23'
+  project: lora-ingestion
+  task: t-017
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: When a helper return shape grows, update both new-path coverage and pre-existing exact-dict
+    assertions for unchanged/no-op paths in the same patch.

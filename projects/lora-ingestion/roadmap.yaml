@@ -471,8 +471,7 @@ tasks:
 - id: t-017
   milestone: m2
   title: Print a dry-run byte-delta summary before a multi-file parity-report resync
-  status: review
-  owner: worker
+  status: done
   stakes: reversible
   note: |-
     Kaizen from t-016 (Worker, 2026-09-23). resync_vendored_scanner.py --from-parity-report
@@ -488,8 +487,10 @@ tasks:
     See silasfelinus/conductor#5077 review comment and retry_context.
 
     Retry addresses pass-1 feedback by updating the pre-existing no-change-path regression to assert current_bytes, source_bytes, and byte_delta: 0. Existing PR #5077 updated on the same worker branch; full GitHub Actions verification pending.
+
+    Retry fixed the stale no-change-path assertion identified in pass 1. PR #5077 exact head 424ceedfd73c8b7764d19087b7d965c7186559dc passed Worker PR CI 35814013642, Security Audit 35814013588, Worker PR handoff 35814028404, and Process task events 35814013581, then squash-merged as 63c1e597d259593c022a3db4f1ca4317716c48dd.
   claimed_by: openai-scheduled-2026-09-23T031841Z-lora-ingestion-t017-a11
   claimed_at: '2026-09-23T03:18:41Z'
-  updated: '2026-09-23T03:23:00Z'
+  updated: '2026-09-23T03:27:00Z'
   passes: 1
   retry_context: 'pass 1 failed (quality): PR #5077 added current_bytes/source_bytes/byte_delta to resync()s no-change return branch in scripts/resync_vendored_scanner.py, but did not update the pre-existing test_resync_no_change_when_already_matching in tests/test_resync_vendored_scanner.py, which still asserts the old 3-key dict -- CI "Python test suite" failed on the resulting AssertionError. Do differently: update that test''s expected dict to include current_bytes, source_bytes, and byte_delta: 0, and run the full local suite before pushing.'
