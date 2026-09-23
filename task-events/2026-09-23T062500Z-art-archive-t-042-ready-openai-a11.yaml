@@ -1,9 +1,0 @@
-version: 1
-project: art-archive
-task: t-042
-operation: ready
-session: 2026-09-23T055430Z-art-archive-t042-gpt56-gallery
-updated: '2026-09-23T06:25:00Z'
-implementation_pr: silasfelinus/kind_robots#3007
-note: >-
-  Pass 1 failed (quality) on kind_robots#3007 exact head 10f6654cac44cba80ad3c147fab47ec8de8c7c65. Content Visibility Coverage run 35825635576 fails because the new capability-authorized ArtImage read is not recognized by the repository-wide visibility verifier; Contract Tests run 35825635538 also fails the Prettier ratchet. Retry must preserve the signed capability design while teaching the visibility contract to prove that narrow authorization (without allowlisting the route), add regression coverage that an unguarded ArtImage read still fails, format touched files, and rerun actual CI checks. Reviewer session openai-scheduled-2026-09-23T062035Z-art-archive-pr3007-a11.
