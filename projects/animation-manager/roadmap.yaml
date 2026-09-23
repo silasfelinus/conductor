@@ -150,14 +150,25 @@ tasks:
 
   - id: t-007
     milestone: m5
-    title: "Build or polish one animation candidate from reaction evidence"
+    title: "Ship one new screensaver; polish only when no buildable pitch is available"
     passes: 0
     stakes: reversible
     recurring: true
+    daily_commitment: true
+    daily_last_checked: '2026-09-21'
+    daily_last_completed: '2026-09-21'
     depends_on:
       - t-003
       - t-004
     note: >-
+      STANDING DAILY CONTRACT (Silas, 2026-09-23): target one genuinely new shipped
+      screensaver per Pacific calendar day. Prefer the next buildable pitched animation;
+      polish an existing effect only when no buildable pitch exists or a critical repair
+      blocks a safe new release. Every completed daily attempt updates daily_last_checked
+      to that Pacific date. Update daily_last_completed only after a new effect is merged,
+      registered in the animation catalog, and therefore actually tryable. An honest no-op
+      may satisfy today's check only when no buildable pitch can safely ship; it does not
+      advance daily_last_completed, and the digest will continue to expose the stale release.
       Reconciliation (conductor scheduled sweep, state-reconciliation duty): task was left at status: review (claimed 2026-08-12T17:30:11Z by 20260812T1727-am-t007) even though kind_robots PR #1821 (Ant Farm Excavation screen FX) merged over 6 hours ago -- merged_at 2026-08-12T20:58:06Z, verified via GitHub MCP, all CI green. Rearmed to ready per recurring-task convention -- t-007 never reaches done; no code change, bookkeeping only.
       kind_robots#2135 merged (squash 2b49dc5) -- Marble Run Contraption shipped. All CI green (37/37 checks including Contract verifiers, TypeScript, layout-contract). Re-armed to ready per recurring-task convention.
       Cycle (conductor scheduled Agent run, 2026-08-29T02:27Z session, claude-scheduled-20260829T0227Z-am-t007): re-checked before doing any work (per convention) -- interface-vision/t-104's slice 57 and mermaids-of-venice/t-013's daily check had already run earlier this same hour with no new evidence (kind_robots main advanced by one commit since t-104's last check, d93fe3a home-page pass; grepped its changed files against both t-104 mechanical pools, zero new candidates). Every other active project's ready task was either genuinely blocked pending Silas (coat-dance/t-010 on t-003's source video) or deeply exhausted with an explicit no-new-lens note (model-builder/t-029 at 65+ cycles, media-watchlist/t-006 waiting on its own t-017 retire-or-v2 decision). Fell through to this continuous-lifecycle task per AGENTS.md's fallback rule, last run 2026-08-26 (marble-run-contraption).
@@ -416,7 +427,7 @@ tasks:
   - id: t-020
     milestone: m5
     title: "Make the animation build lane a daily creative commitment"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-09-23T09:53:38-t020-retry
     claimed_at: '2026-09-23T09:53:39Z'
