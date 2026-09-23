@@ -471,7 +471,7 @@ tasks:
 - id: t-017
   milestone: m2
   title: Print a dry-run byte-delta summary before a multi-file parity-report resync
-  status: ready
+  status: claimed
   owner: worker
   stakes: reversible
   note: |-
@@ -486,8 +486,8 @@ tasks:
 
     Reviewer rejected pass 1 (quality): CI test failure caused by this diff, not a flake.
     See silasfelinus/conductor#5077 review comment and retry_context.
-  claimed_by: openai-scheduled-2026-09-23T021625Z-lora-ingestion-t017-a11
-  claimed_at: '2026-09-23T02:16:25Z'
-  updated: '2026-09-23T02:54:44Z'
+  claimed_by: openai-scheduled-2026-09-23T031841Z-lora-ingestion-t017-a11
+  claimed_at: '2026-09-23T03:18:41Z'
+  updated: '2026-09-23T03:18:41Z'
   passes: 1
   retry_context: 'pass 1 failed (quality): PR #5077 added current_bytes/source_bytes/byte_delta to resync()s no-change return branch in scripts/resync_vendored_scanner.py, but did not update the pre-existing test_resync_no_change_when_already_matching in tests/test_resync_vendored_scanner.py, which still asserts the old 3-key dict -- CI "Python test suite" failed on the resulting AssertionError. Do differently: update that test''s expected dict to include current_bytes, source_bytes, and byte_delta: 0, and run the full local suite before pushing.'
