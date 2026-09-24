@@ -996,9 +996,8 @@ tasks:
 - id: t-030
   milestone: m4
   title: Make the kingdom visible and its decisions image-led
-  status: review
+  status: done
   gate_human: false
-  owner: worker
   stakes: reversible
   passes: 0
   note: |-
@@ -1010,7 +1009,9 @@ tasks:
     Reconciliation 2026-09-23: PR silasfelinus/kind_robots#2990 merged 2026-09-22, landing the decision-card art slice (cardArt.ts image ladder + ruler-hooked-card.vue render). Per the PR body itself, remaining scope (a dedicated kingdom view, populace presence) is intentionally left open -- returning to ready rather than done, and clearing the stale claim (check_pr_merged_drift.py flagged it stuck at claimed/worker after merge).
 
     Implemented the remaining kingdom-view and populace-presence slice on the Kind Robots worker branch. The existing Your reign affordance now opens an image-led realm view built around the live composited stage, weakest/strongest realm readings, cast portraits with graceful fallbacks, and recent decision consequences.
-  updated: '2026-09-24T06:26:00Z'
+
+    Completed the remaining kingdom-view and populace-presence slice. Kind Robots PR #3035 merged as 51d2eda94d6671ebdecacff75f27b1b0978b1c21 after the final head 8eb760a4111b066f9519e737adfeaa814f69defc passed Contract Tests, Ruler Hooked, Layout Contract, TypeScript, Schema Migration Parity, Project Architecture, and all other observed head workflows. The existing Your reign surface now centers the live composited realm, highlights pressure points, shows populace portraits/roles with fallbacks, and recent decision consequences.
+  updated: '2026-09-24T09:18:49Z'
   claimed_by: openai-scheduled-2026-09-24T061909Z-ruler-hooked-t030-a11
   claimed_at: '2026-09-24T06:19:09Z'
   implementation_pr: 'silasfelinus/kind_robots#2990'
@@ -1037,7 +1038,7 @@ tasks:
 - id: t-032
   milestone: m4
   title: 'FOR SILAS: re-audit Ruler Hooked once the vertical slice is real'
-  status: waiting
+  status: ready
   gate_human: true
   owner: worker
   stakes: reversible
