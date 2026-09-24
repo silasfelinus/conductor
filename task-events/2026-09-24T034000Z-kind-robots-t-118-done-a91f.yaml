@@ -1,0 +1,19 @@
+version: 1
+project: kind-robots
+task: t-118
+operation: done
+session: 20260924T025900Z-kr-t118-source-image-capabilities-a91f
+updated: '2026-09-24T03:40:00Z'
+note: >-
+  Merged kind_robots PR #3032 after all 35 head checks passed. The main art
+  generator now exposes source-image upload by verified engine capability:
+  named checkpoints route to checkpoint img2img, FLUX.1 schnell/dev preserve a
+  source latent with denoise strength, FLUX.2 Klein uses its ReferenceLatent
+  edit graph, and FLUX.1 Kontext is available as a source-required recipe.
+  Krea 2 remains text-only because no source-image workflow has been verified.
+  Illustrious/NoobAI is now a first-class checkpoint family and generic
+  checkpoint copy no longer mislabels Pony/Illustrious/SD1.5 as SDXL.
+learning: >-
+  Source-image support belongs in the generator capability matrix rather than
+  as an SDXL-only UI special case. Directory-based checkpoint lineage is more
+  reliable than Resource.generation for imported checkpoints.
