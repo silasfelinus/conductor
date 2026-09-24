@@ -2916,5 +2916,22 @@ tasks:
     Merged kind_robots PR #3032 after all 35 head checks passed. The main art generator now exposes source-image upload by verified engine capability: named checkpoints route to checkpoint img2img, FLUX.1 schnell/dev preserve a source latent with denoise strength, FLUX.2 Klein uses its ReferenceLatent edit graph, and FLUX.1 Kontext is available as a source-required recipe. Krea 2 remains text-only because no source-image workflow has been verified. Illustrious/NoobAI is now a first-class checkpoint family and generic checkpoint copy no longer mislabels Pony/Illustrious/SD1.5 as SDXL.
   updated: '2026-09-24T03:40:00Z'
 
+- id: t-119
+  milestone: m6
+  title: 'Fix the Art surface navigation, gallery visibility controls, and SDXL action randomizer breadth'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  gate_human: false
+  note: |-
+    Silas, 2026-09-23/24: finish the Art surface follow-up as one coherent UX/behavior pass.
+
+    1. Add a direct Art icon shortcut in the fixed header beside the existing ArtJob and Memory Dungeon shortcuts. Move /art from the Plan channel to Play.
+    2. On /art, make the mature / not-mature / both control visibly available at the top level, aligned with the Generate/Gallery area rather than hidden inside a suppressed Gallery header. For userId=1, entering Gallery must visibly distinguish normal/public from private: show the two-choice interstitial and only load the chosen scope. Other users go straight to the normal public gallery. Preserve the private-gallery access rules and do not turn private into a global binary toggle.
+    3. Diagnose why {action} on an SDXL-family checkpoint currently rolls only the pet-play action even though the catalog should contain more action-capable LoRAs. Fix the classification/compatibility/random-pool path so eligible SDXL/Pony/Illustrious action LoRAs can participate without widening to incompatible architectures or overwriting HUMAN classifications.
+
+    The Gallery portion is a regression follow-up: art-gallery.vue already contains the maturity filter and private chooser, but art-manager.vue currently mounts it with show-header=false and the chooser decision can race user-store hydration, leaving both controls effectively invisible on kindrobots.org/art.
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
