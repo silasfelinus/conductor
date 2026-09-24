@@ -2897,5 +2897,28 @@ tasks:
   claimed_at: '2026-09-23T09:09:08Z'
   implementation_pr: 'silasfelinus/kind_robots#3013'
 
+
+- id: t-118
+  milestone: m6
+  title: 'Expose source-image upload on every art-generator recipe whose backend supports image-to-image'
+  status: claimed
+  gate_human: false
+  stakes: reversible
+  owner: worker
+  passes: 0
+  approved_by_human: false
+  claimed_by: 20260924T025900Z-kr-t118-source-image-capabilities-a91f
+  claimed_at: '2026-09-24T02:59:00Z'
+  note: >-
+    Silas, 2026-09-23: the generator should not treat image input as an SDXL-only
+    special case. Kontext belongs on the main Recipe surface, and FLUX.1 schnell/dev
+    support image-to-image. Upload controls should appear for every recipe whose real
+    backend workflow supports source images, without advertising unsupported behavior.
+    Audit the checkpoint-family list as part of the same pass so Pony, Illustrious,
+    SDXL/SDXL-distilled, and SD1.5 do not disappear behind an SDXL-only label. Krea 2
+    should be exposed only if its current model/workflow is actually verified to support
+    image-to-image.
+  updated: '2026-09-24T02:59:00Z'
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
