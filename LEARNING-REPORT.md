@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-24T03:03:12Z
+Generated: 2026-09-24T06:47:20Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1139**
-- Outcomes: blocked: 19, cancelled: 2, done: 1118
+- Closed tasks recorded: **1140**
+- Outcomes: blocked: 19, cancelled: 2, done: 1119
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -42,7 +42,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | interface-vision | 140 | 100% |
 | kapowarr | 52 | 100% |
 | kind-economy | 11 | 100% |
-| kind-robots | 68 | 99% |
+| kind-robots | 69 | 99% |
 | kindrobots-unraid | 9 | 100% |
 | lora-ingestion | 11 | 100% |
 | mandarin-tutor | 14 | 93% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1122 | 99% |
+| software | 1123 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-24 `kind-robots/t-118` — Source-image support belongs in the generator capability matrix rather than as an SDXL-only UI special case. Directory-based checkpoint lineage is more reliable than Resource.generation for imported checkpoints.
 - 2026-09-24 `storybook/t-067` — This is the third occurrence of the same stale-post-cleanup-reference pattern (t-037's own guard deletion, then t-066, then this task) -- grepping the FULL deleted-filename list against every surviving file, not just the file(s) a task title implies, is what actually finds the next hit: the real one this cycle was in a .ts guard for a completely different feature (verifyStorybookActiveStoryResumeGuard.ts), not another *DeepLinkGuard.mjs sibling. Filed t-068 to make this mechanical instead of relying on a third manual sweep.
 - 2026-09-23 `dream-cycle/t-033` — The weekly site audit's orphan-directory pass correctly found server/api/dream-relations/ was undocumented, but its 'wired into real UI' read was wrong -- always trace named consumer files' actual fetch/import calls (not just their filenames appearing near the feature) before repeating an audit's wiring claim. Here, the named UI files only read DreamRelation via a Prisma include on a different endpoint, and a repo-wide grep for the write endpoints and prisma.dreamRelation.create/upsert found zero callers anywhere -- the CRUD surface is fully built and guarded but currently has no caller at all, live or seeded.
 - 2026-09-23 `storybook/t-066` — Clean first-pass kaizen fix: a stale-comment cleanup task is fast to verify fully (guard's own test + prettier + a repo-wide grep for the deleted filenames) even without a full local eslint environment -- worth doing that full grep sweep rather than trusting the single file diff, since a header comment mentioning a deleted file can easily have a sibling reference elsewhere in the same file.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-23 `ruler-hooked/t-038` — build_ruler_hooked_art_queue.py's card lane had been silently staging every request at the wrong image_path (public/images/ruler-hooked/cards/<id>.webp with a cards/ subdirectory and no card- prefix) against cardArtPath()'s actual contract (public/images/ruler-hooked/card-<id>.webp, no subdirectory) since the lane was written -- caught only by reading the consuming component (cardArt.ts) directly rather than trusting the producing script's own naming. A staging script and its consumer having independently-plausible-looking but silently mismatched path conventions is a class of bug that unit tests over the staging script alone would never catch, since it never reads the consumer; worth checking both ends of any asset-path contract when adding a new art-queue lane, not just validating the producer's own output shape.
 - 2026-09-23 `animation-manager/t-020` — Pass 1's only defect was test isolation, not the feature: adding find_due_daily_commitments() to select_role.py changed live selection outcomes for the same roadmap data test_github_api_unreachable_surfaced_when_real_requests_fail asserted against, and that test didn't mock run_worker.load_roadmaps or the new finder the way its sibling test_remote_refresh_failure_does_not_crash_selection already did. Any new selection signal that reads load_roadmaps() needs every existing test exercising select_role() end-to-end re-checked for the same missing mock, not just the tests written for the new feature itself. Separately: this session's own PR-body edits tripped scripts/check_pr_handoff_template.py's required-heading check twice (dropped Kaizen suggestion, then dropped Notes for reviewer) while iterating the body by hand -- worth diffing a PR-body edit against the full AGENTS.md handoff heading list before pushing it, not just eyeballing the new content.
 - 2026-09-23 `kind-robots/t-117` — Its own unit tests caught a real bug in the first pass of a route-matching regex before it shipped: a trailing-boundary check used a negative lookahead against word/slash/hyphen characters, which let quantifier backtracking land on the harmless-looking '}' that closes a template-literal interpolation and falsely accept a call to a longer, different route. A positive whitelist of real string/call terminators (excluding template-syntax characters) fixed it. Worth remembering generally: a negative-lookahead boundary check on a backtracking character class is exploitable by the regex engine's own backtracking, not just by adversarial input -- a positive whitelist of real terminators is safer whenever the preceding token is a backtracking quantifier.
-- 2026-09-23 `art-archive/t-043` — Read both PRs before assuming a kaizen'd reconciliation task still needs code: kind_robots#3006 (the second of the two independent signed-capability schemes this task was filed to reconcile) already extracted the shared server/utils/signedMediaCapability.ts primitive and removed the duplicate attacher module itself, with its own added contract test (verifyArtArchiveSignedMedia.test.ts) enforcing 'one implementation, two key domains, one attacher' as part of its own green CI. The task only needed verification against live main (file listing + a code search for the removed duplicate's name) and a close-out, not a new PR -- closing tasks unread risks either duplicating work already done or missing that it's done at all.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-24T03:03:12Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-24T06:47:20Z_
