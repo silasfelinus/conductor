@@ -2901,10 +2901,9 @@ tasks:
 - id: t-118
   milestone: m6
   title: 'Expose source-image upload on every art-generator recipe whose backend supports image-to-image'
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
-  owner: worker
   passes: 0
   approved_by_human: false
   claimed_by: 20260924T025900Z-kr-t118-source-image-capabilities-a91f
@@ -2913,7 +2912,9 @@ tasks:
     Silas, 2026-09-23: the generator should not treat image input as an SDXL-only special case. Kontext belongs on the main Recipe surface, and FLUX.1 schnell/dev support image-to-image. Upload controls should appear for every recipe whose real backend workflow supports source images, without advertising unsupported behavior. Audit the checkpoint-family list as part of the same pass so Pony, Illustrious, SDXL/SDXL-distilled, and SD1.5 do not disappear behind an SDXL-only label. Krea 2 should be exposed only if its current model/workflow is actually verified to support image-to-image.
 
     Implementation is on worker/kind-robots-t-118-20260924t025900z-a91f. It adds capability-driven source uploads to named checkpoints, FLUX.1, FLUX.2, and Kontext; adds Kontext to the main Recipe surface; recognizes Illustrious as a checkpoint family; and deliberately leaves Krea 2 text-only because the current Krea workflow has no verified source-image path. PR and CI follow after this review transition is applied.
-  updated: '2026-09-24T03:18:00Z'
+
+    Merged kind_robots PR #3032 after all 35 head checks passed. The main art generator now exposes source-image upload by verified engine capability: named checkpoints route to checkpoint img2img, FLUX.1 schnell/dev preserve a source latent with denoise strength, FLUX.2 Klein uses its ReferenceLatent edit graph, and FLUX.1 Kontext is available as a source-required recipe. Krea 2 remains text-only because no source-image workflow has been verified. Illustrious/NoobAI is now a first-class checkpoint family and generic checkpoint copy no longer mislabels Pony/Illustrious/SD1.5 as SDXL.
+  updated: '2026-09-24T03:40:00Z'
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.

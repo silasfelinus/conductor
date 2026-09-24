@@ -16399,3 +16399,14 @@ records:
   outcome: done
   failure_category: null
   lesson: "This is the third occurrence of the same stale-post-cleanup-reference pattern (t-037's own guard deletion, then t-066, then this task) -- grepping the FULL deleted-filename list against every surviving file, not just the file(s) a task title implies, is what actually finds the next hit: the real one this cycle was in a .ts guard for a completely different feature (verifyStorybookActiveStoryResumeGuard.ts), not another *DeepLinkGuard.mjs sibling. Filed t-068 to make this mechanical instead of relying on a third manual sweep."
+- date: '2026-09-24'
+  project: kind-robots
+  task: t-118
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Source-image support belongs in the generator capability matrix rather than as an SDXL-only
+    UI special case. Directory-based checkpoint lineage is more reliable than Resource.generation for
+    imported checkpoints.
