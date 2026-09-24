@@ -200,6 +200,64 @@ def test_current_output_probes_current_art_and_promotes_a_live_render(tmp_path, 
     assert result["previous_dream_output"] is None
 
 
+def test_public_probe_requires_image_content_type(monkeypatch):
+    # Regression: a successful SPA/fallback response is not a renderable email image.
+    class Response:
+        status = 200
+
+        def __init__(self, content_type):
+            self.headers = {"Content-Type": content_type}
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return False
+
+    monkeypatch.setattr(
+        enrich.urllib.request,
+        "urlopen",
+        lambda *_args, **_kwargs: Response("text/html; charset=utf-8"),
+    )
+    assert enrich._url_exists("https://kindrobots.org/images/dreams/missing.webp") is False
+
+    monkeypatch.setattr(
+        enrich.urllib.request,
+        "urlopen",
+        lambda *_args, **_kwargs: Response("image/webp"),
+    )
+    assert enrich._url_exists("https://kindrobots.org/images/dreams/present.webp") is True
+
+
+def test_same_title_location_prefers_location_art_identity(tmp_path):
+    entry = proposal(tmp_path / "amberlow.md", "2026-09-23", built=True, title="Amberlow")
+    entry["data"]["vibe"]["title"] = "Voice Into Wood"
+    entry["data"]["locations"][0]["title"] = "Amberlow"
+    entry["built"]["art"] = [
+        {
+            "element": "amberlow",
+            "public_path": "/images/dreams/amberlow/amberlow-card.webp",
+            "attached": True,
+            "request_id": "dream-cycle-amberlow-amberlow",
+        },
+        {
+            "element": "amberlow-location",
+            "public_path": "/images/dreams/amberlow/amberlow-location-card.webp",
+            "attached": True,
+            "request_id": "dream-cycle-amberlow-amberlow-location",
+        },
+    ]
+
+    rows = {
+        row["key"]: row
+        for row in enrich.proposal_payload(entry, probe_images=False)["assets"]
+    }
+
+    assert rows["vibe"]["request_id"] == "dream-cycle-amberlow-amberlow"
+    assert rows["location"]["request_id"] == "dream-cycle-amberlow-amberlow-location"
+    assert rows["location"]["image_url"].endswith("/amberlow-location-card.webp")
+
+
 def test_previous_output_has_six_readable_asset_rows(tmp_path):
     previous = proposal(tmp_path / "previous.md", "2026-07-29", built=True)
     current = proposal(
