@@ -1038,9 +1038,8 @@ tasks:
 - id: t-032
   milestone: m4
   title: 'FOR SILAS: re-audit Ruler Hooked once the vertical slice is real'
-  status: claimed
+  status: needs-human
   gate_human: true
-  owner: worker
   stakes: reversible
   passes: 0
   depends_on:
@@ -1052,31 +1051,17 @@ tasks:
     - t-028
     - t-029
     - t-030
-  note: >-
-    FOR SILAS: this is the exit gate for the m4 vertical slice, and it exists because the last
-    completion number this project reported was wrong in a way that cost you an evening.
-
-    Your 2026-09-11 verdict, kept verbatim so it is not softened by later summaries: "we still have
-    ruler is done at 85% and 21/22 done on projects, which is ABSURD unless there is a lot of
-    background stuff that we again haven't worked into the front end. I see no visuals of the
-    kingdom, no interactions with populous, no ability to see text based prompts with an image that
-    asks me to decide important things, no shop to purchase upgrades to finishing or to upgrade the
-    kingdom, no ability to catch treasures when fishing that might be spent at said shop on gear or
-    the kingdom, etc. The roadmap needs a serious overhaul, the interface needs serious upgrades,
-    more art needs to be submitted and integrated, scenarios need to be written, shop needs to be
-    planned, more fish need to be added, kingdom sections need to be built."
-
-    TO APPROVE: after t-023 through t-030 land, play it again and say whether the loop is worth
-    scaling -- that is the question m4 exists to answer, per the audit's own framing ("enough fish,
-    characters, encounters, art, and endings to judge whether the core loop is genuinely fun before
-    scaling production"). If it is not, that is a useful answer and should redirect m5's production
-    rather than be treated as failure. What unblocks: m5's full art and content production, which
-    should not scale until the slice proves the systems.
-
+  note: |-
+    FOR SILAS: this is the exit gate for the m4 vertical slice, and it exists because the last completion number this project reported was wrong in a way that cost you an evening.
+    Your 2026-09-11 verdict, kept verbatim so it is not softened by later summaries: "we still have ruler is done at 85% and 21/22 done on projects, which is ABSURD unless there is a lot of background stuff that we again haven't worked into the front end. I see no visuals of the kingdom, no interactions with populous, no ability to see text based prompts with an image that asks me to decide important things, no shop to purchase upgrades to finishing or to upgrade the kingdom, no ability to catch treasures when fishing that might be spent at said shop on gear or the kingdom, etc. The roadmap needs a serious overhaul, the interface needs serious upgrades, more art needs to be submitted and integrated, scenarios need to be written, shop needs to be planned, more fish need to be added, kingdom sections need to be built."
+    TO APPROVE: after t-023 through t-030 land, play it again and say whether the loop is worth scaling -- that is the question m4 exists to answer, per the audit's own framing ("enough fish, characters, encounters, art, and endings to judge whether the core loop is genuinely fun before scaling production"). If it is not, that is a useful answer and should redirect m5's production rather than be treated as failure. What unblocks: m5's full art and content production, which should not scale until the slice proves the systems.
     Ruler Hooked must not be described as finished, nor reported near-complete, before this.
-  updated: '2026-09-24T10:22:49+00:00'
+
+    The m4 dependency set t-023 through t-030 is now complete, including t-030's kingdom/populace slice merged as kind_robots#3035. This task is the explicit vertical-slice exit gate and requires Silas to actually play the current build and judge whether the fishing + decisions + kingdom/shop/treasure loop is worth scaling. No agent can truthfully substitute a code/CI inspection for that subjective play verdict. TO APPROVE: play Ruler Hooked on the current main build and answer whether the core loop is worth scaling into m5 production; if not, record what feels wrong so m5 can be redirected. This is a real human acceptance gate, not an implementation blocker.
+  updated: '2026-09-24T10:23:23+00:00'
   claimed_by: openai-scheduled-2026-09-24T101808Z-ruler-hooked-t032-a11
   claimed_at: '2026-09-24T10:22:49+00:00'
+  soft_gate: false
 - id: t-033
   milestone: m4
   title: Per-species visual theming of the timing bar
