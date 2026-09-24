@@ -2073,8 +2073,8 @@ tasks:
 - id: t-068
   milestone: m7
   title: "Add a mechanical check for stale filename references to guards deleted in a cleanup pass"
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >-
@@ -2086,4 +2086,6 @@ tasks:
     the deleted filenames and fails/flags any hit that isn't already phrased in the past
     tense (or otherwise dated/historical), so a future cleanup pass doesn't need its own
     manual sweep task to catch this.
-  updated: '2026-09-24T00:06:53Z'
+  updated: '2026-09-24T16:19:05Z'
+  claimed_by: openai-scheduled-2026-09-24T161905Z-storybook-t068-a11
+  claimed_at: '2026-09-24T16:19:05Z'
