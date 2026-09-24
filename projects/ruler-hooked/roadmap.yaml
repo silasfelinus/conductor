@@ -996,42 +996,21 @@ tasks:
 - id: t-030
   milestone: m4
   title: Make the kingdom visible and its decisions image-led
-  status: claimed
+  status: review
   gate_human: false
   owner: worker
   stakes: reversible
   passes: 0
-  note: >-
-    Silas, 2026-09-11: "I see no visuals of the kingdom, no interactions with populous, no ability to
-    see text based prompts with an image that asks me to decide important things."
+  note: |-
+    Silas, 2026-09-11: "I see no visuals of the kingdom, no interactions with populous, no ability to see text based prompts with an image that asks me to decide important things."
+    The PoC does recomposite a landscape from kingdom-health sliders, so a kingdom view is not starting from nothing -- but the player never meets it. Half the title is "rule the realm" and the realm is currently a set of numbers behind a fishing screen.
+    DO: (1) A kingdom view the player can actually go to and read: the realm's state, what changed since last turn, what is going badly. Reuse the existing composited landscape as its centrepiece rather than drawing a second representation of the same state. (2) Decision encounters that arrive as an IMAGE plus a situation plus real choices with consequences -- the card shape the design brief describes and the audit's encounter-authoring item covers. The image is not decoration here; Silas is explicit that the prompt should be visual and ask him to decide something important. (3) Populace presence: the realm should contain people who want things and react, so decisions have someone on the other side of them.
+    Sequence note: the encounter AUTHORING pipeline (generation/import/validation, duplicate and dead-trigger checks) is the audit's item 5 and is what makes this scale past a handful of hand-written cards. Build enough cards by hand to prove the shape, then build the pipeline before writing the full deck.
+    Shipped this cycle (2026-09-22, scheduled Conductor Agent run): item (2)'s decision-card slice -- kind_robots#2990 (merged). ruler-hooked-card.vue rendered every card as title/body/buttons only, ignoring the per-card art: card-<id> key decks.md already defines and the characters: slugs every card can list. Added utils/rulerHooked/cardArt.ts (an image-candidate ladder: card's own art -> featured/relaying-advisor character's neutral portrait -> plain fallback -> none, mirroring the existing region and advisor degrade ladders) and wired it into ruler-hooked-card.vue + ruler-hooked-game.vue (passes the advisor's slug through for characterless cards). New utils/rulerHooked/cardArt.selftest.ts added to .github/workflows/ruler-hooked.yml. No new art or backend work needed -- every rung already has a defined asset-path contract, this just makes the renderer use it. Verified: all 6 ruler-hooked selftests pass, full-project vue-tsc clean, eslint clean, prettier-ratchet and lint-ratchet both hold (no regression). No browser/visual check possible non-interactively -- no art has actually rendered yet for any rung (render queue backlog, tracked at conductor/t-165 and t-167), so this is a code-path verification, not a pixel one. Remaining scope, still open: item (1) a dedicated kingdom view (a place to go read realm state / what changed / what's going badly, reusing the existing composited Stage as its centerpiece rather than a second representation) and item (3) populace presence. Sequence note from the original task stands: prove the card shape by hand first (done, this cycle), then the authoring/generation pipeline before writing a full deck -- not attempted here, out of this slice's scope. Re-arming to ready for the remaining scope.
+    Reconciliation 2026-09-23: PR silasfelinus/kind_robots#2990 merged 2026-09-22, landing the decision-card art slice (cardArt.ts image ladder + ruler-hooked-card.vue render). Per the PR body itself, remaining scope (a dedicated kingdom view, populace presence) is intentionally left open -- returning to ready rather than done, and clearing the stale claim (check_pr_merged_drift.py flagged it stuck at claimed/worker after merge).
 
-    The PoC does recomposite a landscape from kingdom-health sliders, so a kingdom view is not
-    starting from nothing -- but the player never meets it. Half the title is "rule the realm" and
-    the realm is currently a set of numbers behind a fishing screen.
-
-    DO: (1) A kingdom view the player can actually go to and read: the realm's state, what changed
-    since last turn, what is going badly. Reuse the existing composited landscape as its centrepiece
-    rather than drawing a second representation of the same state. (2) Decision encounters that
-    arrive as an IMAGE plus a situation plus real choices with consequences -- the card shape the
-    design brief describes and the audit's encounter-authoring item covers. The image is not
-    decoration here; Silas is explicit that the prompt should be visual and ask him to decide
-    something important. (3) Populace presence: the realm should contain people who want things and
-    react, so decisions have someone on the other side of them.
-
-    Sequence note: the encounter AUTHORING pipeline (generation/import/validation, duplicate and
-    dead-trigger checks) is the audit's item 5 and is what makes this scale past a handful of
-    hand-written cards. Build enough cards by hand to prove the shape, then build the pipeline
-    before writing the full deck.
-
-    Shipped this cycle (2026-09-22, scheduled Conductor Agent run): item (2)'s decision-card slice -- kind_robots#2990 (merged). ruler-hooked-card.vue rendered every card as title/body/buttons only, ignoring the per-card art: card-<id> key decks.md already defines and the characters: slugs every card can list. Added utils/rulerHooked/cardArt.ts (an image-candidate ladder: card's own art -> featured/relaying-advisor character's neutral portrait -> plain fallback -> none, mirroring the existing region and advisor degrade ladders) and wired it into ruler-hooked-card.vue + ruler-hooked-game.vue (passes the advisor's slug through for characterless cards). New utils/rulerHooked/cardArt.selftest.ts added to .github/workflows/ruler-hooked.yml. No new art or backend work needed -- every rung already has a defined asset-path contract, this just makes the renderer use it. Verified: all 6 ruler-hooked selftests pass, full-project vue-tsc clean, eslint clean, prettier-ratchet and lint-ratchet both hold (no regression). No browser/visual check possible non-interactively -- no art has actually rendered yet for any rung (render queue backlog, tracked at conductor/t-165 and t-167), so this is a code-path verification, not a pixel one.
-    Remaining scope, still open: item (1) a dedicated kingdom view (a place to go read realm state / what changed / what's going badly, reusing the existing composited Stage as its centerpiece rather than a second representation) and item (3) populace presence. Sequence note from the original task stands: prove the card shape by hand first (done, this cycle), then the authoring/generation pipeline before writing a full deck -- not attempted here, out of this slice's scope. Re-arming to ready for the remaining scope.
-
-    Reconciliation 2026-09-23: PR silasfelinus/kind_robots#2990 merged 2026-09-22, landing
-    the decision-card art slice (cardArt.ts image ladder + ruler-hooked-card.vue render).
-    Per the PR body itself, remaining scope (a dedicated kingdom view, populace presence) is
-    intentionally left open -- returning to ready rather than done, and clearing the stale
-    claim (check_pr_merged_drift.py flagged it stuck at claimed/worker after merge).
-  updated: '2026-09-24T06:19:09Z'
+    Implemented the remaining kingdom-view and populace-presence slice on the Kind Robots worker branch. The existing Your reign affordance now opens an image-led realm view built around the live composited stage, weakest/strongest realm readings, cast portraits with graceful fallbacks, and recent decision consequences.
+  updated: '2026-09-24T06:26:00Z'
   claimed_by: openai-scheduled-2026-09-24T061909Z-ruler-hooked-t030-a11
   claimed_at: '2026-09-24T06:19:09Z'
   implementation_pr: 'silasfelinus/kind_robots#2990'
