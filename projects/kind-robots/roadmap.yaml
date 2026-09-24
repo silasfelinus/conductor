@@ -2942,10 +2942,10 @@ tasks:
 - id: t-120
   milestone: m6
   title: 'Make Art Generate render immediately without loading the full art archive or heavyweight collection summaries'
-  status: ready
+  status: claimed
   gate_human: false
   stakes: reversible
-  owner:
+  owner: worker
   passes: 0
   note: >-
     Silas, 2026-09-24: /art Generate pauses before the generator appears, then shows
@@ -2954,7 +2954,9 @@ tasks:
     must not require the complete ArtImage index or per-collection counts/previews just
     to render; destination collection metadata may load progressively/lightweight while
     the generation UI becomes usable. Preserve Gallery's scoped progressive loading.
-  updated: '2026-09-24T22:03:00Z'
+  updated: '2026-09-24T22:07:00Z'
+  claimed_by: 20260924T2203Z-kind-robots-t120-chatgpt-b7e4
+  claimed_at: '2026-09-24T22:07:00Z'
 
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
