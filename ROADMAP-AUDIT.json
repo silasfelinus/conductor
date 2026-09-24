@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-09-23T15:04:54.466097+00:00",
+  "generated_at": "2026-09-24T15:13:10.083842+00:00",
   "summary": {
     "roadmaps": 54,
     "active_projects": 22,
     "continuous_projects": 3,
-    "tasks": 1677,
-    "ready": 17,
-    "waiting": 52,
-    "needs_human": 57,
-    "in_progress": 2,
-    "done": 1534,
+    "tasks": 1685,
+    "ready": 14,
+    "waiting": 51,
+    "needs_human": 61,
+    "in_progress": 3,
+    "done": 1540,
     "errors": 0,
-    "warnings": 9,
+    "warnings": 10,
     "info": 29
   },
   "projects": [
@@ -198,9 +198,9 @@
       "override_status": "active",
       "priority_index": 10,
       "autonomous": false,
-      "task_count": 117,
+      "task_count": 119,
       "counts": {
-        "done": 114,
+        "done": 116,
         "needs-human": 3
       },
       "open_count": 3,
@@ -209,7 +209,7 @@
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 114
+      "done": 116
     },
     {
       "slug": "rainbow-butterflies",
@@ -274,14 +274,14 @@
       "override_status": "active",
       "priority_index": 14,
       "autonomous": false,
-      "task_count": 21,
+      "task_count": 22,
       "counts": {
         "done": 14,
-        "needs-human": 1,
+        "needs-human": 2,
         "waiting": 6
       },
-      "open_count": 7,
-      "human_attention": 1,
+      "open_count": 8,
+      "human_attention": 2,
       "ready": 0,
       "waiting": 6,
       "claimed": 0,
@@ -296,14 +296,14 @@
       "autonomous": false,
       "task_count": 45,
       "counts": {
-        "done": 44,
-        "ready": 1
+        "claimed": 1,
+        "done": 44
       },
       "open_count": 1,
       "human_attention": 0,
-      "ready": 1,
+      "ready": 0,
       "waiting": 0,
-      "claimed": 0,
+      "claimed": 1,
       "review": 0,
       "done": 44
     },
@@ -351,21 +351,20 @@
       "override_status": "active",
       "priority_index": 18,
       "autonomous": false,
-      "task_count": 64,
+      "task_count": 68,
       "counts": {
-        "claimed": 1,
-        "done": 56,
-        "needs-human": 4,
-        "ready": 1,
+        "done": 58,
+        "needs-human": 5,
+        "ready": 3,
         "waiting": 2
       },
-      "open_count": 8,
-      "human_attention": 4,
-      "ready": 1,
+      "open_count": 10,
+      "human_attention": 5,
+      "ready": 3,
       "waiting": 2,
-      "claimed": 1,
+      "claimed": 0,
       "review": 0,
-      "done": 56
+      "done": 58
     },
     {
       "slug": "coat-dance",
@@ -453,18 +452,17 @@
       "autonomous": false,
       "task_count": 39,
       "counts": {
-        "done": 33,
-        "needs-human": 2,
-        "ready": 3,
-        "waiting": 1
+        "done": 34,
+        "needs-human": 4,
+        "ready": 1
       },
-      "open_count": 6,
-      "human_attention": 2,
-      "ready": 3,
-      "waiting": 1,
+      "open_count": 5,
+      "human_attention": 4,
+      "ready": 1,
+      "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 33
+      "done": 34
     },
     {
       "slug": "animation-manager",
@@ -472,18 +470,20 @@
       "override_status": "continuous",
       "priority_index": 24,
       "autonomous": true,
-      "task_count": 21,
+      "task_count": 22,
       "counts": {
+        "blocked": 1,
         "claimed": 1,
         "done": 18,
-        "ready": 2
+        "ready": 1,
+        "review": 1
       },
-      "open_count": 3,
+      "open_count": 4,
       "human_attention": 0,
-      "ready": 2,
+      "ready": 1,
       "waiting": 0,
       "claimed": 1,
-      "review": 0,
+      "review": 1,
       "done": 18
     },
     {
@@ -494,16 +494,16 @@
       "autonomous": true,
       "task_count": 33,
       "counts": {
-        "done": 30,
-        "ready": 3
+        "done": 31,
+        "ready": 2
       },
-      "open_count": 3,
+      "open_count": 2,
       "human_attention": 0,
-      "ready": 3,
+      "ready": 2,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 30
+      "done": 31
     },
     {
       "slug": "ai-art-academy",
@@ -1050,6 +1050,13 @@
     }
   ],
   "findings": [
+    {
+      "severity": "warning",
+      "code": "DUPLICATE_YAML_KEY",
+      "project": "coloring-book",
+      "task": null,
+      "message": "Duplicate key 'updated' at line 670 \u2014 YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one."
+    },
     {
       "severity": "warning",
       "code": "POSSIBLY_UNNECESSARY_GATE",

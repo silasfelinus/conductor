@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-09-23T15:04:54.466097+00:00`
+Generated: `2026-09-24T15:13:10.083842+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **54** roadmaps, **22** active + **3** continuous projects, **1677** tasks
-- **17 ready**, **52 waiting**, **57 needs-human**, **2 claimed/review**, **1534 done**
-- Findings: **0 errors**, **9 warnings**, **29 informational**
+- **54** roadmaps, **22** active + **3** continuous projects, **1685** tasks
+- **14 ready**, **51 waiting**, **61 needs-human**, **3 claimed/review**, **1540 done**
+- Findings: **0 errors**, **10 warnings**, **29 informational**
 
 ## Project inventory
 
@@ -23,22 +23,22 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 7 | `coloring-book` | active | software | 1 | 9 | 1 | 0 | 36 / 47 |
 | 8 | `humboldt-scoop-cms` | active | software | 0 | 0 | 4 | 0 | 35 / 39 |
 | 9 | `digital-storefront` | active | software | 0 | 2 | 2 | 0 | 40 / 44 |
-| 10 | `kind-robots` | active | software | 0 | 0 | 3 | 0 | 114 / 117 |
+| 10 | `kind-robots` | active | software | 0 | 0 | 3 | 0 | 116 / 119 |
 | 11 | `rainbow-butterflies` | active | software | 0 | 0 | 3 | 0 | 50 / 53 |
 | 12 | `scene-animator` | active | software | 0 | 0 | 1 | 0 | 10 / 11 |
 | 13 | `text-generation` | active | software | 0 | 0 | 1 | 0 | 8 / 9 |
-| 14 | `kindrobots-unraid` | active | software | 0 | 6 | 1 | 0 | 14 / 21 |
-| 15 | `model-builder` | active | software | 1 | 0 | 0 | 0 | 44 / 45 |
+| 14 | `kindrobots-unraid` | active | software | 0 | 6 | 2 | 0 | 14 / 22 |
+| 15 | `model-builder` | active | software | 0 | 0 | 0 | 1 | 44 / 45 |
 | 16 | `lora-ingestion` | active | infrastructure | 0 | 0 | 1 | 0 | 16 / 17 |
 | 17 | `conductor` | active | software | 0 | 0 | 4 | 0 | 190 / 194 |
-| 18 | `storybook` | active | software | 1 | 2 | 4 | 1 | 56 / 64 |
+| 18 | `storybook` | active | software | 3 | 2 | 5 | 0 | 58 / 68 |
 | 19 | `coat-dance` | active | content | 1 | 0 | 1 | 0 | 3 / 10 |
 | 20 | `conductor-app` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
 | 21 | `appmaker` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
 | 22 | `media-watchlist` | active | software | 0 | 0 | 1 | 0 | 18 / 19 |
-| 23 | `ruler-hooked` | active | software | 3 | 1 | 2 | 0 | 33 / 39 |
-| 24 | `animation-manager` | continuous | software | 2 | 0 | 0 | 1 | 18 / 21 |
-| 25 | `dream-cycle` | continuous | software | 3 | 0 | 0 | 0 | 30 / 33 |
+| 23 | `ruler-hooked` | active | software | 1 | 0 | 4 | 0 | 34 / 39 |
+| 24 | `animation-manager` | continuous | software | 1 | 0 | 0 | 2 | 18 / 22 |
+| 25 | `dream-cycle` | continuous | software | 2 | 0 | 0 | 0 | 31 / 33 |
 | — | `ai-art-academy` | finished | software | 0 | 0 | 0 | 0 | 79 / 79 |
 | — | `alexa-integration` | paused | software | 0 | 0 | 1 | 0 | 21 / 22 |
 | — | `animation-studio` | retired | software | 0 | 3 | 0 | 0 | 4 / 8 |
@@ -75,8 +75,9 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (9)
+### Warning (10)
 
+- **DUPLICATE_YAML_KEY** — `coloring-book`: Duplicate key 'updated' at line 670 — YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one.
 - **POSSIBLY_UNNECESSARY_GATE** — `conductor` / `t-167`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **SOFT_NEEDS_HUMAN** — `conductor` / `t-189`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
 - **SOFT_NEEDS_HUMAN** — `cthulhuquarium` / `t-065`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
