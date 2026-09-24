@@ -1038,44 +1038,23 @@ tasks:
 - id: t-031
   milestone: m4
   title: Grow the fish roster past the 15-species vertical slice
-  status: claimed
+  status: needs-human
   gate_human: false
-  owner: worker
   stakes: reversible
   passes: 0
-  note: >-
+  note: |-
     Silas, 2026-09-11: "only fifteen fishes?"
+    Verified: utils/rulerHooked/fish.ts holds exactly 15 species, and the Fishopedia's "0/15 discovered" surfaces that number directly to the player. FULL-GAME-GAP-AUDIT.md set 12-20 as a deliberate VERTICAL SLICE target -- "deliberately smaller than the final catalog" -- so 15 is the plan working as intended, not an oversight. What went wrong is that the slice number reached the player as if it were the game.
+    DO: (1) Decide the real catalog target for a shipped game and record it, so "how many fish" stops being an open question every time someone looks at the Fishopedia. (2) Expand the roster toward it, in style-consistent batches with art (t-027) rather than as name-only rows -- 15 species with plates beats 60 without. (3) While the roster is small, stop displaying the raw slice count as a completion denominator; a Fishopedia that says 0/15 invites exactly the reaction Silas had.
+    Cross-check before adding: 18 species in the shared bestiary are tagged for both this game and Cthulhuquarium, and cthulhuquarium/t-065 delivered 119 fish plates. Some of the roster this task would commission may already be drawn, and the two games are supposed to share a bestiary -- cthulhuquarium/t-022 is the open handshake task.
+    Shipped item (3) this cycle: silasfelinus/kind_robots#2927 replaces the Fishopedia badge's raw '0/15 discovered' denominator with a discovered-only count label, so the vertical-slice roster size no longer reads as an unfinished catalog. Verified: eslint, prettier, full-project vue-tsc, test:layout-contract, and test:kr-class-coverage all clean; no browser/visual check possible in this non-interactive session. Items (1) decide the real catalog target and (2) expand the roster with art remain open -- (2) is blocked on t-027's art dependency (t-019's species-design renders) and (1) is a product decision for Silas, not something this slice should force. Re-arming to ready for the remaining scope.
 
-    Verified: utils/rulerHooked/fish.ts holds exactly 15 species, and the Fishopedia's "0/15
-    discovered" surfaces that number directly to the player. FULL-GAME-GAP-AUDIT.md set 12-20 as a
-    deliberate VERTICAL SLICE target -- "deliberately smaller than the final catalog" -- so 15 is
-    the plan working as intended, not an oversight. What went wrong is that the slice number reached
-    the player as if it were the game.
-
-    DO: (1) Decide the real catalog target for a shipped game and record it, so "how many fish" stops
-    being an open question every time someone looks at the Fishopedia. (2) Expand the roster toward
-    it, in style-consistent batches with art (t-027) rather than as name-only rows -- 15 species with
-    plates beats 60 without. (3) While the roster is small, stop displaying the raw slice count as a
-    completion denominator; a Fishopedia that says 0/15 invites exactly the reaction Silas had.
-
-    Cross-check before adding: 18 species in the shared bestiary are tagged for both this game and
-    Cthulhuquarium, and cthulhuquarium/t-065 delivered 119 fish plates. Some of the roster this task
-    would commission may already be drawn, and the two games are supposed to share a bestiary --
-    cthulhuquarium/t-022 is the open handshake task.
-
-    Shipped item (3) this cycle: silasfelinus/kind_robots#2927 replaces the Fishopedia
-    badge's raw '0/15 discovered' denominator with a discovered-only count label, so the
-    vertical-slice roster size no longer reads as an unfinished catalog. Verified: eslint,
-    prettier, full-project vue-tsc, test:layout-contract, and test:kr-class-coverage all
-    clean; no browser/visual check possible in this non-interactive session. Items (1)
-    decide the real catalog target and (2) expand the roster with art remain open -- (2) is
-    blocked on t-027's art dependency (t-019's species-design renders) and (1) is a product
-    decision for Silas, not something this slice should force. Re-arming to ready for the
-    remaining scope.
-  updated: '2026-09-24T00:16:31Z'
+    FOR SILAS: the Fishopedia no longer exposes the 15-species vertical-slice count as if it were the final catalog (kind_robots#2927 already shipped that fix), and the existing 15-species art set is complete. The remaining work is choosing the shipped-game fish catalog target, then expanding toward it in art-backed batches. The roadmap explicitly records that target size as a product decision for Silas rather than an agent guess. TO APPROVE: choose a target catalog size (or a target range) for the shipped game and return this task to ready. This is a soft gate only; it does not block t-030 or other Ruler Hooked work.
+  updated: '2026-09-24T00:20:00Z'
   claimed_by: openai-scheduled-2026-09-24T001631Z-ruler-hooked-t031-a11
   claimed_at: '2026-09-24T00:16:31Z'
   implementation_pr: 'silasfelinus/kind_robots#2927'
+  soft_gate: true
 - id: t-032
   milestone: m4
   title: 'FOR SILAS: re-audit Ruler Hooked once the vertical slice is real'
