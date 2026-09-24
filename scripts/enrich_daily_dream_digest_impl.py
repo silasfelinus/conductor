@@ -101,10 +101,18 @@ def _public_url(public_path: str) -> str:
 
 
 def _url_exists(url: str, timeout: int = 5) -> bool:
+    """Return true only when the public URL resolves to an actual image.
+
+    Kind Robots can return a successful HTML app/fallback response for a missing
+    static asset path. A status-only HEAD probe therefore turned missing renders
+    into "ready" digest cards whose <img> tags broke in Gmail/Brevo.
+    """
     request = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "conductor-digest/3"})
     try:
         with urllib.request.urlopen(request, timeout=timeout) as response:
-            return 200 <= response.status < 400
+            content_type = str(response.headers.get("Content-Type") or "")
+            media_type = content_type.split(";", 1)[0].strip().lower()
+            return 200 <= response.status < 400 and media_type.startswith("image/")
     except (OSError, urllib.error.HTTPError, urllib.error.URLError):
         return False
 
@@ -150,6 +158,11 @@ def _asset_rows(proposal: dict[str, Any], *, probe_images: bool = True) -> list[
 
     def art_for(key: str, title: str, element_slug: str) -> dict[str, Any]:
         candidates = [element_slug, builder_slugify(title), slugify(title)]
+        if key == "location":
+            # The world/vibe and its first location may share a title (Amberlow).
+            # The builder disambiguates the location art row with "-location";
+            # prefer that explicit identity before falling back to legacy bare slugs.
+            candidates = [f"{candidate}-location" for candidate in candidates] + candidates
         if key == "scenario":
             candidates = [f"{candidate}-scenario" for candidate in candidates] + candidates
         for candidate in candidates:
