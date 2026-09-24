@@ -1,0 +1,12 @@
+version: 1
+project: dream-cycle
+task: t-006
+operation: review
+session: 2026-09-24T205200Z-dream-cycle-t-006-digest-image-probe-a7f3
+updated: '2026-09-24T21:05:00Z'
+note: >-
+  Root-caused the 2026-09-24 digest broken-image cards: the digest accepted any
+  successful HEAD response as an image, so a missing static asset could be
+  labeled ready when Kind Robots returned a non-image fallback; same-title
+  world/location art also collided on the bare slug. Branch validates image/*
+  Content-Type and prefers the builder's -location art identity, with regressions.
