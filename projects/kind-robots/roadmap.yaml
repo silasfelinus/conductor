@@ -2959,5 +2959,22 @@ tasks:
   claimed_at: '2026-09-24T22:07:00Z'
 
 
+- id: t-121
+  milestone: m6
+  title: 'Audit remaining Art manager tabs for unnecessary full-index hydration'
+  status: ready
+  gate_human: false
+  stakes: reversible
+  owner:
+  passes: 0
+  note: >-
+    Kaizen from kind-robots/t-120. Generate no longer waits on the manager-wide
+    ArtImage/collection hydration gate, but other legacy Art tabs still share that
+    eager path. Audit each tab's actual startup dependencies and replace full-index
+    loading with tab-owned lightweight queries where safe, without changing Gallery's
+    progressive-loading contract.
+  updated: '2026-09-24T22:18:00Z'
+
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
