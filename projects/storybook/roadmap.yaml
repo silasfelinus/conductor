@@ -2069,3 +2069,21 @@ tasks:
   claimed_by: claude-scheduled-2026-09-23T235641Z-storybook-t067
   claimed_at: '2026-09-23T23:57:40Z'
   implementation_pr: 'silasfelinus/kind_robots#3031'
+
+- id: t-068
+  milestone: m7
+  title: "Add a mechanical check for stale filename references to guards deleted in a cleanup pass"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from t-067 (2026-09-24). This is the third occurrence of the same staleness
+    pattern (t-037's own cleanup, then t-066, then t-067) -- each time found only by a
+    manual full-file grep sweep, not caught automatically. DO: add a small script (or a
+    check inside an existing lint/guard workflow) that, whenever a guard-cleanup PR deletes
+    utils/scripts/verify*.{mjs,ts} files, greps the surviving verify*.{mjs,ts} files for
+    the deleted filenames and fails/flags any hit that isn't already phrased in the past
+    tense (or otherwise dated/historical), so a future cleanup pass doesn't need its own
+    manual sweep task to catch this.
+  updated: '2026-09-24T00:06:53Z'
