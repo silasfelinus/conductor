@@ -201,6 +201,7 @@ def test_current_output_probes_current_art_and_promotes_a_live_render(tmp_path, 
 
 
 def test_public_probe_requires_image_content_type(monkeypatch):
+    # Regression: a successful SPA/fallback response is not a renderable email image.
     class Response:
         status = 200
 
