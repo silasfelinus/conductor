@@ -16390,3 +16390,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "The weekly site audit's orphan-directory pass correctly found server/api/dream-relations/ was undocumented, but its 'wired into real UI' read was wrong -- always trace named consumer files' actual fetch/import calls (not just their filenames appearing near the feature) before repeating an audit's wiring claim. Here, the named UI files only read DreamRelation via a Prisma include on a different endpoint, and a repo-wide grep for the write endpoints and prisma.dreamRelation.create/upsert found zero callers anywhere -- the CRUD surface is fully built and guarded but currently has no caller at all, live or seeded."
+- date: '2026-09-24'
+  project: storybook
+  task: t-067
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "This is the third occurrence of the same stale-post-cleanup-reference pattern (t-037's own guard deletion, then t-066, then this task) -- grepping the FULL deleted-filename list against every surviving file, not just the file(s) a task title implies, is what actually finds the next hit: the real one this cycle was in a .ts guard for a completely different feature (verifyStorybookActiveStoryResumeGuard.ts), not another *DeepLinkGuard.mjs sibling. Filed t-068 to make this mechanical instead of relying on a third manual sweep."
