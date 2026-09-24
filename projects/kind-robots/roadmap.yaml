@@ -2919,8 +2919,7 @@ tasks:
 - id: t-119
   milestone: m6
   title: 'Fix the Art surface navigation, gallery visibility controls, and SDXL action randomizer breadth'
-  status: review
-  owner: worker
+  status: done
   passes: 0
   stakes: reversible
   gate_human: false
@@ -2934,9 +2933,11 @@ tasks:
     The Gallery portion is a regression follow-up: art-gallery.vue already contains the maturity filter and private chooser, but art-manager.vue currently mounts it with show-header=false and the chooser decision can race user-store hydration, leaving both controls effectively invisible on kindrobots.org/art.
 
     Implementation is ready for PR review on worker/kind-robots-t-119-20260924t064700z-a7c3: Art is in Play with a fixed-header shortcut; Gallery exposes the three-way maturity filter beside Generate/Gallery and waits for restored user state before deciding the user-1 public/private interstitial; the action LoRA classifier now lets specific pose/style purpose tags outrank generic character tags, repairs clearly titled legacy pose rows at randomizer read time without overriding HUMAN classifications, and enforces Pony/Illustrious/base-SDXL family boundaries.
+
+    Merged kind_robots PR #3036 as f55ade54ec63c4785435938bc8f4ecc6d66bb763 after all 32 head checks completed successfully. Art now lives in Play with a fixed-header shortcut; the /art Gallery exposes Both/Mature/Not mature beside Generate/Gallery and user #1 gets the public/private chooser after session hydration; SDXL action randomization now repairs legacy non-HUMAN pose classifications conservatively and enforces SDXL/Pony/Illustrious family compatibility.
   claimed_by: 20260924T064700Z-kind-robots-t119-chatgpt-a7c3
   claimed_at: '2026-09-24T06:47:00Z'
-  updated: '2026-09-24T07:20:00Z'
+  updated: '2026-09-24T07:57:02Z'
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.

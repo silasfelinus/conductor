@@ -16410,3 +16410,14 @@ records:
   lesson: Source-image support belongs in the generator capability matrix rather than as an SDXL-only
     UI special case. Directory-based checkpoint lineage is more reliable than Resource.generation for
     imported checkpoints.
+- date: '2026-09-24'
+  project: kind-robots
+  task: t-119
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Gallery controls can exist yet be unreachable when a parent suppresses the child header; surface
+    cross-view state at the owning page level. Also treat supportedServer as a loader lane, not a training-family
+    guarantee, and preserve HUMAN LoRA classifications when repairing inferred categories.
