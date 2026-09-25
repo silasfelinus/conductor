@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-09-24T15:13:10.083842+00:00`
+Generated: `2026-09-25T15:19:51.590905+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **54** roadmaps, **22** active + **3** continuous projects, **1685** tasks
-- **14 ready**, **51 waiting**, **61 needs-human**, **3 claimed/review**, **1540 done**
+- **54** roadmaps, **22** active + **3** continuous projects, **1687** tasks
+- **14 ready**, **51 waiting**, **61 needs-human**, **3 claimed/review**, **1542 done**
 - Findings: **0 errors**, **10 warnings**, **29 informational**
 
 ## Project inventory
@@ -23,7 +23,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 7 | `coloring-book` | active | software | 1 | 9 | 1 | 0 | 36 / 47 |
 | 8 | `humboldt-scoop-cms` | active | software | 0 | 0 | 4 | 0 | 35 / 39 |
 | 9 | `digital-storefront` | active | software | 0 | 2 | 2 | 0 | 40 / 44 |
-| 10 | `kind-robots` | active | software | 0 | 0 | 3 | 0 | 116 / 119 |
+| 10 | `kind-robots` | active | software | 0 | 0 | 3 | 0 | 118 / 121 |
 | 11 | `rainbow-butterflies` | active | software | 0 | 0 | 3 | 0 | 50 / 53 |
 | 12 | `scene-animator` | active | software | 0 | 0 | 1 | 0 | 10 / 11 |
 | 13 | `text-generation` | active | software | 0 | 0 | 1 | 0 | 8 / 9 |
@@ -31,13 +31,13 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 15 | `model-builder` | active | software | 0 | 0 | 0 | 1 | 44 / 45 |
 | 16 | `lora-ingestion` | active | infrastructure | 0 | 0 | 1 | 0 | 16 / 17 |
 | 17 | `conductor` | active | software | 0 | 0 | 4 | 0 | 190 / 194 |
-| 18 | `storybook` | active | software | 3 | 2 | 5 | 0 | 58 / 68 |
+| 18 | `storybook` | active | software | 2 | 2 | 5 | 1 | 58 / 68 |
 | 19 | `coat-dance` | active | content | 1 | 0 | 1 | 0 | 3 / 10 |
 | 20 | `conductor-app` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
 | 21 | `appmaker` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
 | 22 | `media-watchlist` | active | software | 0 | 0 | 1 | 0 | 18 / 19 |
 | 23 | `ruler-hooked` | active | software | 1 | 0 | 4 | 0 | 34 / 39 |
-| 24 | `animation-manager` | continuous | software | 1 | 0 | 0 | 2 | 18 / 22 |
+| 24 | `animation-manager` | continuous | software | 2 | 0 | 0 | 1 | 18 / 22 |
 | 25 | `dream-cycle` | continuous | software | 2 | 0 | 0 | 0 | 31 / 33 |
 | — | `ai-art-academy` | finished | software | 0 | 0 | 0 | 0 | 79 / 79 |
 | — | `alexa-integration` | paused | software | 0 | 0 | 1 | 0 | 21 / 22 |
