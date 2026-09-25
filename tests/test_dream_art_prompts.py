@@ -36,7 +36,7 @@ SEASONING = dict(
 
 def test_item_prompt_leads_with_the_object_not_its_function():
     prompt = dap.reward_prompt(**LADLE)
-    assert prompt.startswith("a single Tidefortune Ladle, one object alone in frame")
+    assert prompt.startswith("a single Tidefortune Ladle, one object alone")
     assert prompt.index("dented tin ladle") < prompt.index("hidden fortune")
 
 
@@ -113,7 +113,7 @@ def test_world_prompt_keeps_the_setting_as_subject():
     prompt = dap.world_prompt(
         "Choir of the Drowned Kingdom", "A submerged kingdom sings.",
         "Sea-gods sing.", "a submerged amphitheater of coral columns")
-    assert "the landscape dominates the frame" in prompt
+    assert "an expansive landscape" in prompt
     assert "distant figures near the horizon giving it scale" in prompt
     # The intent survives; the condition must not come back.
     assert "any figures present" not in prompt
@@ -125,7 +125,7 @@ def test_location_prompt_keeps_figures_incidental_to_the_architecture():
         "The Sunken Cantata", "a submerged amphitheater of coral columns",
         "drowned acoustics", "a hymn unravels a listener",
         "Choir of the Drowned Kingdom", "Sea-gods sing.")
-    assert "the environment fills the frame" in prompt
+    assert "expansive architecture" in prompt
     assert "distant figures near the horizon giving it scale" in prompt
     assert "any figures present" not in prompt
     assert "only for scale" not in prompt
@@ -188,7 +188,7 @@ def test_prompts_are_capped_at_a_clause_boundary():
 
 def test_item_prompt_does_not_double_the_article_on_a_the_name():
     prompt = dap.reward_prompt(**{**LADLE, "name": "The Corsair's Encore"})
-    assert prompt.startswith("The Corsair's Encore, one object alone in frame")
+    assert prompt.startswith("The Corsair's Encore, one object alone")
     assert "a single The" not in prompt
 
 
@@ -238,3 +238,13 @@ def test_the_unpeopled_direction_names_no_people_at_all():
             f"{banned!r} in the unpeopled direction is an order for it"
         )
     assert "unpeopled" in text
+
+
+def test_generated_directions_do_not_request_frames_or_pictures():
+    import re
+
+    prompts = _all_prompt_kinds() + list(dap.TREATMENTS)
+    for prompt in prompts:
+        assert not re.search(r"\b(?:frame|picture)\b", prompt, re.I), prompt
+    assert "close-up" in dap.character_prompt("A", "b", "c", "d", "World", "Sea-gods sing.")
+    assert "wrists cropped tightly" in dap.reward_prompt(**SEASONING)

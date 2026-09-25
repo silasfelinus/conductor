@@ -86,7 +86,7 @@ TREATMENTS = (
     "symmetrical centred framing, cold monochrome palette, one saturated accent colour",
     "backlit contre-jour staging, dust and moisture in the beam, deep bronze shadows",
     "high vantage looking down a steep drop, cool blue shade against a hot lit floor",
-    "night scene lit only by sources inside the frame, deep blacks, small warm pools",
+    "night scene lit by nearby lamps and lanterns, deep blacks, small warm pools",
 )
 
 CAST_DIRECTION = (
@@ -102,7 +102,7 @@ CAST_DIRECTION = (
 # commissioning the very crowd the 2026-08-08 sweep existed to remove. Silas
 # found the leftovers still rendering on 2026-09-19, six weeks later.
 UNPEOPLED = (
-    "an unpeopled frame, the subject alone, the space around it bare and deserted"
+    "an unpeopled setting, the subject alone, the space around it bare and deserted"
 )
 
 # Same rule, text instead of people: naming text to a Qwen-lineage model is how
@@ -191,7 +191,7 @@ def world_prompt(title: str, idea: str, vibe_line: str, vibe_art: str = "",
         # artPromptContract's CONDITIONAL_PATTERNS never matched it either. 103
         # dream records carried it past every check before anyone looked at a
         # picture (2026-09-20).
-        "the landscape dominates the frame, a few distant figures near the "
+        "an expansive landscape, a few distant figures near the "
         "horizon giving it scale",
         style or style_for_world(title),
         NO_TEXT,
@@ -212,7 +212,7 @@ def location_prompt(title: str, art_direction: str, known_for: str,
         _world_context(world_title, vibe_line),
         CARD_FRAMING,
         # Same fix as world_prompt above: a fact, not a condition.
-        "architectural establishing shot, the environment fills the frame, a few "
+        "architectural establishing shot, expansive architecture, a few "
         "distant figures near the horizon giving it scale",
         style or style_for_world(world_title),
         NO_TEXT,
@@ -229,7 +229,7 @@ def character_prompt(name: str, look: str, role_drive: str, carries: str,
         f"the bearing of someone driven by this: {_clean(role_drive)}" if role_drive else "",
         _world_context(world_title, vibe_line),
         CARD_FRAMING,
-        "single figure, three-quarter view from the waist up, filling most of the frame, "
+        "single figure, three-quarter view from the waist up, close-up, "
         "sharply separated from a simple world-specific background",
         style or style_for_world(world_title),
         NO_TEXT,
@@ -276,20 +276,20 @@ def reward_prompt(name: str, reward_type: str, look: str, grants: str,
             # positive conditioning on 68 SKILL rewards. The positive form of
             # the same intent is a crop: say where the frame stops.
             "tight centered composition on the effect, cropped close so that only one "
-            "pair of hands enters at the very edge of the frame to work it, "
-            "everything beyond that crop outside the picture",
+            "pair of hands enters at the very edge to work it, "
+            "wrists cropped tightly",
             f"rendered with the weight given a {rarity} ability" if rarity else "",
             style,
             NO_TEXT,
         )
 
     return _join(
-        f"{_a(name)}, one object alone in frame",
+        f"{_a(name)}, one object alone",
         look or f"a crafted object whose form makes plain what it does: {grants}",
         f"its purpose readable in its shape: {grants}" if grants and look else "",
         _world_context(world_title, vibe_line),
         CARD_FRAMING,
-        "museum-like object study, the object centered and filling the frame, resting on a "
+        "museum-like object study, the object centered in close-up, resting on a "
         "bare surface or floating against a simple ground, close enough to read material and wear",
         UNPEOPLED,
         f"rendered with the reverence given a {rarity} artifact" if rarity else "",
