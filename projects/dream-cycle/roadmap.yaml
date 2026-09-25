@@ -788,3 +788,27 @@ tasks:
   claimed_by: null
   claimed_at: null
   updated: '2026-09-23T22:05:18Z'
+
+- id: t-034
+  milestone: m5
+  title: "Wire dream_prose_quality + check_dream_creative_contract into build_dream_proposal.py's --from-json path"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from this session's 2026-09-29-gillstack authoring cycle. `build_dream_proposal.py
+    --from-json --dry-run` only runs `build_dream_proposal_core.validate_proposal` (schema,
+    invention, title-shape, structural-repetition checks) -- it does NOT run
+    `dream_prose_quality.complaints()` or `check_dream_creative_contract.py`'s vocabulary-
+    overlap check, even though CLAUDE.md documents the former as "the contract" for card
+    copy and CI runs both. This session's proposal passed a clean local --dry-run, was
+    pushed, and only then failed CI's `creative-contract` job (5+ shared 7-letter-plus words
+    with a recent premise -- generic connective words, not real thematic overlap, but the
+    check doesn't distinguish). Caught and fixed in the same session, but the gap means
+    every future authoring session risks the same one-round-trip surprise. Fold both checks
+    into --from-json (at least as a --dry-run-time warning, ideally a hard failure matching
+    CI) so authoring-time validation actually matches what CI enforces.
+  claimed_by: null
+  claimed_at: null
+  updated: '2026-09-25T23:03:39Z'
