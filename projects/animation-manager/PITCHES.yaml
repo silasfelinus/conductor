@@ -1134,7 +1134,7 @@ pitches:
 
   - id: cairn-balancing
     title: Cairn Balancing
-    status: pitched
+    status: candidate
     priority: 24
     surprise: >
       A small clearing of flat river stones sits empty. One at a time, an unseen hand sets a
@@ -1204,6 +1204,18 @@ pitches:
       - the stack's lean visibly increases as it grows, and the eventual topple reads as a genuine physical failure rather than an instant swap to a "scattered" state
       - the scatter-and-settle phase brings every stone to a full stop before the clearing fade-and-rebuild begins, and pointer-nudge/click-triggered topples never block underlying page input
       - solver iteration count, stone pool size, and per-frame simulation cost stay fixed regardless of viewport size or how many topple cycles have run this session
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/cairn-balancing.vue
+        pull_request: silasfelinus/kind_robots#3046
+        released_at: '2026-09-25T23:15:37Z'
+        commit: 9c4b6817bcb50e74623f7a9a41b38424ec4ac001
+        verification:
+          - Contract verifiers
+          - TypeScript
+          - layout-contract
+          - facet-catalog
   - id: zoetrope-lantern-drum
     title: Zoetrope Lantern Drum
     status: pitched
