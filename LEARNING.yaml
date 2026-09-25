@@ -16455,3 +16455,15 @@ records:
     same-task-id lookup in a different repo) -- always record implementation_pr at close-out
     time so a later drift check has something to verify against directly instead of falling
     back to a repo-guessing search.
+- date: 2026-09-25
+  project: animation-manager
+  task: t-007
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A background subagent asked to poll its own PR's CI and hand back when green can
+    loop its SubagentHandback if it runs its own internal Monitor task -- tell it up front
+    to cancel that Monitor before the final handback, not just to stop when done, or the
+    coordinator ends up re-processing the same report repeatedly.
