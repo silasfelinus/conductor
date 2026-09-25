@@ -71,3 +71,5 @@ home watcher can process `checkpoints/import` with the same catalog/sort/upsert
 pipeline as `Lora/import`. This copy includes Resource emission for checkpoints,
 diffusion models, text encoders, VAEs, ControlNets, hypernetworks, embeddings,
 pixel upscalers, and latent upscalers.
+
+Re-synced 2026-09-25 (`scan_loras.py`) for conductor session sweep 2026-09-25: pick up ACTION/STYLE tag categories added ahead of CHARACTER so pose/style LoRAs stop disappearing from purpose-specific randomizer pools. Source: kind_robots@main.
