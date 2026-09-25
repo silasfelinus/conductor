@@ -298,16 +298,22 @@ def test_main_exit_code_one_when_flagged(tmp_path, monkeypatch):
 
 
 def test_main_exit_code_zero_when_clean(tmp_path, monkeypatch):
+    # daily_last_checked must be computed relative to the real wall clock, not
+    # hardcoded: main() calls scan() with no `now` override, so it always reads
+    # real current time. A fixed past date drifts into "stale" as days pass --
+    # this test failed for real on 2026-09-25 for exactly that reason with a
+    # '2026-09-23' literal here.
+    today = staleness.today_pacific().isoformat()
     write_roadmap(
         tmp_path,
         "alpha",
-        """\
+        f"""\
         tasks:
           - id: t-007
             daily_commitment: true
             recurring: true
             status: ready
-            daily_last_checked: '2026-09-23'
+            daily_last_checked: '{today}'
         """,
     )
     write_overrides(tmp_path, [("alpha", "active")])
