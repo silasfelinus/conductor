@@ -2100,3 +2100,18 @@ tasks:
   claimed_by: openai-scheduled-2026-09-24T161905Z-storybook-t068-a11
   claimed_at: '2026-09-24T16:19:05Z'
   implementation_pr: 'silasfelinus/kind_robots#3045'
+
+- id: t-069
+  milestone: m7
+  title: "Wire verifyDeletedGuardReferences.mjs / verifyVerifierFilenameReferences.mjs into CI"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from t-068 (kind_robots PR #3045, merged 2026-09-25). Both new guard-staleness
+    checkers ship with a working --self-test but are not yet invoked by any CI workflow or
+    package.json script, so they cannot actually catch a future stale-reference regression
+    until they run automatically. Add them to the relevant lint/guard npm script (or a
+    dedicated CI step) the same way the project's other verify*.mjs checks are wired in.
+  updated: '2026-09-25T23:03:39Z'
