@@ -1,0 +1,14 @@
+version: 1
+project: kind-robots
+task: t-121
+operation: review
+owner: worker
+session: 20260925T003800Z-kind-robots-t121-chatgpt-9f2a
+updated: '2026-09-25T00:52:00Z'
+note: >-
+  Implemented the scoped Resource Gallery repair on worker/kind-robots-t-121-20260925t003800z-9f2a:
+  hide mature Resource rows when the account preference is off; send Bearer auth when loading
+  generated ArtImage bytes as a source; add owner/admin two-press delete for generated Resource
+  gallery images; and stop Resource preview regeneration after the ArtJob is successfully queued.
+  Current main already contains the claim-time and requeue-time frame prompt repair used by the
+  failed dream-cycle jobs, so this branch does not duplicate that logic.
