@@ -469,7 +469,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 52
     stakes: reversible
@@ -746,7 +746,17 @@ tasks:
       gallery private-art-by-default, #3028 storybook/t-066 stale-reference fix), all
       unrelated surfaces. No model-builder-specific regression audit warranted -- verified no-
       op, re-arming to ready.
-    updated: '2026-09-23T23:57:35Z'
+
+      State reconciliation (session start sweep, 2026-09-25): status was still 'claimed'
+      again despite cycle 101's own note already saying 're-arming to ready', and
+      claimed_by/claimed_at already null. Flagged by check_pr_merged_drift.py (which read
+      it via the still-merged implementation_pr silasfelinus/kind_robots#2742, merged
+      2026-09-15). This is the SECOND time this exact drift has hit this task -- see the
+      2026-09-2x reconciliation note above for the first occurrence -- so the underlying
+      writer that appends cycle notes appears to sometimes skip the matching `status: ready`
+      field write. Filed conductor/t-195 to find and fix the root cause rather than
+      patching state a third time. Flipping to ready now; claimed_by/owner left as-is.
+    updated: '2026-09-25T22:05:00Z'
     owner: null
     claimed_by: null
     claimed_at: null
