@@ -332,3 +332,9 @@ def test_an_ordinary_when_is_not_a_conditional():
     scene = "a market at dusk when the lanterns are lit, warm crowded stalls"
     assert "conditional-instruction" not in rn.violations(scene)
     assert rn.repair(scene) == scene
+
+
+def test_new_repair_directions_do_not_introduce_frame_objects():
+    for prompt in (RING, PENNY_TAIL, SCALE_FIGURES, SETTING_IS_SUBJECT):
+        fixed = rn.repair(prompt)
+        assert not re.search(r"\b(?:frame|picture)\b", fixed, re.I), fixed
