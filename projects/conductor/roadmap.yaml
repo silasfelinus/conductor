@@ -4055,5 +4055,32 @@ tasks:
   updated: '2026-09-23T12:11:43Z'
   implementation_pr: 'silasfelinus/conductor#5116'
 
+- id: t-195
+  milestone: m6
+  title: 'Find why model-builder/t-029 repeatedly sticks at status: claimed after its cycle note already says re-arming to ready'
+  status: ready
+  gate_human: false
+  stakes: reversible
+  owner:
+  passes: 0
+  note: >-
+    model-builder/t-029 (a recurring regression-audit grinder) has now drifted twice: its
+    own cycle note text says "re-arming to ready" while the roadmap `status:` field stays
+    stuck at `claimed` with `claimed_by`/`claimed_at` already null -- caught both times only
+    by check_pr_merged_drift.py reading a stale implementation_pr, not by anything that
+    actually watches recurring-task re-arm correctness. First occurrence reconciled around
+    2026-09-2x (see the task's own note history); second occurrence reconciled during the
+    2026-09-25 session-start sweep.
+
+    Find whichever writer appends these scheduled-cycle notes (likely something under
+    scripts/ invoked by the hourly Conductor Agent Routine for recurring/continuous-lifecycle
+    tasks) and check whether it can write the note text and the status field in two separate
+    steps that can land inconsistently (e.g. a crash/interruption between them, or a race
+    with another concurrent writer). Fix the root cause -- either make the write atomic, or
+    add a mechanical check (a natural companion to check_pr_merged_drift.py /
+    check_daily_commitment_staleness.py) that flags a recurring task whose note says
+    "re-arming to ready" more recently than its `status:` field was last set to `ready`.
+  updated: '2026-09-25T22:10:00Z'
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
