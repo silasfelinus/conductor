@@ -16442,3 +16442,16 @@ records:
   failure_category: formatting
   lesson: Binary image fetches that bypass performFetch must carry the same Bearer token as normal API
     calls, and UI changes should be checked against the Prettier ratchet before the first CI pass.
+- date: 2026-09-25
+  project: storybook
+  task: t-068
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: A closed-review task with no implementation_pr recorded is invisible to merged-PR
+    drift checks that hit a lookup failure elsewhere (here, an unrelated 403 on a
+    same-task-id lookup in a different repo) -- always record implementation_pr at close-out
+    time so a later drift check has something to verify against directly instead of falling
+    back to a repo-guessing search.
