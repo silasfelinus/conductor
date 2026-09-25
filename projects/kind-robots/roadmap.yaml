@@ -2987,10 +2987,10 @@ tasks:
 - id: t-122
   milestone: m6
   title: 'Audit remaining Art manager tabs for unnecessary full-index hydration'
-  status: ready
+  status: claimed
   gate_human: false
   stakes: reversible
-  owner:
+  owner: worker
   passes: 0
   note: >-
     Kaizen from kind-robots/t-120 (Silas, 2026-09-24). Generate no longer waits on
@@ -3002,7 +3002,9 @@ tasks:
     Rescued from stranded branch worker/kind-robots-t-120-kaizen-20260924T2218Z-b7e4,
     which committed this task under a now-reused id (t-121) and was never opened as
     a PR; re-added here under a fresh id via next_free_task_id.py.
-  updated: '2026-09-25T21:55:00Z'
+  updated: '2026-09-25T23:20:52Z'
+  claimed_by: openai-scheduled-2026-09-25T232052Z-kind-robots-t122-a11
+  claimed_at: '2026-09-25T23:20:52Z'
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
