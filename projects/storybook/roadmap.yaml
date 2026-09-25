@@ -2073,7 +2073,7 @@ tasks:
 - id: t-068
   milestone: m7
   title: "Add a mechanical check for stale filename references to guards deleted in a cleanup pass"
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -2086,6 +2086,17 @@ tasks:
     the deleted filenames and fails/flags any hit that isn't already phrased in the past
     tense (or otherwise dated/historical), so a future cleanup pass doesn't need its own
     manual sweep task to catch this.
-  updated: '2026-09-24T16:32:00Z'
+
+    Reconciliation (conductor scheduled sweep, state-reconciliation duty): kind_robots PR
+    #3045 merged 2026-09-25T21:52:22Z (squash 53f12bb..., rescued from the stranded
+    worker/storybook-t-068-openai-scheduled-... branch onto current main). Adds
+    utils/scripts/verifyDeletedGuardReferences.mjs and verifyVerifierFilenameReferences.mjs,
+    both with --self-test passing. Roadmap was still status: review with no
+    implementation_pr recorded -- check_pr_merged_drift.py's lookup this session hit an
+    unrelated 403 on silasfelinus/PortOS for this same task id, which was a red herring; the
+    real merged PR was found directly via kind_robots' own git log. Neither script is wired
+    into CI yet per the PR's own Flags for Reviewer -- worth a follow-up kaizen task.
+  updated: '2026-09-25T23:03:39Z'
   claimed_by: openai-scheduled-2026-09-24T161905Z-storybook-t068-a11
   claimed_at: '2026-09-24T16:19:05Z'
+  implementation_pr: 'silasfelinus/kind_robots#3045'
