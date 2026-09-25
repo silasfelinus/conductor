@@ -4082,5 +4082,29 @@ tasks:
     "re-arming to ready" more recently than its `status:` field was last set to `ready`.
   updated: '2026-09-25T22:10:00Z'
 
+- id: t-196
+  milestone: m1
+  title: "Extend set_task_field.py / close_task.py's --set allow-list to cover daily-commitment ledger fields"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from this session's animation-manager/t-007 cycle. `set_task_field.py` and
+    `close_task.py --set` both restrict writes to a fixed allow-list (approved_by_human,
+    claimed_at, claimed_by, depends_on, gate_human, implementation_pr, note, owner, passes,
+    retry_context, soft_gate, stakes, status, updated) that does not include
+    `daily_last_checked`/`daily_last_completed` -- the two fields
+    `check_daily_commitment_staleness.py` and every daily_commitment task's own convention
+    depend on. Every cycle that advances them (this one included) has to hand-edit the
+    roadmap YAML directly instead of going through the same fetch-fresh,
+    collision-resistant git plumbing that close_task.py provides for status/
+    implementation_pr -- exactly the kind of direct-edit gap the claim_task.py/close_task.py
+    tooling exists to close. Add both fields (date-string validated, same shape as other
+    ISO-date fields) to the allow-list in both scripts.
+  claimed_by: null
+  claimed_at: null
+  updated: '2026-09-25T23:20:00Z'
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
