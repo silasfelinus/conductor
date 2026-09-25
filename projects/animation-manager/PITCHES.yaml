@@ -1049,7 +1049,7 @@ pitches:
 
   - id: harmonograph-sand-table
     title: Harmonograph Sand Table
-    status: pitched
+    status: candidate
     priority: 23
     surprise: >
       A tabletop sand-drawing device suspended from two decaying pendulums traces a
@@ -1108,6 +1108,29 @@ pitches:
       - the rake-sweep erase-and-restart cycle completes within the design's target duration and never leaves the bed permanently fully traced or permanently blank
       - pointer nudge perturbation and click-triggered forced sweeps never block underlying page input, and the forced sweep is rate-limited
       - traced-segment buffer size and rake sweep cost stay fixed regardless of viewport size or elapsed session time
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/harmonograph-sand-table.vue
+        pull_request: silasfelinus/kind_robots#3039
+        released_at: '2026-09-24T15:00:09Z'
+        commit: 178384766ac94efb27c5e64d40ea10e185ac39de
+        verification:
+          - Contract Tests
+          - TypeScript
+          - Layout
+          - Schema Migration Parity
+          - Project Architecture
+        notes: >-
+          Shipped 2026-09-24 by the OpenAI Worker's scheduled daily-creative run
+          (kind_robots PR #3039: component + animationCatalog.ts registration in the
+          same PR, all CI green, merged to main at the released_at timestamp above,
+          verified via GitHub MCP). This release-ledger entry was completed one cycle
+          late (session 2026-09-25) because the 2026-09-24T15:17:21Z roadmap closeout
+          deliberately deferred it rather than advancing t-007's daily_last_completed
+          without a matching builds entry -- see t-007's roadmap note and t-022, which
+          tracks making the two a single documented step so this can't split across
+          cycles again.
 
   - id: cairn-balancing
     title: Cairn Balancing
