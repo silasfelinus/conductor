@@ -35,11 +35,11 @@ Deterministic clause surgery, never a rewrite of the subject. It removes the
 offending clause and, where the clause was carrying real intent, states that
 intent positively instead:
 
-  people exclusion   -> "an unpeopled frame, the subject alone, the space
+  people exclusion   -> "an unpeopled setting, the subject alone, the space
                         around it bare and deserted"   (once, only if the
                         prompt does not already say something equivalent)
   text exclusion     -> "every surface bare and unmarked"
-  layout exclusion   -> "one single image filling the frame"
+  layout exclusion   -> "one continuous scene"
   crowd cast clause  -> removed outright (the 2026-08-08 defect)
   art-direction jargon / contextual wrapper -> removed outright
 
@@ -282,7 +282,7 @@ SCALE_FIGURE_CLAUSE = re.compile(
     re.I,
 )
 SCALE_FIGURE_REPLACEMENT = (
-    "the landscape dominates the frame, a few distant figures near the horizon "
+    "an expansive landscape, a few distant figures near the horizon "
     "giving it scale"
 )
 
@@ -305,7 +305,7 @@ RULES: tuple[tuple[str, re.Pattern[str], Optional[str], re.Pattern[str]], ...] =
     (
         "people-negation",
         PEOPLE_CLAUSE,
-        "an unpeopled frame, the subject alone, the space around it bare and deserted",
+        "an unpeopled setting, the subject alone, the space around it bare and deserted",
         re.compile(r"\bunpeopled\b|\bdeserted\b|\buninhabited\b", re.I),
     ),
     (
@@ -317,8 +317,8 @@ RULES: tuple[tuple[str, re.Pattern[str], Optional[str], re.Pattern[str]], ...] =
     (
         "layout-exclusion",
         LAYOUT_CLAUSE,
-        "one single image filling the frame",
-        re.compile(r"\bone single image\b|\bfull-bleed\b|\bedge to edge\b", re.I),
+        "one continuous scene",
+        re.compile(r"\bone continuous scene\b|\bone single image\b|\bfull-bleed\b|\bedge to edge\b", re.I),
     ),
     ("crowd-cast-clause", CROWD_CAST_CLAUSE, None, re.compile(r"(?!)")),
     ("art-direction-jargon", JARGON_CLAUSE, None, re.compile(r"(?!)")),

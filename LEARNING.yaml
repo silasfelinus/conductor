@@ -16432,3 +16432,13 @@ records:
   lesson: For image-led game-state views, reuse the canonical composited scene and live ContentBundle/save
     data rather than creating a second visual/state representation; container-responsive auto-fit grids
     also satisfy the layout contract better than viewport breakpoints inside reusable components.
+- date: 2026-09-25
+  project: kind-robots
+  task: t-121
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: formatting
+  lesson: Binary image fetches that bypass performFetch must carry the same Bearer token as normal API
+    calls, and UI changes should be checked against the Prettier ratchet before the first CI pass.

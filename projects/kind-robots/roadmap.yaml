@@ -2942,10 +2942,9 @@ tasks:
 - id: t-120
   milestone: m6
   title: 'Make Art Generate render immediately without loading the full art archive or heavyweight collection summaries'
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
-  owner: worker
   passes: 0
   note: >-
     Silas, 2026-09-24: /art Generate pauses before the generator appears, then shows
@@ -2954,12 +2953,38 @@ tasks:
     must not require the complete ArtImage index or per-collection counts/previews just
     to render; destination collection metadata may load progressively/lightweight while
     the generation UI becomes usable. Preserve Gallery's scoped progressive loading.
-  updated: '2026-09-24T22:10:00Z'
+  updated: '2026-09-24T23:17:00Z'
   claimed_by: 20260924T2203Z-kind-robots-t120-chatgpt-b7e4
   claimed_at: '2026-09-24T22:07:00Z'
 
 
 - id: t-121
+  milestone: m6
+  title: 'Fix Resource Gallery maturity hiding, resource image actions, and failed ArtJob handling'
+  status: done
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  note: |-
+    Silas, 2026-09-24: Resource Gallery follow-up from live screenshots.
+
+    1. When mature resources are disabled, omit mature Resource cards entirely instead of rendering one placeholder card per hidden resource.
+    2. In the Resource detail gallery, add a delete icon/action for user-owned/generated gallery images, preserving authorization and confirmation behavior.
+    3. Fix choosing a gallery image as the resource default/source image; the current flow reports a 403 for a generated ArtImage.
+    4. Make "Regenerate art" return to idle as soon as the replacement ArtJob is successfully submitted. The button must not spin until rendering finishes.
+    5. Diagnose the 10 currently failed ArtJobs shown in the queue and fix any shared code-path regressions rather than blindly requeueing. The screenshot shows several dream-cycle failures rejected by art-prompt validation around overloaded "frame" wording, one invalid-argument/path-style failure, and one relay recovery record; preserve historical failures while making safe retries possible.
+
+    Keep the changes scoped to Resource Gallery/resource-art behavior and shared ArtJob validation/recovery paths needed to address these failures.
+
+    Implemented the scoped Resource Gallery repair on worker/kind-robots-t-121-20260925t003800z-9f2a: hide mature Resource rows when the account preference is off; send Bearer auth when loading generated ArtImage bytes as a source; add owner/admin two-press delete for generated Resource gallery images; and stop Resource preview regeneration after the ArtJob is successfully queued. Current main already contains the claim-time and requeue-time frame prompt repair used by the failed dream-cycle jobs, so this branch does not duplicate that logic.
+
+    Merged silasfelinus/kind_robots#3042 after all 28 GitHub Actions workflows on the final head completed successfully. Resource Gallery now omits mature rows when mature browsing is off, owner/private gallery images load as generation sources with Bearer auth, generated Resource gallery ArtImages have a confirmed delete action, and Resource preview regeneration returns to idle after queue submission. The failed dream-cycle cohort's legacy frame wording is already repaired by current main's claim/requeue normalization paths; historical failed rows were left intact rather than bulk-requeued.
+  updated: '2026-09-25T15:11:00Z'
+  claimed_by: 20260925T003800Z-kind-robots-t121-chatgpt-9f2a
+  claimed_at: '2026-09-25T00:45:00Z'
+
+
+- id: t-122
   milestone: m6
   title: 'Audit remaining Art manager tabs for unnecessary full-index hydration'
   status: ready
