@@ -2961,7 +2961,7 @@ tasks:
 - id: t-121
   milestone: m6
   title: 'Fix Resource Gallery maturity hiding, resource image actions, and failed ArtJob handling'
-  status: ready
+  status: claimed
   gate_human: false
   stakes: reversible
   passes: 0
@@ -2975,7 +2975,10 @@ tasks:
     5. Diagnose the 10 currently failed ArtJobs shown in the queue and fix any shared code-path regressions rather than blindly requeueing. The screenshot shows several dream-cycle failures rejected by art-prompt validation around overloaded "frame" wording, one invalid-argument/path-style failure, and one relay recovery record; preserve historical failures while making safe retries possible.
 
     Keep the changes scoped to Resource Gallery/resource-art behavior and shared ArtJob validation/recovery paths needed to address these failures.
-  updated: '2026-09-25T00:38:00Z'
+  updated: '2026-09-25T00:45:00Z'
+  owner: worker
+  claimed_by: 20260925T003800Z-kind-robots-t121-chatgpt-9f2a
+  claimed_at: '2026-09-25T00:45:00Z'
 
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
