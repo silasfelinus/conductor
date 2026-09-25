@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-25T23:09:44Z
+Generated: 2026-09-25T23:21:37Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1144**
-- Outcomes: blocked: 19, cancelled: 2, done: 1123
+- Closed tasks recorded: **1145**
+- Outcomes: blocked: 19, cancelled: 2, done: 1124
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -17,7 +17,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 |---|---|---|
 | ai-art-academy | 73 | 99% |
 | alexa-integration | 6 | 100% |
-| animation-manager | 19 | 95% |
+| animation-manager | 20 | 95% |
 | animation-studio | 2 | 50% |
 | appmaker | 11 | 100% |
 | approval-portal | 2 | 0% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1127 | 99% |
+| software | 1128 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-25 `animation-manager/t-007` — A background subagent asked to poll its own PR's CI and hand back when green can loop its SubagentHandback if it runs its own internal Monitor task -- tell it up front to cancel that Monitor before the final handback, not just to stop when done, or the coordinator ends up re-processing the same report repeatedly.
 - 2026-09-25 `storybook/t-068` — A closed-review task with no implementation_pr recorded is invisible to merged-PR drift checks that hit a lookup failure elsewhere (here, an unrelated 403 on a same-task-id lookup in a different repo) -- always record implementation_pr at close-out time so a later drift check has something to verify against directly instead of falling back to a repo-guessing search.
 - 2026-09-25 `kind-robots/t-121` — Binary image fetches that bypass performFetch must carry the same Bearer token as normal API calls, and UI changes should be checked against the Prettier ratchet before the first CI pass.
 - 2026-09-24 `ruler-hooked/t-030` — For image-led game-state views, reuse the canonical composited scene and live ContentBundle/save data rather than creating a second visual/state representation; container-responsive auto-fit grids also satisfy the layout contract better than viewport breakpoints inside reusable components.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-23 `dream-cycle/t-033` — The weekly site audit's orphan-directory pass correctly found server/api/dream-relations/ was undocumented, but its 'wired into real UI' read was wrong -- always trace named consumer files' actual fetch/import calls (not just their filenames appearing near the feature) before repeating an audit's wiring claim. Here, the named UI files only read DreamRelation via a Prisma include on a different endpoint, and a repo-wide grep for the write endpoints and prisma.dreamRelation.create/upsert found zero callers anywhere -- the CRUD surface is fully built and guarded but currently has no caller at all, live or seeded.
 - 2026-09-23 `storybook/t-066` — Clean first-pass kaizen fix: a stale-comment cleanup task is fast to verify fully (guard's own test + prettier + a repo-wide grep for the deleted filenames) even without a full local eslint environment -- worth doing that full grep sweep rather than trusting the single file diff, since a header comment mentioning a deleted file can easily have a sibling reference elsewhere in the same file.
 - 2026-09-23 `animation-manager/t-019-followup` — Two worker/* branches (worker/animation-manager-t019-final, superseded, and worker/animation-manager-t019-digest-final, the cleaned-up final version) sat with a merged PR (#5136) that select_role.py's own scan missed on the run that found the branches -- always re-check list_pull_requests by head branch before opening a new PR from an existing worker/* branch, since a PR can exist even when the role-selection script reports zero reviewable PRs.
-- 2026-09-23 `animation-manager/t-021` — Three straight passes failed on lint/format ratchet gates, not the actual helper design (which was accepted as correct from pass 1) -- pass 1 was ESLint escape/regex issues, pass 2 was Prettier on both new files, pass 3 was Prettier on only one of the two new files (a partial fix, not a fresh regression). A connector-only Worker session retrying a ratchet failure needs to actually run `npm run test:lint-ratchet && npm run test:prettier-ratchet` locally after its fix and read the output, not just apply a plausible-looking `prettier --write`/manual edit and repush blind -- the same gate class recurring three times on two small new files suggests the retry loop wasn't verifying its own fix before pushing.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-25T23:09:44Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-25T23:21:37Z_
