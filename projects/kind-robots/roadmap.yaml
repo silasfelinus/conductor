@@ -2958,5 +2958,25 @@ tasks:
   claimed_at: '2026-09-24T22:07:00Z'
 
 
+- id: t-121
+  milestone: m6
+  title: 'Fix Resource Gallery maturity hiding, resource image actions, and failed ArtJob handling'
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  note: |-
+    Silas, 2026-09-24: Resource Gallery follow-up from live screenshots.
+
+    1. When mature resources are disabled, omit mature Resource cards entirely instead of rendering one placeholder card per hidden resource.
+    2. In the Resource detail gallery, add a delete icon/action for user-owned/generated gallery images, preserving authorization and confirmation behavior.
+    3. Fix choosing a gallery image as the resource default/source image; the current flow reports a 403 for a generated ArtImage.
+    4. Make "Regenerate art" return to idle as soon as the replacement ArtJob is successfully submitted. The button must not spin until rendering finishes.
+    5. Diagnose the 10 currently failed ArtJobs shown in the queue and fix any shared code-path regressions rather than blindly requeueing. The screenshot shows several dream-cycle failures rejected by art-prompt validation around overloaded "frame" wording, one invalid-argument/path-style failure, and one relay recovery record; preserve historical failures while making safe retries possible.
+
+    Keep the changes scoped to Resource Gallery/resource-art behavior and shared ArtJob validation/recovery paths needed to address these failures.
+  updated: '2026-09-25T00:38:00Z'
+
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
