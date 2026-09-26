@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-26T23:19:49Z
+Generated: 2026-09-26T23:25:24Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1159**
-- Outcomes: blocked: 19, cancelled: 2, done: 1138
+- Closed tasks recorded: **1160**
+- Outcomes: blocked: 19, cancelled: 2, done: 1139
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -65,20 +65,20 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | superkate-services-calculator | 12 | 100% |
 | taskmaster | 3 | 100% |
 | text-generation | 7 | 100% |
-| tzaddik-gallery | 1 | 100% |
+| tzaddik-gallery | 2 | 100% |
 
 ## By kind
 
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1142 | 99% |
+| software | 1143 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
-| quality | 42 |
+| quality | 43 |
 | transient | 18 |
 | actionable | 17 |
 | scope | 3 |
@@ -87,13 +87,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - project `coat-dance` — 11% success over 9 closed tasks; aim the next kaizen task here
 - kind `content` — 47% success over 17 closed tasks; aim the next kaizen task here
-- failure category `quality` — 42 occurrences; look for the shared cause across its records
+- failure category `quality` — 43 occurrences; look for the shared cause across its records
 - failure category `transient` — 18 occurrences; look for the shared cause across its records
 - failure category `actionable` — 17 occurrences; look for the shared cause across its records
 - failure category `scope` — 3 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-09-26 `tzaddik-gallery/t-003` — A schema.prisma change without a committed `npx prisma generate` diff fails test:generated-client-parity every time and is a pure mechanical fix -- when retry_context names the exact expected file list, regenerating and verifying locally before re-pushing resolves it in one pass with no need to touch the schema. Also: closing a task to done with dependents whose depends_on is now satisfied requires re-running resolve_deps.py in the same close-out PR, or the audit CI check will refuse to merge ("resolver should promote this task to ready") -- close_task.py does not do this automatically.
 - 2026-09-26 `humboldt-scoop-cms/t-043` — The quote form's poopstakes checkbox has no address field to key a 'household' on (quote_requests only carries city) -- a naive implementation of the task note's literal 'household key (the property address)' would have been unbuildable for the common case of a lead who hasn't signed up yet. Tiering the household key (customer's property address, else normalized phone, else email) and recording which tier was used per winner made the ambiguous spec buildable without guessing silently; when a task note names a data field that doesn't actually exist on the row it's describing, build a documented fallback rather than blocking on it.
 - 2026-09-26 `ruler-hooked/t-043` — A worker/* branch can be fully implemented, correctly scoped, and even have its roadmap task set to status: review, and still never get a PR opened if create_pull_request fails mid-session -- check_pr_merged_drift.py's stranded-branch check caught it two sessions later. Before reimplementing any review/ready task, check for a matching worker/<project>-<task-id>-* branch first; if the diff is complete and scoped, open the PR from it as-is and run full CI rather than trusting the original session's local verification alone.
 - 2026-09-26 `ruler-hooked/t-042` — Extending timingVisualFor()'s existing per-rarity Record pattern (bandColorClass, markerShape) to a third cue (zoneGlyphs) kept the single-source-of-truth property free -- reusing an established per-field Record<Rarity, T> shape, rather than inventing a new lookup mechanism, made the addition a small, low-risk diff and let the selftest assert the new field against the same rarity ladder the existing fields already used.
@@ -103,7 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-26 `dream-cycle/t-034` — build_dream_proposal.py --from-json only ran validate_proposal (schema/invention/ title-shape/structural-repetition) -- it never called dream_prose_quality.complaints() or check_dream_creative_contract.py's entropy-version/premise-vocabulary-overlap/ name-diversity checks, so a proposal could pass a clean local --dry-run and only fail CI's check_dream_creative_contract.py --all-open job after being pushed (the 2026-09-29-gillstack kaizen this task came from). Fixed by adding creative_contract_complaints() to build_dream_proposal_core.py, mirroring check_dream_creative_contract.validate_path's checks exactly, and wiring it into --from-json: a real write is refused outright on failure (no partial write, matching CI's hard failure) while --dry-run still renders for inspection but reports the failure and returns non-zero. Scoped to --from-json only, not write_proposal/--sample generally, to avoid touching unrelated call sites the task didn't ask about. Needed lazy imports of author_dream_proposal/dream_prose_quality inside the new function (not at module top) because author_dream_proposal imports build_dream_proposal back (as `dreams`) -- a top-level import would have been circular at exec time, since build_dream_proposal_core.py's source is exec'd inside build_dream_proposal_impl.py's namespace before that namespace is fully populated.
 - 2026-09-26 `tzaddik-gallery/t-002` — components/conductor/project-front-page.vue is a reusable page shell that already owns its own kr-surface root and kr-scroll region internally. Wrapping it inside a NEW pages/*.vue file's own template without giving that page file its own root-surface class and scroll region passes eslint/vue-tsc but fails utils/scripts/verifyLayoutContract.ts's root-surface/zero-scroll rules, because the checker scans each page-classified file's own template independently rather than resolving through child components -- and forcing it to pass by adding a second kr-scroll class at the page level would create a genuine nested-scroll region in the rendered DOM, not just satisfy the linter. A brand-new top-level route composing project-front-page needs either its own self-contained scroll wrapper (the music-mentor.vue shape, used here instead) or a documented exception; there is no existing precedent in this codebase of a real routed page reusing that shell as-is.
 - 2026-09-26 `conductor/t-197` — A roadmap task block can carry a duplicate same-indent field key (found live in coloring-book/t-022: two `updated:` keys, one before `note:`, one after) that PyYAML silently resolves via last-key-wins, but set_task_field.py's field locator stopped at the first match and edited the wrong (shadowed) occurrence -- confirmed reproducing via this session's own claim_task.py/close_task.py calls against the live task. Neither validate_roadmaps.py nor verify_result() catches this class of drift, since both only check that a field is present somewhere, not that the edited occurrence is the effective one. Lesson: when a roadmap-editing tool assumes "the" field with a given name is unique within a mapping, that assumption should be enforced (raise on a duplicate) rather than silently relied on -- a line-oriented YAML editor that never re-parses the whole document before locating its target is exactly the shape of tool that can drift from what a real YAML parser would resolve.
-- 2026-09-26 `storybook/t-069` — A new mechanical checker (verifyVerifierFilenameReferences.mjs, t-068) that ships with only a --self-test on synthetic strings can still be badly broken on real repo state -- running it for real, as part of wiring it into CI, found it flagging 16 lines across the actual utils/scripts/ directory (2 genuine stale doc references plus 14 false positives from self-test/.test.ts fixtures and a multi-line historical-context miss). Before wiring any new "scan every file for X" guard into CI, run it once against the real tree, not just its own unit self-test, since the self-test only proves the matching function works on hand-picked strings.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-26T23:19:49Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-26T23:25:24Z_
