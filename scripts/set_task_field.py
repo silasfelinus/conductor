@@ -87,6 +87,8 @@ ALLOWED_FIELDS = {
     "claimed_at",
     "implementation_pr",
     "retry_context",
+    "daily_last_checked",
+    "daily_last_completed",
 }
 # Bare words YAML 1.1 parsers read as booleans; quote them so the value stays a string.
 YAML11_BOOL_WORDS = {"yes", "no", "on", "off", "y", "n"}

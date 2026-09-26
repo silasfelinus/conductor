@@ -112,6 +112,20 @@ def test_claim_fields_are_allowed_and_land_outside_note():
     assert tasks["t-001"]["note"].startswith("Multi-line quoted note.")
 
 
+def test_daily_commitment_ledger_fields_are_allowed_and_land_outside_note():
+    # conductor/t-196: daily_last_checked/daily_last_completed back the
+    # daily_commitment convention (select_role.py, check_daily_commitment_staleness.py)
+    # so they need the same collision-resistant git plumbing as claimed_at/claimed_by
+    # instead of a hand-edit of the roadmap YAML.
+    out = stf.set_task_field_text(ROADMAP, "t-001", "daily_last_checked", "2026-09-26")
+    out = stf.set_task_field_text(out, "t-001", "daily_last_completed", "2026-09-25")
+    tasks = parse_tasks(out)
+    assert tasks["t-001"]["daily_last_checked"] == "2026-09-26"
+    assert tasks["t-001"]["daily_last_completed"] == "2026-09-25"
+    assert "daily_last_checked" not in tasks["t-001"]["note"]
+    assert tasks["t-001"]["note"].startswith("Multi-line quoted note.")
+
+
 def test_replace_folded_note_removes_old_block():
     out = stf.set_task_field_text(ROADMAP, "t-002", "note", "Short replacement note")
     tasks = parse_tasks(out)  # would raise if the edit left invalid YAML behind
