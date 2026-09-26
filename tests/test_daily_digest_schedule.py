@@ -75,5 +75,5 @@ def test_delayed_schedule_cannot_resend_after_watchdog_replacement_succeeds():
 def test_digest_gives_priority_art_a_bounded_same_cycle_window():
     workflow = DIGEST.read_text(encoding="utf-8")
 
-    assert "submit_daily_dream_art.py --wait-timeout 300" in workflow
+    assert "submit_daily_dream_art.py --wait-timeout 1800" in workflow
     assert "continue-on-error: true" in workflow
