@@ -1,0 +1,156 @@
+# Tzaddik Gallery — Design Brief
+
+## Premise
+
+Tzaddik Gallery is a playful Kind Robots pop-culture database built around the
+folkloric idea of 36 righteous people whose existence keeps the world going.
+Here, "tzaddik" is deliberately used as a whimsical editorial label for a "just
+person": someone whose work, courage, generosity, creativity, public service, or
+moral example makes the world feel more habitable.
+
+It is **not** a Jewish religious classification project. A person's religion,
+ethnicity, or relationship to Hasidism is neither a requirement nor a selection
+criterion. The explanation page should acknowledge the concept being borrowed,
+avoid pretending the site's game is authoritative theology, and invite curious
+readers to learn more from reliable sources.
+
+## Core product
+
+The feature has three top-level views:
+
+1. **Current 36** — living people currently in the playful canonical set.
+2. **Past Tzaddik** — historical/deceased people retained as an educational
+   gallery rather than disappearing when they leave the living set.
+3. **About the 36** — explains the conceit, editorial philosophy, sourcing, and
+   the distinction between community reactions and canonical selection.
+
+Every person gets an image-forward card and a detail page. The detail page
+contains a concise sourced biography, the reason they are being proposed,
+Wikipedia/Wikimedia provenance, submitter attribution where relevant, community
+reaction totals, and a clearly visible **controversy / objections** section.
+
+The controversy section is a guardrail against accidental hagiography, not an
+obligation to fabricate a "both sides" paragraph. Include meaningful,
+well-sourced objections, disputes, or harms when they exist. When nothing
+substantial is documented, say less.
+
+## Community mechanics
+
+Authenticated Kind Robots users can submit a candidate and react to candidates
+with an upvote or downvote. Reactions are community signal, not automatic
+membership. New submissions enter a pending/community pool. Editors/admins can
+approve, archive, correct, or promote records.
+
+The initial canonical 36 is an editorial selection. Silas gets the human gate on
+the first set. Future promotion/demotion mechanics can evolve after the core
+experience proves itself.
+
+## Sources and overrides
+
+Wikipedia is the default biographical source. Wikimedia/Wikipedia images are the
+default image source when usable. Each record should retain machine-readable
+source provenance.
+
+Editors may override display copy or imagery, but the override must be explicit
+and must not erase the original source. The UI should be able to communicate
+where the displayed content came from.
+
+The implementation should fetch/refresh source data through a controlled server
+path rather than trusting arbitrary client URLs. Cache enough normalized source
+data that the gallery is not hostage to a Wikipedia request on every page load.
+
+## Initial seeds
+
+Historical examples named by Silas:
+
+- Dolly Parton
+- Steve Irwin
+- Fred Rogers
+- Martin Luther King Jr.
+- Stanislav Petrov, specifically the Soviet officer associated with correctly
+  treating the 1983 missile-warning alert as a false alarm rather than
+  escalating it.
+
+Living suggestions attributed to **Silasfelinus (userId=1)**:
+
+- Cassandra Peterson / Elvira
+- Greta Thunberg
+
+Current living status and source metadata must be verified when records are
+actually ingested, rather than assumed from this planning document.
+
+## Daily discovery roster
+
+Tzaddik Gallery has an ongoing discovery lane inspired by Daily Dream. Once the
+core data model and review surfaces exist, each Pacific day the system prepares
+**20 sourced suggestions: 10 living and 10 deceased**.
+
+Each suggestion includes:
+
+- a compact biography;
+- a short editorial pitch for why the person merits consideration;
+- Wikipedia/Wikimedia source and image provenance;
+- verified living/deceased status;
+- meaningful objections or controversies when documented;
+- enough region/field context to notice when the pool is drifting back toward
+  familiar US/Anglosphere celebrity names;
+- dedupe state against canonical, historical, pending, rejected, deferred, and
+  recently suggested people.
+
+This daily roster is explicitly **human-vetted**. Silas may approve, reject,
+defer, or investigate a suggestion. LLM research does not automatically add a
+person to the canonical 36 or historical gallery. Rejected people should not
+immediately boomerang back into tomorrow's docket.
+
+After the finite gallery build is accepted, this daily research/review loop is
+the reason the Conductor project should transition from `active` to
+`continuous` rather than being marked finished.
+
+## Escaping the Anglosphere gravity well
+
+International breadth is a core editorial feature, not polish. Candidate
+research should deliberately look beyond famous US/UK media figures and include
+people whose impact is primarily known within Africa, Asia, Latin America, the
+Middle East, Oceania, Indigenous communities, and non-English-language public
+spheres.
+
+Breadth should span kinds of contribution too: disaster response, medicine,
+science, education, labor, human rights, conservation, journalism, civic
+infrastructure, mutual aid, arts, diplomacy, and stubborn acts of courage that
+changed outcomes.
+
+The goal is discovery, not a geography quota. Each candidate still needs a
+specific, sourced case for inclusion.
+
+## Product tone
+
+Warm, slightly absurd, image-forward, and educational. The site should be able
+to say "these 36 people are keeping the world running" with a straight enough
+face to make the joke work, while the sourcing underneath is serious.
+
+Avoid saintly visual language, halos, religious costume shorthand, or
+pseudo-Hasidic aesthetics. The design belongs to Kind Robots and pop-culture
+gallery language, not cosplay of a living religion.
+
+## Moderation and safety
+
+- Only authenticated users submit/react.
+- Submission does not equal canonical membership.
+- Admin/editor actions are auditable.
+- Person records must distinguish sourced fact, editorial rationale, community
+  reaction, and objections.
+- Biographical claims and controversies should be source-backed.
+- Do not infer sensitive identity attributes beyond what reliable public
+  sources explicitly establish and what is actually relevant.
+- Wikipedia being the default source does not make it infallible; overrides and
+  editorial review exist for a reason.
+
+## Definition of done
+
+The finite build milestone is done when Kind Robots has a polished responsive
+current-36 gallery, historical gallery, concept page, sourced person detail
+pages, authenticated submissions/reactions, admin moderation and source
+overrides, an internationally researched seed pool, an accepted initial living
+36, a working daily 10-living + 10-deceased human-vetted discovery docket, and
+verified phone/tablet/desktop visual quality. After that acceptance, the project
+continues as a low-priority continuous discovery program.
