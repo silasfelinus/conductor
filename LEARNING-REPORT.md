@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-26T14:14:38Z
+Generated: 2026-09-26T14:16:07Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1153**
-- Outcomes: blocked: 19, cancelled: 2, done: 1132
+- Closed tasks recorded: **1154**
+- Outcomes: blocked: 19, cancelled: 2, done: 1133
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -55,7 +55,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | newsfeed | 20 | 100% |
 | packmaker | 10 | 100% |
 | rainbow-butterflies | 21 | 100% |
-| ruler-hooked | 23 | 100% |
+| ruler-hooked | 24 | 100% |
 | scene-animator | 2 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
@@ -72,7 +72,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1136 | 99% |
+| software | 1137 | 99% |
 
 ## Failure categories
 
@@ -94,6 +94,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-26 `ruler-hooked/t-033` — A note that says 'once Silas has actually played the mechanic and there is real signal' is design guidance, not a hard gate -- the task was still status: ready with gate_human: false, and the three suggested candidates were concrete/specific enough to implement as small, independently reversible, bounded slices rather than waiting speculatively; land one slice per PR, not a combined diff.
 - 2026-09-26 `dream-cycle/t-034` — build_dream_proposal.py --from-json only ran validate_proposal (schema/invention/ title-shape/structural-repetition) -- it never called dream_prose_quality.complaints() or check_dream_creative_contract.py's entropy-version/premise-vocabulary-overlap/ name-diversity checks, so a proposal could pass a clean local --dry-run and only fail CI's check_dream_creative_contract.py --all-open job after being pushed (the 2026-09-29-gillstack kaizen this task came from). Fixed by adding creative_contract_complaints() to build_dream_proposal_core.py, mirroring check_dream_creative_contract.validate_path's checks exactly, and wiring it into --from-json: a real write is refused outright on failure (no partial write, matching CI's hard failure) while --dry-run still renders for inspection but reports the failure and returns non-zero. Scoped to --from-json only, not write_proposal/--sample generally, to avoid touching unrelated call sites the task didn't ask about. Needed lazy imports of author_dream_proposal/dream_prose_quality inside the new function (not at module top) because author_dream_proposal imports build_dream_proposal back (as `dreams`) -- a top-level import would have been circular at exec time, since build_dream_proposal_core.py's source is exec'd inside build_dream_proposal_impl.py's namespace before that namespace is fully populated.
 - 2026-09-26 `tzaddik-gallery/t-002` — components/conductor/project-front-page.vue is a reusable page shell that already owns its own kr-surface root and kr-scroll region internally. Wrapping it inside a NEW pages/*.vue file's own template without giving that page file its own root-surface class and scroll region passes eslint/vue-tsc but fails utils/scripts/verifyLayoutContract.ts's root-surface/zero-scroll rules, because the checker scans each page-classified file's own template independently rather than resolving through child components -- and forcing it to pass by adding a second kr-scroll class at the page level would create a genuine nested-scroll region in the rendered DOM, not just satisfy the linter. A brand-new top-level route composing project-front-page needs either its own self-contained scroll wrapper (the music-mentor.vue shape, used here instead) or a documented exception; there is no existing precedent in this codebase of a real routed page reusing that shell as-is.
 - 2026-09-26 `conductor/t-197` — A roadmap task block can carry a duplicate same-indent field key (found live in coloring-book/t-022: two `updated:` keys, one before `note:`, one after) that PyYAML silently resolves via last-key-wins, but set_task_field.py's field locator stopped at the first match and edited the wrong (shadowed) occurrence -- confirmed reproducing via this session's own claim_task.py/close_task.py calls against the live task. Neither validate_roadmaps.py nor verify_result() catches this class of drift, since both only check that a field is present somewhere, not that the edited occurrence is the effective one. Lesson: when a roadmap-editing tool assumes "the" field with a given name is unique within a mapping, that assumption should be enforced (raise on a duplicate) rather than silently relied on -- a line-oriented YAML editor that never re-parses the whole document before locating its target is exactly the shape of tool that can drift from what a real YAML parser would resolve.
@@ -103,7 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-26 `kind-robots/t-123` — A repo-wide doc fix from a kaizen suggestion is worth doing in the same session even when it ranks below the top priority.yaml project -- the priority order picks which project to work when several have real ready work, it is not a rule against picking up a quick, reversible, already-scoped kaizen task once the higher-ranked project's only ready task is a recurring monitor that was already re-checked minutes earlier with no change.
 - 2026-09-26 `kind-robots/t-122` — A stranded worker branch (implementation done, PR never opened because a prior session's create_pull_request call hit a connector write-safety block) is safe to open as-is without reimplementing -- but re-verify it against a full CI run before merging, not just the one purpose-built verifier the original author ran locally. CI caught a real gap the original commit missed -- verifyMaturityPrivacyContract.ts still pinned the pre-change "activeTab.value !== 'gallery'" substring the diff had removed, even though the author had already updated the sibling verifyGalleryProgressiveRendering.ts for the same rename. One file's test being updated is not evidence every file pinning the same string was.
 - 2026-09-25 `animation-manager/t-007` — A background subagent asked to poll its own PR's CI and hand back when green can loop its SubagentHandback if it runs its own internal Monitor task -- tell it up front to cancel that Monitor before the final handback, not just to stop when done, or the coordinator ends up re-processing the same report repeatedly.
-- 2026-09-25 `storybook/t-068` — A closed-review task with no implementation_pr recorded is invisible to merged-PR drift checks that hit a lookup failure elsewhere (here, an unrelated 403 on a same-task-id lookup in a different repo) -- always record implementation_pr at close-out time so a later drift check has something to verify against directly instead of falling back to a repo-guessing search.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-26T14:14:38Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-26T14:16:07Z_
