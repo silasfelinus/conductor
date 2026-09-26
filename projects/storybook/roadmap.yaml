@@ -476,7 +476,7 @@ tasks:
 - id: t-016
   milestone: m4
   title: "FOR SILAS: visually accept the redesigned Storybook setup and reading experience"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   gate_human: true
@@ -497,7 +497,10 @@ tasks:
     2026-09-12: davinci/t-022 ("FOR SILAS: visually accept the finished Da Vinci experience") is folded into this gate when davinci was retired into storybook -- the life shape is one of the shapes on the same screen, so one acceptance covers both. The redesign this gate now waits on is the card-driven Table/Reading/Ending spec in projects/storybook/docs/storymaker-redesign.md (t-034..t-036), which supersedes the fix/storybook-art-first-setup branch mentioned above. 2026-09-13: this gate is Silas's acceptance of the finished screens and it blocks nothing -- the earlier clause saying mockups "come first" is withdrawn. Build t-034..t-036 functionally, then ask him to look.
 
     2026-09-12: this gate now covers four modes, not four shapes -- open-ended, episodic, structured and taskmaster -- on one Table with one hand. Taskmaster's own route is retired by then (t-047), so accepting this screen is also accepting that its work still feels safe: the real objective visible beside the fiction, and nothing written to a real task without an explicit accept.
-  updated: '2026-09-12T12:00:00Z'
+  updated: '2026-09-26T09:01:04Z'
+  owner: worker
+  claimed_by: claude-scheduled-20260926T090103Z-storybook-t016
+  claimed_at: '2026-09-26T09:01:04Z'
 - id: t-017
   milestone: m4
   title: Add a contract for Storybook object-entry links
