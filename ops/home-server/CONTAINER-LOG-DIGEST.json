@@ -1,105 +1,249 @@
 {
-  "generated_at": "2026-09-25T14:00:01.279321+00:00",
+  "generated_at": "2026-09-26T14:00:02.221747+00:00",
   "host": "alexandria",
   "new": [
     {
       "baseline": null,
-      "container": "ownfoil",
-      "count": 22,
-      "fingerprint": "3aa40483aad7",
-      "sample": "[2026-09-24 21:26:28.930] WARNING (titles) worker-2 010083a01d457064 not in cnmts, fallback to default identification.",
-      "severity": "warn",
-      "skeleton": "[<ts>] warning (titles) worker-<num> <hex> not in cnmts, fallback to default identification."
-    },
-    {
-      "baseline": null,
-      "container": "hairpress",
+      "container": "sonarr",
       "count": 1,
-      "fingerprint": "2e38b5bed5e7",
-      "sample": "[Fri Sep 25 00:03:45.806123 2026] [autoindex:error] [pid 864:tid 864] [client 20.24.74.198:0] AH01276: Cannot serve directory <REDACTED-BLOB>: No matching DirectoryIndex (index.php,index.html) found, ",
+      "fingerprint": "568496c1bba9",
+      "sample": "[Error] CommandExecutor: Error occurred while executing task RescanSeries",
       "severity": "error",
-      "skeleton": "[<ts>] [autoindex:error] [pid <num>:tid <num>] [client <ip>] ah01276: cannot serve directory <redacted-blob>: no matching directoryindex (index.php,index.html) found, and server-generated directory index forbidden by options directive"
+      "skeleton": "[error] commandexecutor: error occurred while executing task rescanseries"
+    },
+    {
+      "baseline": null,
+      "container": "scoopspress",
+      "count": 1,
+      "fingerprint": "587aa613cdff",
+      "sample": "213.209.159.223 - - [25/Sep/2026:21:51:43 -0700] \"GET /error.log HTTP/1.1\" 404 489 \"-\" \"Mozilla/5.0 (X11; U; Linux i686; Ubuntu 7.04; de-CH; rv:1.8.1.5) Gecko/20070309 Firefox/2.0.0.5\"",
+      "severity": "error",
+      "skeleton": "<ip> - - [<ts>] <str> <num> <num> <str> <str>"
+    },
+    {
+      "baseline": null,
+      "container": "calibre",
+      "count": 1,
+      "fingerprint": "d444dda14352",
+      "sample": "[pixelflux] No hardware encoder on render node 0 (nvenc): Could not load CUDA library (libcuda.so.1): dlopen failed",
+      "severity": "error",
+      "skeleton": "[pixelflux] no hardware encoder on render node <num> (nvenc): could not load cuda library (libcuda.so.<num>): dlopen failed"
+    },
+    {
+      "baseline": null,
+      "container": "calibre",
+      "count": 1,
+      "fingerprint": "bd38335d7e6c",
+      "sample": "[pixelflux] Thread priority -15 refused and rtkit does not grant it; capture threads run at normal priority.",
+      "severity": "other",
+      "skeleton": "[pixelflux] thread priority -<num> refused and rtkit does not grant it; capture threads run at normal priority."
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 1,
+      "fingerprint": "2d68afef6965",
+      "sample": "time=2026-09-25T18:41:06.358-07:00 comm=debugfs.plugin source=collector level=error errno=\"125, Operation canceled\" tid=3513598 thread=DEBUGFS_READER msg=\"PARSER: thread cancelled while waiting for da",
+      "severity": "error",
+      "skeleton": "time=<ts> comm=debugfs.plugin source=collector level=error errno=<str> tid=<num> thread=debugfs_reader msg=<str>"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 1,
+      "fingerprint": "1918a474b6d5",
+      "sample": "time=2026-09-25T18:41:07.194-07:00 comm=netdata source=daemon level=warning errno=\"32, Broken pipe\" tid=3513536 thread=PD[debugfs] module=plugins.d[debugfs.plugin] node=166641f45674   src_transport=pl",
+      "severity": "warn",
+      "skeleton": "time=<ts> comm=netdata source=daemon level=warning errno=<str> tid=<num> thread=pd[debugfs] module=plugins.d[debugfs.plugin] node=<hex> src_transport=pluginsd msg=<str>"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 1,
+      "fingerprint": "5f67faaa6218",
+      "sample": "time=2026-09-25T18:41:07.201-07:00 comm=netdata source=collector level=warning tid=3513536 thread=PD[debugfs] module=plugins.d[debugfs.plugin] node=166641f45674 src_transport=pluginsd msg=\"PLUGINSD: '",
+      "severity": "warn",
+      "skeleton": "time=<ts> comm=netdata source=collector level=warning tid=<num> thread=pd[debugfs] module=plugins.d[debugfs.plugin] node=<hex> src_transport=pluginsd msg=\"pluginsd: <str>, '<path>"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "9e60d1d17de1",
-      "sample": "[2026-09-24 08:23:27.345] INFO: [SocketAuthority] Socket vsKmIbQKHNQFBjDqAACG disconnected from client \"superkate\" after 170662ms (Reason: ping timeout)",
+      "fingerprint": "f58d37018f08",
+      "sample": "[2026-09-25 07:27:13.384] INFO: [SocketAuthority] Socket 96ddzJxRymatGPUiAACQ disconnected from client \"superkate\" after 170540ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket vskmibqkhnqfbjdqaacg disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket 96ddzjxrymatgpuiaacq disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "f05a278ec16e",
-      "sample": "[2026-09-24 08:27:54.248] INFO: [SocketAuthority] Socket -kTYcgLZ9_b5CLb5AACI disconnected from client \"superkate\" after 95109ms (Reason: ping timeout)",
+      "fingerprint": "644d850d84ac",
+      "sample": "[2026-09-25 07:46:28.174] INFO: [SocketAuthority] Socket rtt3R71yVZjy6A7aAACS disconnected from client \"superkate\" after 120385ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket -ktycglz9_b5clb5aaci disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket rtt3r71yvzjy6a7aaacs disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "c308624188c9",
-      "sample": "[2026-09-24 12:28:24.407] INFO: [SocketAuthority] Socket DqismkAFt9jpySSAAACO disconnected from client \"superkate\" after 95195ms (Reason: ping timeout)",
+      "fingerprint": "da3cf9899a5b",
+      "sample": "[2026-09-25 08:00:37.564] INFO: [SocketAuthority] Socket 0mdY9ywNg-B8gokVAACU disconnected from client \"superkate\" after 95401ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket dqismkaft9jpyssaaaco disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket 0mdy9ywng-b8gokvaacu disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "flaresolverr",
+      "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "eb3022fc9576",
-      "sample": "2026-09-25 06:09:36 INFO     Incoming request => POST /v1 body: {'maxTimeout': 60000, 'cmd': 'request.get', 'url': 'https://1337x.to/sort-search/Critical%20Role%20S04E36/time/desc/1/', 'proxy': {}}",
-      "severity": "fatal",
-      "skeleton": "<ts> info incoming request => post /v1 body: {<str>: <num>, <str>: <str>, <str>: <str>proxy': {}}"
+      "fingerprint": "d97758ae034f",
+      "sample": "[2026-09-25 08:25:14.320] INFO: [SocketAuthority] Socket UyNHupf7Q8Mo2h6nAACW disconnected from client \"superkate\" after 120544ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket uynhupf7q8mo2h6naacw disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "ownfoil",
+      "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "064cc92417e9",
-      "sample": "[2026-09-24 20:52:57.721] WARNING (tasks) worker-1 Verification failed for \u5730\u7403\u9632\u885b\u8ecd\uff13 for Nintendo Switch [0100E87013C98000][v0].nsp: > <REDACTED-BLOB>.nca\t\t -> was MODIFIED; > <REDACTED-BLOB>.nca\t\t -> wa",
-      "severity": "warn",
-      "skeleton": "[<ts>] warning (tasks) worker-<num> verification failed for \u5730\u7403\u9632\u885b\u8ecd\uff13 for nintendo switch [<hex>][v0].nsp: > <redacted-blob>.nca -> was modified; > <redacted-blob>.nca -> was modified; > <redacted-blob>.nca -> was modified; > <redacted-blob>.nca -> was modified; > <redacted-blob>.cnmt.nca -> was modifi"
+      "fingerprint": "6a5c5c60fa23",
+      "sample": "[2026-09-25 08:31:38.932] INFO: [SocketAuthority] Socket BqmtDL4LHb9ZXmSQAACc disconnected from client \"superkate\" after 95093ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket bqmtdl4lhb9zxmsqaacc disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "ownfoil",
+      "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "153e4dc76285",
-      "sample": "[2026-09-24 21:42:08.317] WARNING (tasks) worker-1 Verification failed for John Wick Hex [01007090104EC000][v0].nsp: > <REDACTED-BLOB>.nca\t\t -> was MODIFIED; > <REDACTED-BLOB>.nca\t\t -> was MODIFIED; >",
-      "severity": "warn",
-      "skeleton": "[<ts>] warning (tasks) worker-<num> verification failed for john wick hex [<hex>][v0].nsp: > <redacted-blob>.nca -> was modified; > <redacted-blob>.nca -> was modified; > <redacted-blob>.nca -> was modified; > <redacted-blob>.cnmt.nca -> was modified"
+      "fingerprint": "f183fb74dc04",
+      "sample": "[2026-09-25 08:48:46.407] INFO: [SocketAuthority] Socket 0X2KMZn0gS6g_jyrAACe disconnected from client \"superkate\" after 95199ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket 0x2kmzn0gs6g_jyraace disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "ownfoil",
+      "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "124c722cba4b",
-      "sample": "[2026-09-24 22:17:09.177] WARNING (tasks) worker-2 Verification failed for Cassette Beasts\uff1a Fashion Pack [010066F01A0E1003][v0].nsp: > <REDACTED-BLOB>.cnmt.nca\t -> was MODIFIED; > <REDACTED-BLOB>.nca\t",
-      "severity": "warn",
-      "skeleton": "[<ts>] warning (tasks) worker-<num> verification failed for cassette beasts\uff1a fashion pack [<hex>][v0].nsp: > <redacted-blob>.cnmt.nca -> was modified; > <redacted-blob>.nca -> was modified"
+      "fingerprint": "dd543894ac65",
+      "sample": "[2026-09-25 08:53:53.125] INFO: [SocketAuthority] Socket 0TdfrNeTUDrP7y5iAACg disconnected from client \"fiftyone50\" after 246077ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket 0tdfrnetudrp7y5iaacg disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "ownfoil",
+      "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "a525dd751b58",
-      "sample": "[2026-09-24 22:17:09.200] WARNING (tasks) worker-2 Verification failed for Cassette Beasts\uff1a Wings Pack [010066F01A0E1004][v0].nsp: > <REDACTED-BLOB>.cnmt.nca\t -> was MODIFIED; > <REDACTED-BLOB>.nca\t\t ",
-      "severity": "warn",
-      "skeleton": "[<ts>] warning (tasks) worker-<num> verification failed for cassette beasts\uff1a wings pack [<hex>][v0].nsp: > <redacted-blob>.cnmt.nca -> was modified; > <redacted-blob>.nca -> was modified"
+      "fingerprint": "bfc45962d52d",
+      "sample": "[2026-09-25 08:58:59.018] INFO: [SocketAuthority] Socket qeyTAHQ85mHDTob_AACi disconnected from client \"fiftyone50\" after 95178ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket qeytahq85mhdtob_aaci disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "ownfoil",
+      "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "96ae68ddadb3",
-      "sample": "[2026-09-24 22:22:53.219] WARNING (tasks) worker-1 Verification failed for \u5730\u7403\u9632\u885b\u8ecd\uff12 for Nintendo Switch [010082B013C8C000][v0].nsp: > <REDACTED-BLOB>.nca\t\t -> was MODIFIED; > <REDACTED-BLOB>.nca\t\t -> wa",
-      "severity": "warn",
-      "skeleton": "[<ts>] warning (tasks) worker-<num> verification failed for \u5730\u7403\u9632\u885b\u8ecd\uff12 for nintendo switch [<hex>][v0].nsp: > <redacted-blob>.nca -> was modified; > <redacted-blob>.nca -> was modified; > <redacted-blob>.nca -> was modified; > <redacted-blob>.nca -> was modified; > <redacted-blob>.cnmt.nca -> was modifi"
+      "fingerprint": "439983a5b125",
+      "sample": "[2026-09-25 12:24:52.706] INFO: [SocketAuthority] Socket _GSyRpSjAK4cELypAACk disconnected from client \"fiftyone50\" after 95218ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket _gsyrpsjak4celypaack disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "6050c35a4f8f",
+      "sample": "[2026-09-25 13:20:26.179] INFO: [SocketAuthority] Socket cAYDTH9E2LQqB0ZoAACm disconnected from client \"fiftyone50\" after 120206ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket caydth9e2lqqb0zoaacm disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "59eaedb4ae2c",
+      "sample": "[2026-09-25 14:51:22.908] INFO: [SocketAuthority] Socket AnvmmQZcY4zCy7ZTAACo disconnected from client \"fiftyone50\" after 145324ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket anvmmqzcy4zcy7ztaaco disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "8e1dafcac3e3",
+      "sample": "[2026-09-25 15:10:34.416] INFO: [SocketAuthority] Socket 8EE1YT45-iBeOr-kAACq disconnected from client \"fiftyone50\" after 852362ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket 8ee1yt45-ibeor-kaacq disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "41e52b5321ae",
+      "sample": "[2026-09-25 15:17:44.723] INFO: [SocketAuthority] Socket 3DotaH7RJjHftHf9AACs disconnected from client \"fiftyone50\" after 95129ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket 3dotah7rjjhfthf9aacs disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "1584ebe46b3e",
+      "sample": "[2026-09-25 15:47:53.791] INFO: [SocketAuthority] Socket 8ewJMarTlsUtuMf2AACu disconnected from client \"fiftyone50\" after 95066ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket 8ewjmartlsutumf2aacu disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "a3e4386f855f",
+      "sample": "[2026-09-25 17:15:21.305] INFO: [SocketAuthority] Socket D6xMtPKl6aGLsPqsAACy disconnected from client \"superkate\" after 95221ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket d6xmtpkl6aglspqsaacy disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "e74204e0adbb",
+      "sample": "[2026-09-25 17:31:40.891] INFO: [SocketAuthority] Socket Fnn-2vGuk55vL32nAAC0 disconnected from client \"superkate\" after 95141ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket fnn-2vguk55vl32naac0 disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "7fe4156c1fc5",
+      "sample": "[2026-09-25 17:52:35.973] INFO: [SocketAuthority] Socket YthKRboyQMt6xHp1AAC2 disconnected from client \"fiftyone50\" after 96397ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket ythkrboyqmt6xhp1aac2 disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "b28e47d7f5c0",
+      "sample": "[2026-09-25 18:00:54.404] INFO: [SocketAuthority] Socket 6OvtW_z_wPZ3CasUAAC4 disconnected from client \"fiftyone50\" after 120297ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket 6ovtw_z_wpz3casuaac4 disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "60f5b3d0c3d8",
+      "sample": "[2026-09-25 18:08:34.190] INFO: [SocketAuthority] Socket a8PgR54mwduKT5ejAAC7 disconnected from client \"fiftyone50\" after 44845ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket a8pgr54mwdukt5ejaac7 disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "b1746d4e151e",
+      "sample": "[2026-09-25 21:04:37.483] INFO: [SocketAuthority] Socket 2sm9VWjggu2g3u9BAADB disconnected from client \"superkate\" after 195364ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket 2sm9vwjggu2g3u9baadb disconnected from client <str> after <num> (reason: ping timeout)"
     }
   ],
   "quiet": [
@@ -113,7 +257,7 @@
       "skeleton": "<ts> info <ip> post <url> <num> internal server error"
     },
     {
-      "baseline": 74.0,
+      "baseline": 68.0,
       "container": "flaresolverr",
       "count": 0,
       "fingerprint": "3b030fffc6de",
@@ -122,7 +266,16 @@
       "skeleton": "<ts> error error: message: session not created: cannot connect to chrome at <ip>"
     },
     {
-      "baseline": 36.5,
+      "baseline": 60.0,
+      "container": "netdata",
+      "count": 0,
+      "fingerprint": "2107195e439a",
+      "sample": "2026-09-25T01:41:08.381032Z  WARN ThreadId(08) journal_registry::registry::monitor: 23: Failed to send file system event: receiver dropped (channel closed)",
+      "severity": "error",
+      "skeleton": "<ts> warn threadid(<num>) journal_registry<ip>registry<ip>monitor: <num>: failed to send file system event: receiver dropped (channel closed)"
+    },
+    {
+      "baseline": 36.0,
       "container": "sonarr",
       "count": 0,
       "fingerprint": "86dd8b493a0a",
@@ -131,7 +284,16 @@
       "skeleton": "[error] taskextensions: task error"
     },
     {
-      "baseline": 29.5,
+      "baseline": 28.0,
+      "container": "netdata",
+      "count": 0,
+      "fingerprint": "b4a4f3c0319b",
+      "sample": "time=2026-09-24T18:41:06.907-07:00 comm=spawn-plugins source=collector level=warning tid=3512212  msg=\"SPAWN SERVER: child with pid 3513557 (request 8) exited with exit code 1: /bin/sh -c \\\"exec /usr/",
+      "severity": "warn",
+      "skeleton": "time=<ts> comm=spawn-plugins source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
+    },
+    {
+      "baseline": 16.0,
       "container": "flaresolverr",
       "count": 0,
       "fingerprint": "a4739f92a073",
@@ -163,72 +325,81 @@
     "containers_scanned": 44,
     "containers_total": 44,
     "high_cardinality": [],
-    "lines_matched": 1077,
-    "lines_read": 137494,
-    "signatures_total": 131,
+    "lines_matched": 1149,
+    "lines_read": 134238,
+    "signatures_total": 124,
     "truncated": []
   },
   "spiking": [
     {
       "baseline": 0.0,
-      "container": "hairpress",
-      "count": 28,
-      "fingerprint": "b32e674d9dd1",
-      "sample": "[Fri Sep 25 00:03:15.034468 2026] [autoindex:error] [pid 1413:tid 1413] [client 20.24.74.198:0] AH01276: Cannot serve directory /var/www/html/wp-includes/fonts/: No matching DirectoryIndex (index.php,",
+      "container": "sonarr",
+      "count": 152,
+      "fingerprint": "72a8782f0735",
+      "sample": "[Error] DownloadedEpisodesImportService: Import failed, path does not exist or is not accessible by Sonarr: /pc/miss_kitty/sonarr/American.Dad.S06.1080p.DSNP.WEB-DL.AAC2.0.H.264-OldT. Ensure the path ",
       "severity": "error",
-      "skeleton": "[<ts>] [autoindex:error] [pid <num>:tid <num>] [client <ip>] ah01276: cannot serve directory <path>"
+      "skeleton": "[error] downloadedepisodesimportservice: import failed, path does not exist or is not accessible by sonarr: <path>"
     }
   ],
   "top": [
     {
       "baseline": null,
-      "container": "requests",
-      "count": 135,
-      "fingerprint": "b0b22d3dd961",
-      "sample": "2026-09-25T11:34:07.727Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 363723\",\"title\"",
+      "container": "sonarr",
+      "count": 152,
+      "fingerprint": "72a8782f0735",
+      "sample": "[Error] DownloadedEpisodesImportService: Import failed, path does not exist or is not accessible by Sonarr: /pc/miss_kitty/sonarr/American.Dad.S06.1080p.DSNP.WEB-DL.AAC2.0.H.264-OldT. Ensure the path ",
       "severity": "error",
-      "skeleton": "<ts> [error][sonarr scan]: failed to process sonarr media {<str>:<str>,<str>:<str>}"
+      "skeleton": "[error] downloadedepisodesimportservice: import failed, path does not exist or is not accessible by sonarr: <path>"
     },
     {
       "baseline": null,
       "container": "yac",
-      "count": 100,
+      "count": 144,
       "fingerprint": "22365e849ef3",
-      "sample": "WARN  2026-09-24T08:54:32.442 QObject: Cannot create children for a parent that is in a different thread.",
+      "sample": "WARN  2026-09-25T07:02:11.143 QObject: Cannot create children for a parent that is in a different thread.",
       "severity": "warn",
       "skeleton": "warn <ts> qobject: cannot create children for a parent that is in a different thread."
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 72,
-      "fingerprint": "2107195e439a",
-      "sample": "2026-09-25T01:41:08.381032Z  WARN ThreadId(08) journal_registry::registry::monitor: 23: Failed to send file system event: receiver dropped (channel closed)",
+      "container": "requests",
+      "count": 129,
+      "fingerprint": "b0b22d3dd961",
+      "sample": "2026-09-26T11:34:06.069Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 396098\",\"title\"",
       "severity": "error",
-      "skeleton": "<ts> warn threadid(<num>) journal_registry<ip>registry<ip>monitor: <num>: failed to send file system event: receiver dropped (channel closed)"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 61,
-      "fingerprint": "a9cfc33818b3",
-      "sample": "2026-09-24 08:10:51 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 75.111.66.70:34060 , user 'kindrobot_migrate' , hostgroup 30 , connection 98062",
-      "severity": "warn",
-      "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup <num> , connection <num>"
+      "skeleton": "<ts> [error][sonarr scan]: failed to process sonarr media {<str>:<str>,<str>:<str>}"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 57,
+      "count": 90,
       "fingerprint": "8ef3774a1987",
-      "sample": "time=2026-09-24T18:42:35.307-07:00 comm=apps.plugin source=collector level=error errno=\"3, No such process\" tid=3513538  msg=\"Cannot process /host/proc/3535250/cgroup (command 'mariadbd-safe')\"",
+      "sample": "time=2026-09-25T07:51:55.253-07:00 comm=apps.plugin source=collector level=error errno=\"3, No such process\" tid=3513538  msg=\"Cannot process /host/proc/1417886/cgroup (command 'rm')\"",
       "severity": "error",
       "skeleton": "time=<ts> comm=apps.plugin source=collector level=error errno=<str> tid=<num> msg=\"cannot process <path>"
     },
     {
       "baseline": null,
+      "container": "netdata",
+      "count": 72,
+      "fingerprint": "29a758d0ae5d",
+      "sample": "time=2026-09-25T07:41:32.039-07:00 comm=tc-qos-helper.sh source=collector level=warning tid=1278642 thread=tc-qos-helper request=\"'/usr/libexec/netdata/plugins.d/tc-qos-helper.sh' '1' \" msg=\"FireQOS i",
+      "severity": "warn",
+      "skeleton": "time=<ts> comm=tc-qos-helper.sh source=collector level=warning tid=<num> thread=tc-qos-helper request=\"'<path>"
+    },
+    {
+      "baseline": null,
+      "container": "proxysql",
+      "count": 72,
+      "fingerprint": "a9cfc33818b3",
+      "sample": "2026-09-25 08:20:44 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 75.111.66.70:37118 , user 'kindrobot_migrate' , hostgroup 30 , connection 145929",
+      "severity": "warn",
+      "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup <num> , connection <num>"
+    },
+    {
+      "baseline": null,
       "container": "KindRobots",
-      "count": 55,
+      "count": 57,
       "fingerprint": "3d84f1a8fd12",
       "sample": "Operation rejected: {",
       "severity": "other",
@@ -237,7 +408,7 @@
     {
       "baseline": null,
       "container": "KindRobots",
-      "count": 55,
+      "count": 57,
       "fingerprint": "bb9501289941",
       "sample": "name: 'Error',",
       "severity": "error",
@@ -245,116 +416,107 @@
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 51,
-      "fingerprint": "24756dae8afd",
-      "sample": "time=2026-09-24T18:41:17.681-07:00 comm=spawn-unnamed source=collector level=warning tid=3515989  msg=\"SPAWN SERVER: child with pid 3515990 (request 1) exited with exit code 1: /usr/libexec/netdata/pl",
-      "severity": "warn",
-      "skeleton": "time=<ts> comm=spawn-unnamed source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
-    },
-    {
-      "baseline": null,
       "container": "scoopspress",
-      "count": 50,
+      "count": 27,
       "fingerprint": "6497ddc377f6",
-      "sample": "[Thu Sep 24 07:30:44.433598 2026] [php:warn] [pid 23:tid 23] [client 104.143.84.9:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
+      "sample": "[Fri Sep 25 14:59:45.295333 2026] [php:warn] [pid 21:tid 21] [client 23.21.179.120:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
       "severity": "warn",
       "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 39,
-      "fingerprint": "29a758d0ae5d",
-      "sample": "time=2026-09-24T18:41:06.948-07:00 comm=tc-qos-helper.sh source=collector level=warning tid=3513602 thread=tc-qos-helper request=\"'/usr/libexec/netdata/plugins.d/tc-qos-helper.sh' '1' \" msg=\"FireQOS i",
-      "severity": "warn",
-      "skeleton": "time=<ts> comm=tc-qos-helper.sh source=collector level=warning tid=<num> thread=tc-qos-helper request=\"'<path>"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 32,
-      "fingerprint": "8da141147da1",
-      "sample": "2026-09-24 07:13:41 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 100.101.126.42:60768 , user 'unknown' , hostgroup -1 , connection 0",
-      "severity": "warn",
-      "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup -<num> , connection <num>"
-    },
-    {
-      "baseline": null,
-      "container": "hairpress",
-      "count": 28,
-      "fingerprint": "b32e674d9dd1",
-      "sample": "[Fri Sep 25 00:03:15.034468 2026] [autoindex:error] [pid 1413:tid 1413] [client 20.24.74.198:0] AH01276: Cannot serve directory /var/www/html/wp-includes/fonts/: No matching DirectoryIndex (index.php,",
-      "severity": "error",
-      "skeleton": "[<ts>] [autoindex:error] [pid <num>:tid <num>] [client <ip>] ah01276: cannot serve directory <path>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 26,
-      "fingerprint": "b4a4f3c0319b",
-      "sample": "time=2026-09-24T18:41:06.907-07:00 comm=spawn-plugins source=collector level=warning tid=3512212  msg=\"SPAWN SERVER: child with pid 3513557 (request 8) exited with exit code 1: /bin/sh -c \\\"exec /usr/",
-      "severity": "warn",
-      "skeleton": "time=<ts> comm=spawn-plugins source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
-    },
-    {
-      "baseline": null,
-      "container": "scoopspress",
-      "count": 24,
-      "fingerprint": "c0da6bb0877b",
-      "sample": "[Thu Sep 24 12:53:36.953470 2026] [php:error] [pid 25:tid 25] [client 34.156.249.47:0] script '/var/www/html/.env.php' not found or unable to stat",
-      "severity": "error",
-      "skeleton": "[<ts>] [php:error] [pid <num>:tid <num>] [client <ip>] script '<path>"
-    },
-    {
-      "baseline": null,
-      "container": "ownfoil",
-      "count": 22,
-      "fingerprint": "3aa40483aad7",
-      "sample": "[2026-09-24 21:26:28.930] WARNING (titles) worker-2 010083a01d457064 not in cnmts, fallback to default identification.",
-      "severity": "warn",
-      "skeleton": "[<ts>] warning (titles) worker-<num> <hex> not in cnmts, fallback to default identification."
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 13,
+      "count": 23,
       "fingerprint": "8dd2babb373c",
-      "sample": "time=2026-09-24T18:42:08.000-07:00 level=warn msg=\"Memory inventory: Slot locators are missing or duplicated\" plugin=go.d collector=smbios_memory job=smbios_memory config_source=\"stock/file reader\"",
+      "sample": "time=2026-09-25T07:48:08.006-07:00 level=warn msg=\"Memory inventory: Slot locators are missing or duplicated\" plugin=go.d collector=smbios_memory job=smbios_memory config_source=\"stock/file reader\"",
       "severity": "warn",
       "skeleton": "time=<ts> level=warn msg=<str> plugin=go.d collector=smbios_memory job=smbios_memory config_source=<str>"
     },
     {
       "baseline": null,
-      "container": "prowlarr",
-      "count": 13,
-      "fingerprint": "9b73c2a9c5ad",
-      "sample": "[Warn] Newznab: Invalid Release: 'Delusion.2026.S01.SUBFRENCH.1080p.WEB.x264-AZR' from indexer: Nzb.su. No categories provided.",
+      "container": "proxysql",
+      "count": 21,
+      "fingerprint": "8da141147da1",
+      "sample": "2026-09-25 07:37:11 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 100.127.250.90:47182 , user 'unknown' , hostgroup -1 , connection 0",
       "severity": "warn",
-      "skeleton": "[warn] newznab: invalid release: <str> from indexer: nzb.su. no categories provided."
+      "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup -<num> , connection <num>"
     },
     {
       "baseline": null,
-      "container": "proxysql",
-      "count": 13,
-      "fingerprint": "9f8480a922a5",
-      "sample": "2026-09-24 09:35:09 mysql_data_stream.cpp:720:read_from_net(): [ERROR] Oversized first packet from client: pkt_length=66326 exceeds queue capacity (32764). Closing fd=132",
+      "container": "scoopspress",
+      "count": 20,
+      "fingerprint": "c0da6bb0877b",
+      "sample": "[Fri Sep 25 17:57:32.757154 2026] [php:error] [pid 22:tid 22] [client 45.148.10.74:0] script '/var/www/html/phpinfo.php' not found or unable to stat",
       "severity": "error",
-      "skeleton": "<ts> mysql_data_stream.cpp<ip>read_from_net(): [error] oversized first packet from client: pkt_length=<num> exceeds queue capacity (<num>). closing fd=<num>"
+      "skeleton": "[<ts>] [php:error] [pid <num>:tid <num>] [client <ip>] script '<path>"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 19,
+      "fingerprint": "24756dae8afd",
+      "sample": "time=2026-09-25T08:20:42.989-07:00 comm=spawn-unnamed source=collector level=warning tid=1797182  msg=\"SPAWN SERVER: child with pid 1797183 (request 1) exited with exit code 1: /usr/libexec/netdata/pl",
+      "severity": "warn",
+      "skeleton": "time=<ts> comm=spawn-unnamed source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
     },
     {
       "baseline": null,
       "container": "ownfoil",
       "count": 12,
       "fingerprint": "01b110cb7702",
-      "sample": "[2026-09-24 07:32:02.762] ERROR (library) worker-1 An unexpected error occurred while organizing file None [0100CE800B94A000][v0].nsp: 'NoneType' object is not iterable",
+      "sample": "[2026-09-25 07:32:22.076] ERROR (library) worker-1 An unexpected error occurred while organizing file None [0100CE800B94A000][v0].nsp: 'NoneType' object is not iterable",
       "severity": "error",
       "skeleton": "[<ts>] error (library) worker-<num> an unexpected error occurred while organizing file none [<hex>][v0].nsp: <str> object is not iterable"
     },
     {
       "baseline": null,
-      "container": "radarr",
+      "container": "proxysql",
       "count": 9,
+      "fingerprint": "9f8480a922a5",
+      "sample": "2026-09-25 10:02:26 mysql_data_stream.cpp:720:read_from_net(): [ERROR] Oversized first packet from client: pkt_length=66326 exceeds queue capacity (32764). Closing fd=132",
+      "severity": "error",
+      "skeleton": "<ts> mysql_data_stream.cpp<ip>read_from_net(): [error] oversized first packet from client: pkt_length=<num> exceeds queue capacity (<num>). closing fd=<num>"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 8,
+      "fingerprint": "39a858d67d7c",
+      "sample": "time=2026-09-25T13:39:22.238-07:00 comm=apps.plugin source=collector level=error tid=3513538  msg=\"Cannot process /host/proc/1836564/limits (command 'runc:[0:PARENT]')\"",
+      "severity": "error",
+      "skeleton": "time=<ts> comm=apps.plugin source=collector level=error tid=<num> msg=\"cannot process <path>"
+    },
+    {
+      "baseline": null,
+      "container": "hairpress",
+      "count": 7,
+      "fingerprint": "b32e674d9dd1",
+      "sample": "[Fri Sep 25 21:36:29.622942 2026] [autoindex:error] [pid 22:tid 22] [client 195.3.220.7:0] AH01276: Cannot serve directory /var/www/html/wp-content/upgrade/: No matching DirectoryIndex (index.php,inde",
+      "severity": "error",
+      "skeleton": "[<ts>] [autoindex:error] [pid <num>:tid <num>] [client <ip>] ah01276: cannot serve directory <path>"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 7,
+      "fingerprint": "6dcd09e267ea",
+      "sample": "time=2026-09-25T08:21:03.013-07:00 level=warn msg=\"skipping data collection: previous run is still in progress for 2.013187191s (skipped 2 times in a row, interval 1s)\" plugin=go.d collector=docker jo",
+      "severity": "warn",
+      "skeleton": "time=<ts> level=warn msg=<str> plugin=go.d collector=docker job=local config_source=<str>"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 7,
+      "fingerprint": "381cf7bc9913",
+      "sample": "time=2026-09-25T08:21:03.065-07:00 level=error msg=\"Get \\\"http://%2Fvar%2Frun%2Fdocker.sock/v1.47/info\\\": context deadline exceeded\" plugin=go.d collector=docker job=local config_source=\"stock/file re",
+      "severity": "error",
+      "skeleton": "time=<ts> level=error msg=<str><url> context deadline exceeded<str>stock/file reader\""
+    },
+    {
+      "baseline": null,
+      "container": "radarr",
+      "count": 6,
       "fingerprint": "83d95d9043e3",
       "sample": "[Warn] HttpClient: HTTP Error - Res: HTTP/2.0 [GET] https://api.nzbplanet.<REDACTED-BLOB>.nzb&i=425756&r=(removed) 510.NotExtended (1807 bytes)",
       "severity": "warn",
@@ -363,20 +525,11 @@
     {
       "baseline": null,
       "container": "radarr",
-      "count": 9,
+      "count": 6,
       "fingerprint": "faca9d640225",
       "sample": "[v6.4.4.10685] NzbDrone.Common.Http.HttpException: HTTP request failed: [510:NotExtended] [GET] at [https://api.nzbplanet.<REDACTED-BLOB>.nzb&i=425756&r=(removed)   at NzbDrone.Common.Http.HttpClient.",
       "severity": "error",
       "skeleton": "[v6.<num>.<num>] nzbdrone.common.http.httpexception: http request failed: [<num>:notextended] [get] at [<url> at nzbdrone.common.http.httpclient.executeasync(httprequest request) in .<path>"
-    },
-    {
-      "baseline": null,
-      "container": "scoopspress",
-      "count": 6,
-      "fingerprint": "4798ff1f70e0",
-      "sample": "[Thu Sep 24 09:53:21.915671 2026] [php:warn] [pid 67:tid 67] [client 74.7.227.34:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90, referer: ",
-      "severity": "warn",
-      "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>, referer: <url>"
     },
     {
       "baseline": null,
@@ -389,21 +542,30 @@
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 5,
-      "fingerprint": "365b5ce3937e",
-      "sample": "time=2026-09-24T18:50:40.246-07:00 comm=netdata source=collector level=error errno=\"2, No such file or directory\" tid=3513553 thread=\"P[proc netdev]\" msg=\"Cannot refresh vethaeecb20 operstate by readi",
-      "severity": "error",
-      "skeleton": "time=<ts> comm=netdata source=collector level=error errno=<str> tid=<num> thread=<str> msg=<str>"
-    },
-    {
-      "baseline": null,
       "container": "jellyfin",
       "count": 5,
       "fingerprint": "8d680c2e8709",
       "sample": "MediaBrowser.Common.FfmpegException: ffprobe failed - streams and format are both null.",
       "severity": "error",
       "skeleton": "mediabrowser.common.ffmpegexception: ffprobe failed - streams and format are both null."
+    },
+    {
+      "baseline": null,
+      "container": "sonarr",
+      "count": 4,
+      "fingerprint": "54c436eb197b",
+      "sample": "[Warn] Newznab: Indexer Nzb.su (Prowlarr) rss sync didn't cover the period between 09/26/2026 05:07:03 and 09/26/2026 05:39:30 UTC. Search may be required.",
+      "severity": "warn",
+      "skeleton": "[warn] newznab: indexer nzb.su (prowlarr) rss sync didn't cover the period between <num>/<num>/<num> <ts> and <num>/<num>/<num> <ts> utc. search may be required."
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
+      "count": 4,
+      "fingerprint": "5dcec9bc3591",
+      "sample": "[Warn] AllowedHostsCheck: Allowed Hosts is not configured, requests for any hostname will be accepted. You can set this via settings or the config file",
+      "severity": "warn",
+      "skeleton": "[warn] allowedhostscheck: allowed hosts is not configured, requests for any hostname will be accepted. you can set this via settings or the config file"
     }
   ],
   "version": 1,
