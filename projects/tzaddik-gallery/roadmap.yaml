@@ -126,12 +126,12 @@ tasks:
   - id: t-003
     milestone: m1
     title: "Add Tzaddik candidate and provenance data model"
-    status: claimed
+    status: done
     owner: worker
     passes: 1
     stakes: reversible
     depends_on: t-001
-    note: >
+    note: >-
       Model a candidate/person record with living/historical state, short
       rationale, Wikipedia article URL, Wikipedia/Wikimedia image provenance,
       optional explicit admin overrides, submitter attribution, curation state,
@@ -139,10 +139,19 @@ tasks:
       metadata, a sourced controversy/objections section, last source
       refresh/revision metadata, and auditable recheck-request state. Preserve
       source provenance even when display fields are overridden.
+
+      DONE 2026-09-26 (claude-scheduled session): pass 1's rejection was verified accurate —
+      silasfelinus/kind_robots#3057's schema.prisma change
+      (TzaddikCandidate/TzaddikCandidateTag/TzaddikRecheckRequest) had never run `npx prisma
+      generate`, so test:generated-client-parity failed CI. Fixed by regenerating and
+      committing the Prisma client diff exactly as retry_context described (8 modified
+      generated files + 3 new per-model files, no schema changes). All 32 checks green,
+      mergeable_state clean, merged as fb056ab. No new task needed.
     claimed_by: claude-scheduled-20260926T225836Z-tzaddik-t003
     claimed_at: '2026-09-26T22:58:37Z'
-    updated: '2026-09-26T22:58:37Z'
+    updated: '2026-09-26T23:11:33Z'
     retry_context: 'pass 1 failed (quality): kind_robots#3057 added TzaddikCandidate/TzaddikCandidateTag/TzaddikRecheckRequest to schema.prisma but never ran/committed `npx prisma generate` -- CI verify job test:generated-client-parity fails, diffing 8 files plus 3 new untracked model files under prisma/generated/prisma/. Do differently: after any schema.prisma change, run `npx prisma generate` and commit the full prisma/generated/prisma/** diff (including new per-model files) on the same branch before opening/re-pushing the PR. All other checks (migrations, TypeScript, contracts) already pass -- push only the regenerated client, no schema/model changes needed.'
+    implementation_pr: 'silasfelinus/kind_robots#3057'
 
   - id: t-004
     milestone: m2
