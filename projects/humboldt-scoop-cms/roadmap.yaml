@@ -753,7 +753,7 @@ tasks:
 - id: t-041
   milestone: m11
   title: Install the scheduled deploy (unraid User Script running sync-live.sh --unattended) on Alexandria
-  status: needs-human
+  status: done
   owner: human
   passes: 0
   stakes: outward-facing
@@ -761,7 +761,18 @@ tasks:
   depends_on: t-040
   note: >-
     Progress 2026-09-26, all run by Silas on Alexandria. DONE: the deploy key is in hss-repo/.secrets/ and fetch works. DONE: the live site deployed to main (silasfelinus/humboldtscoopsolutions#83-#94); the schema dry run was green and the live schema is now 2.17.0. The 23 "hand edits" were proven to be the stale Aug 17 04:18 files from a half-finished pull, not real edits, and are saved in .deploy-state/local-edits/. Checked from outside: the new front page, the portal, privacy and service-agreement pages all return 200. DONE: the live database moved from mariadb-kindrobots2 (via ProxySQL 192.168.7.172:5544) to mariadb-scoopspress with site/tools/move-db.sh -- 39 tables, row counts matched, and verify confirmed over WordPress's own connection (silasfelinus/humboldtscoopsolutions#95 records it). DONE: the unraid User Script is installed as `hss-update`; its first run reported "Up to date with origin/main; nothing to deploy." REMAINING, then close: (a) confirm its schedule is Custom `*/15 * * * *` (site/DEPLOY.md "Scheduled deploys"); (b) point the CMS's HSS_DB_HOST at mariadb-scoopspress wherever it runs; (c) optional: drop the frozen scoopspress copy on mariadb-kindrobots2, and switch WordPress permalinks to "Post name" so /portal/ URLs resolve (plain ?page_id= links work today).
-  updated: '2026-09-26T22:40:00Z'
+
+    Closed 2026-09-26: Silas completed everything on Alexandria this session. The User
+    Script hss-update is installed with a Custom */15 schedule and its first run reported up
+    to date. The old shadowed copies under appdata/scoops were archived to .deploy-state/
+    and removed, and sync-live.sh --check now reports 'Live is origin/main and the checkout
+    is clean.' Permalinks are set to Post name: /portal/, /service-agreement/ and /privacy/
+    all return 200 from outside. No CMS is running on Alexandria (neither docker ps nor pm2
+    shows one), so there is no HSS_DB_HOST to move. Optional, not blocking: drop the frozen
+    scoopspress copy on mariadb-kindrobots2 (command in site/DEPLOY.md).
+  updated: '2026-09-26T22:37:48Z'
+  approved_by_human: true
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#95'
 
 - id: t-042
   milestone: m11
