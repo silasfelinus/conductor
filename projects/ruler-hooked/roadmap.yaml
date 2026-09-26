@@ -1311,3 +1311,27 @@ tasks:
   claimed_at: '2026-09-23T14:00:14Z'
   implementation_pr: 'silasfelinus/kind_robots#3022'
   updated: '2026-09-23T14:25:00Z'
+
+- id: t-040
+  milestone: m4
+  title: Remaining per-species timing-bar visual identity (Sunspoke Koi pause, rarity marker/band color)
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  note: >-
+    Kaizen follow-up from t-033 (silasfelinus/kind_robots#3051), which landed the first of
+    three suggested bounded slices from the original t-026 kaizen note: the Moebius Crab
+    (REVERSE_CONTROL) timing-bar marker now visibly sweeps in reverse once
+    `encounter.reversed` flips true.
+
+    DO: the two remaining candidates from that same note, each its own bounded slice --
+    (1) Sunspoke Koi (PATIENCE family) could slow or pause the marker's sweep during
+    APPROACH to visually reinforce the patience requirement (components/ruler-hooked/
+    ruler-hooked-timing-bar.vue, utils/rulerHooked/timingBar.ts); (2) higher-rarity fish
+    could get a distinct marker shape/icon or REEL-band color beyond just a narrower/faster
+    band (RARITY_DIFFICULTY already exists in timingBar.ts as the natural hook). Both are
+    display-only -- `resolveTimingStop()`'s position-to-action/quality resolution must stay
+    unchanged so game-state determinism (same seed + same stops -> same outcome) holds.
+    Land as separate PRs, not one combined diff, matching t-033's own bounded-slice
+    discipline.

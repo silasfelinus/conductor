@@ -16612,3 +16612,12 @@ records:
     (as `dreams`) -- a top-level import would have been circular at exec time, since
     build_dream_proposal_core.py's source is exec'd inside build_dream_proposal_impl.py's
     namespace before that namespace is fully populated.
+- date: 2026-09-26
+  project: ruler-hooked
+  task: t-033
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A note that says 'once Silas has actually played the mechanic and there is real signal' is design guidance, not a hard gate -- the task was still status: ready with gate_human: false, and the three suggested candidates were concrete/specific enough to implement as small, independently reversible, bounded slices rather than waiting speculatively; land one slice per PR, not a combined diff."
