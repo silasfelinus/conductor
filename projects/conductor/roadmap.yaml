@@ -4058,7 +4058,7 @@ tasks:
 - id: t-195
   milestone: m6
   title: 'Find why model-builder/t-029 repeatedly sticks at status: claimed after its cycle note already says re-arming to ready'
-  status: claimed
+  status: done
   gate_human: false
   stakes: reversible
   owner: worker
@@ -4080,7 +4080,19 @@ tasks:
     add a mechanical check (a natural companion to check_pr_merged_drift.py /
     check_daily_commitment_staleness.py) that flags a recurring task whose note says
     "re-arming to ready" more recently than its `status:` field was last set to `ready`.
-  updated: '2026-09-26T02:06:40Z'
+
+    RAN 2026-09-26 (scheduled Conductor Agent run, silasfelinus/conductor#TBD): traced the
+    actual mechanism -- neither claim_task.py nor close_task.py has a write-atomicity gap
+    (both always write status/claimed_by/claimed_at together in one edit). The 2026-09-25
+    occurrence's real cause was a merge-conflict resolution on the PR #5150 close branch
+    (commit 640405b) that took origin/main's whole conflicted hunk for projects/model-
+    builder/roadmap.yaml -- correctly picking up storybook/t-067's genuinely newer claim
+    from the same conflict, but silently discarding model-builder/t-029's own just-fixed
+    status: ready alongside it. Added scripts/check_recurring_claim_drift.py: flags any task
+    at status: claimed with claimed_by/claimed_at both null, an invariant violation that can
+    never come from a live claim. Wired into CLAUDE.md's session-startup sweep. TALKBACK and
+    LEARNING.yaml entries appended.
+  updated: '2026-09-26T02:08:38Z'
   claimed_by: claude-scheduled-20260926T020639Z-conductor-t195
   claimed_at: '2026-09-26T02:06:40Z'
 
