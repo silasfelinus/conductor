@@ -16513,3 +16513,17 @@ records:
     The reliable mechanical check is the invariant itself (a claimed status with
     claimed_by/claimed_at both null can never come from a live claim), not parsing
     recurring-task note prose for "re-arming to ready".'
+- date: 2026-09-26
+  project: conductor
+  task: t-196
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: set_task_field.py's ALLOWED_FIELDS is a single shared allow-list -- close_task.py's
+    --set imports and gates through the exact same constant rather than keeping a second
+    copy, so a field gap the task description worded as "extend both scripts" only needed
+    one edit. Confirmed by reading close_task.py's own import line before touching anything,
+    rather than assuming the docstring's "both scripts" implied two allow-lists to keep in
+    sync.
