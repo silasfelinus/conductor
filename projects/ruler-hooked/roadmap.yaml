@@ -1351,3 +1351,21 @@ tasks:
   claimed_at: '2026-09-26T15:00:32Z'
   updated: '2026-09-26T15:16:15Z'
   implementation_pr: 'silasfelinus/kind_robots#3052'
+
+- id: t-041
+  milestone: m4
+  title: Rarity-based timing-bar marker shape/band color
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  note: >-
+    Kaizen follow-up from t-040 (silasfelinus/kind_robots#3052), which landed the
+    Sunspoke Koi APPROACH-pause slice -- the second and last of the two remaining
+    candidates from the original t-026/t-033 kaizen note. This task covers the one
+    still-open candidate: higher-rarity fish could get a distinct marker shape/icon
+    or REEL-band color beyond just a narrower/faster band. RARITY_DIFFICULTY already
+    exists in utils/rulerHooked/timingBar.ts as the natural hook (components/
+    ruler-hooked/ruler-hooked-timing-bar.vue is the display surface). Display-only --
+    `resolveTimingStop()`'s position-to-action/quality resolution must stay unchanged
+    so game-state determinism (same seed + same stops -> same outcome) holds.
