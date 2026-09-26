@@ -98,9 +98,9 @@ into the first gallery data set.
 
 Direct Silas nominations currently include:
 
-- Living: Dolly Parton; Cassandra Peterson / Elvira; Greta Thunberg.
-- Memorial: Steve Irwin; Fred Rogers; Martin Luther King Jr.; Stanislav Petrov;
-  Nelson Mandela; Harriet Tubman.
+- Living: Cassandra Peterson / Elvira; Greta Thunberg.
+- Memorial: Dolly Parton; Steve Irwin; Fred Rogers; Martin Luther King Jr.;
+  Stanislav Petrov; Nelson Mandela; Harriet Tubman.
 
 The first LLM discovery batch is also accepted into the initial gallery set.
 This seed acceptance does not by itself define the final canonical living 36.
