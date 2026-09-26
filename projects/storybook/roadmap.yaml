@@ -476,7 +476,7 @@ tasks:
 - id: t-016
   milestone: m4
   title: "FOR SILAS: visually accept the redesigned Storybook setup and reading experience"
-  status: claimed
+  status: needs-human
   passes: 0
   stakes: reversible
   gate_human: true
@@ -497,7 +497,15 @@ tasks:
     2026-09-12: davinci/t-022 ("FOR SILAS: visually accept the finished Da Vinci experience") is folded into this gate when davinci was retired into storybook -- the life shape is one of the shapes on the same screen, so one acceptance covers both. The redesign this gate now waits on is the card-driven Table/Reading/Ending spec in projects/storybook/docs/storymaker-redesign.md (t-034..t-036), which supersedes the fix/storybook-art-first-setup branch mentioned above. 2026-09-13: this gate is Silas's acceptance of the finished screens and it blocks nothing -- the earlier clause saying mockups "come first" is withdrawn. Build t-034..t-036 functionally, then ask him to look.
 
     2026-09-12: this gate now covers four modes, not four shapes -- open-ended, episodic, structured and taskmaster -- on one Table with one hand. Taskmaster's own route is retired by then (t-047), so accepting this screen is also accepting that its work still feels safe: the real objective visible beside the fiction, and nothing written to a real task without an explicit accept.
-  updated: '2026-09-26T09:01:04Z'
+
+    FOR SILAS: Live-verified the redesigned Storybook setup screen at kindrobots.org/storybook (real production, logged in as a disposable cypress test account) at phone (390px), tablet (834px), and desktop (1440px) widths. Screenshots committed to projects/storybook/verification/t-016-2026-09-26/ (storybook-phone.png, storybook-tablet.png, storybook-desktop.png, storybook-after-genre-click.png).
+
+    What it contains: The Frame/The Cast/The Turn board of image-led slot cards (Mode, Genre, Place, Hero, Company, Narrator, Thread, Treasures) replacing the old tab/button setup. The Genre picker below the board shows real illustrated artwork per genre in a deck-like row. Clicking a genre card (tested with 'Cozy Mystery') visibly fills the Genre slot with that artwork and checks it in the picker -- the placeable-card interaction works end to end. No horizontal overflow or layout breakage at any of the three widths; console showed only a benign hydration-mismatch warning and one failed background fetch, no page-level errors.
+
+    TO APPROVE: look at the four screenshots (or load /storybook yourself) and confirm this reads as 'assembling a story from a tarot-deck-like tableau' per your redesign rejection, not nested admin panels. If it looks right, set approved_by_human: true and status: done here. If something about the feel is still off, leave concrete visual/interaction notes and I'll set status: ready for the next redesign pass.
+
+    What unblocks when you approve: this also closes the folded-in davinci/t-022 life-shape acceptance (same gate, per the 2026-09-12 note above), and storybook/t-054 (banner cleanup, depends_on t-037) and t-037's destructive beat-loop cutover remain on their own separate t-065 gate -- unaffected by this one either way.
+  updated: '2026-09-26T09:06:26Z'
   owner: worker
   claimed_by: claude-scheduled-20260926T090103Z-storybook-t016
   claimed_at: '2026-09-26T09:01:04Z'
