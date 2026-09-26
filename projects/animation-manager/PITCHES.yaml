@@ -1218,7 +1218,7 @@ pitches:
           - facet-catalog
   - id: zoetrope-lantern-drum
     title: Zoetrope Lantern Drum
-    status: pitched
+    status: candidate
     priority: 25
     surprise: >
       A squat cylindrical drum of vertical slats slowly turns in place, warm light glowing
@@ -1288,6 +1288,18 @@ pitches:
       - pointer-drag speed changes and click-triggered figure swaps never block underlying page input, and drag can never reverse or exceed the capped rotation rate
       - the dim-and-swap transition between figures completes fully (old figure fully dimmed) before the next figure's first pose is ever sampled
       - pose sampling is driven by rotation angle, not a frame-rate timer, so backgrounding and resuming the tab cannot desync or accelerate the apparent walk cycle
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/zoetrope-lantern-drum.vue
+        pull_request: silasfelinus/kind_robots#3049
+        released_at: '2026-09-26T08:08:13Z'
+        commit: a41cf22a5b4141807f99de7cf9819f598eb62253
+        verification:
+          - Contract verifiers
+          - TypeScript
+          - layout-contract
+          - facet-catalog
   - id: soap-film-membrane
     title: Soap-Film Membrane
     status: pitched
