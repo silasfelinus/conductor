@@ -4099,8 +4099,8 @@ tasks:
 - id: t-196
   milestone: m1
   title: "Extend set_task_field.py / close_task.py's --set allow-list to cover daily-commitment ledger fields"
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >-
@@ -4116,9 +4116,9 @@ tasks:
     implementation_pr -- exactly the kind of direct-edit gap the claim_task.py/close_task.py
     tooling exists to close. Add both fields (date-string validated, same shape as other
     ISO-date fields) to the allow-list in both scripts.
-  claimed_by: null
-  claimed_at: null
-  updated: '2026-09-25T23:20:00Z'
+  claimed_by: claude-20260926T025904Z-t196
+  claimed_at: '2026-09-26T02:59:05Z'
+  updated: '2026-09-26T02:59:05Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
