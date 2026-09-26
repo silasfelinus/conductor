@@ -195,8 +195,8 @@ tasks:
     stakes: reversible
     recurring: true
     daily_commitment: true
-    daily_last_checked: '2026-09-25'
-    daily_last_completed: '2026-09-25'
+    daily_last_checked: '2026-09-26'
+    daily_last_completed: '2026-09-26'
     depends_on:
       - t-003
       - t-004
@@ -273,9 +273,45 @@ tasks:
       handed off -- resolved by explicitly asking it to cancel that Monitor via TaskStop;
       worth watching for in future subagent dispatches that use Monitor internally. Re-armed
       to ready per this task's recurring-task convention -- t-007 never reaches done.
-    status: claimed
-    updated: '2026-09-26T08:08:59Z'
-    implementation_pr: 'silasfelinus/kind_robots#3046'
+
+      Cycle (conductor scheduled Agent run, session claude-
+      scheduled-20260926T080754Z-am-t007): re-checked before doing work (per convention) --
+      all candidate-tier pitches remain awaiting Reaction-evidence promotion, no live DB
+      access in this sandbox (SPEC.md standing sandbox-access-gap). Built the next unbuilt
+      pitch, zoetrope-lantern-drum (PITCHES.yaml priority 25, top of the pitched queue).
+      Implemented components/screenfx/zoetrope-lantern-drum.vue: a fixed ring of 22 opaque
+      slats rotates at a constant angular velocity around a lit interior; each viewer-facing
+      slat gap samples exactly one pose from the current figures short pre-authored pose strip
+      (walker/wingbeat/juggler, 6-7 poses each) by mapping the slat gaps instantaneous angle
+      to a pose index -- driven strictly by rotation angle, never a frame-rate timer, so
+      backgrounding/resuming the tab cannot desync or accelerate the apparent walk cycle.
+      Every 3 full rotations the drum dims to embers over ~1s, swaps to the next figure in the
+      fixed rotation, and resumes. Pointer proximity to the rim applies a capped, non-
+      reversing rotation-speed nudge (drag toward MAX_ROTATION_PERIOD_MS, never past it); a
+      click forces one rate-limited dim-and-swap, cooldown-gated so repeated clicks cannot
+      cycle figures faster than the natural dim transition allows. Reduced motion renders one
+      static mid-cycle pose through the slats with only a slow ember-glow breathing pulse --
+      no rotation, no slat-driven pose stepping. Only the 1-3 viewer-facing slat gaps are ever
+      composited per frame. Registered in stores/animationCatalog.ts via
+      utils/scripts/registerAnimationEffect.mjs (icon kind-icon:flame, color #d97b3f,
+      fullscreen). Verified: eslint clean, prettier clean on both changed files
+      (animationCatalog.tsss long new tooltip string needed prettiers own line-wrap, applied;
+      no pre-existing drift touched), full-project vue-tsc --noEmit exit 0, test:animation-
+      catalog (54 effects, unique ids, 67 screenfx components resolved) and test:animation-
+      component-attempts both pass, test:layout-contract holds with zero new violations,
+      test:lint-ratchet holds (-1, unrelated), test:prettier-ratchet holds (-18, unrelated),
+      check_animation_novelty.py --strict reports no collision across all 32 pitches. Manual
+      browser smoke matrix deferred per the standing sandbox-access-gap tag, same as every
+      prior build in this project. kind_robots PR #3049 opened from claude/laughing-
+      pascal-i2lp9n (this sessions harness-designated branch, reused per convention); merged
+      squash a41cf22a5b4141807f99de7cf9819f598eb62253, all 29 checks green (Contract
+      verifiers, TypeScript, layout-contract, facet-catalog, GitGuardian, and 24 others).
+      PITCHES.yamls zoetrope-lantern-drum promotion (pitched -> candidate with its build
+      entry) committed alongside this roadmap update, same conductor session. Re-armed to
+      ready per this tasks recurring-task convention -- t-007 never reaches done.
+    status: ready
+    updated: '2026-09-26T08:09:21Z'
+    implementation_pr: 'silasfelinus/kind_robots#3049'
     owner: worker
     claimed_by: claude-scheduled-20260926T080754Z-am-t007
     claimed_at: '2026-09-26T08:08:59Z'
