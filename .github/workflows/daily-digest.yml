@@ -180,7 +180,7 @@ jobs:
         id: daily_dream_art
         if: ${{ steps.daily_dream_build.outcome == 'success' }}
         continue-on-error: true
-        run: python scripts/submit_daily_dream_art.py --wait-timeout 300
+        run: python scripts/submit_daily_dream_art.py --wait-timeout 1800
         env:
           KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
           KR_MEDIA_ORIGIN: https://media.acrocatranch.com
