@@ -1355,7 +1355,7 @@ tasks:
 - id: t-041
   milestone: m4
   title: Rarity-based timing-bar marker shape/band color
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
   passes: 0
@@ -1372,4 +1372,24 @@ tasks:
   owner: worker
   claimed_by: claude-2026-09-26T160500-rh041
   claimed_at: '2026-09-26T16:02:22Z'
-  updated: '2026-09-26T16:16:53Z'
+  updated: '2026-09-26T16:24:12Z'
+  implementation_pr: 'silasfelinus/kind_robots#3053'
+
+- id: t-042
+  milestone: m4
+  title: Give MYTHIC/LEGENDARY a distinct REEL/SLACK/WAIT glyph, not just band color
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  note: >-
+    Kaizen follow-up from t-041 (silasfelinus/kind_robots#3053), which gave the
+    timing bar a rarity-based REEL-band color and diamond marker from RARE up.
+    That cue is entirely color-based, which is invisible to a colorblind player;
+    the SLACK/REEL/WAIT zone glyphs (currently the fixed 🨢/🎣/👀 in
+    ruler-hooked-timing-bar.vue) never change with rarity at all. Give the
+    highest tiers (LEGENDARY/MYTHIC at least) a distinct glyph set alongside the
+    existing color/shape cues, via timingVisualFor() in utils/rulerHooked/
+    timingBar.ts so it stays a single source of truth. Display-only, same
+    constraint as t-041: resolveTimingStop()'s position-to-action/quality
+    resolution must stay untouched.

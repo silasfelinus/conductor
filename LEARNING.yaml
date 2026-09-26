@@ -16630,3 +16630,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Continuing t-033's bounded-slice discipline: landed the Sunspoke Koi APPROACH-pause slice (kind_robots#3052) as a small, purely-display animation change (a brief dwell at each end of the timing-bar sweep, gated on family==PATIENCE && phase==APPROACH) and filed the one remaining candidate (rarity-based marker shape/band color) as a fresh task (t-041) rather than reopening this one -- confirming the same family/reversed-flag mutual-exclusivity check (grep the reducer for where the flag is set) before assuming two display-only effects can't collide is a cheap, worthwhile step whenever a kaizen note bundles multiple per-species visual candidates."
+- date: 2026-09-26
+  project: ruler-hooked
+  task: t-041
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The last open candidate from t-026/t-033's kaizen note (rarity-based marker shape/band color) landed as a single pure-function addition (timingVisualFor()) plus a component wiring change, with a selftest that explicitly proves the new visual lookup never perturbs resolveTimingStop()'s output -- when a display-only feature sits next to a determinism-critical pure function, assert the non-interference directly in the test rather than relying on code review alone to notice a stray shared-state touch."
