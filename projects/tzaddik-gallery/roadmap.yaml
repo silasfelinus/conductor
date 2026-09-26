@@ -118,9 +118,10 @@ tasks:
       Model a candidate/person record with living/historical state, short
       rationale, Wikipedia article URL, Wikipedia/Wikimedia image provenance,
       optional explicit admin overrides, submitter attribution, curation state,
-      a sourced controversy/objections section, last source refresh/revision
-      metadata, and auditable recheck-request state. Preserve source provenance
-      even when display fields are overridden.
+      multi-select controlled editorial tags, structured country/region
+      metadata, a sourced controversy/objections section, last source
+      refresh/revision metadata, and auditable recheck-request state. Preserve
+      source provenance even when display fields are overridden.
 
   - id: t-004
     milestone: m2
@@ -221,10 +222,12 @@ tasks:
     note: >
       Build a sourced research pool spanning multiple world regions, languages,
       professions, and forms of public service. Deliberately counter
-      US/Anglosphere celebrity bias. Research is not automatic canonization:
-      record why each person is notable, meaningful objections/controversies,
-      Wikipedia availability, and uncertainty. Favor genuine educational
-      discovery over quota-box geography.
+      US/Anglosphere celebrity bias. Assign provisional controlled tags so the
+      pool can be inspected for domain concentration as well as geography.
+      Research is not automatic canonization: record why each person is notable,
+      meaningful objections/controversies, Wikipedia availability, and
+      uncertainty. Favor genuine educational discovery over quota-box
+      geography.
 
   - id: t-011
     milestone: m3
@@ -284,8 +287,9 @@ tasks:
       candidate suggestions per Pacific day. Each item needs a concise sourced
       bio, a short "why this person" pitch, Wikipedia/Wikimedia provenance,
       meaningful controversy/objection notes when documented, living/deceased
-      verification, region/context tags, and dedupe against existing canonical,
-      historical, pending, and recently-suggested people. Suggestions never
+      verification, structured region/context metadata, controlled editorial
+      tags, and dedupe against existing canonical, historical, pending, and
+      recently-suggested people. Suggestions never
       auto-enter the canonical 36 or historical gallery.
 
   - id: t-015
@@ -377,3 +381,22 @@ tasks:
       ambiguous source changes to editor review. Show users last-checked,
       requested/pending, success, or needs-review state so repeated requests do
       not hammer Wikipedia.
+
+  - id: t-020
+    milestone: m2
+    title: "Add multi-select editorial tags and gallery filtering"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-003, t-004, t-005]
+    note: >
+      Add a controlled multi-select tag taxonomy for Politics, Pop Culture,
+      Humanitarian, Science & Medicine, Education, Environment, Civil Rights &
+      Justice, Peace & Diplomacy, Community & Mutual Aid, Arts & Culture,
+      Journalism & Truth, and Courage & Rescue. Show tags on cards and person
+      pages and support filtering by one or more tags in Living, Memorial, and
+      review surfaces. Treat tags as descriptive editorial metadata, not scores
+      or endorsements. Keep country/region as separate structured metadata and
+      living/memorial as record state. Editors may extend the controlled set
+      when repeated real cases do not fit, but avoid arbitrary one-off tags.
