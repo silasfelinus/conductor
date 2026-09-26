@@ -752,7 +752,7 @@ tasks:
 
 - id: t-041
   milestone: m11
-  title: Deploy main (schema 2.16.0) to Alexandria with sync-live.sh
+  title: Install the scheduled deploy (unraid User Script running sync-live.sh --unattended) on Alexandria
   status: needs-human
   owner: human
   passes: 0
@@ -760,8 +760,8 @@ tasks:
   gate_human: true
   depends_on: t-040
   note: >-
-    Only Silas can run this: it is a production deploy on Alexandria. On Alexandria: `cd /mnt/user/appdata/hss-repo && git pull` (or let the script fetch), then `bash site/tools/sync-live.sh --check` to see what is live against main and whether anything was hand-edited on the server. Run the schema dry run (`DEV_DB=... bash site/tools/schema-dry-run.sh`, must be green), then `bash site/tools/sync-live.sh`. Any hand edits are saved to /mnt/user/appdata/hss-repo-local-edits/<ts>/ before being moved aside. Verify: /portal as an admin shows the business console links; the front page trust row reads "No long-term contracts or cancellation fees"; /service-agreement/ exists. See site/DEPLOY.md "The one rule".
-  updated: '2026-09-26T21:40:00Z'
+    Silas, 2026-09-26: "help me change that so it's an unraid scheduled task" (silasfelinus/humboldtscoopsolutions#86). One-time setup on Alexandria, in site/DEPLOY.md "Scheduled deploys": (1) the read-only deploy key, so `git pull` in /mnt/user/appdata/hss-repo asks nothing; (2) the mariadb-hss-dev container for schema dry runs; (3) Plugins -> User Scripts -> Add New Script "hss-sync-live", with site/tools/unraid-user-script.sh pasted in; (4) Custom schedule `*/15 * * * *`; (5) Run Script once. That first run deploys everything waiting on main, including schema 2.16.0, which it dry-runs first. From then on a merge to main is live within 15 minutes; a failing schema dry run, local commits on Alexandria, or a fetch failure deploy nothing and raise an unraid notification. Verify after the first run: /portal as an admin shows the business console, the front page reads "No long-term contracts or cancellation fees", and /service-agreement/ exists.
+  updated: '2026-09-26T21:45:00Z'
 
 - id: t-042
   milestone: m11
