@@ -1378,7 +1378,7 @@ tasks:
 - id: t-042
   milestone: m4
   title: Give MYTHIC/LEGENDARY a distinct REEL/SLACK/WAIT glyph, not just band color
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
   passes: 0
@@ -1400,8 +1400,12 @@ tasks:
     Extended timingBar.selftest.ts to cover the new contract. Verified: selftest + all
     sibling ruler-hooked selftests pass, vue-tsc clean, eslint clean, prettier clean. Opened
     silasfelinus/kind_robots#3054.
+
+    Merged silasfelinus/kind_robots#3054 (squash 67eb90ef5bbe48bf39372d2eab57511e1f9687bf).
+    All required kind_robots CI checks green (TypeScript, Contract verifiers, plus the full
+    contract-verifier/verify/layout-contract matrix), mergeable_state clean, squash-merged.
   owner: worker
   claimed_by: claude-2026-09-26T1700Z-rh042
   claimed_at: '2026-09-26T17:06:07Z'
-  updated: '2026-09-26T17:06:51Z'
+  updated: '2026-09-26T17:12:41Z'
   implementation_pr: 'silasfelinus/kind_robots#3054'
