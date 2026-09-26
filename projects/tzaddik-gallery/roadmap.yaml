@@ -196,12 +196,14 @@ tasks:
     stakes: reversible
     depends_on: [t-003, t-008]
     note: >
-      Seed historical examples Dolly Parton, Steve Irwin, Fred Rogers, Martin
-      Luther King Jr., and Stanislav Petrov. Seed living suggestions Cassandra
-      Peterson / Elvira and Greta Thunberg with submitter attribution
-      Silasfelinus, userId=1. Verify
-      living/historical status and Wikipedia/Wikimedia provenance at ingest time;
-      do not rely on stale hard-coded biographical text.
+      Import the accepted first gallery membership from seed-sets.yaml. Silas
+      explicitly accepted the full 2026-09-26 discovery docket plus his direct
+      nominations on 2026-09-26. Dolly Parton belongs in Living, not Memorial.
+      Direct Memorial additions include Nelson Mandela and Harriet Tubman.
+      Preserve suggested_by and accepted_by_user_id metadata. Verify
+      living/memorial status and Wikipedia/Wikimedia provenance at ingest time;
+      do not rely on stale hard-coded biographical text. Seed-set membership is
+      not the same thing as final canonical top-36 selection.
 
   - id: t-010
     milestone: m3
