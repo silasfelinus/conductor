@@ -2987,22 +2987,17 @@ tasks:
 - id: t-122
   milestone: m6
   title: 'Audit remaining Art manager tabs for unnecessary full-index hydration'
-  status: claimed
+  status: review
   gate_human: false
   stakes: reversible
   owner: worker
   passes: 0
-  note: >-
-    Kaizen from kind-robots/t-120 (Silas, 2026-09-24). Generate no longer waits on
-    the manager-wide ArtImage/collection hydration gate, but other legacy Art tabs
-    still share that eager path. Audit each tab's actual startup dependencies and
-    replace full-index loading with tab-owned lightweight queries where safe,
-    without changing Gallery's progressive-loading contract.
+  note: |-
+    Kaizen from kind-robots/t-120 (Silas, 2026-09-24). Generate no longer waits on the manager-wide ArtImage/collection hydration gate, but other legacy Art tabs still share that eager path. Audit each tab's actual startup dependencies and replace full-index loading with tab-owned lightweight queries where safe, without changing Gallery's progressive-loading contract.
+    Rescued from stranded branch worker/kind-robots-t-120-kaizen-20260924T2218Z-b7e4, which committed this task under a now-reused id (t-121) and was never opened as a PR; re-added here under a fresh id via next_free_task_id.py.
 
-    Rescued from stranded branch worker/kind-robots-t-120-kaizen-20260924T2218Z-b7e4,
-    which committed this task under a now-reused id (t-121) and was never opened as
-    a PR; re-added here under a fresh id via next_free_task_id.py.
-  updated: '2026-09-25T23:20:52Z'
+    Audited Art manager tab startup ownership and narrowed manager-wide hydration to Styler; preparing implementation PR.
+  updated: '2026-09-26T00:19:52Z'
   claimed_by: openai-scheduled-2026-09-25T232052Z-kind-robots-t122-a11
   claimed_at: '2026-09-25T23:20:52Z'
 
