@@ -142,6 +142,58 @@ This seed acceptance does not by itself define the final canonical living 36.
 Current living status and source metadata must be verified when records are
 actually ingested, rather than assumed from this planning document.
 
+## Tags and browsing taxonomy
+
+People can carry multiple editorial tags. Tags describe *how* a person's work or
+public contribution is relevant; they are not scores, rankings, identities, or
+political endorsements.
+
+Start with this controlled tag set:
+
+- **Politics** — elected office, public administration, legislation, statecraft,
+  or sustained political leadership that is materially relevant to the person's
+  case for inclusion.
+- **Pop Culture** — entertainment, celebrity, television, film, music, sports,
+  or other mass-cultural work where public visibility is part of the story.
+- **Humanitarian** — disaster relief, poverty relief, refugee support, food,
+  shelter, emergency response, or large-scale direct human aid.
+- **Science & Medicine** — scientific discovery, engineering, medicine, public
+  health, or technical work with strong human benefit.
+- **Education** — teaching, schools, literacy, mentorship, educational access,
+  or institution-building around learning.
+- **Environment** — conservation, climate, ecology, biodiversity, land/water
+  protection, or environmental restoration.
+- **Civil Rights & Justice** — human rights, anti-discrimination work, legal
+  equality, labor rights, criminal-justice reform, or related justice work.
+- **Peace & Diplomacy** — conflict prevention, reconciliation, diplomacy,
+  nonviolent peacebuilding, arms-risk reduction, or international mediation.
+- **Community & Mutual Aid** — durable local care networks, neighborhood or
+  grassroots support, social services, or community institutions.
+- **Arts & Culture** — artistic or cultural work whose significance goes beyond
+  ordinary celebrity and forms part of the inclusion case.
+- **Journalism & Truth** — journalism, documentation, whistleblowing,
+  fact-finding, public-interest information, or preservation of historical
+  truth.
+- **Courage & Rescue** — concrete acts of rescue, refusal, witness, protection,
+  or personal risk where a specific intervention changed outcomes.
+
+Tags are multi-select and should remain relatively broad. Do not force a person
+into one primary category when their contribution spans several domains.
+
+Geography should be modeled separately as structured country/region metadata,
+not as tags. Likewise, living/memorial state is a core record status rather than
+a tag.
+
+The gallery should support filtering by one or more tags and show tags on cards
+and person detail pages. The Daily Tzaddik discovery process should also assign
+provisional tags so the review queue can reveal overconcentration, for example
+too much Pop Culture and too little Science & Medicine or Community & Mutual
+Aid.
+
+Editors may add new controlled tags when a repeated category genuinely fails to
+fit the existing set. Avoid one-off micro-tags that turn browsing into taxonomy
+confetti.
+
 ## Daily discovery roster
 
 Tzaddik Gallery has an ongoing discovery lane inspired by Daily Dream. Once the
