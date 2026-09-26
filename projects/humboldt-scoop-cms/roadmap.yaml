@@ -82,7 +82,7 @@ milestones:
 - id: m11
   title: "SHIP — production rollout, betas, Play Store + App Store"
   weight: 15
-  status: not-started
+  status: in-progress
 
 tasks:
   # ── Completed foundation retained by ID ──────────────────────────────
@@ -738,5 +738,55 @@ tasks:
   claimed_at: '2026-08-18T10:27:28Z'
   updated: '2026-08-18T10:49:46Z'
   implementation_pr: 'silasfelinus/humboldtscoopsolutions#82'
+- id: t-040
+  milestone: m11
+  title: Implement the 2026-09-26 partners' meeting (pricing, policies, quote-first signup, Service Agreement)
+  status: done
+  owner: worker
+  passes: 0
+  stakes: reversible
+  note: >-
+    Silas, 2026-09-26, with meeting notes and screenshots. Found first: the live site was ~40 merged PRs behind main (hss.css?ver= = 2026-08-17 04:24 PDT), which is both the front-page discrepancy and why an admin saw the customer dashboard at /portal (#50/#65 never deployed). Shipped in three PRs: silasfelinus/humboldtscoopsolutions#83 (site/tools/sync-live.sh: save hand edits on Alexandria as a patch, ff to origin/main, restart, verify ?ver=), silasfelinus/humboldtscoopsolutions#84 (weekly $100/$130, every-other-week $90/$120 replaces twice-a-month, restoration $100/hr min $40, deodorization removed, billed on signup day with a free first pickup instead of a trial, referral after the 2nd paid month, custom-quote list, FAQ policies, Poopstakes rules), silasfelinus/humboldtscoopsolutions#85 (quote -> signup link -> Service Agreement + preferred pickup day -> payment; no self-serve registration or plan picker; HSS_Agreement generated to docs/SERVICE-AGREEMENT.md; cancel-now-and-refund; per-kind notification opt-outs; schema 2.16.0 verified on MariaDB 10.11 + real WordPress, pipeline verified end to end with Stripe intercepted).
+  updated: '2026-09-26T21:40:00Z'
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#85'
+
+- id: t-041
+  milestone: m11
+  title: Deploy main (schema 2.16.0) to Alexandria with sync-live.sh
+  status: needs-human
+  owner: human
+  passes: 0
+  stakes: outward-facing
+  gate_human: true
+  depends_on: t-040
+  note: >-
+    Only Silas can run this: it is a production deploy on Alexandria. On Alexandria: `cd /mnt/user/appdata/hss-repo && git pull` (or let the script fetch), then `bash site/tools/sync-live.sh --check` to see what is live against main and whether anything was hand-edited on the server. Run the schema dry run (`DEV_DB=... bash site/tools/schema-dry-run.sh`, must be green), then `bash site/tools/sync-live.sh`. Any hand edits are saved to /mnt/user/appdata/hss-repo-local-edits/<ts>/ before being moved aside. Verify: /portal as an admin shows the business console links; the front page trust row reads "No long-term contracts or cancellation fees"; /service-agreement/ exists. See site/DEPLOY.md "The one rule".
+  updated: '2026-09-26T21:40:00Z'
+
+- id: t-042
+  milestone: m11
+  title: Confirm the drafted Service Agreement clauses and the open pricing points
+  status: needs-human
+  owner: human
+  passes: 0
+  stakes: outward-facing
+  gate_human: true
+  depends_on: t-040
+  note: >-
+    Decisions only Silas (and his partners) can make, listed in docs/PRICING-DECISIONS.md "Open" and at the top of class-hss-agreement.php. (1) Three agreement sections were NOT in the meeting notes and are drafted defaults: 30 days' notice of price or terms changes, the Responsibility section, and the failed-payment line under Billing. A legal read in California is recommended before relying on it. (2) Weekly 3-4 dogs was not restated and kept $130/mo, which is $10 more than every-other-week 3-4 dogs for twice the visits. (3) In the Stripe dashboard, turn off cancellation in the customer (billing) portal, so cancellations come through the change-request flow where the refund rule applies.
+  updated: '2026-09-26T21:40:00Z'
+
+- id: t-043
+  milestone: m11
+  title: Build the Poopstakes drawing (10 winners/month Nov-Jan, once per household and per customer)
+  status: ready
+  owner: worker
+  passes: 0
+  stakes: reversible
+  depends_on: t-040
+  note: >-
+    The rules are on the site and in the Service Agreement (HSS_Config::POOPSTAKES_*), but nothing draws winners or enforces "each household and each customer can win only once". Entries are the poopstakes checkbox on wp_hss_quote_requests. Needs a winners table keyed on a household (normalised service address) and a customer/email, and an admin screen that draws up to POOPSTAKES_WINNERS_PER_MONTH eligible entrants in an eligible month and records the prize (2 weeks of free weekly cleanup, or 30 minutes of unusual cleanup). Must be usable before November 2026. Also open (smaller, see docs/BACKLOG.md): asking existing customers to re-accept a newer agreement VERSION.
+  updated: '2026-09-26T21:40:00Z'
+
 goal: Keep Humboldt Scoop Solutions’ website maintainable through its CMS while accurately presenting services, leads, 
   operations, and brand voice.
