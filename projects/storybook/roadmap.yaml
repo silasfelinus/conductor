@@ -880,7 +880,7 @@ tasks:
 - id: t-037
   milestone: m7
   title: "Delete the client-side beat loop and rewrite its ~25 verifyStorybook*Guard scripts"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-036, t-052]
@@ -1116,10 +1116,10 @@ tasks:
     rewrite target -- it stays blocked on the same t-065 gate. No new bounded slice
     available this cycle; genuinely blocked, not a quality/scope failure. Re-arming to
     ready; releasing the claim, moving to other priority-order work.
-  updated: '2026-09-26T13:57:34Z'
+  updated: '2026-09-26T14:59:30Z'
   owner: worker
-  claimed_by: claude-scheduled-20260926T135800Z-storybook-t037-cycle33
-  claimed_at: '2026-09-26T13:57:27Z'
+  claimed_by: claude-scheduled-20260926T145929Z-storybook-t037-cycle34
+  claimed_at: '2026-09-26T14:59:30Z'
   implementation_pr: 'silasfelinus/kind_robots#3025'
 
 - id: t-052
