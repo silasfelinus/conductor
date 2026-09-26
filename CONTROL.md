@@ -122,6 +122,34 @@ Silas explicitly approves that concrete action too.
 
 ## Per-project direction  ← agents read the block for the project they're working on
 
+
+### tzaddik-gallery  (software)
+**Direction (2026-09-26, new project):** Build a playful Kind Robots pop-culture
+gallery around the borrowed idea of 36 living "just people" keeping the world
+running. This is explicitly not a Jewish religious classification: Jewish or
+Hasidic identity is neither required nor implied. Wikipedia/Wikimedia are the
+default sources for facts and images, with explicit editor overrides that
+preserve provenance. Users may submit candidates and upvote/downvote them;
+community reaction is signal, not an automatic canonical ranking.
+**Notes:**
+- Three primary surfaces: current living 36, historical/past Tzaddik, and an
+  explanation of the concept and editorial rules.
+- Every person view includes a sourced controversy/objections section. Do not
+  manufacture false balance when no substantial objection is documented.
+- Silas's historical examples: Dolly Parton, Steve Irwin, Fred Rogers, Martin
+  Luther King Jr., and Stanislav Petrov (the 1983 Soviet missile-warning
+  incident).
+- Silasfelinus/userId=1 living suggestions: Cassandra Peterson / Elvira and
+  Greta Thunberg.
+- International discovery is a first-class goal: deliberately research beyond
+  US/Anglosphere celebrity bias across regions, languages, disciplines, and
+  forms of public service.
+- Add a Daily Tzaddik docket: 10 living + 10 deceased sourced suggestions per
+  Pacific day, each with a compact bio, inclusion pitch, provenance, and
+  meaningful objections/controversies. Silas vets them; nothing auto-enters the
+  canon. Once the finite gallery build is accepted, this discovery lane should
+  keep the project alive as continuous work.
+
 ### superkate-services-calculator  (software)
 **Direction:** Private app for Superkate / Hair by Superkate. Build a private,
 polished services calculator for salon appointments: client name, appointment date,
