@@ -79,7 +79,7 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Write the design brief and audit reusable Kind Robots infrastructure"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
     note: |-
@@ -87,7 +87,21 @@ tasks:
 
 
       Existing DESIGN-BRIEF.md on main already covers the product brief. This cycle audited reusable Kind Robots reaction, gallery, auth, moderation, image provenance, project identity, and Pinia/API boundaries. Connector safety checks rejected both attempted branch file writes, so no documentation diff could be landed; releasing the claim for normal retry without consuming a pass.
-    updated: '2026-09-26T12:00:36Z'
+
+      DONE 2026-09-26 (claude-scheduled-20260926T115739Z-tzaddik-t001, PR #5209): Added an
+      Infrastructure audit section to DESIGN-BRIEF.md covering reactions (reuse the existing
+      Reaction model/enum + reactionStore.ts, no new table), gallery/detail components (kr-
+      gallery.vue + kr-card-flip/kr-card-back, following character-gallery.vue),
+      auth/attribution (userStore.ts + authGuard.ts), moderation/overrides
+      (SocialPostDraftStatus-style approval enum, plus mandarin_curation.prisma's override-
+      with-provenance-preserved pattern for MandarinCatalogOverride/MandarinCatalogChange),
+      and Pinia/API conventions (reactionStore.ts as the template). Flagged one genuine gap:
+      no existing sourceUrl/license/attribution fields or external-image-fetch/cache route
+      anywhere in the schema -- recommended building on server/utils/safeFetch.ts (SSRF-safe)
+      plus a TTL cache modeled on cthulhuquariumCuration.ts. This lands the audit a prior
+      connector-only session (openai-scheduled-2026-09-26T101656Z) found but could not write
+      due to connector safety-check rejections. Unblocks t-003.
+    updated: '2026-09-26T12:04:26Z'
     owner: worker
     claimed_by: claude-scheduled-20260926T115739Z-tzaddik-t001
     claimed_at: '2026-09-26T11:57:40Z'
@@ -112,7 +126,7 @@ tasks:
   - id: t-003
     milestone: m1
     title: "Add Tzaddik candidate and provenance data model"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
