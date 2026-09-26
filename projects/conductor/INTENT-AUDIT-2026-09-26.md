@@ -1,28 +1,28 @@
-# Portfolio intent audit — 2026-09-26
+# Portfolio Intent Audit — 2026-09-26
 
-Session: `openai-scheduled-2026-09-26T051603Z-conductor-intent-audit-a11`
+Session: `openai-scheduled-2026-09-26T061841Z-conductor-intent-audit-a11`
 
 ## Verified
 
-- Re-read `CONTROL.md`, lifecycle overrides, priority order, source-of-truth rules, the current portfolio sensor, structural roadmap audit, the lead/high-priority roadmaps, and recent project TALKBACK/history.
-- The explicit steering band remains internally consistent: **cthulhuquarium → kind-economy → butterfly-gallery → art-archive → mandarin-tutor**. The September 18 promotion of Butterfly Gallery ahead of Art Archive and the September 19 reopening of Mandarin Tutor are represented in CONTROL, lifecycle, priority, and their roadmaps. No newer reviewed human steering supports reordering them.
-- Cthulhuquarium is correctly still active. Its remaining work includes concrete visual/runtime acceptance and production-access gates against the stated playable-game goal, so task-count closure would be false.
-- Kind Economy is correctly still active. Recent work retired an orphaned mission-accrual backend, while remaining payout/publication decisions are policy/outward-facing gates.
-- Butterfly Gallery and Art Archive remain active/high for the reason Silas gave September 18. Their remaining gates are acceptance/production-facing endpoints of substantial landed implementation, not evidence the projects were abandoned.
-- Mandarin Tutor's reopened m5 COMPREHENSION work matches the September 19 request: per-word teaching, phonetic-series exploration, soft lesson-before-drill behavior, and comprehension/recall-weighted points landed. The remaining t-027 gate is the explicit cross-width human visual acceptance before the reopened slice can close.
-- The structural sensor reports zero errors. The duplicate `updated` key in `coloring-book/t-022` from the prior ROADMAP-AUDIT snapshot was already repaired immediately before this audit by conductor PR #5185, which also hardened `set_task_field.py` against repeating that corruption class.
+- **Priority remains intentional.** `projects/priority.yaml` still reflects the latest named steering: Cthulhuquarium leads after Mandarin Tutor's September 11 acceptance; Kind Economy remains second; Butterfly Gallery and Art Archive retain the HIGH-priority band Silas set on September 18, with Butterfly Gallery first; Mandarin Tutor re-entered on September 19 behind that band because its reopening did not restore the older lead position.
+- **Lifecycle remains coherent.** `project-overrides.yaml` keeps finite lead projects active and Interface Vision/Animation Manager in the continuous fallback tier. Finished, paused, and retired projects remain excluded from ordinary pickup.
+- **Mandarin Tutor matches the reopening request.** m1–m4 remain a closed accepted record, while m5 COMPREHENSION captures the September 19 direction to teach characters before drilling rather than rewriting completed milestone weights.
+- **Structural health supports the semantic result.** `PORTFOLIO-OVERSIGHT.md` reports zero Kind Robots/Conductor parity drift and zero roadmap/CONTROL structural errors.
+- **OpenAI heartbeat is healthy.** Oversight sees recent `openai-scheduled-` coordination activity and does not flag the heartbeat overdue.
 
 ## Corrected
 
-- No additional roadmap or priority mutation is justified by the reviewed evidence. The one unambiguous structural defect visible in the prior audit snapshot was already corrected by #5185 before this semantic pass.
-- This report refreshes the semantic review only after the portfolio comparison above.
+No roadmap, priority, or lifecycle mutation was justified. Making one merely to clear the sensor would create drift rather than repair it.
 
 ## Still questionable
 
-- Several lead projects are active with only human-gated or soft-gated tail work. That is not evidence to finish or pause them automatically because their goals still include acceptance or production outcomes not yet verified. Existing task notes already narrow the needed human decisions, so no new umbrella gate is warranted.
-- `cthulhuquarium/t-065` is close to closure: code-level evidence says bundled art reached production, but the task explicitly requires a signed-out hydrated visual check. Keep that boundary rather than turning asset-prefetch evidence into a visual claim.
-- `mandarin-tutor/t-027` should remain the sole closeout gate for the reopened comprehension slice. Do not invent more Mandarin polish work unless that visual review finds a concrete defect.
+- **Cthulhuquarium:** retain active status while its explicit human/product gates remain unresolved. Do not infer completion from task counts.
+- **Kind Economy:** retain its lead-tier placement and urgent semantic priority; no newer human steering reviewed here supersedes it.
+- **Butterfly Gallery / Art Archive:** both remain intentionally elevated from September 18, with Butterfly Gallery first.
+- **Mandarin Tutor:** keep it behind that September 18 high-priority pair unless Silas explicitly restores its former lead position.
+
+These are monitored boundaries, not requests for a new human decision in this cycle.
 
 ## Next review
 
-2026-09-29, or sooner after a human change to the lead priority band or lifecycle.
+2026-09-29, or sooner after a substantial priority, lifecycle, or product-direction change.
