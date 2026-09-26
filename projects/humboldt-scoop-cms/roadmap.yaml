@@ -807,5 +807,28 @@ tasks:
   updated: '2026-09-26T22:06:40Z'
   implementation_pr: 'silasfelinus/humboldtscoopsolutions#89'
 
-goal: Keep Humboldt Scoop Solutions’ website maintainable through its CMS while accurately presenting services, leads, 
+- id: t-044
+  milestone: m11
+  title: Live smoke-test the Poopstakes draw (HSS_Poopstakes) on a real database before November
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-043
+  note: >-
+    Kaizen from t-043 (silasfelinus/humboldtscoopsolutions#89): HSS_Poopstakes::draw() /
+    eligible_entrants() / household_key_for_quote()'s address tier were only verified
+    structurally (php -l, a pure-function/regex test suite) -- none of them ever ran
+    against a real $wpdb. Before the season's first real draw, exercise it for real: seed
+    a few poopstakes-checked quote_requests rows (including at least one linked to a
+    customer with a property on file, to hit the address tier) on the mariadb-hss-dev
+    dev database or inside site/tools/schema-dry-run.sh's throwaway environment, run a
+    draw for an eligible month from the admin screen, and confirm winners are recorded
+    with the expected household_key_source and that a second draw attempt for the same
+    month is refused. Also worth confirming schema-dry-run.sh's EXPECTED_TABLES=16 (this
+    task's session corrected it from a pre-existing stale 12, unverified against a live
+    activation) actually matches a real dbDelta run.
+  updated: '2026-09-26T22:06:40Z'
+
+goal: Keep Humboldt Scoop Solutions’ website maintainable through its CMS while accurately presenting services, leads,
   operations, and brand voice.
