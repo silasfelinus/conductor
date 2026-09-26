@@ -260,6 +260,76 @@ gallery language, not cosplay of a living religion.
 - Wikipedia being the default source does not make it infallible; overrides and
   editorial review exist for a reason.
 
+## Infrastructure audit — reusable Kind Robots patterns (t-001)
+
+Audited existing kind_robots infrastructure before building anything new. Build
+on these directly rather than parallel-inventing a Tzaddik-specific stack.
+
+**Reactions (upvote/downvote):** reuse the existing single `Reaction` model
+(`prisma/schema.prisma`) rather than a new table. It carries one nullable FK
+column per reactable entity type plus a `Reaction_reactionCategory` enum
+(`ART_IMAGE`, etc.) selecting which column is active. Add a
+`tzaddikCandidateId Int?` column and a `TZADDIK_CANDIDATE` category value, and
+extend the shared `KARMA_REF_TARGET_COLUMNS` map (`utils/karmaRefTypes.ts`) and
+`stores/reactionStore.ts` the same way every other entity type does. Routes
+already exist generically at `server/api/reactions/*`.
+
+**Gallery/detail view:** `components/gallery/kr-gallery.vue` is the reusable
+grid shell (loading/empty/error states, a `modes` prop for the
+Living/Memorial/Info-style view switcher, viewport-gated lazy hydration).
+`components/characters/character-gallery.vue` is the closest existing
+consumer to imitate, pairing the grid with `kr-card-flip` + `kr-card-back` for
+a flip-to-detail panel (title/subtitle/description/art/badges/interact
+button) instead of a separate route per person. `pages/tzaddik-gallery.vue`
+already has a `TabKey = 'living' | 'memorial' | 'info'` tab scaffold (static
+copy only, no data grid wired yet), and
+`content/channels/play/tzaddik-gallery.md` already registers the
+channel/dashboard entry.
+
+**Auth/submitter attribution:** use `stores/userStore.ts` client-side
+(`isLoggedIn`, `userId`, `isAdmin` computed off the reactive `user`, with user
+id 10 as the anonymous/guest sentinel) and `server/utils/authGuard.ts`
+(`requireMachineUser` for authenticated submission routes,
+`requireAdminApiUser` for moderation routes) server-side. Attribution
+convention: a plain `userId Int` FK with a named relation on the submitted
+record, exactly like `Prompt.User`.
+
+**Moderation / overrides:** two existing patterns cover this, no gap.
+(a) Simple approval state — `SocialPostDraftStatus { DRAFT APPROVED REJECTED }`
+with admin-gated `reviewedBy`/`reviewedAt` fields, set only via an
+admin-gated route (`server/api/social/drafts/[id]/approve.post.ts`); model
+candidate status (PENDING/APPROVED/ARCHIVED) the same way.
+(b) Override-with-provenance-preserved — `prisma/mandarin_curation.prisma`'s
+`MandarinCatalogOverride` (nullable fields inherit the source value; only a
+non-null field overrides it) paired with an append-only
+`MandarinCatalogChange` audit table (`beforeJson`/`afterJson`/`note`). This is
+exactly the "override a field but never lose the Wikipedia-sourced original"
+shape this brief already calls for — model `TzaddikOverride`/`TzaddikChange`
+directly on it (see `server/utils/mandarinCatalogOverrides.ts`).
+
+**Image/source provenance — genuine gap, no existing pattern to copy.**
+`ArtImage` stores generation provenance (`designer`, `serverUrl`/`serverName`)
+but nothing in the schema has `sourceUrl`/`license`/`attribution` fields, and
+no existing route fetches an external image URL, validates it, and caches it
+server-side. Add those three columns to the candidate model directly. For the
+fetch path, build a new `server/api/tzaddik-gallery/wikipedia-fetch.*.ts` on
+top of `server/utils/safeFetch.ts` (validates/re-validates every redirect hop
+against SSRF rules, enforces a connect timeout — never call Wikipedia/Wikimedia
+with a raw `fetch`), and use `server/utils/cthulhuquariumCuration.ts`'s
+in-memory TTL cache (`fishCache`/`CACHE_TTL_MS`) as the caching model so the
+gallery isn't hostage to a live Wikipedia call per page view. Never accept a
+client-supplied image URL directly into a public field.
+
+**Pinia/API boundary:** one store per feature, components never call `$fetch`
+directly (`AGENTS.md`'s standing rule). Route naming:
+`server/api/{model}/index.ts` for collection routes,
+`{name}.{verb}.ts` otherwise; every route funnels through `errorHandler()`
+(`server/utils/error.ts`) for a consistent `{ success, message, statusCode }`
+shape. Copy `stores/reactionStore.ts` (built on the shared
+`performFetch`/`handleError` helpers in `stores/utils.ts`) paired with
+`server/api/reactions/*` as the template for a new `tzaddikGalleryStore.ts` +
+`server/api/tzaddik-gallery/*`.
+
 ## Definition of done
 
 The finite build milestone is done when Kind Robots has a polished responsive
