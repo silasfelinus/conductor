@@ -869,7 +869,7 @@ tasks:
 - id: t-037
   milestone: m7
   title: "Delete the client-side beat loop and rewrite its ~25 verifyStorybook*Guard scripts"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-036, t-052]
@@ -1086,10 +1086,10 @@ tasks:
     Filed storybook/t-066 for a small kaizen: verifyStorybookTableDeepLinkGuard.mjs's header comment still points at verifyStorybookLocationDeepLinkGuard.mjs and verifyStorybookCharacterDeepLinkGuard.mjs, both deleted in the cycle-30 guard-cleanup pass (kind_robots#3023) -- stale reference, not a functional issue.
 
     Remaining verifyStorybook*Guard scope: verifyStorybookActiveStoryResumeGuard.ts still functionally imports storybookLibraryHelper.ts/storybookStore.ts (the legacy library-resume behavior) and cannot migrate to a new-engine equivalent -- it is destined for deletion alongside the beat loop itself, not rewrite, so it stays blocked on the same t-065 (export-notice-timing) gate as the destructive cutover. No other guard files referencing the legacy store/helper/pages were found this cycle. Re-arming to ready (recurring multi-slice task); releasing the claim.
-  updated: '2026-09-23T20:01:50Z'
-  owner: reviewer
-  claimed_by: 20260923T195730Z-storybook-t037-cycle31
-  claimed_at: '2026-09-23T19:57:31Z'
+  updated: '2026-09-26T07:02:54Z'
+  owner: worker
+  claimed_by: claude-conductor-agent-2026-09-26T0700Z-storybook-t037
+  claimed_at: '2026-09-26T07:02:54Z'
   implementation_pr: 'silasfelinus/kind_robots#3025'
 
 - id: t-052
