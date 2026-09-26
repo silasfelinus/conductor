@@ -779,14 +779,56 @@ tasks:
 - id: t-043
   milestone: m11
   title: Build the Poopstakes drawing (10 winners/month Nov-Jan, once per household and per customer)
-  status: ready
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-040
   note: >-
     The rules are on the site and in the Service Agreement (HSS_Config::POOPSTAKES_*), but nothing draws winners or enforces "each household and each customer can win only once". Entries are the poopstakes checkbox on wp_hss_quote_requests. Needs a winners table keyed on a household (normalised service address) and a customer/email, and an admin screen that draws up to POOPSTAKES_WINNERS_PER_MONTH eligible entrants in an eligible month and records the prize (2 weeks of free weekly cleanup, or 30 minutes of unusual cleanup). Must be usable before November 2026. Also open (smaller, see docs/BACKLOG.md): asking existing customers to re-accept a newer agreement VERSION.
-  updated: '2026-09-26T21:40:00Z'
 
-goal: Keep Humboldt Scoop Solutions’ website maintainable through its CMS while accurately presenting services, leads, 
+    Implemented and merged silasfelinus/humboldtscoopsolutions#89: new
+    wp_hss_poopstakes_winners table (schema 2.17.0) and HSS_Poopstakes class, drawing up to
+    POOPSTAKES_WINNERS_PER_MONTH winners a month for the Nov/Dec/Jan season, excluding any
+    email or household that has ever won (not just this month). Household key: the quote
+    form has no address field, so household_key_for_quote() uses the best available tier --
+    the customer's primary property address once they've signed up, else a normalized phone
+    number, else the email itself -- and records which tier was used. New 'Poopstakes' admin
+    screen draws winners for an eligible month and lets an admin record which of the two
+    prizes a winner got, email them, and mark it fulfilled. Also corrected
+    site/tools/schema-dry-run.sh's EXPECTED_TABLES (stale at 12 against 15 real tables
+    before this PR's 16th) and removed the now-shipped bullet from docs/BACKLOG.md. Verified
+    via php -l on every changed file, a new site/tests/poopstakes-test.php (pure-function
+    checks plus structural schema/wiring checks), and the full existing site/tests/*.php +
+    *.sh suite -- all green, no regressions. Could not exercise draw()/eligible_entrants()
+    end-to-end (needs $wpdb/WordPress) or run schema-dry-run.sh itself (needs the Alexandria
+    MariaDB/Docker environment); flagged in the PR for a live smoke test before the first
+    real November draw.
+  updated: '2026-09-26T22:06:40Z'
+  implementation_pr: 'silasfelinus/humboldtscoopsolutions#89'
+
+- id: t-044
+  milestone: m11
+  title: Live smoke-test the Poopstakes draw (HSS_Poopstakes) on a real database before November
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: t-043
+  note: >-
+    Kaizen from t-043 (silasfelinus/humboldtscoopsolutions#89): HSS_Poopstakes::draw() /
+    eligible_entrants() / household_key_for_quote()'s address tier were only verified
+    structurally (php -l, a pure-function/regex test suite) -- none of them ever ran
+    against a real $wpdb. Before the season's first real draw, exercise it for real: seed
+    a few poopstakes-checked quote_requests rows (including at least one linked to a
+    customer with a property on file, to hit the address tier) on the mariadb-hss-dev
+    dev database or inside site/tools/schema-dry-run.sh's throwaway environment, run a
+    draw for an eligible month from the admin screen, and confirm winners are recorded
+    with the expected household_key_source and that a second draw attempt for the same
+    month is refused. Also worth confirming schema-dry-run.sh's EXPECTED_TABLES=16 (this
+    task's session corrected it from a pre-existing stale 12, unverified against a live
+    activation) actually matches a real dbDelta run.
+  updated: '2026-09-26T22:06:40Z'
+
+goal: Keep Humboldt Scoop Solutions’ website maintainable through its CMS while accurately presenting services, leads,
   operations, and brand voice.
