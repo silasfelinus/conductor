@@ -118,7 +118,8 @@ tasks:
       Model a candidate/person record with living/historical state, short
       rationale, Wikipedia article URL, Wikipedia/Wikimedia image provenance,
       optional explicit admin overrides, submitter attribution, curation state,
-      and a sourced controversy/objections section. Preserve source provenance
+      a sourced controversy/objections section, last source refresh/revision
+      metadata, and auditable recheck-request state. Preserve source provenance
       even when display fields are overridden.
 
   - id: t-004
@@ -146,9 +147,10 @@ tasks:
     depends_on: t-003
     note: >
       Show image, concise biography/rationale, source links/provenance, status,
-      submitter attribution, reactions, and a visible controversy/objections
-      section. Keep objections factual and source-backed; absence of a
-      substantial documented objection should not trigger invented balance.
+      submitter attribution, reactions, a visible controversy/objections
+      section, and a Request recheck control with last-checked/pending state.
+      Keep objections factual and source-backed; absence of a substantial
+      documented objection should not trigger invented balance.
 
   - id: t-006
     milestone: m2
@@ -352,3 +354,26 @@ tasks:
       screen backdrop / landing visual. The image must support overlaid UI,
       portrait cards, and readable text rather than competing with them. Verify
       cropping at lg/xl and provide a simpler mobile treatment for sm/md.
+
+  - id: t-019
+    milestone: m2
+    title: "Add community Wikipedia recheck / correction requests"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-003, t-005, t-008]
+    note: >
+      Add a visible Request recheck action on every person page for authenticated
+      users. A request queues a controlled server-side refresh of the record's
+      canonical Wikipedia/Wikimedia sources and compares the latest revision to
+      the stored normalized snapshot. Recheck living/deceased status and death
+      date, source-derived biography fields, redirects/article identity, and
+      image/license provenance. Record requester, timestamps, source revision,
+      diff/result, and dedupe/cooldown state. Safe source-derived changes may
+      refresh automatically; a verified death/living-status change must move
+      the record between Living and Memorial. Never silently overwrite explicit
+      editor overrides: preserve override provenance and route conflicts or
+      ambiguous source changes to editor review. Show users last-checked,
+      requested/pending, success, or needs-review state so repeated requests do
+      not hammer Wikipedia.

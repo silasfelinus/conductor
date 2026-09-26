@@ -90,6 +90,40 @@ The implementation should fetch/refresh source data through a controlled server
 path rather than trusting arbitrary client URLs. Cache enough normalized source
 data that the gallery is not hostage to a Wikipedia request on every page load.
 
+## Community correction / source recheck
+
+Every person detail page should expose a clearly visible **Request recheck**
+control. This is not a free-form edit button. It asks the server to re-fetch
+the record's canonical Wikipedia/Wikimedia sources and compare the latest
+source-derived facts against the stored snapshot.
+
+A recheck should cover, at minimum:
+
+- living/deceased status and death date when applicable;
+- current lead/biographical summary used by the gallery;
+- Wikipedia article identity / redirects;
+- Wikimedia image and license/provenance metadata;
+- other normalized source-derived fields used by the person card/detail page.
+
+The request should be attributable to the signed-in user, deduplicated/cooldown
+protected, and auditable. Store the Wikipedia revision/source timestamp used for
+the comparison so editors can see *what changed since what*.
+
+When the fresh source clearly changes an ordinary source-derived field, update
+that field and record the refresh. A verified death/living-state change must
+also move the person between Living and Memorial as appropriate instead of
+leaving a stale gallery classification.
+
+Explicit editor overrides are protected: a Wikipedia refresh must never silently
+overwrite intentionally overridden copy or imagery. If fresh source data
+conflicts with an override, surface the diff for editor review while preserving
+both the source value and override provenance.
+
+A failed or ambiguous refresh should produce a visible review state rather than
+silently claiming the record is current. The button should communicate recent
+refresh state, for example "checked 2 days ago" or "recheck requested", so users
+do not repeatedly hammer the same source.
+
 ## Initial seeds
 
 Initial gallery membership is now tracked concretely in `seed-sets.yaml`.
