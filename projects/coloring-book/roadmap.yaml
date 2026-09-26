@@ -386,11 +386,31 @@ tasks:
     coloring-book/t-039 (needs-human, unchanged since 2026-09-22T09:09:54Z). No
     unblocked agent-side slice this cycle; re-arming to ready (recurring), releasing
     the claim, moving to other priority-order work.
+
+    Cycle 47 (2026-09-26T22:00Z, scheduled Conductor Agent run): render box UP
+    (check_render_box.py: media.acrocatranch.com answered HTTP 404, Comfy heartbeat healthy
+    0.2min ago, 6 renders completed in last 6h). Re-ran coloring_queue_status.py for all
+    three books -- unchanged: monster-recast (17 approved/19 done), hollywood-recast (22
+    approved/14 done), kind-robots (28 approved/8 done) all report pending: 0,
+    recovery_candidate_count: 0, recommended_action: complete on the COLOR pass. This cycle
+    made real progress on the BW-derivation blocker instead of only re-checking it:
+    coloring-book/t-039's outstanding item (Silas's own 2026-09-22 GGUF-vs-safetensors A/B
+    result, "if i just switch the gguf for safetensors, it works, no static") had never
+    actually been turned into a code change. Verified the target checkpoint (flux1-dev-
+    kontext_fp8_scaled.safetensors) is registered in the Resource library (id 3837) via GET
+    /api/resources, then implemented the switch in all three Kontext graph builders and
+    opened silasfelinus/kind_robots#3056 (CI pending at time of writing) -- see t-039's own
+    note for full detail. Did NOT attempt a live generate-bw retry this cycle: the fix is
+    unmerged and, per kind_robots AGENTS.md, merge does not equal deploy on the self-hosted
+    Unraid path, so no render right now would reflect the fix either way. No unblocked slice
+    for t-022 itself this cycle; re-arming to ready (recurring), releasing the claim. Next
+    cycle: check PR #3056 CI, merge if green, then track deploy + a live canary before
+    resuming generate-bw.
   run_log: projects/coloring-book/t-022-run-log.md
   recurring: true
   implementation_pr: 'silasfelinus/conductor#4482'
-  status: claimed
-  updated: '2026-09-26T19:53:39Z'
+  status: ready
+  updated: '2026-09-26T20:08:04Z'
   owner: worker
   claimed_by: claude-2026-09-26T2200Z-cb022-c110
   claimed_at: '2026-09-26T19:53:39Z'
@@ -914,12 +934,16 @@ tasks:
     than a second signal on the open question. Not claiming anything new here: the T5 finding
     and the #2977 fix were already established by the session immediately prior to this one;
     recording this only so the next cycle doesn't re-run the same confirmatory check.
-  updated: '2026-09-22T09:09:54Z'
+
+    Cycle 2026-09-26T22:00Z (scheduled Conductor Agent run, coloring-book/t-022 cycle 47): the outstanding item from Silas's own 2026-09-22 A/B ("if i just switch the gguf for safetensors, it works, no static") is now implemented. flux1-dev-kontext_fp8_scaled.safetensors (Resource id 3837, verified present via GET /api/resources) replaces flux1-kontext-dev-Q5_K_M.gguf as the Kontext UNet default in all three graph builders: the shared queue builder (kontext/utils/workflow.ts's DEFAULT_KONTEXT_UNET) and both direct routes (generate.post.ts, kombine.post.ts) that had their own separately-hardcoded copy of the same broken checkpoint -- the same three-file shape the sibling T5-encoder defect needed (#2750 + #2977). Added utils/scripts/verifyKontextUnetDefault.ts (wired into contract-tests.yml) to guard against this checkpoint regressing back in as a default, mirroring verifyKontextTextEncoder.ts's existing guard for the T5 defect. Updated verifyKontextMaskForwarding.ts's pinned reference-graph assertion, which had asserted the now-disproven claim that the GGUF UNet was compatible with a healthy render. PR: silasfelinus/kind_robots#3056 (open, CI pending at time of writing).
+
+    NOT closing this task yet, deliberately: this exact task has already been prematurely marked done twice (2026-09-15, RECONCILED then REOPENED same day after live canary ArtJob 22830 still rendered static) on evidence that turned out to be misdiagnosed. The code fix is scoped, tested (unit guards + typecheck + lint + prettier all clean), and directly implements Silas's own live A/B result -- but per this task's own established bar ("a render that structurally matches Silas's known-working reference, not just a green mechanical gate"), it should stay needs-human/soft_gate until (a) PR #3056 merges, (b) the self-hosted Unraid container picks it up via the normal deploy path (merge != deploy, per kind_robots AGENTS.md), and (c) a live generate-bw canary renders clean line art rather than static. Next session: check PR #3056's CI and merge if green (this is ordinary scoped software work, not itself gated), then track the deploy+canary step before flipping this to done.
+  updated: '2026-09-26T20:07:21Z'
   owner: worker
   claimed_by: 2026-09-15T091200Z-coloring-book-t039-sampler9c2a
   claimed_at: '2026-09-15T09:19:00Z'
   soft_gate: true
-  implementation_pr: 'silasfelinus/kind_robots#2976'
+  implementation_pr: 'silasfelinus/kind_robots#3056'
 - id: t-040
   milestone: m4
   title: manage_coloring_book_production.py should surface the Pillow-missing fix inline instead of a bare ImportError
