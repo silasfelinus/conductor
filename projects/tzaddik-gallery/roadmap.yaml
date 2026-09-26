@@ -1,0 +1,318 @@
+# Tzaddik Gallery — playful pop-culture gallery of "just people"
+# Created from Silas's 2026-09-26 direction.
+
+project: tzaddik-gallery
+kind: software
+goal: "Ship an entertaining, sourced Kind Robots gallery of 36 living 'just people' plus a historical archive, community submissions/reactions, Wikipedia-backed provenance, transparent objections, international coverage, and a daily human-vetted discovery roster of 10 living + 10 deceased candidates."
+
+notes_from_silas: |
+  This is a silly pop-culture database and entertainment feature, not a Jewish
+  religious project. The name borrows the folklore/concept of 36 righteous or
+  just people sustaining the world, but being Jewish or Hasidic is NOT a
+  requirement, expectation, ranking factor, or implication.
+
+  Present the current gallery as a playful list of 36 living "just people"
+  keeping the world running. Include a separate explanation tab, a historical
+  gallery for past/deceased tzaddik, and the current living gallery.
+
+  Kind Robots users should be able to submit new candidates and react to
+  submissions with upvotes/downvotes using the site's normal identity/auth
+  patterns.
+
+  Wikipedia is the default source for biographical facts and images. Store the
+  source URL and source/image provenance. Admin/editor overrides are allowed,
+  but overrides must be explicit rather than silently replacing provenance.
+
+  Every person detail view should include a "controversy / objections" section
+  so the gallery does not turn admiration into hagiography. Summaries should be
+  factual, sourced, and proportionate: document meaningful objections or
+  contested facts without manufacturing false balance.
+
+  Historical examples from Silas: Dolly Parton, Steve Irwin, Fred Rogers,
+  Martin Luther King Jr., and Stanislav Petrov, the Soviet officer who judged a
+  1983 missile-warning alert to be false rather than escalating it.
+
+  Initial living suggestions attributed to Silasfelinus / userId=1:
+  - Cassandra Peterson / Elvira
+  - Greta Thunberg
+
+  One explicit editorial goal is to escape an American-centric candidate pool.
+  Research should deliberately seek people from multiple regions, languages,
+  disciplines, and kinds of public service. This is an educational opportunity
+  as much as a joke.
+
+  Add a Daily Tzaddik discovery lane, analogous to Daily Dream: each Pacific
+  day, prepare a filled docket of 10 living and 10 deceased suggestions with a
+  concise sourced bio, inclusion pitch, Wikipedia/Wikimedia provenance, and
+  meaningful objections/controversies. These are suggestions for Silas to vet,
+  never automatic additions. Prefer fresh international discovery over repeating
+  familiar US/UK names. Once the finite gallery build is accepted, this daily
+  discovery lane is the project's ongoing/continuous reason to stay alive.
+
+milestones:
+  - id: m1
+    title: "SHAPE — concept, sourcing contract, data model, and route plan"
+    weight: 20
+    status: in-progress
+
+  - id: m2
+    title: "BUILD — current/history galleries, detail views, submissions, and reactions"
+    weight: 45
+    status: not-started
+
+  - id: m3
+    title: "CURATE — sourced seed set, objections, and international coverage"
+    weight: 20
+    status: not-started
+
+  - id: m4
+    title: "POLISH & SHIP — moderation, accessibility, performance, and visual acceptance"
+    weight: 15
+    status: not-started
+
+  - id: m5
+    title: "DAILY DISCOVERY — 10 living + 10 deceased suggestions for human vetting"
+    weight: 10
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write the design brief and audit reusable Kind Robots infrastructure"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Turn Silas's direction into a concrete Kind Robots implementation plan.
+      Audit existing Reaction/user identity patterns, submission/moderation
+      surfaces, image/source handling, and reusable gallery/card components.
+      Keep Tzaddik Gallery a first-class Kind Robots feature rather than a
+      parallel auth/reaction stack.
+
+  - id: t-002
+    milestone: m1
+    title: "Create the Kind Robots Project identity and route placement"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Maintain conductorSlug parity for tzaddik-gallery. Presentation fields
+      belong to Kind Robots per SOURCE_OF_TRUTH.md. Add a simple app route and
+      navigation placement appropriate for a playful educational/community
+      feature; do not add deprecated presentation metadata to
+      project-overrides.yaml.
+
+  - id: t-003
+    milestone: m1
+    title: "Add Tzaddik candidate and provenance data model"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-001
+    note: >
+      Model a candidate/person record with living/historical state, short
+      rationale, Wikipedia article URL, Wikipedia/Wikimedia image provenance,
+      optional explicit admin overrides, submitter attribution, curation state,
+      and a sourced controversy/objections section. Preserve source provenance
+      even when display fields are overridden.
+
+  - id: t-004
+    milestone: m2
+    title: "Build current, historical, and concept/explanation tabs"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-002, t-003]
+    note: >
+      Three primary views: the current 36 living Tzaddik, historical/past
+      Tzaddik, and an explanation of the playful borrowed concept and selection
+      philosophy. The explanation must say plainly that the project is not a
+      Jewish-religious classification and does not require or imply Jewish or
+      Hasidic identity.
+
+  - id: t-005
+    milestone: m2
+    title: "Build sourced person detail view with objections section"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-003
+    note: >
+      Show image, concise biography/rationale, source links/provenance, status,
+      submitter attribution, reactions, and a visible controversy/objections
+      section. Keep objections factual and source-backed; absence of a
+      substantial documented objection should not trigger invented balance.
+
+  - id: t-006
+    milestone: m2
+    title: "Add authenticated candidate submission workflow"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-003
+    note: >
+      Let Kind Robots users submit candidates with a rationale and Wikipedia
+      article. Default new submissions to pending/community state rather than
+      automatically entering the canonical 36. Record submitter user identity.
+
+  - id: t-007
+    milestone: m2
+    title: "Add user upvotes/downvotes using Kind Robots reaction patterns"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-003, t-006]
+    note: >
+      Reuse the site's existing user/reaction conventions where practical.
+      Reactions express community sentiment and discovery; they must not silently
+      define the canonical 36 or turn the page into an unmoderated popularity
+      leaderboard.
+
+  - id: t-008
+    milestone: m2
+    title: "Add moderation and explicit source/content overrides"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-003, t-006]
+    note: >
+      Admin/editor controls can approve/archive submissions and override
+      Wikipedia-derived display text or images. Overrides must retain the
+      original source/provenance and make the edited state inspectable.
+
+  - id: t-009
+    milestone: m3
+    title: "Seed Silas's named historical and living candidates"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-003, t-008]
+    note: >
+      Seed historical examples Dolly Parton, Steve Irwin, Fred Rogers, Martin
+      Luther King Jr., and Stanislav Petrov. Seed living suggestions Cassandra
+      Peterson / Elvira and Greta Thunberg with submitter attribution
+      Silasfelinus, userId=1. Verify
+      living/historical status and Wikipedia/Wikimedia provenance at ingest time;
+      do not rely on stale hard-coded biographical text.
+
+  - id: t-010
+    milestone: m3
+    title: "Research an internationally broad candidate pool for the living 36"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-003
+    note: >
+      Build a sourced research pool spanning multiple world regions, languages,
+      professions, and forms of public service. Deliberately counter
+      US/Anglosphere celebrity bias. Research is not automatic canonization:
+      record why each person is notable, meaningful objections/controversies,
+      Wikipedia availability, and uncertainty. Favor genuine educational
+      discovery over quota-box geography.
+
+  - id: t-011
+    milestone: m3
+    title: "Curate the first canonical set of 36 living Tzaddik"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-009, t-010]
+    gate_human: true
+    note: >
+      FOR SILAS: canonical membership is an editorial choice rather than a
+      mechanical reaction score. Present the sourced candidate pool and
+      community signal for selection. This gate controls the initial canonical
+      36 only; research and feature development continue around it.
+
+  - id: t-012
+    milestone: m4
+    title: "Add accessibility, responsive gallery polish, and empty/loading/error states"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-004, t-005, t-006, t-007, t-008]
+    note: >
+      Make cards and detail content usable at phone/tablet/desktop widths, with
+      alt text and keyboard-accessible reactions/submission controls. Source
+      failures should degrade to explicit missing-source/image states rather
+      than broken cards.
+
+  - id: t-013
+    milestone: m4
+    title: "Verify sourcing, moderation boundaries, and visual state across widths"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-011, t-012]
+    gate_human: true
+    note: >
+      Final acceptance pass: verify live Wikipedia-derived data/provenance,
+      reaction/submission permissions, controversy presentation, canonical 36,
+      and phone/tablet/desktop visual quality. User-facing software does not
+      become finished until Silas accepts or explicitly waives visual review.
+
+  - id: t-014
+    milestone: m5
+    title: "Build the Daily Tzaddik discovery docket"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-003, t-005, t-008]
+    note: >
+      Build a daily research pipeline analogous to Daily Dream, but editorial
+      rather than generative-canon: produce exactly 10 living and 10 deceased
+      candidate suggestions per Pacific day. Each item needs a concise sourced
+      bio, a short "why this person" pitch, Wikipedia/Wikimedia provenance,
+      meaningful controversy/objection notes when documented, living/deceased
+      verification, region/context tags, and dedupe against existing canonical,
+      historical, pending, and recently-suggested people. Suggestions never
+      auto-enter the canonical 36 or historical gallery.
+
+  - id: t-015
+    milestone: m5
+    title: "Surface each daily 20-person roster for Silas's vetting"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-014
+    note: >
+      Give Silas an easy daily review surface, integrated with the same
+      attention/digest patterns used by Daily Dream and other daily creative
+      commitments. He must be able to approve, reject, defer, or open the full
+      sourced profile. Preserve prior decisions so rejected suggestions are not
+      immediately recycled. This is an inbound review queue only; do not send or
+      publish anything externally.
+
+  - id: t-016
+    milestone: m5
+    title: "Run the recurring Daily Tzaddik research cycle"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    recurring: true
+    depends_on: t-015
+    note: >
+      Once the daily docket/review surface exists, re-arm this task once per
+      Pacific calendar day after a complete 10-living + 10-deceased roster has
+      been generated, sourced, deduplicated, and made available for Silas to
+      review. Bias discovery toward underrepresented regions and non-Anglosphere
+      sources while still selecting on the strength of the individual case, not
+      geography quotas. When the finite gallery build is accepted, transition
+      tzaddik-gallery from active to continuous rather than leaving never-idle
+      work in a finished finite project.
