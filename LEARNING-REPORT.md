@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-26T11:15:11Z
+Generated: 2026-09-26T11:28:10Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1151**
-- Outcomes: blocked: 19, cancelled: 2, done: 1130
+- Closed tasks recorded: **1152**
+- Outcomes: blocked: 19, cancelled: 2, done: 1131
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -65,13 +65,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | superkate-services-calculator | 12 | 100% |
 | taskmaster | 3 | 100% |
 | text-generation | 7 | 100% |
+| tzaddik-gallery | 1 | 100% |
 
 ## By kind
 
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1134 | 99% |
+| software | 1135 | 99% |
 
 ## Failure categories
 
@@ -93,6 +94,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-26 `tzaddik-gallery/t-002` — components/conductor/project-front-page.vue is a reusable page shell that already owns its own kr-surface root and kr-scroll region internally. Wrapping it inside a NEW pages/*.vue file's own template without giving that page file its own root-surface class and scroll region passes eslint/vue-tsc but fails utils/scripts/verifyLayoutContract.ts's root-surface/zero-scroll rules, because the checker scans each page-classified file's own template independently rather than resolving through child components -- and forcing it to pass by adding a second kr-scroll class at the page level would create a genuine nested-scroll region in the rendered DOM, not just satisfy the linter. A brand-new top-level route composing project-front-page needs either its own self-contained scroll wrapper (the music-mentor.vue shape, used here instead) or a documented exception; there is no existing precedent in this codebase of a real routed page reusing that shell as-is.
 - 2026-09-26 `conductor/t-197` — A roadmap task block can carry a duplicate same-indent field key (found live in coloring-book/t-022: two `updated:` keys, one before `note:`, one after) that PyYAML silently resolves via last-key-wins, but set_task_field.py's field locator stopped at the first match and edited the wrong (shadowed) occurrence -- confirmed reproducing via this session's own claim_task.py/close_task.py calls against the live task. Neither validate_roadmaps.py nor verify_result() catches this class of drift, since both only check that a field is present somewhere, not that the edited occurrence is the effective one. Lesson: when a roadmap-editing tool assumes "the" field with a given name is unique within a mapping, that assumption should be enforced (raise on a duplicate) rather than silently relied on -- a line-oriented YAML editor that never re-parses the whole document before locating its target is exactly the shape of tool that can drift from what a real YAML parser would resolve.
 - 2026-09-26 `storybook/t-069` — A new mechanical checker (verifyVerifierFilenameReferences.mjs, t-068) that ships with only a --self-test on synthetic strings can still be badly broken on real repo state -- running it for real, as part of wiring it into CI, found it flagging 16 lines across the actual utils/scripts/ directory (2 genuine stale doc references plus 14 false positives from self-test/.test.ts fixtures and a multi-line historical-context miss). Before wiring any new "scan every file for X" guard into CI, run it once against the real tree, not just its own unit self-test, since the self-test only proves the matching function works on hand-picked strings.
 - 2026-09-26 `conductor/t-196` — set_task_field.py's ALLOWED_FIELDS is a single shared allow-list -- close_task.py's --set imports and gates through the exact same constant rather than keeping a second copy, so a field gap the task description worded as "extend both scripts" only needed one edit. Confirmed by reading close_task.py's own import line before touching anything, rather than assuming the docstring's "both scripts" implied two allow-lists to keep in sync.
@@ -102,7 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-25 `animation-manager/t-007` — A background subagent asked to poll its own PR's CI and hand back when green can loop its SubagentHandback if it runs its own internal Monitor task -- tell it up front to cancel that Monitor before the final handback, not just to stop when done, or the coordinator ends up re-processing the same report repeatedly.
 - 2026-09-25 `storybook/t-068` — A closed-review task with no implementation_pr recorded is invisible to merged-PR drift checks that hit a lookup failure elsewhere (here, an unrelated 403 on a same-task-id lookup in a different repo) -- always record implementation_pr at close-out time so a later drift check has something to verify against directly instead of falling back to a repo-guessing search.
 - 2026-09-25 `kind-robots/t-121` — Binary image fetches that bypass performFetch must carry the same Bearer token as normal API calls, and UI changes should be checked against the Prettier ratchet before the first CI pass.
-- 2026-09-24 `ruler-hooked/t-030` — For image-led game-state views, reuse the canonical composited scene and live ContentBundle/save data rather than creating a second visual/state representation; container-responsive auto-fit grids also satisfy the layout contract better than viewport breakpoints inside reusable components.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-26T11:15:11Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-26T11:28:10Z_
