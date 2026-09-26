@@ -92,20 +92,18 @@ data that the gallery is not hostage to a Wikipedia request on every page load.
 
 ## Initial seeds
 
-Historical examples named by Silas:
+Initial gallery membership is now tracked concretely in `seed-sets.yaml`.
+Silas accepted the full 2026-09-26 discovery docket plus his direct nominations
+into the first gallery data set.
 
-- Dolly Parton
-- Steve Irwin
-- Fred Rogers
-- Martin Luther King Jr.
-- Stanislav Petrov, specifically the Soviet officer associated with correctly
-  treating the 1983 missile-warning alert as a false alarm rather than
-  escalating it.
+Direct Silas nominations currently include:
 
-Living suggestions attributed to **Silasfelinus (userId=1)**:
+- Living: Dolly Parton; Cassandra Peterson / Elvira; Greta Thunberg.
+- Memorial: Steve Irwin; Fred Rogers; Martin Luther King Jr.; Stanislav Petrov;
+  Nelson Mandela; Harriet Tubman.
 
-- Cassandra Peterson / Elvira
-- Greta Thunberg
+The first LLM discovery batch is also accepted into the initial gallery set.
+This seed acceptance does not by itself define the final canonical living 36.
 
 Current living status and source metadata must be verified when records are
 actually ingested, rather than assumed from this planning document.
