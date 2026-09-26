@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-26T17:11:13Z
+Generated: 2026-09-26T17:18:01Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1156**
-- Outcomes: blocked: 19, cancelled: 2, done: 1135
+- Closed tasks recorded: **1157**
+- Outcomes: blocked: 19, cancelled: 2, done: 1136
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -55,7 +55,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | newsfeed | 20 | 100% |
 | packmaker | 10 | 100% |
 | rainbow-butterflies | 21 | 100% |
-| ruler-hooked | 26 | 100% |
+| ruler-hooked | 27 | 100% |
 | scene-animator | 2 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
@@ -72,7 +72,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1139 | 99% |
+| software | 1140 | 99% |
 
 ## Failure categories
 
@@ -94,6 +94,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-26 `ruler-hooked/t-042` — Extending timingVisualFor()'s existing per-rarity Record pattern (bandColorClass, markerShape) to a third cue (zoneGlyphs) kept the single-source-of-truth property free -- reusing an established per-field Record<Rarity, T> shape, rather than inventing a new lookup mechanism, made the addition a small, low-risk diff and let the selftest assert the new field against the same rarity ladder the existing fields already used.
 - 2026-09-26 `ruler-hooked/t-041` — The last open candidate from t-026/t-033's kaizen note (rarity-based marker shape/band color) landed as a single pure-function addition (timingVisualFor()) plus a component wiring change, with a selftest that explicitly proves the new visual lookup never perturbs resolveTimingStop()'s output -- when a display-only feature sits next to a determinism-critical pure function, assert the non-interference directly in the test rather than relying on code review alone to notice a stray shared-state touch.
 - 2026-09-26 `ruler-hooked/t-040` — Continuing t-033's bounded-slice discipline: landed the Sunspoke Koi APPROACH-pause slice (kind_robots#3052) as a small, purely-display animation change (a brief dwell at each end of the timing-bar sweep, gated on family==PATIENCE && phase==APPROACH) and filed the one remaining candidate (rarity-based marker shape/band color) as a fresh task (t-041) rather than reopening this one -- confirming the same family/reversed-flag mutual-exclusivity check (grep the reducer for where the flag is set) before assuming two display-only effects can't collide is a cheap, worthwhile step whenever a kaizen note bundles multiple per-species visual candidates.
 - 2026-09-26 `ruler-hooked/t-033` — A note that says 'once Silas has actually played the mechanic and there is real signal' is design guidance, not a hard gate -- the task was still status: ready with gate_human: false, and the three suggested candidates were concrete/specific enough to implement as small, independently reversible, bounded slices rather than waiting speculatively; land one slice per PR, not a combined diff.
@@ -103,7 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-26 `storybook/t-069` — A new mechanical checker (verifyVerifierFilenameReferences.mjs, t-068) that ships with only a --self-test on synthetic strings can still be badly broken on real repo state -- running it for real, as part of wiring it into CI, found it flagging 16 lines across the actual utils/scripts/ directory (2 genuine stale doc references plus 14 false positives from self-test/.test.ts fixtures and a multi-line historical-context miss). Before wiring any new "scan every file for X" guard into CI, run it once against the real tree, not just its own unit self-test, since the self-test only proves the matching function works on hand-picked strings.
 - 2026-09-26 `conductor/t-196` — set_task_field.py's ALLOWED_FIELDS is a single shared allow-list -- close_task.py's --set imports and gates through the exact same constant rather than keeping a second copy, so a field gap the task description worded as "extend both scripts" only needed one edit. Confirmed by reading close_task.py's own import line before touching anything, rather than assuming the docstring's "both scripts" implied two allow-lists to keep in sync.
 - 2026-09-26 `conductor/t-195` — A recurring task's "status stuck at claimed" drift was not a write-atomicity bug in claim_task.py/close_task.py (both always write status+claimed_by+claimed_at together) -- it was a merge-conflict resolution that took origin/main's whole conflicted hunk instead of resolving per-task, discarding this task's own just-written status fix while correctly keeping an unrelated task's genuinely newer claim from the same hunk. The reliable mechanical check is the invariant itself (a claimed status with claimed_by/claimed_at both null can never come from a live claim), not parsing recurring-task note prose for "re-arming to ready".
-- 2026-09-26 `kind-robots/t-123` — A repo-wide doc fix from a kaizen suggestion is worth doing in the same session even when it ranks below the top priority.yaml project -- the priority order picks which project to work when several have real ready work, it is not a rule against picking up a quick, reversible, already-scoped kaizen task once the higher-ranked project's only ready task is a recurring monitor that was already re-checked minutes earlier with no change.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-26T17:11:13Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-26T17:18:01Z_
