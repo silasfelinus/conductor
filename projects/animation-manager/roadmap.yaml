@@ -166,10 +166,27 @@ tasks:
       --strict` reported no collisions at or above the 0.2 threshold across all 31 pitches.
       `validate_roadmaps.py` clean. Brings the buildable queue to 11. No kind_robots code
       touched (pitch-only) -- re-arming to ready per the recurring-task convention.
-    status: claimed
+
+      RAN 2026-09-26 (~07:10 UTC, conductor scheduled Agent session,
+      claude-conductor-agent-2026-09-26T0710Z-am-t006): new Pacific calendar day since the
+      prior run (2026-09-23T16:56 UTC) and the buildable (status: pitched) queue was at 7,
+      below the cap of 12, so neither no-op condition applied. Added split-flap-departures (a
+      wall of discrete-alphabet split-flap tiles that settles, tile by tile on a deterministic
+      clock, into a readable phrase before churning back into nonsense), checked against all
+      31 existing pitch titles/themes for overlap -- distinct from Zoetrope Lantern Drum
+      (single rotating drum sampling fixed poses by angle, not a grid of independent character
+      tiles), Cairn Balancing (physical stack-and-topple, not discrete character settling),
+      Pendulum Wave Garden (closed-form continuous oscillation, not discrete-state tile
+      flapping), and every other shipped/pitched concept. `check_animation_novelty.py
+      --pitch split-flap-departures --strict` reported no collisions at or above the 0.2
+      threshold; `validate_roadmaps.py` clean. Brings the buildable queue to 8, still below
+      the cap. No kind_robots code touched (pitch-only) -- re-arming to ready per the
+      recurring-task convention.
+    status: ready
+    owner: worker
     claimed_by: claude-conductor-agent-2026-09-26T0710Z-am-t006
     claimed_at: '2026-09-26T07:07:25Z'
-    updated: '2026-09-26T07:07:25Z'
+    updated: '2026-09-26T07:10:00Z'
 
   - id: t-007
     milestone: m5

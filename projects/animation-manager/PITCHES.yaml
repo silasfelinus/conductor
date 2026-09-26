@@ -1,4 +1,4 @@
-updated: "2026-09-23T16:56:00+00:00"
+updated: "2026-09-26T07:10:00+00:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -1646,3 +1646,56 @@ pitches:
       - a clearly readable doubled/split wave pattern appears at the cycle's midpoint between unison instants
       - pointer bob-nudge and click-restart never desynchronize the closed-form phase function of any bob not directly interacted with
       - reduced-motion mode holds one static unison frame with no oscillation
+
+  - id: split-flap-departures
+    title: Split-Flap Departure Board
+    status: pitched
+    priority: 32
+    surprise: >
+      A wall of vintage split-flap tiles chatters through unrelated letters and glyphs, tile by
+      tile, until -- one row at a time -- the chaos resolves into a short, wistful phrase, holds a
+      moment, then dissolves back into churning nonsense to build toward the next.
+    passive_loop: >
+      Each tile cycles through a fixed character strip; a per-tile settle scheduler advances tiles
+      at staggered offsets (a wave sweeping across the row) driven by a deterministic clock rather
+      than per-frame randomness, so the churn is exactly reproducible and never accumulates drift.
+      A tile that has reached its target character for the current phrase stops flapping; once
+      every tile in the row has settled, the phrase holds for a fixed dwell, then the next phrase
+      is pulled from a fixed cycling list and the settle wave restarts from a fresh stagger offset
+      seeded from the phrase index (never Math.random per frame, so the whole cycle is
+      deterministic and reproducible from elapsed time alone).
+    optional_interaction: >
+      Hovering a tile freezes just that tile's flap mid-motion (paused, not reset) while its
+      neighbors keep churning. Clicking the row forces an early transition to the next phrase,
+      skipping the remaining dwell, without disturbing any other row's independent cycle.
+    technique: >
+      A row of tiles, each modeled as a two-panel split flap (a top half rotating down to reveal
+      the next character) via canvas draw calls or a CSS 3D transform. Each tile's state is a
+      small record of {currentChar, targetChar, phase}, advanced per frame purely from elapsed
+      time against a lookup table of character-index to rotation progress -- never an
+      accumulated per-frame delta -- so the whole board can be evaluated at any timestamp
+      deterministically, which is what makes the reduced-motion snapshot trivial.
+    reduced_motion: >
+      Freeze on the current fully-settled phrase (never render the churn phase); if reduced
+      motion activates mid-churn, jump every tile immediately to its current target character
+      with zero flap animation.
+    performance_risk: >
+      Many tiles each running an independent rotation calculation and transform can add up on a
+      large board. Cap board/row size, batch all tile updates into a single requestAnimationFrame
+      pass, and prefer canvas draw calls over one DOM element per tile if the tile count grows.
+    novelty: >
+      No existing pitch drives a grid of independently-settling, discrete-alphabet tiles that
+      resolves into readable text. Zoetrope Lantern Drum samples fixed poses from a single
+      rotating drum by angle, not a row of independent character tiles with their own settle
+      state. Crease Fold Atlas is paper-folding geometry, not electromechanical flap tiles. Moire
+      Weave Engine produces its pattern from static interfering gratings, never a discrete
+      alphabet or a settling state machine. Tapestry Loom is a continuous weave build, not
+      stop-motion character flipping toward a phrase. This pitch's mechanic -- staggered
+      per-tile discrete-character settling that resolves into legible text -- has no prior
+      instance in the queue.
+    acceptance:
+      - tiles visibly flap through multiple wrong characters before settling on the phrase's correct character, staggered across the row
+      - once fully settled, the phrase holds recognizably readable for a fixed dwell before the next churn begins
+      - hovering a single tile pauses only that tile's flap without affecting any neighboring tile's progress
+      - clicking the row can skip an in-progress dwell early without breaking any tile's settle logic
+      - reduced-motion mode always shows either a fully-settled phrase or an instant jump to the current target character, never mid-flap motion
