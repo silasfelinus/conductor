@@ -880,7 +880,7 @@ tasks:
 - id: t-037
   milestone: m7
   title: "Delete the client-side beat loop and rewrite its ~25 verifyStorybook*Guard scripts"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-036, t-052]
@@ -1106,7 +1106,17 @@ tasks:
     and is destined for deletion alongside the beat loop, not a rewrite target -- it stays
     blocked on the same t-065 gate). No new bounded slice available this cycle; genuinely
     blocked, not a quality/scope failure. Re-arming to ready; releasing the claim.
-  updated: '2026-09-26T13:57:27Z'
+
+    Cycle 33 (2026-09-26T13:58Z, scheduled Conductor Agent run): re-verified via this
+    session's audit_human_gates.py that storybook/t-065 (export-notice-timing confirmation)
+    is still status: needs-human, unchanged since 2026-09-23T16:25:27Z. Cycle 32's
+    conclusion stands: all guard migration/rewrite work reachable without the destructive
+    cutover was already completed by cycle 31; verifyStorybookActiveStoryResumeGuard.ts
+    remains the sole remainder and is destined for deletion alongside the beat loop, not a
+    rewrite target -- it stays blocked on the same t-065 gate. No new bounded slice
+    available this cycle; genuinely blocked, not a quality/scope failure. Re-arming to
+    ready; releasing the claim, moving to other priority-order work.
+  updated: '2026-09-26T13:57:34Z'
   owner: worker
   claimed_by: claude-scheduled-20260926T135800Z-storybook-t037-cycle33
   claimed_at: '2026-09-26T13:57:27Z'
