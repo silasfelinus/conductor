@@ -2104,8 +2104,8 @@ tasks:
 - id: t-069
   milestone: m7
   title: "Wire verifyDeletedGuardReferences.mjs / verifyVerifierFilenameReferences.mjs into CI"
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >-
@@ -2114,4 +2114,6 @@ tasks:
     package.json script, so they cannot actually catch a future stale-reference regression
     until they run automatically. Add them to the relevant lint/guard npm script (or a
     dedicated CI step) the same way the project's other verify*.mjs checks are wired in.
-  updated: '2026-09-25T23:03:39Z'
+  updated: '2026-09-26T04:07:05Z'
+  claimed_by: claude-20260926T040659Z-sbt069
+  claimed_at: '2026-09-26T04:07:05Z'
