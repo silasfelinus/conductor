@@ -16565,3 +16565,24 @@ records:
     duplicate) rather than silently relied on -- a line-oriented YAML editor that never
     re-parses the whole document before locating its target is exactly the shape of tool
     that can drift from what a real YAML parser would resolve.
+- date: 2026-09-26
+  project: tzaddik-gallery
+  task: t-002
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    components/conductor/project-front-page.vue is a reusable page shell that already
+    owns its own kr-surface root and kr-scroll region internally. Wrapping it inside a
+    NEW pages/*.vue file's own template without giving that page file its own
+    root-surface class and scroll region passes eslint/vue-tsc but fails
+    utils/scripts/verifyLayoutContract.ts's root-surface/zero-scroll rules, because the
+    checker scans each page-classified file's own template independently rather than
+    resolving through child components -- and forcing it to pass by adding a second
+    kr-scroll class at the page level would create a genuine nested-scroll region in the
+    rendered DOM, not just satisfy the linter. A brand-new top-level route composing
+    project-front-page needs either its own self-contained scroll wrapper (the
+    music-mentor.vue shape, used here instead) or a documented exception; there is no
+    existing precedent in this codebase of a real routed page reusing that shell as-is.
