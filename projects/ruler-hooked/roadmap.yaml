@@ -1409,3 +1409,25 @@ tasks:
   claimed_at: '2026-09-26T17:06:07Z'
   updated: '2026-09-26T17:12:41Z'
   implementation_pr: 'silasfelinus/kind_robots#3054'
+
+- id: t-043
+  milestone: m4
+  title: Give RARE/EPIC a non-color cue too, not just LEGENDARY/MYTHIC
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  note: >-
+    Kaizen follow-up from t-042 (silasfelinus/kind_robots#3054), which gave
+    LEGENDARY/MYTHIC a distinct SLACK/REEL/WAIT glyph set on top of the
+    existing band-color/marker-shape cues. RARE and EPIC still share the
+    default glyph triple and the same 'diamond' marker shape (that shape only
+    upgrades once, at RARE, and never again through MYTHIC) -- so a
+    colorblind player can tell COMMON/UNCOMMON apart from RARE+ and can tell
+    LEGENDARY/MYTHIC apart from everything below them, but cannot
+    non-color-distinguish RARE from EPIC. Add a second non-color step at
+    RARE/EPIC (e.g. a marker outline/pulse or a glyph-weight change) via
+    timingVisualFor() in utils/rulerHooked/timingBar.ts, keeping it the single
+    source of truth. Display-only, same constraint as t-041/t-042:
+    resolveTimingStop()'s position-to-action/quality resolution must stay
+    untouched.
