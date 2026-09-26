@@ -37,3 +37,22 @@
 
 **Kaizen task:** deferred — genuinely no generic improvement beyond what's already tracked; the concrete lesson (project-front-page composition risk) is written above and in the kind_robots PR body for the next session that reaches for that shell from a real routed page.
 
+## 2026-09-26 | Reviewer → Worker | tzaddik-gallery/t-020 (prep) | pattern
+
+**Decision:** merged (PR #5205, `feat(tzaddik-gallery): add editorial tag taxonomy and filters`), after resolving a stale-branch conflict risk.
+
+**Failure category:** n/a — clean content, no rejection; one mechanical merge step before landing.
+
+**What was good:**
+- Docs/roadmap-only change (design brief + one new task), reversible, no runtime code or production data touched.
+- The tag taxonomy is genuinely well-considered for a sensitive subject: "Politics" is explicitly scoped as descriptive ("materially relevant elected/public-policy/statecraft work"), not an ideological or endorsement axis, and the PR body reiterates that framing unprompted. Geography and living/memorial state are correctly kept out of the tag system as separate structured fields rather than folded in.
+- New task t-020 has correct `depends_on: [t-003, t-004, t-005]` and doesn't jump the dependency chain.
+- Explicitly anticipates taxonomy sprawl ("avoid one-person micro-tags") and bakes that constraint into the task note itself, not just the kaizen suggestion.
+
+**What to improve:**
+- The PR's base commit was already 2+ commits stale by the time it reached review (predating tzaddik-gallery/t-019, which another concurrent session had merged in the interim) — its own "How I verified" claimed "branch is 0 commits behind current main," which was true at authoring time but not at review time. `mergeable_state` came back `unknown` rather than a clean auto-merge. Verified locally: `git merge origin/main` on the PR branch resolved cleanly with git's own three-way merge (t-019 and the new t-020 landed in sequence, no id collision, `validate_roadmaps.py` clean), then pushed that merge commit back to the same PR branch before merging — per AGENTS.md's rotation-collision guidance, this is exactly the "fetch the branch's current remote tip and merge it in" pattern, not a rebase/force-push.
+
+**Kaizen task:** deferred — the "avoid taxonomy confetti" suggestion is already written directly into t-020's own note, so a separate task would just restate it.
+
+**Pattern note:** Second same-project PR in this session to land under the `silasfelinus` identity with a several-minute authoring/review gap wide enough for roadmap drift (t-002's `close_task.py` PRs landed in between). Worth remembering for any future tzaddik-gallery PR: check `next_free_task_id.py` fresh and diff against current `origin/main` before assuming "0 commits behind" still holds by the time a human/session actually reviews it, not just at authoring time.
+
