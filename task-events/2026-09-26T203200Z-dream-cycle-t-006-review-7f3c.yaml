@@ -1,0 +1,15 @@
+version: 1
+project: dream-cycle
+task: t-006
+operation: review
+owner: worker
+session: 20260926T201000Z-chatgpt-dream-digest-queued-7f3c
+updated: '2026-09-26T20:32:00Z'
+note: >-
+  Root-caused the 2026-09-26 digest's false queued art: the workflow gave the six
+  priority ArtJobs only a 300-second render window, then annotate_daily_dream_art_queue.py
+  inferred runtime queue state from the deliberately-pending art-prompts staging ledger
+  without reading the live ArtJob endpoint. Implemented a live read-only ArtJob status
+  join, truthful rendered/rendering/failed email states, and restored the bounded render
+  runway to 1800 seconds while still exiting early when all six jobs finish. Branch:
+  worker/dream-cycle-t-006-digest-art-7f3c.
