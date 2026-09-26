@@ -1,9 +1,11 @@
 import copy
+import json
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
 import pytest
 
+import scripts.author_dream_proposal as authoring
 import scripts.build_dream_proposal as bdp
 
 
@@ -180,6 +182,68 @@ def test_invalid_proposal_raises_before_file_write(
         bdp.write_proposal(
             bad, date="2026-07-31", fetch=False
         )
+
+
+def test_creative_contract_complaints_flags_stale_entropy_version(tmp_path, monkeypatch):
+    monkeypatch.setattr(authoring, "DREAM_BACKLOG_DIR", tmp_path)
+    proposal = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
+    proposal["seed_facets"]["creative_entropy_version"] = 1
+    problems = bdp.creative_contract_complaints(proposal, "2026-07-31")
+    assert any("predates current version" in problem for problem in problems)
+
+
+def test_creative_contract_complaints_clean_sample(tmp_path, monkeypatch):
+    monkeypatch.setattr(authoring, "DREAM_BACKLOG_DIR", tmp_path)
+    proposal = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
+    proposal["seed_facets"]["creative_entropy_version"] = bdp.CREATIVE_ENTROPY_VERSION
+    assert bdp.creative_contract_complaints(proposal, "2026-07-31") == []
+
+
+def test_from_json_refuses_to_write_on_creative_contract_failure(tmp_path, monkeypatch):
+    monkeypatch.setattr(bdp, "BACKLOG", tmp_path)
+    monkeypatch.setattr(authoring, "DREAM_BACKLOG_DIR", tmp_path)
+    proposal = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
+    proposal["seed_facets"]["creative_entropy_version"] = 1
+    proposal_path = tmp_path / "proposal.json"
+    proposal_path.write_text(json.dumps(proposal), encoding="utf-8")
+
+    assert bdp.main(
+        ["--from-json", str(proposal_path), "--date", "2026-07-31", "--no-fetch"]
+    ) == 1
+    assert list(tmp_path.glob("2026-07-31-*.md")) == []
+
+
+def test_from_json_dry_run_warns_but_still_renders_on_creative_contract_failure(
+    tmp_path, monkeypatch, capsys
+):
+    monkeypatch.setattr(bdp, "BACKLOG", tmp_path)
+    monkeypatch.setattr(authoring, "DREAM_BACKLOG_DIR", tmp_path)
+    proposal = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
+    proposal["seed_facets"]["creative_entropy_version"] = 1
+    proposal_path = tmp_path / "proposal.json"
+    proposal_path.write_text(json.dumps(proposal), encoding="utf-8")
+
+    assert bdp.main(
+        ["--from-json", str(proposal_path), "--date", "2026-07-31", "--no-fetch", "--dry-run"]
+    ) == 1
+    output = capsys.readouterr()
+    assert "predates current version" in output.err
+    assert "## Dream vibe (1)" in output.out
+    assert list(tmp_path.glob("2026-07-31-*.md")) == []
+
+
+def test_from_json_writes_when_creative_contract_passes(tmp_path, monkeypatch):
+    monkeypatch.setattr(bdp, "BACKLOG", tmp_path)
+    monkeypatch.setattr(authoring, "DREAM_BACKLOG_DIR", tmp_path)
+    proposal = copy.deepcopy(bdp.SAMPLE_PROPOSAL)
+    proposal["seed_facets"]["creative_entropy_version"] = bdp.CREATIVE_ENTROPY_VERSION
+    proposal_path = tmp_path / "proposal.json"
+    proposal_path.write_text(json.dumps(proposal), encoding="utf-8")
+
+    assert bdp.main(
+        ["--from-json", str(proposal_path), "--date", "2026-07-31", "--no-fetch"]
+    ) == 0
+    assert list(tmp_path.glob("2026-07-31-*.md"))
 
 
 def test_check_cli_reports_docket_depth_not_a_calendar_hit(
