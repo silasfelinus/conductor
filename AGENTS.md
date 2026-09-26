@@ -388,6 +388,20 @@ To verify kind_robots changes locally (vue-tsc / eslint) in an ephemeral sandbox
 client with the two required workarounds (CYPRESS_INSTALL_BINARY=0 and a dummy
 DATABASE_URL) baked in, instead of every session re-deriving them (conductor/t-046).
 
+**Check for a stranded implementation branch before reimplementing a `ready` task.** A
+`create_pull_request` connector failure can leave a target-repo branch fully implemented
+and pushed with no PR ever opened, while the conductor task sits at `status: ready`
+describing the blocker in its own `note:` (kind-robots/t-120's kaizen id-collision rescue
+and t-122 both hit this within two days, 2026-09-24/26). Before claiming and reimplementing
+such a task, check the task's `note:` for a referenced branch/commit, or list the target
+repo's branches for a `worker/<project>-<task-id>-*` match. If one exists and its diff looks
+complete against the task description, open the PR from it as-is rather than reimplementing
+— but do not treat the stranded branch's own prior local verification as sufficient to merge.
+Run full CI on it first: t-122's branch passed its author's one purpose-built verifier
+locally, but a full CI run caught a real regression in a *different* file that pinned the
+same string the change had renamed, which the original author's narrower local check never
+touched. A stranded branch is safe to reuse; skipping CI on it is not.
+
 Several scripts here (`fetch_todos.py`, admin-gated kind_robots API calls, etc.) need
 `KR_API_TOKEN` in the environment. To check whether it's set **without ever printing the
 value itself**, run `scripts/kr_token_set.sh` (or `source` it) rather than hand-typing a
