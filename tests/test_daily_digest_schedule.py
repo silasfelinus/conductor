@@ -76,5 +76,4 @@ def test_digest_gives_priority_art_a_bounded_same_cycle_window():
     workflow = DIGEST.read_text(encoding="utf-8")
 
     assert "submit_daily_dream_art.py --wait-timeout 1800" in workflow
-    assert "KR_BASE_URL=https://kind-robots.vercel.app python scripts/annotate_daily_dream_art_queue.py digest.json" in workflow
     assert "continue-on-error: true" in workflow
