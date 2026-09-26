@@ -16648,3 +16648,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Extending timingVisualFor()'s existing per-rarity Record pattern (bandColorClass, markerShape) to a third cue (zoneGlyphs) kept the single-source-of-truth property free -- reusing an established per-field Record<Rarity, T> shape, rather than inventing a new lookup mechanism, made the addition a small, low-risk diff and let the selftest assert the new field against the same rarity ladder the existing fields already used."
+- date: 2026-09-26
+  project: ruler-hooked
+  task: t-043
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: transient
+  lesson: "A worker/* branch can be fully implemented, correctly scoped, and even have its roadmap task set to status: review, and still never get a PR opened if create_pull_request fails mid-session -- check_pr_merged_drift.py's stranded-branch check caught it two sessions later. Before reimplementing any review/ready task, check for a matching worker/<project>-<task-id>-* branch first; if the diff is complete and scoped, open the PR from it as-is and run full CI rather than trusting the original session's local verification alone."

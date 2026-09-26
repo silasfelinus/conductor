@@ -1413,7 +1413,7 @@ tasks:
 - id: t-043
   milestone: m4
   title: Give RARE/EPIC a non-color cue too, not just LEGENDARY/MYTHIC
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
   passes: 0
@@ -1431,7 +1431,16 @@ tasks:
     source of truth. Display-only, same constraint as t-041/t-042:
     resolveTimingStop()'s position-to-action/quality resolution must stay
     untouched.
+
+    Recovered a stranded, fully-implemented worker/* branch found via
+    check_pr_merged_drift.py this session (no PR had ever been opened for it, likely a
+    create_pull_request connector failure in the original openai-scheduled session).
+    Verified the diff was scoped exactly to the task (timingBar.ts markerShape ladder +
+    selftest + the .vue consumer, 19+/14- across 3 files), opened
+    silasfelinus/kind_robots#3055, ran it through full CI (30 checks, all green), and
+    merged.
   owner: worker
   claimed_by: openai-scheduled-2026-09-26T171901Z-ruler-hooked-t043-a11
   claimed_at: '2026-09-26T17:19:01Z'
-  updated: '2026-09-26T17:24:30Z'
+  updated: '2026-09-26T18:12:38Z'
+  implementation_pr: 'silasfelinus/kind_robots#3055'
