@@ -1315,7 +1315,7 @@ tasks:
 - id: t-040
   milestone: m4
   title: Remaining per-species timing-bar visual identity (Sunspoke Koi pause, rarity marker/band color)
-  status: claimed
+  status: done
   gate_human: false
   stakes: reversible
   passes: 0
@@ -1335,7 +1335,19 @@ tasks:
     unchanged so game-state determinism (same seed + same stops -> same outcome) holds.
     Land as separate PRs, not one combined diff, matching t-033's own bounded-slice
     discipline.
+
+    First bounded slice landed: silasfelinus/kind_robots#3052 gives Sunspoke Koi (PATIENCE
+    family) a brief dwell at each end of the timing-bar marker's sweep during APPROACH,
+    visually reinforcing the 'circles the lure without committing' cue text -- matching
+    t-033's REVERSE_CONTROL mirror pattern (display-only,
+    resolveTimingStop()/timingProfileFor() untouched, no determinism impact). eslint clean,
+    prettier-ratchet held (improved by 19 files), vue-tsc zero errors, all 30 kind_robots CI
+    checks green, squash-merged. The other suggested slice from the same t-026/t-033 kaizen
+    note (higher-rarity fish getting a distinct marker shape/band color) remains open
+    follow-up scope -- filing as a new task (t-041) rather than reopening this one, since
+    this slice is itself complete and landed, per t-033's own precedent.
   owner: worker
   claimed_by: claude-scheduled-20260926T150031Z-ruler-hooked-t040
   claimed_at: '2026-09-26T15:00:32Z'
-  updated: '2026-09-26T15:00:32Z'
+  updated: '2026-09-26T15:16:15Z'
+  implementation_pr: 'silasfelinus/kind_robots#3052'
