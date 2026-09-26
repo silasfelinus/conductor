@@ -105,6 +105,25 @@ def test_current_art_rich_section_shows_latest_images_and_queue_placeholders():
     assert "Art queued" in html
 
 
+def test_current_art_rich_section_distinguishes_rendered_from_queued():
+    module = load_module()
+    rows = assets(submitted=True)
+    rows[-1]["art_status"] = "rendered, awaiting public image"
+    html = module.proposal_section(
+        "ignored",
+        {
+            "title": "Current",
+            "idea": "Idea",
+            "display_mode": "current-art-rich",
+            "assets": rows,
+        },
+    )
+    assert "5/6 latest asset images ready" in html
+    assert "1 rendered and awaiting public image" in html
+    assert "unfinished slots remain queued" not in html
+    assert "Art rendered, awaiting public image" in html
+
+
 def test_payload_leads_with_just_built_then_health_then_tomorrow_pitch():
     module = load_module()
     digest = {
