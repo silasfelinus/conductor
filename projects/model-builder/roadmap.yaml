@@ -469,7 +469,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 52
     stakes: reversible
@@ -790,7 +790,20 @@ tasks:
       is the same drift class conductor/t-195 was filed to root-cause; flipping to ready now
       per the note's own conclusion. claimed_by/owner left as-is per the established precedent
       for this recurring task.
-    updated: '2026-09-26T08:58:32Z'
+
+      Cycle 105 (checked through 2026-09-26T09:00Z, scheduled Conductor Agent run): checked
+      kind_robots commits repo-wide since the prior 2026-09-26T03:57:46Z audit via the GitHub
+      commits API: two new commits -- a41cf22 (feat(screenfx): add Zoetrope Lantern Drum
+      passive animation, #3049; touches only components/screenfx/zoetrope-lantern-drum.vue and
+      stores/animationCatalog.ts) and 7aa1ff9 (storybook/t-069: wire guard-staleness checkers
+      into CI, #3048; touches .github/workflows/storybook-guard-staleness-contract.yml and
+      utils/scripts/verify*.ts|.mjs guard scripts, including a one-line dangling-reference
+      reword in verifyModelBuilderStartRunLoadingGuard.ts -- a guard-script name match, not a
+      components/model-builder/**, stores/modelBuilderStore.ts, server/api/model-builder/**,
+      prisma/model-builder.prisma, or content/model-builder*.md change). Neither touches the
+      tracked model-builder surface. No model-builder-specific regression audit warranted --
+      verified no-op, re-arming to ready.
+    updated: '2026-09-26T08:59:07Z'
     owner: worker
     claimed_by: claude-scheduled-20260926T085831Z-model-builder-t029
     claimed_at: '2026-09-26T08:58:32Z'
