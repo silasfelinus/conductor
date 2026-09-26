@@ -2987,7 +2987,7 @@ tasks:
 - id: t-122
   milestone: m6
   title: 'Audit remaining Art manager tabs for unnecessary full-index hydration'
-  status: claimed
+  status: review
   gate_human: false
   stakes: reversible
   passes: 0
@@ -2998,10 +2998,11 @@ tasks:
     Audited Art manager tab startup ownership and narrowed manager-wide hydration to Styler; preparing implementation PR.
 
     Implementation is preserved on the worker branch at 9f05b3eaf1a7ddf6b6e1f18395c7347a11371c6b, but create_pull_request is currently blocked by the connector write safety layer. Retry PR creation without reimplementing.
-  updated: '2026-09-26T01:03:52Z'
+  updated: '2026-09-26T01:04:18Z'
   owner: worker
   claimed_by: 2026-09-26T01-00-00-t122-pr
   claimed_at: '2026-09-26T01:03:52Z'
+  implementation_pr: 'silasfelinus/kind_robots#3047'
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
