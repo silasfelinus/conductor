@@ -120,6 +120,17 @@ At the start of every session, before responding to any task, run a conductor sw
      or 2+ days stale) and STALLED CLAIM (`status: claimed` past the normal 90-minute claim TTL).
      Advisory only; exit 1 when at least one daily_commitment task is flagged. No network/token
      needed.
+   - `python scripts/check_recurring_claim_drift.py` — flags any task showing `status: claimed`
+     with `claimed_by`/`claimed_at` already null, a combination that never occurs from a live
+     claim (claim_task.py and process_task_events.py only ever write all three fields together).
+     Root-caused for conductor/t-195 from model-builder/t-029 drifting into this state twice
+     (2026-08-12, 2026-09-25) while its own recurring cycle note already said "re-arming to
+     ready" — both times caught only incidentally by `check_pr_merged_drift.py` noticing a stale
+     `implementation_pr`. Traced to a manual merge-conflict resolution on the close branch that
+     kept `origin/main`'s stale copy of this task's status alongside another task's genuinely
+     newer change in the same conflicted file, rather than resolving per-task. Advisory only;
+     exit 1 when at least one task is flagged — the fix is a normal `close_task.py` re-close back
+     to whatever the note's last paragraph says actually happened. No network/token needed.
    Treat exit 1 (or 3) from any of these as a reconciliation prompt, not permission to bypass a genuine gate. The
    four roadmap-reading commands intentionally exclude paused, retired, and finished projects unless
    `--include-inactive` is supplied; `check_live_facet_coverage.py` reads live records rather than roadmaps and
