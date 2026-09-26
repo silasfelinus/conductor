@@ -469,7 +469,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 52
     stakes: reversible
@@ -782,7 +782,15 @@ tasks:
       kind_robots commits repo-wide since the prior 2026-09-26T02:05Z audit via the GitHub
       commits API (since-filtered repo-wide, kind_robots default branch): zero results. No
       model-builder-specific regression audit warranted -- verified no-op, re-arming to ready.
-    updated: '2026-09-26T04:23:00Z'
+
+      Reconciled (conductor Agent run, 2026-09-26T06:56Z): status field was still `claimed`
+      even though cycle 104's own note above already concluded "verified no-op, re-arming to
+      ready" -- caught by check_pr_merged_drift.py reading implementation_pr
+      silasfelinus/kind_robots#2742 (merged 2026-09-15, unrelated to the current claim). This
+      is the same drift class conductor/t-195 was filed to root-cause; flipping to ready now
+      per the note's own conclusion. claimed_by/owner left as-is per the established precedent
+      for this recurring task.
+    updated: '2026-09-26T06:57:19Z'
     owner: worker
     claimed_by: openai-scheduled-2026-09-26T041833Z-coloring-book-t022-a11
     claimed_at: '2026-09-26T04:23:00Z'
