@@ -756,6 +756,54 @@ def validate_proposal(proposal: Any) -> list[str]:
     return bad
 
 
+def creative_contract_complaints(proposal: dict[str, Any], day: str) -> list[str]:
+    """Run the same checks CI's ``check_dream_creative_contract.py --all-open`` job runs.
+
+    ``validate_proposal`` above only covers schema/invention/title-shape/structural-
+    repetition. It does not run ``dream_prose_quality.complaints()`` (card-copy quality),
+    the entropy-version gate, the premise-vocabulary-overlap check, or character-name-
+    diversity -- so a proposal could pass a clean local ``--from-json`` and only then fail
+    CI (2026-09-29-gillstack: 5+ shared 7-letter-plus words with a recent premise). Mirrors
+    ``check_dream_creative_contract.validate_path`` exactly, minus the file-reading, so
+    ``--from-json`` catches the same failure locally instead of only after a push. Imports
+    are lazy because ``author_dream_proposal`` imports this module back (``as dreams``).
+    """
+    problems: list[str] = []
+    if not isinstance(proposal, dict):
+        return problems
+
+    import author_dream_proposal
+
+    seeds = proposal.get("seed_facets")
+    if isinstance(seeds, dict):
+        try:
+            version = int(seeds.get("creative_entropy_version") or 0)
+        except (TypeError, ValueError):
+            version = 0
+        if version < CREATIVE_ENTROPY_VERSION:
+            problems.append(
+                f"proposal creative entropy version {version} predates current version "
+                f"{CREATIVE_ENTROPY_VERSION}; re-author it from the current brief so aquatic, "
+                "semantic-family, Facet, title, and structural cooldowns are applied before "
+                "any live records are built"
+            )
+
+    premise_history = author_dream_proposal.recent_premise_history(day)
+    problems.extend(
+        author_dream_proposal.story_diversity_complaints(proposal, premise_history, seeds)
+    )
+    characters = proposal.get("characters") or []
+    if characters and isinstance(characters[0], dict):
+        name_history = author_dream_proposal.recent_name_history(day)
+        problems.extend(
+            author_dream_proposal.name_diversity_complaints(
+                str(characters[0].get("name") or ""),
+                name_history.get("characters", []),
+            )
+        )
+    return problems
+
+
 def _frontmatter(path: Path) -> dict[str, Any]:
     text = path.read_text(encoding="utf-8"); end = text.find("\n---\n", 4)
     if not text.startswith("---\n") or end < 0: return {}
@@ -889,8 +937,17 @@ def main(argv=None) -> int:
         except (OSError,json.JSONDecodeError) as error:
             print(f"Could not read proposal JSON: {error}",file=sys.stderr); return 1
         proposal.setdefault("seed_facets",facet_seed_plan(day))
-        return 0 if write_proposal(proposal,date=day,fetch=not a.no_fetch,
-                                   dry_run=a.dry_run,force=a.force) else 1
+        contract_problems=creative_contract_complaints(proposal,day)
+        if contract_problems:
+            print("Creative contract failed (same checks as CI's check_dream_creative_contract.py):",
+                  file=sys.stderr)
+            for problem in contract_problems: print(f"  - {problem}",file=sys.stderr)
+            if not a.dry_run:
+                print("Refusing to write; re-author to address the above, or fix and retry.",file=sys.stderr)
+                return 1
+        written=write_proposal(proposal,date=day,fetch=not a.no_fetch,dry_run=a.dry_run,force=a.force)
+        if not written: return 1
+        return 1 if contract_problems else 0
     ap.error("choose --check, --brief, --from-json, or --sample"); return 2
 
 
