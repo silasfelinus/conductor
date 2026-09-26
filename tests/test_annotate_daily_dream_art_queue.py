@@ -37,6 +37,42 @@ def test_submitted_request_is_called_queued_and_carries_job_id():
     assert result["art_job_id"] == 8123
 
 
+def test_live_done_artjob_overrides_pending_staging_metadata():
+    result = annotate.annotate_asset(
+        asset(),
+        {
+            "dream-cycle-example-world": {
+                "id": "dream-cycle-example-world",
+                "status": "pending",
+                "last_art_job_id": 8123,
+            }
+        },
+        fetch_job=lambda job_id: {
+            "id": job_id,
+            "status": "DONE",
+            "artImageId": 9123,
+        },
+    )
+    assert result["art_status"] == "rendered, awaiting public image"
+    assert result["art_job_id"] == 8123
+    assert result["art_image_id"] == 9123
+
+
+def test_live_running_artjob_is_not_flattened_to_generic_queued():
+    result = annotate.annotate_asset(
+        asset(),
+        {
+            "dream-cycle-example-world": {
+                "id": "dream-cycle-example-world",
+                "status": "pending",
+                "last_art_job_id": 8123,
+            }
+        },
+        fetch_job=lambda _job_id: {"status": "RUNNING"},
+    )
+    assert result["art_status"] == "rendering"
+
+
 def test_done_request_without_visible_image_reports_attachment_gap():
     result = annotate.annotate_asset(
         asset(),
