@@ -237,11 +237,27 @@ def proposal_section(
 
     if show_art:
         ready = sum(asset.get("art_status") == "ready" for asset in assets)
-        art_context = (
-            "latest asset images ready when this digest was assembled; unfinished slots remain queued."
-            if mode == "current-art-rich"
-            else "asset images ready from this completed bundle."
+        statuses = [str(asset.get("art_status") or "") for asset in assets]
+        rendered = sum(status.startswith("rendered") for status in statuses)
+        active = sum(
+            status in {"queued", "rendering", "awaiting ArtJob"}
+            for status in statuses
         )
+        failed = sum(status in {"failed", "cancelled"} for status in statuses)
+        if mode == "current-art-rich":
+            details = []
+            if rendered:
+                details.append(f"{rendered} rendered and awaiting public image")
+            if active:
+                details.append(f"{active} still queued/rendering")
+            if failed:
+                details.append(f"{failed} failed/cancelled")
+            suffix = f"; {', '.join(details)}." if details else "."
+            art_context = (
+                "latest asset images ready when this digest was assembled" + suffix
+            )
+        else:
+            art_context = "asset images ready from this completed bundle."
         art_line = (
             f'<p style="color:#334155;background:#f8fafc;border-left:4px solid #64748b;'
             f'padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px">'
