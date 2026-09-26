@@ -126,9 +126,9 @@ tasks:
   - id: t-003
     milestone: m1
     title: "Add Tzaddik candidate and provenance data model"
-    status: review
+    status: ready
     owner: worker
-    passes: 0
+    passes: 1
     stakes: reversible
     depends_on: t-001
     note: >
@@ -141,7 +141,8 @@ tasks:
       source provenance even when display fields are overridden.
     claimed_by: openai-scheduled-2026-09-26T201601Z-tzaddik-gallery-t003-branchmedic-a11
     claimed_at: '2026-09-26T20:16:01Z'
-    updated: '2026-09-26T20:18:30Z'
+    updated: '2026-09-26T20:59:44Z'
+    retry_context: 'pass 1 failed (quality): kind_robots#3057 added TzaddikCandidate/TzaddikCandidateTag/TzaddikRecheckRequest to schema.prisma but never ran/committed `npx prisma generate` -- CI verify job test:generated-client-parity fails, diffing 8 files plus 3 new untracked model files under prisma/generated/prisma/. Do differently: after any schema.prisma change, run `npx prisma generate` and commit the full prisma/generated/prisma/** diff (including new per-model files) on the same branch before opening/re-pushing the PR. All other checks (migrations, TypeScript, contracts) already pass -- push only the regenerated client, no schema/model changes needed.'
 
   - id: t-004
     milestone: m2
