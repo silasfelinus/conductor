@@ -316,3 +316,35 @@ tasks:
       geography quotas. When the finite gallery build is accepted, transition
       tzaddik-gallery from active to continuous rather than leaving never-idle
       work in a finished finite project.
+
+  - id: t-017
+    milestone: m2
+    title: "Build the lg/xl single-page gallery and person-review shell"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-002, t-003, t-004, t-005]
+    note: >
+      On lg/xl, make Living / Memorial / Info switch inside one composed
+      viewport-level interface. The person/submission view should fit the large
+      image, atmospheric background, concise bio/pitch, provenance,
+      controversies, review controls, navigation, and an internally scrollable
+      comments region without routine page-level scrolling. Preserve the
+      currently selected Living/Memorial context when opening and closing a
+      person. On sm/md, deliberately fall back to a normal stacked, scrollable
+      page rather than squeezing the desktop arrangement into miniature panels.
+
+  - id: t-018
+    milestone: m4
+    title: "Create and integrate the Tzaddik Gallery splash/background art"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-017
+    note: >
+      Use the queued tzaddik-gallery splash request as the atmospheric large
+      screen backdrop / landing visual. The image must support overlaid UI,
+      portrait cards, and readable text rather than competing with them. Verify
+      cropping at lg/xl and provide a simpler mobile treatment for sm/md.

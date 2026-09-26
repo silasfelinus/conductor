@@ -34,6 +34,37 @@ obligation to fabricate a "both sides" paragraph. Include meaningful,
 well-sourced objections, disputes, or harms when they exist. When nothing
 substantial is documented, say less.
 
+## Large-screen single-page interface
+
+On `lg` and `xl` widths, Tzaddik Gallery should feel like one composed
+application screen rather than a long document. The primary navigation switches
+between **Living**, **Memorial**, and **Info** without throwing the user into
+different visual worlds.
+
+The person/submission view is also a single viewport composition:
+
+- one dominant large portrait/image;
+- atmospheric project art or person-derived background treatment behind the
+  interface, with contrast controls so text remains readable;
+- name, compact bio, source/provenance, and "why this person" pitch visible
+  without page scrolling;
+- a distinct controversies/objections panel;
+- review controls for the current user (vote plus approve/reject/defer where
+  authorized);
+- comments in their own internally scrollable region so a long discussion does
+  not make the whole desktop page grow forever;
+- clear previous/next/back-to-gallery navigation without losing the current
+  Living/Memorial context.
+
+Treat the viewport as a layout budget. On desktop, page-level vertical scrolling
+should be the exception, not the default. Panels that can overflow should own
+their scroll behavior deliberately.
+
+For `sm` and `md`, abandon the viewport-lock requirement. Stack the same
+information into a conventional readable vertical page with sticky or compact
+navigation where useful. Do not shrink the desktop composition until it becomes
+a tiny dashboard.
+
 ## Community mechanics
 
 Authenticated Kind Robots users can submit a candidate and react to candidates
