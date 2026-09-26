@@ -380,6 +380,7 @@ def set_task_field_text(
     start, end, field_indent = find_task_block(lines, task_id)
 
     found_field_idx: int | None = None
+    duplicate_field_idx: int | None = None
     for idx in range(start + 1, end):
         match = KEY_RE.match(lines[idx])
         if not match:
@@ -387,8 +388,21 @@ def set_task_field_text(
         if len(match.group("indent")) != field_indent:
             continue
         if match.group("key") == field:
-            found_field_idx = idx
-            break
+            if found_field_idx is None:
+                found_field_idx = idx
+            else:
+                duplicate_field_idx = idx
+                break
+
+    if duplicate_field_idx is not None:
+        raise TaskFieldError(
+            f"{task_id} has field {field!r} at two lines within the same task block "
+            f"(line {found_field_idx + 1} and line {duplicate_field_idx + 1}). YAML's "
+            "last-key-wins semantics mean any consumer reads the second occurrence, but "
+            "editing 'the' matching field is now ambiguous -- refusing rather than "
+            "silently updating the shadowed (first) one. Fix the roadmap by hand to remove "
+            "the duplicate key first (see conductor/t-197)."
+        )
 
     if field == "note" and found_field_idx is not None and not force:
         value_end = field_value_end(lines, found_field_idx, end, field_indent)

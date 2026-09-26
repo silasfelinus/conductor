@@ -179,6 +179,32 @@ def test_disallowed_field_is_rejected():
         stf.set_task_field_text(ROADMAP, "t-001", "title", "sneaky rename")
 
 
+def test_duplicate_field_key_in_one_task_block_is_rejected():
+    # conductor/t-197: coloring-book/t-022 was found carrying two `updated:` keys
+    # within the same task mapping (one before `note:`, one after). PyYAML's
+    # last-key-wins semantics make the second one authoritative to every reader,
+    # but the field locator used to stop at the first match and silently edit the
+    # shadowed one -- refuse instead of guessing which occurrence is meant.
+    roadmap = """\
+project: demo
+kind: software
+milestones:
+- id: m1
+  title: First milestone
+  status: not-started
+tasks:
+- id: t-010
+  milestone: m1
+  title: Task with a duplicate updated key
+  status: ready
+  updated: '2026-01-01T00:00:00Z'
+  note: some note text
+  updated: '2026-01-02T00:00:00Z'
+"""
+    with pytest.raises(stf.TaskFieldError, match="two lines within the same task block"):
+        stf.set_task_field_text(roadmap, "t-010", "updated", "now")
+
+
 def test_implementation_pr_field_is_allowed_and_round_trips(tmp_path):
     # conductor/t-099: close_task.py's --implementation-pr writes this field
     # directly. It must be allowed, and a value containing `#` (owner/repo#N)
