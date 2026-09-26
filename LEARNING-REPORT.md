@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-26T01:45:20Z
+Generated: 2026-09-26T01:48:34Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1146**
-- Outcomes: blocked: 19, cancelled: 2, done: 1125
+- Closed tasks recorded: **1147**
+- Outcomes: blocked: 19, cancelled: 2, done: 1126
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -42,7 +42,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | interface-vision | 140 | 100% |
 | kapowarr | 52 | 100% |
 | kind-economy | 11 | 100% |
-| kind-robots | 72 | 99% |
+| kind-robots | 73 | 99% |
 | kindrobots-unraid | 9 | 100% |
 | lora-ingestion | 11 | 100% |
 | mandarin-tutor | 14 | 93% |
@@ -71,7 +71,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1129 | 99% |
+| software | 1130 | 99% |
 
 ## Failure categories
 
@@ -93,6 +93,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-26 `kind-robots/t-123` — A repo-wide doc fix from a kaizen suggestion is worth doing in the same session even when it ranks below the top priority.yaml project -- the priority order picks which project to work when several have real ready work, it is not a rule against picking up a quick, reversible, already-scoped kaizen task once the higher-ranked project's only ready task is a recurring monitor that was already re-checked minutes earlier with no change.
 - 2026-09-26 `kind-robots/t-122` — A stranded worker branch (implementation done, PR never opened because a prior session's create_pull_request call hit a connector write-safety block) is safe to open as-is without reimplementing -- but re-verify it against a full CI run before merging, not just the one purpose-built verifier the original author ran locally. CI caught a real gap the original commit missed -- verifyMaturityPrivacyContract.ts still pinned the pre-change "activeTab.value !== 'gallery'" substring the diff had removed, even though the author had already updated the sibling verifyGalleryProgressiveRendering.ts for the same rename. One file's test being updated is not evidence every file pinning the same string was.
 - 2026-09-25 `animation-manager/t-007` — A background subagent asked to poll its own PR's CI and hand back when green can loop its SubagentHandback if it runs its own internal Monitor task -- tell it up front to cancel that Monitor before the final handback, not just to stop when done, or the coordinator ends up re-processing the same report repeatedly.
 - 2026-09-25 `storybook/t-068` — A closed-review task with no implementation_pr recorded is invisible to merged-PR drift checks that hit a lookup failure elsewhere (here, an unrelated 403 on a same-task-id lookup in a different repo) -- always record implementation_pr at close-out time so a later drift check has something to verify against directly instead of falling back to a repo-guessing search.
@@ -102,7 +103,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-24 `kind-robots/t-118` — Source-image support belongs in the generator capability matrix rather than as an SDXL-only UI special case. Directory-based checkpoint lineage is more reliable than Resource.generation for imported checkpoints.
 - 2026-09-24 `storybook/t-067` — This is the third occurrence of the same stale-post-cleanup-reference pattern (t-037's own guard deletion, then t-066, then this task) -- grepping the FULL deleted-filename list against every surviving file, not just the file(s) a task title implies, is what actually finds the next hit: the real one this cycle was in a .ts guard for a completely different feature (verifyStorybookActiveStoryResumeGuard.ts), not another *DeepLinkGuard.mjs sibling. Filed t-068 to make this mechanical instead of relying on a third manual sweep.
 - 2026-09-23 `dream-cycle/t-033` — The weekly site audit's orphan-directory pass correctly found server/api/dream-relations/ was undocumented, but its 'wired into real UI' read was wrong -- always trace named consumer files' actual fetch/import calls (not just their filenames appearing near the feature) before repeating an audit's wiring claim. Here, the named UI files only read DreamRelation via a Prisma include on a different endpoint, and a repo-wide grep for the write endpoints and prisma.dreamRelation.create/upsert found zero callers anywhere -- the CRUD surface is fully built and guarded but currently has no caller at all, live or seeded.
-- 2026-09-23 `storybook/t-066` — Clean first-pass kaizen fix: a stale-comment cleanup task is fast to verify fully (guard's own test + prettier + a repo-wide grep for the deleted filenames) even without a full local eslint environment -- worth doing that full grep sweep rather than trusting the single file diff, since a header comment mentioning a deleted file can easily have a sibling reference elsewhere in the same file.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-26T01:45:20Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-26T01:48:34Z_
