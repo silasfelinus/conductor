@@ -16544,3 +16544,24 @@ records:
     "scan every file for X" guard into CI, run it once against the real tree,
     not just its own unit self-test, since the self-test only proves the matching
     function works on hand-picked strings.'
+- date: 2026-09-26
+  project: conductor
+  task: t-197
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    A roadmap task block can carry a duplicate same-indent field key (found live in
+    coloring-book/t-022: two `updated:` keys, one before `note:`, one after) that PyYAML
+    silently resolves via last-key-wins, but set_task_field.py's field locator stopped at
+    the first match and edited the wrong (shadowed) occurrence -- confirmed reproducing via
+    this session's own claim_task.py/close_task.py calls against the live task. Neither
+    validate_roadmaps.py nor verify_result() catches this class of drift, since both only
+    check that a field is present somewhere, not that the edited occurrence is the
+    effective one. Lesson: when a roadmap-editing tool assumes "the" field with a given
+    name is unique within a mapping, that assumption should be enforced (raise on a
+    duplicate) rather than silently relied on -- a line-oriented YAML editor that never
+    re-parses the whole document before locating its target is exactly the shape of tool
+    that can drift from what a real YAML parser would resolve.
