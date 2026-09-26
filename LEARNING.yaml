@@ -16586,3 +16586,29 @@ records:
     project-front-page needs either its own self-contained scroll wrapper (the
     music-mentor.vue shape, used here instead) or a documented exception; there is no
     existing precedent in this codebase of a real routed page reusing that shell as-is.
+- date: 2026-09-26
+  project: dream-cycle
+  task: t-034
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: >-
+    build_dream_proposal.py --from-json only ran validate_proposal (schema/invention/
+    title-shape/structural-repetition) -- it never called dream_prose_quality.complaints()
+    or check_dream_creative_contract.py's entropy-version/premise-vocabulary-overlap/
+    name-diversity checks, so a proposal could pass a clean local --dry-run and only fail
+    CI's check_dream_creative_contract.py --all-open job after being pushed (the
+    2026-09-29-gillstack kaizen this task came from). Fixed by adding
+    creative_contract_complaints() to build_dream_proposal_core.py, mirroring
+    check_dream_creative_contract.validate_path's checks exactly, and wiring it into
+    --from-json: a real write is refused outright on failure (no partial write, matching
+    CI's hard failure) while --dry-run still renders for inspection but reports the
+    failure and returns non-zero. Scoped to --from-json only, not write_proposal/--sample
+    generally, to avoid touching unrelated call sites the task didn't ask about. Needed
+    lazy imports of author_dream_proposal/dream_prose_quality inside the new function
+    (not at module top) because author_dream_proposal imports build_dream_proposal back
+    (as `dreams`) -- a top-level import would have been circular at exec time, since
+    build_dream_proposal_core.py's source is exec'd inside build_dream_proposal_impl.py's
+    namespace before that namespace is fully populated.
