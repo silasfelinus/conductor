@@ -469,7 +469,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 52
     stakes: reversible
@@ -767,10 +767,20 @@ tasks:
       server/api/model-builder/**, prisma/model-builder.prisma, content/model-builder*.md).
       No model-builder-specific regression audit warranted -- verified no-op, re-arming to
       ready.
-    updated: '2026-09-26T02:05:55Z'
-    owner: worker
-    claimed_by: claude-scheduled-20260926T020554Z-mb-t029-cycle103
-    claimed_at: '2026-09-26T02:05:55Z'
+
+      Cycle 103 (checked through 2026-09-26T02:05Z, scheduled Conductor Agent run): checked
+      kind_robots commits repo-wide since the prior 2026-09-25T23:57:27Z audit via the GitHub
+      commits API (since-filtered repo-wide, kind_robots default branch): one new commit,
+      kind_robots#3047 (perf(art): scope manager startup hydration to Styler tab) -- touches
+      only components/art/art-manager.vue and two verify*.ts guard scripts
+      (verifyGalleryProgressiveRendering.ts, verifyMaturityPrivacyContract.ts), no tracked
+      model-builder surface (components/model-builder/**, stores/modelBuilderStore.ts,
+      server/api/model-builder/**, prisma/model-builder.prisma, content/model-builder*.md). No
+      model-builder-specific regression audit warranted -- verified no-op, re-arming to ready.
+    updated: '2026-09-26T02:06:05Z'
+    owner: null
+    claimed_by: null
+    claimed_at: null
 
   - id: t-030
     milestone: m6
