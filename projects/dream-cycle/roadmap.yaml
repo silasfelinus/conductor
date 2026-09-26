@@ -792,7 +792,7 @@ tasks:
 - id: t-034
   milestone: m5
   title: "Wire dream_prose_quality + check_dream_creative_contract into build_dream_proposal.py's --from-json path"
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
@@ -809,6 +809,14 @@ tasks:
     every future authoring session risks the same one-round-trip surprise. Fold both checks
     into --from-json (at least as a --dry-run-time warning, ideally a hard failure matching
     CI) so authoring-time validation actually matches what CI enforces.
+
+    Implemented via worker/dream-cycle-t034: added creative_contract_complaints() (mirrors
+    check_dream_creative_contract.validate_path's checks -- entropy version,
+    dream_prose_quality.complaints via story_diversity_complaints, premise-vocabulary
+    overlap, character-name diversity) and wired it into main()'s --from-json branch: a real
+    write is refused when the contract fails (no partial write), --dry-run still renders but
+    reports the failure and returns non-zero. Added 5 new tests; full local suite green
+    (2350 passed, 30 skipped).
   claimed_by: claude-scheduled-20260926T130500Z-dream-cycle-t034
   claimed_at: '2026-09-26T12:56:36Z'
-  updated: '2026-09-26T12:56:36Z'
+  updated: '2026-09-26T13:06:51Z'
