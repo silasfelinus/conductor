@@ -1378,7 +1378,7 @@ tasks:
 - id: t-042
   milestone: m4
   title: Give MYTHIC/LEGENDARY a distinct REEL/SLACK/WAIT glyph, not just band color
-  status: claimed
+  status: review
   gate_human: false
   stakes: reversible
   passes: 0
@@ -1393,7 +1393,15 @@ tasks:
     timingBar.ts so it stays a single source of truth. Display-only, same
     constraint as t-041: resolveTimingStop()'s position-to-action/quality
     resolution must stay untouched.
+
+    Implemented: added zoneGlyphs (ZoneGlyphs type) to timingVisualFor()/TimingBarVisual in
+    utils/rulerHooked/timingBar.ts -- COMMON..EPIC share the existing default glyph triple,
+    LEGENDARY and MYTHIC each get a distinct set. Wired into ruler-hooked-timing-bar.vue.
+    Extended timingBar.selftest.ts to cover the new contract. Verified: selftest + all
+    sibling ruler-hooked selftests pass, vue-tsc clean, eslint clean, prettier clean. Opened
+    silasfelinus/kind_robots#3054.
   owner: worker
   claimed_by: claude-2026-09-26T1700Z-rh042
   claimed_at: '2026-09-26T17:06:07Z'
-  updated: '2026-09-26T17:06:07Z'
+  updated: '2026-09-26T17:06:51Z'
+  implementation_pr: 'silasfelinus/kind_robots#3054'
