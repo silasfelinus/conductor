@@ -2987,7 +2987,7 @@ tasks:
 - id: t-122
   milestone: m6
   title: 'Audit remaining Art manager tabs for unnecessary full-index hydration'
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
   passes: 0
@@ -2998,11 +2998,36 @@ tasks:
     Audited Art manager tab startup ownership and narrowed manager-wide hydration to Styler; preparing implementation PR.
 
     Implementation is preserved on the worker branch at 9f05b3eaf1a7ddf6b6e1f18395c7347a11371c6b, but create_pull_request is currently blocked by the connector write safety layer. Retry PR creation without reimplementing.
-  updated: '2026-09-26T01:04:18Z'
+  updated: '2026-09-26T01:29:36Z'
   owner: worker
   claimed_by: 2026-09-26T01-00-00-t122-pr
   claimed_at: '2026-09-26T01:03:52Z'
   implementation_pr: 'silasfelinus/kind_robots#3047'
+
+
+- id: t-123
+  milestone: m6
+  title: 'Document the stranded-branch-reuse pattern for connector-blocked PR creation'
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  note: |-
+    Kaizen from kind-robots/t-122 (2026-09-26). A `create_pull_request` connector failure can
+    leave a fully-implemented, pushed worker branch stranded with no PR ever opened, while the
+    roadmap task sits at `status: ready` describing the blocker in its note (this happened twice
+    in two days: t-120's kaizen id-collision rescue and t-122 itself). A later session has no
+    reliable signal to check for an already-pushed `worker/*` branch matching the task id before
+    assuming it needs fresh implementation.
+    Add a short section to AGENTS.md's cross-repo/tooling-failure guidance: before claiming and
+    reimplementing a `ready` task, check for an existing `worker/<project>-<task-id>-*` branch on
+    the target repo (or one referenced in the task's own note); if found and its diff looks
+    complete against the task description, open the PR from it as-is (per the pattern this task's
+    own close-out just used) rather than reimplementing. Also verify full CI on the reused branch
+    before merging -- do not treat a stranded branch's own prior local verification as sufficient
+    (t-122 caught a real regression: verifyMaturityPrivacyContract.ts still pinned a string the
+    diff had already renamed elsewhere).
+  updated: '2026-09-26T01:29:36Z'
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
