@@ -792,7 +792,7 @@ tasks:
 - id: t-034
   milestone: m5
   title: "Wire dream_prose_quality + check_dream_creative_contract into build_dream_proposal.py's --from-json path"
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -817,6 +817,10 @@ tasks:
     write is refused when the contract fails (no partial write), --dry-run still renders but
     reports the failure and returns non-zero. Added 5 new tests; full local suite green
     (2350 passed, 30 skipped).
+
+    Merged via PR #5214 (silasfelinus/conductor). Full local suite green (2350 passed, 30
+    skipped); CI green on merge.
   claimed_by: claude-scheduled-20260926T130500Z-dream-cycle-t034
   claimed_at: '2026-09-26T12:56:36Z'
-  updated: '2026-09-26T13:06:51Z'
+  updated: '2026-09-26T13:11:17Z'
+  implementation_pr: 'silasfelinus/conductor#5214'
