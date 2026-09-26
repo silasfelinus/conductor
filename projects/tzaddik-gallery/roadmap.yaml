@@ -79,19 +79,15 @@ tasks:
   - id: t-001
     milestone: m1
     title: "Write the design brief and audit reusable Kind Robots infrastructure"
-    status: claimed
-    owner: worker
+    status: ready
     passes: 0
     stakes: reversible
-    note: >
-      Turn Silas's direction into a concrete Kind Robots implementation plan.
-      Audit existing Reaction/user identity patterns, submission/moderation
-      surfaces, image/source handling, and reusable gallery/card components.
-      Keep Tzaddik Gallery a first-class Kind Robots feature rather than a
-      parallel auth/reaction stack.
-    claimed_by: openai-scheduled-2026-09-26T101656Z-tzaddik-gallery-t001-a11
-    claimed_at: '2026-09-26T10:16:56Z'
-    updated: '2026-09-26T10:16:56Z'
+    note: |-
+      Turn Silas's direction into a concrete Kind Robots implementation plan. Audit existing Reaction/user identity patterns, submission/moderation surfaces, image/source handling, and reusable gallery/card components. Keep Tzaddik Gallery a first-class Kind Robots feature rather than a parallel auth/reaction stack.
+
+
+      Existing DESIGN-BRIEF.md on main already covers the product brief. This cycle audited reusable Kind Robots reaction, gallery, auth, moderation, image provenance, project identity, and Pinia/API boundaries. Connector safety checks rejected both attempted branch file writes, so no documentation diff could be landed; releasing the claim for normal retry without consuming a pass.
+    updated: '2026-09-26T10:21:00Z'
 
   - id: t-002
     milestone: m1
