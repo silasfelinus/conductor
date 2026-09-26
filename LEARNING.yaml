@@ -16497,3 +16497,19 @@ records:
     project to work when several have real ready work, it is not a rule against picking up a
     quick, reversible, already-scoped kaizen task once the higher-ranked project's only ready
     task is a recurring monitor that was already re-checked minutes earlier with no change.
+- date: 2026-09-26
+  project: conductor
+  task: t-195
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A recurring task''s "status stuck at claimed" drift was not a write-atomicity
+    bug in claim_task.py/close_task.py (both always write status+claimed_by+claimed_at
+    together) -- it was a merge-conflict resolution that took origin/main''s whole conflicted
+    hunk instead of resolving per-task, discarding this task''s own just-written status fix
+    while correctly keeping an unrelated task''s genuinely newer claim from the same hunk.
+    The reliable mechanical check is the invariant itself (a claimed status with
+    claimed_by/claimed_at both null can never come from a live claim), not parsing
+    recurring-task note prose for "re-arming to ready".'
