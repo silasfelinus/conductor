@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
 import urllib.error
@@ -34,6 +35,7 @@ ROOT = Path(__file__).resolve().parent.parent
 BACKLOG = ROOT / "projects" / "dream-cycle" / "backlog"
 PACIFIC = ZoneInfo("America/Los_Angeles")
 PUBLIC_BASE = "https://kindrobots.org"
+PUBLIC_IMAGE_BASE = os.environ.get("KR_MEDIA_ORIGIN", "https://media.acrocatranch.com").rstrip("/")
 PROPOSAL_RE = re.compile(r"<!-- proposal-data\s*\n(.*?)\n-->", re.DOTALL)
 BUILT_RE = re.compile(r"<!-- built-data\s*\n(.*?)\n-->", re.DOTALL)
 
@@ -97,7 +99,7 @@ def collect_proposals(backlog: Path = BACKLOG) -> list[dict[str, Any]]:
 def _public_url(public_path: str) -> str:
     if public_path.startswith("http://") or public_path.startswith("https://"):
         return public_path
-    return f"{PUBLIC_BASE}/{public_path.lstrip('/')}"
+    return f"{PUBLIC_IMAGE_BASE}/{public_path.lstrip('/')}"
 
 
 def _url_exists(url: str, timeout: int = 5) -> bool:

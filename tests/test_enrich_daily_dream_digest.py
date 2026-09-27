@@ -200,6 +200,17 @@ def test_current_output_probes_current_art_and_promotes_a_live_render(tmp_path, 
     assert result["previous_dream_output"] is None
 
 
+def test_daily_dream_images_use_direct_media_origin(tmp_path, monkeypatch):
+    monkeypatch.setenv("KR_MEDIA_ORIGIN", "https://media.example.test")
+    # The implementation constant is set at import time, so exercise the URL
+    # contract directly by patching the runtime value used by _public_url.
+    monkeypatch.setattr(enrich, "PUBLIC_IMAGE_BASE", "https://media.example.test")
+    assert enrich._public_url("/images/dreams/example/card.webp") == (
+        "https://media.example.test/images/dreams/example/card.webp"
+    )
+    assert enrich.PUBLIC_BASE == "https://kindrobots.org"
+
+
 def test_public_probe_requires_image_content_type(monkeypatch):
     # Regression: a successful SPA/fallback response is not a renderable email image.
     class Response:
