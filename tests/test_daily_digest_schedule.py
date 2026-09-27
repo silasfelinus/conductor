@@ -50,7 +50,7 @@ def test_digest_retry_watchdog_keeps_expected_offsets():
 def test_daily_dream_sidecars_warn_without_manufacturing_a_failed_digest_run():
     workflow = DIGEST.read_text(encoding="utf-8")
 
-    assert "::warning::Daily Dream object build failed" in workflow
+    assert "::warning::Tomorrow's Daily Dream object build failed" in workflow
     assert "::warning::Daily Dream live composed-field verification found drift" in workflow
     assert_no_post_email_failure_step(workflow)
 

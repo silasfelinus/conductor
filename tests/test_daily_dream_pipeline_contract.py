@@ -123,7 +123,10 @@ def test_digest_order_cannot_submit_art_before_build(tmp_path):
 
     errors = pipeline.check_pipeline(root)
 
-    assert any("author, build, attach Facets, submit ArtJobs" in error for error in errors)
+    assert any(
+        "freeze today's email before building/submitting today's proposal for tomorrow" in error
+        for error in errors
+    )
 
 
 def test_direct_rest_playbook_is_rejected(tmp_path):

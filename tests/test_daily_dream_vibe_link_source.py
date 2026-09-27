@@ -43,12 +43,14 @@ def test_build_facet_or_art_failure_cannot_discard_cycle_evidence():
         "        continue-on-error: true"
     ) in workflow
     assert (
-        "- name: Commit Daily Dream cycle evidence\n"
+        "- name: Commit tomorrow's Daily Dream cycle evidence\n"
         "        if: ${{ always() }}"
     ) in workflow
-    assert workflow.index("Commit Daily Dream cycle evidence") < workflow.index(
-        "Verify Daily Dream cycle"
+    assert workflow.index("Commit tomorrow's Daily Dream cycle evidence") < workflow.index(
+        "Verify tomorrow's Daily Dream cycle"
     )
-    assert workflow.index("Verify Daily Dream cycle") < workflow.index(
-        "Build digest JSON"
+    # The digest payload is frozen before tomorrow's proposal is built/submitted --
+    # the whole point of the one-day render runway (see PIPELINE.md step 2).
+    assert workflow.index("Build digest JSON") < workflow.index(
+        "Commit tomorrow's Daily Dream cycle evidence"
     )
