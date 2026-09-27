@@ -307,7 +307,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Seed Silas's named historical and living candidates"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -361,7 +361,7 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Add accessibility, responsive gallery polish, and empty/loading/error states"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -390,7 +390,7 @@ tasks:
   - id: t-014
     milestone: m5
     title: "Build the Daily Tzaddik discovery docket"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -483,7 +483,7 @@ tasks:
   - id: t-019
     milestone: m2
     title: "Add community Wikipedia recheck / correction requests"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -615,7 +615,7 @@ tasks:
   - id: t-024
     milestone: m2
     title: "Surface editor-only moderation actions in the t-017 composed detail rail instead of a separate admin page"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -662,3 +662,25 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-09-27T22:55:00Z'
+
+  - id: t-026
+    milestone: m2
+    title: "Confirm before archiving an already-APPROVED (live) Tzaddik candidate"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: null
+    note: >-
+      Kaizen from t-008 (silasfelinus/kind_robots#3068): the admin Archive
+      button in tzaddik-detail-sheet.vue fires immediately with no
+      confirmation step, for both a PENDING submission (low stakes -- nothing
+      public changes) and an already-APPROVED candidate (higher stakes --
+      this removes a live entry from the public Living/Memorial roster with
+      one click). Add a confirmation prompt specifically for the
+      APPROVED-to-ARCHIVED transition (curationState === 'APPROVED' before
+      the click), leaving the PENDING-to-ARCHIVED path as an immediate action
+      since it was never public in the first place.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-09-27T23:30:00Z'
