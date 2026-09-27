@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-27T01:19:14Z
+Generated: 2026-09-27T01:28:37Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1161**
-- Outcomes: blocked: 19, cancelled: 2, done: 1140
+- Closed tasks recorded: **1162**
+- Outcomes: blocked: 19, cancelled: 2, done: 1141
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -65,14 +65,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | superkate-services-calculator | 12 | 100% |
 | taskmaster | 3 | 100% |
 | text-generation | 7 | 100% |
-| tzaddik-gallery | 3 | 100% |
+| tzaddik-gallery | 4 | 100% |
 
 ## By kind
 
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1144 | 99% |
+| software | 1145 | 99% |
 
 ## Failure categories
 
@@ -94,6 +94,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-27 `tzaddik-gallery/t-021` — Adding a new reaction target to kind_robots is two separable steps, not one: (1) the enum value + Reaction.<target>Id column/FK/migration + getExpectedTargetField's total-Record entry, which can land now mapped to null, and (2) utils/karmaRefTypes.ts's KARMA_REF_TYPES/KARMA_REF_TARGET_COLUMNS entry, which verifyEarnedKarmaWiring.ts and verifyReactionTargetCoverage.ts correctly refuse until the target column is actually access-checked end to end (they require every listed ref type to already be fully wired, on purpose, per the FACET/PROJECT/CHALLENGE_SUBMISSION incidents those scripts cite). Landing (1) alone and leaving (2) for the task that actually builds the access rule is the documented pattern (COMPONENT is the precedent) -- do not add to karmaRefTypes.ts just because the enum value exists.
 - 2026-09-27 `tzaddik-gallery/t-004` — A brand-new project's data model (t-003) existing with zero curated rows means the correct first pass on the next UI task is the plumbing (API + store + gallery wiring) verified via typecheck/contract tests, not a claim that the feature has been seen working against real data -- say which of those two you actually verified rather than blurring them. Also: reuse the shared kr-gallery shell directly from the page rather than adding a wrapper *-gallery.vue component when the page itself already carries the tab logic -- verifyRouteGalleryContract.ts's Rule 2 only requires the route's own mounted subtree to render kr-gallery, not a dedicated component file.
 - 2026-09-26 `tzaddik-gallery/t-003` — A schema.prisma change without a committed `npx prisma generate` diff fails test:generated-client-parity every time and is a pure mechanical fix -- when retry_context names the exact expected file list, regenerating and verifying locally before re-pushing resolves it in one pass with no need to touch the schema. Also: closing a task to done with dependents whose depends_on is now satisfied requires re-running resolve_deps.py in the same close-out PR, or the audit CI check will refuse to merge ("resolver should promote this task to ready") -- close_task.py does not do this automatically.
 - 2026-09-26 `humboldt-scoop-cms/t-043` — The quote form's poopstakes checkbox has no address field to key a 'household' on (quote_requests only carries city) -- a naive implementation of the task note's literal 'household key (the property address)' would have been unbuildable for the common case of a lead who hasn't signed up yet. Tiering the household key (customer's property address, else normalized phone, else email) and recording which tier was used per winner made the ambiguous spec buildable without guessing silently; when a task note names a data field that doesn't actually exist on the row it's describing, build a documented fallback rather than blocking on it.
@@ -103,7 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-26 `ruler-hooked/t-040` — Continuing t-033's bounded-slice discipline: landed the Sunspoke Koi APPROACH-pause slice (kind_robots#3052) as a small, purely-display animation change (a brief dwell at each end of the timing-bar sweep, gated on family==PATIENCE && phase==APPROACH) and filed the one remaining candidate (rarity-based marker shape/band color) as a fresh task (t-041) rather than reopening this one -- confirming the same family/reversed-flag mutual-exclusivity check (grep the reducer for where the flag is set) before assuming two display-only effects can't collide is a cheap, worthwhile step whenever a kaizen note bundles multiple per-species visual candidates.
 - 2026-09-26 `ruler-hooked/t-033` — A note that says 'once Silas has actually played the mechanic and there is real signal' is design guidance, not a hard gate -- the task was still status: ready with gate_human: false, and the three suggested candidates were concrete/specific enough to implement as small, independently reversible, bounded slices rather than waiting speculatively; land one slice per PR, not a combined diff.
 - 2026-09-26 `dream-cycle/t-034` — build_dream_proposal.py --from-json only ran validate_proposal (schema/invention/ title-shape/structural-repetition) -- it never called dream_prose_quality.complaints() or check_dream_creative_contract.py's entropy-version/premise-vocabulary-overlap/ name-diversity checks, so a proposal could pass a clean local --dry-run and only fail CI's check_dream_creative_contract.py --all-open job after being pushed (the 2026-09-29-gillstack kaizen this task came from). Fixed by adding creative_contract_complaints() to build_dream_proposal_core.py, mirroring check_dream_creative_contract.validate_path's checks exactly, and wiring it into --from-json: a real write is refused outright on failure (no partial write, matching CI's hard failure) while --dry-run still renders for inspection but reports the failure and returns non-zero. Scoped to --from-json only, not write_proposal/--sample generally, to avoid touching unrelated call sites the task didn't ask about. Needed lazy imports of author_dream_proposal/dream_prose_quality inside the new function (not at module top) because author_dream_proposal imports build_dream_proposal back (as `dreams`) -- a top-level import would have been circular at exec time, since build_dream_proposal_core.py's source is exec'd inside build_dream_proposal_impl.py's namespace before that namespace is fully populated.
-- 2026-09-26 `tzaddik-gallery/t-002` — components/conductor/project-front-page.vue is a reusable page shell that already owns its own kr-surface root and kr-scroll region internally. Wrapping it inside a NEW pages/*.vue file's own template without giving that page file its own root-surface class and scroll region passes eslint/vue-tsc but fails utils/scripts/verifyLayoutContract.ts's root-surface/zero-scroll rules, because the checker scans each page-classified file's own template independently rather than resolving through child components -- and forcing it to pass by adding a second kr-scroll class at the page level would create a genuine nested-scroll region in the rendered DOM, not just satisfy the linter. A brand-new top-level route composing project-front-page needs either its own self-contained scroll wrapper (the music-mentor.vue shape, used here instead) or a documented exception; there is no existing precedent in this codebase of a real routed page reusing that shell as-is.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-27T01:19:14Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-27T01:28:37Z_
