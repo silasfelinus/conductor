@@ -1601,9 +1601,9 @@ tasks:
 - id: t-052
   milestone: m4
   title: "Narrow color-art-jobs.yaml's write path to the touched book/proposal entry instead of the whole file"
-  status: ready
+  status: claimed
   stakes: reversible
-  owner: null
+  owner: worker
   passes: 0
   note: >-
     Kaizen from t-049 (2026-09-27): manage_coloring_book_production.py now holds an
@@ -1621,7 +1621,9 @@ tasks:
     entry being touched, verified against the existing
     tests/test_coloring_book_production.py suite plus a new test that two
     non-overlapping entries survive a read-modify-write round trip untouched.
-  updated: '2026-09-27T09:15:00Z'
+  updated: '2026-09-27T11:54:26Z'
+  claimed_by: 2026-09-27T-conductor-sweep-t052
+  claimed_at: '2026-09-27T11:54:26Z'
 
 - id: t-053
   milestone: m4
