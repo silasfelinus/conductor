@@ -510,3 +510,27 @@ tasks:
     claimed_at: '2026-09-27T05:55:07Z'
     updated: '2026-09-27T06:06:57Z'
 
+  - id: t-023
+    milestone: m2
+    title: "Extend the editorial-tag filter to the review/submission surface once it exists"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-006
+    note: >-
+      Kaizen from t-020 (silasfelinus/kind_robots#3063): t-020 built tag badges (gallery
+      cards + person detail sheet) and a chip-based multi-select tag filter, but only for
+      the Living/Memorial tabs -- no review/admin/moderation surface exists yet in the
+      codebase for a submitted-but-not-yet-approved candidate, so the "review surfaces"
+      half of t-020's own description could not be built. Once t-006 (authenticated
+      candidate submission workflow) lands and a review surface exists, wire the same
+      filter chips (reuse utils/tzaddikTags.ts's TZADDIK_TAG_ORDER/labels) into it. Also
+      confirm with Silas at that point whether the filter's AND semantics (must match
+      every selected tag) is the intended UX, or whether OR (match any selected tag) reads
+      better once there's a larger, more filterable pending-review queue -- t-020 picked
+      AND without an explicit human decision either way.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-09-27T20:00:00Z'
+
