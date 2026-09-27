@@ -821,7 +821,7 @@ tasks:
 - id: t-044
   milestone: m11
   title: Live smoke-test the Poopstakes draw (HSS_Poopstakes) on a real database before November
-  status: claimed
+  status: needs-human
   owner: worker
   passes: 0
   stakes: reversible
@@ -839,9 +839,27 @@ tasks:
     month is refused. Also worth confirming schema-dry-run.sh's EXPECTED_TABLES=16 (this
     task's session corrected it from a pre-existing stale 12, unverified against a live
     activation) actually matches a real dbDelta run.
-  updated: '2026-09-27T01:58:43Z'
+
+    SOFT NEEDS-HUMAN (access limitation, not a design question): this task's own
+    verification method -- site/tools/schema-dry-run.sh -- is explicit that it must run "on
+    ALEXANDRIA, as root" against the live Docker containers (scoopspress, mariadb-
+    scoopspress/mariadb-kindrobots2). It copies the live wp_hss_* schema into a scratch
+    database on a real MariaDB container, activates the plugin twice, and runs the portal-
+    save/notify/verify-schema self-tests against it. This cloud sandbox has the `docker` CLI
+    installed but no daemon reachable (`docker info`/`docker ps` fail with "no such file or
+    directory" on /var/run/docker.sock) -- there is no host, container runtime, or live/dev
+    database to run this smoke test against from here. FOR SILAS: run `bash
+    /mnt/user/appdata/hss-repo/site/tools/schema-dry-run.sh` on Alexandria (or ask a session
+    with Unraid shell access to run it) before the season's first real Poopstakes draw in
+    November. TO APPROVE: once the script prints "The schema comes out as intended. Safe to
+    activate on the live site." (or you've otherwise confirmed the draw works against a real
+    database), set approved_by_human: true and status: done, or paste the failure output
+    here if it doesn't come out clean so a follow-up task can fix it. Nothing else in this
+    project is blocked on this -- releasing the claim so other work can proceed.
+  updated: '2026-09-27T01:58:59Z'
   claimed_by: 2026-09-27T020000Z-humboldt-scoop-cms-t044
   claimed_at: '2026-09-27T01:58:43Z'
+  soft_gate: true
 
 goal: Keep Humboldt Scoop Solutions’ website maintainable through its CMS while accurately presenting services, leads,
   operations, and brand voice.
