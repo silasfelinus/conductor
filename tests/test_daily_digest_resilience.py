@@ -22,14 +22,14 @@ def test_daily_dream_failures_are_recorded_without_blocking_digest_delivery():
     author = _step(
         text,
         "Author today's next Daily Dream proposal",
-        "Build the eligible Daily Dream proposal",
+        "Review Alexandria's container logs",
     )
     commit = _step(
         text,
-        "Commit Daily Dream cycle evidence",
-        "Verify Daily Dream cycle",
+        "Commit tomorrow's Daily Dream cycle evidence",
+        "Verify tomorrow's Daily Dream cycle",
     )
-    verify = _step(text, "Verify Daily Dream cycle", "Build digest JSON")
+    verify = _step(text, "Verify tomorrow's Daily Dream cycle", "Upload digest artifacts")
 
     assert "id: daily_dream_author" in author
     assert "continue-on-error: true" in author

@@ -50,7 +50,7 @@ def test_digest_retry_watchdog_keeps_expected_offsets():
 def test_daily_dream_sidecars_warn_without_manufacturing_a_failed_digest_run():
     workflow = DIGEST.read_text(encoding="utf-8")
 
-    assert "::warning::Daily Dream object build failed" in workflow
+    assert "::warning::Tomorrow's Daily Dream object build failed" in workflow
     assert "::warning::Daily Dream live composed-field verification found drift" in workflow
     assert_no_post_email_failure_step(workflow)
 
@@ -72,8 +72,16 @@ def test_delayed_schedule_cannot_resend_after_watchdog_replacement_succeeds():
     assert "Human workflow_dispatch is explicit" in workflow
 
 
-def test_digest_gives_priority_art_a_bounded_same_cycle_window():
+def test_digest_freezes_email_before_preparing_tomorrows_art():
     workflow = DIGEST.read_text(encoding="utf-8")
 
-    assert "submit_daily_dream_art.py --wait-timeout 1800" in workflow
+    digest_pos = workflow.index("python scripts/build_digest.py")
+    email_payload_pos = workflow.index("python scripts/build_digest_email_v2.py")
+    build_pos = workflow.index("python scripts/run_daily_dream_build.py --date")
+    submit_pos = workflow.index("python scripts/submit_daily_dream_art.py")
+    email_pos = workflow.index("Email via Brevo")
+
+    assert digest_pos < email_payload_pos < build_pos < submit_pos < email_pos
+    assert "submit_daily_dream_art.py --wait-timeout" not in workflow
+    assert "TZ=America/Los_Angeles date +%F" in workflow
     assert "continue-on-error: true" in workflow

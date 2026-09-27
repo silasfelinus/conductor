@@ -9,81 +9,83 @@ Daily Digest morning cycle
     ↓
 author today's six-asset steering proposal
     ↓
-build the now-eligible prior proposal
+build digest JSON/email from the most recent ALREADY BUILT bundle
     ↓
-scripts/build_dream_records.py
+freeze today's email payload
     ↓
-kind_robots rows + built-data ledger + six stable art requests
+build TODAY'S proposal into six live records for TOMORROW
     ↓
-scripts/apply_daily_dream_facets.py
-    ↓
-scripts/submit_daily_dream_art.py
-    ↓
-six durable Kind Robots ArtJobs with recorded IDs
+attach Facets + submit six durable priority ArtJobs
     ↓
 commit proposal/build/ArtJob evidence
     ↓
-build and send the digest
+send the already-frozen digest
     ↓
-older completed bundle WITH art
-then the just-built bundle WITHOUT empty art space
+~24 hours of render runway before those ArtJobs appear in tomorrow's digest
 ```
 
 In shorthand, the workflow contract is:
 
-**author → build → Facets → submit ArtJobs → commit → digest**
+**author → freeze digest → build today for tomorrow → Facets → submit ArtJobs → commit → send frozen digest**
 
-There is no second authoring step after the email.
+There is still one writer and one morning workflow. The difference is temporal ownership:
+the bundle shown in today's email was prepared by the prior cycle, while today's newly
+authored proposal is prepared immediately after the email payload is frozen so its art has
+roughly a full day to render.
 
-## 1. Author today's next proposal
+## 1. Author today's proposal
 
-At the start of the scheduled morning cycle, `scripts/author_dream_proposal.py` ensures that the current Pacific date has one canonical six-asset proposal:
+At the start of the scheduled morning cycle, `scripts/author_dream_proposal.py` ensures
+that the current Pacific date has one canonical six-asset proposal. Authoring is
+idempotent and creates no database objects by itself.
 
-- one dream vibe
-- one dream location
-- one Character
-- one ITEM Reward
-- one SKILL Reward
-- one Scenario, authored from the completed preceding elements
+## 2. Freeze today's digest from prior completed work
 
-The proposal is steering input for the **next** build. It creates no database objects and is not shown as a third Daily Dream showcase in that morning's email.
+Before any records or ArtJobs are created for today's proposal, the workflow runs
+`build_digest.py`, `enrich_daily_dream_digest.py`,
+`annotate_daily_dream_art_queue.py`, validation, and the email renderer. The resulting
+payload therefore describes work that already existed before this morning's preparation
+step. Its ArtJobs normally have had about 24 hours to render.
 
-Silas may still add notes, park, or veto a proposal during its steering day. The authoring command is idempotent, so an already-authored proposal is left alone.
+This ordering is deliberate. A longer same-cycle wait is not a substitute for the
+one-day pipeline: digest morning must not be the generation starting gun for the art it
+is about to showcase.
 
-## 2. Build the prior eligible proposal
+## 3. Build today's proposal for tomorrow
 
-`scripts/build_dream_records.py` is the **sole object writer** for Daily Dream objects.
+After the email payload is frozen, `scripts/run_daily_dream_build.py --date <today>`
+delegates to `scripts/build_dream_records.py`, the **sole object writer**. The explicit
+Pacific date allows the proposal to be built during its own morning cycle rather than
+waiting until it becomes "prior" the next day.
 
-After authoring today's proposal, `daily-digest.yml` invokes the builder exactly once. The builder selects the oldest pinned retry when one exists; otherwise it selects the newest valid proposal whose Pacific proposal date is earlier than today.
+The builder creates the complete six-object bundle transactionally, records every
+resulting ID in `built-data`, and writes exactly six stable art requests to
+`projects/art-prompts.yaml`. Immediately afterward,
+`scripts/apply_daily_dream_facets.py` attaches the persisted Facets.
 
-The builder creates the complete six-object bundle transactionally, records every resulting ID in `built-data`, writes exactly six stable art requests to `projects/art-prompts.yaml`, and rolls back partial creation when an API write fails. No agent manually reproduces its REST calls.
+## 4. Submit tomorrow's art immediately
 
-Immediately afterward, `scripts/apply_daily_dream_facets.py` attaches the proposal's persisted Facets to the completed records.
+`scripts/submit_daily_dream_art.py` submits the six newly staged `source: dream-cycle`
+requests to Kind Robots and records each durable `last_art_job_id`. It does not wait
+for those renders, because they are not needed by the already-frozen email. The normal
+renderer now has the rest of the day and overnight to complete them.
 
-## 3. Submit art before the email
+## 5. Persist evidence, then send the frozen email
 
-The six builder-created art requests are a Conductor staging ledger, not yet Kind Robots ArtJobs.
+The workflow commits today's proposal/build/Facet/ArtJob evidence before sending the
+payload that was frozen in step 2. Sidecar preparation failures remain warnings so a
+problem preparing tomorrow cannot erase today's otherwise valid digest.
 
-`scripts/submit_daily_dream_art.py` closes that boundary before the digest is built. It processes only `source: dream-cycle` requests, submits each to the Kind Robots ArtJob queue, and immediately records `last_art_job_id` back on the durable request row. It does **not** wait for renders to finish.
+The next morning, that prepared bundle becomes the newest completed output and its public
+art paths are probed for the digest. Missing or failed art remains visible as an honest
+status rather than being silently replaced or re-enqueued.
 
-Daily Dream ArtJobs use the reserved priority tier and stable request IDs. The normal relay/art pipeline renders them after submission and writes Kind Robots media targets directly when complete.
+## 6. Hourly Conductor remains report-only
 
-## 4. Commit evidence, then render the digest
-
-The workflow commits the newly authored proposal, built-data changes, Facet evidence, staged request changes, and recorded ArtJob IDs before constructing the email. The digest therefore reports durable state rather than optimistic in-process state.
-
-The email has two Daily Dream showcase sections in this order:
-
-1. **Previous completed output**: the completed bundle before the one built this morning. This is the art-rich section because its renders have had a full cycle to finish. Missing art is reported honestly when necessary.
-2. **Just built this cycle**: the bundle built moments ago. It shows the six records, summaries, and seed Facets in a compact layout with **no reserved image boxes**. Its newly submitted art belongs to the next cycle's art-rich section.
-
-Today's newly authored steering proposal is retained in digest JSON for diagnostics but is not rendered as another near-identical card grid.
-
-## 5. Hourly Conductor is report-only
-
-Hourly Conductor no longer creates Daily Dream objects, attaches Daily Dream Facets, or submits Daily Dream art. Its workflow calls `scripts/build_conductor_summary_report_only.py`, which preserves the existing health-report implementation while neutralizing its historical `ensure_records()` side effect.
-
-This prevents midnight and other hourly runs from building a proposal before the ordered morning sequence.
+Hourly Conductor does not create Daily Dream objects, attach Daily Dream Facets, or submit
+Daily Dream art. Keeping the morning workflow as the sole writer preserves the
+single-writer/race-safety repair while the reordered cycle restores the intended
+generation runway.
 
 ## Failure and retry behavior
 
@@ -95,7 +97,7 @@ The Daily Digest retry watchdog may rerun the same workflow after a failed or mi
 - Daily Dream ArtJobs use stable idempotency keys;
 - recorded `last_art_job_id` values prevent the digest from claiming a request is queued before a real ArtJob exists.
 
-A failed morning cycle should be retried as a cycle, rather than letting Hourly Conductor quietly advance only one piece of it.
+A failed morning cycle should be retried as a cycle. Stable request IDs and recorded ArtJob IDs make tomorrow-preparation idempotent without letting Hourly Conductor quietly advance only one piece of it.
 
 ## Freshness: old proposals are poisoned, not queued
 

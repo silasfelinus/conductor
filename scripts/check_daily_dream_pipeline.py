@@ -114,21 +114,21 @@ def check_pipeline(root: Path = ROOT) -> list[str]:
 
     digest_sequence = (
         "python scripts/author_dream_proposal.py",
-        "python scripts/run_daily_dream_build.py",
-        "python scripts/apply_daily_dream_facets.py",
-        "python scripts/submit_daily_dream_art.py",
-        "Commit Daily Dream cycle evidence",
-        "Verify Daily Dream cycle",
         "python scripts/build_digest.py",
         "python scripts/enrich_daily_dream_digest.py",
         "python scripts/annotate_daily_dream_art_queue.py",
         "python scripts/validate_digest.py",
         "python scripts/build_digest_email_v2.py",
+        "python scripts/run_daily_dream_build.py --date",
+        "python scripts/apply_daily_dream_facets.py",
+        "python scripts/submit_daily_dream_art.py",
+        "Commit tomorrow's Daily Dream cycle evidence",
+        "Verify tomorrow's Daily Dream cycle",
         "Email via Brevo",
     )
     if not _in_order(digest, digest_sequence):
         errors.append(
-            "Daily Digest must author, build, attach Facets, submit ArtJobs, persist evidence, verify, then render/send"
+            "Daily Digest must freeze today's email before building/submitting today's proposal for tomorrow"
         )
     if digest.count("python scripts/author_dream_proposal.py") != 1:
         errors.append("Daily Digest must author exactly once, at the start of the cycle")
@@ -152,7 +152,7 @@ def check_pipeline(root: Path = ROOT) -> list[str]:
         "id: daily_dream_build\n        continue-on-error: true",
         "id: daily_dream_facets\n        if: ${{ steps.daily_dream_build.outcome == 'success' }}\n        continue-on-error: true",
         "id: daily_dream_art\n        if: ${{ steps.daily_dream_build.outcome == 'success' }}\n        continue-on-error: true",
-        "- name: Commit Daily Dream cycle evidence\n        if: ${{ always() }}",
+        "- name: Commit tomorrow's Daily Dream cycle evidence\n        if: ${{ always() }}",
         'steps.daily_dream_build.outcome',
         'steps.daily_dream_facets.outcome',
         'steps.daily_dream_art.outcome',
@@ -176,8 +176,8 @@ def check_pipeline(root: Path = ROOT) -> list[str]:
 
     if "sole object writer" not in pipeline.casefold():
         errors.append("PIPELINE.md must identify the sole object writer")
-    if "author → build → facets → submit artjobs → commit → digest" not in pipeline.casefold():
-        errors.append("PIPELINE.md must state the ordered morning cycle")
+    if "author → freeze digest → build today for tomorrow → facets → submit artjobs → commit → send frozen digest" not in pipeline.casefold():
+        errors.append("PIPELINE.md must state the full-cycle render-runway ordering")
     if "scripts/build_dream_records.py" not in creation_spec:
         errors.append("CREATION-SPEC.md must name the canonical builder")
     if "sole object writer" not in dream_spec.casefold():
@@ -272,7 +272,7 @@ def main() -> int:
 
     print(
         "Daily Dream pipeline healthy: one ordered morning cycle, one object writer, "
-        "and an hourly report-only sweep."
+        "a full-cycle art runway, and an hourly report-only sweep."
     )
     return 0
 
