@@ -368,3 +368,54 @@ def test_live_known_bad_examples_match_frozen_fixture(name, fx):
     )
     assert info["mean_saturation"] == pytest.approx(fx["mean_saturation"], abs=0.01)
     assert info["tint_concentration"] == pytest.approx(fx["tint_concentration"], abs=0.01)
+
+
+# NOISE_MIN_HF_RATIO regression corpus (coloring-book/t-054, 2026-09-27). hf_ratio
+# depends on real per-pixel spatial arrangement, not just aggregate stats, so unlike
+# the fixtures above it cannot be reconstructed with `_pinned_stats()` -- these are
+# live-only (skipped without Pillow) tests against the real rejected-candidate files
+# already checked into the repo under */generated/*/rejected/mechanical/. Every file
+# here is real production output, not synthetic.
+NOISE_CORPUS_ROOT = REPO_ROOT / "projects" / "coloring-book" / "sets"
+
+# Supplementary real evidence found independently in the same cycle (t-022 cycle 80)
+# as t-048's own NOISE_FALSE_POSITIVES/NOISE_TRUE_POSITIVES above -- named distinctly
+# (_EXTRA suffix) to avoid shadowing those dict-shaped fixtures with these list-shaped
+# ones. mr-010 is a second, independent false-positive example (a completely different
+# composition style from kr-001 -- fine linework/large white areas rather than dense
+# scattered icons) that strengthens the case for the recalibration; mr-005/mr-011 are
+# additional true-positive corruption examples from the same real corpus.
+NOISE_FALSE_POSITIVES_EXTRA = [
+    NOISE_CORPUS_ROOT / "monster-recast" / "generated" / "bw" / "rejected" / "mechanical"
+    / "mr-010-bw-20260927T113010Z.webp",
+]
+
+NOISE_TRUE_POSITIVES_EXTRA = [
+    NOISE_CORPUS_ROOT / "monster-recast" / "generated" / "bw" / "rejected" / "mechanical"
+    / "mr-005-bw-20260915T070347Z.webp",
+    NOISE_CORPUS_ROOT / "monster-recast" / "generated" / "bw" / "rejected" / "mechanical"
+    / "mr-011-bw-20260915T070357Z.webp",
+]
+
+
+@pytest.mark.parametrize("path", NOISE_FALSE_POSITIVES_EXTRA, ids=lambda p: p.name)
+def test_live_dense_detail_line_art_is_not_rejected_as_noise(path):
+    pytest.importorskip("PIL")
+    if not path.exists():
+        pytest.skip(f"{path} not present in this checkout")
+    ok, reasons, info = aq.assess_file(path, "bw")
+    assert ok is True, f"{path.name} should pass the bw gate now: {reasons} ({info})"
+    assert info["hf_ratio"] < aq.NOISE_MIN_HF_RATIO
+
+
+@pytest.mark.parametrize("path", NOISE_TRUE_POSITIVES_EXTRA, ids=lambda p: p.name)
+def test_live_genuine_noise_static_is_still_rejected(path):
+    pytest.importorskip("PIL")
+    if not path.exists():
+        pytest.skip(f"{path} not present in this checkout")
+    ok, reasons, info = aq.assess_file(path, "bw")
+    assert ok is False, f"{path.name} unexpectedly passes the bw gate now: {info}"
+    assert any("noise/static" in r for r in reasons), (
+        f"{path.name} rejected for a different reason than expected: {reasons}"
+    )
+    assert info["hf_ratio"] >= aq.NOISE_MIN_HF_RATIO
