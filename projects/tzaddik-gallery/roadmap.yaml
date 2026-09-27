@@ -174,20 +174,28 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Build sourced person detail view with objections section"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-003
-    note: >
+    note: >-
       Show image, concise biography/rationale, source links/provenance, status,
       submitter attribution, reactions, a visible controversy/objections
       section, and a Request recheck control with last-checked/pending state.
       Keep objections factual and source-backed; absence of a substantial
       documented objection should not trigger invented balance.
+
+      DONE 2026-09-27 (claude-scheduled session): implemented tzaddik-detail-sheet.vue plus
+      the reaction access-rule wiring (getExpectedTargetField/assertReactionTargetAccessible/g
+      etContentOwnerId/reactionVisibility) that tzaddik-gallery/t-021 deliberately deferred
+      here. silasfelinus/kind_robots#3060 merged clean (all checks green including
+      verifyReactionTargetCoverage.ts, verifyReactionRouteAuth.ts, verifyEarnedKarmaWiring.ts,
+      and the full vue-tsc typecheck).
     claimed_by: 2026-09-27T020500Z-tzaddik-gallery-t005
     claimed_at: '2026-09-27T02:00:47Z'
-    updated: '2026-09-27T02:18:47Z'
+    updated: '2026-09-27T02:25:19Z'
+    implementation_pr: 'silasfelinus/kind_robots#3060'
 
   - id: t-006
     milestone: m2
