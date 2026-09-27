@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-09-27T01:14:14.830254+00:00`
+Generated: `2026-09-27T15:11:07.826686+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **55** roadmaps, **23** active + **3** continuous projects, **1724** tasks
-- **17 ready**, **64 waiting**, **63 needs-human**, **2 claimed/review**, **1562 done**
-- Findings: **0 errors**, **13 warnings**, **30 informational**
+- **55** roadmaps, **23** active + **3** continuous projects, **1738** tasks
+- **19 ready**, **62 waiting**, **67 needs-human**, **3 claimed/review**, **1571 done**
+- Findings: **0 errors**, **15 warnings**, **30 informational**
 
 ## Project inventory
 
@@ -20,25 +20,25 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 4 | `art-archive` | active | software | 0 | 0 | 3 | 0 | 40 / 43 |
 | 5 | `mandarin-tutor` | active | software | 0 | 0 | 1 | 0 | 27 / 28 |
 | 6 | `interface-vision` | continuous | software | 3 | 1 | 0 | 0 | 136 / 140 |
-| 7 | `coloring-book` | active | software | 1 | 9 | 1 | 0 | 36 / 47 |
-| 8 | `humboldt-scoop-cms` | active | software | 1 | 0 | 5 | 0 | 38 / 44 |
+| 7 | `coloring-book` | active | software | 1 | 9 | 4 | 2 | 41 / 57 |
+| 8 | `humboldt-scoop-cms` | active | software | 0 | 0 | 6 | 0 | 38 / 44 |
 | 9 | `digital-storefront` | active | software | 0 | 2 | 2 | 0 | 40 / 44 |
 | 10 | `kind-robots` | active | software | 0 | 0 | 3 | 0 | 120 / 123 |
 | 11 | `rainbow-butterflies` | active | software | 0 | 0 | 3 | 0 | 50 / 53 |
-| 12 | `tzaddik-gallery` | active | software | 3 | 13 | 0 | 1 | 4 / 21 |
+| 12 | `tzaddik-gallery` | active | software | 4 | 11 | 0 | 0 | 7 / 22 |
 | 13 | `scene-animator` | active | software | 0 | 0 | 1 | 0 | 10 / 11 |
 | 14 | `text-generation` | active | software | 0 | 0 | 1 | 0 | 8 / 9 |
 | 15 | `kindrobots-unraid` | active | software | 0 | 6 | 2 | 0 | 14 / 22 |
 | 16 | `model-builder` | active | software | 1 | 0 | 0 | 0 | 44 / 45 |
 | 17 | `lora-ingestion` | active | infrastructure | 0 | 0 | 1 | 0 | 16 / 17 |
-| 18 | `conductor` | active | software | 0 | 0 | 4 | 0 | 193 / 197 |
+| 18 | `conductor` | active | software | 1 | 0 | 4 | 0 | 194 / 199 |
 | 19 | `storybook` | active | software | 1 | 2 | 6 | 0 | 60 / 69 |
 | 20 | `coat-dance` | active | content | 1 | 0 | 1 | 0 | 3 / 10 |
 | 21 | `conductor-app` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
 | 22 | `appmaker` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
 | 23 | `media-watchlist` | active | software | 0 | 0 | 1 | 0 | 18 / 19 |
 | 24 | `ruler-hooked` | active | software | 0 | 0 | 4 | 0 | 39 / 43 |
-| 25 | `animation-manager` | continuous | software | 2 | 0 | 0 | 1 | 18 / 22 |
+| 25 | `animation-manager` | continuous | software | 3 | 0 | 0 | 1 | 18 / 23 |
 | 26 | `dream-cycle` | continuous | software | 2 | 0 | 0 | 0 | 32 / 34 |
 | — | `ai-art-academy` | finished | software | 0 | 0 | 0 | 0 | 79 / 79 |
 | — | `alexa-integration` | paused | software | 0 | 0 | 1 | 0 | 21 / 22 |
@@ -76,9 +76,11 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (13)
+### Warning (15)
 
 - **DUPLICATE_YAML_KEY** — `animation-manager`: Duplicate key 'owner' at line 186 — YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one.
+- **DUPLICATE_YAML_KEY** — `animation-manager`: Duplicate key 'daily_last_checked' at line 365 — YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one.
+- **DUPLICATE_YAML_KEY** — `animation-manager`: Duplicate key 'daily_last_completed' at line 366 — YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one.
 - **STALE_IN_PROGRESS** — `animation-manager` / `t-022`: Task has remained claimed for 3 days.
 - **POSSIBLY_UNNECESSARY_GATE** — `conductor` / `t-167`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **SOFT_NEEDS_HUMAN** — `conductor` / `t-189`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
