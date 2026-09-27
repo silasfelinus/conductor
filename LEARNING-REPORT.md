@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-27T09:33:19Z
+Generated: 2026-09-27T09:38:26Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1167**
-- Outcomes: blocked: 19, cancelled: 2, done: 1146
+- Closed tasks recorded: **1168**
+- Outcomes: blocked: 19, cancelled: 2, done: 1147
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -27,7 +27,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | butterfly-gallery | 32 | 94% |
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
-| coloring-book | 41 | 100% |
+| coloring-book | 42 | 100% |
 | conductor | 137 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 51 | 98% |
@@ -72,7 +72,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1150 | 99% |
+| software | 1151 | 99% |
 
 ## Failure categories
 
@@ -94,6 +94,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-27 `coloring-book/t-049` — A kaizen task that names the exact race (two manage_coloring_book_production.py invocations racing on different proposal ids in the same shared color-art-jobs.yaml) and the smallest of three explicit fix options (a lockfile held for the whole live run, vs. narrowing the write path, vs. a docstring warning) is landable in one pass: an exclusive non-blocking flock on a sibling .lock file, held from load through every write, makes a racing second invocation fail fast with a clear error instead of silently reverting the first's already-persisted state. Verified with a real cross-process test (not just an in-process mock) since flock semantics depend on separate open-file-descriptions, which a same-process double-open can get subtly wrong. Filed t-052 to narrow the write path itself (read-modify-write only the touched entry) as a follow-on if whole-file rewrites become a real cost -- deliberately deferred rather than bundled, per the original note's own preference for the smallest safe fix.
 - 2026-09-27 `tzaddik-gallery/t-022` — A kaizen task naming an exact file, function, and the mechanical reason ESLint double-flagged it (disable comment landing above a multi-line type instead of the line the `any` actually appears on) is landable in one pass with zero ambiguity: narrowing the map's `findUnique` argument type to the shape every call site actually passes removed the `any` outright, so no disable comment was needed at all. Confirmed via eslint (clean), vue-tsc --noEmit (clean), and test:lint-ratchet (-3 problems vs. baseline).
 - 2026-09-27 `coloring-book/t-022` — A script that loads a shared YAML file once per process and writes the whole in-memory snapshot back at several points during its run is unsafe to invoke concurrently, even across entries the two invocations don't logically share -- the slower process's later write is based on a pre-change snapshot and silently reverts the faster process's already-persisted progress with no error. Reproduced live running manage_coloring_book_production.py's generate-bw for two different book/proposal ids at once: the first to finish had its bw_status: done reverted back to running by the second process's later write. Recovered safely only because the render and server-side ArtImage survived independently of the YAML bookkeeping and the enqueue step was idempotent against an existing job id -- a less careful recovery could have double-submitted a render job. Filed coloring-book/t-049 to fix the script; the immediate mitigation is to never run two invocations against the same shared state file in parallel, regardless of how independent their target keys look.
 - 2026-09-27 `coloring-book/t-039` — When a fix's own task has already been closed prematurely twice on indirect evidence (a merged PR, a plausible diagnosis), closing it a third time needs a direct check of the actual deployed artifact, not the passage of time since merge: inspect the specific field the bug lived in (here, GET /api/art/queue/:id's stored workflow graph's UNETLoader checkpoint name) before spending a render cycle assuming a Force Update happened. Then verify the render's actual pixels, not just its mechanical pass/fail, before trusting the fix -- a mechanical rejection on a DIFFERENT input during the same verification pass (kind-robots kr-001) turned out to be an unrelated false positive in the quality gate itself, not evidence the fix was incomplete; reading the rejected file directly (not just its stats) was what told the two apart.
@@ -103,7 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-27 `tzaddik-gallery/t-004` — A brand-new project's data model (t-003) existing with zero curated rows means the correct first pass on the next UI task is the plumbing (API + store + gallery wiring) verified via typecheck/contract tests, not a claim that the feature has been seen working against real data -- say which of those two you actually verified rather than blurring them. Also: reuse the shared kr-gallery shell directly from the page rather than adding a wrapper *-gallery.vue component when the page itself already carries the tab logic -- verifyRouteGalleryContract.ts's Rule 2 only requires the route's own mounted subtree to render kr-gallery, not a dedicated component file.
 - 2026-09-26 `tzaddik-gallery/t-003` — A schema.prisma change without a committed `npx prisma generate` diff fails test:generated-client-parity every time and is a pure mechanical fix -- when retry_context names the exact expected file list, regenerating and verifying locally before re-pushing resolves it in one pass with no need to touch the schema. Also: closing a task to done with dependents whose depends_on is now satisfied requires re-running resolve_deps.py in the same close-out PR, or the audit CI check will refuse to merge ("resolver should promote this task to ready") -- close_task.py does not do this automatically.
 - 2026-09-26 `humboldt-scoop-cms/t-043` — The quote form's poopstakes checkbox has no address field to key a 'household' on (quote_requests only carries city) -- a naive implementation of the task note's literal 'household key (the property address)' would have been unbuildable for the common case of a lead who hasn't signed up yet. Tiering the household key (customer's property address, else normalized phone, else email) and recording which tier was used per winner made the ambiguous spec buildable without guessing silently; when a task note names a data field that doesn't actually exist on the row it's describing, build a documented fallback rather than blocking on it.
-- 2026-09-26 `ruler-hooked/t-043` — A worker/* branch can be fully implemented, correctly scoped, and even have its roadmap task set to status: review, and still never get a PR opened if create_pull_request fails mid-session -- check_pr_merged_drift.py's stranded-branch check caught it two sessions later. Before reimplementing any review/ready task, check for a matching worker/<project>-<task-id>-* branch first; if the diff is complete and scoped, open the PR from it as-is and run full CI rather than trusting the original session's local verification alone.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-27T09:33:19Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-27T09:38:26Z_
