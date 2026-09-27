@@ -3860,9 +3860,16 @@ tasks:
     via conductor/t-182. As a secondary, non-blocking follow-up once this is acknowledged:
     harden `scripts/kr_token_set.sh`'s docstring to call out the no-argument
     `export`/`env`/`set` shape alongside the two patterns it already documents.
+
+    2026-09-27 update: this same token was exposed again, by a fourth distinct unsafe shape
+    (a Python getattr(module, 'SECRET_NAME', default) diagnostic, not a shell construct)
+    while investigating conductor/t-198. Full write-up in root TALKBACK.md's 2026-09-27
+    security-flag entry. No new action needed beyond what this task already asks for --
+    rotate the token and harden kr_token_set.sh's guidance to cover the Python-level unsafe
+    shape too.
   claimed_by: null
   claimed_at: null
-  updated: '2026-09-21T18:00:00Z'
+  updated: '2026-09-27T11:20:32Z'
 
 - id: t-190
   milestone: m2
@@ -4170,8 +4177,8 @@ tasks:
 - id: t-198
   milestone: m1
   title: "Fix the full-suite-only test_annotate_daily_dream_art_queue.py isolation flake"
-  status: ready
-  owner: null
+  status: done
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: null
@@ -4196,6 +4203,38 @@ tasks:
     the suite's signal, not a product bug, but a test that fails only in select
     full-suite runs and passes on retry erodes trust in "green" the same way a
     genuine flake does.
+  claimed_by: 2026-09-27T-conductor-sweep-t198
+  claimed_at: '2026-09-27T11:14:54Z'
+  updated: '2026-09-27T11:29:15Z'
+  implementation_pr: 'silasfelinus/conductor#5282'
+
+- id: t-199
+  milestone: m1
+  title: "Harden annotate_daily_dream_art_queue.py's _live_job_fetcher() import against ambient sys.path state"
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: >-
+    Kaizen from t-198 (2026-09-27, PR #5282). `_live_job_fetcher()` does a bare
+    `import consume_art_requests as requests`, which only succeeds when `scripts/`
+    happens to already be on `sys.path` -- true in a full pytest run (11 other test
+    files each do their own `sys.path.insert(0, .../scripts)` at collection time) or
+    when the script is invoked in a context where `scripts/` is already importable,
+    false when run in most other contexts. t-198 worked around this at the test level
+    (the test itself doesn't need a real fetcher and now clears KR_API_TOKEN so the
+    import is never attempted), but the production code's own import robustness is
+    still exactly as fragile as before -- it's just no longer exercised by this test.
+    TO FIX: switch to the dual-path pattern already used elsewhere in this codebase
+    (see scripts/consume_art_queue.py's `try: from scripts import consume_art_queue_core
+    as _core / except ImportError: import consume_art_queue_core as _core`), so the
+    import succeeds deterministically whenever the repo root is on sys.path (which
+    pytest and any script invocation via `python3 scripts/foo.py` both guarantee)
+    rather than depending on scripts/ specifically also being on sys.path. Add a
+    regression test that imports and calls `_live_job_fetcher()` from a subprocess/
+    fresh interpreter with only the repo root on sys.path (no scripts/ dir), confirming
+    it still resolves the real fetcher when KR_API_TOKEN is set.
+  updated: '2026-09-27T11:29:15Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'

@@ -57,18 +57,22 @@ COLORFUL_PIXEL_SATURATION = 0.20   # a pixel counts as "colorful" past this
 BLANK_WHITE_FRACTION = 0.985       # near-all-white == blank
 DEGENERATE_MAX_LUMA_STD = 0.02     # near-zero contrast == flat/dead frame
 SAMPLE_EDGE = 160                  # downsample longest edge before sampling
-NOISE_MIN_HF_RATIO = 0.70          # spatially-uncorrelated static, any variant
-# Recalibrated 2026-09-27 (coloring-book/t-054) from 0.55: the real coloring-book
-# corpus checked into this repo under */generated/*/rejected/mechanical/ (16 files
-# as of this change) splits cleanly bimodal -- 3 real, faithful line-art false
-# positives (busy/detail-dense compositions: kr-001 "Logo Workshop" x2, mr-010
-# "Madam Hat") measure hf_ratio 0.5732-0.5953, while 13 genuine spatially-uncorrelated
-# noise/static renders (the original t-039 Kontext-corruption defect) measure
-# 0.8530-0.8756 -- a gap from 0.60 to 0.85 with zero real examples in between. 0.55
-# sat inside the false-positive cluster and rejected legitimate art; 0.70 sits
-# centered in the empty gap with ~0.10-0.15 margin on both sides. See
-# tests/test_art_quality.py's noise-corpus tests, which pin this exact real-file
-# evidence as a live regression guard.
+NOISE_MIN_HF_RATIO = 0.72          # spatially-uncorrelated static, any variant
+# coloring-book/t-048: 0.55 false-positived on kind-robots/the-logo-workshop
+# (kr-001) at hf_ratio=0.59-0.60 across two independent renders -- a legitimate
+# dense line-art page (a robot mascot surrounded by dozens of small repeated
+# robots/stars/gears/butterflies/paintbrushes), not corruption. Lots of small
+# repeated closed contours packed tightly produce adjacent-pixel luma
+# variance similar to real static, which the pure horizontal-neighbor
+# correlation this ratio measures can't tell apart from genuine noise.
+# Recalibrated against every hf_ratio this pipeline has ever recorded
+# (`color-art-jobs.yaml` across all three books, 2026-09-27): every real
+# mechanical-noise reject (the t-039 Kontext-corruption class, 12 samples)
+# measures 0.857-0.876; every other real render, including kr-001's two
+# false positives, measures <= 0.5953. The old 0.55 threshold sat inside
+# that gap; 0.72 sits with real margin on both sides (>=0.10 below the
+# noise floor, >=0.12 above the highest known false positive) without
+# needing a book-specific carve-out or an untested secondary signal.
 # A genuine color-stage master in this pipeline runs 0.20-0.60 mean_saturation
 # and 0.43-0.95 colorful_fraction against the approved/ set (see
 # coloring-book/t-044). An intermittent color-engine defect instead produces a

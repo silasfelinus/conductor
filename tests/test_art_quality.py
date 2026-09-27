@@ -150,6 +150,41 @@ KNOWN_BAD = {
     ),
 }
 
+# coloring-book/t-048: NOISE_MIN_HF_RATIO recalibration. Real mechanical-noise
+# rejects (the t-039 Kontext-corruption class) all measure 0.857-0.876
+# hf_ratio; kr-001 (kind-robots/the-logo-workshop, a legitimate dense-icon
+# line-art page) false-positived at 0.5886-0.5953 under the old 0.55
+# threshold. Both groups are pinned here so a future threshold change that
+# would flip either shows up as a named failure.
+KIND_ROBOTS_BW_DIR = (
+    REPO_ROOT / "projects" / "coloring-book" / "sets" / "kind-robots"
+    / "generated" / "bw" / "rejected" / "mechanical"
+)
+MONSTER_RECAST_BW_DIR = (
+    REPO_ROOT / "projects" / "coloring-book" / "sets" / "monster-recast"
+    / "generated" / "bw" / "rejected" / "mechanical"
+)
+NOISE_FALSE_POSITIVES = {
+    "kr-001-bw-20260927T031917Z.webp": dict(
+        path=KIND_ROBOTS_BW_DIR / "kr-001-bw-20260927T031917Z.webp",
+        hf_ratio=0.5886,
+    ),
+    "kr-001-bw-20260927T093733Z.webp": dict(
+        path=KIND_ROBOTS_BW_DIR / "kr-001-bw-20260927T093733Z.webp",
+        hf_ratio=0.5953,
+    ),
+}
+NOISE_TRUE_POSITIVES = {
+    "mr-020-bw-20260911T003019Z.webp": dict(
+        path=MONSTER_RECAST_BW_DIR / "mr-020-bw-20260911T003019Z.webp",
+        hf_ratio=0.8571,
+    ),
+    "mr-016-bw-20260911T003011Z.webp": dict(
+        path=MONSTER_RECAST_BW_DIR / "mr-016-bw-20260911T003011Z.webp",
+        hf_ratio=0.8756,
+    ),
+}
+
 
 def _pinned_stats(mean_saturation: float, colorful_fraction: float,
                    luma_std: float, white_fraction: float = 0.0) -> aq.Stats:
@@ -222,6 +257,68 @@ def test_masking_up_bw_stays_the_closest_real_bw_pass():
     assert ok, f"masking-up-bw.webp should still pass: {reasons}"
 
 
+def test_noise_false_positives_no_longer_rejected():
+    """kr-001's two real renders (dense repeated-icon line art, not
+    corruption) must NOT trip the noise/static check at their measured
+    hf_ratio -- the false positive t-048 recalibrated NOISE_MIN_HF_RATIO to
+    fix. Uses real bw stats from the actual files (mean_saturation=0.0003,
+    white_fraction~0.50) so only the hf_ratio behavior is under test."""
+    for name, fx in NOISE_FALSE_POSITIVES.items():
+        assert fx["hf_ratio"] < aq.NOISE_MIN_HF_RATIO, (
+            f"{name} hf_ratio={fx['hf_ratio']} should sit below the "
+            f"recalibrated threshold {aq.NOISE_MIN_HF_RATIO}"
+        )
+        stats = _pinned_stats(0.0003, 0.0, 0.24, white_fraction=0.50)
+        ok, reasons = aq.assess(stats, "bw", hf_ratio=fx["hf_ratio"])
+        assert ok, f"{name} should pass the bw gate but was rejected: {reasons}"
+
+
+def test_noise_true_positives_still_rejected():
+    """Real mechanical-noise rejects (the t-039 Kontext-corruption class)
+    must still trip the noise/static check after the recalibration -- the
+    threshold moved up from 0.55 to 0.72, not away entirely."""
+    for name, fx in NOISE_TRUE_POSITIVES.items():
+        assert fx["hf_ratio"] >= aq.NOISE_MIN_HF_RATIO, (
+            f"{name} hf_ratio={fx['hf_ratio']} should sit at/above the "
+            f"recalibrated threshold {aq.NOISE_MIN_HF_RATIO}"
+        )
+        stats = _pinned_stats(0.0003, 0.0, 0.24, white_fraction=0.50)
+        ok, reasons = aq.assess(stats, "bw", hf_ratio=fx["hf_ratio"])
+        assert not ok, f"{name} should be REJECTED by the noise/static check"
+        assert any("noise" in r for r in reasons), (
+            f"{name} expected a noise/static rejection, got: {reasons}"
+        )
+
+
+@pytest.mark.parametrize("name,fx", list(NOISE_FALSE_POSITIVES.items()))
+def test_live_noise_false_positives_pass_the_bw_gate(name, fx):
+    """Same live cross-check as the other test_live_* cases: re-load the
+    real checked-in kr-001 files and confirm they now pass, with hf_ratio
+    still measuring where it was pinned (drift here would mean the file
+    changed, not just the threshold)."""
+    pytest.importorskip("PIL")
+    path = fx["path"]
+    if not path.exists():
+        pytest.skip(f"{path} not present in this checkout")
+    ok, reasons, info = aq.assess_file(path, "bw")
+    assert ok is True, f"{name} still rejected on the live bw gate: {reasons}"
+    assert info["hf_ratio"] == pytest.approx(fx["hf_ratio"], abs=0.01)
+
+
+@pytest.mark.parametrize("name,fx", list(NOISE_TRUE_POSITIVES.items()))
+def test_live_noise_true_positives_still_rejected(name, fx):
+    pytest.importorskip("PIL")
+    path = fx["path"]
+    if not path.exists():
+        pytest.skip(f"{path} not present in this checkout")
+    ok, reasons, info = aq.assess_file(path, "bw")
+    assert ok is False, f"{name} unexpectedly passes the live bw gate now: {info}"
+    assert any("noise" in r for r in reasons), (
+        f"{name} rejected for a different reason than expected: {reasons}"
+    )
+    assert info["hf_ratio"] == pytest.approx(fx["hf_ratio"], abs=0.01)
+
+
 @pytest.mark.parametrize("name,fx", list(APPROVED_BW_MASTERS.items()))
 def test_live_approved_bw_masters_match_frozen_fixture(name, fx):
     """When Pillow is installed, re-load the real checked-in file and confirm
@@ -281,33 +378,27 @@ def test_live_known_bad_examples_match_frozen_fixture(name, fx):
 # here is real production output, not synthetic.
 NOISE_CORPUS_ROOT = REPO_ROOT / "projects" / "coloring-book" / "sets"
 
-# Real, faithful line art that NOISE_MIN_HF_RATIO=0.55 false-positived on (busy,
-# detail-dense compositions -- dozens of small repeated elements across the frame --
-# measured hf_ratio 0.5732-0.5953). Visually confirmed clean, coherent line art by
-# inspection before filing t-054; must PASS the bw gate.
-NOISE_FALSE_POSITIVES = [
-    NOISE_CORPUS_ROOT / "kind-robots" / "generated" / "bw" / "rejected" / "mechanical"
-    / "kr-001-bw-20260927T031917Z.webp",
-    NOISE_CORPUS_ROOT / "kind-robots" / "generated" / "bw" / "rejected" / "mechanical"
-    / "kr-001-bw-20260927T093733Z.webp",
+# Supplementary real evidence found independently in the same cycle (t-022 cycle 80)
+# as t-048's own NOISE_FALSE_POSITIVES/NOISE_TRUE_POSITIVES above -- named distinctly
+# (_EXTRA suffix) to avoid shadowing those dict-shaped fixtures with these list-shaped
+# ones. mr-010 is a second, independent false-positive example (a completely different
+# composition style from kr-001 -- fine linework/large white areas rather than dense
+# scattered icons) that strengthens the case for the recalibration; mr-005/mr-011 are
+# additional true-positive corruption examples from the same real corpus.
+NOISE_FALSE_POSITIVES_EXTRA = [
     NOISE_CORPUS_ROOT / "monster-recast" / "generated" / "bw" / "rejected" / "mechanical"
     / "mr-010-bw-20260927T113010Z.webp",
 ]
 
-# Genuine spatially-uncorrelated noise/static (the original t-039 Kontext-corruption
-# defect) measured hf_ratio 0.8530-0.8756 across every real example in the corpus.
-# Must still FAIL the bw gate on the noise/static reason after the recalibration.
-NOISE_TRUE_POSITIVES = [
+NOISE_TRUE_POSITIVES_EXTRA = [
     NOISE_CORPUS_ROOT / "monster-recast" / "generated" / "bw" / "rejected" / "mechanical"
     / "mr-005-bw-20260915T070347Z.webp",
     NOISE_CORPUS_ROOT / "monster-recast" / "generated" / "bw" / "rejected" / "mechanical"
     / "mr-011-bw-20260915T070357Z.webp",
-    NOISE_CORPUS_ROOT / "monster-recast" / "generated" / "bw" / "rejected" / "mechanical"
-    / "mr-016-bw-20260927T105708Z.webp",
 ]
 
 
-@pytest.mark.parametrize("path", NOISE_FALSE_POSITIVES, ids=lambda p: p.name)
+@pytest.mark.parametrize("path", NOISE_FALSE_POSITIVES_EXTRA, ids=lambda p: p.name)
 def test_live_dense_detail_line_art_is_not_rejected_as_noise(path):
     pytest.importorskip("PIL")
     if not path.exists():
@@ -317,7 +408,7 @@ def test_live_dense_detail_line_art_is_not_rejected_as_noise(path):
     assert info["hf_ratio"] < aq.NOISE_MIN_HF_RATIO
 
 
-@pytest.mark.parametrize("path", NOISE_TRUE_POSITIVES, ids=lambda p: p.name)
+@pytest.mark.parametrize("path", NOISE_TRUE_POSITIVES_EXTRA, ids=lambda p: p.name)
 def test_live_genuine_noise_static_is_still_rejected(path):
     pytest.importorskip("PIL")
     if not path.exists():

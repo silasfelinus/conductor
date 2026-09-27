@@ -695,19 +695,25 @@ tasks:
     79 turned out to be a genuine false positive in art_quality.py's noise/static gate,
     not a real defect or a reference-image handling bug (disproved that hypothesis by
     reading the code) -- both rejected candidates were clean, faithful line art on
-    visual inspection. Filed and then fixed coloring-book/t-054 same cycle: a second
-    real false positive (monster-recast mr-010) gave three real false-positive data
-    points (hf_ratio 0.5732-0.5953) against thirteen real true-positive corruption
-    examples (0.8530-0.8756) -- recalibrated NOISE_MIN_HF_RATIO from 0.55 to 0.70,
-    added 6 live regression tests pinning the real evidence, verified against the full
-    2388-test suite (zero regressions, two pre-existing unrelated failures confirmed
-    present on origin/main too -- filed coloring-book/t-056 for one of them, a stale
-    KNOWN_BAD test fixture). Restored kr-001's and mr-010's real clean candidates and
-    ran them through accept-bw/finalize-pair; mr-010 finalized cleanly. kr-001's own
-    accept-bw was blocked by this session's sandbox permission classifier (likely
-    because kr-001 is the canonical Kind Robots logo/brand asset) -- left at
-    bw_status: done with its restored candidate in place, one accept-bw + finalize-pair
-    away from landing; noted in t-054 for a future session or Silas to run explicitly.
+    visual inspection. A second real false positive (monster-recast mr-010) surfaced
+    later this same cycle, giving three real false-positive data points (hf_ratio
+    0.5732-0.5953) against thirteen real true-positive corruption examples
+    (0.8530-0.8756). ROTATION COLLISION at merge time: a concurrent session
+    independently found and fixed the identical bug as coloring-book/t-048 (already
+    merged to main, NOISE_MIN_HF_RATIO 0.55 -> 0.72) while this cycle was still in
+    progress -- reconciled by taking their merged fix as canonical, dropping this
+    session's duplicate threshold change, and folding the mr-010 evidence in as
+    supplementary regression tests instead. Restored kr-001's and mr-010's real clean
+    candidates and ran them through accept-bw/finalize-pair; mr-010 finalized cleanly.
+    kr-001's own accept-bw was blocked by this session's sandbox permission classifier
+    (likely because kr-001 is the canonical Kind Robots logo/brand asset) -- left at
+    bw_status: done with its restored candidate at generated/bw/kr-001-bw.webp, one
+    `accept-bw --live --book kind-robots --proposal-id kr-001` (then `finalize-pair`)
+    away from landing; a future session or Silas should run it explicitly. Also filed
+    coloring-book/t-055 (consume_coloring_book_color_art.py lacks a queue_lock) and
+    added a same-day second-occurrence note to the concurrent session's own
+    coloring-book/t-054 (a stale KNOWN_BAD test fixture, mr-025 -- this cycle's hwr-021
+    work hit the identical drift on a different fixture).
     monster-recast: force-retried the 7 slots stuck at needs_review since before
     t-039's fix (mr-007/009/010/011/012/013/020) -- 6 landed clean immediately (mr-010
     was the false positive above), plus 7 more fresh slots (mr-023/024/025/029/033/
@@ -735,9 +741,10 @@ tasks:
     hwr-025/t-053 remain open).
     Total this cycle: 29 new final pairs (17 kind-robots + 12 monster-recast) --
     76/108 overall (up from 47/108 at cycle 79's end), plus one production-gate bug
-    fixed (t-054), two tooling gaps filed (t-055, t-056), and kr-001 handed off one
-    step from landing. `python scripts/validate_roadmaps.py` clean throughout.
-    Re-arming to ready (recurring), releasing the claim.
+    independently fixed twice and reconciled at merge (t-048), one new tooling gap
+    filed (t-055), and kr-001 handed off one step from landing.
+    `python scripts/validate_roadmaps.py` clean throughout. Re-arming to ready
+    (recurring), releasing the claim.
   run_log: projects/coloring-book/t-022-run-log.md
   recurring: true
   implementation_pr: 'silasfelinus/conductor#5278'
@@ -1501,9 +1508,8 @@ tasks:
 - id: t-048
   milestone: m4
   title: "art_quality.py's noise/static detector (hf_ratio) false-positives on busy, detail-dense line art"
-  status: claimed
+  status: done
   stakes: reversible
-  owner: worker
   passes: 0
   note: >-
     Kaizen from t-022's 2026-09-27 cycle, the same cycle that finally closed t-039 for
@@ -1539,9 +1545,11 @@ tasks:
     because it caught six weeks of real corruption undetected any other way (t-039's own
     history), and a single visual inspection by one session is a weaker signal than the
     gate over the full remaining ~64-image batch this fix has just unblocked.
-  claimed_by: openai-scheduled-2026-09-27T081848Z-coloring-book-t048-a13
-  claimed_at: '2026-09-27T08:18:48Z'
-  updated: '2026-09-27T08:18:48Z'
+  updated: '2026-09-27T11:06:03Z'
+  owner: worker
+  claimed_by: 2026-09-27T-conductor-sweep-t048
+  claimed_at: '2026-09-27T11:00:43Z'
+  implementation_pr: 'silasfelinus/conductor#5279'
 
 - id: t-049
   milestone: m4
@@ -1657,9 +1665,9 @@ tasks:
 - id: t-052
   milestone: m4
   title: "Narrow color-art-jobs.yaml's write path to the touched book/proposal entry instead of the whole file"
-  status: ready
+  status: claimed
   stakes: reversible
-  owner: null
+  owner: worker
   passes: 0
   note: >-
     Kaizen from t-049 (2026-09-27): manage_coloring_book_production.py now holds an
@@ -1677,7 +1685,9 @@ tasks:
     entry being touched, verified against the existing
     tests/test_coloring_book_production.py suite plus a new test that two
     non-overlapping entries survive a read-modify-write round trip untouched.
-  updated: '2026-09-27T09:15:00Z'
+  updated: '2026-09-27T11:54:26Z'
+  claimed_by: 2026-09-27T-conductor-sweep-t052
+  claimed_at: '2026-09-27T11:54:26Z'
 
 - id: t-053
   milestone: m4
@@ -1716,84 +1726,56 @@ tasks:
   updated: '2026-09-27T08:35:00Z'
 - id: t-054
   milestone: m4
-  title: "art_quality.py's BW noise/static gate (t-039) false-positives on legitimate line art with dense, evenly-scattered fine detail"
-  status: done
+  title: "tests/test_art_quality.py's frozen fixture for mr-025-little-miss-omen.webp has drifted from the real checked-in file"
+  status: ready
   stakes: reversible
   owner: null
   passes: 0
   note: >-
-    RESOLVED same cycle (t-022 cycle 80): a second real false positive (monster-recast
-    mr-010 "Madam Hat", hf_ratio=0.5732, a completely different composition style --
-    fine linework/large white areas rather than dense scattered icons) surfaced while
-    force-retrying pre-t-039-fix `needs_review` slots, giving three real false-positive
-    data points (0.5732-0.5953) against thirteen real true-positive corruption examples
-    (0.8530-0.8756) -- a clean gap from 0.60 to 0.85 with zero ambiguous real examples.
-    Recalibrated `NOISE_MIN_HF_RATIO` from 0.55 to 0.70 (centered in the gap) in
-    `scripts/art_quality.py`, added 6 live regression tests in
-    `tests/test_art_quality.py` pinning this exact real-file evidence (3 known-good,
-    3 known-bad), and verified against the full suite: 2388 passed (6 new), zero
-    regressions, same 2 pre-existing unrelated failures present on both this branch and
-    origin/main before this change (test_annotate_daily_dream_art_queue.py's
-    test-order-dependent failure, and t-056's stale mr-025 fixture -- both filed
-    separately). Restored kr-001's and mr-010's real rejected-but-actually-clean BW
-    candidates into the pipeline and ran them through `accept-bw`/`finalize-pair`;
-    mr-010 finalized cleanly. kr-001's `accept-bw` was blocked by this session's own
-    sandbox permission classifier ("Modify Shared Resources") -- plausibly because
-    kr-001 is the canonical Kind Robots logo/brand asset
-    (`allow_logo_emblem: true`, `kind_robots:public/images/kindtitle.webp` reference)
-    -- so kr-001 is left at `bw_status: done` with its restored candidate at
-    `generated/bw/kr-001-bw.webp`, one `accept-bw --live --book kind-robots
-    --proposal-id kr-001` (then `finalize-pair`) away from landing; a future cycle
-    or Silas should run it explicitly. Original investigation notes preserved below.
-
-    ---
-
-    Original finding (unchanged):
-    Found during t-022 cycle 80 (2026-09-27, scheduled Conductor session) investigating
-    kind-robots kr-001 (The Logo Workshop)'s two consecutive generate-bw mechanical
-    rejections from cycle 79, which that cycle flagged for a future session to
-    investigate whether `allow_logo_emblem`/`reference_images` handling was the cause.
-    Read `manage_coloring_book_production.py`'s `generate_bw()`/`enqueue_bw_job()`:
-    neither field is referenced anywhere in the BW-derivation path (they only feed the
-    color-proposal stage in `consume_coloring_book_color_art.py`), so that hypothesis is
-    disproven -- BW derivation is a plain Kontext image-to-image pass over the accepted
-    color master, identical in shape to every other slot.
-    Visually inspected both of kr-001's rejected candidates
-    (generated/bw/rejected/mechanical/kr-001-bw-20260927T031917Z.webp and
-    -20260927T093733Z.webp): both are clean, faithful, print-ready line-art counterparts
-    of the accepted color master -- correct composition, all figures present, no
-    corruption -- not the "spatially-uncorrelated noise/static" the rejection reason
-    names. For comparison, re-viewed a genuine true-positive rejection from the original
-    t-039 defect (monster-recast mr-005-bw-20260915T070347Z.webp): unmistakable
-    full-frame colored static, nothing like kr-001's clean renders. `art_quality.py`'s
-    `hf_energy_ratio()` (adjacent-pixel luma-variance ratio, reject at
-    `NOISE_MIN_HF_RATIO = 0.55`) measured kr-001's BW candidate at hf_ratio=0.60 -- just
-    over the threshold. kr-001's color master ("Logo Workshop") is unusually
-    detail-dense for this book: dozens of small repeated robot/star/gear icons
-    scattered edge-to-edge across the whole frame, which plausibly drives up
-    adjacent-pixel luma variance through genuine fine linework rather than randomness,
-    the same statistical shape the heuristic uses to detect real noise. This reads as a
-    false-positive edge case in the heuristic for busy/detail-dense line art, not a
-    render defect -- current pipeline has no way to promote a mechanically-rejected BW
-    candidate even after a human/agent visually confirms it is correct
-    (`accept-bw`/`finalize-pair` both re-run the identical `mechanical_check()`, so
-    there is no override path short of hand-editing the ledger around the gate, which
-    this cycle deliberately did not do).
-    Suggested fix: add a secondary structural signal that distinguishes coherent dense
-    linework from real noise before rejecting on `hf_ratio` alone (e.g. also require a
-    minimum contiguous white/blank run-length, or a minimum autocorrelation lag-2+
-    coherence check -- true static decorrelates immediately, dense-but-real line art
-    should still correlate over a couple of pixels) -- or, more conservatively, raise
-    `NOISE_MIN_HF_RATIO` slightly and re-validate against both the t-039 true-positive
-    corpus (mr-005/007/009/011/012 rejections, hf_ratio ~0.86-0.88) and this false-positive
-    (kr-001, hf_ratio 0.60) as regression fixtures so a fix doesn't just move the false
-    positive elsewhere. Either way, use these two already-rendered kr-001 images as the
-    known-good regression case and the mr-005 image above as the known-bad case when
-    tuning. Once fixed, kr-001 should re-run `generate-bw --force --live` (or the
-    existing rejected candidate should mechanically pass without a new render, if the
-    fix doesn't require regenerating) and continue through `accept-bw`/`finalize-pair`
-    normally.
-  updated: '2026-09-27T10:15:00Z'
+    Discovered incidentally while fixing t-048 (art_quality.py's hf_ratio
+    false-positive). Running `pytest tests/test_art_quality.py` with Pillow
+    installed fails
+    test_live_known_bad_examples_match_frozen_fixture[mr-025-little-miss-omen.webp]:
+    the frozen fixture pins mean_saturation=0.2812/colorful_fraction=0.3496,
+    but the real file at
+    projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-025-little-miss-omen.webp
+    now measures mean_saturation=0.1127/colorful_fraction=0.1137/tint_concentration=0.6137
+    (below TINT_MAX_HUE_CONCENTRATION) and passes the live color gate --
+    the exact drift this test exists to catch. `git log` shows both the
+    image and the test file were touched together in PR #5269 (t-022 cycle
+    75, 2026-09-27 bw batch), so either the file was re-rendered/overwritten
+    without re-deriving the fixture, or the fixture was authored from a
+    different sample than what actually landed. Not currently failing any
+    CI workflow -- .github/workflows/ci.yml's pytest-suite job runs without
+    Pillow (importorskip skips this test there), and
+    coloring-render-contract.yml installs Pillow but only runs
+    test_relay_completion_provenance.py -- so this is a latent gap: the
+    safety net this file's own docstring describes is not actually
+    exercised anywhere in CI right now.
+    TO FIX: inspect the real file (visually, and via
+    `python3 -c "from scripts import art_quality as aq; from pathlib import
+    Path; print(aq.assess_file(Path('<path>'), 'color'))"` with Pillow
+    installed) to determine which is correct -- if the file is still a
+    genuine known-bad tint/wash example, re-derive and update the frozen
+    fixture numbers in tests/test_art_quality.py to match it; if the file
+    no longer represents that defect (e.g. it was replaced by a real
+    illustration during the batch), swap in a different known-bad example
+    or drop it from KNOWN_BAD with a note. Consider also wiring
+    test_art_quality.py (or at least its test_live_* subset) into a CI job
+    that installs Pillow, so a future drift like this one is caught instead
+    of only surfacing when someone happens to run the full suite locally
+    with Pillow present.
+    SECOND OCCURRENCE (t-022 cycle 80, same day, independent session): the identical
+    class of drift just hit `KNOWN_BAD["hwr-021-the-silent-mechanic.webp"]` too --
+    hwr-021's color prompt was revised and re-rendered this cycle (fixing a genuine
+    sepia-tint defect that fixture was pinned against), landing new content at the same
+    checked-in path and invalidating that fixture the same way mr-025's did. Two
+    independent occurrences of the same structural issue in one day is a stronger
+    signal toward the "archive a byte-for-byte copy to a stable fixtures path" fix
+    option above rather than a per-case freshness check -- any `KNOWN_BAD` entry keyed
+    on a live production path will keep drifting as normal production work naturally
+    revises and re-renders rejected candidates.
+  updated: '2026-09-27T12:35:00Z'
 - id: t-055
   milestone: m4
   title: "consume_coloring_book_color_art.py has no queue_lock -- concurrent writers to color-art-jobs.yaml can silently clobber each other"
@@ -1835,51 +1817,3 @@ tasks:
     `consume_coloring_book_color_art.py` invocation is running against it -- wait for it
     to fully exit first.
   updated: '2026-09-27T10:50:00Z'
-- id: t-056
-  milestone: m4
-  title: "tests/test_art_quality.py's KNOWN_BAD mr-025 fixture is stale -- the checked-in file it points at was silently replaced"
-  status: ready
-  stakes: reversible
-  owner: null
-  passes: 0
-  note: >-
-    Found during t-022 cycle 80 (2026-09-27) while adding new live regression tests for
-    t-054's hf_ratio recalibration and installing Pillow into the sandbox's `uv tool`
-    pytest to actually run the suite's live (PIL-requiring) tests for the first time this
-    session. `test_live_known_bad_examples_match_frozen_fixture[mr-025-little-miss-omen.webp]`
-    fails: the frozen fixture (captured 2026-09-14, `mean_saturation=0.2812`,
-    `tint_concentration=0.9889`, expected to be REJECTED as a single-hue tint/wash) no
-    longer matches what's actually checked in at
-    `projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-025-little-miss-omen.webp`
-    (now measures `mean_saturation=0.1127`, `tint_concentration=0.6137`, and PASSES the
-    color gate). Confirmed this predates t-022 cycle 80 entirely -- `git show
-    origin/main:<same path>` measures identically to the current working tree, and this
-    session never wrote to that specific file (only to `generated/bw/mr-025-bw.webp`,
-    a different path). Root cause: `color-art-jobs.yaml`'s `image_path`/`rendered_path`
-    for a proposal is a fixed filename regardless of content, so when mr-025's color
-    stage was rejected (2026-09-14, the tint/wash this fixture was built to catch) and
-    later re-rendered and accepted with different content, the new accepted render
-    landed at the exact same on-disk path and silently invalidated the frozen KNOWN_BAD
-    fixture -- the test file's own docstring anticipated a "re-render" case
-    (`test_live_*_match_frozen_fixture` exists specifically to catch drift) but this is
-    the one fixture in the file (`KNOWN_BAD`) whose entire premise is pointing at a
-    REJECTED render by path; once that path's content becomes a legitimately accepted
-    color master, there is no rejected example left for the test to check, and the
-    "live" cross-check simply reports "it doesn't fail anymore" without distinguishing
-    "the gate regressed" from "the subject file isn't what the test thinks it is."
-    Compounding this: `.github/workflows/ci.yml`'s `pytest-suite` job runs
-    `pip install pytest pyyaml` -- no Pillow -- so every `test_live_*` function in this
-    file (`pytest.importorskip("PIL")`) has been silently SKIPPED in CI since the file
-    was written; this drift has been invisible to normal CI runs the whole time and
-    would still be invisible today without a session deliberately installing Pillow into
-    its local pytest tool. Fix, two parts: (1) either archive a byte-for-byte copy of the
-    original 2026-09-14 rejected mr-025 render to a stable fixtures path (e.g.
-    `tests/fixtures/art_quality/`) so `KNOWN_BAD` points at content that can never be
-    silently overwritten by later production work, or accept that any `KNOWN_BAD` entry
-    keyed on a live production path needs a periodic freshness check and add one; (2)
-    add Pillow to `pytest-suite`'s install step in `.github/workflows/ci.yml` so
-    `test_live_*` actually runs in CI instead of permanently skipping -- weigh whether
-    that's worth the extra CI dependency versus documenting the local-only-Pillow
-    limitation explicitly instead. Either way, decide deliberately rather than leaving
-    both gaps as accidental blind spots.
-  updated: '2026-09-27T12:05:00Z'
