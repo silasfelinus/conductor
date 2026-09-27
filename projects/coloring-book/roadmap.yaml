@@ -1444,7 +1444,7 @@ tasks:
 - id: t-048
   milestone: m4
   title: "art_quality.py's noise/static detector (hf_ratio) false-positives on busy, detail-dense line art"
-  status: review
+  status: done
   stakes: reversible
   passes: 0
   note: >-
@@ -1481,10 +1481,11 @@ tasks:
     because it caught six weeks of real corruption undetected any other way (t-039's own
     history), and a single visual inspection by one session is a weaker signal than the
     gate over the full remaining ~64-image batch this fix has just unblocked.
-  updated: '2026-09-27T11:01:52Z'
+  updated: '2026-09-27T11:06:03Z'
   owner: worker
   claimed_by: 2026-09-27T-conductor-sweep-t048
   claimed_at: '2026-09-27T11:00:43Z'
+  implementation_pr: 'silasfelinus/conductor#5279'
 
 - id: t-049
   milestone: m4
