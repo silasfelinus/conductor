@@ -309,12 +309,61 @@ tasks:
       PITCHES.yamls zoetrope-lantern-drum promotion (pitched -> candidate with its build
       entry) committed alongside this roadmap update, same conductor session. Re-armed to
       ready per this tasks recurring-task convention -- t-007 never reaches done.
-    status: claimed
-    updated: '2026-09-27T07:50:59Z'
-    implementation_pr: 'silasfelinus/kind_robots#3049'
-    owner: worker
-    claimed_by: claude-scheduled-20260927T0740Z-am-t007
-    claimed_at: '2026-09-27T07:50:59Z'
+
+      Cycle (conductor scheduled Agent run, session claude-scheduled-20260927T0740Z-am-t007):
+      built the next highest-priority unbuilt pitch, soap-film-membrane (priority 26, top of
+      the pitched queue) -- all seventeen candidate-tier pitches remain awaiting
+      Reaction-evidence promotion, and this sandbox still has no live DB to read Reaction data
+      (SPEC.md standing sandbox-access-gap). Implemented components/screenfx/soap-film-membrane.vue:
+      a fixed 24x16 thickness grid drains downward and diffuses each frame, mapped through a
+      compact thin-film-interference color approximation (stacked periodic hue terms) for a
+      continuously drifting rainbow swirl. Once a region thins past a threshold (or a ~42s time
+      cap elapses with no natural trigger), a radial tear expands and clears the film in ~620ms,
+      pauses ~550ms, then reseeds with fresh randomized thickness/hue so no two cycles repeat.
+      Pointer proximity locally thins the film but is floored above the rupture threshold so it
+      can never trigger a rupture on its own; a click forces one rate-limited rupture at the
+      pointer's position. Reduced motion renders one static representative gradient with only a
+      slow hue-cycle breathing pulse. Grid resolution and tear-front timing are fixed regardless
+      of viewport size or session length, per the pitch's performance_risk note. Registered in
+      stores/animationCatalog.ts via utils/scripts/registerAnimationEffect.mjs (icon
+      kind-icon:bubbles, color #8fd6e8, fullscreen). Verified: full-project vue-tsc --noEmit
+      clean (after fixing several noUncheckedIndexedAccess Float32Array-read errors caught on
+      first run), eslint clean, prettier clean on both changed files, test:animation-catalog
+      (55 effects, 68 screenfx components resolved) and test:animation-component-attempts both
+      pass, test:layout-contract holds with zero new violations, test:lint-ratchet and
+      test:prettier-ratchet both hold, check_animation_novelty.py --strict reports no collision
+      across all 32 pitches. Manual browser smoke matrix deferred per the standing
+      sandbox-access-gap tag, same as every prior build in this project. kind_robots PR #3062
+      opened from claude/laughing-pascal-0dmz2p (this session's harness-designated branch,
+      reused per convention); merged squash 1289952575f594fbd709551ca9d61f8df1d61f40, all 29
+      checks green (Contract verifiers, TypeScript, layout-contract, facet-catalog, and 25
+      others). PITCHES.yaml's soap-film-membrane promoted straight to status: shipped (not the
+      usual pitched -> candidate resting state) per SPEC.md's standing sandbox-verification-gap
+      exception -- the component is registered and reachable in the catalog and the code
+      satisfies the non-negotiable experience contract, so this build's own record carries the
+      deferred sandbox-access-gap tag directly rather than parking at candidate awaiting a
+      promotion this sandbox cannot evidence anyway.
+
+      Separately noticed while reviewing PITCHES.yaml this cycle: several earlier
+      already-shipped-in-practice builds (koi-memory-pond, impossible-terrarium, ink-oracle,
+      celestial-mobile, tiny-weather-front, ant-farm-excavation, strandbeest-migration,
+      shadow-puppet-theater, kintsugi-weather, tapestry-loom, hourglass-cascade, geode-bloom,
+      candlelit-reliquary, frost-window-etching, harmonograph-sand-table, cairn-balancing,
+      zoetrope-lantern-drum -- 17 total) are registered and reachable in kind_robots'
+      animationCatalog.ts but still carry status: candidate in PITCHES.yaml, apparently because
+      no session has applied SPEC.md's sandbox-verification-gap promotion path to them
+      retroactively. Not fixed in this cycle (out of this task's scope -- a batch status-only
+      bookkeeping pass across 17 pitches deserves its own reviewed diff, not a rider on today's
+      new build); filed as animation-manager/t-023 for a future cycle. daily_last_checked
+      and daily_last_completed both advanced to 2026-09-27 (Pacific) -- a new effect shipped and
+      is registered/tryable today. Re-armed to ready per this task's recurring-task convention
+      -- t-007 never reaches done.
+    status: ready
+    updated: '2026-09-27T08:05:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3062'
+    owner: null
+    daily_last_checked: '2026-09-27'
+    daily_last_completed: '2026-09-27'
 
   - id: t-008
     milestone: m3
@@ -595,3 +644,33 @@ tasks:
     claimed_by: openai-scheduled-2026-09-23T201650Z-animation-manager-t022-a11
     claimed_at: '2026-09-23T20:16:50Z'
     updated: '2026-09-23T20:16:50Z'
+
+  - id: t-023
+    milestone: m5
+    title: "Reconcile PITCHES.yaml status for already-shipped-in-practice builds still marked candidate"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Found while closing out t-007's 2026-09-27 soap-film-membrane cycle: 17 pitches
+      (koi-memory-pond, impossible-terrarium, ink-oracle, celestial-mobile,
+      tiny-weather-front, ant-farm-excavation, strandbeest-migration,
+      shadow-puppet-theater, kintsugi-weather, tapestry-loom, hourglass-cascade,
+      geode-bloom, candlelit-reliquary, frost-window-etching, harmonograph-sand-table,
+      cairn-balancing, zoetrope-lantern-drum) each have exactly one build entry, are
+      registered in kind_robots' stores/animationCatalog.ts, and are therefore reachable
+      through their intended surfaces per SPEC.md's own definition of "shipped" -- but
+      PITCHES.yaml still marks every one of them status: candidate with a build-level
+      status: candidate, not shipped. This looks identical to a gap a prior t-007 cycle
+      already fixed once for geode-bloom alone (2026-09-21, see t-007's own note history)
+      before geode-bloom picked up a second, genuinely-candidate build later -- i.e. this
+      has recurred at least once and is probably systemic rather than a one-off. For each
+      pitch: confirm the component file
+      still exists and is still registered in animationCatalog.ts (grep, not assumption),
+      then apply SPEC.md's standing sandbox-verification-gap promotion (status: shipped,
+      build status: shipped, deferred: sandbox-access-gap) exactly as this cycle did for
+      soap-film-membrane. Do not promote any pitch whose component or catalog registration
+      no longer checks out live -- report those separately instead. This is a
+      status-field-only change (no code, no new builds); keep the diff to PITCHES.yaml.
+

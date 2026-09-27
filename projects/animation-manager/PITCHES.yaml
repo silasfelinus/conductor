@@ -1302,7 +1302,7 @@ pitches:
           - facet-catalog
   - id: soap-film-membrane
     title: Soap-Film Membrane
-    status: pitched
+    status: shipped
     priority: 26
     surprise: >
       A translucent rectangular soap-film membrane hangs stretched across a wire loop,
@@ -1368,6 +1368,20 @@ pitches:
       - the rupture tear expands smoothly across the full loop and clears it completely before the reseed begins, never leaving a partially-torn film stuck mid-cycle
       - pointer-driven local thinning and click-triggered ruptures never block underlying page input, and the forced rupture is rate-limited
       - thickness-grid resolution and tear-front growth rate stay fixed regardless of viewport size or how many rupture cycles have run this session
+    builds:
+      - version: 1
+        status: shipped
+        component: components/screenfx/soap-film-membrane.vue
+        pull_request: 'silasfelinus/kind_robots#3062'
+        released_at: '2026-09-27T07:44:17Z'
+        commit: 1289952575f594fbd709551ca9d61f8df1d61f40
+        verification:
+          - Contract verifiers
+          - TypeScript
+          - layout-contract
+          - facet-catalog
+        deferred:
+          - 'sandbox-access-gap (see SPEC.md "Sandbox verification gap")'
   - id: kaleidoscope-bloom
     title: Kaleidoscope Bloom
     status: pitched
