@@ -169,12 +169,9 @@ books:
     prompt_fingerprint: f5031ee17543338505b06e5c96e5a1f7730d1eba9c5a1812e945f5f5835902d1
     approved_at: '2026-09-07T22:41:39Z'
     lock_seed: true
-    bw_status: running
+    bw_status: done
     bw_requested_at: '2026-09-27T04:54:42Z'
-    bw_render_reasons:
-    - spatially-uncorrelated noise/static — no discernible image structure (hf_ratio=0.86); this can pass the saturation/white-fraction
-      checks for either variant while being pure garbage (coloring-book/t-039)
-    - not black-and-white line art — came back colored/shaded (mean_saturation=0.18, colorful_fraction=0.35, white_fraction=0.00)
+    bw_render_reasons: []
     bw_revision_history:
     - requested_at: '2026-09-27T04:54:41Z'
       previous_status: needs_review
@@ -183,6 +180,18 @@ books:
       semantic_score: null
       archived_path: null
     bw_job_id: 31606
+    bw_art_image_id: 240125
+    bw_rendered_path: generated/bw/mr-005-bw.webp
+    bw_mechanical_info:
+      pixels: 16960
+      mean_saturation: 0.0008
+      colorful_fraction: 0.0004
+      white_fraction: 0.7255
+      luma_std: 0.2888
+      size: 1024x1536
+      hf_ratio: 0.2138
+      tint_concentration: null
+    bw_completed_at: '2026-09-27T04:58:29Z'
   - slot: 6
     id: mr-006
     slug: screwhead
@@ -1091,6 +1100,26 @@ books:
     prompt_fingerprint: 3bbad292d2139b589d57edf1e2efb517624f6a362886afebf8f1c0d0b5a894c8
     approved_at: '2026-09-11T00:32:13Z'
     lock_seed: true
+    bw_job_id: 31607
+    bw_status: approved
+    bw_requested_at: '2026-09-27T05:00:36Z'
+    bw_art_image_id: 240126
+    bw_rendered_path: generated/bw/hwr-004-bw.webp
+    bw_mechanical_info:
+      pixels: 16960
+      mean_saturation: 0.0006
+      colorful_fraction: 0.0
+      white_fraction: 0.7181
+      luma_std: 0.1284
+      size: 1024x1536
+      hf_ratio: 0.408
+      tint_concentration: null
+    bw_render_reasons: []
+    bw_completed_at: '2026-09-27T05:03:45Z'
+    bw_approved_at: '2026-09-27T05:03:57Z'
+    pair_status: final
+    pair_semantic_score: null
+    pair_finalized_at: '2026-09-27T05:04:02Z'
   - slot: 5
     id: hwr-005
     slug: midnight-detective
