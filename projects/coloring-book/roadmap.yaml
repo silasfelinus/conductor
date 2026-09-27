@@ -1555,3 +1555,27 @@ tasks:
     batch (t-022 continues on other hollywood-recast/kind-robots slots in the
     meantime, soft_gate: true).
   updated: '2026-09-27T07:15:00Z'
+- id: t-052
+  milestone: m4
+  title: "Narrow color-art-jobs.yaml's write path to the touched book/proposal entry instead of the whole file"
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: >-
+    Kaizen from t-049 (2026-09-27): manage_coloring_book_production.py now holds an
+    exclusive flock on color-art-jobs.yaml.lock for the whole live run, which fixes
+    the concurrent-invocation data-loss bug (two processes racing on different
+    proposal ids silently reverting each other's writes) by serializing runs against
+    the file. That closes the correctness gap cheaply, but load_yaml/write_yaml still
+    read and rewrite the *entire* queue file on every call within run_operation
+    (accept_color, generate_bw, accept_bw, finalize_pair each call write_yaml(QUEUE_FILE,
+    queue) with the full in-memory dict). This was option (b) in t-049's original note
+    and was deliberately not implemented there in favor of the smaller lockfile fix.
+    Worth revisiting if color-art-jobs.yaml keeps growing (it already covers three
+    books) and whole-file dump/reload becomes a real latency or diff-noise cost:
+    change the write path to re-read-modify-write only the specific book/proposal
+    entry being touched, verified against the existing
+    tests/test_coloring_book_production.py suite plus a new test that two
+    non-overlapping entries survive a read-modify-write round trip untouched.
+  updated: '2026-09-27T09:15:00Z'
