@@ -429,12 +429,12 @@ tasks:
   - id: t-020
     milestone: m2
     title: "Add multi-select editorial tags and gallery filtering"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-003, t-004, t-005]
-    note: >
+    note: >-
       Add a controlled multi-select tag taxonomy for Politics, Pop Culture,
       Humanitarian, Science & Medicine, Education, Environment, Civil Rights &
       Justice, Peace & Diplomacy, Community & Mutual Aid, Arts & Culture,
@@ -444,9 +444,19 @@ tasks:
       or endorsements. Keep country/region as separate structured metadata and
       living/memorial as record state. Editors may extend the controlled set
       when repeated real cases do not fit, but avoid arbitrary one-off tags.
+
+      Merged silasfelinus/kind_robots#3063: tag badges on Living/Memorial gallery cards and
+      the person detail sheet, plus a chip-based multi-select tag filter (AND semantics) above
+      the gallery. TzaddikCandidateTag/TzaddikEditorialTag and the API's Tags payload already
+      existed; this PR is the first UI consumer. Scoped to Living/Memorial only -- no
+      review/admin surface exists yet (pending tzaddik-gallery/t-006), so 'review surfaces'
+      filtering from the task description is deferred until that surface is built. Verified
+      via vue-tsc --noEmit, eslint, and prettier --check on the changed files (all clean); no
+      live DB/browser path was available in this sandbox. CI green (30/30 checks) before
+      merge.
     claimed_by: 2026-09-27T195400Z-tzaddik-t020-tags
     claimed_at: '2026-09-27T19:56:54Z'
-    updated: '2026-09-27T20:06:41Z'
+    updated: '2026-09-27T20:12:31Z'
     implementation_pr: 'silasfelinus/kind_robots#3063'
 
   - id: t-021
@@ -499,4 +509,28 @@ tasks:
     claimed_by: claude-2026-09-27T00-00-00-tzaddik-t022
     claimed_at: '2026-09-27T05:55:07Z'
     updated: '2026-09-27T06:06:57Z'
+
+  - id: t-023
+    milestone: m2
+    title: "Extend the editorial-tag filter to the review/submission surface once it exists"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-006
+    note: >-
+      Kaizen from t-020 (silasfelinus/kind_robots#3063): t-020 built tag badges (gallery
+      cards + person detail sheet) and a chip-based multi-select tag filter, but only for
+      the Living/Memorial tabs -- no review/admin/moderation surface exists yet in the
+      codebase for a submitted-but-not-yet-approved candidate, so the "review surfaces"
+      half of t-020's own description could not be built. Once t-006 (authenticated
+      candidate submission workflow) lands and a review surface exists, wire the same
+      filter chips (reuse utils/tzaddikTags.ts's TZADDIK_TAG_ORDER/labels) into it. Also
+      confirm with Silas at that point whether the filter's AND semantics (must match
+      every selected tag) is the intended UX, or whether OR (match any selected tag) reads
+      better once there's a larger, more filterable pending-review queue -- t-020 picked
+      AND without an explicit human decision either way.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-09-27T20:00:00Z'
 
