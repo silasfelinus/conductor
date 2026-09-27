@@ -1135,16 +1135,36 @@ books:
     id: mr-028
     slug: backward-boy
     title: Backward Boy
-    status: done
+    status: pending
     seed: 840028
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-028-backward-boy.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-028
-    rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-028-backward-boy.webp
-    art_image_id: 17051
-    render_seed: 1998420470
-    render_engine: krea2
-    completed_at: '2026-08-09T08:32:42Z'
-    prompt_fingerprint: 5fccc95ecb64c17443b2a2cf645d2157d1e566fc5db37c080ecfa3f50ea1d33a
+    studio_revision_history:
+    - requested_at: '2026-09-27T18:00:04Z'
+      previous_status: done
+      art_image_id: 17051
+      rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-028-backward-boy.webp
+      semantic_score: null
+      prompt_fingerprint: 5fccc95ecb64c17443b2a2cf645d2157d1e566fc5db37c080ecfa3f50ea1d33a
+      archived_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/revisions/mr-028-backward-boy-20260927T180004Z.webp
+    studio_revision_requested_at: '2026-09-27T18:00:04Z'
+    render_failures:
+    - attempt: 1
+      seed: 1299181458
+      engine: krea2
+      art_image_id: 240230
+      prompt_fingerprint: 491317e645e7a9ac762649ff1260209afae7619dacf333b285e6dcd29bdace3b
+      gate: mechanical
+      reasons: &id003
+      - single-hue tint/wash — near-neutral pixels share a consistent hue (concentration=0.98, reject at >= 0.9),
+        the signature of a duotone/sepia filter rather than the house style's flat cel-shaded multi-color palette
+        (coloring-book/t-045)
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/render/rejected/mr-028-backward-boy-attempt-1-seed-1299181458.webp
+      checked_at: '2026-09-27T18:03:30Z'
+    render_attempts: 1
+    last_rejected_art_image_id: 240230
+    last_render_seed: 1299181458
+    last_render_reasons: *id003
   - slot: 29
     id: mr-029
     slug: madame-close-shave
@@ -2224,14 +2244,14 @@ books:
       art_image_id: null
       prompt_fingerprint: 10548edccb5a24a45f6bf3f869fbb10b7a4cd6e55e1103121f54ff0af8ea1f1f
       gate: mechanical
-      reasons: &id003
+      reasons: &id004
       - single-hue tint/wash — near-neutral pixels share a consistent hue (concentration=0.95, reject at >= 0.9),
         the signature of a duotone/sepia filter rather than the house style's flat cel-shaded multi-color palette
         (coloring-book/t-045)
       rejected_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/rejected/render/rejected/hwr-021-the-silent-mechanic-attempt-1-seed-0.webp
       checked_at: '2026-09-27T11:57:23Z'
     render_attempts: 1
-    last_render_reasons: *id003
+    last_render_reasons: *id004
     studio_revision_history:
     - requested_at: '2026-09-27T14:00:07Z'
       previous_status: done
