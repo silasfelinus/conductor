@@ -1663,9 +1663,9 @@ tasks:
 - id: t-054
   milestone: m4
   title: "tests/test_art_quality.py's frozen fixture for mr-025-little-miss-omen.webp has drifted from the real checked-in file"
-  status: ready
+  status: claimed
   stakes: reversible
-  owner: null
+  owner: worker
   passes: 0
   note: >-
     Discovered incidentally while fixing t-048 (art_quality.py's hf_ratio
@@ -1701,4 +1701,6 @@ tasks:
     that installs Pillow, so a future drift like this one is caught instead
     of only surfacing when someone happens to run the full suite locally
     with Pillow present.
-  updated: '2026-09-27T11:15:00Z'
+  updated: '2026-09-27T12:15:43Z'
+  claimed_by: 2026-09-27T-conductor-sweep-t054
+  claimed_at: '2026-09-27T12:15:43Z'
