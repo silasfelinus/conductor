@@ -169,26 +169,29 @@ books:
     prompt_fingerprint: f5031ee17543338505b06e5c96e5a1f7730d1eba9c5a1812e945f5f5835902d1
     approved_at: '2026-09-07T22:41:39Z'
     lock_seed: true
-    bw_job_id: 21643
-    bw_status: needs_review
-    bw_requested_at: '2026-09-07T22:39:07Z'
-    bw_art_image_id: 23745
+    bw_status: done
+    bw_requested_at: '2026-09-27T04:54:42Z'
+    bw_render_reasons: []
+    bw_revision_history:
+    - requested_at: '2026-09-27T04:54:41Z'
+      previous_status: needs_review
+      art_image_id: 23745
+      rendered_path: null
+      semantic_score: null
+      archived_path: null
+    bw_job_id: 31606
+    bw_art_image_id: 240125
     bw_rendered_path: generated/bw/mr-005-bw.webp
-    bw_rejected_path: projects/coloring-book/sets/monster-recast/generated/bw/rejected/mechanical/mr-005-bw-20260915T070347Z.webp
     bw_mechanical_info:
       pixels: 16960
-      mean_saturation: 0.1765
-      colorful_fraction: 0.353
-      white_fraction: 0.0
-      luma_std: 0.0823
+      mean_saturation: 0.0008
+      colorful_fraction: 0.0004
+      white_fraction: 0.7255
+      luma_std: 0.2888
       size: 1024x1536
-      hf_ratio: 0.8633
-      tint_concentration: 0.2246
-    bw_render_reasons:
-    - spatially-uncorrelated noise/static — no discernible image structure (hf_ratio=0.86); this can pass the saturation/white-fraction
-      checks for either variant while being pure garbage (coloring-book/t-039)
-    - not black-and-white line art — came back colored/shaded (mean_saturation=0.18, colorful_fraction=0.35, white_fraction=0.00)
-    bw_completed_at: '2026-09-15T07:03:47Z'
+      hf_ratio: 0.2138
+      tint_concentration: null
+    bw_completed_at: '2026-09-27T04:58:29Z'
   - slot: 6
     id: mr-006
     slug: screwhead
@@ -1097,6 +1100,26 @@ books:
     prompt_fingerprint: 3bbad292d2139b589d57edf1e2efb517624f6a362886afebf8f1c0d0b5a894c8
     approved_at: '2026-09-11T00:32:13Z'
     lock_seed: true
+    bw_job_id: 31607
+    bw_status: approved
+    bw_requested_at: '2026-09-27T05:00:36Z'
+    bw_art_image_id: 240126
+    bw_rendered_path: generated/bw/hwr-004-bw.webp
+    bw_mechanical_info:
+      pixels: 16960
+      mean_saturation: 0.0006
+      colorful_fraction: 0.0
+      white_fraction: 0.7181
+      luma_std: 0.1284
+      size: 1024x1536
+      hf_ratio: 0.408
+      tint_concentration: null
+    bw_render_reasons: []
+    bw_completed_at: '2026-09-27T05:03:45Z'
+    bw_approved_at: '2026-09-27T05:03:57Z'
+    pair_status: final
+    pair_semantic_score: null
+    pair_finalized_at: '2026-09-27T05:04:02Z'
   - slot: 5
     id: hwr-005
     slug: midnight-detective
@@ -1129,6 +1152,26 @@ books:
     prompt_fingerprint: a357241ebfaef6bb6fa0a2ec349d16ffd28b7339a589cad4bba176f4d513b298
     approved_at: '2026-09-15T00:15:09Z'
     lock_seed: true
+    bw_job_id: 31608
+    bw_status: approved
+    bw_requested_at: '2026-09-27T05:04:18Z'
+    bw_art_image_id: 240127
+    bw_rendered_path: generated/bw/hwr-005-bw.webp
+    bw_mechanical_info:
+      pixels: 16960
+      mean_saturation: 0.0006
+      colorful_fraction: 0.0
+      white_fraction: 0.8451
+      luma_std: 0.073
+      size: 1024x1536
+      hf_ratio: 0.4413
+      tint_concentration: null
+    bw_render_reasons: []
+    bw_completed_at: '2026-09-27T05:07:26Z'
+    bw_approved_at: '2026-09-27T05:07:36Z'
+    pair_status: final
+    pair_semantic_score: null
+    pair_finalized_at: '2026-09-27T05:07:41Z'
   - slot: 6
     id: hwr-006
     slug: temple-of-the-sun-engine
@@ -1145,6 +1188,26 @@ books:
     prompt_fingerprint: f415a35108c4656e86cbfb29f020624c2da0697a50245afdf05db00199ea055c
     approved_at: '2026-09-11T00:32:13Z'
     lock_seed: true
+    bw_job_id: 31609
+    bw_status: approved
+    bw_requested_at: '2026-09-27T05:08:00Z'
+    bw_art_image_id: 240128
+    bw_rendered_path: generated/bw/hwr-006-bw.webp
+    bw_mechanical_info:
+      pixels: 16960
+      mean_saturation: 0.0004
+      colorful_fraction: 0.0
+      white_fraction: 0.6465
+      luma_std: 0.0746
+      size: 1024x1536
+      hf_ratio: 0.4765
+      tint_concentration: null
+    bw_render_reasons: []
+    bw_completed_at: '2026-09-27T05:11:10Z'
+    bw_approved_at: '2026-09-27T05:11:22Z'
+    pair_status: final
+    pair_semantic_score: null
+    pair_finalized_at: '2026-09-27T05:11:28Z'
   - slot: 7
     id: hwr-007
     slug: the-silver-swashbuckler
@@ -1161,12 +1224,32 @@ books:
     prompt_fingerprint: 47bf045f21f991efbe36ffa353850f93849545a30e482b2c82503414e816ab82
     approved_at: '2026-09-11T00:32:13Z'
     lock_seed: true
+    bw_job_id: 31610
+    bw_status: approved
+    bw_requested_at: '2026-09-27T05:12:00Z'
+    bw_art_image_id: 240129
+    bw_rendered_path: generated/bw/hwr-007-bw.webp
+    bw_mechanical_info:
+      pixels: 16960
+      mean_saturation: 0.0005
+      colorful_fraction: 0.0
+      white_fraction: 0.7804
+      luma_std: 0.0895
+      size: 1024x1536
+      hf_ratio: 0.3261
+      tint_concentration: null
+    bw_render_reasons: []
+    bw_completed_at: '2026-09-27T05:15:21Z'
+    bw_approved_at: '2026-09-27T05:15:33Z'
+    pair_status: final
+    pair_semantic_score: null
+    pair_finalized_at: '2026-09-27T05:15:38Z'
   - slot: 8
     id: hwr-008
     slug: laboratory-tenor
     title: Laboratory Tenor
-    status: done
-    seed: 850008
+    status: approved
+    seed: 1964838167
     source_ref: projects/coloring-book/sets/hollywood-recast/proposals.yaml#hwr-008
     image_path: projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-008-laboratory-tenor.webp
     studio_revision_history:
@@ -1205,6 +1288,28 @@ books:
     render_engine: krea2
     completed_at: '2026-09-21T14:03:59Z'
     prompt_fingerprint: 8f120ccac0e99fd3590ed0143e97e0b7ef11458a38bea2d99d417281a4b8a86d
+    approved_at: '2026-09-27T05:16:10Z'
+    lock_seed: true
+    bw_job_id: 31611
+    bw_status: approved
+    bw_requested_at: '2026-09-27T05:16:23Z'
+    bw_art_image_id: 240130
+    bw_rendered_path: generated/bw/hwr-008-bw.webp
+    bw_mechanical_info:
+      pixels: 16960
+      mean_saturation: 0.0004
+      colorful_fraction: 0.0
+      white_fraction: 0.8775
+      luma_std: 0.0448
+      size: 1024x1536
+      hf_ratio: 0.484
+      tint_concentration: null
+    bw_render_reasons: []
+    bw_completed_at: '2026-09-27T05:19:30Z'
+    bw_approved_at: '2026-09-27T05:19:43Z'
+    pair_status: final
+    pair_semantic_score: null
+    pair_finalized_at: '2026-09-27T05:19:43Z'
   - slot: 9
     id: hwr-009
     slug: ballroom-double-take
