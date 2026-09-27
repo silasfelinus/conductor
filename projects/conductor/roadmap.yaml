@@ -3860,9 +3860,16 @@ tasks:
     via conductor/t-182. As a secondary, non-blocking follow-up once this is acknowledged:
     harden `scripts/kr_token_set.sh`'s docstring to call out the no-argument
     `export`/`env`/`set` shape alongside the two patterns it already documents.
+
+    2026-09-27 update: this same token was exposed again, by a fourth distinct unsafe shape
+    (a Python getattr(module, 'SECRET_NAME', default) diagnostic, not a shell construct)
+    while investigating conductor/t-198. Full write-up in root TALKBACK.md's 2026-09-27
+    security-flag entry. No new action needed beyond what this task already asks for --
+    rotate the token and harden kr_token_set.sh's guidance to cover the Python-level unsafe
+    shape too.
   claimed_by: null
   claimed_at: null
-  updated: '2026-09-21T18:00:00Z'
+  updated: '2026-09-27T11:20:32Z'
 
 - id: t-190
   milestone: m2
