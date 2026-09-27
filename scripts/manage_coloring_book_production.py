@@ -14,7 +14,9 @@ from __future__ import annotations
 
 import argparse
 import base64
+import contextlib
 import datetime
+import fcntl
 import io
 import json
 import os
@@ -35,6 +37,7 @@ ROOT = Path(__file__).resolve().parents[1]
 COLORING_ROOT = ROOT / "projects" / "coloring-book"
 SETS_DIR = COLORING_ROOT / "sets"
 QUEUE_FILE = COLORING_ROOT / "color-art-jobs.yaml"
+QUEUE_LOCK_FILE = COLORING_ROOT / "color-art-jobs.yaml.lock"
 BOOKS = ("monster-recast", "hollywood-recast", "kind-robots")
 OPERATIONS = ("accept-color", "generate-bw", "accept-bw", "finalize-pair")
 PAIR_MIN_SCORE = int(os.environ.get("BW_PAIR_MIN_SEMANTIC_SCORE", "80"))
@@ -74,6 +77,45 @@ def write_yaml(path: Path, data: dict[str, Any]) -> None:
         yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=110),
         encoding="utf-8",
     )
+
+
+@contextlib.contextmanager
+def queue_lock():
+    """Hold an exclusive lock on QUEUE_LOCK_FILE for the whole live run.
+
+    QUEUE_FILE is loaded once into memory and written back (whole-snapshot)
+    at several points during a single operation. Two invocations racing
+    against different proposal ids in the same book set (or across books --
+    QUEUE_FILE is shared) will otherwise silently overwrite each other's
+    already-persisted changes with no error (coloring-book/t-049). This
+    refuses to proceed rather than blocking/retrying, since callers are
+    short-lived one-shot CLI invocations that can simply be re-run.
+    """
+    QUEUE_LOCK_FILE.parent.mkdir(parents=True, exist_ok=True)
+    # "a" (not "w"): opening must never truncate a lockfile another process
+    # may currently hold, since that happens before the flock() call below
+    # can tell us whether we actually won the lock.
+    handle = open(QUEUE_LOCK_FILE, "a", encoding="utf-8")
+    try:
+        try:
+            fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except OSError as error:
+            raise RuntimeError(
+                f"{QUEUE_LOCK_FILE.name} is already held by another "
+                "manage_coloring_book_production.py invocation -- refusing to run "
+                "concurrently against the same queue file. Wait for it to finish "
+                "(or investigate a stuck process) and retry."
+            ) from error
+        handle.seek(0)
+        handle.truncate()
+        handle.write(f"pid={os.getpid()} started={now_iso()}\n")
+        handle.flush()
+        yield
+    finally:
+        try:
+            fcntl.flock(handle, fcntl.LOCK_UN)
+        finally:
+            handle.close()
 
 
 def ledger_path(book_slug: str) -> Path:
@@ -541,31 +583,32 @@ def run_operation(
     if not live:
         return 0
 
-    queue = load_yaml(QUEUE_FILE)
-    ledger = load_yaml(ledger_path(book_slug))
-    failures = 0
-    for proposal_id in proposal_ids:
-        try:
-            if operation == "accept-color":
-                accept_color(book_slug, proposal_id, queue, ledger)
-            elif operation == "generate-bw":
-                generate_bw(
-                    book_slug,
-                    proposal_id,
-                    queue,
-                    ledger,
-                    timeout=timeout,
-                    force=force,
-                )
-            elif operation == "accept-bw":
-                accept_bw(book_slug, proposal_id, queue, ledger)
-            else:
-                finalize_pair(book_slug, proposal_id, queue, ledger)
-            print(f"  DONE {operation} {book_slug}/{proposal_id}")
-        except Exception as error:  # noqa: BLE001
-            failures += 1
-            print(f"  FAILED {operation} {book_slug}/{proposal_id}: {error}", file=sys.stderr)
-    return 1 if failures else 0
+    with queue_lock():
+        queue = load_yaml(QUEUE_FILE)
+        ledger = load_yaml(ledger_path(book_slug))
+        failures = 0
+        for proposal_id in proposal_ids:
+            try:
+                if operation == "accept-color":
+                    accept_color(book_slug, proposal_id, queue, ledger)
+                elif operation == "generate-bw":
+                    generate_bw(
+                        book_slug,
+                        proposal_id,
+                        queue,
+                        ledger,
+                        timeout=timeout,
+                        force=force,
+                    )
+                elif operation == "accept-bw":
+                    accept_bw(book_slug, proposal_id, queue, ledger)
+                else:
+                    finalize_pair(book_slug, proposal_id, queue, ledger)
+                print(f"  DONE {operation} {book_slug}/{proposal_id}")
+            except Exception as error:  # noqa: BLE001
+                failures += 1
+                print(f"  FAILED {operation} {book_slug}/{proposal_id}: {error}", file=sys.stderr)
+        return 1 if failures else 0
 
 
 def main() -> int:
