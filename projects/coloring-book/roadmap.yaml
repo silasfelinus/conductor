@@ -499,14 +499,62 @@ tasks:
     three books still need a BW counterpart, minus the 2 now finalized this cycle) is
     unblocked and ready for the next worker_pass_size-scoped batch. Re-arming to ready
     (recurring), releasing the claim.
+
+    Cycle 75 (2026-09-27T03:57Z, scheduled Conductor Agent run): scaled the now-unblocked
+    BW-derivation path. First, reconciled a cycle-74 bookkeeping gap: hwr-001's
+    color-art-jobs.yaml entry was stuck at bw_status: running (job 31598) despite the
+    render having completed DONE and already been accepted/finalized in proposals.yaml --
+    the prior session's generate-bw invocation apparently didn't complete its own write
+    path back to done/approved. Verified job 31598 was DONE with artImageId 240117 via
+    GET /api/art/queue/31598, re-ran the local mechanical gate against the already-landed
+    file (installed Pillow in this sandbox, which lacked it), confirmed it passes clean
+    (hf_ratio=0.46, mean_saturation=0.0007), and patched the entry's bw_status/
+    bw_mechanical_info/pair_status fields to match reality rather than leaving stale
+    "running" metadata for a completed, already-finalized pair.
+
+    Then ran 6 fresh generate-bw -> accept-bw -> finalize-pair cycles, two per book:
+    monster-recast mr-002 (ArtImage 240119) and mr-003 (240122), hollywood-recast hwr-002
+    (240120) and hwr-003 (240123), kind-robots kr-002 (240121) and kr-003 (240124). All six
+    landed clean on the first attempt (no mechanical rejections), and all six were visually
+    inspected directly before accept-bw -- confirmed as genuine, well-formed black-and-white
+    line art matching each accepted color master's composition, not noise. kr-002/kr-003 in
+    particular were checked carefully against the t-048 false-positive pattern (dense
+    repeated small elements can trip the hf_ratio detector) and both passed mechanically
+    with headroom, so no manual gate bypass was needed for either.
+
+    KAIZEN CAUGHT LIVE: started two generate-bw invocations concurrently (mr-002 and
+    hwr-002) to save wall-clock time, since each render takes several minutes and the
+    books are independent. This is unsafe -- manage_coloring_book_production.py loads
+    the entire color-art-jobs.yaml once per process invocation and holds it in memory,
+    so two concurrent processes each hold a stale snapshot of the other's changes; the
+    slower process's later write silently reverts the faster process's already-written
+    "done" state back to whatever it looked like at that process's own start. Observed
+    directly: mr-002 finished first and reached bw_status: done, then hwr-002 finished
+    later and its write reverted mr-002 back to bw_status: running (losing the done/
+    accept/finalize progress, though the rendered file itself was untouched on disk and
+    the ArtImage/job already existed server-side, so nothing was unrecoverable). Recovered
+    by re-running generate-bw for mr-002 alone (idempotent -- enqueue_bw_job detects the
+    existing DONE job by id and skips re-submission) once hwr-002's process had exited, then
+    re-ran accept-bw/finalize-pair for it. All batches after this were run strictly
+    sequentially (one full generate-bw -> accept-bw -> finalize-pair cycle finishes before
+    the next starts) with no further loss. Filed as coloring-book/t-049 (kaizen): either
+    make manage_coloring_book_production.py single-instance-safe (a lockfile, or re-read-
+    before-write on the specific entry rather than the whole loaded snapshot) or document
+    prominently in its own docstring that concurrent invocations against the same book
+    file must never run in parallel.
+
+    Remaining scope: 61 approved color masters across the three books (9-2=7 monster-
+    recast, 21-2=19 hollywood-recast, 27-2=25 kind-robots, plus kr-001 stuck pending
+    t-048's detector fix) still need a BW counterpart. Re-arming to ready (recurring),
+    releasing the claim.
   run_log: projects/coloring-book/t-022-run-log.md
   recurring: true
   implementation_pr: 'silasfelinus/conductor#4482'
-  status: claimed
-  updated: '2026-09-27T03:57:16Z'
-  owner: worker
-  claimed_by: 20260927T035715Z-coloring-book-t022-cycle75
-  claimed_at: '2026-09-27T03:57:16Z'
+  status: ready
+  updated: '2026-09-27T04:20:00Z'
+  owner: null
+  claimed_by: null
+  claimed_at: null
 - id: t-025
   milestone: m6
   title: Package and register Monster Recast book 1
@@ -1302,3 +1350,36 @@ tasks:
   claimed_by: openai-scheduled-2026-09-27T041702Z-coloring-book-t048-a11
   claimed_at: '2026-09-27T04:17:02Z'
   updated: '2026-09-27T04:17:02Z'
+
+- id: t-049
+  milestone: m4
+  title: "manage_coloring_book_production.py's generate-bw is unsafe to run concurrently across proposal ids in the same book set"
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: >-
+    Kaizen from t-022's 2026-09-27 cycle 75. The script loads the whole
+    color-art-jobs.yaml once per process invocation into an in-memory dict and writes
+    that same in-memory snapshot back to disk at several points during a single
+    generate-bw/accept-bw/finalize-pair run. Running two invocations concurrently
+    against different proposal ids in the same book (observed: monster-recast mr-002
+    and hollywood-recast hwr-002, started a few seconds apart) is unsafe: the slower
+    process's later write is based on a snapshot taken before the faster process's
+    changes existed, so it silently overwrites the faster process's already-persisted
+    bw_status: done (and any accept-bw/finalize-pair fields already applied) back to
+    an earlier state, with no error or warning. Reproduced live this cycle -- mr-002's
+    finalized state was reverted to bw_status: running by hwr-002's later write, and
+    had to be manually recovered by re-running generate-bw (idempotent given an
+    existing DONE job id) once the concurrent process had exited. No data was
+    permanently lost only because the rendered file and server-side ArtJob/ArtImage
+    survived independently of the YAML bookkeeping -- a less careful recovery could
+    have re-submitted a duplicate render job instead.
+    TO FIX: either (a) add a simple lockfile (e.g. color-art-jobs.yaml.lock) that the
+    script acquires for its whole runtime and refuses to proceed if already held, or
+    (b) change the write path to re-read-modify-write only the specific book/proposal
+    entry being touched rather than the whole loaded snapshot, or (c) at minimum, add
+    a prominent docstring/README warning that concurrent invocations against the same
+    book must never run in parallel, so a future session doesn't rediscover this by
+    losing bookkeeping again. (a) is the smallest, safest fix given how this script is
+    actually invoked (short-lived one-shot CLI calls, not a long-running service).
