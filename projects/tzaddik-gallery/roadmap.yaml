@@ -394,7 +394,7 @@ tasks:
   - id: t-017
     milestone: m2
     title: "Build the lg/xl single-page gallery and person-review shell"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -404,14 +404,22 @@ tasks:
 
 
       Replaced the narrow filler-style gallery shell with the scoped lg/xl composed workspace and person-review layout on worker/tzaddik-gallery-t-017-20260927T215700Z-a7f3; mobile remains stacked and scrollable. Opening the implementation PR for CI verification.
+
+      Merged silasfelinus/kind_robots#3067 (squash dda94d7) after CI green (TypeScript,
+      layout-contract, verify, GitGuardian, all Storybook/narrative contracts) and a diff
+      audit of the 2 changed files (tzaddik-detail-sheet.vue, tzaddik-gallery.vue page) for
+      scope/safety -- no admin/moderation controls added (correctly deferred to t-008), no
+      v-html/eval/secret patterns, splash art deliberately deferred to t-018 per PR body.
+      Reviewed by conductor sweep session.
     claimed_by: 2026-09-27T215700Z-tzaddik-t017-a7f3
     claimed_at: '2026-09-27T21:57:00Z'
-    updated: '2026-09-27T22:05:00Z'
+    updated: '2026-09-27T22:50:43Z'
+    implementation_pr: 'silasfelinus/kind_robots#3067'
 
   - id: t-018
     milestone: m4
     title: "Create and integrate the Tzaddik Gallery splash/background art"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -553,3 +561,22 @@ tasks:
     claimed_at: null
     updated: '2026-09-27T20:00:00Z'
 
+
+  - id: t-024
+    milestone: m2
+    title: "Surface editor-only moderation actions in the t-017 composed detail rail instead of a separate admin page"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-008
+    note: >-
+      Kaizen from t-017 (silasfelinus/kind_robots#3067): the new composed lg/xl
+      person-review shell places the existing reaction/recheck/discussion controls
+      but deliberately does not invent nonfunctional approve/reject/defer buttons
+      ahead of t-008. Once t-008 lands moderation/override actions, let the detail
+      rail surface editor-only approve/archive/override controls in the same
+      composed panel rather than introducing a separate admin page.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-09-27T22:49:00Z'
