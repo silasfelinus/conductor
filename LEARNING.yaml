@@ -16684,3 +16684,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A brand-new project's data model (t-003) existing with zero curated rows means the correct first pass on the next UI task is the plumbing (API + store + gallery wiring) verified via typecheck/contract tests, not a claim that the feature has been seen working against real data -- say which of those two you actually verified rather than blurring them. Also: reuse the shared kr-gallery shell directly from the page rather than adding a wrapper *-gallery.vue component when the page itself already carries the tab logic -- verifyRouteGalleryContract.ts's Rule 2 only requires the route's own mounted subtree to render kr-gallery, not a dedicated component file."
+- date: 2026-09-27
+  project: tzaddik-gallery
+  task: t-021
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Adding a new reaction target to kind_robots is two separable steps, not one: (1) the enum value + Reaction.<target>Id column/FK/migration + getExpectedTargetField's total-Record entry, which can land now mapped to null, and (2) utils/karmaRefTypes.ts's KARMA_REF_TYPES/KARMA_REF_TARGET_COLUMNS entry, which verifyEarnedKarmaWiring.ts and verifyReactionTargetCoverage.ts correctly refuse until the target column is actually access-checked end to end (they require every listed ref type to already be fully wired, on purpose, per the FACET/PROJECT/CHALLENGE_SUBMISSION incidents those scripts cite). Landing (1) alone and leaving (2) for the task that actually builds the access rule is the documented pattern (COMPONENT is the precedent) -- do not add to karmaRefTypes.ts just because the enum value exists."
