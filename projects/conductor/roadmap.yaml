@@ -3829,7 +3829,7 @@ tasks:
 - id: t-189
   milestone: m2
   title: 'FOR SILAS: KR_API_TOKEN exposed again in a session transcript -- rotate it, and harden kr_token_set.sh against a fourth unsafe shell shape'
-  status: needs-human
+  status: done
   owner: null
   passes: 0
   stakes: reversible
@@ -3879,9 +3879,23 @@ tasks:
     KR_RELAY_TOKEN + KR_API_TOKEN with pm2 --update-env + pm2 save, and sets the GitHub
     secret via gh), then update the claude.ai cloud environment's KR_API_TOKEN variable.
     Close with approved_by_human: true + status: done once Silas says it is rotated.
+
+    2026-09-27 CLOSED (Silas-verified): rotated with ops/home-server/Rotate-KrToken.ps1. New
+    value is user 1's apiKey; Silas confirmed it via meta.describe (HTTP 200, source=user-
+    api-key). The KindRobots container on Alexandria has no ADMIN_TOKEN/BETA_ADMIN_TOKEN
+    set, so the env-token path is disabled, and the old value cannot authenticate by any
+    path. GitHub secret, render-box KR_API_TOKEN/KR_RELAY_TOKEN (pm2 --update-env + save),
+    and the cloud environment were updated; this session's refreshed env value
+    authenticates. Leak-prevention follow-up shipped in conductor#5308 (value-based output
+    redaction) and #5311 (dual-credential handling in the script). Follow-ups for Silas, not
+    blocking: set ARCHIVE_MEDIA_SECRET in the KindRobots Unraid template (without it, signed
+    archive-media keys are random per process), and note that appdata/kind_robots/.env is
+    read by scripts, not by the container.
   claimed_by: null
   claimed_at: null
-  updated: '2026-09-27T21:30:00Z'
+  updated: '2026-09-27T21:51:14Z'
+  approved_by_human: true
+  implementation_pr: 'silasfelinus/conductor#5311'
 
 - id: t-190
   milestone: m2
