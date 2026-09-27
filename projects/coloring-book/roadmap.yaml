@@ -1751,3 +1751,51 @@ tasks:
     `consume_coloring_book_color_art.py` invocation is running against it -- wait for it
     to fully exit first.
   updated: '2026-09-27T10:50:00Z'
+- id: t-056
+  milestone: m4
+  title: "tests/test_art_quality.py's KNOWN_BAD mr-025 fixture is stale -- the checked-in file it points at was silently replaced"
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: >-
+    Found during t-022 cycle 80 (2026-09-27) while adding new live regression tests for
+    t-054's hf_ratio recalibration and installing Pillow into the sandbox's `uv tool`
+    pytest to actually run the suite's live (PIL-requiring) tests for the first time this
+    session. `test_live_known_bad_examples_match_frozen_fixture[mr-025-little-miss-omen.webp]`
+    fails: the frozen fixture (captured 2026-09-14, `mean_saturation=0.2812`,
+    `tint_concentration=0.9889`, expected to be REJECTED as a single-hue tint/wash) no
+    longer matches what's actually checked in at
+    `projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-025-little-miss-omen.webp`
+    (now measures `mean_saturation=0.1127`, `tint_concentration=0.6137`, and PASSES the
+    color gate). Confirmed this predates t-022 cycle 80 entirely -- `git show
+    origin/main:<same path>` measures identically to the current working tree, and this
+    session never wrote to that specific file (only to `generated/bw/mr-025-bw.webp`,
+    a different path). Root cause: `color-art-jobs.yaml`'s `image_path`/`rendered_path`
+    for a proposal is a fixed filename regardless of content, so when mr-025's color
+    stage was rejected (2026-09-14, the tint/wash this fixture was built to catch) and
+    later re-rendered and accepted with different content, the new accepted render
+    landed at the exact same on-disk path and silently invalidated the frozen KNOWN_BAD
+    fixture -- the test file's own docstring anticipated a "re-render" case
+    (`test_live_*_match_frozen_fixture` exists specifically to catch drift) but this is
+    the one fixture in the file (`KNOWN_BAD`) whose entire premise is pointing at a
+    REJECTED render by path; once that path's content becomes a legitimately accepted
+    color master, there is no rejected example left for the test to check, and the
+    "live" cross-check simply reports "it doesn't fail anymore" without distinguishing
+    "the gate regressed" from "the subject file isn't what the test thinks it is."
+    Compounding this: `.github/workflows/ci.yml`'s `pytest-suite` job runs
+    `pip install pytest pyyaml` -- no Pillow -- so every `test_live_*` function in this
+    file (`pytest.importorskip("PIL")`) has been silently SKIPPED in CI since the file
+    was written; this drift has been invisible to normal CI runs the whole time and
+    would still be invisible today without a session deliberately installing Pillow into
+    its local pytest tool. Fix, two parts: (1) either archive a byte-for-byte copy of the
+    original 2026-09-14 rejected mr-025 render to a stable fixtures path (e.g.
+    `tests/fixtures/art_quality/`) so `KNOWN_BAD` points at content that can never be
+    silently overwritten by later production work, or accept that any `KNOWN_BAD` entry
+    keyed on a live production path needs a periodic freshness check and add one; (2)
+    add Pillow to `pytest-suite`'s install step in `.github/workflows/ci.yml` so
+    `test_live_*` actually runs in CI instead of permanently skipping -- weigh whether
+    that's worth the extra CI dependency versus documenting the local-only-Pillow
+    limitation explicitly instead. Either way, decide deliberately rather than leaving
+    both gaps as accidental blind spots.
+  updated: '2026-09-27T12:05:00Z'

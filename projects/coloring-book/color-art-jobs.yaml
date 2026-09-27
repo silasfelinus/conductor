@@ -391,12 +391,9 @@ books:
     prompt_fingerprint: cc8679a96a3bff315c20d2379e536c7359723bf09eed601286ba580c02b8363f
     approved_at: '2026-09-14T14:37:57Z'
     lock_seed: true
-    bw_status: running
+    bw_status: approved
     bw_requested_at: '2026-09-27T11:26:57Z'
-    bw_render_reasons:
-    - spatially-uncorrelated noise/static — no discernible image structure (hf_ratio=0.86); this can pass the saturation/white-fraction
-      checks for either variant while being pure garbage (coloring-book/t-039)
-    - not black-and-white line art — came back colored/shaded (mean_saturation=0.17, colorful_fraction=0.33, white_fraction=0.00)
+    bw_render_reasons: []
     bw_revision_history:
     - requested_at: '2026-09-27T11:26:56Z'
       previous_status: needs_review
@@ -405,6 +402,19 @@ books:
       semantic_score: null
       archived_path: null
     bw_job_id: 31672
+    bw_art_image_id: 240191
+    bw_rendered_path: generated/bw/mr-010-bw.webp
+    bw_mechanical_info:
+      pixels: 16960
+      mean_saturation: 0.0005
+      colorful_fraction: 0.0
+      white_fraction: 0.8745
+      luma_std: 0.0519
+      size: 1024x1536
+      hf_ratio: 0.5732
+      tint_concentration: null
+    bw_completed_at: '2026-09-27T11:30:10Z'
+    bw_approved_at: '2026-09-27T11:51:43Z'
   - slot: 11
     id: mr-011
     slug: alien-king
@@ -422,26 +432,29 @@ books:
     prompt_fingerprint: 3e7d512149b84d3a387384218f0fd8d2e78b323732ee12e8db80b2ba3a22f792
     approved_at: '2026-09-07T23:33:41Z'
     lock_seed: true
-    bw_job_id: 21646
-    bw_status: needs_review
-    bw_requested_at: '2026-09-07T23:35:06Z'
-    bw_art_image_id: 23748
+    bw_status: done
+    bw_requested_at: '2026-09-27T11:30:11Z'
+    bw_render_reasons: []
+    bw_revision_history:
+    - requested_at: '2026-09-27T11:30:10Z'
+      previous_status: needs_review
+      art_image_id: 23748
+      rendered_path: null
+      semantic_score: null
+      archived_path: null
+    bw_job_id: 31673
+    bw_art_image_id: 240192
     bw_rendered_path: generated/bw/mr-011-bw.webp
-    bw_rejected_path: projects/coloring-book/sets/monster-recast/generated/bw/rejected/mechanical/mr-011-bw-20260915T070357Z.webp
     bw_mechanical_info:
       pixels: 16960
-      mean_saturation: 0.1748
-      colorful_fraction: 0.3466
-      white_fraction: 0.0
-      luma_std: 0.0825
+      mean_saturation: 0.0003
+      colorful_fraction: 0.0
+      white_fraction: 0.7435
+      luma_std: 0.0719
       size: 1024x1536
-      hf_ratio: 0.8751
-      tint_concentration: 0.2021
-    bw_render_reasons:
-    - spatially-uncorrelated noise/static — no discernible image structure (hf_ratio=0.88); this can pass the saturation/white-fraction
-      checks for either variant while being pure garbage (coloring-book/t-039)
-    - not black-and-white line art — came back colored/shaded (mean_saturation=0.17, colorful_fraction=0.35, white_fraction=0.00)
-    bw_completed_at: '2026-09-15T07:03:57Z'
+      hf_ratio: 0.4092
+      tint_concentration: null
+    bw_completed_at: '2026-09-27T11:33:21Z'
   - slot: 12
     id: mr-012
     slug: hush-dummy
@@ -459,26 +472,29 @@ books:
     prompt_fingerprint: 67077411beaaf6fdd7d8307d23db63aa62306023379dae7794cbe66894134d51
     approved_at: '2026-09-07T23:33:41Z'
     lock_seed: true
-    bw_job_id: 21647
-    bw_status: needs_review
-    bw_requested_at: '2026-09-07T23:35:46Z'
-    bw_art_image_id: 23749
+    bw_status: done
+    bw_requested_at: '2026-09-27T11:33:22Z'
+    bw_render_reasons: []
+    bw_revision_history:
+    - requested_at: '2026-09-27T11:33:21Z'
+      previous_status: needs_review
+      art_image_id: 23749
+      rendered_path: null
+      semantic_score: null
+      archived_path: null
+    bw_job_id: 31674
+    bw_art_image_id: 240193
     bw_rendered_path: generated/bw/mr-012-bw.webp
-    bw_rejected_path: projects/coloring-book/sets/monster-recast/generated/bw/rejected/mechanical/mr-012-bw-20260915T070401Z.webp
     bw_mechanical_info:
       pixels: 16960
-      mean_saturation: 0.1735
-      colorful_fraction: 0.3426
-      white_fraction: 0.0
-      luma_std: 0.082
+      mean_saturation: 0.0006
+      colorful_fraction: 0.0
+      white_fraction: 0.8189
+      luma_std: 0.0758
       size: 1024x1536
-      hf_ratio: 0.8726
-      tint_concentration: 0.2029
-    bw_render_reasons:
-    - spatially-uncorrelated noise/static — no discernible image structure (hf_ratio=0.87); this can pass the saturation/white-fraction
-      checks for either variant while being pure garbage (coloring-book/t-039)
-    - not black-and-white line art — came back colored/shaded (mean_saturation=0.17, colorful_fraction=0.34, white_fraction=0.00)
-    bw_completed_at: '2026-09-15T07:04:01Z'
+      hf_ratio: 0.4094
+      tint_concentration: null
+    bw_completed_at: '2026-09-27T11:36:31Z'
   - slot: 13
     id: mr-013
     slug: ansel-bell
@@ -502,26 +518,29 @@ books:
     render_engine: krea2
     completed_at: '2026-09-14T10:48:58Z'
     prompt_fingerprint: 28e681623a3e382d6d679161a88ccee08a3b3348200f9fc1f515ed4412270b11
-    bw_job_id: 22682
-    bw_status: needs_review
-    bw_requested_at: '2026-09-15T06:51:22Z'
-    bw_art_image_id: 24459
+    bw_status: done
+    bw_requested_at: '2026-09-27T11:36:32Z'
+    bw_render_reasons: []
+    bw_revision_history:
+    - requested_at: '2026-09-27T11:36:31Z'
+      previous_status: needs_review
+      art_image_id: 24459
+      rendered_path: null
+      semantic_score: null
+      archived_path: null
+    bw_job_id: 31675
+    bw_art_image_id: 240194
     bw_rendered_path: generated/bw/mr-013-bw.webp
-    bw_rejected_path: projects/coloring-book/sets/monster-recast/generated/bw/rejected/mechanical/mr-013-bw-20260915T073402Z.webp
     bw_mechanical_info:
       pixels: 16960
-      mean_saturation: 0.171
-      colorful_fraction: 0.3354
-      white_fraction: 0.0
-      luma_std: 0.0832
+      mean_saturation: 0.0004
+      colorful_fraction: 0.0
+      white_fraction: 0.7259
+      luma_std: 0.1213
       size: 1024x1536
-      hf_ratio: 0.8686
-      tint_concentration: 0.2295
-    bw_render_reasons:
-    - spatially-uncorrelated noise/static — no discernible image structure (hf_ratio=0.87); this can pass the saturation/white-fraction
-      checks for either variant while being pure garbage (coloring-book/t-039)
-    - not black-and-white line art — came back colored/shaded (mean_saturation=0.17, colorful_fraction=0.34, white_fraction=0.00)
-    bw_completed_at: '2026-09-15T07:34:02Z'
+      hf_ratio: 0.4631
+      tint_concentration: null
+    bw_completed_at: '2026-09-27T11:39:52Z'
   - slot: 14
     id: mr-014
     slug: bathtub-shave
@@ -669,22 +688,29 @@ books:
     prompt_fingerprint: 132db7a87f0fa1dc00031e01bdaaec19898c709dc7571ac3d5ddf94be212dd60
     approved_at: '2026-09-09T06:33:37Z'
     lock_seed: true
-    bw_job_id: 21668
-    bw_status: needs_review
-    bw_requested_at: '2026-09-09T06:36:47Z'
-    bw_art_image_id: 23761
+    bw_status: done
+    bw_requested_at: '2026-09-27T11:39:53Z'
+    bw_render_reasons: []
+    bw_revision_history:
+    - requested_at: '2026-09-27T11:39:52Z'
+      previous_status: needs_review
+      art_image_id: 23761
+      rendered_path: null
+      semantic_score: null
+      archived_path: projects/coloring-book/sets/monster-recast/generated/bw/revisions/studio/mr-020-bw-20260927T113952Z.webp
+    bw_job_id: 31676
+    bw_art_image_id: 240195
     bw_rendered_path: generated/bw/mr-020-bw.webp
-    bw_rejected_path: projects/coloring-book/sets/monster-recast/generated/bw/rejected/mechanical/mr-020-bw-20260911T003019Z.webp
     bw_mechanical_info:
       pixels: 16960
-      mean_saturation: 0.1747
-      colorful_fraction: 0.3469
-      white_fraction: 0.0
-      luma_std: 0.0824
+      mean_saturation: 0.001
+      colorful_fraction: 0.0
+      white_fraction: 0.6172
+      luma_std: 0.2114
       size: 1024x1536
-    bw_render_reasons:
-    - not black-and-white line art — came back colored/shaded (mean_saturation=0.17, colorful_fraction=0.35, white_fraction=0.00)
-    bw_completed_at: '2026-09-11T00:30:19Z'
+      hf_ratio: 0.4258
+      tint_concentration: null
+    bw_completed_at: '2026-09-27T11:43:04Z'
   - slot: 21
     id: mr-021
     slug: invisible-flasher
@@ -2445,11 +2471,9 @@ books:
     prompt_fingerprint: 2b2cedba8d64d2fec2b105895d3e0fc6956ba6de94ab9e4ace3a17c3e927e6c4
     approved_at: '2026-09-11T08:36:08Z'
     lock_seed: true
-    bw_status: needs_review
+    bw_status: done
     bw_requested_at: '2026-09-27T09:34:24Z'
-    bw_render_reasons:
-    - spatially-uncorrelated noise/static — no discernible image structure (hf_ratio=0.60); this can pass the saturation/white-fraction
-      checks for either variant while being pure garbage (coloring-book/t-039)
+    bw_render_reasons: []
     bw_revision_history:
     - requested_at: '2026-09-27T09:34:23Z'
       previous_status: needs_review
@@ -2460,7 +2484,7 @@ books:
     bw_job_id: 31645
     bw_art_image_id: 240164
     bw_rendered_path: generated/bw/kr-001-bw.webp
-    bw_rejected_path: projects/coloring-book/sets/kind-robots/generated/bw/rejected/mechanical/kr-001-bw-20260927T093733Z.webp
+    bw_completed_at: '2026-09-27T09:37:33Z'
     bw_mechanical_info:
       pixels: 16960
       mean_saturation: 0.0002
@@ -2470,7 +2494,6 @@ books:
       size: 1024x1536
       hf_ratio: 0.5953
       tint_concentration: null
-    bw_completed_at: '2026-09-27T09:37:33Z'
   - slot: 2
     id: kr-002
     slug: ami-over-the-redwoods

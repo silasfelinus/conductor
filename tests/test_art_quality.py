@@ -271,3 +271,60 @@ def test_live_known_bad_examples_match_frozen_fixture(name, fx):
     )
     assert info["mean_saturation"] == pytest.approx(fx["mean_saturation"], abs=0.01)
     assert info["tint_concentration"] == pytest.approx(fx["tint_concentration"], abs=0.01)
+
+
+# NOISE_MIN_HF_RATIO regression corpus (coloring-book/t-054, 2026-09-27). hf_ratio
+# depends on real per-pixel spatial arrangement, not just aggregate stats, so unlike
+# the fixtures above it cannot be reconstructed with `_pinned_stats()` -- these are
+# live-only (skipped without Pillow) tests against the real rejected-candidate files
+# already checked into the repo under */generated/*/rejected/mechanical/. Every file
+# here is real production output, not synthetic.
+NOISE_CORPUS_ROOT = REPO_ROOT / "projects" / "coloring-book" / "sets"
+
+# Real, faithful line art that NOISE_MIN_HF_RATIO=0.55 false-positived on (busy,
+# detail-dense compositions -- dozens of small repeated elements across the frame --
+# measured hf_ratio 0.5732-0.5953). Visually confirmed clean, coherent line art by
+# inspection before filing t-054; must PASS the bw gate.
+NOISE_FALSE_POSITIVES = [
+    NOISE_CORPUS_ROOT / "kind-robots" / "generated" / "bw" / "rejected" / "mechanical"
+    / "kr-001-bw-20260927T031917Z.webp",
+    NOISE_CORPUS_ROOT / "kind-robots" / "generated" / "bw" / "rejected" / "mechanical"
+    / "kr-001-bw-20260927T093733Z.webp",
+    NOISE_CORPUS_ROOT / "monster-recast" / "generated" / "bw" / "rejected" / "mechanical"
+    / "mr-010-bw-20260927T113010Z.webp",
+]
+
+# Genuine spatially-uncorrelated noise/static (the original t-039 Kontext-corruption
+# defect) measured hf_ratio 0.8530-0.8756 across every real example in the corpus.
+# Must still FAIL the bw gate on the noise/static reason after the recalibration.
+NOISE_TRUE_POSITIVES = [
+    NOISE_CORPUS_ROOT / "monster-recast" / "generated" / "bw" / "rejected" / "mechanical"
+    / "mr-005-bw-20260915T070347Z.webp",
+    NOISE_CORPUS_ROOT / "monster-recast" / "generated" / "bw" / "rejected" / "mechanical"
+    / "mr-011-bw-20260915T070357Z.webp",
+    NOISE_CORPUS_ROOT / "monster-recast" / "generated" / "bw" / "rejected" / "mechanical"
+    / "mr-016-bw-20260927T105708Z.webp",
+]
+
+
+@pytest.mark.parametrize("path", NOISE_FALSE_POSITIVES, ids=lambda p: p.name)
+def test_live_dense_detail_line_art_is_not_rejected_as_noise(path):
+    pytest.importorskip("PIL")
+    if not path.exists():
+        pytest.skip(f"{path} not present in this checkout")
+    ok, reasons, info = aq.assess_file(path, "bw")
+    assert ok is True, f"{path.name} should pass the bw gate now: {reasons} ({info})"
+    assert info["hf_ratio"] < aq.NOISE_MIN_HF_RATIO
+
+
+@pytest.mark.parametrize("path", NOISE_TRUE_POSITIVES, ids=lambda p: p.name)
+def test_live_genuine_noise_static_is_still_rejected(path):
+    pytest.importorskip("PIL")
+    if not path.exists():
+        pytest.skip(f"{path} not present in this checkout")
+    ok, reasons, info = aq.assess_file(path, "bw")
+    assert ok is False, f"{path.name} unexpectedly passes the bw gate now: {info}"
+    assert any("noise/static" in r for r in reasons), (
+        f"{path.name} rejected for a different reason than expected: {reasons}"
+    )
+    assert info["hf_ratio"] >= aq.NOISE_MIN_HF_RATIO
