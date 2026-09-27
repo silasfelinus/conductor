@@ -859,14 +859,75 @@ tasks:
     Next cycle: continue monster-recast's never-attempted slots (mr-019 onward),
     investigate mr-group-001's status shape, and revisit kr-005/007/011/014/025 and
     hwr-021 with the literal prompt rewrites already recorded on each proposal's notes.
+
+    Cycle 84 (2026-09-27T14:59-15:20Z, scheduled Conductor Agent run): render box UP
+    (check_render_box.py: media.acrocatranch.com answered, Comfy heartbeat healthy,
+    59 renders completed in last 6h). Continued right after cycle 83, working
+    monster-recast's two remaining accepted-color+accepted-BW-but-not-finalized slots
+    (mr-007, mr-013). Local Pillow was missing again (same recurring sandbox gap as
+    cycles 75/76/81/82) -- reinstalled it, then hit a real, unexpected mechanical gate
+    on both: finalize-pair's "single-hue tint/wash" check (coloring-book/t-045) rejected
+    both at concentration 0.94/0.93 against the 0.90 threshold. Visually inspected both
+    accepted color masters directly rather than trusting the score: mr-007 (Pound
+    Foolish, a rainbow-costumed circus clown in a doorway) is clearly a rich, multi-hue
+    cel-shaded illustration -- pixel analysis confirms colorful_fraction 0.55 spread
+    across four distinct strong hue bins (red/orange/green/blue) -- yet still trips the
+    guard, which looks like a genuine false-positive/calibration gap: the check only
+    measures the *low*-saturation band's hue consistency and never cross-checks whether
+    the image's saturated/colorful band is itself multi-hued, so a piece with consistent
+    warm ambient lighting across its neutral background can trip it even though the
+    foreground is genuinely multi-color. mr-013 (Ansel Bell) is a much closer call --
+    colorful_fraction only 0.14, almost entirely skin-tone hues, genuinely close to
+    monochrome by eye -- left that one exactly where the guard put it rather than
+    overriding. finalize-pair has no --force/bypass path for this check by design, so
+    neither was forced through; filed coloring-book/t-058 (ready) with the full pixel
+    evidence for a future session to properly recalibrate TINT_MAX_HUE_CONCENTRATION (or
+    add a colorful-band hue-diversity carve-out) against the full approved corpus, the
+    same way t-045 itself was originally calibrated -- not something to hand-wave past
+    without that corpus-wide check. Moved on to two other mechanical slices: mr-016
+    (Creature in Drag) had an already-in-flight BW ArtJob (31695, status running,
+    requested by an earlier session today at 10:57Z per the queue's bw_rejected_path
+    timestamp) -- recovered it via the existing bw_job_id rather than resubmitting, per
+    the recover_timed_out_job() pattern's spirit. It landed clean (ArtImage 240214, no
+    signage/text leak, no rating concerns -- a fun all-ages sea-creature-getting-
+    glammed-up scene), visually inspected against the color master, accepted, and
+    finalized -- monster-recast now 22/36 final pairs (up from 21/36). Also gave mr-019
+    (Countess Vermin) a second creative-review attempt now that render budget was
+    available (fresh seed, ArtImage 240215, same prompt as the 2026-09-09 rejection):
+    real improvement on the shadow-contrast half of the visual_hook, but the real body
+    still reads as an ordinary elderly woman rather than the brief's bald/ratlike/
+    skeletal/corpse-like requirement -- two consecutive misses on the same half of the
+    brief now looks like the same engine-limitation pattern already documented for
+    hollywood-recast/hwr-021 (t-051) rather than a wording problem, since the prompt
+    already names every required grotesque feature explicitly. Recorded detailed notes
+    on mr-019's proposal entry; not re-enqueued a third time this cycle. Did not touch
+    mr-021 or mr-group-001 (also NOT ACCEPTED, render-queue-backlog-deferred from
+    2026-09-09) this cycle -- ran out of cycle scope after mr-016/mr-019 plus the t-045
+    investigation; mr-group-001's blocking note is stale (it said mr-008/mr-012/mr-013
+    were not yet individually accepted, but all three now have accepted color+BW per the
+    ledger) and is worth re-checking fresh next cycle rather than trusting that note's
+    2026-09-09 snapshot. `python scripts/validate_roadmaps.py` clean;
+    `python scripts/coloring_proposal_status.py` confirms monster-recast 25/24 accepted
+    color/BW, 22/22 final color/BW, 22/36 final pairs, hollywood-recast and kind-robots
+    unchanged at 33/36 and 31/36; ledger/queue structure OK. Reinstalled the sandbox's
+    isolated pytest tool with `uv tool install pytest --with pyyaml --force` (missing
+    PyYAML again, the other documented recurring sandbox gap) before the relevant pytest
+    suites (test_coloring_proposal_status, test_coloring_queue_status,
+    test_coloring_book_production) would even collect; all green after that (29
+    passed). Re-arming to ready (recurring), releasing the claim. Next cycle: continue
+    monster-recast's remaining never-attempted/rejected slots (mr-021, mr-group-001 --
+    re-check its component-acceptance status fresh first), revisit kr-005/007/011/014/025
+    and hwr-021 with the literal prompt rewrites already recorded on each proposal's
+    notes, and consider coloring-book/t-058's tint-guard calibration question once there
+    is room for a full-corpus pass.
   run_log: projects/coloring-book/t-022-run-log.md
   recurring: true
   implementation_pr: 'silasfelinus/conductor#5278'
-  status: claimed
-  owner: worker
-  updated: '2026-09-27T14:59:21Z'
-  claimed_by: cycle84-2026-09-27T145920
-  claimed_at: '2026-09-27T14:59:21Z'
+  status: ready
+  owner: null
+  updated: '2026-09-27T15:14:58Z'
+  claimed_by: null
+  claimed_at: null
 - id: t-025
   milestone: m6
   title: Package and register Monster Recast book 1
@@ -2004,3 +2065,50 @@ tasks:
     reports the same "Ledger and queue structure: OK" it does today (unaffected either
     way, since this only touches prompt.text).
   updated: '2026-09-27T14:00:00Z'
+- id: t-058
+  milestone: m4
+  title: Recalibrate art_quality.py's single-hue tint/wash guard against the full approved corpus -- it false-positives on genuinely multi-color illustrations
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Discovered during t-022's 2026-09-27 cycle 84: finalize-pair rejected monster-recast
+    mr-007 (Pound Foolish, a rainbow-costumed circus clown scene) with "single-hue
+    tint/wash -- near-neutral pixels share a consistent hue (concentration=0.94, reject
+    at >= 0.90)" (coloring-book/t-045's TINT_MAX_HUE_CONCENTRATION check). Direct visual
+    inspection of the file confirms it is clearly NOT a sepia/duotone wash -- it's a rich,
+    flat cel-shaded illustration with strong reds, yellows, greens, and blues throughout
+    the costume, tents, and balloons. Pixel analysis backs this up: colorful_fraction is
+    0.55, spread across four distinct strong hue bins (roughly red/orange, green, and
+    blue/violet each carrying six-figure pixel counts), which is exactly the "flat
+    cel-shaded multi-color palette" t-045's own comment says this check exists to
+    distinguish real illustrations from. The likely root cause: tint_hue_concentration()
+    only measures hue consistency within the *low-saturation* band (near-neutral
+    midtones/background) and never cross-checks whether the image's *saturated* pixels
+    are themselves multi-hued -- so a real illustration whose neutral/background regions
+    (walls, doors, shadow) carry a consistent warm ambient-light cast can trip the guard
+    even though its foreground is genuinely rich and multi-color. mr-013 (Ansel Bell)
+    rejected the same cycle at concentration=0.93 is a much weaker case for false-positive
+    (colorful_fraction only 0.14, almost entirely skin-tone hues, genuinely close to
+    monochrome by eye) -- left unresolved and NOT claimed as a false positive; it may be
+    a real quality issue.
+    Fix: read scripts/art_quality.py's tint_hue_concentration()/TINT_MAX_HUE_CONCENTRATION
+    (search coloring-book/t-045's calibration comment for the full history and the 10
+    Silas-approved masters used last time), then re-run the same calibration exercise
+    against the FULL current approved/ corpus across all three books -- not just the two
+    cases this note flags -- to find a signal that separates mr-007 (clearly real,
+    multi-hue) from a genuine duotone/sepia wash without needing a book-specific
+    carve-out. A plausible direction: also measure hue diversity within the *colorful*
+    (>= COLORFUL_PIXEL_SATURATION) band and only flag the low-sat-band concentration when
+    the colorful band is ALSO low-diversity (a real duotone wash is single-hue at every
+    saturation level, not just the low-sat one) -- but verify against the corpus rather
+    than assuming this is sufficient. finalize-pair has no --force bypass for this check
+    by design, so mr-007 (and mr-013, if it turns out to be a false positive too) stay
+    stuck at accepted-but-not-finalized until this is resolved one way or the other:
+    either the guard is recalibrated and they finalize cleanly, or the recalibration
+    confirms the reject is correct and they need a fresh render instead. Verify with
+    `python -m pytest tests/ -k art_quality` (or the equivalent test file, if one exists
+    for this module) plus a live finalize-pair --live retry on both mr-007 and mr-013
+    once the fix lands.
+  updated: '2026-09-27T15:15:00Z'
