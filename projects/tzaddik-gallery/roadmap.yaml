@@ -437,12 +437,12 @@ tasks:
   - id: t-021
     milestone: m2
     title: "Add a TZADDIK reactionCategories enum value ahead of the detail-view/reactions work"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: null
-    note: >
+    note: >-
       Kaizen from t-004 (silasfelinus/kind_robots#3058): stores/reactionStore.ts
       + the reactionCategories enum (server/api/reactions/*) currently has no
       TZADDIK value -- ART_IMAGE, ART_COLLECTION, BOT, CHARACTER, CHAT_EXCHANGE,
@@ -451,6 +451,12 @@ tasks:
       both need to attach reactions to a TzaddikCandidate. Landing the enum/schema
       migration now, decoupled from either task's own UI work, means neither one
       needs its own migration cycle just to wire up reactions.
+
+      Merged silasfelinus/kind_robots#3059: TZADDIK reaction category +
+      Reaction.tzaddikCandidateId column/FK/migration landed, getExpectedTargetField
+      deliberately maps it to null pending t-005/t-006's access-rule wiring (TzaddikCandidate
+      has no userId/isPublic pair for the generic content-access check).
     claimed_by: conductor-20260927T010008Z-tzaddik-t021
     claimed_at: '2026-09-27T01:00:09Z'
-    updated: '2026-09-27T01:12:10Z'
+    updated: '2026-09-27T01:23:37Z'
+    implementation_pr: 'silasfelinus/kind_robots#3059'
