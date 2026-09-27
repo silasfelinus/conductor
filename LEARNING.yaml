@@ -16711,3 +16711,12 @@ records:
   outcome: done
   failure_category: quality
   lesson: "A workflow-step rename (changing a GitHub Actions step name, an ::warning:: message, or an error string a contract test greps for verbatim) is a repo-wide rename, not a local edit -- grep the whole tests/ tree for the exact old string before renaming, not just the test file you already know references it. Caught here as a Reviewer catch (not a Worker rejection) on silasfelinus/conductor#5264, which renamed several daily-digest.yml step names for the one-day render-runway fix but left 4 pre-existing tests hardcoding the old names, failing both the Python test suite and the dream-cycle contract CI job."
+- date: 2026-09-27
+  project: coloring-book
+  task: t-039
+  kind: software
+  stakes: reversible
+  passes: 3
+  outcome: done
+  failure_category: quality
+  lesson: "When a fix's own task has already been closed prematurely twice on indirect evidence (a merged PR, a plausible diagnosis), closing it a third time needs a direct check of the actual deployed artifact, not the passage of time since merge: inspect the specific field the bug lived in (here, GET /api/art/queue/:id's stored workflow graph's UNETLoader checkpoint name) before spending a render cycle assuming a Force Update happened. Then verify the render's actual pixels, not just its mechanical pass/fail, before trusting the fix -- a mechanical rejection on a DIFFERENT input during the same verification pass (kind-robots kr-001) turned out to be an unrelated false positive in the quality gate itself, not evidence the fix was incomplete; reading the rejected file directly (not just its stats) was what told the two apart."
