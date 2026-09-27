@@ -821,8 +821,8 @@ tasks:
 - id: t-044
   milestone: m11
   title: Live smoke-test the Poopstakes draw (HSS_Poopstakes) on a real database before November
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-043
@@ -839,7 +839,9 @@ tasks:
     month is refused. Also worth confirming schema-dry-run.sh's EXPECTED_TABLES=16 (this
     task's session corrected it from a pre-existing stale 12, unverified against a live
     activation) actually matches a real dbDelta run.
-  updated: '2026-09-26T22:06:40Z'
+  updated: '2026-09-27T01:58:43Z'
+  claimed_by: 2026-09-27T020000Z-humboldt-scoop-cms-t044
+  claimed_at: '2026-09-27T01:58:43Z'
 
 goal: Keep Humboldt Scoop Solutions’ website maintainable through its CMS while accurately presenting services, leads,
   operations, and brand voice.
