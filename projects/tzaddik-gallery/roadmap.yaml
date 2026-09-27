@@ -429,12 +429,12 @@ tasks:
   - id: t-020
     milestone: m2
     title: "Add multi-select editorial tags and gallery filtering"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-003, t-004, t-005]
-    note: >
+    note: >-
       Add a controlled multi-select tag taxonomy for Politics, Pop Culture,
       Humanitarian, Science & Medicine, Education, Environment, Civil Rights &
       Justice, Peace & Diplomacy, Community & Mutual Aid, Arts & Culture,
@@ -444,9 +444,19 @@ tasks:
       or endorsements. Keep country/region as separate structured metadata and
       living/memorial as record state. Editors may extend the controlled set
       when repeated real cases do not fit, but avoid arbitrary one-off tags.
+
+      Merged silasfelinus/kind_robots#3063: tag badges on Living/Memorial gallery cards and
+      the person detail sheet, plus a chip-based multi-select tag filter (AND semantics) above
+      the gallery. TzaddikCandidateTag/TzaddikEditorialTag and the API's Tags payload already
+      existed; this PR is the first UI consumer. Scoped to Living/Memorial only -- no
+      review/admin surface exists yet (pending tzaddik-gallery/t-006), so 'review surfaces'
+      filtering from the task description is deferred until that surface is built. Verified
+      via vue-tsc --noEmit, eslint, and prettier --check on the changed files (all clean); no
+      live DB/browser path was available in this sandbox. CI green (30/30 checks) before
+      merge.
     claimed_by: 2026-09-27T195400Z-tzaddik-t020-tags
     claimed_at: '2026-09-27T19:56:54Z'
-    updated: '2026-09-27T20:06:41Z'
+    updated: '2026-09-27T20:12:31Z'
     implementation_pr: 'silasfelinus/kind_robots#3063'
 
   - id: t-021
