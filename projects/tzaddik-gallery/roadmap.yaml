@@ -391,23 +391,19 @@ tasks:
   - id: t-017
     milestone: m2
     title: "Build the lg/xl single-page gallery and person-review shell"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-002, t-003, t-004, t-005]
-    note: >
-      On lg/xl, make Living / Memorial / Info switch inside one composed
-      viewport-level interface. The person/submission view should fit the large
-      image, atmospheric background, concise bio/pitch, provenance,
-      controversies, review controls, navigation, and an internally scrollable
-      comments region without routine page-level scrolling. Preserve the
-      currently selected Living/Memorial context when opening and closing a
-      person. On sm/md, deliberately fall back to a normal stacked, scrollable
-      page rather than squeezing the desktop arrangement into miniature panels.
+    note: |-
+      On lg/xl, make Living / Memorial / Info switch inside one composed viewport-level interface. The person/submission view should fit the large image, atmospheric background, concise bio/pitch, provenance, controversies, review controls, navigation, and an internally scrollable comments region without routine page-level scrolling. Preserve the currently selected Living/Memorial context when opening and closing a person. On sm/md, deliberately fall back to a normal stacked, scrollable page rather than squeezing the desktop arrangement into miniature panels.
+
+
+      Replaced the narrow filler-style gallery shell with the scoped lg/xl composed workspace and person-review layout on worker/tzaddik-gallery-t-017-20260927T215700Z-a7f3; mobile remains stacked and scrollable. Opening the implementation PR for CI verification.
     claimed_by: 2026-09-27T215700Z-tzaddik-t017-a7f3
     claimed_at: '2026-09-27T21:57:00Z'
-    updated: '2026-09-27T21:57:00Z'
+    updated: '2026-09-27T22:05:00Z'
 
   - id: t-018
     milestone: m4
