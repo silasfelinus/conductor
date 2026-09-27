@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-27T03:57:46Z
+Generated: 2026-09-27T04:27:26Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1165**
-- Outcomes: blocked: 19, cancelled: 2, done: 1144
+- Closed tasks recorded: **1166**
+- Outcomes: blocked: 19, cancelled: 2, done: 1145
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -27,7 +27,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | butterfly-gallery | 32 | 94% |
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
-| coloring-book | 40 | 100% |
+| coloring-book | 41 | 100% |
 | conductor | 137 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 51 | 98% |
@@ -72,13 +72,13 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1148 | 99% |
+| software | 1149 | 99% |
 
 ## Failure categories
 
 | Category | Count |
 |---|---|
-| quality | 45 |
+| quality | 46 |
 | transient | 18 |
 | actionable | 17 |
 | scope | 3 |
@@ -87,13 +87,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 - project `coat-dance` — 11% success over 9 closed tasks; aim the next kaizen task here
 - kind `content` — 47% success over 17 closed tasks; aim the next kaizen task here
-- failure category `quality` — 45 occurrences; look for the shared cause across its records
+- failure category `quality` — 46 occurrences; look for the shared cause across its records
 - failure category `transient` — 18 occurrences; look for the shared cause across its records
 - failure category `actionable` — 17 occurrences; look for the shared cause across its records
 - failure category `scope` — 3 occurrences; look for the shared cause across its records
 
 ## Recent lessons
 
+- 2026-09-27 `coloring-book/t-022` — A script that loads a shared YAML file once per process and writes the whole in-memory snapshot back at several points during its run is unsafe to invoke concurrently, even across entries the two invocations don't logically share -- the slower process's later write is based on a pre-change snapshot and silently reverts the faster process's already-persisted progress with no error. Reproduced live running manage_coloring_book_production.py's generate-bw for two different book/proposal ids at once: the first to finish had its bw_status: done reverted back to running by the second process's later write. Recovered safely only because the render and server-side ArtImage survived independently of the YAML bookkeeping and the enqueue step was idempotent against an existing job id -- a less careful recovery could have double-submitted a render job. Filed coloring-book/t-049 to fix the script; the immediate mitigation is to never run two invocations against the same shared state file in parallel, regardless of how independent their target keys look.
 - 2026-09-27 `coloring-book/t-039` — When a fix's own task has already been closed prematurely twice on indirect evidence (a merged PR, a plausible diagnosis), closing it a third time needs a direct check of the actual deployed artifact, not the passage of time since merge: inspect the specific field the bug lived in (here, GET /api/art/queue/:id's stored workflow graph's UNETLoader checkpoint name) before spending a render cycle assuming a Force Update happened. Then verify the render's actual pixels, not just its mechanical pass/fail, before trusting the fix -- a mechanical rejection on a DIFFERENT input during the same verification pass (kind-robots kr-001) turned out to be an unrelated false positive in the quality gate itself, not evidence the fix was incomplete; reading the rejected file directly (not just its stats) was what told the two apart.
 - 2026-09-27 `dream-cycle/t-006` — A workflow-step rename (changing a GitHub Actions step name, an ::warning:: message, or an error string a contract test greps for verbatim) is a repo-wide rename, not a local edit -- grep the whole tests/ tree for the exact old string before renaming, not just the test file you already know references it. Caught here as a Reviewer catch (not a Worker rejection) on silasfelinus/conductor#5264, which renamed several daily-digest.yml step names for the one-day render-runway fix but left 4 pre-existing tests hardcoding the old names, failing both the Python test suite and the dream-cycle contract CI job.
 - 2026-09-27 `tzaddik-gallery/t-005` — Completing t-021's deferred step (2) -- karmaRefTypes.ts + the access rule -- for a model with no userId/isPublic pair means a bespoke branch in every place the generic {userId, isPublic} select would otherwise run (assertReactionTargetAccessible, getContentOwnerId, canViewReactionsOn), mirroring the existing chatId special case rather than adding a naive entry to contentTargetModel/OWNED_TARGETS. Name the new KarmaRefType after the <target>Id column's prefix exactly (tzaddikCandidate, not the shorter tzaddik the reaction-category enum happens to use) so verifyEarnedKarmaWiring.ts's regex-derived name and verifyReactionTargetCoverage.ts's ${target}Id equality check both pass without a special-case exception.
@@ -103,7 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-26 `humboldt-scoop-cms/t-043` — The quote form's poopstakes checkbox has no address field to key a 'household' on (quote_requests only carries city) -- a naive implementation of the task note's literal 'household key (the property address)' would have been unbuildable for the common case of a lead who hasn't signed up yet. Tiering the household key (customer's property address, else normalized phone, else email) and recording which tier was used per winner made the ambiguous spec buildable without guessing silently; when a task note names a data field that doesn't actually exist on the row it's describing, build a documented fallback rather than blocking on it.
 - 2026-09-26 `ruler-hooked/t-043` — A worker/* branch can be fully implemented, correctly scoped, and even have its roadmap task set to status: review, and still never get a PR opened if create_pull_request fails mid-session -- check_pr_merged_drift.py's stranded-branch check caught it two sessions later. Before reimplementing any review/ready task, check for a matching worker/<project>-<task-id>-* branch first; if the diff is complete and scoped, open the PR from it as-is and run full CI rather than trusting the original session's local verification alone.
 - 2026-09-26 `ruler-hooked/t-042` — Extending timingVisualFor()'s existing per-rarity Record pattern (bandColorClass, markerShape) to a third cue (zoneGlyphs) kept the single-source-of-truth property free -- reusing an established per-field Record<Rarity, T> shape, rather than inventing a new lookup mechanism, made the addition a small, low-risk diff and let the selftest assert the new field against the same rarity ladder the existing fields already used.
-- 2026-09-26 `ruler-hooked/t-041` — The last open candidate from t-026/t-033's kaizen note (rarity-based marker shape/band color) landed as a single pure-function addition (timingVisualFor()) plus a component wiring change, with a selftest that explicitly proves the new visual lookup never perturbs resolveTimingStop()'s output -- when a display-only feature sits next to a determinism-critical pure function, assert the non-interference directly in the test rather than relying on code review alone to notice a stray shared-state touch.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-27T03:57:46Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-27T04:27:26Z_
