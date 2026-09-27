@@ -614,3 +614,35 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-09-27T22:49:00Z'
+
+  - id: t-025
+    milestone: m2
+    title: "Decide and build in-grid reaction/discovery affordance for Living/Memorial gallery cards"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: null
+    note: >-
+      Filed from the t-007 audit (2026-09-27): the reaction submit/read UI for a
+      Tzaddik candidate is fully wired in the detail sheet (reaction-card +
+      review-list, same pattern every other gallery uses), but nothing surfaces
+      a reaction/earned-karma signal on the gallery grid cards themselves --
+      bot-gallery.vue's bot-card.vue wraps reactable-card with an in-grid
+      earned-karma badge, but tzaddik-gallery.vue renders through the generic
+      kr-gallery/GalleryItem, which has no reaction slot, and no
+      userStore.trackEarnedKarma('tzaddikCandidate', ...) call exists anywhere
+      yet. Two real implementation paths, different blast radius: (a) extend
+      kr-gallery's GalleryItem to optionally carry an earned-karma badge /
+      react-toggle -- cross-cutting, touches every other gallery using
+      kr-gallery, audit siblings first per AGENTS.md; or (b) build a bespoke
+      tzaddik-card.vue wrapping reactable-card (mirroring bot-card.vue) and
+      swap the Living/Memorial grids off kr-gallery's generic renderer onto it.
+      Whichever path: keep the surfaced signal a soft discovery cue, not a raw
+      vote count or sort key -- t-007's own note warns against turning this
+      into an unmoderated popularity leaderboard, and t-011 (FOR SILAS) already
+      gates canonical-36 membership as an editorial decision, not a mechanical
+      reaction score.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-09-27T22:55:00Z'
