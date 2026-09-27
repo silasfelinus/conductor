@@ -1155,15 +1155,27 @@ books:
       art_image_id: 240230
       prompt_fingerprint: 491317e645e7a9ac762649ff1260209afae7619dacf333b285e6dcd29bdace3b
       gate: mechanical
-      reasons: &id003
+      reasons:
       - single-hue tint/wash — near-neutral pixels share a consistent hue (concentration=0.98, reject at >= 0.9),
         the signature of a duotone/sepia filter rather than the house style's flat cel-shaded multi-color palette
         (coloring-book/t-045)
       rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/render/rejected/mr-028-backward-boy-attempt-1-seed-1299181458.webp
       checked_at: '2026-09-27T18:03:30Z'
-    render_attempts: 1
-    last_rejected_art_image_id: 240230
-    last_render_seed: 1299181458
+    - attempt: 2
+      seed: 695481638
+      engine: krea2
+      art_image_id: 240237
+      prompt_fingerprint: d74b77c571d3cc965c1d8bb8dc4e167e70a615ad5e91b253332b4bc077c0be8c
+      gate: mechanical
+      reasons: &id003
+      - single-hue tint/wash — near-neutral pixels share a consistent hue (concentration=1.00, reject at >= 0.9),
+        the signature of a duotone/sepia filter rather than the house style's flat cel-shaded multi-color palette
+        (coloring-book/t-045)
+      rejected_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/rejected/render/rejected/mr-028-backward-boy-attempt-2-seed-695481638.webp
+      checked_at: '2026-09-27T18:11:44Z'
+    render_attempts: 2
+    last_rejected_art_image_id: 240237
+    last_render_seed: 695481638
     last_render_reasons: *id003
   - slot: 29
     id: mr-029
