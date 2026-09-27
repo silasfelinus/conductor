@@ -281,24 +281,33 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Add moderation and explicit source/content overrides"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-003, t-006]
-    note: >
+    note: >-
       Admin/editor controls can approve/archive submissions and override
       Wikipedia-derived display text or images. Overrides must retain the
       original source/provenance and make the edited state inspectable.
+
+      Merged silasfelinus/kind_robots#3068 (squash bf9b42f) -- admin approve/archive routes,
+      an explicit-override route (never touches sourced columns, only the *Override siblings),
+      an admin-gated curationState query param on index.get.ts so PENDING/ARCHIVED candidates
+      are discoverable, store actions, and a new admin-only Review queue tab + in-sheet
+      moderation panel in tzaddik-detail-sheet.vue. Verified: vue-tsc/eslint/prettier clean; v
+      erifyReactionTargetCoverage/verifyReactionRouteAuth/verifyEarnedKarmaWiring/auditServerA
+      piCallers/verifyLayoutContract/auditIcons all still pass unchanged; full CI (33/33)
+      green before merge.
     claimed_by: 2026-09-27T2300Z-tzaddik-t008-worker
     claimed_at: '2026-09-27T23:03:00Z'
-    updated: '2026-09-27T23:23:04Z'
+    updated: '2026-09-27T23:28:42Z'
     implementation_pr: 'silasfelinus/kind_robots#3068'
 
   - id: t-009
     milestone: m3
     title: "Seed Silas's named historical and living candidates"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -352,7 +361,7 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Add accessibility, responsive gallery polish, and empty/loading/error states"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -381,7 +390,7 @@ tasks:
   - id: t-014
     milestone: m5
     title: "Build the Daily Tzaddik discovery docket"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -474,7 +483,7 @@ tasks:
   - id: t-019
     milestone: m2
     title: "Add community Wikipedia recheck / correction requests"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -606,7 +615,7 @@ tasks:
   - id: t-024
     milestone: m2
     title: "Surface editor-only moderation actions in the t-017 composed detail rail instead of a separate admin page"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -653,3 +662,25 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-09-27T22:55:00Z'
+
+  - id: t-026
+    milestone: m2
+    title: "Confirm before archiving an already-APPROVED (live) Tzaddik candidate"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: null
+    note: >-
+      Kaizen from t-008 (silasfelinus/kind_robots#3068): the admin Archive
+      button in tzaddik-detail-sheet.vue fires immediately with no
+      confirmation step, for both a PENDING submission (low stakes -- nothing
+      public changes) and an already-APPROVED candidate (higher stakes --
+      this removes a live entry from the public Living/Memorial roster with
+      one click). Add a confirmation prompt specifically for the
+      APPROVED-to-ARCHIVED transition (curationState === 'APPROVED' before
+      the click), leaving the PENDING-to-ARCHIVED path as an immediate action
+      since it was never public in the first place.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-09-27T23:30:00Z'
