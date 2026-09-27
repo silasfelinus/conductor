@@ -789,14 +789,61 @@ tasks:
     ready (recurring), releasing the claim. Next cycle: continue the remaining
     never-attempted monster-recast slots (mr-019 onward), investigate mr-group-001's
     status shape, and re-check t-050/t-051/t-053/t-056 for a Silas verdict.
+
+    Cycle 82 (2026-09-27T13:58-14:15Z, scheduled Conductor Agent run): render box UP
+    (check_render_box.py: media.acrocatranch.com answered, Comfy heartbeat healthy,
+    64 renders completed in last 6h). Worked kind-robots' 8 remaining not-accepted
+    color slots from cycle-77's full review pass (kr-005/006/007/011/014/025/028/035),
+    requesting fresh --force revisions for each. Hit two new gaps first: (1) local
+    Pillow was missing again (same recurring sandbox gap as cycles 75/76/81 --
+    installed it, then recovered kr-005's already-submitted ArtJob 31683 idempotently
+    rather than resubmitting), and (2) kr-006/007/011/014's prompts all still carried
+    the literal word "text" in their "no text" clause, which now 422s against a newer
+    art-prompt-contract rule (text-exclusion-pile) that didn't exist when these prompts
+    were first written -- reworded all four to the endpoint's own suggested phrasing
+    ("every surface bare and unmarked") and resubmitted clean. Filed coloring-book/t-057
+    (ready) to sweep the same still-latent "no text" phrasing across the other ~47
+    occurrences in all three books' proposals.yaml before their next forced revision
+    hits the identical 422 -- out of scope to fix all of them by hand this cycle.
+    Reviewed all 8 renders against their prompts: accepted kr-006 (Net Delivery Flight,
+    signage now illegible), kr-028 (Night Market Helpers, a robot now visibly carries a
+    shoe-repair tray, clearing the bar cycle-77's own note set), and kr-035 (Kind Robots
+    Parade, the storefront-lettering defect is gone). NOT ACCEPTED again, each on a
+    second attempt with detailed notes on what to try next: kr-005 (Serendipity Space
+    Bar -- glowing bottle shoulders now fixed, butterfly-swarm patron still not
+    achieved), kr-007 (Ukulele Under the Redwoods -- sheet-music glyphs fixed, sleepy
+    repair crew still absent, cat count drifted 3->4), kr-011 (Cat Rescue Protocol --
+    tomcat/one-eyed-elder cast still not delivered), kr-014 (Rainbow Butterfly Sanctuary
+    -- trees more stylized but still not explicitly mechanical, no mobility aids), and
+    kr-025 (Art Studio Swarm -- butterflies still purely decorative, still no
+    sculpt/print/sew activity). kind-robots color-review slots now 31/36 approved (up
+    from 28/36), still 5 open (kr-005/007/011/014/025), each with a concrete next-prompt
+    suggestion recorded on its own proposal note rather than a bare "try again". Also
+    revised hollywood-recast/hwr-021 (The Silent Mechanic) per cycle-80's own suggested
+    literal rewrite (leads with "A woman", explicit creeper-trolley pose) -- the palette/
+    camera fix held, but pose and casting still both missed a third consecutive time;
+    documented as likely an engine/subject limitation rather than a wording problem,
+    left unaccepted, not re-submitted a fourth time this cycle. Did not touch monster-
+    recast's remaining never-attempted slots (mr-019 onward) or mr-group-001 this cycle
+    -- stayed focused on the kind-robots not-accepted batch and the newly-discovered
+    prompt-contract gap. `python scripts/validate_roadmaps.py` clean;
+    `python scripts/coloring_proposal_status.py` confirms kind-robots 31/28 accepted
+    color/BW, 28/36 final pairs, ledger/queue structure OK; relevant pytest suites
+    (test_coloring_proposal_status, test_coloring_queue_status,
+    test_consume_coloring_book_studio_request, test_coloring_book_production) all
+    green (39 passed). Re-arming to ready (recurring), releasing the claim. Next cycle:
+    run generate-bw -> accept-bw -> finalize-pair on the 3 newly-accepted kind-robots
+    slots (kr-006/028/035), continue monster-recast's never-attempted slots, and
+    revisit kr-005/007/011/014/025 and hwr-021 with the more literal prompt rewrites
+    this cycle's notes suggest, once there is fresh render budget.
   run_log: projects/coloring-book/t-022-run-log.md
   recurring: true
   implementation_pr: 'silasfelinus/conductor#5278'
-  status: claimed
-  owner: worker
-  updated: '2026-09-27T13:54:24Z'
-  claimed_by: claude-web-20260927-t022
-  claimed_at: '2026-09-27T13:54:24Z'
+  status: ready
+  owner: null
+  updated: '2026-09-27T14:15:00Z'
+  claimed_by: null
+  claimed_at: null
 - id: t-025
   milestone: m6
   title: Package and register Monster Recast book 1
@@ -1898,3 +1945,39 @@ tasks:
     remaining production batch (t-022 continues on other monster-recast slots in the
     meantime, soft_gate: true).
   updated: '2026-09-27T13:20:00Z'
+- id: t-057
+  milestone: m4
+  title: Reword every remaining "no text" prompt clause across all three books before its next resubmission hits the art prompt contract
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Discovered during t-022's 2026-09-27 scheduled sweep: submitting a fresh render for
+    kind-robots kr-006/kr-007/kr-011/kr-014 (all --force revisions requested this session)
+    hit a new HTTP 422 from the art-enqueue endpoint's prompt contract:
+    "[text-exclusion-pile] no text names text on an engine whose negative prompt is inert,
+    so the word lands in POSITIVE conditioning ... State the wanted result instead:
+    'every surface bare and unmarked'." This session fixed those four prompts (and
+    hollywood-recast/hwr-021's unrelated pose/casting revision, done separately) by
+    replacing the literal "no text" clause with the endpoint's own suggested wording. A
+    repo-wide grep at the time this task was filed found the same "no text" phrase still
+    present 1x in monster-recast/proposals.yaml, 25x in hollywood-recast/proposals.yaml
+    (net of hwr-021, already fixed), and 21x in kind-robots/proposals.yaml (net of the
+    four already fixed) -- every one of those will hit the identical 422 the next time its
+    slot needs a --force revision (a not-accepted re-render, a content fix, anything other
+    than the original submission that predates this contract rule). None of these are
+    urgent today since they only fail *when resubmitted*, not at rest, but each one is a
+    silent trap for a future cycle. Fix: read each remaining occurrence in context (the
+    exact phrasing varies -- "no text or brand marks", "no text or recognizable
+    constellation labels", etc.) and reword it to state the wanted result instead of
+    naming "text", mirroring this session's "every surface bare and unmarked" pattern
+    where a plain replacement fits, or a more tailored phrase where the surrounding clause
+    needs one (e.g. "no recognizable constellation labels" -> "constellation shapes with
+    no recognizable pattern names"). Do not touch anything else on the line. No live
+    submission required for this task itself -- it's a pure prompt-text edit pass across
+    the three sets/*/proposals.yaml files, verified by re-grepping for "no text" after
+    (expect 0 remaining) and confirming `python scripts/coloring_proposal_status.py`
+    reports the same "Ledger and queue structure: OK" it does today (unaffected either
+    way, since this only touches prompt.text).
+  updated: '2026-09-27T14:00:00Z'
