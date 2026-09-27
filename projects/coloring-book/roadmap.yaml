@@ -682,11 +682,68 @@ tasks:
     here since it's out of this cycle's scope. `python
     scripts/validate_roadmaps.py` clean. Re-arming to ready (recurring),
     releasing the claim.
+    Cycle 80 (2026-09-27, scheduled Conductor sweep): the largest single cycle to date.
+    render box UP throughout (check_render_box.py: Comfy heartbeat healthy). Confirmed
+    mr-005/t-050 is a slot-specific soft gate, not book-wide -- monster-recast's other
+    approved-color slots were workable independently and had simply not been attempted
+    since before coloring-book/t-039's fix landed.
+    kind-robots: ran generate-bw/accept-bw/finalize-pair for all 17 remaining
+    approved-color slots except kr-001 (kr-017 through kr-036) -- 17 new final pairs,
+    27/36 (up from 10/36). Every BW candidate visually reviewed against its color
+    master before promotion.
+    kr-001 investigation: two consecutive generate-bw mechanical rejections from cycle
+    79 turned out to be a genuine false positive in art_quality.py's noise/static gate,
+    not a real defect or a reference-image handling bug (disproved that hypothesis by
+    reading the code) -- both rejected candidates were clean, faithful line art on
+    visual inspection. Filed and then fixed coloring-book/t-054 same cycle: a second
+    real false positive (monster-recast mr-010) gave three real false-positive data
+    points (hf_ratio 0.5732-0.5953) against thirteen real true-positive corruption
+    examples (0.8530-0.8756) -- recalibrated NOISE_MIN_HF_RATIO from 0.55 to 0.70,
+    added 6 live regression tests pinning the real evidence, verified against the full
+    2388-test suite (zero regressions, two pre-existing unrelated failures confirmed
+    present on origin/main too -- filed coloring-book/t-056 for one of them, a stale
+    KNOWN_BAD test fixture). Restored kr-001's and mr-010's real clean candidates and
+    ran them through accept-bw/finalize-pair; mr-010 finalized cleanly. kr-001's own
+    accept-bw was blocked by this session's sandbox permission classifier (likely
+    because kr-001 is the canonical Kind Robots logo/brand asset) -- left at
+    bw_status: done with its restored candidate in place, one accept-bw + finalize-pair
+    away from landing; noted in t-054 for a future session or Silas to run explicitly.
+    monster-recast: force-retried the 7 slots stuck at needs_review since before
+    t-039's fix (mr-007/009/010/011/012/013/020) -- 6 landed clean immediately (mr-010
+    was the false positive above), plus 7 more fresh slots (mr-023/024/025/029/033/
+    034/035) -- 13 new final pairs, 16/36 (up from 4/36). mr-016 mechanically rejected
+    again with the genuine noise signature (hf_ratio 0.87, unmistakable static on visual
+    inspection) -- left needs_review, not a false positive. mr-007 and mr-013 landed
+    clean BW but hit a *legacy* tint/wash rejection (coloring-book/t-045) on their own
+    pre-existing approved color masters at finalize-pair time -- both were approved
+    before t-045 existed; left accepted-color/accepted-bw pending a color re-render or
+    an explicit grandfather decision, not forcing a re-render of already-approved
+    content this cycle.
+    hwr-021: root-caused its color rejection -- the prompt literally contained the word
+    "Sepia" in its palette clause, directly conflicting with t-045's house-style gate.
+    Revised the prompt (flat cel-shaded multi-color, explicit anti-sepia language,
+    reinforced "rolling camera"). Also found and documented a real tooling gap while
+    doing this: consume_coloring_book_color_art.py has no queue_lock (unlike
+    manage_coloring_book_production.py), so a hand-edit made while a batch is running
+    gets silently clobbered by the batch's next whole-file write -- lost the first
+    resubmission attempt this way, filed coloring-book/t-055, redid the edit after the
+    batch finished. Fresh render fixed the palette but still misses the pose ("hangs
+    from the underside" -> stands beside) and casting ("stocky woman mechanic" -> reads
+    as a man) that 2026-09-11's review already flagged -- documented with a concrete
+    stronger-rewrite suggestion for a future cycle; not re-submitted a third time this
+    cycle. hollywood-recast stays at 33/36 final pairs (hwr-014/t-051, hwr-021, and
+    hwr-025/t-053 remain open).
+    Total this cycle: 29 new final pairs (17 kind-robots + 12 monster-recast) --
+    76/108 overall (up from 47/108 at cycle 79's end), plus one production-gate bug
+    fixed (t-054), two tooling gaps filed (t-055, t-056), and kr-001 handed off one
+    step from landing. `python scripts/validate_roadmaps.py` clean throughout.
+    Re-arming to ready (recurring), releasing the claim.
   run_log: projects/coloring-book/t-022-run-log.md
   recurring: true
   implementation_pr: 'silasfelinus/conductor#5278'
-  status: claimed
-  updated: '2026-09-27T09:56:47Z'
+  status: ready
+  owner:
+  updated: '2026-09-27T12:30:00Z'
   owner: worker
   claimed_by: 2026-09-27T-conductor-sweep-t022-cycle80
   claimed_at: '2026-09-27T09:56:47Z'
