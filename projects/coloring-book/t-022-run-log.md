@@ -2913,3 +2913,24 @@ Still gated on conductor/t-165 (relay hang, hands-on diagnosis needed) / t-167 (
 wedge after restart) for these three specific jobs, and coloring-book/t-039
 (Kontext BW-corruption) for the book-wide `generate-bw` stage. No unblocked slice this
 cycle. Re-arming to ready (recurring), releasing the claim.
+
+Cycle 85 (2026-09-27, scheduled Conductor sweep): render box UP, no active relay wedge.
+Reconciled the 14 not-yet-finalized monster-recast slots via proposals.yaml's `final`
+dict (matching coloring_proposal_status.py's own definition of done) rather than
+color-art-jobs.yaml's per-slot status alone. Visually reviewed and accept-color'd
+mr-022/026/027/030/031/032/group-001 (all clean, all-ages); mr-013 (t-058 undecided
+case) and mr-028 (near-monochrome blue wash, looks like a genuine tint-guard reject)
+left unaccepted. mr-021 visually reviewed and NOT accepted -- its own brief requires an
+invisible/negative-space body that the render omits entirely, reading more explicit
+than allowed; filed coloring-book/t-059 (FOR SILAS, soft_gate) rather than deciding
+unilaterally. Ran generate-bw -> accept-bw -> finalize-pair for all seven accepted
+slots (mr-022's first generate-bw call timed out at 600s on a legitimate queue wait,
+recovered cleanly on retry against the same bw_job_id). Monster Recast final pairs:
+22/36 -> 29/36. Manually replayed archive_recurring_task_note.py's logic by hand
+(second marked block appended to the existing T022-HISTORY.md, byte-for-byte verified)
+since the script refuses when a HISTORY.md already exists; filed coloring-book/t-060 to
+teach it multi-round support. `python scripts/validate_roadmaps.py` clean;
+`pytest tests/test_coloring_proposal_status.py tests/test_coloring_queue_status.py
+tests/test_coloring_book_production.py tests/test_set_task_field.py
+tests/test_validate_roadmaps.py tests/test_check_roadmap_note_size.py` all green (99
+passed). Re-arming to ready (recurring), releasing the claim.
