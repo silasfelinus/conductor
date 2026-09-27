@@ -281,18 +281,27 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Add moderation and explicit source/content overrides"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-003, t-006]
-    note: >
+    note: >-
       Admin/editor controls can approve/archive submissions and override
       Wikipedia-derived display text or images. Overrides must retain the
       original source/provenance and make the edited state inspectable.
+
+      Merged silasfelinus/kind_robots#3068 (squash bf9b42f) -- admin approve/archive routes,
+      an explicit-override route (never touches sourced columns, only the *Override siblings),
+      an admin-gated curationState query param on index.get.ts so PENDING/ARCHIVED candidates
+      are discoverable, store actions, and a new admin-only Review queue tab + in-sheet
+      moderation panel in tzaddik-detail-sheet.vue. Verified: vue-tsc/eslint/prettier clean; v
+      erifyReactionTargetCoverage/verifyReactionRouteAuth/verifyEarnedKarmaWiring/auditServerA
+      piCallers/verifyLayoutContract/auditIcons all still pass unchanged; full CI (33/33)
+      green before merge.
     claimed_by: 2026-09-27T2300Z-tzaddik-t008-worker
     claimed_at: '2026-09-27T23:03:00Z'
-    updated: '2026-09-27T23:23:04Z'
+    updated: '2026-09-27T23:28:42Z'
     implementation_pr: 'silasfelinus/kind_robots#3068'
 
   - id: t-009
