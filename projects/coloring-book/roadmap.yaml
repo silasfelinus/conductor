@@ -1291,7 +1291,7 @@ tasks:
 - id: t-057
   milestone: m4
   title: Reword every remaining "no text" prompt clause across all three books before its next resubmission hits the art prompt contract
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -1323,9 +1323,19 @@ tasks:
     (expect 0 remaining) and confirming `python scripts/coloring_proposal_status.py`
     reports the same "Ledger and queue structure: OK" it does today (unaffected either
     way, since this only touches prompt.text).
-  updated: '2026-09-27T16:56:46Z'
+
+    DONE 2026-09-27: reworded all 44 remaining live prompt.text "no text" occurrences (1
+    monster-recast, 23 hollywood-recast, 20 kind-robots) to state the wanted result instead
+    of naming "text" (mostly "every surface bare and unmarked.", two tailored for combined
+    constraints). Left 3 historical NOT-ACCEPTED/recovery note references untouched (not
+    resubmitted, so no contract risk; rewriting them would misrepresent past attempts).
+    Verified via YAML parse, re-grep (0 live occurrences remaining), and
+    coloring_proposal_status.py (Ledger and queue structure: OK, unchanged counts).
+    silasfelinus/conductor#5298 merged.
+  updated: '2026-09-27T17:10:38Z'
   claimed_by: conductor-sweep-20260927T165300-t057-run
   claimed_at: '2026-09-27T16:53:29Z'
+  implementation_pr: 'silasfelinus/conductor#5298'
 - id: t-058
   milestone: m4
   title: Recalibrate art_quality.py's single-hue tint/wash guard against the full approved corpus -- it false-positives on genuinely multi-color illustrations
@@ -1440,3 +1450,42 @@ tasks:
     (or wherever the existing test for this script lives) covering both the first-round
     (current, unchanged) and second-round (new) paths, plus a live-ish exercise against
     a scratch copy of T022-HISTORY.md's actual two-round shape from this cycle.
+- id: t-061
+  milestone: m4
+  title: Audit the wider "no logo/title/label/document/signage/... or text" clause family for the same prompt-contract trap t-057 just closed
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Kaizen from t-057 (silasfelinus/conductor#5298, 2026-09-27): t-057 reworded every
+    live prompt.text occurrence of the literal two-word "no text" clause across the
+    three books (44 total), since the art-enqueue endpoint's prompt contract throws an
+    HTTP 422 on any positive-prompt resubmission naming "text" ("[text-exclusion-pile]
+    no text names text on an engine whose negative prompt is inert ..."). That fix was
+    deliberately scoped to only the literal "no text" substring, matching the count the
+    filing session had already grepped. A broader family of "text"-adjacent clauses was
+    explicitly left out of scope and is still present across all three
+    sets/*/proposals.yaml files: "no readable text", "no logo or text", "no readable
+    documents or text", "no title cards or text", "no logos or text", "no recognizable
+    films or text", "no logos, signage, or text", "film frames or text", "no copied
+    awards branding or readable text", "no readable book titles or text", "no banners or
+    readable text", "no readable labels or text", "no readable signs or text", "no
+    readable page text", "no brand characters or text", and similar. If the contract's
+    actual rule is "the word 'text' anywhere in the positive prompt" (not specifically
+    the two-word "no text" phrase), every one of these is the same silent trap t-057
+    just closed for its narrower slice -- it just hasn't been hit by a --force
+    resubmission yet. TO DO: (1) confirm the actual trigger condition -- read
+    server/utils/artPromptContract.ts's text-exclusion-pile rule (or enqueue a harmless
+    test prompt containing one of these clauses) to verify whether "readable text",
+    "logo or text", etc. also 422, not just bare "no text"; (2) if confirmed, grep and
+    reword every remaining occurrence of the word "text" in a prompt.text field across
+    the three proposals.yaml files, following the same reword-to-state-the-wanted-result
+    pattern ("no text" -> "every surface bare and unmarked", "no readable text" ->
+    "every surface free of lettering", "no logo or text" -> "no logo or lettering" ->
+    (still contains "text"? no, "lettering" avoids it) etc.) — do not touch anything
+    else on the line, and do not touch historical note fields describing past attempts
+    in their own past-tense wording (t-057 left 3 of those alone for the same reason).
+    Verify via YAML parse + re-grep for the word "text" in live prompt.text fields
+    (expect 0, excluding characters.yaml/pages.yaml/README.md/notes/TALKBACK/run-log
+    files which are out of scope) + scripts/coloring_proposal_status.py unchanged.
