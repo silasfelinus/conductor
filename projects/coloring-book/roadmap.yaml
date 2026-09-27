@@ -461,14 +461,52 @@ tasks:
     releasing the claim. Next cycle: same as cycles 48-49 -- after confirming (or being
     told) the Unraid container has been Force-Updated past 2026-09-26T20:15Z, run exactly
     one live generate-bw canary before resuming the rest of the BW-derivation batch.
+
+    Cycle 74 (2026-09-27T02:55Z, scheduled Conductor Agent run) -- BREAKTHROUGH: the
+    BW-derivation path is unblocked for real after 6 weeks. Re-checked mr-001's cached
+    bw_job_id 30650 (rendered 2026-09-22, pre-fix): mechanically rejected as noise as
+    expected -- stale evidence, not a new data point. Forced a fresh live submission
+    (--force, ArtJob 31597) and inspected its stored workflow graph immediately via
+    GET /api/art/queue/31597: node 59 is a plain UNETLoader with
+    flux1-dev-kontext_fp8_scaled.safetensors (fp8_e4m3fn), not the old
+    UnetLoaderGGUF/flux1-kontext-dev-Q5_K_M.gguf path -- confirmed the Unraid Force Update
+    carrying kind_robots#3056 has landed. Waited for the render: DONE, BW-LANDED (not
+    rejected), ArtImage 240116, mechanical stats mean_saturation=0.0004/
+    colorful_fraction=0.0/white_fraction=0.788/hf_ratio=0.4683 -- the inverse of every
+    prior noise rejection. Visually inspected the rendered webp directly: genuine clean
+    black-and-white line art matching mr-001's accepted color master. Ran accept-bw and
+    finalize-pair live; both landed clean. Closed coloring-book/t-039 for real (third
+    close attempt; the first two on 2026-09-15 were disproven by a live canary within
+    hours -- this one already passed that same bar before being marked done).
+
+    Ran two more confirmatory canaries to rule out a Monster-Recast-specific fluke:
+    hollywood-recast hwr-001 (ArtJob, ArtImage 240117) also BW-LANDED, visually confirmed
+    clean, accepted and finalized. kind-robots kr-001 (ArtJob 31599, ArtImage 240118) was
+    mechanically REJECTED (hf_ratio=0.59) -- but visual inspection of the rejected file
+    shows a completely legitimate, clean coloring page (a large robot mascot amid a dense
+    repeating pattern of dozens of small robots/stars/gears/butterflies), not corrupted
+    static, and its mean_saturation=0.0003/colorful_fraction=0.0 rules out the t-039 noise
+    signature entirely. This is a false positive from the hf_ratio noise detector (t-043)
+    tripped by kind-robots' uniquely dense repeated-icon prompt style, not a recurrence of
+    t-039's bug -- filed as coloring-book/t-048 (kaizen) rather than reopening t-039 or
+    hand-bypassing the quality gate. kr-001 stays in its rejected-mechanical state pending
+    that fix.
+
+    Net result: the Kontext engine fix is confirmed correct on 2 of 3 books via full
+    generate-bw -> accept-bw -> finalize-pair, and the 3rd book's single miss is a
+    separate, already-triaged quality-gate tuning issue, not evidence the render bug
+    persists. coloring-book/t-022's remaining scope (67 approved color masters across all
+    three books still need a BW counterpart, minus the 2 now finalized this cycle) is
+    unblocked and ready for the next worker_pass_size-scoped batch. Re-arming to ready
+    (recurring), releasing the claim.
   run_log: projects/coloring-book/t-022-run-log.md
   recurring: true
   implementation_pr: 'silasfelinus/conductor#4482'
-  status: claimed
-  updated: '2026-09-27T02:55:50Z'
-  owner: worker
-  claimed_by: 20260927T025549Z-coloring-book-t022-sweep
-  claimed_at: '2026-09-27T02:55:50Z'
+  status: ready
+  updated: '2026-09-27T03:25:00Z'
+  owner: null
+  claimed_by: null
+  claimed_at: null
 - id: t-025
   milestone: m6
   title: Package and register Monster Recast book 1
@@ -1219,3 +1257,45 @@ tasks:
   claimed_at: '2026-09-17T03:38:09Z'
   updated: '2026-09-17T03:51:08Z'
   implementation_pr: 'silasfelinus/conductor#4536'
+
+- id: t-048
+  milestone: m4
+  title: "art_quality.py's noise/static detector (hf_ratio) false-positives on busy, detail-dense line art"
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: >-
+    Kaizen from t-022's 2026-09-27 cycle, the same cycle that finally closed t-039 for
+    real. After confirming coloring-book/t-039's Kontext UNet fix (kind_robots#3056) was
+    live and rendering clean on two books (monster-recast mr-001 ArtImage 240116,
+    hollywood-recast hwr-001 ArtImage 240117 -- both BW-LANDED, both visually confirmed
+    as real black-and-white line art, both accepted and finalized), the third
+    confirmatory canary (kind-robots kr-001, ArtJob 31599, ArtImage 240118) was
+    mechanically REJECTED as noise: hf_ratio=0.59 (the same spatial-autocorrelation
+    detector t-043 added to catch t-039's corrupted-static bug, threshold presumably
+    ~0.5-0.6). But the rejected image
+    (projects/coloring-book/sets/kind-robots/generated/bw/rejected/mechanical/kr-001-bw-20260927T031917Z.webp)
+    is visually a completely legitimate, clean coloring-book page: a large friendly
+    robot mascot surrounded by a dense repeating pattern of dozens of small robots,
+    stars, gears, butterflies, and paintbrushes on a white background -- not static, not
+    corrupted, just busy. mean_saturation=0.0003 and colorful_fraction=0.0 (correctly
+    grayscale/line-art, unlike every real noise rejection which had mean_saturation~0.17)
+    confirm this isn't the t-039 bug recurring -- only the spatial high-frequency energy
+    from the dense small-icon pattern is tripping the same heuristic that (correctly)
+    flags genuine noise, because lots of small repeated closed contours produce
+    similar adjacent-pixel luma variance to real static. Do NOT reopen t-039 over this:
+    the engine fix is confirmed correct (2/3 real-content canaries, one false-positive
+    on a detector that predates this fix and was never tuned against dense
+    reference-image-driven compositions like kind-robots' logo-workshop prompts, which
+    intentionally ask for many small repeated mascot instances). TO FIX: either raise
+    the hf_ratio threshold for the "kind-robots" book specifically (its prompts are the
+    only ones requesting dense repeated-icon compositions), or add a secondary signal
+    that distinguishes structured repetition (real static has no repeating shapes) from
+    genuine noise -- e.g. edge-count regularity, or comparing hf_ratio only within
+    contiguous regions rather than the whole frame. kr-001 itself is left in its
+    rejected-mechanical state pending this fix; do not manually bypass the quality gate
+    to force it through by hand-copying the rejected file back -- the gate exists
+    because it caught six weeks of real corruption undetected any other way (t-039's own
+    history), and a single visual inspection by one session is a weaker signal than the
+    gate over the full remaining ~64-image batch this fix has just unblocked.
