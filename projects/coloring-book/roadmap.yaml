@@ -1351,50 +1351,17 @@ tasks:
 - id: t-058
   milestone: m4
   title: Recalibrate art_quality.py's single-hue tint/wash guard against the full approved corpus -- it false-positives on genuinely multi-color illustrations
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
-  note: >-
-    Discovered during t-022's 2026-09-27 cycle 84: finalize-pair rejected monster-recast
-    mr-007 (Pound Foolish, a rainbow-costumed circus clown scene) with "single-hue
-    tint/wash -- near-neutral pixels share a consistent hue (concentration=0.94, reject
-    at >= 0.90)" (coloring-book/t-045's TINT_MAX_HUE_CONCENTRATION check). Direct visual
-    inspection of the file confirms it is clearly NOT a sepia/duotone wash -- it's a rich,
-    flat cel-shaded illustration with strong reds, yellows, greens, and blues throughout
-    the costume, tents, and balloons. Pixel analysis backs this up: colorful_fraction is
-    0.55, spread across four distinct strong hue bins (roughly red/orange, green, and
-    blue/violet each carrying six-figure pixel counts), which is exactly the "flat
-    cel-shaded multi-color palette" t-045's own comment says this check exists to
-    distinguish real illustrations from. The likely root cause: tint_hue_concentration()
-    only measures hue consistency within the *low-saturation* band (near-neutral
-    midtones/background) and never cross-checks whether the image's *saturated* pixels
-    are themselves multi-hued -- so a real illustration whose neutral/background regions
-    (walls, doors, shadow) carry a consistent warm ambient-light cast can trip the guard
-    even though its foreground is genuinely rich and multi-color. mr-013 (Ansel Bell)
-    rejected the same cycle at concentration=0.93 is a much weaker case for false-positive
-    (colorful_fraction only 0.14, almost entirely skin-tone hues, genuinely close to
-    monochrome by eye) -- left unresolved and NOT claimed as a false positive; it may be
-    a real quality issue.
-    Fix: read scripts/art_quality.py's tint_hue_concentration()/TINT_MAX_HUE_CONCENTRATION
-    (search coloring-book/t-045's calibration comment for the full history and the 10
-    Silas-approved masters used last time), then re-run the same calibration exercise
-    against the FULL current approved/ corpus across all three books -- not just the two
-    cases this note flags -- to find a signal that separates mr-007 (clearly real,
-    multi-hue) from a genuine duotone/sepia wash without needing a book-specific
-    carve-out. A plausible direction: also measure hue diversity within the *colorful*
-    (>= COLORFUL_PIXEL_SATURATION) band and only flag the low-sat-band concentration when
-    the colorful band is ALSO low-diversity (a real duotone wash is single-hue at every
-    saturation level, not just the low-sat one) -- but verify against the corpus rather
-    than assuming this is sufficient. finalize-pair has no --force bypass for this check
-    by design, so mr-007 (and mr-013, if it turns out to be a false positive too) stay
-    stuck at accepted-but-not-finalized until this is resolved one way or the other:
-    either the guard is recalibrated and they finalize cleanly, or the recalibration
-    confirms the reject is correct and they need a fresh render instead. Verify with
-    `python -m pytest tests/ -k art_quality` (or the equivalent test file, if one exists
-    for this module) plus a live finalize-pair --live retry on both mr-007 and mr-013
-    once the fix lands.
-  updated: '2026-09-27T15:15:00Z'
+  note: |-
+    Discovered during t-022's 2026-09-27 cycle 84: finalize-pair rejected monster-recast mr-007 (Pound Foolish, a rainbow-costumed circus clown scene) with "single-hue tint/wash -- near-neutral pixels share a consistent hue (concentration=0.94, reject at >= 0.90)" (coloring-book/t-045's TINT_MAX_HUE_CONCENTRATION check). Direct visual inspection of the file confirms it is clearly NOT a sepia/duotone wash -- it's a rich, flat cel-shaded illustration with strong reds, yellows, greens, and blues throughout the costume, tents, and balloons. Pixel analysis backs this up: colorful_fraction is 0.55, spread across four distinct strong hue bins (roughly red/orange, green, and blue/violet each carrying six-figure pixel counts), which is exactly the "flat cel-shaded multi-color palette" t-045's own comment says this check exists to distinguish real illustrations from. The likely root cause: tint_hue_concentration() only measures hue consistency within the *low-saturation* band (near-neutral midtones/background) and never cross-checks whether the image's *saturated* pixels are themselves multi-hued -- so a real illustration whose neutral/background regions (walls, doors, shadow) carry a consistent warm ambient-light cast can trip the guard even though its foreground is genuinely rich and multi-color. mr-013 (Ansel Bell) rejected the same cycle at concentration=0.93 is a much weaker case for false-positive (colorful_fraction only 0.14, almost entirely skin-tone hues, genuinely close to monochrome by eye) -- left unresolved and NOT claimed as a false positive; it may be a real quality issue. Fix: read scripts/art_quality.py's tint_hue_concentration()/TINT_MAX_HUE_CONCENTRATION (search coloring-book/t-045's calibration comment for the full history and the 10 Silas-approved masters used last time), then re-run the same calibration exercise against the FULL current approved/ corpus across all three books -- not just the two cases this note flags -- to find a signal that separates mr-007 (clearly real, multi-hue) from a genuine duotone/sepia wash without needing a book-specific carve-out. A plausible direction: also measure hue diversity within the *colorful* (>= COLORFUL_PIXEL_SATURATION) band and only flag the low-sat-band concentration when the colorful band is ALSO low-diversity (a real duotone wash is single-hue at every saturation level, not just the low-sat one) -- but verify against the corpus rather than assuming this is sufficient. finalize-pair has no --force bypass for this check by design, so mr-007 (and mr-013, if it turns out to be a false positive too) stay stuck at accepted-but-not-finalized until this is resolved one way or the other: either the guard is recalibrated and they finalize cleanly, or the recalibration confirms the reject is correct and they need a fresh render instead. Verify with `python -m pytest tests/ -k art_quality` (or the equivalent test file, if one exists for this module) plus a live finalize-pair --live retry on both mr-007 and mr-013 once the fix lands.
+
+    Claim tint/wash guard recalibration against the full approved coloring-book corpus.
+  updated: '2026-09-27T17:19:06+00:00'
+  claimed_by: openai-scheduled-2026-09-27T171826Z-coloring-book-t058-a11
+  claimed_at: '2026-09-27T17:19:06+00:00'
 - id: t-059
   milestone: m4
   title: "FOR SILAS: mr-021 (Invisible Exhibitionist) render makes the body fully visible instead of invisible, and reads more explicit than its brief allows"
