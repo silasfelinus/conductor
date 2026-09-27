@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-09-26T14:33:02.332334+00:00",
+  "generated_at": "2026-09-27T01:14:14.830254+00:00",
   "summary": {
     "roadmaps": 55,
     "active_projects": 23,
     "continuous_projects": 3,
-    "tasks": 1715,
-    "ready": 14,
-    "waiting": 68,
-    "needs_human": 62,
+    "tasks": 1724,
+    "ready": 17,
+    "waiting": 64,
+    "needs_human": 63,
     "in_progress": 2,
-    "done": 1553,
+    "done": 1562,
     "errors": 0,
-    "warnings": 12,
-    "info": 29
+    "warnings": 13,
+    "info": 30
   },
   "projects": [
     {
@@ -159,18 +159,19 @@
       "override_status": "active",
       "priority_index": 8,
       "autonomous": false,
-      "task_count": 39,
+      "task_count": 44,
       "counts": {
-        "done": 35,
-        "needs-human": 4
+        "done": 38,
+        "needs-human": 5,
+        "ready": 1
       },
-      "open_count": 4,
-      "human_attention": 4,
-      "ready": 0,
+      "open_count": 6,
+      "human_attention": 5,
+      "ready": 1,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 35
+      "done": 38
     },
     {
       "slug": "digital-storefront",
@@ -236,19 +237,20 @@
       "override_status": "active",
       "priority_index": 12,
       "autonomous": false,
-      "task_count": 20,
+      "task_count": 21,
       "counts": {
         "claimed": 1,
-        "done": 2,
-        "waiting": 17
+        "done": 4,
+        "ready": 3,
+        "waiting": 13
       },
-      "open_count": 18,
+      "open_count": 17,
       "human_attention": 0,
-      "ready": 0,
-      "waiting": 17,
+      "ready": 3,
+      "waiting": 13,
       "claimed": 1,
       "review": 0,
-      "done": 2
+      "done": 4
     },
     {
       "slug": "scene-animator",
@@ -470,19 +472,18 @@
       "override_status": "active",
       "priority_index": 24,
       "autonomous": false,
-      "task_count": 40,
+      "task_count": 43,
       "counts": {
-        "done": 35,
-        "needs-human": 4,
-        "ready": 1
+        "done": 39,
+        "needs-human": 4
       },
-      "open_count": 5,
+      "open_count": 4,
       "human_attention": 4,
-      "ready": 1,
+      "ready": 0,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 35
+      "done": 39
     },
     {
       "slug": "animation-manager",
@@ -1078,6 +1079,13 @@
     },
     {
       "severity": "warning",
+      "code": "STALE_IN_PROGRESS",
+      "project": "animation-manager",
+      "task": "t-022",
+      "message": "Task has remained claimed for 3 days."
+    },
+    {
+      "severity": "warning",
       "code": "POSSIBLY_UNNECESSARY_GATE",
       "project": "conductor",
       "task": "t-167",
@@ -1215,6 +1223,13 @@
       "project": "dream-cycle",
       "task": "t-029",
       "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
+      "code": "NEEDS_HUMAN_NOTE_FORMAT",
+      "project": "humboldt-scoop-cms",
+      "task": "t-042",
+      "message": "needs-human note does not use the AGENTS.md FOR SILAS action format."
     },
     {
       "severity": "info",
