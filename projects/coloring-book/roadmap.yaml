@@ -1818,3 +1818,37 @@ tasks:
     `consume_coloring_book_color_art.py` invocation is running against it -- wait for it
     to fully exit first.
   updated: '2026-09-27T10:50:00Z'
+
+- id: t-056
+  milestone: m4
+  title: "FOR SILAS: mr-014 (bathtub phone-call scene) render omits its required mask and reads more cleavage-forward than its own brief allows"
+  status: needs-human
+  soft_gate: true
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: >-
+    FOR SILAS: t-022's 2026-09-27 BW-derivation cycle reached monster-recast slot 14,
+    mr-014 "Ghostface Gets Ready" (working title;
+    projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-014-bathtub-shave.webp).
+    This concept's own design brief (homage-concepts.yaml#mr-014) requires: "framing:
+    ... mask turned toward the viewer", "originalization_hook: Commercial version needs
+    an original elongated scream mask and robe architecture", and "sensuality: Tastefully
+    covered adult bathtub pinup; exposed leg, bubbles, wet fabric, no explicit anatomy."
+    The rendered candidate omits the mask entirely (an ordinary unmasked woman's face) and
+    the robe has a deep plunging neckline with visible cleavage -- beyond "tastefully
+    covered" as written, and without the mask the originalization_hook's main IP-safety
+    device (an original mask design standing in for the literal Ghostface likeness) isn't
+    present at all. This was caught before accept-color was run (no ledger state changed
+    for this slot -- the premature accept-color this cycle briefly triggered was reverted
+    unpushed). TO APPROVE: view the file above and decide: (a) request a re-render with
+    the mask included and the neckline brought within the brief's own "tastefully covered"
+    language -- the next coloring-book/t-022 cycle will resubmit from a revised prompt
+    once one exists, (b) accept the current render as-is despite missing the mask (set
+    approved_by_human: true and status: done, and the next cycle will run accept-color
+    then generate-bw/accept-bw/finalize-pair), or (c) drop mr-014 from the set and note a
+    replacement slot. Left unaccepted in color-art-jobs.yaml (status: done, not approved)
+    either way; no auto-accept. What unblocks: mr-014's slot in coloring-book/t-022's
+    remaining production batch (t-022 continues on other monster-recast slots in the
+    meantime, soft_gate: true).
+  updated: '2026-09-27T13:20:00Z'
