@@ -1261,9 +1261,9 @@ tasks:
 - id: t-048
   milestone: m4
   title: "art_quality.py's noise/static detector (hf_ratio) false-positives on busy, detail-dense line art"
-  status: ready
+  status: claimed
   stakes: reversible
-  owner: null
+  owner: worker
   passes: 0
   note: >-
     Kaizen from t-022's 2026-09-27 cycle, the same cycle that finally closed t-039 for
@@ -1299,3 +1299,6 @@ tasks:
     because it caught six weeks of real corruption undetected any other way (t-039's own
     history), and a single visual inspection by one session is a weaker signal than the
     gate over the full remaining ~64-image batch this fix has just unblocked.
+  claimed_by: openai-scheduled-2026-09-27T041702Z-coloring-book-t048-a11
+  claimed_at: '2026-09-27T04:17:02Z'
+  updated: '2026-09-27T04:17:02Z'
