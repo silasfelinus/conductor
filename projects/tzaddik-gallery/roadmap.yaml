@@ -200,7 +200,7 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Add authenticated candidate submission workflow"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -212,9 +212,19 @@ tasks:
 
       Opened kind_robots PR #3065: authenticated candidate submission workflow (POST
       /api/tzaddik + tzaddik-submit-form.vue). vue-tsc/eslint/prettier clean; CI running.
+
+      silasfelinus/kind_robots#3065 merged clean (all 33 checks green: vue-tsc, eslint,
+      contract verifiers, layout-contract, etc). Signed-in users can now submit a Tzaddik
+      candidate (name, LIVING/MEMORIAL, rationale, Wikipedia source, optional biography) via a
+      new modal on /tzaddik-gallery; POST /api/tzaddik validates the wikipedia.org source,
+      reserves a unique slug, and creates the row at curationState: PENDING with
+      submittedByUserId recorded. Submitter sees their own pending entry immediately via the
+      existing [id].get.ts visibility carve-out. No karma/reaction wiring added -- out of
+      scope. t-007 (upvote/downvote) and t-008 (moderation/override) remain waiting on this
+      and can now be picked up.
     claimed_by: 2026-09-27T205707Z-tzaddik-t006
     claimed_at: '2026-09-27T20:57:08Z'
-    updated: '2026-09-27T21:08:45Z'
+    updated: '2026-09-27T21:14:04Z'
     implementation_pr: 'silasfelinus/kind_robots#3065'
 
   - id: t-007
