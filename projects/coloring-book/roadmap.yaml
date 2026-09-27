@@ -682,14 +682,77 @@ tasks:
     here since it's out of this cycle's scope. `python
     scripts/validate_roadmaps.py` clean. Re-arming to ready (recurring),
     releasing the claim.
+    Cycle 80 (2026-09-27, scheduled Conductor sweep): the largest single cycle to date.
+    render box UP throughout (check_render_box.py: Comfy heartbeat healthy). Confirmed
+    mr-005/t-050 is a slot-specific soft gate, not book-wide -- monster-recast's other
+    approved-color slots were workable independently and had simply not been attempted
+    since before coloring-book/t-039's fix landed.
+    kind-robots: ran generate-bw/accept-bw/finalize-pair for all 17 remaining
+    approved-color slots except kr-001 (kr-017 through kr-036) -- 17 new final pairs,
+    27/36 (up from 10/36). Every BW candidate visually reviewed against its color
+    master before promotion.
+    kr-001 investigation: two consecutive generate-bw mechanical rejections from cycle
+    79 turned out to be a genuine false positive in art_quality.py's noise/static gate,
+    not a real defect or a reference-image handling bug (disproved that hypothesis by
+    reading the code) -- both rejected candidates were clean, faithful line art on
+    visual inspection. A second real false positive (monster-recast mr-010) surfaced
+    later this same cycle, giving three real false-positive data points (hf_ratio
+    0.5732-0.5953) against thirteen real true-positive corruption examples
+    (0.8530-0.8756). ROTATION COLLISION at merge time: a concurrent session
+    independently found and fixed the identical bug as coloring-book/t-048 (already
+    merged to main, NOISE_MIN_HF_RATIO 0.55 -> 0.72) while this cycle was still in
+    progress -- reconciled by taking their merged fix as canonical, dropping this
+    session's duplicate threshold change, and folding the mr-010 evidence in as
+    supplementary regression tests instead. Restored kr-001's and mr-010's real clean
+    candidates and ran them through accept-bw/finalize-pair; mr-010 finalized cleanly.
+    kr-001's own accept-bw was blocked by this session's sandbox permission classifier
+    (likely because kr-001 is the canonical Kind Robots logo/brand asset) -- left at
+    bw_status: done with its restored candidate at generated/bw/kr-001-bw.webp, one
+    `accept-bw --live --book kind-robots --proposal-id kr-001` (then `finalize-pair`)
+    away from landing; a future session or Silas should run it explicitly. Also filed
+    coloring-book/t-055 (consume_coloring_book_color_art.py lacks a queue_lock) and
+    added a same-day second-occurrence note to the concurrent session's own
+    coloring-book/t-054 (a stale KNOWN_BAD test fixture, mr-025 -- this cycle's hwr-021
+    work hit the identical drift on a different fixture).
+    monster-recast: force-retried the 7 slots stuck at needs_review since before
+    t-039's fix (mr-007/009/010/011/012/013/020) -- 6 landed clean immediately (mr-010
+    was the false positive above), plus 7 more fresh slots (mr-023/024/025/029/033/
+    034/035) -- 13 new final pairs, 16/36 (up from 4/36). mr-016 mechanically rejected
+    again with the genuine noise signature (hf_ratio 0.87, unmistakable static on visual
+    inspection) -- left needs_review, not a false positive. mr-007 and mr-013 landed
+    clean BW but hit a *legacy* tint/wash rejection (coloring-book/t-045) on their own
+    pre-existing approved color masters at finalize-pair time -- both were approved
+    before t-045 existed; left accepted-color/accepted-bw pending a color re-render or
+    an explicit grandfather decision, not forcing a re-render of already-approved
+    content this cycle.
+    hwr-021: root-caused its color rejection -- the prompt literally contained the word
+    "Sepia" in its palette clause, directly conflicting with t-045's house-style gate.
+    Revised the prompt (flat cel-shaded multi-color, explicit anti-sepia language,
+    reinforced "rolling camera"). Also found and documented a real tooling gap while
+    doing this: consume_coloring_book_color_art.py has no queue_lock (unlike
+    manage_coloring_book_production.py), so a hand-edit made while a batch is running
+    gets silently clobbered by the batch's next whole-file write -- lost the first
+    resubmission attempt this way, filed coloring-book/t-055, redid the edit after the
+    batch finished. Fresh render fixed the palette but still misses the pose ("hangs
+    from the underside" -> stands beside) and casting ("stocky woman mechanic" -> reads
+    as a man) that 2026-09-11's review already flagged -- documented with a concrete
+    stronger-rewrite suggestion for a future cycle; not re-submitted a third time this
+    cycle. hollywood-recast stays at 33/36 final pairs (hwr-014/t-051, hwr-021, and
+    hwr-025/t-053 remain open).
+    Total this cycle: 29 new final pairs (17 kind-robots + 12 monster-recast) --
+    76/108 overall (up from 47/108 at cycle 79's end), plus one production-gate bug
+    independently fixed twice and reconciled at merge (t-048), one new tooling gap
+    filed (t-055), and kr-001 handed off one step from landing.
+    `python scripts/validate_roadmaps.py` clean throughout. Re-arming to ready
+    (recurring), releasing the claim.
   run_log: projects/coloring-book/t-022-run-log.md
   recurring: true
   implementation_pr: 'silasfelinus/conductor#5278'
-  status: claimed
-  updated: '2026-09-27T09:56:47Z'
-  owner: worker
-  claimed_by: 2026-09-27T-conductor-sweep-t022-cycle80
-  claimed_at: '2026-09-27T09:56:47Z'
+  status: ready
+  owner:
+  updated: '2026-09-27T12:30:00Z'
+  claimed_by:
+  claimed_at:
 - id: t-025
   milestone: m6
   title: Package and register Monster Recast book 1
@@ -1701,6 +1764,57 @@ tasks:
     that installs Pillow, so a future drift like this one is caught instead
     of only surfacing when someone happens to run the full suite locally
     with Pillow present.
+    SECOND OCCURRENCE (t-022 cycle 80, same day, independent session): the identical
+    class of drift just hit `KNOWN_BAD["hwr-021-the-silent-mechanic.webp"]` too --
+    hwr-021's color prompt was revised and re-rendered this cycle (fixing a genuine
+    sepia-tint defect that fixture was pinned against), landing new content at the same
+    checked-in path and invalidating that fixture the same way mr-025's did. Two
+    independent occurrences of the same structural issue in one day is a stronger
+    signal toward the "archive a byte-for-byte copy to a stable fixtures path" fix
+    option above rather than a per-case freshness check -- any `KNOWN_BAD` entry keyed
+    on a live production path will keep drifting as normal production work naturally
+    revises and re-renders rejected candidates.
   updated: '2026-09-27T12:21:16Z'
   claimed_by: 2026-09-27T-conductor-sweep-t054
   claimed_at: '2026-09-27T12:15:43Z'
+- id: t-055
+  milestone: m4
+  title: "consume_coloring_book_color_art.py has no queue_lock -- concurrent writers to color-art-jobs.yaml can silently clobber each other"
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: >-
+    Found the hard way during t-022 cycle 80 (2026-09-27): while a live
+    `manage_coloring_book_production.py --operation generate-bw --live --book kind-robots`
+    batch (17 slots) was running in the background, this session hand-edited
+    `color-art-jobs.yaml` directly (resetting hollywood-recast hwr-021's `status` from
+    `done` back to `pending` after revising its color prompt) and committed/pushed that
+    edit. The edit was silently lost: `manage_coloring_book_production.py` loads the
+    whole queue file into memory once at start and calls `write_yaml(QUEUE_FILE, queue)`
+    -- rewriting the ENTIRE file, not just the touched book -- after every single
+    proposal in its batch, so each of its writes after my edit landed on disk clobbered
+    it back to the stale in-memory copy. `manage_coloring_book_production.py` itself has
+    a `queue_lock()` (`fcntl.flock`) specifically to stop two invocations of *itself*
+    from doing this to each other (confirmed by hand: running two operations against the
+    same queue file concurrently correctly raises "already held by another
+    manage_coloring_book_production.py invocation"), but `consume_coloring_book_color_art.py`
+    -- the OTHER script that reads/writes this exact same `color-art-jobs.yaml` for the
+    color-submission stage -- has no such lock (`grep -n queue_lock
+    scripts/consume_coloring_book_color_art.py` -> no match) and no defense against a
+    concurrent hand-edit either. A future cycle running color submission and BW
+    derivation back-to-back without fully serializing them (or any agent editing the
+    queue file directly while either script has it loaded) can hit the identical silent
+    data loss -- worse than a crash, because nothing errors; the edit just doesn't stick
+    and nothing says why. Fix: give `consume_coloring_book_color_art.py` the same
+    `queue_lock()` (share the helper from `manage_coloring_book_production.py` rather
+    than reimplementing it) so the two scripts serialize against each other the same way
+    `manage_coloring_book_production.py` already serializes against itself; consider
+    whether `write_yaml` should merge a re-read-before-write pass instead of trusting a
+    single in-memory snapshot for the entire batch duration, which would also protect
+    against exactly this class of hand-edit race without requiring every caller to
+    remember to take the lock. Practical workaround until fixed: never hand-edit
+    `color-art-jobs.yaml` while any `manage_coloring_book_production.py` or
+    `consume_coloring_book_color_art.py` invocation is running against it -- wait for it
+    to fully exit first.
+  updated: '2026-09-27T10:50:00Z'

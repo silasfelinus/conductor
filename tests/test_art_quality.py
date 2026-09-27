@@ -138,10 +138,18 @@ KNOWN_BAD_DIR_HWR = (
     / "generated" / "color-proposals-v1"
 )
 KNOWN_BAD = {
-    "mr-025-little-miss-omen.webp": dict(
-        path=KNOWN_BAD_DIR_MR / "mr-025-little-miss-omen.webp",
-        mean_saturation=0.2812, colorful_fraction=0.3496, luma_std=0.3826,
-        tint_concentration=0.9889,
+    # coloring-book/t-054: the previously-pinned final mr-025 file
+    # (mr-025-little-miss-omen.webp) was overwritten with a real accepted
+    # illustration in PR #5269 (t-022 cycle 75) and now legitimately passes
+    # the color gate -- it no longer represents the tint/wash defect this
+    # fixture exists to catch. Swapped in its own archived attempt-1 render
+    # (same character, still checked into the repo under rejected/render/),
+    # which still measures as a genuine single-hue sepia/duotone wash today.
+    "mr-025-little-miss-omen-attempt-1-seed-1794629632.webp": dict(
+        path=KNOWN_BAD_DIR_MR / "rejected" / "render" / "rejected"
+        / "mr-025-little-miss-omen-attempt-1-seed-1794629632.webp",
+        mean_saturation=0.1195, colorful_fraction=0.1346, luma_std=0.3637,
+        tint_concentration=0.9661,
     ),
     "hwr-021-the-silent-mechanic.webp": dict(
         path=KNOWN_BAD_DIR_HWR / "hwr-021-the-silent-mechanic.webp",
@@ -368,3 +376,54 @@ def test_live_known_bad_examples_match_frozen_fixture(name, fx):
     )
     assert info["mean_saturation"] == pytest.approx(fx["mean_saturation"], abs=0.01)
     assert info["tint_concentration"] == pytest.approx(fx["tint_concentration"], abs=0.01)
+
+
+# NOISE_MIN_HF_RATIO regression corpus (coloring-book/t-054, 2026-09-27). hf_ratio
+# depends on real per-pixel spatial arrangement, not just aggregate stats, so unlike
+# the fixtures above it cannot be reconstructed with `_pinned_stats()` -- these are
+# live-only (skipped without Pillow) tests against the real rejected-candidate files
+# already checked into the repo under */generated/*/rejected/mechanical/. Every file
+# here is real production output, not synthetic.
+NOISE_CORPUS_ROOT = REPO_ROOT / "projects" / "coloring-book" / "sets"
+
+# Supplementary real evidence found independently in the same cycle (t-022 cycle 80)
+# as t-048's own NOISE_FALSE_POSITIVES/NOISE_TRUE_POSITIVES above -- named distinctly
+# (_EXTRA suffix) to avoid shadowing those dict-shaped fixtures with these list-shaped
+# ones. mr-010 is a second, independent false-positive example (a completely different
+# composition style from kr-001 -- fine linework/large white areas rather than dense
+# scattered icons) that strengthens the case for the recalibration; mr-005/mr-011 are
+# additional true-positive corruption examples from the same real corpus.
+NOISE_FALSE_POSITIVES_EXTRA = [
+    NOISE_CORPUS_ROOT / "monster-recast" / "generated" / "bw" / "rejected" / "mechanical"
+    / "mr-010-bw-20260927T113010Z.webp",
+]
+
+NOISE_TRUE_POSITIVES_EXTRA = [
+    NOISE_CORPUS_ROOT / "monster-recast" / "generated" / "bw" / "rejected" / "mechanical"
+    / "mr-005-bw-20260915T070347Z.webp",
+    NOISE_CORPUS_ROOT / "monster-recast" / "generated" / "bw" / "rejected" / "mechanical"
+    / "mr-011-bw-20260915T070357Z.webp",
+]
+
+
+@pytest.mark.parametrize("path", NOISE_FALSE_POSITIVES_EXTRA, ids=lambda p: p.name)
+def test_live_dense_detail_line_art_is_not_rejected_as_noise(path):
+    pytest.importorskip("PIL")
+    if not path.exists():
+        pytest.skip(f"{path} not present in this checkout")
+    ok, reasons, info = aq.assess_file(path, "bw")
+    assert ok is True, f"{path.name} should pass the bw gate now: {reasons} ({info})"
+    assert info["hf_ratio"] < aq.NOISE_MIN_HF_RATIO
+
+
+@pytest.mark.parametrize("path", NOISE_TRUE_POSITIVES_EXTRA, ids=lambda p: p.name)
+def test_live_genuine_noise_static_is_still_rejected(path):
+    pytest.importorskip("PIL")
+    if not path.exists():
+        pytest.skip(f"{path} not present in this checkout")
+    ok, reasons, info = aq.assess_file(path, "bw")
+    assert ok is False, f"{path.name} unexpectedly passes the bw gate now: {info}"
+    assert any("noise/static" in r for r in reasons), (
+        f"{path.name} rejected for a different reason than expected: {reasons}"
+    )
+    assert info["hf_ratio"] >= aq.NOISE_MIN_HF_RATIO
