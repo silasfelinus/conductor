@@ -46,12 +46,9 @@ books:
     render_engine: krea2
     completed_at: '2026-09-14T10:48:58Z'
     prompt_fingerprint: f7a2b373e25e81fcf7b24d0ba97e92de70991b0fea9d810aaa9d40e954016930
-    bw_status: running
-    bw_requested_at: '2026-09-22T11:02:15Z'
-    bw_render_reasons:
-    - spatially-uncorrelated noise/static — no discernible image structure (hf_ratio=0.85); this can pass the saturation/white-fraction
-      checks for either variant while being pure garbage (coloring-book/t-039)
-    - not black-and-white line art — came back colored/shaded (mean_saturation=0.17, colorful_fraction=0.33, white_fraction=0.00)
+    bw_status: approved
+    bw_requested_at: '2026-09-27T02:58:56Z'
+    bw_render_reasons: []
     bw_revision_history:
     - requested_at: '2026-09-15T08:33:57Z'
       previous_status: needs_review
@@ -65,7 +62,29 @@ books:
       rendered_path: null
       semantic_score: null
       archived_path: null
-    bw_job_id: 30650
+    - requested_at: '2026-09-27T02:58:55Z'
+      previous_status: needs_review
+      art_image_id: 30608
+      rendered_path: null
+      semantic_score: null
+      archived_path: null
+    bw_job_id: 31597
+    bw_art_image_id: 240116
+    bw_rendered_path: generated/bw/mr-001-bw.webp
+    bw_mechanical_info:
+      pixels: 16960
+      mean_saturation: 0.0004
+      colorful_fraction: 0.0
+      white_fraction: 0.788
+      luma_std: 0.0689
+      size: 1024x1536
+      hf_ratio: 0.4683
+      tint_concentration: null
+    bw_completed_at: '2026-09-27T03:11:10Z'
+    bw_approved_at: '2026-09-27T03:12:22Z'
+    pair_status: final
+    pair_semantic_score: null
+    pair_finalized_at: '2026-09-27T03:12:25Z'
   - slot: 2
     id: mr-002
     slug: dream-killer
@@ -927,6 +946,9 @@ books:
     prompt_fingerprint: d79b3c359529ddbeb44592e5376f6a518f5a9204216f8465404c916414288f1e
     approved_at: '2026-09-11T00:32:11Z'
     lock_seed: true
+    bw_job_id: 31598
+    bw_status: running
+    bw_requested_at: '2026-09-27T03:12:30Z'
   - slot: 2
     id: hwr-002
     slug: the-grand-staircase
@@ -1580,6 +1602,25 @@ books:
     prompt_fingerprint: 2b2cedba8d64d2fec2b105895d3e0fc6956ba6de94ab9e4ace3a17c3e927e6c4
     approved_at: '2026-09-11T08:36:08Z'
     lock_seed: true
+    bw_job_id: 31599
+    bw_status: needs_review
+    bw_requested_at: '2026-09-27T03:12:32Z'
+    bw_art_image_id: 240118
+    bw_rendered_path: generated/bw/kr-001-bw.webp
+    bw_rejected_path: projects/coloring-book/sets/kind-robots/generated/bw/rejected/mechanical/kr-001-bw-20260927T031917Z.webp
+    bw_mechanical_info:
+      pixels: 16960
+      mean_saturation: 0.0003
+      colorful_fraction: 0.0
+      white_fraction: 0.4996
+      luma_std: 0.2482
+      size: 1024x1536
+      hf_ratio: 0.5886
+      tint_concentration: null
+    bw_render_reasons:
+    - spatially-uncorrelated noise/static — no discernible image structure (hf_ratio=0.59); this can pass the saturation/white-fraction
+      checks for either variant while being pure garbage (coloring-book/t-039)
+    bw_completed_at: '2026-09-27T03:19:17Z'
   - slot: 2
     id: kr-002
     slug: ami-over-the-redwoods

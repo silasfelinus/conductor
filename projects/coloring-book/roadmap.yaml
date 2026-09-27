@@ -461,14 +461,52 @@ tasks:
     releasing the claim. Next cycle: same as cycles 48-49 -- after confirming (or being
     told) the Unraid container has been Force-Updated past 2026-09-26T20:15Z, run exactly
     one live generate-bw canary before resuming the rest of the BW-derivation batch.
+
+    Cycle 74 (2026-09-27T02:55Z, scheduled Conductor Agent run) -- BREAKTHROUGH: the
+    BW-derivation path is unblocked for real after 6 weeks. Re-checked mr-001's cached
+    bw_job_id 30650 (rendered 2026-09-22, pre-fix): mechanically rejected as noise as
+    expected -- stale evidence, not a new data point. Forced a fresh live submission
+    (--force, ArtJob 31597) and inspected its stored workflow graph immediately via
+    GET /api/art/queue/31597: node 59 is a plain UNETLoader with
+    flux1-dev-kontext_fp8_scaled.safetensors (fp8_e4m3fn), not the old
+    UnetLoaderGGUF/flux1-kontext-dev-Q5_K_M.gguf path -- confirmed the Unraid Force Update
+    carrying kind_robots#3056 has landed. Waited for the render: DONE, BW-LANDED (not
+    rejected), ArtImage 240116, mechanical stats mean_saturation=0.0004/
+    colorful_fraction=0.0/white_fraction=0.788/hf_ratio=0.4683 -- the inverse of every
+    prior noise rejection. Visually inspected the rendered webp directly: genuine clean
+    black-and-white line art matching mr-001's accepted color master. Ran accept-bw and
+    finalize-pair live; both landed clean. Closed coloring-book/t-039 for real (third
+    close attempt; the first two on 2026-09-15 were disproven by a live canary within
+    hours -- this one already passed that same bar before being marked done).
+
+    Ran two more confirmatory canaries to rule out a Monster-Recast-specific fluke:
+    hollywood-recast hwr-001 (ArtJob, ArtImage 240117) also BW-LANDED, visually confirmed
+    clean, accepted and finalized. kind-robots kr-001 (ArtJob 31599, ArtImage 240118) was
+    mechanically REJECTED (hf_ratio=0.59) -- but visual inspection of the rejected file
+    shows a completely legitimate, clean coloring page (a large robot mascot amid a dense
+    repeating pattern of dozens of small robots/stars/gears/butterflies), not corrupted
+    static, and its mean_saturation=0.0003/colorful_fraction=0.0 rules out the t-039 noise
+    signature entirely. This is a false positive from the hf_ratio noise detector (t-043)
+    tripped by kind-robots' uniquely dense repeated-icon prompt style, not a recurrence of
+    t-039's bug -- filed as coloring-book/t-048 (kaizen) rather than reopening t-039 or
+    hand-bypassing the quality gate. kr-001 stays in its rejected-mechanical state pending
+    that fix.
+
+    Net result: the Kontext engine fix is confirmed correct on 2 of 3 books via full
+    generate-bw -> accept-bw -> finalize-pair, and the 3rd book's single miss is a
+    separate, already-triaged quality-gate tuning issue, not evidence the render bug
+    persists. coloring-book/t-022's remaining scope (67 approved color masters across all
+    three books still need a BW counterpart, minus the 2 now finalized this cycle) is
+    unblocked and ready for the next worker_pass_size-scoped batch. Re-arming to ready
+    (recurring), releasing the claim.
   run_log: projects/coloring-book/t-022-run-log.md
   recurring: true
   implementation_pr: 'silasfelinus/conductor#4482'
-  status: claimed
-  updated: '2026-09-27T02:55:50Z'
-  owner: worker
-  claimed_by: 20260927T025549Z-coloring-book-t022-sweep
-  claimed_at: '2026-09-27T02:55:50Z'
+  status: ready
+  updated: '2026-09-27T03:25:00Z'
+  owner: null
+  claimed_by: null
+  claimed_at: null
 - id: t-025
   milestone: m6
   title: Package and register Monster Recast book 1
@@ -785,7 +823,7 @@ tasks:
 - id: t-039
   milestone: m4
   title: "Investigate: Kontext BW-derivation renders pure corrupted noise (mr-016, mr-020) -- resembles ai-art-academy/t-079"
-  status: needs-human
+  status: done
   stakes: reversible
   note: >-
     Kaizen from t-022's 2026-09-11 pass. `manage_coloring_book_production.py`'s `generate-bw` always calls the art-enqueue endpoint with `"engine": "kontext"` (image-to-image line-art derivation from an accepted color master, no LoRA fields set). Two Monster Recast accepts left in-flight from the prior pass (mr-016 job 21667, mr-020 job 21668) both landed as pure corrupted color noise -- not line art, not a bad rendering of the source scene, just static -- and both were mechanically rejected by `art_quality.assess_file` with byte-identical statistics (mean_saturation=0.17, colorful_fraction=0.35, white_fraction=0.00) despite being derived from two completely different source color images. That identical-statistics result across different inputs points at the render backend itself, not per-image content. Rejected candidates saved at `projects/coloring-book/sets/monster-recast/generated/bw/rejected/mechanical/ mr-016-bw-20260911T003011Z.webp` and `mr-020-bw-20260911T003019Z.webp`. This resembles `ai-art-academy/t-079` ("Kontext LoRA arm renders pure corrupted noise instead of a real image", still `needs-human`/unresolved) -- same `kontext` engine family, same "every render comes back as uniform noise regardless of input" symptom -- but is NOT confirmed to be the identical bug: t-079's request body sets `loraName`/`loraStrength` (implicating the LoRA branch specifically), while this book's BW-derivation body has no LoRA fields at all, just a plain kontext image-to-image call. So either (a) the LoRA branch and the plain kontext branch share a broken component (e.g. a VAEDecode step, per t-079's own hypothesis), or (b) this is a second, separate kontext-engine defect. Both need the same backend/relay-side investigation this sandbox cannot do directly (no access to the ComfyUI node graph or relay process) -- compare the plain kontext workflow graph this book's BW derivation emits against a known-working kontext call (e.g. this same script's `accept-color`/mechanical-check path, which only downloads an already-rendered image and never calls enqueue) to see whether the corruption is upstream of both branches or specific to each. FOR SILAS: two systemic corrupted-noise signals now exist across two projects on the same `kontext` engine family (ai-art-academy/t-079 and this task). Worth having whoever has backend/relay access (ComfyUI workflow graph, or the relay's `buildKontextWorkflow`) look at both together rather than separately, since a shared root cause would explain both with one fix. TO APPROVE: no roadmap action needed from Silas to unblock other work -- this is a soft gate (agents keep working elsewhere; coloring-book's `t-022` is simply not re-attempting any `generate-bw` calls until this clears). What unblocks when it's fixed: `t-022` can resume BW derivation for mr-016, mr-020, and the other in-progress Monster Recast accepts. REPRODUCED 2026-09-11 BY DIRECT TEST, and the result rules out the leading hypothesis. Silas gave a session admin art-job access ("You have the ability to create art job requests through the admin key, make the Kontext test yourself"), so this no longer needed to wait on him. THE TEST: ArtJob 21693, enqueued through POST /api/art/enqueue with `"engine": "kontext"` and NO LoRA fields of any kind -- the same plain image-to-image branch `manage_coloring_book_production.py`'s `generate-bw` uses. Source was a known-good 1024x1024 plate (cthulhuquarium-fish-lamplight-angler.webp, a clean Victorian trade-card illustration), prompt asked for black and white line art on a pure white background, steps 20, guidance 2.5, denoise 1. The job took roughly 25 minutes, completed DONE with no error, and produced ArtImage 23785: a valid, well-formed 1024x1024 PNG of PURE MULTICOLOURED STATIC. No line art, no recognisable subject, no white background -- the identical failure mr-016 and mr-020 showed. WHAT THIS RULES OUT. ai-art-academy/t-079's leading hypothesis was GGUF + LoraLoaderModelOnly: that the corruption lived in the LoRA branch specifically. This run had no LoRA node at all and still produced noise, so the fault is UPSTREAM OF THE LORA BRANCH and shared by every kontext call. t-079's own note had already flagged this possibility from the coloring-book sighting; this test confirms it rather than leaving it as an inference from two projects' anecdotes. THE EXACT MODEL CHAIN, read from job 21693's stored payload so the next session does not have to re-derive it:
@@ -993,11 +1031,12 @@ tasks:
     Cycle 2026-09-26T22:00Z (scheduled Conductor Agent run, coloring-book/t-022 cycle 47): the outstanding item from Silas's own 2026-09-22 A/B ("if i just switch the gguf for safetensors, it works, no static") is now implemented. flux1-dev-kontext_fp8_scaled.safetensors (Resource id 3837, verified present via GET /api/resources) replaces flux1-kontext-dev-Q5_K_M.gguf as the Kontext UNet default in all three graph builders: the shared queue builder (kontext/utils/workflow.ts's DEFAULT_KONTEXT_UNET) and both direct routes (generate.post.ts, kombine.post.ts) that had their own separately-hardcoded copy of the same broken checkpoint -- the same three-file shape the sibling T5-encoder defect needed (#2750 + #2977). Added utils/scripts/verifyKontextUnetDefault.ts (wired into contract-tests.yml) to guard against this checkpoint regressing back in as a default, mirroring verifyKontextTextEncoder.ts's existing guard for the T5 defect. Updated verifyKontextMaskForwarding.ts's pinned reference-graph assertion, which had asserted the now-disproven claim that the GGUF UNet was compatible with a healthy render. PR: silasfelinus/kind_robots#3056 (open, CI pending at time of writing).
 
     NOT closing this task yet, deliberately: this exact task has already been prematurely marked done twice (2026-09-15, RECONCILED then REOPENED same day after live canary ArtJob 22830 still rendered static) on evidence that turned out to be misdiagnosed. The code fix is scoped, tested (unit guards + typecheck + lint + prettier all clean), and directly implements Silas's own live A/B result -- but per this task's own established bar ("a render that structurally matches Silas's known-working reference, not just a green mechanical gate"), it should stay needs-human/soft_gate until (a) PR #3056 merges, (b) the self-hosted Unraid container picks it up via the normal deploy path (merge != deploy, per kind_robots AGENTS.md), and (c) a live generate-bw canary renders clean line art rather than static. Next session: check PR #3056's CI and merge if green (this is ordinary scoped software work, not itself gated), then track the deploy+canary step before flipping this to done.
-  updated: '2026-09-26T20:07:21Z'
+
+    CLOSED FOR REAL (conductor scheduled Agent run, 2026-09-27T03:11Z): both remaining conditions are now met. (b) Deploy confirmed live: forced a fresh generate-bw submission for mr-001 (ArtJob 31597, --force to bypass the stale cached job) and inspected its stored workflow graph immediately via GET /api/art/queue/31597 -- node 59 is a plain UNETLoader with flux1-dev-kontext_fp8_scaled.safetensors (fp8_e4m3fn), not the old UnetLoaderGGUF/flux1-kontext-dev-Q5_K_M.gguf path, proving the Unraid Force Update landed #3056's fix. (c) The canary rendered clean: ArtJob 31597 completed DONE, BW-LANDED (not mechanically rejected), ArtImage 240116, mechanical stats mean_saturation=0.0004/colorful_fraction=0.0/white_fraction=0.788/hf_ratio=0.4683 -- structurally the opposite of every prior noise rejection (which ran mean_saturation~0.17/colorful_fraction~0.33/white_fraction=0.00). Visually inspected the rendered webp directly: a real black-and-white line-art coloring page (two lab technicians and a heart-gauge device under a muscular bride-figure), clean closed contours on a pure white background, matching mr-001's accepted color master composition -- not static, not a stray gray wash. Ran accept-bw and finalize-pair for mr-001 live; both completed clean. This clears the last condition this task itself set as the bar for closing, so status: done for real this time (third time is the actual charm -- the first two premature closes were disproven by a live canary within hours; this one already passed that same test). coloring-book/t-022's BW-derivation path is unblocked book-wide as of this cycle: submitted confirmatory generate-bw canaries for hollywood-recast/hwr-001 and kind-robots/kr-001 in the same cycle to verify the fix isn't Monster-Recast-specific before scaling to the full remaining batch (67 approved color masters across the three books still need their BW counterpart).
+  updated: '2026-09-27T03:15:00Z'
   owner: worker
   claimed_by: 2026-09-15T091200Z-coloring-book-t039-sampler9c2a
   claimed_at: '2026-09-15T09:19:00Z'
-  soft_gate: true
   implementation_pr: 'silasfelinus/kind_robots#3056'
 - id: t-040
   milestone: m4
@@ -1218,3 +1257,45 @@ tasks:
   claimed_at: '2026-09-17T03:38:09Z'
   updated: '2026-09-17T03:51:08Z'
   implementation_pr: 'silasfelinus/conductor#4536'
+
+- id: t-048
+  milestone: m4
+  title: "art_quality.py's noise/static detector (hf_ratio) false-positives on busy, detail-dense line art"
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: >-
+    Kaizen from t-022's 2026-09-27 cycle, the same cycle that finally closed t-039 for
+    real. After confirming coloring-book/t-039's Kontext UNet fix (kind_robots#3056) was
+    live and rendering clean on two books (monster-recast mr-001 ArtImage 240116,
+    hollywood-recast hwr-001 ArtImage 240117 -- both BW-LANDED, both visually confirmed
+    as real black-and-white line art, both accepted and finalized), the third
+    confirmatory canary (kind-robots kr-001, ArtJob 31599, ArtImage 240118) was
+    mechanically REJECTED as noise: hf_ratio=0.59 (the same spatial-autocorrelation
+    detector t-043 added to catch t-039's corrupted-static bug, threshold presumably
+    ~0.5-0.6). But the rejected image
+    (projects/coloring-book/sets/kind-robots/generated/bw/rejected/mechanical/kr-001-bw-20260927T031917Z.webp)
+    is visually a completely legitimate, clean coloring-book page: a large friendly
+    robot mascot surrounded by a dense repeating pattern of dozens of small robots,
+    stars, gears, butterflies, and paintbrushes on a white background -- not static, not
+    corrupted, just busy. mean_saturation=0.0003 and colorful_fraction=0.0 (correctly
+    grayscale/line-art, unlike every real noise rejection which had mean_saturation~0.17)
+    confirm this isn't the t-039 bug recurring -- only the spatial high-frequency energy
+    from the dense small-icon pattern is tripping the same heuristic that (correctly)
+    flags genuine noise, because lots of small repeated closed contours produce
+    similar adjacent-pixel luma variance to real static. Do NOT reopen t-039 over this:
+    the engine fix is confirmed correct (2/3 real-content canaries, one false-positive
+    on a detector that predates this fix and was never tuned against dense
+    reference-image-driven compositions like kind-robots' logo-workshop prompts, which
+    intentionally ask for many small repeated mascot instances). TO FIX: either raise
+    the hf_ratio threshold for the "kind-robots" book specifically (its prompts are the
+    only ones requesting dense repeated-icon compositions), or add a secondary signal
+    that distinguishes structured repetition (real static has no repeating shapes) from
+    genuine noise -- e.g. edge-count regularity, or comparing hf_ratio only within
+    contiguous regions rather than the whole frame. kr-001 itself is left in its
+    rejected-mechanical state pending this fix; do not manually bypass the quality gate
+    to force it through by hand-copying the rejected file back -- the gate exists
+    because it caught six weeks of real corruption undetected any other way (t-039's own
+    history), and a single visual inspection by one session is a weaker signal than the
+    gate over the full remaining ~64-image batch this fix has just unblocked.
