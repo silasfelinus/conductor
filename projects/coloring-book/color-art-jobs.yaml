@@ -169,26 +169,20 @@ books:
     prompt_fingerprint: f5031ee17543338505b06e5c96e5a1f7730d1eba9c5a1812e945f5f5835902d1
     approved_at: '2026-09-07T22:41:39Z'
     lock_seed: true
-    bw_job_id: 21643
-    bw_status: needs_review
-    bw_requested_at: '2026-09-07T22:39:07Z'
-    bw_art_image_id: 23745
-    bw_rendered_path: generated/bw/mr-005-bw.webp
-    bw_rejected_path: projects/coloring-book/sets/monster-recast/generated/bw/rejected/mechanical/mr-005-bw-20260915T070347Z.webp
-    bw_mechanical_info:
-      pixels: 16960
-      mean_saturation: 0.1765
-      colorful_fraction: 0.353
-      white_fraction: 0.0
-      luma_std: 0.0823
-      size: 1024x1536
-      hf_ratio: 0.8633
-      tint_concentration: 0.2246
+    bw_status: running
+    bw_requested_at: '2026-09-27T04:54:42Z'
     bw_render_reasons:
     - spatially-uncorrelated noise/static — no discernible image structure (hf_ratio=0.86); this can pass the saturation/white-fraction
       checks for either variant while being pure garbage (coloring-book/t-039)
     - not black-and-white line art — came back colored/shaded (mean_saturation=0.18, colorful_fraction=0.35, white_fraction=0.00)
-    bw_completed_at: '2026-09-15T07:03:47Z'
+    bw_revision_history:
+    - requested_at: '2026-09-27T04:54:41Z'
+      previous_status: needs_review
+      art_image_id: 23745
+      rendered_path: null
+      semantic_score: null
+      archived_path: null
+    bw_job_id: 31606
   - slot: 6
     id: mr-006
     slug: screwhead
