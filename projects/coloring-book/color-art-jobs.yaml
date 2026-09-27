@@ -670,12 +670,9 @@ books:
     prompt_fingerprint: 3c166044c1f2c341bd83e59c8afd77d4a90fbca447f026aa7c77be2c9d1b03ef
     approved_at: '2026-09-09T06:33:37Z'
     lock_seed: true
-    bw_status: needs_review
-    bw_requested_at: '2026-09-15T18:18:19Z'
-    bw_render_reasons:
-    - spatially-uncorrelated noise/static — no discernible image structure (hf_ratio=0.87); this can pass the saturation/white-fraction
-      checks for either variant while being pure garbage (coloring-book/t-039)
-    - not black-and-white line art — came back colored/shaded (mean_saturation=0.17, colorful_fraction=0.33, white_fraction=0.00)
+    bw_status: approved
+    bw_requested_at: '2026-09-27T15:03:08Z'
+    bw_render_reasons: []
     bw_revision_history:
     - requested_at: '2026-09-15T08:29:42Z'
       previous_status: needs_review
@@ -695,20 +692,29 @@ books:
       rendered_path: null
       semantic_score: null
       archived_path: null
-    bw_job_id: 23052
-    bw_art_image_id: 30381
+    - requested_at: '2026-09-27T15:03:07Z'
+      previous_status: needs_review
+      art_image_id: 30381
+      rendered_path: null
+      semantic_score: null
+      archived_path: null
+    bw_job_id: 31695
+    bw_art_image_id: 240214
     bw_rendered_path: generated/bw/mr-016-bw.webp
-    bw_rejected_path: projects/coloring-book/sets/monster-recast/generated/bw/rejected/mechanical/mr-016-bw-20260927T105708Z.webp
     bw_mechanical_info:
       pixels: 16960
-      mean_saturation: 0.1685
-      colorful_fraction: 0.3252
-      white_fraction: 0.0
-      luma_std: 0.0823
+      mean_saturation: 0.0006
+      colorful_fraction: 0.0
+      white_fraction: 0.7969
+      luma_std: 0.0652
       size: 1024x1536
-      hf_ratio: 0.8671
-      tint_concentration: 0.237
-    bw_completed_at: '2026-09-27T10:57:08Z'
+      hf_ratio: 0.3925
+      tint_concentration: null
+    bw_completed_at: '2026-09-27T15:06:33Z'
+    bw_approved_at: '2026-09-27T15:11:23Z'
+    pair_status: final
+    pair_semantic_score: null
+    pair_finalized_at: '2026-09-27T15:11:24Z'
   - slot: 17
     id: mr-017
     slug: trophy-queen
@@ -791,13 +797,21 @@ books:
     seed: 840019
     image_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-019-countess-vermin.webp
     source_ref: projects/coloring-book/sets/monster-recast/art-modeler-request.yaml#mr-019
-    last_render_seed: 314880941
+    studio_revision_history:
+    - requested_at: '2026-09-27T15:07:25Z'
+      previous_status: done
+      art_image_id: 17044
+      rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-019-countess-vermin.webp
+      semantic_score: null
+      prompt_fingerprint: 0d2eb3cb364afca831b7b5af5dcb0d5ccf0bd0fb5e9a43c6b64afa01d8b0bc38
+      archived_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/revisions/mr-019-countess-vermin-20260927T150725Z.webp
+    studio_revision_requested_at: '2026-09-27T15:07:25Z'
     rendered_path: projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-019-countess-vermin.webp
-    art_image_id: 17044
-    render_seed: 997057438
+    art_image_id: 240215
+    render_seed: 1480224862
     render_engine: krea2
-    completed_at: '2026-08-09T08:32:42Z'
-    prompt_fingerprint: 0d2eb3cb364afca831b7b5af5dcb0d5ccf0bd0fb5e9a43c6b64afa01d8b0bc38
+    completed_at: '2026-09-27T15:09:32Z'
+    prompt_fingerprint: 59215f95cef1c11a49e0a5a3669b3044ecc260a69e8852b9ef05ac13b03f1ab8
   - slot: 20
     id: mr-020
     slug: fly-girl-summer
