@@ -254,6 +254,13 @@ user's id), then `pm2 start ecosystem.config.js --only kr-relay && pm2 save`.
 Needs any Python 3.9+ — stdlib only, no pip installs. Watch it with
 `pm2 logs kr-relay`.
 
+**Rotating that token:** run `.\Rotate-KrToken.ps1` from this folder. kr-relay and
+kr-download read `KR_RELAY_TOKEN`, not `KR_API_TOKEN`, and a plain `pm2 restart`
+keeps the old value (as does every reboot, via `pm2 resurrect`) — the 2026-09-20
+rotation missed exactly this and the renderer sat dead for about half a day. The
+script sets both names, restarts with `--update-env`, runs `pm2 save`, and never
+prints the value.
+
 ## The download agent (kr-download)
 
 `relay_download_agent.py` is the relay's companion for *models*. When you queue

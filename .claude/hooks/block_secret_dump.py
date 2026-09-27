@@ -384,16 +384,43 @@ def check(command: str, depth: int = 0) -> str | None:
     return None
 
 
+def check_file_tool(tool: str, tool_input: dict) -> str | None:
+    """Read/Grep of a live dotenv file puts its credential lines in the transcript.
+
+    The Bash rules above never saw these: the Read and Grep tools are not shell
+    commands. A Grep that only counts or lists files is fine, as is a
+    `.env.example`-style template.
+    """
+    path = tool_input.get("file_path") if tool == "Read" else tool_input.get("path")
+    if not path:
+        return None
+    hits = dotenv_paths(str(path))
+    if not hits or not path.rstrip("/").endswith(hits[-1]):
+        return None
+    if tool == "Grep" and tool_input.get("output_mode") in {"count", "files_with_matches"}:
+        return None
+    return (
+        "%s of `%s` prints credential lines verbatim. Count with Grep "
+        "`output_mode: count`, or read names only with "
+        "`grep '^' %s | sed 's/=.*/=<redacted>/'`. See AGENTS.md hard rule 15."
+        % (tool, hits[-1], hits[-1])
+    )
+
+
 def main() -> int:
     try:
         payload = json.load(sys.stdin)
-        if payload.get("tool_name") != "Bash":
+        tool = payload.get("tool_name")
+        tool_input = payload.get("tool_input", {}) or {}
+        if tool == "Bash":
+            reason = check(tool_input.get("command") or "")
+        elif tool in {"Read", "Grep"}:
+            reason = check_file_tool(tool, tool_input)
+        else:
             return 0
-        command = payload.get("tool_input", {}).get("command") or ""
     except Exception:
         return 0  # fail open; see the module docstring
 
-    reason = check(command)
     if not reason:
         return 0
 

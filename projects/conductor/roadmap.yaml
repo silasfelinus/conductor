@@ -3867,9 +3867,21 @@ tasks:
     security-flag entry. No new action needed beyond what this task already asks for --
     rotate the token and harden kr_token_set.sh's guidance to cover the Python-level unsafe
     shape too.
+
+    2026-09-27 (Silas-directed session): the secondary follow-up is DONE -- kr_token_set.sh
+    documents both later shapes, and a value-based output redactor
+    (.claude/hooks/redact_bash_output.py, mirrored user-level by
+    scripts/install_secret_hooks.py) now masks any secret value in Bash output whatever
+    shape prints it; block_secret_dump.py also refuses Read/Grep of a live .env. Only the
+    rotation itself remains. TO ROTATE: on the render box run
+    `ops/home-server/Rotate-KrToken.ps1` (detects user-api-key vs beta-admin-token, rotates
+    the apiKey via the API when it can, verifies new=admin / old=401, updates
+    KR_RELAY_TOKEN + KR_API_TOKEN with pm2 --update-env + pm2 save, and sets the GitHub
+    secret via gh), then update the claude.ai cloud environment's KR_API_TOKEN variable.
+    Close with approved_by_human: true + status: done once Silas says it is rotated.
   claimed_by: null
   claimed_at: null
-  updated: '2026-09-27T11:20:32Z'
+  updated: '2026-09-27T21:30:00Z'
 
 - id: t-190
   milestone: m2

@@ -24,6 +24,17 @@
 # Never echo, log, or otherwise print "$KR_API_TOKEN" itself. This script
 # only ever reports presence/absence.
 #
+# Two more shapes leaked the same token later, neither of them `${VAR:-...}`:
+#   export $(grep -q KR_API_TOKEN <<< "$(env)" && true)   # 2026-09-21, t-189
+#       -- the substitution was empty, leaving a bare `export`, which prints
+#          every exported variable. Bare `export`/`env`/`set`/`declare -x` all do.
+#   python3 -c "print(getattr(mod, 'KR_API_TOKEN', 'NOATTR'))"  # 2026-09-27
+#       -- getattr/os.environ.get with a default returns the VALUE when set.
+#          Python presence checks are `hasattr(mod, 'KR_API_TOKEN')` and
+#          `bool(os.environ.get('KR_API_TOKEN'))`.
+# .claude/hooks/redact_bash_output.py now masks the value in Bash output
+# whatever shape prints it; that is a backstop, not permission.
+#
 # `source`d vs executed both have to end this shell's involvement the same
 # way: `exit` inside a *sourced* script terminates the caller's whole shell,
 # not just this script — so `source scripts/kr_token_set.sh; <next command>`
