@@ -485,9 +485,11 @@ proposals:
   title: The Silent Mechanic
   prompt:
     text: 1920s-inspired silent-cinema workshop scene. A stocky woman mechanic in suspenders and grease-streaked
-      face hangs from the underside of an absurdly elegant clockwork limousine while a runaway film camera records
-      her. Tools, gears, and sprockets make crisp colorable shapes; her expression is deadpan. Sepia, teal, and
-      red accents, original character and machine, no title cards or text.
+      face hangs from the underside of an absurdly elegant clockwork limousine while a rolling silent-film
+      camera on a wheeled dolly chases past. Tools, gears, and sprockets make crisp colorable shapes; her
+      expression is deadpan. Flat cel-shaded multi-color palette -- warm teal and red accents against brass
+      and cream -- no single-hue tint or sepia/duotone wash. Original character and machine, no title cards
+      or text.
     ref: null
   inspirations: []
   accepted:
@@ -504,6 +506,13 @@ proposals:
     called for isn''t really present (mostly cream/brown/tan). Gears, sprockets, and workshop detail otherwise match
     the 1920s silent-cinema mood. Needs a fresh render addressing the pose, casting, and palette; not re-enqueued
     this session (render queue backlog).'
+  - 'REVISED 2026-09-27 (t-022 cycle 80): a later render (same prompt) passed creative review on pose/camera/gears
+    but failed coloring-book/t-045''s mechanical duotone/sepia-tint gate (tint_concentration=0.9458, reject at
+    >=0.9) -- the literal word ''Sepia'' in the prompt''s palette clause was driving the render toward exactly the
+    single-hue wash the house style forbids. Reworded the palette clause to explicitly request the flat cel-shaded
+    multi-color house style and forbid a sepia/duotone wash, and reinforced ''rolling ... camera'' in place of the
+    ambiguous ''runaway film camera'' phrase 2026-09-11''s review flagged as rendering static. Not yet re-submitted
+    this note-edit; queue status reset to pending in the same commit so the next production pass picks it up.'
 - slot: 22
   id: hwr-022
   title: Disco Exorcist

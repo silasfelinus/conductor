@@ -1657,3 +1657,56 @@ tasks:
     batch (t-022 continues on other hollywood-recast/kind-robots slots in the
     meantime, soft_gate: true).
   updated: '2026-09-27T08:35:00Z'
+- id: t-054
+  milestone: m4
+  title: "art_quality.py's BW noise/static gate (t-039) false-positives on legitimate line art with dense, evenly-scattered fine detail"
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: >-
+    Found during t-022 cycle 80 (2026-09-27, scheduled Conductor session) investigating
+    kind-robots kr-001 (The Logo Workshop)'s two consecutive generate-bw mechanical
+    rejections from cycle 79, which that cycle flagged for a future session to
+    investigate whether `allow_logo_emblem`/`reference_images` handling was the cause.
+    Read `manage_coloring_book_production.py`'s `generate_bw()`/`enqueue_bw_job()`:
+    neither field is referenced anywhere in the BW-derivation path (they only feed the
+    color-proposal stage in `consume_coloring_book_color_art.py`), so that hypothesis is
+    disproven -- BW derivation is a plain Kontext image-to-image pass over the accepted
+    color master, identical in shape to every other slot.
+    Visually inspected both of kr-001's rejected candidates
+    (generated/bw/rejected/mechanical/kr-001-bw-20260927T031917Z.webp and
+    -20260927T093733Z.webp): both are clean, faithful, print-ready line-art counterparts
+    of the accepted color master -- correct composition, all figures present, no
+    corruption -- not the "spatially-uncorrelated noise/static" the rejection reason
+    names. For comparison, re-viewed a genuine true-positive rejection from the original
+    t-039 defect (monster-recast mr-005-bw-20260915T070347Z.webp): unmistakable
+    full-frame colored static, nothing like kr-001's clean renders. `art_quality.py`'s
+    `hf_energy_ratio()` (adjacent-pixel luma-variance ratio, reject at
+    `NOISE_MIN_HF_RATIO = 0.55`) measured kr-001's BW candidate at hf_ratio=0.60 -- just
+    over the threshold. kr-001's color master ("Logo Workshop") is unusually
+    detail-dense for this book: dozens of small repeated robot/star/gear icons
+    scattered edge-to-edge across the whole frame, which plausibly drives up
+    adjacent-pixel luma variance through genuine fine linework rather than randomness,
+    the same statistical shape the heuristic uses to detect real noise. This reads as a
+    false-positive edge case in the heuristic for busy/detail-dense line art, not a
+    render defect -- current pipeline has no way to promote a mechanically-rejected BW
+    candidate even after a human/agent visually confirms it is correct
+    (`accept-bw`/`finalize-pair` both re-run the identical `mechanical_check()`, so
+    there is no override path short of hand-editing the ledger around the gate, which
+    this cycle deliberately did not do).
+    Suggested fix: add a secondary structural signal that distinguishes coherent dense
+    linework from real noise before rejecting on `hf_ratio` alone (e.g. also require a
+    minimum contiguous white/blank run-length, or a minimum autocorrelation lag-2+
+    coherence check -- true static decorrelates immediately, dense-but-real line art
+    should still correlate over a couple of pixels) -- or, more conservatively, raise
+    `NOISE_MIN_HF_RATIO` slightly and re-validate against both the t-039 true-positive
+    corpus (mr-005/007/009/011/012 rejections, hf_ratio ~0.86-0.88) and this false-positive
+    (kr-001, hf_ratio 0.60) as regression fixtures so a fix doesn't just move the false
+    positive elsewhere. Either way, use these two already-rendered kr-001 images as the
+    known-good regression case and the mr-005 image above as the known-bad case when
+    tuning. Once fixed, kr-001 should re-run `generate-bw --force --live` (or the
+    existing rejected candidate should mechanically pass without a new render, if the
+    fix doesn't require regenerating) and continue through `accept-bw`/`finalize-pair`
+    normally.
+  updated: '2026-09-27T10:15:00Z'
