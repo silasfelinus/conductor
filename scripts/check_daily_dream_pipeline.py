@@ -176,8 +176,8 @@ def check_pipeline(root: Path = ROOT) -> list[str]:
 
     if "sole object writer" not in pipeline.casefold():
         errors.append("PIPELINE.md must identify the sole object writer")
-    if "author → build → facets → submit artjobs → commit → digest" not in pipeline.casefold():
-        errors.append("PIPELINE.md must state the ordered morning cycle")
+    if "author → freeze digest → build today for tomorrow → facets → submit artjobs → commit → send frozen digest" not in pipeline.casefold():
+        errors.append("PIPELINE.md must state the full-cycle render-runway ordering")
     if "scripts/build_dream_records.py" not in creation_spec:
         errors.append("CREATION-SPEC.md must name the canonical builder")
     if "sole object writer" not in dream_spec.casefold():
