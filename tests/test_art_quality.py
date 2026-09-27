@@ -151,8 +151,17 @@ KNOWN_BAD = {
         mean_saturation=0.1195, colorful_fraction=0.1346, luma_std=0.3637,
         tint_concentration=0.9661,
     ),
-    "hwr-021-the-silent-mechanic.webp": dict(
-        path=KNOWN_BAD_DIR_HWR / "hwr-021-the-silent-mechanic.webp",
+    # coloring-book/t-054 SECOND OCCURRENCE (same day): hwr-021's color
+    # prompt was revised and re-rendered mid-cycle (t-022 cycle 80), fixing
+    # the genuine sepia-tint defect this fixture was pinned against, and
+    # landing new content at the same checked-in path -- the identical
+    # drift class mr-025 hit, just for the fixture that was still valid
+    # when this file's mr-025 entry above was first fixed. Swapped in the
+    # archived original render (same values the old fixture already pinned;
+    # this file was moved to rejected/render/ rather than overwritten).
+    "hwr-021-the-silent-mechanic-attempt-1-seed-0.webp": dict(
+        path=KNOWN_BAD_DIR_HWR / "rejected" / "render" / "rejected"
+        / "hwr-021-the-silent-mechanic-attempt-1-seed-0.webp",
         mean_saturation=0.2878, colorful_fraction=0.6124, luma_std=0.2989,
         tint_concentration=0.9458,
     ),
