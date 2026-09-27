@@ -416,7 +416,7 @@ tasks:
   - id: t-018
     milestone: m4
     title: "Create and integrate the Tzaddik Gallery splash/background art"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -558,3 +558,22 @@ tasks:
     claimed_at: null
     updated: '2026-09-27T20:00:00Z'
 
+
+  - id: t-024
+    milestone: m2
+    title: "Surface editor-only moderation actions in the t-017 composed detail rail instead of a separate admin page"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-008
+    note: >-
+      Kaizen from t-017 (silasfelinus/kind_robots#3067): the new composed lg/xl
+      person-review shell places the existing reaction/recheck/discussion controls
+      but deliberately does not invent nonfunctional approve/reject/defer buttons
+      ahead of t-008. Once t-008 lands moderation/override actions, let the detail
+      rail surface editor-only approve/archive/override controls in the same
+      composed panel rather than introducing a separate admin page.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-09-27T22:49:00Z'
