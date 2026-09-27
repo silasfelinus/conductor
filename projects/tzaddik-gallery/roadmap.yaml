@@ -437,8 +437,8 @@ tasks:
   - id: t-021
     milestone: m2
     title: "Add a TZADDIK reactionCategories enum value ahead of the detail-view/reactions work"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: null
@@ -451,3 +451,6 @@ tasks:
       both need to attach reactions to a TzaddikCandidate. Landing the enum/schema
       migration now, decoupled from either task's own UI work, means neither one
       needs its own migration cycle just to wire up reactions.
+    claimed_by: conductor-20260927T010008Z-tzaddik-t021
+    claimed_at: '2026-09-27T01:00:09Z'
+    updated: '2026-09-27T01:00:09Z'
