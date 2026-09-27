@@ -1444,7 +1444,7 @@ tasks:
 - id: t-048
   milestone: m4
   title: "art_quality.py's noise/static detector (hf_ratio) false-positives on busy, detail-dense line art"
-  status: claimed
+  status: review
   stakes: reversible
   passes: 0
   note: >-
@@ -1481,7 +1481,7 @@ tasks:
     because it caught six weeks of real corruption undetected any other way (t-039's own
     history), and a single visual inspection by one session is a weaker signal than the
     gate over the full remaining ~64-image batch this fix has just unblocked.
-  updated: '2026-09-27T11:00:43Z'
+  updated: '2026-09-27T11:01:52Z'
   owner: worker
   claimed_by: 2026-09-27T-conductor-sweep-t048
   claimed_at: '2026-09-27T11:00:43Z'
@@ -1657,3 +1657,45 @@ tasks:
     batch (t-022 continues on other hollywood-recast/kind-robots slots in the
     meantime, soft_gate: true).
   updated: '2026-09-27T08:35:00Z'
+- id: t-054
+  milestone: m4
+  title: "tests/test_art_quality.py's frozen fixture for mr-025-little-miss-omen.webp has drifted from the real checked-in file"
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: >-
+    Discovered incidentally while fixing t-048 (art_quality.py's hf_ratio
+    false-positive). Running `pytest tests/test_art_quality.py` with Pillow
+    installed fails
+    test_live_known_bad_examples_match_frozen_fixture[mr-025-little-miss-omen.webp]:
+    the frozen fixture pins mean_saturation=0.2812/colorful_fraction=0.3496,
+    but the real file at
+    projects/coloring-book/sets/monster-recast/generated/color-proposals-v1/mr-025-little-miss-omen.webp
+    now measures mean_saturation=0.1127/colorful_fraction=0.1137/tint_concentration=0.6137
+    (below TINT_MAX_HUE_CONCENTRATION) and passes the live color gate --
+    the exact drift this test exists to catch. `git log` shows both the
+    image and the test file were touched together in PR #5269 (t-022 cycle
+    75, 2026-09-27 bw batch), so either the file was re-rendered/overwritten
+    without re-deriving the fixture, or the fixture was authored from a
+    different sample than what actually landed. Not currently failing any
+    CI workflow -- .github/workflows/ci.yml's pytest-suite job runs without
+    Pillow (importorskip skips this test there), and
+    coloring-render-contract.yml installs Pillow but only runs
+    test_relay_completion_provenance.py -- so this is a latent gap: the
+    safety net this file's own docstring describes is not actually
+    exercised anywhere in CI right now.
+    TO FIX: inspect the real file (visually, and via
+    `python3 -c "from scripts import art_quality as aq; from pathlib import
+    Path; print(aq.assess_file(Path('<path>'), 'color'))"` with Pillow
+    installed) to determine which is correct -- if the file is still a
+    genuine known-bad tint/wash example, re-derive and update the frozen
+    fixture numbers in tests/test_art_quality.py to match it; if the file
+    no longer represents that defect (e.g. it was replaced by a real
+    illustration during the batch), swap in a different known-bad example
+    or drop it from KNOWN_BAD with a note. Consider also wiring
+    test_art_quality.py (or at least its test_live_* subset) into a CI job
+    that installs Pillow, so a future drift like this one is caught instead
+    of only surfacing when someone happens to run the full suite locally
+    with Pillow present.
+  updated: '2026-09-27T11:15:00Z'
