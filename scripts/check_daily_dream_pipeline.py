@@ -114,21 +114,21 @@ def check_pipeline(root: Path = ROOT) -> list[str]:
 
     digest_sequence = (
         "python scripts/author_dream_proposal.py",
-        "python scripts/run_daily_dream_build.py",
-        "python scripts/apply_daily_dream_facets.py",
-        "python scripts/submit_daily_dream_art.py",
-        "Commit Daily Dream cycle evidence",
-        "Verify Daily Dream cycle",
         "python scripts/build_digest.py",
         "python scripts/enrich_daily_dream_digest.py",
         "python scripts/annotate_daily_dream_art_queue.py",
         "python scripts/validate_digest.py",
         "python scripts/build_digest_email_v2.py",
+        "python scripts/run_daily_dream_build.py --date",
+        "python scripts/apply_daily_dream_facets.py",
+        "python scripts/submit_daily_dream_art.py",
+        "Commit tomorrow's Daily Dream cycle evidence",
+        "Verify tomorrow's Daily Dream cycle",
         "Email via Brevo",
     )
     if not _in_order(digest, digest_sequence):
         errors.append(
-            "Daily Digest must author, build, attach Facets, submit ArtJobs, persist evidence, verify, then render/send"
+            "Daily Digest must freeze today's email before building/submitting today's proposal for tomorrow"
         )
     if digest.count("python scripts/author_dream_proposal.py") != 1:
         errors.append("Daily Digest must author exactly once, at the start of the cycle")
@@ -272,7 +272,7 @@ def main() -> int:
 
     print(
         "Daily Dream pipeline healthy: one ordered morning cycle, one object writer, "
-        "and an hourly report-only sweep."
+        "a full-cycle art runway, and an hourly report-only sweep."
     )
     return 0
 
