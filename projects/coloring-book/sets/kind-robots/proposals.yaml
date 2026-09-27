@@ -104,9 +104,10 @@ proposals:
   title: Serendipity Space Bar
   prompt:
     text: Inside a cozy space bar drifting beside a colorful nebula, an elegant bartender robot with glowing bottle-shaped
-      shoulders serves impossible drinks to aliens, humans, and one butterfly swarm occupying its own stool. Windows
-      reveal tiny starships and a moon shaped like a lemon slice. Rich jewel colors, theatrical lighting, original
-      species and props, no readable signs.
+      shoulders serves impossible drinks to aliens, humans, and a cluster of a dozen distinct butterflies perched
+      together on one bar stool -- no single winged figure, no person. Windows reveal tiny starships and a moon
+      shaped like a lemon slice. Rich jewel colors, theatrical lighting, original species and props, no readable
+      signs.
     ref: null
   inspirations: []
   accepted:
@@ -128,6 +129,11 @@ proposals:
     stool' as the concrete instruction (e.g. 'a cluster of a dozen distinct butterflies perched together
     on one bar stool, no single figure, no person') rather than 'butterfly swarm' as a compound noun the
     model keeps resolving into one winged individual."
+  - "REVISED 2026-09-27 (t-022 cycle 86): applied the note's own suggested literal rewrite -- replaced
+    'one butterfly swarm occupying its own stool' with 'a cluster of a dozen distinct butterflies perched
+    together on one bar stool -- no single winged figure, no person', since the model has twice resolved
+    'butterfly swarm' into one winged individual. Shoulders clause left unchanged (already fixed on the
+    second attempt). Requesting a fresh render (--force) this session; not yet reviewed."
 - slot: 6
   id: kr-006
   title: Net Delivery Flight
@@ -151,10 +157,11 @@ proposals:
   id: kr-007
   title: Ukulele Under the Redwoods
   prompt:
-    text: A soft-spoken little robot sits on a giant redwood root playing ukulele for woodland animals, three cats,
-      and a sleepy repair crew. Its chest light pulses like a metronome while butterflies carry tiny sheet-music
-      shapes with no readable notes. Humboldt forest atmosphere, mossy greens and warm gold, gentle humor,
-      every surface bare and unmarked.
+    text: A soft-spoken little robot sits on a giant redwood root playing ukulele for woodland animals, exactly
+      three distinct cats (a tabby, a black cat, and an orange cat), and a sleepy repair crew made of a sleepy
+      raccoon and two dozing squirrels in tiny tool belts, slumped against a toolbox. Its chest light pulses
+      like a metronome while butterflies carry tiny sheet-music shapes with no readable notes. Humboldt forest
+      atmosphere, mossy greens and warm gold, gentle humor, every surface bare and unmarked.
     ref: null
   inspirations: []
   accepted:
@@ -174,6 +181,12 @@ proposals:
     (e.g. 'a sleepy raccoon and two dozing squirrels in tiny tool belts, slumped against a toolbox') so
     the model has a literal cast rather than an abstract collective noun to lose, and pin the cat count
     to exactly three by describing each one individually."
+  - "REVISED 2026-09-27 (t-022 cycle 86): applied the note's own suggested literal rewrite -- named the
+    repair crew concretely ('a sleepy raccoon and two dozing squirrels in tiny tool belts, slumped against
+    a toolbox') instead of leaving it an abstract collective noun the model kept dropping, and pinned the
+    cat count to exactly three named cats (tabby, black, orange) since the count drifted to four on the
+    second attempt. No-readable-notes clause left unchanged (already fixed on the second attempt).
+    Requesting a fresh render (--force) this session; not yet reviewed."
 - slot: 8
   id: kr-008
   title: Granny Gearworks
@@ -229,9 +242,10 @@ proposals:
   title: Cat Rescue Protocol
   prompt:
     text: 'A dignified service robot kneels in a rainy alley to offer shelter to four very different cats: a huge
-      tomcat, a tiny calico, a one-eyed elder, and a suspicious kitten. Its umbrella unfolds into a warm little
-      canopy while puddles reflect butterflies and city lights. Tender but not sentimental, strong shapes,
-      every surface bare and unmarked.'
+      solid grey tomcat, clearly male and battle-scarred; a tiny calico kitten; an elder cat with one eye
+      permanently closed and an old scar across it; and a suspicious young kitten. Its umbrella unfolds into a
+      warm little canopy while puddles reflect butterflies and city lights. Tender but not sentimental, strong
+      shapes, every surface bare and unmarked.'
     ref: null
   inspirations: []
   accepted:
@@ -258,6 +272,11 @@ proposals:
       the calico palette the model keeps defaulting to, and describe the elder's eye directly (e.g.
       'one eye permanently closed with an old scar across it') rather than 'one-eyed', which the model
       has now twice ignored."
+    - "REVISED 2026-09-27 (t-022 cycle 86): applied the note's own suggested literal rewrite -- gave the
+      tomcat explicit non-calico coloring ('huge solid grey tomcat, clearly male and battle-scarred') to
+      break it away from the calico palette the model kept defaulting to, and described the elder's eye
+      directly ('one eye permanently closed with an old scar across it') instead of the twice-ignored
+      'one-eyed'. Requesting a fresh render (--force) this session; not yet reviewed."
 - slot: 12
   id: kr-012
   title: The Dream Library
@@ -295,10 +314,11 @@ proposals:
   id: kr-014
   title: Rainbow Butterfly Sanctuary
   prompt:
-    text: Inside a glass sanctuary, thousands of rainbow butterflies rest on sculptural robot trees while visitors
-      of varied ages and bodies move quietly along curved paths. A central caretaker bot opens its chest to reveal
-      a warm habitat light. Luminous color, strong negative space, crisp wings, peaceful awe, every surface
-      bare and unmarked.
+    text: Inside a glass sanctuary, thousands of rainbow butterflies rest on robot trees with trunks made of jointed
+      brass pipe with visible rivets and branches ending in articulated metal fingers, while visitors of varied
+      ages and bodies -- including a wheelchair user who pauses beneath a butterfly-laden branch -- move quietly
+      along curved paths. A central caretaker bot opens its chest to reveal a warm habitat light. Luminous color,
+      strong negative space, crisp wings, peaceful awe, every surface bare and unmarked.
     ref: null
   inspirations: []
   accepted:
@@ -326,6 +346,11 @@ proposals:
       (e.g. 'trunks made of jointed brass pipe with visible rivets, branches ending in articulated metal
       fingers') rather than the abstract 'robot trees', and add one visitor with a visible mobility aid
       (e.g. 'a wheelchair user pauses beneath a butterfly-laden branch') to anchor the body-diversity ask."
+    - "REVISED 2026-09-27 (t-022 cycle 86): applied the note's own suggested literal rewrite -- named
+      concrete mechanical features on the trees ('trunks made of jointed brass pipe with visible rivets,
+      branches ending in articulated metal fingers') instead of the abstract 'sculptural robot trees', and
+      added a wheelchair user visitor to anchor the body-diversity ask. Requesting a fresh render (--force)
+      this session; not yet reviewed."
 - slot: 15
   id: kr-015
   title: Coat Dance Calibration
@@ -493,9 +518,10 @@ proposals:
   id: kr-025
   title: Art Studio Swarm
   prompt:
-    text: A bustling art studio where robots and humans paint, sculpt, print, and sew while a rainbow butterfly
-      swarm carries wet canvases to drying racks. Include a broad range of bodies, ages, and artistic tools; every
-      participant is making something different. Saturated color, organized chaos, no readable labels or text.
+    text: A rainbow butterfly swarm carries wet canvases to drying racks across a bustling art studio, where one
+      robot paints at an easel, another sculpts clay on a wheel, a human prints woodblocks at a press, and another
+      human sews fabric at a machine -- four distinct activities, never all painting. Include a broad range of
+      bodies, ages, and artistic tools. Saturated color, organized chaos, no readable labels or text.
     ref: null
   inspirations: []
   accepted:
@@ -526,6 +552,11 @@ proposals:
       to lead with the butterfly-carrying action and name a specific non-painting
       activity per figure rather than leaving 'sculpt, print, and sew' as unweighted
       alternatives the model can ignore in favor of the easier 'everyone paints' reading."
+    - "REVISED 2026-09-27 (t-022 cycle 86): applied the note's own suggested literal rewrite -- led with
+      the butterfly-carrying action instead of burying it mid-sentence, and named a specific non-painting
+      activity per figure (sculpting, printmaking, sewing) instead of leaving 'sculpt, print, and sew' as
+      unweighted alternatives the model kept ignoring in favor of 'everyone paints'. Requesting a fresh
+      render (--force) this session; not yet reviewed."
 - slot: 26
   id: kr-026
   title: Goat Farm Fix-It
