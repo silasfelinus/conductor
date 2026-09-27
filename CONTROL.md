@@ -17,7 +17,7 @@ reversible until the first clean cycle is done. Nothing publishes, deploys, or s
 money without my explicit approval (set `approved_by_human: true` on the gated task).
 
 **Priority order this week:** cthulhuquarium → kind-economy → butterfly-gallery → art-archive →
-mandarin-tutor → interface-vision → coloring-book → humboldt-scoop-cms → digital-storefront → kind-robots → rainbow-butterflies.
+mandarin-tutor → interface-vision → humboldt-scoop-cms → digital-storefront → kind-robots → rainbow-butterflies.
 
 <!-- Updated 2026-09-19: mandarin-tutor reopened by Silas (see projects/priority.yaml) and
 reinserted here directly behind art-archive to match, repairing CONTROL_PRIORITY_DRIFT flagged

@@ -233,7 +233,14 @@ overrides:
     tabKey: academy
 
   - slug: coloring-book
-    status: active
+    status: paused # paused 2026-09-27 by Silas, in session: "let's pause the coloring book
+    # project. It's on pause anyway, and I'm really unsure what's been done with it for a while."
+    # Found during a usage investigation: recurring t-022 (Monster Recast production pass) re-armed
+    # to ready after every cycle and was claimed 40 times in 48h (Sep 26-27, cycles ~49-88) by the
+    # hourly Conductor Agent, while its own notes said every book's next step was gated FOR SILAS or
+    # an already-concluded 3-attempt engine limitation -- burning Max-plan usage on no-op cycles.
+    # Pausing removes all its tasks from pickup and gate reports. Nothing is abandoned: proposals,
+    # T022-HISTORY.md and t-022-run-log.md stay as they are for when he reviews it.
     priority: normal
     kind: software
     # Frontend placement — synced to the kind_robots Project row by
