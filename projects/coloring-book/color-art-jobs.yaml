@@ -46,12 +46,9 @@ books:
     render_engine: krea2
     completed_at: '2026-09-14T10:48:58Z'
     prompt_fingerprint: f7a2b373e25e81fcf7b24d0ba97e92de70991b0fea9d810aaa9d40e954016930
-    bw_status: running
+    bw_status: approved
     bw_requested_at: '2026-09-27T02:58:56Z'
-    bw_render_reasons:
-    - spatially-uncorrelated noise/static — no discernible image structure (hf_ratio=0.87); this can pass the saturation/white-fraction
-      checks for either variant while being pure garbage (coloring-book/t-039)
-    - not black-and-white line art — came back colored/shaded (mean_saturation=0.17, colorful_fraction=0.33, white_fraction=0.00)
+    bw_render_reasons: []
     bw_revision_history:
     - requested_at: '2026-09-15T08:33:57Z'
       previous_status: needs_review
@@ -72,6 +69,22 @@ books:
       semantic_score: null
       archived_path: null
     bw_job_id: 31597
+    bw_art_image_id: 240116
+    bw_rendered_path: generated/bw/mr-001-bw.webp
+    bw_mechanical_info:
+      pixels: 16960
+      mean_saturation: 0.0004
+      colorful_fraction: 0.0
+      white_fraction: 0.788
+      luma_std: 0.0689
+      size: 1024x1536
+      hf_ratio: 0.4683
+      tint_concentration: null
+    bw_completed_at: '2026-09-27T03:11:10Z'
+    bw_approved_at: '2026-09-27T03:12:22Z'
+    pair_status: final
+    pair_semantic_score: null
+    pair_finalized_at: '2026-09-27T03:12:25Z'
   - slot: 2
     id: mr-002
     slug: dream-killer
@@ -933,6 +946,9 @@ books:
     prompt_fingerprint: d79b3c359529ddbeb44592e5376f6a518f5a9204216f8465404c916414288f1e
     approved_at: '2026-09-11T00:32:11Z'
     lock_seed: true
+    bw_job_id: 31598
+    bw_status: running
+    bw_requested_at: '2026-09-27T03:12:30Z'
   - slot: 2
     id: hwr-002
     slug: the-grand-staircase
@@ -1586,6 +1602,9 @@ books:
     prompt_fingerprint: 2b2cedba8d64d2fec2b105895d3e0fc6956ba6de94ab9e4ace3a17c3e927e6c4
     approved_at: '2026-09-11T08:36:08Z'
     lock_seed: true
+    bw_job_id: 31599
+    bw_status: running
+    bw_requested_at: '2026-09-27T03:12:32Z'
   - slot: 2
     id: kr-002
     slug: ami-over-the-redwoods
