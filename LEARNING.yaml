@@ -16675,3 +16675,12 @@ records:
   outcome: done
   failure_category: quality
   lesson: "A schema.prisma change without a committed `npx prisma generate` diff fails test:generated-client-parity every time and is a pure mechanical fix -- when retry_context names the exact expected file list, regenerating and verifying locally before re-pushing resolves it in one pass with no need to touch the schema. Also: closing a task to done with dependents whose depends_on is now satisfied requires re-running resolve_deps.py in the same close-out PR, or the audit CI check will refuse to merge (\"resolver should promote this task to ready\") -- close_task.py does not do this automatically."
+- date: 2026-09-27
+  project: tzaddik-gallery
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 1
+  outcome: done
+  failure_category: null
+  lesson: "A brand-new project's data model (t-003) existing with zero curated rows means the correct first pass on the next UI task is the plumbing (API + store + gallery wiring) verified via typecheck/contract tests, not a claim that the feature has been seen working against real data -- say which of those two you actually verified rather than blurring them. Also: reuse the shared kr-gallery shell directly from the page rather than adding a wrapper *-gallery.vue component when the page itself already carries the tab logic -- verifyRouteGalleryContract.ts's Rule 2 only requires the route's own mounted subtree to render kr-gallery, not a dedicated component file."

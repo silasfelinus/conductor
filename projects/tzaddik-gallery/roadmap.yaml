@@ -433,3 +433,21 @@ tasks:
       or endorsements. Keep country/region as separate structured metadata and
       living/memorial as record state. Editors may extend the controlled set
       when repeated real cases do not fit, but avoid arbitrary one-off tags.
+
+  - id: t-021
+    milestone: m2
+    title: "Add a TZADDIK reactionCategories enum value ahead of the detail-view/reactions work"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: null
+    note: >
+      Kaizen from t-004 (silasfelinus/kind_robots#3058): stores/reactionStore.ts
+      + the reactionCategories enum (server/api/reactions/*) currently has no
+      TZADDIK value -- ART_IMAGE, ART_COLLECTION, BOT, CHARACTER, CHAT_EXCHANGE,
+      DREAM, FACET, MESSAGE, PROJECT, PROMPT, RESOURCE, REWARD, SCENARIO, THEME
+      are the full set today. t-005 (detail view) and t-006 (submission workflow)
+      both need to attach reactions to a TzaddikCandidate. Landing the enum/schema
+      migration now, decoupled from either task's own UI work, means neither one
+      needs its own migration cycle just to wire up reactions.
