@@ -230,19 +230,53 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Add user upvotes/downvotes using Kind Robots reaction patterns"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-003, t-006]
-    note: >
+    note: >-
       Reuse the site's existing user/reaction conventions where practical.
       Reactions express community sentiment and discovery; they must not silently
       define the canonical 36 or turn the page into an unmoderated popularity
       leaderboard.
+
+      AUDITED, not reimplemented (zero-diff close): the reaction write/read/access-rule stack
+      for TzaddikCandidate is already fully wired end-to-end and satisfies this task as
+      written. Confirmed by direct code read plus an independent Explore-agent pass: (1)
+      server/api/reactions/index.post.ts's getExpectedTargetField maps TZADDIK ->
+      tzaddikCandidateId with its own assertReactionTargetAccessible/getContentOwnerId
+      branches (t-005, kind_robots#3060); (2)
+      server/api/reactions/tzaddikCandidate/[id].get.ts is the dedicated read route, gated by
+      reactionVisibility.ts's canViewReactionsOn; (3) utils/karmaRefTypes.ts registers
+      'tzaddikCandidate' in KARMA_REF_TYPES/KARMA_REF_TARGET_COLUMNS so REACTION_RECEIVED
+      karma flows correctly; (4) components/tzaddik/tzaddik-detail-sheet.vue already embeds
+      <reaction-card target-type="tzaddikCandidate" reaction-category="TZADDIK" .../> plus
+      <review-list target-type="tzaddikCandidate" .../>, preserved through t-017's rebuild --
+      the exact same reaction-card/review-list pattern every other gallery (character, bot,
+      dream, reward, scenario) uses for its own detail view. All three CI-enforced verifiers
+      (verifyReactionTargetCoverage, verifyReactionRouteAuth, verifyEarnedKarmaWiring) already
+      pass for tzaddikCandidate today. Users can submit
+      LOVED/CLAPPED/BOOED/HATED/NEUTRAL/FLAGGED reactions (this codebase's upvote/downvote
+      vocabulary -- there is no literal thumbs-up/down component anywhere in the site) and see
+      others' reactions, exactly matching 'reuse the site's existing user/reaction conventions
+      where practical.' Genuinely missing (filed as tzaddik-gallery/t-025, not built here to
+      avoid guessing at an unreviewed UX/architecture call): any in-grid reaction/earned-karma
+      affordance on the Living/Memorial gallery cards themselves -- bot-gallery.vue's bot-
+      card.vue wraps reactable-card with an earned-karma badge in-grid, but tzaddik-
+      gallery.vue renders through the generic kr-gallery/GalleryItem (no reaction slot) and no
+      userStore.trackEarnedKarma('tzaddikCandidate', ...) call exists yet anywhere.
+      Deliberately not adding this now: it requires choosing between extending kr-gallery's
+      generic GalleryItem (cross-cutting, touches every other gallery using it) or building a
+      bespoke tzaddik-card.vue and swapping the page off kr-gallery's renderer (nontrivial,
+      touches the page t-017 just rebuilt) -- a real design decision, not a mechanical follow-
+      on, and the task's own note ('must not turn the page into an unmoderated popularity
+      leaderboard') argues for deliberately not surfacing a raw vote count in-grid without an
+      explicit call on it.
     claimed_by: 2026-09-27T2255Z-tzaddik-t007-worker
     claimed_at: '2026-09-27T22:53:41Z'
-    updated: '2026-09-27T22:53:41Z'
+    updated: '2026-09-27T22:57:44Z'
+    implementation_pr: 'silasfelinus/kind_robots#3060'
 
   - id: t-008
     milestone: m2
