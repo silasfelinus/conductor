@@ -1448,9 +1448,9 @@ tasks:
 - id: t-049
   milestone: m4
   title: "manage_coloring_book_production.py's generate-bw is unsafe to run concurrently across proposal ids in the same book set"
-  status: ready
+  status: claimed
   stakes: reversible
-  owner: null
+  owner: worker
   passes: 0
   note: >-
     Kaizen from t-022's 2026-09-27 cycle 75. The script loads the whole
@@ -1477,6 +1477,9 @@ tasks:
     book must never run in parallel, so a future session doesn't rediscover this by
     losing bookkeeping again. (a) is the smallest, safest fix given how this script is
     actually invoked (short-lived one-shot CLI calls, not a long-running service).
+  claimed_by: claude-scheduled-20260927T0851Z-cb-t049
+  claimed_at: '2026-09-27T09:01:06Z'
+  updated: '2026-09-27T09:01:06Z'
 
 - id: t-050
   milestone: m4
