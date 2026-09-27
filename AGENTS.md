@@ -420,6 +420,38 @@ from profile) — `source scripts/kr_token_set.sh` in one call has no effect on 
 call's environment, so check presence in the *same* invocation that uses the token, not a
 prior one.
 
+**Secrets are guarded by hooks now, because remembering the rule has failed five times.**
+(2026-09-27, after a Python `print(getattr(module, "KR_API_TOKEN", "NOATTR"))` diagnostic
+printed the live token — a shape no shell rule could cover. Silas: *"The risks of training
+data leaking my personal hobby project's admin key is not worth excessive hassle."*) Two
+PreToolUse hooks in `.claude/settings.json`, mirrored to `~/.claude/` by
+`scripts/install_secret_hooks.py` so sessions rooted outside this repo get them too:
+- `.claude/hooks/block_secret_dump.py` refuses the command shapes that have leaked before,
+  and Read/Grep of a live `.env`.
+- `.claude/hooks/redact_bash_output.py` wraps every Bash command so its stdout and stderr
+  pass through a filter that replaces the literal value of every secret-shaped env var
+  (and every secret-shaped line in the project's dotenv files) with `[REDACTED:NAME]`.
+  This is the layer that does not depend on anyone predicting the next shape.
+
+What that means for you:
+- **Never inspect a secret's value, in any language, for any reason** — not to print it,
+  not a prefix, not its length next to its value, not a hash, not "just to confirm it
+  resolved". Presence only: shell `[ -n "$X" ]` or `scripts/kr_token_set.sh`; Python
+  `bool(os.environ.get("X"))` or `hasattr(module, "X")`. To learn whether a token *works*,
+  make the authenticated call and report only the HTTP status.
+- **Never set `CONDUCTOR_REDACT_OUTPUT=0`** or otherwise route around either hook. The kill
+  switch exists for Silas debugging the hook itself, not for agents.
+- **If `[REDACTED:<NAME>]` shows up in your output, the redactor caught a leak.** Stop that
+  line of investigation and do not try to reveal what was masked. Log a root-TALKBACK
+  `security-flag` entry naming the command shape and stating that the value did **not**
+  reach the transcript — so **no rotation is needed**. Say that explicitly; an entry that
+  leaves it ambiguous costs Silas a rotation for nothing.
+- **If a value genuinely reached the transcript anyway** (the hooks weren't loaded, or a
+  non-Bash tool printed it), append to the ONE open `FOR SILAS: rotate KR_API_TOKEN`
+  conductor task instead of filing another, link kind_robots
+  `docs/runbooks/admin-token-rotation.md`, and fix the hook so that shape is masked next
+  time — that fix is the deliverable, a TALKBACK apology is not.
+
 **Visually verifying a front-end change: kind_robots production is self-hosted at
 `kindrobots.org`, not Vercel.** As of 2026-08-12 kind_robots migrated off Vercel
 entirely — Vercel Git deployments are disabled repo-wide (there is no `vercel.json` in

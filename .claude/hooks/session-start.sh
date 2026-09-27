@@ -8,6 +8,10 @@ fi
 
 cd "${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel)}"
 
+# Mirror the secret guards to user level so the NEXT session in this container is
+# covered even if it is rooted outside this repo (scripts/install_secret_hooks.py).
+python3 scripts/install_secret_hooks.py >/dev/null 2>&1 || true
+
 # Collect startup sweep via Python (handles YAML parsing + JSON output)
 python3 - <<'PYEOF'
 import subprocess, sys, json, os

@@ -201,3 +201,33 @@ def test_settings_json_actually_wires_the_hook_up():
 
 def test_the_hook_is_executable():
     assert HOOK.stat().st_mode & 0o111, "hook needs its exec bit to run as a command"
+
+
+@pytest.mark.parametrize(
+    "tool,tool_input",
+    [
+        ("Read", {"file_path": "/home/user/kind_robots/.env"}),
+        ("Read", {"file_path": "../kind_robots/.env.local"}),
+        ("Grep", {"pattern": "TOKEN", "path": "/home/user/kind_robots/.env", "output_mode": "content"}),
+        ("Grep", {"pattern": "TOKEN", "path": ".env"}),
+    ],
+)
+def test_the_file_tools_cannot_read_a_live_dotenv(tool, tool_input):
+    """Read and Grep are not shell commands, so none of the Bash rules saw them."""
+    result = _run({"tool_name": tool, "tool_input": tool_input})
+    assert json.loads(result.stdout)["hookSpecificOutput"]["permissionDecision"] == "deny"
+
+
+@pytest.mark.parametrize(
+    "tool,tool_input",
+    [
+        ("Read", {"file_path": "/home/user/kind_robots/.env.example"}),
+        ("Read", {"file_path": "/home/user/conductor/AGENTS.md"}),
+        ("Read", {"file_path": "/home/user/conductor/.envrc-notes/readme.md"}),
+        ("Grep", {"pattern": "TOKEN", "path": ".env", "output_mode": "count"}),
+        ("Grep", {"pattern": "TOKEN", "path": ".env", "output_mode": "files_with_matches"}),
+        ("Grep", {"pattern": "TOKEN", "path": "scripts"}),
+    ],
+)
+def test_the_file_tools_still_read_everything_else(tool, tool_input):
+    assert _run({"tool_name": tool, "tool_input": tool_input}).stdout == ""
