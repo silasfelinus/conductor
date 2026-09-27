@@ -1291,8 +1291,8 @@ tasks:
 - id: t-057
   milestone: m4
   title: Reword every remaining "no text" prompt clause across all three books before its next resubmission hits the art prompt contract
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   note: >-
@@ -1323,7 +1323,9 @@ tasks:
     (expect 0 remaining) and confirming `python scripts/coloring_proposal_status.py`
     reports the same "Ledger and queue structure: OK" it does today (unaffected either
     way, since this only touches prompt.text).
-  updated: '2026-09-27T14:00:00Z'
+  updated: '2026-09-27T16:53:29Z'
+  claimed_by: conductor-sweep-20260927T165300-t057-run
+  claimed_at: '2026-09-27T16:53:29Z'
 - id: t-058
   milestone: m4
   title: Recalibrate art_quality.py's single-hue tint/wash guard against the full approved corpus -- it false-positives on genuinely multi-color illustrations
