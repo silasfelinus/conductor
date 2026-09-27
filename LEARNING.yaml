@@ -16783,3 +16783,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A frozen fixture pinned to a live production file path is only as stable as that path's own guarantee of immutability -- color-art-jobs.yaml's production scripts move a superseded render to a rejected/ or revisions/ subdirectory rather than deleting it, so the original archived bytes usually still exist in the repo even after the canonical path is overwritten by a real accepted illustration. Finding and swapping in that archived original (same character, same historical measurements) fixes drift with zero loss of test coverage, instead of hunting for an unrelated known-bad substitute or dropping coverage entirely. Caught a SECOND live occurrence of the identical class (hwr-021) mid-fix, flagged by an independent concurrent session's roadmap note on the same task -- worth re-reading a task's own note for fresh evidence appended after a claim, not just what it said at claim time, since two unrelated production cycles hit the same drift class the same day."
+- date: 2026-09-27
+  project: coloring-book
+  task: t-057
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The task's own predicted grep counts (1/25/21) matched the raw 'no text' substring hit count exactly, but 3 of those hits (2 in hollywood-recast, 1 in kind-robots) were inside historical NOT-ACCEPTED/recovery notes quoting the old wording in past tense, not live prompt.text fields -- rewriting them would have misrepresented what was actually tried and served no purpose since notes are never resubmitted as prompts. Checking each occurrence's YAML context (notes: list vs. prompt.text) before editing caught this; a blind find-and-replace across the matched line numbers would not have. Also surfaced a broader family of 'text'-adjacent clauses (\"no readable text\", \"no logo or text\", etc.) explicitly left out of scope since the task's own count only covered the literal two-word phrase -- filed as t-061 rather than scope-creeping into the same diff."
