@@ -1383,3 +1383,43 @@ tasks:
     book must never run in parallel, so a future session doesn't rediscover this by
     losing bookkeeping again. (a) is the smallest, safest fix given how this script is
     actually invoked (short-lived one-shot CLI calls, not a long-running service).
+
+- id: t-050
+  milestone: m4
+  title: "FOR SILAS: confirm mr-005 (Moon-Torn werewolf) BW line art is acceptable for the all-ages Monster Recast set"
+  status: needs-human
+  soft_gate: true
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: >-
+    FOR SILAS: t-022's 2026-09-27 BW-derivation batch produced a fresh line-art
+    render for monster-recast mr-005 "Moon-Torn"
+    (projects/coloring-book/sets/monster-recast/generated/bw/mr-005-bw.webp,
+    ArtImage 240125) once the Kontext engine fix (kind_robots#3056) unblocked it --
+    the old cached candidate had been mechanically rejected as noise back on
+    2026-09-15, before the fix.
+    What it contains: the line art shows a bare-chested, muscular werewolf figure
+    howling at the moon. The dramatic backlighting in the accepted color master
+    (mr-005-moon-torn.webp) leaves the torso mostly in silhouette/shadow, but the
+    BW derivation -- which faithfully traces structure the color version only
+    implies -- renders that torso with a clearly breast-shaped chest contour and
+    shaded hip/groin area, i.e. more explicit nudity than the color master visibly
+    shows. DESIGN-BRIEF.md's Content rating section says Monster Recast is
+    "celebratory and queer-positive, with monster drag, gender play, theatrical
+    peril, and macabre comedy but no gore or sexualized adult content" for an
+    "all-ages" launch set -- this render is not sexualized, but it is bare-chested
+    nudity on a named/credited character in a page meant for general audiences, and
+    that reading doesn't fall cleanly on either side of that line, so it stopped
+    here rather than being auto-accepted into the finalized set.
+    TO APPROVE: view the file above and decide: (a) accept as-is (set
+    approved_by_human: true and status: done, add a note saying so, and the next
+    coloring-book/t-022 cycle will run accept-bw/finalize-pair for mr-005), or (b)
+    request a modesty pass (e.g. torn shirt/vest, thicker fur coverage, or a
+    reframed crop) and note the specific change -- the next cycle will regenerate
+    from that direction, or (c) drop mr-005 from the set and note a replacement
+    slot. Left at needs_review in color-art-jobs.yaml either way; no auto-accept.
+    What unblocks: mr-005's slot in coloring-book/t-022's remaining BW-derivation
+    batch (currently the only slot held for this reason -- t-022 continues on
+    other slots/books in the meantime, soft_gate: true).
+  updated: '2026-09-27T05:10:00Z'
