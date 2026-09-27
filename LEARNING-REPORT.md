@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-27T06:04:24Z
+Generated: 2026-09-27T06:11:20Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1166**
-- Outcomes: blocked: 19, cancelled: 2, done: 1145
+- Closed tasks recorded: **1167**
+- Outcomes: blocked: 19, cancelled: 2, done: 1146
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -65,14 +65,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | superkate-services-calculator | 12 | 100% |
 | taskmaster | 3 | 100% |
 | text-generation | 7 | 100% |
-| tzaddik-gallery | 5 | 100% |
+| tzaddik-gallery | 6 | 100% |
 
 ## By kind
 
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1149 | 99% |
+| software | 1150 | 99% |
 
 ## Failure categories
 
@@ -94,6 +94,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-27 `tzaddik-gallery/t-022` — A kaizen task naming an exact file, function, and the mechanical reason ESLint double-flagged it (disable comment landing above a multi-line type instead of the line the `any` actually appears on) is landable in one pass with zero ambiguity: narrowing the map's `findUnique` argument type to the shape every call site actually passes removed the `any` outright, so no disable comment was needed at all. Confirmed via eslint (clean), vue-tsc --noEmit (clean), and test:lint-ratchet (-3 problems vs. baseline).
 - 2026-09-27 `coloring-book/t-022` — A script that loads a shared YAML file once per process and writes the whole in-memory snapshot back at several points during its run is unsafe to invoke concurrently, even across entries the two invocations don't logically share -- the slower process's later write is based on a pre-change snapshot and silently reverts the faster process's already-persisted progress with no error. Reproduced live running manage_coloring_book_production.py's generate-bw for two different book/proposal ids at once: the first to finish had its bw_status: done reverted back to running by the second process's later write. Recovered safely only because the render and server-side ArtImage survived independently of the YAML bookkeeping and the enqueue step was idempotent against an existing job id -- a less careful recovery could have double-submitted a render job. Filed coloring-book/t-049 to fix the script; the immediate mitigation is to never run two invocations against the same shared state file in parallel, regardless of how independent their target keys look.
 - 2026-09-27 `coloring-book/t-039` — When a fix's own task has already been closed prematurely twice on indirect evidence (a merged PR, a plausible diagnosis), closing it a third time needs a direct check of the actual deployed artifact, not the passage of time since merge: inspect the specific field the bug lived in (here, GET /api/art/queue/:id's stored workflow graph's UNETLoader checkpoint name) before spending a render cycle assuming a Force Update happened. Then verify the render's actual pixels, not just its mechanical pass/fail, before trusting the fix -- a mechanical rejection on a DIFFERENT input during the same verification pass (kind-robots kr-001) turned out to be an unrelated false positive in the quality gate itself, not evidence the fix was incomplete; reading the rejected file directly (not just its stats) was what told the two apart.
 - 2026-09-27 `dream-cycle/t-006` — A workflow-step rename (changing a GitHub Actions step name, an ::warning:: message, or an error string a contract test greps for verbatim) is a repo-wide rename, not a local edit -- grep the whole tests/ tree for the exact old string before renaming, not just the test file you already know references it. Caught here as a Reviewer catch (not a Worker rejection) on silasfelinus/conductor#5264, which renamed several daily-digest.yml step names for the one-day render-runway fix but left 4 pre-existing tests hardcoding the old names, failing both the Python test suite and the dream-cycle contract CI job.
@@ -103,7 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-26 `tzaddik-gallery/t-003` — A schema.prisma change without a committed `npx prisma generate` diff fails test:generated-client-parity every time and is a pure mechanical fix -- when retry_context names the exact expected file list, regenerating and verifying locally before re-pushing resolves it in one pass with no need to touch the schema. Also: closing a task to done with dependents whose depends_on is now satisfied requires re-running resolve_deps.py in the same close-out PR, or the audit CI check will refuse to merge ("resolver should promote this task to ready") -- close_task.py does not do this automatically.
 - 2026-09-26 `humboldt-scoop-cms/t-043` — The quote form's poopstakes checkbox has no address field to key a 'household' on (quote_requests only carries city) -- a naive implementation of the task note's literal 'household key (the property address)' would have been unbuildable for the common case of a lead who hasn't signed up yet. Tiering the household key (customer's property address, else normalized phone, else email) and recording which tier was used per winner made the ambiguous spec buildable without guessing silently; when a task note names a data field that doesn't actually exist on the row it's describing, build a documented fallback rather than blocking on it.
 - 2026-09-26 `ruler-hooked/t-043` — A worker/* branch can be fully implemented, correctly scoped, and even have its roadmap task set to status: review, and still never get a PR opened if create_pull_request fails mid-session -- check_pr_merged_drift.py's stranded-branch check caught it two sessions later. Before reimplementing any review/ready task, check for a matching worker/<project>-<task-id>-* branch first; if the diff is complete and scoped, open the PR from it as-is and run full CI rather than trusting the original session's local verification alone.
-- 2026-09-26 `ruler-hooked/t-042` — Extending timingVisualFor()'s existing per-rarity Record pattern (bandColorClass, markerShape) to a third cue (zoneGlyphs) kept the single-source-of-truth property free -- reusing an established per-field Record<Rarity, T> shape, rather than inventing a new lookup mechanism, made the addition a small, low-risk diff and let the selftest assert the new field against the same rarity ladder the existing fields already used.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-27T06:04:24Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-27T06:11:20Z_
