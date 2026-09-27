@@ -471,3 +471,25 @@ tasks:
     claimed_at: '2026-09-27T01:00:09Z'
     updated: '2026-09-27T01:23:37Z'
     implementation_pr: 'silasfelinus/kind_robots#3059'
+
+  - id: t-022
+    milestone: m2
+    title: "Fix the pre-existing eslint-disable-next-line/no-explicit-any mismatch in reactions/index.post.ts's getContentOwnerId"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: null
+    note: >-
+      Kaizen from t-005 (silasfelinus/kind_robots#3060): server/api/reactions/index.post.ts's
+      getContentOwnerId declares `const modelMap: Record<string, {findUnique: (args: any) =>
+      ...}>` across three lines, with an `eslint-disable-next-line @typescript-eslint/no-explicit-any`
+      comment directly above it. Because the type is wrapped across multiple lines, the actual
+      `any` usage lands two lines below the comment it was meant to cover, so ESLint reports
+      both "Unexpected any" AND "Unused eslint-disable directive" on the same block. Confirmed
+      pre-existing on main (not introduced by t-005) via `npx eslint` against the committed
+      file before t-005's own changes landed. Fix: either reformat the disable comment onto the
+      line that actually has the `any` (e.g. `eslint-disable-line` on the closing brace line, or
+      restructure the type to fit one line) or give the map a real (non-`any`) callable type.
+      Small, mechanical, one file.
+
