@@ -1710,3 +1710,44 @@ tasks:
     fix doesn't require regenerating) and continue through `accept-bw`/`finalize-pair`
     normally.
   updated: '2026-09-27T10:15:00Z'
+- id: t-055
+  milestone: m4
+  title: "consume_coloring_book_color_art.py has no queue_lock -- concurrent writers to color-art-jobs.yaml can silently clobber each other"
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: >-
+    Found the hard way during t-022 cycle 80 (2026-09-27): while a live
+    `manage_coloring_book_production.py --operation generate-bw --live --book kind-robots`
+    batch (17 slots) was running in the background, this session hand-edited
+    `color-art-jobs.yaml` directly (resetting hollywood-recast hwr-021's `status` from
+    `done` back to `pending` after revising its color prompt) and committed/pushed that
+    edit. The edit was silently lost: `manage_coloring_book_production.py` loads the
+    whole queue file into memory once at start and calls `write_yaml(QUEUE_FILE, queue)`
+    -- rewriting the ENTIRE file, not just the touched book -- after every single
+    proposal in its batch, so each of its writes after my edit landed on disk clobbered
+    it back to the stale in-memory copy. `manage_coloring_book_production.py` itself has
+    a `queue_lock()` (`fcntl.flock`) specifically to stop two invocations of *itself*
+    from doing this to each other (confirmed by hand: running two operations against the
+    same queue file concurrently correctly raises "already held by another
+    manage_coloring_book_production.py invocation"), but `consume_coloring_book_color_art.py`
+    -- the OTHER script that reads/writes this exact same `color-art-jobs.yaml` for the
+    color-submission stage -- has no such lock (`grep -n queue_lock
+    scripts/consume_coloring_book_color_art.py` -> no match) and no defense against a
+    concurrent hand-edit either. A future cycle running color submission and BW
+    derivation back-to-back without fully serializing them (or any agent editing the
+    queue file directly while either script has it loaded) can hit the identical silent
+    data loss -- worse than a crash, because nothing errors; the edit just doesn't stick
+    and nothing says why. Fix: give `consume_coloring_book_color_art.py` the same
+    `queue_lock()` (share the helper from `manage_coloring_book_production.py` rather
+    than reimplementing it) so the two scripts serialize against each other the same way
+    `manage_coloring_book_production.py` already serializes against itself; consider
+    whether `write_yaml` should merge a re-read-before-write pass instead of trusting a
+    single in-memory snapshot for the entire batch duration, which would also protect
+    against exactly this class of hand-edit race without requiring every caller to
+    remember to take the lock. Practical workaround until fixed: never hand-edit
+    `color-art-jobs.yaml` while any `manage_coloring_book_production.py` or
+    `consume_coloring_book_color_art.py` invocation is running against it -- wait for it
+    to fully exit first.
+  updated: '2026-09-27T10:50:00Z'
