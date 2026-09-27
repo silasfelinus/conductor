@@ -2934,3 +2934,24 @@ teach it multi-round support. `python scripts/validate_roadmaps.py` clean;
 tests/test_coloring_book_production.py tests/test_set_task_field.py
 tests/test_validate_roadmaps.py tests/test_check_roadmap_note_size.py` all green (99
 passed). Re-arming to ready (recurring), releasing the claim.
+
+Cycle 86 (2026-09-27, same session as cycle 85): monster-recast still blocked
+(gates/tint-guard/engine-limitation from cycle 85). Moved to kind-robots's 5
+remaining slots (kr-005/007/011/014/025), each already at "second attempt,
+not accepted" with a documented literal-rewrite suggestion. Applied each
+suggestion, resubmitted via consume_coloring_book_studio_request.py --force.
+kr-005's rewrite initially tripped the art-prompt contract's people-negation
+rule (HTTP 422, no render) -- reworded to state what IS present instead of
+what isn't, landed clean on retry. kr-005 and kr-014 both matched their
+briefs on the third attempt: accept-color -> generate-bw -> accept-bw ->
+finalize-pair --live for both. kr-007, kr-011, kr-025 each fixed part of
+their defect but still miss one specific element (cat count, one-eyed elder,
+butterfly-carrying action respectively) on a third attempt -- documented as
+likely engine/composition limitations with a concrete next-step suggestion
+each, not re-submitted a fourth time. hollywood-recast: no unblocked slice
+(hwr-014/hwr-025 already FOR SILAS, hwr-021 already concluded
+engine-limitation earlier today). Kind Robots final pairs: 31/36 -> 33/36.
+`python scripts/validate_roadmaps.py` clean; `pytest
+tests/test_coloring_proposal_status.py tests/test_coloring_queue_status.py
+tests/test_coloring_book_production.py` all green (29 passed). Re-arming to
+ready (recurring), releasing the claim.
