@@ -475,8 +475,8 @@ tasks:
   - id: t-022
     milestone: m2
     title: "Fix the pre-existing eslint-disable-next-line/no-explicit-any mismatch in reactions/index.post.ts's getContentOwnerId"
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
     depends_on: null
@@ -492,4 +492,7 @@ tasks:
       line that actually has the `any` (e.g. `eslint-disable-line` on the closing brace line, or
       restructure the type to fit one line) or give the map a real (non-`any`) callable type.
       Small, mechanical, one file.
+    claimed_by: claude-2026-09-27T00-00-00-tzaddik-t022
+    claimed_at: '2026-09-27T05:55:07Z'
+    updated: '2026-09-27T05:55:07Z'
 
