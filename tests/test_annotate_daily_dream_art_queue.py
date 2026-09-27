@@ -98,7 +98,19 @@ def test_unbuilt_proposal_stays_awaiting_build():
     assert result["art_status"] == "awaiting build"
 
 
-def test_cli_rewrites_current_and_previous_outputs_in_place(tmp_path):
+def test_cli_rewrites_current_and_previous_outputs_in_place(tmp_path, monkeypatch):
+    # conductor/t-198: main() wires _live_job_fetcher() with no CLI override, and
+    # that fetcher checks os.environ["KR_API_TOKEN"] to decide whether to make a
+    # real network call. Whether that check even gets a chance to fire also
+    # depends on `import consume_art_requests` succeeding, which is only true
+    # once some *other* test file's `sys.path.insert(0, .../scripts)` has run in
+    # the same process -- true in full-suite collection order, false running
+    # this file alone. In an environment where KR_API_TOKEN is genuinely set
+    # (this sandbox always has it), that combination makes this assertion
+    # depend on a real Kind Robots API response for job 8123, deterministically
+    # in full-suite runs, never in isolation. Clearing it here makes the test
+    # hermetic regardless of both the ambient token and collection order.
+    monkeypatch.delenv("KR_API_TOKEN", raising=False)
     queue = tmp_path / "art-prompts.yaml"
     queue.write_text(
         "requests:\n"
