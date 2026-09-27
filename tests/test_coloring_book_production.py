@@ -20,9 +20,12 @@ class ColoringBookProductionTests(unittest.TestCase):
         self.ledger = self.root / "proposals.yaml"
         self.original_ledger_path = MODULE.ledger_path
         MODULE.ledger_path = lambda _book: self.ledger
+        self.original_queue_lock_file = MODULE.QUEUE_LOCK_FILE
+        MODULE.QUEUE_LOCK_FILE = self.root / "color-art-jobs.yaml.lock"
 
     def tearDown(self) -> None:
         MODULE.ledger_path = self.original_ledger_path
+        MODULE.QUEUE_LOCK_FILE = self.original_queue_lock_file
         self.temp.cleanup()
 
     def test_replace_inline_pair_value_preserves_neighboring_proposals(self) -> None:
@@ -178,6 +181,33 @@ class ColoringBookProductionTests(unittest.TestCase):
         message = str(ctx.exception)
         self.assertEqual(message, "image quality gate unavailable")
         self.assertNotIn("pip3 install Pillow", message)
+
+    def test_queue_lock_refuses_concurrent_acquisition(self) -> None:
+        # Regression test for coloring-book/t-049: two invocations racing against
+        # the same QUEUE_FILE must not both proceed and silently clobber each
+        # other's writes. The second acquisition attempt must fail fast rather
+        # than block or succeed.
+        with MODULE.queue_lock():
+            self.assertTrue(MODULE.QUEUE_LOCK_FILE.exists())
+            with self.assertRaises(RuntimeError) as ctx:
+                with MODULE.queue_lock():
+                    pass
+        self.assertIn("already held", str(ctx.exception))
+
+    def test_queue_lock_releases_on_exit_and_on_exception(self) -> None:
+        with MODULE.queue_lock():
+            pass
+        # Lock released cleanly -- a fresh acquisition must succeed.
+        with MODULE.queue_lock():
+            pass
+
+        with self.assertRaises(ValueError):
+            with MODULE.queue_lock():
+                raise ValueError("boom")
+        # Lock released even though the body raised -- a fresh acquisition
+        # must still succeed rather than staying held forever.
+        with MODULE.queue_lock():
+            pass
 
     def test_save_image_surfaces_pillow_fix_when_pil_unavailable(self) -> None:
         import builtins
