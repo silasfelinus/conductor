@@ -232,12 +232,9 @@ books:
     prompt_fingerprint: c40243edaaf7eb0e6e4a5b5444088b64eaa16964f7d0f20c413a94135c0868f5
     approved_at: '2026-09-07T22:41:39Z'
     lock_seed: true
-    bw_status: running
+    bw_status: done
     bw_requested_at: '2026-09-27T11:20:16Z'
-    bw_render_reasons:
-    - spatially-uncorrelated noise/static — no discernible image structure (hf_ratio=0.86); this can pass the saturation/white-fraction
-      checks for either variant while being pure garbage (coloring-book/t-039)
-    - not black-and-white line art — came back colored/shaded (mean_saturation=0.18, colorful_fraction=0.36, white_fraction=0.00)
+    bw_render_reasons: []
     bw_revision_history:
     - requested_at: '2026-09-27T11:20:15Z'
       previous_status: needs_review
@@ -246,6 +243,18 @@ books:
       semantic_score: null
       archived_path: null
     bw_job_id: 31670
+    bw_art_image_id: 240189
+    bw_rendered_path: generated/bw/mr-007-bw.webp
+    bw_mechanical_info:
+      pixels: 16960
+      mean_saturation: 0.0006
+      colorful_fraction: 0.0
+      white_fraction: 0.713
+      luma_std: 0.086
+      size: 1024x1536
+      hf_ratio: 0.3884
+      tint_concentration: null
+    bw_completed_at: '2026-09-27T11:23:38Z'
   - slot: 8
     id: mr-008
     slug: game-mistress
@@ -334,26 +343,29 @@ books:
     prompt_fingerprint: e2cb31eba945d6a905c22c68e686cf68a41beef907aef22be3483edbc045e3aa
     approved_at: '2026-09-07T23:33:40Z'
     lock_seed: true
-    bw_job_id: 21645
-    bw_status: needs_review
-    bw_requested_at: '2026-09-07T23:33:46Z'
-    bw_art_image_id: 23747
+    bw_status: done
+    bw_requested_at: '2026-09-27T11:23:40Z'
+    bw_render_reasons: []
+    bw_revision_history:
+    - requested_at: '2026-09-27T11:23:39Z'
+      previous_status: needs_review
+      art_image_id: 23747
+      rendered_path: null
+      semantic_score: null
+      archived_path: null
+    bw_job_id: 31671
+    bw_art_image_id: 240190
     bw_rendered_path: generated/bw/mr-009-bw.webp
-    bw_rejected_path: projects/coloring-book/sets/monster-recast/generated/bw/rejected/mechanical/mr-009-bw-20260915T070354Z.webp
     bw_mechanical_info:
       pixels: 16960
-      mean_saturation: 0.174
-      colorful_fraction: 0.3411
-      white_fraction: 0.0
-      luma_std: 0.0821
+      mean_saturation: 0.0005
+      colorful_fraction: 0.0
+      white_fraction: 0.8295
+      luma_std: 0.0912
       size: 1024x1536
-      hf_ratio: 0.8706
-      tint_concentration: 0.2059
-    bw_render_reasons:
-    - spatially-uncorrelated noise/static — no discernible image structure (hf_ratio=0.87); this can pass the saturation/white-fraction
-      checks for either variant while being pure garbage (coloring-book/t-039)
-    - not black-and-white line art — came back colored/shaded (mean_saturation=0.17, colorful_fraction=0.34, white_fraction=0.00)
-    bw_completed_at: '2026-09-15T07:03:54Z'
+      hf_ratio: 0.4642
+      tint_concentration: null
+    bw_completed_at: '2026-09-27T11:26:55Z'
   - slot: 10
     id: mr-010
     slug: madam-hat
@@ -379,26 +391,20 @@ books:
     prompt_fingerprint: cc8679a96a3bff315c20d2379e536c7359723bf09eed601286ba580c02b8363f
     approved_at: '2026-09-14T14:37:57Z'
     lock_seed: true
-    bw_job_id: 22681
-    bw_status: needs_review
-    bw_requested_at: '2026-09-15T06:41:15Z'
-    bw_art_image_id: 24458
-    bw_rendered_path: generated/bw/mr-010-bw.webp
-    bw_rejected_path: projects/coloring-book/sets/monster-recast/generated/bw/rejected/mechanical/mr-010-bw-20260915T073358Z.webp
-    bw_mechanical_info:
-      pixels: 16960
-      mean_saturation: 0.1709
-      colorful_fraction: 0.3318
-      white_fraction: 0.0
-      luma_std: 0.0822
-      size: 1024x1536
-      hf_ratio: 0.861
-      tint_concentration: 0.2254
+    bw_status: running
+    bw_requested_at: '2026-09-27T11:26:57Z'
     bw_render_reasons:
     - spatially-uncorrelated noise/static — no discernible image structure (hf_ratio=0.86); this can pass the saturation/white-fraction
       checks for either variant while being pure garbage (coloring-book/t-039)
     - not black-and-white line art — came back colored/shaded (mean_saturation=0.17, colorful_fraction=0.33, white_fraction=0.00)
-    bw_completed_at: '2026-09-15T07:33:58Z'
+    bw_revision_history:
+    - requested_at: '2026-09-27T11:26:56Z'
+      previous_status: needs_review
+      art_image_id: 24458
+      rendered_path: null
+      semantic_score: null
+      archived_path: null
+    bw_job_id: 31672
   - slot: 11
     id: mr-011
     slug: alien-king
