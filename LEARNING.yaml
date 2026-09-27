@@ -16693,3 +16693,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Adding a new reaction target to kind_robots is two separable steps, not one: (1) the enum value + Reaction.<target>Id column/FK/migration + getExpectedTargetField's total-Record entry, which can land now mapped to null, and (2) utils/karmaRefTypes.ts's KARMA_REF_TYPES/KARMA_REF_TARGET_COLUMNS entry, which verifyEarnedKarmaWiring.ts and verifyReactionTargetCoverage.ts correctly refuse until the target column is actually access-checked end to end (they require every listed ref type to already be fully wired, on purpose, per the FACET/PROJECT/CHALLENGE_SUBMISSION incidents those scripts cite). Landing (1) alone and leaving (2) for the task that actually builds the access rule is the documented pattern (COMPONENT is the precedent) -- do not add to karmaRefTypes.ts just because the enum value exists."
+- date: 2026-09-27
+  project: tzaddik-gallery
+  task: t-005
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Completing t-021's deferred step (2) -- karmaRefTypes.ts + the access rule -- for a model with no userId/isPublic pair means a bespoke branch in every place the generic {userId, isPublic} select would otherwise run (assertReactionTargetAccessible, getContentOwnerId, canViewReactionsOn), mirroring the existing chatId special case rather than adding a naive entry to contentTargetModel/OWNED_TARGETS. Name the new KarmaRefType after the <target>Id column's prefix exactly (tzaddikCandidate, not the shorter tzaddik the reaction-category enum happens to use) so verifyEarnedKarmaWiring.ts's regex-derived name and verifyReactionTargetCoverage.ts's ${target}Id equality check both pass without a special-case exception."

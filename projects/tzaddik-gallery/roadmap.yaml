@@ -174,20 +174,28 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Build sourced person detail view with objections section"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-003
-    note: >
+    note: >-
       Show image, concise biography/rationale, source links/provenance, status,
       submitter attribution, reactions, a visible controversy/objections
       section, and a Request recheck control with last-checked/pending state.
       Keep objections factual and source-backed; absence of a substantial
       documented objection should not trigger invented balance.
+
+      DONE 2026-09-27 (claude-scheduled session): implemented tzaddik-detail-sheet.vue plus
+      the reaction access-rule wiring (getExpectedTargetField/assertReactionTargetAccessible/g
+      etContentOwnerId/reactionVisibility) that tzaddik-gallery/t-021 deliberately deferred
+      here. silasfelinus/kind_robots#3060 merged clean (all checks green including
+      verifyReactionTargetCoverage.ts, verifyReactionRouteAuth.ts, verifyEarnedKarmaWiring.ts,
+      and the full vue-tsc typecheck).
     claimed_by: 2026-09-27T020500Z-tzaddik-gallery-t005
     claimed_at: '2026-09-27T02:00:47Z'
-    updated: '2026-09-27T02:18:47Z'
+    updated: '2026-09-27T02:25:19Z'
+    implementation_pr: 'silasfelinus/kind_robots#3060'
 
   - id: t-006
     milestone: m2
@@ -366,7 +374,7 @@ tasks:
   - id: t-017
     milestone: m2
     title: "Build the lg/xl single-page gallery and person-review shell"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -421,7 +429,7 @@ tasks:
   - id: t-020
     milestone: m2
     title: "Add multi-select editorial tags and gallery filtering"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -463,3 +471,25 @@ tasks:
     claimed_at: '2026-09-27T01:00:09Z'
     updated: '2026-09-27T01:23:37Z'
     implementation_pr: 'silasfelinus/kind_robots#3059'
+
+  - id: t-022
+    milestone: m2
+    title: "Fix the pre-existing eslint-disable-next-line/no-explicit-any mismatch in reactions/index.post.ts's getContentOwnerId"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: null
+    note: >-
+      Kaizen from t-005 (silasfelinus/kind_robots#3060): server/api/reactions/index.post.ts's
+      getContentOwnerId declares `const modelMap: Record<string, {findUnique: (args: any) =>
+      ...}>` across three lines, with an `eslint-disable-next-line @typescript-eslint/no-explicit-any`
+      comment directly above it. Because the type is wrapped across multiple lines, the actual
+      `any` usage lands two lines below the comment it was meant to cover, so ESLint reports
+      both "Unexpected any" AND "Unused eslint-disable directive" on the same block. Confirmed
+      pre-existing on main (not introduced by t-005) via `npx eslint` against the committed
+      file before t-005's own changes landed. Fix: either reformat the disable comment onto the
+      line that actually has the `any` (e.g. `eslint-disable-line` on the closing brace line, or
+      restructure the type to fit one line) or give the map a real (non-`any`) callable type.
+      Small, mechanical, one file.
+
