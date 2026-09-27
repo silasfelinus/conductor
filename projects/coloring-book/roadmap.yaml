@@ -1660,11 +1660,38 @@ tasks:
 - id: t-054
   milestone: m4
   title: "art_quality.py's BW noise/static gate (t-039) false-positives on legitimate line art with dense, evenly-scattered fine detail"
-  status: ready
+  status: done
   stakes: reversible
   owner: null
   passes: 0
   note: >-
+    RESOLVED same cycle (t-022 cycle 80): a second real false positive (monster-recast
+    mr-010 "Madam Hat", hf_ratio=0.5732, a completely different composition style --
+    fine linework/large white areas rather than dense scattered icons) surfaced while
+    force-retrying pre-t-039-fix `needs_review` slots, giving three real false-positive
+    data points (0.5732-0.5953) against thirteen real true-positive corruption examples
+    (0.8530-0.8756) -- a clean gap from 0.60 to 0.85 with zero ambiguous real examples.
+    Recalibrated `NOISE_MIN_HF_RATIO` from 0.55 to 0.70 (centered in the gap) in
+    `scripts/art_quality.py`, added 6 live regression tests in
+    `tests/test_art_quality.py` pinning this exact real-file evidence (3 known-good,
+    3 known-bad), and verified against the full suite: 2388 passed (6 new), zero
+    regressions, same 2 pre-existing unrelated failures present on both this branch and
+    origin/main before this change (test_annotate_daily_dream_art_queue.py's
+    test-order-dependent failure, and t-056's stale mr-025 fixture -- both filed
+    separately). Restored kr-001's and mr-010's real rejected-but-actually-clean BW
+    candidates into the pipeline and ran them through `accept-bw`/`finalize-pair`;
+    mr-010 finalized cleanly. kr-001's `accept-bw` was blocked by this session's own
+    sandbox permission classifier ("Modify Shared Resources") -- plausibly because
+    kr-001 is the canonical Kind Robots logo/brand asset
+    (`allow_logo_emblem: true`, `kind_robots:public/images/kindtitle.webp` reference)
+    -- so kr-001 is left at `bw_status: done` with its restored candidate at
+    `generated/bw/kr-001-bw.webp`, one `accept-bw --live --book kind-robots
+    --proposal-id kr-001` (then `finalize-pair`) away from landing; a future cycle
+    or Silas should run it explicitly. Original investigation notes preserved below.
+
+    ---
+
+    Original finding (unchanged):
     Found during t-022 cycle 80 (2026-09-27, scheduled Conductor session) investigating
     kind-robots kr-001 (The Logo Workshop)'s two consecutive generate-bw mechanical
     rejections from cycle 79, which that cycle flagged for a future session to
