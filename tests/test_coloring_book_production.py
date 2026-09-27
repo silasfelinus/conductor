@@ -112,12 +112,12 @@ class ColoringBookProductionTests(unittest.TestCase):
 
         original_absolute_set_path = MODULE.absolute_set_path
         original_mechanical_check = MODULE.mechanical_check
-        original_write_yaml = MODULE.write_yaml
+        original_write_queue_entry = MODULE.write_queue_entry
         MODULE.absolute_set_path = (
             lambda _book, value: color if "color" in value else bw
         )
         MODULE.mechanical_check = lambda _path, _variant: None
-        MODULE.write_yaml = lambda _path, _data: None
+        MODULE.write_queue_entry = lambda _book, _proposal_id, _entry: None
         try:
             queue_entry = {"id": "mr-002", "bw_semantic_score": 91}
             queue = {"books": [{"slug": "monster-recast", "entries": [queue_entry]}]}
@@ -135,7 +135,7 @@ class ColoringBookProductionTests(unittest.TestCase):
         finally:
             MODULE.absolute_set_path = original_absolute_set_path
             MODULE.mechanical_check = original_mechanical_check
-            MODULE.write_yaml = original_write_yaml
+            MODULE.write_queue_entry = original_write_queue_entry
 
         self.assertEqual(queue_entry["pair_status"], "final")
         self.assertEqual(queue_entry["pair_semantic_score"], 91)
@@ -208,6 +208,78 @@ class ColoringBookProductionTests(unittest.TestCase):
         # must still succeed rather than staying held forever.
         with MODULE.queue_lock():
             pass
+
+    def test_write_queue_entry_preserves_other_entries_byte_for_byte(self) -> None:
+        # Regression test for coloring-book/t-052: write_queue_entry must
+        # text-splice only the touched book/entry, leaving every other
+        # book/entry -- including a sibling in the same book with its own
+        # nested revision-history list, and an entry in an entirely
+        # different book -- byte-for-byte untouched, instead of
+        # re-serializing the whole in-memory queue tree the way
+        # write_yaml(QUEUE_FILE, queue) used to.
+        queue_file = self.root / "color-art-jobs.yaml"
+        queue_file.write_text(
+            """schema_version: 1
+books:
+- order: 1
+  slug: monster-recast
+  title: Monster Recast
+  entries:
+  - slot: 1
+    id: mr-001
+    status: done
+    bw_revision_history:
+    - requested_at: '2026-09-14T05:36:10Z'
+      previous_status: done
+      archived_path: null
+  - slot: 2
+    id: mr-002
+    status: pending
+- order: 2
+  slug: kind-robots
+  title: Kind Robots
+  entries:
+  - slot: 1
+    id: kr-001
+    status: done
+""",
+            encoding="utf-8",
+        )
+        original_queue_file = MODULE.QUEUE_FILE
+        MODULE.QUEUE_FILE = queue_file
+        try:
+            before = queue_file.read_text(encoding="utf-8")
+            mr001_block_before = before[before.index("  - slot: 1") : before.index("  - slot: 2")]
+            book2_block_before = before[before.index("- order: 2") :]
+
+            MODULE.write_queue_entry(
+                "monster-recast",
+                "mr-002",
+                {
+                    "slot": 2,
+                    "id": "mr-002",
+                    "status": "approved",
+                    "approved_at": "2026-09-27T00:00:00Z",
+                },
+            )
+
+            after = queue_file.read_text(encoding="utf-8")
+        finally:
+            MODULE.QUEUE_FILE = original_queue_file
+
+        # The touched entry actually changed.
+        self.assertIn("status: approved", after)
+        self.assertIn("approved_at: '2026-09-27T00:00:00Z'", after)
+
+        # Every other entry -- a sibling in the same book (with its own
+        # nested list) and an entry in a different book -- is untouched.
+        self.assertIn(mr001_block_before, after)
+        self.assertIn(book2_block_before, after)
+
+        parsed = MODULE.yaml.safe_load(after)
+        self.assertEqual(parsed["books"][0]["entries"][1]["status"], "approved")
+        self.assertEqual(parsed["books"][0]["entries"][0]["id"], "mr-001")
+        self.assertEqual(parsed["books"][1]["slug"], "kind-robots")
 
     def test_save_image_surfaces_pillow_fix_when_pil_unavailable(self) -> None:
         import builtins
