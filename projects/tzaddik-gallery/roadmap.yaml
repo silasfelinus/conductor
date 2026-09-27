@@ -200,18 +200,22 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Add authenticated candidate submission workflow"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-003
-    note: >
+    note: >-
       Let Kind Robots users submit candidates with a rationale and Wikipedia
       article. Default new submissions to pending/community state rather than
       automatically entering the canonical 36. Record submitter user identity.
+
+      Opened kind_robots PR #3065: authenticated candidate submission workflow (POST
+      /api/tzaddik + tzaddik-submit-form.vue). vue-tsc/eslint/prettier clean; CI running.
     claimed_by: 2026-09-27T205707Z-tzaddik-t006
     claimed_at: '2026-09-27T20:57:08Z'
-    updated: '2026-09-27T20:57:08Z'
+    updated: '2026-09-27T21:08:45Z'
+    implementation_pr: 'silasfelinus/kind_robots#3065'
 
   - id: t-007
     milestone: m2
