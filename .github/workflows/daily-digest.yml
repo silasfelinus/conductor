@@ -1,14 +1,13 @@
 name: daily-digest
 
-# One ordered Daily Dream cycle, then the email:
+# One ordered Daily Dream cycle with a one-day render runway:
 #   1. author today's steering proposal
-#   2. build the now-eligible prior proposal into six live records
-#   3. attach its Facets
-#   4. submit every staged Daily Dream request into the real ArtJob queue
-#   5. commit the durable proposal/build/ArtJob evidence, even on a partial failure
-#   6. report any Daily Dream failure without blocking digest delivery
-#   7. render and send the digest
-#   8. leave Daily Dream sidecar issues as warnings; digest/email failures still fail normally
+#   2. render the digest from previously built/submitted work
+#   3. build today's proposal into six live records for tomorrow
+#   4. attach its Facets and submit its six ArtJobs
+#   5. commit durable proposal/build/ArtJob evidence
+#   6. send the already-frozen digest
+#   7. leave Daily Dream sidecar issues as warnings; digest/email failures still fail normally
 #
 # Human-requested creative resets also stay inside this sole-writer workflow. A
 # revision-request push takes the dedicated creative-revision job, which preflights
@@ -23,10 +22,10 @@ name: daily-digest
 # topped up by the hourly Conductor Agent sessions (see CLAUDE.md, session
 # startup step 7) and the digest falls back to its mechanical log banner.
 #
-# The morning email showcases the bundle just built. Its six priority-200 ArtJobs get
-# a bounded same-cycle render window, then the digest probes the live image paths and
-# shows whatever is ready (with honest queue placeholders for the rest). Today's newly
-# authored proposal remains a compact text-only preview because it has not been built yet.
+# The morning email showcases the bundle prepared by the prior cycle. Its six priority-200
+# ArtJobs have had roughly 24 hours to render before the digest probes live image paths.
+# Today's newly authored proposal is built and submitted only after the digest payload is
+# frozen, so its art belongs to tomorrow's email rather than racing today's send.
 
 on:
   schedule:
@@ -156,96 +155,6 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ inputs.spend_api_credits == true && secrets.ANTHROPIC_API_KEY || '' }}
 
-      # These steps can produce durable evidence even when their final exit code
-      # is non-zero: a build retry marker, a partial Facet ledger, or some
-      # successfully submitted ArtJob IDs. Keep going long enough to commit that
-      # evidence. Daily Dream sidecar failures are warnings; digest generation,
-      # validation, configuration, and delivery still fail normally on their own.
-      - name: Build the eligible Daily Dream proposal
-        id: daily_dream_build
-        continue-on-error: true
-        run: python scripts/run_daily_dream_build.py
-        env:
-          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
-
-      - name: Attach Daily Dream Facets
-        id: daily_dream_facets
-        if: ${{ steps.daily_dream_build.outcome == 'success' }}
-        continue-on-error: true
-        run: python scripts/apply_daily_dream_facets.py
-        env:
-          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
-
-      - name: Submit Daily Dream ArtJobs and give priority renders a head start
-        id: daily_dream_art
-        if: ${{ steps.daily_dream_build.outcome == 'success' }}
-        continue-on-error: true
-        run: python scripts/submit_daily_dream_art.py --wait-timeout 1800
-        env:
-          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
-          KR_MEDIA_ORIGIN: https://media.acrocatranch.com
-
-      - name: Commit Daily Dream cycle evidence
-        if: ${{ always() }}
-        id: daily_dream_commit
-        continue-on-error: true
-        run: |
-          git config user.name "kind-robots-bot"
-          git config user.email "noreply@kindrobots.app"
-          git add projects/dream-cycle/backlog/ projects/art-prompts.yaml
-          if git diff --staged --quiet; then
-            echo "Daily Dream cycle produced no repository changes."
-            exit 0
-          fi
-          git commit -m "daily dream: build and submit $(date -u +%Y-%m-%d) cycle [skip ci]"
-          for attempt in 1 2 3; do
-            git fetch origin main
-            if git rebase origin/main && git push origin HEAD:main; then
-              exit 0
-            fi
-            echo "Daily Dream evidence push attempt ${attempt}/3 lost a race; retrying."
-            git rebase --abort 2>/dev/null || true
-            sleep $((attempt * 2))
-          done
-          echo "::error::Unable to persist Daily Dream cycle evidence after 3 attempts."
-          exit 1
-
-      # Detection, not repair: the 2026-08-31 de-stemming fix corrected the
-      # builder but left rows it had already built on live still garbled,
-      # because the repair lane only rewrites backstory/desc when it also
-      # rewrites carries -- so a bundle that never needed a prose repair goes
-      # unchecked forever. This recomposes every built bundle's deterministic
-      # fields and diffs them against the live row so the next builder fix
-      # that doesn't back-propagate is caught this cycle, not whenever it
-      # happens to surface on a card (dream-cycle/t-024).
-      - name: Verify live prose composition
-        id: daily_dream_verify_live
-        if: ${{ always() }}
-        continue-on-error: true
-        run: python scripts/repair_dream_prose_catalog.py --verify-live --strict
-        env:
-          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
-
-      - name: Verify Daily Dream cycle
-        if: ${{ always() }}
-        run: |
-          if [ "${{ steps.daily_dream_author.outcome }}" != "success" ]; then
-            echo "::warning::Daily Dream authoring failed; digest delivery will continue."
-          fi
-          if [ "${{ steps.daily_dream_build.outcome }}" != "success" ]; then
-            echo "::warning::Daily Dream object build failed; digest delivery will continue."
-          elif [ "${{ steps.daily_dream_facets.outcome }}" != "success" ]; then
-            echo "::warning::Daily Dream Facet attachment failed; digest delivery will continue."
-          elif [ "${{ steps.daily_dream_art.outcome }}" != "success" ]; then
-            echo "::warning::Daily Dream ArtJob submission was partial or failed; digest delivery will continue."
-          fi
-          if [ "${{ steps.daily_dream_commit.outcome }}" != "success" ]; then
-            echo "::warning::Daily Dream evidence commit failed; digest delivery will continue."
-          fi
-          if [ "${{ steps.daily_dream_verify_live.outcome }}" != "success" ]; then
-            echo "::warning::Daily Dream live composed-field verification found drift (or failed to run); see the 'Verify live prose composition' step output above. Digest delivery will continue."
-          fi
-
       # Must run before "Build digest JSON": build_digest.py reads the review
       # file this writes. It exits 0 on every failure path -- no key, no
       # digest, a stale digest, an API error -- so the worst case is the email
@@ -308,6 +217,102 @@ jobs:
 
       - name: Build Brevo payload preview
         run: python scripts/build_digest_email_v2.py digest.json digest-email.json
+
+      # The digest above is intentionally frozen before today's proposal is built.
+      # Now prepare that proposal for tomorrow: create its six records, attach Facets,
+      # and submit its ArtJobs. Those jobs then have roughly a full day to render before
+      # the next digest probes their media paths. This keeps one workflow as the sole
+      # writer without making digest morning the art-generation starting gun.
+      # These steps can produce durable evidence even when their final exit code
+      # is non-zero: a build retry marker, a partial Facet ledger, or some
+      # successfully submitted ArtJob IDs. Keep going long enough to commit that
+      # evidence. Daily Dream sidecar failures are warnings; digest generation,
+      # validation, configuration, and delivery still fail normally on their own.
+      - name: Build today's Daily Dream proposal for tomorrow
+        id: daily_dream_build
+        continue-on-error: true
+        run: python scripts/run_daily_dream_build.py --date "$(TZ=America/Los_Angeles date +%F)"
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+
+      - name: Attach Daily Dream Facets
+        id: daily_dream_facets
+        if: ${{ steps.daily_dream_build.outcome == 'success' }}
+        continue-on-error: true
+        run: python scripts/apply_daily_dream_facets.py
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+
+      - name: Submit tomorrow's Daily Dream ArtJobs
+        id: daily_dream_art
+        if: ${{ steps.daily_dream_build.outcome == 'success' }}
+        continue-on-error: true
+        run: python scripts/submit_daily_dream_art.py
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+          KR_MEDIA_ORIGIN: https://media.acrocatranch.com
+
+      - name: Commit tomorrow's Daily Dream cycle evidence
+        if: ${{ always() }}
+        id: daily_dream_commit
+        continue-on-error: true
+        run: |
+          git config user.name "kind-robots-bot"
+          git config user.email "noreply@kindrobots.app"
+          git add projects/dream-cycle/backlog/ projects/art-prompts.yaml
+          if git diff --staged --quiet; then
+            echo "Daily Dream cycle produced no repository changes."
+            exit 0
+          fi
+          git commit -m "daily dream: build and submit $(date -u +%Y-%m-%d) cycle [skip ci]"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if git rebase origin/main && git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "Daily Dream evidence push attempt ${attempt}/3 lost a race; retrying."
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          echo "::error::Unable to persist Daily Dream cycle evidence after 3 attempts."
+          exit 1
+
+      # Detection, not repair: the 2026-08-31 de-stemming fix corrected the
+      # builder but left rows it had already built on live still garbled,
+      # because the repair lane only rewrites backstory/desc when it also
+      # rewrites carries -- so a bundle that never needed a prose repair goes
+      # unchecked forever. This recomposes every built bundle's deterministic
+      # fields and diffs them against the live row so the next builder fix
+      # that doesn't back-propagate is caught this cycle, not whenever it
+      # happens to surface on a card (dream-cycle/t-024).
+      - name: Verify live prose composition
+        id: daily_dream_verify_live
+        if: ${{ always() }}
+        continue-on-error: true
+        run: python scripts/repair_dream_prose_catalog.py --verify-live --strict
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+
+      - name: Verify tomorrow's Daily Dream cycle
+        if: ${{ always() }}
+        run: |
+          if [ "${{ steps.daily_dream_author.outcome }}" != "success" ]; then
+            echo "::warning::Daily Dream authoring failed; digest delivery will continue."
+          fi
+          if [ "${{ steps.daily_dream_build.outcome }}" != "success" ]; then
+            echo "::warning::Tomorrow's Daily Dream object build failed; digest delivery will continue."
+          elif [ "${{ steps.daily_dream_facets.outcome }}" != "success" ]; then
+            echo "::warning::Tomorrow's Daily Dream Facet attachment failed; digest delivery will continue."
+          elif [ "${{ steps.daily_dream_art.outcome }}" != "success" ]; then
+            echo "::warning::Tomorrow's Daily Dream ArtJob submission was partial or failed; digest delivery will continue."
+          fi
+          if [ "${{ steps.daily_dream_commit.outcome }}" != "success" ]; then
+            echo "::warning::Tomorrow's Daily Dream evidence commit failed; digest delivery will continue."
+          fi
+          if [ "${{ steps.daily_dream_verify_live.outcome }}" != "success" ]; then
+            echo "::warning::Daily Dream live composed-field verification found drift (or failed to run); see the 'Verify live prose composition' step output above. Digest delivery will continue."
+          fi
+
 
       - name: Upload digest artifacts
         if: always()
