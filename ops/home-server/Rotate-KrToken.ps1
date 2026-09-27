@@ -188,13 +188,32 @@ if ($after.Code -ne 200 -or $after.Actor.role -ne 'admin') {
     exit 1
 }
 Write-Host ('New token verified: role={0}, source={1}.' -f $after.Actor.role, $after.Actor.source)
+$alsoEnvToken = $false
 if ($oldToken) {
     $dead = Get-Actor -Token $oldToken
+    if ($dead.Code -eq 200 -and $dead.Actor.source -eq 'beta-admin-token') {
+        # The same string was BOTH User.apiKey and the ADMIN_TOKEN env var.
+        # authGuard checks the apiKey first, so meta.describe reported
+        # user-api-key; with that rewritten, the old value falls through to
+        # the env-var check and still works (2026-09-27 rotation).
+        $alsoEnvToken = $true
+        Write-Host 'The old value is ALSO the ADMIN_TOKEN env var on Alexandria, so it still works.'
+        Write-Host 'Set it to the SAME new value (still on your clipboard):'
+        Write-Host '  1. /mnt/user/appdata/kind_robots/.env: ADMIN_TOKEN (and BETA_ADMIN_TOKEN if present)'
+        Write-Host '  2. Unraid > Docker > KindRobots > Edit: the same variable, if the template has it'
+        Write-Host '  3. Apply / docker compose up -d so the container is RECREATED'
+        [void](Read-Host -Prompt 'Press Enter once the container is back up')
+        for ($i = 0; $i -lt 60; $i++) {
+            $dead = Get-Actor -Token $oldToken
+            if ($dead.Code -ne 200) { break }
+            Start-Sleep -Seconds 10
+        }
+    }
     if ($dead.Code -eq 401 -or $dead.Code -eq 403) {
         Write-Host ('Old token confirmed dead (HTTP {0}).' -f $dead.Code)
     } else {
-        Write-Host ('WARNING: the old token still returns HTTP {0}. Something else still honours it --' -f $dead.Code)
-        Write-Host '         check the retired Vercel deployment in the runbook before calling this done.'
+        Write-Host ('WARNING: the old token still returns HTTP {0} (source={1}). Something on kindrobots.org' -f $dead.Code, $dead.Actor.source)
+        Write-Host '         still honours it. Do not call this rotation done.'
     }
 }
 
@@ -224,12 +243,9 @@ Write-Host 'Restarting the pm2 ecosystem with --update-env, then saving the dump
 & pm2 restart ecosystem.config.js --update-env | Out-Null
 & pm2 save | Out-Null
 Start-Sleep -Seconds 15
-$apps = & pm2 jlist | ConvertFrom-Json
-foreach ($app in $apps) {
-    if ($app.name -in @('kr-relay', 'kr-download')) {
-        Write-Host ('  {0}: {1}, restarts={2}' -f $app.name, $app.pm2_env.status, $app.pm2_env.restart_time)
-    }
-}
+# Not `pm2 jlist | ConvertFrom-Json`: its env block carries both `username`
+# and `USERNAME`, which Windows PowerShell 5.1 refuses as duplicate keys.
+& pm2 ls | Select-String -Pattern 'kr-relay|kr-download' | ForEach-Object { Write-Host ('  ' + $_.Line.Trim()) }
 
 # --- 5. GitHub secrets -----------------------------------------------------------
 
@@ -241,7 +257,7 @@ if (Get-Command gh -ErrorAction SilentlyContinue) {
         # become part of the secret.
         & gh secret set KR_API_TOKEN --repo $ConductorRepo --body $newToken | Out-Null
         Write-Host ('Set KR_API_TOKEN on {0}.' -f $ConductorRepo)
-        if ($after.Actor.source -eq 'beta-admin-token') {
+        if ($after.Actor.source -eq 'beta-admin-token' -or $alsoEnvToken) {
             & gh secret set CYPRESS_BETA_ADMIN_TOKEN --repo $KindRobotsRepo --body $newToken | Out-Null
             Write-Host ('Set CYPRESS_BETA_ADMIN_TOKEN on {0}.' -f $KindRobotsRepo)
         }
