@@ -391,7 +391,7 @@ tasks:
   - id: t-017
     milestone: m2
     title: "Build the lg/xl single-page gallery and person-review shell"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -401,9 +401,17 @@ tasks:
 
 
       Replaced the narrow filler-style gallery shell with the scoped lg/xl composed workspace and person-review layout on worker/tzaddik-gallery-t-017-20260927T215700Z-a7f3; mobile remains stacked and scrollable. Opening the implementation PR for CI verification.
+
+      Merged silasfelinus/kind_robots#3067 (squash dda94d7) after CI green (TypeScript,
+      layout-contract, verify, GitGuardian, all Storybook/narrative contracts) and a diff
+      audit of the 2 changed files (tzaddik-detail-sheet.vue, tzaddik-gallery.vue page) for
+      scope/safety -- no admin/moderation controls added (correctly deferred to t-008), no
+      v-html/eval/secret patterns, splash art deliberately deferred to t-018 per PR body.
+      Reviewed by conductor sweep session.
     claimed_by: 2026-09-27T215700Z-tzaddik-t017-a7f3
     claimed_at: '2026-09-27T21:57:00Z'
-    updated: '2026-09-27T22:05:00Z'
+    updated: '2026-09-27T22:50:43Z'
+    implementation_pr: 'silasfelinus/kind_robots#3067'
 
   - id: t-018
     milestone: m4
