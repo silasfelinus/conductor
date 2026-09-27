@@ -79,17 +79,78 @@ def write_yaml(path: Path, data: dict[str, Any]) -> None:
     )
 
 
+_QUEUE_BOOK_HEADER_RE = re.compile(r"^- order:\s*\d+\s*$", re.MULTILINE)
+_QUEUE_ENTRY_HEADER_RE = re.compile(r"^  - ", re.MULTILINE)
+
+
+def _locate_queue_book_block(content: str, book_slug: str) -> tuple[int, int]:
+    headers = list(_QUEUE_BOOK_HEADER_RE.finditer(content))
+    for index, match in enumerate(headers):
+        start = match.start()
+        end = headers[index + 1].start() if index + 1 < len(headers) else len(content)
+        if re.search(
+            rf"^  slug:\s*[\"']?{re.escape(book_slug)}[\"']?\s*$",
+            content[start:end],
+            re.MULTILINE,
+        ):
+            return start, end
+    raise RuntimeError(f"Book not found in {QUEUE_FILE.name}: {book_slug}")
+
+
+def _locate_queue_entry_block(
+    content: str, region_start: int, region_end: int, proposal_id: str
+) -> tuple[int, int]:
+    region = content[region_start:region_end]
+    headers = list(_QUEUE_ENTRY_HEADER_RE.finditer(region))
+    for index, match in enumerate(headers):
+        start = match.start()
+        end = headers[index + 1].start() if index + 1 < len(headers) else len(region)
+        block = region[start:end]
+        if re.search(
+            rf"^    id:\s*[\"']?{re.escape(proposal_id)}[\"']?\s*$",
+            block,
+            re.MULTILINE,
+        ):
+            return region_start + start, region_start + end
+    raise RuntimeError(f"Entry not found in {QUEUE_FILE.name}: {proposal_id}")
+
+
+def write_queue_entry(book_slug: str, proposal_id: str, entry: dict[str, Any]) -> None:
+    """Persist one queue entry's current in-memory state without rewriting
+    the rest of QUEUE_FILE (coloring-book/t-052).
+
+    Re-reads QUEUE_FILE fresh -- never the batch-loaded `queue` snapshot a
+    run_operation() call started with -- and text-splices just this entry's
+    block back in, leaving every other book/entry byte-for-byte untouched.
+    Same targeted-write approach replace_ledger_pair_value already uses for
+    the ledger file, applied here one nesting level deeper (books -> entries).
+    """
+    content = QUEUE_FILE.read_text(encoding="utf-8")
+    book_start, book_end = _locate_queue_book_block(content, book_slug)
+    entry_start, entry_end = _locate_queue_entry_block(content, book_start, book_end, proposal_id)
+    serialized = yaml.safe_dump([entry], sort_keys=False, allow_unicode=True, width=110)
+    reindented = "".join(
+        ("  " + line if line.strip() else line) for line in serialized.splitlines(keepends=True)
+    )
+    QUEUE_FILE.write_text(
+        content[:entry_start] + reindented + content[entry_end:],
+        encoding="utf-8",
+    )
+
+
 @contextlib.contextmanager
 def queue_lock():
     """Hold an exclusive lock on QUEUE_LOCK_FILE for the whole live run.
 
-    QUEUE_FILE is loaded once into memory and written back (whole-snapshot)
-    at several points during a single operation. Two invocations racing
-    against different proposal ids in the same book set (or across books --
-    QUEUE_FILE is shared) will otherwise silently overwrite each other's
-    already-persisted changes with no error (coloring-book/t-049). This
-    refuses to proceed rather than blocking/retrying, since callers are
-    short-lived one-shot CLI invocations that can simply be re-run.
+    QUEUE_FILE is loaded once into memory to locate entries, but each
+    touched entry is then persisted individually via write_queue_entry
+    (coloring-book/t-052) rather than dumping the whole in-memory tree back.
+    Two invocations racing against different proposal ids in the same book
+    set (or across books -- QUEUE_FILE is shared) will otherwise silently
+    overwrite each other's already-persisted changes with no error
+    (coloring-book/t-049). This refuses to proceed rather than
+    blocking/retrying, since callers are short-lived one-shot CLI
+    invocations that can simply be re-run.
     """
     QUEUE_LOCK_FILE.parent.mkdir(parents=True, exist_ok=True)
     # "a" (not "w"): opening must never truncate a lockfile another process
@@ -322,7 +383,8 @@ def enqueue_bw_job(
     source: Path,
     timeout: int,
     queue_entry: dict[str, Any],
-    queue: dict[str, Any],
+    book_slug: str,
+    proposal_id: str,
 ) -> dict[str, Any]:
     existing_job_id = queue_entry.get("bw_job_id")
     if isinstance(existing_job_id, int) and existing_job_id > 0:
@@ -334,7 +396,7 @@ def enqueue_bw_job(
         if job and job.get("status") in ("FAILED", "CANCELLED"):
             queue_entry["bw_status"] = "failed"
             queue_entry["bw_error"] = job.get("error")
-            write_yaml(QUEUE_FILE, queue)
+            write_queue_entry(book_slug, proposal_id, queue_entry)
             raise RuntimeError(
                 f"BW ArtJob {existing_job_id} {job.get('status')}: {job.get('error')}"
             )
@@ -363,7 +425,7 @@ def enqueue_bw_job(
     queue_entry["bw_job_id"] = job_id
     queue_entry["bw_status"] = "running"
     queue_entry["bw_requested_at"] = now_iso()
-    write_yaml(QUEUE_FILE, queue)
+    write_queue_entry(book_slug, proposal_id, queue_entry)
     return queue_consumer.wait_for_job(job_id, timeout)
 
 
@@ -391,7 +453,7 @@ def accept_color(
     if queue_entry.get("render_seed") is not None:
         queue_entry["seed"] = queue_entry["render_seed"]
     replace_ledger_pair_value(book_slug, proposal_id, "accepted", "color", rendered)
-    write_yaml(QUEUE_FILE, queue)
+    write_queue_entry(book_slug, proposal_id, queue_entry)
 
 
 def generate_bw(
@@ -454,7 +516,7 @@ def generate_bw(
         queue_entry["bw_status"] = "pending"
         bw_status = "pending"
         candidate = absolute_set_path(book_slug, candidate_rel)
-        write_yaml(QUEUE_FILE, queue)
+        write_queue_entry(book_slug, proposal_id, queue_entry)
     elif bw_status in ("done", "approved", "needs_review"):
         raise RuntimeError(
             f"{proposal_id} already has BW status {bw_status}; accept it or request a forced revision"
@@ -470,7 +532,7 @@ def generate_bw(
                 f"{proposal_id} has a landed BW candidate but no recoverable ArtImage id"
             )
     else:
-        job = enqueue_bw_job(source, timeout, queue_entry, queue)
+        job = enqueue_bw_job(source, timeout, queue_entry, book_slug, proposal_id)
         art_image_id = job.get("artImageId")
         if not art_image_id:
             raise RuntimeError(f"BW ArtJob {job.get('id')} completed without artImageId")
@@ -478,7 +540,7 @@ def generate_bw(
         save_image(candidate, image_b64)
         queue_entry["bw_art_image_id"] = int(art_image_id)
         queue_entry["bw_rendered_path"] = candidate_rel
-        write_yaml(QUEUE_FILE, queue)
+        write_queue_entry(book_slug, proposal_id, queue_entry)
 
     ok, reasons, info = art_quality.assess_file(candidate, "bw")
     if ok is None:
@@ -491,7 +553,7 @@ def generate_bw(
         queue_entry["bw_mechanical_info"] = info
         queue_entry["bw_render_reasons"] = reasons
         queue_entry["bw_completed_at"] = now_iso()
-        write_yaml(QUEUE_FILE, queue)
+        write_queue_entry(book_slug, proposal_id, queue_entry)
         print(f"  BW-REJECT {book_slug}/{proposal_id}: {'; '.join(reasons)} -> {rejected}")
         return
 
@@ -505,7 +567,7 @@ def generate_bw(
     queue_entry["bw_render_reasons"] = []
     queue_entry["bw_completed_at"] = now_iso()
     queue_entry.pop("bw_error", None)
-    write_yaml(QUEUE_FILE, queue)
+    write_queue_entry(book_slug, proposal_id, queue_entry)
     print(
         f"  BW-LANDED {book_slug}/{proposal_id} -> {candidate.relative_to(ROOT)} "
         f"(ArtImage {art_image_id}) - awaiting human review"
@@ -533,7 +595,7 @@ def accept_bw(
     queue_entry["bw_status"] = "approved"
     queue_entry["bw_approved_at"] = now_iso()
     replace_ledger_pair_value(book_slug, proposal_id, "accepted", "bw", rendered)
-    write_yaml(QUEUE_FILE, queue)
+    write_queue_entry(book_slug, proposal_id, queue_entry)
 
 
 def finalize_pair(
@@ -566,7 +628,7 @@ def finalize_pair(
     queue_entry["pair_finalized_at"] = now_iso()
     replace_ledger_pair_value(book_slug, proposal_id, "final", "color", final_color)
     replace_ledger_pair_value(book_slug, proposal_id, "final", "bw", final_bw)
-    write_yaml(QUEUE_FILE, queue)
+    write_queue_entry(book_slug, proposal_id, queue_entry)
 
 
 def run_operation(
