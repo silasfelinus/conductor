@@ -4167,5 +4167,35 @@ tasks:
   claimed_at: '2026-09-26T04:58:00Z'
   updated: '2026-09-26T04:58:00Z'
 
+- id: t-198
+  milestone: m1
+  title: "Fix the full-suite-only test_annotate_daily_dream_art_queue.py isolation flake"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  depends_on: null
+  note: >-
+    Found while reviewing dream-cycle/t-006's PR (silasfelinus/conductor#5264):
+    tests/test_annotate_daily_dream_art_queue.py::test_cli_rewrites_current_and_previous_outputs_in_place
+    fails deterministically when the full `pytest tests/` suite runs (asserts
+    `current["art_status"] == "queued"` but gets `"rendered, awaiting public image"`),
+    yet passes every time in isolation (`pytest tests/test_annotate_daily_dream_art_queue.py`).
+    Reproduced identically on a clean worktree of main at e6dab20, unrelated to any
+    change in that PR -- some earlier test in full-suite collection order is leaking
+    module-level state (a cache, a monkeypatched clock/registry, or similar) into this
+    one's fixed job-id-8123 fixture. CI's own "Python test suite" job has NOT
+    consistently shown this failure (it did not appear in the run that first
+    surfaced the 4 stale digest-runway tests, nor in the re-run after they were
+    fixed), suggesting GitHub Actions' test collection/worker order differs from
+    this sandbox's, or the leak is itself intermittent depending on collection order.
+    Fix: bisect which earlier test(s) in full-suite order leave state behind (start
+    with `pytest tests/ -p no:randomly` if a randomizer plugin is active, or run
+    increasing prefixes of the suite until the failure appears) and give the leaking
+    fixture/mock proper teardown/reset. Low priority: it is a false-negative risk to
+    the suite's signal, not a product bug, but a test that fails only in select
+    full-suite runs and passes on retry erodes trust in "green" the same way a
+    genuine flake does.
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
