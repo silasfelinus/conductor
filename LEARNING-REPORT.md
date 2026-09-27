@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-27T11:54:57Z
+Generated: 2026-09-27T12:16:13Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1170**
-- Outcomes: blocked: 19, cancelled: 2, done: 1149
+- Closed tasks recorded: **1171**
+- Outcomes: blocked: 19, cancelled: 2, done: 1150
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -27,7 +27,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | butterfly-gallery | 32 | 94% |
 | challenge-center | 16 | 100% |
 | coat-dance | 9 | 11% |
-| coloring-book | 43 | 100% |
+| coloring-book | 44 | 100% |
 | conductor | 138 | 100% |
 | conductor-app | 4 | 100% |
 | cthulhuquarium | 51 | 98% |
@@ -72,7 +72,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1153 | 99% |
+| software | 1154 | 99% |
 
 ## Failure categories
 
@@ -94,6 +94,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-27 `coloring-book/t-052` — The whole-file-rewrite cost t-049 deliberately deferred (write_yaml(QUEUE_FILE, queue) dumping the entire ~3,000-line/~130KB in-memory tree on every single-entry mutation) narrows cleanly by mirroring a pattern the same file already had precedent for: replace_ledger_pair_value already text-splices one field of one ledger entry in place rather than rewriting the ledger. Generalizing that to a whole entry one nesting level deeper (books -> entries) needed only locating each level's block boundaries by its own list-item marker (0-indent '- order:' for books, 2-indent '  - ' for entries) and re-serializing just the touched entry with a fixed re-indent, rather than any structural rewrite of the read/load path. Verified beyond the unit-test round trip by running the new write function against a real scratch copy of the actual ~130KB production queue file and diffing every other book/entry and all top-level scalar keys before/after -- a synthetic fixture alone would not have caught an edge case specific to the real file's shape (e.g. a book or entry ordering quirk), and none existed here (108-entries, 3-books, all entry blocks IDed correctly).
 - 2026-09-27 `conductor/t-198` — A test that calls a production CLI's main() end-to-end without mocking its network-dependent branch is only as isolated as the branch's own gating condition happens to be closed in the current process -- test_annotate_daily_dream_art_queue.py's isolation flake existed because _live_job_fetcher()'s bare `import consume_art_requests` failed silently (ImportError -> None) unless some *other* test file had already put scripts/ on sys.path, an accidental protection that full-suite collection order defeats deterministically while single-file runs never exercise. When a CLI-level test's correctness implicitly depends on an ambient secret/import/environment condition rather than an explicit mock, make that condition explicit (monkeypatch.delenv, an injected fetch_job, etc.) rather than fixing the accident that happened to mask it -- the accident (sys.path scope) is not the actual isolation boundary the test needs.
 - 2026-09-27 `coloring-book/t-048` — art_quality.py's NOISE_MIN_HF_RATIO (0.55) false-positived on legitimate busy/detail-dense line art (kind-robots/kr-001's dense repeated-icon composition) because the task note's own diagnosis was already precise. Rather than take the note's offered book-specific-threshold shortcut, pulled every hf_ratio ever recorded in color-art-jobs.yaml across all three books and found a clean, wide, unused gap between real noise (0.857-0.876) and every legitimate render including the false positive (<=0.5953) -- letting a single global recalibration (0.72) fix it safely for every book, with regression fixtures pinning both groups so a future change that would flip either shows up as a named test failure. When a false-positive/true-positive pair both have recorded historical measurements, check the full distribution before reaching for a per-case carve-out or a new heuristic -- the simpler global fix is often already safe and just needs the data to prove it.
 - 2026-09-27 `coloring-book/t-049` — A kaizen task that names the exact race (two manage_coloring_book_production.py invocations racing on different proposal ids in the same shared color-art-jobs.yaml) and the smallest of three explicit fix options (a lockfile held for the whole live run, vs. narrowing the write path, vs. a docstring warning) is landable in one pass: an exclusive non-blocking flock on a sibling .lock file, held from load through every write, makes a racing second invocation fail fast with a clear error instead of silently reverting the first's already-persisted state. Verified with a real cross-process test (not just an in-process mock) since flock semantics depend on separate open-file-descriptions, which a same-process double-open can get subtly wrong. Filed t-052 to narrow the write path itself (read-modify-write only the touched entry) as a follow-on if whole-file rewrites become a real cost -- deliberately deferred rather than bundled, per the original note's own preference for the smallest safe fix.
@@ -103,7 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-27 `dream-cycle/t-006` — A workflow-step rename (changing a GitHub Actions step name, an ::warning:: message, or an error string a contract test greps for verbatim) is a repo-wide rename, not a local edit -- grep the whole tests/ tree for the exact old string before renaming, not just the test file you already know references it. Caught here as a Reviewer catch (not a Worker rejection) on silasfelinus/conductor#5264, which renamed several daily-digest.yml step names for the one-day render-runway fix but left 4 pre-existing tests hardcoding the old names, failing both the Python test suite and the dream-cycle contract CI job.
 - 2026-09-27 `tzaddik-gallery/t-005` — Completing t-021's deferred step (2) -- karmaRefTypes.ts + the access rule -- for a model with no userId/isPublic pair means a bespoke branch in every place the generic {userId, isPublic} select would otherwise run (assertReactionTargetAccessible, getContentOwnerId, canViewReactionsOn), mirroring the existing chatId special case rather than adding a naive entry to contentTargetModel/OWNED_TARGETS. Name the new KarmaRefType after the <target>Id column's prefix exactly (tzaddikCandidate, not the shorter tzaddik the reaction-category enum happens to use) so verifyEarnedKarmaWiring.ts's regex-derived name and verifyReactionTargetCoverage.ts's ${target}Id equality check both pass without a special-case exception.
 - 2026-09-27 `tzaddik-gallery/t-021` — Adding a new reaction target to kind_robots is two separable steps, not one: (1) the enum value + Reaction.<target>Id column/FK/migration + getExpectedTargetField's total-Record entry, which can land now mapped to null, and (2) utils/karmaRefTypes.ts's KARMA_REF_TYPES/KARMA_REF_TARGET_COLUMNS entry, which verifyEarnedKarmaWiring.ts and verifyReactionTargetCoverage.ts correctly refuse until the target column is actually access-checked end to end (they require every listed ref type to already be fully wired, on purpose, per the FACET/PROJECT/CHALLENGE_SUBMISSION incidents those scripts cite). Landing (1) alone and leaving (2) for the task that actually builds the access rule is the documented pattern (COMPONENT is the precedent) -- do not add to karmaRefTypes.ts just because the enum value exists.
-- 2026-09-27 `tzaddik-gallery/t-004` — A brand-new project's data model (t-003) existing with zero curated rows means the correct first pass on the next UI task is the plumbing (API + store + gallery wiring) verified via typecheck/contract tests, not a claim that the feature has been seen working against real data -- say which of those two you actually verified rather than blurring them. Also: reuse the shared kr-gallery shell directly from the page rather than adding a wrapper *-gallery.vue component when the page itself already carries the tab logic -- verifyRouteGalleryContract.ts's Rule 2 only requires the route's own mounted subtree to render kr-gallery, not a dedicated component file.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-27T11:54:57Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-27T12:16:13Z_

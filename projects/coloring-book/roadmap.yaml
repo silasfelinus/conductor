@@ -1665,7 +1665,7 @@ tasks:
 - id: t-052
   milestone: m4
   title: "Narrow color-art-jobs.yaml's write path to the touched book/proposal entry instead of the whole file"
-  status: claimed
+  status: done
   stakes: reversible
   owner: worker
   passes: 0
@@ -1685,7 +1685,7 @@ tasks:
     entry being touched, verified against the existing
     tests/test_coloring_book_production.py suite plus a new test that two
     non-overlapping entries survive a read-modify-write round trip untouched.
-  updated: '2026-09-27T11:54:26Z'
+  updated: '2026-09-27T12:10:49Z'
   claimed_by: 2026-09-27T-conductor-sweep-t052
   claimed_at: '2026-09-27T11:54:26Z'
 
@@ -1727,9 +1727,9 @@ tasks:
 - id: t-054
   milestone: m4
   title: "tests/test_art_quality.py's frozen fixture for mr-025-little-miss-omen.webp has drifted from the real checked-in file"
-  status: ready
+  status: claimed
   stakes: reversible
-  owner: null
+  owner: worker
   passes: 0
   note: >-
     Discovered incidentally while fixing t-048 (art_quality.py's hf_ratio
@@ -1775,7 +1775,9 @@ tasks:
     option above rather than a per-case freshness check -- any `KNOWN_BAD` entry keyed
     on a live production path will keep drifting as normal production work naturally
     revises and re-renders rejected candidates.
-  updated: '2026-09-27T12:35:00Z'
+  updated: '2026-09-27T12:15:43Z'
+  claimed_by: 2026-09-27T-conductor-sweep-t054
+  claimed_at: '2026-09-27T12:15:43Z'
 - id: t-055
   milestone: m4
   title: "consume_coloring_book_color_art.py has no queue_lock -- concurrent writers to color-art-jobs.yaml can silently clobber each other"

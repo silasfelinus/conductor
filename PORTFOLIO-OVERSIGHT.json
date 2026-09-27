@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-09-27T05:25:47.980667+00:00",
+  "generated_at": "2026-09-27T12:11:39.646537+00:00",
   "summary": {
     "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 13,
+    "roadmap_warnings": 15,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -12,8 +12,8 @@
   },
   "openai_scheduled_agent": {
     "overdue": false,
-    "last_activity": "2026-09-27T05:21:23+00:00",
-    "hours_since": 0.07,
+    "last_activity": "2026-09-27T10:17:11+00:00",
+    "hours_since": 1.91,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "OpenAI coordination activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit."
@@ -30,19 +30,19 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-09-27T05:25:47.980674+00:00",
+    "generated_at": "2026-09-27T12:11:39.646544+00:00",
     "summary": {
       "roadmaps": 55,
       "active_projects": 23,
       "continuous_projects": 3,
-      "tasks": 1729,
-      "ready": 20,
+      "tasks": 1735,
+      "ready": 19,
       "waiting": 62,
-      "needs_human": 64,
-      "in_progress": 2,
-      "done": 1565,
+      "needs_human": 66,
+      "in_progress": 3,
+      "done": 1569,
       "errors": 0,
-      "warnings": 13,
+      "warnings": 15,
       "info": 30
     },
     "errors": [],
@@ -53,6 +53,20 @@
         "project": "animation-manager",
         "task": null,
         "message": "Duplicate key 'owner' at line 186 \u2014 YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one."
+      },
+      {
+        "severity": "warning",
+        "code": "DUPLICATE_YAML_KEY",
+        "project": "animation-manager",
+        "task": null,
+        "message": "Duplicate key 'daily_last_checked' at line 365 \u2014 YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one."
+      },
+      {
+        "severity": "warning",
+        "code": "DUPLICATE_YAML_KEY",
+        "project": "animation-manager",
+        "task": null,
+        "message": "Duplicate key 'daily_last_completed' at line 366 \u2014 YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one."
       },
       {
         "severity": "warning",
