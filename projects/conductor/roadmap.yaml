@@ -4170,8 +4170,8 @@ tasks:
 - id: t-198
   milestone: m1
   title: "Fix the full-suite-only test_annotate_daily_dream_art_queue.py isolation flake"
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
   depends_on: null
@@ -4196,6 +4196,9 @@ tasks:
     the suite's signal, not a product bug, but a test that fails only in select
     full-suite runs and passes on retry erodes trust in "green" the same way a
     genuine flake does.
+  claimed_by: 2026-09-27T-conductor-sweep-t198
+  claimed_at: '2026-09-27T11:14:54Z'
+  updated: '2026-09-27T11:14:54Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
