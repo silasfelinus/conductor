@@ -16729,3 +16729,12 @@ records:
   outcome: done
   failure_category: quality
   lesson: "A script that loads a shared YAML file once per process and writes the whole in-memory snapshot back at several points during its run is unsafe to invoke concurrently, even across entries the two invocations don't logically share -- the slower process's later write is based on a pre-change snapshot and silently reverts the faster process's already-persisted progress with no error. Reproduced live running manage_coloring_book_production.py's generate-bw for two different book/proposal ids at once: the first to finish had its bw_status: done reverted back to running by the second process's later write. Recovered safely only because the render and server-side ArtImage survived independently of the YAML bookkeeping and the enqueue step was idempotent against an existing job id -- a less careful recovery could have double-submitted a render job. Filed coloring-book/t-049 to fix the script; the immediate mitigation is to never run two invocations against the same shared state file in parallel, regardless of how independent their target keys look."
+- date: 2026-09-27
+  project: tzaddik-gallery
+  task: t-022
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A kaizen task naming an exact file, function, and the mechanical reason ESLint double-flagged it (disable comment landing above a multi-line type instead of the line the `any` actually appears on) is landable in one pass with zero ambiguity: narrowing the map's `findUnique` argument type to the shape every call site actually passes removed the `any` outright, so no disable comment was needed at all. Confirmed via eslint (clean), vue-tsc --noEmit (clean), and test:lint-ratchet (-3 problems vs. baseline)."
