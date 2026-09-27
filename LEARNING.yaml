@@ -16774,3 +16774,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "The whole-file-rewrite cost t-049 deliberately deferred (write_yaml(QUEUE_FILE, queue) dumping the entire ~3,000-line/~130KB in-memory tree on every single-entry mutation) narrows cleanly by mirroring a pattern the same file already had precedent for: replace_ledger_pair_value already text-splices one field of one ledger entry in place rather than rewriting the ledger. Generalizing that to a whole entry one nesting level deeper (books -> entries) needed only locating each level's block boundaries by its own list-item marker (0-indent '- order:' for books, 2-indent '  - ' for entries) and re-serializing just the touched entry with a fixed re-indent, rather than any structural rewrite of the read/load path. Verified beyond the unit-test round trip by running the new write function against a real scratch copy of the actual ~130KB production queue file and diffing every other book/entry and all top-level scalar keys before/after -- a synthetic fixture alone would not have caught an edge case specific to the real file's shape (e.g. a book or entry ordering quirk), and none existed here (108-entries, 3-books, all entry blocks IDed correctly)."
+- date: 2026-09-27
+  project: coloring-book
+  task: t-054
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A frozen fixture pinned to a live production file path is only as stable as that path's own guarantee of immutability -- color-art-jobs.yaml's production scripts move a superseded render to a rejected/ or revisions/ subdirectory rather than deleting it, so the original archived bytes usually still exist in the repo even after the canonical path is overwritten by a real accepted illustration. Finding and swapping in that archived original (same character, same historical measurements) fixes drift with zero loss of test coverage, instead of hunting for an unrelated known-bad substitute or dropping coverage entirely. Caught a SECOND live occurrence of the identical class (hwr-021) mid-fix, flagged by an independent concurrent session's roadmap note on the same task -- worth re-reading a task's own note for fresh evidence appended after a claim, not just what it said at claim time, since two unrelated production cycles hit the same drift class the same day."
