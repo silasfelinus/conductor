@@ -16756,3 +16756,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "art_quality.py's NOISE_MIN_HF_RATIO (0.55) false-positived on legitimate busy/detail-dense line art (kind-robots/kr-001's dense repeated-icon composition) because the task note's own diagnosis was already precise. Rather than take the note's offered book-specific-threshold shortcut, pulled every hf_ratio ever recorded in color-art-jobs.yaml across all three books and found a clean, wide, unused gap between real noise (0.857-0.876) and every legitimate render including the false positive (<=0.5953) -- letting a single global recalibration (0.72) fix it safely for every book, with regression fixtures pinning both groups so a future change that would flip either shows up as a named test failure. When a false-positive/true-positive pair both have recorded historical measurements, check the full distribution before reaching for a per-case carve-out or a new heuristic -- the simpler global fix is often already safe and just needs the data to prove it."
+- date: 2026-09-27
+  project: conductor
+  task: t-198
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A test that calls a production CLI's main() end-to-end without mocking its network-dependent branch is only as isolated as the branch's own gating condition happens to be closed in the current process -- test_annotate_daily_dream_art_queue.py's isolation flake existed because _live_job_fetcher()'s bare `import consume_art_requests` failed silently (ImportError -> None) unless some *other* test file had already put scripts/ on sys.path, an accidental protection that full-suite collection order defeats deterministically while single-file runs never exercise. When a CLI-level test's correctness implicitly depends on an ambient secret/import/environment condition rather than an explicit mock, make that condition explicit (monkeypatch.delenv, an injected fetch_job, etc.) rather than fixing the accident that happened to mask it -- the accident (sys.path scope) is not the actual isolation boundary the test needs."

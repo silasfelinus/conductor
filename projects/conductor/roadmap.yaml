@@ -4208,5 +4208,33 @@ tasks:
   updated: '2026-09-27T11:29:15Z'
   implementation_pr: 'silasfelinus/conductor#5282'
 
+- id: t-199
+  milestone: m1
+  title: "Harden annotate_daily_dream_art_queue.py's _live_job_fetcher() import against ambient sys.path state"
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: >-
+    Kaizen from t-198 (2026-09-27, PR #5282). `_live_job_fetcher()` does a bare
+    `import consume_art_requests as requests`, which only succeeds when `scripts/`
+    happens to already be on `sys.path` -- true in a full pytest run (11 other test
+    files each do their own `sys.path.insert(0, .../scripts)` at collection time) or
+    when the script is invoked in a context where `scripts/` is already importable,
+    false when run in most other contexts. t-198 worked around this at the test level
+    (the test itself doesn't need a real fetcher and now clears KR_API_TOKEN so the
+    import is never attempted), but the production code's own import robustness is
+    still exactly as fragile as before -- it's just no longer exercised by this test.
+    TO FIX: switch to the dual-path pattern already used elsewhere in this codebase
+    (see scripts/consume_art_queue.py's `try: from scripts import consume_art_queue_core
+    as _core / except ImportError: import consume_art_queue_core as _core`), so the
+    import succeeds deterministically whenever the repo root is on sys.path (which
+    pytest and any script invocation via `python3 scripts/foo.py` both guarantee)
+    rather than depending on scripts/ specifically also being on sys.path. Add a
+    regression test that imports and calls `_live_job_fetcher()` from a subprocess/
+    fresh interpreter with only the repo root on sys.path (no scripts/ dir), confirming
+    it still resolves the real fetcher when KR_API_TOKEN is set.
+  updated: '2026-09-27T11:29:15Z'
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
