@@ -138,10 +138,18 @@ KNOWN_BAD_DIR_HWR = (
     / "generated" / "color-proposals-v1"
 )
 KNOWN_BAD = {
-    "mr-025-little-miss-omen.webp": dict(
-        path=KNOWN_BAD_DIR_MR / "mr-025-little-miss-omen.webp",
-        mean_saturation=0.2812, colorful_fraction=0.3496, luma_std=0.3826,
-        tint_concentration=0.9889,
+    # coloring-book/t-054: the previously-pinned final mr-025 file
+    # (mr-025-little-miss-omen.webp) was overwritten with a real accepted
+    # illustration in PR #5269 (t-022 cycle 75) and now legitimately passes
+    # the color gate -- it no longer represents the tint/wash defect this
+    # fixture exists to catch. Swapped in its own archived attempt-1 render
+    # (same character, still checked into the repo under rejected/render/),
+    # which still measures as a genuine single-hue sepia/duotone wash today.
+    "mr-025-little-miss-omen-attempt-1-seed-1794629632.webp": dict(
+        path=KNOWN_BAD_DIR_MR / "rejected" / "render" / "rejected"
+        / "mr-025-little-miss-omen-attempt-1-seed-1794629632.webp",
+        mean_saturation=0.1195, colorful_fraction=0.1346, luma_std=0.3637,
+        tint_concentration=0.9661,
     ),
     "hwr-021-the-silent-mechanic.webp": dict(
         path=KNOWN_BAD_DIR_HWR / "hwr-021-the-silent-mechanic.webp",
