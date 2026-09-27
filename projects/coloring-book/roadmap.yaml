@@ -1323,9 +1323,19 @@ tasks:
     (expect 0 remaining) and confirming `python scripts/coloring_proposal_status.py`
     reports the same "Ledger and queue structure: OK" it does today (unaffected either
     way, since this only touches prompt.text).
-  updated: '2026-09-27T17:09:56Z'
+
+    DONE 2026-09-27: reworded all 44 remaining live prompt.text "no text" occurrences (1
+    monster-recast, 23 hollywood-recast, 20 kind-robots) to state the wanted result instead
+    of naming "text" (mostly "every surface bare and unmarked.", two tailored for combined
+    constraints). Left 3 historical NOT-ACCEPTED/recovery note references untouched (not
+    resubmitted, so no contract risk; rewriting them would misrepresent past attempts).
+    Verified via YAML parse, re-grep (0 live occurrences remaining), and
+    coloring_proposal_status.py (Ledger and queue structure: OK, unchanged counts).
+    silasfelinus/conductor#5298 merged.
+  updated: '2026-09-27T17:10:38Z'
   claimed_by: conductor-sweep-20260927T165300-t057-run
   claimed_at: '2026-09-27T16:53:29Z'
+  implementation_pr: 'silasfelinus/conductor#5298'
 - id: t-058
   milestone: m4
   title: Recalibrate art_quality.py's single-hue tint/wash guard against the full approved corpus -- it false-positives on genuinely multi-color illustrations
