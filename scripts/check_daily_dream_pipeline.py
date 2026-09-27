@@ -152,7 +152,7 @@ def check_pipeline(root: Path = ROOT) -> list[str]:
         "id: daily_dream_build\n        continue-on-error: true",
         "id: daily_dream_facets\n        if: ${{ steps.daily_dream_build.outcome == 'success' }}\n        continue-on-error: true",
         "id: daily_dream_art\n        if: ${{ steps.daily_dream_build.outcome == 'success' }}\n        continue-on-error: true",
-        "- name: Commit Daily Dream cycle evidence\n        if: ${{ always() }}",
+        "- name: Commit tomorrow's Daily Dream cycle evidence\n        if: ${{ always() }}",
         'steps.daily_dream_build.outcome',
         'steps.daily_dream_facets.outcome',
         'steps.daily_dream_art.outcome',
