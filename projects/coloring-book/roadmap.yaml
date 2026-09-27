@@ -641,14 +641,53 @@ tasks:
     kind-robots has kr-001 (rejected, pending t-048's fix) plus 25 more still
     needing BW once t-048 lands. `python scripts/validate_roadmaps.py` clean.
     Re-arming to ready (recurring), releasing the claim.
+    Cycle 79 (2026-09-27, scheduled Conductor sweep): render box UP throughout
+    (check_render_box.py: Comfy heartbeat healthy, 20-40 renders completed per
+    6h window across the cycle). kind-robots/t-048 (the fix this task's own
+    prior cycles were waiting on) closed since cycle 78 -- confirmed via its
+    roadmap status before touching this book. Worked hollywood-recast and
+    kind-robots in parallel batches (up to 18 images per PRODUCTION-MODEL.md):
+    hollywood-recast -- ran generate-bw/accept-bw/finalize-pair for hwr-018,
+    019, 020, 024, 026, 029, 033, 035, 036 (first attempt hit the recurring
+    "Pillow not installed" gap, fixed with pip3 install Pillow, then a plain
+    retry resumed hwr-018/019's already-submitted jobs idempotently rather
+    than resubmitting); then reviewed and accepted color for hwr-017, 022,
+    023, 027, 028, 030, 031, 032, 034 (all fully clothed/appropriate scenes,
+    visually inspected) and ran the same generate-bw/accept-bw/finalize-pair
+    sequence for all nine. hwr-021 failed accept-color on the automated
+    single-hue/duotone mechanical check (coloring-book/t-045, sepia-toned
+    render) -- needs a re-render, not a human content call, left unaccepted.
+    hwr-025 (two trapeze performers in cleavage-forward pin-up corset
+    costuming) read the same as hwr-014/t-051's precedent -- filed
+    coloring-book/t-053 (FOR SILAS, soft_gate) rather than auto-accepting.
+    hollywood-recast is now at 33/36 final pairs (up from 15/36 at cycle
+    start), leaving only hwr-014 (t-051), hwr-021 (needs re-render), and
+    hwr-025 (t-053) open. kind-robots -- with t-048 closed, ran
+    generate-bw/accept-bw/finalize-pair for kr-004, 008, 009, 010, 012, 013,
+    015, 016 (all faithful counterparts, visually inspected); kr-001 was
+    retried both with and without --force and failed BOTH times with the
+    identical "spatially-uncorrelated noise/static, no discernible image
+    structure" mechanical rejection (coloring-book/t-039's guard) -- this is
+    not a render-box health issue (other kr-slots in the same batch rendered
+    cleanly) and two consecutive identical failures mean a third blind retry
+    is unlikely to help; flagging for a future cycle to investigate whether
+    kr-001's `allow_logo_emblem`/reference-image handling is provoking this,
+    rather than retrying again. kind-robots is now at 10/36 final pairs (up
+    from 2/36). monster-recast untouched this cycle (still gated on t-050/
+    mr-005, unchanged). Total: 26 new final pairs across the two unblocked
+    books this cycle (47/108 overall, up from 21/108). Note: this task's own
+    `note:` field is now well past check_roadmap_note_size.py's 50,000-byte
+    single-note threshold (already archived once to T022-HISTORY.md through
+    cycle 23) -- worth a second archival pass in a future cycle, not done
+    here since it's out of this cycle's scope. `python
+    scripts/validate_roadmaps.py` clean. Re-arming to ready (recurring),
+    releasing the claim.
   run_log: projects/coloring-book/t-022-run-log.md
   recurring: true
-  implementation_pr: 'silasfelinus/conductor#4482'
-  status: claimed
-  updated: '2026-09-27T07:58:10Z'
-  owner: worker
-  claimed_by: claude-scheduled-20260927T0800Z-cb-t022
-  claimed_at: '2026-09-27T07:58:10Z'
+  implementation_pr: 'silasfelinus/conductor#5278'
+  status: ready
+  updated: '2026-09-27T09:45:00Z'
+  owner:
 - id: t-025
   milestone: m6
   title: Package and register Monster Recast book 1
@@ -1555,6 +1594,7 @@ tasks:
     batch (t-022 continues on other hollywood-recast/kind-robots slots in the
     meantime, soft_gate: true).
   updated: '2026-09-27T07:15:00Z'
+
 - id: t-052
   milestone: m4
   title: "Narrow color-art-jobs.yaml's write path to the touched book/proposal entry instead of the whole file"
@@ -1579,3 +1619,39 @@ tasks:
     tests/test_coloring_book_production.py suite plus a new test that two
     non-overlapping entries survive a read-modify-write round trip untouched.
   updated: '2026-09-27T09:15:00Z'
+
+- id: t-053
+  milestone: m4
+  title: "FOR SILAS: confirm hwr-025 (circus trapeze duo) color art fits the all-ages Hollywood Recast rating"
+  status: needs-human
+  soft_gate: true
+  stakes: reversible
+  owner: null
+  passes: 0
+  note: >-
+    FOR SILAS: t-022's 2026-09-27 cycle 79 reached hollywood-recast slot 25,
+    hwr-025 "Escape from Center Ring"
+    (projects/coloring-book/sets/hollywood-recast/generated/color-proposals-v1/hwr-025-escape-from-center-ring.webp
+    -- rendered, still awaiting its accept-color review, so no BW work has been
+    attempted yet).
+    What it contains: two trapeze performers in tight, low-cut corset-style
+    circus costumes with exposed cleavage, bare shoulders, and thigh-high boots,
+    posed in a glamorous pin-up style against broken robotic circus animals.
+    Not nudity, but the same shape as hwr-014/t-051 (Chrome Thunder): the
+    costume's focal point is cleavage and a pin-up pose rather than incidental
+    circus-performer attire, which reads closer to a sexualized cover trope than
+    the rest of the book's action/adventure staging. DESIGN-BRIEF.md's Content
+    rating section says launch sets are all-ages with "no ... sexualized adult
+    content" -- ambiguous enough that this stopped here rather than being
+    auto-accepted into the color ledger, same as t-051's precedent.
+    TO APPROVE: view the file above and decide: (a) accept as-is (set
+    approved_by_human: true and status: done, add a note saying so, and the next
+    coloring-book/t-022 cycle will run accept-color then generate-bw/accept-bw/
+    finalize-pair for hwr-025), or (b) request a re-render with less revealing
+    costuming and note that direction -- the next cycle will regenerate from it,
+    or (c) drop hwr-025 from the set and note a replacement slot. Left at status:
+    done (unreviewed) in color-art-jobs.yaml either way; no auto-accept.
+    What unblocks: hwr-025's slot in coloring-book/t-022's remaining production
+    batch (t-022 continues on other hollywood-recast/kind-robots slots in the
+    meantime, soft_gate: true).
+  updated: '2026-09-27T08:35:00Z'
