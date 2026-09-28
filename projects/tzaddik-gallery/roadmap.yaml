@@ -420,19 +420,32 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Add accessibility, responsive gallery polish, and empty/loading/error states"
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
     depends_on: [t-004, t-005, t-006, t-007, t-008]
-    note: >
+    note: >-
       Make cards and detail content usable at phone/tablet/desktop widths, with
       alt text and keyboard-accessible reactions/submission controls. Source
       failures should degrade to explicit missing-source/image states rather
       than broken cards.
+
+      MERGED 2026-09-28 (found via direct kind_robots PR listing, not surfaced by
+      select_role.py's own kind_robots reviewable-PR check): silasfelinus/kind_robots#3071
+      implemented and merged -- ARIA tab semantics + roving-focus keyboard nav on tzaddik-
+      gallery.vue's section tabs, plus radiogroup/radio semantics and a live status
+      announcement on the shared reaction-card.vue star rating (used by every reaction
+      surface, not just Tzaddik). Verified: npm run test (vue-tsc) clean, eslint/prettier
+      clean, verifyLayoutContract.ts holds, live-browser check at phone/tablet/desktop widths
+      (against the still-undeployed older production build, per the documented merge-is-not-
+      deploy gap). Confirmed loading/error/empty/image-failure states were already satisfied
+      by existing shared kr-gallery/art-pending-placeholder/kr-art-plate infra, no new page-
+      level code needed for those. All 31 kind_robots CI checks green before merge.
     claimed_by: claude-scheduled-20260928T050500Z-tzaddik-t012-review
     claimed_at: '2026-09-28T05:01:44Z'
-    updated: '2026-09-28T05:01:44Z'
+    updated: '2026-09-28T05:01:57Z'
+    implementation_pr: 'silasfelinus/kind_robots#3071'
 
   - id: t-013
     milestone: m4

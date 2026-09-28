@@ -16864,3 +16864,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A stale claim (t-010 sat claimed by an openai session for 5+ hours with no branch ever pushed) is safe to reclaim and complete directly once the TTL has expired -- next_ready_task.py already surfaces this correctly. Placing the new research-pool content inside discovery/ (matching the dated dockets' heading/section/tzaddik-meta format) rather than at the project root meant excluded_names() picked it up for dedup automatically, with zero code changes -- worth defaulting to 'shape new content to fit an existing scan' before reaching for a scanner-code change."
+- date: 2026-09-28
+  project: tzaddik-gallery
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "select_role.py's kind_robots candidate_reviewable_pr_count reported 0 while a real, fully green, mergeable claude/* PR (kind_robots#3071) had been sitting open for ~4 hours. A direct list_pull_requests call against kind_robots found it immediately. Worth checking select_role.py's kind_robots PR-scan filter (branch prefix? PR age? author?) against this specific miss before trusting its reviewable-PR count as complete -- a manual cross-repo PR listing is cheap insurance in the meantime."
