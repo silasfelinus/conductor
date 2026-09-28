@@ -16943,3 +16943,12 @@ records:
     cross-cutting change and a per-gallery override. Also: verifyCardActionContract.ts's
     ENTITY_CARDS/SHARED_BODY_CARDS lists are a curated allowlist ('new models get added here'),
     not a glob -- a new *-card.vue wrapping reactable-card should be registered there explicitly."
+- date: 2026-09-28
+  project: tzaddik-gallery
+  task: t-019
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "The recheck pipeline's schema, fetch util, and UI were already built across three earlier tasks (t-005/t-006/t-009) -- the only missing piece was recheck.post.ts actually calling fetchTzaddikSource. Check for already-built-but-unwired pieces before assuming a task needs new code from scratch."

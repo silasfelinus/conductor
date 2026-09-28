@@ -964,3 +964,23 @@ tasks:
     claimed_by: claude-scheduled-20260928T025902Z-tzaddik-t027
     claimed_at: '2026-09-28T02:59:02Z'
     updated: '2026-09-28T02:59:29Z'
+
+  - id: t-028
+    milestone: m2
+    title: "Give editors a queue of NEEDS_REVIEW recheck requests instead of one-candidate-at-a-time discovery"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: null
+    note: >-
+      Kaizen from t-019 (silasfelinus/kind_robots#3080): the recheck pipeline now
+      actually runs and can leave a TzaddikRecheckRequest at NEEDS_REVIEW (a
+      Wikipedia page-id change -- possible redirect/article identity change --
+      that was deliberately not auto-applied). Today an editor can only discover
+      this by opening that specific candidate's detail sheet, which shows the
+      reason via the new recheckDetailLabel. There is no cross-candidate view.
+      Add an admin-only filter/queue (e.g. extend the existing admin Review
+      queue tab from t-008, or a small dedicated list) surfacing every
+      TzaddikCandidate with a latest RecheckRequest at NEEDS_REVIEW, so editors
+      don't have to remember to check each candidate individually.
