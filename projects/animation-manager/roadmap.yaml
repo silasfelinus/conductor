@@ -757,7 +757,7 @@ tasks:
   - id: t-025
     milestone: m5
     title: "Decide the fate of the kaleidoscope-bloom pitch given the pre-existing kaleidoscope-effect catalog entry"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -775,7 +775,13 @@ tasks:
       existing effect doesn't have) and keep it in the build queue, or (b) retire the pitch
       (status: retired or similar) as redundant with the shipped kaleidoscope-effect. Either
       way, this unblocks t-007's queue from skipping over it indefinitely.
+
+      Merged as silasfelinus/conductor#5375 (squash 15ed2f8, all 24 checks green). Decided to
+      retire rather than rewrite: kaleidoscope-effect.vue already ships the exact wedge-
+      simulate + rotate/alternating-mirror technique this pitch's own novelty section claimed
+      was unprecedented, so the overlap is mechanistic, not just thematic.
     claimed_by: 20260928T172334Z-am025
     claimed_at: '2026-09-28T17:23:35Z'
-    updated: '2026-09-28T17:24:14Z'
+    updated: '2026-09-28T17:27:37Z'
+    implementation_pr: 'silasfelinus/conductor#5375'
 
