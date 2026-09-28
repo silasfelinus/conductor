@@ -3,6 +3,7 @@ Tests for check_animation_novelty.py — the advisory keyword-overlap novelty ch
 animation-manager's PITCHES.yaml (conductor animation-manager t-009). No API calls.
 """
 
+import json
 from pathlib import Path
 
 import pytest
@@ -160,3 +161,136 @@ def test_real_pitches_file_parses_and_has_no_high_collisions():
     assert len(pitches) >= 1
     collisions = can.find_collisions(pitches, threshold=0.5)
     assert collisions == [], f"unexpectedly high-overlap pitches: {[c.as_dict() for c in collisions]}"
+
+
+# --------------------------------------------------------------------------- #
+# --check-catalog (animation-manager t-024)
+# --------------------------------------------------------------------------- #
+
+SAMPLE_CATALOG_SOURCE = """
+export const ANIMATION_EFFECTS = [
+  {
+    id: 'kaleidoscope-effect',
+    label: 'Kaleidoscope',
+    reveal: 'Symmetry',
+    icon: 'kind-icon:sparkle',
+    tooltip: 'Sacred geometry in motion 🔮',
+    color: '#000000',
+    generationSafe: true,
+  },
+  {
+    id: 'starfield-effect',
+    label: 'Warp Drive',
+    reveal: 'Hyperspace!',
+    icon: 'kind-icon:star',
+    tooltip: "Punch it, it's warp speed ✨",
+    color: '#111111',
+    generationSafe: true,
+  },
+] as const satisfies AnimationEffectDefinition[]
+"""
+
+
+def test_overlap_coefficient_uses_smaller_side_as_denominator():
+    # Both sides have 4 tokens here (unlike Jaccard, size alone isn't the point --
+    # the point is dividing by the *smaller* side, which this keeps simple to assert).
+    long_pitch_tokens = {"kaleidoscope", "bloom", "dihedral", "radial"}
+    short_catalog_tokens = {"kaleidoscope", "sacred", "geometry", "motion"}
+    score, shared = can.overlap_coefficient(long_pitch_tokens, short_catalog_tokens)
+    assert score == pytest.approx(0.25)
+    assert shared == {"kaleidoscope"}
+
+
+def test_overlap_coefficient_empty_side_is_zero():
+    assert can.overlap_coefficient(set(), {"a"}) == (0.0, set())
+
+
+def test_parse_catalog_entries_reads_both_quote_styles():
+    entries = can.parse_catalog_entries(SAMPLE_CATALOG_SOURCE)
+    by_id = {e["id"]: e for e in entries}
+    assert set(by_id) == {"kaleidoscope-effect", "starfield-effect"}
+    assert by_id["kaleidoscope-effect"]["label"] == "Kaleidoscope"
+    assert by_id["kaleidoscope-effect"]["tooltip"] == "Sacred geometry in motion 🔮"
+    # double-quoted tooltip (containing an apostrophe) parses too
+    assert by_id["starfield-effect"]["tooltip"] == "Punch it, it's warp speed ✨"
+
+
+def test_parse_catalog_entries_missing_array_raises():
+    with pytest.raises(ValueError):
+        can.parse_catalog_entries("export const SOMETHING_ELSE = []")
+
+
+def test_find_catalog_collisions_catches_title_match_technique_prose_misses():
+    """Regression for the actual incident this check exists for: kaleidoscope-bloom's
+    technique/surprise text never says "kaleidoscope", so `pitch_signature` +
+    `jaccard` (the PITCHES-internal check) cannot catch the collision -- only a
+    title/novelty vs. label/tooltip comparison can."""
+    bloom = pitch(
+        id="kaleidoscope-bloom",
+        title="Kaleidoscope Bloom",
+        technique="Canvas 2D offscreen wedge buffer composited via rotate/mirror transforms",
+        surprise="Jewel-toned shard clusters bloom outward in perfect radial symmetry",
+        novelty="No existing pitch renders through geometric symmetry compositing.",
+    )
+    entries = can.parse_catalog_entries(SAMPLE_CATALOG_SOURCE)
+
+    # The PITCHES-internal signature (technique+surprise) genuinely misses it.
+    assert "kaleidoscope" not in can.pitch_signature(bloom)
+
+    collisions = can.find_catalog_collisions([bloom], entries, threshold=0.2)
+    assert len(collisions) == 1
+    assert collisions[0].pitch_id == "kaleidoscope-bloom"
+    assert collisions[0].other_id == "catalog:kaleidoscope-effect"
+    assert "kaleidoscope" in collisions[0].shared
+
+
+def test_find_catalog_collisions_only_id_filters():
+    a = pitch(id="a", title="Kaleidoscope Thing", novelty="")
+    b = pitch(id="b", title="Unrelated Thing", novelty="")
+    entries = can.parse_catalog_entries(SAMPLE_CATALOG_SOURCE)
+    collisions = can.find_catalog_collisions([a, b], entries, threshold=0.2, only_id="b")
+    assert collisions == []
+
+
+def test_main_check_catalog_without_token_exits_2(tmp_path, monkeypatch):
+    monkeypatch.delenv("GITHUB_TOKEN", raising=False)
+    monkeypatch.delenv("GH_TOKEN", raising=False)
+    path = _write_pitches(tmp_path, [pitch(id="a")])
+    assert can.main(["--pitches", str(path), "--check-catalog"]) == 2
+
+
+def test_main_check_catalog_reports_collisions_in_json(tmp_path, monkeypatch, capsys):
+    monkeypatch.setenv("GITHUB_TOKEN", "fake-token-for-test")
+    monkeypatch.setattr(
+        can, "fetch_kind_robots_catalog_source", lambda ref, token: (SAMPLE_CATALOG_SOURCE, None)
+    )
+    path = _write_pitches(tmp_path, [
+        pitch(id="kaleidoscope-bloom", title="Kaleidoscope Bloom", novelty="A dihedral bloom effect."),
+    ])
+    code = can.main(["--pitches", str(path), "--check-catalog", "--json"])
+    assert code == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert isinstance(payload, dict)
+    assert payload["catalog_error"] is None
+    assert any(c["collides_with"] == "catalog:kaleidoscope-effect" for c in payload["catalog_collisions"])
+
+
+def test_main_check_catalog_fetch_failure_exits_2(tmp_path, monkeypatch):
+    monkeypatch.setenv("GITHUB_TOKEN", "fake-token-for-test")
+    monkeypatch.setattr(
+        can, "fetch_kind_robots_catalog_source", lambda ref, token: (None, "HTTP 404 fetching stores/animationCatalog.ts")
+    )
+    path = _write_pitches(tmp_path, [pitch(id="a")])
+    assert can.main(["--pitches", str(path), "--check-catalog"]) == 2
+
+
+def test_main_without_check_catalog_json_is_still_a_plain_list(tmp_path, capsys):
+    """--json's default shape must not change for callers that don't pass
+    --check-catalog (regression guard alongside test_main_json_output_is_parseable)."""
+    path = _write_pitches(tmp_path, [
+        pitch(id="a", technique="Canvas particles glow", surprise="Dust drifts slowly"),
+        pitch(id="b", technique="Canvas particles glow", surprise="Dust drifts slowly"),
+    ])
+    can.main(["--pitches", str(path), "--json"])
+    payload = json.loads(capsys.readouterr().out)
+    assert isinstance(payload, list)
