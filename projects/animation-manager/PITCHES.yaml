@@ -1,4 +1,4 @@
-updated: "2026-09-26T07:10:00+00:00"
+updated: "2026-09-28T17:30:00+00:00"
 
 pitches:
   - id: bioluminescent-tide
@@ -1773,3 +1773,65 @@ pitches:
       - hovering a single tile pauses only that tile's flap without affecting any neighboring tile's progress
       - clicking the row can skip an in-progress dwell early without breaking any tile's settle logic
       - reduced-motion mode always shows either a fully-settled phrase or an instant jump to the current target character, never mid-flap motion
+
+  - id: firefly-phase-sync
+    title: Firefly Phase Sync
+    status: pitched
+    priority: 33
+    surprise: >
+      A dusk meadow scattered with dozens of fireflies blinks in total chaos at first -- no two
+      lights in step -- but watching a while, nearby blinks visibly knit into small clusters,
+      the clusters merge, and eventually the whole field pulses together in one soft synchronized
+      glow. The unison holds for a breath, then quietly dissolves back into scattered private
+      rhythms, ready to find sync again.
+    passive_loop: >
+      Each of a fixed population of fireflies holds a personal phase angle advancing at its own
+      natural frequency (small per-firefly variance) and flashes briefly whenever its phase
+      crosses zero. Every frame, each firefly's phase is nudged a small amount toward the mean
+      phase of a short fixed list of nearby neighbors -- weak phase-coupling, the same mechanism
+      (a discretized Kuramoto model) real synchronizing firefly species use to fall into step
+      with no conductor. Starting from random phases and frequencies, the population visibly
+      drifts from independent blinking into small local clusters flashing together, then into
+      full unison over roughly a minute. Once synchronized, unison holds for a short bloom before
+      every firefly's frequency is quietly reseeded with fresh small random variance, breaking
+      the lock so the whole approach-to-sync journey begins again.
+    optional_interaction: >
+      Pointer position acts as a soft "conductor" landmark: fireflies within a radius around the
+      pointer couple to each other more strongly than to the rest of the field, visibly
+      accelerating a local sync bubble that can be dragged around the meadow. A click hard-resets
+      every firefly to a fresh random phase and frequency, instantly breaking any current
+      synchronization and restarting the emergence from scratch.
+    technique: >
+      Canvas 2D. Each firefly is a lightweight record {x, y, phase, naturalFreq, neighbors:
+      index[]}; a fixed small neighbor list (nearest few) is computed once per firefly at start
+      from a coarse spatial grid, never recomputed per frame. Each frame's update is the standard
+      discretized Kuramoto step -- phase += naturalFreq * dt + couplingStrength *
+      mean(sin(neighborPhase - phase)) * dt -- evaluated once per firefly against its cached
+      neighbor list, never a full pairwise sum. Each firefly draws as one pre-rendered
+      radial-gradient glow sprite reused via drawImage at a phase-driven alpha/scale, never a
+      per-firefly-per-frame gradient construction.
+    reduced_motion: >
+      Freeze on a fully synchronized frame -- every firefly mid-glow at the same phase -- with
+      phase advancement, coupling updates, and pointer/click interaction all disabled.
+    performance_risk: >
+      A naive pairwise coupling sum is O(n^2) per frame and becomes the bottleneck well before a
+      few hundred fireflies. Cap the population, precompute each firefly's fixed small neighbor
+      list once from a coarse spatial grid rather than recomputing proximity every frame, and
+      reuse one cached glow sprite via drawImage instead of constructing a gradient per firefly
+      per frame.
+    novelty: >
+      The core mechanic is phase-coupled oscillator synchronization (a discretized Kuramoto
+      model) -- no existing pitch drives its passive loop from neighbor-phase-averaging
+      convergence. Moth Constellation's boids-lite steering aligns points toward spatial
+      position/velocity, never toward timing/phase. Pendulum Wave Garden deliberately computes
+      each bob's swing directly from a fixed formula specifically so nothing accumulates or
+      couples between bobs -- the opposite mechanic. Zoetrope Lantern Drum samples discrete poses
+      by rotation angle, not continuous phase convergence. No existing pitch's surprise is "chaos
+      gradually organizing into synchrony," a well-documented real biological phenomenon (e.g.
+      Pteroptyx firefly species) not touched by any prior concept in this queue.
+    acceptance:
+      - from a fresh reset, blinking visibly clusters into small synchronized groups before broad unison, never snapping all fireflies to sync instantly
+      - once fully synchronized the population holds a visible unison bloom before naturally re-scattering into fresh independent blinking
+      - dragging the pointer through the meadow visibly speeds up local synchronization near the cursor without affecting fireflies far outside its radius
+      - a click immediately and visibly resets every firefly to a new random phase and frequency
+      - reduced-motion mode shows a static fully-synchronized frame with zero phase advancement and no interaction
