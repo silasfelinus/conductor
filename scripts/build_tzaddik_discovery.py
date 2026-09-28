@@ -170,9 +170,10 @@ def check() -> int:
     if not dockets:
         print("No discovery dockets found yet -- the pipeline has never produced one.")
         return 1
-    latest = dockets[-1]
+    dated = sorted((d for d in dockets if d["date"]), key=lambda d: d["date"])
+    latest_label = dated[-1]["date"] if dated else "none (no dated dockets yet)"
     total_names = len(excluded_names())
-    print(f"{len(dockets)} discovery docket(s) on file, most recent: {latest['date']}.")
+    print(f"{len(dockets)} discovery docket(s) on file, most recent: {latest_label}.")
     print(f"{total_names} distinct name(s) already suggested or accepted (dedup pool).")
     counts: dict[str, int] = {}
     for docket in dockets:
