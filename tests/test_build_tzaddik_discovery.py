@@ -205,3 +205,24 @@ def test_check_reports_docket_count(tmp_path, monkeypatch, capsys):
     out = capsys.readouterr().out
     assert rc == 0
     assert "1 discovery docket(s)" in out
+
+
+def test_check_ignores_non_dated_file_when_reporting_most_recent(tmp_path, monkeypatch, capsys):
+    # A non-dated research-pool file (e.g. living36-research-pool.md) sorts after
+    # any 2026-... dated docket alphabetically, so picking dockets[-1] blindly
+    # reports "most recent: None" instead of the real latest dated docket.
+    monkeypatch.setattr(btd, "DISCOVERY_DIR", tmp_path)
+    monkeypatch.setattr(btd, "_seed_set_names", lambda: set())
+
+    older = tmp_path / "2026-09-26.md"
+    older.write_text("# Daily Tzaddik discovery docket -- 2026-09-26\n", encoding="utf-8")
+    newer = tmp_path / "2026-09-28.md"
+    newer.write_text("# Daily Tzaddik discovery docket -- 2026-09-28\n", encoding="utf-8")
+    pool = tmp_path / "living36-research-pool.md"
+    pool.write_text("# Living-36 candidate research pool\n", encoding="utf-8")
+
+    rc = btd.check()
+    out = capsys.readouterr().out
+    assert rc == 0
+    assert "most recent: 2026-09-28." in out
+    assert "None" not in out
