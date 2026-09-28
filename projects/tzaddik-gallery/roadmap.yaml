@@ -307,12 +307,12 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Seed Silas's named historical and living candidates"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-003, t-008]
-    note: >
+    note: >-
       Import the accepted first gallery membership from seed-sets.yaml. Silas
       explicitly accepted the full 2026-09-26 discovery docket plus his direct
       nominations on 2026-09-26. Dolly Parton died on 2026-08-25 and belongs
@@ -321,9 +321,30 @@ tasks:
       living/memorial status and Wikipedia/Wikimedia provenance from current
       sources at ingest time; never trust stale model memory or cached prose. Seed-set membership is
       not the same thing as final canonical top-36 selection.
+
+      IN PROGRESS 2026-09-28 (claude-scheduled session): kind_robots#3069 adds the
+      missing admin bulk-import capability (server/api/tzaddik/import.post.ts) plus
+      the live Wikipedia/Wikidata/Commons source-refresh util
+      (server/utils/tzaddikSourceRefresh.ts) that recheck.post.ts's own docstring
+      noted was never built. Neither existing route (index.post.ts, override.patch.ts)
+      could preserve seed-sets.yaml's suggested_by ("llm-daily-discovery" vs a real
+      user) or set acceptedByUserId/wikipediaPageId/wikipediaRevisionId/image
+      provenance directly, so this was a genuine prerequisite, not scope creep.
+      vue-tsc/eslint/prettier clean locally; full CI running on the PR.
+      Remaining for t-009 to actually close: once #3069 merges and deploys (Unraid
+      auto-deploy; no PR preview exists for this repo), POST the 29 seed-sets.yaml
+      entries (12 living + 17 memorial) to /api/tzaddik/import with rationale text
+      sourced from projects/tzaddik-gallery/discovery/2026-09-26.md's Pitch fields
+      for the 20 llm-daily-discovery entries, and freshly authored rationale for
+      the 9 silasfelinus direct nominations (Cassandra Peterson, Greta Thunberg,
+      Dolly Parton, Steve Irwin, Fred Rogers, Martin Luther King Jr., Stanislav
+      Petrov, Nelson Mandela, Harriet Tubman) which have no discovery pitch text.
+      Verify all 29 created records afterward (curationState APPROVED, correct
+      lifeState from live Wikidata, suggestedBy/acceptedByUserId preserved).
     claimed_by: claude-scheduled-20260928T000759Z-tzaddik-t009
     claimed_at: '2026-09-28T00:08:00Z'
-    updated: '2026-09-28T00:08:00Z'
+    updated: '2026-09-28T00:08:20Z'
+    implementation_pr: 'silasfelinus/kind_robots#3069'
 
   - id: t-010
     milestone: m3
