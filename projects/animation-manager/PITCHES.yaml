@@ -1444,7 +1444,7 @@ pitches:
 
   - id: moire-weave-engine
     title: Moiré Weave Engine
-    status: pitched
+    status: candidate
     priority: 28
     surprise: >
       Two nearly ordinary translucent line screens overlap across the desktop, but their tiny
@@ -1503,6 +1503,20 @@ pitches:
       - pointer phase bending and click-triggered palette changes remain optional, rate-limited, and never block underlying page input
       - reduced-motion mode removes grating translation and rotation and avoids temporal shimmer while retaining a coherent static composition
       - active texture count, grating resolution, and per-frame work remain bounded regardless of viewport size or elapsed session time
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/moire-weave-engine.vue
+        pull_request: silasfelinus/kind_robots#3075
+        released_at: '2026-09-28T07:56:24Z'
+        commit: 47b533a042667b618df633fefc64352e96969896
+        verification:
+          - Contract verifiers
+          - TypeScript
+          - layout-contract
+          - facet-catalog
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
 
   - id: crease-fold-atlas
     title: Crease Fold Atlas
