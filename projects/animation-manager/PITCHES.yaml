@@ -215,7 +215,7 @@ pitches:
 
   - id: koi-memory-pond
     title: Koi Memory Pond
-    status: candidate
+    status: shipped
     priority: 8
     surprise: Koi remember paths across sessions locally and slowly develop favorite routes, crossings, and resting places.
     passive_loop: Fish swim under transparent water, disturb floating leaves, and occasionally follow one another.
@@ -233,7 +233,7 @@ pitches:
         released_at: '2026-07-27T00:38:03Z'
         commit: 5c40bf0
         component: components/screenfx/koi-memory-pond.vue
-        status: candidate
+        status: shipped
         verification:
           - TypeScript
           - Contract verifiers
@@ -245,7 +245,7 @@ pitches:
 
   - id: impossible-terrarium
     title: Impossible Terrarium
-    status: candidate
+    status: shipped
     priority: 9
     surprise: A glass terrarium contains stairways, roots, waterfalls, and rooms whose gravity directions disagree.
     passive_loop: Tiny inhabitants traverse impossible routes while water and spores obey different gravity fields.
@@ -263,7 +263,7 @@ pitches:
         released_at: '2026-07-27T23:04:32Z'
         commit: 8e78fba
         component: components/screenfx/impossible-terrarium.vue
-        status: candidate
+        status: shipped
         verification:
           - TypeScript
           - Contract verifiers
@@ -275,7 +275,7 @@ pitches:
 
   - id: ink-oracle
     title: Ink Oracle
-    status: candidate
+    status: shipped
     priority: 10
     surprise: Floating ink blooms repeatedly suggest symbols, creatures, or faces but never settle into the same answer.
     passive_loop: Diffusion-like tendrils expand, fold, fade, and seed the next bloom.
@@ -289,7 +289,7 @@ pitches:
       - no frame-to-frame flicker or muddy full-screen opacity
     builds:
       - version: 1
-        status: candidate
+        status: shipped
         component: components/screenfx/ink-oracle.vue
         pull_request: silasfelinus/kind_robots#1107
         released_at: '2026-07-28T15:23:34Z'
@@ -301,10 +301,12 @@ pitches:
           - test:animation-catalog
           - test:animation-component-attempts
           - check_animation_novelty.py --strict
+        deferred:
+          - 'sandbox-access-gap (see SPEC.md "Sandbox verification gap")'
 
   - id: celestial-mobile
     title: Celestial Mobile
-    status: candidate
+    status: shipped
     priority: 11
     surprise: A hanging mobile of moons, robots, keys, and tiny planets physically balances itself as pieces drift into new configurations.
     passive_loop: Arms rotate with believable inertia while weights slowly migrate and rebalance the sculpture.
@@ -318,7 +320,7 @@ pitches:
       - system returns to stable balance after perturbation
     builds:
       - version: 1
-        status: candidate
+        status: shipped
         component: components/screenfx/celestial-mobile.vue
         pull_request: silasfelinus/kind_robots#1130
         released_at: '2026-07-29T02:21:24Z'
@@ -330,10 +332,12 @@ pitches:
           - test:animation-catalog
           - test:animation-component-attempts
           - check_animation_novelty.py --strict
+        deferred:
+          - 'sandbox-access-gap (see SPEC.md "Sandbox verification gap")'
 
   - id: tiny-weather-front
     title: Tiny Weather Front
-    status: candidate
+    status: shipped
     priority: 12
     surprise: >
       Miniature localized weather cells cross the screen independently — rain beneath one
@@ -349,7 +353,7 @@ pitches:
       - effect remains passive and transparent
     builds:
       - version: 1
-        status: candidate
+        status: shipped
         component: components/screenfx/tiny-weather-front.vue
         pull_request: silasfelinus/kind_robots#1154
         released_at: '2026-07-29T13:33:03Z'
@@ -361,10 +365,12 @@ pitches:
           - test:animation-catalog
           - test:animation-component-attempts
           - check_animation_novelty.py --strict
+        deferred:
+          - 'sandbox-access-gap (see SPEC.md "Sandbox verification gap")'
 
   - id: ant-farm-excavation
     title: Ant Farm Excavation
-    status: candidate
+    status: shipped
     priority: 13
     surprise: >
       A cross-section sand column, like a childhood ant farm, where a small colony of
@@ -394,7 +400,7 @@ pitches:
       - excavated trinkets appear at most once per minute and do not repeat consecutively
     builds:
       - version: 1
-        status: candidate
+        status: shipped
         component: components/screenfx/ant-farm-excavation.vue
         pull_request: silasfelinus/kind_robots#1821
         released_at: '2026-08-12T20:58:06Z'
@@ -459,7 +465,7 @@ pitches:
 
   - id: strandbeest-migration
     title: Strandbeest Migration
-    status: candidate
+    status: shipped
     priority: 15
     surprise: >
       A herd of wind-powered wire-legged walker sculptures ambles across a dune
@@ -496,7 +502,7 @@ pitches:
       - a walker that exits one edge re-enters from the opposite edge without a visible teleport pop (fade or off-screen buffer)
     builds:
       - version: 1
-        status: candidate
+        status: shipped
         component: components/screenfx/strandbeest-migration.vue
         pull_request: silasfelinus/kind_robots#2190
         released_at: '2026-08-29T02:54:20Z'
@@ -528,7 +534,7 @@ pitches:
 
   - id: shadow-puppet-theater
     title: Shadow Puppet Theater
-    status: candidate
+    status: shipped
     priority: 16
     surprise: >
       A backlit paper screen where jointed shadow-puppet cutouts (a bird, a boat, a
@@ -560,7 +566,7 @@ pitches:
       - hand-shadow interaction never blocks or offsets the actual page pointer
     builds:
       - version: 1
-        status: candidate
+        status: shipped
         component: components/screenfx/shadow-puppet-theater.vue
         pull_request: silasfelinus/kind_robots#2274
         released_at: '2026-08-31T21:01:28Z'
@@ -602,7 +608,7 @@ pitches:
 
   - id: kintsugi-weather
     title: Kintsugi Weather
-    status: candidate
+    status: shipped
     priority: 17
     surprise: >
       Hairline fractures quietly travel through a transparent porcelain-like surface, then
@@ -639,7 +645,7 @@ pitches:
       - pointer and click interactions never block underlying page input
     builds:
       - version: 1
-        status: candidate
+        status: shipped
         component: components/screenfx/kintsugi-weather.vue
         pull_request: silasfelinus/kind_robots#2352
         released_at: '2026-09-03T06:44:50Z'
@@ -657,7 +663,7 @@ pitches:
 
   - id: tapestry-loom
     title: Tapestry Loom
-    status: candidate
+    status: shipped
     priority: 18
     surprise: >
       A hand loom's shuttle glides steadily back and forth across taut warp threads, and with
@@ -711,7 +717,7 @@ pitches:
       - thread palette remains readable on both light and dark themes
     builds:
       - version: 1
-        status: candidate
+        status: shipped
         component: components/screenfx/tapestry-loom.vue
         pull_request: silasfelinus/kind_robots#2360
         released_at: '2026-09-03T13:52:10Z'
@@ -729,7 +735,7 @@ pitches:
 
   - id: hourglass-cascade
     title: Hourglass Cascade
-    status: candidate
+    status: shipped
     priority: 19
     surprise: >
       A glass hourglass sits center-stage, individual grains streaming from the top bulb
@@ -791,7 +797,7 @@ pitches:
       - in-flight grain count and height-map bin count stay fixed regardless of viewport size or elapsed session time
     builds:
       - version: 1
-        status: candidate
+        status: shipped
         component: components/screenfx/hourglass-cascade.vue
         pull_request: silasfelinus/kind_robots#2367
         released_at: '2026-09-03T19:51:24Z'
@@ -809,7 +815,7 @@ pitches:
 
   - id: geode-bloom
     title: Geode Bloom
-    status: candidate
+    status: shipped
     priority: 20
     surprise: >
       A dark hollow geode cross-section fills the desktop; faceted crystal clusters nucleate
@@ -851,7 +857,7 @@ pitches:
       - concurrent cluster cap and per-cluster facet cap hold under continuous nucleation
     builds:
       - version: 1
-        status: candidate
+        status: shipped
         component: components/screenfx/geode-bloom.vue
         pull_request: silasfelinus/kind_robots#2407
         released_at: '2026-09-05T07:55:56Z'
@@ -866,10 +872,12 @@ pitches:
           all CI green) but this entry was never promoted past status: pitched and never
           got a builds: section, unlike every other shipped/candidate pitch. Confirmed
           both files are live in the kind_robots checkout before writing this entry.
+        deferred:
+          - 'sandbox-access-gap (see SPEC.md "Sandbox verification gap")'
 
   - id: candlelit-reliquary
     title: Candlelit Reliquary
-    status: candidate
+    status: shipped
     priority: 21
     surprise: >
       A row of slender tapers burns on a stone ledge, each flame guttering slightly in an
@@ -936,7 +944,7 @@ pitches:
       - concurrent wax-run pool size and per-candle height-map bin count stay fixed regardless of viewport size or elapsed session time
     builds:
       - version: 1
-        status: candidate
+        status: shipped
         component: components/screenfx/candlelit-reliquary.vue
         pull_request: silasfelinus/kind_robots#2962
         released_at: '2026-09-21T23:12:33Z'
@@ -965,7 +973,7 @@ pitches:
 
   - id: frost-window-etching
     title: Frost Window Etching
-    status: candidate
+    status: shipped
     priority: 22
     surprise: >
       A dark windowpane slowly grows pale frost crystals inward from its edges -- thin,
@@ -1031,7 +1039,7 @@ pitches:
       - active walker count and frost-bitmap size stay fixed regardless of viewport size or elapsed session time
     builds:
       - version: 1
-        status: candidate
+        status: shipped
         component: components/screenfx/frost-window-etching.vue
         pull_request: silasfelinus/kind_robots#3020
         released_at: '2026-09-23T12:08:03Z'
@@ -1046,10 +1054,12 @@ pitches:
           Shipped and registered on 2026-09-23 as the first release under the explicit
           daily screensaver commitment. Release time is the verified GitHub merge time
           for kind_robots PR #3020.
+        deferred:
+          - 'sandbox-access-gap (see SPEC.md "Sandbox verification gap")'
 
   - id: harmonograph-sand-table
     title: Harmonograph Sand Table
-    status: candidate
+    status: shipped
     priority: 23
     surprise: >
       A tabletop sand-drawing device suspended from two decaying pendulums traces a
@@ -1110,7 +1120,7 @@ pitches:
       - traced-segment buffer size and rake sweep cost stay fixed regardless of viewport size or elapsed session time
     builds:
       - version: 1
-        status: candidate
+        status: shipped
         component: components/screenfx/harmonograph-sand-table.vue
         pull_request: silasfelinus/kind_robots#3039
         released_at: '2026-09-24T15:00:09Z'
@@ -1131,10 +1141,12 @@ pitches:
           without a matching builds entry -- see t-007's roadmap note and t-022, which
           tracks making the two a single documented step so this can't split across
           cycles again.
+        deferred:
+          - 'sandbox-access-gap (see SPEC.md "Sandbox verification gap")'
 
   - id: cairn-balancing
     title: Cairn Balancing
-    status: candidate
+    status: shipped
     priority: 24
     surprise: >
       A small clearing of flat river stones sits empty. One at a time, an unseen hand sets a
@@ -1206,7 +1218,7 @@ pitches:
       - solver iteration count, stone pool size, and per-frame simulation cost stay fixed regardless of viewport size or how many topple cycles have run this session
     builds:
       - version: 1
-        status: candidate
+        status: shipped
         component: components/screenfx/cairn-balancing.vue
         pull_request: silasfelinus/kind_robots#3046
         released_at: '2026-09-25T23:15:37Z'
@@ -1216,9 +1228,11 @@ pitches:
           - TypeScript
           - layout-contract
           - facet-catalog
+        deferred:
+          - 'sandbox-access-gap (see SPEC.md "Sandbox verification gap")'
   - id: zoetrope-lantern-drum
     title: Zoetrope Lantern Drum
-    status: candidate
+    status: shipped
     priority: 25
     surprise: >
       A squat cylindrical drum of vertical slats slowly turns in place, warm light glowing
@@ -1290,7 +1304,7 @@ pitches:
       - pose sampling is driven by rotation angle, not a frame-rate timer, so backgrounding and resuming the tab cannot desync or accelerate the apparent walk cycle
     builds:
       - version: 1
-        status: candidate
+        status: shipped
         component: components/screenfx/zoetrope-lantern-drum.vue
         pull_request: silasfelinus/kind_robots#3049
         released_at: '2026-09-26T08:08:13Z'
@@ -1300,6 +1314,8 @@ pitches:
           - TypeScript
           - layout-contract
           - facet-catalog
+        deferred:
+          - 'sandbox-access-gap (see SPEC.md "Sandbox verification gap")'
   - id: soap-film-membrane
     title: Soap-Film Membrane
     status: shipped
