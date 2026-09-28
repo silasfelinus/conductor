@@ -181,11 +181,25 @@ tasks:
       threshold; `validate_roadmaps.py` clean. Brings the buildable queue to 8, still below
       the cap. No kind_robots code touched (pitch-only) -- re-arming to ready per the
       recurring-task convention.
-    status: claimed
+
+      RAN 2026-09-28 (~17:35 UTC, scheduled conductor session): last RAN was 2026-09-26, a new
+      Pacific calendar day had passed, and the buildable (status: pitched) queue was at 4
+      (well below twelve), so neither no-op condition applied. Added firefly-phase-sync (a
+      discretized Kuramoto phase-coupled-oscillator synchronization loop -- fireflies blink
+      chaotically, gradually lock into local clusters then full unison via weak neighbor-phase
+      averaging, hold a bloom, then reseed and restart), checked against all 32 existing
+      pitches and the live shipped catalog (--check-catalog): no collisions at or above
+      threshold 0.2 either way. Distinct from moth-constellation (boids-lite spatial/velocity
+      steering, never phase/timing), pendulum-wave-garden (direct per-bob formula deliberately
+      avoiding coupling/accumulation), and zoetrope-lantern-drum (discrete pose sampling by
+      angle, not continuous phase convergence). No kind_robots code touched (pitch-only) --
+      re-armed to ready per the recurring-task convention. PR: silasfelinus/conductor#5378.
+    status: ready
     owner: worker
     claimed_by: 20260928T173547Z-am006
     claimed_at: '2026-09-28T17:35:47Z'
-    updated: '2026-09-28T17:35:47Z'
+    updated: '2026-09-28T17:36:56Z'
+    implementation_pr: 'silasfelinus/conductor#5378'
 
   - id: t-007
     milestone: m5
