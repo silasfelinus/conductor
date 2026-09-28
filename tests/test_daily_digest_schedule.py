@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parent.parent
 HOURLY = ROOT / ".github" / "workflows" / "hourly-conductor.yml"
 DIGEST = ROOT / ".github" / "workflows" / "daily-digest.yml"
 RETRY = ROOT / ".github" / "workflows" / "daily-digest-retry.yml"
+TASK_EVENTS = ROOT / ".github" / "workflows" / "process-task-events.yml"
 CRON_RE = re.compile(r"cron:\s*[\"']([^\"']+)[\"']")
 
 
@@ -45,6 +46,22 @@ def test_digest_retry_watchdog_keeps_expected_offsets():
     primary = daily_minutes(digest[0])
     fallbacks = [daily_minutes(schedule) for schedule in retry]
     assert fallbacks == [primary + 60, primary + 180]
+
+
+def test_digest_sentinel_recovers_from_non_schedule_conductor_activity():
+    workflow = TASK_EVENTS.read_text(encoding="utf-8")
+    sentinel = workflow[workflow.index("  daily-digest-sentinel:") :]
+
+    assert "github.event_name == 'schedule'" in sentinel
+    assert "github.event_name == 'workflow_dispatch'" in sentinel
+    assert "github.event_name == 'push'" in sentinel
+    assert "github.event_name == 'pull_request_target'" in sentinel
+    assert "github.event.pull_request.merged == true" in sentinel
+    assert "github.event_name == 'pull_request'" not in sentinel
+    assert "task-events/*.yaml" in workflow
+    assert "pull_request_target:" in workflow
+    assert 'recovery_epoch="$(date -u -d "${today} 16:00:00" +%s)"' in sentinel
+    assert "gh workflow run daily-digest.yml" in sentinel
 
 
 def test_daily_dream_sidecars_warn_without_manufacturing_a_failed_digest_run():
