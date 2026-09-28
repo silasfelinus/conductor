@@ -706,3 +706,51 @@ tasks:
       no longer checks out live -- report those separately instead. This is a
       status-field-only change (no code, no new builds); keep the diff to PITCHES.yaml.
 
+  - id: t-024
+    milestone: m5
+    title: "Teach check_animation_novelty.py to also diff a new pitch against the shipped catalog, not only PITCHES.yaml"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Kaizen from t-007's 2026-09-28 cycle: the pitch queue's next unbuilt entry by
+      priority was kaleidoscope-bloom (priority 27, novel single-wedge simulate +
+      rotate/mirror composite), but kind_robots already has a shipped, catalog-registered
+      kaleidoscope-effect.vue (id: kaleidoscope-effect, label "Kaleidoscope") doing the
+      same N-fold mirror-symmetry concept under a different, older technique
+      (direct Lissajous-cursor rendering, predates the pitch pipeline, never entered into
+      PITCHES.yaml). check_animation_novelty.py only diffs a pitch's novelty/title text
+      against other PITCHES.yaml entries, so it could not catch this, and
+      kaleidoscope-bloom's own novelty section never mentions the pre-existing catalog
+      entry either. The cycle worked around it by building the next pitch down the queue
+      instead (moire-weave-engine, priority 28) rather than risk shipping a
+      user-facing near-duplicate. Extend the checker (or add a sibling one) to also
+      compare a pitch's title/novelty text against stores/animationCatalog.ts's
+      label/tooltip strings for every already-shipped effect, flagging a likely
+      conceptual collision the same way it already does within PITCHES.yaml.
+      See silasfelinus/kind_robots#3075's "Flags for Reviewer" section for the full
+      writeup of the specific collision that prompted this.
+
+  - id: t-025
+    milestone: m5
+    title: "Decide the fate of the kaleidoscope-bloom pitch given the pre-existing kaleidoscope-effect catalog entry"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Found during t-007's 2026-09-28 cycle (see t-024's note for the full collision
+      writeup): PITCHES.yaml's kaleidoscope-bloom (priority 27, status: pitched, still
+      unbuilt) describes a single-wedge-simulate-plus-rotate/mirror-composite dihedral
+      kaleidoscope effect. kind_robots already ships components/screenfx/kaleidoscope-effect.vue
+      (catalog id kaleidoscope-effect, label "Kaleidoscope", a pre-pitch-pipeline
+      Lissajous-cursor-trail effect) covering the same conceptual ground for a user
+      browsing the Screen FX catalog, even though the underlying rendering technique is
+      genuinely different. Left untouched (status: pitched) rather than guessed at. Pick
+      one: (a) rewrite kaleidoscope-bloom's surprise/title to clearly differentiate it from
+      the existing effect (e.g. lean harder into the bloom-and-dissolve lifecycle the
+      existing effect doesn't have) and keep it in the build queue, or (b) retire the pitch
+      (status: retired or similar) as redundant with the shipped kaleidoscope-effect. Either
+      way, this unblocks t-007's queue from skipping over it indefinitely.
+
