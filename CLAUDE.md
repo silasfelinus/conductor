@@ -202,6 +202,13 @@ Then report:
 - **Daily dream**: whether today's dated proposal exists; its steering/build/retry,
   Facet, art, and digest state; legacy Dream outlines are idea inventory rather
   than queued object builds (warn when useful idea inventory falls below five)
+- **Daily Tzaddik**: run `python scripts/tzaddik_review.py --check` and report the
+  approved/rejected/deferred/pending counts across every discovery docket. List
+  any pending suggestions so Silas can act with `--decide "Name"
+  approved|rejected|deferred` (or by hand-editing
+  `projects/tzaddik-gallery/discovery-decisions.yaml`, the same pattern as any
+  other roadmap-adjacent field Silas edits directly) — a rejected/deferred name
+  never boomerangs back into a future docket once decided
 
 After the report, ask Silas what he wants to work on — or proceed directly if his first message is already a clear task.
 
