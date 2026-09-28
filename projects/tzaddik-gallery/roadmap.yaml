@@ -1095,6 +1095,12 @@ tasks:
       needsReview=true queue filter's response carries RecheckRequests at all.
       Tighten the card's show condition to require status === 'NEEDS_REVIEW'
       too, closing the gap even if it stays unreachable today.
+
+      Merged as silasfelinus/kind_robots#3085 (squash 9aa72d9). Server verified:
+      resolveTzaddikRecheckReview 409s on any status != NEEDS_REVIEW; card now gates its
+      buttons on that exact status instead of non-empty recheckReason (which was also true for
+      FAILED).
     claimed_by: 20260928T164855Z-t032
     claimed_at: '2026-09-28T16:48:56Z'
-    updated: '2026-09-28T17:00:05Z'
+    updated: '2026-09-28T17:00:30Z'
+    implementation_pr: 'silasfelinus/kind_robots#3085'
