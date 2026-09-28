@@ -1,5 +1,21 @@
 project: interface-vision
 kind: software
+- id: t-140
+  milestone: m6
+  title: Add a tablet viewport fixture for navigation menu anchoring and density
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  note: >-
+    Kaizen from interface-vision/t-105 and kind_robots#3073 (2026-09-28): the tablet
+    Admin tab menu regressed into a desktop-sized, left-hanging two-line slab and was caught
+    from Silas's iPad screenshot rather than by an automated viewport check. Add a focused
+    tablet navigation fixture/contract that exercises the tab dropdown at an iPad-class
+    width and pins its anchor, width, and compact row treatment without changing the phone
+    unified-picker or xl desktop behavior.
+  updated: '2026-09-28T06:54:00Z'
+
 goal: >
   Finish the entire user-facing Kind Robots front end in three explicit phases: make
   every reachable page work on phone/tablet/desktop with no hidden or unreachable UI;
