@@ -482,13 +482,13 @@ tasks:
   - id: t-016
     milestone: m5
     title: "Run the recurring Daily Tzaddik research cycle"
-    status: claimed
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
     recurring: true
     depends_on: t-015
-    note: >
+    note: >-
       Once the daily docket/review surface exists, re-arm this task once per
       Pacific calendar day after a complete 10-living + 10-deceased roster has
       been generated, sourced, deduplicated, and made available for Silas to
@@ -497,9 +497,19 @@ tasks:
       geography quotas. When the finite gallery build is accepted, transition
       tzaddik-gallery from active to continuous rather than leaving never-idle
       work in a finished finite project.
+
+      NO-OP 2026-09-28 (claude-scheduled session): checked before running the pipeline again
+      -- projects/tzaddik-gallery/discovery/2026-09-28.md already exists (10 living + 10
+      deceased, sourced, region/profession-diverse, dedup'd against 2026-09-26's roster;
+      committed as part of t-014's build in kind_robots#3069's sibling PR
+      silasfelinus/conductor#5320) and is already surfaced via scripts/tzaddik_review.py
+      --check (40 pending across both dockets, 0 approved/rejected/deferred). Running
+      build_tzaddik_discovery.py again today would just duplicate this same roster. Re-arming
+      to ready without a new run; next cycle should verify the *next* unbuilt Pacific day
+      before generating.
     claimed_by: claude-scheduled-20260928T034924Z-tzaddik-t016
     claimed_at: '2026-09-28T03:49:54Z'
-    updated: '2026-09-28T03:49:54Z'
+    updated: '2026-09-28T03:50:07Z'
 
   - id: t-017
     milestone: m2
