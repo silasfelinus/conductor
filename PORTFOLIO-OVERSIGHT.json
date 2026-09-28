@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-09-28T14:08:48.392157+00:00",
+  "generated_at": "2026-09-28T23:21:59.422255+00:00",
   "summary": {
-    "status": "clean",
+    "status": "action-needed",
     "roadmap_errors": 0,
-    "roadmap_warnings": 11,
+    "roadmap_warnings": 10,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
-    "openai_scheduled_agent_overdue": false,
+    "openai_scheduled_agent_overdue": true,
     "intent_review_due": false
   },
   "openai_scheduled_agent": {
-    "overdue": false,
+    "overdue": true,
     "last_activity": "2026-09-28T13:48:51+00:00",
-    "hours_since": 0.33,
+    "hours_since": 9.55,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "OpenAI coordination activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit."
@@ -30,36 +30,29 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-09-28T14:08:48.392161+00:00",
+    "generated_at": "2026-09-28T23:21:59.422263+00:00",
     "summary": {
       "roadmaps": 55,
       "active_projects": 22,
       "continuous_projects": 3,
-      "tasks": 1751,
-      "ready": 21,
+      "tasks": 1756,
+      "ready": 19,
       "waiting": 52,
       "needs_human": 68,
-      "in_progress": 4,
-      "done": 1590,
+      "in_progress": 2,
+      "done": 1599,
       "errors": 0,
-      "warnings": 11,
+      "warnings": 10,
       "info": 32
     },
     "errors": [],
     "warnings": [
       {
         "severity": "warning",
-        "code": "DUPLICATE_YAML_KEY",
-        "project": "animation-manager",
-        "task": null,
-        "message": "Duplicate key 'owner' at line 186 \u2014 YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one."
-      },
-      {
-        "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "animation-manager",
         "task": "t-022",
-        "message": "Task has remained claimed for 4 days."
+        "message": "Task has remained claimed for 5 days."
       },
       {
         "severity": "warning",
