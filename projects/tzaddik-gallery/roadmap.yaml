@@ -515,7 +515,7 @@ tasks:
   - id: t-016
     milestone: m5
     title: "Run the recurring Daily Tzaddik research cycle"
-    status: claimed
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
@@ -553,9 +553,17 @@ tasks:
       silasfelinus/conductor's worker/tzaddik-gallery-t-016 branch/PR. --check now correctly
       reports 2026-09-28 as most recent. Next cycle should verify the *next* unbuilt Pacific
       day before generating.
+
+      NO-OP 2026-09-27 (claude-scheduled session): re-checked pipeline state before running
+      again -- still only 2026-09-26.md and 2026-09-28.md on file (build_tzaddik_discovery.py
+      --check: 3 dockets, most recent 2026-09-28), and today's Pacific date is still
+      2026-09-27, so the buffer already covers the next unbuilt day. No new Pacific day has
+      rolled over since the prior cycle's check. Running the pipeline again would duplicate
+      the existing 2026-09-28 roster. Re-arming to ready without a new run; next cycle should
+      re-verify the next unbuilt Pacific day before generating.
     claimed_by: 2026-09-28T064900Z-tzaddik-t016-claude
     claimed_at: '2026-09-28T06:48:42Z'
-    updated: '2026-09-28T06:48:42Z'
+    updated: '2026-09-28T06:48:55Z'
 
   - id: t-017
     milestone: m2
