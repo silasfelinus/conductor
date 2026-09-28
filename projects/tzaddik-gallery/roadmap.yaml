@@ -1024,7 +1024,7 @@ tasks:
   - id: t-030
     milestone: m2
     title: "Add an inline accept/dismiss action for a NEEDS_REVIEW recheck directly on the Needs-review queue card"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1037,7 +1037,11 @@ tasks:
       -- e.g. "Update to new page id" / "Keep current source" -- backed by the
       existing recheck-resolution logic, so an editor can clear the whole
       queue without a click-through per candidate.
+
+      MERGED 2026-09-28: silasfelinus/kind_robots#3083 (Update/Keep current buttons on the
+      queue card, backed by new resolveTzaddikRecheckReview + POST /api/tzaddik/recheck-
+      resolve). vue-tsc/eslint/prettier clean; kind_robots CI green before merge.
     claimed_by: 20260928T151500Z-tzaddik-t030
     claimed_at: '2026-09-28T15:06:17Z'
-    updated: '2026-09-28T15:12:10Z'
+    updated: '2026-09-28T15:18:52Z'
     implementation_pr: 'silasfelinus/kind_robots#3083'
