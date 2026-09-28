@@ -1400,8 +1400,26 @@ pitches:
           - 'sandbox-access-gap (see SPEC.md "Sandbox verification gap")'
   - id: kaleidoscope-bloom
     title: Kaleidoscope Bloom
-    status: pitched
+    status: retired
     priority: 27
+    retired_note: >-
+      animation-manager/t-025 (2026-09-28): retired as redundant with the shipped
+      components/screenfx/kaleidoscope-effect.vue (catalog id kaleidoscope-effect,
+      label "Kaleidoscope"). This pitch's own novelty section claimed "no existing
+      pitch uses dihedral mirror-symmetry rendering to multiply a single simulated
+      region into a full radial pattern" -- but kaleidoscope-effect.vue already does
+      exactly that (grep confirms ctx.rotate(i * segAngle + globalAngle) paired with
+      an alternating ctx.scale(-1, 1) mirror per segment, driven from a single
+      per-wedge simulation), just with Lissajous-curve cursor trails in the wedge
+      instead of drifting bloom-and-dissolve shard clusters. The novelty claim was
+      never checked against the shipped catalog, only against other PITCHES.yaml
+      entries (the exact gap t-024 closed in check_animation_novelty.py). Unlike
+      other differentiation cases in this queue, the overlap here is in the
+      rendering mechanism itself, not just surface theming, so rewriting the
+      surprise/title to lean harder into the bloom lifecycle would still ship a
+      second "Kaleidoscope"-branded effect built on an identical compositing
+      trick -- a re-skin rather than a genuinely new animation. Retiring rather
+      than rewriting.
     surprise: >
       A softly rotating kaleidoscope window reveals drifting jewel-toned shard clusters
       blooming outward from the center in perfect radial symmetry, each cluster's colors and
