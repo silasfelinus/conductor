@@ -33,9 +33,12 @@ def _live_job_fetcher() -> Callable[[int], dict[str, Any] | None] | None:
     if not os.environ.get("KR_API_TOKEN"):
         return None
     try:
-        import consume_art_requests as requests  # noqa: PLC0415
+        from scripts import consume_art_requests as requests  # noqa: PLC0415
     except ImportError:
-        return None
+        try:
+            import consume_art_requests as requests  # noqa: PLC0415
+        except ImportError:
+            return None
     return requests.fetch_job
 
 

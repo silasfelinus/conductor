@@ -1,6 +1,12 @@
 import json
+import os
+import subprocess
+import sys
+from pathlib import Path
 
 import scripts.annotate_daily_dream_art_queue as annotate
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def asset(request_id="dream-cycle-example-world", status="queued", image_url=""):
@@ -151,3 +157,33 @@ def test_cli_rewrites_current_and_previous_outputs_in_place(tmp_path, monkeypatc
     assert current["art_job_id"] == 8123
     assert previous["art_status"] == "awaiting ArtJob"
     assert result["next_dream_proposal"]["assets"][0]["art_status"] == "awaiting build"
+
+
+def test_live_job_fetcher_resolves_with_only_repo_root_on_sys_path():
+    # conductor/t-199: _live_job_fetcher() used to do a bare `import
+    # consume_art_requests`, which only succeeds when scripts/ itself (not just
+    # the repo root) is already on sys.path -- true in a full pytest run because
+    # other test files each insert scripts/ at collection time, false in a fresh
+    # interpreter that only has the repo root on sys.path (the guarantee pytest
+    # and `python3 scripts/foo.py` both actually provide). Run in a subprocess
+    # with PYTHONPATH unset and cwd=ROOT so sys.path starts with only the repo
+    # root, confirming the fixed dual-path import still resolves the real
+    # fetcher rather than silently degrading to None.
+    script = (
+        "from scripts.annotate_daily_dream_art_queue import _live_job_fetcher\n"
+        "from scripts import consume_art_requests as expected\n"
+        "fetcher = _live_job_fetcher()\n"
+        "assert fetcher is not None, 'expected a real fetcher, got None'\n"
+        "assert fetcher is expected.fetch_job, 'resolved the wrong fetch_job'\n"
+        "print('OK')\n"
+    )
+    env = {"PATH": os.environ.get("PATH", ""), "KR_API_TOKEN": "fake-token-for-test"}
+    result = subprocess.run(
+        [sys.executable, "-c", script],
+        cwd=str(ROOT),
+        env=env,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert result.stdout.strip() == "OK"
