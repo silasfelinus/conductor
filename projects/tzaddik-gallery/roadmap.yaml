@@ -968,7 +968,7 @@ tasks:
   - id: t-028
     milestone: m2
     title: "Give editors a queue of NEEDS_REVIEW recheck requests instead of one-candidate-at-a-time discovery"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -984,7 +984,12 @@ tasks:
       queue tab from t-008, or a small dedicated list) surfacing every
       TzaddikCandidate with a latest RecheckRequest at NEEDS_REVIEW, so editors
       don't have to remember to check each candidate individually.
+
+      MERGED 2026-09-28: silasfelinus/kind_robots#3081. Added an admin-only needsReview=true
+      filter to GET /api/tzaddik and a third Needs-review toggle on the Review queue tab,
+      reusing the existing gallery/card/detail-sheet flow. vue-tsc/eslint/prettier clean; all
+      33 kind_robots CI checks green before merge.
     claimed_by: 20260928T142000Z-tzaddik-t028
     claimed_at: '2026-09-28T14:09:43Z'
-    updated: '2026-09-28T14:14:27Z'
+    updated: '2026-09-28T14:22:45Z'
     implementation_pr: 'silasfelinus/kind_robots#3081'
