@@ -16952,3 +16952,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "The recheck pipeline's schema, fetch util, and UI were already built across three earlier tasks (t-005/t-006/t-009) -- the only missing piece was recheck.post.ts actually calling fetchTzaddikSource. Check for already-built-but-unwired pieces before assuming a task needs new code from scratch."
+- date: 2026-09-28
+  project: tzaddik-gallery
+  task: t-028
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Reusing the existing admin Review-queue tab (Pending/Archived) with a third filter value, instead of building a dedicated NEEDS_REVIEW page, kept the diff small and consistent with the site's own routes-and-surfaces guidance to prefer an existing surface over a new one."
