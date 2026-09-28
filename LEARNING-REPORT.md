@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-28T02:47:27Z
+Generated: 2026-09-28T02:59:29Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1178**
-- Outcomes: blocked: 19, cancelled: 2, done: 1157
+- Closed tasks recorded: **1179**
+- Outcomes: blocked: 19, cancelled: 2, done: 1158
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -65,14 +65,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | superkate-services-calculator | 12 | 100% |
 | taskmaster | 3 | 100% |
 | text-generation | 7 | 100% |
-| tzaddik-gallery | 11 | 100% |
+| tzaddik-gallery | 12 | 100% |
 
 ## By kind
 
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1161 | 99% |
+| software | 1162 | 99% |
 
 ## Failure categories
 
@@ -94,6 +94,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-28 `tzaddik-gallery/t-015` — 'Give Silas a review surface' does not have to mean a live kind_robots UI/DB build -- a conductor-side script plus a small human-editable YAML ledger (scripts/tzaddik_review.py + discovery-decisions.yaml) satisfied the actual contract (approve/reject/defer/show-full-profile, wired into the session digest) in one landable pass, matching how Daily Dream's own conductor-side state is already surfaced. Also caught mid-close: t-014's own kaizen (t-027) had assumed t-015 would need a kind_robots database, which turned out to be moot once excluded_names() was re-read closely -- it already dedupes every docketed name permanently regardless of decision. Re-verify a dependent kaizen task's premise against what actually got built, not what was assumed, before letting it sit as 'ready' work for someone else to discover is unnecessary.
 - 2026-09-28 `tzaddik-gallery/t-014` — DESIGN-BRIEF.md's daily discovery roster is a two-sided system (pipeline + review surface); scoping t-014 to only the conductor-side dedup/validate/render mechanism, and proving it by actually authoring a real docket rather than leaving the script unexercised, kept this a landable single-pass build instead of an oversized 'build the whole Daily-Dream-equivalent system' attempt.
 - 2026-09-27 `tzaddik-gallery/t-008` — Clean first-pass build of admin approve/archive + explicit content overrides on top of schema t-003 already shipped -- confirming exact field/enum coverage before writing code (rather than assuming a migration was needed) kept this a pure application-layer PR. Following an existing precedent's shape (socialPostDraft.ts's approve/reject util split) for a new but structurally similar feature (Tzaddik's approve/archive) produced a smaller, more reviewable diff than inventing a new pattern.
 - 2026-09-27 `tzaddik-gallery/t-007` — select_role.py's 'likely a zero-diff close' heuristic fired from a dependency note mentioning this task, but the note's own wording ('No karma/reaction wiring added -- out of scope') looked like real work remained. Reading the actual current code (not just the roadmap note chain) showed a later PR on the same dependency (t-005) had already closed the gap without updating t-006's note to say so. Always verify an audit-candidate flag against live code before either reimplementing blind or trusting the note at face value -- both are wrong in different directions.
@@ -103,7 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-27 `coloring-book/t-054` — A frozen fixture pinned to a live production file path is only as stable as that path's own guarantee of immutability -- color-art-jobs.yaml's production scripts move a superseded render to a rejected/ or revisions/ subdirectory rather than deleting it, so the original archived bytes usually still exist in the repo even after the canonical path is overwritten by a real accepted illustration. Finding and swapping in that archived original (same character, same historical measurements) fixes drift with zero loss of test coverage, instead of hunting for an unrelated known-bad substitute or dropping coverage entirely. Caught a SECOND live occurrence of the identical class (hwr-021) mid-fix, flagged by an independent concurrent session's roadmap note on the same task -- worth re-reading a task's own note for fresh evidence appended after a claim, not just what it said at claim time, since two unrelated production cycles hit the same drift class the same day.
 - 2026-09-27 `coloring-book/t-052` — The whole-file-rewrite cost t-049 deliberately deferred (write_yaml(QUEUE_FILE, queue) dumping the entire ~3,000-line/~130KB in-memory tree on every single-entry mutation) narrows cleanly by mirroring a pattern the same file already had precedent for: replace_ledger_pair_value already text-splices one field of one ledger entry in place rather than rewriting the ledger. Generalizing that to a whole entry one nesting level deeper (books -> entries) needed only locating each level's block boundaries by its own list-item marker (0-indent '- order:' for books, 2-indent '  - ' for entries) and re-serializing just the touched entry with a fixed re-indent, rather than any structural rewrite of the read/load path. Verified beyond the unit-test round trip by running the new write function against a real scratch copy of the actual ~130KB production queue file and diffing every other book/entry and all top-level scalar keys before/after -- a synthetic fixture alone would not have caught an edge case specific to the real file's shape (e.g. a book or entry ordering quirk), and none existed here (108-entries, 3-books, all entry blocks IDed correctly).
 - 2026-09-27 `conductor/t-198` — A test that calls a production CLI's main() end-to-end without mocking its network-dependent branch is only as isolated as the branch's own gating condition happens to be closed in the current process -- test_annotate_daily_dream_art_queue.py's isolation flake existed because _live_job_fetcher()'s bare `import consume_art_requests` failed silently (ImportError -> None) unless some *other* test file had already put scripts/ on sys.path, an accidental protection that full-suite collection order defeats deterministically while single-file runs never exercise. When a CLI-level test's correctness implicitly depends on an ambient secret/import/environment condition rather than an explicit mock, make that condition explicit (monkeypatch.delenv, an injected fetch_job, etc.) rather than fixing the accident that happened to mask it -- the accident (sys.path scope) is not the actual isolation boundary the test needs.
-- 2026-09-27 `coloring-book/t-048` — art_quality.py's NOISE_MIN_HF_RATIO (0.55) false-positived on legitimate busy/detail-dense line art (kind-robots/kr-001's dense repeated-icon composition) because the task note's own diagnosis was already precise. Rather than take the note's offered book-specific-threshold shortcut, pulled every hf_ratio ever recorded in color-art-jobs.yaml across all three books and found a clean, wide, unused gap between real noise (0.857-0.876) and every legitimate render including the false positive (<=0.5953) -- letting a single global recalibration (0.72) fix it safely for every book, with regression fixtures pinning both groups so a future change that would flip either shows up as a named test failure. When a false-positive/true-positive pair both have recorded historical measurements, check the full distribution before reaching for a per-case carve-out or a new heuristic -- the simpler global fix is often already safe and just needs the data to prove it. (A concurrent t-022 cycle 80 session independently hit and diagnosed the same bug via a different route -- monster-recast mr-010, hf_ratio 0.5732, a completely different composition style -- landed as a real rotation collision on scripts/art_quality.py; reconciled at merge by keeping this fix as canonical and folding the second data point in as supplementary regression tests rather than a duplicate threshold change.)
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-28T02:47:27Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-28T02:59:29Z_
