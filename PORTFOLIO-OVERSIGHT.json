@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-09-27T21:26:03.523048+00:00",
+  "generated_at": "2026-09-28T05:33:13.063118+00:00",
   "summary": {
     "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 15,
+    "roadmap_warnings": 14,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -12,8 +12,8 @@
   },
   "openai_scheduled_agent": {
     "overdue": false,
-    "last_activity": "2026-09-27T21:21:53+00:00",
-    "hours_since": 0.07,
+    "last_activity": "2026-09-28T05:17:36+00:00",
+    "hours_since": 0.26,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "OpenAI coordination activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit."
@@ -21,7 +21,7 @@
   "intent_review": {
     "due": false,
     "last_report": "INTENT-AUDIT-2026-09-26.md",
-    "days_since": 1,
+    "days_since": 2,
     "stale_days": 3.0
   },
   "project_parity": {
@@ -30,20 +30,20 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-09-27T21:26:03.523054+00:00",
+    "generated_at": "2026-09-28T05:33:13.063123+00:00",
     "summary": {
       "roadmaps": 55,
-      "active_projects": 23,
+      "active_projects": 22,
       "continuous_projects": 3,
-      "tasks": 1743,
+      "tasks": 1747,
       "ready": 23,
-      "waiting": 60,
-      "needs_human": 68,
-      "in_progress": 2,
-      "done": 1574,
+      "waiting": 53,
+      "needs_human": 67,
+      "in_progress": 5,
+      "done": 1583,
       "errors": 0,
-      "warnings": 15,
-      "info": 30
+      "warnings": 14,
+      "info": 32
     },
     "errors": [],
     "warnings": [
@@ -81,13 +81,6 @@
         "project": "conductor",
         "task": "t-167",
         "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
-      },
-      {
-        "severity": "warning",
-        "code": "SOFT_NEEDS_HUMAN",
-        "project": "conductor",
-        "task": "t-189",
-        "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
       },
       {
         "severity": "warning",
