@@ -1819,7 +1819,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: "Polish every reachable Kind Robots surface page-by-page"
-  status: ready
+  status: claimed
   passes: 0
   stakes: reversible
   recurring: true
@@ -1896,9 +1896,12 @@ tasks:
     Screenshot-directed Art Generator density and SDXL image-to-image repair. Root cause: the art LoRA picker removed its height cap when expanded, so LoRAs grew the whole page; the generator also spent permanent height on a full-width maturity band, Destination controls, and an empty Latest Result panel. Separately, the front-end LoRA compatibility helper returned zero for every sdxl-img2img LoRA even though the server-side resolver explicitly supports SDXL/COMFY/GENERIC LoRAs, and artStore omitted sdxl-img2img from both Comfy routing requirement and serverCanUseEngine, producing the false "Comfy cannot run SDXL from an image" warning and allowing engine fallback. Changes: LoRAs now scroll within a 14rem compact / 24rem taller bounded panel, with a visible compact Mature toggle in its header; SDXL img2img now mirrors server LoRA compatibility and is preserved/routed as a Comfy engine; automatic routing no longer emits a false preferred-server incompatibility warning, while an explicitly pinned incompatible server disables Generate and explains the conflict; Destination is collapsed by default, prompt/settings/panel spacing is tighter, Facets use compact copy, and the empty Latest Result placeholder no longer consumes a viewport before any render exists. Added regression coverage for maturity placement, bounded LoRA scrolling, img2img compatibility/routing, progressive Destination, and no empty result slab. No API shape, database, mana, generation preset values, or production data changed.
 
     Reviewer merged silasfelinus/kind_robots#2910 at exact head 837c4c2d09da5f9ecca379b5c423351b9e27f602 after all exact-head Actions completed successfully. Art Generator density was reduced, LoRA browsing is bounded, and SDXL image-to-image now stays on the compatible Comfy lane. Re-arm this recurring page-polish task for the next screenshot-directed slice. kind-economy/t-028 (2026-09-23): the Mission Accrual polish slice recorded above (icon-badge header, merged as kind_robots#2114) predates Silas's deliberate retirement of the whole Mission Accrual admin surface in kind_robots#2669 (2026-09-12) -- not an accident, and not a page-polish regression. mission-accrual-page.vue no longer exists; do not treat its historical mentions above as describing a currently-live page.
-  updated: '2026-09-20T01:25:00Z'
+  updated: '2026-09-28T06:40:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2899'
   approved_by_human: true
+  owner: worker
+  claimed_by: 2026-09-28T064000Z-interface-vision-t105-chatgpt-7c92
+  claimed_at: '2026-09-28T06:40:00Z'
 
 - id: t-106
   milestone: m6
