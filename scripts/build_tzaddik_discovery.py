@@ -148,9 +148,11 @@ def excluded_names() -> set[str]:
     Covers canonical/accepted seed-set membership plus everyone appearing in any
     prior discovery docket, matching DESIGN-BRIEF.md's "dedupe state against
     canonical, historical, pending, rejected, deferred, and recently suggested
-    people" as far as this repo can see it -- the pending/rejected/deferred
-    states themselves live in kind_robots' database once t-015's review surface
-    exists, which is outside what a conductor-side script can check today.
+    people": every docketed name stays in this pool permanently regardless of
+    what Silas later decides (approved/rejected/deferred, tracked in
+    projects/tzaddik-gallery/discovery-decisions.yaml by tzaddik_review.py, t-015)
+    -- once suggested, a name is never re-suggested, so a rejection can't
+    immediately boomerang back into a future docket.
     """
     names = set(_seed_set_names())
     for docket in all_dockets():
