@@ -650,9 +650,18 @@ tasks:
       delivery is async via auto-art-generate.yml (triggered on this push since art-
       prompts.yaml changed, or its 6h schedule) -- a future cycle should verify the file
       actually resolves at that path before closing this task done.
+
+      RECHECKED 2026-09-28 (scheduled conductor sweep): kind_robots#3078 (front-end wiring)
+      confirmed merged 2026-09-28T12:03:51Z. Splash asset still not delivered -- GET
+      https://kindrobots.org/images/tzaddik-gallery/tzaddik-gallery-splash.webp returns 404,
+      and projects/art-prompts.yaml's tzaddik-gallery-splash entry is still status: pending
+      (not yet picked up by auto-art-generate.yml). Leaving at status: review per the task's
+      own note ('verify the file actually resolves at that path before closing this task
+      done') rather than closing done on code-merge alone. Next session: recheck the
+      source_url and re-check art-prompts.yaml status before closing done.
     claimed_by: 2026-09-28T115229Z-tzaddik-t018-splash
     claimed_at: '2026-09-28T11:52:32Z'
-    updated: '2026-09-28T11:58:38Z'
+    updated: '2026-09-28T13:48:09Z'
     implementation_pr: 'silasfelinus/kind_robots#3078'
 
   - id: t-019
