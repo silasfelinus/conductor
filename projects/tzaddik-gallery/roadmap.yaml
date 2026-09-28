@@ -1078,8 +1078,8 @@ tasks:
   - id: t-032
     milestone: m2
     title: "Tighten tzaddik-card.vue's recheck-resolve buttons to require status === NEEDS_REVIEW, matching the server's actual guard"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: null
@@ -1095,3 +1095,6 @@ tasks:
       needsReview=true queue filter's response carries RecheckRequests at all.
       Tighten the card's show condition to require status === 'NEEDS_REVIEW'
       too, closing the gap even if it stays unreachable today.
+    claimed_by: 20260928T164855Z-t032
+    claimed_at: '2026-09-28T16:48:56Z'
+    updated: '2026-09-28T16:48:56Z'
