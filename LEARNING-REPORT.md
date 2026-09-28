@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-28T17:24:14Z
+Generated: 2026-09-28T17:31:35Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1196**
-- Outcomes: blocked: 19, cancelled: 2, done: 1175
+- Closed tasks recorded: **1197**
+- Outcomes: blocked: 19, cancelled: 2, done: 1176
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -17,7 +17,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 |---|---|---|
 | ai-art-academy | 73 | 99% |
 | alexa-integration | 6 | 100% |
-| animation-manager | 23 | 96% |
+| animation-manager | 24 | 96% |
 | animation-studio | 2 | 50% |
 | appmaker | 11 | 100% |
 | approval-portal | 2 | 0% |
@@ -72,7 +72,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1179 | 99% |
+| software | 1180 | 99% |
 
 ## Failure categories
 
@@ -94,6 +94,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-28 `animation-manager/t-025` — kaleidoscope-bloom's own novelty section claimed no existing pitch used dihedral mirror-symmetry rendering, but a direct read of kaleidoscope-effect.vue showed it already ships the identical wedge-simulate + rotate/alternating-mirror technique -- the exact gap t-024 closed in check_animation_novelty.py (novelty was only ever checked against other PITCHES.yaml entries, not the shipped catalog). Retired rather than rewrote: when the overlap is in the rendering mechanism itself rather than surface theming, differentiating the surprise/title still ships a re-skin, not a genuinely new animation. Worth reading a pitch's actual claimed-novel technique against the real component source before trusting its own novelty section, not just running the automated checker.
 - 2026-09-28 `animation-manager/t-023` — Found while closing t-007's 2026-09-27 cycle: 17 pitches had a live component + catalog registration + exactly one build entry but were still marked status: candidate at both the pitch and build level, identical to a gap already fixed once for geode-bloom alone (2026-09-21). Verified each id's component file and animationCatalog.ts registration individually against kind_robots@main before promoting -- grep, not assumption -- rather than batch-promoting on the roadmap note's word alone. Worth a small periodic checker script (filed as this task's kaizen suggestion) so this class of drift surfaces on its own instead of needing a Worker to notice it by hand during an unrelated cycle.
 - 2026-09-28 `tzaddik-gallery/t-032` — t-031's kaizen note (above) named the exact gap this task closed: tzaddik-card.vue's own recheck buttons showed on any non-empty recheckReasonLabel(...), which is also true for a FAILED recheck, while resolveTzaddikRecheckReview 409s on any status other than NEEDS_REVIEW. Added a recheckNeedsReview computed reading RecheckRequests[0].status directly instead of re-deriving it from the reason-label helper. Currently unreachable in production per t-029's note (only the NEEDS_REVIEW queue filter's response carries RecheckRequests at all), same as t-031's equivalent fix on the detail sheet -- worth grepping for every other consumer of recheckReasonLabel/RecheckRequests[0] the next time this surface changes, since the same latent gap could recur on a third surface.
 - 2026-09-28 `tzaddik-gallery/t-031` — Gated the detail sheet's new Update/Keep-current buttons on latestRecheck.status === 'NEEDS_REVIEW' explicitly rather than reusing the queue card's broader non-empty-reason-label condition -- the card's condition also renders for FAILED recheck requests, which /api/tzaddik/recheck-resolve rejects with a 409. Worth checking a sibling component's show-condition against the server's actual guard, not just copying it, when adding the same control to a second surface.
@@ -103,7 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-28 `tzaddik-gallery/t-028` — Reusing the existing admin Review-queue tab (Pending/Archived) with a third filter value, instead of building a dedicated NEEDS_REVIEW page, kept the diff small and consistent with the site's own routes-and-surfaces guidance to prefer an existing surface over a new one.
 - 2026-09-28 `tzaddik-gallery/t-019` — The recheck pipeline's schema, fetch util, and UI were already built across three earlier tasks (t-005/t-006/t-009) -- the only missing piece was recheck.post.ts actually calling fetchTzaddikSource. Check for already-built-but-unwired pieces before assuming a task needs new code from scratch.
 - 2026-09-28 `tzaddik-gallery/t-025` — kr-gallery's #item slot (already used by bot-gallery.vue) lets a new object type get a bespoke card without touching the generic GalleryItem renderer every other gallery shares -- the narrower, lower-blast-radius option when a task note offers a choice between a cross-cutting change and a per-gallery override. Also: verifyCardActionContract.ts's ENTITY_CARDS/SHARED_BODY_CARDS lists are a curated allowlist ('new models get added here'), not a glob -- a new *-card.vue wrapping reactable-card should be registered there explicitly.
-- 2026-09-28 `tzaddik-gallery/t-024` — A 'kaizen from X, once Y lands' follow-up filed against a not-yet-merged dependency can end up fully subsumed by that dependency's actual implementation -- read the dependency's merged diff (not just its status: done) before claiming the downstream task, since the dependency's own PR description may already name the exact component the follow-up targets.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-28T17:24:14Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-28T17:31:35Z_
