@@ -142,10 +142,15 @@ jobs:
 
   daily-digest-sentinel:
     # The dedicated daily-digest and retry schedules can both disappear without
-    # GitHub creating a queued or failed run. Piggyback on this independently
-    # healthy hourly schedule so one missing scheduler lane cannot suppress the
-    # digest and its watchdog together.
-    if: github.event_name == 'schedule'
+    # GitHub creating a queued or failed run. Use this workflow's independent
+    # carriers too: task-event pushes and merged-PR close events still arrive
+    # when schedule delivery goes missing, so they can recover an overdue digest
+    # without adding another push-triggered workflow.
+    if: >-
+      github.event_name == 'schedule' ||
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request_target' && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     steps:
       - name: Recover a missing daily digest invocation
