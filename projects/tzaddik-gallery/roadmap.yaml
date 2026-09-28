@@ -968,8 +968,8 @@ tasks:
   - id: t-028
     milestone: m2
     title: "Give editors a queue of NEEDS_REVIEW recheck requests instead of one-candidate-at-a-time discovery"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: null
@@ -984,3 +984,6 @@ tasks:
       queue tab from t-008, or a small dedicated list) surfacing every
       TzaddikCandidate with a latest RecheckRequest at NEEDS_REVIEW, so editors
       don't have to remember to check each candidate individually.
+    claimed_by: 20260928T142000Z-tzaddik-t028
+    claimed_at: '2026-09-28T14:09:43Z'
+    updated: '2026-09-28T14:09:43Z'
