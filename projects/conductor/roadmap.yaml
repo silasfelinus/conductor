@@ -4237,7 +4237,7 @@ tasks:
 - id: t-199
   milestone: m1
   title: "Harden annotate_daily_dream_art_queue.py's _live_job_fetcher() import against ambient sys.path state"
-  status: claimed
+  status: review
   stakes: reversible
   owner: worker
   passes: 0
@@ -4260,7 +4260,7 @@ tasks:
     regression test that imports and calls `_live_job_fetcher()` from a subprocess/
     fresh interpreter with only the repo root on sys.path (no scripts/ dir), confirming
     it still resolves the real fetcher when KR_API_TOKEN is set.
-  updated: '2026-09-28T06:58:02Z'
+  updated: '2026-09-28T06:58:38Z'
   claimed_by: 2026-09-28T070200Z-conductor-t199-claude
   claimed_at: '2026-09-28T06:58:02Z'
 
