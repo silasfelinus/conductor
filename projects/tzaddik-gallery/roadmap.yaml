@@ -307,7 +307,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Seed Silas's named historical and living candidates"
-    status: review
+    status: claimed
     owner: worker
     passes: 0
     stakes: reversible
@@ -341,9 +341,24 @@ tasks:
       Petrov, Nelson Mandela, Harriet Tubman) which have no discovery pitch text.
       Verify all 29 created records afterward (curationState APPROVED, correct
       lifeState from live Wikidata, suggestedBy/acceptedByUserId preserved).
+
+      UPDATE 2026-09-28 (claude-scheduled session): kind_robots#3069 merged to main
+      (3cf718c). Confirmed live production (kindrobots.org) has NOT yet picked up
+      this commit -- POST /api/tzaddik/import currently returns the Nuxt SPA shell
+      (200 HTML), not the route, meaning Unraid auto-deploy hasn't run yet (see
+      AGENTS.md's documented merge-is-not-deploy gap). Re-claimed at status:claimed
+      rather than done, since the actual deliverable (29 seeded candidate records)
+      doesn't exist yet. Next session: recheck whether
+      POST https://kindrobots.org/api/tzaddik/import responds as JSON (not the SPA
+      shell) before attempting the import; if so, run the 29-entry payload built
+      from seed-sets.yaml + discovery/2026-09-26.md's Pitch/Review-note fields
+      (rationale/objections) for the 20 llm-daily-discovery entries, with freshly
+      authored rationale for the 9 silasfelinus direct nominations, using
+      KR_API_TOKEN as the admin bearer. Verify all 29 created (curationState
+      APPROVED, lifeState matches live Wikidata) before marking t-009 done.
     claimed_by: claude-scheduled-20260928T000759Z-tzaddik-t009
     claimed_at: '2026-09-28T00:08:00Z'
-    updated: '2026-09-28T00:08:20Z'
+    updated: '2026-09-28T00:15:02Z'
     implementation_pr: 'silasfelinus/kind_robots#3069'
 
   - id: t-010
