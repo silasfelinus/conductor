@@ -745,8 +745,8 @@ tasks:
   - id: t-027
     milestone: m5
     title: "Extend the discovery pipeline's dedup to cover pending/rejected/deferred names once t-015 exists"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-015
@@ -765,6 +765,6 @@ tasks:
       this out at the next opportunity (verify excluded_names() still has no logic gap, then
       status: done citing this note) rather than attempting the now-unnecessary KR_API_TOKEN
       pull.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-09-28T02:10:00Z'
+    claimed_by: claude-scheduled-20260928T025902Z-tzaddik-t027
+    claimed_at: '2026-09-28T02:59:02Z'
+    updated: '2026-09-28T02:59:02Z'
