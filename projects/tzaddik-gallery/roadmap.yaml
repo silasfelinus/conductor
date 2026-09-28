@@ -307,7 +307,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Seed Silas's named historical and living candidates"
-    status: claimed
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
@@ -366,9 +366,19 @@ tasks:
       Next session: recheck POST https://kindrobots.org/api/tzaddik/import for a JSON response
       before attempting the 29-entry seed-sets.yaml + discovery/2026-09-26.md import described
       above.
+
+      RECHECKED 2026-09-28T06:51Z (claude-scheduled session): POST
+      https://kindrobots.org/api/tzaddik/import still returns the Nuxt SPA shell (HTTP 200,
+      text/html), not JSON -- Unraid auto-deploy of kind_robots#3069 still has not run, over 2
+      hours after it merged. No import attempted (same reasoning as the prior recheck: against
+      an undeployed route this would 404/render-shell, not actually seed records). Releasing
+      the stale claim without consuming a pass -- same known deploy-timing gap AGENTS.md
+      documents, not a new incident. Next session: recheck POST
+      https://kindrobots.org/api/tzaddik/import for a JSON response before attempting the
+      29-entry seed-sets.yaml + discovery/2026-09-26.md import.
     claimed_by: 2026-09-28T065100Z-tzaddik-t009-claude
     claimed_at: '2026-09-28T06:50:15Z'
-    updated: '2026-09-28T06:50:15Z'
+    updated: '2026-09-28T06:50:23Z'
     implementation_pr: 'silasfelinus/kind_robots#3069'
 
   - id: t-010
