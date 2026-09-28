@@ -726,8 +726,8 @@ tasks:
   - id: t-026
     milestone: m2
     title: "Confirm before archiving an already-APPROVED (live) Tzaddik candidate"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: null
@@ -741,9 +741,9 @@ tasks:
       APPROVED-to-ARCHIVED transition (curationState === 'APPROVED' before
       the click), leaving the PENDING-to-ARCHIVED path as an immediate action
       since it was never public in the first place.
-    claimed_by: null
-    claimed_at: null
-    updated: '2026-09-27T23:30:00Z'
+    claimed_by: claude-scheduled-20260928T035500Z-tzaddik-t026
+    claimed_at: '2026-09-28T03:58:19Z'
+    updated: '2026-09-28T03:58:19Z'
 
   - id: t-027
     milestone: m5
