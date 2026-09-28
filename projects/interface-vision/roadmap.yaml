@@ -1819,7 +1819,7 @@ tasks:
 - id: t-105
   milestone: m6
   title: "Polish every reachable Kind Robots surface page-by-page"
-  status: review
+  status: ready
   passes: 0
   stakes: reversible
   recurring: true
@@ -1898,12 +1898,11 @@ tasks:
     Reviewer merged silasfelinus/kind_robots#2910 at exact head 837c4c2d09da5f9ecca379b5c423351b9e27f602 after all exact-head Actions completed successfully. Art Generator density was reduced, LoRA browsing is bounded, and SDXL image-to-image now stays on the compatible Comfy lane. Re-arm this recurring page-polish task for the next screenshot-directed slice. kind-economy/t-028 (2026-09-23): the Mission Accrual polish slice recorded above (icon-badge header, merged as kind_robots#2114) predates Silas's deliberate retirement of the whole Mission Accrual admin surface in kind_robots#2669 (2026-09-12) -- not an accident, and not a page-polish regression. mission-accrual-page.vue no longer exists; do not treat its historical mentions above as describing a currently-live page.
 
     Screenshot-directed tablet navigation slice: align the tab dropdown beneath its own trigger, cap tablet width at 18rem while retaining 22rem on xl desktops, and hide secondary row descriptions only at tablet breakpoints to reduce menu height and clutter. Added source-contract coverage for the responsive menu behavior.
-  updated: '2026-09-28T06:46:00Z'
+
+    Screenshot-directed tablet navigation slice merged as silasfelinus/kind_robots#3073 (merge 69224c46c3b4539246c9bf845785bff68615e865). The non-phone tab dropdown had desktop-sized 22rem geometry, end-alignment that hung the panel left across the channel picker, and full two-line rows at tablet widths. It now opens from the tab trigger's leading edge, caps at 18rem below xl, and hides row summaries only from sm through xl. Phone keeps the unified picker and xl desktop keeps the 22rem descriptive menu. All 31 exact-head PR workflows completed successfully. Kaizen follow-up filed as t-140.
+  updated: '2026-09-28T06:57:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2899'
   approved_by_human: true
-  owner: worker
-  claimed_by: 2026-09-28T064000Z-interface-vision-t105-chatgpt-7c92
-  claimed_at: '2026-09-28T06:40:00Z'
 
 - id: t-106
   milestone: m6
