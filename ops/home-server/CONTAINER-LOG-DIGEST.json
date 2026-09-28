@@ -1,141 +1,60 @@
 {
-  "generated_at": "2026-09-27T14:00:01.971731+00:00",
+  "generated_at": "2026-09-28T14:00:01.839495+00:00",
   "host": "alexandria",
   "new": [
     {
       "baseline": null,
-      "container": "proxysql",
-      "count": 5,
-      "fingerprint": "4a7a8954614a",
-      "sample": "2026-09-26 15:20:57 MySQL_Session.cpp:5667:<REDACTED-BLOB>(): [WARNING] Error during query on (10,mariadb-kindrobots2,3306,206572): 1146, Table 'scoopspress.wp_hss_poopstakes_winners' doesn't exist",
-      "severity": "warn",
-      "skeleton": "<ts> mysql_session.cpp:<num>:<redacted-blob>(): [warning] error during query on (<num>,mariadb-kindrobots2,<num>,<num>): <num>, table <str> doesn't exist"
-    },
-    {
-      "baseline": null,
-      "container": "KindRobots",
-      "count": 1,
-      "fingerprint": "89b29866f859",
-      "sample": "[Icon] loading icon `kind-icon:star` timed out after 1500ms",
-      "severity": "other",
-      "skeleton": "[icon] loading icon `kind-icon:star` timed out after <num>"
-    },
-    {
-      "baseline": null,
-      "container": "KindRobots",
-      "count": 1,
-      "fingerprint": "ee70475b1fcc",
-      "sample": "[Icon] loading icon `kind-icon:sliders` timed out after 1500ms",
-      "severity": "other",
-      "skeleton": "[icon] loading icon `kind-icon:sliders` timed out after <num>"
-    },
-    {
-      "baseline": null,
-      "container": "KindRobots",
-      "count": 1,
-      "fingerprint": "2f30c81bc994",
-      "sample": "[Icon] loading icon `kind-icon:news` timed out after 1500ms",
-      "severity": "other",
-      "skeleton": "[icon] loading icon `kind-icon:news` timed out after <num>"
-    },
-    {
-      "baseline": null,
-      "container": "hairpress",
-      "count": 1,
-      "fingerprint": "50d899ff8982",
-      "sample": "[Sat Sep 26 19:41:14.689208 2026] [php:error] [pid 380:tid 380] [client 20.24.74.198:0] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /var/www/html/wp-content/themes/twe",
-      "severity": "error",
-      "skeleton": "[<ts>] [php:error] [pid <num>:tid <num>] [client <ip>] php fatal error: uncaught error: call to undefined function add_action() in <path>"
-    },
-    {
-      "baseline": null,
       "container": "radarr",
       "count": 1,
-      "fingerprint": "8fb35386826b",
-      "sample": "[Fatal] RadarrErrorPipeline: Request Failed. POST /api/v3/queue/grab/1867228346",
-      "severity": "fatal",
-      "skeleton": "[fatal] radarrerrorpipeline: request failed. post <path>"
+      "fingerprint": "40f461e0d662",
+      "sample": "[Warn] Newznab: Indexer NzbPlanet (Prowlarr) rss sync didn't cover the period between 25/09/2026 23:18:27 and 26/09/2026 20:38:52 UTC. Search may be required.",
+      "severity": "warn",
+      "skeleton": "[warn] newznab: indexer nzbplanet (prowlarr) rss sync didn't cover the period between <num>/<num>/<num> <ts> and <num>/<num>/<num> <ts> utc. search may be required."
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "da900a1eb084",
-      "sample": "[2026-09-26 09:40:00.636] INFO: [SocketAuthority] Socket MDBxXqjrckpA3urcAADL disconnected from client \"superkate\" after 95477ms (Reason: ping timeout)",
+      "fingerprint": "f8d19d03e662",
+      "sample": "[2026-09-27 10:38:16.188] INFO: [SocketAuthority] Socket qzoGPAHXl6wGqyUvAADj disconnected from client \"superkate\" after 70430ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket mdbxxqjrckpa3urcaadl disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket qzogpahxl6wgqyuvaadj disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "c03054ad4e37",
-      "sample": "[2026-09-26 15:10:14.044] INFO: [SocketAuthority] Socket qsszs4Ko9Y-gm-1LAADP disconnected from client \"superkate\" after 120817ms (Reason: ping timeout)",
+      "fingerprint": "52d983fd3863",
+      "sample": "[2026-09-27 10:38:45.546] INFO: [SocketAuthority] Socket su32L1NHcFSz2ZdXAADl disconnected from client \"superkate\" after 44768ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket qsszs4ko9y-gm-1laadp disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket su32l1nhcfsz2zdxaadl disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "35c25e222e53",
-      "sample": "[2026-09-26 15:23:21.801] INFO: [SocketAuthority] Socket 01SBTL_fclSG_wA7AADR disconnected from client \"superkate\" after 95088ms (Reason: ping timeout)",
+      "fingerprint": "ddbffb7653a5",
+      "sample": "[2026-09-27 11:09:23.976] INFO: [SocketAuthority] Socket 3AwuNaEtlcVJKpjQAADn disconnected from client \"superkate\" after 95053ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket 01sbtl_fclsg_wa7aadr disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket 3awunaetlcvjkpjqaadn disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
       "container": "audiobookshelf",
       "count": 1,
-      "fingerprint": "99be3566b3d2",
-      "sample": "[2026-09-26 17:08:52.951] INFO: [SocketAuthority] Socket MGu4z_RjVYWD8QOwAADT disconnected from client \"superkate\" after 145599ms (Reason: ping timeout)",
+      "fingerprint": "6ad5786dce8a",
+      "sample": "[2026-09-27 17:22:52.965] INFO: [SocketAuthority] Socket KI-TbZRL5hHLM1f4AADp disconnected from client \"superkate\" after 145453ms (Reason: ping timeout)",
       "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket mgu4z_rjvywd8qowaadt disconnected from client <str> after <num> (reason: ping timeout)"
+      "skeleton": "[<ts>] info: [socketauthority] socket ki-tbzrl5hhlm1f4aadp disconnected from client <str> after <num> (reason: ping timeout)"
     },
     {
       "baseline": null,
-      "container": "audiobookshelf",
+      "container": "ownfoil",
       "count": 1,
-      "fingerprint": "0af367156f09",
-      "sample": "[2026-09-26 17:20:22.445] INFO: [SocketAuthority] Socket QPtVsLJZD0PtvmyXAADV disconnected from client \"superkate\" after 95244ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket qptvsljzd0ptvmyxaadv disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "6e0ea3c1534a",
-      "sample": "[2026-09-26 17:46:20.221] INFO: [SocketAuthority] Socket gpbFkIuzUmNcP5HKAADX disconnected from client \"superkate\" after 145636ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket gpbfkiuzumncp5hkaadx disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "83aa55052978",
-      "sample": "[2026-09-26 17:59:09.308] INFO: [SocketAuthority] Socket E6dhtwYoLIZnKZKOAADZ disconnected from client \"superkate\" after 95029ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket e6dhtwyoliznkzkoaadz disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "ba159698e30a",
-      "sample": "[2026-09-26 19:43:36.986] INFO: [SocketAuthority] Socket pduy2zZGBtTODobkAADb disconnected from client \"superkate\" after 120507ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket pduy2zzgbttodobkaadb disconnected from client <str> after <num> (reason: ping timeout)"
-    },
-    {
-      "baseline": null,
-      "container": "audiobookshelf",
-      "count": 1,
-      "fingerprint": "dfe5732ec463",
-      "sample": "[2026-09-26 19:47:46.593] INFO: [SocketAuthority] Socket mT3cSrbJEx-s8XE_AADd disconnected from client \"superkate\" after 95281ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket mt3csrbjex-s8xe_aadd disconnected from client <str> after <num> (reason: ping timeout)"
+      "fingerprint": "553828eb39fa",
+      "sample": "[2026-09-27 14:20:28.169] ERROR (db) worker-2 An error occurred while removing the file path: DELETE statement on table 'app_files' expected to delete 1 row(s); Only 0 were matched.",
+      "severity": "error",
+      "skeleton": "[<ts>] error (db) worker-<num> an error occurred while removing the file path: delete statement on table <str> expected to delete <num> row(s); only <num> were matched."
     }
   ],
   "quiet": [
@@ -149,33 +68,6 @@
       "skeleton": "<ts> info <ip> post <url> <num> internal server error"
     },
     {
-      "baseline": 60.0,
-      "container": "netdata",
-      "count": 0,
-      "fingerprint": "2107195e439a",
-      "sample": "2026-09-25T01:41:08.381032Z  WARN ThreadId(08) journal_registry::registry::monitor: 23: Failed to send file system event: receiver dropped (channel closed)",
-      "severity": "error",
-      "skeleton": "<ts> warn threadid(<num>) journal_registry<ip>registry<ip>monitor: <num>: failed to send file system event: receiver dropped (channel closed)"
-    },
-    {
-      "baseline": 43.5,
-      "container": "flaresolverr",
-      "count": 0,
-      "fingerprint": "3b030fffc6de",
-      "sample": "2026-09-20 14:00:50 ERROR    Error: Message: session not created: cannot connect to chrome at 127.0.0.1:49037",
-      "severity": "error",
-      "skeleton": "<ts> error error: message: session not created: cannot connect to chrome at <ip>"
-    },
-    {
-      "baseline": 30.0,
-      "container": "sonarr",
-      "count": 0,
-      "fingerprint": "86dd8b493a0a",
-      "sample": "[Error] TaskExtensions: Task Error",
-      "severity": "error",
-      "skeleton": "[error] taskextensions: task error"
-    },
-    {
       "baseline": 25.0,
       "container": "scoopspress",
       "count": 0,
@@ -185,6 +77,24 @@
       "skeleton": "[<ts>] [php:error] [pid <num>:tid <num>] [client <ip>] script '<path>"
     },
     {
+      "baseline": 24.0,
+      "container": "sonarr",
+      "count": 0,
+      "fingerprint": "86dd8b493a0a",
+      "sample": "[Error] TaskExtensions: Task Error",
+      "severity": "error",
+      "skeleton": "[error] taskextensions: task error"
+    },
+    {
+      "baseline": 19.0,
+      "container": "flaresolverr",
+      "count": 0,
+      "fingerprint": "3b030fffc6de",
+      "sample": "2026-09-20 14:00:50 ERROR    Error: Message: session not created: cannot connect to chrome at 127.0.0.1:49037",
+      "severity": "error",
+      "skeleton": "<ts> error error: message: session not created: cannot connect to chrome at <ip>"
+    },
+    {
       "baseline": 16.0,
       "container": "flaresolverr",
       "count": 0,
@@ -192,6 +102,15 @@
       "sample": "2026-09-20 14:03:12 WARNING  Task queue depth is 27",
       "severity": "warn",
       "skeleton": "<ts> warning task queue depth is <num>"
+    },
+    {
+      "baseline": 13.0,
+      "container": "netdata",
+      "count": 0,
+      "fingerprint": "8dd2babb373c",
+      "sample": "time=2026-09-26T07:01:08.006-07:00 level=warn msg=\"Memory inventory: Slot locators are missing or duplicated\" plugin=go.d collector=smbios_memory job=smbios_memory config_source=\"stock/file reader\"",
+      "severity": "warn",
+      "skeleton": "time=<ts> level=warn msg=<str> plugin=go.d collector=smbios_memory job=smbios_memory config_source=<str>"
     },
     {
       "baseline": 12.0,
@@ -217,225 +136,180 @@
     "containers_scanned": 44,
     "containers_total": 44,
     "high_cardinality": [],
-    "lines_matched": 1671,
-    "lines_read": 125636,
-    "signatures_total": 139,
+    "lines_matched": 1731,
+    "lines_read": 130568,
+    "signatures_total": 122,
     "truncated": []
   },
   "spiking": [
     {
-      "baseline": 45.0,
-      "container": "KindRobots",
-      "count": 245,
-      "fingerprint": "3d84f1a8fd12",
-      "sample": "Operation rejected: {",
-      "severity": "other",
-      "skeleton": "operation rejected: {"
-    },
-    {
-      "baseline": 45.0,
-      "container": "KindRobots",
-      "count": 245,
-      "fingerprint": "bb9501289941",
-      "sample": "name: 'Error',",
-      "severity": "error",
-      "skeleton": "name: <str>,"
-    },
-    {
-      "baseline": 0.0,
-      "container": "qbit",
-      "count": 27,
-      "fingerprint": "78027c85326d",
-      "sample": "Sun Sep 27 01:38:09 2026 AEAD Decrypt error: bad packet ID (may be a replay): [ #9827926 ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mu",
-      "severity": "error",
-      "skeleton": "<ts> aead decrypt error: bad packet id (may be a replay): [ #<num> ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mute-replay-warnings"
+      "baseline": 37.0,
+      "container": "scoopspress",
+      "count": 801,
+      "fingerprint": "6497ddc377f6",
+      "sample": "[Sun Sep 27 09:31:33.945923 2026] [php:warn] [pid 121:tid 121] [client 136.22.149.10:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
+      "severity": "warn",
+      "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>"
     },
     {
       "baseline": 5.0,
       "container": "scoopspress",
-      "count": 26,
+      "count": 59,
       "fingerprint": "4798ff1f70e0",
-      "sample": "[Sat Sep 26 15:44:32.801973 2026] [php:warn] [pid 30:tid 30] [client 75.111.66.70:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90, referer:",
+      "sample": "[Sun Sep 27 09:31:28.867779 2026] [php:warn] [pid 167:tid 167] [client 174.227.129.197:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90, ref",
       "severity": "warn",
       "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>, referer: <url>"
+    },
+    {
+      "baseline": 0.0,
+      "container": "hairpress",
+      "count": 27,
+      "fingerprint": "b32e674d9dd1",
+      "sample": "[Sun Sep 27 19:30:52.806184 2026] [autoindex:error] [pid 1198:tid 1198] [client 104.211.74.130:0] AH01276: Cannot serve directory /var/www/html/wp-includes/Text/Diff/Engine/: No matching DirectoryInde",
+      "severity": "error",
+      "skeleton": "[<ts>] [autoindex:error] [pid <num>:tid <num>] [client <ip>] ah01276: cannot serve directory <path>"
     }
   ],
   "top": [
     {
       "baseline": null,
-      "container": "KindRobots",
-      "count": 245,
-      "fingerprint": "3d84f1a8fd12",
-      "sample": "Operation rejected: {",
-      "severity": "other",
-      "skeleton": "operation rejected: {"
-    },
-    {
-      "baseline": null,
-      "container": "KindRobots",
-      "count": 245,
-      "fingerprint": "bb9501289941",
-      "sample": "name: 'Error',",
-      "severity": "error",
-      "skeleton": "name: <str>,"
+      "container": "scoopspress",
+      "count": 801,
+      "fingerprint": "6497ddc377f6",
+      "sample": "[Sun Sep 27 09:31:33.945923 2026] [php:warn] [pid 121:tid 121] [client 136.22.149.10:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
+      "severity": "warn",
+      "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>"
     },
     {
       "baseline": null,
       "container": "yac",
-      "count": 192,
+      "count": 157,
       "fingerprint": "22365e849ef3",
-      "sample": "WARN  2026-09-26T07:01:00.637 QObject: Cannot create children for a parent that is in a different thread.",
+      "sample": "WARN  2026-09-27T07:06:17.578 QObject: Cannot create children for a parent that is in a different thread.",
       "severity": "warn",
       "skeleton": "warn <ts> qobject: cannot create children for a parent that is in a different thread."
-    },
-    {
-      "baseline": null,
-      "container": "scoopspress",
-      "count": 150,
-      "fingerprint": "6497ddc377f6",
-      "sample": "[Sat Sep 26 15:27:43.630489 2026] [php:warn] [pid 20:tid 20] [client 75.111.66.70:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
-      "severity": "warn",
-      "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>"
     },
     {
       "baseline": null,
       "container": "requests",
       "count": 133,
       "fingerprint": "b0b22d3dd961",
-      "sample": "2026-09-27T11:33:57.703Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 388535\",\"title\"",
+      "sample": "2026-09-28T11:33:47.982Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 388535\",\"title\"",
       "severity": "error",
       "skeleton": "<ts> [error][sonarr scan]: failed to process sonarr media {<str>:<str>,<str>:<str>}"
     },
     {
       "baseline": null,
+      "container": "netdata",
+      "count": 73,
+      "fingerprint": "2107195e439a",
+      "sample": "2026-09-28T07:41:16.676355Z  WARN ThreadId(08) journal_registry::registry::monitor: 23: Failed to send file system event: receiver dropped (channel closed)",
+      "severity": "error",
+      "skeleton": "<ts> warn threadid(<num>) journal_registry<ip>registry<ip>monitor: <num>: failed to send file system event: receiver dropped (channel closed)"
+    },
+    {
+      "baseline": null,
       "container": "proxysql",
-      "count": 106,
+      "count": 68,
       "fingerprint": "a9cfc33818b3",
-      "sample": "2026-09-26 07:20:40 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 75.111.66.70:33468 , user 'kindrobot_migrate' , hostgroup 30 , connection 191777",
+      "sample": "2026-09-27 14:39:31 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.21.0.1:43700 , user 'kindrobot' , hostgroup 10 , connection 223094",
       "severity": "warn",
       "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup <num> , connection <num>"
     },
     {
       "baseline": null,
-      "container": "netdata",
-      "count": 98,
-      "fingerprint": "8ef3774a1987",
-      "sample": "time=2026-09-26T07:04:16.251-07:00 comm=apps.plugin source=collector level=error errno=\"3, No such process\" tid=3513538  msg=\"Cannot process /host/proc/3133668/io (command 'mariadbd-safe')\"",
-      "severity": "error",
-      "skeleton": "time=<ts> comm=apps.plugin source=collector level=error errno=<str> tid=<num> msg=\"cannot process <path>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 72,
-      "fingerprint": "29a758d0ae5d",
-      "sample": "time=2026-09-26T07:42:20.022-07:00 comm=tc-qos-helper.sh source=collector level=warning tid=3648498 thread=tc-qos-helper request=\"'/usr/libexec/netdata/plugins.d/tc-qos-helper.sh' '1' \" msg=\"FireQOS i",
-      "severity": "warn",
-      "skeleton": "time=<ts> comm=tc-qos-helper.sh source=collector level=warning tid=<num> thread=tc-qos-helper request=\"'<path>"
-    },
-    {
-      "baseline": null,
-      "container": "qbit",
-      "count": 27,
-      "fingerprint": "78027c85326d",
-      "sample": "Sun Sep 27 01:38:09 2026 AEAD Decrypt error: bad packet ID (may be a replay): [ #9827926 ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mu",
-      "severity": "error",
-      "skeleton": "<ts> aead decrypt error: bad packet id (may be a replay): [ #<num> ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mute-replay-warnings"
-    },
-    {
-      "baseline": null,
-      "container": "proxysql",
-      "count": 27,
-      "fingerprint": "8da141147da1",
-      "sample": "2026-09-26 07:36:50 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 199.45.154.116:53700 , user 'unknown' , hostgroup -1 , connection 0",
-      "severity": "warn",
-      "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup -<num> , connection <num>"
-    },
-    {
-      "baseline": null,
       "container": "scoopspress",
-      "count": 26,
+      "count": 59,
       "fingerprint": "4798ff1f70e0",
-      "sample": "[Sat Sep 26 15:44:32.801973 2026] [php:warn] [pid 30:tid 30] [client 75.111.66.70:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90, referer:",
+      "sample": "[Sun Sep 27 09:31:28.867779 2026] [php:warn] [pid 167:tid 167] [client 174.227.129.197:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90, ref",
       "severity": "warn",
       "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>, referer: <url>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 24,
-      "fingerprint": "8dd2babb373c",
-      "sample": "time=2026-09-26T07:01:08.006-07:00 level=warn msg=\"Memory inventory: Slot locators are missing or duplicated\" plugin=go.d collector=smbios_memory job=smbios_memory config_source=\"stock/file reader\"",
-      "severity": "warn",
-      "skeleton": "time=<ts> level=warn msg=<str> plugin=go.d collector=smbios_memory job=smbios_memory config_source=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 16,
+      "count": 49,
       "fingerprint": "24756dae8afd",
-      "sample": "time=2026-09-26T07:20:40.502-07:00 comm=spawn-unnamed source=collector level=warning tid=3353270  msg=\"SPAWN SERVER: child with pid 3353271 (request 1) exited with exit code 1: /usr/libexec/netdata/pl",
+      "sample": "time=2026-09-28T00:41:26.767-07:00 comm=spawn-unnamed source=collector level=warning tid=1309813  msg=\"SPAWN SERVER: child with pid 1309814 (request 1) exited with exit code 1: /usr/libexec/netdata/pl",
       "severity": "warn",
       "skeleton": "time=<ts> comm=spawn-unnamed source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
     },
     {
       "baseline": null,
-      "container": "qbit",
-      "count": 16,
-      "fingerprint": "46d08c635a8f",
-      "sample": "Sun Sep 27 01:39:48 2026 AEAD Decrypt error: bad packet ID (may be a replay): [ #10025896 ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --m",
+      "container": "netdata",
+      "count": 28,
+      "fingerprint": "b4a4f3c0319b",
+      "sample": "time=2026-09-28T00:41:14.450-07:00 comm=spawn-plugins source=collector level=warning tid=1304989  msg=\"SPAWN SERVER: child with pid 1306774 (request 11) exited with exit code 1: /bin/sh -c \\\"exec /usr",
+      "severity": "warn",
+      "skeleton": "time=<ts> comm=spawn-plugins source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 28,
+      "fingerprint": "8ef3774a1987",
+      "sample": "time=2026-09-28T00:43:23.521-07:00 comm=apps.plugin source=collector level=error errno=\"3, No such process\" tid=1306726  msg=\"Cannot process /host/proc/1340497/cmdline (command 'sh')\"",
       "severity": "error",
-      "skeleton": "<ts> aead decrypt error: bad packet id (may be a replay): [ #<hex> ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mute-replay-warnings"
+      "skeleton": "time=<ts> comm=apps.plugin source=collector level=error errno=<str> tid=<num> msg=\"cannot process <path>"
+    },
+    {
+      "baseline": null,
+      "container": "hairpress",
+      "count": 27,
+      "fingerprint": "b32e674d9dd1",
+      "sample": "[Sun Sep 27 19:30:52.806184 2026] [autoindex:error] [pid 1198:tid 1198] [client 104.211.74.130:0] AH01276: Cannot serve directory /var/www/html/wp-includes/Text/Diff/Engine/: No matching DirectoryInde",
+      "severity": "error",
+      "skeleton": "[<ts>] [autoindex:error] [pid <num>:tid <num>] [client <ip>] ah01276: cannot serve directory <path>"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 21,
+      "fingerprint": "29a758d0ae5d",
+      "sample": "time=2026-09-28T00:41:14.651-07:00 comm=tc-qos-helper.sh source=collector level=warning tid=1306802 thread=tc-qos-helper request=\"'/usr/libexec/netdata/plugins.d/tc-qos-helper.sh' '1' \" msg=\"FireQOS i",
+      "severity": "warn",
+      "skeleton": "time=<ts> comm=tc-qos-helper.sh source=collector level=warning tid=<num> thread=tc-qos-helper request=\"'<path>"
+    },
+    {
+      "baseline": null,
+      "container": "proxysql",
+      "count": 19,
+      "fingerprint": "8da141147da1",
+      "sample": "2026-09-27 07:42:47 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 100.84.165.85:44370 , user 'unknown' , hostgroup -1 , connection 0",
+      "severity": "warn",
+      "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup -<num> , connection <num>"
     },
     {
       "baseline": null,
       "container": "ownfoil",
-      "count": 12,
+      "count": 18,
       "fingerprint": "01b110cb7702",
-      "sample": "[2026-09-26 07:32:42.445] ERROR (library) worker-1 An unexpected error occurred while organizing file None [0100CE800B94A000][v0].nsp: 'NoneType' object is not iterable",
+      "sample": "[2026-09-27 07:32:59.445] ERROR (library) worker-1 An unexpected error occurred while organizing file None [0100CE800B94A000][v0].nsp: 'NoneType' object is not iterable",
       "severity": "error",
       "skeleton": "[<ts>] error (library) worker-<num> an unexpected error occurred while organizing file none [<hex>][v0].nsp: <str> object is not iterable"
     },
     {
       "baseline": null,
-      "container": "proxysql",
-      "count": 11,
-      "fingerprint": "9f8480a922a5",
-      "sample": "2026-09-26 07:37:04 mysql_data_stream.cpp:720:read_from_net(): [ERROR] Oversized first packet from client: pkt_length=66326 exceeds queue capacity (32764). Closing fd=109",
+      "container": "KindRobots",
+      "count": 13,
+      "fingerprint": "3d84f1a8fd12",
+      "sample": "Operation rejected: {",
+      "severity": "other",
+      "skeleton": "operation rejected: {"
+    },
+    {
+      "baseline": null,
+      "container": "KindRobots",
+      "count": 13,
+      "fingerprint": "bb9501289941",
+      "sample": "name: 'Error',",
       "severity": "error",
-      "skeleton": "<ts> mysql_data_stream.cpp<ip>read_from_net(): [error] oversized first packet from client: pkt_length=<num> exceeds queue capacity (<num>). closing fd=<num>"
-    },
-    {
-      "baseline": null,
-      "container": "books",
-      "count": 10,
-      "fingerprint": "e46d2fea9b5a",
-      "sample": "update-alternatives: warning: skip creation of /usr/share/man/man1/lzma.1.gz because associated file /usr/share/man/man1/xz.1.gz (of link group lzma) doesn't exist",
-      "severity": "warn",
-      "skeleton": "update-alternatives: warning: skip creation of <path>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 9,
-      "fingerprint": "6dcd09e267ea",
-      "sample": "time=2026-09-26T07:20:53.000-07:00 level=warn msg=\"skipping data collection: previous run is still in progress for 1.999941194s (skipped 2 times in a row, interval 1s)\" plugin=go.d collector=docker jo",
-      "severity": "warn",
-      "skeleton": "time=<ts> level=warn msg=<str> plugin=go.d collector=docker job=local config_source=<str>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 9,
-      "fingerprint": "381cf7bc9913",
-      "sample": "time=2026-09-26T07:20:53.019-07:00 level=error msg=\"Get \\\"http://%2Fvar%2Frun%2Fdocker.sock/v1.47/info\\\": context deadline exceeded\" plugin=go.d collector=docker job=local config_source=\"stock/file re",
-      "severity": "error",
-      "skeleton": "time=<ts> level=error msg=<str><url> context deadline exceeded<str>stock/file reader\""
+      "skeleton": "name: <str>,"
     },
     {
       "baseline": null,
       "container": "scoopspress",
-      "count": 8,
+      "count": 12,
       "fingerprint": "0174d77ccc5f",
       "sample": "AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.21.0.39. Set the 'ServerName' directive globally to suppress this message",
       "severity": "other",
@@ -443,39 +317,12 @@
     },
     {
       "baseline": null,
-      "container": "sonarr",
-      "count": 6,
-      "fingerprint": "39069f455224",
-      "sample": "[Warn] HttpClient: HTTP Error - Res: HTTP/2.0 [GET] https://api.nzbplanet.<REDACTED-BLOB>.nzb&i=425756&<REDACTED-BLOB>: 510.NotExtended (1807 bytes)",
-      "severity": "warn",
-      "skeleton": "[warn] httpclient: http error - res: http/<num> [get] <url> <num>.notextended (<num> bytes)"
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 6,
-      "fingerprint": "55b528497e1f",
-      "sample": "[v4.0.20.3014] NzbDrone.Common.Http.HttpException: HTTP request failed: [510:NotExtended] [GET] at [https://api.nzbplanet.<REDACTED-BLOB>.nzb&i=425756&<REDACTED-BLOB>]",
+      "container": "proxysql",
+      "count": 9,
+      "fingerprint": "9f8480a922a5",
+      "sample": "2026-09-27 10:36:03 mysql_data_stream.cpp:720:read_from_net(): [ERROR] Oversized first packet from client: pkt_length=5522759 exceeds queue capacity (32764). Closing fd=151",
       "severity": "error",
-      "skeleton": "[v4.<num>.<num>] nzbdrone.common.http.httpexception: http request failed: [<num>:notextended] [get] at [<url>"
-    },
-    {
-      "baseline": null,
-      "container": "ownfoil",
-      "count": 6,
-      "fingerprint": "b47d155feeeb",
-      "sample": "[2026-09-26 16:17:18.112] WARNING (client) (CyberFoil) Incorrect Hauth detected for host: ownfoil.acrocatranch.com.",
-      "severity": "warn",
-      "skeleton": "[<ts>] warning (client) (cyberfoil) incorrect hauth detected for host: ownfoil.acrocatranch.com."
-    },
-    {
-      "baseline": null,
-      "container": "ownfoil",
-      "count": 6,
-      "fingerprint": "45da16e767d6",
-      "sample": "[2026-09-26 16:17:18.112] WARNING (client) (CyberFoil) Client-specific auth failed: Incorrect Hauth for URL `ownfoil.acrocatranch.com`.",
-      "severity": "warn",
-      "skeleton": "[<ts>] warning (client) (cyberfoil) client-specific auth failed: incorrect hauth for url `ownfoil.acrocatranch.com`."
+      "skeleton": "<ts> mysql_data_stream.cpp<ip>read_from_net(): [error] oversized first packet from client: pkt_length=<num> exceeds queue capacity (<num>). closing fd=<num>"
     },
     {
       "baseline": null,
@@ -485,6 +332,69 @@
       "sample": "Response status: 403 Forbidden",
       "severity": "other",
       "skeleton": "response status: <num> forbidden"
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
+      "count": 5,
+      "fingerprint": "9b73c2a9c5ad",
+      "sample": "[Warn] Newznab: Invalid Release: 'All.Out.of.Love.2018.S01.1080p.VIKI.WEB-DL.AAC2.0.H.264.DUSKLiGHT' from indexer: Nzb.su. No categories provided.",
+      "severity": "warn",
+      "skeleton": "[warn] newznab: invalid release: <str> from indexer: nzb.su. no categories provided."
+    },
+    {
+      "baseline": null,
+      "container": "jellyfin",
+      "count": 5,
+      "fingerprint": "140f403e0c24",
+      "sample": "[06:30:53] [ERR] [67] Jellyfin.Api.Middleware.ExceptionMiddleware: Error processing request: Token is required. URL GET /socket.",
+      "severity": "error",
+      "skeleton": "[<ts>] [err] [<num>] jellyfin.api.middleware.exceptionmiddleware: error processing request: token is required. url get /socket."
+    },
+    {
+      "baseline": null,
+      "container": "proxysql",
+      "count": 5,
+      "fingerprint": "9caf510b320a",
+      "sample": "2026-09-27 11:05:17 MySQL_Session.cpp:5667:<REDACTED-BLOB>(): [WARNING] Error during query on (10,mariadb-kindrobots2,3306,223508): 1062, Duplicate entry 'compartmented-mourner' for key 'Facet_slug_ke",
+      "severity": "warn",
+      "skeleton": "<ts> mysql_session.cpp:<num>:<redacted-blob>(): [warning] error during query on (<num>,mariadb-kindrobots2,<num>,<num>): <num>, duplicate entry <str> for key <str>"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 4,
+      "fingerprint": "bacfa044aae5",
+      "sample": "time=2026-09-28T00:41:39.528-07:00 comm=cgroup-network source=collector level=error tid=1314661  msg=\"Cannot find a cgroup PID from cgroup '/host/sys/fs/cgroup/1'\"",
+      "severity": "error",
+      "skeleton": "time=<ts> comm=cgroup-network source=collector level=error tid=<num> msg=\"cannot find a cgroup pid from cgroup '<path>"
+    },
+    {
+      "baseline": null,
+      "container": "scoopspress",
+      "count": 4,
+      "fingerprint": "c9fdc4c9db2b",
+      "sample": "174.235.182.156 - - [27/Sep/2026:17:39:31 -0700] \"GET /wp-includes/js/dist/deprecated.min.js?ver=fe587bac92b7d0ef760e HTTP/1.1\" 200 1050 \"https://humboldtscoopsolutions.com/wp-admin/profile.php\" \"Mozi",
+      "severity": "warn",
+      "skeleton": "<ip> - - [<ts>] \"get <path>"
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
+      "count": 4,
+      "fingerprint": "5dcec9bc3591",
+      "sample": "[Warn] AllowedHostsCheck: Allowed Hosts is not configured, requests for any hostname will be accepted. You can set this via settings or the config file",
+      "severity": "warn",
+      "skeleton": "[warn] allowedhostscheck: allowed hosts is not configured, requests for any hostname will be accepted. you can set this via settings or the config file"
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
+      "count": 4,
+      "fingerprint": "46dd23614c58",
+      "sample": "--- End of inner exception stack trace ---",
+      "severity": "error",
+      "skeleton": "--- end of inner exception stack trace ---"
     }
   ],
   "version": 1,
