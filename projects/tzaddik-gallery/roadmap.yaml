@@ -1074,3 +1074,24 @@ tasks:
     claimed_at: '2026-09-28T15:49:31Z'
     updated: '2026-09-28T16:06:51Z'
     implementation_pr: 'silasfelinus/kind_robots#3084'
+
+  - id: t-032
+    milestone: m2
+    title: "Tighten tzaddik-card.vue's recheck-resolve buttons to require status === NEEDS_REVIEW, matching the server's actual guard"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: null
+    note: >-
+      Kaizen from t-031 (silasfelinus/kind_robots#3084): the detail sheet's new
+      Update/Keep-current buttons are gated on latestRecheck.status ===
+      'NEEDS_REVIEW', matching what POST /api/tzaddik/recheck-resolve
+      (resolveTzaddikRecheckReview) actually accepts -- it 409s for any other
+      status. tzaddik-card.vue's own buttons (t-030) instead show whenever
+      recheckReasonLabel(...) is non-empty, which is also true for a FAILED
+      recheck (it has a non-empty error string). That's a latent 409 path on
+      the card, currently unreachable per t-029's note that only the
+      needsReview=true queue filter's response carries RecheckRequests at all.
+      Tighten the card's show condition to require status === 'NEEDS_REVIEW'
+      too, closing the gap even if it stays unreachable today.

@@ -16988,3 +16988,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "check_pr_merged_drift.py caught a task left at status: review after its PR (kind_robots#3078) had already merged -- reconciled during the scheduled sweep's session-startup checks rather than sitting stale until a later Reviewer pass noticed it by hand."
+- date: 2026-09-28
+  project: tzaddik-gallery
+  task: t-031
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "Gated the detail sheet's new Update/Keep-current buttons on latestRecheck.status === 'NEEDS_REVIEW' explicitly rather than reusing the queue card's broader non-empty-reason-label condition -- the card's condition also renders for FAILED recheck requests, which /api/tzaddik/recheck-resolve rejects with a 409. Worth checking a sibling component's show-condition against the server's actual guard, not just copying it, when adding the same control to a second surface."
