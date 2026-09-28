@@ -12,67 +12,38 @@ positive descriptions rather than relying on negative-prompt instructions.
 from __future__ import annotations
 
 import hashlib
+import json
 import re
+from pathlib import Path
 
 # These intentionally describe media/visual languages rather than named artists.
 # One world gets one stable style, so its six assets belong together; a different
 # world can look as if it came through an entirely different dimensional portal.
-STYLE_DIRECTIONS = (
-    (
-        "bold four-color superhero-comic aesthetic, muscular ink contours, "
-        "saturated cel color, halftone texture, dramatic foreshortening, crisp graphic shadows"
-    ),
-    (
-        "charcoal-and-chalk cosmic-horror drawing, rough paper grain, crushed blacks, "
-        "pale luminous accents, smeared edges, unsettling shifts of scale"
-    ),
-    (
-        "luminous gouache storybook painting, matte pigment, simplified confident shapes, "
-        "soft edge variation, layered hand-painted texture"
-    ),
-    (
-        "tactile stop-motion miniature aesthetic, sculpted clay and felt surfaces, "
-        "handmade imperfections, practical miniature lighting, shallow depth of field"
-    ),
-    (
-        "high-contrast risograph aesthetic, limited spot-color layers, coarse paper grain, "
-        "slight registration offsets, bold graphic silhouettes"
-    ),
-    (
-        "low-poly 3D diorama, faceted geometry, toy-scale materials, crisp ambient occlusion, "
-        "clean volumetric lighting, deliberately simplified forms"
-    ),
-    (
-        "cinematic photorealism, natural lens behavior, physically believable materials, "
-        "volumetric atmosphere, restrained color grading, fine environmental detail"
-    ),
-    (
-        "stained-glass mosaic aesthetic, strong leaded contours, jewel-tone translucent panes, "
-        "fractured colored light, geometric shape language"
-    ),
-    (
-        "watercolor-and-ink naturalist illustration, transparent washes, dry-brush texture, "
-        "expressive line variation, visible paper tooth, selective fine detail"
-    ),
-    (
-        "neon cel-animation aesthetic, clean graphic linework, flat luminous color, "
-        "sharp rim lighting, dynamic perspective, controlled gradients"
-    ),
-    (
-        "layered paper-cut collage, visible paper fibers, simplified cut shapes, "
-        "physical layer shadows, tactile depth, hand-cut irregular edges"
-    ),
-    (
-        "scratchboard engraving aesthetic, dense crosshatching and carved white lines, "
-        "near-monochrome values, one restrained luminous accent, dramatic texture"
-    ),
+#
+# The bank is data, not code: `scripts/data/art-style-catalog.json` is a
+# byte-identical copy of kind_robots' `config/art-style-catalog.json`, which also
+# feeds the art generator's Style picker (Silas, 2026-09-28: "an overall upgrade
+# to the random default styles that we use for daily dream, including that super
+# vibrant cartoon style ... and I want the default styles to all be included as
+# options in the art generator"). Edit the kind_robots copy and copy it here.
+#
+# Each style carries a `weight`. Until 2026-09-28 every lane was equally likely,
+# and four of the twelve (photorealism with restrained grading, charcoal cosmic
+# horror, scratchboard, muted naturalist watercolour) were dark or desaturated,
+# so a third of days rendered gloomy. Vibrant styles now weigh 2-4 and moody ones
+# 1: a gloomy world still turns up, about one day in sixteen.
+STYLE_CATALOG_PATH = Path(__file__).resolve().parent / "data" / "art-style-catalog.json"
+STYLE_CATALOG: tuple[dict, ...] = tuple(
+    json.loads(STYLE_CATALOG_PATH.read_text(encoding="utf-8"))["styles"]
 )
+STYLE_DIRECTIONS: tuple[str, ...] = tuple(style["prompt"] for style in STYLE_CATALOG)
+STYLE_WEIGHTS: tuple[int, ...] = tuple(int(style["weight"]) for style in STYLE_CATALOG)
 
 # Compatibility alias for callers/tests that imported STYLE before the variety
 # pass. Builders no longer use one universal STYLE.
 STYLE = STYLE_DIRECTIONS[0]
 
-# An orthogonal axis to STYLE_DIRECTIONS. Twelve media multiplied by these treatments
+# An orthogonal axis to STYLE_DIRECTIONS. The media multiplied by these treatments
 # give the remaster enough room to replace a few hundred images without producing a few
 # hundred cousins of the same diffusion look. Treatments describe camera, palette, and
 # light — never medium — so a treatment can ride on any style without fighting it.
@@ -148,22 +119,46 @@ def _world_context(title: str, vibe_line: str) -> str:
 
 def _lane(world_title: str, salt: str, size: int, variant: int) -> int:
     """Deterministic lane index, offset by `variant` for a remaster restyle."""
+    return (_world_hash(world_title, salt) + variant) % size
+
+
+def _world_hash(world_title: str, salt: str) -> int:
     key = (_clean(world_title).casefold() + salt).encode("utf-8") or b"daily-dream"
-    index = int.from_bytes(hashlib.sha256(key).digest()[:4], "big")
-    return (index + variant) % size
+    return int.from_bytes(hashlib.sha256(key).digest()[:4], "big")
+
+
+def style_index_for_world(world_title: str, variant: int = 0) -> int:
+    """Weighted, deterministic index into STYLE_DIRECTIONS.
+
+    Heavier styles own proportionally more of the hash space. `variant` then steps
+    the chosen lane along the bank, so a remaster restyle always moves a world off
+    its default look regardless of weight.
+    """
+    slot = _world_hash(world_title, "") % sum(STYLE_WEIGHTS)
+    for index, weight in enumerate(STYLE_WEIGHTS):
+        if slot < weight:
+            return (index + variant) % len(STYLE_DIRECTIONS)
+        slot -= weight
+    return variant % len(STYLE_DIRECTIONS)
+
+
+def style_lane_share(index: int) -> float:
+    """The fraction of worlds a style lane is expected to carry."""
+    return STYLE_WEIGHTS[index] / sum(STYLE_WEIGHTS)
 
 
 def style_for_world(world_title: str, variant: int = 0) -> str:
     """Return one deterministic visual language for all assets in a world.
 
     Python's built-in hash is intentionally randomized between processes, so use
-    SHA-256 to keep rebuilds and retries stable. Twelve lanes make accidental
-    adjacent-world repeats uncommon without turning style into another model call.
+    SHA-256 to keep rebuilds and retries stable. The lane is weighted by the
+    catalog's `weight` (see STYLE_CATALOG) without turning style into another
+    model call.
 
     `variant` walks a world deliberately off its default lane. The catalog remaster
     uses it to break up crowded lanes without making style selection random.
     """
-    return STYLE_DIRECTIONS[_lane(world_title, "", len(STYLE_DIRECTIONS), variant)]
+    return STYLE_DIRECTIONS[style_index_for_world(world_title, variant)]
 
 
 def treatment_for_world(world_title: str, variant: int = 0) -> str:

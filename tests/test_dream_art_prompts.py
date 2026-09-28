@@ -248,3 +248,24 @@ def test_generated_directions_do_not_request_frames_or_pictures():
         assert not re.search(r"\b(?:frame|picture)\b", prompt, re.I), prompt
     assert "close-up" in dap.character_prompt("A", "b", "c", "d", "World", "Sea-gods sing.")
     assert "wrists cropped tightly" in dap.reward_prompt(**SEASONING)
+
+
+def test_style_bank_carries_the_vibrant_narrator_cartoon_look():
+    # Silas, 2026-09-28: the "super vibrant cartoon style" the narrator art used.
+    ids = {style["id"] for style in dap.STYLE_CATALOG}
+    assert "adult-animated-cartoon" in ids
+    assert any("adult animated cartoon style" in prompt for prompt in dap.STYLE_DIRECTIONS)
+
+
+def test_gloomy_worlds_are_occasional_not_a_third_of_the_catalog():
+    moods = [
+        dap.STYLE_CATALOG[dap.style_index_for_world(f"Portal World {index}")]["mood"]
+        for index in range(4000)
+    ]
+    moody_share = moods.count("moody") / len(moods)
+    assert 0 < moody_share < 0.1
+
+
+def test_remaster_variant_always_moves_a_world_off_its_default_style():
+    world = "Tar and Fresh Plank"
+    assert dap.style_for_world(world, 1) != dap.style_for_world(world)
