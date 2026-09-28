@@ -16855,3 +16855,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A kaizen task's premise can be invalidated by how its own dependency actually gets built, not just by scope drift over time -- t-027 assumed t-015 would need a kind_robots-database pull for dedup state, but t-015 (#5323) made that moot in the same PR that unblocked t-027. Closing it required only re-reading excluded_names() and its own test coverage, no implementation. Worth claiming and closing a downstream kaizen immediately when its resolution is already evident, rather than leaving a 'ready' task in the queue that looks like real work but isn't."
+- date: 2026-09-28
+  project: tzaddik-gallery
+  task: t-012
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "select_role.py's kind_robots candidate_reviewable_pr_count reported 0 while a real, fully green, mergeable claude/* PR (kind_robots#3071) had been sitting open for ~4 hours. A direct list_pull_requests call against kind_robots found it immediately. Worth checking select_role.py's kind_robots PR-scan filter (branch prefix? PR age? author?) against this specific miss before trusting its reviewable-PR count as complete -- a manual cross-repo PR listing is cheap insurance in the meantime."
