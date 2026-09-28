@@ -20,6 +20,8 @@ Every animation must:
 8. cancel animation frames, observers, timers, media listeners, and input listeners on unmount.
 9. Avoid network requests, audio, paid services, or remote assets for the passive loop unless a later pitch explicitly approves them.
 10. Preserve underlying page interaction unless `blocksInput: true` is an intentional, visible part of a Screen FX-only effect.
+11. For startup-eligible wallpapers, make the signature motion or transformation visibly legible within the first few seconds of an ordinary page load; do not hide the interesting state behind a long ambient cycle.
+12. Any visual state reachable by click, hover, pointer, or touch must also have a passive path when it is part of the effect's core appeal. Interaction may accelerate, redirect, or embellish the loop, but must not unlock the only compelling version of it.
 
 ## Single registration contract
 
