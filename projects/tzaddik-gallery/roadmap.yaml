@@ -364,12 +364,12 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Research an internationally broad candidate pool for the living 36"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-003
-    note: >
+    note: >-
       Build a sourced research pool spanning multiple world regions, languages,
       professions, and forms of public service. Deliberately counter
       US/Anglosphere celebrity bias. Assign provisional controlled tags so the
@@ -378,9 +378,16 @@ tasks:
       meaningful objections/controversies, Wikipedia availability, and
       uncertainty. Favor genuine educational discovery over quota-box
       geography.
+
+      IMPLEMENTED 2026-09-28 (claude-scheduled session): built projects/tzaddik-
+      gallery/discovery/living36-research-pool.md -- 24 sourced, internationally diverse
+      living candidates with controlled tags and review notes, deduplicated against seed-
+      sets.yaml and both existing dockets. Placed in discovery/ (not project root) so
+      excluded_names() picks it up automatically.
     claimed_by: claude-scheduled-20260928T045500Z-tzaddik-t010
     claimed_at: '2026-09-28T04:51:31Z'
-    updated: '2026-09-28T04:51:31Z'
+    updated: '2026-09-28T04:55:36Z'
+    implementation_pr: 'silasfelinus/conductor#5329'
 
   - id: t-011
     milestone: m3
