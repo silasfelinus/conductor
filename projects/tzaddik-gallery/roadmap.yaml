@@ -997,7 +997,7 @@ tasks:
   - id: t-029
     milestone: m2
     title: "Surface the NEEDS_REVIEW recheck reason directly on the Needs-review queue card"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1012,7 +1012,28 @@ tasks:
       rendered inside this queue would save an editor a click per candidate.
 
       implementation_pr: silasfelinus/kind_robots#3082
+
+      MERGED 2026-09-28: silasfelinus/kind_robots#3082 (queue card now renders the recheck
+      reason inline; recheckReasonLabel extracted to utils/tzaddikRecheck.ts and shared with
+      the detail sheet). vue-tsc/eslint/prettier clean; kind_robots CI green before merge.
     claimed_by: 20260928T150000Z-tzaddik-t029
     claimed_at: '2026-09-28T14:51:37Z'
-    updated: '2026-09-28T14:55:20Z'
+    updated: '2026-09-28T15:00:43Z'
     implementation_pr: 'silasfelinus/kind_robots#3082'
+
+  - id: t-030
+    milestone: m2
+    title: "Add an inline accept/dismiss action for a NEEDS_REVIEW recheck directly on the Needs-review queue card"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: null
+    note: >-
+      Kaizen from t-029 (silasfelinus/kind_robots#3082): the queue card now shows
+      *why* a candidate needs review (the recheck reason, e.g. a changed
+      Wikipedia page id), but resolving it still requires opening the detail
+      sheet to act. Add a compact accept/dismiss control directly on the card
+      -- e.g. "Update to new page id" / "Keep current source" -- backed by the
+      existing recheck-resolution logic, so an editor can clear the whole
+      queue without a click-through per candidate.
