@@ -16929,3 +16929,17 @@ records:
     dependency's merged diff (not just its status: done) before claiming the downstream task,
     since the dependency's own PR description may already name the exact component the
     follow-up targets."
+- date: 2026-09-28
+  project: tzaddik-gallery
+  task: t-025
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "kr-gallery's #item slot (already used by bot-gallery.vue) lets a new object type get a
+    bespoke card without touching the generic GalleryItem renderer every other gallery shares --
+    the narrower, lower-blast-radius option when a task note offers a choice between a
+    cross-cutting change and a per-gallery override. Also: verifyCardActionContract.ts's
+    ENTITY_CARDS/SHARED_BODY_CARDS lists are a curated allowlist ('new models get added here'),
+    not a glob -- a new *-card.vue wrapping reactable-card should be registered there explicitly."
