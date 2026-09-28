@@ -482,7 +482,7 @@ tasks:
   - id: t-016
     milestone: m5
     title: "Run the recurring Daily Tzaddik research cycle"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -745,20 +745,26 @@ tasks:
   - id: t-027
     milestone: m5
     title: "Extend the discovery pipeline's dedup to cover pending/rejected/deferred names once t-015 exists"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
     depends_on: t-015
     note: >-
-      Kaizen from t-014 (silasfelinus/conductor#5320): scripts/build_tzaddik_discovery.py's
-      excluded_names() currently dedupes only against seed-sets.yaml (accepted) and prior
-      discovery/*.md files (suggested), which is everything a conductor-side script can see
-      today. DESIGN-BRIEF.md's "Daily discovery roster" also wants dedup against pending,
-      rejected, and deferred candidates, which will live in kind_robots' database once t-015
-      builds the review surface. Once that exists, extend excluded_names() to also pull those
-      states from kind_robots via KR_API_TOKEN so dedup covers the full contract, not just the
-      conductor-local state.
+      Kaizen from t-014 (silasfelinus/conductor#5320), premise updated now that t-015
+      (silasfelinus/conductor#5323) has landed: this task assumed pending/rejected/deferred
+      state would live in a future kind_robots database, requiring excluded_names() to pull
+      it via KR_API_TOKEN. t-015 instead built a conductor-side review surface
+      (scripts/tzaddik_review.py + projects/tzaddik-gallery/discovery-decisions.yaml), and
+      excluded_names() already keeps every docketed name in its dedup pool permanently
+      regardless of decision (approved/rejected/deferred/pending all included via
+      all_dockets(), independent of the ledger) -- confirmed in #5323's docstring update to
+      excluded_names(). There is no remaining dedup gap to fix: DESIGN-BRIEF.md's "dedupe
+      against canonical, historical, pending, rejected, deferred, and recently suggested
+      people" is already fully satisfied. No kind_robots integration is needed here. Close
+      this out at the next opportunity (verify excluded_names() still has no logic gap, then
+      status: done citing this note) rather than attempting the now-unnecessary KR_API_TOKEN
+      pull.
     claimed_by: null
     claimed_at: null
     updated: '2026-09-28T02:10:00Z'

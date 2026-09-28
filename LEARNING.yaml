@@ -16837,3 +16837,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "DESIGN-BRIEF.md's daily discovery roster is a two-sided system (pipeline + review surface); scoping t-014 to only the conductor-side dedup/validate/render mechanism, and proving it by actually authoring a real docket rather than leaving the script unexercised, kept this a landable single-pass build instead of an oversized 'build the whole Daily-Dream-equivalent system' attempt."
+- date: 2026-09-28
+  project: tzaddik-gallery
+  task: t-015
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "'Give Silas a review surface' does not have to mean a live kind_robots UI/DB build -- a conductor-side script plus a small human-editable YAML ledger (scripts/tzaddik_review.py + discovery-decisions.yaml) satisfied the actual contract (approve/reject/defer/show-full-profile, wired into the session digest) in one landable pass, matching how Daily Dream's own conductor-side state is already surfaced. Also caught mid-close: t-014's own kaizen (t-027) had assumed t-015 would need a kind_robots database, which turned out to be moot once excluded_names() was re-read closely -- it already dedupes every docketed name permanently regardless of decision. Re-verify a dependent kaizen task's premise against what actually got built, not what was assumed, before letting it sit as 'ready' work for someone else to discover is unnecessary."
