@@ -4237,9 +4237,9 @@ tasks:
 - id: t-199
   milestone: m1
   title: "Harden annotate_daily_dream_art_queue.py's _live_job_fetcher() import against ambient sys.path state"
-  status: ready
+  status: claimed
   stakes: reversible
-  owner: null
+  owner: worker
   passes: 0
   note: >-
     Kaizen from t-198 (2026-09-27, PR #5282). `_live_job_fetcher()` does a bare
@@ -4260,7 +4260,9 @@ tasks:
     regression test that imports and calls `_live_job_fetcher()` from a subprocess/
     fresh interpreter with only the repo root on sys.path (no scripts/ dir), confirming
     it still resolves the real fetcher when KR_API_TOKEN is set.
-  updated: '2026-09-27T11:29:15Z'
+  updated: '2026-09-28T06:58:02Z'
+  claimed_by: 2026-09-28T070200Z-conductor-t199-claude
+  claimed_at: '2026-09-28T06:58:02Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
