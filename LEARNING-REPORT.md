@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-28T15:00:50Z
+Generated: 2026-09-28T15:06:10Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1190**
-- Outcomes: blocked: 19, cancelled: 2, done: 1169
+- Closed tasks recorded: **1191**
+- Outcomes: blocked: 19, cancelled: 2, done: 1170
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -65,14 +65,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | superkate-services-calculator | 12 | 100% |
 | taskmaster | 3 | 100% |
 | text-generation | 7 | 100% |
-| tzaddik-gallery | 21 | 100% |
+| tzaddik-gallery | 22 | 100% |
 
 ## By kind
 
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1173 | 99% |
+| software | 1174 | 99% |
 
 ## Failure categories
 
@@ -94,6 +94,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-28 `tzaddik-gallery/t-029` — The server route already returned the data the card needed (RecheckRequests on the needsReview=true filter) -- the whole fix was rendering it and widening one store type. Extracting the existing recheckDetailLabel parsing logic out of the detail sheet into a shared util (rather than re-deriving it on the card) kept the two surfaces from reading resultJson.reason differently.
 - 2026-09-28 `tzaddik-gallery/t-028` — Reusing the existing admin Review-queue tab (Pending/Archived) with a third filter value, instead of building a dedicated NEEDS_REVIEW page, kept the diff small and consistent with the site's own routes-and-surfaces guidance to prefer an existing surface over a new one.
 - 2026-09-28 `tzaddik-gallery/t-019` — The recheck pipeline's schema, fetch util, and UI were already built across three earlier tasks (t-005/t-006/t-009) -- the only missing piece was recheck.post.ts actually calling fetchTzaddikSource. Check for already-built-but-unwired pieces before assuming a task needs new code from scratch.
 - 2026-09-28 `tzaddik-gallery/t-025` — kr-gallery's #item slot (already used by bot-gallery.vue) lets a new object type get a bespoke card without touching the generic GalleryItem renderer every other gallery shares -- the narrower, lower-blast-radius option when a task note offers a choice between a cross-cutting change and a per-gallery override. Also: verifyCardActionContract.ts's ENTITY_CARDS/SHARED_BODY_CARDS lists are a curated allowlist ('new models get added here'), not a glob -- a new *-card.vue wrapping reactable-card should be registered there explicitly.
@@ -103,7 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-28 `animation-manager/t-007` — Two things worth carrying forward. (1) check_animation_novelty.py only diffs a pitch against other PITCHES.yaml entries, not the already-shipped catalog in stores/animationCatalog.ts -- kaleidoscope-bloom (priority 27) sat undetected as a likely near-duplicate of the pre-pitch-pipeline kaleidoscope-effect.vue catalog entry; caught by hand, worked around by building the next pitch (moire-weave-engine) instead, filed as t-024/t-025 for a structural fix and a pitch-fate decision. (2) close_task.py's --branch defaults to reusing whatever close-out branch a prior status transition in the same cycle already created; if a separate fix (here, a roadmap duplicate-key bug) lands on main in between, that reused branch is still based on the pre-fix tip and the same duplicate-key error recurs even though origin/main is clean -- passing a fresh --branch name based on current origin/main resolved it. Worth close_task.py detecting this itself (a stale existing --branch whose base predates a needed fix) rather than requiring the caller to notice the base mismatch by hand.
 - 2026-09-28 `tzaddik-gallery/t-026` — check_pr_merged_drift.py caught a real gap: t-026's implementing PR (kind_robots#3072) merged over an hour before any session reconciled the roadmap task off status=review. Worth running the merged-PR drift check as a matter of course after any worker cycle that touches a cross-repo project, not only at session start/end, since a PR can merge mid-session on its own CI schedule without the conductor session that opened it noticing.
 - 2026-09-28 `tzaddik-gallery/t-012` — select_role.py's kind_robots candidate_reviewable_pr_count reported 0 while a real, fully green, mergeable claude/* PR (kind_robots#3071) had been sitting open for ~4 hours. A direct list_pull_requests call against kind_robots found it immediately. Worth checking select_role.py's kind_robots PR-scan filter (branch prefix? PR age? author?) against this specific miss before trusting its reviewable-PR count as complete -- a manual cross-repo PR listing is cheap insurance in the meantime.
-- 2026-09-28 `tzaddik-gallery/t-010` — A stale claim (t-010 sat claimed by an openai session for 5+ hours with no branch ever pushed) is safe to reclaim and complete directly once the TTL has expired -- next_ready_task.py already surfaces this correctly. Placing the new research-pool content inside discovery/ (matching the dated dockets' heading/section/tzaddik-meta format) rather than at the project root meant excluded_names() picked it up for dedup automatically, with zero code changes -- worth defaulting to 'shape new content to fit an existing scan' before reaching for a scanner-code change.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-28T15:00:50Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-28T15:06:10Z_
