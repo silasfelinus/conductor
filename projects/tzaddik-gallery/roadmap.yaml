@@ -515,7 +515,7 @@ tasks:
   - id: t-016
     milestone: m5
     title: "Run the recurring Daily Tzaddik research cycle"
-    status: claimed
+    status: ready
     owner: worker
     passes: 0
     stakes: reversible
@@ -540,9 +540,22 @@ tasks:
       build_tzaddik_discovery.py again today would just duplicate this same roster. Re-arming
       to ready without a new run; next cycle should verify the *next* unbuilt Pacific day
       before generating.
+
+      NO-OP 2026-09-28 (claude-scheduled session, cycle 2): re-checked before running the
+      pipeline again -- still only 2026-09-26.md and 2026-09-28.md on file, no new Pacific day
+      has rolled over since the prior cycle's check, and 2026-09-28.md already covers the next
+      unbuilt day. Running build_tzaddik_discovery.py again would duplicate that roster; re-
+      arming to ready without a new run. While verifying pipeline health, found and fixed a
+      real bug in build_tzaddik_discovery.py's check(): it picked dockets[-1] off a plain
+      filename-alphabetical sort, so the non-dated living36-research-pool.md (kept in the same
+      directory on purpose for dedup) sorted after every dated docket and made every --check
+      print 'most recent: None' instead of the real latest date -- see
+      silasfelinus/conductor's worker/tzaddik-gallery-t-016 branch/PR. --check now correctly
+      reports 2026-09-28 as most recent. Next cycle should verify the *next* unbuilt Pacific
+      day before generating.
     claimed_by: claude-scheduled-20260928T054500Z-tzaddik-t016-fix
     claimed_at: '2026-09-28T05:46:38Z'
-    updated: '2026-09-28T05:46:38Z'
+    updated: '2026-09-28T05:53:43Z'
 
   - id: t-017
     milestone: m2
