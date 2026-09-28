@@ -631,19 +631,29 @@ tasks:
   - id: t-018
     milestone: m4
     title: "Create and integrate the Tzaddik Gallery splash/background art"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-017
-    note: >
+    note: >-
       Use the queued tzaddik-gallery splash request as the atmospheric large
       screen backdrop / landing visual. The image must support overlaid UI,
       portrait cards, and readable text rather than competing with them. Verify
       cropping at lg/xl and provide a simpler mobile treatment for sm/md.
+
+      Queued the splash art render (conductor/projects/art-prompts.yaml entry tzaddik-gallery-
+      splash, prompt from ART-PROMPTS.md, target public/images/tzaddik-gallery/tzaddik-
+      gallery-splash.webp) and wired the front-end (pages/tzaddik-gallery.vue) to reference
+      that path as a full-bleed lg/xl-only background-image with a gradient overlay, degrading
+      cleanly on sm/md and until the image renders. kind_robots#3078 open, CI pending. Image
+      delivery is async via auto-art-generate.yml (triggered on this push since art-
+      prompts.yaml changed, or its 6h schedule) -- a future cycle should verify the file
+      actually resolves at that path before closing this task done.
     claimed_by: 2026-09-28T115229Z-tzaddik-t018-splash
     claimed_at: '2026-09-28T11:52:32Z'
-    updated: '2026-09-28T11:52:32Z'
+    updated: '2026-09-28T11:58:38Z'
+    implementation_pr: 'silasfelinus/kind_robots#3078'
 
   - id: t-019
     milestone: m2
