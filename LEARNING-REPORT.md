@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-28T16:58:17Z
+Generated: 2026-09-28T17:05:00Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1194**
-- Outcomes: blocked: 19, cancelled: 2, done: 1173
+- Closed tasks recorded: **1195**
+- Outcomes: blocked: 19, cancelled: 2, done: 1174
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -65,14 +65,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | superkate-services-calculator | 12 | 100% |
 | taskmaster | 3 | 100% |
 | text-generation | 7 | 100% |
-| tzaddik-gallery | 25 | 100% |
+| tzaddik-gallery | 26 | 100% |
 
 ## By kind
 
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1177 | 99% |
+| software | 1178 | 99% |
 
 ## Failure categories
 
@@ -94,6 +94,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-28 `tzaddik-gallery/t-032` — t-031's kaizen note (above) named the exact gap this task closed: tzaddik-card.vue's own recheck buttons showed on any non-empty recheckReasonLabel(...), which is also true for a FAILED recheck, while resolveTzaddikRecheckReview 409s on any status other than NEEDS_REVIEW. Added a recheckNeedsReview computed reading RecheckRequests[0].status directly instead of re-deriving it from the reason-label helper. Currently unreachable in production per t-029's note (only the NEEDS_REVIEW queue filter's response carries RecheckRequests at all), same as t-031's equivalent fix on the detail sheet -- worth grepping for every other consumer of recheckReasonLabel/RecheckRequests[0] the next time this surface changes, since the same latent gap could recur on a third surface.
 - 2026-09-28 `tzaddik-gallery/t-031` — Gated the detail sheet's new Update/Keep-current buttons on latestRecheck.status === 'NEEDS_REVIEW' explicitly rather than reusing the queue card's broader non-empty-reason-label condition -- the card's condition also renders for FAILED recheck requests, which /api/tzaddik/recheck-resolve rejects with a 409. Worth checking a sibling component's show-condition against the server's actual guard, not just copying it, when adding the same control to a second surface.
 - 2026-09-28 `tzaddik-gallery/t-018` — check_pr_merged_drift.py caught a task left at status: review after its PR (kind_robots#3078) had already merged -- reconciled during the scheduled sweep's session-startup checks rather than sitting stale until a later Reviewer pass noticed it by hand.
 - 2026-09-28 `tzaddik-gallery/t-030` — The kaizen note that spawned this task assumed 'existing recheck-resolution logic' to wire buttons to -- there wasn't any; recheck.post.ts detects an identity change but never applies it. Verify a kaizen task's premise against the actual code before implementing, not just its own wording, since a Reviewer's own kaizen suggestion can be wrong about what already exists.
@@ -103,7 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-28 `tzaddik-gallery/t-025` — kr-gallery's #item slot (already used by bot-gallery.vue) lets a new object type get a bespoke card without touching the generic GalleryItem renderer every other gallery shares -- the narrower, lower-blast-radius option when a task note offers a choice between a cross-cutting change and a per-gallery override. Also: verifyCardActionContract.ts's ENTITY_CARDS/SHARED_BODY_CARDS lists are a curated allowlist ('new models get added here'), not a glob -- a new *-card.vue wrapping reactable-card should be registered there explicitly.
 - 2026-09-28 `tzaddik-gallery/t-024` — A 'kaizen from X, once Y lands' follow-up filed against a not-yet-merged dependency can end up fully subsumed by that dependency's actual implementation -- read the dependency's merged diff (not just its status: done) before claiming the downstream task, since the dependency's own PR description may already name the exact component the follow-up targets.
 - 2026-09-28 `animation-manager/t-024` — check_animation_novelty.py's Jaccard-based collision score is meaningless once one side (a catalog tooltip) is far shorter than the other (a pitch's novelty prose) -- an exact shared word scores near zero once the longer side dilutes the union. Switching to an overlap coefficient (|A∩B| / min(|A|,|B|)) for that specific comparison fixed it; worth remembering for any future keyword-overlap check comparing texts of very different lengths.
-- 2026-09-28 `tzaddik-gallery/t-009` — Deploy-lag reconciliation should probe the actual live listing endpoint (GET /api/tzaddik) rather than only re-testing the write endpoint (POST /api/tzaddik/import) each cycle -- the read side can go live and get seeded by another session's PR before a session re-checking only the write path would notice.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-28T16:58:17Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-28T17:05:00Z_
