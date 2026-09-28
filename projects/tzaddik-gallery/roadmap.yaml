@@ -785,7 +785,7 @@ tasks:
   - id: t-026
     milestone: m2
     title: "Confirm before archiving an already-APPROVED (live) Tzaddik candidate"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -806,9 +806,15 @@ tasks:
       transition, matching the existing window.confirm pattern used elsewhere in the repo
       (art-gallery.vue, stylist-clients.vue, etc.). PENDING path unchanged. Verified via
       eslint (clean) and vue-tsc --noEmit (clean, exit 0). PR: silasfelinus/kind_robots#3072.
+
+      Reconciled 2026-09-28 (check_pr_merged_drift.py): implementation PR
+      silasfelinus/kind_robots#3072 merged 2026-09-28T04:06:26Z; conductor roadmap was still
+      at status=review. Closing to done -- no further verification needed beyond what the
+      implementer already recorded (eslint/vue-tsc clean); this is a local confirm-dialog UI
+      change with no deploy-gated behavior to re-check.
     claimed_by: claude-scheduled-20260928T035500Z-tzaddik-t026
     claimed_at: '2026-09-28T03:58:19Z'
-    updated: '2026-09-28T03:59:13Z'
+    updated: '2026-09-28T06:01:48Z'
     implementation_pr: 'silasfelinus/kind_robots#3072'
 
   - id: t-027
