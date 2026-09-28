@@ -1,0 +1,14 @@
+version: 1
+project: interface-vision
+task: t-105
+operation: rearm
+session: 2026-09-28T064000Z-interface-vision-t105-chatgpt-7c92
+updated: '2026-09-28T06:57:00Z'
+note: >-
+  Screenshot-directed tablet navigation slice merged as silasfelinus/kind_robots#3073
+  (merge 69224c46c3b4539246c9bf845785bff68615e865). The non-phone tab dropdown had
+  desktop-sized 22rem geometry, end-alignment that hung the panel left across the channel
+  picker, and full two-line rows at tablet widths. It now opens from the tab trigger's
+  leading edge, caps at 18rem below xl, and hides row summaries only from sm through xl.
+  Phone keeps the unified picker and xl desktop keeps the 22rem descriptive menu. All 31
+  exact-head PR workflows completed successfully. Kaizen follow-up filed as t-140.
