@@ -16903,3 +16903,16 @@ records:
     than only re-testing the write endpoint (POST /api/tzaddik/import) each cycle -- the read side can
     go live and get seeded by another session's PR before a session re-checking only the write path would
     notice.
+- date: 2026-09-28
+  project: animation-manager
+  task: t-024
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "check_animation_novelty.py's Jaccard-based collision score is meaningless once one side
+    (a catalog tooltip) is far shorter than the other (a pitch's novelty prose) -- an exact shared
+    word scores near zero once the longer side dilutes the union. Switching to an overlap
+    coefficient (|A∩B| / min(|A|,|B|)) for that specific comparison fixed it; worth remembering
+    for any future keyword-overlap check comparing texts of very different lengths."
