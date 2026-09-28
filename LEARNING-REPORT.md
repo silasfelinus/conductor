@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-28T15:50:06Z
+Generated: 2026-09-28T15:57:42Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1192**
-- Outcomes: blocked: 19, cancelled: 2, done: 1171
+- Closed tasks recorded: **1193**
+- Outcomes: blocked: 19, cancelled: 2, done: 1172
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -65,14 +65,14 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | superkate-services-calculator | 12 | 100% |
 | taskmaster | 3 | 100% |
 | text-generation | 7 | 100% |
-| tzaddik-gallery | 23 | 100% |
+| tzaddik-gallery | 24 | 100% |
 
 ## By kind
 
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1175 | 99% |
+| software | 1176 | 99% |
 
 ## Failure categories
 
@@ -94,6 +94,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-28 `tzaddik-gallery/t-018` — check_pr_merged_drift.py caught a task left at status: review after its PR (kind_robots#3078) had already merged -- reconciled during the scheduled sweep's session-startup checks rather than sitting stale until a later Reviewer pass noticed it by hand.
 - 2026-09-28 `tzaddik-gallery/t-030` — The kaizen note that spawned this task assumed 'existing recheck-resolution logic' to wire buttons to -- there wasn't any; recheck.post.ts detects an identity change but never applies it. Verify a kaizen task's premise against the actual code before implementing, not just its own wording, since a Reviewer's own kaizen suggestion can be wrong about what already exists.
 - 2026-09-28 `tzaddik-gallery/t-029` — The server route already returned the data the card needed (RecheckRequests on the needsReview=true filter) -- the whole fix was rendering it and widening one store type. Extracting the existing recheckDetailLabel parsing logic out of the detail sheet into a shared util (rather than re-deriving it on the card) kept the two surfaces from reading resultJson.reason differently.
 - 2026-09-28 `tzaddik-gallery/t-028` — Reusing the existing admin Review-queue tab (Pending/Archived) with a third filter value, instead of building a dedicated NEEDS_REVIEW page, kept the diff small and consistent with the site's own routes-and-surfaces guidance to prefer an existing surface over a new one.
@@ -103,7 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-28 `animation-manager/t-024` — check_animation_novelty.py's Jaccard-based collision score is meaningless once one side (a catalog tooltip) is far shorter than the other (a pitch's novelty prose) -- an exact shared word scores near zero once the longer side dilutes the union. Switching to an overlap coefficient (|A∩B| / min(|A|,|B|)) for that specific comparison fixed it; worth remembering for any future keyword-overlap check comparing texts of very different lengths.
 - 2026-09-28 `tzaddik-gallery/t-009` — Deploy-lag reconciliation should probe the actual live listing endpoint (GET /api/tzaddik) rather than only re-testing the write endpoint (POST /api/tzaddik/import) each cycle -- the read side can go live and get seeded by another session's PR before a session re-checking only the write path would notice.
 - 2026-09-28 `animation-manager/t-007` — Two things worth carrying forward. (1) check_animation_novelty.py only diffs a pitch against other PITCHES.yaml entries, not the already-shipped catalog in stores/animationCatalog.ts -- kaleidoscope-bloom (priority 27) sat undetected as a likely near-duplicate of the pre-pitch-pipeline kaleidoscope-effect.vue catalog entry; caught by hand, worked around by building the next pitch (moire-weave-engine) instead, filed as t-024/t-025 for a structural fix and a pitch-fate decision. (2) close_task.py's --branch defaults to reusing whatever close-out branch a prior status transition in the same cycle already created; if a separate fix (here, a roadmap duplicate-key bug) lands on main in between, that reused branch is still based on the pre-fix tip and the same duplicate-key error recurs even though origin/main is clean -- passing a fresh --branch name based on current origin/main resolved it. Worth close_task.py detecting this itself (a stale existing --branch whose base predates a needed fix) rather than requiring the caller to notice the base mismatch by hand.
-- 2026-09-28 `tzaddik-gallery/t-026` — check_pr_merged_drift.py caught a real gap: t-026's implementing PR (kind_robots#3072) merged over an hour before any session reconciled the roadmap task off status=review. Worth running the merged-PR drift check as a matter of course after any worker cycle that touches a cross-repo project, not only at session start/end, since a PR can merge mid-session on its own CI schedule without the conductor session that opened it noticing.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-28T15:50:06Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-28T15:57:42Z_
