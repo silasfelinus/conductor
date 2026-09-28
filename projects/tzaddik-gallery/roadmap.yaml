@@ -307,8 +307,8 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Seed Silas's named historical and living candidates"
-    status: ready
-    owner: worker
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
     depends_on: [t-003, t-008]
@@ -376,10 +376,23 @@ tasks:
       documents, not a new incident. Next session: recheck POST
       https://kindrobots.org/api/tzaddik/import for a JSON response before attempting the
       29-entry seed-sets.yaml + discovery/2026-09-26.md import.
+
+      RECONCILED 2026-09-28T~07:30Z (claude-scheduled session, tzaddik-gallery/t-012 cycle):
+      live production now serves the deployed route and the deliverable exists. Verified via
+      GET https://kindrobots.org/api/tzaddik?lifeState=LIVING|MEMORIAL: 12 living + 17
+      memorial = 29 records, all curationState APPROVED, matching seed-sets.yaml exactly. All
+      9 silasfelinus direct nominations (Cassandra Peterson, Greta Thunberg, Dolly Parton,
+      Steve Irwin, Fred Rogers, Martin Luther King Jr., Stanislav Petrov, Nelson Mandela,
+      Harriet Tubman) carry suggestedBy=silasfelinus and acceptedByUserId=1; the 20 llm-daily-
+      discovery entries carry suggestedBy=llm-daily-discovery. Dolly Parton correctly MEMORIAL
+      with deathDate 2026-08-25. kind_robots#3074 ("fix(tzaddik): restore production
+      publishing and seed the gallery", merged after #3071) appears to be what carried the
+      deploy/import through -- not re-verified against that PR's own diff since the live data
+      is conclusive either way.
     claimed_by: 2026-09-28T065100Z-tzaddik-t009-claude
     claimed_at: '2026-09-28T06:50:15Z'
-    updated: '2026-09-28T06:50:23Z'
-    implementation_pr: 'silasfelinus/kind_robots#3069'
+    updated: '2026-09-28T08:27:31Z'
+    implementation_pr: 'silasfelinus/kind_robots#3074'
 
   - id: t-010
     milestone: m3
