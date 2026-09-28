@@ -455,21 +455,29 @@ tasks:
   - id: t-015
     milestone: m5
     title: "Surface each daily 20-person roster for Silas's vetting"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-014
-    note: >
+    note: >-
       Give Silas an easy daily review surface, integrated with the same
       attention/digest patterns used by Daily Dream and other daily creative
       commitments. He must be able to approve, reject, defer, or open the full
       sourced profile. Preserve prior decisions so rejected suggestions are not
       immediately recycled. This is an inbound review queue only; do not send or
       publish anything externally.
+
+      Landed as silasfelinus/conductor#5323: scripts/tzaddik_review.py
+      (--check/--pending/--show/--decide) plus projects/tzaddik-gallery/discovery-
+      decisions.yaml as the human-editable decision ledger, wired into CLAUDE.md's session-
+      startup report. Conductor-side only, matching how Daily Dream's own state is surfaced
+      (scripts + session digest) -- no kind_robots UI/DB build. t-016 (recurring cadence)
+      remains the next follow-on.
     claimed_by: claude-scheduled-20260928T024655Z-tzaddik-t015
     claimed_at: '2026-09-28T02:46:56Z'
-    updated: '2026-09-28T02:49:47Z'
+    updated: '2026-09-28T02:54:47Z'
+    implementation_pr: 'silasfelinus/conductor#5323'
 
   - id: t-016
     milestone: m5
