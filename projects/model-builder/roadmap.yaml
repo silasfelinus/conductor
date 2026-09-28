@@ -469,7 +469,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: claimed
+    status: ready
     recurring: true
     passes: 52
     stakes: reversible
@@ -845,7 +845,19 @@ tasks:
       prisma/model-builder.prisma, content/model-builder.md): zero commits on any tracked
       surface since the last check. No model-builder-specific regression audit warranted --
       verified no-op, re-arming to ready.
-    updated: '2026-09-28T06:51:29Z'
+
+      Cycle 111 (checked through 2026-09-28T06:54Z, scheduled Conductor Agent run): checked
+      kind_robots commits repo-wide since the prior 2026-09-26T19:05Z audit via the GitHub
+      commits API (path-filtered) across all five tracked model-builder surfaces
+      (components/model-builder/**, stores/modelBuilderStore.ts, server/api/model-builder/**,
+      prisma/model-builder.prisma, content/model-builder.md): latest commit on each path
+      predates 2026-09-26T19:05Z (newest is components/model-builder/** at
+      2026-09-17T22:44:32Z, the same interface-vision/t-104 icon-class migration already noted
+      as unrelated in prior cycles; server/api/model-builder/** newest is
+      2026-09-15T03:46:09Z, prisma/model-builder.prisma unchanged since 2026-07-14). Zero
+      commits on any tracked surface since the last check. No model-builder-specific
+      regression audit warranted -- verified no-op, re-arming to ready.
+    updated: '2026-09-28T06:51:38Z'
     owner: worker
     claimed_by: 2026-09-28T065400Z-mb029c111
     claimed_at: '2026-09-28T06:51:29Z'
