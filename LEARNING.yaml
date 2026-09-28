@@ -16891,3 +16891,15 @@ records:
   outcome: done
   failure_category: null
   lesson: "Two things worth carrying forward. (1) check_animation_novelty.py only diffs a pitch against other PITCHES.yaml entries, not the already-shipped catalog in stores/animationCatalog.ts -- kaleidoscope-bloom (priority 27) sat undetected as a likely near-duplicate of the pre-pitch-pipeline kaleidoscope-effect.vue catalog entry; caught by hand, worked around by building the next pitch (moire-weave-engine) instead, filed as t-024/t-025 for a structural fix and a pitch-fate decision. (2) close_task.py's --branch defaults to reusing whatever close-out branch a prior status transition in the same cycle already created; if a separate fix (here, a roadmap duplicate-key bug) lands on main in between, that reused branch is still based on the pre-fix tip and the same duplicate-key error recurs even though origin/main is clean -- passing a fresh --branch name based on current origin/main resolved it. Worth close_task.py detecting this itself (a stale existing --branch whose base predates a needed fix) rather than requiring the caller to notice the base mismatch by hand."
+- date: 2026-09-28
+  project: tzaddik-gallery
+  task: t-009
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Deploy-lag reconciliation should probe the actual live listing endpoint (GET /api/tzaddik) rather
+    than only re-testing the write endpoint (POST /api/tzaddik/import) each cycle -- the read side can
+    go live and get seeded by another session's PR before a session re-checking only the write path would
+    notice.
