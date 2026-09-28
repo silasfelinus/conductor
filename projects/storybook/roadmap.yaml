@@ -2185,3 +2185,32 @@ tasks:
   claimed_by: null
   claimed_at: null
   implementation_pr: 'silasfelinus/kind_robots#3048'
+
+- id: t-070
+  milestone: m7
+  title: "Add queueing/failed/retry status to the new engine's beat art (storybook-reading.vue) before t-037 can safely delete the legacy guard pinning it"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Filed from t-037's cycle investigation (2026-09-28, conductor scheduled sweep) while
+    checking whether the new engine already has equivalents for everything
+    utils/scripts/verifyNarrativeArtPersistence.mjs pins against the legacy
+    components/conductor/storybook-page.vue. That guard requires an explicit
+    <NarrativeArtStatus> integration showing queueing/queued/rendering/done/failed/cancelled
+    states plus a retryBeatArt() control. The new engine's components/storybook/storybook-
+    reading.vue only renders `sceneArt` via `v-if="sceneArt"` once an ArtImage already
+    exists on the run -- there is no status indicator and no retry affordance. A beat whose
+    art generation fails or is still queued currently shows no frame at all, silently, with
+    no way for the reader to retry.
+
+    This is a real feature gap, not just a guard-migration chore: t-037's eventual bulk
+    cutover PR (deleting storybook-page.vue and the guards that only pin legacy-only
+    behavior) must not delete verifyNarrativeArtPersistence.mjs's pinned behavior until
+    either (a) storybook-reading.vue gains equivalent status/retry UI wired to
+    runStore.art's per-beat status field, or (b) Silas explicitly accepts the current
+    silent-no-frame behavior as intentional and this task is closed as won't-fix with that
+    decision recorded. Either resolution unblocks t-037 to safely retire or repoint that
+    guard.
+  updated: '2026-09-28T12:54:00Z'
