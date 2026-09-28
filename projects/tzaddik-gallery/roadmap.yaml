@@ -726,7 +726,7 @@ tasks:
   - id: t-026
     milestone: m2
     title: "Confirm before archiving an already-APPROVED (live) Tzaddik candidate"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -741,9 +741,16 @@ tasks:
       APPROVED-to-ARCHIVED transition (curationState === 'APPROVED' before
       the click), leaving the PENDING-to-ARCHIVED path as an immediate action
       since it was never public in the first place.
+
+      Implemented on worker/tzaddik-gallery-t-026 (kind_robots): added a window.confirm prompt
+      in tzaddik-detail-sheet.vue's archive() specifically for the APPROVED-to-ARCHIVED
+      transition, matching the existing window.confirm pattern used elsewhere in the repo
+      (art-gallery.vue, stylist-clients.vue, etc.). PENDING path unchanged. Verified via
+      eslint (clean) and vue-tsc --noEmit (clean, exit 0). PR: silasfelinus/kind_robots#3072.
     claimed_by: claude-scheduled-20260928T035500Z-tzaddik-t026
     claimed_at: '2026-09-28T03:58:19Z'
-    updated: '2026-09-28T03:58:19Z'
+    updated: '2026-09-28T03:59:13Z'
+    implementation_pr: 'silasfelinus/kind_robots#3072'
 
   - id: t-027
     milestone: m5
