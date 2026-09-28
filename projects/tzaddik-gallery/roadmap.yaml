@@ -1045,3 +1045,22 @@ tasks:
     claimed_at: '2026-09-28T15:06:17Z'
     updated: '2026-09-28T15:18:52Z'
     implementation_pr: 'silasfelinus/kind_robots#3083'
+
+  - id: t-031
+    milestone: m2
+    title: "Give the detail sheet the same NEEDS_REVIEW accept/dismiss controls the queue card has"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: null
+    note: >-
+      Kaizen from t-030 (silasfelinus/kind_robots#3083): the queue card can
+      now resolve a NEEDS_REVIEW recheck inline (Update / Keep current,
+      backed by resolveTzaddikRecheckReview + POST /api/tzaddik/recheck-
+      resolve), but tzaddik-detail-sheet.vue's own recheck section still
+      only offers the "Recheck" button -- an editor who opens a candidate
+      from the queue (rather than acting from the card directly) has no way
+      to resolve it without closing the sheet and finding the card again.
+      Wire the same two actions into the detail sheet's existing recheck
+      section, reusing store.resolveRecheckReview.
