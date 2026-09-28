@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-09-28T05:33:13.063118+00:00",
+  "generated_at": "2026-09-28T14:08:48.392157+00:00",
   "summary": {
     "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 14,
+    "roadmap_warnings": 11,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -12,8 +12,8 @@
   },
   "openai_scheduled_agent": {
     "overdue": false,
-    "last_activity": "2026-09-28T05:17:36+00:00",
-    "hours_since": 0.26,
+    "last_activity": "2026-09-28T13:48:51+00:00",
+    "hours_since": 0.33,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "OpenAI coordination activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit."
@@ -30,19 +30,19 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-09-28T05:33:13.063123+00:00",
+    "generated_at": "2026-09-28T14:08:48.392161+00:00",
     "summary": {
       "roadmaps": 55,
       "active_projects": 22,
       "continuous_projects": 3,
-      "tasks": 1747,
-      "ready": 23,
-      "waiting": 53,
-      "needs_human": 67,
-      "in_progress": 5,
-      "done": 1583,
+      "tasks": 1751,
+      "ready": 21,
+      "waiting": 52,
+      "needs_human": 68,
+      "in_progress": 4,
+      "done": 1590,
       "errors": 0,
-      "warnings": 14,
+      "warnings": 11,
       "info": 32
     },
     "errors": [],
@@ -53,20 +53,6 @@
         "project": "animation-manager",
         "task": null,
         "message": "Duplicate key 'owner' at line 186 \u2014 YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one."
-      },
-      {
-        "severity": "warning",
-        "code": "DUPLICATE_YAML_KEY",
-        "project": "animation-manager",
-        "task": null,
-        "message": "Duplicate key 'daily_last_checked' at line 365 \u2014 YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one."
-      },
-      {
-        "severity": "warning",
-        "code": "DUPLICATE_YAML_KEY",
-        "project": "animation-manager",
-        "task": null,
-        "message": "Duplicate key 'daily_last_completed' at line 366 \u2014 YAML mapping semantics let the last occurrence silently win; check for a stale trailing owner/claimed_by/status value overriding the real one."
       },
       {
         "severity": "warning",
@@ -130,13 +116,6 @@
         "project": "kindrobots-unraid",
         "task": "t-018",
         "message": "Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect."
-      },
-      {
-        "severity": "warning",
-        "code": "POSSIBLY_UNNECESSARY_GATE",
-        "project": "tzaddik-gallery",
-        "task": "t-011",
-        "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
       },
       {
         "severity": "warning",
