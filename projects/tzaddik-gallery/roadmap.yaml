@@ -667,7 +667,7 @@ tasks:
   - id: t-019
     milestone: m2
     title: "Add community Wikipedia recheck / correction requests"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -690,9 +690,18 @@ tasks:
       Wired recheck.post.ts to actually run fetchTzaddikSource synchronously
       (fetch/diff/apply-or-needs-review/cooldown), extended the detail sheet's status label to
       show the terminal outcome. PR: silasfelinus/kind_robots#3080.
+
+      MERGED 2026-09-28: silasfelinus/kind_robots#3080. recheck.post.ts now actually runs
+      fetchTzaddikSource synchronously on each request: applies safe source-derived changes
+      (including moving Living<->Memorial on a verified Wikidata death-date change), routes a
+      changed Wikipedia page id to NEEDS_REVIEW without auto-applying, records
+      NO_CHANGE/UPDATED/NEEDS_REVIEW/FAILED with a resultJson diff, adds a 1-hour cooldown,
+      and never touches the *Override columns. Detail sheet's status label extended to show
+      the terminal outcome. vue-tsc/eslint/prettier clean; all 32 kind_robots CI checks green
+      before merge.
     claimed_by: 20260928T134900Z-tzaddik-t019
     claimed_at: '2026-09-28T13:48:50Z'
-    updated: '2026-09-28T13:59:00Z'
+    updated: '2026-09-28T14:05:32Z'
     implementation_pr: 'silasfelinus/kind_robots#3080'
 
   - id: t-020
