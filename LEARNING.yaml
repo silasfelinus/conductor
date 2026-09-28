@@ -16997,3 +16997,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Gated the detail sheet's new Update/Keep-current buttons on latestRecheck.status === 'NEEDS_REVIEW' explicitly rather than reusing the queue card's broader non-empty-reason-label condition -- the card's condition also renders for FAILED recheck requests, which /api/tzaddik/recheck-resolve rejects with a 409. Worth checking a sibling component's show-condition against the server's actual guard, not just copying it, when adding the same control to a second surface."
+- date: 2026-09-28
+  project: tzaddik-gallery
+  task: t-032
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "t-031's kaizen note (above) named the exact gap this task closed: tzaddik-card.vue's own recheck buttons showed on any non-empty recheckReasonLabel(...), which is also true for a FAILED recheck, while resolveTzaddikRecheckReview 409s on any status other than NEEDS_REVIEW. Added a recheckNeedsReview computed reading RecheckRequests[0].status directly instead of re-deriving it from the reason-label helper. Currently unreachable in production per t-029's note (only the NEEDS_REVIEW queue filter's response carries RecheckRequests at all), same as t-031's equivalent fix on the detail sheet -- worth grepping for every other consumer of recheckReasonLabel/RecheckRequests[0] the next time this surface changes, since the same latent gap could recur on a third surface."
