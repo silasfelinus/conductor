@@ -680,7 +680,7 @@ tasks:
   - id: t-023
     milestone: m5
     title: "Reconcile PITCHES.yaml status for already-shipped-in-practice builds still marked candidate"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -705,9 +705,16 @@ tasks:
       soap-film-membrane. Do not promote any pitch whose component or catalog registration
       no longer checks out live -- report those separately instead. This is a
       status-field-only change (no code, no new builds); keep the diff to PITCHES.yaml.
+
+      Merged as silasfelinus/conductor#5373 (squash de023fb, all 24 checks green including
+      novelty-check). All 17 pitches verified against kind_robots@db6a474 before promotion:
+      component file + exactly one animationCatalog.ts registration each, exactly one build
+      entry each (geode-bloom's own caution note about a possible second build did not apply
+      -- still one build).
     claimed_by: 20260928T171122Z-am023
     claimed_at: '2026-09-28T17:11:23Z'
-    updated: '2026-09-28T17:11:23Z'
+    updated: '2026-09-28T17:17:53Z'
+    implementation_pr: 'silasfelinus/conductor#5373'
 
   - id: t-024
     milestone: m5
