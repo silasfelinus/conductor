@@ -428,20 +428,32 @@ tasks:
   - id: t-011
     milestone: m3
     title: "Curate the first canonical set of 36 living Tzaddik"
-    status: claimed
+    status: needs-human
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-009, t-010]
     gate_human: true
-    note: >
+    note: >-
       FOR SILAS: canonical membership is an editorial choice rather than a
       mechanical reaction score. Present the sourced candidate pool and
       community signal for selection. This gate controls the initial canonical
       36 only; research and feature development continue around it.
+
+      FOR SILAS: The sourced candidate pool for the canonical 36 is ready for your
+      call. Read projects/tzaddik-gallery/CANONICAL-36-CANDIDATES.md -- it lays out
+      the 12 already-live candidates, the 24 sourced-but-unimported research-pool
+      candidates (exactly 36 together), and four names (Yo-Yo Ma, Muhammad Yunus,
+      Sonia Guajajara, Agnes Binagwaho) that need an explicit in/out call rather
+      than a default include. Live community reaction signal is currently zero, so
+      this is a pure editorial decision today. TO APPROVE: reply with your picks
+      (accept the pool as-is, accept a subset, or ask for different candidates),
+      then set approved_by_human: true and status: done once a session has imported
+      your picks. What unblocks: the canonical living-36 gallery ships; any
+      unfilled slots keep getting sourced by t-016's daily discovery cycle.
     claimed_by: claude-scheduled-20260928T085039Z-tzaddik-t011
     claimed_at: '2026-09-28T08:50:40Z'
-    updated: '2026-09-28T08:50:40Z'
+    updated: '2026-09-28T08:52:59Z'
 
   - id: t-012
     milestone: m4
