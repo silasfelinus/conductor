@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-28T17:12:02Z
+Generated: 2026-09-28T17:22:05Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1195**
-- Outcomes: blocked: 19, cancelled: 2, done: 1174
+- Closed tasks recorded: **1196**
+- Outcomes: blocked: 19, cancelled: 2, done: 1175
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -17,7 +17,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 |---|---|---|
 | ai-art-academy | 73 | 99% |
 | alexa-integration | 6 | 100% |
-| animation-manager | 22 | 95% |
+| animation-manager | 23 | 96% |
 | animation-studio | 2 | 50% |
 | appmaker | 11 | 100% |
 | approval-portal | 2 | 0% |
@@ -72,7 +72,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1178 | 99% |
+| software | 1179 | 99% |
 
 ## Failure categories
 
@@ -94,6 +94,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-28 `animation-manager/t-023` — Found while closing t-007's 2026-09-27 cycle: 17 pitches had a live component + catalog registration + exactly one build entry but were still marked status: candidate at both the pitch and build level, identical to a gap already fixed once for geode-bloom alone (2026-09-21). Verified each id's component file and animationCatalog.ts registration individually against kind_robots@main before promoting -- grep, not assumption -- rather than batch-promoting on the roadmap note's word alone. Worth a small periodic checker script (filed as this task's kaizen suggestion) so this class of drift surfaces on its own instead of needing a Worker to notice it by hand during an unrelated cycle.
 - 2026-09-28 `tzaddik-gallery/t-032` — t-031's kaizen note (above) named the exact gap this task closed: tzaddik-card.vue's own recheck buttons showed on any non-empty recheckReasonLabel(...), which is also true for a FAILED recheck, while resolveTzaddikRecheckReview 409s on any status other than NEEDS_REVIEW. Added a recheckNeedsReview computed reading RecheckRequests[0].status directly instead of re-deriving it from the reason-label helper. Currently unreachable in production per t-029's note (only the NEEDS_REVIEW queue filter's response carries RecheckRequests at all), same as t-031's equivalent fix on the detail sheet -- worth grepping for every other consumer of recheckReasonLabel/RecheckRequests[0] the next time this surface changes, since the same latent gap could recur on a third surface.
 - 2026-09-28 `tzaddik-gallery/t-031` — Gated the detail sheet's new Update/Keep-current buttons on latestRecheck.status === 'NEEDS_REVIEW' explicitly rather than reusing the queue card's broader non-empty-reason-label condition -- the card's condition also renders for FAILED recheck requests, which /api/tzaddik/recheck-resolve rejects with a 409. Worth checking a sibling component's show-condition against the server's actual guard, not just copying it, when adding the same control to a second surface.
 - 2026-09-28 `tzaddik-gallery/t-018` — check_pr_merged_drift.py caught a task left at status: review after its PR (kind_robots#3078) had already merged -- reconciled during the scheduled sweep's session-startup checks rather than sitting stale until a later Reviewer pass noticed it by hand.
@@ -103,7 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-28 `tzaddik-gallery/t-019` — The recheck pipeline's schema, fetch util, and UI were already built across three earlier tasks (t-005/t-006/t-009) -- the only missing piece was recheck.post.ts actually calling fetchTzaddikSource. Check for already-built-but-unwired pieces before assuming a task needs new code from scratch.
 - 2026-09-28 `tzaddik-gallery/t-025` — kr-gallery's #item slot (already used by bot-gallery.vue) lets a new object type get a bespoke card without touching the generic GalleryItem renderer every other gallery shares -- the narrower, lower-blast-radius option when a task note offers a choice between a cross-cutting change and a per-gallery override. Also: verifyCardActionContract.ts's ENTITY_CARDS/SHARED_BODY_CARDS lists are a curated allowlist ('new models get added here'), not a glob -- a new *-card.vue wrapping reactable-card should be registered there explicitly.
 - 2026-09-28 `tzaddik-gallery/t-024` — A 'kaizen from X, once Y lands' follow-up filed against a not-yet-merged dependency can end up fully subsumed by that dependency's actual implementation -- read the dependency's merged diff (not just its status: done) before claiming the downstream task, since the dependency's own PR description may already name the exact component the follow-up targets.
-- 2026-09-28 `animation-manager/t-024` — check_animation_novelty.py's Jaccard-based collision score is meaningless once one side (a catalog tooltip) is far shorter than the other (a pitch's novelty prose) -- an exact shared word scores near zero once the longer side dilutes the union. Switching to an overlap coefficient (|A∩B| / min(|A|,|B|)) for that specific comparison fixed it; worth remembering for any future keyword-overlap check comparing texts of very different lengths.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-28T17:12:02Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-28T17:22:05Z_
