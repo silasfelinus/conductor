@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-28T09:01:57Z
+Generated: 2026-09-28T09:07:02Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1185**
-- Outcomes: blocked: 19, cancelled: 2, done: 1164
+- Closed tasks recorded: **1186**
+- Outcomes: blocked: 19, cancelled: 2, done: 1165
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -17,7 +17,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 |---|---|---|
 | ai-art-academy | 73 | 99% |
 | alexa-integration | 6 | 100% |
-| animation-manager | 21 | 95% |
+| animation-manager | 22 | 95% |
 | animation-studio | 2 | 50% |
 | appmaker | 11 | 100% |
 | approval-portal | 2 | 0% |
@@ -72,7 +72,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1168 | 99% |
+| software | 1169 | 99% |
 
 ## Failure categories
 
@@ -94,6 +94,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-28 `animation-manager/t-024` — check_animation_novelty.py's Jaccard-based collision score is meaningless once one side (a catalog tooltip) is far shorter than the other (a pitch's novelty prose) -- an exact shared word scores near zero once the longer side dilutes the union. Switching to an overlap coefficient (|A∩B| / min(|A|,|B|)) for that specific comparison fixed it; worth remembering for any future keyword-overlap check comparing texts of very different lengths.
 - 2026-09-28 `tzaddik-gallery/t-009` — Deploy-lag reconciliation should probe the actual live listing endpoint (GET /api/tzaddik) rather than only re-testing the write endpoint (POST /api/tzaddik/import) each cycle -- the read side can go live and get seeded by another session's PR before a session re-checking only the write path would notice.
 - 2026-09-28 `animation-manager/t-007` — Two things worth carrying forward. (1) check_animation_novelty.py only diffs a pitch against other PITCHES.yaml entries, not the already-shipped catalog in stores/animationCatalog.ts -- kaleidoscope-bloom (priority 27) sat undetected as a likely near-duplicate of the pre-pitch-pipeline kaleidoscope-effect.vue catalog entry; caught by hand, worked around by building the next pitch (moire-weave-engine) instead, filed as t-024/t-025 for a structural fix and a pitch-fate decision. (2) close_task.py's --branch defaults to reusing whatever close-out branch a prior status transition in the same cycle already created; if a separate fix (here, a roadmap duplicate-key bug) lands on main in between, that reused branch is still based on the pre-fix tip and the same duplicate-key error recurs even though origin/main is clean -- passing a fresh --branch name based on current origin/main resolved it. Worth close_task.py detecting this itself (a stale existing --branch whose base predates a needed fix) rather than requiring the caller to notice the base mismatch by hand.
 - 2026-09-28 `tzaddik-gallery/t-026` — check_pr_merged_drift.py caught a real gap: t-026's implementing PR (kind_robots#3072) merged over an hour before any session reconciled the roadmap task off status=review. Worth running the merged-PR drift check as a matter of course after any worker cycle that touches a cross-repo project, not only at session start/end, since a PR can merge mid-session on its own CI schedule without the conductor session that opened it noticing.
@@ -103,7 +104,6 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 - 2026-09-28 `tzaddik-gallery/t-015` — 'Give Silas a review surface' does not have to mean a live kind_robots UI/DB build -- a conductor-side script plus a small human-editable YAML ledger (scripts/tzaddik_review.py + discovery-decisions.yaml) satisfied the actual contract (approve/reject/defer/show-full-profile, wired into the session digest) in one landable pass, matching how Daily Dream's own conductor-side state is already surfaced. Also caught mid-close: t-014's own kaizen (t-027) had assumed t-015 would need a kind_robots database, which turned out to be moot once excluded_names() was re-read closely -- it already dedupes every docketed name permanently regardless of decision. Re-verify a dependent kaizen task's premise against what actually got built, not what was assumed, before letting it sit as 'ready' work for someone else to discover is unnecessary.
 - 2026-09-28 `tzaddik-gallery/t-014` — DESIGN-BRIEF.md's daily discovery roster is a two-sided system (pipeline + review surface); scoping t-014 to only the conductor-side dedup/validate/render mechanism, and proving it by actually authoring a real docket rather than leaving the script unexercised, kept this a landable single-pass build instead of an oversized 'build the whole Daily-Dream-equivalent system' attempt.
 - 2026-09-27 `tzaddik-gallery/t-008` — Clean first-pass build of admin approve/archive + explicit content overrides on top of schema t-003 already shipped -- confirming exact field/enum coverage before writing code (rather than assuming a migration was needed) kept this a pure application-layer PR. Following an existing precedent's shape (socialPostDraft.ts's approve/reject util split) for a new but structurally similar feature (Tzaddik's approve/archive) produced a smaller, more reviewable diff than inventing a new pattern.
-- 2026-09-27 `tzaddik-gallery/t-007` — select_role.py's 'likely a zero-diff close' heuristic fired from a dependency note mentioning this task, but the note's own wording ('No karma/reaction wiring added -- out of scope') looked like real work remained. Reading the actual current code (not just the roadmap note chain) showed a later PR on the same dependency (t-005) had already closed the gap without updating t-006's note to say so. Always verify an audit-candidate flag against live code before either reimplementing blind or trusting the note at face value -- both are wrong in different directions.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-28T09:01:57Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-28T09:07:02Z_
