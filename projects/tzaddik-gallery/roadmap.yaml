@@ -782,7 +782,7 @@ tasks:
   - id: t-024
     milestone: m2
     title: "Surface editor-only moderation actions in the t-017 composed detail rail instead of a separate admin page"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -794,9 +794,21 @@ tasks:
       ahead of t-008. Once t-008 lands moderation/override actions, let the detail
       rail surface editor-only approve/archive/override controls in the same
       composed panel rather than introducing a separate admin page.
+
+      Already delivered by t-008 (silasfelinus/kind_robots#3068, merged): that PR's admin-only
+      moderation panel (Approve/Archive buttons + override form) landed directly inside
+      tzaddik-detail-sheet.vue's composed aside -- the exact 't-017 composed detail rail' this
+      task asked for, not a separate admin page. The 'Review queue' tab t-008 also added to
+      pages/tzaddik-gallery.vue is an in-page admin-only tab (for discovering PENDING/ARCHIVED
+      candidates that are otherwise invisible on the public Living/Memorial rosters), not a
+      separate admin page/route -- confirmed no pages/admin/tzaddik*.vue or similar exists.
+      Verified by reading current tzaddik-detail-sheet.vue (aside section, admin-gated on
+      userStore.isAdmin) and tzaddik-gallery.vue (REVIEW_TAB, admin-only) on kind_robots main
+      (47b533a). No further code change needed; closing as done with no new diff.
     claimed_by: 2026-09-28T094753Z-tzaddik-t024-worker
     claimed_at: '2026-09-28T09:47:54Z'
-    updated: '2026-09-28T09:47:54Z'
+    updated: '2026-09-28T09:49:10Z'
+    implementation_pr: 'silasfelinus/kind_robots#3068'
 
   - id: t-025
     milestone: m2
