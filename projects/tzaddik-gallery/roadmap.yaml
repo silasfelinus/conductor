@@ -432,8 +432,8 @@ tasks:
   - id: t-014
     milestone: m5
     title: "Build the Daily Tzaddik discovery docket"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-003, t-005, t-008]
@@ -447,6 +447,9 @@ tasks:
       tags, and dedupe against existing canonical, historical, pending, and
       recently-suggested people. Suggestions never
       auto-enter the canonical 36 or historical gallery.
+    claimed_by: claude-scheduled-20260928T0145Z-tzaddik-t014
+    claimed_at: '2026-09-28T01:53:42Z'
+    updated: '2026-09-28T01:53:42Z'
 
   - id: t-015
     milestone: m5
