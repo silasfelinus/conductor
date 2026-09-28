@@ -1489,13 +1489,13 @@ pitches:
       page.
     passive_loop: >
       Pre-render two bounded line-grating textures with slightly different spatial
-      frequencies. One remains almost fixed while the other drifts through a long, slow phase
-      orbit combining a few degrees of rotation, sub-line-width translation, and a tiny
+      frequencies. One remains almost fixed while the other moves through a clearly legible
+      phase orbit combining a few degrees of rotation, sub-line-width translation, and a
       breathing scale offset. Those relative transforms continuously reorganize the emergent
-      moire bands into broad waves, knots, and expanding cells. After several minutes the
-      phase orbit closes without a visible reset, then begins again with a new deterministic
-      grating-angle pair chosen from a small fixed palette so the next cycle has a different
-      interference topology.
+      moire bands into broad waves, knots, and expanding cells. Every twelve seconds the
+      wallpaper crossfades to the next deterministic grating-angle pair from a small fixed
+      palette, so the topology changes autonomously during an ordinary page load rather than
+      reserving the strongest visual transition for a click.
     optional_interaction: >
       Pointer movement gently biases the moving grating's phase toward the pointer, making the
       nearest interference bands bow around it while the autonomous phase orbit continues. A
@@ -1534,7 +1534,8 @@ pitches:
     acceptance:
       - broad interference bands visibly travel, split, and reform for at least five minutes without requiring interaction or exposing a hard reset
       - the effect's large shapes are produced by superimposed grating interference rather than explicit band geometry or a particle simulation
-      - pointer phase bending and click-triggered palette changes remain optional, rate-limited, and never block underlying page input
+      - the signature phase motion is visibly legible within the first few seconds and palette/topology changes occur autonomously during normal viewing
+      - pointer phase bending and click-triggered palette skipping remain optional, rate-limited, and never block underlying page input
       - reduced-motion mode removes grating translation and rotation and avoids temporal shimmer while retaining a coherent static composition
       - active texture count, grating resolution, and per-frame work remain bounded regardless of viewport size or elapsed session time
     builds:
@@ -1551,6 +1552,21 @@ pitches:
           - facet-catalog
         deferred:
           - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
+      - version: 2
+        status: candidate
+        component: components/screenfx/moire-weave-engine.vue
+        pull_request: silasfelinus/kind_robots#3086
+        released_at: '2026-09-28T20:54:47Z'
+        commit: 492d5ad7242055640ee431e69c9e1984d41eb808
+        verification:
+          - Contract verifiers
+          - TypeScript
+          - layout-contract
+          - facet-catalog
+        note: >
+          Polish pass after user feedback: shortened the passive phase orbit, increased
+          visible transform range, and added automatic 12-second palette crossfades so the
+          interesting topology changes no longer depend on discovering the click interaction.
 
   - id: crease-fold-atlas
     title: Crease Fold Atlas
