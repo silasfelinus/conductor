@@ -880,7 +880,7 @@ tasks:
 - id: t-037
   milestone: m7
   title: "Delete the client-side beat loop and rewrite its ~25 verifyStorybook*Guard scripts"
-  status: claimed
+  status: ready
   passes: 0
   stakes: reversible
   depends_on: [t-034, t-035, t-036, t-052]
@@ -1136,7 +1136,15 @@ tasks:
     rewrite target -- it stays blocked on the same t-065 gate. No new bounded slice
     available this cycle; genuinely blocked, not a quality/scope failure. Re-arming to
     ready; releasing the claim, moving to other priority-order work.
-  updated: '2026-09-28T12:54:29Z'
+
+    Cycle (conductor scheduled sweep, investigative slice per prior cycle's "next cycle" instruction): checked the 5 named components (components/dreams/dream-narration.vue, components/rewards/reward-encounter.vue, components/brainstorm/brainstorm-manager.vue, components/facets/facet-profile.vue, components/storybook/storybook-life-run.vue) for real storybook-page.vue imports. Four are comment-only mentions (no real import) -- safe, no action needed for them. storybook-life-run.vue has a real import of stores/storybookStore.ts (useStorybookStore(), storybookStore.endLife()), which is the already-known t-053 blocker (t-053 stays waiting on this task).
+
+    Bigger finding while grepping repo-wide for storybook-page.vue references: three guard scripts OUTSIDE the previously catalogued ~25 verifyStorybook*Guard / 13 verifyDaVinci*Guard sets also read components/conductor/storybook-page.vue directly and pin real behavior against it -- utils/scripts/verifyGalleryIndexHydration.ts (asserts the cast picker uses lightweight Character browse rows and excludes personality/backstory), utils/scripts/verifyNarrativeRoles.ts (asserts NarrativeRoleAssigner mounts, isNarrativeRoleKey validation, and query-based deep-link seeding), and utils/scripts/verifyNarrativeArtPersistence.mjs (asserts the <NarrativeArtStatus> beat-art integration: queueing/queued/rendering/done/failed/cancelled states plus retryBeatArt). A fourth, verifyNarrativePrimitives.mjs, reads the file for a negative assertion only (no useTaskmasterStore) -- trivially satisfied once migrated but its readFileSync has no try/catch, so it will crash (not just fail) once the file is deleted unless repointed first. verifyNarrativeKit.ts also lists the file but already filters missing files gracefully -- no action needed there.
+
+    Checked whether the new engine (storybook-table.vue / storybook-storymaker.vue / storybook-reading.vue) already carries equivalent behavior for each: the cast-picker property (verifyGalleryIndexHydration) DOES already hold in storybook-table.vue -- it casts via characterStore.browseCharacters.map(toHeroCard).map(withCharacterLock), the same lightweight-DTO pattern, so that guard is a straightforward repoint once storybook-page.vue goes away, not a feature gap. The beat-art property (verifyNarrativeArtPersistence) is a REAL GAP, not just a guard-migration chore: storybook-reading.vue's sceneArt only renders via `v-if="sceneArt"` when an ArtImage already exists on the run -- there is no queueing/rendering/failed/cancelled status indicator and no retry control in the new engine at all. A beat whose art generation fails or is still queued currently just shows no frame, silently, with no way for the reader to retry. Filed storybook/t-070 to close this gap (or have Silas explicitly accept the silent-no-frame behavior as intentional) before the bulk cutover PR deletes storybook-page.vue and verifyNarrativeArtPersistence.mjs's pinned behavior with it -- deleting first would ship a real regression, not just remove a redundant guard.
+
+    No Kind Robots mutation this cycle (pure investigation + one new roadmap task filed). Re-arming to ready. Next cycle: decide the verifyGalleryIndexHydration/verifyNarrativeRoles/verifyNarrativePrimitives repoint (mechanical, low-risk) versus wait on t-070 (blocks safely deleting the beat-art guard's pinned behavior) as the next bounded slice, or split them.
+  updated: '2026-09-28T12:57:53Z'
   owner: worker
   claimed_by: 20260928T125429Z-storybook-t037
   claimed_at: '2026-09-28T12:54:29Z'
@@ -2177,3 +2185,32 @@ tasks:
   claimed_by: null
   claimed_at: null
   implementation_pr: 'silasfelinus/kind_robots#3048'
+
+- id: t-070
+  milestone: m7
+  title: "Add queueing/failed/retry status to the new engine's beat art (storybook-reading.vue) before t-037 can safely delete the legacy guard pinning it"
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  note: >-
+    Filed from t-037's cycle investigation (2026-09-28, conductor scheduled sweep) while
+    checking whether the new engine already has equivalents for everything
+    utils/scripts/verifyNarrativeArtPersistence.mjs pins against the legacy
+    components/conductor/storybook-page.vue. That guard requires an explicit
+    <NarrativeArtStatus> integration showing queueing/queued/rendering/done/failed/cancelled
+    states plus a retryBeatArt() control. The new engine's components/storybook/storybook-
+    reading.vue only renders `sceneArt` via `v-if="sceneArt"` once an ArtImage already
+    exists on the run -- there is no status indicator and no retry affordance. A beat whose
+    art generation fails or is still queued currently shows no frame at all, silently, with
+    no way for the reader to retry.
+
+    This is a real feature gap, not just a guard-migration chore: t-037's eventual bulk
+    cutover PR (deleting storybook-page.vue and the guards that only pin legacy-only
+    behavior) must not delete verifyNarrativeArtPersistence.mjs's pinned behavior until
+    either (a) storybook-reading.vue gains equivalent status/retry UI wired to
+    runStore.art's per-beat status field, or (b) Silas explicitly accepts the current
+    silent-no-frame behavior as intentional and this task is closed as won't-fix with that
+    decision recorded. Either resolution unblocks t-037 to safely retire or repoint that
+    guard.
+  updated: '2026-09-28T12:54:00Z'
