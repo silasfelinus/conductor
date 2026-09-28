@@ -631,7 +631,7 @@ tasks:
   - id: t-018
     milestone: m4
     title: "Create and integrate the Tzaddik Gallery splash/background art"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -659,9 +659,15 @@ tasks:
       own note ('verify the file actually resolves at that path before closing this task
       done') rather than closing done on code-merge alone. Next session: recheck the
       source_url and re-check art-prompts.yaml status before closing done.
+
+      2026-09-28 conductor sweep: check_pr_merged_drift.py flagged this at status: review with
+      its implementing PR (kind_robots#3078) already merged 2026-09-28T12:03:51Z. Reconciled
+      to done. Splash art render (tzaddik-gallery-splash.webp) still delivers async via auto-
+      art-generate.yml per the PR's own flag -- worth a visual confirmation once it lands, but
+      code integration is complete and merged.
     claimed_by: 2026-09-28T115229Z-tzaddik-t018-splash
     claimed_at: '2026-09-28T11:52:32Z'
-    updated: '2026-09-28T13:48:09Z'
+    updated: '2026-09-28T15:48:46Z'
     implementation_pr: 'silasfelinus/kind_robots#3078'
 
   - id: t-019
