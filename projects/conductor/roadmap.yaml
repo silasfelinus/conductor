@@ -4237,7 +4237,7 @@ tasks:
 - id: t-199
   milestone: m1
   title: "Harden annotate_daily_dream_art_queue.py's _live_job_fetcher() import against ambient sys.path state"
-  status: review
+  status: done
   stakes: reversible
   owner: worker
   passes: 0
@@ -4260,9 +4260,16 @@ tasks:
     regression test that imports and calls `_live_job_fetcher()` from a subprocess/
     fresh interpreter with only the repo root on sys.path (no scripts/ dir), confirming
     it still resolves the real fetcher when KR_API_TOKEN is set.
-  updated: '2026-09-28T06:58:38Z'
+
+    Merged silasfelinus/conductor#5339 (squash eab08fd). Switched _live_job_fetcher()'s bare
+    'import consume_art_requests' to the dual-path pattern already used by
+    consume_art_queue.py, and added a subprocess-based regression test confirming the
+    fetcher resolves from a fresh interpreter with only the repo root on sys.path. Full test
+    suite (2422 passed) and the new test both green in CI.
+  updated: '2026-09-28T07:10:56Z'
   claimed_by: 2026-09-28T070200Z-conductor-t199-claude
   claimed_at: '2026-09-28T06:58:02Z'
+  implementation_pr: 'silasfelinus/conductor#5339'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
