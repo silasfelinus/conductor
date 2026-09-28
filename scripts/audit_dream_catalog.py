@@ -34,6 +34,7 @@ from __future__ import annotations
 import argparse
 import datetime
 import json
+import math
 import re
 import sys
 from collections import Counter
@@ -46,7 +47,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_dream_proposal as proposals  # noqa: E402
 import dream_creative_ruts as ruts  # noqa: E402
 from author_dream_proposal import PREMISE_STOPWORDS  # noqa: E402
-from dream_art_prompts import STYLE_DIRECTIONS, style_for_world  # noqa: E402
+from dream_art_prompts import (  # noqa: E402
+    STYLE_DIRECTIONS,
+    style_for_world,
+    style_lane_share,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 BACKLOG = ROOT / "projects" / "dream-cycle" / "backlog"
@@ -499,7 +504,7 @@ def audit_bundle(
     catalog: list[Bundle],
     *,
     lane_load: Counter[int],
-    lane_cap: int,
+    lane_cap: int | dict[int, int],
     family_load: Counter[str],
     saturated: set[str],
 ) -> BundleAudit:
@@ -643,9 +648,10 @@ def audit_bundle(
             art_reasons.append(
                 f"only {evidence['attached']}/{evidence['requests']} renders ever attached"
             )
-    if lane_load[lane] > lane_cap:
+    cap = lane_cap.get(lane, 1) if isinstance(lane_cap, dict) else lane_cap
+    if lane_load[lane] > cap:
         art_reasons.append(
-            f"style lane {lane} is carrying {lane_load[lane]} worlds (cap {lane_cap}); "
+            f"style lane {lane} is carrying {lane_load[lane]} worlds (cap {cap}); "
             "this world should move to an unused visual language"
         )
         if verdict == ART_KEEP:
@@ -674,7 +680,12 @@ def audit_catalog(bundles: list[Bundle]) -> list[BundleAudit]:
     lane_load: Counter[int] = Counter(
         STYLE_DIRECTIONS.index(style_for_world(bundle.title)) for bundle in bundles
     )
-    lane_cap = max(1, -(-len(bundles) // len(STYLE_DIRECTIONS)))
+    # Lanes are weighted (dream_art_prompts.STYLE_CATALOG), so "crowded" means
+    # carrying more than the lane's own expected share, not an even split.
+    lane_cap = {
+        index: max(1, math.ceil(len(bundles) * style_lane_share(index)))
+        for index in range(len(STYLE_DIRECTIONS))
+    }
     family_load = catalog_family_load(bundles)
     # A motif carried by a third of the catalog is a groove even where an individual
     # day's Facets legitimately asked for it. That is the "renamed versions of the
