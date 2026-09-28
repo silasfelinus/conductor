@@ -745,7 +745,7 @@ tasks:
   - id: t-027
     milestone: m5
     title: "Extend the discovery pipeline's dedup to cover pending/rejected/deferred names once t-015 exists"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -765,6 +765,16 @@ tasks:
       this out at the next opportunity (verify excluded_names() still has no logic gap, then
       status: done citing this note) rather than attempting the now-unnecessary KR_API_TOKEN
       pull.
+
+      Verified, no code change needed: excluded_names() (scripts/build_tzaddik_discovery.py)
+      already keeps every docketed name in the dedup pool permanently via all_dockets(),
+      independent of any approved/rejected/deferred/pending decision -- confirmed by
+      inspection and by tests/test_build_tzaddik_discovery.py's existing dedup-violation
+      coverage. t-015 (silasfelinus/conductor#5323) built the decision ledger (discovery-
+      decisions.yaml) as documentation/review-state, not as a dedup input, so there was never
+      a kind_robots-database dependency to build here. Closing as satisfied by t-015's
+      docstring clarification; ran the full tzaddik test suite (29 passed) to confirm no
+      regression.
     claimed_by: claude-scheduled-20260928T025902Z-tzaddik-t027
     claimed_at: '2026-09-28T02:59:02Z'
-    updated: '2026-09-28T02:59:02Z'
+    updated: '2026-09-28T02:59:29Z'
