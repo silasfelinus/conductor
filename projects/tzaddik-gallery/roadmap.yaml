@@ -658,12 +658,12 @@ tasks:
   - id: t-019
     milestone: m2
     title: "Add community Wikipedia recheck / correction requests"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-003, t-005, t-008]
-    note: >
+    note: >-
       Add a visible Request recheck action on every person page for authenticated
       users. A request queues a controlled server-side refresh of the record's
       canonical Wikipedia/Wikimedia sources and compares the latest revision to
@@ -677,9 +677,14 @@ tasks:
       ambiguous source changes to editor review. Show users last-checked,
       requested/pending, success, or needs-review state so repeated requests do
       not hammer Wikipedia.
+
+      Wired recheck.post.ts to actually run fetchTzaddikSource synchronously
+      (fetch/diff/apply-or-needs-review/cooldown), extended the detail sheet's status label to
+      show the terminal outcome. PR: silasfelinus/kind_robots#3080.
     claimed_by: 20260928T134900Z-tzaddik-t019
     claimed_at: '2026-09-28T13:48:50Z'
-    updated: '2026-09-28T13:48:50Z'
+    updated: '2026-09-28T13:59:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3080'
 
   - id: t-020
     milestone: m2
