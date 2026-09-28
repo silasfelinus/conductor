@@ -1,8 +1,0 @@
-version: 1
-project: dream-cycle
-task: t-006
-operation: review
-session: 2026-09-28T203100Z-dream-cycle-t006-digestgap-b7c4
-updated: '2026-09-28T20:40:00Z'
-note: >-
-  Root-caused the 2026-09-28 missing digest to undelivered GitHub schedule events. The existing process-task-events digest sentinel was schedule-only, so multiple live task/PR runs after 16:00 UTC could not recover it. Patch broadens that sentinel to trusted non-schedule carriers and adds regression coverage.
