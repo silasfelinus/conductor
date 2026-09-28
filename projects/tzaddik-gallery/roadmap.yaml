@@ -667,7 +667,7 @@ tasks:
   - id: t-019
     milestone: m2
     title: "Add community Wikipedia recheck / correction requests"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -690,9 +690,18 @@ tasks:
       Wired recheck.post.ts to actually run fetchTzaddikSource synchronously
       (fetch/diff/apply-or-needs-review/cooldown), extended the detail sheet's status label to
       show the terminal outcome. PR: silasfelinus/kind_robots#3080.
+
+      MERGED 2026-09-28: silasfelinus/kind_robots#3080. recheck.post.ts now actually runs
+      fetchTzaddikSource synchronously on each request: applies safe source-derived changes
+      (including moving Living<->Memorial on a verified Wikidata death-date change), routes a
+      changed Wikipedia page id to NEEDS_REVIEW without auto-applying, records
+      NO_CHANGE/UPDATED/NEEDS_REVIEW/FAILED with a resultJson diff, adds a 1-hour cooldown,
+      and never touches the *Override columns. Detail sheet's status label extended to show
+      the terminal outcome. vue-tsc/eslint/prettier clean; all 32 kind_robots CI checks green
+      before merge.
     claimed_by: 20260928T134900Z-tzaddik-t019
     claimed_at: '2026-09-28T13:48:50Z'
-    updated: '2026-09-28T13:59:00Z'
+    updated: '2026-09-28T14:05:32Z'
     implementation_pr: 'silasfelinus/kind_robots#3080'
 
   - id: t-020
@@ -955,3 +964,23 @@ tasks:
     claimed_by: claude-scheduled-20260928T025902Z-tzaddik-t027
     claimed_at: '2026-09-28T02:59:02Z'
     updated: '2026-09-28T02:59:29Z'
+
+  - id: t-028
+    milestone: m2
+    title: "Give editors a queue of NEEDS_REVIEW recheck requests instead of one-candidate-at-a-time discovery"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: null
+    note: >-
+      Kaizen from t-019 (silasfelinus/kind_robots#3080): the recheck pipeline now
+      actually runs and can leave a TzaddikRecheckRequest at NEEDS_REVIEW (a
+      Wikipedia page-id change -- possible redirect/article identity change --
+      that was deliberately not auto-applied). Today an editor can only discover
+      this by opening that specific candidate's detail sheet, which shows the
+      reason via the new recheckDetailLabel. There is no cross-candidate view.
+      Add an admin-only filter/queue (e.g. extend the existing admin Review
+      queue tab from t-008, or a small dedicated list) surfacing every
+      TzaddikCandidate with a latest RecheckRequest at NEEDS_REVIEW, so editors
+      don't have to remember to check each candidate individually.
