@@ -432,7 +432,7 @@ tasks:
   - id: t-014
     milestone: m5
     title: "Build the Daily Tzaddik discovery docket"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -449,13 +449,13 @@ tasks:
       auto-enter the canonical 36 or historical gallery.
     claimed_by: claude-scheduled-20260928T0145Z-tzaddik-t014
     claimed_at: '2026-09-28T01:53:42Z'
-    updated: '2026-09-28T02:03:51Z'
+    updated: '2026-09-28T02:06:53Z'
     implementation_pr: 'silasfelinus/conductor#5320'
 
   - id: t-015
     milestone: m5
     title: "Surface each daily 20-person roster for Silas's vetting"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -730,3 +730,24 @@ tasks:
     claimed_by: null
     claimed_at: null
     updated: '2026-09-27T23:30:00Z'
+
+  - id: t-027
+    milestone: m5
+    title: "Extend the discovery pipeline's dedup to cover pending/rejected/deferred names once t-015 exists"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-015
+    note: >-
+      Kaizen from t-014 (silasfelinus/conductor#5320): scripts/build_tzaddik_discovery.py's
+      excluded_names() currently dedupes only against seed-sets.yaml (accepted) and prior
+      discovery/*.md files (suggested), which is everything a conductor-side script can see
+      today. DESIGN-BRIEF.md's "Daily discovery roster" also wants dedup against pending,
+      rejected, and deferred candidates, which will live in kind_robots' database once t-015
+      builds the review surface. Once that exists, extend excluded_names() to also pull those
+      states from kind_robots via KR_API_TOKEN so dedup covers the full contract, not just the
+      conductor-local state.
+    claimed_by: null
+    claimed_at: null
+    updated: '2026-09-28T02:10:00Z'
