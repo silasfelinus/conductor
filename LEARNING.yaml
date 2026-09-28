@@ -16857,6 +16857,15 @@ records:
   lesson: "A kaizen task's premise can be invalidated by how its own dependency actually gets built, not just by scope drift over time -- t-027 assumed t-015 would need a kind_robots-database pull for dedup state, but t-015 (#5323) made that moot in the same PR that unblocked t-027. Closing it required only re-reading excluded_names() and its own test coverage, no implementation. Worth claiming and closing a downstream kaizen immediately when its resolution is already evident, rather than leaving a 'ready' task in the queue that looks like real work but isn't."
 - date: 2026-09-28
   project: tzaddik-gallery
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A stale claim (t-010 sat claimed by an openai session for 5+ hours with no branch ever pushed) is safe to reclaim and complete directly once the TTL has expired -- next_ready_task.py already surfaces this correctly. Placing the new research-pool content inside discovery/ (matching the dated dockets' heading/section/tzaddik-meta format) rather than at the project root meant excluded_names() picked it up for dedup automatically, with zero code changes -- worth defaulting to 'shape new content to fit an existing scan' before reaching for a scanner-code change."
+- date: 2026-09-28
+  project: tzaddik-gallery
   task: t-012
   kind: software
   stakes: reversible
