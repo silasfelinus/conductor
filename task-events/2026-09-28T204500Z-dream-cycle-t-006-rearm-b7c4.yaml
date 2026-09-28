@@ -1,0 +1,8 @@
+version: 1
+project: dream-cycle
+task: t-006
+operation: rearm
+session: 2026-09-28T203100Z-dream-cycle-t006-digestgap-b7c4
+updated: '2026-09-28T20:45:00Z'
+note: >-
+  Root-caused the 2026-09-28 missing Daily Dream digest to missing GitHub schedule delivery combined with a schedule-only recovery sentinel. Merged conductor PR #5382 at 1dae72c2554b78402d606b37b326ff726460caf8 after Process task events, Daily Dream Contract, Security Audit, Worker PR CI/full pytest, and corrected Worker PR handoff validation all passed on the final head. The merged sentinel immediately recovered the outage: Process task events run 36480881840 dispatched daily-digest run 36480902054, whose delivery guard, digest build/validation, tomorrow build/Facets/ArtJobs/evidence, live-prose verification, digest configuration, and Email via Brevo all completed successfully. Re-arming recurring maintenance.
