@@ -17015,3 +17015,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "Found while closing t-007's 2026-09-27 cycle: 17 pitches had a live component + catalog registration + exactly one build entry but were still marked status: candidate at both the pitch and build level, identical to a gap already fixed once for geode-bloom alone (2026-09-21). Verified each id's component file and animationCatalog.ts registration individually against kind_robots@main before promoting -- grep, not assumption -- rather than batch-promoting on the roadmap note's word alone. Worth a small periodic checker script (filed as this task's kaizen suggestion) so this class of drift surfaces on its own instead of needing a Worker to notice it by hand during an unrelated cycle."
+- date: 2026-09-28
+  project: animation-manager
+  task: t-025
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "kaleidoscope-bloom's own novelty section claimed no existing pitch used dihedral mirror-symmetry rendering, but a direct read of kaleidoscope-effect.vue showed it already ships the identical wedge-simulate + rotate/alternating-mirror technique -- the exact gap t-024 closed in check_animation_novelty.py (novelty was only ever checked against other PITCHES.yaml entries, not the shipped catalog). Retired rather than rewrote: when the overlap is in the rendering mechanism itself rather than surface theming, differentiating the surprise/title still ships a re-skin, not a genuinely new animation. Worth reading a pitch's actual claimed-novel technique against the real component source before trusting its own novelty section, not just running the automated checker."
