@@ -16979,3 +16979,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "The kaizen note that spawned this task assumed 'existing recheck-resolution logic' to wire buttons to -- there wasn't any; recheck.post.ts detects an identity change but never applies it. Verify a kaizen task's premise against the actual code before implementing, not just its own wording, since a Reviewer's own kaizen suggestion can be wrong about what already exists."
+- date: 2026-09-28
+  project: tzaddik-gallery
+  task: t-018
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "check_pr_merged_drift.py caught a task left at status: review after its PR (kind_robots#3078) had already merged -- reconciled during the scheduled sweep's session-startup checks rather than sitting stale until a later Reviewer pass noticed it by hand."
