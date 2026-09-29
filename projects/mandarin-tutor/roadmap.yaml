@@ -744,3 +744,69 @@ tasks:
       phone/tablet/desktop widths is t-027's gate, which now covers this front door too.
     updated: '2026-09-20T10:45:52Z'
     implementation_pr: 'silasfelinus/kind_robots#2922'
+
+  - id: t-029
+    milestone: m5
+    title: "Parts first: teach each part's meaning and origin before the word it builds"
+    status: done
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-028
+    note: >-
+      Silas, 2026-09-29, on the 我 course card ("Its parts don't explain this one — learn it
+      whole"): "If I am learning wo, I should learn how the parts of the symbols mean, and
+      what they used to mean, and how they connect. there is a history for each symbol, and
+      it's VERY important that this is part of the instruction." Then: "we should learn the
+      parts before we learn the combinations" and "I should learn roof before I learn house,
+      for example."
+
+      Root cause: the pinned Make Me a Hanzi source DOES analyse 我 -- ideographic, "A hand
+      扌 holding a weapon 戈" -- but only semantic/phonetic roles counted as teachable, so all
+      1,840 ideographic entries (我 你 好 休 明 ...) fell through to `form` leaves and the
+      2026-09-20 的 fix then hid them as "learn it whole". And t-028's pieces beat ran after
+      `meet`, so 家 was shown whole before 宀 roof / 豕 pig.
+
+      Implemented in silasfelinus/kind_robots#3097: a new `idea` component role (a leaf only
+      when the source's own hint names it); every meaning/sound/idea part is looked up as a
+      character in its own right and carries its reading, meaning and origin from the
+      source's entry for THAT part (戈 "A spear pointing to the bottom-right"); per-character
+      formations on cards, with a `pictograph` teachability for 人/日-type characters; the
+      course's pieces beat now runs BEFORE meet ("First, the parts"), and meet shows how they
+      combine; orderPartsFirst pulls unlearned catalog words that are parts (日, 月) into the
+      session ahead of the word they build (明) within the 8-word session. Intro card
+      rewritten as "Parts first, then the whole" (宀 + 豕 -> 家). New
+      test:mandarin-parts-first in contract-tests.yml, built on verbatim source lines.
+      NOT verified in a browser -- the visual check folds into t-027's gate.
+
+      DONE 2026-09-29: silasfelinus/kind_robots#3097 merged (squash 9f2e2bf) with all 34
+      checks green, including TypeScript, Contract verifiers (runs the new
+      test:mandarin-parts-first) and Build production image.
+    updated: '2026-09-29T07:50:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3097'
+
+  - id: t-030
+    milestone: m5
+    title: "Deeper glyph history: ancient forms, original meanings, and borrowings per character"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: t-029
+    note: >-
+      Follow-up to t-029, from the same 2026-09-29 request ("what they used to mean ... there
+      is a history for each symbol, and it's VERY important"). Make Me a Hanzi gives one-line
+      formation hints, which t-029 now teaches, but not the historical record: oracle-bone /
+      bronze / seal forms, the ORIGINAL meaning, and phonetic borrowing. 我 is the canonical
+      example -- the scholarly account is a pictograph of a toothed/pronged weapon, borrowed
+      early for the first-person pronoun; MMAH's "a hand holding a weapon" is a structural
+      reading and does not tell that story. The honesty contract (utils/mandarinLesson.ts)
+      rules out writing these from memory, so this task is: pick and PIN a licensed source
+      for glyph origins (candidates: Wiktionary "Glyph origin" sections, CC BY-SA 4.0 --
+      attribution + share-alike must be reviewed against how Kind Robots serves card data;
+      Outlier Linguistics is commercial and would need permission), add a per-character
+      `glyphHistory` (original meaning, borrowed/extended meaning, ancient-form images where
+      the licence allows) beside `formations`, and render it on the pieces and meet beats
+      with source credit. If the licence review comes back share-alike-incompatible, stop at
+      needs-human with the options rather than choosing.
+    updated: '2026-09-29T00:00:00Z'
