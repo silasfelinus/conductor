@@ -1714,7 +1714,7 @@ tasks:
 - id: t-057
   milestone: m7
   title: "Post-final 'Ask for it again' regresses readyToResolve and can generate an off-budget extra turn"
-  status: claimed
+  status: review
   owner: worker
   stakes: reversible
   passes: 0
@@ -1756,10 +1756,11 @@ tasks:
 
     Connector-only session verified both post-final retry bugs against current kind_robots/main and preserved the exact small patch plus regression-test plan in projects/storybook/docs/t-057-post-final-retry-guard.md. The available connector only supports whole-file replacement for existing files; server/utils/storybookRuns.ts is large, and connector-worker rules forbid reconstructing it from paged/truncated reads. No target code was overwritten. A shell-capable worker should apply the preserved patch on the intended worker branch, run Storybook contracts/typecheck/lint, and merge normally. Soft tooling gate; other roadmap work may continue.
     GATE HYGIENE 2026-09-29: this is a fully diagnosed reversible code bug with an exact patch and regression-test handoff already preserved. It was parked only because the earlier connector-only session could not safely rewrite the large target file. No human action is required; released to ready for a shell-capable worker.
-  updated: '2026-09-29T21:45:02Z'
+  updated: '2026-09-29T21:49:02Z'
   claimed_by: 20260929T215000Z-sb057
   claimed_at: '2026-09-29T21:45:02Z'
   soft_gate: false
+  implementation_pr: 'silasfelinus/kind_robots#3105'
 
 - id: t-058
   milestone: m7
