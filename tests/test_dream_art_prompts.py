@@ -174,8 +174,8 @@ def test_many_worlds_actually_span_the_style_bank():
 
 def test_style_bank_contains_materially_different_media_not_one_house_style():
     joined = " ".join(dap.STYLE_DIRECTIONS).lower()
-    for medium in ("superhero-comic", "charcoal", "gouache", "stop-motion", "risograph",
-                   "photorealism", "stained-glass", "paper-cut"):
+    for medium in ("cartoon", "charcoal", "risograph", "stained-glass", "paper-cut",
+                   "ukiyo-e", "pixel art", "impressionist"):
         assert medium in joined
     assert len(dap.STYLE_DIRECTIONS) >= 10
 
