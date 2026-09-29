@@ -53,6 +53,7 @@ def test_scheduled_agent_heartbeat_fresh_and_overdue():
 def test_scheduled_git_log_prefers_newer_coordination_content(monkeypatch):
     calls = []
     results = [
+        SimpleNamespace(returncode=0, stdout="2026-09-13T05:21:35+00:00\n"),
         SimpleNamespace(returncode=0, stdout="2026-09-13T04:21:35+00:00\n"),
         SimpleNamespace(returncode=0, stdout="2026-09-10T09:34:43+00:00\n"),
     ]
@@ -63,15 +64,17 @@ def test_scheduled_git_log_prefers_newer_coordination_content(monkeypatch):
 
     monkeypatch.setattr(oversight.subprocess, "run", fake_run)
 
-    assert oversight._scheduled_git_log() == "2026-09-13T04:21:35+00:00"
-    assert "-Gopenai-scheduled-" in calls[0]
-    assert calls[0][-3:] == ["--", "task-events", "projects"]
-    assert "--grep=openai-scheduled-" in calls[1]
+    assert oversight._scheduled_git_log() == "2026-09-13T05:21:35+00:00"
+    assert calls[0][-2:] == ["--", "OPENAI-SCHEDULED-HEARTBEAT.json"]
+    assert "-Gopenai-scheduled-" in calls[1]
+    assert calls[1][-3:] == ["--", "task-events", "projects"]
+    assert "--grep=openai-scheduled-" in calls[2]
 
 
 def test_scheduled_git_log_keeps_legacy_subject_fallback(monkeypatch):
     calls = []
     results = [
+        SimpleNamespace(returncode=0, stdout=""),
         SimpleNamespace(returncode=0, stdout=""),
         SimpleNamespace(returncode=0, stdout="2026-09-10T09:34:43+00:00\n"),
     ]
@@ -83,7 +86,7 @@ def test_scheduled_git_log_keeps_legacy_subject_fallback(monkeypatch):
     monkeypatch.setattr(oversight.subprocess, "run", fake_run)
 
     assert oversight._scheduled_git_log() == "2026-09-10T09:34:43+00:00"
-    assert len(calls) == 2
+    assert len(calls) == 3
 
 
 def test_missing_scheduled_agent_heartbeat_is_overdue_and_provider_specific():
