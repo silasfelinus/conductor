@@ -1,0 +1,15 @@
+version: 1
+project: animation-manager
+task: t-026
+operation: done
+session: 20260929T2024Z-animation-manager-t026-openai-f4c1
+updated: '2026-09-29T20:41:00Z'
+note: >-
+  Merged silasfelinus/conductor#5411 as a11ddfb after the final head
+  a0e397f6 completed green Worker PR CI, Security Audit, Worker PR handoff,
+  and Process task events workflows. The digest sender now passes
+  contactPixelTrackingConsent: false for its sole recipient, preventing Brevo
+  click/open tracking from replacing Kind Robots hrefs with sendibt2.com
+  redirects. Added regression coverage at configure_payload(). No live email
+  was sent during verification; the next scheduled digest will exercise the
+  change through the normal send path.
