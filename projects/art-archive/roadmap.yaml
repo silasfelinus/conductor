@@ -1285,7 +1285,7 @@ tasks:
     note: |-
       The step the whole project was for, and the one nobody filed. t-019's title reads like this task but its implementation built the --dry-run mode and the privacy audit instead; its own note says running against the real /app/private mount needed shell access the agent did not have, and it was closed anyway. t-020 then confirmed from the live site that production held 0 ArchiveEntry rows, and kind_robots#2885 recorded explicitly that no production import had been run. Nothing since has changed that, so 36 of 38 tasks are done and none of the files under /mnt/user/pc/kindrobots/private have entered the database.
       FOR SILAS: with t-040 merged, this needs no shell. On kindrobots.org go to /admin/art-archive and press Dry Run. Read the report: filesScanned, the new/changed/moved/copied/unchanged/missing plan, scan issues, how many files carry Resource match evidence, and the unresolved-model count. Unresolved checkpoints and LoRAs are expected and do not block -- they are preserved as evidence and collected by t-021's backlog. If the counts look right, press Import and confirm. Every row is written isPublic=false and isMature=true; the import is idempotent, so a second run after adding missing Resources is safe.
-      TO CLOSE: paste the dry-run and import numbers into this note and set approved_by_human: true and status: done. Then re-open t-020's visual acceptance against the populated grid at 390/768/1280px -- its own note flags that it could only exercise the empty state. t-033 (archive preset ArtJobs hardcoding engine 'A1111' against the COMFY-only direction) is a real bug but does not block this: scanning, importing, rating, collecting, moving, and Resource matching are all independent of regeneration.
+      TO CLOSE: paste the dry-run and import numbers into this note and set approved_by_human: false and status: done. Then re-open t-020's visual acceptance against the populated grid at 390/768/1280px -- its own note flags that it could only exercise the empty state. t-033 (archive preset ArtJobs hardcoding engine 'A1111' against the COMFY-only direction) is a real bug but does not block this: scanning, importing, rating, collecting, moving, and Resource matching are all independent of regeneration.
 
       Silas explicitly directed this session to fix the private archive import rather than merely report on it. Human gate cleared for the reversible private production import; proceed through the authenticated Kind Robots admin API and record aggregate dry-run/import results without exposing private filenames or secrets.
 
@@ -1348,7 +1348,14 @@ tasks:
       have a further, still-undiagnosed issue beyond #2933/#2936 and needs fresh server-side
       investigation (Alexandria logs during a dry-run request) rather than another blind
       client-side retry.
-    updated: '2026-09-21T06:04:09Z'
+      GATE HYGIENE 2026-09-29: the earlier approved_by_human=true referred to Silas's
+      explicit authorization for the reversible private import. The task later acquired a
+      different blocker: the scanner fixes must reach production through an Alexandria Force
+      Update before another live dry-run is safe. That deployment is a new outward-facing
+      human gate, so the CURRENT approval flag is reset to false while the prior import
+      authorization remains preserved above. Do not deploy or retry the production scan
+      until Silas clears that concrete deployment/action.
+    updated: '2026-09-29T09:12:00Z'
     approved_by_human: true
     owner: worker
     claimed_by: 2026-09-20T112500Z-art-archive-t041-chatgpt-fix1
