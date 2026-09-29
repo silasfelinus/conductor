@@ -30,8 +30,11 @@ from pathlib import Path
 # Each style carries a `weight`. Until 2026-09-28 every lane was equally likely,
 # and four of the twelve (photorealism with restrained grading, charcoal cosmic
 # horror, scratchboard, muted naturalist watercolour) were dark or desaturated,
-# so a third of days rendered gloomy. Vibrant styles now weigh 2-4 and moody ones
-# 1: a gloomy world still turns up, about one day in sixteen.
+# so a third of days rendered gloomy. The current 20 came out of the 2026-09-29
+# bake-off (32 candidates, same three subjects and seeds on Krea 2); styles that
+# collapsed into one generic cartoon or went pale were cut. Vibrant styles weigh
+# 3-4 and the two moody ones 2: a gloomy world still turns up, about one day in
+# fifteen.
 STYLE_CATALOG_PATH = Path(__file__).resolve().parent / "data" / "art-style-catalog.json"
 STYLE_CATALOG: tuple[dict, ...] = tuple(
     json.loads(STYLE_CATALOG_PATH.read_text(encoding="utf-8"))["styles"]
