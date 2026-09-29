@@ -42,7 +42,7 @@ INTENT_DIR = ROOT / "projects" / "conductor"
 INTENT_REPORT_RE = re.compile(r"^INTENT-AUDIT-(\d{4}-\d{2}-\d{2})\.md$")
 DEFAULT_INTENT_STALE_DAYS = 3.0
 DEFAULT_AGENT_HEARTBEAT_HOURS = 6.0
-OPENAI_SESSION_MARKER = "openai-scheduled-"
+OPENAI_SESSION_MARKER = "openai-scheduled-"\nOPENAI_HEARTBEAT_FILE = "OPENAI-SCHEDULED-HEARTBEAT.json"
 
 
 def _parse_iso_datetime(value: str) -> datetime | None:
@@ -129,7 +129,7 @@ def _scheduled_git_log() -> str:
     )
 
     candidates: list[tuple[datetime, str]] = []
-    for raw in (content_date, message_date):
+    for raw in (heartbeat_file_date, content_date, message_date):
         parsed = _parse_iso_datetime(raw)
         if parsed is not None:
             candidates.append((parsed, raw))
@@ -161,7 +161,7 @@ def scheduled_agent_status(
         "hours_since": round(hours_since, 2),
         "stale_hours": stale_hours,
         "marker": OPENAI_SESSION_MARKER,
-        "note": "OpenAI coordination activity is a heartbeat only; a clean no-op OpenAI cycle may leave no commit.",
+        "note": f"OpenAI scheduled cycles must refresh {OPENAI_HEARTBEAT_FILE}; coordination-marker history remains a compatibility fallback.",
     }
 
 
