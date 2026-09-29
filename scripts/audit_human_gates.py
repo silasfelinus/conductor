@@ -175,7 +175,11 @@ def human_answer_unread(task: dict[str, Any]) -> str:
 
 def stale_reasons(task: dict[str, Any]) -> list[str]:
     reasons: list[str] = []
-    if task.get("approved_by_human") is True:
+    # Approval is only contradictory while a task is still waiting on the
+    # human DECISION it says it requires. A soft execution/access assist may
+    # legitimately preserve approved_by_human=true as provenance after Silas
+    # has authorized the work but the environment still needs his hands.
+    if task.get("approved_by_human") is True and task.get("gate_human"):
         reasons.append("approved-by-human-but-still-needs-human")
 
     if human_answer_unread(task):
@@ -314,8 +318,12 @@ def render(gates: list[dict[str, Any]]) -> str:
 
     findings = [gate for gate in core if gate["stale_reasons"]]
     answered = [gate for gate in core if gate.get("human_answer")]
+    hard = [gate for gate in core if not gate["soft_gate"]]
+    soft = [gate for gate in core if gate["soft_gate"]]
     lines = [
         f"Active human gates: {len(core)}",
+        f"Human decisions/approvals: {len(hard)}",
+        f"Soft access/assistance gates: {len(soft)}",
         f"Strong stale-state signals: {len(findings)}",
         f"Gates with an unread answer from Silas: {len(answered)}",
         "",

@@ -71,8 +71,16 @@ def get_pitches_pending() -> list[tuple[str, str, str]]:
         title = title.group(1).strip() if title else f.stem
         date_match = re.match(r"(\d{4}-\d{2}-\d{2})-", f.name)
         date = date_match.group(1) if date_match else "unknown"
-        status_match = re.search(r"^status:\s*(\S+)", text, re.MULTILINE)
-        status = status_match.group(1).strip().rstrip("#").strip() if status_match else "awaiting-silas"
+        status_match = re.search(
+            r"^(?:status:\s*|\*\*Status:\*\*\s*)(.+)$",
+            text,
+            re.MULTILINE | re.IGNORECASE,
+        )
+        status = (
+            status_match.group(1).strip().lower()
+            if status_match
+            else "awaiting-silas"
+        )
         target_match = re.search(r"^project-target:\s*(.+)$", text, re.MULTILINE)
         target = target_match.group(1).strip() if target_match else "—"
         if "awaiting" in status:
@@ -85,6 +93,8 @@ def build_status():
 
     project_rows = []
     global_counts = {s: 0 for s in STATUS_COLS}
+    workable_needs_human = 0
+    archival_needs_human = 0
     overrides = load_project_overrides(OVERRIDES_FILE)
     lifecycle_counts = {status: 0 for status in PROJECT_LIFECYCLE_STATUSES}
 
@@ -105,6 +115,11 @@ def build_status():
 
         for k, v in counts.items():
             global_counts[k] += v
+
+        if lifecycle in {"active", "continuous"}:
+            workable_needs_human += counts["needs-human"]
+        else:
+            archival_needs_human += counts["needs-human"]
 
         project_rows.append(
             f"| {project_dir.name} | {lifecycle} | {kind} | {progress}% "
@@ -133,7 +148,9 @@ def build_status():
         f"| Total tasks | {sum(global_counts.values())} |",
         f"| Ready | {global_counts['ready']} |",
         f"| In progress (claimed/review) | {global_counts['claimed'] + global_counts['review']} |",
-        f"| Needs human | {global_counts['needs-human']} |",
+        f"| Needs human (all history) | {global_counts['needs-human']} |",
+        f"| Needs human (workable projects) | {workable_needs_human} |",
+        f"| Needs human (archival projects) | {archival_needs_human} |",
         f"| Blocked | {global_counts['blocked']} |",
         f"| Pitches pending | {len(pitches)} |",
         "",

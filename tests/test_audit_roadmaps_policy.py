@@ -127,3 +127,56 @@ def test_continuous_improvement_in_sync_is_clean(tmp_path):
         '      last_pr: some-pr-reference\n',
     )
     assert 'CONTINUOUS_IMPROVEMENT_NOTE_DRIFT' not in codes(result)
+
+
+def test_approved_hard_gate_cannot_stay_needs_human(tmp_path):
+    result = findings_for(
+        tmp_path,
+        '  - id: t-001\n'
+        '    milestone: m1\n'
+        '    title: Approved decision still parked\n'
+        '    status: needs-human\n'
+        '    stakes: reversible\n'
+        '    gate_human: true\n'
+        '    approved_by_human: true\n'
+        '    note: "FOR SILAS: Decision was already approved."\n',
+    )
+    finding = next(
+        item
+        for item in result
+        if item['code'] == 'APPROVED_HARD_GATE_STILL_NEEDS_HUMAN'
+    )
+    assert finding['severity'] == 'error'
+
+
+def test_approved_soft_execution_assist_is_not_a_hard_gate_contradiction(tmp_path):
+    result = findings_for(
+        tmp_path,
+        '  - id: t-001\n'
+        '    milestone: m1\n'
+        '    title: Run approved smoke from reachable host\n'
+        '    status: needs-human\n'
+        '    stakes: reversible\n'
+        '    soft_gate: true\n'
+        '    gate_human: false\n'
+        '    approved_by_human: true\n'
+        '    note: "FOR SILAS: Policy approved; environment access remains."\n',
+    )
+    assert 'APPROVED_HARD_GATE_STILL_NEEDS_HUMAN' not in codes(result)
+    assert 'MIXED_HARD_SOFT_GATE' not in codes(result)
+
+
+def test_mixed_hard_and_soft_gate_markers_warn(tmp_path):
+    result = findings_for(
+        tmp_path,
+        '  - id: t-001\n'
+        '    milestone: m1\n'
+        '    title: Ambiguous gate\n'
+        '    status: needs-human\n'
+        '    stakes: reversible\n'
+        '    gate_human: true\n'
+        '    soft_gate: true\n'
+        '    note: "FOR SILAS: Ambiguous gate markers."\n',
+    )
+    finding = next(item for item in result if item['code'] == 'MIXED_HARD_SOFT_GATE')
+    assert finding['severity'] == 'warning'

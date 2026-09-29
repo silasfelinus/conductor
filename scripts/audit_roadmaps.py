@@ -289,6 +289,38 @@ def audit() -> dict[str, Any]:
                 elif (now - updated).days >= STALE_DAYS:
                     findings.append(issue("warning", "STALE_IN_PROGRESS", slug, f"Task has remained {status} for {(now - updated).days} days.", task_id))
 
+            if (
+                status == "needs-human"
+                and task.get("gate_human") is True
+                and task.get("approved_by_human") is True
+            ):
+                findings.append(
+                    issue(
+                        "error",
+                        "APPROVED_HARD_GATE_STILL_NEEDS_HUMAN",
+                        slug,
+                        "Task records human approval but is still parked on the same hard gate. "
+                        "Either complete it, return it to ready as approved-to-proceed, or convert "
+                        "the remaining blocker to a documented soft access/assistance gate.",
+                        task_id,
+                    )
+                )
+            if (
+                status == "needs-human"
+                and task.get("gate_human") is True
+                and task.get("soft_gate") is True
+            ):
+                findings.append(
+                    issue(
+                        "warning",
+                        "MIXED_HARD_SOFT_GATE",
+                        slug,
+                        "Task is marked both gate_human and soft_gate. Split the human decision "
+                        "from any remaining execution/access assist so the queue says what it means.",
+                        task_id,
+                    )
+                )
+
             if status == "needs-human":
                 hard_reasons = []
                 if task.get("gate_human"):

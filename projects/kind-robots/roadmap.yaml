@@ -1846,7 +1846,8 @@ tasks:
   milestone: m6
   title: Run the v5 Facet art repair sweep and decide what prompt-modifier Facets should show
   status: needs-human
-  gate_human: true
+  soft_gate: true
+  gate_human: false
   owner: null
   stakes: reversible
   passes: 0
@@ -1938,7 +1939,8 @@ tasks:
     diffed against main to confirm the 204 already dry-run on 2026-09-14 are
     byte-identical, so a --write before or after #2739 queues the same jobs.
     Close this task once both runs are done and the picker has been spot-checked.
-  updated: '2026-09-15T02:05:40Z'
+    GATE HYGIENE 2026-09-29: Silas's product decision is already recorded above and approved_by_human is true. The remaining work is hands-on Alexandria execution plus verification, so this is a soft access/assistance gate, not another human decision. Keep it visible until those runs complete, but do not ask Silas to re-approve the already-decided prompt policy.
+  updated: '2026-09-29T08:38:00Z'
   approved_by_human: true
 
 - id: t-105

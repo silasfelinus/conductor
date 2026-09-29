@@ -76,6 +76,7 @@ def test_scan_flags_approved_task_still_waiting(tmp_path):
                 "id": "t-002",
                 "status": "needs-human",
                 "title": "Approve fulfillment",
+                "gate_human": True,
                 "approved_by_human": True,
             }
         ],
@@ -463,3 +464,53 @@ def test_retired_project_still_suppressed_unless_sweeping(tmp_path):
         projects_dir=projects, overrides_path=overrides, include_inactive=True
     )
     assert [(gate["project"], gate["task_id"]) for gate in swept] == [("gone", "t-001")]
+
+
+def test_scan_does_not_flag_approved_soft_execution_assist(tmp_path):
+    """Approval may survive a soft access gate after the policy decision is made."""
+    write_roadmap(
+        tmp_path,
+        "operations",
+        [
+            {
+                "id": "t-010",
+                "status": "needs-human",
+                "title": "Run the approved test-mode smoke from the reachable host",
+                "soft_gate": True,
+                "approved_by_human": True,
+                "note": "The decision is made; only environment access remains.",
+            }
+        ],
+    )
+    write_overrides(tmp_path, [("operations", "active")])
+
+    gates = audit.scan(tmp_path / "projects")
+    assert len(gates) == 1
+    assert "approved-by-human-but-still-needs-human" not in gates[0]["stale_reasons"]
+
+
+def test_render_splits_decisions_from_soft_assistance():
+    gates = [
+        {
+            "project": "alpha",
+            "task_id": "t-001",
+            "title": "Choose a policy",
+            "soft_gate": False,
+            "stale_reasons": [],
+            "human_answer": "",
+            "priority_rank": 0,
+        },
+        {
+            "project": "beta",
+            "task_id": "t-002",
+            "title": "Run an approved smoke from the reachable host",
+            "soft_gate": True,
+            "stale_reasons": [],
+            "human_answer": "",
+            "priority_rank": 1,
+        },
+    ]
+
+    output = audit.render(gates)
+    assert "Human decisions/approvals: 1" in output
+    assert "Soft access/assistance gates: 1" in output

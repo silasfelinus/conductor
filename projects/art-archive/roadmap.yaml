@@ -1348,8 +1348,15 @@ tasks:
       have a further, still-undiagnosed issue beyond #2933/#2936 and needs fresh server-side
       investigation (Alexandria logs during a dry-run request) rather than another blind
       client-side retry.
-    updated: '2026-09-21T06:04:09Z'
-    approved_by_human: true
+      GATE HYGIENE 2026-09-29: the earlier approved_by_human=true referred to Silas's
+      explicit authorization for the reversible private import. The task later acquired a
+      different blocker: the scanner fixes must reach production through an Alexandria Force
+      Update before another live dry-run is safe. That deployment is a new outward-facing
+      human gate, so the CURRENT approval flag is reset to false while the prior import
+      authorization remains preserved above. Do not deploy or retry the production scan
+      until Silas clears that concrete deployment/action.
+    updated: '2026-09-29T09:12:00Z'
+    approved_by_human: false
     owner: worker
     claimed_by: 2026-09-20T112500Z-art-archive-t041-chatgpt-fix1
     claimed_at: '2026-09-20T11:26:00Z'
