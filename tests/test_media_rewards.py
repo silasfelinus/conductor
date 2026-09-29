@@ -174,10 +174,10 @@ def test_media_root_resolves_the_single_configured_root(tmp_path, monkeypatch):
 
 
 def test_atomic_write_scratch_name_does_not_grow_with_the_target(tmp_path, monkeypatch):
-    # ArtJob 31518: a legal 221-character gallery filename failed on NTFS
+    # ArtJob 31518: a legal 225-character gallery filename failed on NTFS
     # because its ".<name>.tmp-<pid>-<ns>" scratch copy was 256 characters.
     module = load_relay_media_module(monkeypatch)
-    target = tmp_path / ("x" * 221 + ".png")
+    target = tmp_path / ("x" * 225 + ".png")
     seen = []
     real_replace = module.os.replace
 
