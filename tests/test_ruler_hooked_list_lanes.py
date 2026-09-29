@@ -6,6 +6,43 @@ import pytest
 import scripts.build_ruler_hooked_art_queue as bruq
 
 
+FAKE = {
+    "concept": ["c1", "c2"],
+    "alt": [],
+    "ruler": ["r1"],
+    "fish": ["f1", "f2", "f3"],
+    "reward": [],
+    "ending": ["e1"],
+    "card": ["k1"],
+}
+STAGED = ["c1", "f2", "k1"]
+
+
+def _entries(lane, ids):
+    return [{"id": i, "lane": lane, "size": "1x1"} for i in ids]
+
+
+@pytest.fixture(autouse=True)
+def hermetic(monkeypatch, tmp_path):
+    """CI has no kind_robots checkout, so stub every source of entries."""
+    monkeypatch.setattr(bruq, "find_content_bundle", lambda: tmp_path / "content.ts")
+    monkeypatch.setattr(bruq, "read_cast", lambda ts: None)
+    monkeypatch.setattr(bruq, "read_regions", lambda ts: None)
+    monkeypatch.setattr(bruq, "alt_vista_entries", lambda: [])
+    monkeypatch.setattr(bruq, "concept_entries", lambda cast: _entries("concept", FAKE["concept"]))
+    monkeypatch.setattr(bruq, "ruler_entries", lambda: _entries("ruler", FAKE["ruler"]))
+    monkeypatch.setattr(bruq, "fish_entries", lambda: _entries("fish", FAKE["fish"]))
+    monkeypatch.setattr(bruq, "reward_entries", lambda ts: [])
+    monkeypatch.setattr(bruq, "ending_entries", lambda ts: _entries("ending", FAKE["ending"]))
+    monkeypatch.setattr(bruq, "card_entries", lambda ts: _entries("card", FAKE["card"]))
+    monkeypatch.setattr(bruq, "layer_entries", lambda regions: _entries("layer", ["l1", "l2"]))
+    monkeypatch.setattr(bruq, "assert_contract", lambda entries: None)
+    monkeypatch.setattr(bruq, "staged_ids", lambda text: set(STAGED))
+    art = tmp_path / "art-prompts.yaml"
+    art.write_text("stub\n", encoding="utf-8")
+    monkeypatch.setattr(bruq, "ART_PROMPTS", art)
+
+
 def _run(monkeypatch, capsys, *argv):
     monkeypatch.setattr(sys, "argv", ["build_ruler_hooked_art_queue.py", *argv])
     code = bruq.main()
@@ -38,15 +75,21 @@ def test_list_lanes_prints_every_lane_once_and_totals_add_up(monkeypatch, capsys
     for total, staged, unstaged in rows.values():
         assert staged + unstaged == total
     assert rows["layer"] == (0, 0, 0)
+    assert rows["fish"] == (3, 1, 2)  # f2 staged; f1, f3 not
+    assert rows["card"] == (1, 1, 0)
 
 
 def test_list_lanes_never_writes(monkeypatch, capsys):
     def boom(*a, **k):
         raise AssertionError("--list-lanes must be read-only")
 
-    monkeypatch.setattr(type(bruq.ART_PROMPTS), "write_text", boom)
-    code, _ = _run(monkeypatch, capsys, "--list-lanes", "--write")
+    path = bruq.ART_PROMPTS
+    before = path.read_text(encoding="utf-8")
+    with monkeypatch.context() as m:
+        m.setattr(type(path), "write_text", boom)
+        code, _ = _run(m, capsys, "--list-lanes", "--write")
     assert code == 0
+    assert path.read_text(encoding="utf-8") == before
 
 
 def test_list_lanes_rejects_lane(monkeypatch, capsys):
@@ -57,5 +100,4 @@ def test_list_lanes_rejects_lane(monkeypatch, capsys):
 
 def test_list_lanes_layer_row_reflects_include_layers(monkeypatch, capsys):
     _, out = _run(monkeypatch, capsys, "--include-layers", "--list-lanes")
-    total, staged, unstaged = _rows(out)["layer"]
-    assert total > 0 and staged + unstaged == total
+    assert _rows(out)["layer"] == (2, 0, 2)
