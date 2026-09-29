@@ -788,7 +788,7 @@ tasks:
   - id: t-030
     milestone: m5
     title: "Deeper glyph history: ancient forms, original meanings, and borrowings per character"
-    status: claimed
+    status: needs-human
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -809,9 +809,15 @@ tasks:
       the licence allows) beside `formations`, and render it on the pieces and meet beats
       with source credit. If the licence review comes back share-alike-incompatible, stop at
       needs-human with the options rather than choosing.
-    updated: '2026-09-29T13:44:43Z'
+
+      FOR SILAS: Licence review at projects/mandarin-tutor/GLYPH-HISTORY-SOURCES.md.
+      Recommends Wiktionary Glyph origin (CC BY-SA 4.0) as an isolated, attributed field. TO
+      APPROVE: pick option 1, 2 or 3 in that file and add a note_from_silas on t-030; then set
+      status: ready. Unblocks: ingestion + rendering of glyphHistory in kind_robots.
+    updated: '2026-09-29T13:45:10Z'
     claimed_by: 2026-09-29T13:44:42Z-glyph
     claimed_at: '2026-09-29T13:44:43Z'
+    soft_gate: true
 
   - id: t-031
     milestone: m5
