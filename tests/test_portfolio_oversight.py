@@ -83,7 +83,7 @@ def test_scheduled_git_log_keeps_legacy_subject_fallback(monkeypatch):
     monkeypatch.setattr(oversight.subprocess, "run", fake_run)
 
     assert oversight._scheduled_git_log() == "2026-09-10T09:34:43+00:00"
-    assert len(calls) == 2
+    assert len(calls) == 3
 
 
 def test_missing_scheduled_agent_heartbeat_is_overdue_and_provider_specific():
