@@ -117,6 +117,7 @@ def _scheduled_git_log() -> str:
     workers that embedded the session id directly in the commit subject. Claude uses
     different session identifiers, so Claude activity cannot satisfy either lookup.
     """
+    heartbeat_file_date = _git_log_date("--", OPENAI_HEARTBEAT_FILE)
     content_date = _git_log_date(
         f"-G{OPENAI_SESSION_MARKER}",
         "--",
