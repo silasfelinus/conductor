@@ -171,10 +171,13 @@ def encode_image_for_suffix(raw, suffix):
 
 
 def atomic_write(path, data):
+    # The temporary name must not grow with the target's name. NTFS caps a
+    # single path component at 255 characters, and a legacy gallery filename of
+    # 221 characters plus ".<name>.tmp-<pid>-<ns>" came to 256 and failed every
+    # attempt with "[Errno 22] Invalid argument" (ArtJob 31518). The target
+    # itself was a legal name; only the scratch copy was not.
     path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_name(
-        f".{path.name}.tmp-{os.getpid()}-{time.time_ns()}"
-    )
+    temporary = path.with_name(f".tmp-{os.getpid()}-{time.time_ns()}")
     temporary.write_bytes(data)
     os.replace(temporary, path)
 
