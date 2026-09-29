@@ -654,12 +654,12 @@ tasks:
 - id: t-030
   milestone: m5
   title: Re-measure character embodiment coverage now that the axes are seeded
-  status: claimed
+  status: ready
   owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-09-29T19:46:07Z'
-  note: >
+  updated: '2026-09-29T19:47:00Z'
+  note: >-
     The proof step for t-029. Seeding the axes is not the same as the axes
     reaching the rendered image, and the difference is invisible from the
     pipeline end -- a Facet linked to a record but absent from `look` changes
@@ -704,6 +704,14 @@ tasks:
     character with long silver hair"). That is the opposite failure from the
     rut and would mean the seeds are landing but the prose is not absorbing
     them. Both failures are authoring-contract fixes.
+
+    2026-09-29 PARTIAL (18/20 post-axes characters, so no verdict yet):
+    scripts/measure_character_embodiment.py (PR #5409) now automates the measurement.
+    Preliminary baseline(97) -> post(18): hair mentioned 22.7%->61.1%, explicit age
+    3.1%->33.3%, skin tone 10.3%->44.4%, affect 9.3%->33.3%, they/them 3.1%->44.4%,
+    saturated hair 0%->5.6%, she/her 34%->27.8%; long hair still 0%; no character-sheet-
+    shaped prose. Signal is a real move, not the 'ignore them' failure. Re-run 'python
+    scripts/measure_character_embodiment.py --show 5' once it exits 0 (>=20), then close.
   claimed_by: 20260929T2000Z-dc030
   claimed_at: '2026-09-29T19:46:07Z'
 - id: t-031
