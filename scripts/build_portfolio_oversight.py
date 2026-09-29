@@ -42,7 +42,8 @@ INTENT_DIR = ROOT / "projects" / "conductor"
 INTENT_REPORT_RE = re.compile(r"^INTENT-AUDIT-(\d{4}-\d{2}-\d{2})\.md$")
 DEFAULT_INTENT_STALE_DAYS = 3.0
 DEFAULT_AGENT_HEARTBEAT_HOURS = 6.0
-OPENAI_SESSION_MARKER = "openai-scheduled-"\nOPENAI_HEARTBEAT_FILE = "OPENAI-SCHEDULED-HEARTBEAT.json"
+OPENAI_SESSION_MARKER = "openai-scheduled-"
+OPENAI_HEARTBEAT_FILE = "OPENAI-SCHEDULED-HEARTBEAT.json"
 
 
 def _parse_iso_datetime(value: str) -> datetime | None:
