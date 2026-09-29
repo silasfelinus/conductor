@@ -654,11 +654,11 @@ tasks:
 - id: t-030
   milestone: m5
   title: Re-measure character embodiment coverage now that the axes are seeded
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-09-15T09:30:00Z'
+  updated: '2026-09-29T19:46:07Z'
   note: >
     The proof step for t-029. Seeding the axes is not the same as the axes
     reaching the rendered image, and the difference is invisible from the
@@ -704,6 +704,8 @@ tasks:
     character with long silver hair"). That is the opposite failure from the
     rut and would mean the seeds are landing but the prose is not absorbing
     them. Both failures are authoring-contract fixes.
+  claimed_by: 20260929T2000Z-dc030
+  claimed_at: '2026-09-29T19:46:07Z'
 - id: t-031
   milestone: null
   title: Guard against workflow-behavior contract drift when an intentional failure policy changes
