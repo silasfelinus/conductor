@@ -45,6 +45,9 @@ recovery still outrank it. Its other research/maintenance tasks remain continuou
 **Continuous fallback order:** animation-manager, then dream-cycle. Outside the explicit
 animation-manager/t-007 daily-commitment exception above, finite `active` work always outranks
 `continuous` programs; dream-cycle remains the final idle fallback.
+**Never idle (2026-09-29):** a run never ends on "nothing to do". When queues are empty, walk
+AGENTS.md "Never idle: the fallback ladder" — continuous tasks, dream docket, art, polish,
+bug hunts, old pitches, new objects, new pitches — and ship one unit.
 
 **Standing rules for all agents:** Respect each project's `kind`. Honor `depends_on` gates.
 Never expand product-types.yaml — pitch it. When unsure, do less and escalate to
