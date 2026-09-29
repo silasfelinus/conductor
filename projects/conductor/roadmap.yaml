@@ -4271,5 +4271,15 @@ tasks:
   claimed_at: '2026-09-28T06:58:02Z'
   implementation_pr: 'silasfelinus/conductor#5339'
 
+- id: t-200
+  milestone: m2
+  title: "Human-gate hygiene: separate approval-to-proceed from acceptance, repair stale gate state, and make reporting actionable"
+  status: ready
+  owner:
+  passes: 0
+  stakes: reversible
+  note: >-
+    Silas-directed 2026-09-29 after auditing the live human-gate queue. Fix the system rather than manually dismissing a noisy inbox: distinguish authorization to continue from acceptance-as-complete in the Kind Robots gate UI/event contract; make approved+needs-human contradictions impossible to miss; report workable vs archival gates separately; fix stale pitch-status parsing; and reconcile currently misclassified active gates conservatively so only genuine decisions remain in the human queue. Do not cross real gates for secrets, billing, publication, irreversible actions, or subjective acceptance.
+
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
