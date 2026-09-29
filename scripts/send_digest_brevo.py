@@ -30,6 +30,11 @@ def configure_payload(payload: dict[str, Any]) -> dict[str, Any]:
         {
             "email": os.environ["DIGEST_TO"],
             "name": os.environ.get("DIGEST_TO_NAME") or "Silas",
+            # This is a private one-recipient operational digest. Keeping Brevo
+            # click/open tracking off preserves the original hrefs instead of
+            # rewriting them through a tracking redirect that can fail before
+            # the Kind Robots destination is reached.
+            "contactPixelTrackingConsent": False,
         }
     ]
     return payload
