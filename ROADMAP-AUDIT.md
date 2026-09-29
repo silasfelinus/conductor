@@ -1,13 +1,13 @@
 # Roadmap Audit
 
-Generated: `2026-09-28T18:11:25.405199+00:00`
+Generated: `2026-09-29T16:33:17.218234+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **55** roadmaps, **22** active + **3** continuous projects, **1756** tasks
-- **18 ready**, **52 waiting**, **68 needs-human**, **3 claimed/review**, **1599 done**
+- **55** roadmaps, **22** active + **3** continuous projects, **1760** tasks
+- **21 ready**, **52 waiting**, **67 needs-human**, **3 claimed/review**, **1601 done**
 - Findings: **0 errors**, **10 warnings**, **32 informational**
 
 ## Project inventory
@@ -18,7 +18,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 2 | `kind-economy` | active | software | 0 | 2 | 4 | 0 | 22 / 28 |
 | 3 | `butterfly-gallery` | active | software | 0 | 0 | 2 | 0 | 33 / 35 |
 | 4 | `art-archive` | active | software | 0 | 0 | 3 | 0 | 40 / 43 |
-| 5 | `mandarin-tutor` | active | software | 0 | 0 | 1 | 0 | 27 / 28 |
+| 5 | `mandarin-tutor` | active | software | 0 | 0 | 2 | 0 | 29 / 31 |
 | 6 | `interface-vision` | continuous | software | 4 | 1 | 0 | 0 | 136 / 141 |
 | 7 | `humboldt-scoop-cms` | active | software | 0 | 0 | 6 | 0 | 38 / 44 |
 | 8 | `digital-storefront` | active | software | 0 | 2 | 2 | 0 | 40 / 44 |
@@ -28,15 +28,15 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 12 | `scene-animator` | active | software | 0 | 0 | 1 | 0 | 10 / 11 |
 | 13 | `text-generation` | active | software | 0 | 0 | 1 | 0 | 8 / 9 |
 | 14 | `kindrobots-unraid` | active | software | 0 | 6 | 2 | 0 | 14 / 22 |
-| 15 | `model-builder` | active | software | 0 | 0 | 0 | 1 | 44 / 45 |
+| 15 | `model-builder` | active | software | 1 | 0 | 0 | 0 | 44 / 45 |
 | 16 | `lora-ingestion` | active | infrastructure | 0 | 0 | 1 | 0 | 16 / 17 |
-| 17 | `conductor` | active | software | 0 | 0 | 3 | 0 | 196 / 199 |
-| 18 | `storybook` | active | software | 2 | 2 | 6 | 0 | 60 / 70 |
+| 17 | `conductor` | active | software | 0 | 0 | 3 | 1 | 196 / 200 |
+| 18 | `storybook` | active | software | 3 | 2 | 5 | 0 | 60 / 70 |
 | 19 | `coat-dance` | active | content | 1 | 0 | 1 | 0 | 3 / 10 |
 | 20 | `conductor-app` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
 | 21 | `appmaker` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
 | 22 | `media-watchlist` | active | software | 0 | 0 | 1 | 0 | 18 / 19 |
-| 23 | `ruler-hooked` | active | software | 0 | 0 | 4 | 0 | 39 / 43 |
+| 23 | `ruler-hooked` | active | software | 1 | 0 | 3 | 0 | 39 / 43 |
 | 24 | `animation-manager` | continuous | software | 2 | 0 | 0 | 1 | 21 / 25 |
 | 25 | `dream-cycle` | continuous | software | 2 | 0 | 0 | 0 | 32 / 34 |
 | — | `ai-art-academy` | finished | software | 0 | 0 | 0 | 0 | 79 / 79 |
@@ -78,15 +78,15 @@ _None._
 
 ### Warning (10)
 
-- **STALE_IN_PROGRESS** — `animation-manager` / `t-022`: Task has remained claimed for 4 days.
+- **STALE_IN_PROGRESS** — `animation-manager` / `t-022`: Task has remained claimed for 5 days.
 - **POSSIBLY_UNNECESSARY_GATE** — `conductor` / `t-167`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **SOFT_NEEDS_HUMAN** — `cthulhuquarium` / `t-065`: needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kind-economy` / `t-017`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
-- **POSSIBLY_UNNECESSARY_GATE** — `kind-robots` / `t-104`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-014`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-015`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-017`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-018`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
+- **MIXED_HARD_SOFT_GATE** — `mandarin-tutor` / `t-027`: Task is marked both gate_human and soft_gate. Split the human decision from any remaining execution/access assist so the queue says what it means.
 - **POSSIBLY_UNNECESSARY_GATE** — `tzaddik-gallery` / `t-013`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 
 ### Info (32)
@@ -108,9 +108,11 @@ _None._
 - **APPROVAL_WITHOUT_GATE** — `interface-vision` / `t-124`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `kapowarr` / `t-024`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `kapowarr` / `t-058`: approved_by_human is set on a task that is not human-gated.
+- **APPROVAL_WITHOUT_GATE** — `kind-economy` / `t-011`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `kind-economy` / `t-021`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `kind-robots` / `t-078`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `kind-robots` / `t-092`: approved_by_human is set on a task that is not human-gated.
+- **APPROVAL_WITHOUT_GATE** — `kind-robots` / `t-104`: approved_by_human is set on a task that is not human-gated.
 - **NEEDS_HUMAN_NOTE_FORMAT** — `kind-robots` / `t-104`: needs-human note does not use the AGENTS.md FOR SILAS action format.
 - **APPROVAL_WITHOUT_GATE** — `kind-robots` / `t-105`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `kindrobots-unraid` / `t-012`: approved_by_human is set on a task that is not human-gated.
@@ -120,8 +122,6 @@ _None._
 - **INACTIVE_PROJECT_HAS_READY_TASKS** — `mural-design`: Inactive project retains 1 ready task(s); harmless but misleading in generated status.
 - **APPROVAL_WITHOUT_GATE** — `mural-design` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **NEEDS_HUMAN_NOTE_FORMAT** — `rainbow-butterflies` / `t-014`: needs-human note does not use the AGENTS.md FOR SILAS action format.
-- **NEEDS_HUMAN_NOTE_FORMAT** — `ruler-hooked` / `t-037`: needs-human note does not use the AGENTS.md FOR SILAS action format.
-- **NEEDS_HUMAN_NOTE_FORMAT** — `storybook` / `t-057`: needs-human note does not use the AGENTS.md FOR SILAS action format.
 - **MISSING_GOAL** — `text-generation`: Roadmap has no friendly goal/definition of done.
 
 ## Interpretation rules
