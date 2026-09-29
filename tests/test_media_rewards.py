@@ -171,3 +171,23 @@ def test_media_root_resolves_the_single_configured_root(tmp_path, monkeypatch):
     image_root = tmp_path / "media-cache" / "images"
     monkeypatch.setattr(relay_media, "MEDIA_ROOT_VALUE", str(image_root))
     assert relay_media.media_root() == image_root.resolve()
+
+
+def test_atomic_write_scratch_name_does_not_grow_with_the_target(tmp_path, monkeypatch):
+    # ArtJob 31518: a legal 225-character gallery filename failed on NTFS
+    # because its ".<name>.tmp-<pid>-<ns>" scratch copy was 256 characters.
+    module = load_relay_media_module(monkeypatch)
+    target = tmp_path / ("x" * 225 + ".png")
+    seen = []
+    real_replace = module.os.replace
+
+    def spy_replace(source, destination):
+        seen.append(Path(source).name)
+        real_replace(source, destination)
+
+    monkeypatch.setattr(module.os, "replace", spy_replace)
+    module.atomic_write(target, b"image")
+
+    assert target.read_bytes() == b"image"
+    assert len(seen) == 1 and len(seen[0]) <= 64
+    assert [p.name for p in tmp_path.iterdir()] == [target.name]
