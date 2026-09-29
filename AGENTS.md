@@ -780,9 +780,9 @@ role from live state on arrival:**
      reported in the JSON output even when a different role wins, so don't wait for
      this role to actually surface a staleness signal you notice while reading the
      output for another role.
-   - **`role: idle`** — none of the above. Fall through to the idle-fallback rule
-     (dream-cycle's "nothing better to do" contract, or `autonomous: true` projects'
-     own rule).
+   - **`role: idle`** — none of the above. **Idle is never a stopping point.** Walk
+     "Never idle: the fallback ladder" below (also emitted as `idle_ladder` in the
+     JSON) and ship at least one unit of work before the session ends.
 2. Follow the matching section below. A session isn't locked to one role for its
    whole run: if you finish reviewing everything open, re-run `select_role.py` — it
    may now recommend `workflow-medic`, `pr-medic`, `branch-medic`, `site-auditor`,
@@ -815,6 +815,61 @@ of silently no-op'ing. Consolidating the trigger schedule itself is a platform
 setting change outside this repo (see conductor/t-026's roadmap history) if Silas
 wants to pursue it further; this section is the repo-side half of the fix and does
 not depend on that happening.
+
+### Never idle: the fallback ladder
+
+Silas, 2026-09-29, verbatim: *"this sounds like there is nothing to do, and there ALWAYS
+should be. ... we need a fallback idle. If there truly are no open tasks on roadmaps, no
+dream digests to create, no art to generate, no work to be done polishing errors, merging
+prs, creating new pitches for concepts, bug checking, then we should be creating new
+objects, running with old pitches and making new material, we can create new object
+pitches."*
+
+A trigger-fired session that ends with only a sweep report and no shipped work is a
+**failed run**, not a quiet one. The 2026-09-29 run that prompted this reported "nothing to
+do" while a green PR sat unreviewed, animation-manager's daily commitment was due,
+tzaddik-gallery/t-016 was ready, and two interface-vision recurring tasks were 8 days
+stale. So:
+
+- **Run `select_role.py` and act on it** — the startup sweep is the preamble, not the job.
+  Re-run it after each unit of work and keep going while the session has budget.
+- **A predicted no-op is not a skip.** If the top pickup looks like it would close as a
+  no-op (e.g. a recurring polish task whose last cycle was a verified no-op), move to the
+  next ready task or the next rung below; never end the session on that judgment alone.
+- **Gated projects are not empty projects.** A project whose top tasks sit at
+  `needs-human` usually still has reversible work around the gate — prep, tests, docs, art,
+  a draft the gate will need. Look before walking past it.
+
+When `select_role.py` returns `idle` (or every recommendation above is exhausted), walk this
+ladder top-down and take the **first rung that yields a real unit of work**. Every rung uses
+normal flow: create (or reuse) a roadmap task in the owning project, claim it, PR, merge when
+green. Default home for work with no natural project is dream-cycle (`autonomous: true`,
+`status: continuous`). Human gates are unchanged: publishing, spend, deploys, outreach, and
+irreversible actions still stop at `needs-human`.
+
+1. **Continuous programs** — any `ready` task in a `status: continuous` project
+   (animation-manager, dream-cycle, interface-vision, …) in priority order, recurring ones
+   included.
+2. **Dream docket** — author one proposal if `build_dream_proposal.py --check` is below the
+   buffer; if it is full, improve the weakest queued proposal instead.
+3. **Art** — drain an art/media queue, or generate missing/weak art for existing records
+   (generated art is pre-approved; keep prompt/model metadata).
+4. **Polish errors** — turn a standing sweep finding into a fix: a noisy container-log
+   signature, CARD COPY Facet prompts from `check_facet_prompt_subjects.py`, a check that
+   keeps timing out (`check_live_facet_coverage.py`), a flaky test.
+5. **Bug hunt** — audit one active project's live front end or API for real bugs and
+   phone/tablet/desktop breakage; file and fix what you find.
+6. **Run with old pitches** — take an `approved` pitch in `pitches/` (or a
+   `projects/*/pitches/` entry, or a `projects/dream-cycle/backlog/` outline) whose work never
+   reached a roadmap, and build its first real slice.
+7. **Create new objects** — make new Kind Robots material from existing seeds: characters,
+   rewards, scenarios, bots, art collections, coloring pages, screensavers.
+8. **Pitch new objects** — write one new concept/object pitch in `pitches/` using the pitch
+   template, after deduping against every existing pitch, project, and shipped feature.
+
+Rung 8 always has work, so a session that reaches the bottom of the ladder still ships.
+Record which rung you took (and why the rungs above it were empty) in the task note so the
+next session and the digest can see the ladder working.
 
 ### If you're working
 - **Step 0 — Todos**: run `python scripts/fetch_todos.py`. Handle the top OPEN todo if

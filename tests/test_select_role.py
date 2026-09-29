@@ -293,6 +293,18 @@ def test_idle_when_nothing_needs_doing():
         result = select_role.select_role(github_token="fake-token")
 
     assert result["role"] == "idle"
+    # Silas, 2026-09-29: idle is never a stopping point -- it hands the
+    # session the fallback ladder to walk.
+    assert result["idle_ladder"] == select_role.IDLE_LADDER
+    assert "NOT a stop" in result["reason"]
+
+
+def test_idle_ladder_empty_when_real_work_exists():
+    with _apply(_patched(queue_summary=SOME_READY_TASK)):
+        result = select_role.select_role(github_token="fake-token")
+
+    assert result["role"] == "worker"
+    assert result["idle_ladder"] == []
 
 
 # --- stale-recurring: conductor/t-118 ---------------------------------------

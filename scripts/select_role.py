@@ -91,7 +91,11 @@ rather than duplicates:
                     `stale_recurring_tasks`/`stale_recurring_task_count` are
                     reported in the output regardless of which role wins, so a
                     caller can see staleness even when `worker` won instead.
-  - idle          — none of the above; dream-cycle fallback applies
+  - idle          — none of the above. NEVER a stopping point (Silas,
+                    2026-09-29: "there ALWAYS should be" something to do).
+                    The output carries `idle_ladder`, the ordered creative/
+                    maintenance fallback from AGENTS.md "Never idle: the
+                    fallback ladder"; the session walks it and ships one unit.
   - reviewer-uncertain — worker/idle/stale-recurring would have won, but
                     github_api_unreachable is true, so the reviewer/workflow-
                     medic/pr-medic/branch-medic checks above never got real
@@ -892,6 +896,24 @@ def find_stale_recurring_tasks(
     return stale
 
 
+# Silas, 2026-09-29: "this sounds like there is nothing to do, and there
+# ALWAYS should be ... we need a fallback idle." A session that lands on
+# `idle` walks these rungs top-down and ships the first one that yields a
+# real unit of work. Kept in lockstep with AGENTS.md "Never idle: the
+# fallback ladder" -- the prose there is authoritative, this is the
+# machine-readable pointer so a caller reading only JSON still sees it.
+IDLE_LADDER = [
+    'continuous: claim any ready task in a status: continuous project (priority order), including a recurring task even if its last cycle was a no-op',
+    'docket: author or improve a Daily Dream proposal (build_dream_proposal.py --check/--brief)',
+    'art: drain an art/media queue or generate missing art for existing records (generated art is pre-approved)',
+    'polish: turn a sweep finding into a fix -- container-log signatures, CARD COPY Facet prompts, flaky/slow checks',
+    'bug-hunt: audit one active project for bugs/UX breaks against its live front end; file and fix what you find',
+    'old pitches: run with an approved pitch or dream-cycle backlog outline whose work never reached a roadmap',
+    'new objects: create new Kind Robots objects (characters, rewards, scenarios, bots, art collections) from existing seeds',
+    'new pitches: write one new object/concept pitch in pitches/ (dedupe against every existing pitch first)',
+]
+
+
 def select_role(
     *,
     repos: list[str] | None = None,
@@ -991,7 +1013,10 @@ def select_role(
         reason = f'{len(stale_recurring)} recurring task(s) stale {recurring_stale_days}+ days with no other work claiming this cycle: {names}'
     else:
         role = 'idle'
-        reason = 'nothing to review, fix, triage, audit, or work — dream-cycle fallback applies'
+        reason = (
+            'no queued work — this is NOT a stop: walk idle_ladder '
+            '(AGENTS.md "Never idle: the fallback ladder") and ship one unit'
+        )
 
     github_token_missing = not github_token
     if github_token_missing:
@@ -1055,6 +1080,7 @@ def select_role(
         'due_daily_commitment_count': len(due_daily),
         'due_daily_commitments': due_daily,
         'ready_task': ready_task,
+        'idle_ladder': IDLE_LADDER if underlying_role == 'idle' else [],
         'projects_with_ready_tasks': queue.get('projects_with_ready_tasks', []),
         'projects_needing_human': queue.get('projects_needing_human', []),
         'stale_recurring_task_count': len(stale_recurring),
