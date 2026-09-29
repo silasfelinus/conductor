@@ -38,6 +38,28 @@ def base_payload():
     }
 
 
+def test_configure_payload_disables_brevo_click_and_open_tracking(monkeypatch):
+    monkeypatch.setenv("DIGEST_FROM", "conductor@example.com")
+    monkeypatch.setenv("DIGEST_FROM_NAME", "Conductor")
+    monkeypatch.setenv("DIGEST_TO", "silas@example.com")
+    monkeypatch.setenv("DIGEST_TO_NAME", "Silas")
+
+    payload = {
+        "subject": "Daily Dream",
+        "htmlContent": '<a href="https://kindrobots.org">Kind Robots</a>',
+    }
+
+    configured = digest_sender.configure_payload(payload)
+
+    assert configured["to"] == [
+        {
+            "email": "silas@example.com",
+            "name": "Silas",
+            "contactPixelTrackingConsent": False,
+        }
+    ]
+
+
 def test_transient_http_failure_retries_with_same_idempotency_key():
     requests = []
     sleeps = []
