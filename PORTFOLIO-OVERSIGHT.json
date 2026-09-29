@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-29T05:51:31.884141+00:00",
+  "generated_at": "2026-09-29T13:03:34.479170+00:00",
   "summary": {
     "status": "semantic-review-due",
     "roadmap_errors": 0,
@@ -12,8 +12,8 @@
   },
   "openai_scheduled_agent": {
     "overdue": false,
-    "last_activity": "2026-09-29T00:41:35+00:00",
-    "hours_since": 5.17,
+    "last_activity": "2026-09-29T10:45:06+00:00",
+    "hours_since": 2.31,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "OpenAI scheduled cycles must refresh OPENAI-SCHEDULED-HEARTBEAT.json; coordination-marker history remains a compatibility fallback."
@@ -30,17 +30,17 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-09-29T05:51:31.884146+00:00",
+    "generated_at": "2026-09-29T13:03:34.479178+00:00",
     "summary": {
       "roadmaps": 55,
       "active_projects": 22,
       "continuous_projects": 3,
-      "tasks": 1756,
-      "ready": 18,
+      "tasks": 1760,
+      "ready": 22,
       "waiting": 52,
-      "needs_human": 68,
+      "needs_human": 66,
       "in_progress": 3,
-      "done": 1599,
+      "done": 1601,
       "errors": 0,
       "warnings": 10,
       "info": 32
@@ -77,13 +77,6 @@
       },
       {
         "severity": "warning",
-        "code": "POSSIBLY_UNNECESSARY_GATE",
-        "project": "kind-robots",
-        "task": "t-104",
-        "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
-      },
-      {
-        "severity": "warning",
         "code": "GATED_DONE_WITHOUT_APPROVAL",
         "project": "kindrobots-unraid",
         "task": "t-014",
@@ -109,6 +102,13 @@
         "project": "kindrobots-unraid",
         "task": "t-018",
         "message": "Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect."
+      },
+      {
+        "severity": "warning",
+        "code": "MIXED_HARD_SOFT_GATE",
+        "project": "mandarin-tutor",
+        "task": "t-027",
+        "message": "Task is marked both gate_human and soft_gate. Split the human decision from any remaining execution/access assist so the queue says what it means."
       },
       {
         "severity": "warning",
