@@ -816,16 +816,14 @@ tasks:
   - id: t-026
     milestone: m5
     title: "Keep Daily Dream digest links direct instead of Brevo-tracked redirects"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20260929T2024Z-animation-manager-t026-openai-f4c1
     claimed_at: '2026-09-29T20:24:00Z'
-    updated: '2026-09-29T20:24:00Z'
+    updated: '2026-09-29T20:27:00Z'
     passes: 0
     stakes: reversible
-    note: >-
-      Silas, 2026-09-29: the Animation Manager link in the received Daily Dream digest
-      fails. The generated URL is correct, but the delivered Gmail message shows Brevo
-      replaced it with a sendibt2.com click-tracking redirect. Disable per-recipient open
-      and click tracking for this private one-recipient digest so links remain the original
-      Kind Robots URLs, and add a regression test at the Brevo payload boundary.
+    note: |-
+      Silas, 2026-09-29: the Animation Manager link in the received Daily Dream digest fails. The generated URL is correct, but the delivered Gmail message shows Brevo replaced it with a sendibt2.com click-tracking redirect. Disable per-recipient open and click tracking for this private one-recipient digest so links remain the original Kind Robots URLs, and add a regression test at the Brevo payload boundary.
+
+      Root cause verified against the delivered Gmail message: Brevo rewrote the valid Kind Robots Animation Manager URL through a sendibt2.com click-tracking redirect. The implementation adds contactPixelTrackingConsent: false to the one-recipient transactional payload and regression coverage at the sender boundary.
