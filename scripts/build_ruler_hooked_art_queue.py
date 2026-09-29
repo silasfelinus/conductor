@@ -46,6 +46,8 @@ Usage:
     python scripts/build_ruler_hooked_art_queue.py --check    # exit 1 if staging is stale
     python scripts/build_ruler_hooked_art_queue.py --include-layers --write
     python scripts/build_ruler_hooked_art_queue.py --write --lane ruler   # stage one lane only
+    python scripts/build_ruler_hooked_art_queue.py --list-lanes           # staged/unstaged per lane
+    python scripts/build_ruler_hooked_art_queue.py --include-layers --list-lanes
 
 LANE FILTER (ruler-hooked/t-036). `--write` with no `--lane` stages every not-yet-
 staged entry across every lane -- fine for a fresh full build, but "stage the one
@@ -1305,6 +1307,22 @@ def render_block(entries: list[dict]) -> str:
     )
 
 
+def lane_counts(entries: list[dict], existing: set[str]) -> list[tuple[str, int, int]]:
+    """(lane, staged, unstaged) for every lane in LANES, sorted by lane name."""
+    rows = []
+    for lane in sorted(LANES):
+        in_lane = [e for e in entries if e["lane"] == lane]
+        staged = sum(1 for e in in_lane if e["id"] in existing)
+        rows.append((lane, staged, len(in_lane) - staged))
+    return rows
+
+
+def print_lane_table(rows: list[tuple[str, int, int]]) -> None:
+    print(f"{'lane':<10} {'total':>6} {'staged':>7} {'unstaged':>9}")
+    for lane, staged, unstaged in rows:
+        print(f"{lane:<10} {staged + unstaged:>6} {staged:>7} {unstaged:>9}")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--write", action="store_true", help="append new entries")
@@ -1325,7 +1343,15 @@ def main() -> int:
         help="only build/stage/check entries from this lane (default: all lanes). "
         "'layer' entries are only produced when --include-layers is also passed.",
     )
+    parser.add_argument(
+        "--list-lanes",
+        action="store_true",
+        help="print staged vs not-yet-staged counts for every produced lane and exit "
+        "(read-only, even with --write)",
+    )
     args = parser.parse_args()
+    if args.list_lanes and args.lane:
+        parser.error("--list-lanes summarizes every lane; do not combine it with --lane")
 
     content_ts = find_content_bundle()
     entries = (
@@ -1341,11 +1367,15 @@ def main() -> int:
         entries += layer_entries(read_regions(content_ts))
     assert_contract(entries)
 
-    if args.lane:
-        entries = [e for e in entries if e["lane"] == args.lane]
-
     text = ART_PROMPTS.read_text(encoding="utf-8")
     existing = staged_ids(text)
+
+    if args.list_lanes:
+        print_lane_table(lane_counts(entries, existing))
+        return 0
+
+    if args.lane:
+        entries = [e for e in entries if e["lane"] == args.lane]
     fresh = [e for e in entries if e["id"] not in existing]
 
     lane_suffix = f" (lane={args.lane})" if args.lane else ""
