@@ -748,7 +748,7 @@ tasks:
   - id: t-029
     milestone: m5
     title: "Parts first: teach each part's meaning and origin before the word it builds"
-    status: review
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -778,7 +778,11 @@ tasks:
       rewritten as "Parts first, then the whole" (宀 + 豕 -> 家). New
       test:mandarin-parts-first in contract-tests.yml, built on verbatim source lines.
       NOT verified in a browser -- the visual check folds into t-027's gate.
-    updated: '2026-09-29T00:00:00Z'
+
+      DONE 2026-09-29: silasfelinus/kind_robots#3097 merged (squash 9f2e2bf) with all 34
+      checks green, including TypeScript, Contract verifiers (runs the new
+      test:mandarin-parts-first) and Build production image.
+    updated: '2026-09-29T07:50:00Z'
     implementation_pr: 'silasfelinus/kind_robots#3097'
 
   - id: t-030
