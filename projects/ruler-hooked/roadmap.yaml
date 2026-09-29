@@ -1193,8 +1193,8 @@ tasks:
 - id: t-037
   milestone: m5
   title: Add a --list-lanes summary to build_ruler_hooked_art_queue.py
-  status: ready
-  owner: null
+  status: claimed
+  owner: worker
   stakes: reversible
   passes: 0
   note: |-
@@ -1202,9 +1202,9 @@ tasks:
 
     Connector-only implementation inspected the exact main() flow and preserved an exact patch/test handoff at projects/ruler-hooked/docs/t-037-list-lanes-handoff.md. The required edit is inside a large existing script; this connector only supports whole-file replacement, and AGENTS.md forbids reconstructing that file from paged/truncated reads. No production/API work is involved. Apply the handoff with a line-patch-capable worker, then return this task to ready/review as appropriate.
     GATE HYGIENE 2026-09-29: this was parked only because a connector-only session could not safely line-patch the large script. The exact patch/test handoff already exists and no human decision, credential, publication, or production action is required. Released to ready for a shell-capable worker.
-  claimed_by: null
-  claimed_at: null
-  updated: '2026-09-29T08:38:00Z'
+  claimed_by: 20260929T190000Z-rh037
+  claimed_at: '2026-09-29T18:45:57Z'
+  updated: '2026-09-29T18:45:57Z'
   soft_gate: false
 
 - id: t-038
