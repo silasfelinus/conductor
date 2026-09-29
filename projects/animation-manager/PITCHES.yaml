@@ -1683,7 +1683,7 @@ pitches:
 
   - id: pendulum-wave-garden
     title: Pendulum Wave Garden
-    status: pitched
+    status: candidate
     priority: 31
     surprise: >
       A tidy row of identical-looking pendulum bobs starts swinging in perfect unison, then
@@ -1736,6 +1736,21 @@ pitches:
       - a clearly readable doubled/split wave pattern appears at the cycle's midpoint between unison instants
       - pointer bob-nudge and click-restart never desynchronize the closed-form phase function of any bob not directly interacted with
       - reduced-motion mode holds one static unison frame with no oscillation
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/pendulum-wave-garden.vue
+        pull_request: silasfelinus/kind_robots#3101
+        released_at: '2026-09-29T09:10:00Z'
+        commit: 2892b9d2ae181cadc163da42d85c443e207e91b1
+        verification:
+          - Contract verifiers
+          - TypeScript
+          - layout-contract
+          - facet-catalog
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
+
 
   - id: split-flap-departures
     title: Split-Flap Departure Board
