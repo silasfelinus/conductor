@@ -44,7 +44,10 @@ def test_configure_payload_disables_brevo_click_and_open_tracking(monkeypatch):
     monkeypatch.setenv("DIGEST_TO", "silas@example.com")
     monkeypatch.setenv("DIGEST_TO_NAME", "Silas")
 
-    payload = {"subject": "Daily Dream", "htmlContent": "<a href=\"https://kindrobots.org\">Kind Robots</a>"}
+    payload = {
+        "subject": "Daily Dream",
+        "htmlContent": '<a href="https://kindrobots.org">Kind Robots</a>',
+    }
 
     configured = digest_sender.configure_payload(payload)
 
