@@ -19,6 +19,25 @@ from typing import Any
 # catch a session that crashed or never returned, not a merely slow one.
 CLAIM_TTL_MINUTES = 90
 
+# No-op backoff for recurring tasks (2026-09-30, token essentialization). A recurring
+# task re-armed straight back to `ready` after a cycle that found nothing to do is picked
+# up again by the very next hourly session: coloring-book/t-022 was claimed 40 times in
+# 48h while every next step was gated on Silas, and model-builder/t-029 ran 122 full
+# agent sessions that each concluded "no model-builder commits, re-arming". Each of those
+# is a whole session's worth of Max-plan usage. `close_task.py --noop` records a
+# `noop_streak` and a `rest_until` timestamp; every picker skips the task until then.
+# The rest grows with the streak and resets on the first cycle that does real work.
+NOOP_REST_HOURS = (2, 6, 12, 24, 48)
+
+
+def noop_rest_hours(streak: int, max_hours: float | None = None) -> float:
+    """Hours a recurring task rests after its `streak`-th consecutive no-op cycle."""
+    streak = max(1, int(streak))
+    hours = float(NOOP_REST_HOURS[min(streak, len(NOOP_REST_HOURS)) - 1])
+    if max_hours is not None:
+        hours = min(hours, float(max_hours))
+    return hours
+
 
 def parse_timestamp(value: Any) -> datetime | None:
     """Parse a roadmap timestamp field into an aware UTC datetime, or None if unparseable."""
@@ -50,6 +69,19 @@ def claim_is_stale(claimed_at: Any, *, now: datetime | None = None) -> bool:
     return now - parsed > timedelta(minutes=CLAIM_TTL_MINUTES)
 
 
+def task_is_resting(task: dict[str, Any], *, now: datetime | None = None) -> bool:
+    """True while a task's `rest_until` timestamp is still in the future.
+
+    An unparseable `rest_until` is ignored (never locks a task), same spirit as
+    claim_is_stale treating a bad claimed_at as stale.
+    """
+    until = parse_timestamp(task.get("rest_until"))
+    if until is None:
+        return False
+    now = now or datetime.now(timezone.utc)
+    return now < until
+
+
 def remaining_scope_delegate_open(task: dict[str, Any], tasks_by_id: dict[str, dict[str, Any]]) -> bool:
     """True when `task` has delegated all its remaining scope to a sibling task
     (via `remaining_scope_task: <task-id>`) that has not reached `status: done` yet.
@@ -78,8 +110,8 @@ def task_is_claimable(
     now: datetime | None = None,
 ) -> bool:
     """True when a picker may claim this task: it's ready, or an abandoned stale claim,
-    and (when `tasks_by_id` is supplied) it isn't delegating its remaining scope to a
-    still-open sibling task."""
+    it isn't resting after a no-op cycle (`rest_until`), and (when `tasks_by_id` is
+    supplied) it isn't delegating its remaining scope to a still-open sibling task."""
     status = task.get("status")
     if status == "ready":
         pass
@@ -90,5 +122,7 @@ def task_is_claimable(
         return False
 
     if tasks_by_id is not None and remaining_scope_delegate_open(task, tasks_by_id):
+        return False
+    if task_is_resting(task, now=now):
         return False
     return True

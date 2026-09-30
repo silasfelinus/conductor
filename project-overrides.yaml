@@ -241,6 +241,15 @@ overrides:
     # an already-concluded 3-attempt engine limitation -- burning Max-plan usage on no-op cycles.
     # Pausing removes all its tasks from pickup and gate reports. Nothing is abandoned: proposals,
     # T022-HISTORY.md and t-022-run-log.md stay as they are for when he reviews it.
+    # RESUME CHECKLIST (2026-09-30, token essentialization) -- before flipping this to active:
+    #   1. Silas answers or closes the FOR SILAS gates (t-050/051/053/056/059) first; they are the
+    #      only thing t-022's cycles were waiting on.
+    #   2. t-022 is re-scoped or goes to needs-human with its one open question -- it must NOT
+    #      return to plain `ready` while its next step is a human decision. No-op cycles re-arm with
+    #      `close_task.py coloring-book t-022 ready --noop` (2h..48h backoff every picker honors).
+    #   3. Agents read t-022 with `scripts/show_task.py coloring-book/t-022 --note-tail 3000`, never
+    #      T022-HISTORY.md (150KB) / t-022-run-log.md (216KB) / color-art-jobs.yaml (166KB) whole.
+    #   4. check_recurring_churn.py (startup sweep) will flag it if it re-arms 8+ times in 7 days.
     priority: normal
     kind: software
     # Frontend placement — synced to the kind_robots Project row by

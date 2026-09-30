@@ -941,10 +941,19 @@ tasks:
       wide): #3103 Conductor human-gate action semantics. It does not touch the five tracked
       model-builder surfaces. No model-builder-specific regression audit warranted -- verified
       no-op, re-arming to ready.
-    updated: '2026-09-30T02:44:41Z'
+
+      Token essentialization (2026-09-30): put on the no-op backoff. Cycles ~70-122 were all
+      "no kind_robots commits touch the five model-builder surfaces, re-arming" -- ~43 full
+      agent sessions in 10 days (check_recurring_churn.py). Now rests 48h between pickups;
+      future no-op cycles must re-arm with close_task.py --noop and append ONE line, not a
+      paragraph. Commits accumulate while it rests, so the next cycle audits all of them --
+      nothing is missed.
+    updated: '2026-09-30T05:21:31Z'
     owner: worker
     claimed_by: 20260930T0000Z-mb029e
     claimed_at: '2026-09-29T23:44:16Z'
+    noop_streak: 5
+    rest_until: '2026-10-02T05:21:31Z'
 
   - id: t-030
     milestone: m6

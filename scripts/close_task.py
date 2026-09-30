@@ -17,6 +17,12 @@ Usage:
         [--branch <name>] [--set field=value ...] [--append-note TEXT] \\
         [--implementation-pr OWNER/REPO#N] [--force] [--dry-run]
 
+Recurring re-arm after a cycle that did nothing (``status=ready`` with ``--noop``) records
+``noop_streak`` and ``rest_until`` so no picker claims the task again until the rest
+(2h, 6h, 12h, 24h, then 48h; ``max_rest_hours`` on the task caps it) has elapsed. A re-arm
+WITHOUT ``--noop`` resets both, so the first cycle that does real work ends the backoff.
+See roadmap_claims.NOOP_REST_HOURS for why.
+
 ``note:`` is append-only in normal use. Prefer ``--append-note``; destructive note
 replacement requires ``--force``. ``--implementation-pr`` stores the canonical
 ``owner/repo#number`` reference used by merged-PR drift checks.
@@ -27,6 +33,7 @@ from __future__ import annotations
 import argparse
 import re
 import sys
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import yaml
@@ -42,6 +49,7 @@ from git_plumbing import (  # noqa: E402
     run_git,
 )
 from process_task_events import HANDOFF_DOC_RE, missing_handoff_docs  # noqa: E402
+from roadmap_claims import noop_rest_hours  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 PROJECTS_DIR = ROOT / "projects"
@@ -170,12 +178,16 @@ def close(
     dry_run: bool,
     force: bool = False,
     append_note: str | None = None,
+    noop: bool = False,
+    now: datetime | None = None,
 ) -> None:
     run_git(ROOT, "fetch", "origin", "main", "-q")
     path = roadmap_relpath(project)
     branch = branch or default_branch_name(project, task_id, session)
     ref = f"refs/heads/{branch}"
     _, task = load_task_at_ref("origin/main", project, task_id)
+    extra_fields = dict(extra_fields)
+    extra_fields.update(rest_fields(task, status, noop, now=now))
 
     existing_pr = task.get("implementation_pr")
     if (
@@ -276,6 +288,36 @@ def close(
     )
 
 
+def rest_fields(
+    task: dict, status: str, noop: bool, *, now: datetime | None = None
+) -> dict[str, str]:
+    """Fields implementing the recurring no-op backoff (see module docstring)."""
+    if noop:
+        if status != "ready" or not task.get("recurring"):
+            raise CloseError(
+                "ERROR: --noop is only for re-arming a recurring: true task to status=ready "
+                "after a cycle that found nothing to do."
+            )
+        if task.get("daily_commitment"):
+            raise CloseError(
+                "ERROR: --noop does not apply to daily_commitment tasks -- the daily gate "
+                "(daily_last_checked) already limits them to one attempt per Pacific day, and "
+                "a multi-day rest would skip promised days."
+            )
+        try:
+            streak = int(task.get("noop_streak") or 0) + 1
+        except (TypeError, ValueError):
+            streak = 1
+        now = now or datetime.now(timezone.utc)
+        hours = noop_rest_hours(streak, task.get("max_rest_hours"))
+        until = (now + timedelta(hours=hours)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        print(f"[close_task] no-op #{streak}: resting until {until} ({hours:g}h)", file=sys.stderr)
+        return {"noop_streak": str(streak), "rest_until": until}
+    if status == "ready" and (task.get("noop_streak") or task.get("rest_until")):
+        return {"noop_streak": "0", "rest_until": "null"}
+    return {}
+
+
 def parse_set_args(pairs: list[str]) -> dict[str, str]:
     result: dict[str, str] = {}
     for pair in pairs:
@@ -298,6 +340,11 @@ def main() -> int:
     parser.add_argument("--append-note", metavar="TEXT", help="Append TEXT to the existing task note; mutually exclusive with --set note=...")
     parser.add_argument("--force", action="store_true", help="Allow same-status close and destructive --set note replacement")
     parser.add_argument("--dry-run", action="store_true", help="Check state and print intent; push nothing")
+    parser.add_argument(
+        "--noop",
+        action="store_true",
+        help="Recurring re-arm after a cycle that did nothing: rest the task (2h..48h backoff) before any picker takes it again",
+    )
     args = parser.parse_args()
 
     if not (PROJECTS_DIR / args.project / "roadmap.yaml").exists():
@@ -329,6 +376,7 @@ def main() -> int:
             args.dry_run,
             force=args.force,
             append_note=args.append_note,
+            noop=args.noop,
         )
     except CloseError as exc:
         print(str(exc), file=sys.stderr)

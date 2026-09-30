@@ -89,6 +89,10 @@ ALLOWED_FIELDS = {
     "retry_context",
     "daily_last_checked",
     "daily_last_completed",
+    # Recurring no-op backoff (close_task.py --noop, roadmap_claims.NOOP_REST_HOURS).
+    "noop_streak",
+    "rest_until",
+    "max_rest_hours",
 }
 # Bare words YAML 1.1 parsers read as booleans; quote them so the value stays a string.
 YAML11_BOOL_WORDS = {"yes", "no", "on", "off", "y", "n"}

@@ -38,7 +38,7 @@ except ImportError:
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from daily_gate import already_recorded_today  # noqa: E402
-from roadmap_claims import remaining_scope_delegate_open  # noqa: E402
+from roadmap_claims import remaining_scope_delegate_open, task_is_resting  # noqa: E402
 from roadmap_deps import zero_diff_close_hint  # noqa: E402
 from project_lifecycle import (  # noqa: E402
     WORKABLE_PROJECT_STATUSES,
@@ -114,6 +114,9 @@ def find_ready_task(
             if task.get('status') != 'ready':
                 continue
             if remaining_scope_delegate_open(task, tasks_by_id):
+                continue
+            if task_is_resting(task, now=now):
+                # Recurring task resting after a no-op cycle (roadmap_claims.NOOP_REST_HOURS).
                 continue
             if already_recorded_today(task, now=now):
                 # Same-day-gated recurring task (e.g. mermaids-of-venice/t-013) whose
