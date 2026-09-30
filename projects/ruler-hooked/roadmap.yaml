@@ -336,7 +336,7 @@ tasks:
 - id: t-019
   milestone: m5
   title: Generate species designs for the 15-fish vertical-slice roster
-  status: needs-human
+  status: done
   passes: 0
   stakes: reversible
   gate_human: true
@@ -564,13 +564,18 @@ tasks:
     session): Legitimate: a look/feel or play verdict that only Silas can give. Note:
     AGENTS.md pre-approves generated art, and all 15 species pass agent review. Recommended:
     Silas clears this in one line.
-  updated: '2026-09-30T06:00:00Z'
+
+    APPROVED by silasfelinus in session 20260930T0600Z-gate-triage (Claude Code, 2026-09-30;
+    recorded under CONTROL.md's human gate clearance rule): The 15 vertical-slice fish
+    designs are accepted.
+  updated: '2026-09-30T07:00:00Z'
   owner: null
   claimed_by: 2026-09-23T080500Z-rh019-choirfish-verify
   claimed_at: '2026-09-23T08:00:02Z'
   implementation_pr: 'silasfelinus/conductor#5008'
   gate_reason: subjective-acceptance
   gate_rechecked: '2026-09-30'
+  approved_by_human: true
 
 - id: t-020
   milestone: m5
@@ -1025,7 +1030,7 @@ tasks:
 - id: t-031
   milestone: m4
   title: Grow the fish roster past the 15-species vertical slice
-  status: needs-human
+  status: ready
   gate_human: false
   stakes: reversible
   passes: 0
@@ -1043,12 +1048,18 @@ tasks:
     40-60 species shipped catalog. The 18 species already shared with Cthulhuquarium's
     151-species bible make the 40s cheap to reach. Under the proposed default-recommendation
     policy, agents adopt this if Silas has not answered within 7 days.
-  updated: '2026-09-30T06:00:00Z'
+
+    APPROVED by silasfelinus in session 20260930T0600Z-gate-triage (Claude Code, 2026-09-30;
+    recorded under CONTROL.md's human gate clearance rule): Shipped fish catalog target:
+    40-60 species. Expand toward it in art-backed, style-consistent batches, starting with
+    the 18 species shared with Cthulhuquarium.
+  updated: '2026-09-30T07:00:00Z'
   claimed_by: openai-scheduled-2026-09-24T001631Z-ruler-hooked-t031-a11
   claimed_at: '2026-09-24T00:16:31Z'
   implementation_pr: 'silasfelinus/kind_robots#2927'
   soft_gate: true
   gate_rechecked: '2026-09-30'
+  approved_by_human: true
 - id: t-032
   milestone: m4
   title: 'FOR SILAS: re-audit Ruler Hooked once the vertical slice is real'

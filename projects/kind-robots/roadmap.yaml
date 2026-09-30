@@ -2474,7 +2474,7 @@ tasks:
 - id: t-109
   milestone: m6
   title: 'SECURITY: entity previews now serve from an unauthenticated static route, losing revocable access control for private/mature images'
-  status: needs-human
+  status: ready
   gate_human: true
   stakes: outward-facing
   owner: null
@@ -2534,9 +2534,16 @@ tasks:
     answer, pending Silas: apply the narrow fix in the note. Prefer the static path only
     when isPublic && !isMature. That restores per-request revocation for private/mature
     previews.
-  updated: '2026-09-30T06:00:00Z'
+
+    APPROVED by silasfelinus in session 20260930T0600Z-gate-triage (Claude Code, 2026-09-30;
+    recorded under CONTROL.md's human gate clearance rule): Apply the narrow fix: prefer the
+    static /images/... path only when isPublic && !isMature, and keep private or mature
+    previews on /api/art/images/:id/file so mayView is re-checked on every request. The
+    implementation is agent work.
+  updated: '2026-09-30T07:00:00Z'
   gate_reason: security
   gate_rechecked: '2026-09-30'
+  approved_by_human: true
 
 - id: t-110
   milestone: m6
@@ -2667,7 +2674,7 @@ tasks:
   milestone: m6
   title: 'Decide how much entity context (Krea 2 / cfg-1 engines) belongs in the positive
     art prompt before the 1,152 queued negation-repair jobs render'
-  status: needs-human
+  status: ready
   gate_human: true
   stakes: reversible
   owner: null
@@ -2716,8 +2723,15 @@ tasks:
     PROMPTS.md rule 6 already says that prose describes what a thing does, not how it looks.
     Under the proposed default-recommendation policy, agents adopt this if Silas has not
     answered within 7 days.
-  updated: '2026-09-30T06:00:00Z'
+
+    APPROVED by silasfelinus in session 20260930T0600Z-gate-triage (Claude Code, 2026-09-30;
+    recorded under CONTROL.md's human gate clearance rule): Option (b). buildEntityArtPrompt
+    keeps identity-only lines (Name, Type, Species, Genre) and drops the prose lines
+    (Description, Effect, Flavor text, Existing art prompt), per ART-PROMPTS.md rule 6. Then
+    re-queue affected jobs from the manifest and resubmit the 11 blocked Rewards.
+  updated: '2026-09-30T07:00:00Z'
   gate_rechecked: '2026-09-30'
+  approved_by_human: true
 
 - id: t-115
   milestone: m6

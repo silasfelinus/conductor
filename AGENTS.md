@@ -377,6 +377,13 @@ days. A "needs DATABASE_URL" block that an admin endpoint plus a workflow would 
   art-archive/t-040 turned a shell-only import into a button. Building that path is agent work.
 - Before parking on a decision, check CONTROL.md, `notes_from_silas`, and standing directives.
   If Silas has already answered, apply the answer.
+- **Default-recommendation rule (Silas, 2026-09-30, standing).** A reversible product decision
+  gate can be parked only with a written recommendation. If Silas has not answered within 7 days,
+  the next `gate-triage` session adopts the recommendation. It records "ADOPTED under the
+  2026-09-30 default-recommendation rule" in the note, sets the task back to `ready`, and builds
+  it. Silas can still reverse the decision later. This never applies to a gate whose
+  `gate_reason` is money, publish, legal, security, irreversible, secrets, or physical-access.
+  Leave `approved_by_human` unset when adopting. Only Silas's own answer sets it.
 
 ## Security model — who can do what
 

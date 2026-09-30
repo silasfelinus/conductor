@@ -2718,7 +2718,7 @@ tasks:
 - id: t-165
   milestone: m2
   title: 'lora-ingestion/t-003: relay hangs a second time on flux2_dev_fp8mixed.safetensors, needs hands-on diagnosis'
-  status: needs-human
+  status: done
   gate_human: true
   stakes: reversible
   passes: 0
@@ -2796,9 +2796,15 @@ tasks:
     Relay health 2026-09-30: 317 DONE / 5 CANCELLED in 24h, 0 stale-running, 0 failed, queue
     idle. The hang has not recurred since 2026-09-20. Recommended: Silas closes this as not-
     recurring and reopens on the next hang.
-  updated: '2026-09-30T06:00:00Z'
+
+    APPROVED by silasfelinus in session 20260930T0600Z-gate-triage (Claude Code, 2026-09-30;
+    recorded under CONTROL.md's human gate clearance rule): Closed as not recurring. The
+    relay has run clean since 2026-09-20 (317 DONE / 0 stale / 0 failed in the 24h to
+    2026-09-30). Reopen on the next Flux.2 hang. smartQueue follow-up: conductor/t-201.
+  updated: '2026-09-30T07:00:00Z'
   gate_reason: physical-access
   gate_rechecked: '2026-09-30'
+  approved_by_human: true
 
 - id: t-166
   milestone: m2
@@ -2845,12 +2851,12 @@ tasks:
 - id: t-167
   milestone: null
   title: 'Relay wedged again on a NON-Flux job after the Flux.2 one was cleared (ArtJob 22838)'
-  status: needs-human
+  status: done
   gate_human: true
   owner: null
   stakes: reversible
   passes: 0
-  approved_by_human: false
+  approved_by_human: true
   note: >-
     FOR SILAS. Filed 2026-09-15. Deliberately narrow: this is the part of today's
     outage that t-165 does NOT cover, and it matters because it breaks t-165's
@@ -3026,7 +3032,11 @@ tasks:
     session): Legitimate: the remaining step needs hands on a machine no agent can reach.
     Same relay health as t-165. The smartQueue gap named in this note is agent work. Filed
     as conductor/t-201 (ready).
-  updated: '2026-09-30T06:00:00Z'
+
+    APPROVED by silasfelinus in session 20260930T0600Z-gate-triage (Claude Code, 2026-09-30;
+    recorded under CONTROL.md's human gate clearance rule): Closed as not recurring, same
+    evidence as t-165. Reopen on the next wedge. smartQueue follow-up: conductor/t-201.
+  updated: '2026-09-30T07:00:00Z'
   gate_reason: physical-access
   gate_rechecked: '2026-09-30'
 
@@ -3684,7 +3694,7 @@ tasks:
 - id: t-183
   milestone: m2
   title: 'Kaizen from t-180: check whether check-watchdog-liveness.ps1s 30-minute staleness threshold is well-tuned against the 5-minute watchdog cadence'
-  status: needs-human
+  status: done
   owner: null
   passes: 0
   stakes: reversible
@@ -3711,10 +3721,15 @@ tasks:
     GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
     session): Legitimate: the remaining step needs hands on a machine no agent can reach.
     Low value. Recommended: Silas closes this as won't-fix unless the watchdog misfires.
-  updated: '2026-09-30T06:00:00Z'
+
+    APPROVED by silasfelinus in session 20260930T0600Z-gate-triage (Claude Code, 2026-09-30;
+    recorded under CONTROL.md's human gate clearance rule): Closed as won't-fix. The
+    30-minute watchdog threshold stays unless it misfires.
+  updated: '2026-09-30T07:00:00Z'
   soft_gate: true
   gate_reason: physical-access
   gate_rechecked: '2026-09-30'
+  approved_by_human: true
 
 - id: t-184
   milestone: m2

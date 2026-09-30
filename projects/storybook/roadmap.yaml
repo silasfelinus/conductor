@@ -1158,6 +1158,9 @@ tasks:
     Checked whether the new engine (storybook-table.vue / storybook-storymaker.vue / storybook-reading.vue) already carries equivalent behavior for each: the cast-picker property (verifyGalleryIndexHydration) DOES already hold in storybook-table.vue -- it casts via characterStore.browseCharacters.map(toHeroCard).map(withCharacterLock), the same lightweight-DTO pattern, so that guard is a straightforward repoint once storybook-page.vue goes away, not a feature gap. The beat-art property (verifyNarrativeArtPersistence) is a REAL GAP, not just a guard-migration chore: storybook-reading.vue's sceneArt only renders via `v-if="sceneArt"` when an ArtImage already exists on the run -- there is no queueing/rendering/failed/cancelled status indicator and no retry control in the new engine at all. A beat whose art generation fails or is still queued currently just shows no frame, silently, with no way for the reader to retry. Filed storybook/t-070 to close this gap (or have Silas explicitly accept the silent-no-frame behavior as intentional) before the bulk cutover PR deletes storybook-page.vue and verifyNarrativeArtPersistence.mjs's pinned behavior with it -- deleting first would ship a real regression, not just remove a redundant guard.
 
     No Kind Robots mutation this cycle (pure investigation + one new roadmap task filed). Re-arming to ready. Next cycle: decide the verifyGalleryIndexHydration/verifyNarrativeRoles/verifyNarrativePrimitives repoint (mechanical, low-risk) versus wait on t-070 (blocks safely deleting the beat-art guard's pinned behavior) as the next bounded slice, or split them.
+
+    Silas, 2026-09-30 (via t-065): the destructive beat-loop slice may land on or after
+    2026-10-05. Not before.
   updated: '2026-09-28T12:57:53Z'
   owner: worker
   claimed_by: 20260928T125429Z-storybook-t037
@@ -1795,7 +1798,7 @@ tasks:
 - id: t-058
   milestone: m7
   title: "Decide whether the new run engine should ever attach fresh in-scene art, and wire it up if so"
-  status: needs-human
+  status: ready
   stakes: reversible
   passes: 0
   note: |-
@@ -1873,12 +1876,18 @@ tasks:
     wire the same enqueue/poll/attach flow the legacy life-run path already uses, so the new
     engine does not regress art the old one had. Under the proposed default-recommendation
     policy, agents adopt this if Silas has not answered within 7 days.
-  updated: '2026-09-30T06:00:00Z'
+
+    APPROVED by silasfelinus in session 20260930T0600Z-gate-triage (Claude Code, 2026-09-30;
+    recorded under CONTROL.md's human gate clearance rule): Option (b). Wire the same
+    enqueue/poll/attach-on-completion flow storybook-life-run.vue uses into the new run
+    engine.
+  updated: '2026-09-30T07:00:00Z'
   owner: worker
   claimed_by: 20260922T100000Z-sb-t058-triage
   claimed_at: '2026-09-22T09:57:40Z'
   soft_gate: true
   gate_rechecked: '2026-09-30'
+  approved_by_human: true
 
 - id: t-059
   milestone: m7
@@ -2071,7 +2080,7 @@ tasks:
 - id: t-065
   milestone: m7
   title: "FOR SILAS: confirm the legacy-export notice window is long enough before t-037's destructive beat-loop cutover lands"
-  status: needs-human
+  status: done
   soft_gate: true
   passes: 0
   stakes: reversible
@@ -2110,10 +2119,16 @@ tasks:
     session): Removed depends_on t-037. It was backwards: this gate releases t-037's
     destructive slice, not the other way round. The legacy-export notice has been live since
     2026-09-21. Recommended: proceed on 2026-10-05 (two weeks of notice).
-  updated: '2026-09-30T06:00:00Z'
+
+    APPROVED by silasfelinus in session 20260930T0600Z-gate-triage (Claude Code, 2026-09-30;
+    recorded under CONTROL.md's human gate clearance rule): Proceed with t-037's destructive
+    beat-loop cutover on or after 2026-10-05 (two weeks of notice after the 2026-09-21
+    banner).
+  updated: '2026-09-30T07:00:00Z'
   implementation_pr: 'silasfelinus/conductor#5050'
   gate_reason: subjective-acceptance
   gate_rechecked: '2026-09-30'
+  approved_by_human: true
 
 - id: t-066
   milestone: m7
