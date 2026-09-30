@@ -438,7 +438,7 @@ tasks:
 - id: t-022
   milestone: m3
   title: "Shared bestiary handshake with Ruler is Hooked"
-  status: ready
+  status: done
   soft_gate: false
   owner: worker
   passes: 0
@@ -478,6 +478,12 @@ tasks:
     Monster.games freshness, or reseeding the 18 shared species, should go through an admin
     API or workflow path, not Silas's WSL checkout. NEXT: read Monster.games for the 18
     slugs via the API. If they are stale, add an admin-only reseed path and run it.
+
+    CLOSED 2026-09-30 (scheduled Agent run): kind_robots #3130 added the admin sync
+    workflow; its first write=true run got HTTP 400 (PATCH route validated the games string
+    as an ArtImage id), fixed in #3136. After #3136 deployed, re-dispatched 'Sync Monster
+    games tags' write=true; live API now shows cthulhuquarium,ruler-hooked for choirfish,
+    errand-guppy, moebius-crab, the-pleasant-island (all 18 shared species tagged).
   prior_note: >
     Close the loop Silas asked for: "we can have appropriate ones appear in both
     games." Confirm the ruler-hooked-tagged fish seed correctly into the shared
@@ -494,8 +500,9 @@ tasks:
     conversation, and this task only prepares for it.
   claimed_by: claude-scheduled-20260827T003036Z-cq-t022
   claimed_at: '2026-08-27T00:30:37Z'
-  updated: '2026-09-30T06:00:00Z'
+  updated: '2026-09-30T19:13:23Z'
   gate_rechecked: '2026-09-30'
+  implementation_pr: 'silasfelinus/kind_robots#3136'
 - id: t-023
   milestone: m3
   title: "The voices — shopkeeper, assistant, and the Character/Bot records behind them"
