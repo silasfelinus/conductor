@@ -37,6 +37,7 @@ ROOT = Path(__file__).resolve().parent.parent
 CHECKS: list[tuple[str, list[str], bool, bool]] = [
     ("check_pr_merged_drift", ["scripts/check_pr_merged_drift.py"], True, False),
     ("audit_human_gates", ["scripts/audit_human_gates.py"], False, True),
+    ("check_gate_legitimacy", ["scripts/check_gate_legitimacy.py", "--live"], True, False),
     ("check_project_scaffold_drift", ["scripts/check_project_scaffold_drift.py"], True, False),
     ("check_live_facet_coverage", ["scripts/check_live_facet_coverage.py"], True, False),
     ("check_milestone_status_drift", ["scripts/check_milestone_status_drift.py"], False, False),

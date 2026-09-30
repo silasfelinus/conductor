@@ -368,7 +368,12 @@ tasks:
     host able to say what happened -- they are complements, and item (1) is worth doing
     first because it is free -- and it is now done. Set status: done when MemTest has run at
     least one full pass and the 09-12 reboot is accounted for.
-  updated: '2026-09-13T13:00:00Z'
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Legitimate: the remaining step needs hands on a machine no agent can reach.
+  updated: '2026-09-30T06:00:00Z'
+  gate_reason: physical-access
+  gate_rechecked: '2026-09-30'
 
 - id: t-021
   milestone: m4
@@ -416,7 +421,13 @@ tasks:
     expand storage; if it's a false-positive from a transient spike, no roadmap
     action needed -- just note it here so the check doesn't re-flag identically.
     Nothing unblocks downstream; this is a standalone observability finding.
-  updated: '2026-09-23T18:10:00Z'
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Legitimate: the remaining step needs hands on a machine no agent can reach.
+    Worth a 30-second df -h / btrfs filesystem usage / on Alexandria.
+  updated: '2026-09-30T06:00:00Z'
+  gate_reason: physical-access
+  gate_rechecked: '2026-09-30'
 
 goal: Run Kind Robots reliably on the Unraid/home infrastructure, with deployment, storage, networking, GPU services,
   and recovery procedures kept reproducible.

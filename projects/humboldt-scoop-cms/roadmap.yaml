@@ -453,7 +453,7 @@ tasks:
   depends_on:
   - t-024
   - t-025
-  note: >
+  note: >-
     FOR SILAS: All the software-only prep is done and merged
     (silasfelinus/humboldtscoopsolutions#79, field-client/). It contains a
     release-signing scaffold (build.gradle.kts reads a git-ignored
@@ -484,11 +484,16 @@ tasks:
     publish) to proceed on the same footing.
 
     iOS (t-027) is a separate task, untouched here.
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Legitimate: public posting or store submission under Kind Robots' name.
   claimed_by: 20260818T082745Z-hsscms-t026
   claimed_at: '2026-08-18T08:28:51Z'
-  updated: '2026-08-18T08:38:13Z'
+  updated: '2026-09-30T06:00:00Z'
   soft_gate: false
   implementation_pr: 'silasfelinus/humboldtscoopsolutions#79'
+  gate_reason: publish
+  gate_rechecked: '2026-09-30'
 
 - id: t-027
   milestone: m10
@@ -500,7 +505,7 @@ tasks:
   depends_on:
   - t-024
   - t-025
-  note: >
+  note: >-
     FOR SILAS: All the software-only prep is done and merged
     (silasfelinus/humboldtscoopsolutions#80, field-client/). It contains an
     iOS Info.plist audit (result: no missing usage-description keys --
@@ -535,11 +540,16 @@ tasks:
 
     Android (t-026) already reached this same needs-human state and is a
     separate task.
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Legitimate: public posting or store submission under Kind Robots' name.
   claimed_by: 2026-08-18T092755Z-hss-t027-
   claimed_at: '2026-08-18T09:27:56Z'
-  updated: '2026-08-18T09:36:49Z'
+  updated: '2026-09-30T06:00:00Z'
   soft_gate: false
   implementation_pr: 'silasfelinus/humboldtscoopsolutions#80'
+  gate_reason: publish
+  gate_rechecked: '2026-09-30'
 
 - id: t-028
   milestone: m11
@@ -554,15 +564,21 @@ tasks:
   - t-014
   - t-015
   - t-020
-  note: >
+  note: >-
     FOR SILAS: Hard launch gate. Before switching from test/seed behavior to real customer addresses, production credentials,
     or real crew assignments, verify auth boundaries, backups, retention/deletion/export, TLS, geocoding, schema dry run/migrations,
     and rollback. Development may proceed around this gate; crossing it requires explicit human approval.
 
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Legitimate: an irreversible production or external-repo action.
+  gate_reason: irreversible
+  gate_rechecked: '2026-09-30'
+  updated: '2026-09-30T06:00:00Z'
+
 - id: t-029
   milestone: m11
   title: "Publish HSS Android and iOS apps to the public stores"
-  status: needs-human
+  status: waiting
   owner:
   passes: 0
   stakes: outward-facing
@@ -572,10 +588,17 @@ tasks:
   - t-026
   - t-027
   - t-028
-  note: >
+  note: >-
     FOR SILAS: Final outward-facing gate: submit the production-ready Android and iOS builds, complete store-account/review
     requirements, address review feedback, and verify the public releases. The project is not finished until both portals
     are actually available in their stores.
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Legitimate: public posting or store submission under Kind Robots' name. Moved
+    to waiting behind t-026/t-027/t-028.
+  gate_reason: publish
+  gate_rechecked: '2026-09-30'
+  updated: '2026-09-30T06:00:00Z'
 
 - id: t-030
   milestone: m8
@@ -785,7 +808,12 @@ tasks:
   depends_on: t-040
   note: >-
     Decisions only Silas (and his partners) can make, listed in docs/PRICING-DECISIONS.md "Open" and at the top of class-hss-agreement.php. (1) Three agreement sections were NOT in the meeting notes and are drafted defaults: 30 days' notice of price or terms changes, the Responsibility section, and the failed-payment line under Billing. A legal read in California is recommended before relying on it. (2) Weekly 3-4 dogs was not restated and kept $130/mo, which is $10 more than every-other-week 3-4 dogs for twice the visits. (3) In the Stripe dashboard, turn off cancellation in the customer (billing) portal, so cancellations come through the change-request flow where the refund rule applies.
-  updated: '2026-09-26T21:40:00Z'
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Legitimate: a legal or licensing call.
+  updated: '2026-09-30T06:00:00Z'
+  gate_reason: legal
+  gate_rechecked: '2026-09-30'
 
 - id: t-043
   milestone: m11
@@ -856,10 +884,16 @@ tasks:
     database), set approved_by_human: true and status: done, or paste the failure output
     here if it doesn't come out clean so a follow-up task can fix it. Nothing else in this
     project is blocked on this -- releasing the claim so other work can proceed.
-  updated: '2026-09-27T01:58:59Z'
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Legitimate: the remaining step needs hands on a machine no agent can reach.
+    schema-dry-run.sh must run as root on Alexandria.
+  updated: '2026-09-30T06:00:00Z'
   claimed_by: 2026-09-27T020000Z-humboldt-scoop-cms-t044
   claimed_at: '2026-09-27T01:58:43Z'
   soft_gate: true
+  gate_reason: physical-access
+  gate_rechecked: '2026-09-30'
 
 goal: Keep Humboldt Scoop Solutions’ website maintainable through its CMS while accurately presenting services, leads,
   operations, and brand voice.

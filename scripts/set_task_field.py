@@ -89,6 +89,10 @@ ALLOWED_FIELDS = {
     "retry_context",
     "daily_last_checked",
     "daily_last_completed",
+    # check_gate_legitimacy.py (2026-09-30): why a needs-human gate needs a human,
+    # and when an agent last re-triaged it.
+    "gate_reason",
+    "gate_rechecked",
     # Recurring no-op backoff (close_task.py --noop, roadmap_claims.NOOP_REST_HOURS).
     "noop_streak",
     "rest_until",

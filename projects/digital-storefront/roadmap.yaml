@@ -602,7 +602,7 @@ tasks:
   passes: 0
   stakes: reversible
   depends_on: t-037
-  note: >
+  note: >-
     Exercise test-mode purchase paths for PDF entitlement/download, supporter subscription,
     mana top-up, POD PrintJob creation, DLC Entitlement+Grant, and the general cart. Verify auth,
     idempotency, success/cancel returns, webhook fulfillment, and customer-visible post-purchase
@@ -642,11 +642,18 @@ tasks:
     stripe.webhooks.generateTestHeaderString against a mocked Prisma client) to close the
     webhook-routing coverage gap without needing live credentials -- worth a dedicated follow-up
     task since it's a real, achievable next slice.
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Legitimate: the remaining step needs credentials only Silas can supply. Needs
+    Stripe TEST-mode keys stored as a GitHub Actions secret (or in the session environment).
+    Everything offline is done. kind-economy/t-011 adopts this work.
   claimed_by: claude-quirky-curie-20260808T153013Z-df-t039
   claimed_at: '2026-08-08T15:30:14Z'
   implementation_pr: silasfelinus/kind_robots#1615
   soft_gate: true
-  updated: '2026-08-08T15:30:14Z'
+  updated: '2026-09-30T06:00:00Z'
+  gate_reason: secrets
+  gate_rechecked: '2026-09-30'
 
 - id: t-040
   milestone: m6
@@ -684,10 +691,16 @@ tasks:
     -- nothing else in digital-storefront depends_on t-040 directly yet, but t-041 (responsive
     polish) and the broader "storefront is genuinely live" goal both assume real fulfillment
     exists.
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Legitimate: live money. Stays with Silas. Needs a real Printful account and
+    keys.
   claimed_by:
   claimed_at:
   implementation_pr: silasfelinus/kind_robots#1658
-  updated: '2026-08-09T11:32:44Z'
+  updated: '2026-09-30T06:00:00Z'
+  gate_reason: money
+  gate_rechecked: '2026-09-30'
 
 - id: t-041
   milestone: m6

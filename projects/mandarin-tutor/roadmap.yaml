@@ -662,7 +662,12 @@ tasks:
       confirm the evolved Mandarin experience at phone, tablet, and desktop widths before m5
       and the reopened project are marked finished. No publish, billing, DNS, secret, or
       destructive production action is attached to this gate.
-    updated: '2026-09-19T20:00:00Z'
+
+      GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+      session): Legitimate: a look/feel or play verdict that only Silas can give.
+    updated: '2026-09-30T06:00:00Z'
+    gate_reason: subjective-acceptance
+    gate_rechecked: '2026-09-30'
 
   - id: t-028
     milestone: m5
@@ -788,7 +793,7 @@ tasks:
   - id: t-030
     milestone: m5
     title: "Deeper glyph history: ancient forms, original meanings, and borrowings per character"
-    status: needs-human
+    status: ready
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -814,10 +819,23 @@ tasks:
       Recommends Wiktionary Glyph origin (CC BY-SA 4.0) as an isolated, attributed field. TO
       APPROVE: pick option 1, 2 or 3 in that file and add a note_from_silas on t-030; then set
       status: ready. Unblocks: ingestion + rendering of glyphHistory in kind_robots.
-    updated: '2026-09-29T13:45:10Z'
+
+      GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+      session): Legitimate: a legal or licensing call. Recommendation in GLYPH-HISTORY-
+      SOURCES.md: Wiktionary Glyph origin (CC BY-SA 4.0) as an isolated, attributed field.
+
+      APPROVED by silasfelinus in session 20260930T0600Z-gate-triage (Claude Code, 2026-09-30;
+      recorded under CONTROL.md's human gate clearance rule): Option 1 in GLYPH-HISTORY-
+      SOURCES.md. Wiktionary 'Glyph origin' (CC BY-SA 4.0) as an isolated, attributed
+      glyphHistory field, ingested from the dump rather than the live API. The share-alike
+      scope on that one field is accepted.
+    updated: '2026-09-30T07:00:00Z'
     claimed_by: 2026-09-29T13:44:42Z-glyph
     claimed_at: '2026-09-29T13:44:43Z'
     soft_gate: true
+    gate_reason: legal
+    gate_rechecked: '2026-09-30'
+    approved_by_human: true
 
   - id: t-031
     milestone: m5

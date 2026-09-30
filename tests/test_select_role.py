@@ -58,6 +58,7 @@ def _patched(
     queue_summary=None,
     daily_commitments=(),
     stale_recurring_tasks=(),
+    gate_triage_findings=(),
 ):
     """One combined patch context covering all eight signals, each defaulted
     to "nothing found"/"not overdue" and overridden per-test — keeps each
@@ -85,6 +86,9 @@ def _patched(
         ),
         mock.patch.object(
             select_role, "find_stale_recurring_tasks", return_value=list(stale_recurring_tasks)
+        ),
+        mock.patch.object(
+            select_role, "find_gate_triage_findings", return_value=list(gate_triage_findings)
         ),
     )
 
@@ -1378,3 +1382,38 @@ def test_script_is_read_only_like_its_sources():
     text = SELECT_ROLE.read_text()
     for forbidden in ("def claim_task", "def set_task_status", "def write_roadmap", "delete_branch(", "'w')"):
         assert forbidden not in text, f"{forbidden!r} would make this script no longer read-only"
+
+
+# --- gate-triage (check_gate_legitimacy.py, 2026-09-30) ----------------------
+
+GATE_FINDING = {
+    "project": "rainbow-butterflies",
+    "task_id": "t-014",
+    "title": "Review launch evidence",
+    "findings": [{"code": "SHOULD_BE_WAITING", "detail": "depends_on t-009 is not done"}],
+}
+
+
+def test_gate_triage_outranks_worker():
+    with _apply(_patched(queue_summary=SOME_READY_TASK, gate_triage_findings=[GATE_FINDING])):
+        result = select_role.select_role(github_token="fake-token")
+
+    assert result["role"] == "gate-triage"
+    assert "rainbow-butterflies/t-014" in result["reason"]
+    assert result["gate_triage_finding_count"] == 1
+
+
+def test_site_audit_outranks_gate_triage():
+    with _apply(_patched(audit_status=AUDIT_OVERDUE, gate_triage_findings=[GATE_FINDING])):
+        result = select_role.select_role(github_token="fake-token")
+
+    assert result["role"] == "site-auditor"
+    assert result["gate_triage_findings"] == [GATE_FINDING]
+
+
+def test_gate_triage_downgrades_when_github_unreachable():
+    with _apply(_patched(gate_triage_findings=[GATE_FINDING])):
+        result = select_role.select_role()
+
+    assert result["role"] == "reviewer-uncertain"
+    assert result["underlying_role"] == "gate-triage"

@@ -19,7 +19,7 @@ At the start of every session, before responding to any task, run a conductor sw
 5. Read `docs/state-reconciliation.md`, then run `python scripts/session_sweep.py`. It runs every reconciliation check in one process and prints
    ONE line per check, plus the tail of any check that did not exit 0 — do not also run the checks one by
    one unless you need a flag (`--repair`, `--include-inactive`, `--payload-only`). Checks it runs:
-   `check_pr_merged_drift`, `audit_human_gates`, `check_project_scaffold_drift`, `check_live_facet_coverage`,
+   `check_pr_merged_drift`, `audit_human_gates`, `check_gate_legitimacy --live`, `check_project_scaffold_drift`, `check_live_facet_coverage`,
    `check_milestone_status_drift`, `check_container_log_drift`, `check_roadmap_note_size --payload-only`,
    `check_facet_prompt_subjects`, `check_priority_queue_starvation`, `check_vendored_scanner_parity`,
    `check_daily_commitment_staleness`, `check_recurring_claim_drift`, `check_recurring_churn`, plus `build_dream_proposal.py --check

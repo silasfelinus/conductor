@@ -654,9 +654,14 @@ tasks:
       FOR SILAS: Live-verified pages/admin/art-archive.vue on kindrobots.org at phone/tablet/desktop widths (390px/768px/1280px) via a disposable cypress-* admin test login (created, granted admin+mature access, screenshotted, then fully deleted afterward -- 0 remaining). Screenshots confirm no horizontal overflow and no crushed controls at any width: the filter/search panel, the batch-selection curation board (rating + drag/drop preset targets), and the paginated grid + detail pane all reflow cleanly. kind_robots' own test:layout-contract and test:disabled-affordances checks both pass with zero violations for this file, so no code changes were needed -- no PR opened in kind_robots.
       Limitation: production currently has 0 rows in ArchiveEntry (t-019 ran a dry-run reconciliation only; the real bulk import via t-024's endpoint hasn't been triggered yet), so only the empty-state UI was exercised live -- the populated grid with real thumbnails and actual drag/drop-over-real-cards interaction could not be visually confirmed against live data. Worth a quick re-check at all three widths once the real import has run.
       TO APPROVE: if the above is acceptable, set approved_by_human: true and status: done on art-archive/t-020. Nothing else in this roadmap depends_on t-020 -- it is the standalone m5 acceptance gate, not a blocker for other tasks.
+
+      GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+      session): Legitimate: a look/feel or play verdict that only Silas can give.
     claimed_by: claude-web-20260919T093219Z-artarchive-t020-a1
     claimed_at: '2026-09-19T09:32:20Z'
-    updated: '2026-09-19T09:42:27Z'
+    updated: '2026-09-30T06:00:00Z'
+    gate_reason: subjective-acceptance
+    gate_rechecked: '2026-09-30'
 
   - id: t-021
     milestone: m2
@@ -1016,7 +1021,7 @@ tasks:
   - id: t-033
     milestone: m4
     title: "Confirm archive-preset ArtJobs are safe to always tag engine: 'A1111'"
-    status: needs-human
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-016
@@ -1041,8 +1046,16 @@ tasks:
       What unblocks when he does: a new t-039 (or similar) implementing exactly the confirmed shape, with this investigation as its starting context so the next session doesn't re-derive it.
 
       Soft gate (stakes: reversible, unclear architectural direction per AGENTS.md's soft/hard split) -- not stopping the cycle for this; moving on to other ready work.
-    updated: '2026-09-19T15:38:55Z'
-    soft_gate: true
+
+      GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+      session): NOT A HUMAN GATE, returned to agents. Silas's standing directive (2026-08-09)
+      answers this: 'Nothing should be running a1111 ... any (all) gen tasks should be comfy.'
+      The fix shape in this note (buildDefaultComfyWorkflow, the same family allowlist as
+      generate-preview.post.ts, reject incompatible families, add this file to
+      verifyComfyOnlyGeneration.ts) is the implementation. Build it. Do not re-ask.
+    updated: '2026-09-30T06:00:00Z'
+    soft_gate: false
+    gate_rechecked: '2026-09-30'
 
   - id: t-034
     milestone: m4
@@ -1276,12 +1289,11 @@ tasks:
   - id: t-041
     milestone: m5
     title: "Run the first real production import of the private archive and record the result"
-    status: needs-human
+    status: waiting
     passes: 0
     stakes: reversible
     gate_human: true
-    depends_on:
-      - t-040
+    depends_on: [t-044]
     note: |-
       The step the whole project was for, and the one nobody filed. t-019's title reads like this task but its implementation built the --dry-run mode and the privacy audit instead; its own note says running against the real /app/private mount needed shell access the agent did not have, and it was closed anyway. t-020 then confirmed from the live site that production held 0 ArchiveEntry rows, and kind_robots#2885 recorded explicitly that no production import had been run. Nothing since has changed that, so 36 of 38 tasks are done and none of the files under /mnt/user/pc/kindrobots/private have entered the database.
       FOR SILAS: with t-040 merged, this needs no shell. On kindrobots.org go to /admin/art-archive and press Dry Run. Read the report: filesScanned, the new/changed/moved/copied/unchanged/missing plan, scan issues, how many files carry Resource match evidence, and the unresolved-model count. Unresolved checkpoints and LoRAs are expected and do not block -- they are preserved as evidence and collected by t-021's backlog. If the counts look right, press Import and confirm. Every row is written isPublic=false and isMature=true; the import is idempotent, so a second run after adding missing Resources is safe.
@@ -1355,11 +1367,22 @@ tasks:
       human gate, so the CURRENT approval flag is reset to false while the prior import
       authorization remains preserved above. Do not deploy or retry the production scan
       until Silas clears that concrete deployment/action.
-    updated: '2026-09-29T09:12:00Z'
+
+      GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+      session): Production now runs a build containing #2933/#2936 (kind_robots 431f499,
+      2026-09-29), so the Force Update blocker is cleared. Dry-run re-triggered today: run
+      36672365799. The single POST /api/admin/art-archive/dry-run still hit the runner's 300s
+      read timeout. The workflow reported green anyway because the fail step was import-only,
+      fixed in this PR. The blocker is now engineering: a synchronous full scan cannot finish
+      inside one HTTP request. Filed art-archive/t-044 (ready) to make the scan
+      resumable/batched. Moved this task to waiting behind it. Silas's import authorization,
+      preserved above, still stands for when t-044 lands.
+    updated: '2026-09-30T06:00:00Z'
     approved_by_human: false
     owner: worker
     claimed_by: 2026-09-20T112500Z-art-archive-t041-chatgpt-fix1
     claimed_at: '2026-09-20T11:26:00Z'
+    gate_rechecked: '2026-09-30'
 
   - id: t-042
     milestone: m5
@@ -1438,4 +1461,12 @@ tasks:
       done rather than opening a redundant PR.
     updated: '2026-09-23T09:03:39Z'
     implementation_pr: 'silasfelinus/kind_robots#3006'
+  - id: t-044
+    title: Make the archive dry-run/import scan finish within request limits (resumable or batched)
+    status: ready
+    stakes: reversible
+    owner: null
+    passes: 0
+    updated: '2026-09-30T06:00:00Z'
+    note: 'Filed by gate triage 2026-09-30. Conductor run 36672365799: POST /api/admin/art-archive/dry-run on production (kind_robots 431f499, with #2933/#2936 deployed) did not respond within 300s. Earlier attempts hung for 40+ minutes. A full synchronous scan of the private mount cannot fit in one HTTP request. Make it an async job (start, then poll status) or a cursor-batched scan, update scripts/run_art_archive_production_import.py to drive it, and re-run the dry-run workflow. Unblocks t-041.'
 

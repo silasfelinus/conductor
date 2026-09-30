@@ -284,7 +284,7 @@ tasks:
   milestone: m3
   title: "Run the Stripe checkout/webhook/fulfillment matrix end-to-end in TEST mode"
   status: needs-human
-  updated: '2026-09-29T08:38:00Z'
+  updated: '2026-09-30T06:00:00Z'
   passes: 0
   stakes: outward-facing
   gate_human: false
@@ -311,11 +311,19 @@ tasks:
     SILAS: unchanged ask -- supply TEST-mode Stripe keys + a reachable database URL to a
     session, or run the matrix yourself against staging.
     GATE HYGIENE 2026-09-29: approved_by_human=true records Silas's 2026-09-07 authorization to run the TEST-mode matrix. The remaining blocker is access to test Stripe credentials plus a reachable database, not another policy decision. Keep this as a soft access gate until an equipped session runs the matrix; live keys, real charges, live products/prices, and payouts remain separately gated.
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Legitimate: the remaining step needs credentials only Silas can supply. The
+    decision is made (TEST mode authorized 2026-09-07). The only missing piece is Stripe
+    TEST keys plus a reachable database. Supply them as a secret and an agent runs the
+    matrix.
   owner: worker
   claimed_by: claude-scheduled-20260907T143500Z-ke-t011
   claimed_at: '2026-09-07T14:31:50Z'
   soft_gate: true
   implementation_pr: 'silasfelinus/kind_robots#2492'
+  gate_reason: secrets
+  gate_rechecked: '2026-09-30'
 
 - id: t-012
   milestone: m3
@@ -336,15 +344,15 @@ tasks:
 - id: t-013
   milestone: m3
   title: "GATE: go live with real Stripe keys and take the first real dollar"
-  status: needs-human
+  status: waiting
   owner:
-  updated: '2026-08-19T00:00:00Z'
+  updated: '2026-09-30T06:00:00Z'
   passes: 0
   stakes: irreversible
   gate_human: true
   approved_by_human: false
   depends_on: [t-008, t-011, t-012]
-  note: >
+  note: >-
     FOR SILAS: FOR SILAS ONLY. Real money, real customers, real refund and chargeback exposure. No agent may set live keys,
     create live products or prices, or trigger a live charge. Preconditions before this is even askable: t-011's test matrix
     passes clean, t-008's split ledger writes correctly for every purchase path, t-012's env documentation is complete, and
@@ -352,7 +360,14 @@ tasks:
     first real transaction should be Silas buying the smallest mana tier from his own site and then verifying, by hand, that
     the Order row, the mana credit, and the split rows all match to the cent.
 
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Legitimate: live money. Stays with Silas. Moved to waiting: depends_on t-011
+    (TEST-mode matrix) is not done, so this is not even askable yet. resolve_deps.py
+    releases it.
+
   # ------------------------------------------------------------ m4 DISPERSAL
+  gate_reason: money
+  gate_rechecked: '2026-09-30'
 - id: t-014
   milestone: m4
   title: "Design the creator payout mechanism"
@@ -372,19 +387,24 @@ tasks:
 - id: t-015
   milestone: m4
   title: "GATE: enable real creator payouts"
-  status: needs-human
+  status: waiting
   owner:
-  updated: '2026-08-19T00:00:00Z'
+  updated: '2026-09-30T06:00:00Z'
   passes: 0
   stakes: irreversible
   gate_human: true
   approved_by_human: false
   depends_on: [t-014, t-013]
-  note: >
+  note: >-
     FOR SILAS: FOR SILAS ONLY. Paying third parties is irreversible, creates tax-reporting obligations, and is the point at
     which the site's creator-earnings promise becomes legally load-bearing rather than aspirational. No agent creates a Connect
     account, onboards a creator, or moves a cent. Gated behind a working split ledger, live payments, a settled entity decision,
     and t-014's design being reviewed by someone qualified.
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Legitimate: live money. Stays with Silas. Moved to waiting behind t-013.
+  gate_reason: money
+  gate_rechecked: '2026-09-30'
 
 - id: t-016
   milestone: m4
@@ -488,20 +508,25 @@ tasks:
   title: "GATE: connect real social accounts and publish the first posts"
   status: needs-human
   owner:
-  updated: '2026-08-19T00:00:00Z'
+  updated: '2026-09-30T06:00:00Z'
   passes: 0
   stakes: outward-facing
   gate_human: true
   approved_by_human: false
   depends_on: [t-025]
-  note: >
+  note: >-
     FOR SILAS: FOR SILAS ONLY. Publishing under Kind Robots' name in public, on platforms with live audiences, on a topic
     (AI) that a lot of people are actively angry about. No agent creates a social account, connects an API key, or publishes
     a post. When approving, decide explicitly: which platforms (from t-024's recommendation), who reviews the queue and how
     often, what the volume ceiling is, and what the response plan is if a post gets a hostile reception — deciding that in
     advance, calmly, is much better than deciding it while a thread is going badly.
 
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Legitimate: public posting or store submission under Kind Robots' name.
+
   # --------------------------------------------------------------- m6 ENTITY
+  gate_reason: publish
+  gate_rechecked: '2026-09-30'
 - id: t-018
   milestone: m6
   title: "Establish the true current legal status of Save One Human"

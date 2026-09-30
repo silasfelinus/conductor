@@ -301,6 +301,43 @@ What unblocks when he does (next task id + what it will do).
 Do NOT write the note for the next agent to read. The agent reads the roadmap;
 Silas reads the note. Agent-facing context belongs in the PR description.
 
+### A gate must say why it needs a human, or agents take it back
+
+Silas, 2026-09-30: *"can we get some sort of oversight so that we aren't allowing things to hang
+when its not really a human gate issue?"* The triage that prompted this found 15 of 51 open gates
+were agent work. Examples: a dependency wait filed as a gate. A decision already answered by one of
+Silas's standing directives. A "needs a Force Update" block on a fix that had been live for nine
+days. A "needs DATABASE_URL" block that an admin endpoint plus a workflow would have removed.
+
+- **`gate_reason:`** names why a human is needed. It is one of `money`, `publish`, `legal`,
+  `irreversible`, `secrets`, `security`, `physical-access`, `subjective-acceptance`, or
+  `creative-approval`. Set it whenever you park a task at `needs-human`. If none fits, it is
+  probably not a human gate.
+- **`python scripts/check_gate_legitimacy.py [--live]`** flags gates agents should take back:
+  - NO_GATE_BASIS: a hard gate with no hard-gate marker.
+  - APPROVED_PARKED: an approved decision nobody executed.
+  - SHOULD_BE_WAITING: an unmet `depends_on`. Use `status: waiting` instead.
+  - DEPLOY_PREREQ_MET: waiting on a deploy that has already shipped.
+  - UNREVIEWED: not re-triaged in 7 days (soft), 14 days (hard), or 30 days (with a human-only
+    `gate_reason`).
+- **`select_role.py` returns `gate-triage`** while any finding exists. It ranks above `worker`.
+  Clear each finding in one of three ways: execute it, reclassify it (`ready`/`waiting`, or a
+  new ready task for the engineering it hides), or re-check it for real and stamp
+  `gate_rechecked: YYYY-MM-DD` with a one-line reason in the note. A stamp without a real
+  re-check is the failure this exists to stop.
+- Before parking on access ("needs DB/shell/Alexandria"), ask whether an admin HTTPS endpoint
+  plus a conductor workflow using `KR_API_TOKEN` would remove the need. That is how
+  art-archive/t-040 turned a shell-only import into a button. Building that path is agent work.
+- Before parking on a decision, check CONTROL.md, `notes_from_silas`, and standing directives.
+  If Silas has already answered, apply the answer.
+- **Default-recommendation rule (Silas, 2026-09-30, standing).** A reversible product decision
+  gate can be parked only with a written recommendation. If Silas has not answered within 7 days,
+  the next `gate-triage` session adopts the recommendation. It records "ADOPTED under the
+  2026-09-30 default-recommendation rule" in the note, sets the task back to `ready`, and builds
+  it. Silas can still reverse the decision later. This never applies to a gate whose
+  `gate_reason` is money, publish, legal, security, irreversible, secrets, or physical-access.
+  Leave `approved_by_human` unset when adopting. Only Silas's own answer sets it.
+
 ## Security model — who can do what
 
 Every agent operates within a strict permission boundary. Acting outside it is a safety
@@ -603,6 +640,10 @@ role from live state on arrival:**
      (default 7) old or older. This is time-boxed rather than purely reactive — it
      outranks fresh `worker` pickup once overdue, so it actually happens close to
      weekly instead of "whenever the queue happens to run dry." See `docs/agents/roles/site-auditor.md`.
+   - **`role: gate-triage`** — `check_gate_legitimacy.py` found `needs-human` gates that are
+     really agent work (see "A gate must say why it needs a human"). Clear every finding, then
+     re-run. Outranks `worker` because each finding either releases work or takes an item off
+     Silas's list. Playbook: `docs/agents/roles/gate-triage.md`.
    - **`role: worker`** — none of the above, but a `ready` task exists.
    - **`role: stale-recurring`** — no ordinary `ready` task and no due daily
      commitment won the cycle, but a `recurring: true` task (most often a

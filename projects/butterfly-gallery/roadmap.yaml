@@ -546,13 +546,11 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Implement ambient peekaboo butterfly traffic"
-    status: needs-human
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
-    depends_on:
-      - t-010
-      - t-014
+    depends_on: [t-033]
     note: >-
       Implement the long upper runway scheduler from APPROVED-STAGE-SPEC.md
       after t-014 is released from its production-geometry hold. Reuse/extract
@@ -579,8 +577,15 @@ tasks:
       and change depends_on from [t-010, t-014] to [t-033]. I did not implement or close it
       myself since this changes task structure across three related tasks (t-016/t-031/t-033)
       rather than being a single-task call. Did not consume a retry pass -- never claimed.
-    updated: '2026-09-19T13:37:42Z'
-    soft_gate: true
+
+      GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+      session): NOT A HUMAN GATE, returned to agents. Silas's own 2026-09-19 ANIMATION-SHOT-
+      LIST.md settles the conflict: no procedural DOM renderer for runway butterflies. t-033
+      is done. Taking option (b): narrow this task to randomized clip selection/scheduling
+      across the rendered runway clips, with depends_on [t-033].
+    updated: '2026-09-30T06:00:00Z'
+    soft_gate: false
+    gate_rechecked: '2026-09-30'
 
   - id: t-017
     milestone: m4
@@ -900,12 +905,18 @@ tasks:
     passes: 0
     stakes: reversible
     gate_human: true
-    note: >
+    note: >-
       FOR SILAS: final visual acceptance after the real archive feed and motion
       system are deployed. Verify the room/pile/frame/bin composition, intro
       timing, butterfly personality, drag/click/keyboard sorting, reduced motion,
       and phone/tablet/desktop layouts. This is a final appearance/feel gate, not
       a blocker for earlier implementation.
+
+      GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+      session): Legitimate: a look/feel or play verdict that only Silas can give.
+    gate_reason: subjective-acceptance
+    gate_rechecked: '2026-09-30'
+    updated: '2026-09-30T06:00:00Z'
 
   - id: t-026
     milestone: m1

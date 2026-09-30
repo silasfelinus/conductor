@@ -12,6 +12,16 @@ flags something and you need to know why it exists or how to fix it.
 
    - `python scripts/check_pr_merged_drift.py`
    - `python scripts/audit_human_gates.py`
+   - `python scripts/check_gate_legitimacy.py --live` — the other half of the gate audit: which
+     `needs-human` gates are really agent work (Silas, 2026-09-30: *"can we get some sort of
+     oversight so that we aren't allowing things to hang when its not really a human gate
+     issue?"*). The first run found 15 of 51. It flags five cases: a hard gate with no basis
+     (NO_GATE_BASIS), an approved decision left parked (APPROVED_PARKED), a dependency wait
+     filed as a gate (SHOULD_BE_WAITING), a deploy prerequisite that has already shipped
+     (DEPLOY_PREREQ_MET, `--live` only), and gates nobody has re-triaged (UNREVIEWED). Every
+     finding is agent work (`select_role.py` role `gate-triage`, playbook
+     `docs/agents/roles/gate-triage.md`). Never report a flagged gate to Silas as his to clear.
+     Exit 1 means findings. `--live` degrades to offline checks when the network is unavailable.
    - `python scripts/check_project_scaffold_drift.py` — a Kind-Robots-authored project's ONLY path
      into Conductor is the scaffold Todo `createProjectWithScaffoldTodo` writes; a closed todo alone
      never proved the roadmap directory actually landed (conductor/t-125, filed 2026-08-24: Todo

@@ -60,6 +60,11 @@ This does not authorize publishing, deploys, billing changes, DNS/secrets work, 
 submission, destructive database actions, or other irreversible/outward-facing actions unless
 Silas explicitly approves that concrete action too.
 
+**Default-recommendation rule (Silas, 2026-09-30, in session):** a reversible product-decision
+gate with a written agent recommendation is adopted after 7 days without an answer. This never
+covers money, publishing, legal, security, irreversible, secrets, or physical-access gates. See
+AGENTS.md "A gate must say why it needs a human".
+
 **Global notes (free-form, agents read these):**
 - Slug parity is a standing rule: every conductor project must have a matching
   kind_robots **Project** record (the Dream model split into Dream / Project /
