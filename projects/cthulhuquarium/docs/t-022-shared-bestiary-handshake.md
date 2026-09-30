@@ -123,3 +123,20 @@ read those directly rather than this summary if anything here seems to conflict.
 3. The documentation contract itself needs no further work — `fish/SCHEMA.md` and
    `fish/CROSS-GAME-SHARING.md` in `silasfelinus/cthulhuquarium` already say everything
    t-022's original note asked for.
+
+---
+
+## Update 2026-09-30 (scheduled Agent run): live check + admin sync path
+
+Live `Monster.games` is readable without DB access via the public
+`GET https://kindrobots.org/api/monsters/<slug>`. Result for the 18 tagged species:
+
+- **14 already** `cthulhuquarium,ruler-hooked` (a reseed did happen, 2026-08-27 ~04:37Z).
+- **4 stale** (`cthulhuquarium` only): `choirfish`, `errand-guppy`, `moebius-crab`,
+  `the-pleasant-island`. The bible tags all four for ruler-hooked.
+
+The admin `PATCH /api/monsters/<slug>` route already accepts `games`. kind_robots PR #3130
+adds `scripts/sync-monster-games.mjs` and the `Sync Monster games tags` workflow
+(`workflow_dispatch`, dry run by default, `write=true` to apply, uses the existing
+`CYPRESS_BETA_ADMIN_TOKEN` secret). Once #3130 is on `main`, dispatch it with `write=true`,
+re-run the 18-slug check above, then close t-022.
