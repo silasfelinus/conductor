@@ -900,7 +900,7 @@ tasks:
   - id: t-025
     milestone: m5
     title: "Cross-width visual and interaction acceptance"
-    status: needs-human
+    status: waiting
     owner: null
     passes: 0
     stakes: reversible
@@ -914,9 +914,16 @@ tasks:
 
       GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
       session): Legitimate: a look/feel or play verdict that only Silas can give.
+
+      GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage): moved to waiting on
+      [t-016]. The final look-and-feel check needs the motion system finished, and t-016
+      (runway butterfly scheduling) is ready, not done. Presenting it now would ask Silas to
+      judge an incomplete room. resolve_deps.py returns it to needs-human-ready when the
+      dependency lands.
     gate_reason: subjective-acceptance
     gate_rechecked: '2026-09-30'
-    updated: '2026-09-30T06:00:00Z'
+    updated: '2026-09-30T08:10:00Z'
+    depends_on: [t-016]
 
   - id: t-026
     milestone: m1

@@ -638,14 +638,12 @@ tasks:
   - id: t-020
     milestone: m5
     title: "Cross-width visual acceptance of the admin archive workflow"
-    status: needs-human
+    status: waiting
     owner: worker
     passes: 0
     stakes: reversible
     gate_human: true
-    depends_on:
-      - t-015
-      - t-018
+    depends_on: [t-041]
     note: >-
       Final user-facing acceptance gate for phone/tablet/desktop admin layout
       after the main curation workflow is deployed and can be exercised against
@@ -657,9 +655,14 @@ tasks:
 
       GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
       session): Legitimate: a look/feel or play verdict that only Silas can give.
+
+      GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage): moved to waiting on
+      [t-041]. The agent's cross-width check already passed on the empty state. The populated
+      grid can only be judged once the real import (t-041) has run. resolve_deps.py returns it
+      to needs-human-ready when the dependency lands.
     claimed_by: claude-web-20260919T093219Z-artarchive-t020-a1
     claimed_at: '2026-09-19T09:32:20Z'
-    updated: '2026-09-30T06:00:00Z'
+    updated: '2026-09-30T08:10:00Z'
     gate_reason: subjective-acceptance
     gate_rechecked: '2026-09-30'
 
