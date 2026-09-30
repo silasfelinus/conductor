@@ -1266,7 +1266,7 @@ tasks:
 - id: t-071
   milestone: m3
   title: Reconcile the click-collectible and food/upgrade mechanics with the pitch, or amend the brief
-  status: ready
+  status: review
   gate_human: false
   soft_gate: false
   owner: null
@@ -1297,9 +1297,19 @@ tasks:
     BRIEF.md. Following the written spec is the default, not a question. NEXT: build the
     literal mechanics (click-to-collect income and food/drop-speed upgrades) to the brief.
     If Silas later prefers the tick-settled simplification, a revert is cheap.
-  updated: '2026-09-30T06:00:00Z'
+    BUILT 2026-09-30 (session claude/gallant-clarke-tn8g6f), silasfelinus/kind_robots#3113: the
+    literal mechanics per the gate triage. Clicking scales (shed by fish, waiting at the
+    surface) pays real coins, server-authoritative (POST /api/aquarium/collect, bank cap 8, ~3x
+    idle when every scale is caught -- the same active/idle gap ECONOMY.md already accepted).
+    Upgrades: food (-15% feed cost/level, 3 levels) and drop speed (+25% scale rate/level, 4
+    levels). Tank slots deliberately NOT for sale: economy.yaml "coins buy breadth, milestones
+    buy room". SCHEMA-AFFECTING additive migration
+    20260930120000_add_aquarium_collect_and_upgrades. Constants live in
+    server/utils/aquariumCollect.ts and should be copied into data/economy.yaml on the next
+    balance pass.
+  updated: '2026-09-30T08:40:00Z'
   gate_rechecked: '2026-09-30'
-
+  implementation_pr: 'silasfelinus/kind_robots#3113'
 - id: t-072
   milestone: m3
   title: Delete the dead importCthulhuquariumArt.mjs script (Monster art DB linking split to t-076)
@@ -1359,7 +1369,7 @@ tasks:
 - id: t-073
   milestone: m3
   title: Author and deliver art for the remaining 32 species with no plate
-  status: ready
+  status: review
   gate_human: false
   owner: worker
   stakes: reversible
@@ -1463,12 +1473,16 @@ tasks:
     bundled in kind_robots). NEXT: bundle the 32 into kind_robots
     assets/images/cthulhuquarium/ using the #2620 pattern, and wire them in
     utils/cthulhuquariumArt.ts.
-  updated: '2026-09-30T06:00:00Z'
+    DELIVERED 2026-09-30, silasfelinus/kind_robots#3113: all 32 plates were already rendered in
+    projects/cthulhuquarium/art/ but never bundled; downscaled to 512px (537 KB) into
+    assets/images/cthulhuquarium/. Every one of the 151 species now has a card. Done once #3113
+    merges.
+  updated: '2026-09-30T08:40:00Z'
   claimed_by: claude-20260912t2035z-cq-t073-blk
   claimed_at: '2026-09-12T07:39:54Z'
   soft_gate: false
   gate_rechecked: '2026-09-30'
-
+  implementation_pr: 'silasfelinus/kind_robots#3113'
 - id: t-074
   milestone: m3
   title: Wire the two buildable remaining milestones; scope-decide the other two
@@ -1583,4 +1597,14 @@ tasks:
     build_story_art.py, and kind_robots `node scripts/sync_cthulhuquarium_canon.mjs` in a
     follow-up PR. BLOCKED 07:03Z 2026-09-30 on the render box: Silas-PC claimed ArtJob 32074 and
     stalled; check_render_box.py reports DOWN (stalled queue). Needs a ComfyUI restart at home.
-  updated: '2026-09-30T07:40:00Z'
+    PROGRESS 2026-09-30 08:40Z (Silas: "we have lots of tokens over the next 36 hours... it
+    should all be submitted"). All 190 renders + 7 WAN video clips are SUBMITTED (cthulhuquarium
+    art/jobs.yaml; render_art.py submit/harvest). Box still stalled (Silas gaming on the render
+    box). Merged: cthulhuquarium#16-#19 (sprites, voices for all 151, barks, videos),
+    kind_robots#3112. Open: kind_robots#3113 (living tank: per-behavior motion, ambience, sound,
+    hunts, eggs; voices/barks on screens; t-071 click-for-coins + upgrades; t-073 cards;
+    Ichthyonomicon scrapbook; live read-only canvas on public tanks; milestone reconcile for
+    veterans; restricted-user public-URL leak fixed), cthulhuquarium#20 (upgrade + peace ward
+    plates). NEXT: harvest -> build_sprites.py -> build_story_art.py -> sync -> art PR; submit
+    the 3 videos whose stills are pending.
+  updated: '2026-09-30T08:40:00Z'
