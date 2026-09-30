@@ -1354,11 +1354,18 @@ tasks:
     endpoint plus a conductor workflow that uses KR_API_TOKEN. NEXT: drive the linker
     through admin APIs (ArtImage create + PATCH /api/monsters/:id). Add an admin-only
     endpoint if one is missing. Then run it from a workflow. Do not wait for DB credentials.
-  updated: '2026-09-30T06:00:00Z'
+
+    API PATH BUILT 2026-09-30: kind_robots#3139 adds iconPath/cardPath to PATCH
+    /api/monsters/:id and ships 151 plates under public/images/cthulhuquarium/.
+    scripts/link_cthulhuquarium_monster_art_api.py + workflow cthulhuquarium-art-link.yml
+    drive it with KR_API_TOKEN (live dry-run verified: 151 plates, all Monster rows exist).
+    NEXT: after #3139 merges AND is deployed to kindrobots.org, dispatch the workflow with
+    mode=write, then flip done.
+  updated: '2026-09-30T20:48:28Z'
   claimed_by: 2026-09-11T141847Z-cthulhuquarium-t-076-r4m9
   claimed_at: '2026-09-11T14:18:47Z'
   soft_gate: false
-  implementation_pr: 'silasfelinus/kind_robots#2629'
+  implementation_pr: 'silasfelinus/kind_robots#3139'
   gate_rechecked: '2026-09-30'
 
 - id: t-073
