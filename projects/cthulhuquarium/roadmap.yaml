@@ -1266,7 +1266,7 @@ tasks:
 - id: t-071
   milestone: m3
   title: Reconcile the click-collectible and food/upgrade mechanics with the pitch, or amend the brief
-  status: review
+  status: done
   gate_human: false
   soft_gate: false
   owner: null
@@ -1307,7 +1307,11 @@ tasks:
     20260930120000_add_aquarium_collect_and_upgrades. Constants live in
     server/utils/aquariumCollect.ts and should be copied into data/economy.yaml on the next
     balance pass.
-  updated: '2026-09-30T08:40:00Z'
+
+    MERGED 2026-09-30 08:49Z as silasfelinus/kind_robots#3113 (537c101). Merged is not
+    deployed: the additive migration 20260930120000_add_aquarium_collect_and_upgrades runs
+    via the Alexandria deploy script.
+  updated: '2026-09-30T08:54:13Z'
   gate_rechecked: '2026-09-30'
   implementation_pr: 'silasfelinus/kind_robots#3113'
 - id: t-072
@@ -1369,7 +1373,7 @@ tasks:
 - id: t-073
   milestone: m3
   title: Author and deliver art for the remaining 32 species with no plate
-  status: review
+  status: done
   gate_human: false
   owner: worker
   stakes: reversible
@@ -1477,7 +1481,10 @@ tasks:
     projects/cthulhuquarium/art/ but never bundled; downscaled to 512px (537 KB) into
     assets/images/cthulhuquarium/. Every one of the 151 species now has a card. Done once #3113
     merges.
-  updated: '2026-09-30T08:40:00Z'
+
+    MERGED 2026-09-30 08:49Z as silasfelinus/kind_robots#3113: all 151 species have a
+    bundled card plate.
+  updated: '2026-09-30T08:54:22Z'
   claimed_by: claude-20260912t2035z-cq-t073-blk
   claimed_at: '2026-09-12T07:39:54Z'
   soft_gate: false
