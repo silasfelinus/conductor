@@ -6,182 +6,40 @@ The operating manual for this repo is **[AGENTS.md](./AGENTS.md)** — read it i
 
 At the start of every session, before responding to any task, run a conductor sweep and report it to Silas:
 
-1. Read `AGENTS.md` in full
-2. Run `git status` and `git log --oneline -5`
-3. Check for open PRs (use GitHub MCP tools if available)
-4. Scan all `projects/*/roadmap.yaml` for tasks with `status: ready`, `status: needs-human`, or `status: claimed` —
-   **first check `project-overrides.yaml` and skip any project whose `status` there is not `active`** (`paused`,
-   `retired`, `finished`). Several projects (career-transition, pinball-hero, recipe-box, mermaids-of-venice,
-   others) are deliberately tabled/closed there; a scan that reads `roadmap.yaml` directly without cross-checking
-   this file resurfaces their stale tasks every session regardless (2026-07-25 — this exact bug surfaced
-   career-transition/t-003 and pinball-hero/t-002 as live "needs-human" items after both had been `retired` for
-   over a week). Before proposing a new project-status value to fix a "closed project keeps coming up" complaint,
-   confirm the project isn't already correctly marked in `project-overrides.yaml` and simply not being checked.
-5. Read `docs/state-reconciliation.md`, then run:
-   - `python scripts/check_pr_merged_drift.py`
-   - `python scripts/audit_human_gates.py`
-   - `python scripts/check_project_scaffold_drift.py` — a Kind-Robots-authored project's ONLY path
-     into Conductor is the scaffold Todo `createProjectWithScaffoldTodo` writes; a closed todo alone
-     never proved the roadmap directory actually landed (conductor/t-125, filed 2026-08-24: Todo
-     #1320 was marked DONE while `projects/cthulhuquarium/` never existed). This checks both
-     directions — a Kind Robots `conductorSlug` with no matching `projects/<slug>/roadmap.yaml`
-     (the reported bug, exit 1), and a Conductor project with no matching Kind Robots row at all
-     (weaker/informational, exit 3). Needs `KR_API_TOKEN`; exits 2 (unresolved, not clean) without it.
-   - `python scripts/check_live_facet_coverage.py` — asks Kind Robots what Facets each
-     built daily-dream record ACTUALLY carries, rather than trusting what the pipeline
-     recorded at apply time (dream-cycle/t-026, 2026-09-02: PUT /api/characters/:id/facets
-     ignored `facetKeys`, so all 36 built bundles logged `status: "complete"` with
-     `errors: []` over a Character holding no Facets — for six weeks, until Silas noticed
-     from the digest end). The applier now verifies its own responses, so a fresh build
-     cannot repeat that silently; this catches what a one-time record cannot — a link
-     deleted later, a catalog row merged out from under a record, or a bundle never
-     repaired. `--repair` re-applies each bundle's stored seed selection. Needs
-     `KR_API_TOKEN`; exits 2 (unresolved, not clean) without it.
-   - `python scripts/check_milestone_status_drift.py` — a milestone's `status:` field (not-started/
-     in-progress/done) is only ever read, never cross-checked against its own project's task list, so
-     it can sit stale for weeks (conductor/t-135, filed 2026-08-28 from cthulhuquarium/t-063: m3 stuck
-     at `not-started` despite 25/31 tasks already done). Flags a milestone marked not-started/pending/
-     waiting with any done task under it, or marked done/complete with any non-recurring task under it
-     that isn't done. Advisory only — wrong milestone status doesn't block task selection or gate
-     anything, it only skews the digest's portfolio-percentage math; exit 1 means "worth a look and an
-     edit," not a genuine gate. No network/token needed.
-   - `python scripts/check_container_log_drift.py` — reads the daily container-log triage digest
-     that kind_robots' `scripts/container_log_triage.py` writes on Alexandria (Silas, 2026-09-03: *"I'm
-     not searching around the logs of 50-ish containers regularly to find suboptimal problems. If
-     something is erroring in the logs but not actually breaking the container, I'm not aware of
-     it."*). Reports only signatures that are NEW, SPIKING against their own history, or newly
-     QUIET — a stored baseline suppresses the steady-state noise, without which the report becomes
-     wallpaper in a week. **A digest older than 48h is itself a finding**, because from the reading
-     end "nothing to report" and "the User Script stopped running" are indistinguishable — the
-     `check_engine_heartbeat.py` lesson (healthcheck.ps1 stopped at 2026-09-01 02:26:07 and never
-     said so; its log just ends, ~37 hours before Silas noticed). A MISSING digest is exit 0 with a
-     "not configured yet" note, so this stays quiet until the User Script is scheduled and the
-     digest is published off the host. No network/token needed for a local digest path.
-   - `python scripts/check_roadmap_note_size.py` — watches the one hard ceiling in this repo.
-     `scripts/sync_kind_robots_projection.py` POSTs the raw text of every roadmap under
-     `MAX_PAYLOAD_BYTES = 4_000_000`; crossing it fails `tests/test_sync_kind_robots_projection.py`
-     and stops the Kind Robots board syncing. That happened on 2026-09-11 at 4,000,134 bytes with
-     **no prior warning**, and three days later the payload was back to 93.4% — because t-151's fix
-     only watched a *single* note over 50KB, while the real shape was 154 medium notes summing to
-     411KB in one file (conductor/t-158, 2026-09-14). It now reports three things: oversized single
-     notes, oversized roadmap *files*, and the actual projection headroom. **Report the headroom
-     line every session** — `--payload-only` prints just that line. Exit 1 past any threshold or
-     80% of the limit; advisory, never a gate. The fix is
-     `python scripts/archive_done_task_notes.py --all`, which moves done-task notes into
-     `projects/<slug>/HISTORY.md` verified byte-for-byte under AGENTS.md's archival carve-out. No
-     network/token needed.
-   - `python scripts/check_facet_prompt_subjects.py` — asks the one question
-     `server/utils/artPromptContract.ts` structurally cannot: not whether a live Facet prompt
-     breaks a rule, but whether it says anything to draw. The negation-repair pass closed with a
-     clean CLIP-node audit — 0 violations across 4,442 prompts — while rendering a plush blob for
-     "Octopus", a frog for "Axolotl" and walls of garbled lettering for the ALIGNMENT cards
-     (Silas, 2026-09-20: *"The prompts make no sense and the images reflect that"*). 149 prompts
-     were the Facet's description pasted whole with its own title nowhere in them, which no
-     pattern in a contract can detect, because it is a property of what the prompt LACKS. Flags
-     NO SUBJECT (a producer-generated prompt that never names its Facet), APP WRAPPER (product
-     and builder labels Krea paints as card text), and CARD COPY (the Facet's description
-     appearing verbatim inside its own prompt). Hand-authored concrete scenes that deliberately
-     skip the title are correct and are never flagged. Advisory; exit 1 is a prompt to go look at
-     the cards, and the answer is still a contact sheet, never the audit. **CARD COPY was
-     unreachable until 2026-09-22** — it required the prompt to START with the description (every
-     producer since v2 puts the title first) AND to carry a registered taxonomy clause (which the
-     negation repair trims off), so the script reported "Every prompt names something to draw"
-     over 1,541 live prompts while 595 embedded their own description and Facet 810 "Martian
-     Colonization" was rendering its card copy as lettering. It is containment-based and blocking
-     now; a non-zero exit here is expected until the queue is re-run. Needs `KR_API_TOKEN`; exits
-     2 (unresolved, not clean) without it.
-   - `python scripts/check_priority_queue_starvation.py` — `projects/priority.yaml` is the
-     deterministic worker pickup order, but nothing else reports how deep a session had to walk
-     it before finding a `status: ready` task (conductor/t-149, filed 2026-09-11: the first six
-     entries all had zero ready tasks that day, and "I picked the top-ranked available task" and
-     "I walked past six gate-blocked projects to get here" read identically from the session
-     end). Names each skipped project's reason (gated at needs-human — with the blocking task
-     id/title named, so this doubles as a priority-ordered version of `audit_human_gates.py` —
-     all waiting-blocked, or all claimed) and where the queue actually landed. Advisory only;
-     exit 1 only past a threshold depth (default 3) so ordinary one/two-project fall-through
-     stays quiet, or if literally nothing in the whole order has claimable work. No network/token
-     needed.
-   - `python scripts/check_vendored_scanner_parity.py` — the home-server vendored LoRA/model
-     scanners (`ops/home-server/lora-catalog/scan_loras.py`, `scan_models.py`,
-     `import_catalog.py`) are supposed to be a straight byte-for-byte copy of their kind_robots
-     originals at `scripts/lora-catalog/` (per that directory's `PROVENANCE.md`), but nothing
-     checked that until now (lora-ingestion/t-013, 2026-09-22: the vendored `scan_loras.py` was
-     missing the Civitai tag category classifier entirely, and the gap was only caught by a
-     downstream symptom — garbled preview classification). Fetches each kind_robots original via
-     the GitHub Contents API and diffs it against the local vendored copy. Exit 1 on any drift
-     (with a diff snippet and the `PROVENANCE.md` re-sync command); the fix is always re-copying
-     the file, never hand-editing the vendored side to match. Needs `GITHUB_TOKEN`/`GH_TOKEN`
-     (kind_robots is private); exits 2 (unresolved, not clean) without it.
-   - `python scripts/check_daily_commitment_staleness.py` — `select_role.py`'s `daily-creative`
-     role surfaces a `daily_commitment: true` task the moment its `daily_last_checked` predates
-     today's Pacific date, but nothing distinguished "checked today, honest no-op" from "a
-     session claimed it and stalled" or "nobody ran the role in days" (conductor/t-194, kaizen
-     from animation-manager/t-020, 2026-09-23). Flags STALE CHECK (`daily_last_checked` missing
-     or 2+ days stale) and STALLED CLAIM (`status: claimed` past the normal 90-minute claim TTL).
-     Advisory only; exit 1 when at least one daily_commitment task is flagged. No network/token
-     needed.
-   - `python scripts/check_recurring_claim_drift.py` — flags any task showing `status: claimed`
-     with `claimed_by`/`claimed_at` already null, a combination that never occurs from a live
-     claim (claim_task.py and process_task_events.py only ever write all three fields together).
-     Root-caused for conductor/t-195 from model-builder/t-029 drifting into this state twice
-     (2026-08-12, 2026-09-25) while its own recurring cycle note already said "re-arming to
-     ready" — both times caught only incidentally by `check_pr_merged_drift.py` noticing a stale
-     `implementation_pr`. Traced to a manual merge-conflict resolution on the close branch that
-     kept `origin/main`'s stale copy of this task's status alongside another task's genuinely
-     newer change in the same conflicted file, rather than resolving per-task. Advisory only;
-     exit 1 when at least one task is flagged — the fix is a normal `close_task.py` re-close back
-     to whatever the note's last paragraph says actually happened. No network/token needed.
-   Treat exit 1 (or 3) from any of these as a reconciliation prompt, not permission to bypass a genuine gate. The
-   four roadmap-reading commands intentionally exclude paused, retired, and finished projects unless
-   `--include-inactive` is supplied; `check_live_facet_coverage.py` reads live records rather than roadmaps and
-   takes no such flag.
-6. Check `TALKBACK.md` tail for any unresolved escalations or security flags
-7. Run `python scripts/build_dream_proposal.py --check --fetch`. **Sessions own
-   the docket** (changed 2026-09-04). The `daily-digest.yml` author step no
-   longer receives `ANTHROPIC_API_KEY` on the schedule — the key is opt-in via
-   the workflow's `spend_api_credits` dispatch input — because the hourly
-   Conductor Agent Routine already runs on Silas's Max plan and the API step
-   was doing the same work twice on credits (Silas, 2026-09-04: *"They are
-   literally running as part of my normal Claude max account. I'm not spending
-   $100 a month so it can then trigger the api."*). So: **when `--check`
-   reports fewer than `TARGET_BUFFER_DAYS` (5) unbuilt proposals, author
-   exactly ONE this session** using the `--brief` → `--from-json` recipe
-   below, then move on. Never more than one per session; the hourly cadence
-   fills the buffer within a day. The earlier intent still holds (Silas,
-   2026-08-09: *"I'm not sure why the next dreams aren't written the turn the
-   digest is sent ... that's very high on automated tasks."*) — it is simply
-   done by sessions now, not by the API.
-
-   **`--check` measures the docket, not the calendar** (changed 2026-08-31). It
-   reports how many unbuilt proposals are queued and exits 0 whenever at least
-   one is. A day with no proposal dated today is NORMAL and is not a failure:
-   authoring pauses while the docket is `TARGET_BUFFER_DAYS` (5) deep, because
-   Silas would rather spend that cycle elsewhere (2026-08-31: *"we don't need to
-   spend effort writing new proposals if we have a backlog (though a 5 day or so
-   buffer seems reasonable, just in case). It would be better spent to either
-   take on a new task, or improve the current proposals in the docket."*). A
-   shallow docket (1–4 queued) means author one this session, as above; a full
-   one means leave it alone.
-
-   Exit 1 means the docket is **empty**, which is the real alarm: nothing is
-   queued for tomorrow. Author one yourself then: run `--brief` for the
-   deterministic seed plan, then create exactly one dream vibe, one dream
-   location, one Character, one ITEM Reward, one SKILL Reward, and one Scenario,
-   with no narrator. Preserve the brief's `seed_facets` unchanged; the vibe is
-   the umbrella, every dependent asset must follow its assigned Facets, and the
-   Scenario is authored last and explicitly names the vibe, location, and
-   Character. All user-facing card copy must be complete sentences that parse on
-   their own — `scripts/dream_prose_quality.py` is the contract. Write it with
-   `--from-json` and commit it with the session's log commits. An empty docket
-   two days running means the hourly sessions have stopped doing step 7 —
-   check the Conductor Agent Routine's recent runs and TALKBACK rather than
-   papering over it by hand each session. (Manual API authoring is still
-   possible: dispatch `daily-digest.yml` with `spend_api_credits: true`.)
-
-   Builds drain the docket **oldest first, with no age cutoff**. A proposal that
-   could not build on its day is picked up by the next run instead of being
-   orphaned; the current creative contract is re-checked at build time, which is
-   what actually keeps stale creativity out.
+1. Read `AGENTS.md` in full — it is the core manual. Per-role step lists live in `docs/agents/roles/`; load
+   only the one `select_role.py` names in its `playbook` field (or the one matching an explicit ask).
+2. `git status` / `git log --oneline -5`, 3. open agent PRs, and 4. the ready / needs-human / claimed scan
+   are already in the SessionStart hook's `CONDUCTOR STARTUP SWEEP` message — use it rather than re-running
+   them. Re-run only if that message is missing (hook not loaded, or not a remote session); then use the
+   GitHub MCP tools for PRs, and **skip any project whose `project-overrides.yaml` status is not `active`**
+   (`paused`, `retired`, `finished`) — reading `roadmap.yaml` without that cross-check resurfaces tabled
+   projects' stale tasks (2026-07-25: career-transition/t-003 and pinball-hero/t-002). Before proposing a
+   new project-status value for a "closed project keeps coming up" complaint, confirm the project isn't
+   already marked in `project-overrides.yaml` and simply not being checked.
+5. Read `docs/state-reconciliation.md`, then run `python scripts/session_sweep.py`. It runs every reconciliation check in one process and prints
+   ONE line per check, plus the tail of any check that did not exit 0 — do not also run the checks one by
+   one unless you need a flag (`--repair`, `--include-inactive`, `--payload-only`). Checks it runs:
+   `check_pr_merged_drift`, `audit_human_gates`, `check_project_scaffold_drift`, `check_live_facet_coverage`,
+   `check_milestone_status_drift`, `check_container_log_drift`, `check_roadmap_note_size --payload-only`,
+   `check_facet_prompt_subjects`, `check_priority_queue_starvation`, `check_vendored_scanner_parity`,
+   `check_daily_commitment_staleness`, `check_recurring_claim_drift`, plus `build_dream_proposal.py --check
+   --fetch` (step 7) and `tzaddik_review.py --check`. Why each check exists, what its exit codes mean and
+   how to fix what it flags: [`docs/sweep-checks.md`](docs/sweep-checks.md) — read the entry only for a
+   check that flagged.
+   Treat exit 1 (or 3) from any of these as a reconciliation prompt, not permission to bypass a genuine gate.
+   Exit 2 means unresolved (usually a missing token), never clean. The roadmap-reading checks exclude
+   paused, retired, and finished projects unless `--include-inactive` is supplied.
+6. The hook lists the latest `TALKBACK.md` entry headings. Read an entry body only when its heading looks
+   unresolved (an escalation or `security-flag`) — `tail -n 80 TALKBACK.md`. Never read or grep the whole
+   file (>1MB); see AGENTS.md "Token discipline".
+7. Dream docket: `session_sweep.py` runs `build_dream_proposal.py --check --fetch`. **Sessions own the
+   docket** (the API author step is opt-in via `daily-digest.yml`'s `spend_api_credits`). If it reports
+   fewer than 5 (`TARGET_BUFFER_DAYS`) unbuilt proposals, author exactly ONE this session with the
+   `--brief` → `--from-json` recipe — never more than one per session; a full docket means leave it alone,
+   and a day with no proposal dated today is normal. Exit 1 means the docket is **empty**: author one now.
+   The authoring contract (six assets, preserve `seed_facets`, Scenario last, complete-sentence card copy
+   per `scripts/dream_prose_quality.py`) and the history behind it are in `docs/sweep-checks.md` (Step 7)
+   — read that section before authoring.
 
 Then report:
 - **Branch** and whether the working tree is clean
@@ -202,7 +60,8 @@ Then report:
 - **Daily dream**: whether today's dated proposal exists; its steering/build/retry,
   Facet, art, and digest state; legacy Dream outlines are idea inventory rather
   than queued object builds (warn when useful idea inventory falls below five)
-- **Daily Tzaddik**: run `python scripts/tzaddik_review.py --check` and report the
+- **Daily Tzaddik**: from the sweep's `tzaddik_review` section (`python scripts/tzaddik_review.py --check`
+  for the full list), report the
   approved/rejected/deferred/pending counts across every discovery docket. List
   any pending suggestions so Silas can act with `--decide "Name"
   approved|rejected|deferred` (or by hand-editing
@@ -260,80 +119,11 @@ branch you can't delete from the session (ref deletion 403s here) is cleared by 
 `branch-janitor` workflow — trigger it via `workflow_dispatch` with `force_delete_branches` for
 one you've verified is superseded.
 
-### First push of a session fails with HTTP 413
+### Git push trouble and background agents
 
-If `git push -u origin <your-branch>` fails with an HTTP 413 from the git-smart-HTTP
-proxy on the *first* push of a session, and the branch has never had a PR opened from
-it, the branch likely doesn't exist on the actual GitHub remote yet — even if your local
-checkout's remote-tracking ref shows a SHA for it (that's stale/local-only knowledge).
-`GIT_TRACE_CURL` will show the proxy attempting to send a full-history pack (matching
-the whole `.git` size) instead of a small delta, apparently because a brand-new ref
-needs a full pack rather than one computed relative to objects already reachable via
-other refs (e.g. `main`).
-
-Workaround: call the GitHub MCP `create_branch` tool (`owner`/`repo`/`branch`/
-`from_branch: main`) first — this creates the ref instantly via the API with zero data
-transfer, since it just points at a commit the remote already has. Then the normal
-`git push` of your session's actual commits goes through as a small, fast delta.
-
-### Later push in the same session also fails with HTTP 413 (after a rebase)
-
-The same 413 can recur *after* the branch's first push already succeeded and its PR
-merged, if you `git rebase origin/main` (or otherwise rewrite history) and then try a
-force-push of new work on the same branch name (Silas, 2026-07-16, conductor/t-010
-Bauhaus cycle: PR #592 merged cleanly, then a follow-up TALKBACK-only commit hit 413
-on every retry — including a plain `git push`, a retry, and a `502` on one attempt —
-even though the branch clearly still existed on the remote). Root cause suspected to
-be the same "proxy wants a full pack, not a delta" behavior as the brand-new-ref case,
-just triggered by a rewritten/diverged local history instead of a genuinely new ref.
-
-Workaround: skip `git push` for that one commit and use the GitHub MCP `push_files`
-tool instead, targeting the branch's *current remote tip* (do not rebase locally
-first) — it commits via the REST API with zero pack-transfer, so the 413 doesn't
-apply. Do not force-push to "fix" this. A PR opened from the resulting branch may
-show a larger diff than expected if `main` already has equivalent content under a
-different commit SHA (e.g. from an earlier squash merge) — GitHub's merge-base
-detection may or may not collapse this back to the true incremental diff, so check
-`additions`/`changed_files` on the created PR before assuming it duplicated
-already-merged work; if it looks right (matches only your new commit's actual
-diff), it's safe to merge as normal.
-
-### Don't delegate an in-flight git workaround to a background subagent
-
-If you dispatch a background subagent to run the `push_files` (or any other
-git-state-mutating) workaround above, and then — before it returns — resolve the
-same push in the foreground by a different route (e.g. `create_branch` + rebase +
-`git push`), the background subagent has no way to learn its task was superseded.
-It will still finish, using the file content it was handed at dispatch time, and
-push that stale snapshot on top of whatever the foreground already landed —
-silently reverting any commits the foreground made after dispatching it. This is a
-real write race, not just wasted work: it can clobber later commits even within a
-single session with no other human or agent involved (observed 2026-07-18,
-conductor/t-066: a foreground `status: review → done` flip plus a completion note
-were dropped this way; caught via the task-completion notification and reapplied,
-so no permanent loss, but it cost an extra round-trip and could easily go
-unnoticed for a subagent whose output isn't re-read afterward).
-
-Rule: never delegate a git-state-mutating workaround (`push_files`, `create_branch`,
-force-push, etc.) to a background subagent for a problem you are actively fixing
-inline. Background delegation is for genuinely independent work — if you're already
-solving it in the foreground, either wait for the subagent's result before doing
-anything else to that branch, or cancel/ignore its eventual output once your
-foreground fix lands. If delegation is truly unavoidable, have the subagent re-fetch
-and diff against the *current* remote tip immediately before it pushes (not just use
-the content it was handed at dispatch time), so a stale call fails loudly on an
-unexpected base instead of silently overwriting newer commits.
-
-**This generalizes beyond the workaround case above.** Two independent incidents within
-24 hours (TALKBACK.md 2026-08-13 and 2026-08-14) showed the same root cause reaching
-further than "in-flight workaround" scenarios: a non-isolated background Agent (no
-`isolation: 'worktree'`) doing ANY git-mutating work (`claim_task.py`,
-`set_task_field.py`, `close_task.py`, plain `git commit`/`push`) in the same working
-directory as an active foreground session can silently discard that session's state.
-2026-08-13 lost an uncommitted file edit; 2026-08-14 deleted the foreground session's
-own designated git branch outright (recovered via `mcp__github__create_branch`, but a
-session with unpushed local commits on that branch at dispatch time would have lost
-them for real). See AGENTS.md hard safety rule 11 for the standing rule this promotes
-to: `isolation: 'worktree'` is REQUIRED, not optional, for any background Agent that
-will run git-mutating commands in a repo a foreground session is still actively (even
-passively, mid-edit) using — not only for the narrower in-flight-workaround case above.
+- First push of a session, or a push after a rebase, fails with **HTTP 413**: create the ref with the
+  GitHub MCP `create_branch` tool, or commit via `push_files` against the branch's current remote tip.
+  Never force-push to "fix" it. Full recipes: [`docs/agents/git-troubleshooting.md`](docs/agents/git-troubleshooting.md).
+- **Never delegate a git-state-mutating step to a background subagent without `isolation: 'worktree'`**
+  (AGENTS.md hard safety rule 11), and never hand one a workaround you are also fixing in the foreground —
+  it will push a stale snapshot over your later commits. Incidents: same doc.

@@ -24,14 +24,18 @@ Read these files before selecting work:
 
 `CONTROL.md` overrides roadmap direction. `project-overrides.yaml` decides whether a project is active.
 
+Read only the role playbook `select_role.py` names (`docs/agents/roles/`), and follow AGENTS.md
+"Token discipline" (e.g. `scripts/show_task.py` instead of reading a whole roadmap).
+
 Before selecting work, run:
 
 ```bash
+python scripts/session_sweep.py   # every startup check, one line each; or run these two alone:
 python scripts/check_pr_merged_drift.py
 python scripts/audit_human_gates.py
 ```
 
-Both commands exclude paused, retired, and finished projects by default. Findings are prompts to inspect current evidence, not authorization to bypass a real gate.
+These commands exclude paused, retired, and finished projects by default. Findings are prompts to inspect current evidence, not authorization to bypass a real gate.
 
 **A gate flagged `human-answer-unread` is different from every other finding here: it is
 work, not a suggestion.** Silas can now answer a gate from the Kind Robots home page

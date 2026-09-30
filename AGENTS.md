@@ -20,6 +20,37 @@ rather than override each other.
 
 Each project lives in `projects/<name>/` with its own `roadmap.yaml`.
 
+## Token discipline — context is the budget
+
+Every hourly Routine run and every subagent pays for what it loads. Default to the smallest read
+that answers the question (2026-09-30 token-essentialization pass):
+
+- **Load the core, not the library.** Read this file in full; read a role playbook
+  (`docs/agents/roles/`) only for the role `select_role.py` names in `playbook`; read
+  `docs/sweep-checks.md`, `docs/agents/frontend-verification.md` or
+  `docs/agents/git-troubleshooting.md` only when that situation comes up.
+- **One sweep call.** `python scripts/session_sweep.py` runs every startup check and prints one
+  line each plus the tail of anything flagged. Don't run the checks one by one, and don't re-run
+  what the SessionStart hook already printed (git state, open PRs, ready/claimed tasks).
+- **Never read a big file whole.** `TALKBACK.md` (>1MB), `projects/*/HISTORY.md`, run logs, and the
+  large roadmaps (conductor ~240KB, interface-vision/kind-robots/storybook ~170KB each):
+  - one task → `python scripts/show_task.py <project>/<task-id>` (`--no-note` / `--note-tail N`);
+  - a project's task list → `python scripts/show_task.py <project> --list --status ready`;
+  - TALKBACK → `tail -n 80 TALKBACK.md`, or `grep -n` for a task id then `sed -n 'A,Bp'`;
+  - anything else → `grep -n` first, then read only the matching line range.
+- **Trim tool output at the source.** `pytest -q` (add `-x`/a path while iterating), `git log --oneline`,
+  `| tail -n 40` on long builds; GitHub MCP with `minimal_output`/small `perPage`, and `get_job_logs`
+  with `failed_only` + `tail_lines`. Don't re-read a file you just edited to verify it.
+- **Subagents get a brief, not a transcript.** Give a subagent file paths and the exact question — not
+  pasted file contents, and not "read AGENTS.md first" unless it will make rule-bound changes (then point
+  it at the specific section). Use `Explore` for read-only searches, and pass `model: "haiku"` or
+  `"sonnet"` for mechanical lookups/greps; keep the session's own model for judgment calls. Ask for a
+  short conclusion back, not file dumps. Git-mutating subagents still need `isolation: 'worktree'`
+  (hard safety rule 11).
+- **Don't narrate history into new text.** Put incident history in the task note / HISTORY.md / TALKBACK,
+  and keep instructions in this file and CLAUDE.md to the rule plus a one-line why — both files are
+  loaded by every session, so every sentence added there is paid for on every run.
+
 ## Project kinds — this changes what "done" means
 
 Every roadmap declares a `kind`. It tells agents how to handle finished work:
@@ -155,94 +186,13 @@ todo explicitly asks for it. Scope is exactly what the title/description says.
 
 ### Rotation collisions
 
-Picking a task from `priority.yaml`/`next_ready_task.py` only reads roadmap state — it
-does not reserve anything. Two sessions triggered close together (e.g. concurrent
-hourly burst-mode runs) can both read the same stale `ready` state, both fully
-implement the same project/task, and only discover the collision when one of them
-pushes. This happened for real on 2026-07-14 (`animation-manager/t-008` built twice —
-see `TALKBACK.md` and `conductor/t-040`). Step 6 above (`claim_task.py`) exists
-specifically to close this gap: it re-checks `origin/main` immediately before writing
-the claim and retries under a push race, so a losing session fails fast into
-`ALREADY_CLAIMED` instead of duplicating work. If a claiming session crashes before
-finishing, the claim self-expires after `CLAIM_TTL_MINUTES` (90 minutes, see
-`scripts/roadmap_claims.py`) so the task doesn't stay locked forever — `next_ready_task.py`
-surfaces a stale-claimed task as pickable again automatically.
-
-**Same-session post-compaction collisions** are the identical failure mode with a
-different trigger: a session's context gets compacted mid-run and loses memory of
-work it already completed earlier in the same scheduled window. Resuming from stale
-in-memory state, it can find its own now-outdated `status: claimed` snapshot,
-correctly avoid re-implementing (an open-PR check usually catches that part), but
-then still draft an inaccurate wrap-up commit (roadmap/TALKBACK note) describing a
-"nothing to do" or "releasing the claim" outcome that a real merge has since made
-false. Hit twice the same day (2026-07-22): model-builder/t-029 and
-storymaker/t-010, both in root/project `TALKBACK.md`. The fix is the same as the
-concurrent-session case, just applied to the wrap-up step too, not only the
-implementation step: **before writing any wrap-up commit for a claim this session
-doesn't fully remember taking, `git fetch origin main` and diff the task's current
-state** — a newer merge under the same or a related session id is the signal that
-the "resume" is actually stale, and the wrap-up should defer to `origin/main`'s
-version (via rebase, keeping the newer content) rather than push over it.
-
-**Concurrent PR-conflict-resolution races** are a third variant: two independent
-sessions both notice the *same* open PR has gone stale against `main` (e.g. because a
-third PR just merged and moved the base) and both fix it themselves, unaware of each
-other. Observed 2026-07-27: PR #1195 (ai-art-academy/t-010) and PR #1197
-(music-mentor/t-007 close-out) both touched `music-mentor/roadmap.yaml` and
-`LEARNING.yaml`. A Reviewer session merged #1197 first, then found #1195 conflicted
-and fixed it by hand (dropping #1195's now-redundant duplicate music-mentor bundle,
-keeping only its actual ai-art-academy scope) — but a *second*, independent session
-had, in the meantime, pushed its own conflict-resolution commit to the same PR #1195
-branch that took the opposite, wrong approach: it re-merged `main` but kept #1195's
-stale, less-complete version of the music-mentor content instead of deferring to
-what #1197 had already landed, which would have silently downgraded/reverted the
-already-merged canonical entry had it been pushed on its own. The Reviewer session's
-own second push caught this the normal way — `git push` (no force) failed with a
-plain non-fast-forward rejection because the remote branch had moved — which is
-exactly the safety net this depends on: **never force-push to resolve a PR conflict.**
-The correct recovery is the same shape as the two collisions above: `git fetch` the
-branch's actual current remote tip, `git merge` it in (not overwrite it), re-resolve
-favoring whichever side matches `origin/main`'s already-merged canonical content for
-any file both sides touched, verify the resulting diff against `origin/main` is
-exactly the intended scope (`git diff origin/main --stat` should show only files the
-PR is actually supposed to touch), and push normally. If a plain push is rejected,
-that rejection is doing its job — fetch-merge-reresolve, don't force past it.
+Picking a task does not reserve it — always claim with `claim_task.py` (step 6), which fails
+fast into `ALREADY_CLAIMED` on a race; claims self-expire after 90 minutes. Full history and the
+same-session post-compaction variant: `docs/agents/roles/worker.md`.
 
 ### Review-claim markers — avoiding duplicate review work
 
-`claim_task.py` prevents two sessions from both *implementing* the same roadmap
-task, but there was no equivalent for *reviewing* — nothing stopped several
-concurrent sessions from all picking up the same open, green PR and racing to
-review/merge/close it out. This happened for real (conductor/t-092, 2026-07-28
-"four-way rotation collision" — see root `TALKBACK.md` that date): this session
-and at least three others independently found the same two open kind_robots PRs
-and the same recurring-task close-outs within about a minute of each other,
-producing three redundant conductor PRs that had to be manually triaged after
-the fact. No data was lost — git's non-fast-forward rejection is still the real
-backstop, same as every other rotation-collision case above — but the duplicate
-work itself is worth avoiding when practical.
-
-Before starting a review pass on an open PR (this repo or kind_robots):
-1. Fetch the PR's issue/PR comments using whatever GitHub access this session
-   already has (GitHub MCP tools, `gh pr view --comments`, or a direct API call
-   — read-only, so any working transport is fine even in a sandbox where direct
-   `api.github.com` calls 403, as `select_role.py`'s docstring documents for at
-   least one sandbox shape).
-2. Call `scripts/review_claim.py`'s `find_active_claim(comments)` (or reimplement
-   the same check inline: look for a comment matching `REVIEWING: <session> at
-   <ISO8601>` posted within the last `REVIEW_CLAIM_TTL_MINUTES` — 20 minutes by
-   default). If it returns a claim from a *different* session, skip this PR —
-   someone else is already reviewing it — and move on to the next reviewable item.
-3. Otherwise, post a marker comment (`scripts/review_claim.py format <session-id>`
-   prints the exact text to post) *before* starting the substantive review.
-4. This is advisory/best-effort, not a hard lock: a missed check is wasted
-   duplicate work, not a safety violation. Never skip the normal git-conflict
-   safety net described above on the assumption a marker makes it unnecessary.
-
-The module is intentionally transport-agnostic — it defines the marker format,
-the freshness rule, and the pure decision logic, but never calls the GitHub API
-itself, since the right transport differs per session/platform. See
-`tests/test_review_claim.py` for the full behavioral contract.
+Before reviewing/merging a PR, follow the review-claim marker protocol in `docs/agents/roles/reviewer.md`.
 
 ### Task dependencies (pipelines)
 A task may declare `depends_on: <task-id>` (or a list). A task is only workable when every
@@ -452,123 +402,10 @@ What that means for you:
   `docs/runbooks/admin-token-rotation.md`, and fix the hook so that shape is masked next
   time — that fix is the deliverable, a TALKBACK apology is not.
 
-**Visually verifying a front-end change: kind_robots production is self-hosted at
-`kindrobots.org`, not Vercel.** As of 2026-08-12 kind_robots migrated off Vercel
-entirely — Vercel Git deployments are disabled repo-wide (there is no `vercel.json` in
-the repo anymore) and production is served from a self-hosted container on Unraid at
-`https://kindrobots.org` (kind-robots/t-064, closed 2026-08-12; see the
-`kindrobots-unraid` project). **A `*.vercel.app` URL returning `402 Payment Required` /
-`DEPLOYMENT_PAUSED` / `DEPLOYMENT_DISABLED`, or `mcp__Vercel__get_project` showing
-`live: false`, is the expected state of retired infrastructure — it is NOT a production
-incident and does not need a new gate or notification.** (Re-confirmed 2026-08-15: every
-`*.vercel.app` URL for the project 402s/503s while `kindrobots.org` itself serves fine —
-200, real SSR markup, real image assets.)
-
-This changes what verification is actually possible and when:
-
-- **No PR preview exists anymore.** Vercel previews are gone for every branch prefix,
-  not just the `agent/*`/`worker/*`/`conductor/*` ones that were already disabled for
-  cost before the migration. A session cannot visually verify an *unmerged* branch's UI
-  — verification pre-merge is limited to `vue-tsc`/`eslint`/unit tests/
-  `test:layout-contract`.
-- **No auto-deploy-on-merge either.** The Unraid container only picks up a merged commit
-  when Silas runs a manual "Force Update" in the Unraid UI (see the `kindrobots-unraid`
-  roadmap and `docs/runbooks/migration-credential-boundary.md`). A merged, CI-green PR
-  can sit un-deployed for a while — check `https://kindrobots.org/api/health/database`,
-  and whether the specific code path you changed actually answers as expected, before
-  concluding a change "isn't showing up" means it's wrong (davinci/t-018 hit exactly
-  this deploy-timing gap on 2026-08-08: a new endpoint returned the SPA shell, not JSON,
-  until the next Force Update).
-- **Post-deploy, direct HTTPS is the verification path.** Plain `curl` or `WebFetch`
-  against `https://kindrobots.org/<route>` (or an asset path such as
-  `/images/dashboard-tabs/art/<slug>.webp`) works directly in this sandbox — no MCP
-  connector is required for this host, egress to it is unrestricted like any ordinary
-  HTTPS host. This returns real SSR markup with the same caveats as before: it proves a
-  route loads, isn't a 500, and contains the markup you expect from SSR; it does NOT
-  prove anything that only appears after hydration, nor layout, spacing, or anything
-  pixel-level. Say which of those you actually checked.
-- **Real cross-width geometry**: `responsive-layout-audit.yml`'s `audit` check now runs
-  on a schedule and via manual `workflow_dispatch` against production
-  (`https://kindrobots.org` by default, overridable via its `base_url` input) — Vercel
-  preview support was removed from the workflow along with the rest of the Vercel infra,
-  so it no longer fires per-PR against a branch preview. It measures rendered geometry at
-  phone/tablet/desktop widths, fails on elements that spill past the viewport or get
-  crushed to a sliver, and uploads screenshots as artifacts every run. Trigger it
-  manually after a merge + confirmed Force Update if you need fresh geometry/screenshots
-  for a specific change; it will not run automatically per-PR the way the retired
-  Vercel-preview flow did.
-- **Chromium-through-the-sandbox-proxy still fails on every HTTPS host, not just
-  Vercel's** (interface-vision/t-091, measured 2026-08-04): a headless-Chromium fallback
-  in this sandbox gets `net::ERR_CONNECTION_RESET`/`ERR_TUNNEL_CONNECTION_FAILED`
-  regardless of target host (confirmed byte-identical against `example.com`),
-  independent of proxy flags (`proxy:`, `--proxy-server`, `--disable-http2`,
-  `--disable-quic`, `--ignore-certificate-errors`, `ignoreHTTPSErrors` all changed
-  nothing). This is a Chromium-through-the-proxy limitation, not anything about the
-  target being Vercel or kindrobots.org — don't reach for a local headless-browser
-  fallback in a non-interactive session; use `curl`/`WebFetch` for markup and let CI's
-  `audit` check carry real pixels.
-  **UPDATE (rainbow-butterflies/t-053 cycle, measured 2026-09-16): this failure does
-  NOT reproduce in a Claude Code web/cloud remote-execution environment** (the kind
-  with a pre-installed `/opt/pw-browsers/chromium` and `PLAYWRIGHT_BROWSERS_PATH` set
-  for it, distinct from whatever sandbox interface-vision/t-091 ran in). There, the
-  earlier failure mode was a cert error (`net::ERR_CERT_AUTHORITY_INVALID`), not a
-  connection reset — a different symptom than what t-091 saw, and one `ignoreHTTPSErrors`
-  alone did not fix (it changed the error to a timeout instead). The combination that
-  worked, verified against `https://example.com`, `https://kindrobots.org`, and
-  `https://kindrobots.org/model-builder` (200, real hydrated title, zero horizontal
-  overflow at a 390px viewport): launch with explicit
-  `proxy: { server: 'http://127.0.0.1:38425' }` (read the actual port from `$HTTPS_PROXY`
-  rather than hardcoding it) plus `args: ['--ignore-certificate-errors', '--disable-http2']`,
-  and a browser context with `ignoreHTTPSErrors: true`. Use Node's global Playwright at
-  `/opt/node22/lib/node_modules/playwright` via `require()`/CJS (a bare `import
-  'playwright'` fails with `ERR_MODULE_NOT_FOUND` unless the project's own
-  `node_modules` has it). Do not assume this generalizes to every session type — verify
-  with the `example.com` + target-host pair above before relying on it for a specific
-  task, since t-091's environment and this one clearly differ in ways not fully
-  understood. If it works, this reopens live UI-driven verification (clicking through
-  an authenticated flow, screenshotting hydrated state, running a task like
-  model-builder/t-031's live smoke test) for sessions that previously treated it as
-  categorically impossible.
-
-  **UPDATE (model-builder/t-031 cycle, 2026-09-17): the authenticated-flow gap above is
-  closed** — a working test-login path already exists, it just hadn't been wired to
-  browser-based verification before. kind_robots' own CI (`cleanup-test-users.yml`,
-  Cypress's `createFreshLoggedInTestUser`) already registers and logs in disposable
-  `cypress-*` users against production `kindrobots.org` as its normal test methodology.
-  The same pattern works from a plain script, no Cypress required: `POST
-  /api/users/register` with `x-api-key: $KR_API_TOKEN` (this is the beta-admin token,
-  read via `x-api-key`/`x-admin-token`/`Authorization`, per
-  `server/utils/validateKey.ts`) creates a `cypress-`-prefixed user; `POST
-  /api/auth/login` with that user's username/password returns a real session JWT;
-  `page.evaluate(() => localStorage.setItem('token', <jwt>))` before navigating logs the
-  Playwright browser context in exactly the way the SPA's own `userStore.ts` expects
-  (`getFromLocalStorage('token')`, validated via `/api/auth/validate/token`) — confirmed
-  live, including a full `/model-builder` source-pick → recipe → run flow rendering
-  correctly with a real username in the header. `KR_API_TOKEN` itself is NOT a valid
-  session token and must not be dropped into `localStorage` directly — it authenticates
-  server-to-server admin calls (`x-api-key` etc.), not a browser session; the app's own
-  client-side validation silently strips it back out if you try. Clean up afterward via
-  `POST /api/users/cypress-cleanup` with `{"username": "cypress-..."}` and the same
-  admin header — restricted server-side to `cypress-*` usernames, so it can't be used to
-  delete real accounts. This whole round trip is the established, sanctioned pattern
-  already running in kind_robots CI, not a new bypass. One live gap remains, not an
-  auth one: a fresh test user owns nothing, so exercising a source-owned flow (model
-  builder, or anything gated by `assertSourceOwnership`-style checks) needs a same-session
-  API call to create an owned record first (e.g. `POST /api/characters` with
-  `Authorization: Bearer <jwt>`) — the UI's source picker itself does not filter to
-  owned-only records and will happily let you pick something you can't actually build on,
-  which surfaces as a 403 from the write endpoint rather than a clear UI-level warning
-  (worth a small UX task on its own).
-
-So a UI change on a `claude/*` branch is NOT merging on structural CI alone. The honest
-summary of what a non-interactive session can claim: SSR markup via `curl`/`WebFetch`
-against `kindrobots.org` post-deploy (itself), real cross-width geometry plus
-screenshots via the `audit` check (CI, scheduled/manual against production), structural
-invariants via the layout contract (CI), and nothing about aesthetics pre-deploy or
-pre-Force-Update. The old Vercel MCP connector flow
-(`list_teams`/`list_projects`/`list_deployments`/`web_fetch_vercel_url` against the
-kind-robots Vercel project) is retired for kind_robots verification purposes — its data
-now describes decommissioned infrastructure, not anything a merge or preview affects.
+**Visually verifying a front-end change** (kind_robots is self-hosted at `kindrobots.org`, not
+Vercel; no PR previews, no auto-deploy-on-merge; a UI change does not merge on structural CI
+alone): read [`docs/agents/frontend-verification.md`](docs/agents/frontend-verification.md)
+before verifying or merging any kind_robots UI change.
 
 When a cross-repo task is selected:
 1. Claim the conductor roadmap task exactly as usual on `main`.
@@ -741,17 +578,15 @@ role from live state on arrival:**
      didn't succeed. A scheduled workflow's failure otherwise only shows up in the
      Actions tab — nothing else pings a session (conductor/t-102: the 2026-08-05
      ai-art-academy/t-010 stuck-`rearm` incident sat failing on every run for hours
-     before a manual sweep noticed). See "If you're fixing a failing scheduled
-     workflow" below.
+     before a manual sweep noticed). See `docs/agents/roles/workflow-medic.md`.
    - **`role: pr-medic`** — no branch to review, but an open PR (`run_reviewer.py`'s
      scope) has red CI that's gone stale (no push in `--pr-stale-hours`, default 3h)
-     — a real error nobody is actively iterating on, not a PR mid-fix. See "If you're
-     fixing PR errors" below.
+     — a real error nobody is actively iterating on, not a PR mid-fix. See `docs/agents/roles/pr-medic.md`.
    - **`role: branch-medic`** — nothing to review or fix, but `branch_janitor.py`'s
      STRANDED tier is non-empty: a `claude/*`/`worker/*` branch with unique unmerged
      commits, old enough (`--branch-stale-hours`, default 12h) that nobody's actively
      pushing to it. `branch_janitor.py` itself deliberately never auto-acts on this
-     tier — see "If you're triaging stale branches" below.
+     tier — see `docs/agents/roles/branch-medic.md`.
    - **`role: daily-creative`** — a ready recurring task explicitly marked
      `daily_commitment: true` has not yet been checked on today's Pacific calendar date.
      This lane exists for human-designated daily creative output, initially
@@ -764,8 +599,7 @@ role from live state on arrival:**
      `AUDIT-REPORT-<date>.md` exists yet, or the newest one is `--audit-stale-days`
      (default 7) old or older. This is time-boxed rather than purely reactive — it
      outranks fresh `worker` pickup once overdue, so it actually happens close to
-     weekly instead of "whenever the queue happens to run dry." See "If you're doing
-     the weekly site audit" below.
+     weekly instead of "whenever the queue happens to run dry." See `docs/agents/roles/site-auditor.md`.
    - **`role: worker`** — none of the above, but a `ready` task exists.
    - **`role: stale-recurring`** — no ordinary `ready` task and no due daily
      commitment won the cycle, but a `recurring: true` task (most often a
@@ -783,7 +617,7 @@ role from live state on arrival:**
    - **`role: idle`** — none of the above. **Idle is never a stopping point.** Walk
      "Never idle: the fallback ladder" below (also emitted as `idle_ladder` in the
      JSON) and ship at least one unit of work before the session ends.
-2. Follow the matching section below. A session isn't locked to one role for its
+2. Follow the matching playbook (table below). A session isn't locked to one role for its
    whole run: if you finish reviewing everything open, re-run `select_role.py` — it
    may now recommend `workflow-medic`, `pr-medic`, `branch-medic`, `site-auditor`,
    `worker`, or `stale-recurring` — and keep going in the same session rather than
@@ -871,267 +705,21 @@ Rung 8 always has work, so a session that reaches the bottom of the ladder still
 Record which rung you took (and why the rungs above it were empty) in the task note so the
 next session and the digest can see the ladder working.
 
-### If you're working
-- **Step 0 — Todos**: run `python scripts/fetch_todos.py`. Handle the top OPEN todo if
-  any exist (see "Todos" section). Call `complete_todo.py <id>` when done.
-- **Step 1 — Resolve deps**: run `python scripts/resolve_deps.py`.
-- **Step 2 — Claim**: run `python scripts/claim_task.py <project> <task-id> --owner worker
-  --session <id>` (see "Rotation collisions" above). It checks `origin/main` fresh,
-  refuses if another session already claimed the task, and otherwise pushes the
-  `status: claimed`/`owner: worker`/`updated` commit straight to `main` for you. On
-  `ALREADY_CLAIMED`, do not implement this task — pick the next `ready` task instead.
-- Branch `worker/<project>-<task-id>`. Do ONLY that task.
-- **Rebase onto `origin/main` immediately before opening the PR** (all kinds): run
-  `git fetch origin main && git rebase origin/main` (or merge) right before `gh pr
-  create`, so the PR opens conflict-free against the current tip instead of drifting
-  stale while it waits for review. `STATUS.md` / `workspace.html` / `ROADMAP-AUDIT.*`
-  are regenerated on every push to `main`, so a branch whose merge-base is even one
-  `chore: refresh STATUS.md …` auto-commit behind will conflict on these files 100%
-  of the time — resolve any such conflict by taking main's copy per hard rule 9
-  (they're auto-generated). This keeps trivial auto-gen conflicts off the Reviewer's
-  plate (kaizen from PR #550, conductor/t-045).
-- **software:** open a PR into `main`, fill the handoff template (including "Flags for
-  Reviewer"), set task `status: review`, verify it, resolve conflicts if present, and **merge
-  it** — reversible/scoped/verified software work is merged, not parked at an open PR. After a
-  successful safe merge, **before hand-writing `status: done`**, check `task-events/` for an
-  already-queued event naming this same project/task (a "PR merged" auto-queue mechanism can
-  race a manual close-out — both derive staleness from the same monotonically increasing
-  `updated` timestamp, and whichever writes last makes the other look stale, silently
-  discarding its `learning`/`note` payload with no trace; see conductor/t-085, TALKBACK.md
-  2026-07-26). If a matching event exists, either let it apply on its own next processor run
-  (don't also hand-write the transition) or explicitly consume it first — apply its
-  `learning`/`note` payload, then delete the file — rather than racing it blind. Only once
-  that's clear, close the task out with `python scripts/close_task.py <project> <task-id>
-  done --session <id>` (the branch is auto-removed on merge) — **never** a plain
-  `set_task_field.py` edit followed by a direct `git commit && git push` to `main`.
-  `close_task.py` pushes the `status: done` edit to its own small branch (checked fresh
-  against `origin/main`, same collision-resistant git plumbing as `claim_task.py`); open a
-  tiny PR from that branch into `main` and merge it, exactly like any other software
-  change. Hard safety rule 1 ("PRs only into `main`, except the Worker's atomic claim
-  commit") does not carve out a second exception for close-out bookkeeping — a direct push
-  here is exactly the gap conductor/t-091 self-flagged from the coloring-book/t-036
-  close-out (2026-07-28): every prior close-out commit in this repo's history carries a
-  `(#PR)` suffix, meaning a small follow-up PR was always the actual convention, just not
-  the tooling default. Several close-outs from the same PR/session can share one
-  `close_task.py` branch (call it once per task with the same `--branch`) so one PR closes
-  a whole batch.
-- **content:** write the draft file, open a PR, set `status: needs-human`.
-- **proposal:** write `pitches/<date>-<slug>.md` using the pitch template, open a PR, set
-  `status: needs-human`.
-- **Every run ends with a clean `main` and no leftover branch.** The required terminal state
-  for reversible, scoped, verified, non-gated work is **merged into `main`** — not an open PR
-  left for a human to merge. Do not "park" safe work at an open PR because no one told you to
-  merge: merging safe work is the default, not a request. Only work that is genuinely unsafe,
-  human-gated, outward-facing, irreversible, or blocked ends unmerged — and it ends at
-  `status: needs-human` with its PR open (so it isn't lost), never as a silent stranded branch.
-  Merged branches are removed automatically (the repo's delete-on-merge setting + the
-  `branch-janitor` workflow); never leave a no-PR branch behind. Work one task in flight at a
-  time — you may complete several tasks in a single run, but finish each (merged, or parked at
-  `needs-human` with a PR) before claiming the next. Never hold two active claims at once.
-- **On closing a task at `done`** (e.g. after a safe self-merge): append the outcome record
-  to `LEARNING.yaml`.
-- **Merge conflicts:** resolve them intelligently. Keep both sides when they are independent,
-  follow CONTROL.md and Silas notes when they conflict, and for `STATUS.md` / `workspace.html`
-  accept the latest generated/main version. Re-check relevant verification after fixing conflicts.
-- **After a Reviewer rejection:** read the Reviewer's feedback AND the task's
-  `retry_context:` carefully before re-claiming — never retry blind. If you agree,
-  fix and resubmit, saying in "Flags for Reviewer" how the retry addressed the
-  retry_context. If you disagree, write your case to the project's `TALKBACK.md` and
-  set `status: challenged` — do not silently retry a disputed decision.
+### Role playbooks — read only the one you were assigned
 
-**Recurring tasks** (`recurring: true`, e.g. brainstorm/t-001): these never reach `done`.
-After doing the work and opening/merging the PR, set the task's `status` back to `ready`
-(not `review`/`needs-human`) so it re-arms for a future cycle. The pitches it produces are the
-output that goes to Silas — the task itself just keeps cycling. A recurring task that
-produced nothing this cycle (e.g. pitch queue full) still re-arms to `ready`; note "no-op"
-in the PR. Recurring tasks don't count toward milestone progress.
+The per-role step lists live in `docs/agents/roles/` so a session loads only its own.
+`select_role.py` names the file in its `playbook` field. Re-read the new playbook whenever
+you re-run `select_role.py` and the role changes.
 
-**Daily commitments** are the stricter recurring subset marked `daily_commitment: true`.
-They maintain two machine-readable Pacific-calendar dates on the task: set
-`daily_last_checked` after every completed daily attempt, including a legitimate no-op, and
-set `daily_last_completed` only when the promised creative output actually shipped. Do not
-advance `daily_last_completed` to make the selector green. For animation-manager/t-007,
-"a creation shipped" means the new Screen FX component merged, is registered in the catalog,
-and is tryable. If no buildable pitch can safely ship, record the reason, advance only
-`daily_last_checked`, re-arm, and let the digest's release-age signal remain visibly stale.
-
-### If you're reviewing
-- Read the project's `kind` first.
-- **Before reviewing:** check the project's `TALKBACK.md` for any prior critique context
-  on this task or recurring Worker patterns. Use it to calibrate your review.
-- **software, reversible, does the task, scoped:** approve and merge if the Worker has not
-  already merged it — do not leave a safe PR open for Silas; merging safe work is the
-  Reviewer's job too. Otherwise audit the result and append TALKBACK if useful. Either way the
-  run ends with the work on `main` and no branch left behind.
-- **Needs changes:** triage the failure first (see "Failure triage" — only quality/scope
-  consume a pass; transient/actionable failures route differently and never do). For a
-  quality/scope rejection: comment specifically, write `retry_context:` on the task,
-  set `status: ready`, increment `passes`. At `passes == 3`, set `status: blocked`
-  instead and append the ledger record. Do NOT re-implement.
-- **content / proposal / outward-facing / irreversible:** do NOT merge to live. Confirm the
-  draft or pitch is well-formed, then leave at `status: needs-human` for Silas. (You may
-  merge the file into main so it's visible, but never trigger publish/deploy/send.)
-- **After every review decision** (merge, reject, audit, or escalate): append a brief entry to
-  the project's `TALKBACK.md` noting your reasoning, any patterns you observed in the
-  Worker's output, and any suggestions for how the Worker could improve. This is not
-  optional — the critique log is how the system learns.
-- **Log commits must reach main**: TALKBACK/roadmap commits made on a session branch are only
-  preserved if that branch gets a PR — never end a session with log commits stranded on an
-  unPR'd branch.
-- **Ledger on close**: whenever your decision closes a task (`done` after merge, or
-  `blocked` at passes == 3), append the outcome record to `LEARNING.yaml` — including
-  the failure category and a one-line lesson.
-- **Kaizen on merge**: after every successful merge, create exactly one new `ready` task
-  in the project's roadmap from the Worker's kaizen suggestion (or substitute your own if
-  theirs is weak). One sentence title, `stakes: reversible`. Get the id from
-  `python scripts/next_free_task_id.py <project>` (checks `origin/main` fresh) rather than
-  hand-picking one — this is the fix for the id-collision class that produced
-  interface-vision/t-065 (`t-061`/`t-062` each hand-assigned twice in one day). This
-  compounds improvement across cycles automatically. Check `LEARNING-REPORT.md` first
-  — target a systematic
-  weakness over a generic improvement when one applies (see "Learning ledger").
-- **On a `challenged` task:** read the Worker's TALKBACK entry carefully. If the Worker's
-  case has merit, adjust your decision and append a response. If not, escalate to
-  `needs-human` for Silas to arbitrate — never re-reject a challenge silently.
-
-### If you're fixing a failing scheduled workflow
-
-`select_role.py` recommended `workflow-medic`: a watched scheduled workflow
-(default `process-task-events.yml`) has failed `--workflow-fail-threshold` (default
-3) or more completed runs in a row, with nothing else having noticed.
-
-- Read the most recent failing run's job logs directly (`get_job_logs` with
-  `failed_only`, generous `tail_lines` — the default truncates before the real
-  error on some jobs, a documented recurring gap). Diagnose the actual cause, not
-  just "it's red": a malformed `task-events/*.yaml` entry, a real code regression in
-  the workflow's own script, transient infra, or a downstream dependency (API rate
-  limit, a repo it reads from being unreachable).
-- **Fixable now:** push the fix (a corrected/quarantined malformed input, a script
-  bug fix, a workflow-file correction) and re-run the workflow (`actions_run_trigger`
-  if it supports `workflow_dispatch`, or wait for its next scheduled tick) to confirm
-  it actually goes green — don't close this out on a plausible-looking diff alone,
-  same discipline as every other fix-then-verify role here.
-- **Malformed input from elsewhere** (e.g. a `task-events/*.yaml` entry another
-  session queued incorrectly): fix or quarantine the bad entry rather than patching
-  around it in the processor, unless the processor's own validation gap is the real
-  root cause (in which case fix both — tighten validation so the next bad entry fails
-  at PR time via `validate_task_events.py`, per conductor/t-103's precedent).
-- **Not fixable from this session** (needs credentials/access this sandbox lacks, or
-  a decision only Silas can make): leave a clear note on the affected roadmap task
-  (or open one if none exists yet) at `status: needs-human` with `soft_gate: true` if
-  other work can still proceed in parallel, and move on to the next role/task rather
-  than stalling the whole session on it.
-- This check only watches conductor-repo scheduled workflows by default (see the
-  scope note above) — it does not replace reading `TALKBACK.md`/`RENDER-BACKLOG.md`
-  for kind_robots-side incidents surfaced other ways.
-
-### If you're fixing PR errors
-
-`select_role.py` recommended `pr-medic`: an open PR has CI that's both **red** and
-**stale** (no push in the configured window despite failing) — a genuine orphaned
-error, distinct from a PR mid-iteration whose latest push just hasn't gone green yet.
-
-- For each PR in `red_stale_prs`: open it, read the actual failing check's logs (not
-  just the red status), and diagnose the real cause — flaky/transient infra vs. a
-  real regression vs. a pre-existing failure on the base branch the PR's diff didn't
-  cause (check whether the base branch itself is also red before blaming the PR).
-- **Fixable now:** push a commit that fixes it. Re-run/verify the check goes green.
-  This follows the same "drive to green" discipline as the PR-activity CI-failure
-  handling elsewhere in this manual — diagnose and push a fix, or reply explaining
-  why not; never leave a red check silently unaddressed.
-- **Base branch itself is broken** (the PR's own diff isn't the cause): say so once on
-  the PR (which check, confirmed also red on base) rather than repeatedly re-diagnosing
-  the same non-issue, and don't merge base into the PR until the base recovers.
-- **Not actually fixable / needs a human call** (e.g. the fix requires a decision only
-  Silas can make, or touches something outward-facing/irreversible): comment explaining
-  the real blocker and leave the task at `status: needs-human` — do not force a merge
-  past a red required check, and do not silently close the PR.
-- **The PR is simply abandoned** (author/owner unclear, work superseded elsewhere,
-  genuinely dead): don't unilaterally close someone else's PR — flag it in the
-  project's `TALKBACK.md` with your read and, if the underlying task's roadmap status
-  doesn't already reflect this, correct it (matching the same "roadmap state must
-  reflect live reality" principle as `check_pr_merged_drift.py`).
-- Cross-repo: `select_role.py` checks both conductor's and kind_robots' open PRs by
-  default. If you have access to still other repos, check those too via GitHub MCP
-  tools before concluding there's nothing to fix.
-
-### If you're triaging stale branches
-
-`select_role.py` recommended `branch-medic`: `branch_janitor.py`'s STRANDED tier has
-entries — branches with unique unmerged commits, old enough that nobody's actively
-pushing to them. This is deliberately the ONE tier `branch_janitor.py` itself never
-acts on (it only auto-deletes MERGED/FORCE-named branches and *reports* STRANDED ones)
-— judgment is required, and that's this role's job:
-
-- For each stranded branch: read its actual diff against `main`, not just the commit
-  messages — is this real, reviewable, not-yet-landed work, or leftover scratch state
-  from an abandoned/superseded session?
-- **Real, reviewable work:** open a PR from it (or, if you're confident it's safe,
-  reversible, and scoped, finish and merge it directly per the normal Worker/Reviewer
-  merge rules) rather than leaving it to rot further. If it's stale enough that it
-  conflicts with current `main` in ways that need real judgment to resolve (not a
-  mechanical STATUS.md/ROADMAP-AUDIT.* auto-gen conflict), rebase and resolve properly
-  before opening the PR — do not force-push over unrelated newer history.
-  Reuse the git-race guardrail already in this manual (see "Don't delegate an in-flight
-  git workaround to a background subagent" pattern in `CLAUDE.md`-style operating
-  notes) — verify the branch's current remote tip immediately before touching it, since
-  time may have passed since `select_role.py` last checked.
-- **Confirmed superseded/scratch, safe to discard:** delete it yourself if your
-  session's credentials allow (`git push origin --delete <branch>`); if they 403 (the
-  documented sandbox limitation — session credentials can't delete refs, only the
-  `branch-janitor` workflow's `GITHUB_TOKEN` can), don't leave it hanging — trigger
-  `branch-janitor.yml` via `workflow_dispatch` with `force_delete_branches` set to the
-  branch name(s) you've verified, rather than reporting it and stopping.
-- **Genuinely ambiguous** (can't tell if it's real unfinished work without more context
-  than you have, e.g. a Silas-authored branch with unclear intent): do not guess either
-  way — leave it reported (this is exactly the case STRANDED exists to surface to a
-  human/session with more context) and note it in the project's `TALKBACK.md` or the
-  root one if it's not project-scoped.
-- Never touch `main` itself, and never delete a branch that still has an open PR
-  against it (that's the reviewer role's territory, not this one's).
-- Cross-repo: `select_role.py`'s STRANDED check covers both conductor (via
-  `branch_janitor.py`'s local git) and kind_robots (via the GitHub API — the same
-  classification, `list_branches`/compare/commit-date, just without needing a local
-  checkout) by default. kind_robots branches accumulate the same way conductor's do
-  (see conductor/t-078 for a real example this exact gap once produced) and now get
-  the same STRANDED scrutiny. If you have access to still other repos beyond these
-  two, check them via GitHub MCP `list_branches` using the same judgment above — there's
-  no scripted classification for them yet, so read each candidate branch's actual
-  state (merged? open PR? how old? real diff or empty?) directly.
-
-### If you're doing the weekly site audit
-
-`select_role.py` recommended `site-auditor`: the weekly gap-audit is overdue (never
-run, or `--audit-stale-days` old or older). This role folds
-`projects/global-ui/SITE-AUDIT-AGENT.md`'s originally-planned dedicated Claude Code
-Remote Trigger into the same self-assigning system every other role uses (Silas,
-2026-07-26: "we have a weekly review job, can we add that as a role as well?") — it
-no longer needs its own separately-approved platform trigger; it rides whichever
-trigger fires next, as long as `select_role.py` runs first and nothing higher-priority
-is pending.
-
-- Read `projects/global-ui/SITE-AUDIT-AGENT.md` in full and follow its **Agent
-  Prompt** section verbatim — that spec is authoritative for scope/boundaries, not a
-  paraphrase here. In short: cross-reference every active project's roadmap
-  vocabulary (API routes, Vue components, Pinia stores, schema models it mentions)
-  against what actually exists in `/home/user/kind_robots/`, using Glob/Grep — never
-  call the live site.
-- Write findings as a report to `projects/global-ui/AUDIT-REPORT-<YYYY-MM-DD>.md`
-  (today's date, matching `select_role.py`'s `AUDIT_REPORT_RE` filename contract
-  exactly — a differently-named file won't be recognized as satisfying this week's
-  audit, and the role will keep recommending itself next time).
-- Propose **up to 3** small, reversible follow-up tasks from the most impactful
-  gaps found — new `ready` tasks in the relevant `roadmap.yaml` files, `stakes:
-  reversible`, `owner: null`. This is a read-and-report run: roadmap task additions
-  are the only writes permitted besides the report itself and opening the PR.
-- Never modify a task marked `gate_human: true` without human review, never run
-  npm/pnpm builds, never push directly to `main` — one PR per run, same as any other
-  software-kind task, title `audit(site): weekly gap report YYYY-MM-DD`.
-- If `select_role.py` reports `site_audit_overdue` but you can't complete a full
-  audit this cycle (e.g. genuinely out of session budget), it's fine to leave it for
-  the next session that self-assigns this role — don't write a partial or empty
-  report just to stop the recommendation from firing; an honest "still overdue" is
-  better than a hollow report that silently lowers the bar for what counts as done.
+| Role | Playbook |
+| --- | --- |
+| Worker (`role: worker`, `stale-recurring`, `daily-creative`) | [`docs/agents/roles/worker.md`](docs/agents/roles/worker.md) |
+| Reviewer (`role: reviewer`, `reviewer-uncertain`) | [`docs/agents/roles/reviewer.md`](docs/agents/roles/reviewer.md) |
+| `role: workflow-medic` | [`docs/agents/roles/workflow-medic.md`](docs/agents/roles/workflow-medic.md) |
+| `role: pr-medic` | [`docs/agents/roles/pr-medic.md`](docs/agents/roles/pr-medic.md) |
+| `role: branch-medic` | [`docs/agents/roles/branch-medic.md`](docs/agents/roles/branch-medic.md) |
+| `role: site-auditor` | [`docs/agents/roles/site-auditor.md`](docs/agents/roles/site-auditor.md) |
+| `idle` | "Never idle: the fallback ladder" above (no separate file) |
 
 ## Cross-vetting protocol
 

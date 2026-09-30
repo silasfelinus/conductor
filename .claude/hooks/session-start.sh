@@ -63,13 +63,26 @@ try:
             elif s == "claimed":
                 claimed.append(entry)
 
-    def section(title, items):
-        if items:
-            return [f"Roadmap — {title}:"] + items + [""]
-        return [f"Roadmap — {title}: none", ""]
+    # Token essentialization (2026-09-30): this message lands in every session's
+    # context, so list only what a session acts on directly. Needs-human detail
+    # (50+ lines) is audit_human_gates.py's job via scripts/session_sweep.py;
+    # here it is one per-project count line.
+    def section(title, items, cap=15):
+        if not items:
+            return [f"Roadmap — {title}: none", ""]
+        shown = items[:cap]
+        more = [f"  ... {len(items) - cap} more"] if len(items) > cap else []
+        return [f"Roadmap — {title} ({len(items)}):"] + shown + more + [""]
 
     lines += section("Ready tasks", ready)
-    lines += section("Needs-human gates", needs_human)
+    if needs_human:
+        from collections import Counter
+        per = Counter(e.split("[", 1)[1].split("/", 1)[0] for e in needs_human)
+        lines += [f"Roadmap — Needs-human gates ({len(needs_human)}): "
+                  + ", ".join(f"{k} {v}" for k, v in sorted(per.items()))
+                  + "  (detail: python scripts/audit_human_gates.py)", ""]
+    else:
+        lines += ["Roadmap — Needs-human gates: none", ""]
     lines += section("Claimed tasks", claimed)
 except Exception as e:
     lines += [f"Roadmap scan error: {e}", ""]
@@ -77,12 +90,18 @@ except Exception as e:
 # TALKBACK.md tail
 talkback = root / "TALKBACK.md"
 try:
-    text = talkback.read_text()
-    tail = "\n".join(text.splitlines()[-30:])
-    if tail.strip():
-        lines += ["TALKBACK.md (last 30 lines):", tail, ""]
+    # TALKBACK.md is >1MB; show only the headings of the latest entries, not
+    # their bodies. Read an entry in full only when its heading needs action.
+    with open(talkback, "rb") as fh:
+        fh.seek(0, 2)
+        fh.seek(max(0, fh.tell() - 60000))
+        text = fh.read().decode("utf-8", "replace")
+    heads = [l for l in text.splitlines() if l.startswith("## ")][-6:]
+    if heads:
+        lines += ["TALKBACK.md latest entry headings (read an entry only if it needs action; "
+                  "never read the whole file — `tail -n 80 TALKBACK.md`):"] + [f"  {h[3:]}" for h in heads] + [""]
     else:
-        lines += ["TALKBACK.md: empty", ""]
+        lines += ["TALKBACK.md: no recent entries", ""]
 except Exception as e:
     lines += [f"TALKBACK error: {e}", ""]
 
@@ -125,7 +144,9 @@ else:
 lines += [
     "SOURCE OF TRUTH: Read SOURCE_OF_TRUTH.md. Conductor owns coordination; "
     "Kind Robots owns presentation/application state and stores only a projected read model.",
-    "NOTE: Read AGENTS.md and docs/state-reconciliation.md before responding.",
+    "NOTE: Read AGENTS.md (core) and docs/state-reconciliation.md before responding; "
+    "then run `python scripts/session_sweep.py` for all reconciliation checks in one call. "
+    "Load only the role playbook select_role.py names (docs/agents/roles/).",
 ]
 lines += ["=== END SWEEP ==="]
 
