@@ -5,7 +5,7 @@ cthulhuquarium/t-076. No DATABASE_URL needed: uses KR_API_TOKEN against
 POST /api/art/image and PATCH /api/monsters/:slug (iconPath/cardPath/artImageId).
 Dry-run by default; pass --write to change anything. Idempotent: a Monster that
 already has artImageId and both paths is skipped. Requires the kind_robots deploy
-that ships public/images/cthulhuquarium/ and the PATCH path fields (PR #3139).
+that ships public/cthulhuquarium-plates/ and the PATCH path fields (PR #3139).
 """
 from __future__ import annotations
 
@@ -19,7 +19,7 @@ from pathlib import Path
 
 ART_DIR = Path(__file__).resolve().parent.parent / "projects/cthulhuquarium/art"
 PREFIX = "cthulhuquarium-fish-"
-PUBLIC = "/images/cthulhuquarium/"
+PUBLIC = "/cthulhuquarium-plates/"
 
 
 def call(base, token, method, path, body=None):
