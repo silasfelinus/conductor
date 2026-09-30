@@ -4274,7 +4274,7 @@ tasks:
 - id: t-200
   milestone: m2
   title: "Human-gate hygiene: separate approval-to-proceed from acceptance, repair stale gate state, and make reporting actionable"
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
@@ -4282,9 +4282,13 @@ tasks:
     Silas-directed 2026-09-29 after auditing the live human-gate queue. Fix the system rather than manually dismissing a noisy inbox: distinguish authorization to continue from acceptance-as-complete in the Kind Robots gate UI/event contract; make approved+needs-human contradictions impossible to miss; report workable vs archival gates separately; fix stale pitch-status parsing; and reconcile currently misclassified active gates conservatively so only genuine decisions remain in the human queue. Do not cross real gates for secrets, billing, publication, irreversible actions, or subjective acceptance.
 
     Implementation complete across Conductor and Kind Robots. The gate action contract now separates approve-to-proceed from accept-complete; audits/reporting distinguish real decisions from soft access assists; and stale pure-tooling gates were released.
+
+    Kind Robots PR #3103 (proceed vs accept-complete gate actions) merged 2026-09-30 after
+    35/35 green checks; closed by branch-medic sweep.
   claimed_by: 2026-09-29T083200Z-conductor-t200-gate-hygiene-k7p4
   claimed_at: '2026-09-29T08:32:00Z'
-  updated: '2026-09-29T08:46:00Z'
+  updated: '2026-09-30T01:44:33Z'
+  implementation_pr: 'silasfelinus/kind_robots#3103'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
