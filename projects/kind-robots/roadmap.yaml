@@ -1845,7 +1845,7 @@ tasks:
 - id: t-104
   milestone: m6
   title: Run the v5 Facet art repair sweep and decide what prompt-modifier Facets should show
-  status: needs-human
+  status: done
   soft_gate: true
   gate_human: false
   owner: null
@@ -1945,7 +1945,18 @@ tasks:
     session): Legitimate: the remaining step needs hands on a machine no agent can reach.
     The producer needs the DB port (acrocatranch.com:5544), which no web session can reach.
     Policy is already decided (approved_by_human true).
-  updated: '2026-09-30T06:00:00Z'
+
+    DONE 2026-09-30 (session 20260930T0600Z-gate-triage, Claude Code, 2026-09-30). Silas ran
+    both commands on Alexandria. retireCargoCultPromptEnhancements.ts --apply retired 13 of
+    59 prompt-enhancement Facets (masterpiece, 4k render, trending on ArtStation, ...), kept
+    46 as swatches, and cancelled 0 jobs. The action is reversible with --apply --restore.
+    generate_facet_art.ts --write --repair-tainted (facet-coverage-krea2-v6) resubmitted 0
+    tainted targets and queued 4 coverage jobs. It left 550 healthy v4 renders alone and
+    skipped 542 slots already attempted by a newer version, so the tainted backlog is clear.
+    Silas accepted the Storybook genre picker the same day (storybook/t-016), which covers
+    this task's spot-check. The 65 Facets the producer holds for catalog review went to
+    kind-robots/t-124.
+  updated: '2026-09-30T09:00:00Z'
   approved_by_human: true
   gate_reason: physical-access
   gate_rechecked: '2026-09-30'
@@ -3071,6 +3082,14 @@ tasks:
   claimed_by: 2026-09-26T01-45-00-t123
   claimed_at: '2026-09-26T01:40:56Z'
   implementation_pr: 'silasfelinus/conductor#5172'
+- id: t-124
+  title: Review the 65 Facets the art producer holds for catalog review
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  updated: '2026-09-30T09:00:00Z'
+  note: 'Filed 2026-09-30 from kind-robots/t-104''s final run. generate_facet_art.ts --write --repair-tainted held 65 Facets (61 repair targets) for catalog review. Almost all are sentence-title quirk and backstory Facets (ids 532-577, 1188-1297, e.g. ''Was once a duck. No one knows why, including them.''). The rest: setting-shaped (Circus 16), subject-shaped (Celtic Mythology 836, Eastern European Folklore 840, Oceanic Mythology 841), composite (One Thousand and One Nights Fantasy 843), parenthetical (Cli-Fi 780) and worldview-shaped personality Facets (Metaphysical 1035, Superstitious 1037). Decide per class: give sentence-titles a short visual title with the sentence kept as description, retype the genre-shaped ones, or mark them art-not-required. Then re-run the producer in dry-run and confirm blocked drops toward 0. Reversible catalog edits via the admin API.'
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.

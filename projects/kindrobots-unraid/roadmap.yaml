@@ -371,7 +371,16 @@ tasks:
 
     GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
     session): Legitimate: the remaining step needs hands on a machine no agent can reach.
-  updated: '2026-09-30T06:00:00Z'
+
+    UPDATE 2026-09-30 (session 20260930T0600Z-gate-triage, Claude Code, 2026-09-30): Silas
+    declined MemTest86. It needs hours of downtime and Alexandria has no monitor, which also
+    rules out BIOS changes for now. Remaining asks are small and remote: (a) over SSH,
+    `dmidecode -t memory | grep -E 'Configured Memory Speed|^\s+Speed|Part Number'` shows
+    what speed the four sticks actually run at, with no downtime and nothing secret; (b) a
+    yes or no on whether the 2026-09-12 ~15:43 PDT reboot was planned. If the sticks report
+    3600 and incidents recur, dropping to 3200 becomes a next-time-a-monitor-is-attached
+    change, not a blocker. Close after (a) and (b).
+  updated: '2026-09-30T09:00:00Z'
   gate_reason: physical-access
   gate_rechecked: '2026-09-30'
 
@@ -425,7 +434,18 @@ tasks:
     GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
     session): Legitimate: the remaining step needs hands on a machine no agent can reach.
     Worth a 30-second df -h / btrfs filesystem usage / on Alexandria.
-  updated: '2026-09-30T06:00:00Z'
+
+    UPDATE 2026-09-30 (session 20260930T0600Z-gate-triage, Claude Code, 2026-09-30): Silas
+    ran df -h. The host root is fine (rootfs 32G, 4% used), so the alert is not about the
+    boot RAM disk. Both alerts fit Docker's image file: /var/lib/docker is a 150G loop
+    device (/dev/loop2) at 72% (105G used), and Unraid formats docker.img as btrfs, which
+    explains the btrfs_allocated warning. Netdata's out_of_disk_space_time is a fill-rate
+    prediction, so a growing docker.img trips it well before 100%. NEXT (read-only, safe to
+    paste back): `btrfs filesystem usage /var/lib/docker` and `docker system df`. If build
+    cache or dangling images dominate, `docker image prune` and `docker builder prune`
+    reclaim them. Also noted: the array itself is at 97% (6.9T free of 206T), with 13 of 17
+    data disks at 97-99%. That is a separate capacity-planning item, not this alert.
+  updated: '2026-09-30T09:00:00Z'
   gate_reason: physical-access
   gate_rechecked: '2026-09-30'
 

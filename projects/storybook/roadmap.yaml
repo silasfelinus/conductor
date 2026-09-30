@@ -476,11 +476,11 @@ tasks:
 - id: t-016
   milestone: m4
   title: "FOR SILAS: visually accept the redesigned Storybook setup and reading experience"
-  status: needs-human
+  status: done
   passes: 0
   stakes: reversible
   gate_human: true
-  approved_by_human: false
+  approved_by_human: true
   depends_on: [t-011, t-012, t-013, t-014]
   note: |-
     FOR SILAS: once the current casting-board/setup/deep-link redesign tasks are complete, review Storybook at phone/tablet/desktop widths with a real scenario/cast. TO APPROVE: confirm the front end feels like assembling and reading a story rather than nested admin panels, or leave concrete visual/interaction notes. This is separate from t-015's stage-role architecture choice.
@@ -508,7 +508,12 @@ tasks:
 
     GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
     session): Legitimate: a look/feel or play verdict that only Silas can give.
-  updated: '2026-09-30T06:00:00Z'
+
+    APPROVED by silasfelinus in session (session 20260930T0600Z-gate-triage, Claude Code,
+    2026-09-30; recorded under CONTROL.md's human gate clearance rule): The redesigned
+    Storybook setup and reading experience is accepted. This also closes the folded-in
+    davinci/t-022 life-shape acceptance.
+  updated: '2026-09-30T09:00:00Z'
   owner: worker
   claimed_by: claude-scheduled-20260926T090103Z-storybook-t016
   claimed_at: '2026-09-26T09:01:04Z'
