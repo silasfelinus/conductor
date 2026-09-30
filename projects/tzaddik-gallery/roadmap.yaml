@@ -1,4 +1,4 @@
-# Tzaddik Gallery — playful pop-culture gallery of "just people"
+# Tzaddikim (formerly Tzaddik Gallery) — playful pop-culture gallery of "just people"
 # Created from Silas's 2026-09-26 direction.
 
 project: tzaddik-gallery
@@ -48,6 +48,14 @@ notes_from_silas: |
   never automatic additions. Prefer fresh international discovery over repeating
   familiar US/UK names. Once the finite gallery build is accepted, this daily
   discovery lane is the project's ongoing/continuous reason to stay alive.
+
+  2026-09-30: "I don't know why we've stalled on the tzaddikim project (which
+  should be named as such), but we should have at least 72 nominees for each
+  section. right now we have a weird small cast. research best shoices for best
+  people. keanu reeves. abraham lincoln. jimmy carter. we should also have a
+  blacklist section, so we don't get problematics like ghandi, mother teresa.
+  thomas jefferson, etc." Clarified: "72 for each section. that means 72 pop
+  culture, 72 political, etc"
 
 milestones:
   - id: m1
@@ -454,6 +462,12 @@ tasks:
 
       GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
       session): Legitimate: creative or editorial sign-off.
+
+      UPDATE 2026-09-30 (t-033): the nominee pool is now 380+ living (885 total, every
+      editorial tag at 72+), so the canonical 36 is a pick from a much deeper bench than
+      CANONICAL-36-CANDIDATES.md describes. The gate itself is unchanged: the living 36 is
+      still Silas's editorial call. Muhammad Yunus and Vandana Shiva are deferred in
+      discovery-decisions.yaml pending his call.
     claimed_by: claude-scheduled-20260928T085039Z-tzaddik-t011
     claimed_at: '2026-09-28T08:50:40Z'
     updated: '2026-09-30T06:00:00Z'
@@ -1113,3 +1127,36 @@ tasks:
     claimed_at: '2026-09-28T16:48:56Z'
     updated: '2026-09-28T17:00:30Z'
     implementation_pr: 'silasfelinus/kind_robots#3085'
+
+  - id: t-033
+    milestone: m3
+    title: "Rename to Tzaddikim, add a nominee blacklist, and deepen every tag section to 72+ nominees"
+    status: review
+    owner: worker
+    passes: 0
+    stakes: reversible
+    depends_on: [t-009, t-020]
+    note: >-
+      Silas, 2026-09-30 (verbatim in notes_from_silas): at least 72 nominees per tag
+      section, best people (Keanu Reeves, Abraham Lincoln, Jimmy Carter named), a blacklist
+      (Gandhi, Mother Teresa, Thomas Jefferson named), and the Tzaddikim name.
+
+      Done in this session: blacklist.yaml (29 entries, reasons stated) enforced by
+      build_tzaddik_discovery.py and mirrored in kind_robots utils/tzaddikBlacklist.ts
+      (submission 422, admin import, model discovery), with a parity test. Six research
+      passes (two tags each) produced 856 new nominees; every one is deduped, blacklist-checked,
+      and verified against Wikidata for article identity and life state (six recent 2025-26
+      deaths moved to Memorial; Zainab Salbi dropped for a bad Wikidata death date; Shakira
+      dropped over a tax-fraud plea). Per-tag totals with the 29 live seeds: Politics 118,
+      Pop Culture 102, Humanitarian 154, Science & Medicine 159, Education 164, Environment
+      117, Civil Rights & Justice 318, Peace & Diplomacy 136, Community & Mutual Aid 134,
+      Arts & Culture 121, Journalism & Truth 121, Courage & Rescue 188. Membership is in
+      seed-sets.yaml and kind_robots config/tzaddik-initial-seeds.json; research text in
+      discovery/2026-09-30-nominee-expansion.md. Display name is Tzaddikim; the
+      /tzaddik-gallery route stays (with /tzaddikim redirecting) so links keep working.
+
+      Close when: the kind_robots PR is merged and deployed, the Bootstrap seeds workflow
+      reports its verification line, and GET /api/tzaddik shows 72+ per tag.
+    claimed_by: 2026-09-30-tzaddikim-expansion
+    claimed_at: '2026-09-30T00:00:00Z'
+    updated: '2026-09-30T00:00:00Z'
