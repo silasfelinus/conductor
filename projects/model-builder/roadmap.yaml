@@ -469,7 +469,7 @@ tasks:
   - id: t-029
     milestone: m6
     title: "Polish and upgrade Model Builder front-end surface"
-    status: ready
+    status: done
     recurring: true
     passes: 54
     stakes: reversible
@@ -948,12 +948,19 @@ tasks:
       future no-op cycles must re-arm with close_task.py --noop and append ONE line, not a
       paragraph. Commits accumulate while it rests, so the next cycle audits all of them --
       nothing is missed.
-    updated: '2026-09-30T05:21:31Z'
-    owner: worker
-    claimed_by: 20260930T0000Z-mb029e
-    claimed_at: '2026-09-29T23:44:16Z'
-    noop_streak: 5
-    rest_until: '2026-10-02T05:21:31Z'
+
+      RETIRED 2026-09-30 by Silas (in session: "retire."). Its last ~50 cycles were all no-op
+      watch checks ("no kind_robots commits touch the five model-builder surfaces"), ~43 full
+      agent sessions in 10 days, flagged by check_recurring_churn.py during the token-
+      essentialization pass (conductor#5422). The polish work it drove shipped through cycles
+      1-70 and the m6 milestone is done. Future Model Builder regressions or polish ideas
+      should be filed as ordinary one-off tasks, not a standing watcher.
+    updated: '2026-09-30T05:30:29Z'
+    owner: null
+    claimed_by: null
+    claimed_at: null
+    noop_streak: 0
+    rest_until: null
 
   - id: t-030
     milestone: m6
