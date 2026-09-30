@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-09-30T06:08:56Z
+Generated: 2026-09-30T06:22:21Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1203**
-- Outcomes: blocked: 19, cancelled: 2, done: 1182
+- Closed tasks recorded: **1208**
+- Outcomes: blocked: 19, cancelled: 2, done: 1187
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -42,10 +42,10 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | interface-vision | 140 | 100% |
 | kapowarr | 52 | 100% |
 | kind-economy | 11 | 100% |
-| kind-robots | 73 | 99% |
+| kind-robots | 74 | 99% |
 | kindrobots-unraid | 9 | 100% |
 | lora-ingestion | 11 | 100% |
-| mandarin-tutor | 15 | 93% |
+| mandarin-tutor | 16 | 94% |
 | media-watchlist | 12 | 100% |
 | mermaids-of-venice | 3 | 100% |
 | model-builder | 85 | 100% |
@@ -56,15 +56,15 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | packmaker | 10 | 100% |
 | rainbow-butterflies | 21 | 100% |
 | ruler-hooked | 29 | 100% |
-| scene-animator | 2 | 100% |
+| scene-animator | 3 | 100% |
 | serendipity | 3 | 100% |
 | sketchy | 3 | 100% |
-| storybook | 45 | 100% |
+| storybook | 46 | 100% |
 | storymaker | 1 | 100% |
 | superkate-hairstyle-ai | 18 | 100% |
 | superkate-services-calculator | 12 | 100% |
 | taskmaster | 3 | 100% |
-| text-generation | 7 | 100% |
+| text-generation | 8 | 100% |
 | tzaddik-gallery | 26 | 100% |
 
 ## By kind
@@ -72,7 +72,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1186 | 99% |
+| software | 1191 | 99% |
 
 ## Failure categories
 
@@ -94,16 +94,16 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-09-30 `kind-robots/t-104` — A gate parked on 'needs Alexandria' cleared in one sitting once the note carried the exact two commands to paste.
+- 2026-09-30 `scene-animator/t-005` — Only present a surface for acceptance after it works in production. The 2026-09-11 attempt failed on a missing mount, and the re-presentation after the fix cleared.
+- 2026-09-30 `text-generation/t-009` — Closing-step acceptance gates are cheap for Silas to clear once they are presented alongside other gates rather than one at a time.
+- 2026-09-30 `mandarin-tutor/t-027` — Batched visual acceptance clears fastest when the note names the exact surfaces to open.
+- 2026-09-30 `storybook/t-016` — A visual gate that was sent back once cleared on the second pass once the redesign followed Silas's own written rejection point by point.
 - 2026-09-30 `conductor/t-183` — A gate whose only remaining step was a hands-on diagnosis of a problem that had stopped recurring sat open for two weeks. Close on non-recurrence with a reopen trigger, rather than parking indefinitely.
 - 2026-09-30 `conductor/t-167` — A gate whose only remaining step was a hands-on diagnosis of a problem that had stopped recurring sat open for two weeks. Close on non-recurrence with a reopen trigger, rather than parking indefinitely.
 - 2026-09-30 `conductor/t-165` — A gate whose only remaining step was a hands-on diagnosis of a problem that had stopped recurring sat open for two weeks. Close on non-recurrence with a reopen trigger, rather than parking indefinitely.
 - 2026-09-30 `ruler-hooked/t-019` — Cleared in a single batched decision session. Gates with a written recommendation clear fastest when presented together with their defaults.
 - 2026-09-30 `storybook/t-065` — Cleared in a single batched decision session. Gates with a written recommendation clear fastest when presented together with their defaults.
-- 2026-09-29 `mandarin-tutor/t-031` — When a teaching card already labels a component's role and gives its sourced origin, repeating the same role again in a helper sentence adds noise rather than instruction.
-- 2026-09-28 `animation-manager/t-025` — kaleidoscope-bloom's own novelty section claimed no existing pitch used dihedral mirror-symmetry rendering, but a direct read of kaleidoscope-effect.vue showed it already ships the identical wedge-simulate + rotate/alternating-mirror technique -- the exact gap t-024 closed in check_animation_novelty.py (novelty was only ever checked against other PITCHES.yaml entries, not the shipped catalog). Retired rather than rewrote: when the overlap is in the rendering mechanism itself rather than surface theming, differentiating the surprise/title still ships a re-skin, not a genuinely new animation. Worth reading a pitch's actual claimed-novel technique against the real component source before trusting its own novelty section, not just running the automated checker.
-- 2026-09-28 `animation-manager/t-023` — Found while closing t-007's 2026-09-27 cycle: 17 pitches had a live component + catalog registration + exactly one build entry but were still marked status: candidate at both the pitch and build level, identical to a gap already fixed once for geode-bloom alone (2026-09-21). Verified each id's component file and animationCatalog.ts registration individually against kind_robots@main before promoting -- grep, not assumption -- rather than batch-promoting on the roadmap note's word alone. Worth a small periodic checker script (filed as this task's kaizen suggestion) so this class of drift surfaces on its own instead of needing a Worker to notice it by hand during an unrelated cycle.
-- 2026-09-28 `tzaddik-gallery/t-032` — t-031's kaizen note (above) named the exact gap this task closed: tzaddik-card.vue's own recheck buttons showed on any non-empty recheckReasonLabel(...), which is also true for a FAILED recheck, while resolveTzaddikRecheckReview 409s on any status other than NEEDS_REVIEW. Added a recheckNeedsReview computed reading RecheckRequests[0].status directly instead of re-deriving it from the reason-label helper. Currently unreachable in production per t-029's note (only the NEEDS_REVIEW queue filter's response carries RecheckRequests at all), same as t-031's equivalent fix on the detail sheet -- worth grepping for every other consumer of recheckReasonLabel/RecheckRequests[0] the next time this surface changes, since the same latent gap could recur on a third surface.
-- 2026-09-28 `tzaddik-gallery/t-031` — Gated the detail sheet's new Update/Keep-current buttons on latestRecheck.status === 'NEEDS_REVIEW' explicitly rather than reusing the queue card's broader non-empty-reason-label condition -- the card's condition also renders for FAILED recheck requests, which /api/tzaddik/recheck-resolve rejects with a 409. Worth checking a sibling component's show-condition against the server's actual guard, not just copying it, when adding the same control to a second surface.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-30T06:08:56Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-09-30T06:22:21Z_
