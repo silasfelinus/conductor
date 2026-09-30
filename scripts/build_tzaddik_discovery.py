@@ -30,6 +30,7 @@ import argparse
 import json
 import re
 import sys
+import unicodedata
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
@@ -39,6 +40,7 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 DISCOVERY_DIR = ROOT / "projects" / "tzaddik-gallery" / "discovery"
 SEED_SETS_PATH = ROOT / "projects" / "tzaddik-gallery" / "seed-sets.yaml"
+BLACKLIST_PATH = ROOT / "projects" / "tzaddik-gallery" / "blacklist.yaml"
 
 REQUIRED_PER_STATUS = 10
 
@@ -165,6 +167,44 @@ def _norm(name: str) -> str:
     return re.sub(r"\s+", " ", name.strip()).casefold()
 
 
+def blacklist_key(name: str) -> str:
+    """Accent-, case-, and punctuation-insensitive key for blacklist matching.
+
+    "Ghandi", "César Chávez", and "J.K. Rowling" must all hit their entries, so
+    this is looser than _norm (which dedup uses and keeps exact spellings).
+    """
+    decomposed = unicodedata.normalize("NFKD", name)
+    stripped = "".join(ch for ch in decomposed if not unicodedata.combining(ch))
+    return re.sub(r"[^a-z0-9]+", "", stripped.casefold())
+
+
+def load_blacklist() -> dict[str, str]:
+    """Map every blacklisted name/alias key to its canonical entry name.
+
+    projects/tzaddik-gallery/blacklist.yaml (Silas, 2026-09-30) lists people
+    who must never be nominated. A missing file means an empty blacklist.
+    """
+    if not BLACKLIST_PATH.exists():
+        return {}
+    data = yaml.safe_load(BLACKLIST_PATH.read_text(encoding="utf-8")) or {}
+    result: dict[str, str] = {}
+    for entry in data.get("entries", []) or []:
+        if not isinstance(entry, dict) or not entry.get("name"):
+            continue
+        canonical = str(entry["name"])
+        for alias in [canonical, *(entry.get("aliases") or [])]:
+            key = blacklist_key(str(alias))
+            if key:
+                result[key] = canonical
+    return result
+
+
+def blacklisted_as(name: str, blacklist: dict[str, str] | None = None) -> str | None:
+    """Return the blacklist entry a name matches, or None."""
+    table = load_blacklist() if blacklist is None else blacklist
+    return table.get(blacklist_key(name))
+
+
 def check() -> int:
     dockets = all_dockets()
     if not dockets:
@@ -199,10 +239,12 @@ def brief(date: str | None) -> int:
         "required": {"living": REQUIRED_PER_STATUS, "deceased": REQUIRED_PER_STATUS},
         "controlled_tags": CONTROLLED_TAGS,
         "excluded_names": sorted(excluded_names()),
+        "blacklisted_names": sorted(set(load_blacklist().values())),
         "entry_fields": list(REQUIRED_ENTRY_FIELDS),
         "instructions": (
             "Research exactly 10 living and 10 deceased candidates not in "
-            "excluded_names. Favor breadth beyond US/Anglosphere celebrity per "
+            "excluded_names or blacklisted_names (and no one with a comparable "
+            "record: abuse, enslavement, atrocity, bigotry campaigns, fraud). Favor breadth beyond US/Anglosphere celebrity per "
             "DESIGN-BRIEF.md's 'Escaping the Anglosphere gravity well'. Each "
             "entry needs a real Wikipedia URL, a concrete sourced pitch, a "
             "review_note flagging meaningful documented controversy/objections "
@@ -216,7 +258,14 @@ def brief(date: str | None) -> int:
     return 0
 
 
-def _validate_entry(entry: dict[str, Any], index: int, status: str, seen: set[str], excluded: set[str]) -> list[str]:
+def _validate_entry(
+    entry: dict[str, Any],
+    index: int,
+    status: str,
+    seen: set[str],
+    excluded: set[str],
+    blacklist: dict[str, str] | None = None,
+) -> list[str]:
     errors = []
     prefix = f"{status}[{index}]"
     for field in REQUIRED_ENTRY_FIELDS:
@@ -239,6 +288,9 @@ def _validate_entry(entry: dict[str, Any], index: int, status: str, seen: set[st
         seen.add(key)
         if key in excluded:
             errors.append(f"{prefix}: {name!r} was already suggested or accepted (dedup violation)")
+        match = blacklisted_as(name, blacklist or {})
+        if match:
+            errors.append(f"{prefix}: {name!r} is on the blacklist (as {match!r}); see blacklist.yaml")
     wiki = str(entry.get("wikipedia", ""))
     if wiki and not wiki.startswith("http"):
         errors.append(f"{prefix}: 'wikipedia' does not look like a URL: {wiki!r}")
@@ -262,11 +314,12 @@ def validate_batch(payload: dict[str, Any]) -> list[str]:
 
     excluded = excluded_names()
     excluded_norm = {_norm(n) for n in excluded}
+    blacklist = load_blacklist()
     seen: set[str] = set()
     for i, entry in enumerate(living):
-        errors.extend(_validate_entry(entry, i, "living", seen, excluded_norm))
+        errors.extend(_validate_entry(entry, i, "living", seen, excluded_norm, blacklist))
     for i, entry in enumerate(memorial):
-        errors.extend(_validate_entry(entry, i, "memorial", seen, excluded_norm))
+        errors.extend(_validate_entry(entry, i, "memorial", seen, excluded_norm, blacklist))
     return errors
 
 

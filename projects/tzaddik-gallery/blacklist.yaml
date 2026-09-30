@@ -1,0 +1,137 @@
+# Tzaddikim blacklist — people who must never be nominated, suggested, or imported.
+#
+# Silas, 2026-09-30: "we should also have a blacklist section, so we don't get
+# problematics like ghandi, mother teresa, thomas jefferson, etc."
+#
+# These are figures commonly held up as moral exemplars whose documented record
+# includes serious harm (enslavement, abuse, atrocity, bigotry, fraud) that the
+# gallery's "controversy / objections" panel cannot honestly contain. Being
+# listed here is an editorial call for this playful gallery, not a verdict on
+# anyone's whole life.
+#
+# Enforced by scripts/build_tzaddik_discovery.py (docket validation + dedup) and,
+# in kind_robots, by utils/tzaddikBlacklist.ts (submission, import, and model
+# discovery routes). Keep the two lists in sync; tests/test_tzaddik_blacklist.py
+# checks parity against a kind_robots checkout when one is present.
+#
+# Matching is on the normalized name and every alias (case-, accent-, and
+# punctuation-insensitive). Add aliases for common spellings.
+version: 1
+updated: "2026-09-30"
+entries:
+  - name: "Mahatma Gandhi"
+    aliases: ["Gandhi", "Ghandi", "Mohandas Gandhi", "Mohandas Karamchand Gandhi", "Mahatma Ghandi"]
+    reason: "Documented anti-Black racism in South Africa and coercive 'celibacy experiments' involving young female relatives."
+    added_by: silas
+  - name: "Mother Teresa"
+    aliases: ["Teresa of Calcutta", "Saint Teresa of Calcutta", "Anjezë Gonxhe Bojaxhiu"]
+    reason: "Well-documented substandard care and withheld pain relief in her homes for the dying, alongside cultivation of dictators and fraudsters as donors."
+    added_by: silas
+  - name: "Thomas Jefferson"
+    aliases: []
+    reason: "Enslaved more than 600 people over his lifetime, including Sally Hemings, with whom he fathered children beginning when she was a teenager."
+    added_by: silas
+  - name: "George Washington"
+    aliases: []
+    reason: "Enslaved hundreds of people and pursued those who escaped, including Ona Judge."
+    added_by: claude-research
+  - name: "Andrew Jackson"
+    aliases: []
+    reason: "Enslaver who signed the Indian Removal Act, leading to the Trail of Tears."
+    added_by: claude-research
+  - name: "Woodrow Wilson"
+    aliases: []
+    reason: "Resegregated the federal civil service and promoted Birth of a Nation-era white supremacist history."
+    added_by: claude-research
+  - name: "Christopher Columbus"
+    aliases: ["Cristoforo Colombo", "Cristóbal Colón"]
+    reason: "Governed Hispaniola through enslavement, mutilation, and brutality documented even by his contemporaries."
+    added_by: claude-research
+  - name: "Winston Churchill"
+    aliases: []
+    reason: "Openly racist imperial views and policy responsibility debated in the 1943 Bengal famine."
+    added_by: claude-research
+  - name: "Martin Luther"
+    aliases: []
+    reason: "Authored 'On the Jews and Their Lies' (1543), urging the burning of synagogues."
+    added_by: claude-research
+  - name: "Maximilian Kolbe"
+    aliases: []
+    reason: "Publications he founded ran antisemitic content in 1930s Poland."
+    added_by: claude-research
+  - name: "Henry Ford"
+    aliases: []
+    reason: "Published and distributed 'The International Jew' and the Protocols of the Elders of Zion through the Dearborn Independent."
+    added_by: claude-research
+  - name: "Charles Lindbergh"
+    aliases: []
+    reason: "Antisemitic America First speeches and accepted a Nazi decoration in 1938."
+    added_by: claude-research
+  - name: "Margaret Sanger"
+    aliases: []
+    reason: "Promoted eugenics and addressed a women's auxiliary of the Ku Klux Klan."
+    added_by: claude-research
+  - name: "Che Guevara"
+    aliases: ["Ernesto Guevara", "Ernesto 'Che' Guevara"]
+    reason: "Oversaw summary executions at La Cabaña prison."
+    added_by: claude-research
+  - name: "Aung San Suu Kyi"
+    aliases: []
+    reason: "Defended Myanmar's military at the International Court of Justice against Rohingya genocide charges."
+    added_by: claude-research
+  - name: "Henry Kissinger"
+    aliases: []
+    reason: "Central role in the Cambodia bombing campaign and support for the Pinochet coup and Indonesian invasion of East Timor."
+    added_by: claude-research
+  - name: "Abiy Ahmed"
+    aliases: []
+    reason: "Nobel Peace laureate who led the Tigray war, with documented mass atrocities and a blockade that caused famine."
+    added_by: claude-research
+  - name: "Cesar Chavez"
+    aliases: ["César Chávez"]
+    reason: "2026 New York Times investigation and later lawsuits alleging he sexually abused girls, and Dolores Huerta's account that he raped her."
+    added_by: claude-research
+  - name: "Jean Vanier"
+    aliases: []
+    reason: "L'Arche's own 2020 inquiry found he sexually abused women under his spiritual direction."
+    added_by: claude-research
+  - name: "Abbé Pierre"
+    aliases: ["Henri Grouès"]
+    reason: "Emmaüs's own 2024 investigations documented dozens of sexual assault allegations."
+    added_by: claude-research
+  - name: "Jimmy Savile"
+    aliases: []
+    reason: "Charity fundraiser who used that access to commit hundreds of sexual offences."
+    added_by: claude-research
+  - name: "Bill Cosby"
+    aliases: []
+    reason: "Dozens of sexual assault allegations and a civil jury finding of sexual abuse."
+    added_by: claude-research
+  - name: "Michael Jackson"
+    aliases: []
+    reason: "Multiple child sexual abuse allegations and settlements."
+    added_by: claude-research
+  - name: "John Lennon"
+    aliases: []
+    reason: "By his own account hit women, and was emotionally abusive toward his first family, undercutting the peace-icon framing."
+    added_by: claude-research
+  - name: "Lance Armstrong"
+    aliases: []
+    reason: "Built the Livestrong halo on a doping fraud and the bullying of whistleblowers."
+    added_by: claude-research
+  - name: "Greg Mortenson"
+    aliases: []
+    reason: "'Three Cups of Tea' charity fabrications and misuse of donor funds."
+    added_by: claude-research
+  - name: "Paul Rusesabagina"
+    aliases: []
+    reason: "Hotel Rwanda account disputed by survivors, plus later ties to an armed group. Too contested for a clean nomination."
+    added_by: claude-research
+  - name: "J. K. Rowling"
+    aliases: ["J.K. Rowling", "JK Rowling", "Joanne Rowling"]
+    reason: "Sustained public campaigning against trans people's rights. Out of step with the gallery's queer-positive values."
+    added_by: claude-research
+  - name: "Elon Musk"
+    aliases: []
+    reason: "Amplifying antisemitic and far-right content, and a gesture at the 2025 inauguration widely read as a Nazi salute."
+    added_by: claude-research
