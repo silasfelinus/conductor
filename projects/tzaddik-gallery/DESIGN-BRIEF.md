@@ -1,8 +1,8 @@
-# Tzaddik Gallery — Design Brief
+# Tzaddikim — Design Brief
 
 ## Premise
 
-Tzaddik Gallery is a playful Kind Robots pop-culture database built around the
+Tzaddikim (the plural of *tzaddik*, formerly "Tzaddik Gallery") is a playful Kind Robots pop-culture database built around the
 folkloric idea of 36 righteous people whose existence keeps the world going.
 Here, "tzaddik" is deliberately used as a whimsical editorial label for a "just
 person": someone whose work, courage, generosity, creativity, public service, or
@@ -193,6 +193,25 @@ Aid.
 Editors may add new controlled tags when a repeated category genuinely fails to
 fit the existing set. Avoid one-off micro-tags that turn browsing into taxonomy
 confetti.
+
+## Nominee depth and the blacklist
+
+Silas, 2026-09-30: *"we should have at least 72 nominees for each section ... research best choices for best
+people. keanu reeves. abraham lincoln. jimmy carter. we should also have a blacklist section, so we don't get
+problematics like ghandi, mother teresa. thomas jefferson, etc."* and, clarifying: *"72 for each section. that
+means 72 pop culture, 72 political, etc"*.
+
+- **Depth:** every controlled tag must carry at least 72 approved nominees (living + memorial combined). One
+  person can count toward several tags. Nominee is not the same as canonical: the canonical living 36 (t-011)
+  is still Silas's pick from among them.
+- **Calibre:** beloved, widely recognisable people are welcome (Silas's examples are Keanu Reeves, Abraham
+  Lincoln, Jimmy Carter), alongside the international discovery this brief already asks for. A nominee's
+  objections panel still states documented criticism.
+- **Blacklist:** `blacklist.yaml` names people who must never be nominated. These are figures often held up as
+  moral exemplars whose record includes serious documented harm, such as enslavement, abuse, atrocity, bigotry
+  campaigns or charity fraud. The list is enforced by `scripts/build_tzaddik_discovery.py` and, in kind_robots,
+  by `utils/tzaddikBlacklist.ts` on submission, import and model discovery. Keep the two in sync (a parity test
+  checks this).
 
 ## Daily discovery roster
 
