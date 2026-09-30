@@ -538,7 +538,7 @@ def gh_open_pr_head_branches(repo: str, token: str | None) -> set[str] | None:
 
 # A branch implementing "<project>/<task-id>" follows one of two established
 # naming shapes (conductor/t-150, from the worker-branch convention in
-# AGENTS.md's "If you're working" section): `worker/<project>-<task-id>-*`
+# docs/agents/roles/worker.md, "If you're working"): `worker/<project>-<task-id>-*`
 # (the usual timestamped/suffixed form) or a bare `<project>-<task-id>`.
 def branch_matches_task(branch_name: str, project: str, task_id: str) -> bool:
     bare = f"{project}-{task_id}"

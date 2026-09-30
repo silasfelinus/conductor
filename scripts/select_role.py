@@ -874,6 +874,10 @@ def find_stale_recurring_tasks(
                 continue
             if task.get('status') != 'ready':
                 continue
+            if run_worker.task_is_resting(task):
+                # Deliberately resting after no-op cycles (close_task.py --noop);
+                # not stale, and waking it here would defeat the backoff.
+                continue
 
             last_activity = last_recurring_activity(task)
             if last_activity is None:
@@ -1089,6 +1093,7 @@ def select_role(
     return {
         'role': role,
         'reason': reason,
+        'playbook': ROLE_PLAYBOOKS.get(role),
         'underlying_role': underlying_role,
         'underlying_reason': underlying_reason,
         'repos_checked': repos,
@@ -1118,6 +1123,24 @@ def select_role(
         'github_api_unreachable': github_api_unreachable,
         'github_api_unreachable_detail': github_api_unreachable_detail,
     }
+
+
+# Per-role step lists live outside AGENTS.md so a session loads only its own
+# (token essentialization, 2026-09-30). `idle` walks AGENTS.md's fallback
+# ladder, which stays in the core file and is emitted as `idle_ladder`.
+ROLE_PLAYBOOKS = {
+    'worker': 'docs/agents/roles/worker.md',
+    'daily-creative': 'docs/agents/roles/worker.md',
+    'stale-recurring': 'docs/agents/roles/worker.md',
+    'reviewer': 'docs/agents/roles/reviewer.md',
+    'reviewer-uncertain': 'docs/agents/roles/reviewer.md',
+    'workflow-medic': 'docs/agents/roles/workflow-medic.md',
+    'pr-medic': 'docs/agents/roles/pr-medic.md',
+    'branch-medic': 'docs/agents/roles/branch-medic.md',
+    'site-auditor': 'docs/agents/roles/site-auditor.md',
+    'gate-triage': 'docs/agents/roles/gate-triage.md',
+    'idle': None,
+}
 
 
 def main() -> None:

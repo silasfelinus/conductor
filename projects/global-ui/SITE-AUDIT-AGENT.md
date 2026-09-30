@@ -19,8 +19,8 @@ achieves.
 **Primary trigger (as of 2026-07-26, global-ui/t-016):** `scripts/select_role.py`
 recommends `role: site-auditor` whenever no `AUDIT-REPORT-<date>.md` exists yet, or
 the newest one is 7+ days old — riding whichever platform trigger (Worker/Reviewer-
-family) fires next, rather than needing its own dedicated schedule. See AGENTS.md's
-"If you're doing the weekly site audit" section — that's what a session actually
+family) fires next, rather than needing its own dedicated schedule. See
+`docs/agents/roles/site-auditor.md` (moved out of AGENTS.md 2026-09-30) — that's what a session actually
 follows; this file remains the authoritative scope/prompt/boundaries it points back
 to.
 
