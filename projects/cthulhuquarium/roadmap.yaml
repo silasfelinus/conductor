@@ -1553,3 +1553,34 @@ tasks:
     Cthulhuquarium must not be marked finished before it.
   updated: '2026-09-11T10:30:00Z'
 
+- id: t-078
+  milestone: m3
+  title: Real fish roster (animated cut-out sprites), Charlotte/Wilbur redesign + story scenes, real backgrounds
+  status: claimed
+  gate_human: false
+  owner: worker
+  stakes: reversible
+  passes: 0
+  claimed_by: 2026-09-30T070000Z-cthulhuquarium-t-078-session
+  claimed_at: '2026-09-30T07:00:00Z'
+  implementation_pr: 'silasfelinus/kind_robots#3112'
+  note: >-
+    Silas, 2026-09-30: "cthulhuquarium deserves a real roster of fish, with animation, and
+    invisible background... custom, bespoke listings, static image and then animated." Then:
+    "151 fish. real backgrounds. intro tutorial, with special text and images from the two main
+    characters during special moments including the intro. And much better character designs for
+    the two mains" (Charlotte: gothic mistress prima donna old woman; Wilbur: long-haired,
+    partially balding, bespectacled sad sack with a cast, bandaids and injuries).
+    CODE + CANON (session 2026-09-30): silasfelinus/cthulhuquarium#16 adds a bespoke `sprite:`
+    block (motion + prompt) to all 151 species, the redesigned characters (5 poses each + hero),
+    story/scenes.yaml (intro + every special moment + one Charlotte interstitial per milestone),
+    16 backgrounds, and render/cut-out/animate scripts. silasfelinus/kind_robots#3112 plays it:
+    animated cut-out sprites in the tank and listings, dialogue bottom sheet with portraits and
+    focus rings, seen-once scenes, background picker, the t-019 milestone ladder, first_evolution,
+    and two shop fixes (evolution-only species were listed free; starters now always stocked).
+    REMAINING: 180 renders (151 sprites, 12 character images, 16 backgrounds, 1 plate) via
+    `python3 scripts/render_art.py all --par 3` in the canon repo, then build_sprites.py,
+    build_story_art.py, and kind_robots `node scripts/sync_cthulhuquarium_canon.mjs` in a
+    follow-up PR. BLOCKED 07:03Z 2026-09-30 on the render box: Silas-PC claimed ArtJob 32074 and
+    stalled; check_render_box.py reports DOWN (stalled queue). Needs a ComfyUI restart at home.
+  updated: '2026-09-30T07:40:00Z'
