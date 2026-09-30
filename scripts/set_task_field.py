@@ -97,6 +97,7 @@ ALLOWED_FIELDS = {
     "noop_streak",
     "rest_until",
     "max_rest_hours",
+    "min_rest_hours",
 }
 # Bare words YAML 1.1 parsers read as booleans; quote them so the value stays a string.
 YAML11_BOOL_WORDS = {"yes", "no", "on", "off", "y", "n"}

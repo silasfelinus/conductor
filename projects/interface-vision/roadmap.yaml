@@ -1792,9 +1792,16 @@ tasks:
     State reconciliation after the prior slice merged: kind_robots#2954 is merged and there is no open reviewer target, but recurring interface-vision/t-104 remained status: review. Rearm the recurring consistency umbrella so the next bounded slice can be selected normally.
 
     Reviewer merged Kind Robots PR #2957 at b46b91f7f3c9601631b48bf252b707cdfa02e7ed after all exact-head Actions completed successfully. Recurring consistency sweep is ready for its next bounded slice. kind-economy/t-028 (2026-09-23): mission-accrual-page.vue, cited above as a live icon-badge-header example file (slice 149's kr-icon-tile survey), was deliberately retired by Silas in kind_robots#2669 (2026-09-12) -- not an accident. It is no longer a valid example file for future slices; do not treat its historical mentions above as describing a currently-live page.
+
+    CAPPED 2026-09-30 by Silas (in session: "cap them"): min_rest_hours: 24 -- at most one
+    cycle per day, even after a cycle that did real work (this task ran up to 35 times a day
+    in early September). Every picker honors it via roadmap_claims.task_is_resting; re-arm
+    with close_task.py as usual (add --noop when the cycle found nothing, which lengthens
+    the rest up to 48h).
   updated: '2026-09-21T20:19:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2912'
   retry_context: ''
+  min_rest_hours: 24
 
 - id: t-123
   milestone: m5
@@ -1830,9 +1837,16 @@ tasks:
     Screenshot-directed tablet navigation slice: align the tab dropdown beneath its own trigger, cap tablet width at 18rem while retaining 22rem on xl desktops, and hide secondary row descriptions only at tablet breakpoints to reduce menu height and clutter. Added source-contract coverage for the responsive menu behavior.
 
     Screenshot-directed tablet navigation slice merged as silasfelinus/kind_robots#3073 (merge 69224c46c3b4539246c9bf845785bff68615e865). The non-phone tab dropdown had desktop-sized 22rem geometry, end-alignment that hung the panel left across the channel picker, and full two-line rows at tablet widths. It now opens from the tab trigger's leading edge, caps at 18rem below xl, and hides row summaries only from sm through xl. Phone keeps the unified picker and xl desktop keeps the 22rem descriptive menu. All 31 exact-head PR workflows completed successfully. Kaizen follow-up filed as t-140.
+
+    CAPPED 2026-09-30 by Silas (in session: "cap them"): min_rest_hours: 24 -- at most one
+    cycle per day, even after a cycle that did real work (this task ran up to 35 times a day
+    in early September). Every picker honors it via roadmap_claims.task_is_resting; re-arm
+    with close_task.py as usual (add --noop when the cycle found nothing, which lengthens
+    the rest up to 48h).
   updated: '2026-09-28T06:57:00Z'
   implementation_pr: 'silasfelinus/kind_robots#3073'
   approved_by_human: true
+  min_rest_hours: 24
 
 - id: t-106
   milestone: m6

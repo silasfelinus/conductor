@@ -21,6 +21,8 @@ Recurring re-arm after a cycle that did nothing (``status=ready`` with ``--noop`
 ``noop_streak`` and ``rest_until`` so no picker claims the task again until the rest
 (2h, 6h, 12h, 24h, then 48h; ``max_rest_hours`` on the task caps it) has elapsed. A re-arm
 WITHOUT ``--noop`` resets both, so the first cycle that does real work ends the backoff.
+A task with ``min_rest_hours`` always rests at least that long after any re-arm (a cap on
+how often a standing task runs, not just a no-op backoff).
 See roadmap_claims.NOOP_REST_HOURS for why.
 
 ``note:`` is append-only in normal use. Prefer ``--append-note``; destructive note
@@ -309,13 +311,25 @@ def rest_fields(
         except (TypeError, ValueError):
             streak = 1
         now = now or datetime.now(timezone.utc)
-        hours = noop_rest_hours(streak, task.get("max_rest_hours"))
+        hours = max(noop_rest_hours(streak, task.get("max_rest_hours")), _min_rest(task))
         until = (now + timedelta(hours=hours)).strftime("%Y-%m-%dT%H:%M:%SZ")
         print(f"[close_task] no-op #{streak}: resting until {until} ({hours:g}h)", file=sys.stderr)
         return {"noop_streak": str(streak), "rest_until": until}
+    if status == "ready" and _min_rest(task) > 0:
+        # Capped standing task: rests min_rest_hours even after real work.
+        now = now or datetime.now(timezone.utc)
+        until = (now + timedelta(hours=_min_rest(task))).strftime("%Y-%m-%dT%H:%M:%SZ")
+        return {"noop_streak": "0", "rest_until": until}
     if status == "ready" and (task.get("noop_streak") or task.get("rest_until")):
         return {"noop_streak": "0", "rest_until": "null"}
     return {}
+
+
+def _min_rest(task: dict) -> float:
+    try:
+        return float(task.get("min_rest_hours") or 0)
+    except (TypeError, ValueError):
+        return 0.0
 
 
 def parse_set_args(pairs: list[str]) -> dict[str, str]:
