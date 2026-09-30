@@ -849,7 +849,7 @@ tasks:
 - id: t-044
   milestone: m11
   title: Live smoke-test the Poopstakes draw (HSS_Poopstakes) on a real database before November
-  status: needs-human
+  status: ready
   owner: worker
   passes: 0
   stakes: reversible
@@ -888,10 +888,24 @@ tasks:
     GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
     session): Legitimate: the remaining step needs hands on a machine no agent can reach.
     schema-dry-run.sh must run as root on Alexandria.
-  updated: '2026-09-30T06:00:00Z'
+
+    UPDATE 2026-09-30 (session 20260930T0600Z-gate-triage, Claude Code, 2026-09-30): Silas
+    ran schema-dry-run.sh on Alexandria and it passed: 'The schema comes out as intended.
+    Safe to activate on the live site.' Activation is idempotent (16 tables before and after
+    a second run, dbDelta reported no changes), EXPECTED_TABLES=16 is confirmed against a
+    real dbDelta run, wp_hss_poopstakes_winners exists with
+    household_key/household_key_source/draw_month, and the portal-save and notification-
+    sweep self-tests pass. NOT COVERED: the script never exercises HSS_Poopstakes::draw(),
+    which is this task's actual goal. Returned to agents. NEXT: add a Poopstakes section to
+    site/tools/schema-dry-run.sh, next to its portal-save and notification self-tests, in
+    silasfelinus/humboldtscoopsolutions. It should seed poopstakes-checked quote_requests
+    (one linked to a customer with a property, to hit the address tier), run a draw for an
+    eligible month, assert a winner row with the expected household_key_source, and assert a
+    second draw for that month is refused. Then hand Silas the same one-line rerun.
+  updated: '2026-09-30T09:00:00Z'
   claimed_by: 2026-09-27T020000Z-humboldt-scoop-cms-t044
   claimed_at: '2026-09-27T01:58:43Z'
-  soft_gate: true
+  soft_gate: false
   gate_reason: physical-access
   gate_rechecked: '2026-09-30'
 
