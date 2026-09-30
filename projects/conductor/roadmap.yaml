@@ -4327,12 +4327,14 @@ tasks:
   implementation_pr: 'silasfelinus/kind_robots#3103'
 - id: t-201
   title: 'relay_agent.py: send smartQueue on claim so model-affinity scheduling actually runs'
-  status: ready
+  status: claimed
   stakes: reversible
-  owner: null
+  owner: worker
   passes: 0
-  updated: '2026-09-30T06:00:00Z'
+  updated: '2026-09-30T22:46:22Z'
   note: 'Filed by gate triage 2026-09-30 from t-167''s note. ops/home-server/relay_agent.py never sends smartQueue, so claim.post.ts''s model-affinity bypass (SMART_QUEUE_MAX_BYPASS = 24) is inert and the queue drains strictly oldest-first. Turning it on makes cold checkpoint loads rare, and those loads are the suspected trigger in t-165/t-167. Vendored relay code: follow ops/home-server provenance rules. Deploying to Silas-PC is still Silas''s step.'
+  claimed_by: 011ktzr8
+  claimed_at: '2026-09-30T22:46:22Z'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
