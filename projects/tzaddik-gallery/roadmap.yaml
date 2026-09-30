@@ -1131,7 +1131,7 @@ tasks:
   - id: t-033
     milestone: m3
     title: "Rename to Tzaddikim, add a nominee blacklist, and deepen every tag section to 72+ nominees"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -1157,6 +1157,17 @@ tasks:
 
       Close when: the kind_robots PR is merged and deployed, the Bootstrap seeds workflow
       reports its verification line, and GET /api/tzaddik shows 72+ per tag.
-    claimed_by: 2026-09-30-tzaddikim-expansion
-    claimed_at: '2026-09-30T00:00:00Z'
-    updated: '2026-09-30T00:00:00Z'
+
+      DONE 2026-09-30T12:20Z: kind_robots#3117 merged and deployed; the bootstrap import ran
+      across several deploy-cancelled runs (idempotent resume) and created every seed. Live
+      GET /api/tzaddik: 885 approved (397 living, 488 memorial), every tag 72+ (lowest Pop
+      Culture 102, highest Civil Rights & Justice 317). Two seeds (Patricia Bath, Jocelyn
+      Bell Burnell) had already been created PENDING by the discovery pool and were skipped
+      by the import; approved by hand, and the import now promotes such rows. Also fixed
+      while verifying: the admin Suggestions pool had never filled because OpenAI strict mode
+      rejected 'uniqueItems' in the replenish schema (kind_robots#3119), and replenish deduped
+      against only 400 recent rows, re-suggesting approved people; 29 such duplicates and
+      blacklisted names (Leila Khaled, Tariq Ramadan, now on blacklist.yaml) were archived
+      from the pool, leaving 91 pending suggestions.
+    updated: '2026-09-30T12:20:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3117'
