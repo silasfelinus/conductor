@@ -20,6 +20,14 @@ At the start of every session, before responding to any task, run a conductor sw
 5. Read `docs/state-reconciliation.md`, then run:
    - `python scripts/check_pr_merged_drift.py`
    - `python scripts/audit_human_gates.py`
+   - `python scripts/check_gate_legitimacy.py --live` — the other half of the gate audit: which
+     `needs-human` gates are really agent work (Silas, 2026-09-30: *"can we get some sort of
+     oversight so that we aren't allowing things to hang when its not really a human gate
+     issue?"*). Flags a hard gate with no basis, an approved decision left parked, a dependency
+     wait filed as a gate, a deploy prerequisite that has already shipped, and gates nobody
+     has re-triaged. Every finding is agent work (`select_role.py` role `gate-triage`).
+     Never report a flagged gate to Silas as his to clear. See AGENTS.md "A gate must say why
+     it needs a human".
    - `python scripts/check_project_scaffold_drift.py` — a Kind-Robots-authored project's ONLY path
      into Conductor is the scaffold Todo `createProjectWithScaffoldTodo` writes; a closed todo alone
      never proved the roadmap directory actually landed (conductor/t-125, filed 2026-08-24: Todo

@@ -438,13 +438,13 @@ tasks:
 - id: t-022
   milestone: m3
   title: "Shared bestiary handshake with Ruler is Hooked"
-  status: needs-human
-  soft_gate: true
+  status: ready
+  soft_gate: false
   owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-008
-  note: >
+  note: >-
     UPDATED 2026-08-27 (conductor scheduled Agent run). Documentation half of this
     task is DONE: fish/SCHEMA.md and the new fish/CROSS-GAME-SHARING.md in
     silasfelinus/cthulhuquarium already state the full contract (merged PR #14,
@@ -472,6 +472,12 @@ tasks:
     projects/cthulhuquarium/docs/t-022-shared-bestiary-handshake.md. Soft gate --
     other cthulhuquarium/ruler-hooked work may continue in parallel; this only blocks
     Ruler is Hooked's own dark-ecosystem branch from safely reading real data.
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): NOT A HUMAN GATE, returned to agents. Same class as t-076. Confirming
+    Monster.games freshness, or reseeding the 18 shared species, should go through an admin
+    API or workflow path, not Silas's WSL checkout. NEXT: read Monster.games for the 18
+    slugs via the API. If they are stale, add an admin-only reseed path and run it.
   prior_note: >
     Close the loop Silas asked for: "we can have appropriate ones appear in both
     games." Confirm the ruler-hooked-tagged fish seed correctly into the shared
@@ -488,7 +494,8 @@ tasks:
     conversation, and this task only prepares for it.
   claimed_by: claude-scheduled-20260827T003036Z-cq-t022
   claimed_at: '2026-08-27T00:30:37Z'
-  updated: '2026-08-27T00:45:00Z'
+  updated: '2026-09-30T06:00:00Z'
+  gate_rechecked: '2026-09-30'
 - id: t-023
   milestone: m3
   title: "The voices — shopkeeper, assistant, and the Character/Bot records behind them"
@@ -1162,7 +1169,7 @@ tasks:
 - id: t-065
   milestone: m3
   title: Deliver the 136 stranded Cthulhuquarium art files to the live game
-  status: needs-human
+  status: ready
   gate_human: false
   stakes: reversible
   passes: 0
@@ -1174,11 +1181,23 @@ tasks:
     FOR SILAS: The actual 136-plate delivery is already merged in kind_robots PR #2620: 138 bundled Vite assets total, downscaled from 22.8MB to 5.1MB, with species/egg/parlour/codex wiring in utils/cthulhuquariumArt.ts and cthulhuquarium-game.vue. Full nuxi build passed and emitted the fingerprinted assets. This session reconciled the stale claim after discovering that concurrent work had already completed the implementation. The remaining acceptance condition in this task is explicitly a signed-out live /play/aquarium visit showing real fish art, egg art, and the parlour background. Kind Robots no longer auto-deploys on merge; AGENTS.md says the self-hosted Unraid container only receives merged commits after Silas performs Force Update, which is a human/outward-facing deployment gate. This runtime also cannot currently resolve kindrobots.org, so it cannot truthfully certify the post-deploy signed-out view. TO APPROVE: after the next normal Kind Robots Force Update, visit /play/aquarium signed out and confirm fish art, egg art, and the parlour background are visibly present; then set approved_by_human: true and status: done (or leave a note describing any visible failure). This closes the delivery gate; t-068/t-069 continue the wider full-game audit/re-acceptance separately.
 
     UPDATE (t-068's audit session, 2026-09-11, later): this runtime CAN reach kindrobots.org (the prior note's claim otherwise no longer holds, or didn't hold for this session). A direct curl of https://kindrobots.org/play/aquarium already returns <link rel="prefetch"> tags for the exact fingerprinted asset URLs named above (bailiff-eel, bg-parlour, char-charlotte-fishmonger, char-wilbur-stint, all six egg tiers, screen-finale, set-last-aquarium), and fetching one of those URLs directly returns HTTP 200 with a real ~17KB WebP file. That confirms the PR #2620 delivery has already reached the production build -- the code-level acceptance condition is met without waiting on a further Force Update. What this check CANNOT confirm is what the hydrated game canvas itself looks like to a live visitor (this route is client-rendered; SSR markup only proves the asset references exist in the build, not the rendered scene) -- see FULL-GAME-GAP-AUDIT.md sec.3 for the full caveat, and note sec.1's finding that the swim-canvas fish are still hand-drawn shapes regardless (tracked separately as t-070). TO APPROVE still stands as written above: a signed-out visual look is the remaining step, it should just be materially faster now that a Force Update may not even be required.
-  updated: '2026-09-11T14:05:00Z'
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): NOT A HUMAN GATE, returned to agents. gate_human false, stakes reversible, no
+    hard-gate basis. Checked live today: production serves kind_robots 431f499 (2026-09-29),
+    and all 139 bundled Cthulhuquarium assets return 200 on /play/aquarium. The acceptance
+    criterion is stale: a signed-out visit now shows the sign-in wall, not the game. A fresh
+    cypress-* test user (created, then cleaned up via /api/users/cypress-cleanup) stayed on
+    'Loading page... Looking for /' for more than 25s at 1280px after dismissing the
+    onboarding tour. 0 cthulhuquarium images rendered. That may be a real bug for new
+    accounts. NEXT: reproduce with the AGENTS.md Playwright recipe, fix if real, screenshot
+    the rendered tank, and close to done. No human approval needed.
+  updated: '2026-09-30T06:00:00Z'
   claimed_by: 2026-09-11T121711Z-cthulhuquarium-t-065-r8v2
   claimed_at: '2026-09-11T12:17:11Z'
   implementation_pr: 'silasfelinus/kind_robots#2622'
   soft_gate: false
+  gate_rechecked: '2026-09-30'
 - id: t-066
   milestone: m3
   title: Stop rendering the project pitch as player-facing page copy
@@ -1247,9 +1266,9 @@ tasks:
 - id: t-071
   milestone: m3
   title: Reconcile the click-collectible and food/upgrade mechanics with the pitch, or amend the brief
-  status: needs-human
+  status: ready
   gate_human: false
-  soft_gate: true
+  soft_gate: false
   owner: null
   stakes: reversible
   passes: 0
@@ -1271,7 +1290,15 @@ tasks:
     it down by amending the brief. Leaving at needs-human rather than ready so tooling stops
     surfacing it as pickable work until Silas actually decides; t-072/t-073 and other
     cthulhuquarium tasks are unaffected and continue in parallel.
-  updated: '2026-09-11T14:31:56Z'
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): NOT A HUMAN GATE, returned to agents. The prior agent review already concluded
+    agents should not water down Silas's own MVP bar, which is quoted verbatim in DESIGN-
+    BRIEF.md. Following the written spec is the default, not a question. NEXT: build the
+    literal mechanics (click-to-collect income and food/drop-speed upgrades) to the brief.
+    If Silas later prefers the tick-settled simplification, a revert is cheap.
+  updated: '2026-09-30T06:00:00Z'
+  gate_rechecked: '2026-09-30'
 
 - id: t-072
   milestone: m3
@@ -1293,7 +1320,7 @@ tasks:
 - id: t-076
   milestone: m3
   title: Bulk-create real ArtImage records and link them to the 119 Monster rows that have art
-  status: needs-human
+  status: ready
   gate_human: false
   owner: worker
   stakes: reversible
@@ -1315,16 +1342,24 @@ tasks:
     any failure output here. This is the last step of the t-072/t-076 split closing the
     Monster.iconPath/cardPath/artImageId gap that keeps kr-art-plate on its client-side
     fallback.
-  updated: '2026-09-11T15:34:11Z'
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): NOT A HUMAN GATE, returned to agents. 'Needs a session with DATABASE_URL' is
+    an access gap agents can engineer around. art-archive/t-040 did it with an admin HTTPS
+    endpoint plus a conductor workflow that uses KR_API_TOKEN. NEXT: drive the linker
+    through admin APIs (ArtImage create + PATCH /api/monsters/:id). Add an admin-only
+    endpoint if one is missing. Then run it from a workflow. Do not wait for DB credentials.
+  updated: '2026-09-30T06:00:00Z'
   claimed_by: 2026-09-11T141847Z-cthulhuquarium-t-076-r4m9
   claimed_at: '2026-09-11T14:18:47Z'
-  soft_gate: true
+  soft_gate: false
   implementation_pr: 'silasfelinus/kind_robots#2629'
+  gate_rechecked: '2026-09-30'
 
 - id: t-073
   milestone: m3
   title: Author and deliver art for the remaining 32 species with no plate
-  status: needs-human
+  status: ready
   gate_human: false
   owner: worker
   stakes: reversible
@@ -1420,10 +1455,19 @@ tasks:
     unraid/t-017 is resolved (or check https://kindrobots.org/api/health/database directly),
     then verify all 32 files exist under projects/cthulhuquarium/art/, spot-check on-style,
     and deliver into kind_robots per the original plan.
-  updated: '2026-09-12T20:35:44Z'
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): NOT A HUMAN GATE, returned to agents. The blocker was the 2026-09-12
+    production 503, and that is resolved (health 200, schema current). All 32 missing plates
+    now exist in projects/cthulhuquarium/art/ on conductor main (152 fish plates vs 120
+    bundled in kind_robots). NEXT: bundle the 32 into kind_robots
+    assets/images/cthulhuquarium/ using the #2620 pattern, and wire them in
+    utils/cthulhuquariumArt.ts.
+  updated: '2026-09-30T06:00:00Z'
   claimed_by: claude-20260912t2035z-cq-t073-blk
   claimed_at: '2026-09-12T07:39:54Z'
-  soft_gate: true
+  soft_gate: false
+  gate_rechecked: '2026-09-30'
 
 - id: t-074
   milestone: m3

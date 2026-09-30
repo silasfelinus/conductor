@@ -184,6 +184,7 @@ if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
 import scripts.branch_janitor as branch_janitor
+import scripts.check_gate_legitimacy as check_gate_legitimacy
 import scripts.run_reviewer as run_reviewer
 import scripts.run_worker as run_worker
 
@@ -902,6 +903,23 @@ def find_stale_recurring_tasks(
 # real unit of work. Kept in lockstep with AGENTS.md "Never idle: the
 # fallback ladder" -- the prose there is authoritative, this is the
 # machine-readable pointer so a caller reading only JSON still sees it.
+def find_gate_triage_findings() -> list[dict]:
+    """needs-human gates that are really agent work (check_gate_legitimacy.py).
+
+    Silas, 2026-09-30: *"can we get some sort of oversight so that we aren't
+    allowing things to hang when its not really a human gate issue?"* The
+    checker only ever finds work agents should take back, such as a dependency
+    wait filed as a gate, an approved decision nobody executed, or a gate
+    nobody has re-triaged in a week. So it gets a role, not just a sweep line.
+    Offline only: the --live deploy check stays in the startup sweep.
+    """
+    try:
+        return check_gate_legitimacy.check()
+    except Exception as error:  # a malformed roadmap must not take role selection down
+        print(f'[select-role] gate legitimacy check failed: {error}', file=sys.stderr)
+        return []
+
+
 IDLE_LADDER = [
     'continuous: claim any ready task in a status: continuous project (priority order), including a recurring task even if its last cycle was a no-op',
     'docket: author or improve a Daily Dream proposal (build_dream_proposal.py --check/--brief)',
@@ -952,6 +970,7 @@ def select_role(
     roadmaps = run_worker.load_roadmaps()
     due_daily = find_due_daily_commitments(roadmaps)
     stale_recurring = find_stale_recurring_tasks(roadmaps, stale_days=recurring_stale_days)
+    gate_findings = find_gate_triage_findings()
 
     if review_branches or reviewable_prs:
         role = 'reviewer'
@@ -995,6 +1014,15 @@ def select_role(
             reason = 'weekly site audit has never run'
         else:
             reason = f'weekly site audit overdue ({audit["days_since"]} days since {audit["last_report"]})'
+    elif gate_findings:
+        # Above worker on purpose: every finding either releases real work back
+        # into the queue or stops a gate from sitting on Silas's list for nothing.
+        # Each one is cleared in minutes (reclassify, execute, or stamp
+        # gate_rechecked after a real re-check), so this cannot starve the queue.
+        role = 'gate-triage'
+        names = ', '.join(f'{g["project"]}/{g["task_id"]}' for g in gate_findings[:5])
+        more = f' (+{len(gate_findings) - 5} more)' if len(gate_findings) > 5 else ''
+        reason = f'{len(gate_findings)} needs-human gate(s) look like agent work: {names}{more}'
     elif ready_task:
         role = 'worker'
         reason = f'ready task available: {ready_task.get("project")}/{ready_task.get("task_id")}'
@@ -1047,7 +1075,7 @@ def select_role(
     # worker/idle -- it needs the same downgrade for the same reason.
     underlying_role = role
     underlying_reason = reason
-    if role in ('daily-creative', 'worker', 'idle', 'stale-recurring') and github_api_unreachable:
+    if role in ('daily-creative', 'gate-triage', 'worker', 'idle', 'stale-recurring') and github_api_unreachable:
         role = 'reviewer-uncertain'
         reason = (
             f'GitHub API was unreachable ({github_api_unreachable_detail}) — the '
@@ -1083,6 +1111,8 @@ def select_role(
         'idle_ladder': IDLE_LADDER if underlying_role == 'idle' else [],
         'projects_with_ready_tasks': queue.get('projects_with_ready_tasks', []),
         'projects_needing_human': queue.get('projects_needing_human', []),
+        'gate_triage_finding_count': len(gate_findings),
+        'gate_triage_findings': gate_findings,
         'stale_recurring_task_count': len(stale_recurring),
         'stale_recurring_tasks': stale_recurring,
         'github_api_unreachable': github_api_unreachable,

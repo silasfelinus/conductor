@@ -176,8 +176,11 @@ jobs:
             sleep 2
           done
 
+      # Applies to dry-run too. Before 2026-09-30 this step was import-only, so a dry-run
+      # whose scan request timed out reported green (run 36672365799). A gate note then
+      # read "the dry-run succeeded" when nothing had been scanned.
       - name: Fail workflow when reconciliation failed
-        if: (github.event_name == 'push' || inputs.mode == 'import') && steps.reconcile.outputs.exit_code != '0'
+        if: always() && steps.reconcile.outputs.exit_code != '0'
         shell: bash
         run: |
           echo "Art Archive reconciliation did not complete successfully; result event recorded above." >&2

@@ -505,10 +505,15 @@ tasks:
     TO APPROVE: look at the four screenshots (or load /storybook yourself) and confirm this reads as 'assembling a story from a tarot-deck-like tableau' per your redesign rejection, not nested admin panels. If it looks right, set approved_by_human: true and status: done here. If something about the feel is still off, leave concrete visual/interaction notes and I'll set status: ready for the next redesign pass.
 
     What unblocks when you approve: this also closes the folded-in davinci/t-022 life-shape acceptance (same gate, per the 2026-09-12 note above), and storybook/t-054 (banner cleanup, depends_on t-037) and t-037's destructive beat-loop cutover remain on their own separate t-065 gate -- unaffected by this one either way.
-  updated: '2026-09-26T09:06:26Z'
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Legitimate: a look/feel or play verdict that only Silas can give.
+  updated: '2026-09-30T06:00:00Z'
   owner: worker
   claimed_by: claude-scheduled-20260926T090103Z-storybook-t016
   claimed_at: '2026-09-26T09:01:04Z'
+  gate_reason: subjective-acceptance
+  gate_rechecked: '2026-09-30'
 - id: t-017
   milestone: m4
   title: Add a contract for Storybook object-entry links
@@ -735,7 +740,7 @@ tasks:
 - id: t-028
   milestone: m6
   title: "Generate, distribute, and verify every missing Life ending asset"
-  status: needs-human
+  status: ready
   passes: 0
   stakes: reversible
   depends_on: t-027
@@ -772,8 +777,17 @@ tasks:
     Soft-gated (soft_gate: true) rather than hard: this doesn't block any other ready
     work in this or another project, and per t-027's own note nothing here needs
     Silas's judgment, only his (or automated) execution access.
-  updated: '2026-09-15T13:47:16Z'
-  soft_gate: true
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): NOT A HUMAN GATE, returned to agents. Re-checked 2026-09-30: GET
+    /api/davinci/endings/coverage still reports seededEndingCount 0 / 1024. The missing
+    piece is a way to run the endings seed against production without DB credentials. That
+    is engineering, the same pattern as art-archive/t-040 (admin endpoint + conductor
+    workflow with KR_API_TOKEN). NEXT: build that path, dry-run it, seed, then continue with
+    the original art scope.
+  updated: '2026-09-30T06:00:00Z'
+  soft_gate: false
+  gate_rechecked: '2026-09-30'
 - id: t-029
   milestone: m6
   title: "Engine: server-side story runs for every shape (create, resume, list, turn)"
@@ -1558,7 +1572,7 @@ tasks:
 - id: t-051
   milestone: m5
   title: Delete the retired /api/davinci/* shim routes and legacy localStorage keys once in-flight runs have drained
-  status: needs-human
+  status: ready
   stakes: reversible
   passes: 0
   note: |-
@@ -1591,11 +1605,20 @@ tasks:
     utils/storybookLifeRunKeys.ts, in one scoped PR. What unblocks: nothing downstream
     depends on this -- it is pure dead-code cleanup once cleared. Soft gate: other storybook
     work continues in parallel.
-  updated: '2026-09-22T09:58:02Z'
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): NOT A HUMAN GATE, returned to agents. The traffic-metrics gate is not
+    reachable by any agent and is not needed for a reversible, git-revertable dead-code
+    deletion. The shims have been in place since 2026-09-16 (two weeks). NEXT: delete the
+    six /api/davinci/* shim routes in one scoped PR. Keep reading the two legacy
+    localStorage keys, since that fallback is a few lines and protects any stale in-flight
+    run.
+  updated: '2026-09-30T06:00:00Z'
   owner: worker
   claimed_by: 20260922T100000Z-sb-t051-triage
   claimed_at: '2026-09-22T09:57:38Z'
-  soft_gate: true
+  soft_gate: false
+  gate_rechecked: '2026-09-30'
 
 - id: t-055
   milestone: m7
@@ -1844,11 +1867,18 @@ tasks:
     one), and have the store refresh art.value once the job resolves. What unblocks: once
     you pick (a) or (b), the next Worker session implements the chosen path in one scoped
     PR. Soft gate: other storybook work continues in parallel.
-  updated: '2026-09-22T09:58:13Z'
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Reversible product decision with a written recommendation. Recommended (b):
+    wire the same enqueue/poll/attach flow the legacy life-run path already uses, so the new
+    engine does not regress art the old one had. Under the proposed default-recommendation
+    policy, agents adopt this if Silas has not answered within 7 days.
+  updated: '2026-09-30T06:00:00Z'
   owner: worker
   claimed_by: 20260922T100000Z-sb-t058-triage
   claimed_at: '2026-09-22T09:57:40Z'
   soft_gate: true
+  gate_rechecked: '2026-09-30'
 
 - id: t-059
   milestone: m7
@@ -2045,7 +2075,7 @@ tasks:
   soft_gate: true
   passes: 0
   stakes: reversible
-  depends_on: t-037
+  depends_on: null
   note: >-
     Kaizen from t-037 cycle 29-30 (2026-09-23, silasfelinus/kind_robots#3023 merged --
     guard-deletion slice only, no production code touched).
@@ -2075,8 +2105,15 @@ tasks:
     What unblocks when he does: t-037's next cycle executes the READY-TO-EXECUTE PLAN
     recorded in its own note (cycle 29) -- the actual store/component/page deletion --
     once the window Silas names has passed.
-  updated: '2026-09-23T16:25:27Z'
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Removed depends_on t-037. It was backwards: this gate releases t-037's
+    destructive slice, not the other way round. The legacy-export notice has been live since
+    2026-09-21. Recommended: proceed on 2026-10-05 (two weeks of notice).
+  updated: '2026-09-30T06:00:00Z'
   implementation_pr: 'silasfelinus/conductor#5050'
+  gate_reason: subjective-acceptance
+  gate_rechecked: '2026-09-30'
 
 - id: t-066
   milestone: m7

@@ -56,7 +56,7 @@ tasks:
 - id: t-003
   milestone: m2
   title: "Reconcile later Resource-backed generation evidence; run one current smoke only if proof is still missing"
-  status: needs-human
+  status: ready
   stakes: reversible
   gate_human: false
   note: >-
@@ -120,8 +120,15 @@ tasks:
     ingestion/docs/t-003-resource-backed-generation-evidence.md (2026-09-15 update). t-003
     stays soft needs-human pending t-165; Krea2 remains untestable (no compatible Resource)
     for the same reason as before.
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): NOT A HUMAN GATE, returned to agents. The relay is healthy (317 DONE in 24h, 0
+    stale). The note's own instruction is 'a later token-equipped agent should queue exactly
+    one Krea2/Flux2 Resource-backed smoke'. NEXT: queue it while the queue is idle. If it
+    goes staleRunning past 20 min, cancel it and record the recurrence on conductor/t-165.
+    Do not wait on t-165 first.
   approved_by_human: false
-  updated: '2026-09-15T11:55:17Z'
+  updated: '2026-09-30T06:00:00Z'
   outcome_note: >
     The original July 28 gate is stale in scope. Since then Kind Robots made Resource.localPath
     authoritative for LoRA resolution across image/video engines (including PR #1090), fixed
@@ -133,7 +140,8 @@ tasks:
   owner: reviewer
   claimed_by: 2026-09-15T115306Z-lora-t003-relay-recur
   claimed_at: '2026-09-15T11:53:06Z'
-  soft_gate: true
+  soft_gate: false
+  gate_rechecked: '2026-09-30'
 
 - id: t-004
   milestone: m3

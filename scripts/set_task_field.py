@@ -89,6 +89,10 @@ ALLOWED_FIELDS = {
     "retry_context",
     "daily_last_checked",
     "daily_last_completed",
+    # check_gate_legitimacy.py (2026-09-30): why a needs-human gate needs a human,
+    # and when an agent last re-triaged it.
+    "gate_reason",
+    "gate_rechecked",
 }
 # Bare words YAML 1.1 parsers read as booleans; quote them so the value stays a string.
 YAML11_BOOL_WORDS = {"yes", "no", "on", "off", "y", "n"}

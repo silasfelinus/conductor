@@ -475,8 +475,13 @@ tasks:
 
 
     CURRENT V2 ORDERING, 2026-09-02: this outward-facing account/community onboarding remains a hard human gate, and it must also wait for the reopened t-027 current-v2 product completion/acceptance pass. Do not treat the already-live domain (t-028) or completed infrastructure as permission to register AMI, accept platform terms, create credentials, or publish introductions. After t-027 returns to done with Silas's acceptance, re-verify the target platform's current rules and ask for explicit approval naming the concrete platform/account/action before executing this task.
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Legitimate: public posting or store submission under Kind Robots' name.
   soft_gate: false
-  updated: '2026-09-02T22:41:00Z'
+  updated: '2026-09-30T06:00:00Z'
+  gate_reason: publish
+  gate_rechecked: '2026-09-30'
 
 - id: t-010
   milestone: m3
@@ -492,8 +497,13 @@ tasks:
 
 
     CURRENT V2 ORDERING, 2026-09-02: this outward-facing publishing pilot remains a hard human gate, and it must also wait for the reopened t-027 current-v2 product completion/acceptance pass. The site being public is not approval to post AMI content elsewhere. After t-027 returns to done with Silas's acceptance, re-verify the target network policies and ask for explicit approval naming the concrete account/channel and publication scope before executing this pilot.
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Legitimate: public posting or store submission under Kind Robots' name.
   soft_gate: false
-  updated: '2026-09-02T22:41:01Z'
+  updated: '2026-09-30T06:00:00Z'
+  gate_reason: publish
+  gate_rechecked: '2026-09-30'
 
 - id: t-011
   milestone: m4
@@ -547,10 +557,10 @@ tasks:
 - id: t-014
   milestone: m4
   title: "Review launch evidence and propose the long-running outreach loop"
-  status: needs-human
+  status: waiting
   passes: 0
   stakes: reversible
-  depends_on: t-011
+  depends_on: [t-011, t-009, t-010]
   note: |-
     After the first real pilots, summarize donation-click movement, contributions, useful conversations, moderation burden, platform friction, and content performance. Recommend what to stop, what to scale, and whether Rainbow Butterflies should become a continuous Conductor program for ongoing ethical outreach. Do not invent success from engagement counts; fundraising and useful contribution are the north stars.
     BLOCKED (soft): this task asks to review evidence from "the first real pilots" (donation-click movement, contributions, moderation burden, platform friction, content performance) and recommend whether to scale/stop/continuize the outreach loop. No real pilot has actually launched yet -- t-009 (agent-native community onboarding) and t-010 (human-network outreach pilot) are still status:needs-human/unexecuted, and t-027 (MVP visual acceptance)/t-028 (public deployment+domain activation) are also still needs- human, so the public forum is still pre-launch (FORUM-LAUNCH-PREP.md: "Status: draft, unpublished. Nothing in this file has been posted anywhere."). Writing a launch-evidence summary now would mean inventing numbers, which the task note itself and ETHICS.md both forbid ("Do not invent success from engagement counts"). Setting soft_gate rather than doing nothing: t-011 (mission-funnel instrumentation) is done and ready to capture real data the moment a pilot runs, so this task is genuinely just waiting on t-009/t-010/t-027/t-028, not on missing design work. Re-run this task once at least one real pilot (t-009 or t-010) has been approved and run long enough to produce data worth summarizing.
@@ -560,10 +570,16 @@ tasks:
     CURRENT V2 RECONCILIATION, 2026-09-02: t-028 is already done because the public domain/deployment exists, so it is no longer a blocker for this evidence-review task. t-027 has been reopened as the current-v2 product completion/acceptance pass and should finish before either real outreach pilot begins. This task still cannot run meaningfully until at least one explicitly approved t-009 or t-010 pilot has actually produced decision-grade evidence. Once that happens, use the existing privacy-preserving mission funnel plus qualitative moderation/platform evidence; do not invent donor amounts, identities, or success from engagement counts.
 
     BOOKKEEPING CORRECTION: this remains a soft wait for real pilot evidence, not a hard human gate by itself. The hard approvals live on t-009/t-010. Keep unrelated reversible Rainbow work moving while t-014 waits.
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): NOT A HUMAN GATE. This waits on pilot evidence from t-009/t-010, so it is a
+    dependency. Moved to status: waiting with depends_on [t-009, t-010]. resolve_deps.py
+    releases it when both land.
   claimed_by: claude-scheduled-20260831T213023Z-rb-t014
   claimed_at: '2026-08-31T21:30:24Z'
-  updated: '2026-09-02T22:55:00Z'
-  soft_gate: true
+  updated: '2026-09-30T06:00:00Z'
+  soft_gate: false
+  gate_rechecked: '2026-09-30'
 
 - id: t-030
   milestone: m2

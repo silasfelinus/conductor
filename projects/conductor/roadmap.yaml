@@ -2790,7 +2790,15 @@ tasks:
     essentially concurrent with the stale claim). Noting the claimant name is 'Silas-PC'
     rather than the usual automated relay claimant, in case that means hands-on diagnosis is
     already underway. No action taken beyond recording.
-  updated: '2026-09-17T13:34:13Z'
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Legitimate: the remaining step needs hands on a machine no agent can reach.
+    Relay health 2026-09-30: 317 DONE / 5 CANCELLED in 24h, 0 stale-running, 0 failed, queue
+    idle. The hang has not recurred since 2026-09-20. Recommended: Silas closes this as not-
+    recurring and reopens on the next hang.
+  updated: '2026-09-30T06:00:00Z'
+  gate_reason: physical-access
+  gate_rechecked: '2026-09-30'
 
 - id: t-166
   milestone: m2
@@ -3013,7 +3021,14 @@ tasks:
     relay has not recovered since (~7h at check time). Same incident class as this task's
     own history, not a new defect. No action taken -- still requires hands-on-the-box
     diagnosis.
-  updated: '2026-09-20T06:59:54Z'
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Legitimate: the remaining step needs hands on a machine no agent can reach.
+    Same relay health as t-165. The smartQueue gap named in this note is agent work. Filed
+    as conductor/t-201 (ready).
+  updated: '2026-09-30T06:00:00Z'
+  gate_reason: physical-access
+  gate_rechecked: '2026-09-30'
 
 - id: t-168
   milestone: m2
@@ -3692,8 +3707,14 @@ tasks:
 
     Nothing else depends on this -- it's a tuning pass, not a redesign, and the current 30-minute
     default keeps working safely in the meantime. Filed soft (other work continues in parallel).
-  updated: '2026-09-21T15:05:48Z'
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Legitimate: the remaining step needs hands on a machine no agent can reach.
+    Low value. Recommended: Silas closes this as won't-fix unless the watchdog misfires.
+  updated: '2026-09-30T06:00:00Z'
   soft_gate: true
+  gate_reason: physical-access
+  gate_rechecked: '2026-09-30'
 
 - id: t-184
   milestone: m2
@@ -4289,6 +4310,14 @@ tasks:
   claimed_at: '2026-09-29T08:32:00Z'
   updated: '2026-09-30T01:44:33Z'
   implementation_pr: 'silasfelinus/kind_robots#3103'
+- id: t-201
+  title: 'relay_agent.py: send smartQueue on claim so model-affinity scheduling actually runs'
+  status: ready
+  stakes: reversible
+  owner: null
+  passes: 0
+  updated: '2026-09-30T06:00:00Z'
+  note: 'Filed by gate triage 2026-09-30 from t-167''s note. ops/home-server/relay_agent.py never sends smartQueue, so claim.post.ts''s model-affinity bypass (SMART_QUEUE_MAX_BYPASS = 24) is inert and the queue drains strictly oldest-first. Turning it on makes cold checkpoint loads rare, and those loads are the suspected trigger in t-165/t-167. Vendored relay code: follow ops/home-server provenance rules. Deploying to Silas-PC is still Silas''s step.'
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'

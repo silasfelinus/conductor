@@ -1851,7 +1851,7 @@ tasks:
   owner: null
   stakes: reversible
   passes: 0
-  note: |
+  note: >-
     Filed 2026-09-14 from Silas's report that the Storybook genre picker was showing "weird statuesque heads" -- the same class of complaint as the earlier "bunch of cartoon faces" wave.
 
     Root cause and code fix: kind_robots PR #2736 (facet-coverage-krea2-v5). scripts/generate_facet_art_v4.ts appended art-direction jargon to every Facet prompt -- 'Iconic scene, concrete focal subject, environment, action, strong atmosphere.' -- and Krea 2, caption-conditioned at cfg 1 with no instruction channel, painted the words: "concrete" as concrete, "iconic" as a monument, "focal subject" as a head placed centre-frame. Verified against live data rather than inferred: the stored artPrompt for every affected row is literally "<Title>. Iconic scene, concrete focal subject, ...", and the rendered images were pulled and inspected. Office Satire, Body Horror and Aging Protagonist are the same grey bust in the same grey room. The occupation clause ('...unmistakable silhouette, workplace cues.') renders as a literal black paper cut-out on a desk -- Chaos Consultant and Accidental Diplomat are the same cut-out.
@@ -1940,8 +1940,15 @@ tasks:
     byte-identical, so a --write before or after #2739 queues the same jobs.
     Close this task once both runs are done and the picker has been spot-checked.
     GATE HYGIENE 2026-09-29: Silas's product decision is already recorded above and approved_by_human is true. The remaining work is hands-on Alexandria execution plus verification, so this is a soft access/assistance gate, not another human decision. Keep it visible until those runs complete, but do not ask Silas to re-approve the already-decided prompt policy.
-  updated: '2026-09-29T08:38:00Z'
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Legitimate: the remaining step needs hands on a machine no agent can reach.
+    The producer needs the DB port (acrocatranch.com:5544), which no web session can reach.
+    Policy is already decided (approved_by_human true).
+  updated: '2026-09-30T06:00:00Z'
   approved_by_human: true
+  gate_reason: physical-access
+  gate_rechecked: '2026-09-30'
 
 - id: t-105
   milestone: m6
@@ -2472,7 +2479,7 @@ tasks:
   stakes: outward-facing
   owner: null
   passes: 0
-  note: |
+  note: >-
     FOR SILAS: kind_robots PR #2814 ("Serve entity previews from disk, not the authenticated
     API route"), merged 2026-09-18T01:44:03Z (you merged it yourself, in-session), fixes a real
     UX bug (flickering/missing previews) but introduces a content-exposure regression the PR's
@@ -2521,7 +2528,15 @@ tasks:
     What unblocks when he does: none, this is a standalone finding, not a dependency for other
     work -- filed here rather than silently merged into the pile of #2814's fixes so it doesn't
     get lost.
-  updated: '2026-09-18T01:50:00Z'
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Legitimate: a security finding that needs Silas's acknowledgement. Recommended
+    answer, pending Silas: apply the narrow fix in the note. Prefer the static path only
+    when isPublic && !isMature. That restores per-request revocation for private/mature
+    previews.
+  updated: '2026-09-30T06:00:00Z'
+  gate_reason: security
+  gate_rechecked: '2026-09-30'
 
 - id: t-110
   milestone: m6
@@ -2694,7 +2709,15 @@ tasks:
     What unblocks when Silas decides: buildEntityArtPrompt() gets the chosen change, the
     1,152 queued jobs get re-queued from the manifest, and the 11 blocked Rewards can be
     resubmitted.
-  updated: '2026-09-20T03:00:00Z'
+
+    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
+    session): Reversible product decision with a written recommendation. Recommended (b):
+    keep identity-only lines (Name, Type, Species, Genre) and drop the prose lines. ART-
+    PROMPTS.md rule 6 already says that prose describes what a thing does, not how it looks.
+    Under the proposed default-recommendation policy, agents adopt this if Silas has not
+    answered within 7 days.
+  updated: '2026-09-30T06:00:00Z'
+  gate_rechecked: '2026-09-30'
 
 - id: t-115
   milestone: m6
