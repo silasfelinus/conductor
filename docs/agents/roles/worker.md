@@ -90,6 +90,9 @@ of a recurring task is a whole agent session. coloring-book/t-022 was claimed 40
   picker skips the task for 2h, 6h, 12h, 24h, then 48h as the streak grows (`max_rest_hours` on
   the task lowers the cap). The first re-arm without `--noop`, after a cycle that did real work,
   resets the backoff. (Not for `daily_commitment` tasks; the daily gate already covers them.)
+- A task carrying `min_rest_hours` is capped: after ANY re-arm it rests at least that long, even when
+  the cycle did real work (interface-vision/t-104 and t-105 are capped at 24h, Silas 2026-09-30).
+  Don't remove or lower a cap without Silas.
 - A cycle whose only next step is Silas's decision/approval goes to `needs-human` with the
   question stated, NOT back to `ready`. Re-arming a gated task just re-asks the question hourly.
 - A task whose every cycle is a mechanical check (did files X change? did job Y finish?) is a

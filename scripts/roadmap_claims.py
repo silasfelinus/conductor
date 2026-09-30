@@ -70,16 +70,28 @@ def claim_is_stale(claimed_at: Any, *, now: datetime | None = None) -> bool:
 
 
 def task_is_resting(task: dict[str, Any], *, now: datetime | None = None) -> bool:
-    """True while a task's `rest_until` timestamp is still in the future.
+    """True while a task's `rest_until` timestamp is still in the future, or while
+    fewer than `min_rest_hours` have passed since its `updated` timestamp.
 
     An unparseable `rest_until` is ignored (never locks a task), same spirit as
     claim_is_stale treating a bad claimed_at as stale.
     """
-    until = parse_timestamp(task.get("rest_until"))
-    if until is None:
-        return False
     now = now or datetime.now(timezone.utc)
-    return now < until
+    until = parse_timestamp(task.get("rest_until"))
+    if until is not None and now < until:
+        return True
+    # `min_rest_hours` caps how often a standing task runs at all, even after
+    # cycles that did real work (Silas capped interface-vision/t-104 and t-105,
+    # 2026-09-30). Measured from `updated`, which every close/re-arm bumps, so
+    # the cap holds even for a re-arm that bypassed close_task.py.
+    try:
+        min_rest = float(task.get("min_rest_hours") or 0)
+    except (TypeError, ValueError):
+        min_rest = 0
+    last = parse_timestamp(task.get("updated"))
+    if min_rest > 0 and last is not None and now < last + timedelta(hours=min_rest):
+        return True
+    return False
 
 
 def remaining_scope_delegate_open(task: dict[str, Any], tasks_by_id: dict[str, dict[str, Any]]) -> bool:

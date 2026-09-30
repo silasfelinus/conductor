@@ -197,3 +197,21 @@ def test_archiver_appends_round_and_guards_signals(tmp_path, monkeypatch):
     new_note = yaml.safe_load((proj / "roadmap.yaml").read_text())["tasks"][0]["note"]
     assert len(new_note) < len(note)
     assert archiver.parsed_signals(new_note) == archiver.parsed_signals(note)
+
+
+# --- min_rest_hours: a cap on how often a standing task runs ---
+
+
+def test_min_rest_hours_caps_pickup_from_updated():
+    task = {"status": "ready", "recurring": True, "min_rest_hours": 24, "updated": "2026-09-30T05:00:00Z"}
+    assert not roadmap_claims.task_is_claimable(task, now=NOW)
+    assert roadmap_claims.task_is_claimable(task, now=datetime(2026, 10, 1, 5, 1, tzinfo=timezone.utc))
+
+
+def test_close_task_capped_rearm_rests_even_after_real_work():
+    capped = {"recurring": True, "min_rest_hours": 24}
+    assert close_task.rest_fields(capped, "ready", False, now=NOW) == {
+        "noop_streak": "0", "rest_until": "2026-10-01T06:00:00Z"}
+    # A no-op on a capped task rests the longer of the cap and the backoff.
+    assert close_task.rest_fields(capped, "ready", True, now=NOW)["rest_until"] == "2026-10-01T06:00:00Z"
+    assert close_task.rest_fields({**capped, "noop_streak": 4}, "ready", True, now=NOW)["rest_until"] == "2026-10-02T06:00:00Z"
