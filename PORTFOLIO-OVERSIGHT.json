@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-09-30T05:41:29.771394+00:00",
+  "generated_at": "2026-09-30T12:45:39.481405+00:00",
   "summary": {
-    "status": "clean",
+    "status": "action-needed",
     "roadmap_errors": 0,
-    "roadmap_warnings": 8,
+    "roadmap_warnings": 7,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
-    "openai_scheduled_agent_overdue": false,
+    "openai_scheduled_agent_overdue": true,
     "intent_review_due": false
   },
   "openai_scheduled_agent": {
-    "overdue": false,
-    "last_activity": "2026-09-30T00:21:29+00:00",
-    "hours_since": 5.33,
+    "overdue": true,
+    "last_activity": "2026-09-30T06:00:29+00:00",
+    "hours_since": 6.75,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "OpenAI scheduled cycles must refresh OPENAI-SCHEDULED-HEARTBEAT.json; coordination-marker history remains a compatibility fallback."
@@ -30,19 +30,19 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-09-30T05:41:29.771398+00:00",
+    "generated_at": "2026-09-30T12:45:39.481409+00:00",
     "summary": {
       "roadmaps": 55,
-      "active_projects": 21,
+      "active_projects": 19,
       "continuous_projects": 3,
-      "tasks": 1764,
-      "ready": 35,
-      "waiting": 57,
-      "needs_human": 42,
-      "in_progress": 2,
-      "done": 1612,
+      "tasks": 1768,
+      "ready": 36,
+      "waiting": 59,
+      "needs_human": 32,
+      "in_progress": 3,
+      "done": 1622,
       "errors": 0,
-      "warnings": 8,
+      "warnings": 7,
       "info": 34
     },
     "errors": [],
@@ -88,13 +88,6 @@
         "project": "kindrobots-unraid",
         "task": "t-018",
         "message": "Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect."
-      },
-      {
-        "severity": "warning",
-        "code": "MIXED_HARD_SOFT_GATE",
-        "project": "mandarin-tutor",
-        "task": "t-027",
-        "message": "Task is marked both gate_human and soft_gate. Split the human decision from any remaining execution/access assist so the queue says what it means."
       },
       {
         "severity": "warning",
