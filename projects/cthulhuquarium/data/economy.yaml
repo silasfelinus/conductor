@@ -19,6 +19,12 @@ status: draft-v1 # confirm-or-tune with Silas before t-009 (server API) ships ag
 economy:
   tick_seconds: 60 # how often the server recomputes accrued coins/hunger/debris
 
+# A new tank's opening purse (2026-09-30, kind_robots#3120). It was an implicit
+# 0 in the server, and since a new fish starts full the intro's "press Feed"
+# beat could not be done. 25 matches the canon repo's economy/balance.yaml.
+currency:
+  starting_coins: 25
+
 # ---------------------------------------------------------------------------
 # Rarity tiers — production and cost scaling. Six tiers to match the existing
 # Character.Rarity enum (COMMON..MYTHIC) exactly; no new enum needed.
