@@ -483,6 +483,9 @@ def claim_job():
             "agentVersion": RELAY_VERSION,
             "supportsInputImages": True,
             "supportsCompletionProof": True,
+            # claim.post.ts defaults this on (only an explicit false means FIFO);
+            # sent anyway so model-affinity scheduling never depends on that default.
+            "smartQueue": True,
         },
         bearer=KR_RELAY_TOKEN,
     )
