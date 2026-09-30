@@ -94,10 +94,13 @@ of a recurring task is a whole agent session. coloring-book/t-022 was claimed 40
   question stated, NOT back to `ready`. Re-arming a gated task just re-asks the question hourly.
 - A task whose every cycle is a mechanical check (did files X change? did job Y finish?) is a
   script, not an agent task. File a kaizen task to make it one, and until then re-arm it with `--noop`.
-- Keep the note short: append one line per no-op cycle, not a paragraph. Archive old cycles
-  with `archive_recurring_task_note.py`; a 35KB note is re-read by every session that claims it.
+- Keep the note short: append one short paragraph per cycle, never extend the first paragraph (six
+  live notes had grown to 33-50KB, mostly by agents appending to one giant first line). Past
+  20KB, archive: `archive_recurring_task_note.py <project> <task> --keep-head 3000 --keep-tail 3500`
+  moves the note verbatim to `<TASK-ID>-HISTORY.md` (as a new round if one exists) and keeps the
+  spec, the latest cycles and every signal daily_gate/select_role read.
 `check_recurring_churn.py` (in the startup sweep) flags any task re-armed 8+ times in 7 days
-without the backoff.
+without the backoff, and any live note over 20KB.
 
 **Daily commitments** are the stricter recurring subset marked `daily_commitment: true`.
 They maintain two machine-readable Pacific-calendar dates on the task: set

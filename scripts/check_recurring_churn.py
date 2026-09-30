@@ -20,6 +20,15 @@ The fix for a flagged task is one of:
   * it is a pure watcher a script could answer -> make it a script/workflow, or
     set `max_rest_hours` high.
 
+It also enforces a LIVE NOTE BUDGET: every session that claims a task re-reads its
+whole `note:`, so a non-done task in an active project whose note is over
+--note-budget bytes (default 20,000) is flagged too. On 2026-09-30 six live tasks
+carried 259KB of notes between them (storybook/t-037 50KB, dream-cycle/t-006 49KB,
+interface-vision/t-105 47KB and t-104 43KB, animation-manager/t-007 37KB and t-006
+33KB). The fix is `archive_recurring_task_note.py <project> <task> --keep-head 3000
+--keep-tail 3500`, which archives the note verbatim and keeps the spec, the latest
+cycles and every signal other scripts parse.
+
 Advisory only. Exit 0 clean, 1 when at least one task is flagged, 2 when history
 could not be read far enough back to cover the window. No network/token needed
 beyond `git fetch` of origin/main.
@@ -98,12 +107,29 @@ def load_task(project: str, task_id: str) -> dict | None:
     return None
 
 
+def oversized_live_notes(allowed: set[str] | None, budget: int) -> list[tuple[int, str, str]]:
+    found = []
+    for path in sorted((ROOT / "projects").glob("*/roadmap.yaml")):
+        project = path.parent.name
+        if allowed is not None and project not in allowed:
+            continue
+        doc = yaml.safe_load(path.read_text()) or {}
+        for task in doc.get("tasks") or []:
+            if not isinstance(task, dict) or task.get("status") == "done":
+                continue
+            size = len(str(task.get("note") or "").encode("utf-8"))
+            if size > budget:
+                found.append((size, project, str(task.get("id"))))
+    return sorted(found, reverse=True)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--days", type=float, default=7.0)
     ap.add_argument("--threshold", type=int, default=8, help="re-arms in the window that count as churn")
     ap.add_argument("--include-inactive", action="store_true")
     ap.add_argument("--all", action="store_true", help="also list tasks already resting under the backoff")
+    ap.add_argument("--note-budget", type=int, default=20_000, help="flag live task notes over this many bytes")
     args = ap.parse_args()
 
     now = datetime.now(timezone.utc)
@@ -122,6 +148,10 @@ def main() -> int:
             claims[(m["project"], m["task"])] += 1
 
     allowed = active_slugs(args.include_inactive)
+    if allowed is not None:
+        # continuous projects are pickable too (project_lifecycle.ordered_workable_slugs)
+        data = yaml.safe_load((ROOT / "project-overrides.yaml").read_text()) or {}
+        allowed |= {e.get("slug") for e in data.get("overrides", []) if isinstance(e, dict) and e.get("status") == "continuous"}
     flagged = []
     for (project, task_id), count in rearms.most_common():
         if count < args.threshold:
@@ -133,27 +163,40 @@ def main() -> int:
         if resting and not args.all:
             continue
         flagged.append((project, task_id, count, claims[(project, task_id)], task, resting))
+    big_notes = oversized_live_notes(allowed, args.note_budget)
 
-    if not flagged:
+    if not flagged and not big_notes:
         print(
             f"No recurring churn -- no active task re-armed to ready {args.threshold}+ times "
-            f"in the last {args.days:g} days without the no-op backoff."
+            f"in the last {args.days:g} days without the no-op backoff, and no live note over "
+            f"{args.note_budget:,} bytes."
         )
         return 0
 
-    print(
-        f"Recurring churn: {len(flagged)} task(s) re-armed to ready {args.threshold}+ times in "
-        f"{args.days:g} days (each re-arm is roughly one full agent session):"
-    )
-    for project, task_id, count, n_claims, task, resting in flagged:
-        state = f"resting until {task.get('rest_until')}" if resting else f"status={task.get('status')}"
-        streak = task.get("noop_streak")
-        extra = f", noop_streak={streak}" if streak else ""
-        print(f"  {project}/{task_id}: {count} re-arms, {n_claims} claims ({state}{extra}) -- {str(task.get('title', ''))[:80]}")
-    print(
-        "Fix: re-arm no-op cycles with `close_task.py <p> <t> ready --noop`; move a task waiting on "
-        "Silas to needs-human; turn a pure watcher into a script. See docs/sweep-checks.md."
-    )
+    if flagged:
+        print(
+            f"Recurring churn: {len(flagged)} task(s) re-armed to ready {args.threshold}+ times in "
+            f"{args.days:g} days (each re-arm is roughly one full agent session):"
+        )
+        for project, task_id, count, n_claims, task, resting in flagged:
+            state = f"resting until {task.get('rest_until')}" if resting else f"status={task.get('status')}"
+            streak = task.get("noop_streak")
+            extra = f", noop_streak={streak}" if streak else ""
+            print(f"  {project}/{task_id}: {count} re-arms, {n_claims} claims ({state}{extra}) -- {str(task.get('title', ''))[:80]}")
+        print(
+            "  Fix: re-arm no-op cycles with `close_task.py <p> <t> ready --noop`; move a task waiting on "
+            "Silas to needs-human; turn a pure watcher into a script."
+        )
+    if big_notes:
+        if not flagged:
+            print(f"Recurring churn: {len(big_notes)} live task note(s) over the {args.note_budget:,}-byte budget:")
+        else:
+            print(f"Live note budget: {len(big_notes)} note(s) over {args.note_budget:,} bytes (re-read on every claim):")
+        for size, project, task_id in big_notes:
+            print(f"  {project}/{task_id}: {size:,} bytes")
+        print(
+            "  Fix: python scripts/archive_recurring_task_note.py <project> <task> --keep-head 3000 --keep-tail 3500"
+        )
     return 1
 
 

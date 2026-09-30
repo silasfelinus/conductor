@@ -1373,7 +1373,7 @@ tasks:
 - id: t-060
   milestone: m4
   title: Teach archive_recurring_task_note.py to append a second round to an existing HISTORY.md instead of refusing
-  status: ready
+  status: done
   owner: null
   passes: 0
   stakes: reversible
@@ -1401,6 +1401,15 @@ tasks:
     (or wherever the existing test for this script lives) covering both the first-round
     (current, unchanged) and second-round (new) paths, plus a live-ish exercise against
     a scratch copy of T022-HISTORY.md's actual two-round shape from this cycle.
+
+    DONE 2026-09-30 (token-essentialization session): archive_recurring_task_note.py now
+    appends `<!-- note:begin <id> round N -->` blocks to an existing <TASK-ID>-HISTORY.md (a
+    marker-less hand archive counts as round 1), verified byte-for-byte, earlier rounds
+    untouched. It also gained --keep-head/--keep-tail auto-pointers and a guard that refuses
+    if daily_gate/select_role note signals would change. Exercised live on interface-
+    vision/t-104 (round 2 onto the hand-made T104-HISTORY.md) and five other live tasks;
+    tests in tests/test_token_essentialization.py.
+  updated: '2026-09-30T05:53:32Z'
 - id: t-061
   milestone: m4
   title: Audit the wider "no logo/title/label/document/signage/... or text" clause family for the same prompt-contract trap t-057 just closed

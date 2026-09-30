@@ -150,3 +150,50 @@ def test_close_task_noop_writes_valid_roadmap_fields():
     task = yaml.safe_load(out)["tasks"][0]
     assert task["status"] == "ready" and task["noop_streak"] == 1
     assert not roadmap_claims.task_is_claimable(task, now=NOW)
+
+
+# --- archive_recurring_task_note.py: rounds, auto-pointer, signal guard ---
+
+import archive_recurring_task_note as archiver  # noqa: E402
+
+
+def _daily_note() -> str:
+    spec = "Standing contract: ship one thing per Pacific calendar day. Keep it small."
+    middle = "\n\n".join(f"Cycle {i}: did a thing on 2026-08-{i:02d} Pacific. RAN 2026-08-{i:02d} filler." for i in range(1, 29))
+    latest_mid = "Out-of-order entry: shipped on 2026-09-27 Pacific per the contract."
+    tail = "\n\n".join(f"Recent cycle {i}: NO-OP 2026-09-{i:02d} nothing to do." for i in range(10, 13))
+    return "\n\n".join([spec, middle, latest_mid, tail])
+
+
+def test_auto_pointer_keeps_spec_latest_signals_and_shrinks():
+    note = _daily_note()
+    pointer = archiver.auto_pointer(note, "projects/x/T001-HISTORY.md", 200, 150)
+    assert len(pointer) < len(note) / 3
+    assert pointer.startswith("Standing contract:")
+    assert "projects/x/T001-HISTORY.md" in pointer
+    assert archiver.parsed_signals(pointer) == archiver.parsed_signals(note)
+
+
+def test_hard_wrapped_note_splits_on_blank_lines_only():
+    note = "First sentence of the spec wraps\nonto a second line. Done.\n\nSecond para."
+    assert archiver._paragraphs(note)[0].endswith("Done.")
+
+
+def test_archiver_appends_round_and_guards_signals(tmp_path, monkeypatch):
+    yaml = pytest.importorskip("yaml")
+    proj = tmp_path / "projects" / "demo"
+    proj.mkdir(parents=True)
+    note = _daily_note()
+    doc = {"project": "demo", "kind": "software",
+           "tasks": [{"id": "t-001", "title": "demo", "status": "ready", "recurring": True, "note": note}]}
+    (proj / "roadmap.yaml").write_text(yaml.safe_dump(doc, sort_keys=False, width=100))
+    (proj / "T001-HISTORY.md").write_text("# hand archive without markers\n\nold text\n")
+    monkeypatch.setattr(archiver, "ROOT", tmp_path)
+    monkeypatch.setattr(sys, "argv", ["x", "demo", "t-001", "--keep-head", "200", "--keep-tail", "150"])
+    archiver.main()
+    hist = (proj / "T001-HISTORY.md").read_text()
+    assert hist.startswith("# hand archive without markers\n\nold text\n")  # earlier round untouched
+    assert archiver.extract_note(hist, "t-001", 2) == note + "\n"
+    new_note = yaml.safe_load((proj / "roadmap.yaml").read_text())["tasks"][0]["note"]
+    assert len(new_note) < len(note)
+    assert archiver.parsed_signals(new_note) == archiver.parsed_signals(note)
