@@ -920,9 +920,14 @@ tasks:
       (runway butterfly scheduling) is ready, not done. Presenting it now would ask Silas to
       judge an incomplete room. resolve_deps.py returns it to needs-human-ready when the
       dependency lands.
+
+      NAV (session 20260930T0600Z-gate-triage, 2026-09-30): kind_robots#3109 lists /butterfly-
+      gallery under Admin -> Butterfly Gallery while it is admin-gated and unaccepted. When
+      this gate is approved, move the tab to Play (content/channels/play/) and drop its
+      requiredRole, in the same PR that removes the page's isAdmin gate.
     gate_reason: subjective-acceptance
     gate_rechecked: '2026-09-30'
-    updated: '2026-09-30T08:10:00Z'
+    updated: '2026-09-30T10:00:00Z'
     depends_on: [t-016]
 
   - id: t-026
