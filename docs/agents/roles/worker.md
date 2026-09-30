@@ -81,6 +81,24 @@ output that goes to Silas — the task itself just keeps cycling. A recurring ta
 produced nothing this cycle (e.g. pitch queue full) still re-arms to `ready`; note "no-op"
 in the PR. Recurring tasks don't count toward milestone progress.
 
+**No-op re-arms rest; gated re-arms don't re-arm at all** (2026-09-30). Every hourly pickup
+of a recurring task is a whole agent session. coloring-book/t-022 was claimed 40 times in
+48h while each cycle concluded "next step is FOR SILAS", and model-builder/t-029 ran 122
+"no model-builder commits, re-arming" cycles. So:
+- A cycle that found nothing to do re-arms with `close_task.py <project> <task> ready --noop
+  --session <id> --append-note "..."`. That records `noop_streak` and `rest_until`, and every
+  picker skips the task for 2h, 6h, 12h, 24h, then 48h as the streak grows (`max_rest_hours` on
+  the task lowers the cap). The first re-arm without `--noop`, after a cycle that did real work,
+  resets the backoff. (Not for `daily_commitment` tasks; the daily gate already covers them.)
+- A cycle whose only next step is Silas's decision/approval goes to `needs-human` with the
+  question stated, NOT back to `ready`. Re-arming a gated task just re-asks the question hourly.
+- A task whose every cycle is a mechanical check (did files X change? did job Y finish?) is a
+  script, not an agent task. File a kaizen task to make it one, and until then re-arm it with `--noop`.
+- Keep the note short: append one line per no-op cycle, not a paragraph. Archive old cycles
+  with `archive_recurring_task_note.py`; a 35KB note is re-read by every session that claims it.
+`check_recurring_churn.py` (in the startup sweep) flags any task re-armed 8+ times in 7 days
+without the backoff.
+
 **Daily commitments** are the stricter recurring subset marked `daily_commitment: true`.
 They maintain two machine-readable Pacific-calendar dates on the task: set
 `daily_last_checked` after every completed daily attempt, including a legitimate no-op, and

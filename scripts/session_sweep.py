@@ -47,6 +47,7 @@ CHECKS: list[tuple[str, list[str], bool, bool]] = [
     ("check_vendored_scanner_parity", ["scripts/check_vendored_scanner_parity.py"], True, False),
     ("check_daily_commitment_staleness", ["scripts/check_daily_commitment_staleness.py"], False, False),
     ("check_recurring_claim_drift", ["scripts/check_recurring_claim_drift.py"], False, False),
+    ("check_recurring_churn", ["scripts/check_recurring_churn.py"], False, False),
     ("dream_docket", ["scripts/build_dream_proposal.py", "--check", "--fetch"], True, True),
     ("tzaddik_review", ["scripts/tzaddik_review.py", "--check"], False, True),
 ]

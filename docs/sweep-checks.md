@@ -123,6 +123,15 @@ flags something and you need to know why it exists or how to fix it.
      newer change in the same conflicted file, rather than resolving per-task. Advisory only;
      exit 1 when at least one task is flagged — the fix is a normal `close_task.py` re-close back
      to whatever the note's last paragraph says actually happened. No network/token needed.
+   - `python scripts/check_recurring_churn.py` — counts `close: <project>/<task> -> status=ready`
+     re-arm commits on `origin/main` per task over the last 7 days and flags any active task with 8+
+     that is not currently resting under the no-op backoff (2026-09-30, token essentialization).
+     Nothing reported pickup frequency before, so coloring-book/t-022 (40 claims in 48h, every
+     cycle gated FOR SILAS) and model-builder/t-029 (122 "no model-builder commits, re-arming"
+     cycles) each burned a full agent session per hour for weeks. Fix a flagged task by re-arming
+     no-op cycles with `close_task.py ... ready --noop` (2h..48h backoff, `roadmap_claims.
+     NOOP_REST_HOURS`), moving a task waiting on Silas to `needs-human`, or turning a pure watcher
+     into a script. Advisory; exit 1 when flagged, 2 when git history can't cover the window.
 
 ## Step 7 — the dream docket (CLAUDE.md startup)
 

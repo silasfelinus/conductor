@@ -873,6 +873,10 @@ def find_stale_recurring_tasks(
                 continue
             if task.get('status') != 'ready':
                 continue
+            if run_worker.task_is_resting(task):
+                # Deliberately resting after no-op cycles (close_task.py --noop);
+                # not stale, and waking it here would defeat the backoff.
+                continue
 
             last_activity = last_recurring_activity(task)
             if last_activity is None:

@@ -47,6 +47,9 @@ that answers the question (2026-09-30 token-essentialization pass):
   `"sonnet"` for mechanical lookups/greps; keep the session's own model for judgment calls. Ask for a
   short conclusion back, not file dumps. Git-mutating subagents still need `isolation: 'worktree'`
   (hard safety rule 11).
+- **Recurring no-op cycles rest; gated ones don't re-arm.** Re-arm a cycle that found nothing to do
+  with `close_task.py ... ready --noop` (2h→48h backoff every picker honors); send a cycle whose next
+  step is Silas's call to `needs-human`. Details: `docs/agents/roles/worker.md` "No-op re-arms rest".
 - **Don't narrate history into new text.** Put incident history in the task note / HISTORY.md / TALKBACK,
   and keep instructions in this file and CLAUDE.md to the rule plus a one-line why — both files are
   loaded by every session, so every sentence added there is paid for on every run.

@@ -81,3 +81,72 @@ def test_session_sweep_offline_runs():
     assert proc.returncode in (0, 1)
     assert "check_milestone_status_drift" in proc.stdout
     assert "check_recurring_claim_drift" in proc.stdout
+
+
+# --- Recurring no-op backoff (close_task.py --noop, roadmap_claims.task_is_resting) ---
+
+from datetime import datetime, timedelta, timezone  # noqa: E402
+
+import close_task  # noqa: E402
+import roadmap_claims  # noqa: E402
+import run_worker  # noqa: E402
+
+NOW = datetime(2026, 9, 30, 6, 0, tzinfo=timezone.utc)
+
+
+def test_noop_backoff_schedule_and_cap():
+    assert [roadmap_claims.noop_rest_hours(n) for n in (1, 2, 3, 4, 5, 9)] == [2, 6, 12, 24, 48, 48]
+    assert roadmap_claims.noop_rest_hours(5, max_hours=6) == 6
+
+
+def test_resting_task_is_not_claimable_until_rest_ends():
+    task = {"status": "ready", "recurring": True, "rest_until": "2026-09-30T08:00:00Z"}
+    assert not roadmap_claims.task_is_claimable(task, now=NOW)
+    assert roadmap_claims.task_is_claimable(task, now=NOW + timedelta(hours=2, minutes=1))
+    # A garbage timestamp never locks a task.
+    assert roadmap_claims.task_is_claimable({"status": "ready", "rest_until": "soon"}, now=NOW)
+
+
+def test_run_worker_skips_resting_task():
+    roadmaps = [{
+        "_project": "demo", "_path": "x", "_lifecycle": "active",
+        "tasks": [
+            {"id": "t-001", "status": "ready", "recurring": True, "rest_until": "2026-09-30T08:00:00Z"},
+            {"id": "t-002", "status": "ready"},
+        ],
+    }]
+    picked = run_worker.find_ready_task(["demo"], roadmaps, now=NOW)
+    assert picked["task_id"] == "t-002"
+
+
+def test_close_task_noop_fields_grow_then_reset():
+    task = {"recurring": True, "noop_streak": 2}
+    fields = close_task.rest_fields(task, "ready", True, now=NOW)
+    assert fields == {"noop_streak": "3", "rest_until": "2026-09-30T18:00:00Z"}
+    assert close_task.rest_fields({"recurring": True, "noop_streak": 3}, "ready", False) == {
+        "noop_streak": "0", "rest_until": "null"}
+    assert close_task.rest_fields({"recurring": True}, "ready", False) == {}
+
+
+@pytest.mark.parametrize("task,status", [
+    ({"recurring": False}, "ready"),
+    ({"recurring": True}, "needs-human"),
+    ({"recurring": True, "daily_commitment": True}, "ready"),
+])
+def test_close_task_noop_refuses_wrong_shapes(task, status):
+    with pytest.raises(close_task.CloseError):
+        close_task.rest_fields(task, status, True, now=NOW)
+
+
+def test_close_task_noop_writes_valid_roadmap_fields():
+    yaml = pytest.importorskip("yaml")
+    text = (
+        "project: demo\nkind: software\ntasks:\n"
+        "  - id: t-001\n    title: demo\n    status: claimed\n    recurring: true\n"
+        "    note: first cycle\n"
+    )
+    fields = close_task.rest_fields({"recurring": True}, "ready", True, now=NOW)
+    out = close_task.apply_close(text, "t-001", "ready", fields, "no-op cycle", False)
+    task = yaml.safe_load(out)["tasks"][0]
+    assert task["status"] == "ready" and task["noop_streak"] == 1
+    assert not roadmap_claims.task_is_claimable(task, now=NOW)

@@ -101,7 +101,10 @@ then be invisible to every subsequent agent).
      retry loop, consumes a pass), **scope** (too big — split into smaller tasks).
    - Never spend a second pass on an actionable failure; never escalate a transient one.
 
-9. Close and reconcile the loop when a task ends.
+9. Recurring re-arms: a cycle that found nothing to do re-arms with `close_task.py ... ready --noop`
+   (backoff rest); a cycle whose next step is waiting on Silas goes to `needs-human`, not `ready`.
+
+10. Close and reconcile the loop when a task ends.
    - On closing a task at `done`/`blocked`, append the outcome record to `LEARNING.yaml`
      (see AGENTS.md "Learning ledger").
    - After the implementation PR merges, a production incident recovers, or Silas makes a decision, re-fetch the live roadmap from `main`.
@@ -110,7 +113,7 @@ then be invisible to every subsequent agent).
    - If recovery criteria are met but root cause remains unknown, close the recovery task and file root-cause/prevention work separately instead of leaving a permanent human gate.
    - Re-run `check_pr_merged_drift.py` and `audit_human_gates.py` after changing roadmap state.
 
-10. Finish on clean main — merge and clean up.
+11. Finish on clean main — merge and clean up.
    - The cycle's terminal state for reversible, scoped, verified, non-gated work is
      **merged into `main`**, not an open PR left for Silas. Merge safe work yourself; don't
      wait to be told. Only genuinely gated work (human-gated / outward-facing / irreversible /
