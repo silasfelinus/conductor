@@ -1807,7 +1807,7 @@ pitches:
 
   - id: firefly-phase-sync
     title: Firefly Phase Sync
-    status: pitched
+    status: candidate
     priority: 33
     surprise: >
       A dusk meadow scattered with dozens of fireflies blinks in total chaos at first -- no two
@@ -1866,3 +1866,15 @@ pitches:
       - dragging the pointer through the meadow visibly speeds up local synchronization near the cursor without affecting fireflies far outside its radius
       - a click immediately and visibly resets every firefly to a new random phase and frequency
       - reduced-motion mode shows a static fully-synchronized frame with zero phase advancement and no interaction
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/firefly-phase-sync.vue
+        pull_request: silasfelinus/kind_robots#3116
+        released_at: '2026-09-30T09:10:00Z'
+        commit: e5fffdb60230d5a869710fd636eb7e74c16fb985
+        verification:
+          - Contract verifiers
+          - TypeScript
+          - layout-contract
+          - facet-catalog
