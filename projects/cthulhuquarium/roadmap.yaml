@@ -1325,7 +1325,7 @@ tasks:
 - id: t-076
   milestone: m3
   title: Bulk-create real ArtImage records and link them to the 119 Monster rows that have art
-  status: ready
+  status: done
   gate_human: false
   owner: worker
   stakes: reversible
@@ -1361,7 +1361,12 @@ tasks:
     drive it with KR_API_TOKEN (live dry-run verified: 151 plates, all Monster rows exist).
     NEXT: after #3139 merges AND is deployed to kindrobots.org, dispatch the workflow with
     mode=write, then flip done.
-  updated: '2026-09-30T20:48:28Z'
+
+    DONE 2026-09-30 (scheduled Agent run): after #3139 deployed (plates live at
+    /cthulhuquarium-plates/), dispatched cthulhuquarium-art-link.yml mode=write (run
+    36781583191): plates 151, linked 151, skipped 0, missing [], failed []. All Monster rows
+    now carry artImageId/iconPath/cardPath.
+  updated: '2026-09-30T21:54:17Z'
   claimed_by: 2026-09-11T141847Z-cthulhuquarium-t-076-r4m9
   claimed_at: '2026-09-11T14:18:47Z'
   soft_gate: false
