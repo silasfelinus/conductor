@@ -141,7 +141,10 @@ flags something and you need to know why it exists or how to fix it.
      cycles) each burned a full agent session per hour for weeks. Fix a flagged task by re-arming
      no-op cycles with `close_task.py ... ready --noop` (2h..48h backoff, `roadmap_claims.
      NOOP_REST_HOURS`), moving a task waiting on Silas to `needs-human`, or turning a pure watcher
-     into a script. Advisory; exit 1 when flagged, 2 when git history can't cover the window.
+     into a script. It also flags any non-done task in an active or continuous project whose note
+     is over 20KB, because each claim re-reads the whole note (2026-09-30: six live notes held 259KB;
+     archived to ~36KB with `archive_recurring_task_note.py --keep-head 3000 --keep-tail 3500`).
+     Advisory; exit 1 when flagged, 2 when git history can't cover the window.
 
 ## Step 7 — the dream docket (CLAUDE.md startup)
 
