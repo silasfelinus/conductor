@@ -283,8 +283,8 @@ tasks:
 - id: t-011
   milestone: m3
   title: "Run the Stripe checkout/webhook/fulfillment matrix end-to-end in TEST mode"
-  status: needs-human
-  updated: '2026-09-30T06:00:00Z'
+  status: ready
+  updated: '2026-09-30T08:00:00Z'
   passes: 0
   stakes: outward-facing
   gate_human: false
@@ -317,10 +317,23 @@ tasks:
     decision is made (TEST mode authorized 2026-09-07). The only missing piece is Stripe
     TEST keys plus a reachable database. Supply them as a secret and an agent runs the
     matrix.
+
+    GATE CLEARED 2026-09-30 (session 20260930T0600Z-gate-triage): Silas says the Stripe TEST
+    keys were added. Verified from production, read-only. With a disposable cypress-* user
+    (cleaned up afterwards), GET /api/stripe/checkout-
+    status?session_id=cs_test_conductorprobe0000 returned Stripe's own 404 'No such
+    checkout.session', so STRIPE_SECRET_KEY is set. POST /api/stripe/webhook with no
+    signature returned 400 'Missing Stripe signature or body', which only happens after the
+    STRIPE_WEBHOOK_SECRET check passes. Both keys are configured on kindrobots.org. NEXT
+    (agent): run the TEST-mode matrix against production with Stripe test cards (4242...).
+    SAFETY RULE: every checkout session this run creates must have an id starting cs_test_.
+    If any id starts cs_live_, stop at once, create nothing more, and set this task back to
+    needs-human with gate_reason: money. Also close digital-storefront/t-039 by reference
+    when this lands.
   owner: worker
   claimed_by: claude-scheduled-20260907T143500Z-ke-t011
   claimed_at: '2026-09-07T14:31:50Z'
-  soft_gate: true
+  soft_gate: false
   implementation_pr: 'silasfelinus/kind_robots#2492'
   gate_reason: secrets
   gate_rechecked: '2026-09-30'

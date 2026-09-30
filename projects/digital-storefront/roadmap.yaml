@@ -597,7 +597,7 @@ tasks:
 - id: t-039
   milestone: m6
   title: "Run and repair the Stripe checkout/webhook/fulfillment matrix end-to-end"
-  status: needs-human
+  status: ready
   owner: worker
   passes: 0
   stakes: reversible
@@ -647,11 +647,21 @@ tasks:
     session): Legitimate: the remaining step needs credentials only Silas can supply. Needs
     Stripe TEST-mode keys stored as a GitHub Actions secret (or in the session environment).
     Everything offline is done. kind-economy/t-011 adopts this work.
+
+    GATE CLEARED 2026-09-30 (session 20260930T0600Z-gate-triage): Silas says the Stripe TEST
+    keys were added. Verified from production, read-only. With a disposable cypress-* user
+    (cleaned up afterwards), GET /api/stripe/checkout-
+    status?session_id=cs_test_conductorprobe0000 returned Stripe's own 404 'No such
+    checkout.session', so STRIPE_SECRET_KEY is set. POST /api/stripe/webhook with no
+    signature returned 400 'Missing Stripe signature or body', which only happens after the
+    STRIPE_WEBHOOK_SECRET check passes. Both keys are configured on kindrobots.org. This
+    work is adopted by kind-economy/t-011. Do not run the matrix twice. Claim kind-
+    economy/t-011 instead, or close this by reference once t-011 lands.
   claimed_by: claude-quirky-curie-20260808T153013Z-df-t039
   claimed_at: '2026-08-08T15:30:14Z'
   implementation_pr: silasfelinus/kind_robots#1615
-  soft_gate: true
-  updated: '2026-09-30T06:00:00Z'
+  soft_gate: false
+  updated: '2026-09-30T08:00:00Z'
   gate_reason: secrets
   gate_rechecked: '2026-09-30'
 
