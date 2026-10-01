@@ -17142,3 +17142,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A prompt-contract fix scoped to one literal phrase leaves the whole rule family live: read the enforcing regex (negation + noun set) before grepping, so the audit counts what the gate counts."
+- date: '2026-10-01'
+  project: music-video
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A task note saying egress is blocked was stale: docs.comfy.org, huggingface.co and raw.githubusercontent.com were all reachable, so test reachability before downgrading research to guesswork. The official workflow-template JSONs and ComfyUI's nodes_*.py source gave exact node ids, defaults and a deprecation (SaveAudioMP3 -> SaveAudioAdvanced) that docs prose and the task note both missed; read the source of truth, and mark what still needs a live run as UNVERIFIED rather than inventing numbers."

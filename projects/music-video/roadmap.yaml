@@ -83,7 +83,7 @@ tasks:
   - id: t-003
     milestone: m1
     title: "ACE-Step spike: pick the model variant and write the Comfy workflow spec"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -99,9 +99,13 @@ tasks:
       card, (f) the licence, and (g) the minimum ComfyUI version. Cite sources. Cloud sessions
       cannot reach Comfy or reliably reach huggingface (EGRESS-BLOCKERS.md), so this is research
       and a spec; the live proof is t-012. Verify node names against the docs rather than memory.
+
+      2026-10-01: spec landed at projects/music-video/docs/ace-step-spike.md (ACE-Step 1.5
+      turbo chosen; UNVERIFIED items handed to t-012).
     claimed_by: 20261001-routine-mv-t003
     claimed_at: '2026-10-01T17:47:48Z'
-    updated: '2026-10-01T17:47:48Z'
+    updated: '2026-10-01T17:49:42Z'
+    implementation_pr: 'silasfelinus/conductor#5469'
 
   - id: t-004
     milestone: m2
