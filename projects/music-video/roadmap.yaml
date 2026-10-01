@@ -1,0 +1,400 @@
+# Music Video — Suno-inspired music video creator, built in kind_robots on our ComfyUI.
+# Cross-repo software project: this roadmap owns task state; the implementation ships as an
+# admin page, store and endpoints in silasfelinus/kind_robots (same pattern as music-mentor and
+# scene-animator). Architecture, the timeline-document schema and the evidence behind every
+# decision live in DESIGN-BRIEF.md. Read it before claiming anything.
+project: music-video
+kind: software
+goal: "An admin gives a pitch plus optional length, genre, BPM and mood, gets structured lyrics and a Comfy-generated song, edits the lyrics, places scene changes on a beat grid, generates or uploads an image per scene, and exports one MP4 with the song, all rendered through the existing ArtJob queue and ComfyUI, checked at phone, tablet and desktop widths and accepted by Silas."
+
+notes_from_silas: |
+  2026-10-01 pitch: "a music video creator. similar to and inspired by suno. we should be able to
+  give it a pitch, optional settings like length of time, genre, beats, and have it create lyrics,
+  also edit lyrics, set when to change scenes, add or upload images for each scene beat, and
+  compile everything. this should use our comfy as the backend."
+
+  Decided with Silas in session, 2026-10-01:
+  - The song is generated on Comfy from day one (not upload-only). An admin audio upload still
+    exists as a fallback lane so everything else can be built and tested before the render box
+    has an audio model and an audio-capable relay.
+  - First release is admin-only, like Scene Animator. Opening it to signed-in users is t-019.
+
+  Agent picks, each a one-line edit if Silas disagrees: slug music-video; priority slot just behind
+  the top-10 band; compile in the browser (WebCodecs) instead of a relay ffmpeg job; MP3 song
+  output.
+
+  Hard rules for this project: ArtJob is the only generation queue (no second queue or renderer);
+  scene prompts follow the Krea 2 contract in ART-PROMPTS.md (concrete nouns first, no negations,
+  no art-direction jargon); cloud sessions cannot reach Comfy, so audio work is verified
+  structurally until t-012 puts a real render on the box. kind_robots PRs use branch
+  worker/music-video-t-0NN and a title starting music-video/t-0NN:, and merge the kind_robots side
+  before the conductor side when a task has companion PRs (AGENTS.md, Cross-repo tasks).
+
+milestones:
+  - id: m1
+    title: "SHAPE — outline, brainstorm, design brief"
+    weight: 25
+    status: in-progress
+
+  - id: m2
+    title: "BUILD — actualize, adjust, test"
+    weight: 50
+    status: not-started
+
+  - id: m3
+    title: "POLISH & SHIP — aesthetics, performance, delivery"
+    weight: 25
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write the design brief and start building"
+    status: done
+    owner: claude
+    passes: 0
+    stakes: reversible
+    updated: 2026-10-01T00:00:00Z
+    note: >-
+      DESIGN-BRIEF.md written from a four-agent research pass (conductor scaffolding rules, the
+      ComfyUI relay path, kind_robots generation and storage code, and an adversarial review of the
+      plan against the audits and tests). Silas-directed session; the scaffold and this roadmap
+      were built immediately.
+
+  - id: t-002
+    milestone: m1
+    title: "Confirm scope with Silas"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    soft_gate: true
+    updated: 2026-10-01T00:00:00Z
+    note: >-
+      FOR SILAS: soft checkpoint, nothing is blocked on it. Read projects/music-video/DESIGN-BRIEF.md
+      (what it is, the architecture diagram and the timeline schema), then confirm or redirect these
+      five picks: (1) admin-only first at /admin/music-video, (2) song generated on Comfy with
+      ACE-Step from day one, (3) the MP4 is compiled in the browser rather than by a relay ffmpeg
+      job, (4) priority slot just behind the top-10 band, (5) slug music-video. TO APPROVE: nothing
+      required. Reply in session or edit notes_from_silas. If there is no answer within 7 days the
+      next gate-triage session adopts these as written under the 2026-09-30 default-recommendation
+      rule. Development is already underway; a redirect is folded into the roadmap.
+
+  - id: t-003
+    milestone: m1
+    title: "ACE-Step spike: pick the model variant and write the Comfy workflow spec"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Write projects/music-video/docs/ace-step-spike.md. Decide ACE-Step v1 (documented native Comfy
+      nodes TextEncodeAceStepAudio, EmptyAceStepLatentAudio, SaveAudio and SaveAudioMP3) versus v1.5
+      (reportedly up to 10 minutes on 12 GB-class cards, but native-Comfy support is unconfirmed;
+      it may need a custom node or a newer ComfyUI). Include for the chosen variant (a) the
+      API-format workflow graph as JSON with node ids, (b) how pitch settings map to tags and
+      lyrics and to the duration and seed inputs, (c) the output node (prefer SaveAudioMP3; a
+      4-minute FLAC is about 47 MB of base64 inside the /complete transaction), (d) every model
+      file with size and the folder it must live in, (e) expected VRAM and runtime on the 12 GB
+      card, (f) the licence, and (g) the minimum ComfyUI version. Cite sources. Cloud sessions
+      cannot reach Comfy or reliably reach huggingface (EGRESS-BLOCKERS.md), so this is research
+      and a spec; the live proof is t-012. Verify node names against the docs rather than memory.
+
+  - id: t-004
+    milestone: m2
+    title: "MusicVideo model, admin API and timeline-document schema (kind_robots)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      In silasfelinus/kind_robots add a MusicVideo Prisma model (id, userId, title, status, doc
+      LongText holding the MusicVideoDoc JSON from DESIGN-BRIEF.md, timestamps, optional
+      finalArtImageId) with ONE additive migration (CREATE TABLE only; the Reviewer may merge it
+      after a line-by-line audit). Add admin-only CRUD under server/api/music-video/ using
+      requireAdminApiUser, and the TypeScript types plus a DB-free validator for the document in
+      utils/ (timeline math stays pure and in utils/). Tests are tsx utils/scripts/verify*.test.ts
+      with a package.json test script and a step in contract-tests.yml; kind_robots has no vitest.
+      Never run prisma migrate reset. Use scripts/provision_kind_robots_deps.sh to verify.
+
+  - id: t-020
+    milestone: m2
+    title: "ArtImage audio support in kind_robots (storage, serving, consumer audit, claim gate)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Audio rides ArtImage, which already stores mp4 and webm through fileType, so this needs no
+      schema change. In kind_robots: add mp3, wav, ogg and flac to ALLOWED_FILE_TYPES in
+      server/api/art/save-generated.post.ts (today a .flac is silently stored as png); add audio
+      content types to the file serving route (it serves unknown types as octet-stream with
+      nosniff); add an audio kind to ArtMediaKind in utils/artImageSource.ts (line 44 currently
+      classifies ogg as video); make private audio rows playable (private rows need a Bearer
+      header, which an audio element cannot send, so the store fetches a blob); audit every
+      ArtImage consumer for fileType assumptions (admin /api/art/image and owner collection lists
+      include private rows; public rails filter isPublic true and are safe; the offload in
+      complete.post.ts throws on audio, which is caught, so keep audio out of the verbatim-offload
+      set because offload writes to the public media origin); and add a claim-side supportsAudio
+      gate like supportsInputImages (claim.post.ts) so audio jobs stay PENDING until an
+      audio-capable relay exists. Merge this before t-011 (companion PRs, kind_robots first).
+
+  - id: t-017
+    milestone: m3
+    title: "Project art: confirm icon, card and hero landed"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Intake queued three Krea-clean prompts in projects/art-prompts.yaml and listed them in
+      ART-PROMPTS.md. Once auto-art-generate and distribute_images have run, confirm
+      projects/images/music-video-icon.webp, -card.webp and -hero.webp exist at 256x256, 512x768
+      and 1280x720 and look right. Regenerate any weak one (generated art is pre-approved, keep
+      prompt and model metadata), then remove the music-video entries from ART-PROMPTS.md per its
+      rule. The render queue was about 1,464 jobs deep at the last log, so this may sit a while.
+
+  - id: t-005
+    milestone: m2
+    title: "Lyrics: pitch and settings to structured, editable lyrics"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-004]
+    note: >-
+      Server route under server/api/music-video/ that wraps POST /api/generate/text (provider
+      agnostic and mana metered; do not hand-roll a provider call). Input is the pitch plus optional
+      duration, genre, BPM, mood, vocal and language; output is MusicVideoDoc.lyrics sections tagged
+      verse, chorus, bridge and so on, with the section count derived from duration and BPM. Support
+      per-section regenerate, inline line editing and a per-section lock so regenerate never
+      overwrites locked text. Lyric text must never go into an ArtJob promptString. DB-free tests
+      cover the section-count math and the response parser.
+
+  - id: t-006
+    milestone: m2
+    title: "Admin page, musicVideoStore and placement"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-004]
+    note: >-
+      Add /admin/music-video (pages/admin/) and a Pinia musicVideoStore that owns every API call
+      (components never call $fetch or localStorage). Follow kind_robots' art-first standard: an
+      image-led stage with the pitch, lyrics, song, timeline and scenes on one visual surface
+      instead of a wizard. Add the placement entry to utils/projectPlacements.ts (channelKey admin,
+      tabKey music-video, route /admin/music-video, like scene-animator) and the channel document
+      content/channels/admin/music-video.md with requiredRole ADMIN; verifyChannelContent.ts and
+      verifyNoHiddenRoutes.ts reject an unplaced route. Do NOT add liveUrl, channelKey or tabKey to
+      conductor's project-overrides.yaml (kind_robots AGENTS.md forbids it). Read
+      docs/agents/frontend-verification.md before verifying.
+
+  - id: t-007
+    milestone: m2
+    title: "Timeline editor: waveform, beat grid and scene markers"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-004, t-020]
+    note: >-
+      Waveform of the song, a beat grid built from the requested BPM plus an offset and beats per
+      bar (audioAnalysisHelper is tuned for monophonic vocals and exports no onset times, so
+      detection is a later upgrade), section bands from the lyrics, scene markers that snap to beat
+      or bar or move freely, and lyric-line assignment to scenes. Lines are spread across sections
+      by section length and are user-adjustable; forced alignment is out of scope. Timeline math is
+      pure code in utils/ with tsx verify tests; the audio is fetched as a blob because private
+      rows need a Bearer header.
+
+  - id: t-008
+    milestone: m2
+    title: "Scene prompts, validator and per-scene image generation"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-004]
+    note: >-
+      An LLM scene-prompt writer (via POST /api/generate/text) that turns a scene's lyric span plus
+      the shared style bible into one Krea 2 prompt, and a validator that rejects negations,
+      art-direction jargon and conditionals before enqueue (patterns: utils/kreaSemanticPrompt.ts in
+      kind_robots; the negation guard in scripts/build_cthulhuquarium_art_queue.py here). Enqueue
+      each scene through POST /api/art/enqueue (krea2 default, optional loraResourceIds) with a
+      musicVideo provenance block and a dedupe key modeled on scene-animator's. Scene status is
+      derived from ArtJobs, never stored. Per scene: regenerate, upload an image (the existing
+      upload route is image-only and open to any signed-in user, so use or add an admin-gated
+      path), or pick from the gallery. Enqueue at the default priority; scene jobs are about 400 s
+      each on the single 12 GB card.
+
+  - id: t-009
+    milestone: m2
+    title: "Per-scene motion: Ken Burns presets and optional ltx or wan clip"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-008]
+    note: >-
+      Default motion is client-side Ken Burns plus crossfade. A per-scene opt-in requests an
+      ltx or wan image-to-video clip through /api/video/generate with the scene still as the first
+      frame, showing the runtime hint from utils/videoPresets.ts (3 to 4 second clips, timeouts up
+      to 5400 s). Clips are silent; the song is the only audio. The clip is an ArtImage referenced
+      by scene.motion.clipArtImageId.
+
+  - id: t-013
+    milestone: m2
+    title: "Audio upload fallback (admin-only route)"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-004, t-020]
+    note: >-
+      The existing server/api/art/upload.post.ts is image-only (PNG, JPEG and WebP, a 15 MB cap) and
+      open to any signed-in user, so add a new admin-only audio route: MP3 and WAV, a sensible size
+      cap, stored as a private audio ArtImage through the t-020 path, returning the artImageId for
+      MusicVideoDoc.song with source upload. This is for Suno exports and Silas's own medleys, and
+      it lets lyrics, timeline, images and compile be built and tested before t-012.
+
+  - id: t-010
+    milestone: m2
+    title: "acestep workflow builder, enqueue engine and song endpoint (kind_robots)"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-003, t-004, t-020]
+    note: >-
+      Build server/api/comfy/acestep/utils/workflow.ts from the t-003 spec and add engine acestep
+      to POST /api/art/enqueue with jobEngine COMFY and payload.media audio (no migration, as video
+      does): EnqueueEngine, normalizeEngine and GATE_ENGINE in enqueue.post.ts, a buildJobPayload
+      branch, and ComfyEngine in comfyGate.ts. Provenance: enrichArtJobPayload (artJobProvenance.ts
+      lines 47 and 261-270) requires top-level promptString to equal a workflow string whose key
+      matches (^|_)(prompt|text)($|_), but TextEncodeAceStepAudio uses tags and lyrics, so every
+      job would 400; extend the pattern with the artjob-provenance-contract tests and set
+      promptString to exactly the tags string. Keep lyrics out of promptString because
+      assertQueuedArtPromptContract (claim.post.ts) would reject lyric text. Set timeoutSeconds in
+      the payload. Add POST /api/music-video/song (tags, lyrics, duration, BPM, seed). Mana gates an
+      acestep job as comfy, which bills like a 1024 square still; fine while admin-only. Verify
+      structurally with fixtures; Comfy is unreachable from cloud sessions.
+
+  - id: t-011
+    milestone: m2
+    title: "Relay audio support (conductor ops/home-server)"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-003, t-020]
+    note: >-
+      The live relay entry point is ops/home-server/relay_media_agent.py, which overrides
+      relay.run_comfy and recomputes want_video itself, so patch it AND relay_agent.py. Add media
+      audio handling with audio extensions and a want_audio path through find_output_file,
+      extract_comfy_output and run_comfy; fix write_local_copy (it would write mp3 bytes as .png);
+      send isPublic false at upload_result (it currently sends no isPublic, so the row is public
+      until /complete flips it); and advertise supportsAudio so the t-020 claim gate releases audio
+      jobs. An unpatched relay does not fail loudly; it stores audio as a png. Add
+      tests/test_relay_agent_audio.py following tests/test_relay_agent_video.py. This is a
+      conductor-side PR; the kind_robots t-020 PR merges first. Do not deploy anything (that is
+      t-012).
+
+  - id: t-012
+    milestone: m2
+    title: "Stage ACE-Step on the share, deploy the relay, run a 30 second song"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    gate_reason: physical-access
+    depends_on: [t-010, t-011]
+    note: >-
+      Agent part: add an audio tier to scripts/sync-comfy-models.sh and .ps1 in kind_robots (the
+      script only copies from the Alexandria share to local disk, so the ACE-Step files must be on
+      the share first), and write the runbook. Human part, which only Silas can do and which is a
+      production deploy to his render box (never deployed from a session): stage the model files,
+      update the relay checkout and restart it under pm2, then run one 30 second song through
+      /api/music-video/song and confirm the ArtImage plays. Write the FOR SILAS block as
+      self-contained commands that start with cd and git pull, per kind_robots AGENTS.md. Park the
+      task at needs-human with the commands and stop; this is the first real render of the audio
+      lane.
+
+  - id: t-014
+    milestone: m2
+    title: "Browser compositor and MP4 exporter"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-004, t-007]
+    note: >-
+      A canvas stage renderer that composites scene stills and clips with Ken Burns and crossfades,
+      driven by song, timeline and scenes only, so it can be built against fixtures. The same
+      renderer powers scrub-preview and export. Export encodes with WebCodecs and a muxer library
+      (mp4-muxer or mediabunny; record the dependency choice in the PR) with the song as the audio
+      track, and downloads the MP4. The compositor lives in stores/helpers/, not a root
+      composables/ directory. Chromium-first is acceptable while admin-only. Tests: pure frame
+      and timing math as tsx verify tests, plus a Cypress or Playwright smoke for the WebCodecs
+      path. Save-to-server and a relay ffmpeg job are later upgrades, not this task.
+
+  - id: t-015
+    milestone: m2
+    title: "End-to-end acceptance: a real video from a real pitch"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    gate_reason: subjective-acceptance
+    depends_on: [t-005, t-006, t-008, t-012, t-014]
+    note: >-
+      Make a roughly 60 second video from a real pitch: lyrics, a Comfy song, scenes with generated
+      images, export. Silas decides whether to approve the result, since taste is subjective and
+      no agent can judge it for him. Park at needs-human with the exported file and a short FOR
+      SILAS note on what to look at (lyric fit, scene cuts landing on beats, image coherence,
+      audio quality); approval is approved_by_human: true plus status: done.
+
+  - id: t-016
+    milestone: m3
+    title: "Phone, tablet and desktop pass and art-first polish"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-005, t-006, t-007, t-008, t-014]
+    note: >-
+      Check /admin/music-video at phone, tablet and desktop widths per
+      docs/agents/frontend-verification.md, fix breakage, and finish the art-first treatment and
+      empty states (an empty scene keeps an image-shaped slot with the shared art fallback). The
+      project is not finished until Silas has accepted the visual state or waived the check.
+
+  - id: t-018
+    milestone: m3
+    title: "Docs and the coat-dance hand-off note"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-015]
+    note: >-
+      Write docs/music-video.md in kind_robots (flow, endpoints, env, the audio lane and its
+      gates, the timeline schema, known limits) and add a note in coat-dance's roadmap that its
+      t-008 rough-cut stage can reuse this project's exporter. No other change to coat-dance.
+
+  - id: t-019
+    milestone: m3
+    title: "Open to signed-in users: duration-based mana and per-user queue caps"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    gate_reason: publish
+    depends_on: [t-015]
+    note: >-
+      Only after acceptance. Move from admin-only to signed-in users: duration-based audio billing
+      (today an acestep job bills like a 1024 square still), per-user queue caps so one video cannot
+      starve the single 12 GB render card (last logged backlog about 1,464 jobs), and a decision on
+      Safari and Firefox export, which WebCodecs only partly supports. Exposing it publicly is a
+      release, so the finished work parks at needs-human.

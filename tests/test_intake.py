@@ -14,7 +14,7 @@ def _fixture_repo(tmp_path, monkeypatch, *, with_control=True):
         "tasks:\n  - id: t-001\n    milestone: m1\n    title: First\n    status: ready\n"
         "    owner: null\n    passes: 0\n    stakes: reversible\n"
     )
-    (projects / "priority.yaml").write_text("order:\n  - brainstorm\n")
+    (projects / "priority.yaml").write_text("order:\n  - storybook\n  - dream-cycle\n")
     (tmp_path / "project-overrides.yaml").write_text("overrides: []\n")
     (projects / "art-prompts.yaml").write_text("images: []\nrequests: []\n")
     (tmp_path / "repos.yaml").write_text("repos: []\n")
@@ -49,9 +49,10 @@ def test_scaffold_touches_every_surface(tmp_path, monkeypatch):
     # roadmap slug/kind substituted
     rm = yaml.safe_load((pdir / "roadmap.yaml").read_text())
     assert rm["project"] == "cosmic-loom" and rm["kind"] == "content"
-    # priority: inserted before brainstorm
+    # priority: inserted before dream-cycle, which stays last
     order = yaml.safe_load((projects / "priority.yaml").read_text())["order"]
-    assert "cosmic-loom" in order and order.index("cosmic-loom") < order.index("brainstorm")
+    assert "cosmic-loom" in order and order.index("cosmic-loom") < order.index("dream-cycle")
+    assert order[-1] == "dream-cycle"
     # overrides: registered active/content
     ov = yaml.safe_load((root / "project-overrides.yaml").read_text())["overrides"]
     entry = next(e for e in ov if e["slug"] == "cosmic-loom")
@@ -118,7 +119,7 @@ def test_priority_and_override_registration_preserves_comments(tmp_path, monkeyp
         "  - challenge-center\n"
         "  - ai-art-academy\n"
         "  # dream-cycle stays LAST on purpose: idle fallback.\n"
-        "  - brainstorm\n"
+        "  - storybook\n"
         "  - dream-cycle\n"
     )
     (root / "project-overrides.yaml").write_text(
@@ -140,7 +141,7 @@ def test_priority_and_override_registration_preserves_comments(tmp_path, monkeyp
     assert "# Which project leads when multiple have ready tasks. Top of list wins." in priority_text
     assert "# dream-cycle stays LAST on purpose: idle fallback." in priority_text
     order = yaml.safe_load(priority_text)["order"]
-    assert order.index("challenge-center") < order.index("comet-forge") < order.index("brainstorm")
+    assert order.index("storybook") < order.index("comet-forge") < order.index("dream-cycle")
     assert order[-1] == "dream-cycle"
 
     overrides_text = (root / "project-overrides.yaml").read_text()
@@ -152,6 +153,29 @@ def test_priority_and_override_registration_preserves_comments(tmp_path, monkeyp
     assert entry["status"] == "active" and entry["kind"] == "software"
     existing = next(e for e in overrides if e["slug"] == "existing-proj")
     assert existing["liveUrl"] == "/existing"
+
+
+def test_priority_registration_handles_file_without_trailing_newline(tmp_path, monkeypatch):
+    # The real projects/priority.yaml ends `  - dream-cycle` with no newline.
+    _, projects = _fixture_repo(tmp_path, monkeypatch)
+    (projects / "priority.yaml").write_text("order:\n  - storybook\n  - dream-cycle")
+
+    intake.main(["glass-harp"])
+
+    order = yaml.safe_load((projects / "priority.yaml").read_text())["order"]
+    assert order == ["storybook", "glass-harp", "dream-cycle"]
+
+
+def test_priority_registration_without_anchor_never_fuses_lines(tmp_path, monkeypatch):
+    # No dream-cycle anchor and no trailing newline: the fallback must still emit
+    # a separate list item instead of "  - storybook  - glass-harp".
+    _, projects = _fixture_repo(tmp_path, monkeypatch)
+    (projects / "priority.yaml").write_text("order:\n  - storybook")
+
+    intake.main(["glass-harp"])
+
+    order = yaml.safe_load((projects / "priority.yaml").read_text())["order"]
+    assert order == ["storybook", "glass-harp"]
 
 
 def test_register_override_updates_existing_entry_in_place(tmp_path, monkeypatch):
