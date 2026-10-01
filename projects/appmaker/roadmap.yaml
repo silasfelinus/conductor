@@ -426,11 +426,13 @@ tasks:
   gate_rechecked: '2026-09-30'
 - id: t-016
   title: Add a log-only dry-run mode to POST /api/appmaker/graduate-execute
-  status: ready
+  status: claimed
   stakes: reversible
-  owner: null
+  owner: worker
   passes: 0
-  updated: '2026-09-30T06:00:00Z'
+  updated: '2026-10-01T15:48:50Z'
   note: Filed by gate triage 2026-09-30 from t-015's own option (b). A dry-run that reads the app tree, resolves the target repo and installation token scope, and reports the exact commit/tree it WOULD push and the removal PR it WOULD open, with zero writes. It lets Silas validate the mechanism before approving t-015's first irreversible run.
+  claimed_by: 20261001T1550Z-appmaker-t016
+  claimed_at: '2026-10-01T15:48:50Z'
 goal: Let a user turn an app idea into a working, maintainable project through AppMaker, from scaffold through a usable
   handoff.
