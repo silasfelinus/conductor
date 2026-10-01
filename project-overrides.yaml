@@ -158,12 +158,8 @@ overrides:
   - slug: humboldt-scoop-cms
     status: active
     priority: normal
-    # Frontend placement — synced to the kind_robots Project row by
-    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
-    # for 'humboldt-scoop-cms' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
-    liveUrl: /scoop-cms
-    channelKey: admin
-    tabKey: scoop-cms
+    # No Kind Robots placement: the Scoop CMS Admin tab was retired by
+    # kind_robots#2663 (2026-10-01); the project lives through its roadmap.
 
   - slug: model-builder
     status: finished # flipped 2026-09-30 -- 45/45 tasks and 6/6 milestones done once Silas retired
@@ -323,15 +319,8 @@ overrides:
     # stop agents from claiming it now. This supersedes the older CONTROL.md note saying
     # "mural-design keeps working." Kind Robots issue #2668 owns removal of the current UI.
     priority: low
-    # Frontend placement — synced to the kind_robots Project row by
-    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
-    # for 'mural-design' in kind_robots utils/projectPlacements.ts.
-    # Corrected 2026-08-14 (conductor/coat-dance t-010 cycle) — the 'lab' channel
-    # was dissolved 2026-07-28 (kind_robots commit 6cd42c2); this doc-only field
-    # never followed. projectPlacements.ts is CI-enforced and was already correct.
-    liveUrl: /build/mural
-    channelKey: admin
-    tabKey: mural
+    # No Kind Robots placement: the Mural Studio UI was removed by
+    # kind_robots#2668 (2026-10-01) while the project is paused.
 
   - slug: storybook
     status: active
@@ -428,12 +417,8 @@ overrides:
     status: finished # flipped 2026-07-26 -- all 10 tasks done, nothing open
     priority: normal
     kind: software
-    # Frontend placement — synced to the kind_robots Project row by
-    # sync_projects.py. Values match the canonical PROJECT_PLACEMENTS entry
-    # for 'packmaker' in kind_robots utils/projectPlacements.ts (conductor/t-per-project polish tasks).
-    liveUrl: /packs
-    channelKey: build
-    tabKey: packs
+    # No Kind Robots placement: the Packs Admin surface was retired by
+    # kind_robots#2663 (2026-10-01).
 
   - slug: coat-dance
     status: active
