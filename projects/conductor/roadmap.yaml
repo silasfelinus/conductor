@@ -1937,12 +1937,10 @@ tasks:
   gate_human: false
   stakes: reversible
   passes: 0
-  note: |-
-    FOR SILAS: Observed 2026-08-27 on silasfelinus/kind_robots#2141 (interface-vision/t-121, a trivial 2-file template-only header polish -- pages/music-mentor.vue and pages/coloring-page.vue). `Contract verifiers` is a required check on kind_robots (unlike conductor's own non-required `Python test suite`/`Analyze (javascript-typescript)` stalls documented in t-124/t-106 -- this one cannot be merged past). Across 6 consecutive attempts (initial run + 5 cancel/rerun cycles, each waited 5-15+ minutes with zero step progress before retrying), the job hung at a DIFFERENT step nearly every time -- Install dependencies (twice), Route gallery contract, the very first Set up job step, and the "ESLint ratchet" step specifically 3 of the 6 times (steps 5-31, the ~300-step job's normal per-step contracts, always completed in 1-2s each when the job was moving at all; only "ESLint ratchet" itself, a full-repo `npx eslint` run via `utils/scripts/verifyLintRatchet.ts` / `npm run test:lint-ratchet`, ever sat in_progress for 10-20+ minutes with the job otherwise idle). Ran the exact same script locally against the same branch/diff: completed in a few seconds (`ESLint ratchet: 335 problem(s) across 24 rule(s) (-57)`, ratchet holds) -- confirms this is not the diff's content or the script's own logic, and not something a local `timeout 120s` run reproduces. githubstatus.com showed a string of real Actions incidents in the prior 24-48h (job queue saturation Aug 26 15:02- 15:45 UTC, start delays from a node disk failure Aug 24, an Actions/PRs degradation resolved the morning of Aug 27) -- consistent with, but not conclusively proving, platform-level flakiness rather than a kind_robots-repo- specific cause. The step recurring 3/6 times specifically (vs. the other stalls being one-offs at varied steps) is the one data point that doesn't fully fit "purely random dispatch noise" -- worth checking whether ESLint's cache/memory footprint on a fresh `npm ci` install (no warm `.eslintcache`) is disproportionately likely to hit a resource-constrained runner's ceiling compared to the job's other, much smaller per-file/per-manifest contract checks. Investigate: (a) whether this reproduces on other kind_robots PRs/days going forward, and whether it's always "ESLint ratchet" specifically when the job does stall mid-run (vs. earlier-step dispatch stalls, which look like ordinary runner-provisioning flakiness); (b) whether `contract-tests.yml`'s `ESLint ratchet` step (or the whole `Contract verifiers` job) needs an explicit `timeout-minutes` so a genuine hang fails loud instead of silently blocking a required check indefinitely with no signal; (c) whether enabling ESLint's cache (`--cache`) in `test:lint-ratchet`/CI specifically would reduce memory/CPU pressure on that one step without changing what it verifies. kind_robots#2141 was left open through this, eventually merged once attempt 6 (or later) actually completed green -- this task tracks the underlying CI-health question, not that PR's own outcome. Second occurrence, same day (2026-08-27, later, scheduled conductor sweep session): kind_robots#2161 (cthulhuquarium/t-028, a small 3-file additive backend change). First attempt (job 98695620393, run 33123396419 attempt 1) sat `in_progress` for 24+ minutes with zero step progress visible via the Actions API (no per-step detail surfaced for that attempt before it was cancelled -- unlike attempt 2 below, this confirms the job can hang somewhere the check-runs summary alone doesn't show step-level detail for an in-progress run, worth remembering when triaging future occurrences). Cancelled and reran once via `rerun_failed_jobs`, per AGENTS.md's "re-run at most once" rule. Attempt 2 (job 98696592310, started 22:44:35) initially progressed completely normally -- all steps 1-70 completed within ~2 minutes, including `ESLint ratchet` (step 32) finishing in 50s, well within its usual range -- then stalled at step 71, "Capture-group guard checker self-test", sitting `in_progress` with zero further step progress for 5+ minutes and counting as of this note. This is the first occurrence where the hang step was neither "ESLint ratchet" nor an early dispatch/install step, and the first where a *rerun* also stalled (all four prior stalls referenced above were first-attempt hangs) -- both data points argue harder for genuine platform-level Actions runner flakiness (a wedged runner process, not anything about this specific step's own logic) over a repo-content or single-step-specific cause. Per the "re-run at most once" rule this session did not attempt a third try; kind_robots#2161 was left open, unmerged, for a later session or Silas to just re-check CI and merge once green -- the PR's actual content was already fully verified locally (vue-tsc, eslint, prettier, and the relevant unit test suite all clean) before this stall, same as every prior occurrence's PR. Third data point (2026-08-30, scheduled conductor sweep session): kind_robots#2234 (interface-vision/t-104 slice 70, a trivial 7-file class-rename-only PR, zero behavior change). Attempt 1 (job 99295054115, run 33325602115) sat `in_progress` for ~25 minutes with zero step progress after all other 36 checks on the PR had gone green -- this was the ONLY outstanding check, and it is required, so it fully blocked the merge (conductor PR #3250, the paired roadmap-status-review PR, merged cleanly in the same session with no stall at all, underlining this is kind_robots-repo/workflow-specific, not a general GitHub Actions outage at the time). Cancelled and reran once via `rerun_workflow_run` (the `cancel_workflow_run` + `rerun_workflow_run` pair, since `rerun_failed_jobs` doesn't apply to a run with no failed jobs yet -- everything else on it was still green, only this one job was stuck). Attempt 2 (job 99295459787, started 17:37:03Z) also stalled -- sat `in_progress` for 23+ minutes with zero step progress, the same duration order as attempt 1 and every prior occurrence documented above. Per the established "re-run at most once" rule, did not attempt a third try. PR content was already fully verified locally before either attempt (eslint, prettier --check, vue-tsc --noEmit, and test:layout-contract all clean) -- this is purely a CI-infrastructure stall, not a content issue, consistent with every prior occurrence's own local verification. Left kind_robots#2234 open, unmerged, for a later session or Silas to re-check CI and merge once green; interface-vision/t-104 itself is unaffected (recurring task, already correctly back at status: review on the conductor side per PR #3250, independent of this specific slice's kind_robots-side merge). This is now 3 independent occurrences across 3 different PRs/days (2026-08-27 x2, 2026-08-30 x1), all showing the same "sits in_progress with zero step-level progress for 15-25+ minutes; a fresh rerun sometimes but not reliably clears it" signature. The open investigation items in the first note (timeout-minutes on the job/step, ESLint --cache) remain unactioned -- worth prioritizing now that a rerun has been shown to NOT reliably self-heal (this session's rerun stalled again, unlike the mixed record above). Fresh recurrence, 2026-09-02, kind_robots PR #2336 (model-builder/t-029 cycle 82, a trivial 2-file+2-wiring-file change). Contract verifiers stalled 3 times in a row on the exact same commit (fdeca382), zero forward progress each time (10-25+ min waits before cancelling): attempt 1 hung at 'ESLint ratchet', attempt 2 also hung at 'ESLint ratchet' (this time confirmed via job-level steps API after the run-level status lagged behind -- the run showed in_progress well after the job itself had already been cancelled), attempt 3 hung at 'Install dependencies' (a step that completed in ~20-30s on both prior attempts). Confirms this note's existing pattern: a different step nearly every time, ESLint ratchet still the single most common one. All other required checks (TypeScript, layout-contract, every other contract job in the same run) passed cleanly on this commit each time they got the chance to run. Stopped after 3 cancel+rerun cycles per this session's own retry budget; left kind_robots PR #2336 open with a standing-down comment and subscribed to its PR activity rather than merging past an unverified required check. Also newly confirmed this session: the check_runs GitHub API can report a run/job as 'in_progress' for several minutes after it has actually completed (confirmed via cross- checking actions_get get_workflow_run/get_workflow_job directly) -- a session relying on check_runs alone without this cross-check could wait indefinitely on a check that already finished, or conversely could think a stalled run is still 'normal' when actions_get would show it's genuinely stuck. Worth folding into whichever future fix investigates this task's item (b). New evidence, 2026-09-07 (interface-vision/t-104 slice 130, kind_robots PR #2483): this stall pattern is not limited to Contract verifiers/ESLint ratchet. The 'Build production image' (Publish Production Container workflow) job on this PR sat in_progress at the exact same 'Build and publish' step for 35+ minutes on attempt 1 with zero step-level progress; cancelled and re-run once per this task's own established 're-run at most once' convention, and attempt 2 also sat at the identical step for 40+ minutes with zero progress before this session stopped retrying. All other 49 required checks on the same commit passed cleanly each time they ran (vue-tsc, eslint, layout-contract, lint- ratchet, Contract Tests' ~330 sequential checks, etc.) -- consistent with every prior occurrence's own local verification showing this is a CI-infrastructure stall, not a content issue. Per the established convention, left kind_robots#2483 open, unmerged, with a standing-down comment, for a later session or Silas to re-check CI and merge once green. Widening this task's scope: the stall signature (sits in_progress with zero step- level progress for 20-40+ minutes, a fresh rerun sometimes but not reliably clears it) now spans at least two different required-check workflows (Contract Tests' ESLint ratchet step, and Publish Production Container's Build and publish step), suggesting a shared runner/infra-level cause rather than something specific to either job's own script.
-    Reconciled during Silas's 2026-09-07 human-gate backlog audit. This is recurring CI/platform diagnosis work, not a decision for Silas. Recent evidence includes stalls at multiple Contract verifiers steps and, on 2026-09-07, the Build production image job showing the same 35-40+ minute no-progress signature while the rest of the PR checks completed. Return to the worker queue to investigate the Actions-level stall, observability, timeout, and recovery behavior; do not park routine CI diagnosis in the human queue. Investigation update, 2026-09-08 (scheduled conductor sweep session): checked this task's own open item (b) -- whether Contract verifiers needs an explicit `timeout-minutes` so a genuine hang fails loud -- against the live workflow file (kind_robots `.github/workflows/contract-tests.yml`). It already has `timeout-minutes: 10` on the `contract-tests` job, present since at least the earliest version in this repo's history (well before every stall occurrence logged above, all of which ran 15-40+ minutes with zero step progress before a human/session cancelled them manually). A job-level timeout that is already set but does not fire on a genuinely wedged run is stronger evidence than anything logged so far for the "wedged GitHub-hosted runner, not a repo-content or script cause" reading of this whole pattern: GitHub's own timeout enforcement apparently cannot always reach a runner that has stopped reporting progress. This closes off item (b) as already-tried-and-insufficient rather than unactioned -- a smaller timeout-minutes value would only make cancellation happen sooner, it would not make it happen reliably. Did not action item (c) (ESLint `--cache`) this session: the logged occurrences hang at varied, mostly non-ESLint steps (Install dependencies, Set up job, Route gallery contract, Capture-group guard checker self-test, Build and publish), so an ESLint-specific cache would at best address a minority of instances and adds its own risk (a stale/poisoned `.eslintcache` surviving between runs) for uncertain benefit against what looks like a platform-level runner fault. Recommend downgrading remaining investigation effort here to periodic monitoring (does the pattern's rate change, does GitHub Support/status ever confirm a runner-wedge root cause) rather than further repo-side config changes, since the two config-shaped fixes this task proposed are now either tried-and-insufficient (b) or unlikely-to-generalize (c).
-    Observation (2026-09-11, scheduled Conductor session, incidental to unrelated coloring-book/t-022 work): kind_robots' contract-tests.yml already carries a job-level `timeout-minutes: 10` on the Contract verifiers job as of 2026-09-09 (commit 78b9d6e, bundled into an unrelated interface-vision/t-104 slice PR #2564 -- not a dedicated fix for this task, so likely incidental rather than a deliberate response to this investigation). This may already substantially address open question (b) from this task's note (whether the job needs an explicit timeout so a genuine hang fails loud) -- worth confirming whether a future stall now actually gets killed at 10 minutes before treating (b) as still open. Questions (a) and (c) are untouched by this. Not verified against a live reproduction this session -- flagging for whoever picks this up next rather than closing anything out.
+  note: >-
+    FOR SILAS: Observed 2026-08-27 on silasfelinus/kind_robots#2141 (interface-vision/t-121, a trivial 2-file template-only header polish -- pages/music-mentor.vue and pages/coloring-page.vue).
 
-    RESOLVED 2026-09-16 after a fresh connector-native investigation. The live kind_robots Contract Tests workflow already has timeout-minutes: 10 on the entire Contract verifiers job, and the historical evidence in this task shows stalls at varied unrelated steps (Set up job, npm ci, Route gallery contract, ESLint ratchet, capture-group self-test) plus the separate Publish Production Container Build and publish step. That rules out an ESLint-specific repo defect as the general cause. ESLint --cache would only target a minority of incidents and would add cache-state risk; lowering the existing timeout cannot make GitHub enforce a timeout on a runner that has stopped reporting. No safe repo-side change remains that addresses the observed cross-workflow failure mode. Treat future recurrences as GitHub Actions runner/platform incidents: inspect the job-level Actions state, rerun at most once, and do not merge past an unfinished required check. Reopen only if new evidence points to a reproducible repository-specific cause.
+    Full history: projects/conductor/HISTORY.md#t-132
   updated: '2026-09-16T03:19:00Z'
   claimed_by: openai-scheduled-2026-09-16T031522Z-conductor-t132-a11
   claimed_at: '2026-09-16T03:15:22Z'
@@ -2232,28 +2230,9 @@ tasks:
   stakes: reversible
   passes: 0
   note: >-
-    Filed 2026-09-11 (conductor scheduled Agent run) from cthulhuquarium/t-076. A prior session set
-    `status: review` on t-076 with a note describing a script it had written, but the actual commit was
-    left sitting on an un-PR'd branch (`worker/cthulhuquarium-t-076-20260911T141847Z-r4m9` in
-    kind_robots) -- no PR ever opened, so the work was invisible to review. `check_pr_merged_drift.py`
-    correctly flagged the task as unverifiable (its GitHub title-text search found nothing, since there
-    was genuinely no PR to find), which is exactly why this session went looking by hand and found the
-    stranded branch and opened kind_robots#2629 from it.
+    Filed 2026-09-11 (conductor scheduled Agent run) from cthulhuquarium/t-076.
 
-    TO BUILD: when a claimed/review task's implementing PR search comes back empty, have the script take
-    one more step before reporting "could not verify" -- list open branches in the relevant repo(s)
-    matching `worker/<project>-<task-id>-*` or `<project>-<task-id>` and, if one exists with no open PR
-    against it, name it explicitly in the finding (e.g. "no PR found, but branch X has unmerged commits
-    and no open PR -- likely an un-PR'd close-out"). This turns a generic "could not verify, check by
-    hand" into a specific, actionable pointer, the same way this session's manual
-    `list_branches`/`list_commits` detour worked, without requiring a human or agent to repeat that
-    detour every time. Advisory only -- never auto-opens a PR itself, since that decision (is the branch
-    real, safe, on-task) still needs judgment; it only needs to surface the candidate. kind_robots is
-    already checked via the GitHub API by this script's existing repo-scanning code path, so reuse that
-    rather than adding a new transport.
-
-    Closed by the same session that implemented it (PR #4416) and flipped it to review (PR
-    #4417), both merged 2026-09-15.
+    Full history: projects/conductor/HISTORY.md#t-150
   updated: '2026-09-15T11:44:36Z'
   owner: worker
   claimed_by: 2026-09-15T113910Z-conductor-t150-sched
@@ -2361,20 +2340,9 @@ tasks:
   passes: 0
   owner: reviewer
   note: >-
-    Kaizen from reviewing/merging conductor#4314 + kind_robots#2719 (2026-09-14): the hourly
-    hostbuf sentinel now distinguishes a genuinely recovered incident from one that merely
-    aged out of the old 2h alert window, and correctly stops emailing about the latter --
-    but the "unverified" case is reported only via `::warning::` in the workflow's own log
-    and an `exit 0`, which means nothing durable records it. A stale unresolved incident can
-    now sit invisible indefinitely unless someone happens to open that specific Action run.
+    Kaizen from reviewing/merging conductor#4314 + kind_robots#2719 (2026-09-14): the hourly hostbuf sentinel now distinguishes a genuinely recovered incident from one that merely aged out of the old 2h alert window, and correctly stops emailing about the latter -- but the "unverifie
 
-    Fix: have `scripts/check_hostbuf_failure.py`'s `unverified` branch also write (or have
-    its caller write) a dated line to a durable, already-read artifact -- RENDER-BACKLOG.md
-    follows the existing convention `recheck_render_queue.py` already uses, or append to the
-    relevant project's TALKBACK.md/roadmap task note if one is open (e.g. kindrobots-unraid/
-    t-021 while it's the active incident). Add a regression test asserting the unverified
-    path actually writes/returns that record, not just prints to stdout. Reversible,
-    tooling-only change; no roadmap/gate semantics affected.
+    Full history: projects/conductor/HISTORY.md#t-157
   updated: '2026-09-15T10:50:31Z'
   claimed_by: claude-scheduled-20260915T1027Z-conductor-t157
   claimed_at: '2026-09-15T10:42:39Z'
@@ -2387,100 +2355,9 @@ tasks:
   stakes: reversible
   owner: worker
   note: >-
-    Filed 2026-09-14 at Silas's direction after a portfolio size assessment. URGENT: this has a
-    deadline, not just a cost.
+    Filed 2026-09-14 at Silas's direction after a portfolio size assessment.
 
-
-    WHY NOW. `scripts/sync_kind_robots_projection.py` POSTs the raw text of every
-    projects/*/roadmap.yaml to https://kindrobots.org/api/conductor/sync under a hard
-    MAX_PAYLOAD_BYTES = 4_000_000. It blew that limit on 2026-09-11 at 4,000,134 bytes, failing
-    tests/test_sync_kind_robots_projection.py; conductor/t-151 fixed it by hand-archiving
-    interface-vision/t-104's ~395KB note to T104-HISTORY.md, dropping the snapshot to ~3.6MB.
-    Measured again 2026-09-14: 3,734,373 bytes, 93.4% of the limit, regrowing ~45KB/day. That is
-    roughly a week of headroom on a soft estimate. 66% of all roadmap text (2,421,423 bytes) is the
-    `note:` bodies of `status: done` tasks. Offloading them lands the payload near 33%.
-
-
-    Biggest contributors, done-note bytes: conductor 337,553; kind-robots 275,696;
-    interface-vision 251,239; ai-art-academy 201,831; cthulhuquarium 190,391; kapowarr 123,002;
-    rainbow-butterflies 97,382; digital-storefront 82,794. Work biggest-first.
-
-
-    DO THREE THINGS IN ONE PR.
-
-
-    (1) Add the archival carve-out to AGENTS.md's append-only rules. Silas authorized this
-    explicitly on 2026-09-14 in session. Today `Delete TALKBACK entries (the log is append-only)`
-    sits under "Neither agent -- EVER" and scripts/set_task_field.py:363 refuses to replace a
-    >300-char note with text that does not contain it (the t-129 guard, added after a session lost
-    199 lines of diagnostics on cthulhuquarium/t-033 and t-034). An offload script is
-    indistinguishable from those incidents without a stated rule, and a future agent will correctly
-    refuse the work. The carve-out: moving content VERBATIM into a named archive file is not
-    deletion, provided the script verifies a byte-for-byte round-trip and the PR names the
-    authorizing session. Rewriting, summarizing, or dropping an entry remains forbidden.
-
-
-    (2) Write scripts/archive_done_task_notes.py. It must write the HISTORY.md entry FIRST, verify
-    the recovered note equals the original byte-for-byte, and only then rewrite the roadmap. Never
-    call close_task.py --set note= ; use set_task_field_text(..., force=True, force_block='>-')
-    from inside the script.
-
-
-    (3) Run it across all projects, biggest first.
-
-
-    POINTER FORMAT -- NOT COSMETIC. Leave a one-sentence outcome summary followed by the pointer,
-    e.g. "Digest portfolio math now reads milestone weights directly. Full history:
-    projects/kind-robots/HISTORY.md#t-101". Two live consumers depend on the first sentence
-    remaining meaningful: scripts/backfill_learning.py:276 takes first_sentence(note) as the lesson
-    for closed tasks, and kind_robots components/conductor/project-detail.vue:363 renders
-    {{ task.note }} verbatim on the live project board. Copy the ROADMAP POINTER style of
-    projects/humboldt-scoop-cms/HISTORY.md, but NOT its archive style -- that file keeps only a
-    one-line summary per task and links to a commit SHA, which is summarizing and would break both
-    the carve-out and the byte-for-byte verification. HISTORY.md must hold the full original note
-    verbatim.
-
-
-    CONSTRAINTS, all load-bearing:
-
-    - Scope strictly to `status: done`. select_role.py (RAN/NO-OP recurring markers),
-    daily_gate.py, audit_human_gates.py and audit_roadmaps.py all scan note text, none of them on
-    done tasks. Touching a recurring, needs-human or claimed task breaks them.
-
-    - Emit block scalars (>-). scripts/check_roadmap_yaml.py rejects a quoted flow scalar whose
-    continuation lines sit at column 0.
-
-    - check_large_deletion_guard.py WILL fire (it flags >=500 deleted lines or >=20%). It is
-    continue-on-error: true and its own docstring blesses this case: "A deliberate large prune (an
-    archival pass, a roadmap reorganization) is legitimate." Expected -- explain it in the PR body.
-
-
-    THEN MAKE IT STICK. A one-time prune does not hold: t-104 was archived 2026-09-11 carrying the
-    literal instruction "Keep this note short going forward" and has regrown through slice 269
-    anyway. scripts/check_roadmap_note_size.py (from t-151) only warns on a SINGLE note over 50KB,
-    which misses today's actual failure mode -- 154 medium notes summing to 411KB in one file.
-    There is no byte-size check anywhere else in this repo (a grep for st_size/getsize/MAX_BYTES
-    across scripts/*.py returns zero). Extend it with a per-FILE threshold and a total-projection
-    check against MAX_PAYLOAD_BYTES, and add the projection-headroom line to the CLAUDE.md startup
-    sweep so every session sees the number.
-
-
-    VERIFY: python scripts/validate_roadmaps.py ; python scripts/check_roadmap_yaml.py ;
-    pytest tests/test_sync_kind_robots_projection.py ; and measure the payload before and after
-    with: python3 -c "import json,pathlib; print(len(json.dumps({'roadmaps':{p.parent.name:
-    p.read_text() for p in pathlib.Path('projects').glob('*/roadmap.yaml')}})))"
-
-    DONE 2026-09-14 (PR #4331). Archived 1,110 done-task notes across 48 projects into projects/<slug>/HISTORY.md. Projection payload 3,734,373 -> 1,635,532 bytes (93.4% -> 40.9%), headroom 2,364,468. Verification: 1,110/1,110 round-trip byte-identical against git HEAD, 0 backfill_learning lessons changed, re-run is a no-op, 1,895 tests pass.
-
-    TWO THINGS THE FIRST ATTEMPT GOT WRONG, both silent. (1) I wrote my own first_sentence() for the pointer summary; backfill_learning.py has its own that caps at 280 chars with a raw-truncation fallback, so for notes with no sentence boundary the appended "Full history:" text bled into that window and silently altered 3 of 34 lesson records on the storybook trial run. Fixed by importing the real function and having build_pointer() VERIFY first_sentence(pointer) == first_sentence(original) per task, declining rather than rewriting where it cannot hold. (2) verify_project() matched a loose "HISTORY.md#" and reported t-158 itself as a broken pointer, because this notes quotes the pointer format as example text; tightened to each task own exact pointer. Both now have tests.
-
-    ENFORCEMENT, because a one-time prune does not hold (t-104 was archived 2026-09-11 carrying the literal instruction "Keep this note short going forward" and regrew through slice 269): check_roadmap_note_size.py now also reports oversized roadmap FILES and the true projection headroom, measured with sync_kind_robots_projection own encoder rather than an approximation. CLAUDE.md startup sweep reports the headroom line every session.
-
-    AGENTS.md gained the archival carve-out (authorized by Silas in session 2026-09-14): a verified byte-for-byte move into a named archive file is not deletion; summarizing or trimming remains forbidden. This is what makes the work distinguishable from t-129 and lets a future agent run the script rather than correctly refusing.
-
-    CI: "Build changed TypeScript projects" failed on a cause unrelated to this diff -- it selects any changed projects/<x>/ with a package.json then runs npm ci, which refuses without a lockfile, and projects/approval-portal (retired) has no lockfile. Latent until this pass touched all 48 project dirs at once. Fixed at the selection step (skip with a message) rather than by generating a lockfile for a retired project; also dropped --silent, which had hidden the error entirely.
-
-    FOLLOW-UPS, not in scope here: two oversized notes remain on LIVE recurring tasks (model-builder/t-029 118KB, storybook/t-010 65KB) -- the t-104 per-task pattern applies there, not this script, which is done-only. interface-vision/roadmap.yaml is still marginally over the new 150KB per-file threshold. t-159 (TALKBACK rotation) is unblocked now that the carve-out has landed.
+    Full history: projects/conductor/HISTORY.md#t-158
   updated: '2026-09-14T11:59:38Z'
   claimed_by: claude-20260914T1030Z-cd-t158
   claimed_at: '2026-09-14T11:43:27Z'
@@ -2494,57 +2371,9 @@ tasks:
   owner: worker
   depends_on: t-158
   note: >-
-    Filed 2026-09-14 at Silas's direction, same size assessment as t-158. Depends on t-158 only
-    because that PR lands the AGENTS.md archival carve-out this task needs.
+    Filed 2026-09-14 at Silas's direction, same size assessment as t-158.
 
-
-    Root TALKBACK.md is 3.67MB / 1,034 entries (2026-06 x8, 07 x323, 08 x479, 09 x223), growing
-    ~48KB/day. It is NOT in the Kind Robots projection payload, so unlike t-158 there is no
-    transport deadline -- but this is an operational bug, not merely token cost.
-    scripts/append_ledger_entry.py's append_with_retry() reads the whole 3.67MB via
-    `git show origin/main:TALKBACK.md`, rebuilds the entire text, and pushes a single-file commit
-    straight to refs/heads/main ON EVERY APPEND. That is almost certainly the cause of the HTTP-413
-    TALKBACK-only push failures already documented in CLAUDE.md ("a follow-up TALKBACK-only commit
-    hit 413 on every retry"). Rotation fixes something that is actively failing.
-
-
-    SHAPE. Rotate to talkback/YYYY-MM.md. The ROOT PATH KEEPS THE CURRENT MONTH -- not a bare
-    index. .claude/hooks/session-start.sh:73-83 read_text()s the root file and surfaces its last 30
-    lines at every session start; an index at that path would show index text instead of recent
-    entries. Preserve the lines 1-22 preamble.
-
-
-    THREE SPECIFICS -- do not rediscover these:
-
-    - Split on ^## \d{4}-\d{2}-\d{2}, NOT on ^## . Line 11 is a format template inside a fenced
-    code block and is a false positive; the dated form matches 1034/1034 real entries and zero
-    templates. Do not try to parse the role field -- there are 126 variants of it.
-
-    - scripts/backfill_learning.py:376 whole-file-parses TALKBACK.md and indexes EVERY ## header
-    into a (project, task, outcome) -> latest-entry map. After rotation it would silently see only
-    the current month, so `--since all` backfills lose historical candidates. It needs a glob
-    across talkback/*.md. This is the one real breakage.
-
-    - LEAVE LEARNING.yaml ALONE. At 725KB it has the same append-only rule but four whole-file YAML
-    parsers (process_task_events.py, build_learning_summary.py, backfill_learning.py,
-    append_ledger_entry.py) and two workflow path filters, versus TALKBACK's one parser and zero.
-    Splitting it is a larger, different job -- note it and move on.
-
-
-    CONVENTION. Copy projects/interface-vision/T104-HISTORY.md: an archive file headed with what it
-    covers and why, plus an explicit pointer left at the original location. Do NOT treat
-    TALKBACK-wonderlab-retirement-2026-08-11.md as the precedent -- it is a standalone decision
-    record that nothing in the repo links to, an orphan rather than a pattern.
-
-
-    Same byte-for-byte round-trip verification as t-158: every rotated entry must be recoverable
-    identical to its original. check_large_deletion_guard.py does not currently watch TALKBACK.md,
-    so it will not fire here.
-
-    Merged: silasfelinus/conductor#4385 (rotate_talkback.py + backfill_learning.py fix, 25
-    new tests) and #4384 (status: review bookkeeping). Rotated 2026-06 (8), 2026-07 (323),
-    2026-08 (479) entries to talkback/*.md; 2026-09 (228) stays in root. Full suite 1938
-    passed/30 skipped, ruff clean, all 22-24 PR checks green on both PRs before merge.
+    Full history: projects/conductor/HISTORY.md#t-159
   updated: '2026-09-15T02:41:29Z'
   claimed_by: claude-scheduled-20260915T023215Z-cond-t159
   claimed_at: '2026-09-15T02:32:16Z'
@@ -2556,29 +2385,10 @@ tasks:
   passes: 0
   stakes: reversible
   owner: worker
-  note: |-
-    Filed 2026-09-14 at Silas's direction, same size assessment as t-158/t-159. Read the SAFETY RULE below before deleting anything.
+  note: >-
+    Filed 2026-09-14 at Silas's direction, same size assessment as t-158/t-159.
 
-    Conductor is a 466MB working tree with a 231MB .git. projects/coat-dance/coat dance_x264.mp4 is 37MB -- the single largest object in the repo, 10x TALKBACK.md, and the only tracked .mp4/.mov/.webm. projects/coloring-book/ is 89MB; ai-art-academy/docs/t-045-lora-evidence/ is 5 x 2.27MB; mermaids-of-venice/manuscript/ is ~4MB (PDF + two .doc); mandarin-tutor/art-manifest.json 1.9MB; media-watchlist/media-entries.json 1.1MB. This is clone and container-startup cost rather than token cost -- real, but lower priority than t-158.
-
-    THIS IS A DOCUMENTED POLICY CHANGE, NOT CLEANUP. ops/home-server/SELF-HOSTED-MEDIA.md currently states the opposite on purpose: "Conductor-owned project images still use the existing projects/process/ and projects/images/ flow." The media.acrocatranch.com pattern is real and well-tooled (100 references, media_direct_consumer.py, media_migrate.py, check_render_box.py, auto-art-generate.yml) but is scoped to kind_robots-TARGETED GENERATED ART. Extending it to conductor-owned binaries means amending that doc. projects/coat-dance/BRIEF.md:25 and projects/coat-dance/roadmap.yaml:249 both record the MP4's presence in git as a settled fact and need updating too.
-
-    SAFETY RULE, NON-NEGOTIABLE: never delete a binary from git until a HEAD probe confirms the media origin serves it 200. This repo already learned this the hard way -- scripts/distribute_images.py's docstring records ai-art-academy/t-010 (2026-07-27), where a local copy LOOKED like delivery, the art-prompts request got pruned as done, and the record that real delivery had never happened was silently lost. For the coat-dance MP4 especially, assume it may be the only copy until proven otherwise. If a probe fails, upload first, verify, and only then remove -- or leave it and say so.
-
-    DO NOT REWRITE GIT HISTORY to reclaim the 231MB. Filtering shared history is a worse problem than the one it solves, and every other checkout would break. Stopping the growth is the goal.
-
-    ALSO IN SCOPE, both small:
-    - Delete docs/art-request-status.md. Generated 2026-06-30, it is a hand-made status table describing the superseded manual ART-PROMPTS.md workflow. The live pipeline it predates (art-request.post.ts -> artRequestYaml.ts -> projects/art-prompts.yaml -> auto-art-generate.yml on a 0 */6 * * * cron) makes it actively misleading. Replace with a generated queue-depth line or nothing.
-    - Fix .gitattributes. It is TRUNCATED: lines 18-26 are a comment block explaining that the vendored WordPress trees should be marked linguist-vendored, but the actual directive lines are missing -- the file just ends on the comment. It also has no *.mp4 / *.mov / *.webm entries while *.png/jpg/webp/pdf/zip are all listed. Note there is no Git LFS configured (no .lfsconfig, no filter=lfs lines) and no size policy anywhere in AGENTS.md or CLAUDE.md.
-    Cycle (this session): completed the two small in-scope items only -- deleted docs/art- request-status.md (stale, superseded by the live art-request.post.ts pipeline) and fixed .gitattributes (trimmed the stale vendored-WordPress comment now that conductor/t-106 already removed those trees; added *.mp4/*.mov/*.webm binary entries). PR: silasfelinus/conductor#TBD (worker/conductor-t-160). Did NOT touch the media-host policy question, ops/home-server/SELF-HOSTED-MEDIA.md, or the coat-dance MP4 migration -- media_migrate.py needs a mounted images share (Z:/kindrobots/images or WSL mount) this sandbox doesn't have, and the task's own safety rule requires a live HEAD-200 probe before deleting anything from git. Re-arming to ready afterward for a session with real filesystem/share access to pick up the remaining migration scope.
-
-    Documented the approved Conductor large-binary media-host policy and made the no-history-rewrite rule explicit. The remaining coat-dance MP4 migration still requires a mounted media share and a successful public HEAD 200 before any tracked binary can be removed.
-
-    Reviewed and merged in PR #4462 (squash 4632dc8): documented the Conductor large-binary
-    migration policy (upload + verified public HEAD 200 + reference updates before removal;
-    no git-history rewriting) and updated the Kind Robots final-migration section to match.
-    Coat-dance MP4 migration itself remains out of scope pending a mounted media share and a
-    live HEAD-200 probe, per the task's own safety rule.
+    Full history: projects/conductor/HISTORY.md#t-160
   updated: '2026-09-16T00:27:11Z'
   claimed_by: openai-scheduled-2026-09-16T001704Z-conductor-t160-a11
   claimed_at: '2026-09-16T00:17:04Z'
@@ -2591,14 +2401,9 @@ tasks:
   passes: 0
   owner: worker
   note: >-
-    Kaizen from coloring-book/t-046 (silasfelinus/conductor#4356, 2026-09-14): this session implemented t-046 locally (committed but not yet pushed) on its designated branch claude/blissful-curie-pubxnn, then ran `close_task.py coloring-book t-046 review --branch claude/blissful-curie-pubxnn ...`. The script's scratch-index plumbing built its close-out commit on top of the branch's remote tip (which did not yet have the local implementation commit, since it had never been pushed) rather than the caller's local HEAD, and force-pushed that result -- silently overwriting the remote ref with a branch that no longer contained the local implementation commit. Caught immediately via `git diff origin/main --stat` before opening the PR (the diff was missing scripts/art_quality.py and tests/test_art_quality.py); recovered via the still-present local commit object (`git reflog` + a clean cherry-pick) and a verified `--force-with-lease` re-push. No data was permanently lost, but it could easily have gone unnoticed by a session that didn't diff before pushing/opening the PR.
-    DO: read close_task.py's actual git-plumbing implementation and confirm exactly what base it builds from when `--branch` names a branch that already has local (or even already-pushed) commits beyond origin/main. Fix one of: (a) make it fast-forward from the caller's actual local branch tip when one exists and matches `--branch`, or (b) refuse/warn loudly when the local branch tip it's about to build on top of doesn't match what `git rev-parse --branch` reports locally, rather than silently rebuilding from a stale base. At minimum, add an explicit docstring note describing the actual behavior so a caller knows to push their own commits first (or use a distinct `--branch` name for the close-out) rather than assuming `--branch <my-current-branch>` preserves local work the way a normal `git push` would.
+    Kaizen from coloring-book/t-046 (silasfelinus/conductor#4356, 2026-09-14): this session implemented t-046 locally (committed but not yet pushed) on its designated branch claude/blissful-curie-pubxnn, then ran `close_task.py coloring-book t-046 review --branch claude/blissful-curi
 
-    Implemented a fail-closed branch-tip guard in close_task.py so --branch cannot silently omit local-only commits; added regression coverage for mismatched and matching local/remote branch tips.
-
-    RESOLVED: merged in #4378 (squash 17a9924) - fail-closed local-vs-remote branch-tip
-    guard in close_task.py, with regression tests for both refusal and matching-tip cases.
-    Reviewed and merged same session.
+    Full history: projects/conductor/HISTORY.md#t-161
   updated: '2026-09-15T00:27:36Z'
   claimed_by: openai-scheduled-2026-09-15T001623Z-conductor-t161-a11
   claimed_at: '2026-09-15T00:16:23Z'
@@ -2612,20 +2417,9 @@ tasks:
   owner: worker
   passes: 0
   note: >-
-    Kaizen from conductor/t-161 (silasfelinus/conductor#4378, 2026-09-15): t-161 added
-    `assert_local_branch_safe`, a straight tip-equality check between a named local
-    branch and its chosen remote base, to stop close_task.py from silently rebuilding
-    a close-out on top of a stale remote tip when local-only commits exist. That check
-    is binary (equal or not) and lives inline in close_task.py. The Worker's own kaizen
-    suggestion: factor a small, pure helper that can classify the actual relationship
-    between two commits -- local is a fast-forward ahead of remote (safe, common after a
-    normal push), remote is ahead of local (caller's checkout is stale), or the two have
-    diverged (real ambiguity, same as today's refusal case) -- so future branch-plumbing
-    scripts (`claim_task.py`'s branch-naming paths flagged as worth checking for the same
-    assumption class) can reuse one tested primitive instead of re-deriving an
-    equality-only comparison each time. Land it as a small, independently testable
-    function (e.g. in `git_plumbing.py` or a new `branch_ancestry.py`), with unit tests
-    for all three relationships, then have close_task.py's existing guard call it.
+    Kaizen from conductor/t-161 (silasfelinus/conductor#4378, 2026-09-15): t-161 added `assert_local_branch_safe`, a straight tip-equality check between a named local branch and its chosen remote base, to stop close_task.py from silently rebuilding a close-out on top of a stale remot
+
+    Full history: projects/conductor/HISTORY.md#t-163
   updated: '2026-09-15T01:39:58Z'
   claimed_by: claude-scheduled-20260915T013143Z-conductor-t163
   claimed_at: '2026-09-15T01:31:46Z'
@@ -2639,57 +2433,9 @@ tasks:
   passes: 1
   owner: claude
   note: >-
-    Filed 2026-09-14 from Silas's report: "things are moving from finished but they aren't hitting
-    done, and I have the same three coloring book pages duplicated in my most recent list. there was
-    201 entries 20 minutes ago, but then they disappear."
+    Filed 2026-09-14 from Silas's report: "things are moving from finished but they aren't hitting done, and I have the same three coloring book pages duplicated in my most recent list.
 
-
-    THE WEDGE. A projects/art-prompts.yaml request whose ArtJob reaches DONE but whose media never
-    lands can never be resolved by anything. record_submitted_job() writes only last_art_job_id and
-    leaves status pending; the row flips to done only when already_satisfied() sees the file at its
-    destination; and has_unresolved_submission(check_live=True) blocks re-submission unless the job
-    is 404 or CANCELLED -- a DONE job still reserves the row. So it is neither retried nor completed.
-    t-136's own docstring lists "DONE not yet reflected in already_satisfied" as a still-reserving
-    state, assuming it is transient, but nothing downloads the render once the run that submitted it
-    has exited. Measured on main 2026-09-14: 16 of the 17 pending rows were in exactly this state,
-    each holding a real ArtImage, the oldest (ArtJobs 18426-18429) stuck for over a week.
-
-
-    FIX: consume_art_requests.py gains a recovery pass that adopts the existing render -- fetch the
-    ArtImage and stage it -- rather than re-queueing a second one or leaving the row stuck. It never
-    enqueues, so it cannot reopen t-133. It deliberately does NOT mark rows done: staging is not
-    delivery, and distribute_images.py already prunes a request only once the file actually landed
-    (ai-art-academy/t-010, 2026-07-27, is the incident that rule exists for). Recovered this session:
-    9 delivered into git, 7 kind_robots media targets staged and correctly left pending.
-
-
-    THE DUPLICATES. Separately, projects/art-generate.yaml entries carry no record of the ArtJob they
-    were submitted as, so a batch whose renders had not landed was re-queued in full on every Auto
-    Art Generate run. Measured 2026-09-14: 13 cthulhuquarium destinations holding 78 PENDING jobs,
-    six identical copies each, ids stepping by exactly 32 per run across two days.
-    ArtJob.attemptFingerprint cannot collapse them because seeds are randomised per submission by
-    design (2026-08-30), so every resubmission is a genuinely new payload. kind_robots cancels the
-    extras at claim time (artJobQueueCoverage.ts reconcileStaticDelivery) -- which is why this
-    presented to Silas as a queue that emptied itself, not as duplicate art. Repo-wide CANCELLED
-    (10,695) had overtaken DONE (10,599). FIX: consume_art_queue_core.py skips an entry whose
-    (targetRepo, imagePath) already owns a PENDING/RUNNING job, failing open when the queue cannot
-    be read.
-
-
-    NOT FIXED, worth a look later: the "same three coloring book pages" are retry attempts that all
-    completed -- 22177/22178/22179 all target hwr-030-mermaid-on-lot-seven.webp, likewise mr-025 and
-    mr-008. Only one can ever be adopted, but every attempt lands DONE with its own ArtImage, so a
-    newest-first feed shows all three. That is the retry design showing through a view that does not
-    collapse by destination, not corruption.
-
-    Closed 2026-09-14. PR #4368 merged as d5924c2: the DONE-but-undelivered wedge is
-    released via render adoption (never re-enqueue), and duplicate re-enqueue is blocked by
-    an in-flight (targetRepo, imagePath) guard that fails open. Recovery run this session
-    adopted 16 stuck renders -- 9 delivered into git, 7 kind_robots media targets staged and
-    deliberately left pending, since staging is not delivery (ai-art-academy/t-010). Full
-    suite green: 1921 passed, 30 skipped. The triplicate coloring-book pages are NOT fixed
-    and are not a defect: they are retry attempts that each completed against the same
-    destination; collapsing them is a kind_robots view change, noted above.
+    Full history: projects/conductor/HISTORY.md#t-162
   updated: '2026-09-14T22:52:37Z'
   implementation_pr: 'silasfelinus/conductor#4368'
 
@@ -2701,15 +2447,9 @@ tasks:
   passes: 0
   owner: worker
   note: >-
-    Kaizen from conductor/t-150 (silasfelinus/conductor#4416, 2026-09-15): the new
-    stranded-branch pass in check_pr_merged_drift.py (find_stranded_branch_candidates)
-    lists branches and open PRs across every repo in ALL_TRACKED_REPOS for each candidate
-    task, same as the existing title-search pass it's modeled on. That's fine at today's
-    scale (a handful of tracked repos, cached per run), but as the tracked-repo list grows
-    it becomes an ever-larger constant-factor cost per otherwise-clean task. Worth teaching
-    both passes to narrow the repo list from a task's own project/note history (e.g. which
-    repo(s) that project's roadmap has previously cited a PR or branch in) before falling
-    back to the full ALL_TRACKED_REPOS scan, rather than always scanning everything.
+    Kaizen from conductor/t-150 (silasfelinus/conductor#4416, 2026-09-15): the new stranded-branch pass in check_pr_merged_drift.py (find_stranded_branch_candidates) lists branches and open PRs across every repo in ALL_TRACKED_REPOS for each candidate task, same as the existing title
+
+    Full history: projects/conductor/HISTORY.md#t-164
   updated: '2026-09-15T12:40:47Z'
   claimed_by: 2026-09-15T123653-conductor-t164-sweep
   claimed_at: '2026-09-15T12:36:54Z'
@@ -2724,83 +2464,9 @@ tasks:
   passes: 0
   owner: null
   note: >-
-    FOR SILAS: The render relay (Silas-PC) has now hung twice, five weeks apart, running the
-    exact same checkpoint: `flux2_dev_fp8mixed.safetensors` (the "Flux.2 Klein" model). Both
-    times it fully wedged the relay's one concurrent slot, blocking the entire production
-    render queue (2026-08-10: ArtJob 21616, ~30 min; today, 2026-09-15: ArtJob 22837, 67+
-    minutes before this session cancelled it). Both jobs used correctly Resource-resolved
-    workflows (verified at the application layer both times) and recorded `error: null` --
-    this is a hang, not a rejection, so it can't be diagnosed from the API side.
+    FOR SILAS: The render relay (Silas-PC) has now hung twice, five weeks apart, running the exact same checkpoint: `flux2_dev_fp8mixed.safetensors` (the "Flux.2 Klein" model).
 
-
-    Full evidence: projects/lora-ingestion/docs/t-003-resource-backed-generation-evidence.md
-    (2026-09-15 update section).
-
-
-    TO APPROVE: this needs someone at the Silas-PC relay console to watch the ComfyUI
-    log/window while a flux2_dev_fp8mixed.safetensors job runs (queue one via the
-    lora-ingestion-t003 project slug, or just watch the next time it comes up naturally --
-    only 3-5 Resources in the whole catalog use this checkpoint, so it's rare live traffic).
-    Likely candidates: a slow first-time model load being mistaken for a hang (check disk/CPU
-    activity during the stall), or the LoraLoaderModelOnly node choking on this specific
-    checkpoint's precision/dtype. Once you know the cause, either fix it (e.g. re-export/
-    re-quantize the checkpoint, add a documented startup warm-load) or mark the checkpoint
-    unavailable for LoRA-backed jobs so the queue can reject it before claiming instead of
-    hanging after. Set approved_by_human: true and status: done here once resolved; this
-    unblocks lora-ingestion/t-003 (currently needs-human, soft, pending this).
-
-    Cross-reference (scheduled Conductor session, 2026-09-15T21:33Z, from kind-
-    robots/t-105): /api/art/queue/stats now shows queueDepth PENDING=2070, RUNNING=1,
-    staleRunningCount=0, oldestPending ArtJob 23040 (coloring-book) aged ~7.8h -- up sharply
-    from ~104 pending seen at 16:30Z the same day. check_render_box.py reports UP with a
-    healthy 0.5-minute heartbeat and 160 completions/6h, so the engine is actively
-    processing, not stuck-RUNNING the way the original wedge symptom was -- but at this
-    throughput a 2070-deep backlog takes many hours to drain. Recording as a data point on
-    the same incident (post-wedge backlog depth), not a new independent defect. No action
-    taken beyond recording.
-
-    Cross-reference (scheduled Conductor session, 2026-09-16T~05:50Z, from coloring-
-    book/t-022 cycle 11): requested a fresh kr-006 render via the Coloring Book Studio; two
-    consecutive submissions (ArtJob 25418, then recovery ArtJob 25419) both timed out after
-    600s/300s respectively, still queued/running, never completing. check_render_box.py
-    reports UP throughout with a healthy 0.1-0.5min heartbeat and steady throughput (34-54
-    completions/6h) -- the engine is processing other work fine, so this reads as a per-job
-    wedge on this specific submission rather than a global outage, the same shape t-167
-    documents. Not a new incident; recording as a data point. kr-006 left correctly at
-    status: pending for the next cycle to recover (not retried a third time this session,
-    per the transient-failure triage rule).
-
-    UPDATE 2026-09-16T~08:40Z (scheduled Conductor session, kind_robots#2777 merged):
-    unrelated to the Flux.2/flux2_dev_fp8mixed checkpoint this task tracks, but relevant
-    context -- a requeue-safety guard merged today (see t-167's matching update) now
-    blocks/repoints known-bad checkpoints instead of silently resending a frozen graph
-    unchanged. No Flux.2 checkpoint is in the quarantine list yet since this task's root
-    cause is still unconfirmed; flagging so whoever diagnoses the relay knows the mechanism
-    now exists if flux2_dev_fp8mixed turns out to need the same treatment. No action taken
-    on this task's actual hands-on-the-box ask.
-
-    Cross-reference (scheduled Conductor session, 2026-09-17T~13:31Z, from coloring-
-    book/t-022 cycle 22): check_render_box.py flipped to DOWN for the first time in this
-    incident's cycle history -- /api/art/queue/stats shows queueDepth PENDING=2207,
-    RUNNING=1, staleRunningCount=1 (claimedBy 'Silas-PC', claimed 2026-09-17T13:13:03Z),
-    oldestPending ArtJob 23040 (coloring-book) aged ~47.8h. This is a continuation of the
-    same post-wedge backlog already recorded here growing (2070 PENDING on
-    2026-09-15T21:33Z), not a new independent defect -- real throughput continues
-    (imagesCreatedInWindow=1277, windowThroughput.DONE=162 in the last 24h, latestDoneAt
-    essentially concurrent with the stale claim). Noting the claimant name is 'Silas-PC'
-    rather than the usual automated relay claimant, in case that means hands-on diagnosis is
-    already underway. No action taken beyond recording.
-
-    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
-    session): Legitimate: the remaining step needs hands on a machine no agent can reach.
-    Relay health 2026-09-30: 317 DONE / 5 CANCELLED in 24h, 0 stale-running, 0 failed, queue
-    idle. The hang has not recurred since 2026-09-20. Recommended: Silas closes this as not-
-    recurring and reopens on the next hang.
-
-    APPROVED by silasfelinus in session 20260930T0600Z-gate-triage (Claude Code, 2026-09-30;
-    recorded under CONTROL.md's human gate clearance rule): Closed as not recurring. The
-    relay has run clean since 2026-09-20 (317 DONE / 0 stale / 0 failed in the 24h to
-    2026-09-30). Reopen on the next Flux.2 hang. smartQueue follow-up: conductor/t-201.
+    Full history: projects/conductor/HISTORY.md#t-165
   updated: '2026-09-30T07:00:00Z'
   gate_reason: physical-access
   gate_rechecked: '2026-09-30'
@@ -2813,36 +2479,10 @@ tasks:
   stakes: reversible
   passes: 0
   owner: worker
-  note: |
+  note: >-
     Filed 2026-09-15 (scheduled conductor sweep session, incidental to conductor/t-164).
-    While running the full `pytest tests/` suite to verify t-164's change, two tests in
-    tests/test_check_render_box.py failed: test_gate_passes_when_reachable_and_rendering
-    and test_gate_passes_on_an_idle_queue. Both monkeypatch render_box_reachable and
-    fetch_queue_stats, call check.main(), and assert it returns 0.
 
-    Root cause: check.main() also calls engine_heartbeat_verdict(), which neither test
-    mocks. engine_heartbeat_verdict() imports check_engine_heartbeat and calls its
-    fetch_uptime() -- a real network call. At the time this was discovered the live
-    render engine genuinely was reporting unhealthy (confirmed independently via
-    `python scripts/check_engine_heartbeat.py`: "engine heartbeat DOWN: Comfy: reporting
-    ok:false since 2026-09-15T12:11:47 (24 minutes)"), which is what made both tests fail
-    with a real "render box DOWN" verdict instead of the intended pass-through case they
-    were written to cover.
-
-    This violates tests/conftest.py's documented suite-wide invariant ("The one thing in
-    here keeps the test suite off the network") -- that fixture only stubs the Resource
-    registry consume_art_queue_core.py uses, not check_engine_heartbeat's HTTP call, so
-    this file is not actually covered by it. The two tests will pass or fail depending on
-    live infrastructure state at whatever moment CI happens to run, which is exactly the
-    kind of flake the conftest.py fixture exists to prevent elsewhere in the suite.
-
-    Fix: monkeypatch check.engine_heartbeat_verdict to return (True, "...") in both
-    tests (same pattern the file already uses for render_box_reachable/fetch_queue_stats),
-    so they test only the throughput-verdict branch they're named for and stay
-    deterministic regardless of the real engine's live state. Conductor's own
-    `Python test suite` CI check is non-required (per conductor/t-132's TALKBACK history),
-    so this was not blocking any merge, but it should still be fixed -- a flaky-looking
-    green/red on this check trains reviewers to stop trusting it.
+    Full history: projects/conductor/HISTORY.md#t-166
   updated: '2026-09-15T12:44:37Z'
   claimed_by: 2026-09-15T124129-conductor-t166-sweep
   claimed_at: '2026-09-15T12:41:30Z'
@@ -2858,184 +2498,9 @@ tasks:
   passes: 0
   approved_by_human: true
   note: >-
-    FOR SILAS. Filed 2026-09-15. Deliberately narrow: this is the part of today's
-    outage that t-165 does NOT cover, and it matters because it breaks t-165's
-    working theory that the Flux.2 Klein checkpoint is the whole story.
+    FOR SILAS.
 
-    CORRECTION TO MY OWN EARLIER READING, recorded so it does not propagate.
-    An earlier draft of this task blamed ArtJob 22837 on a Flux.2 LoRA being
-    routed through the Flux.1 lane. That was wrong. 22837 was queued by the
-    lora-ingestion session through the `flux2` engine onto the
-    `flux2_dev_fp8mixed.safetensors` checkpoint, not through the Flux.1 dev
-    lane, and it is fully evidenced at
-    projects/lora-ingestion/docs/t-003-resource-backed-generation-evidence.md
-    and tracked at t-165. Nothing here re-litigates that. (kind_robots#2763 does
-    guard Flux.2 LoRAs out of the probe's Flux.1 lane, which is a real
-    misroute in its own right -- it simply is not what wedged 22837.)
-
-    WHAT IS NEW. After that session cancelled 22837 at ~11:53Z and reported the
-    relay healthy again, and after Silas restarted pm2 at 12:06:56Z, the relay
-    heartbeat ONCE (12:07:19Z), claimed ArtJob 22838, and went silent again.
-    The server released the claim as stale at 12:25:16Z (attempts back to 1,
-    claimedAt null) and relay-status returned agents: [] once more.
-
-    22838 is a plain Pony job: Pony/ponyFaetality_v11.safetensors, no Flux
-    anywhere near it. So the relay wedged on a completely different checkpoint,
-    on a different engine, minutes after the Flux.2 job was gone. That rules out
-    "the Flux.2 Klein pairing" as a sufficient explanation on its own.
-
-    Also worth weighing against t-165's healthy-relay reading: despite the
-    heartbeat recovering, latestDoneAt never moved off 10:43:51Z all session.
-    A heartbeat is not throughput -- the same lesson serendipity/t-012 recorded
-    in 2026-07 ("relay-status showing a registered agent is NOT sufficient
-    evidence the relay is accepting work").
-
-    THE PATTERN BOTH WEDGES SHARE is a cold model load, not sampling:
-      - ArtJob 22835 SUCCEEDED but took 12m30s end to end, almost all of it
-        loading Pony/cyberrealisticPony_v61.safetensors.
-      - The same relay rendered 63 consecutive jobs at ~65s each on 2026-09-14
-        (jobs 22469-22531) once a model was resident.
-      A ~12-minute load against a ~65-second render is the anomaly to explain.
-
-    TWO CANDIDATE CAUSES, neither confirmable from outside the box:
-      (a) The Alexandria SMB model share degraded again -- the recurring mount
-          documented at mandarin-tutor/t-020 and ops/home-server/README.md,
-          which would make a multi-GB checkpoint read crawl or hang. Supporting:
-          the relay's err log shows the lora-import thread dead on
-          FileNotFoundError [WinError 67] "The network name cannot be found:
-          'Z:/'", and after restart the relay still configured
-          KR_MEDIA_IMAGES_DIR = Z:/kindrobots/images. Models live on
-          //192.168.7.172/pc/ai/models, behind the share gate.
-      (b) Memory pressure: pm2 reported host RAM at 92.2%.
-
-    WHAT ONLY YOU CAN DO, on the box, in this order:
-      1. pm2 status -- did kr-relay's restart counter increment? If yes the
-         process is being killed (points at OOM); if no it is alive and hung
-         inside a load (points at the share). This one check separates (a)
-         from (b).
-      2. pm2 logs kr-relay --lines 100 -- last line after 12:07:19Z. A
-         'COMFY attempt 1' with nothing after it is a hang.
-      3. Confirm //192.168.7.172/pc/ai/models reads at full speed and that
-         Pony/ponyFaetality_v11.safetensors is present; re-map or drop Z:.
-      4. Free RAM before the next batch run.
-
-    STATE OF THE QUEUE: 202 PENDING, 0 RUNNING -- the LoRA preview probes for
-    kind-robots/t-105, ordered in seven checkpoint blocks with the 59-job
-    Pony/ponyFaetality block leading. A plain restart will retry that same first
-    job and may re-wedge. To make progress before diagnosing, bump a different
-    block forward: POST /api/art/queue/<id>/priority. Nothing is lost by leaving
-    them queued.
-
-    SEPARATE, SMALL, AND IT WOULD HAVE SHORTENED BOTH WEDGES: relay_agent.py
-    never sends smartQueue, so claim.post.ts's model-affinity bypass
-    (SMART_QUEUE_MAX_BYPASS = 24) is inert and the queue drains strictly
-    oldest-first. With affinity on, the relay would prefer jobs whose checkpoint
-    is already resident, making cold loads rare rather than routine.
-
-    UPDATE 2026-09-15T~19:30Z (workflow-medic sweep): a fourth job stalled the same way
-    today, on a different engine again -- ArtJob 23052, a coloring-book Kontext generate-bw
-    canary (monster-recast mr-016, queued via process-color-art-events.yml), timed out after
-    900s never leaving queued/running, several hours after this task last relay-wedge note.
-    coloring-book/t-039 (separately needs-human, tracking a suspected Kontext render defect)
-    had been treating its own canary failures as a render/graph-correctness issue, but this
-    occurrence symptom -- never completing, not completing-with-bad-output -- matches this
-    task cold-model-load wedge pattern rather than t-039 original diagnosis. Recorded here
-    so whoever investigates the relay treats Kontext/coloring-book jobs as in-scope too, not
-    just Flux.2/Pony. Removed the stale queued retry event from color-art-events/ to stop it
-    re-failing process-color-art-events.yml every 6h in the meantime (t-039 already
-    independently concluded not to resume live canaries as of its own 09:28Z update).
-
-    Cross-reference (scheduled Conductor session, 2026-09-15T21:33Z, from kind-
-    robots/t-105): same queue-depth evidence as just appended to t-165 --
-    /api/art/queue/stats PENDING=2070 (up from ~104 at 16:30Z), RUNNING=1,
-    staleRunningCount=0, heartbeat healthy 0.5 min old, 160 completions/6h. Engine is
-    processing, not wedged in the stuck-RUNNING sense t-167 documents, but the backlog depth
-    itself is a relevant relay-health signal for whoever does the hands-on diagnosis. No
-    action taken beyond recording.
-
-    UPDATE 2026-09-16T02:05Z (Z-Image lane verification, kind_robots#2773 -- CONTROLLED
-    cold-vs-warm measurement). Every cold-load datapoint in this task so far has been
-    incidental. Three Z-Image jobs run tonight give a clean controlled pair on the same box,
-    same engine, same graph shape: ArtJob 25379 claim->done 31.8 min (cold); ArtJob 25383
-    32.3 min (cold); ArtJob 25384 12.2 min (WARM -- claimed 1 second after 25383 finished,
-    so the z_image_turbo_bf16 + qwen_3_4b + ae weights were still resident; identical
-    prompt, identical seed 4242424, the only difference being one LoraLoaderModelOnly node).
-
-    Against the 61s median / 69s p90 measured across the last 200 completions tonight, that
-    is a ~20 MINUTE pure weight-load delta, isolated under controlled conditions rather than
-    inferred. It is the strongest evidence yet for the cold-model-load pattern this task
-    describes, and it independently confirms the affinity point above: consecutive jobs
-    sharing resident weights cost a fraction of scattered ones, so relay_agent.py not
-    sending smartQueue is costing real hours.
-
-    BUT IT ALSO ARGUES AGAINST THE SIMPLE STORY, and that cuts against my own hypothesis:
-    these cold loads all COMPLETED, at ~32 min. ArtJob 22838 never completed at all. So
-    "cold load is slow" is NOT sufficient to explain a wedge -- slowness and hanging are
-    different failures, and something additional turns one into the other on the
-    Pony/ponyFaetality path. The pm2 status check in step 1 above is still the thing that
-    separates (a) from (b); this measurement does not substitute for it.
-
-    MONITORING CONSEQUENCE, worth fixing regardless of root cause: at 12-32 min per job,
-    EVERY Z-Image job exceeds STALE_CLAIM_MINUTES (15) and shows up in /api/art/queue/stats
-    staleRunning while working perfectly normally. Any alarm keyed on staleRunning will cry
-    wolf on this lane. Note 22838 was correctly flagged stale by that same threshold -- the
-    signal is not useless, it just cannot distinguish "slow lane" from "wedged" on its own.
-
-    Cross-reference (scheduled Conductor session, 2026-09-16T~05:50Z, from coloring-
-    book/t-022 cycle 11): same evidence just appended to t-165 -- two consecutive kr-006
-    render submissions (ArtJob 25418, then recovery ArtJob 25419) timed out after 600s/300s
-    respectively without ever completing, while check_render_box.py showed the engine UP
-    throughout with a healthy heartbeat and steady throughput elsewhere. Matches this task's
-    own documented pattern (engine processing, not globally wedged, but individual jobs
-    hang). No action taken beyond recording.
-
-    UPDATE 2026-09-16T~08:40Z (scheduled Conductor session, kind_robots#2777 merged):
-    mitigation for the ponyFaetality half of this pattern is now live. requeue-failed now
-    runs assessRequeueSafety() against the frozen graph before resending it -- a checkpoint
-    matching Pony/ponyFaetality_v11.safetensors is repointed to
-    Pony/realcartoonPony_v1.safetensors (Silas, 2026-09-15, on realcartoonPony: "It's highly
-    consistent in my tests and one of my favorites.") instead of silently resending the same
-    defect, closing the gap where kind_robots#2766 stopped NEW plans choosing ponyFaetality
-    but did nothing for rows already queued (ArtJob 22838 being the case in point --
-    attempts:0, payload untouched, still pointed at ponyFaetality after two restarts). This
-    is a mitigation, not a root-cause fix: it stops the queue from re-wedging on this ONE
-    known-bad checkpoint, it does not explain WHY a cold load on that checkpoint hangs
-    rather than merely being slow (see the pm2/share/RAM diagnosis steps above, still
-    unrun). No action taken on this task's actual hands-on-the-box ask.
-
-    Cross-reference (scheduled Conductor session, 2026-09-17T~13:31Z, from coloring-
-    book/t-022 cycle 22): check_render_box.py flipped to DOWN for the first time in this
-    incident's cycle history -- /api/art/queue/stats shows queueDepth PENDING=2207,
-    RUNNING=1, staleRunningCount=1 (claimedBy 'Silas-PC', claimed 2026-09-17T13:13:03Z),
-    oldestPending ArtJob 23040 (coloring-book) aged ~47.8h. This is a continuation of the
-    same post-wedge backlog already recorded here growing (2070 PENDING on
-    2026-09-15T21:33Z), not a new independent defect -- real throughput continues
-    (imagesCreatedInWindow=1277, windowThroughput.DONE=162 in the last 24h, latestDoneAt
-    essentially concurrent with the stale claim). Noting the claimant name is 'Silas-PC'
-    rather than the usual automated relay claimant, in case that means hands-on diagnosis is
-    already underway. No action taken beyond recording.
-
-    Cross-reference (scheduled Conductor session, 2026-09-20T06:59Z, from the
-    sweep/butterfly-gallery/t-033 cycle): check_render_box.py now gives a direct, non-
-    inferred DOWN confirmation -- Comfy heartbeat last seen 2026-09-20T00:09:43Z (409
-    minutes ago at check time), kr-relay not reporting at all. /api/art/queue/stats
-    corroborates: staleRunning has exactly one entry, ArtJob 28763 claimed by 'Silas-PC' at
-    2026-09-20T00:08:15Z and never completed, latestDoneAt frozen at 2026-09-19T23:44:16Z
-    (throughput was healthy right up to that point: 120 imagesCreatedInWindow, DONE dropped
-    from PENDING=2207 on 09-17 to PENDING=1342 now). Reading together: the box was draining
-    the backlog normally, then something wedged mid-job on 28763 around 00:08-00:09Z and the
-    relay has not recovered since (~7h at check time). Same incident class as this task's
-    own history, not a new defect. No action taken -- still requires hands-on-the-box
-    diagnosis.
-
-    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
-    session): Legitimate: the remaining step needs hands on a machine no agent can reach.
-    Same relay health as t-165. The smartQueue gap named in this note is agent work. Filed
-    as conductor/t-201 (ready).
-
-    APPROVED by silasfelinus in session 20260930T0600Z-gate-triage (Claude Code, 2026-09-30;
-    recorded under CONTROL.md's human gate clearance rule): Closed as not recurring, same
-    evidence as t-165. Reopen on the next wedge. smartQueue follow-up: conductor/t-201.
+    Full history: projects/conductor/HISTORY.md#t-167
   updated: '2026-09-30T07:00:00Z'
   gate_reason: physical-access
   gate_rechecked: '2026-09-30'
@@ -3047,39 +2512,10 @@ tasks:
   stakes: reversible
   passes: 0
   owner: worker
-  note: |
-    Filed and fixed 2026-09-15 (scheduled conductor sweep session), discovered while
-    diagnosing the process-color-art-events.yml workflow-medic signal.
+  note: >-
+    Filed and fixed 2026-09-15 (scheduled conductor sweep session), discovered while diagnosing the process-color-art-events.yml workflow-medic signal. AGENTS.md documents `source scripts/kr_token_set.sh` as the safe, standard way to check KR_API_TOKEN presence before a command that .
 
-    AGENTS.md documents `source scripts/kr_token_set.sh` as the safe, standard way to
-    check KR_API_TOKEN presence before a command that needs it, e.g.
-    `source scripts/kr_token_set.sh; python3 some_script.py`. The script ended with a
-    plain `exit 0`/`exit 1`. `exit` inside a *sourced* script terminates the calling
-    shell itself, not just the sourced file -- so any command chained after the
-    `source` in that same shell invocation silently never runs, with no error, no
-    non-zero exit surfaced to the caller in a way that explains why (the tool just
-    reports "no output"). Reproduced directly:
-      bash -c 'source scripts/kr_token_set.sh; echo "never printed"'
-    prints only "KR_API_TOKEN: set/not set" and exits; the echo never fires.
-
-    This is a plausible contributor to the sandbox behavior root/TALKBACK.md
-    2026-08-24 (conductor/t-128) already flagged from a different angle -- "an
-    earlier `source scripts/kr_token_set.sh` call silently had no effect on a later
-    call" was attributed there entirely to env vars not persisting across separate
-    Bash tool invocations, but *within* a single invocation this exit-kills-the-shell
-    bug independently produces the exact same symptom (source appears to do nothing
-    useful) and could invite the same bad "let me hand-probe it instead" reflex that
-    caused the t-128 secret leak.
-
-    Fix: detect sourced-vs-executed at runtime with `(return 0 2>/dev/null)` (succeeds
-    only when sourced) and call `return "$status"` when sourced, `exit "$status"` when
-    executed directly -- both paths still print the same "KR_API_TOKEN: set"/"not set"
-    line and carry the same 0/1 status, only the termination mechanism changes.
-    Verified all four combinations (sourced/executed x token-set/token-unset) by hand
-    and added tests/test_kr_token_set.py as a permanent regression (subprocess-drives
-    real bash in each mode, asserts the caller's shell survives sourcing and the
-    correct status/output in every case, and that the token value itself is never
-    printed).
+    Full history: projects/conductor/HISTORY.md#t-168
   updated: '2026-09-15T14:10:00Z'
   claimed_by: 2026-09-15T140500-conductor-t168-sweep
   claimed_at: '2026-09-15T14:05:00Z'
@@ -3090,75 +2526,10 @@ tasks:
   stakes: reversible
   passes: 0
   owner: reviewer
-  note: |-
-    Filed 2026-09-15 (scheduled conductor sweep session), kaizen from
-    model-builder/t-029 cycle 68 (PR #4443).
+  note: >-
+    Filed 2026-09-15 (scheduled conductor sweep session), kaizen from model-builder/t-029 cycle 68 (PR #4443).
 
-    append_note_text() used to force every note to `note: >-` (folded) regardless of
-    its prior style, which is a real corruption risk once a note has substantial
-    multi-line history: a standards-compliant YAML parser folds every run of adjacent
-    non-blank physical lines under `>-` into one logical line, silently merging content
-    a `|-` (literal) note kept as separate lines. Hit for real on model-builder/t-029: a
-    126KB note collapsed from ~hundreds of logical lines to 10 (one 72,000+ character)
-    on the first `>-`-forced rewrite, which pathologically slowed the "Python test
-    suite" CI job (40+ minutes, reproduced twice, vs. the normal ~2 minutes). Fixed in
-    scripts/set_task_field.py's append_note_text() to preserve an existing `|-` style
-    instead of forcing `>-`.
-
-    That fix only stops *future* corruption -- it does not repair notes the old code
-    already damaged. A repo-wide scan (same session) for tasks with a `note` over 2000
-    chars containing any single line over 3000 chars found 12 candidates, 5 of which are
-    *currently* labeled `note: >-` (the label the buggy code always wrote, so these are
-    the most likely already-corrupted-by-this-bug cases, not just naturally long
-    single-paragraph notes): animation-manager/t-007, coloring-book/t-022,
-    coloring-book/t-039, conductor/t-132, interface-vision/t-104. (The other 7 --
-    animation-manager/t-006, dream-cycle/t-006, interface-vision/t-105, kind-robots/t-078,
-    model-builder/t-029 itself, serendipity/t-012, storybook/t-010 -- are already `|-`,
-    so lower priority, though still worth a look for the same "one giant physical line"
-    shape in case something else wrote them that way.)
-
-    Open question this session did NOT resolve: whether a `>-` label combined with a
-    giant folded line is what actually triggered the slow CI check, or whether it was
-    something else in that specific diff (the two observations -- hang reproduced twice
-    with `>-`, resolved once switched to `|-` -- are consistent with the label mattering,
-    but the mechanism (which check, why) was not pinned down; see PR #4443's body for the
-    full reasoning trail). Recommend: for each of the 5 `>-` candidates, read the actual
-    note content for signs of lost information (compare against git blame/history if
-    unclear), and cautiously test whether editing that task's note (e.g. a harmless
-    --append-note no-op, watching CI timing) reproduces the same slowdown -- if it does,
-    that confirms the mechanism and this becomes a hard blocker on those tasks until
-    manually unfolded (there's no automatic way to recover the original per-line
-    boundaries from an already-folded note, since folding is lossy for whitespace). If it
-    doesn't reproduce, downgrade this to "just document the shape, no urgent risk."
-
-    CORRECTION (same session, after filing this task): pulled the actual job logs for the
-    run that first showed a 40+-minute API-reported stall (on the corrupted >- version,
-    before the append_note_text fix) and for a later run that stalled the same way on an
-    unrelated PR (#4444, which never touches model-builder/roadmap.yaml at all). Both logs
-    show "pytest tests/" itself completing normally in ~115s (1990-1991 passed, 29-30
-    skipped) with every remaining step finishing within the same couple of seconds -- the
-    stall was entirely AFTER the job's own work finished: the GitHub Actions job/check-run
-    API kept reporting status:in_progress for 15-40+ minutes past the log's own completion
-    timestamp, resolving only once a cancel_workflow_run call was sent (and on PR #4444's
-    third attempt, not even reliably then -- repeated cancels and reruns of the same run_id
-    left it wedged for over 20 minutes; a fresh commit forcing a brand-new run_id was what
-    actually got a clean run). This is GitHub Actions job-finalization/status-reporting
-    flakiness, not a slow test, and not something this repo's code can fix. The
-    append_note_text() >-/|- forcing bug is still real (independently reproduced by direct
-    function calls and pinned by a regression test) and worth having fixed, but it was NOT
-    the cause of the observed CI timing -- the theory linking them, written in this task's
-    original note and in PR #4443's body, was wrong. Downgrading this audit accordingly: the
-    5 already->--labeled giant-note tasks may still be worth a look for actual content-
-    folding damage (lost information), but there is no confirmed CI-hang risk tied to them.
-    Future sessions hitting a stuck-in_progress PR check should pull the actual job log
-    first (it often shows the real work already finished) before assuming a code-side hang
-    or spending a long diagnostic session chasing content as the cause.
-
-    AUDIT COMPLETE (conductor scheduled sweep, claude-20260915T223201Z-conductor-t169): read all 5 `>-`-labeled candidates end to end (animation-manager/t-007, coloring-book/t-022, coloring-book/t-039, conductor/t-132, interface-vision/t-104) looking specifically for lost information, not just length. Method: split each parsed note on entry-boundary markers (`PROGRESS (`, `RECONCILED (`, `Cycle (`, `DONE 202`, `CORRECTION (`, etc.) and inspected 60-80 chars either side of every boundary for truncation, word loss, or overlapping/garbled text.
-
-    Finding: no data loss in any of the 5. Every entry boundary reads as `<complete sentence ending in a period><single space><next entry's opening phrase>` -- the >- folding rule replaced each original line-break between adjacent non-blank lines with exactly one space, which is lossy for *whitespace/paragraph structure* but not for content: no words, sentences, or entries are missing, duplicated, or run together mid-word. The damage is entirely cosmetic -- dozens of originally one-entry-per-line update cycles now read as a single dense run-on paragraph per note, which is harder for a human or the next session to visually scan for "where did entry N end and N+1 begin," but every entry itself is intact and independently readable by searching for its dated marker phrase.
-
-    This confirms the correction already recorded in this task's history (the CI-hang theory was wrong; GitHub Actions status-reporting flakiness was the real cause) and closes the remaining open question: there is no content-folding data-loss risk from the historical `>-` bug, only a readability regression on notes that predate the append_note_text() fix. No manual unfolding or restoration is needed -- the 5 candidates are fully readable as-is. Not converting their `note:` style from `>-` to `|-` in this pass since that's a cosmetic-only change outside this audit's scope and none of them are actively size-critical the way model-builder/t-029 was (all 5 are well under model-builder's 126KB/72,000-char-line pathological case: largest here is interface-vision/t-104 at 39,859 bytes / 36,458-char max line).
+    Full history: projects/conductor/HISTORY.md#t-169
   claimed_by: claude-20260915T223201Z-conductor-t169
   claimed_at: '2026-09-15T22:32:02Z'
   updated: '2026-09-15T22:34:17Z'
@@ -3170,31 +2541,10 @@ tasks:
   stakes: reversible
   passes: 0
   owner: worker
-  note: |-
-    Filed 2026-09-15 (scheduled conductor sweep session), kaizen from a workflow-medic
-    diagnosis of process-color-art-events.yml (root TALKBACK.md, conductor/t-167 and
-    coloring-book/t-039 entries, same date).
+  note: >-
+    Filed 2026-09-15 (scheduled conductor sweep session), kaizen from a workflow-medic diagnosis of process-color-art-events.yml (root TALKBACK.md, conductor/t-167 and coloring-book/t-039 entries, same date).
 
-    A queued event in color-art-events/ that keeps failing has no attempt cap and no
-    dead-letter path: `process_coloring_art_events.py` preserves it for retry on every
-    failure unconditionally, so a genuinely blocked event (relay wedge, unresolved
-    upstream defect) re-fails the same scheduled workflow every 6 hours indefinitely,
-    burning up to ~15 minutes of CI time per tick, until a human or agent happens to
-    notice and hand-remove the file. That happened for real today:
-    color-art-events/20260915-t039-kontext-canary-mr016.yaml failed 08:44Z, 13:57Z, and
-    18:17Z (ArtJob 23052 timing out after 900s "still queued/running", a relay-wedge
-    symptom -- see conductor/t-167) before this session removed it by hand.
-
-    Fix: add a small attempt-count guard mirroring the existing
-    `COLOR_ART_MAX_RENDER_ATTEMPTS` pattern already used for render attempts inside a
-    single event -- e.g. record consecutive failure count per event filename (a small
-    sidecar state file, or a comment/field appended to the event itself), and once a
-    threshold is hit, move the event to a `color-art-events/quarantine/` sibling
-    directory instead of leaving it in the live queue, with a clear log line naming the
-    quarantined file and why. A quarantined event should not silently disappear --
-    surfacing it (workflow summary output, or a line in the coloring-book project's
-    TALKBACK.md) is part of the fix, so quarantining isn't just replacing "keeps
-    failing loudly" with "silently stops trying."
+    Full history: projects/conductor/HISTORY.md#t-170
   updated: '2026-09-15T21:51:15Z'
   claimed_by: claude-20260915T213519Z-conductor-t170
   claimed_at: '2026-09-15T21:35:20Z'
@@ -3206,28 +2556,10 @@ tasks:
   stakes: reversible
   passes: 0
   owner: worker
-  note: |-
-    Kaizen from t-160 (PR #4462, 2026-09-16 scheduled Reviewer session): the Worker's PR body
-    for a small, well-scoped, one-file doc change contained only Summary/Scope/Verification —
-    it omitted the handoff template's `### Stakes`, `### Flags for Reviewer`, and
-    `### Kaizen suggestion` sections entirely (AGENTS.md "PR handoff template"). The PR was
-    still easy to review by inference (stakes were obviously reversible/doc-only), but a
-    thin template is exactly how a real flag or a genuine kaizen suggestion goes missing
-    without anyone noticing, since there's no empty heading to prompt for it.
+  note: >-
+    Kaizen from t-160 (PR #4462, 2026-09-16 scheduled Reviewer session): the Worker's PR body for a small, well-scoped, one-file doc change contained only Summary/Scope/Verification — it omitted the handoff template's `### Stakes`, `### Flags for Reviewer`, and `### Kaizen suggestion
 
-    Investigate whether the OpenAI Worker's PR-authoring path has a way to enforce/lint the
-    template's required sections before opening a PR (e.g. a small check in the PR-authoring
-    script, or a CI step that greps for the section headers on `worker/*` PRs and warns/fails
-    if `### Stakes` is missing), rather than relying on each Reviewer session to notice and
-    call it out ad hoc every time. If enforcement isn't practical, at minimum confirm the
-    Worker's own template/prompt still lists the full template so this is drift, not a
-    template that was already thinned out.
-
-    Added a Worker PR handoff-template validator, focused regression tests, and a PR workflow that enforces the required AGENTS.md headings on worker/* pull requests.
-
-    Reviewer (2026-09-16 scheduled session): PR #4473 merged (all 23 checks green, including
-    the new Validate Worker PR handoff check passing on its own PR). Handoff was complete
-    and well-scoped.
+    Full history: projects/conductor/HISTORY.md#t-171
   updated: '2026-09-16T04:27:37Z'
   claimed_by: openai-scheduled-2026-09-16T041753Z-conductor-t171-a11
   claimed_at: '2026-09-16T04:17:53Z'
@@ -3239,19 +2571,10 @@ tasks:
   stakes: reversible
   passes: 0
   owner: worker
-  note: |-
-    Kaizen from t-171 (PR #4473, 2026-09-16 scheduled Reviewer session): the new
-    `scripts/check_pr_handoff_template.py` / `pr-handoff-template.yml` CI gate currently
-    reports missing sections only in the job's stderr/log output. Have it also emit a
-    GitHub Actions `::error::` (or `::warning::`) annotation naming the first missing
-    heading, so a Worker whose PR fails the check sees the actual reason directly in the
-    PR's Checks summary/Files-changed annotations instead of having to open job logs.
+  note: >-
+    Kaizen from t-171 (PR #4473, 2026-09-16 scheduled Reviewer session): the new `scripts/check_pr_handoff_template.py` / `pr-handoff-template.yml` CI gate currently reports missing sections only in the job's stderr/log output.
 
-    Added a GitHub Actions error annotation naming the first missing Worker PR handoff heading, with focused regression coverage.
-
-    Reviewer (2026-09-16 scheduled session): PR #4490 merged (all 23 checks green).
-    Annotation emits ::error:: naming the first missing heading; regression test covers
-    exact text. Handoff complete and well-scoped.
+    Full history: projects/conductor/HISTORY.md#t-172
   updated: '2026-09-16T11:27:23Z'
   claimed_by: openai-scheduled-2026-09-16T111616Z-conductor-t172-a11
   claimed_at: '2026-09-16T11:16:16Z'
@@ -3264,30 +2587,10 @@ tasks:
   stakes: reversible
   passes: 0
   owner: null
-  note: |-
-    Kaizen from PR #4488 (2026-09-16 scheduled Reviewer session): the selector
-    (`next_ready_task.py`), the local claimer (`claim_task.py`), and the connector
-    task-event processor (`process_task_events.py`) all read the same
-    `CLAIM_TTL_MINUTES` constant, but each independently implemented its own notion of
-    "is this claim stale enough to be reclaimed" — and the connector processor's copy
-    disagreed with the other two, which is what PR #4488's
-    `scripts/promote_stale_task_event_claims.py` preflight had to paper over (connector
-    workers kept losing t-172's claim to `ALREADY_CLAIMED` even after the claim had
-    expired).
+  note: >-
+    Kaizen from PR #4488 (2026-09-16 scheduled Reviewer session): the selector (`next_ready_task.py`), the local claimer (`claim_task.py`), and the connector task-event processor (`process_task_events.py`) all read the same `CLAIM_TTL_MINUTES` constant, but each independently impleme
 
-    Extract `roadmap_claims.claim_is_stale()` (already used by the new preflight) as the
-    single source of truth, and have all three call sites use it directly instead of
-    re-deriving staleness themselves. Once that lands, `promote_stale_task_event_claims.py`
-    becomes redundant and can be removed — the processor's own collision check would
-    already agree with the selector and local claimer.
-
-    Merged silasfelinus/conductor#4502 (squash, all CI green including the full pytest suite
-    -- one pre-existing, unrelated art_quality fixture failure confirmed via git-stash
-    bisection against origin/main before opening the PR). process_task_events.py's
-    compute_transition_ops() claim branch now calls roadmap_claims.claim_is_stale() directly
-    and only falls through to replace a claimed task when it is stale, agreeing with
-    next_ready_task.py and claim_task.py's existing use of the same helper. Removed the now-
-    redundant promote_stale_task_event_claims.py preflight, its test, and its workflow step.
+    Full history: projects/conductor/HISTORY.md#t-173
   claimed_by: conductor-sched-2026-09-16T145900Z-cd-t173
   claimed_at: '2026-09-16T14:39:37Z'
   updated: '2026-09-16T14:49:46Z'
@@ -3300,44 +2603,10 @@ tasks:
   stakes: reversible
   passes: 0
   owner: worker
-  note: |-
-    Kaizen from t-173 (PR #4502, 2026-09-16 scheduled Reviewer session):
-    `process_task_events.py`'s `compute_transition_ops()` claim branch now consults
-    `roadmap_claims.claim_is_stale()` so a claim event can replace an abandoned claim
-    without `force: true`. `verify_event_ownership()` -- the separate check guarding
-    non-claim transitions (`review`, `done`, etc.) tagged with a `session` -- is a
-    different code path and does NOT consult `claim_is_stale()` at all: it rejects any
-    session-tagged event whose `session` doesn't match the task's live `claimed_by`,
-    stale or not.
+  note: >-
+    Kaizen from t-173 (PR #4502, 2026-09-16 scheduled Reviewer session): `process_task_events.py`'s `compute_transition_ops()` claim branch now consults `roadmap_claims.claim_is_stale()` so a claim event can replace an abandoned claim without `force: true`.
 
-    Decide whether that's a gap or intentional stricter behavior. Argument for
-    extending it: a session that let its own claim go stale (crashed, never returned)
-    and is then reclaimed by a second session should not have its late-arriving
-    `review`/`done` event silently rejected either -- today it collides exactly like a
-    live ownership conflict would. Argument for leaving it as-is: unlike a fresh
-    *claim* (which only starts new work), a `review`/`done` event mutates a task a
-    DIFFERENT session may already be mid-implementation on if the reclaim already
-    happened -- applying a stale session's late done event over that could silently
-    revert or misattribute the second session's in-progress work, which is exactly the
-    hazard the ownership check exists to prevent.
-
-    Whichever way this resolves, add a docstring note next to
-    `verify_event_ownership()` (or wherever the fix lands) making the choice explicit,
-    plus a regression test pinning the decided behavior -- so a future kaizen from a
-    session that only reads the claim branch doesn't propose "fixing" this a third
-    time without the context above.
-
-    DECISION (2026-09-16): leave verify_event_ownership() as intentionally
-    staleness-blind, not a gap. A fresh `claim` event replacing a stale claim only
-    starts new work, so letting staleness win there is safe (t-173's fix). A
-    review/done event mutates a task a different session may already be
-    mid-implementation on if it reclaimed in the meantime; honoring a stale
-    session's late event there could silently revert/misattribute that work. No
-    extension needed: a session that wants stale work already has a safe on-ramp
-    via a fresh claim event, after which its own review/done event matches
-    trivially. Documented in verify_event_ownership()'s docstring and pinned by
-    test_later_done_from_non_owning_session_is_rejected_even_when_claim_is_stale.
-    Full pytest suite: 2006 passed, 30 skipped, 0 failed.
+    Full history: projects/conductor/HISTORY.md#t-175
   claimed_by: claude-web-2026-09-16T152600Z-cd-t175
   claimed_at: '2026-09-16T15:31:46Z'
   updated: '2026-09-16T15:42:53Z'
@@ -3349,14 +2618,10 @@ tasks:
   stakes: reversible
   passes: 0
   owner: worker
-  note: |-
-    Kaizen from t-172 (PR #4490, 2026-09-16 scheduled Reviewer session): the new
-    `github_error_annotation()` formatter is covered by a focused unit test, but nothing
-    exercises `main()` end-to-end — piping a body missing a required section through
-    stdin and asserting both the process exit code and the emitted `::error::` workflow
-    command land together. Add that integration test so a future change to the CLI
-    plumbing (argument parsing, stdin handling, exit codes) can't silently break the
-    annotation path while the pure-formatter unit test still passes.
+  note: >-
+    Kaizen from t-172 (PR #4490, 2026-09-16 scheduled Reviewer session): the new `github_error_annotation()` formatter is covered by a focused unit test, but nothing exercises `main()` end-to-end — piping a body missing a required section through stdin and asserting both the process .
+
+    Full history: projects/conductor/HISTORY.md#t-174
   claimed_by: claude-scheduled-20260916T-conductor-t174-a1
   claimed_at: '2026-09-16T12:30:16Z'
   updated: '2026-09-16T12:37:11Z'
@@ -3368,59 +2633,10 @@ tasks:
   stakes: reversible
   passes: 0
   owner: null
-  note: |-
-    select_role.py recommended workflow-medic: daily-digest.yml had failed its last
-    2 consecutive completed runs (#114, #115), both on the same step ("Submit Daily
-    Dream ArtJobs"), always with the identical failure: `dream-cycle-ansas-borrowed-
-    orchard-featherroot-vale: enqueue failed: HTTP 422 Art prompt rejected by the
-    prompt contract (1 violation): [conditional-instruction] "only when" asks the
-    model to evaluate a condition.`
+  note: >-
+    select_role.py recommended workflow-medic: daily-digest.yml had failed its last 2 consecutive completed runs (#114, #115), both on the same step ("Submit Daily Dream ArtJobs"), always with the identical failure: `dream-cycle-ansas-borrowed- orchard-featherroot-vale: enqueue faile
 
-    Root cause: the "Ansa's Borrowed Orchard" dream cycle's Featherroot Vale
-    location's `known_for` field read "...settles only when the cassowary flock
-    chooses to scratch, nest, and scatter seed...", which kind_robots'
-    server/utils/artPromptContract.ts CONDITIONAL_PATTERNS rejects with a 422 (a
-    diffusion model has no instruction-following layer; it paints the words
-    instead of deciding). `submit_daily_dream_art.py` resubmits every `status:
-    pending` entry from `projects/art-prompts.yaml` on every digest run, so this
-    one entry re-failed on every single cycle since it was staged, with no
-    mechanism to ever stop retrying or surface itself as a standing problem beyond
-    a failing scheduled workflow.
-
-    Fix: rewrote the entry's stored `prompt` in `projects/art-prompts.yaml`
-    (`dream-cycle-ansas-borrowed-orchard-featherroot-vale`) to state one outcome
-    ("settles as the cassowary flock scratches, nests, and scatters seed...")
-    instead of a condition, verified against the same five CONDITIONAL_PATTERNS
-    regexes read directly from kind_robots' artPromptContract.ts.
-
-    Also fixed the validation gap, since it is real and already recurred across
-    repos (kind_robots' own config/art-coverage/batch-0001.json documents the same
-    "only when" pattern repaired twice before): `scripts/dream_prose_quality.py`'s
-    `complaints()` — the shared gate `author_dream_proposal.py`,
-    `build_dream_proposal_core.py`, `apply_dream_revision.py`, and
-    `check_dream_creative_contract.py` all call before a proposal is authored or
-    revised — checked `known_for`/`best_scene`/etc. for length, label-echo, and
-    self-reference, but never for phrasing that would later fail the KR server's
-    art-prompt contract at ArtJob enqueue time, even though those exact fields get
-    spliced verbatim into the Krea prompt (`dream_art_prompts.py`). Added
-    `_conditional_instruction()` mirroring the contract's four host-agnostic
-    CONDITIONAL_PATTERNS entries (the fifth, a cast-noun-plus-presence-verb guard
-    against crowd rendering, is KR house style, not a shape producer prose falls
-    into), wired into every card-copy field plus the art-prompt-only `look`/
-    `art_direction` fields that are otherwise exempt from the sentence-shape
-    checks. 6 new regression tests; full suite 2010 passed, 30 skipped, 0 failed.
-
-    Re-ran daily-digest.yml via workflow_dispatch after merging; see PR for the
-    resulting run link/conclusion.
-
-    VERIFIED (2026-09-16T19:54 UTC): triggered daily-digest.yml via workflow_dispatch after
-    PR #4515 merged. Run #116
-    (https://github.com/silasfelinus/conductor/actions/runs/35143162645) completed
-    conclusion=success, including the exact step that failed on runs #114/#115 ("Submit
-    Daily Dream ArtJobs") -- all 6 assets submitted with 0 failed. Also caught and fixed a
-    second live instance of the same conditional-instruction bug in 2026-09-18-fogkin.md
-    (rewards[item].look) via check_dream_creative_contract.py --all-open before this run, so
-    it did not recur on a later date either.
+    Full history: projects/conductor/HISTORY.md#t-176
   claimed_by: claude-scheduled-20260916T-conductor-t176-wfmedic
   claimed_at: '2026-09-16T19:05:00Z'
   updated: '2026-09-16T19:54:48Z'
@@ -3431,34 +2647,10 @@ tasks:
   status: done
   passes: 0
   stakes: reversible
-  note: |-
-    CONFIRMED 2026-09-19 by direct process trace -- do NOT close as moot. An earlier reading of this session called it moot twice on the theory that the .vbs wrapper hides the whole process tree. watch-window-spawn.ps1 disproved that. At 14:11:03, with the task already registered to the wrapper:
-    start: powershell.exe pid 17896 (parent 25732 = wscript healthcheck-hidden.vbs) start: powershell.exe pid 27484 (parent pid 17896)   <- the Start-Job child start: cmd.exe        pid 26704 (parent pid 27484)   <- pm2.cmd inside it POPUP: new console (conhost.exe pid 24620) owner: pid 27484
-    So the Start-Job child powershell.exe opens its OWN visible console in session 1, and so does the parent healthcheck powershell (conhost 28268, owner pid 17896). The wrapper's shell.Run(..., 0, True) does not suppress either. Two separate findings live here: the children need an explicit windowless launch (this task), and the wrapper itself does not hide what it claims to (see the separate Windows-11 default-terminal question, and ops/home-server/README.md, which still asserts that it does).
-    CONFOUNDER RESOLVED -- IT WAS NOT THE TERMINAL. A 15-minute watch run at 15:14-15:29, AFTER the default terminal was set to Windows Console Host, caught all three ticks of a task registered to the wrapper, each opening TWO visible consoles in session 1:
-    15:16:03  POPUP  owner: powershell.exe -NoProfile ... -File healthcheck.ps1 15:16:06  POPUP  owner: powershell.exe -Version 5.1 -s -NoLogo -NoProfile
-                     parent: powershell.exe ... healthcheck.ps1
+  note: >-
+    CONFIRMED 2026-09-19 by direct process trace -- do NOT close as moot.
 
-    Same pair at 15:21 and 15:26 (summary: 3x -NoProfile, 3x -Version). The `-Version 5.1 -s -NoLogo -NoProfile` process IS the Start-Job child -- that is exactly how PowerShell 5.1 spawns a background job. So THIS TASK IS CONFIRMED, and the wrapper failing to hide the parent console is a second, separate defect (README corrected in the same PR).
-    Those two popups per tick, every five minutes, are precisely the original report: "two cmd popups about every 3-5 minutes".
-    Also measured in the same run: 33 of the 40 popups were pm2's own pidusage metrics poll (`powershell.exe -c gwmi win32_process ...` from pm2/lib/Daemon.js) firing every ~30 seconds -- a separate and much more frequent source, filed as t-181.
-    Superseded reasoning kept below for the record.
-    CONFOUNDER CHANGED AFTER THAT TRACE (2026-09-19, later the same day). The box's default terminal application was Windows Terminal when the trace above was captured. Windows Terminal ignores the SW_HIDE that healthcheck-hidden.vbs passes via shell.Run(..., 0, True), which plausibly explains every popup in that trace including the Start-Job child's. Silas then set Settings > System > For developers > Terminal to "Windows Console Host". If the popups stop, this task's fix is belt-and-braces rather than necessary, and the real defect was the wrapper's claim being true only under the classic console host.
-    So: RE-RUN watch-window-spawn.ps1 for 15 minutes before doing any work here. Close as resolved-by-configuration if no conhost POPUP names a healthcheck descendant; keep and fix if one still does. Do not close it on the reasoning alone -- that reasoning has been wrong twice on this exact question today, in both directions.
-    Original filing follows.
-    Filed from Silas's 2026-09-19 report: two cmd windows popping on ferngrotto every 3-5 minutes, with a confirmed burst at 05:26.
-    ALREADY FIXED IN THAT SESSION (ops/home-server PR): README.md documented registering "AI-Backends-Healthcheck" as `/TR "powershell ... -File healthcheck.ps1"`, which under "Interactive only" logon mode puts a visible console on the desktop every 5-minute tick. healthcheck-hidden.vbs has existed since 2026-08-29 to prevent exactly that (wscript is GUI-subsystem, and shell.Run(..., 0, True) hides the console its children inherit) but no setup snippet ever pointed at it. The snippet now registers the wrapper and carries a `schtasks /Change` line for a box already on the popup form. Also added ops/home-server/watch-window-spawn.ps1 (keys on conhost.exe starts -- one new visible console is one new conhost.exe -- and reports the owning parent chain with redacted command lines) plus a triage section whose FIRST step is free: compare the burst times against the `tick as ...` heartbeat lines in logs\healthcheck.log.
-    THIS TASK IS THE REMAINING, UNPROVEN HALF. If repointing the task at the wrapper does NOT stop the popups, the windows are coming from the watchdog's CHILDREN rather than from the task's own window, and each tick creates several console processes with no explicit windowless launch: a `Start-Job` child powershell.exe bounding `pm2 jlist`, `pm2` itself (pm2.cmd is a BATCH file, so cmd.exe) at healthcheck.ps1:468 and :475, and node.exe for the pm2-jlist-snapshot.js projection. The fix would be to route those through System.Diagnostics.ProcessStartInfo with CreateNoWindow = $true and UseShellExecute = $false.
-    DO NOT DO THIS SPECULATIVELY, and do not start it without evidence from either the healthcheck.log correlation or watch-window-spawn.ps1. Three constraints make this riskier than it looks:
-    (1) The Start-Job wrapper is BOUNDED ON PURPOSE. An unresponsive pm2 daemon used to hang the whole run, and with MultipleInstances=IgnoreNew plus a 72-hour ExecutionTimeLimit one hang silently skipped every 5-minute trigger for DAYS while Task Scheduler kept reporting a healthy NextRunTime (healthcheck.ps1:625-640). Any replacement must keep the timeout, the exit code, and the "empty output" vs "error" distinction -- conflating those two once disabled this watchdog entirely (2026-08-27).
-    (2) `pm2 jlist` output includes the full process environment and is LARGE. A WaitForExit-then-read on a redirected pipe will deadlock when the pipe buffer fills; read stdout asynchronously (ReadToEndAsync, then WaitForExit(ms)).
-    (3) tests/test_healthcheck_crash_loop_gate.py and tests/test_home_server_share_watchdog.py currently PIN the Start-Job mechanism by name ("Wait-Job $pm2Job -Timeout $pm2TimeoutSeconds", "Stop-Job $pm2Job", "$exe jlist" read exactly once per tick). Those assertions encode the invariant "cannot hang forever" and "read pm2 once per tick", not the implementation -- update them to pin the new bounded windowless call rather than deleting them.
-    No PowerShell is available in the Conductor sandbox, so healthcheck.ps1 cannot be syntax-checked here. That is the main reason this was not attempted in the filing session: a parse error in the watchdog leaves a hung ComfyUI unattended, which is the failure this script exists to prevent.
-    2026-09-19: conductor#4781 (merged) found and fixed the actual root cause -- a PowerShell parse error in Restart-Supervised's $name: interpolation (not this task's per-tick-children theory). The popups were that parse failure's doomed launches, not a windowless-launch gap. This task's theory is UNTESTED against the fix and may be moot; per the PR's own flag, confirm popups have actually stopped (via healthcheck.log tick correlation) before picking this up. Do not implement blind. REOPENED/CLAIMED 2026-09-21 by direct Silas request after he acknowledged the active conductor security flag: the PR #4901 windowless ProcessStartInfo helper uses ArgumentList, which is unavailable in Windows PowerShell 5.1's .NET Framework runtime. Because healthcheck.ps1 suppresses non-terminating errors, the argument-add failures are hidden; cmd.exe starts without /d /c pm2.cmd jlist, waits for redirected input/exit, and hits the 60-second timeout. This exactly matches the WATCHDOG BLIND emails beginning immediately after #4901. Preserve CreateNoWindow and the timeout, but use a PS5.1-safe Arguments string with explicit Windows quoting and add a regression test that forbids the unsupported ArgumentList API in executable code.
-
-    Implementation on worker/conductor-t-177-ps51-a11 replaces ProcessStartInfo.ArgumentList with a Windows PowerShell 5.1-compatible Arguments string built by an explicit Windows argv quoting helper. It preserves CreateNoWindow, redirected async output, stdin, and the 60-second kill-on-timeout path. Added a regression test that forbids executable use of ArgumentList and pins the PS5.1-compatible path.
-
-    FIXED 2026-09-21 in PR #4970 (squash f237758). The PR #4901 windowless helper used ProcessStartInfo.ArgumentList, which is unavailable on the Windows PowerShell 5.1/.NET Framework runtime used by SILAS-PC. With ErrorActionPreference=SilentlyContinue, that runtime API failure was hidden and cmd.exe received no pm2 command, so every watchdog probe hit its 60-second timeout and the 60-minute alert cooldown produced the hourly WATCHDOG BLIND mail. The helper now uses the PS5.1-compatible Arguments property with explicit Windows argv quoting plus the required cmd.exe /d /s /c outer quoting for batch paths. CI now runs the helper itself on Windows PowerShell 5.1 with a spaced .cmd path and spaced argument, in addition to parsing every ops PowerShell file. Final PR head 7f3be2d was current with main and all 24 checks completed without failure; Python suite 2180 passed, 29 skipped.
+    Full history: projects/conductor/HISTORY.md#t-177
 
   updated: '2026-09-21T23:24:00Z'
   claimed_by: 2026-09-21T224900Z-conductor-t177-ps51-a11
@@ -3473,26 +2665,9 @@ tasks:
   passes: 0
   stakes: reversible
   note: >-
-    Kaizen from PR #4786 (2026-09-19): the ComfyUI crash loop that #4781's watchdog
-    repair drove into existence climbed pm2's `restart_time` counter for `comfyui`
-    from 779 to 794 in 35 minutes, but nothing tracks that counter as a trend --
-    healthcheck.ps1's existing CRASH LOOP branch only alerts on restarts moving
-    within a single tick, so a counter climbing slowly over weeks (as this one did,
-    reaching 779 before anyone looked) never trips anything. `pm2 status` shows the
-    count only to someone who happens to look at it.
+    Kaizen from PR #4786 (2026-09-19): the ComfyUI crash loop that #4781's watchdog repair drove into existence climbed pm2's `restart_time` counter for `comfyui` from 779 to 794 in 35 minutes, but nothing tracks that counter as a trend -- healthcheck.ps1's existing CRASH LOOP branch
 
-    Add a check (in healthcheck.ps1's own tick loop, or a separate lightweight
-    script polling `pm2 jlist`) that flags a restart count above a threshold, or
-    growing week-over-week, and logs/alerts on it the same way the existing CRASH
-    LOOP branch does. This would have surfaced the pre-existing unhealthy state
-    before #4781's fix landed on top of it and made things briefly worse.
-
-    Duplicate of conductor/t-179 -- both ask for the same fix (alert on pm2 restart_time as
-    a trend, not just within-tick), both filed 2026-09-19 from the same comfyui crash-loop
-    incident chain (PR #4781's watchdog repair driving restart_time from 779->794, fixed in
-    PR #4786). t-179 has the fuller incident narrative and was filed first; closing t-178 as
-    done (no separate implementation needed) rather than leaving both ready to avoid
-    duplicate work landing twice. See t-179 for the tracked scope.
+    Full history: projects/conductor/HISTORY.md#t-178
   updated: '2026-09-19T22:39:38Z'
 
 - id: t-179
@@ -3503,50 +2678,9 @@ tasks:
   passes: 2
   stakes: reversible
   note: >-
-    healthcheck.ps1's CRASH LOOP branch alerts only when pm2's restart_time moves within a
-    SINGLE 5-minute tick (`$crashLoopRestarts = 3`). That catches a fast loop and is silent
-    on a slow one. comfyui reached 779 restarts by climbing gradually, and the only place
-    that number was ever visible was `pm2 status` typed by a human who happened to look.
+    healthcheck.ps1's CRASH LOOP branch alerts only when pm2's restart_time moves within a SINGLE 5-minute tick (`$crashLoopRestarts = 3`).
 
-    Why it matters beyond bookkeeping: on 2026-09-19 a session repaired this watchdog after
-    an 11-day parse-error outage (conductor PR #4781) and handed it straight back onto an
-    engine that was already at 779 restarts. The watchdog's probe budget (20s + 60s retry)
-    was far shorter than ComfyUI's real 167-second boot, so it began restarting a booting
-    engine every tick. Within 35 minutes the count reached 794, pm2's process table was
-    corrupted ("Process 3 not found"), and four orphaned engines were sharing one RTX 3060
-    with an unsupervised one holding port 8188. The boot-grace fix is in PR #4786; this task
-    is the missing SIGNAL, not the missing fix.
-
-    A trend check would have said "do not restore this watchdog yet, the engine it
-    supervises is unhealthy" -- which is exactly the judgement that was missed.
-
-    Suggested shape: record restart_time per app per run (the watchdog already writes
-    logs\alert-state.json, so there is a precedent for small persisted state), and report in
-    the session sweep when a count exceeds an absolute threshold (say 50) or grows week over
-    week. Advisory, never a gate. Related: check_engine_heartbeat.py already reads engine
-    liveness from the CI side and could carry this.
-
-    Reviewer 2026-09-20: CI red on PR #4813 (pytest failure + PR-handoff-template check
-    failure), both real bugs -- see retry_context and PR comment. Rolled back to ready for a
-    retry.
-
-    Pass 3 (claude-scheduled-2026-09-20T0600Z-conductor-t179-pass3): claimed the task,
-    checked out the existing worker branch (worker/conductor-t-179-openai-
-    scheduled-2026-09-20T031957Z-conductor-t179-a11) in an isolated worktree, applied
-    exactly the retry_context fix (reworded check-pm2-restart-trend.ps1 line 98's Write-
-    Warning from 'PM2 restart advisory:' to 'Restart-trend advisory:' so no 'pm2 restart'
-    substring remains anywhere in the file -- confirmed via grep -i). Ran all four
-    tests/test_pm2_restart_trend.py test functions directly (this sandbox's pytest cannot
-    collect tests/conftest.py at all -- import scripts.consume_art_queue fails under
-    pytest's namespace-package resolution even on a pristine main checkout, a pre-existing
-    environment limitation unrelated to this fix); all four pass. Merged current main into
-    the worker branch (clean, no conflicts) and pushed the one-line fix commit (3e7c8dd) to
-    the same branch/PR #4813. Setting status: review; will merge once CI is confirmed green
-    on the new head.
-
-    PR #4813 merged (squash 8d32d8d): check-pm2-restart-trend.ps1 lands with the advisory-
-    only 7-day PM2 restart-trend check, watchdog wiring, and source-contract tests, all CI
-    green. retry_context cleared.
+    Full history: projects/conductor/HISTORY.md#t-179
   updated: '2026-09-20T06:06:30Z'
   claimed_by: claude-scheduled-2026-09-20T0600Z-conductor-t179-pass3
   claimed_at: '2026-09-20T06:01:16Z'
@@ -3561,32 +2695,9 @@ tasks:
   passes: 0
   stakes: reversible
   note: >-
-    From the 2026-09-19 incident. healthcheck.ps1 had a PowerShell parse error, so the
-    scheduled task launched every 5 minutes, PowerShell refused the file, and the action
-    returned exit code 1 -- for ELEVEN DAYS (2026-09-08 00:36 to 2026-09-19). ComfyUI ran
-    unsupervised the whole time.
+    From the 2026-09-19 incident.
 
-    Every signal that could have caught it was already on the box and unread:
-
-      * `LastTaskResult: 1` (Task Scheduler recorded `action "wscript.exe" with return code
-        2147942401` = HRESULT_FROM_WIN32(1)) sitting beside a perfectly healthy
-        `NextRunTime` and `NumberOfMissedRuns: 0`
-      * logs\healthcheck.log frozen at 2026-09-08 00:36, its last entry a normal COMPLETE
-        run (through the `render watchdog:` line), so it does not even read as a crash
-      * Microsoft-Windows-TaskScheduler/Operational logging every launch and its result
-
-    This is the third time this watchdog has gone silent without saying so:
-    check_engine_heartbeat.py's own header records it stopping at 2026-09-01 02:26:07,
-    ~37 hours before Silas noticed. Same shape each time -- the log just ends.
-
-    Suggested shape: a check that reads the task's LastTaskResult and the log's last-write
-    age, and treats a non-zero result OR a log older than ~30 minutes as a finding. Both are
-    local reads, no token needed. The 48h-staleness rule in check_container_log_drift.py is
-    the precedent: from the reading end, "nothing to report" and "it stopped running" are
-    indistinguishable unless something checks explicitly.
-
-    Note the ordering trap: report freshness BEFORE content. A watchdog whose log is stale
-    is not reporting good news, it is not reporting.
+    Full history: projects/conductor/HISTORY.md#t-180
   updated: '2026-09-20T05:10:32Z'
   claimed_by: claude-worker-2026-09-20T0515Z-conductor-t180
   claimed_at: '2026-09-20T05:06:39Z'
@@ -3599,35 +2710,10 @@ tasks:
   owner: worker
   passes: 0
   stakes: reversible
-  note: |-
-    Measured on ferngrotto 2026-09-19, 15:14-15:29, with watch-window-spawn.ps1. Of 40 new visible consoles in 15 minutes, 33 were this:
-    powershell.exe -c gwmi win32_process -Filter 'ProcessId=... '
-      | select CreationDate,KernelModeTime,ParentProcessId,ProcessId,UserModeTime,WorkingSetSize
-      parent: node.exe C:\...\node_modules\pm2\lib\Daemon.js
+  note: >-
+    Measured on ferngrotto 2026-09-19, 15:14-15:29, with watch-window-spawn.ps1.
 
-    That field list is `pidusage`'s signature -- the library pm2 uses to fill the cpu and memory columns in `pm2 status`. On Windows it shells out to PowerShell, pm2's daemon polls it roughly every 30 seconds, and each poll is a new powershell.exe, a new conhost.exe, and a new window on the desktop. It is unrelated to healthcheck.ps1 (t-177) and continues under Windows Console Host.
-    THE STRUCTURAL FIX IS SESSION 0. The same trace caught `conhost.exe pid 6728 in session 0 - session 0, not visible`, which is the proof: a console created in session 0 cannot appear on the desktop. Running pm2 as a Windows service instead of at logon puts the daemon and everything it spawns there, and removes this entire class of popup permanently -- pidusage, pm2.cmd, and any future child alike.
-    IT IS NOT A FREE WIN, and any implementation has to clear three things this repo has already been burned by:
-
-      1. pm2's daemon is PER-USER. A daemon in a session the watchdog cannot reach is what
-         produced `WATCHDOG BLIND` on 2026-08-27, with healthcheck.ps1 logging
-         "pm2 apps: NONE VISIBLE" while ComfyUI died unattended. Verify after any change by
-         reading the next tick: `Get-Content logs\healthcheck.log -Tail 5` must show
-         `tick as <user> - pm2 apps: comfyui, ...`.
-      2. Mapped drive letters belong to one logon session -- see "Why you cannot just have
-         a service fix this for you" in ops/home-server/README.md. The pipeline is supposed
-         to be on UNC paths already; confirm before relying on it.
-      3. README.md already records that pm2-installer's service failed to start on this box
-         without `npm run configure`.
-
-    Cosmetic in isolation. Worth doing because it also fixes the "pm2 is started at logon rather than as a service" fragility that healthcheck.ps1's own port-squatter alert text already tells the reader to go check.
-
-    Added a read-only pm2 service-migration preflight and source-contract tests. It blocks the session-0 switch unless PM2_HOME is unified at C:\ProgramData\pm2\home with dump.pm2 present, KR_SHARE_ROOT is an explicit readable UNC path with ai/models reachable, and the current daemon sees comfyui and kr-relay. The actual service installation remains a physical/admin host action and is not performed by this connector-only session.
-
-    Merged #4931 (squash 7ae3a46): read-only pm2 service-migration preflight script + pinned
-    test. Reviewed by Claude session; fixed PR body to match AGENTS.md handoff template
-    (CI's check_pr_handoff_template.py was failing on non-matching headings) before merge.
-    Next step is running the preflight on ferngrotto.
+    Full history: projects/conductor/HISTORY.md#t-181
   updated: '2026-09-21T10:53:57Z'
   claimed_by: openai-scheduled-2026-09-21T101611Z-conductor-t181-a11
   claimed_at: '2026-09-21T10:16:11Z'
@@ -3642,53 +2728,9 @@ tasks:
   gate_human: false
   soft_gate: true
   note: >-
-    FOR SILAS: as of this session (2026-09-20), every admin-gated Kind Robots API call made
-    with the conductor repo's current `KR_API_TOKEN` value returns 401 "Invalid or expired
-    token." Confirmed reproducible on two independent endpoints and header shapes:
-      - `python scripts/fetch_todos.py` -- 401, skips the todo check.
-      - `GET /api/art/queue/:id` (butterfly-gallery/t-033's own gating check) -- 401 with
-        `Authorization: Bearer`, `x-api-key`, and `x-admin-token` all tried, and again on retry.
-    Non-admin Kind Robots reads with the same token still work fine this session
-    (`check_project_scaffold_drift.py`, `check_live_facet_coverage.py` both succeeded), so this
-    is not a network/outage issue -- it is specific to the admin/beta-admin auth path
-    (`requireMachineUser`/`requireAdminApiUser` in kind_robots' `server/utils/authGuard.ts`).
+    FOR SILAS: as of this session (2026-09-20), every admin-gated Kind Robots API call made with the conductor repo's current `KR_API_TOKEN` value returns 401 "Invalid or expired token." Confirmed reproducible on two independent endpoints and header shapes: - `python scripts/fetch_to
 
-    Most likely explanation: this is the token rotation the standing security-flag escalation
-    asked for (root TALKBACK.md, first filed 2026-09-16, re-flagged 2026-09-17 and 2026-09-19 --
-    the exposed value was confirmed still LIVE as recently as 2026-09-19's session). If Silas
-    rotated `BETA_ADMIN_TOKEN`/`ADMIN_TOKEN` at the kind_robots source between 2026-09-19 and
-    now, that resolves the exposure -- but the conductor-side `KR_API_TOKEN` secret (feeding
-    this session's environment and, presumably, the scheduled GitHub Actions workflows) was not
-    updated to match, so it is now the old, correctly-rejected value.
-
-    TO APPROVE: if this was an intentional rotation, update the `KR_API_TOKEN` secret used by
-    conductor sessions/workflows to the new value, then this task can close (any session can
-    verify by re-running `python scripts/fetch_todos.py` and confirming no 401). If this was
-    NOT an intentional rotation, say so and this needs a different diagnosis -- something else
-    changed in the admin auth path.
-
-    WHAT UNBLOCKS: `fetch_todos.py`, `complete_todo.py`, `check_project_scaffold_drift.py`'s
-    admin-side calls, ArtJob queue polling (`consume_art_queue_core.py` and everything that
-    depends on it -- roughly 40 scripts reference `KR_API_TOKEN`), and directly,
-    butterfly-gallery/t-033 (left at `status: ready`, its own STEP 1 check is blocked by this,
-    no pass/retry consumed per AGENTS.md's Failure Triage -- actionable category).
-
-    Corroborated independently: conductor PR #4801 (merged directly by Silas, same day)
-    documents that during the 2026-09-19 --render pass, "KR_API_TOKEN expired partway
-    through the render half: 746 of 1,154 jobs reached the queue, 408 were refused with a
-    401." This confirms the token genuinely changed/expired on 2026-09-19 mid-run,
-    consistent with this task's rotation theory, and gives a concrete timestamp for when it
-    happened rather than just this session's downstream symptom.
-
-    RESOLVED 2026-09-20 (Krea 2 prompt-repair render pass session). The rotation landed and
-    conductor's secret matches it -- the 401 no longer reproduces. Ran this task's own
-    stated verification plus three more admin-gated calls with this session's KR_API_TOKEN:
-    scripts/fetch_todos.py -> 200 ('No open todos'); GET /api/art/queue/28764 and /28763 ->
-    200; POST /api/art/enqueue -> 201; DELETE /api/art/queue/29690 -> 200. Closing per the
-    TO APPROVE criterion written into this note. This also closes the standing KR_API_TOKEN
-    transcript-exposure security flag (root TALKBACK.md, filed 2026-09-16, re-flagged
-    2026-09-17 and 2026-09-19): the exposed value is no longer live. butterfly-
-    gallery/t-033's STEP 1 check is unblocked.
+    Full history: projects/conductor/HISTORY.md#t-182
   updated: '2026-09-20T01:13:27Z'
 
 - id: t-183
@@ -3700,31 +2742,9 @@ tasks:
   stakes: reversible
   implementation_pr: 'silasfelinus/conductor#4818'
   note: >-
-    FOR SILAS: check-watchdog-liveness.ps1's 30-minute staleness threshold needs tuning
-    data this session cannot gather -- it lives in logs/healthcheck.log on the Silas-PC home
-    server box (gitignored, no remote/API access exists for it; see ops/home-server/README.md).
+    FOR SILAS: check-watchdog-liveness.ps1's 30-minute staleness threshold needs tuning data this session cannot gather -- it lives in logs/healthcheck.log on the Silas-PC home server box (gitignored, no remote/API access exists for it; see ops/home-server/README.md).
 
-    What's needed: on the box, run `Get-Content logs\healthcheck.log -Tail 200` (or similar)
-    and look at the actual tick-to-tick interval distribution against the 5-minute watchdog
-    cadence. Decide whether WATCHDOG_STALE_MINUTES=30 (a 6-tick grace window) is meaningfully
-    looser than observed jitter warrants, or whether a tighter value (e.g. 15, a 3-tick window)
-    would still avoid false positives while catching a dead watchdog sooner.
-
-    TO APPROVE: either (a) confirm 30 is fine as-is and set approved_by_human: true, status: done
-    with a one-line note saying so, or (b) tell the next session the new value to set via
-    `setx WATCHDOG_STALE_MINUTES <n>` on the box (ops/home-server/README.md line ~1914), and it
-    will make that edit and close this out.
-
-    Nothing else depends on this -- it's a tuning pass, not a redesign, and the current 30-minute
-    default keeps working safely in the meantime. Filed soft (other work continues in parallel).
-
-    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
-    session): Legitimate: the remaining step needs hands on a machine no agent can reach.
-    Low value. Recommended: Silas closes this as won't-fix unless the watchdog misfires.
-
-    APPROVED by silasfelinus in session 20260930T0600Z-gate-triage (Claude Code, 2026-09-30;
-    recorded under CONTROL.md's human gate clearance rule): Closed as won't-fix. The
-    30-minute watchdog threshold stays unless it misfires.
+    Full history: projects/conductor/HISTORY.md#t-183
   updated: '2026-09-30T07:00:00Z'
   soft_gate: true
   gate_reason: physical-access
@@ -3740,30 +2760,9 @@ tasks:
   stakes: reversible
   implementation_pr: 'silasfelinus/conductor#4876'
   note: >-
-    Kaizen from PR #4869 (merged 2026-09-20), which serialized ComfyUI's watchdog restart
-    (stop pm2 first, reap only positively-identified old engine pids, verify both the pid
-    set and the port are clear, only then start the replacement) to stop the recurring
-    two-engines-fighting-over-port-8188 failure. `Restart-Supervised` is called from four
-    sites in ops/home-server/healthcheck.ps1 (share-watchdog recovery, crash-loop recovery,
-    liveness-failure recovery, and port-reclaim recovery), and all four now benefit from the
-    fix automatically since they all funnel through this one function.
+    Kaizen from PR #4869 (merged 2026-09-20), which serialized ComfyUI's watchdog restart (stop pm2 first, reap only positively-identified old engine pids, verify both the pid set and the port are clear, only then start the replacement) to stop the recurring two-engines-fighting-over
 
-    The risk is future recovery paths bypassing it: a future watchdog change that shells out
-    to `pm2 restart comfyui` directly (as the pre-fix code effectively did) would silently
-    reintroduce the overlap bug in just that one path. Audit for any such direct `pm2
-    restart`/`pm2 stop`+`pm2 start comfyui`-shaped call outside `Restart-Supervised` in
-    ops/home-server/*.ps1, and either route it through `Restart-Supervised` or document why
-    it's a deliberate exception. Small, reversible; no new behavior if none are found.
-
-    Audit complete: only one direct pm2-restart-comfyui call found outside Restart-
-    Supervised (ops/home-server/restore-shares.ps1:318). Documented inline as a known,
-    tracked gap rather than a blind extraction of Restart-Supervised into a shared module
-    (pinned by tests/test_healthcheck_restart_handoff.py; no PowerShell available in this
-    sandbox to behaviorally verify a cross-file refactor of the production watchdog). Filed
-    conductor/t-185 to do the extraction properly. All four healthcheck.ps1 call sites
-    confirmed already routing through Restart-Supervised as expected.
-
-    PR #4876 merged (squash f06ddf2), CI green (26/26 checks). Done.
+    Full history: projects/conductor/HISTORY.md#t-184
   updated: '2026-09-20T21:04:24Z'
   claimed_by: claude-scheduled-20260920T205451Z-t184
   claimed_at: '2026-09-20T20:54:51Z'
@@ -3774,19 +2773,10 @@ tasks:
   status: done
   passes: 0
   stakes: reversible
-  note: |-
-    Found by the t-184 audit (2026-09-20): ops/home-server/restore-shares.ps1:318 calls `& pm2 restart comfyui` directly, bypassing healthcheck.ps1's `Restart-Supervised` (added by PR #4869 to stop the recurring two-engines-fighting-over-port-8188 failure). This script runs standalone at logon (or manually) to rebuild folder_paths' cached filename lists after remapping shares, so it does not share process/functions with healthcheck.ps1 today. Exposure is lower than the four watchdog call sites t-184 fixed (this script's usual trigger is a fresh reboot, when no old engine survives to fight over the port) but not zero -- it can also be run manually against a live session where an old engine could still be alive when pm2's Windows kill times out silently.
-    t-184 documented this as a known, tracked gap (see the comment at that line) rather than fixing it blind, because `Restart-Supervised` and its three helpers (Get-ComfyEnginePids, Get-PortListenerPid, Test-IsComfyEngine) currently live inside healthcheck.ps1, and tests/test_healthcheck_restart_handoff.py pins their exact function-body location and source strings within that file. Moving them into a shared dot-sourceable script (e.g. ops/home-server/lib/Restart-ComfySupervised.ps1) that both healthcheck.ps1 and restore-shares.ps1 import is real cross-file surgery on the production render-host watchdog -- update the pinned tests to read the new shared file instead of hunting for the function inline, verify healthcheck.ps1's four existing call sites still resolve the function via dot-source, and lean on the repo's windows-latest PowerShell syntax-check CI job for what this sandbox cannot verify locally (no PowerShell available here). Wire restore-shares.ps1's line 318 restart through the shared function once it exists, keeping its existing pm2-lists-comfyui gate unchanged.
+  note: >-
+    Found by the t-184 audit (2026-09-20): ops/home-server/restore-shares.ps1:318 calls `& pm2 restart comfyui` directly, bypassing healthcheck.ps1's `Restart-Supervised` (added by PR #4869 to stop the recurring two-engines-fighting-over-port-8188 failure).
 
-    Connector-only implementation pass inspected the required healthcheck.ps1, restore-shares.ps1, and pinned restart-handoff tests. The safe extraction requires replacing a large contiguous function block inside healthcheck.ps1; this connector exposes whole-file replacement but no line-range patch mutation, and AGENTS.md forbids reconstructing a large file from truncated reads. No code was changed. Returning to ready without consuming a pass so a shell-capable worker can perform the cross-file extraction safely.
-
-    Merged silasfelinus/conductor#4880 (squash 483dcc9): extracted Restart-Supervised and
-    its three helpers into ops/home-server/lib/Restart-ComfySupervised.ps1, dot-sourced by
-    both healthcheck.ps1 (unchanged behavior, four existing call sites) and restore-
-    shares.ps1 (now uses the safe stop/reap/verify/start handoff instead of a direct pm2
-    restart). Test-PowerShellSyntax.ps1 gained -Recurse so the new lib/ file is actually
-    parse-checked. All CI green (PowerShell syntax parse, CodeQL, GitGuardian); full Python
-    suite 2131 passed.
+    Full history: projects/conductor/HISTORY.md#t-185
   updated: '2026-09-20T22:05:03Z'
   owner: worker
   claimed_by: claude-conductor-scheduled-20260920-t185
@@ -3801,18 +2791,9 @@ tasks:
   passes: 0
   stakes: reversible
   note: >-
-    Kaizen from t-185 (silasfelinus/conductor#4880, 2026-09-20): t-184's audit had to
-    hand-grep every ops/home-server/*.ps1 for pm2 restart/stop/start shapes to find the one
-    gap (restore-shares.ps1) that bypassed the safe stop/reap/verify/start handoff -- a
-    one-time, manual sweep that a future script (a new remediation tool, a manual on-box
-    fix) could just as easily reintroduce without anyone noticing, since nothing currently
-    stops a new `& pm2 restart comfyui` / `& pm2 stop comfyui` from being added straight into
-    a script instead of routed through the now-shared Restart-Supervised in
-    lib/Restart-ComfySupervised.ps1. Add a small Python contract test (alongside the existing
-    tests/test_powershell_variable_interpolation.py-style source-text guards) that greps
-    every *.ps1 under ops/home-server/ (recursively, excluding lib/Restart-ComfySupervised.ps1
-    itself) for a direct `pm2 (restart|stop) comfyui` invocation and fails if one is found,
-    so the next such gap is caught in CI rather than by the next manual audit.
+    Kaizen from t-185 (silasfelinus/conductor#4880, 2026-09-20): t-184's audit had to hand-grep every ops/home-server/*.ps1 for pm2 restart/stop/start shapes to find the one gap (restore-shares.ps1) that bypassed the safe stop/reap/verify/start handoff -- a one-time, manual sweep tha
+
+    Full history: projects/conductor/HISTORY.md#t-186
   claimed_by: claude-sweep-2026-09-20T-conductor-t186
   claimed_at: '2026-09-20T22:57:19Z'
   updated: '2026-09-20T23:11:36Z'
@@ -3825,20 +2806,9 @@ tasks:
   passes: 0
   stakes: reversible
   note: >-
-    Kaizen from the ruler-hooked/t-037 rescue (silasfelinus/conductor#4941, 2026-09-21):
-    a queued task-events entry flipped t-037 to status: needs-human/soft_gate: true with a
-    note claiming a handoff doc had been "preserved" at
-    projects/ruler-hooked/docs/t-037-list-lanes-handoff.md -- but that commit never actually
-    added the file, only the roadmap note text. The real file existed only on an unmerged,
-    unrelated worker branch (whose own roadmap edit had reverted the task back to status:
-    claimed against a stale base, a second, independent problem). Reviewer rescued just the
-    doc into #4941 so the existing note became true after the fact, but this worked by luck
-    -- a differently-timed cycle could have left the note permanently false with nothing to
-    catch it. Add a check (task-events processor or a small CI/test-suite guard) that a
-    needs-human transition whose note references a projects/<slug>/docs/<task-id>-*.md
-    handoff path actually has that file present in the same commit/tree before applying the
-    transition -- reject or hold the event otherwise, rather than landing an unverifiable
-    claim on the roadmap.
+    Kaizen from the ruler-hooked/t-037 rescue (silasfelinus/conductor#4941, 2026-09-21): a queued task-events entry flipped t-037 to status: needs-human/soft_gate: true with a note claiming a handoff doc had been "preserved" at projects/ruler-hooked/docs/t-037-list-lanes-handoff.md -
+
+    Full history: projects/conductor/HISTORY.md#t-187
   claimed_by: null
   claimed_at: null
   updated: '2026-09-21T13:00:00Z'
@@ -3850,14 +2820,10 @@ tasks:
   owner: worker
   passes: 0
   stakes: reversible
-  note: |-
-    Kaizen from t-187 (2026-09-21): the missing_handoff_docs() check added to validate_task_events.py and process_task_events.py only guards the task-events (connector) path to a needs-human transition. A session closing a task directly with `close_task.py <project> <task-id> needs-human --append-note "...preserved at projects/<slug>/docs/*.md..."` -- the path most interactive Claude sessions actually use, per this repo's own git history of close: commits -- never goes through either check, so the same false-claim failure mode t-187 fixed for the connector path is still open here. Add the same missing_handoff_docs() guard (importable from process_task_events.py) to close_task.py's needs-human transition, holding/refusing the write the same way, before it pushes its close-out commit.
+  note: >-
+    Kaizen from t-187 (2026-09-21): the missing_handoff_docs() check added to validate_task_events.py and process_task_events.py only guards the task-events (connector) path to a needs-human transition.
 
-    Implementation ready on worker/conductor-t-188-openai-scheduled-2026-09-21T142038Z-conductor-t188-a11: direct close_task needs-human transitions now reject referenced fallback handoff docs absent from the committed base tree, with regression coverage including the uncommitted-worktree false-positive case.
-
-    Merged PR #4948: close_task.py now guards direct needs-human handoffs against missing
-    committed docs, matching t-187's connector-path check. All CI green (23 checks),
-    reviewed and merged by Reviewer session.
+    Full history: projects/conductor/HISTORY.md#t-188
   claimed_by: openai-scheduled-2026-09-21T142038Z-conductor-t188-a11
   claimed_at: '2026-09-21T14:20:38Z'
   updated: '2026-09-21T14:51:11Z'
@@ -3873,60 +2839,9 @@ tasks:
   soft_gate: false
   security_flag: true
   note: >-
-    FOR SILAS: this session's own diagnostic command printed the full live `KR_API_TOKEN`
-    value into its transcript while rechecking butterfly-gallery/t-033's ArtJob queue
-    status -- see root TALKBACK.md, 2026-09-21 security-flag entry, for the full
-    write-up. This is the fourth recurrence of this incident class (conductor/t-116,
-    t-128, and the 2026-09-16 root-TALKBACK entry that led to the 2026-09-20 rotation),
-    and this time it is the token that was rotated on 2026-09-20 specifically to resolve
-    that earlier exposure.
+    FOR SILAS: this session's own diagnostic command printed the full live `KR_API_TOKEN` value into its transcript while rechecking butterfly-gallery/t-033's ArtJob queue status -- see root TALKBACK.md, 2026-09-21 security-flag entry, for the full write-up.
 
-    What happened: a malformed presence check (`export $(grep -q KR_API_TOKEN <<< "$(env)"
-    && true)`) collapsed to a bare `export` with no arguments, which bash prints as every
-    exported variable in `declare -x NAME="value"` form -- a third, previously undocumented
-    unsafe shape distinct from the `${VAR:-...}` and `${VAR:+...}`+mismatched-`sed` cases
-    hard rule 15 already warns about.
-
-    TO APPROVE: rotate `KR_API_TOKEN` at the source (kind_robots admin/token-issuing
-    surface) again, and update the conductor-side secret to match once done -- then set
-    `approved_by_human: true` and `status: done` (or leave a note if a different action is
-    wanted). No agent can rotate secrets (hard rule 5).
-
-    WHAT UNBLOCKS: closes this security-flag cycle the same way the 2026-09-16 one closed
-    via conductor/t-182. As a secondary, non-blocking follow-up once this is acknowledged:
-    harden `scripts/kr_token_set.sh`'s docstring to call out the no-argument
-    `export`/`env`/`set` shape alongside the two patterns it already documents.
-
-    2026-09-27 update: this same token was exposed again, by a fourth distinct unsafe shape
-    (a Python getattr(module, 'SECRET_NAME', default) diagnostic, not a shell construct)
-    while investigating conductor/t-198. Full write-up in root TALKBACK.md's 2026-09-27
-    security-flag entry. No new action needed beyond what this task already asks for --
-    rotate the token and harden kr_token_set.sh's guidance to cover the Python-level unsafe
-    shape too.
-
-    2026-09-27 (Silas-directed session): the secondary follow-up is DONE -- kr_token_set.sh
-    documents both later shapes, and a value-based output redactor
-    (.claude/hooks/redact_bash_output.py, mirrored user-level by
-    scripts/install_secret_hooks.py) now masks any secret value in Bash output whatever
-    shape prints it; block_secret_dump.py also refuses Read/Grep of a live .env. Only the
-    rotation itself remains. TO ROTATE: on the render box run
-    `ops/home-server/Rotate-KrToken.ps1` (detects user-api-key vs beta-admin-token, rotates
-    the apiKey via the API when it can, verifies new=admin / old=401, updates
-    KR_RELAY_TOKEN + KR_API_TOKEN with pm2 --update-env + pm2 save, and sets the GitHub
-    secret via gh), then update the claude.ai cloud environment's KR_API_TOKEN variable.
-    Close with approved_by_human: true + status: done once Silas says it is rotated.
-
-    2026-09-27 CLOSED (Silas-verified): rotated with ops/home-server/Rotate-KrToken.ps1. New
-    value is user 1's apiKey; Silas confirmed it via meta.describe (HTTP 200, source=user-
-    api-key). The KindRobots container on Alexandria has no ADMIN_TOKEN/BETA_ADMIN_TOKEN
-    set, so the env-token path is disabled, and the old value cannot authenticate by any
-    path. GitHub secret, render-box KR_API_TOKEN/KR_RELAY_TOKEN (pm2 --update-env + save),
-    and the cloud environment were updated; this session's refreshed env value
-    authenticates. Leak-prevention follow-up shipped in conductor#5308 (value-based output
-    redaction) and #5311 (dual-credential handling in the script). Follow-ups for Silas, not
-    blocking: set ARCHIVE_MEDIA_SECRET in the KindRobots Unraid template (without it, signed
-    archive-media keys are random per process), and note that appdata/kind_robots/.env is
-    read by scripts, not by the container.
+    Full history: projects/conductor/HISTORY.md#t-189
   claimed_by: null
   claimed_at: null
   updated: '2026-09-27T21:51:14Z'
@@ -3941,28 +2856,9 @@ tasks:
   passes: 0
   stakes: reversible
   note: >-
-    Kaizen from butterfly-gallery/t-031 (2026-09-22, conductor#4984): t-031 was a pure
-    audit task ("confirm the runway motion clips are gated on visibility/reduced-motion,
-    not just a CSS class toggle") sitting on `depends_on: t-033`. When t-033 actually
-    landed, its own closing note and PR (kind_robots#2964) had already implemented the
-    exact IntersectionObserver + document.hidden + prefers-reduced-motion + v-if-unmount
-    gating t-031 existed to require -- because t-033's note named t-031's acceptance
-    criteria up front and built to it directly. t-031 closed with zero code diff once a
-    session actually read t-033's note and the merged diff.
+    Kaizen from butterfly-gallery/t-031 (2026-09-22, conductor#4984): t-031 was a pure audit task ("confirm the runway motion clips are gated on visibility/reduced-motion, not just a CSS class toggle") sitting on `depends_on: t-033`.
 
-    This is likely a recurring shape wherever one task's note explicitly anticipates and
-    satisfies a sibling/dependent task's criteria (see also butterfly-gallery/t-035,
-    which now carries the same gating pattern forward for its own two slots). A ready
-    task whose `note:` or its dependency's `note:` already documents the acceptance
-    criteria as met is worth flagging distinctly from an ordinary unstarted `ready` task,
-    so a session doesn't have to rediscover this by hand each time.
-
-    Concretely: extend `select_role.py`'s ready-task surfacing (or add a small standalone
-    check) to scan a `ready` task's own `depends_on` chain for a `done` dependency whose
-    note text mentions the ready task's id (e.g. "t-031" appearing in t-033's note) and
-    flag it as "audit candidate: likely a zero-diff close" in the JSON output, without
-    changing selection order or auto-closing anything -- purely an advisory hint the
-    picking session can act on faster than re-deriving it from scratch.
+    Full history: projects/conductor/HISTORY.md#t-190
   claimed_by: 2026-09-22T0456Z-conductor-t190
   claimed_at: '2026-09-22T04:57:06Z'
   updated: '2026-09-22T05:05:55Z'
@@ -3977,42 +2873,9 @@ tasks:
   stakes: reversible
   security_flag: true
   note: >-
-    Requested directly by Silas (2026-09-22) after a session told him to paste a Civitai
-    token into a PowerShell window when the value was already sitting in `.env`. Four
-    sessions have now printed a live credential into their own tool output
-    (root TALKBACK.md 2026-08-12, 2026-08-13, 2026-09-16, 2026-09-21), plus the
-    2026-08-25 `.env` grep that AGENTS.md hard rule 15 is written around. Every one of
-    those authors knew the rule; the 2026-09-16 session cited the earlier incidents in
-    its own commit messages while writing the leak. Documentation has had four chances.
+    Requested directly by Silas (2026-09-22) after a session told him to paste a Civitai token into a PowerShell window when the value was already sitting in `.env`.
 
-    `.claude/hooks/block_secret_dump.py` is a PreToolUse guard on `Bash`, wired in
-    `.claude/settings.json`, so it binds every agent session in this repo rather than
-    only the one that read the manual. It refuses on what a command can PRINT, not on
-    whether it mentions a secret: a bare or substitution-collapsed
-    `export`/`env`/`set`/`printenv`/`declare`, a value-yielding expansion of a
-    secret-shaped name (`$VAR`, `${VAR}`, `${VAR:-x}`, `${VAR:0:8}`) reaching a printing
-    command or a here-string, an inline `export SECRET=value`, and a value-printing read
-    of a dotenv file. `curl -H "Authorization: Bearer $KR_API_TOKEN"` is left alone --
-    that value goes to a socket, not to stdout.
-
-    The allow list is load-bearing. `[ -n "$VAR" ]`, `${VAR:+PRESENT}`, `${#VAR}`,
-    `source .env`, `env -u NAME <cmd>`, `grep -c '^NAME=' .env` and the
-    `| sed 's/=.*/=<redacted>/'` form hard rule 15 prescribes all still work, because a
-    guard that refuses the patterns its own manual recommends just teaches the next
-    session to route around it. Each refusal names the safe alternative and never echoes
-    anything to the right of an `=`. Unparseable stdin fails open on purpose.
-
-    `tests/test_block_secret_dump.py` carries all five historical commands verbatim as
-    fixtures, asserts the wire format, asserts silence on allow (an explicit `allow`
-    would bypass the settings.json permission rules rather than defer to them), and
-    asserts `settings.json` still points at the hook -- a correct detector nothing calls
-    is worth nothing.
-
-    Scope notes: conductor only, since kind_robots has no `.claude/` directory at all;
-    and Bash only, so `Read` on a `.env` and a python one-liner that prints
-    `os.environ` are both still on the author. Covers the secondary, non-blocking
-    follow-up named in t-189 (document the no-argument `export`/`env`/`set` shape) by
-    enforcing it rather than describing it.
+    Full history: projects/conductor/HISTORY.md#t-191
   claimed_by: 2026-09-22T0630Z-conductor-t191
   claimed_at: '2026-09-22T06:30:00Z'
   updated: '2026-09-22T10:20:40Z'
@@ -4026,44 +2889,9 @@ tasks:
   passes: 0
   stakes: reversible
   note: >-
-    Filed from ruler-hooked/t-019 (2026-09-22): `consume_art_requests.py`'s
-    `already_satisfied(entry)` is `target_path(entry).exists()` -- true whenever a file
-    already sits at `image_path`, with no check for whether the CONTENT matches the
-    request's current prompt. Five consumer scripts share this function
-    (`consume_art_inspirations.py`, `consume_art_inspirations_to_media.py`,
-    `consume_art_requests.py`, `consume_art_requests_to_media.py`, and the
-    kind-robots-media variant overriding it via `_media_exists`). For a first-time
-    request this is correct and cheap. For a REGENERATION request -- an entry that was
-    already `status: done` once, then flipped back to `pending` after its prompt was
-    corrected, reusing the same `image_path` -- it is silently wrong: the request is
-    marked done and zero ArtJobs are ever submitted, because the stale file from the
-    prior render already satisfies the naive existence check. This produced two
-    consecutive false "it rendered and still failed" conclusions on ruler-hooked's
-    choirfish entry (kind_robots auto-art-generate.yml run 35693015563 and again
-    35714383752, both logging `already present, will mark done` with zero new ArtJobs)
-    before a session traced the actual job history and found it.
+    Filed from ruler-hooked/t-019 (2026-09-22): `consume_art_requests.py`'s `already_satisfied(entry)` is `target_path(entry).exists()` -- true whenever a file already sits at `image_path`, with no check for whether the CONTENT matches the request's current prompt.
 
-    There IS a documented escape hatch -- `consume_art_requests.py --force
-    --id-prefix <id>` ("Use after correcting a prompt, scoped with --id-prefix") -- but
-    it is a manual CLI flag never wired into `auto-art-generate.yml`'s scheduled/push
-    runs, so nothing routes a routine "prompt got fixed, re-stage as pending" edit
-    through it automatically. The gap is specifically: the automated pipeline has no
-    way to tell "brand new pending request" from "pending request whose target file is
-    stale content from an earlier attempt."
-
-    Proposed fix (needs a design decision, not just a patch): give a request an
-    explicit marker for "this specific pending state wants forced regeneration even
-    though a file exists" -- e.g. a `force: true` field the staging edit sets alongside
-    `status: pending`, which `already_satisfied()` (or its caller) checks before the
-    file-existence short-circuit and clears once the request is genuinely fulfilled.
-    Simpler alternative: treat `last_art_job_id` unset/older-than-`updated` on a
-    `status: pending` row as a signal the file predates this pending cycle. Either way,
-    touch all four scripts' shared logic carefully -- this is production automation
-    running every 6 hours across every art lane (project art, missing-image repair,
-    Mandarin Tutor, Daily Dream), so a regression here silently stops ALL first-time
-    generation, not just regeneration. Write a regression test using ruler-hooked's
-    choirfish case (existing stale file + status flipped pending + no matching new
-    ArtJob) as the failing fixture before changing behavior.
+    Full history: projects/conductor/HISTORY.md#t-192
   updated: '2026-09-22T16:09:19Z'
   claimed_by: 2026-09-22T-conductor-agent-c-t192-already-satisfied-force
   claimed_at: '2026-09-22T16:04:05Z'
@@ -4076,18 +2904,9 @@ tasks:
   passes: 0
   stakes: reversible
   note: >-
-    Kaizen from t-192 (silasfelinus/conductor#5033, 2026-09-22). The choirfish
-    regeneration bug's actual production entrypoint was `consume_art_requests_to_media.py`'s
-    `already_satisfied()` wrapper, not the `consume_art_requests.py` function the original
-    task note named -- that wrapper bypasses the underlying function entirely for a
-    kind_robots media target and does a live HEAD check instead, so a fix scoped to only the
-    "obvious" module would have shipped green and left the real bug live. Found this time by
-    grepping for the pattern by hand; worth making structural. Add a small contract test
-    (mirroring the shape of e.g. `test_capture_group_guards.py`'s repo-wide scan pattern) that
-    greps `scripts/*.py` for every function/override named `already_satisfied` (or assigned to
-    `.already_satisfied`) and asserts each one either calls `regeneration_forced()`/
-    `original_already_satisfied()` or is explicitly allow-listed with a comment explaining why
-    not. This closes the gap for the NEXT override, not just today's four call sites.
+    Kaizen from t-192 (silasfelinus/conductor#5033, 2026-09-22).
+
+    Full history: projects/conductor/HISTORY.md#t-193
   claimed_by: 2026-09-22T-conductor-agent-c-t193-already-satisfied-guard
   claimed_at: '2026-09-22T16:14:16Z'
   updated: '2026-09-22T16:19:16Z'
@@ -4100,25 +2919,9 @@ tasks:
   passes: 0
   stakes: reversible
   note: >-
-    Kaizen from animation-manager/t-020 (silasfelinus/conductor#5108, 2026-09-23). The new
-    `daily-creative` role in select_role.py (find_due_daily_commitments()) surfaces a task
-    the moment its `daily_last_checked` predates today's Pacific date, but nothing currently
-    distinguishes "checked today, honest no-op" from "a session claimed it and stalled, or
-    nobody ran the role in days" -- both look identical from the roadmap alone once a session
-    is mid-claim. Add a small advisory check (mirroring check_priority_queue_starvation.py's
-    shape) that flags a `daily_commitment: true` task if `daily_last_checked` is more than
-    N days stale relative to today, or if `claimed_at` is older than a normal session's
-    lifetime with no corresponding PR. Advisory only -- never gates selection.
+    Kaizen from animation-manager/t-020 (silasfelinus/conductor#5108, 2026-09-23).
 
-    Implemented scripts/check_daily_commitment_staleness.py (STALE CHECK + STALLED CLAIM
-    findings, advisory, no network needed), added
-    tests/test_check_daily_commitment_staleness.py (13 tests, all pass), and wired it into
-    CLAUDE.md's session-startup sweep list. Full local suite: 2328 passed / 30 skipped / 0
-    failed. PR opened from claude/beautiful-carson-ccicuv.
-
-    Merged (silasfelinus/conductor#5116, squash f238f8e). All CI green (25 checks incl.
-    Python test suite, CodeQL, lint, roadmap validation), mergeable_state clean before
-    merge.
+    Full history: projects/conductor/HISTORY.md#t-194
   claimed_by: 2026-09-23T115700Z-t194-a1
   claimed_at: '2026-09-23T12:01:33Z'
   updated: '2026-09-23T12:11:43Z'
@@ -4133,34 +2936,9 @@ tasks:
   owner: worker
   passes: 0
   note: >-
-    model-builder/t-029 (a recurring regression-audit grinder) has now drifted twice: its
-    own cycle note text says "re-arming to ready" while the roadmap `status:` field stays
-    stuck at `claimed` with `claimed_by`/`claimed_at` already null -- caught both times only
-    by check_pr_merged_drift.py reading a stale implementation_pr, not by anything that
-    actually watches recurring-task re-arm correctness. First occurrence reconciled around
-    2026-09-2x (see the task's own note history); second occurrence reconciled during the
-    2026-09-25 session-start sweep.
+    model-builder/t-029 (a recurring regression-audit grinder) has now drifted twice: its own cycle note text says "re-arming to ready" while the roadmap `status:` field stays stuck at `claimed` with `claimed_by`/`claimed_at` already null -- caught both times only by check_pr_merged_
 
-    Find whichever writer appends these scheduled-cycle notes (likely something under
-    scripts/ invoked by the hourly Conductor Agent Routine for recurring/continuous-lifecycle
-    tasks) and check whether it can write the note text and the status field in two separate
-    steps that can land inconsistently (e.g. a crash/interruption between them, or a race
-    with another concurrent writer). Fix the root cause -- either make the write atomic, or
-    add a mechanical check (a natural companion to check_pr_merged_drift.py /
-    check_daily_commitment_staleness.py) that flags a recurring task whose note says
-    "re-arming to ready" more recently than its `status:` field was last set to `ready`.
-
-    RAN 2026-09-26 (scheduled Conductor Agent run, silasfelinus/conductor#TBD): traced the
-    actual mechanism -- neither claim_task.py nor close_task.py has a write-atomicity gap
-    (both always write status/claimed_by/claimed_at together in one edit). The 2026-09-25
-    occurrence's real cause was a merge-conflict resolution on the PR #5150 close branch
-    (commit 640405b) that took origin/main's whole conflicted hunk for projects/model-
-    builder/roadmap.yaml -- correctly picking up storybook/t-067's genuinely newer claim
-    from the same conflict, but silently discarding model-builder/t-029's own just-fixed
-    status: ready alongside it. Added scripts/check_recurring_claim_drift.py: flags any task
-    at status: claimed with claimed_by/claimed_at both null, an invariant violation that can
-    never come from a live claim. Wired into CLAUDE.md's session-startup sweep. TALKBACK and
-    LEARNING.yaml entries appended.
+    Full history: projects/conductor/HISTORY.md#t-195
   updated: '2026-09-26T02:08:38Z'
   claimed_by: claude-scheduled-20260926T020639Z-conductor-t195
   claimed_at: '2026-09-26T02:06:40Z'
@@ -4173,18 +2951,9 @@ tasks:
   passes: 0
   stakes: reversible
   note: >-
-    Kaizen from this session's animation-manager/t-007 cycle. `set_task_field.py` and
-    `close_task.py --set` both restrict writes to a fixed allow-list (approved_by_human,
-    claimed_at, claimed_by, depends_on, gate_human, implementation_pr, note, owner, passes,
-    retry_context, soft_gate, stakes, status, updated) that does not include
-    `daily_last_checked`/`daily_last_completed` -- the two fields
-    `check_daily_commitment_staleness.py` and every daily_commitment task's own convention
-    depend on. Every cycle that advances them (this one included) has to hand-edit the
-    roadmap YAML directly instead of going through the same fetch-fresh,
-    collision-resistant git plumbing that close_task.py provides for status/
-    implementation_pr -- exactly the kind of direct-edit gap the claim_task.py/close_task.py
-    tooling exists to close. Add both fields (date-string validated, same shape as other
-    ISO-date fields) to the allow-list in both scripts.
+    Kaizen from this session's animation-manager/t-007 cycle.
+
+    Full history: projects/conductor/HISTORY.md#t-196
   claimed_by: claude-20260926T025904Z-t196
   claimed_at: '2026-09-26T02:59:05Z'
   updated: '2026-09-26T03:09:11Z'
@@ -4198,40 +2967,9 @@ tasks:
   stakes: reversible
   passes: 0
   note: >-
-    Found live in coloring-book/t-022 during the 2026-09-26 scheduled Conductor Agent sweep:
-    that task's roadmap entry carries two `updated:` keys at the same indent within one task
-    mapping -- one near the top of the block (before `depends_on`/`note`), one at the bottom
-    next to `status`/`claimed_by`/`claimed_at`. PyYAML's last-key-wins semantics mean every
-    consumer (yaml.safe_load, select_role.py, the staleness checks) reads the bottom value as
-    authoritative, but `set_task_field.py`'s `find_task_block`/field-locator (the same code
-    path `claim_task.py` and `close_task.py` both call) stops at the FIRST match (a `break` in
-    the loop starting at line ~383 of set_task_field.py) and silently edits that shadowed
-    occurrence instead. Confirmed reproducing: this session's own `claim_task.py` call against
-    coloring-book/t-022 updated the top (dead) `updated:` field to the claim timestamp while
-    the bottom (real) `updated:` field -- the one that travels with `status`/`claimed_by` --
-    stayed stale at the previous cycle's value. `verify_result()` doesn't catch this either,
-    since it only checks that the field is present anywhere on the task, not that the edited
-    occurrence is the last (effective) one.
+    Found live in coloring-book/t-022 during the 2026-09-26 scheduled Conductor Agent sweep: that task's roadmap entry carries two `updated:` keys at the same indent within one task mapping -- one near the top of the block (before `depends_on`/`note`), one at the bottom next to `stat
 
-    Fix: make `find_task_block`'s field locator detect a second same-indent occurrence of the
-    target field within the same task block and raise TaskFieldError (refuse the write) rather
-    than silently editing the wrong one -- this is a data-integrity bug in the roadmap file,
-    not something a tool should paper over by guessing which occurrence to edit. Separately,
-    fix the one live instance in coloring-book/t-022 by removing the redundant top-of-block
-    `updated:` field (the bottom one, paired with status/claimed_by, is the one every other
-    tool already treats as authoritative). Add a test to tests/test_set_task_field.py covering
-    a task block with a duplicate field key.
-
-    RAN 2026-09-26 (scheduled Conductor Agent run): implemented as described. Added a
-    duplicate-same-indent-key check to `set_task_field_text`'s field locator in
-    scripts/set_task_field.py -- it now raises TaskFieldError naming both line numbers
-    instead of silently editing the first (shadowed) occurrence. Removed the redundant
-    top-of-block `updated:` field from coloring-book/t-022 in
-    projects/coloring-book/roadmap.yaml, leaving the single authoritative one that travels
-    with status/claimed_by. Added
-    test_duplicate_field_key_in_one_task_block_is_rejected to tests/test_set_task_field.py.
-    Verified: full local suite (2345 passed / 30 skipped / 0 failed), plus
-    scripts/validate_roadmaps.py clean on the edited coloring-book roadmap.
+    Full history: projects/conductor/HISTORY.md#t-197
   claimed_by: claude-agent-20260926T045629Z-conductor-t197
   claimed_at: '2026-09-26T04:58:00Z'
   updated: '2026-09-26T04:58:00Z'
@@ -4245,26 +2983,9 @@ tasks:
   stakes: reversible
   depends_on: null
   note: >-
-    Found while reviewing dream-cycle/t-006's PR (silasfelinus/conductor#5264):
-    tests/test_annotate_daily_dream_art_queue.py::test_cli_rewrites_current_and_previous_outputs_in_place
-    fails deterministically when the full `pytest tests/` suite runs (asserts
-    `current["art_status"] == "queued"` but gets `"rendered, awaiting public image"`),
-    yet passes every time in isolation (`pytest tests/test_annotate_daily_dream_art_queue.py`).
-    Reproduced identically on a clean worktree of main at e6dab20, unrelated to any
-    change in that PR -- some earlier test in full-suite collection order is leaking
-    module-level state (a cache, a monkeypatched clock/registry, or similar) into this
-    one's fixed job-id-8123 fixture. CI's own "Python test suite" job has NOT
-    consistently shown this failure (it did not appear in the run that first
-    surfaced the 4 stale digest-runway tests, nor in the re-run after they were
-    fixed), suggesting GitHub Actions' test collection/worker order differs from
-    this sandbox's, or the leak is itself intermittent depending on collection order.
-    Fix: bisect which earlier test(s) in full-suite order leave state behind (start
-    with `pytest tests/ -p no:randomly` if a randomizer plugin is active, or run
-    increasing prefixes of the suite until the failure appears) and give the leaking
-    fixture/mock proper teardown/reset. Low priority: it is a false-negative risk to
-    the suite's signal, not a product bug, but a test that fails only in select
-    full-suite runs and passes on retry erodes trust in "green" the same way a
-    genuine flake does.
+    Found while reviewing dream-cycle/t-006's PR (silasfelinus/conductor#5264): tests/test_annotate_daily_dream_art_queue.py::test_cli_rewrites_current_and_previous_outputs_in_place fails deterministically when the full `pytest tests/` suite runs (asserts `current["art_status"] == "q
+
+    Full history: projects/conductor/HISTORY.md#t-198
   claimed_by: 2026-09-27T-conductor-sweep-t198
   claimed_at: '2026-09-27T11:14:54Z'
   updated: '2026-09-27T11:29:15Z'
@@ -4278,30 +2999,9 @@ tasks:
   owner: worker
   passes: 0
   note: >-
-    Kaizen from t-198 (2026-09-27, PR #5282). `_live_job_fetcher()` does a bare
-    `import consume_art_requests as requests`, which only succeeds when `scripts/`
-    happens to already be on `sys.path` -- true in a full pytest run (11 other test
-    files each do their own `sys.path.insert(0, .../scripts)` at collection time) or
-    when the script is invoked in a context where `scripts/` is already importable,
-    false when run in most other contexts. t-198 worked around this at the test level
-    (the test itself doesn't need a real fetcher and now clears KR_API_TOKEN so the
-    import is never attempted), but the production code's own import robustness is
-    still exactly as fragile as before -- it's just no longer exercised by this test.
-    TO FIX: switch to the dual-path pattern already used elsewhere in this codebase
-    (see scripts/consume_art_queue.py's `try: from scripts import consume_art_queue_core
-    as _core / except ImportError: import consume_art_queue_core as _core`), so the
-    import succeeds deterministically whenever the repo root is on sys.path (which
-    pytest and any script invocation via `python3 scripts/foo.py` both guarantee)
-    rather than depending on scripts/ specifically also being on sys.path. Add a
-    regression test that imports and calls `_live_job_fetcher()` from a subprocess/
-    fresh interpreter with only the repo root on sys.path (no scripts/ dir), confirming
-    it still resolves the real fetcher when KR_API_TOKEN is set.
+    Kaizen from t-198 (2026-09-27, PR #5282).
 
-    Merged silasfelinus/conductor#5339 (squash eab08fd). Switched _live_job_fetcher()'s bare
-    'import consume_art_requests' to the dual-path pattern already used by
-    consume_art_queue.py, and added a subprocess-based regression test confirming the
-    fetcher resolves from a fresh interpreter with only the repo root on sys.path. Full test
-    suite (2422 passed) and the new test both green in CI.
+    Full history: projects/conductor/HISTORY.md#t-199
   updated: '2026-09-28T07:10:56Z'
   claimed_by: 2026-09-28T070200Z-conductor-t199-claude
   claimed_at: '2026-09-28T06:58:02Z'
@@ -4314,13 +3014,10 @@ tasks:
   owner: worker
   passes: 0
   stakes: reversible
-  note: |-
-    Silas-directed 2026-09-29 after auditing the live human-gate queue. Fix the system rather than manually dismissing a noisy inbox: distinguish authorization to continue from acceptance-as-complete in the Kind Robots gate UI/event contract; make approved+needs-human contradictions impossible to miss; report workable vs archival gates separately; fix stale pitch-status parsing; and reconcile currently misclassified active gates conservatively so only genuine decisions remain in the human queue. Do not cross real gates for secrets, billing, publication, irreversible actions, or subjective acceptance.
+  note: >-
+    Silas-directed 2026-09-29 after auditing the live human-gate queue.
 
-    Implementation complete across Conductor and Kind Robots. The gate action contract now separates approve-to-proceed from accept-complete; audits/reporting distinguish real decisions from soft access assists; and stale pure-tooling gates were released.
-
-    Kind Robots PR #3103 (proceed vs accept-complete gate actions) merged 2026-09-30 after
-    35/35 green checks; closed by branch-medic sweep.
+    Full history: projects/conductor/HISTORY.md#t-200
   claimed_by: 2026-09-29T083200Z-conductor-t200-gate-hygiene-k7p4
   claimed_at: '2026-09-29T08:32:00Z'
   updated: '2026-09-30T01:44:33Z'
@@ -4333,10 +3030,9 @@ tasks:
   passes: 0
   updated: '2026-09-30T23:45:20Z'
   note: >-
-    Filed by gate triage 2026-09-30 from t-167's note. ops/home-server/relay_agent.py never sends smartQueue, so claim.post.ts's model-affinity bypass (SMART_QUEUE_MAX_BYPASS = 24) is inert and the queue drains strictly oldest-first. Turning it on makes cold checkpoint loads rare, and those loads are the suspected trigger in t-165/t-167. Vendored relay code: follow ops/home-server provenance rules. Deploying to Silas-PC is still Silas's step.
+    Filed by gate triage 2026-09-30 from t-167's note.
 
-    Reviewed and merged 2026-09-30; relay_agent sends smartQueue on claim. Deploying to
-    Silas-PC is Silas's step.
+    Full history: projects/conductor/HISTORY.md#t-201
   claimed_by: 011ktzr8
   claimed_at: '2026-09-30T22:46:22Z'
   implementation_pr: 'silasfelinus/conductor#5448'
