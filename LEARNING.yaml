@@ -17133,3 +17133,12 @@ records:
   outcome: done
   failure_category: null
   lesson: "A dry run that only reads proves nothing about the write path: the sync's dry run passed but the first write=true run 400'd because the PATCH route validated the games string as an ArtImage id. Exercise one real write before relying on an admin write path."
+- date: '2026-10-01'
+  project: coloring-book
+  task: t-061
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: "A prompt-contract fix scoped to one literal phrase leaves the whole rule family live: read the enforcing regex (negation + noun set) before grepping, so the audit counts what the gate counts."
