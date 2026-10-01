@@ -17,9 +17,12 @@ from __future__ import annotations
 
 import argparse
 import base64
+import contextlib
+import fcntl
 import hashlib
 import io
 import json
+import os
 import re
 import sys
 from datetime import datetime, timezone
@@ -36,6 +39,8 @@ import render_retry  # noqa: E402
 
 ROOT = consumer.ROOT
 QUEUE_FILE = ROOT / "projects" / "coloring-book" / "color-art-jobs.yaml"
+# Same lockfile manage_coloring_book_production.py holds, so the two scripts exclude each other.
+QUEUE_LOCK_FILE = QUEUE_FILE.parent / "color-art-jobs.yaml.lock"
 
 # House style anchor. These books want INKED COMIC art — bold clean black ink
 # linework with flat, cel-shaded comic color, in the tradition of European
@@ -621,7 +626,47 @@ def validate_candidate(entry: dict[str, Any], destination: Path) -> tuple[bool, 
     }
 
 
+@contextlib.contextmanager
+def queue_lock():
+    """Exclusive non-blocking flock on QUEUE_LOCK_FILE for a whole live run (coloring-book/t-055).
+
+    Shares the lockfile with manage_coloring_book_production.py, so a color-submission
+    pass and a BW-derivation batch cannot clobber each other's writes to QUEUE_FILE.
+    """
+    QUEUE_LOCK_FILE.parent.mkdir(parents=True, exist_ok=True)
+    handle = open(QUEUE_LOCK_FILE, "a", encoding="utf-8")  # "a": never truncate a held lock
+    try:
+        try:
+            fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except OSError as error:
+            raise RuntimeError(
+                f"{QUEUE_LOCK_FILE.name} is already held by another coloring-book queue writer "
+                "-- refusing to run concurrently. Wait for it to finish and retry."
+            ) from error
+        handle.seek(0)
+        handle.truncate()
+        handle.write(f"pid={os.getpid()} started={now_iso()}\n")
+        handle.flush()
+        yield
+    finally:
+        try:
+            fcntl.flock(handle, fcntl.LOCK_UN)
+        finally:
+            handle.close()
+
+
 def main() -> int:
+    if "--live" not in sys.argv[1:]:
+        return run()
+    try:
+        with queue_lock():
+            return run()
+    except RuntimeError as error:
+        print(f"ERROR: {error}", file=sys.stderr)
+        return 1
+
+
+def run() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--live", action="store_true")
     parser.add_argument("--limit", type=int, default=0, help="0 uses queue batch_policy.worker_pass_size")
