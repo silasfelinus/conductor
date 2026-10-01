@@ -1,15 +1,15 @@
 # Conductor Portfolio Oversight
 
-Generated: `2026-10-01T13:29:37.369920+00:00`
+Generated: `2026-10-01T22:46:06.233301+00:00`
 
-Overall status: **clean**
+Overall status: **action-needed**
 
 This is a deterministic sensor. For semantic roadmap/progress intent review, follow `projects/conductor/OVERSIGHT-AGENT.md`.
 
 ## OpenAI scheduled-agent heartbeat
 
-- Latest visible OpenAI scheduled-Agent activity: `2026-10-01T12:52:28+00:00` (0.62h ago; overdue at 6.0h).
-- Overdue: **false**
+- Latest visible OpenAI scheduled-Agent activity: `2026-10-01T12:52:28+00:00` (9.89h ago; overdue at 6.0h).
+- Overdue: **true**
 - Note: OpenAI scheduled cycles must refresh OPENAI-SCHEDULED-HEARTBEAT.json; coordination-marker history remains a compatibility fallback.
 
 ## Kind Robots ↔ Conductor project parity
