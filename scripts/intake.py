@@ -140,9 +140,16 @@ def _insert_list_item(text: str, item: str, before: str | None = None) -> str:
         m = list_pattern.match(line)
         if m:
             last_idx, last_indent = i, m.group(1)
+    # A file whose last line has no trailing newline (projects/priority.yaml ends
+    # `  - dream-cycle` with none) would otherwise fuse the new item onto it,
+    # e.g. "  - dream-cycle  - music-video", which parses as one bogus entry.
     if last_idx is None:
+        if lines and not lines[-1].endswith("\n"):
+            lines[-1] += "\n"
         lines.append(f"  - {item}\n")
     else:
+        if not lines[last_idx].endswith("\n"):
+            lines[last_idx] += "\n"
         lines.insert(last_idx + 1, f"{last_indent}- {item}\n")
     return "".join(lines)
 
@@ -192,7 +199,9 @@ def register_priority(slug: str) -> None:
     if re.search(rf"^\s*- {re.escape(slug)}\s*$", text, re.MULTILINE):
         return
 
-    new_text = _insert_list_item(text, slug, before="brainstorm")
+    # dream-cycle is pinned LAST (audit_roadmaps DREAM_CYCLE_NOT_LAST), so it is the one
+    # anchor that always exists. The old anchor, `brainstorm`, left the queue 2026-09-11.
+    new_text = _insert_list_item(text, slug, before="dream-cycle")
     PRIORITY_FILE.write_text(new_text)
     print(f"✓ Added {slug} to projects/priority.yaml")
 
