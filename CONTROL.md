@@ -479,3 +479,14 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 - **Motion asset hold (2026-09-18, Silas relaying Moseley):** Butterfly animation rendering is cancelled for now because generated clips are useless until the exact production dimensions for the butterfly background/compositing surface are known. Do not generate or catalog the t-014 butterfly motion assets until those dimensions are locked. The storyboard/shot list remain planning references only.
 - Keep this project at high agent-work priority until complete, ordered immediately ahead of Art Archive (Silas, 2026-09-18).
 - Butterfly Gallery project/scene art should enter the Kind Robots ArtJob queue at priority 200, the same tier as Daily Dream art and well above Resource/LoRA preview refill work (currently priority 1).
+
+### music-video  (software)
+**Direction (2026-10-01, new project):** A Suno-inspired music video creator on our ComfyUI. An admin gives a pitch plus optional length, genre, BPM and mood, gets lyrics and a Comfy-generated song, edits the lyrics, sets scene changes on a beat grid, adds or uploads an image per scene, and exports one MP4, all rendered through the existing ArtJob queue.
+**Notes:**
+- Silas's pitch, 2026-10-01: "a music video creator. similar to and inspired by suno. we should be able to give it a pitch, optional settings like length of time, genre, beats, and have it create lyrics, also edit lyrics, set when to change scenes, add or upload images for each scene beat, and compile everything. this should use our comfy as the backend."
+- Decided with Silas 2026-10-01: the song is generated on Comfy from day one (not upload-only), and the first release is admin-only like Scene Animator. Opening it to signed-in users is t-019, after acceptance.
+- Agent picks, each a one-line edit if Silas disagrees: slug `music-video`; priority slot just behind the top-10 band; compile in the browser (WebCodecs) rather than a relay ffmpeg job; MP3 song output.
+- The feature ships in `silasfelinus/kind_robots` at `/admin/music-video`; this project holds the roadmap and briefs (same pattern as music-mentor and scene-animator). ArtJob is the only generation queue; do not build a second queue or renderer. `projects/kind-robots/BOUNDARY.md` scopes to the kind-robots app project and does not apply here.
+- Scene prompts follow the Krea 2 contract in `ART-PROMPTS.md`: concrete nouns first, no negations, no art-direction jargon.
+- Hard gates that stay gates: deploying the relay and staging ACE-Step models on the render box (t-012, physical access), and Silas's acceptance of a real video (t-015). Cloud sessions cannot reach Comfy, so the first real render happens at t-012.
+- coat-dance/t-008 (assemble a rough cut) can reuse this project's exporter later; nothing in coat-dance changes now.
