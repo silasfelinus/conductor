@@ -1234,14 +1234,10 @@ tasks:
   stakes: reversible
   updated: '2026-09-14T11:46:53Z'
   depends_on: [t-077, t-080, t-081, t-082, t-083, t-084, t-088]
-  note: |-
-    The back-and-forth t-077 shipped a first draft for. Silas, 2026-08-28: "this part may take some back and forth, I want it to look great ... this is going to be the first thing people see when the site loads, so I want it to be special." needs-human because the remaining question is aesthetic judgement, and only Silas can supply it. REWRITTEN AFTER EACH PASS -- t-080 through t-084, now t-088 -- because a needs-human note describing a version no longer on main invites a decision about something that does not exist. What is live now, MEASURED at 1920x1080 rather than estimated (see t-084 for why that distinction earned its own task): TOP BAND, one definite height, all columns filling it: dream card 384px (20.0% of screen, stated as 20vw clamped to [14rem,26rem]); the cast as one horizontally scrolling row of full-height 239x358 portrait cards filling the middle at 833px; Needs-you 629px (32.8%, a third at xl and a half at lg) as a single vertically scrolling column. NEEDS YOU is a composer, not a list of links. Each gate expands in place to a textarea and three actions. "Send to agent" writes the note AND releases the task to `ready`, so conductor's next Worker cycle picks it up carrying the answer. "Note only" keeps it parked and conductor's audit surfaces it. "Approve" closes it. SHELVES are one horizontally scrolling row: seven shelves, four visible, three a chevron away. Headers are a single icon plus a count. The art shelf toggles between finished art and the live ArtJob queue with a status filter. CLICKING AN OBJECT opens an interstitial with its description, attributes and reviews; clicking outside returns. Tiles are plain anchors, so middle-click and cmd-click still navigate. PROJECTS: title, one-letter priority, progress joined to conductor's own figure. NEWSFEED: bounded scroller; compact cards are picture, then a three-line headline, then one provenance line, with no summary; topic chips, controls, heading and lab link all on one row. NAV: brand line plus the page's tabMessage, or its subtitle where none is authored. Page height 865px: well inside his "not larger than two screens". OPEN FOR HIM, in rough order of how much it would change: (1) Whether the band's three-way split now feels right. Every number in it has been moved at his request at least once, and this is the first version where all three were satisfied simultaneously rather than traded off, so it is worth a fresh look rather than assuming it has converged. (2) Whether "Send to agent" should be able to close a gate outright, or whether releasing to `ready` with the answer attached is the right ceiling for a one-click action on the coordination system of record. (3) Whether the hero should server-render. It loads client-side in home-page.vue's onMounted, so the first paint of the front page is a skeleton. (4) The cast row has no visible scrollbar and no chevrons -- the partial card at the right edge is the only affordance, on the same argument home-rail.vue makes. The shelves below DO have chevrons, so the two rows are inconsistent on purpose; if that reads as an oversight rather than a choice, the shelves' chevrons are one prop away.
+  note: >-
+    The back-and-forth t-077 shipped a first draft for.
 
-    Silas's 2026-09-07 standing instruction is to take reasonable reversible recommendations as the decision instead of manufacturing human gates. Accept the current measured home-page three-way composition as the baseline. Remaining work is agent-owned polish: preserve Send to agent as answer + ready rather than one-click closure, add a durable submission receipt that survives the gate row disappearing, present concise actionable question/action + recommendation text, and handle SSR/scroll affordance as normal technical UX decisions without another Silas gate unless a genuinely subjective conflict remains.
-
-    PROGRESS (scheduled Conductor session, 2026-09-14): worked the remaining-polish list item by item rather than guessing which still applied. (1) band split -- left alone, no fresh complaint since it converged. (2) Send to agent already answers-and-releases rather than closing outright -- confirmed against submitTaskAction, no change needed. (4) already resolved in the current code: home-dream-hero.vue's cast row already has a `.no-scrollbar` track plus overlay chevrons (castCanScroll/scrollCast) -- the note's "no visible scrollbar and no chevrons" describes a version this doesn't match any more; git blame puts that landing before this session. That left two real gaps, both in home-attention.vue: the "Queued for conductor..." receipt lived inside the same row `answer`/`approve` had just removed from `humanGates`, so it never actually painted; and the note preview `line-clamp-4`'d the raw `note` field, which on a recurring task's accumulated history just showed the oldest paragraph rather than anything actionable. Fixed both -- receipts are now a section-level list independent of any one row (self-clearing, dismissible), and the preview extracts the `FOR SILAS:`/`TO APPROVE:` spans the needs-human note template already asks for instead of a blind clamp. Verified vue-tsc/eslint/prettier/test:layout-contract all clean, 0 new layout-contract violations. kind_robots#2725.
-
-    Item (3) -- whether the hero should server-render -- is real and NOT done here: `homeShowcaseStore.load()` is one call for the whole showcase (hero + all six rails + the projects strip), so this is an architecture change to the page's data flow, not a one-component tweak, and it carries real hydration-mismatch risk I have no way to visually verify pre-merge in this sandbox (no PR preview exists for this repo; see conductor AGENTS.md's kind_robots verification section). Converting it blind isn't the safer choice just because this task grants latitude to decide without another Silas gate -- filed kind-robots/t-102 to carry it as its own scoped, testable slice instead. This task's own scope (the remaining-polish list) is otherwise complete: closing to done once kind_robots#2725 merges, with t-102 carrying the one item that didn't fit in it.
+    Full history: projects/kind-robots/HISTORY.md#t-078
   approved_by_human: true
   owner: worker
   claimed_by: claude-scheduled-20260914T112936Z-kr-t078
@@ -1503,37 +1499,9 @@ tasks:
   passes: 0
   stakes: reversible
   note: >-
-    Filed 2026-09-09 (weekly site audit, global-ui/SITE-AUDIT-AGENT.md, same shape as
-    the already-resolved t-091 Component-model investigation). `components/abandonware/`
-    was the app-wide convention for parking orphaned/unreferenced components rather than
-    deleting them outright -- kind-robots/t-055, interface-vision/t-101 (citing kind_robots
-    PR #1475, "Park orphaned components in abandonware," 80+ files moved 2026-08-05),
-    digital-storefront/t-037, ruler-hooked/t-012/t-013, and ai-art-academy/t-057 all
-    record files parked there, and the 2026-09-02 weekly audit itself confirmed
-    `components/abandonware/butterfly/store-butterfly.vue` live at that path.
+    Filed 2026-09-09 (weekly site audit, global-ui/SITE-AUDIT-AGENT.md, same shape as the already-resolved t-091 Component-model investigation).
 
-    As of this audit (2026-09-09), `components/abandonware/` does not exist anywhere in
-    the checkout -- confirmed via `find`/`git ls-files` (0 files) and `git log --all --
-    components/abandonware` (0 history hits within the local clone's available window).
-    Unlike t-091's resolved case, nothing here looks like a coordinated, documented
-    removal: `nuxt.config.ts:288` (`ignore: ['abandonware/**/*.vue']`) and
-    `tsconfig.json:15` (`exclude: [..., "components/abandonware/**/*"]`) still actively
-    reference the directory, and `utils/scripts/verifyComponentReachability.ts` still
-    contains extensive current-tense logic treating "park it in abandonware" as live
-    policy (`PARKED_SEGMENT`, its broken-import checker, and PR-facing guidance text all
-    assume the directory exists).
-
-    Next worker: `git fetch --unshallow` (per t-091's precedent) to get full history,
-    then `git log --all -- components/abandonware` to find the removing commit/PR and
-    confirm whether it was a deliberate cleanup (if so, find what superseded the parked
-    components -- restored to active use, or genuinely deleted -- and record it) or an
-    accidental regression. Either way, update or remove the now-dangling references in
-    `nuxt.config.ts`, `tsconfig.json`, and `verifyComponentReachability.ts` to match
-    reality, and check whether any of the specific files the audits tracked there
-    (`store-butterfly.vue`, `plan-projects-grid.vue`, `registration-form.vue`,
-    `theme-manager.vue`, `lab-gallery.vue`, `print-swag.vue`, `single-slider.vue`,
-    `builder-manager.vue`) need their owning roadmap task's note corrected to reflect
-    the new reality.
+    Full history: projects/kind-robots/HISTORY.md#t-095
   claimed_by: claude-scheduled-20260914T233003Z-kind-robots-t095
   claimed_at: '2026-09-14T23:30:04Z'
   updated: '2026-09-14T23:44:00Z'
@@ -1562,29 +1530,9 @@ tasks:
   passes: 0
   stakes: reversible
   note: >-
-    Kaizen from t-096 (kind_robots#2711, 2026-09-13): t-096 fixed 19 route handlers
-    where a `catch` block called `errorHandler(error)` but never propagated the
-    resulting `statusCode` to the actual HTTP response (`event.node.res.statusCode =`,
-    `setResponseStatus(`, or a `createError(`-based rethrow). Nothing currently stops a
-    new route from reintroducing this class of bug. Add a lightweight, source-text
-    verification script (matching the existing `utils/scripts/verifyXyz.ts` pattern,
-    e.g. `verifyAppmakerScaffoldCollisionGuard.ts`) that scans `server/api/**/*.ts`
-    for a function containing `errorHandler(` inside a `catch` block with no
-    `event.node.res.statusCode`, `setResponseStatus(`, or `createError(` anywhere in
-    the same function body, and fails CI if one is found. Exempt the known non-route
-    helper modules that use `errorHandler()` without ever handling an HTTP response
-    themselves (`server/api/auth/index.ts`, `server/api/users/index.ts`,
-    `server/api/scenarios/create.ts`, `server/api/reactions/index.ts` as of t-096 --
-    re-check this list, since more may exist). Wire it into the same CI job that runs
-    the other `verifyXyz.ts` guards.
+    Kaizen from t-096 (kind_robots#2711, 2026-09-13): t-096 fixed 19 route handlers where a `catch` block called `errorHandler(error)` but never propagated the resulting `statusCode` to the actual HTTP response (`event.node.res.statusCode =`, `setResponseStatus(`, or a `createError(`
 
-    Reconciled (scheduled Conductor session, 2026-09-14): PR kind_robots#2727 merged
-    2026-09-14T13:02:19Z but the roadmap task was left at status: review with a malformed
-    implementation_pr field (a raw URL instead of owner/repo#N). Verified the PR directly:
-    adds utils/scripts/verifyErrorHandlerStatusPropagation.ts + selftest, wires it into
-    contract-tests.yml, fixes one genuine live regression it found
-    (server/api/art/sd/currentModel.get.ts), 585 server/api files scanned with 0 offences
-    after the fix. Closing to done and correcting implementation_pr.
+    Full history: projects/kind-robots/HISTORY.md#t-098
   claimed_by: claude-20260914T123046Z-kr-t098-conductor
   claimed_at: '2026-09-14T12:31:12Z'
   updated: '2026-09-14T14:57:23Z'
@@ -1613,36 +1561,9 @@ tasks:
   passes: 0
   stakes: reversible
   note: >-
-    Kaizen from t-062 (kind_robots#2715, 2026-09-14): `PATCH /api/resources/[id]`
-    has existed for a while and now also accepts an active RESOURCE Grant at
-    ADMIN level, but there is currently zero frontend UI anywhere that calls it --
-    `components/resources/resource-manager.vue` only ever renders the read-only
-    gallery/discover tabs, and `resource-card.vue` only emits an `open` event with
-    no editor behind it. t-062 shipped `<ShareManager>` (owner-facing Grant list/
-    share/revoke panel, `components/sharing/share-manager.vue`) but had nowhere
-    real to embed it for Resources, so it landed as a standalone
-    `/resources/[id]/share` route instead. Build a proper Resource-owner edit
-    surface (name/description/visibility/mature toggle, at minimum) -- probably a
-    modal or panel opened from `resource-card.vue`'s existing `open` event, gated
-    on `resource.userId === userStore.user?.id || userStore.isAdmin` the same way
-    `pages/resources/[id]/share.vue` does today -- and once it exists, embed
-    `<ShareManager subject-type="RESOURCE" :subject-id="resource.id" />` inside it
-    so sharing lives next to the other visibility controls instead of on its own
-    route. The standalone `/resources/[id]/share` page can stay as a direct link
-    even after this lands (harmless duplication), or be retired once the new
-    surface covers it.
+    Kaizen from t-062 (kind_robots#2715, 2026-09-14): `PATCH /api/resources/[id]` has existed for a while and now also accepts an active RESOURCE Grant at ADMIN level, but there is currently zero frontend UI anywhere that calls it -- `components/resources/resource-manager.vue` only e
 
-    RESOLVED (kind_robots PR #2728, merged): audited resource-gallery.vue and found the
-    CHECKPOINT/LORA/LYCORIS edit surface already existed (kr-card-back's #edit slot -> add-
-    model/add-lora), contradicting this task's original "zero frontend UI" premise -- that
-    surface predates PR #1611. The three real gaps were: (1) canEditInfoResource only
-    checked resourceType, not ownership -- fixed to match
-    entry.userId===userStore.userId||userStore.isAdmin, the same rule resource-share-
-    panel.vue already applies; (2) no Public/isPublic toggle in add-model.vue/add-lora.vue
-    despite the schema field and PATCH route already supporting it -- added, matching add-
-    reward.vue's convention; (3) <ShareManager subject-type="RESOURCE"> only lived on the
-    standalone /resources/[id]/share page -- embedded it in the edit panel too. Verified
-    eslint/vue-tsc/layout-contract/capture-group-guards clean; merged.
+    Full history: projects/kind-robots/HISTORY.md#t-099
   claimed_by: claude-20260914T123046Z-kr-t099-conductor
   claimed_at: '2026-09-14T12:44:47Z'
   updated: '2026-09-14T13:09:48Z'
@@ -1655,45 +1576,9 @@ tasks:
   passes: 0
   stakes: reversible
   note: >-
-    MOVED from taskmaster/t-004 on 2026-09-14, when taskmaster was wound down into
-    storybook's fourth mode (storybook/t-047). The task was never Taskmaster work --
-    it is a portfolio-wide Kind Robots asset audit that happened to be filed under
-    taskmaster because taskmaster/t-003 turned up the first broken path. Rehomed here
-    so it keeps being scanned after taskmaster retires, rather than going dark inside
-    a retired project with 14 live ArtJobs still queued. Original note follows.
+    MOVED from taskmaster/t-004 on 2026-09-14, when taskmaster was wound down into storybook's fourth mode (storybook/t-047).
 
-    taskmaster/t-004 audited every dashboard-tab and tutorial image path in kind_robots
-    (140 unique paths across dashboardHelper.ts and tutorialCards.ts) by HEAD-checking
-    each against the live media origin. All dashboard-tab images are healthy (200). 15
-    tutorial-card images 404d -- 1 (scenario/storybook.webp) is already worked around in
-    kind_robots storybook-page.vue per interface-vision/t-111, so nothing to do there.
-    The other 14 (Animation Manager, Dream Brainstorm, Community Broadcasts, Mana Purse,
-    Model Builder, AppMaker, Conductor App, Packmaker, WonderLab, Screen FX, Da Vinci,
-    Media Watchlist, Ruler Hooked, Voice Lab) were genuinely missing with no prior
-    tracking. Targeted regeneration requests were added and all 14 queued as ArtJobs
-    ids 8234-8247.
-
-    WHAT IS LEFT: the render queue was backlogged when this was filed (PENDING=1077,
-    oldest pending ~147h, 44/24h throughput) -- the same infra wait tracked for
-    ai-art-academy/t-044 and model-builder/t-031 -- so none of the 14 rendered. A worker
-    should poll job ids 8234-8247 directly (GET /api/art/queue/{id}) rather than re-running
-    consume_art_requests_to_media.py, which would resubmit duplicates for any still-pending
-    entry. Reconcile those ArtJobs against current queue/media state, repair or requeue only
-    missing outputs, verify the 14 targeted tutorial assets return 200, then close to done.
-
-    Two of the 14 are now historical names rather than live surfaces: "Da Vinci" retired
-    into storybook on 2026-09-12 (/play/davinci is a 301) and WonderLab was retired
-    2026-08-11. Check tutorialCards.ts for whether those two cards still render at all
-    before spending render capacity on their art -- a 404 on a card nobody can reach is a
-    delete, not a regeneration.
-
-    No human decision is needed: this is process, not content (released under Silas's
-    2026-09-07 human-gate simplification policy). Nothing downstream depends on it.
-
-    RESOLVED (process reconciliation, no code change needed): polled all 14 ArtJobs (ids 8234-8247) via GET /api/art/queue/{id} -- the render backlog tracked when this was filed has since cleared and all 14 are status=DONE with verified completion proofs. HEAD-checked all 14 target paths on kindrobots.org/images/tutorials/**: all return 200.
-    - 13/14 (Animation Manager, Dream Brainstorm, Community Broadcasts, Mana Purse, Model Builder, AppMaker, Conductor App, Packmaker, WonderLab, Screen FX, Media Watchlist, Ruler Hooked, Voice Lab) are confirmed live and referenced by an active tutorialImage() call in stores/helpers/tutorialCards.ts.
-    - Da Vinci (job 8244, wonder/davinci.webp) rendered successfully (200) but tutorialCards.ts no longer has any tutorialImage('wonder', 'davinci') call -- its card was already removed from the tutorial config independently when Da Vinci retired into storybook on 2026-09-12 (/play/davinci is a 301). No broken card results from this: nothing links to the asset, so it's a harmless orphaned file, not a bug needing a fix. WonderLab (still live, checked separately) does have an active card and is fine.
-    No repair, requeue, or code change was needed -- this was a pure poll-and-verify close-out.
+    Full history: projects/kind-robots/HISTORY.md#t-100
   claimed_by: claude-20260914T131700Z-kr-t100-conductor
   claimed_at: '2026-09-14T13:10:39Z'
   updated: '2026-09-14T13:13:18Z'
@@ -1705,44 +1590,9 @@ tasks:
   stakes: reversible
   owner: worker
   note: >-
-    Filed 2026-09-14 from Silas's art-pipeline assessment. Small, self-contained.
+    Filed 2026-09-14 from Silas's art-pipeline assessment.
 
-
-    The art-request fallback is live and healthy -- server/api/conductor/art-request.post.ts ->
-    server/utils/artRequestYaml.ts appends to conductor projects/art-prompts.yaml, drained every
-    six hours by conductor's auto-art-generate.yml. But ArtQueueEntry carries NO TIMESTAMP AT ALL,
-    so nothing downstream can distinguish a two-hour backlog from a six-week stuck one. As of
-    2026-09-14, 19 of 28 entries are `pending` because Silas's art server is down; that is correct
-    behaviour, and it is indistinguishable from rot by inspection.
-
-
-    Add `requested_at` (ISO-8601 UTC) to the ArtQueueEntry type and to renderRequestEntry() in
-    server/utils/artRequestYaml.ts.
-
-
-    Two things to keep in mind:
-
-    - utils/scripts/verifyArtRequestYaml.ts pins the exact rendering contract -- column-0 `- `
-    marker, 2-space continuation keys, key order -- because mixed indentation silently breaks
-    conductor's PyYAML parser (the original bug, kind_robots PR #84). Update the guard alongside
-    the change rather than after it.
-
-    - The conductor consumers are dict-based and tolerate extra keys
-    (consume_art_requests_to_media.py uses entry.get(...)), and appendRequest's duplicate detection
-    is keyed on `id`, so a per-call-varying timestamp does not affect dedup. Confirm both rather
-    than assuming.
-
-
-    Once the field exists, conductor's side can report queue age; that reporting is not part of
-    this task.
-
-    RESOLVED (kind_robots PR #2729, merged): added requested_at (ISO-8601 UTC) to
-    ArtQueueEntry and renderRequestEntry(), set once in buildEntry() via new
-    Date().toISOString(). Confirmed conductor's consume_art_requests_to_media.py tolerates
-    the new key (dict.get) and appendRequest()'s dedup (keyed on id/image_path) is
-    unaffected. verifyArtRequestYaml.ts updated alongside with a new assertion that
-    requested_at is always present. Conductor-side queue-age reporting from this field
-    remains a separate task.
+    Full history: projects/kind-robots/HISTORY.md#t-101
   updated: '2026-09-14T13:26:01Z'
   claimed_by: claude-20260914T131700Z-kr-t101-conductor
   claimed_at: '2026-09-14T13:14:21Z'
@@ -1756,37 +1606,9 @@ tasks:
   stakes: reversible
   owner: worker
   note: >-
-    Split off t-078's remaining-work item 3, which didn't fit that task's scope. Right now
-    home-page.vue fetches the whole home showcase (hero + all six rails + the projects strip)
-    from a single homeShowcaseStore.load() call inside onMounted, so the front page's first
-    paint is always a skeleton -- there is no SSR path for any of it.
+    Split off t-078's remaining-work item 3, which didn't fit that task's scope.
 
-
-    Scope: decide whether to move that fetch to run during SSR (e.g. via useAsyncData wrapping
-    homeShowcaseStore.load, or an equivalent), and implement it if so. performFetch already
-    resolves relative URLs to absolute ones under import.meta.server (see stores/utils.ts's
-    resolveRequestUrl), which suggests the store is not fundamentally hostile to SSR, but this
-    has not been exercised for this endpoint and the whole page's layout depends on the same
-    fetch, so a naive change risks a hydration mismatch (stale skeleton state briefly disagreeing
-    with server-rendered markup) across every rail, not just the hero.
-
-
-    Verification should cover: vue-tsc/eslint clean as usual, but also an actual check for
-    hydration warnings (dev server console, or a component test that mounts server then
-    hydrates client) rather than relying on vue-tsc/eslint alone -- neither catches a hydration
-    mismatch. If SSR genuinely isn't worth the risk for this page, it is also a legitimate
-    outcome to record that decision and its reasoning here and close the task without a code
-    change; either way, do not leave this open on "should" without concluding it.
-
-    DECISION (no code change; a legitimate outcome per this task's own note): concluded SSR is technically promising but not verifiable in this session, so it is not being implemented now.
-
-    THE CASE FOR SSR (if a future session can verify it):
-    - pages/[...slug].vue already solves the identical class of problem for pageStore: an awaited top-level useAsyncData() populates the store during setup (not inside onMounted, which never runs during SSR), then a sync function is called directly rather than deferred -- see that file's "Populate the store during SETUP, not only on mount" comment. home-page.vue's fix would be the same shape, simpler even: showcaseStore.load() already mutates the store directly as its side effect, so `await useAsyncData('home-showcase', () => showcaseStore.load())` at the top of <script setup> is likely sufficient, with the existing onMounted call left in place as a harmless no-op (isFresh() short-circuits it once SSR has just populated loadedAt).
-    - @pinia/nuxt (already installed) auto-serializes all store state into the Nuxt payload and restores it on hydration, so a store populated during SSR should hydrate to the identical client state without a manual bridge -- the mechanism the task note asked me to confirm rather than assume.
-    - server/api/showcase/home.get.ts is explicitly unauthenticated and identical for every visitor (confirmed by reading it) -- there is no per-user personalization to diverge between the SSR request context and the client, which removes the most common source of hydration mismatches for this class of change.
-    - performFetch's resolveRequestUrl already handles the relative-to-absolute URL rewrite needed under import.meta.server via useRequestURL(), so the store's existing fetch call needs no change to work server-side.
-
-    WHY NOT IMPLEMENTED NOW: the task explicitly requires verifying an actual hydration check (dev server console, or a component test that mounts server then hydrates client) rather than trusting vue-tsc/eslint alone. Neither is available to this session: there is no dev-server-plus-browser path here (AGENTS.md: headless Chromium through this sandbox's proxy fails on every host, not just external ones, so no live hydration-warning console is reachable), and this repo has no component-mount test infrastructure at all (no vitest/@vue/test-utils/jsdom in package.json -- every existing utils/scripts/verifyXyz.ts guard is a source-text contract, never an actual Vue render). Building an entire new SSR-render-then-hydrate test harness from scratch, on spec, to verify one page is a materially larger and riskier undertaking than this task's own reversible/small scope, and shipping the change unverified risks a real hydration mismatch across every rail on the site's first paint, not a contained failure. Left for a session with either capability available.
+    Full history: projects/kind-robots/HISTORY.md#t-102
   updated: '2026-09-14T13:30:00Z'
   claimed_by: claude-20260914T134500Z-kr-t102-conductor
   claimed_at: '2026-09-14T13:29:40Z'
@@ -1800,44 +1622,9 @@ tasks:
   stakes: reversible
   passes: 0
   note: >-
-    Found 2026-09-14 while wiring text-provider-server visibility into character-chat.vue and
-    character-flip-card.vue for text-generation/t-006 (out of that task's scope, filed separately
-    per AGENTS.md's scope-discipline rule).
+    Found 2026-09-14 while wiring text-provider-server visibility into character-chat.vue and character-flip-card.vue for text-generation/t-006 (out of that task's scope, filed separately per AGENTS.md's scope-discipline rule).
 
-    character-chat.vue (the real, current split-out chat cockpit -- see its own header comment)
-    renders `<CharacterFlipCard :character="..." :show-stats="true" image-fit="contain" />` inside
-    a small sidebar slot, evidently expecting a lightweight visual display card. Nuxt's component
-    auto-import here uses `pathPrefix: false` (nuxt.config.ts), so that tag resolves purely by
-    PascalCase filename -- and the only file on disk matching `CharacterFlipCard` is
-    components/characters/character-flip-card.vue, an 880-line file whose own header comment
-    reads "/components/content/characters/character-interact.vue" and which has NO defineProps at
-    all (confirmed: `grep -n defineProps components/characters/character-flip-card.vue` returns
-    nothing). It is, byte for byte in structure, the pre-split character-interact.vue (923 lines,
-    "482 of template and 440 of script") that character-chat.vue's own comment says was fully
-    replaced: "It used to be 923 lines... All of it moved to character-chat.vue unchanged" (verbatim
-    from the CURRENT, real components/characters/character-interact.vue, which is 55 lines and
-    correctly does `<character-gallery v-if="!isInteractMode" /> <character-chat v-else />`).
-
-    So today: character-chat.vue's sidebar renders the ENTIRE duplicate old cockpit (its own
-    "Character Interact" header, mode tabs, full independent chat form with its own send button and
-    Escape-key-shaped state) nested inside character-chat.vue's own aside panel, silently dropping
-    the three props character-chat.vue passes it (character/show-stats/image-fit are just inert
-    attrs on whatever root element the duplicate file renders, since there's no defineProps to
-    receive them). This is very likely visibly broken/confusing in production (a full duplicate
-    "Character Interact" screen crammed into a sidebar box) -- not verified visually in this
-    sandbox (no reachable browser/preview; see AGENTS.md's kind_robots verification section) but
-    confirmed structurally via direct file inspection, not inference.
-
-    Also referenced (as `<CharacterFlipCard>`) from components/bots/bot-gallery.vue's own comment
-    only, not an actual usage -- character-chat.vue is the one live call site.
-
-    DO: figure out what `<CharacterFlipCard>` was actually meant to be (grep art/design docs or
-    ask Silas if unclear), then either (a) build the real small flip-card display component under
-    that name and delete character-flip-card.vue's current duplicate content, or (b) if no such
-    card was ever built and character-chat.vue's own inline character summary already covers the
-    need, drop the `<CharacterFlipCard>` usage from character-chat.vue entirely and delete this
-    file. Either way: delete the dead duplicate content. Do NOT delete it blind without checking
-    whether any other in-flight branch/PR still references it.
+    Full history: projects/kind-robots/HISTORY.md#t-103
   updated: '2026-09-15T00:01:44Z'
   claimed_by: claude-scheduled-20260914T234848Z-kind-robots-t103
   claimed_at: '2026-09-14T23:48:49Z'
@@ -1854,108 +1641,7 @@ tasks:
   note: >-
     Filed 2026-09-14 from Silas's report that the Storybook genre picker was showing "weird statuesque heads" -- the same class of complaint as the earlier "bunch of cartoon faces" wave.
 
-    Root cause and code fix: kind_robots PR #2736 (facet-coverage-krea2-v5). scripts/generate_facet_art_v4.ts appended art-direction jargon to every Facet prompt -- 'Iconic scene, concrete focal subject, environment, action, strong atmosphere.' -- and Krea 2, caption-conditioned at cfg 1 with no instruction channel, painted the words: "concrete" as concrete, "iconic" as a monument, "focal subject" as a head placed centre-frame. Verified against live data rather than inferred: the stored artPrompt for every affected row is literally "<Title>. Iconic scene, concrete focal subject, ...", and the rendered images were pulled and inspected. Office Satire, Body Horror and Aging Protagonist are the same grey bust in the same grey room. The occupation clause ('...unmistakable silhouette, workplace cues.') renders as a literal black paper cut-out on a desk -- Chaos Consultant and Accidental Diplomat are the same cut-out.
-
-    It only bites where the Facet has no description/flavorText/examples. With prose the clause is diluted and the art is fine, which is why 595 of 991 v4 renders are good and this ran unnoticed for six weeks. Of 1,633 live Facets, 206 renders are selected for resubmission (GENRE 78, THEME 70, OCCUPATION 20, ROLE 18, ARCHETYPE 12, SETTING 8). The 64 bare ANIMAL rows are deliberately NOT re-rolled: their clause names a real subject and a Blue-Footed Booby looks like a Blue-Footed Booby.
-
-    TWO THINGS REMAIN, neither doable from a Claude Code web session.
-
-    1. Run the repair sweep where the database is reachable:
-         npx tsx scripts/generate_facet_art.ts --repair-tainted          # dry run first
-         npx tsx scripts/generate_facet_art.ts --write --repair-tainted
-       acrocatranch.com:5544 is outside the web sandbox's network policy (TCP timeout), so the producer cannot run from a web session at all; only the HTTPS API is reachable. Enqueuing through /api/art/enqueue instead was considered and rejected: it bypasses the producer's idempotency key, facetArtworkVersion provenance and requireCompletionProof, which is the same provenance gap that let dream-cycle/t-026 log 36 "complete" bundles over an empty Character for six weeks. The dry run was rehearsed offline against all 1,633 live Facets instead: 0 contract rejections, so the sweep will not abort mid-run the way the 2026-09-05 repair did.
-
-    2. DECIDED 2026-09-15 by Silas, and implemented in kind_robots PR #2739
-       ("If they are useless, kill them. The others do the swatch branch").
-       The pack is 59 rows and it splits: 13 are quality incantations with
-       nothing to depict (masterpiece, 4k render, trending on ArtStation,
-       perfect anatomy, ...) and 46 are real visual techniques (depth of field,
-       subsurface scattering, oil on canvas effect) that can be shown but not in
-       the abstract. An earlier reading of this task called all 55 non-depictable;
-       that was wrong for the 46, and the correction is what the split is built on.
-
-       The 13 are withdrawn by utils/scripts/retireCargoCultPromptEnhancements.ts
-       -- deactivated, de-randomized, art requirement released. NOT deleted:
-       RewardFacet links, ArtImage facet snapshots and saved Builder sheets
-       reference those rows. `--apply --restore` reverses it; hard removal is
-       cleanupRetiredFacetShells.ts, which migrates edges first.
-
-       The 46 render a fixed-subject swatch -- one ripe pear and one glass marble
-       on a bare table -- with the technique named first, so the technique is the
-       only variable across the 46 cards.
-
-       2026-09-15. The shared-swatch idea above is retired: v1 (pear + marble,
-       flat light) gave the techniques nothing to act on, v2 (lamp, gilt, silk,
-       caustics) already did every effect at maximum so naming one changed
-       nothing -- Silas: "volumetric and gilded shimmer are not recognizably
-       different from my eyes." Both failures are the same law this task keeps
-       re-learning: anything concrete in a SHARED clause becomes the shared look,
-       because the clause is the only part that does not vary. Replaced by 45
-       per-technique authored prompts in utils/seeds/facetArtPrompts.ts (191
-       entries total with the 77 genres and 69 themes).
-
-       Two blockers found and fixed today, both silent, both caught by a number
-       or a picture rather than by any test:
-
-       kind_robots #2761 -- the unknown-flag guard added in #2755 ran at module
-       top level, so applyCuratedFacetArtPrompts.ts (which imports the producer)
-       died during import and `--apply` never wrote a prompt. CI could not see
-       it: every verifier imports the module with NO arguments, the one case the
-       guard allows. Now inside main(); regression test imports with foreign
-       flags.
-
-       kind_robots #2762 -- the deeper one. curatedPromptNeedsRender compared the
-       curated prompt against the newest job PAYLOAD (what the producer asked
-       for) rather than the linked ArtImage.promptString (what was painted). The
-       two diverge whenever a queued job does not produce the linked image. That
-       hid 148 genre/theme cards whose catalog prompt and job payload were both
-       the authored text while the actual picture had been painted from the
-       retired v5 template clause -- the exact "A scene of this kind underway"
-       phrasing this task set out to remove. Every counter read done; every card
-       was wrong. The predicate now prefers the painted prompt.
-
-       Also added utils/scripts/auditFacetArtFreshness.ts, which answers the
-       question nothing here could: does every Facet have a picture made from the
-       prompt it carries NOW? It reads the live API from outside and compares
-       three layers -- authored source, catalog prompt, painted prompt -- naming
-       which link is broken (apply-drift / render-drift / no-art / no-prompt).
-       Render-drift is the invisible case: the Facet HAS a picture, so nothing
-       else reports it.
-
-       Live state at close of session, pending Silas's runs on Alexandria:
-       45 swatches apply-drift, 148 genre/theme render-drift, 34 GENRE no-art,
-       11 THEME no-prompt (several are junk rows, e.g. cowcore-1783846580282).
-       Stays needs-human until the runs land and the auditor comes back clean.
-
-    WHAT STILL NEEDS SILAS: only the two runs, both on Alexandria where the
-    database is reachable. The decision is made and the code is on main.
-
-      npx tsx utils/scripts/retireCargoCultPromptEnhancements.ts           # dry run
-      npx tsx utils/scripts/retireCargoCultPromptEnhancements.ts --apply
-      npx tsx scripts/generate_facet_art.ts --write --repair-tainted
-
-    Order does not matter; the producer skips retired rows by policy either way.
-    Repair cohort is now 252 (204 genre/occupation/archetype + 46 swatches);
-    diffed against main to confirm the 204 already dry-run on 2026-09-14 are
-    byte-identical, so a --write before or after #2739 queues the same jobs.
-    Close this task once both runs are done and the picker has been spot-checked.
-    GATE HYGIENE 2026-09-29: Silas's product decision is already recorded above and approved_by_human is true. The remaining work is hands-on Alexandria execution plus verification, so this is a soft access/assistance gate, not another human decision. Keep it visible until those runs complete, but do not ask Silas to re-approve the already-decided prompt policy.
-
-    GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
-    session): Legitimate: the remaining step needs hands on a machine no agent can reach.
-    The producer needs the DB port (acrocatranch.com:5544), which no web session can reach.
-    Policy is already decided (approved_by_human true).
-
-    DONE 2026-09-30 (session 20260930T0600Z-gate-triage, Claude Code, 2026-09-30). Silas ran
-    both commands on Alexandria. retireCargoCultPromptEnhancements.ts --apply retired 13 of
-    59 prompt-enhancement Facets (masterpiece, 4k render, trending on ArtStation, ...), kept
-    46 as swatches, and cancelled 0 jobs. The action is reversible with --apply --restore.
-    generate_facet_art.ts --write --repair-tainted (facet-coverage-krea2-v6) resubmitted 0
-    tainted targets and queued 4 coverage jobs. It left 550 healthy v4 renders alone and
-    skipped 542 slots already attempted by a newer version, so the tainted backlog is clear.
-    Silas accepted the Storybook genre picker the same day (storybook/t-016), which covers
-    this task's spot-check. The 65 Facets the producer holds for catalog review went to
-    kind-robots/t-124.
+    Full history: projects/kind-robots/HISTORY.md#t-104
   updated: '2026-09-30T09:00:00Z'
   approved_by_human: true
   gate_reason: physical-access
@@ -1971,288 +1657,9 @@ tasks:
   gate_human: false
   approved_by_human: true
   note: >-
-    Filed 2026-09-15 from Silas: "We have a lot of loras that don't have a default image attached."
+    Filed 2026-09-15 from Silas: "We have a lot of loras that don't have a default image attached." ASSESSMENT (live /api/resources, 2,345 active Resources).
 
-    ASSESSMENT (live /api/resources, 2,345 active Resources).
-    The gap is not partial, it is total: ZERO of the 2,228 LoRA-family rows
-    (2,015 LORA + 213 LYCORIS) carry a generated ArtImage or a stored imagePath.
-    Every preview in the catalog today is a hotlink to a third party:
-      - 2,005 to image.civitai.com (alive; 59/60 sampled returned 206)
-      -   163 to genur.art (DEAD -- img.genur.art has no DNS record at all)
-      -    60 with no preview of any kind
-    Checkpoints are the same shape: 0 of 58 own their art, 24 have nothing.
-
-    That leaves 223 LoRAs being triaged BLIND -- the maturity page shows them
-    /images/kindart.webp and asks for an SFW/NSFW ruling on a filename. 128 of
-    those are currently flagged mature and 95 SFW, and neither flag was set from
-    looking at anything. Maturity split catalog-wide is 880 mature / 1,348 SFW.
-
-    MATCHING LORAS TO BASES. supportedServer is too coarse to drive this -- it
-    buckets Pony, Illustrious and SDXL-base together, and a Pony LoRA on an
-    SDXL-base checkpoint renders mush rather than failing, so nothing would flag
-    it. `generation` carries the real Civitai baseModel and is the key.
-    2,151 of 2,228 (96.5%) have a same-family base already registered. The 77
-    orphans are Flux Kontext (47, an edit model needing a source image), SD 2.1
-    (16, no base on hand), Anima/Krea/blank (14).
-
-    Checkpoint `generation` is NOT trustworthy the way the LoRA one is:
-    cyberrealisticPony_v61 carries 'ARCHIVE', cartoonArcadiaSDXLSD1_v2 carries
-    'base', and duchaitenStylelikeme (filed under SD15/) carries 'SDXL'. The
-    localPath DIRECTORY is how they are filed for ComfyUI and is the reliable
-    signal. Reading it that way corrects an earlier count made from `generation`:
-    there are 3 Pony checkpoints (one of them SFW, realcartoonPony_v1) and 6
-    Illustrious, not 2 and 0.
-
-    CAPACITY. The live queue did 535 images in 24h, sits idle (oldestPending
-    null) and is not paused, so the full 2,228 is ~4-5 days of background
-    rendering, and batch 1 is ~10 hours.
-
-    WHAT LANDED THIS SESSION (kind_robots, branch claude/happy-gauss-l3znps):
-      - utils/loraProbe.ts: family classification, per-family probe recipe,
-        checkpoint selection, blind-preview detection. Pure and self-tested.
-      - server/api/lora/probe-plan.post.ts: admin-only planner. Resolves what
-        would render on which base with which prompt, and enqueues NOTHING --
-        the caller posts each plan to the existing /api/art/enqueue, so gating,
-        workflow building and queueing are reused rather than duplicated.
-      - server/utils/entityArt.ts: 'resource' added as an EntityArtType. This is
-        what makes the write-back free -- art/queue/[id]/complete.post.ts already
-        calls applyEntityArtCompletion, which sets Resource.artImageId +
-        imagePath and propagates isMature/isPublic from the Resource onto the
-        ArtImage, so a mature LoRA's preview is born correctly gated.
-      - stores/loraTriageStore.ts + pages/admin/lora-triage.vue: a "Render N
-        missing previews" action, per-card render/re-render, a missing-preview
-        filter and count, queued/failed badges, and a skipped-with-reasons list.
-      - utils/scripts/verifyLoraProbePlan.test.ts (npm run test:lora-probe-plan).
-
-    No UI resolution change was needed: previewSrc() in both lora-triage.vue and
-    resource-card.vue already prefers ArtImage over previewImageUrl, so a
-    generated preview displaces its hotlink on arrival.
-
-    WHY THE CATALOG WAS EMPTY DESPITE A PREVIEW ENDPOINT ALREADY EXISTING.
-    server/api/resources/[id]/generate-preview.post.ts has been queueing
-    single-resource preview renders for weeks. Its loop was open at the far end:
-    the job payload carries previewResourceId, but the ONLY reader of that field
-    is preview-job/[jobId].get.ts, and only to check ownership while polling.
-    Nothing attached the finished ArtImage to the Resource that asked for it, so
-    every render it ever queued went nowhere. That is the actual reason 0 of
-    2,228 rows carry art. It now declares the same entityArt metadata, which
-    routes its result through applyEntityArtCompletion and arms
-    expectsEntityArtCompletion, so a failed attachment rolls the completion back
-    instead of marking the job DONE over an unchanged row.
-
-    A BUG THIS INTRODUCED AND THEN FIXED, worth recording because the typecheck
-    could not see it: adding 'resource' to the EntityArtType union and to
-    ENTITY_FIELDS is not sufficient. The runtime gate is
-    normalizeEntityArtType's hardcoded literal list, and a type missing from it
-    is rejected with a 400 at enqueue while the compiler stays happy, because
-    the return type still narrows. verifyLoraProbePlan.test.ts now compares the
-    union, the normalize list and the ENTITY_FIELDS keys as source text so the
-    next entity type added cannot repeat it.
-
-    NOT converged, deliberately: generate-preview.post.ts still uses its own
-    checkpointScore() and its own prompt. That scorer matches `generation`
-    exactly for +100, which misses cyberrealisticPony_v61 ('ARCHIVE') entirely
-    and drops Pony LoRAs onto whatever SDXL checkpoint scores next -- the exact
-    mush-render this task's mapping exists to prevent -- and it 409s on FLUX.
-    Pointing it at utils/loraProbe.ts is the right follow-up but changes
-    behaviour for an existing caller, so it is not being folded into this PR.
-
-    TWO BUGS THE DRY RUN AGAINST LIVE DATA CAUGHT, both fixed before commit:
-      1. The flux lane never reads `checkpoint` -- buildFluxWorkflowFromRequest
-         resolves a fixed UNet through fluxModelByVariant (flux1-dev-Q8_0.gguf).
-         Selecting a Flux checkpoint would have recorded a base on the ArtImage
-         that took no part in the render, and would have routed Flux.1 D LoRAs
-         onto the Flux.2 Klein rows that share the Flux/ directory. Recipes now
-         carry basePolicy, and flux is 'engine-default'.
-      2. Parens in a trigger are attention-weighting syntax, not literal text.
-         '(Imminent) Reversed Gangbang (Concept)' is a real defaultTrigger, and
-         raw parens silently re-weight the probe. The SD lanes now escape them;
-         Flux, read by T5 as prose, does not.
-
-    DRY RUN over the 223: 205 plannable, 18 skipped (8 SD 2.1, 2 LTX, 1 Kontext,
-    1 Anima, 6 blank/other). Bases: 61 cyberrealisticPony, 35 disneyrealcartoonmix,
-    33 duchaitenStylelikeme, 28 bigLove_xl25, 27 revAnimated, 14 flux engine
-    default, 6 realcartoonPony, 1 furrytoonmix.
-
-    DESIGN NOTE. One fixed probe per family, not a per-LoRA prompt. artPrompt is
-    a byte-identical copy of defaultTrigger on all 2,228 rows (median 25 chars),
-    so there was never a curated prompt to use. Identical scaffolding within a
-    family is the point: when every Pony LoRA renders the same subject, framing
-    and lighting, whatever differs in the output is the LoRA -- which is what
-    makes "lackluster" and "wrongly matched" legible when scanning the grid.
-    Steps/cfg are deliberately unset so sdxlSamplerProfile() can tune the
-    Lightning and Turbo bases in the catalog.
-
-    MERGED 2026-09-15: kind_robots PR #2756 (squash 8fb75be) and this roadmap
-    entry as conductor PR #4411. Pushing to main triggers
-    publish-container.yml, so the production image rebuilds from the merge;
-    the batch can run once Alexandria is serving that image.
-
-    ONE CI FAILURE, entirely self-inflicted and worth recording: this task was
-    first filed with `status: in-progress`, which is a MILESTONE status in this
-    repo, not a task status. scripts/validate_roadmaps.py gates task status
-    against the AGENTS.md lifecycle (ready -> claimed -> review -> done, side
-    exits blocked/needs-human/challenged/waiting) and rejected it. The mistake
-    came from grepping raw `status:` text across all roadmaps and reading the
-    52 milestone hits as evidence the value was valid for tasks. Two different
-    vocabularies share one key name; the validator is the authority, not a grep.
-
-    STILL OPEN:
-      - The batch has NOT run yet. It needs the merged image deployed, and then
-        either the triage page's render button or a direct call to
-        /api/lora/probe-plan followed by /api/art/enqueue per plan.
-      - commercialSafe: most NSFW bases are not commercial-safe and these
-        previews must never become print-eligible. Worth an explicit assertion
-        against ArtImage.checkpointResourceId rather than trusting it.
-      - Batches 2 (2,005 civitai hotlinks) and 3 (the 77 orphans, incl. a
-        Kontext img2img path) are follow-on scope, not this task.
-
-    PROGRESS (conductor scheduled sweep, 2026-09-15T16:30Z): ran the STILL-OPEN
-    batch step for the first time since kind_robots#2756 merged. Confirmed the
-    merged code is actually live in production first (POST /api/lora/probe-plan
-    returns a real 401 auth challenge, not the SPA shell).
-
-    Called /api/lora/probe-plan {scope: blind, limit: 300}: 124 blind LoRAs
-    remain considered (down from the PR's original 223 -- some already got
-    previews another way since merge), 106 plannable (60 pony on
-    cyberrealisticPony_v61, 33 sdxl split across duskMixXLIllustration_v15/
-    dreamshaperXL_v21TurboDPMSDE, 13 flux), 18 skipped (same unsupported-base
-    shape the PR described).
-
-    DELIBERATELY DID NOT fire all 106 this cycle. Today's render relay had two
-    still-open hard gates filed the same day (conductor/t-165: relay hung 67+
-    min on flux2_dev_fp8mixed.safetensors, ArtJob 22837; conductor/t-167: relay
-    wedged again minutes later on an unrelated plain Pony job, ArtJob 22838,
-    proving it isn't checkpoint-specific). check_render_box.py and
-    /api/art/queue/stats both show the relay healthy again right now (heartbeat
-    0.1 min old, 96 completions/6h, staleRunningCount 0) -- but with 104 jobs
-    already PENDING (oldest 4+ hours) ahead of anything new, and given the same-
-    day wedge history, queuing all 106 at once felt like the wrong risk to take
-    unattended.
-
-    Instead queued a 5-job PILOT from the pony/comfy lane (resourceIds 1370,
-    1372, 1375, 1377, 1381 -> ArtJob 23041-23045, all accepted 201/PENDING).
-    These sit behind the existing backlog and had not reached RUNNING by the end
-    of this session, so completion (and the actual proof that
-    applyEntityArtCompletion correctly attaches art + isMature/isPublic back
-    onto the Resource for entityType 'resource', which has never fired in
-    production before) is NOT YET VERIFIED.
-
-    NEXT SESSION: check ArtJob 23041-23045 via GET /api/art/queue/:id. If all
-    DONE with the Resource rows (1370 etc.) now carrying artImageId/imagePath --
-    continue queuing the remaining ~101 comfy/sdxl plans in similar small
-    batches (avoid re-running probe-plan blind; re-plan first since the
-    considered set shrinks as jobs land). Hold the 13 flux plans for last per
-    the endpoint's own ordering comment (28 min/job, stalls everything queued
-    behind it) and only once t-165/t-167 are resolved or enough time has passed
-    to trust flux2-adjacent checkpoints again. If any of the 5 pilot jobs FAILED
-    or hung, stop and treat it as a new relay-health data point on t-165/t-167
-    rather than continuing the batch blind.
-
-    RECONCILED (conductor scheduled sweep, workflow-medic/state-reconciliation,
-    2026-09-15T~19:58Z): checked ArtJob 23041-23045 (the 5-job pilot batch from the merged
-    implementation PR) via GET /api/art/queue/:id. Result: 23041 DONE (artImageId 24620);
-    23042-23045 all CANCELLED ("Cancelled by admin"), not failures -- most likely swept up
-    in the same-day relay-wedge firefighting (conductor/t-165, t-167), not a defect in this
-    batch. Verified the actual thing this task exists to prove: GET /api/resources/1370 now
-    shows artImageId=24620, imagePath set, and isMature/isPublic populated --
-    applyEntityArtCompletion correctly attaches art back onto a Resource row for entityType
-    "resource" in real production, confirmed for the first time (the note flagged this as
-    never having fired in production before). That is a genuine positive result, not just an
-    enqueue-returns-a-jobId check. Recording implementation_pr for
-    silasfelinus/conductor#4442 (was unset, which is why check_pr_merged_drift.py flagged
-    this task as claimed/PR-already-merged drift). Re-arming to ready rather than done: only
-    1 of 223 target rows has verified art end-to-end, and conductor/t-165 and t-167 (relay
-    cold-model-load wedging) are still open and were reinforced with fresh evidence this
-    same session (a third engine wedged at 18:17Z) -- the task note already says to hold
-    further batches until relay stability returns, and nothing here changes that. Next
-    actionable step unchanged: once t-165/t-167 clear (or enough stable time passes), re-
-    plan (do not reuse the stale probe-plan) and continue queuing the remaining ~101
-    comfy/sdxl plans in small batches, holding the 13 flux plans for last.
-
-    PROGRESS (scheduled Conductor session, 2026-09-15T21:33Z): claimed to re-plan and
-    continue the small-batch rollout per the prior cycle's next step. Before queuing
-    anything, checked /api/art/queue/stats fresh and found the live queueDepth had grown
-    sharply since the 16:30Z session: PENDING now 2070 (up from ~104 earlier today), RUNNING
-    1, staleRunningCount 0, oldestPending is ArtJob 23040 (coloring-book project) aged
-    ~7.8h. check_render_box.py still reports UP with a healthy 0.5-minute-old heartbeat and
-    160 completions in the last 6h, so this is not the same stale/stuck-RUNNING wedge
-    signature as t-165/t-167 -- the engine is actively processing -- but at ~160/6h
-    throughput against a 2070-deep queue, a newly-queued LoRA-preview batch would sit for
-    many hours before rendering, and this cycle cannot verify completion (the actual proof-
-    of-write-back this task still needs) within a single session at that depth. Appended
-    this queue-depth data point to conductor/t-165 and t-167 as fresh relay-health evidence
-    rather than opening a new escalation, since it is the same underlying incident class
-    (post-wedge backlog, not a new independent defect). Did not submit a new probe-plan or
-    enqueue any jobs this cycle to avoid adding to an already backed-up queue with no
-    ability to verify the outcome. Re-arming to ready, releasing the claim. Next actionable
-    step: once the live queue depth drains back toward its normal range (check
-    /api/art/queue/stats before assuming stability from heartbeat alone) or enough time has
-    passed, re-plan via /api/lora/probe-plan {scope: blind} (the considered set shrinks as
-    jobs land elsewhere) and continue the small-batch comfy/sdxl rollout, holding the 13
-    flux plans for last.
-
-    PROGRESS (scheduled Conductor session, 2026-09-15T23:31Z): render box confirmed healthy
-    (check_render_box.py: UP, heartbeat 0.9 min, 256 completions/6h) with no stale-RUNNING
-    signature and no new wedge since the last t-165/t-167 note ~2h prior, so proceeded past
-    the prior cycle's hold. Re-planned via /api/lora/probe-plan {scope: blind, limit: 300}:
-    considered shrank to 72 (down from 124 two cycles ago as jobs land elsewhere), 54
-    plannable (53 comfy/pony+sdxl, 1 flux). Queued a 20-job batch from the comfy/pony lane
-    via /api/art/enqueue: resourceIds 1466,1478,1482,1483,1485,1486,1524,1530,1532,1544,1547
-    ,1548,1552,1556,1564,1570,1576,1577,1623,1624 -> ArtJob 25358-25377, all accepted
-    201/PENDING. Deliberately held the remaining ~33 comfy/sdxl plans and the 1 flux plan
-    rather than draining the whole plannable set in one pass, consistent with the small-
-    batch approach the task note has used throughout -- live queue was PENDING=2056
-    (oldestPending ArtJob 23040, coloring-book, aged ~9.8h) at plan time, so adding a large
-    batch on top would have pushed unrelated production work further back. Completion of
-    ArtJob 25358-25377 (and the Resource rows now carrying artImageId/imagePath) is NOT YET
-    VERIFIED -- did not block this session on a 2000+ deep queue draining. NEXT SESSION:
-    check ArtJob 25358-25377 via GET /api/art/queue/:id. If healthy (no new failures/wedge),
-    continue queuing the remaining ~33 comfy/sdxl plans in similar batches, re-planning
-    first since the considered set keeps shrinking; hold the flux plan for last and only
-    once t-165/t-167 show sustained calm.
-
-    PROGRESS (scheduled Conductor session, 2026-09-16T02:32Z): render box confirmed healthy (check_render_box.py: UP, heartbeat 0.8-0.9 min throughout, 23-54 completions/6h across the cycle) with no stale-RUNNING signature at any check, so proceeded past the prior cycle's hold. Verified the prior cycle's held batch (ArtJob 25358-25377, resourceIds 1466,1478,1482,1483,1485,1486,1524,1530,1532,1544,1547,1548,1552,1556,1564,1570,1576,1577,1623,1624) all landed DONE with artImageId/imagePath confirmed on the Resource rows (sampled 5, all OK) -- this closes the "completion not yet verified" gap the prior note left open.
-
-    Re-planned via /api/lora/probe-plan {scope: blind, limit: 300}: considered shrank to 50 (from 72), 32 plannable (31 comfy/pony, 1 flux). Queued and verified TWO full batches this cycle rather than holding at 20 as before, since the render box showed sustained health with no new wedge:
-      - Batch A (20 comfy/pony): ArtJob 25385-25404, resourceIds 1625,1634,1635,1651,1658,1660,1665,1670,1729,1732,1742,1747,1759,1764,1768,1769,1827,1839,1844,1845 -- all DONE, all 20 resources confirmed artImageId/imagePath written back.
-      - Batch B (11 comfy/pony, the remainder of the plannable comfy lane): ArtJob 25405-25415, resourceIds 1861,1869,1871,1877,1879,1883,1899,1900,1901,2377,2439 -- all DONE, all 11 resources confirmed artImageId/imagePath written back.
-    No FAILED/errored jobs in either batch. Queue depth held steady around PENDING~2000 throughout (pre-existing production backlog, oldestPending unrelated to this task's jobs) and did not visibly worsen from adding these 31 jobs.
-
-    Re-probed once more after both batches: considered dropped to 19, plans to 1 -- the ENTIRE comfy/pony/sdxl blind lane is now exhausted. The only remaining plannable item is resourceId 1072 (flux), deliberately held back per the standing relay-wedge gates (conductor/t-165, t-167 -- both still status: needs-human, unresolved as of this cycle). The 19 remaining "considered" resources are NOT plannable at all: probe-plan's `skipped` list shows they're on base models with no still-image probe recipe (SD 2.1, Kontext, video/audio bases -- e.g. resourceId 1269 "Digital Illustration Style"/Kontext, 2706/2833 "SD 2.1 768"). This is a structural gap in probe-plan's recipe coverage, not a queue/relay issue -- worth a follow-up task to add still-image probe recipes for those base families if Silas wants blind coverage to reach 100%, but it's a scope decision for him/a new task, not something to force into this cycle.
-
-    Re-arming to ready (recurring-shaped continuation). Next actionable step: once conductor/t-165 or t-167 clear (flux relay stable), queue the single remaining flux plan (resourceId 1072). Until then, this task has no more plannable blind-scope work in the comfy/sdxl lane -- next session should either (a) wait on the flux gate, or (b) consider filing a follow-up task for the 19 unsupported-base-model resources if broader coverage is wanted.
-
-    Cycle (2026-09-16T13:34Z, scheduled Conductor session): live probe-plan check
-    (scope=blind) shows the original 223-blind-row gap has already been almost entirely
-    closed by prior sessions -- only 19 blind LoRAs remain, of which 18 are structurally
-    unplannable (family=unsupported: SD 2.1 768 and Flux.1 Kontext bases have no still-image
-    probe recipe in loraProbe.ts) and 1 (resourceId 1072, an Epic Movie Poster FLUX LoRA)
-    was plannable. Enqueued its preview via POST /api/lora/probe-plan -> POST
-    /api/art/enqueue (ArtJob 26249, flux engine, entityArt write-back to Resource.imagePath)
-    -- confirmed queued (201, mana charged 0) and progressed PENDING -> RUNNING on a healthy
-    render box (check_render_box.py: heartbeat 0.2min, 77 completions/6h) before this
-    session ended; not yet confirmed DONE (Flux single-image renders can run several
-    minutes, and this session did not block indefinitely on one job). Next cycle: verify
-    ArtJob 26249 landed (GET /api/art/queue/26249, expect status DONE and a populated
-    artImageId / Resource.imagePath) and, if so, the batch-render scope of this task is
-    effectively complete (2209/2228 LoRAs now non-blind) with only the 18 structurally-
-    unsupported SD2.1/Kontext rows as a known, permanent gap -- worth a small follow-up task
-    only if a still-image probe recipe becomes feasible for those bases, not urgent. Re-
-    arming to ready pending that verification.
-
-    VERIFIED (conductor scheduled sweep, 2026-09-16T14:52Z): GET /api/art/queue/26249
-    confirms status DONE, artImageId 25358. GET /api/resources/1072 confirms the write-back
-    landed: artImageId=25358, imagePath='/api/art/images/25358/file?v=...', updatedAt
-    matches the job's completion time. This closes the batch-render scope of this task:
-    2209/2228 LoRAs are now non-blind (own generated preview art rather than a third-party
-    hotlink or no preview). The remaining 18 rows are a structural gap, not a queue/relay
-    issue -- probe-plan has no still-image probe recipe for their base families (SD 2.1 768,
-    Flux.1 Kontext, which is an edit model needing a source image). Leaving that gap undone
-    rather than filing a follow-up task now, per this task's own prior note: it is a scope
-    decision for Silas (does he want 100% coverage badly enough to justify building new
-    probe recipes for two niche base families), not agent-actionable work. No code change
-    this cycle -- pure verification of already-landed work. Closing done.
+    Full history: projects/kind-robots/HISTORY.md#t-105
   updated: '2026-09-16T14:37:53Z'
   claimed_by: conductor-sched-2026-09-16T145200Z-kr-t105
   claimed_at: '2026-09-16T14:37:11Z'
@@ -2265,104 +1672,10 @@ tasks:
   stakes: reversible
   passes: 0
   approved_by_human: false
-  note: |-
-    Silas, 2026-09-16, mid cfg-sweep: "I'm just wondering if we should have a recommended
-    cfg in our resources if we don't already. Then we can specifically randomize when
-    combining loras. Not sure if that's worth the extra complexity, but if certain ones want
-    more or less with the same checkpoint, it's the stronger option."
-    IT IS WORTH IT, on evidence from that same session. On ONE checkpoint
-    (realcartoonPony_v1) two LoRAs wanted guidance three points apart: ArtgermLycoXL (style)
-    clipped only 0.39% of its pixels even at cfg 13, while AsheLoLXL (character) clipped
-    5.39% at the same setting and 3.48% at cfg 10. A family-level number is therefore always
-    a compromise between LoRAs that are not alike, and utils/checkpointProfiles.ts can only
-    express the family.
-    WHAT MAKES IT CHEAP. Populating the column is normally what kills an idea like this,
-    because nobody measures 2,078 LoRAs by hand. But the t-105 preview batch renders every
-    one of them, and clipping -- the percentage of pixels crushed to 0 or blown to 255 -- is
-    computable from each finished probe at zero extra render cost. Low clipping means that
-    LoRA tolerates more guidance. The measurement is a by-product of work already scheduled.
-    SHAPE. Add `recommendedCfg Float?` to Resource, beside `loraTarget`, which is the
-    existing precedent for a per-LoRA hint column. Null means 'use the family profile', so
-    it lands as a zero-behaviour-change migration and enqueue reads it only when present.
-    STACKING. Take the MINIMUM across the selected LoRAs, not the mean: the most clipping-
-    prone LoRA is the binding constraint, and one crushed LoRA spoils the render whatever
-    the others tolerate. Silas's randomisation idea then falls out of that -- sample within
-    the OVERLAPPING tolerable band, so a stack of high-tolerance style LoRAs gets a wide
-    range while any stack containing a clip-prone character LoRA stays narrow.
-    SEQUENCING. Land the column null and backfill afterwards. Do not block the column on the
-    backfill, and do not make the batch wait on the column.
-    CAVEAT to carry. Clipping is a proxy for tolerance, not a statement of preference. Silas
-    consistently preferred cfg 13 by eye on BOTH the style and the character LoRA, where the
-    clipping budget says 10 for the character one. This column should record what a LoRA
-    TOLERATES; how close to that ceiling to actually run is a separate taste setting.
-    Conflating the two would bake one person's contrast preference into a catalog field.
+  note: >-
+    Silas, 2026-09-16, mid cfg-sweep: "I'm just wondering if we should have a recommended cfg in our resources if we don't already.
 
-    Implemented the first bounded t-106 slice: a pure loraStackCfgCeiling helper that enforces the task's minimum-across-selected-LoRAs rule with family fallback, plus contract coverage. The nullable Resource column and backfill remain follow-up work in this same task.
-
-    Reviewer (Claude) merged silasfelinus/kind_robots#2780 (squash, CI 45/45 green,
-    mergeable_state clean): adds the pure loraStackCfgCeiling helper (minimum-across-
-    selected-LoRAs with family fallback) plus contract tests, matching the task's stacking
-    rule. This is only the first bounded slice -- the nullable Resource.recommendedCfg
-    column and its backfill from t-105's clipping data are still open under this same task.
-    Re-arming to ready for the next slice.
-
-    Connector-only continuation inspected the merged first slice and the next schema slice. The next change requires an atomic edit to the large existing prisma/schema.prisma plus generated Prisma client parity; this connector surface exposes full-file replacement but no patch/edit primitive, and the runtime has no authenticated git transport. No unsafe partial migration was committed. Also re-audited the superseded prior t-106 branch: it is diverged from main and its only remaining diff is the unwanted checkpointProfiles.ts rewrite (+10/-60), confirming it should be force-deleted by branch-janitor rather than salvaged. Releasing t-106 to ready for a session with authenticated git or a patch-capable connector.
-
-    Reconfirmed the schema slice after ownership was acquired. This connector can create and replace whole files but still has no patch primitive, and prisma/schema.prisma is too large to safely reconstruct from abbreviated connector reads. No partial migration or generated-client mismatch was committed. The stale t-106 branch was also re-compared against current main and remains diverged with exactly one unwanted diff: utils/checkpointProfiles.ts (+10/-60). Release this finite task for a patch-capable/authenticated-git session; do not salvage that stale branch.
-
-    Landed the schema-only slice this session: nullable Resource.recommendedCfg column,
-    migration, resourceGallerySelect update, Prisma client regen. vue-tsc/eslint/prettier
-    clean, loraStackCfgCeiling contract test still passes. Backfill + enqueue/render wiring
-    remain open follow-up under this same task.
-
-    Merged silasfelinus/kind_robots#2781 (squash, CI green: 50/51 checks success, one skip;
-    build-production-image also completed green). Schema-only slice of t-106 landed. Follow-
-    up under this same task: backfill Resource.recommendedCfg from t-105's clipping data,
-    then wire the enqueue/render path to read it via loraStackCfgCeiling (kind_robots#2780)
-    per engine.
-
-    CORRECTION: the prior close-out on this same session mislabeled this status: done. The
-    task's own title includes the backfill ('...backfilled from the preview batch's own
-    clipping'), which is NOT done -- only the nullable Resource.recommendedCfg column +
-    migration + resourceGallerySelect update (silasfelinus/kind_robots#2781, merged) landed.
-    Re-arming to ready, matching this task's own established slicing convention (see the
-    prior 'Re-arming to ready for the next slice' entries above). Next slice: backfill
-    Resource.recommendedCfg from t-105's clipping data, then wire the enqueue/render path to
-    read it via loraStackCfgCeiling (kind_robots#2780) per engine.
-
-    Landed the next t-106 slice this session (local git + provisioned node_modules, not
-    connector-only): wired the already-merged pieces together. resolveEnqueueLoraResource
-    (server/utils/artLoraResource.ts) now selects Resource.recommendedCfg on the LoRA rows
-    it already fetches and returns it as recommendedCfgs, positionally aligned with
-    resourceIds. enqueue.post.ts threads that array into buildDefaultComfyWorkflow's new
-    loraRecommendedCfgs field. workflow.ts's KSampler cfg now resolves as cfgValue ||
-    loraStackCfgCeiling(profile.cfg, loraRecommendedCfgs) -- explicit caller cfg still wins,
-    family default unchanged today since recommendedCfg is still null repo-wide (verified
-    no-op). Deliberately scoped to buildDefaultComfyWorkflow only: buildSdxlImg2ImgWorkflow
-    pins cfg=2 by its own contract (verifyComfyOnlyGeneration.ts), and patchComfyWorkflow's
-    direct/relay route never resolves LoRAs against Resource so has nothing to read. Added
-    utils/scripts/verifyLoraCfgWiring.test.ts covering the ceiling wiring end to end, and
-    registered it plus the pre-existing (but never-wired-into-CI) verifyLoraCfg.test.ts in
-    package.json/contract-tests.yml. vue-tsc clean, eslint clean, full relevant test suite
-    (lora-cfg-ceiling, lora-cfg-wiring, comfy-only-generation, lora-chain) green. PR:
-    silasfelinus/kind_robots#2782, opened, CI in progress -- will merge when green. Next
-    slice after this: backfill Resource.recommendedCfg from t-105's clipping data (needs a
-    defensible per-LoRA cfg-from-clipping methodology, only the pony family has a measured
-    curve today -- deliberately left as its own follow-up rather than rushed into this PR).
-
-    Merged silasfelinus/kind_robots#2782 (squash, CI green, mergeable_state clean, 165
-    insertions/3 deletions across 6 files). Confirms the slice described in the review note
-    above landed exactly as planned: resolveEnqueueLoraResource now returns recommendedCfgs,
-    enqueue.post.ts threads it through, buildDefaultComfyWorkflow's cfg now resolves via
-    loraStackCfgCeiling(profile.cfg, loraRecommendedCfgs). Verified no-op in production
-    today (recommendedCfg still null repo-wide). Closing THIS slice as done -- but the
-    task's own title ('...backfilled from the preview batch's own clipping') is not fully
-    satisfied yet: the backfill itself (computing per-LoRA clipping from t-105's preview
-    images and deriving a defensible recommendedCfg) is real follow-up work requiring a
-    methodology decision (only the pony family has a measured cfg-vs-clipping curve today,
-    in utils/checkpointProfiles.ts) rather than something to rush blind. Filing that as a
-    fresh ready task below rather than re-arming this one, since the enqueue-wiring goal
-    this task's note asked for is now actually done.
+    Full history: projects/kind-robots/HISTORY.md#t-106
   updated: '2026-09-16T18:51:56Z'
   owner: worker
   claimed_by: claude-scheduled-20260916T184324Z-kr-t106-slice2
@@ -2377,46 +1690,10 @@ tasks:
   passes: 1
   owner: null
   approved_by_human: false
-  note: |-
-    Kaizen follow-up from t-106 (kind_robots#2782, merged 2026-09-16): the column and the
-    enqueue-path wiring both landed, but recommendedCfg is still null for every Resource --
-    the backfill itself was deliberately left as its own slice rather than rushed.
+  note: >-
+    Kaizen follow-up from t-106 (kind_robots#2782, merged 2026-09-16): the column and the enqueue-path wiring both landed, but recommendedCfg is still null for every Resource -- the backfill itself was deliberately left as its own slice rather than rushed.
 
-    THE GAP. sharp (already a dependency) can compute clipping -- the fraction of pixels at
-    0 or 255 -- from each t-105 preview ArtImage cheaply. But a raw clipping percentage is
-    not a cfg value, and there is only ONE finished-probe measurement per LoRA (the family's
-    default cfg), not a sweep. Converting "this LoRA clipped X% at cfg 10" into a
-    recommendedCfg number requires inverting a family's cfg-vs-clipping curve -- and only the
-    pony family has one, from the exact sweep t-106's own note documents (realcartoonPony_v1,
-    AsheLoLXL: cfg 3->0.11%, 7->2.03%, 9->3.43%, 10->3.48%, 11->4.87%, 13->5.39%, in
-    utils/checkpointProfiles.ts). illustrious/sdxl/sd15/distilled have no measured curve
-    (checkpointProfiles.ts marks them PROVISIONAL), so there is nothing defensible to invert
-    for LoRAs on those checkpoints yet -- leave their recommendedCfg null rather than invent
-    a number.
-
-    SHAPE, deliberately narrow for pass 1: for each active LORA/LYCORIS Resource with a
-    Pony-family checkpointResourceId preview ArtImage from the t-105 batch and no
-    recommendedCfg yet, compute that image's clipping fraction, linearly interpolate the
-    pony reference curve above to find the cfg where that same clipping level would occur,
-    and write it (clamped to the family's sane range, e.g. 3-13) as Resource.recommendedCfg.
-    Leave every non-pony LoRA's recommendedCfg null -- that is a separate follow-up once a
-    family gets its own measured curve, not a gap to paper over here.
-
-    VERIFY before writing anything live: spot-check the computed recommendedCfg against the
-    two LoRAs t-106's own note already measured by hand (AsheLoLXL, ArtgermLycoXL) and
-    confirm the backfill's number lands close to what that sweep actually showed, before
-    trusting it across the rest of the pony-family catalog.
-
-    First bounded t-107 slice: codified the measured Pony clipping-to-CFG interpolation and opened Resource.recommendedCfg through the existing authenticated PATCH /api/resources/:id mutation path. Added a focused interpolation contract test. The live preview-data backfill remains a later slice after this prerequisite lands; no production Resource rows were mutated in this connector-only run.
-
-    Merged silasfelinus/kind_robots#2783 (feat(resources): prepare measured Pony CFG
-    backfill) after full green CI (48/48 checks). This was the bounded prerequisite slice:
-    codified the Pony cfg<->clipping interpolation in utils/loraCfg.ts and opened
-    Resource.recommendedCfg through the authenticated PATCH route + resourceMutationSelect,
-    with a contract test pinning the measured points/interpolation/clamping. No production
-    Resource rows were mutated. The actual live backfill (computing clipping from t-105
-    preview ArtImages and PATCHing eligible Pony LORA/LYCORIS rows) is the remaining slice
-    -- filed as a follow-up task.
+    Full history: projects/kind-robots/HISTORY.md#t-107
   updated: '2026-09-16T20:30:29Z'
   claimed_by: openai-scheduled-2026-09-16T191904Z-kind-robots-t107-a11
   claimed_at: '2026-09-16T19:19:04Z'
@@ -2431,52 +1708,10 @@ tasks:
   passes: 0
   owner: worker
   approved_by_human: false
-  note: |-
-    The remaining slice of t-107 (done, kind_robots#2783 merged 2026-09-16): that PR
-    codified the measured Pony cfg<->clipping interpolation in utils/loraCfg.ts
-    (ponyCfgFromClipping) and opened Resource.recommendedCfg through the authenticated
-    PATCH /api/resources/:id route + resourceMutationSelect, but deliberately mutated no
-    production data.
+  note: >-
+    The remaining slice of t-107 (done, kind_robots#2783 merged 2026-09-16): that PR codified the measured Pony cfg<->clipping interpolation in utils/loraCfg.ts (ponyCfgFromClipping) and opened Resource.recommendedCfg through the authenticated PATCH /api/resources/:id route + resourc
 
-    THE WORK: for each active LORA/LYCORIS Resource with a Pony-family
-    checkpointResourceId and a t-105-batch preview ArtImage but no recommendedCfg yet, use
-    sharp to compute that preview's clipped-pixel fraction, feed it through
-    ponyCfgFromClipping() to get the interpolated cfg, clamp to the curve's measured range
-    (3-13), and PATCH the Resource via the existing authenticated route. Leave every
-    non-Pony LoRA's recommendedCfg null -- illustrious/sdxl/sd15/distilled have no measured
-    curve (checkpointProfiles.ts marks them PROVISIONAL) and t-107 explicitly forbids
-    inventing one.
-
-    VERIFY before writing anything live: spot-check the computed recommendedCfg against
-    the two LoRAs t-106's note already measured by hand (AsheLoLXL, ArtgermLycoXL) and
-    confirm the backfill's number lands close to what that sweep actually showed.
-
-    Kaizen suggestion from the t-107 PR: build this as a dry-run-first admin script that
-    fetches the t-105 Pony preview cohort, computes clipping, prints the proposed
-    Resource -> CFG changes, and only PATCHes null-recommendedCfg rows under an explicit
-    --apply flag -- rather than a one-shot mutation with no preview step.
-
-    Landed silasfelinus/kind_robots#2785 (utils/scripts/backfillPonyResourceCfgViaApi.ts):
-    for each active LORA/LYCORIS Resource on a Pony-family checkpoint with no recommendedCfg
-    yet, fetches its t-105 preview, computes RGB-channel-clipped fraction, interpolates via
-    ponyCfgFromClipping(), PATCHes through the existing authenticated route. Methodology
-    verified before trusting it: AsheLoLXL's own t-105 preview computed to 3.31% channel-
-    clipped against the hand-measured 3.48% cfg-10 sweep point for the same LoRA -- close
-    enough given different renders to trust the method (greyscale-luminance and whole-pixel
-    definitions measured ~4x and ~9x low on the same image and were rejected). Two dry runs
-    against production (no mutation) found 769 Pony-family LORA/LYCORIS candidates with
-    recommendedCfg still null, non-degenerate distribution across the curve (331 at floor
-    3.00, 372 spread 3-13, 52 at ceiling 13.00). vue-tsc/eslint clean. Live --apply pass
-    launched this session; result counts to follow in the next note before this task closes
-    to done.
-
-    Live --apply run completed: wrote recommendedCfg for 769/769 candidates, 0 failures
-    (first attempt crashed on an unhandled UND_ERR_HEADERS_TIMEOUT mid preview-fetch before
-    any writes happened -- fixed with a retry-and-skip wrapper in a follow-up commit on the
-    same PR, then re-ran clean). Spot-verified live: ArtgermLycoXL (id 1952)
-    recommendedCfg=4.06, AsheLoLXL (id 1955) recommendedCfg=8.83, RanniV1 (id 2317)
-    recommendedCfg=13 -- all match the dry-run plan exactly. Merged
-    silasfelinus/kind_robots#2785.
+    Full history: projects/kind-robots/HISTORY.md#t-108
   updated: '2026-09-16T21:55:55Z'
   claimed_by: claude-scheduled-20260916T2200Z-kr-t108
   claimed_at: '2026-09-16T21:42:37Z'
@@ -2563,30 +1798,10 @@ tasks:
   stakes: reversible
   owner: worker
   passes: 0
-  note: |
-    Spotted in Alexandria's container-log triage (check_container_log_drift.py), first seen
-    2026-09-16/17 and still recurring as of this session (2026-09-18): proxysql is logging
-    "[WARNING] Error during query on (...,mariadb-kindrobots2,3306,...): 1406, Data too long
-    for column 'imagePath' at row 1" -- MySQL's non-strict-mode truncation warning, meaning
-    the write likely succeeded with a silently truncated (corrupted) imagePath value rather
-    than failing outright.
+  note: >-
+    Spotted in Alexandria's container-log triage (check_container_log_drift.py), first seen 2026-09-16/17 and still recurring as of this session (2026-09-18): proxysql is logging "[WARNING] Error during query on (...,mariadb-kindrobots2,3306,...): 1406, Data too long for column 'imag
 
-    Several imagePath columns in prisma/schema.prisma are `@db.VarChar(764)` (others are
-    `@db.Text`, seemingly unbounded) -- worth checking which table(s) proxysql's query
-    actually targeted. Timing lines up with kind_robots#2814 (merged 2026-09-18T01:44:03Z,
-    see the related t-109 security finding above): that PR changed applyEntityArtImage in
-    server/utils/entityArt.ts to write raw static `/images/...` file paths into imagePath
-    instead of the shorter `/api/art/images/:id/file` pointer, which is a plausible source of
-    a longer string tripping a VarChar(764) limit that the old short pointer never
-    approached.
-
-    Scope for whoever picks this up: confirm which model/column the warning is hitting (the
-    proxysql log line doesn't say), check whether any real imagePath values are actually
-    getting truncated in the DB (vs. proxysql logging a warning on a query that MySQL itself
-    handled fine), and either widen the column to Text/enough VarChar headroom or shorten
-    what gets written, whichever is the right fix once the actual cause is confirmed. Not
-    blocking t-109's access-control decision -- a separate bug, just possibly the same root
-    change.
+    Full history: projects/kind-robots/HISTORY.md#t-110
   updated: '2026-09-18T19:45:22Z'
   claimed_by: 2026-09-18T19-30-conductor-t110
   claimed_at: '2026-09-18T19:29:52Z'
@@ -2599,26 +1814,10 @@ tasks:
   gate_human: false
   stakes: reversible
   passes: 0
-  note: |-
-    Filed 2026-09-19 from Silas's direct report on the Rewards encounter surface:
-    clicking "Suggest prompt" inside "Generate Reward replacement" changes the button
-    to "Could not identify record" instead of generating a prompt.
+  note: >-
+    Filed 2026-09-19 from Silas's direct report on the Rewards encounter surface: clicking "Suggest prompt" inside "Generate Reward replacement" changes the button to "Could not identify record" instead of generating a prompt.
 
-    Initial code diagnosis: plugins/entity-art-prompt-suggest.client.ts discovers the
-    active entity through Vue's private __vueParentComponent DOM hook, then falls back
-    to stable data attributes or a pathname-shaped model reference. Reward encounters
-    select their record from the Reward store using ?rewardId / ?reward query state,
-    and EntityArtManager does not currently expose its entity identity as data
-    attributes. When the private Vue hook is unavailable, the plugin therefore has no
-    durable Reward id/slug to resolve. Fix the generic EntityArtManager identity
-    contract rather than adding a Reward-only special case, and extend the prompt
-    suggestion contract test so this regression is pinned.
-
-    Implemented the bounded fix on worker/kind-robots-t-111-openai-chat-20260919-a91f: EntityArtManager now emits stable data-art-model/data-model-id/data-model-slug/data-art-subject attributes so the existing managerContextFromPage fallback can identify Reward and other entity records without relying on Vue's private __vueParentComponent hook. Extended verifyEntityArtPromptSuggest.ts to pin that identity contract. Diff is two files, +15/-1.
-
-    Merged silasfelinus/kind_robots#2878 (squash 8eddee1774fa66cb3ff665f9a0ee04b329f611e0). Root cause: the prompt-suggest plugin could only identify this Reward through Vue's private __vueParentComponent hook; the stable DOM fallback had no model identity because EntityArtManager emitted none. EntityArtManager now exposes data-art-model/data-model-id/data-model-slug/data-art-subject, so managerContextFromPage resolves the Reward and sibling entities reliably. Regression coverage now pins that contract. All 48 PR workflow runs completed successfully, including Entity Art Manager Contract, TypeScript Type Check, and Contract Tests.
-
-    Merged silasfelinus/kind_robots#2878 after all 49 PR workflow runs completed green. Root cause: the prompt-suggestion plugin could only identify the active Reward through Vue's private __vueParentComponent hook because EntityArtManager exposed no stable entity identity in the DOM and the Rewards encounter is selected via query/store state rather than a /reward/:id pathname. The fix makes EntityArtManager emit data-art-model, data-model-id, data-model-slug, and data-art-subject so the existing managerContextFromPage fallback resolves Reward and sibling entity records reliably. Added contract coverage in verifyEntityArtPromptSuggest.ts. No schema changes. Production deploy is separate from merge.
+    Full history: projects/kind-robots/HISTORY.md#t-111
   claimed_by: openai-chat-20260919-reward-prompt-a91f
   claimed_at: '2026-09-19T11:45:00Z'
   updated: '2026-09-19T12:10:00Z'
@@ -2631,28 +1830,10 @@ tasks:
   stakes: reversible
   owner: worker
   passes: 0
-  note: |-
-    Kaizen from kind-robots/t-111 (kind_robots#2878): prompt suggestion still tries
-    managerContextFromVue first, reading Vue's private __vueParentComponent property from
-    DOM nodes. t-111 added stable data-art-model/data-model-id/data-model-slug/data-art-subject
-    attributes so the public DOM fallback is now reliable. Follow through by making that
-    explicit identity contract the primary path for EntityArtManager prompt context and
-    reducing or removing the private-Vue dependency where it is no longer needed. Keep the
-    workspace-project and selected-scenario fallbacks for surfaces that do not render
-    EntityArtManager identity attributes, and preserve the existing prompt/slot behavior.
+  note: >-
+    Kaizen from kind-robots/t-111 (kind_robots#2878): prompt suggestion still tries managerContextFromVue first, reading Vue's private __vueParentComponent property from DOM nodes.
 
-    Prefer the explicit EntityArtManager DOM identity contract before legacy Vue-private component discovery while preserving workspace-project and selected-scenario fallbacks.
-
-    2026-09-19: Merged kind_robots#2898 (worker/kind-robots-t-112-openai-scheduled-2026-09-19T212030Z-kind-robots-t112-a11).
-    Diff verified against exact stated base: +4/-4, one file (plugins/entity-art-prompt-suggest.client.ts),
-    reorders managerContext() fallback precedence so the explicit DOM identity contract
-    (managerContextFromPage/WorkspaceProject/SelectedScenario) runs before the legacy
-    managerContextFromVue introspection, which now sits last as compatibility-only. All 46
-    CI checks green before merge. Kaizen: add a source-contract assertion pinning that
-    ordering.
-
-    Correction: filed as kind-robots/t-113 (AGENTS.md's kaizen-on-merge rule requires a
-    filed task, not a deferral).
+    Full history: projects/kind-robots/HISTORY.md#t-112
   claimed_by: openai-scheduled-2026-09-19T212030Z-kind-robots-t112-a11
   claimed_at: '2026-09-19T21:20:30Z'
   updated: '2026-09-19T21:29:32Z'
@@ -2667,15 +1848,9 @@ tasks:
   owner: worker
   passes: 0
   note: >-
-    Kaizen from kind-robots/t-112 (kind_robots#2898): the PR reordered
-    plugins/entity-art-prompt-suggest.client.ts's managerContext() fallback chain so the
-    explicit DOM identity contract (managerContextFromPage/WorkspaceProject/
-    SelectedScenario) runs before the legacy managerContextFromVue private-property
-    introspection, which is now compatibility-only and last. Nothing currently pins that
-    ordering in source, so a future refactor could silently re-promote the private Vue
-    hook without any test catching it. Add a focused assertion (in
-    verifyEntityArtPromptSuggest.ts or a sibling contract test) that the explicit path's
-    source position precedes managerContextFromVue's, per the PR's own suggested follow-up.
+    Kaizen from kind-robots/t-112 (kind_robots#2898): the PR reordered plugins/entity-art-prompt-suggest.client.ts's managerContext() fallback chain so the explicit DOM identity contract (managerContextFromPage/WorkspaceProject/ SelectedScenario) runs before the legacy managerContext
+
+    Full history: projects/kind-robots/HISTORY.md#t-113
   updated: '2026-09-19T22:44:13Z'
   claimed_by: 2026-09-19T20987Z-kr-t113-manager-context-assert
   claimed_at: '2026-09-19T22:36:23Z'
@@ -2754,71 +1929,9 @@ tasks:
   owner: worker
   passes: 0
   note: >-
-    Reported by Silas 2026-09-21 from an ArtJob screenshot of the facet-catalog build:
-    "we've had some regression with some 'frame' references creating the wrong message.
-    Again". Facet "Wasted but Working" asked for "A thin frame with prominent collarbones
-    and hollow cheeks, clothes hanging loose, grip nonetheless firm" (ArtJob 30116) and
-    came back as a framed portrait hanging on a wall; "Rebuilt" asked for "An asymmetric
-    frame, one limb visibly different in length or make" (ArtJob 30117) and came back as
-    a woman holding an empty gilt picture frame. In both, the body the prompt describes
-    is gone and a frame is standing where it was.
+    Reported by Silas 2026-09-21 from an ArtJob screenshot of the facet-catalog build: "we've had some regression with some 'frame' references creating the wrong message.
 
-    Both prompts passed every rule in server/utils/artPromptContract.ts, because none of
-    them looks at ordinary concrete words -- the same shape as the "concrete focal
-    subject" and "unmistakable silhouette" findings, one vocabulary later.
-
-    "Frame" reaches the gate in three senses and only one is safe. ANATOMY (a person's
-    build) is the sense that shipped the bug: 11 live prompts, all from
-    utils/seeds/facetEmbodimentValues.ts. COMPOSITION (the picture's own boundary) is the
-    same bug with the same fix. OBJECT -- a real frame in the scene -- must keep working,
-    because the "gilded shimmer" swatch card IS a carved frame taking gold leaf.
-
-    THE "AGAIN" IS A CHAIN, and it is why this landed as a gate rather than a wording
-    pass. The contract's own rule-7 remedy text advised writing "an unpeopled frame", and
-    DEFAULT_UNPEOPLED_ART_DIRECTION in server/utils/artJobNormalization.ts emitted exactly
-    that phrase onto every object and product prompt in the app -- so the cure written for
-    the 2026-08-08 crowds was commissioning the frames. The ladle fixture in
-    verifyArtPromptContract.ts asserted an empty violation list on that wording the whole
-    time; that is the third separate bug the same fixture has certified on its way past
-    (see the 2026-08-08 people-negation note and v4's taxonomy clause).
-
-    Implementation (kind_robots PR #2965). New frame-noun rule scoped to the distilled
-    engines, like the jargon rule -- a chat model reads "frame" as framing and the rule
-    would only get in the way. It flags "frame" UNLESS the prompt establishes a real frame
-    object, judged prompt-wide rather than per sentence so the butterfly-gallery display
-    mount can open with "a single thick industrial display frame" and close with "nothing
-    hangs from the frame". Validated against all 1,738 live Facet prompts: 20 flagged,
-    every one a genuine anatomy or composition use; 7 allowed, every one a genuine object;
-    no false positives. Three words are deliberately NOT treated as frame-bearers because
-    each one excused a real bug during the rule's own test run -- "portrait" (an aspect
-    ratio here, exactly as the people-negation exclusions already note), "canvas" (a
-    medium) and "gallery"; "mirror" counts only as a noun, because "its bowl worn to a
-    mirror finish" excused the ladle fixture. Hyphenated compounds are excluded so the
-    "frame-tale tradition of the Arabian Nights" genre description survives -- a false
-    positive caught by verifyFacetContentQuality, which runs this contract over every
-    published description.
-
-    repairFramePrompt() migrates the phrasings already sitting in stored rows, since the
-    gate applies to requeues too and without it those rows would fail at claim time
-    forever (the failure mode LEGACY_ASSET_ART_DIRECTION exists to prevent). Composition
-    phrasings are generic patterns; the 11 anatomy prompts are listed exactly, matching
-    the seed corrections, so a seed re-run and a requeue arrive at the same text. Clears
-    all 20 live prompts and alters none of the 7 good ones.
-
-    Also fixed at source: the two v6 taxonomy clauses in utils/facetVisualLanguage.ts (v7
-    entries added, v6 strings KEPT in GENERATED_PROMPT_TAILS so no cohort is frozen --
-    verified both spellings still recognized), artContextRules, conductorArtPrompt, the
-    artAssetSuggest guidance, the art-card figureCount promptHint, page-backdrop framing,
-    the butterfly-gallery warehouse backdrop, facetBotTypeArtwork's "theatrical frame, no
-    text" (two violations in one line), and Neonpunk's published description. Conductor's
-    scripts/check_facet_prompt_subjects.py GENERATED_CLAUSES mirror is in step.
-
-    FOLLOW-UP, not blocking: the 11 embodiment cards still show the old renders. Pushing
-    the corrected prompts live is a seed re-run (utils/scripts/seedEmbodimentFacetCatalog.ts
-    upserts artPrompt on existing rows) followed by the facet art maintenance pass, which
-    re-queues on its own because the stored prompt no longer matches the painted one
-    (promptWasPainted). acrocatranch.com:5544 is outside the web sandbox's network policy,
-    so that run is Silas's or a host session's, not this one's.
+    Full history: projects/kind-robots/HISTORY.md#t-115
   updated: '2026-09-22T00:00:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2965'
 
@@ -2833,67 +1946,9 @@ tasks:
   owner: worker
   passes: 0
   note: >-
-    Found 2026-09-22 while finishing the Krea "frame" repair (t-115). Silas ran
-    `npx tsx scripts/generate_facet_art.ts --write --requeue-curated` twice in a row. The
-    first run queued 380 jobs; the second queued 75 more and reported
-    `pendingReused: 1`. The queue held 452 PENDING facet-catalog jobs across only 379
-    distinct Facets -- 73 of them asking for a second render of a picture already
-    queued, at roughly a minute of GPU each.
+    Found 2026-09-22 while finishing the Krea "frame" repair (t-115).
 
-    ROOT CAUSE, and the split is the diagnosis. curatedPromptNeedsRender() asks "has a
-    picture been PAINTED from this text yet", which is deliberate and correct: the
-    painted image is the only honest answer to "is this card current", and preferring
-    it over the job payload is what caught 148 cards on 2026-09-15 whose payload said
-    the right thing and whose picture was made from a retired template. But it is
-    unanswerable for a job that has not rendered yet. So the function split by whether
-    the Facet already had art:
-
-      - never painted   -> fell through to the payload comparison, which DID see run
-                           1's job and its recorded prompt. 306 rows correctly skipped.
-      - already painted -> took the painted branch, which returns early and returns
-                           true every single run, because the in-flight job has painted
-                           nothing and nothing it does can change that answer. Those
-                           are the 73, every one a row with an existing render.
-
-    FIX (kind_robots PR #2978). A PENDING or RUNNING job's basePromptString is compared
-    against the curated text BEFORE the painted comparison, and an exact match
-    suppresses the re-queue. Ordering is the whole fix, so the test pins the ordering
-    rather than just the outcome: a Facet painted from older text still requeues when
-    nothing is in flight, does not requeue while a job carrying the same text is
-    pending, and DOES requeue when the in-flight job carries different text (the
-    prompt was edited again).
-
-    CLEANUP. scripts/cancel_duplicate_facet_jobs.ts cancels redundant PENDING
-    facet-catalog jobs -- oldest per Facet always kept, RUNNING never touched, and a
-    duplicate cancelled only when its promptString matches the kept job's exactly, so
-    two different intentions for one Facet are reported and left alone. It recomputes
-    rather than taking a list of ids, because the queue drains while you look at it:
-    the redundant set fell from 73 to 53 in the minutes between measuring and acting.
-    Run against live: 53 cancelled, 53/53 verified, leaving 379 pending across 379
-    Facets, exactly one each.
-
-    TWO SMALLER THINGS FIXED IN THE SAME PR, both found while verifying the above.
-
-    1. A title already ending in sentence punctuation gained a second period.
-       buildFacetIdentityPromptFrom appended "." unconditionally, so all 111 live
-       Facets with such a title opened their conditioning with "...turned to ruin..",
-       in the strongest position in a caption.
-
-    2. Two rows carried text mangled by an older negation-repair pass -- #1734
-       Principled ("does tioned afterward") and #540 ("Does tion it") -- from a pattern
-       that deleted `not men` out of `not mention` for want of a trailing word
-       boundary. Verified rather than assumed: the DESCRIPTIONS are intact, and the
-       damage is only in the derived artPrompt. Both prompts are recognized as legacy
-       generated text, so the producer rebuilds them from the intact description and
-       they self-heal on the next repair run -- no content guessing needed, and none
-       done. Exactly 2 rows repo-wide carry the signature.
-
-    PROCESS NOTE worth keeping. Changing a variable name in claim.post.ts and a
-    template literal in facetVisualLanguage.ts each broke a source-contract test that
-    pins the literal, and in both cases the pin lived in a verifier that reads a file
-    this change touched. Grepping utils/scripts/ for every verifier that reads a
-    changed file, BEFORE pushing, catches these in one pass; discovering them from CI
-    cost three rounds across t-115 and this task.
+    Full history: projects/kind-robots/HISTORY.md#t-116
   updated: '2026-09-22T09:00:00Z'
   implementation_pr: 'silasfelinus/kind_robots#2978'
 
@@ -2906,42 +1961,9 @@ tasks:
   owner: worker
   passes: 0
   note: >-
-    Kaizen from kind-economy/t-028 (kind_robots#3008, 2026-09-23). Silas's own PR #2669
-    (2026-09-12) retired the mission-accrual admin page (components/pages/mission-accrual-page.vue)
-    but left its full backend live: server/api/economy/mission-accrual.{get,post}.ts,
-    server/utils/missionAccrual.ts, and utils/scripts/verifyMissionAccrual.test.ts sat
-    orphaned for 11 days, undetected by any existing CI check or scanner, until the weekly
-    site-audit gap-analysis pass caught it by chance while covering an unrelated project.
+    Kaizen from kind-economy/t-028 (kind_robots#3008, 2026-09-23).
 
-    No script in this repo currently answers "does every server/api route have a live
-    caller somewhere in the app" -- conductor's check_project_scaffold_drift.py checks a
-    different thing (Conductor project rows vs Kind Robots project rows). Build a
-    script/contract test that, for each server/api/**/*.{get,post,put,delete}.ts file,
-    greps the rest of the repo (components/, stores/, server/, utils/) for a $fetch /
-    ofetch / useFetch call to its route path, and flags any route with zero matches as a
-    candidate orphan for human review (not auto-deletion -- a route can be intentionally
-    external-facing, e.g. a webhook, with no in-repo caller). False positives are expected
-    and fine; the goal is surfacing candidates within days, not the 11-day gap this cycle
-    hit, not eliminating false positives.
-
-    Implemented and merged: utils/scripts/auditServerApiCallers.ts (kind_robots#3013, squash
-    6682ea6). Derives each server/api/**/*.{get,post,put,delete,patch}.ts route's URL path
-    (handling [id]/[...slug] dynamic segments and index.* collapsing) and greps the app
-    source (components/, stores/, server/, utils/, plus pages/, plugins/, layouts/,
-    composables/, middleware/ -- broadened beyond the four roots this task named after
-    finding real callers in pages/ and plugins/ during development) for a plausible caller.
-    Advisory by default (exit 0, --strict to gate); wired into contract-tests.yml as a non-
-    blocking 'tee to artifact' step mirroring the existing channel-artwork-audit pattern,
-    plus a normal blocking unit test (test:server-api-callers-audit) pinning the route-
-    derivation/matcher logic. Verified: vue-tsc clean, eslint clean, prettier clean, unit
-    test passes, full local test:contracts-db-free run (398/398) passes. Ran against live
-    main: 553 routes checked, 124 candidate orphans surfaced (not acted on -- that's the
-    next human-review step, e.g. stripe/webhook, v1/agent/*, auth/first-party/* look
-    plausibly legitimate). PR CI: all checks green except comment-contract, which was
-    independently confirmed failing identically on main itself before this PR merged (live
-    GET /api/characters and /api/bots 503 against a real backend -- a pre-existing,
-    unrelated infra issue, not caused by this diff) -- merged past it per AGENTS.md's base-
-    branch-red handling.
+    Full history: projects/kind-robots/HISTORY.md#t-117
   updated: '2026-09-23T09:41:40Z'
   claimed_by: agent-20260923T093000Z-kr-t117
   claimed_at: '2026-09-23T09:09:08Z'
@@ -2958,12 +1980,10 @@ tasks:
   approved_by_human: false
   claimed_by: 20260924T025900Z-kr-t118-source-image-capabilities-a91f
   claimed_at: '2026-09-24T02:59:00Z'
-  note: |-
-    Silas, 2026-09-23: the generator should not treat image input as an SDXL-only special case. Kontext belongs on the main Recipe surface, and FLUX.1 schnell/dev support image-to-image. Upload controls should appear for every recipe whose real backend workflow supports source images, without advertising unsupported behavior. Audit the checkpoint-family list as part of the same pass so Pony, Illustrious, SDXL/SDXL-distilled, and SD1.5 do not disappear behind an SDXL-only label. Krea 2 should be exposed only if its current model/workflow is actually verified to support image-to-image.
+  note: >-
+    Silas, 2026-09-23: the generator should not treat image input as an SDXL-only special case.
 
-    Implementation is on worker/kind-robots-t-118-20260924t025900z-a91f. It adds capability-driven source uploads to named checkpoints, FLUX.1, FLUX.2, and Kontext; adds Kontext to the main Recipe surface; recognizes Illustrious as a checkpoint family; and deliberately leaves Krea 2 text-only because the current Krea workflow has no verified source-image path. PR and CI follow after this review transition is applied.
-
-    Merged kind_robots PR #3032 after all 35 head checks passed. The main art generator now exposes source-image upload by verified engine capability: named checkpoints route to checkpoint img2img, FLUX.1 schnell/dev preserve a source latent with denoise strength, FLUX.2 Klein uses its ReferenceLatent edit graph, and FLUX.1 Kontext is available as a source-required recipe. Krea 2 remains text-only because no source-image workflow has been verified. Illustrious/NoobAI is now a first-class checkpoint family and generic checkpoint copy no longer mislabels Pony/Illustrious/SD1.5 as SDXL.
+    Full history: projects/kind-robots/HISTORY.md#t-118
   updated: '2026-09-24T03:40:00Z'
 
 - id: t-119
@@ -2973,18 +1993,10 @@ tasks:
   passes: 0
   stakes: reversible
   gate_human: false
-  note: |-
+  note: >-
     Silas, 2026-09-23/24: finish the Art surface follow-up as one coherent UX/behavior pass.
 
-    1. Add a direct Art icon shortcut in the fixed header beside the existing ArtJob and Memory Dungeon shortcuts. Move /art from the Plan channel to Play.
-    2. On /art, make the mature / not-mature / both control visibly available at the top level, aligned with the Generate/Gallery area rather than hidden inside a suppressed Gallery header. For userId=1, entering Gallery must visibly distinguish normal/public from private: show the two-choice interstitial and only load the chosen scope. Other users go straight to the normal public gallery. Preserve the private-gallery access rules and do not turn private into a global binary toggle.
-    3. Diagnose why {action} on an SDXL-family checkpoint currently rolls only the pet-play action even though the catalog should contain more action-capable LoRAs. Fix the classification/compatibility/random-pool path so eligible SDXL/Pony/Illustrious action LoRAs can participate without widening to incompatible architectures or overwriting HUMAN classifications.
-
-    The Gallery portion is a regression follow-up: art-gallery.vue already contains the maturity filter and private chooser, but art-manager.vue currently mounts it with show-header=false and the chooser decision can race user-store hydration, leaving both controls effectively invisible on kindrobots.org/art.
-
-    Implementation is ready for PR review on worker/kind-robots-t-119-20260924t064700z-a7c3: Art is in Play with a fixed-header shortcut; Gallery exposes the three-way maturity filter beside Generate/Gallery and waits for restored user state before deciding the user-1 public/private interstitial; the action LoRA classifier now lets specific pose/style purpose tags outrank generic character tags, repairs clearly titled legacy pose rows at randomizer read time without overriding HUMAN classifications, and enforces Pony/Illustrious/base-SDXL family boundaries.
-
-    Merged kind_robots PR #3036 as f55ade54ec63c4785435938bc8f4ecc6d66bb763 after all 32 head checks completed successfully. Art now lives in Play with a fixed-header shortcut; the /art Gallery exposes Both/Mature/Not mature beside Generate/Gallery and user #1 gets the public/private chooser after session hydration; SDXL action randomization now repairs legacy non-HUMAN pose classifications conservatively and enforces SDXL/Pony/Illustrious family compatibility.
+    Full history: projects/kind-robots/HISTORY.md#t-119
   claimed_by: 20260924T064700Z-kind-robots-t119-chatgpt-a7c3
   claimed_at: '2026-09-24T06:47:00Z'
   updated: '2026-09-24T07:57:02Z'
@@ -2997,12 +2009,9 @@ tasks:
   stakes: reversible
   passes: 0
   note: >-
-    Silas, 2026-09-24: /art Generate pauses before the generator appears, then shows
-    "An error occurred while fetching collections: Request timed out after 10000ms".
-    Diagnose and fix the startup path rather than extending the timeout. The generator
-    must not require the complete ArtImage index or per-collection counts/previews just
-    to render; destination collection metadata may load progressively/lightweight while
-    the generation UI becomes usable. Preserve Gallery's scoped progressive loading.
+    Silas, 2026-09-24: /art Generate pauses before the generator appears, then shows "An error occurred while fetching collections: Request timed out after 10000ms".
+
+    Full history: projects/kind-robots/HISTORY.md#t-120
   updated: '2026-09-24T23:17:00Z'
   claimed_by: 20260924T2203Z-kind-robots-t120-chatgpt-b7e4
   claimed_at: '2026-09-24T22:07:00Z'
@@ -3015,20 +2024,10 @@ tasks:
   gate_human: false
   stakes: reversible
   passes: 0
-  note: |-
+  note: >-
     Silas, 2026-09-24: Resource Gallery follow-up from live screenshots.
 
-    1. When mature resources are disabled, omit mature Resource cards entirely instead of rendering one placeholder card per hidden resource.
-    2. In the Resource detail gallery, add a delete icon/action for user-owned/generated gallery images, preserving authorization and confirmation behavior.
-    3. Fix choosing a gallery image as the resource default/source image; the current flow reports a 403 for a generated ArtImage.
-    4. Make "Regenerate art" return to idle as soon as the replacement ArtJob is successfully submitted. The button must not spin until rendering finishes.
-    5. Diagnose the 10 currently failed ArtJobs shown in the queue and fix any shared code-path regressions rather than blindly requeueing. The screenshot shows several dream-cycle failures rejected by art-prompt validation around overloaded "frame" wording, one invalid-argument/path-style failure, and one relay recovery record; preserve historical failures while making safe retries possible.
-
-    Keep the changes scoped to Resource Gallery/resource-art behavior and shared ArtJob validation/recovery paths needed to address these failures.
-
-    Implemented the scoped Resource Gallery repair on worker/kind-robots-t-121-20260925t003800z-9f2a: hide mature Resource rows when the account preference is off; send Bearer auth when loading generated ArtImage bytes as a source; add owner/admin two-press delete for generated Resource gallery images; and stop Resource preview regeneration after the ArtJob is successfully queued. Current main already contains the claim-time and requeue-time frame prompt repair used by the failed dream-cycle jobs, so this branch does not duplicate that logic.
-
-    Merged silasfelinus/kind_robots#3042 after all 28 GitHub Actions workflows on the final head completed successfully. Resource Gallery now omits mature rows when mature browsing is off, owner/private gallery images load as generation sources with Bearer auth, generated Resource gallery ArtImages have a confirmed delete action, and Resource preview regeneration returns to idle after queue submission. The failed dream-cycle cohort's legacy frame wording is already repaired by current main's claim/requeue normalization paths; historical failed rows were left intact rather than bulk-requeued.
+    Full history: projects/kind-robots/HISTORY.md#t-121
   updated: '2026-09-25T15:11:00Z'
   claimed_by: 20260925T003800Z-kind-robots-t121-chatgpt-9f2a
   claimed_at: '2026-09-25T00:45:00Z'
@@ -3041,13 +2040,10 @@ tasks:
   gate_human: false
   stakes: reversible
   passes: 0
-  note: |-
-    Kaizen from kind-robots/t-120 (Silas, 2026-09-24). Generate no longer waits on the manager-wide ArtImage/collection hydration gate, but other legacy Art tabs still share that eager path. Audit each tab's actual startup dependencies and replace full-index loading with tab-owned lightweight queries where safe, without changing Gallery's progressive-loading contract.
-    Rescued from stranded branch worker/kind-robots-t-120-kaizen-20260924T2218Z-b7e4, which committed this task under a now-reused id (t-121) and was never opened as a PR; re-added here under a fresh id via next_free_task_id.py.
+  note: >-
+    Kaizen from kind-robots/t-120 (Silas, 2026-09-24).
 
-    Audited Art manager tab startup ownership and narrowed manager-wide hydration to Styler; preparing implementation PR.
-
-    Implementation is preserved on the worker branch at 9f05b3eaf1a7ddf6b6e1f18395c7347a11371c6b, but create_pull_request is currently blocked by the connector write safety layer. Retry PR creation without reimplementing.
+    Full history: projects/kind-robots/HISTORY.md#t-122
   updated: '2026-09-26T01:29:36Z'
   owner: worker
   claimed_by: 2026-09-26T01-00-00-t122-pr
@@ -3062,21 +2058,10 @@ tasks:
   gate_human: false
   stakes: reversible
   passes: 0
-  note: |-
-    Kaizen from kind-robots/t-122 (2026-09-26). A `create_pull_request` connector failure can
-    leave a fully-implemented, pushed worker branch stranded with no PR ever opened, while the
-    roadmap task sits at `status: ready` describing the blocker in its note (this happened twice
-    in two days: t-120's kaizen id-collision rescue and t-122 itself). A later session has no
-    reliable signal to check for an already-pushed `worker/*` branch matching the task id before
-    assuming it needs fresh implementation.
-    Add a short section to AGENTS.md's cross-repo/tooling-failure guidance: before claiming and
-    reimplementing a `ready` task, check for an existing `worker/<project>-<task-id>-*` branch on
-    the target repo (or one referenced in the task's own note); if found and its diff looks
-    complete against the task description, open the PR from it as-is (per the pattern this task's
-    own close-out just used) rather than reimplementing. Also verify full CI on the reused branch
-    before merging -- do not treat a stranded branch's own prior local verification as sufficient
-    (t-122 caught a real regression: verifyMaturityPrivacyContract.ts still pinned a string the
-    diff had already renamed elsewhere).
+  note: >-
+    Kaizen from kind-robots/t-122 (2026-09-26).
+
+    Full history: projects/kind-robots/HISTORY.md#t-123
   updated: '2026-09-26T01:45:03Z'
   owner: worker
   claimed_by: 2026-09-26T01-45-00-t123
