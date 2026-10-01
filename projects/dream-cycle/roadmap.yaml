@@ -578,11 +578,11 @@ tasks:
 - id: t-030
   milestone: m5
   title: Re-measure character embodiment coverage now that the axes are seeded
-  status: ready
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-09-29T19:47:00Z'
+  updated: '2026-10-01T18:48:53Z'
   note: >-
     The proof step for t-029. Seeding the axes is not the same as the axes
     reaching the rendered image, and the difference is invisible from the
@@ -636,6 +636,13 @@ tasks:
     saturated hair 0%->5.6%, she/her 34%->27.8%; long hair still 0%; no character-sheet-
     shaped prose. Signal is a real move, not the 'ignore them' failure. Re-run 'python
     scripts/measure_character_embodiment.py --show 5' once it exits 0 (>=20), then close.
+
+    2026-10-01 VERDICT (20/20 post-axes characters, measure_character_embodiment.py exit 0):
+    axes reach the prose. hair mentioned 22.7%->65.0%, explicit age 3.1%->30.0%, skin tone
+    10.3%->40.0%, affect 9.3%->40.0%, they/them 3.1%->50.0%, saturated hair 0%->5.0%,
+    character-sheet shape 0%. Not the 'ignore them' failure. Residual: long hair still 0.0%;
+    he/him only 5.0% vs she/her 25.0% (gender is not even, skewed to they/them) -- candidate
+    tweak to _embodiment_instructions if Silas wants it, not a blocker.
   claimed_by: 20260929T2000Z-dc030
   claimed_at: '2026-09-29T19:46:07Z'
 - id: t-031
