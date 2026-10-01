@@ -3036,6 +3036,17 @@ tasks:
   claimed_by: 011ktzr8
   claimed_at: '2026-09-30T22:46:22Z'
   implementation_pr: 'silasfelinus/conductor#5448'
+- id: t-202
+  title: 'Archive done-task notes for kind-robots roadmap (175KB, over the 150KB advisory threshold)'
+  status: ready
+  stakes: reversible
+  owner: worker
+  passes: 0
+  updated: '2026-10-01T03:00:00Z'
+  note: >-
+    Kaizen from conductor archive pass 2026-10-01: run scripts/archive_done_task_notes.py --project kind-robots,
+    verify with --verify-only, confirm check_roadmap_note_size no longer flags it. Also filed so conductor always
+    has an open task (validate_roadmaps requires one for active projects).
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
