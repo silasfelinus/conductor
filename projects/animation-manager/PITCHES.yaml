@@ -1624,7 +1624,7 @@ pitches:
 
   - id: bonsai-seasonal-growth
     title: Bonsai Seasonal Growth
-    status: pitched
+    status: candidate
     priority: 30
     surprise: >
       A potted bonsai tree on a stone ledge quietly grows through an entire year -- bare
@@ -1680,6 +1680,20 @@ pitches:
       - the color-and-drop phase sheds individual leaf sprites (capped concurrent count), not the whole canopy disappearing as a block
       - pointer branch-tip nudge and trunk click-advance never desynchronize the autonomous phase clock for tips not directly interacted with
       - reduced-motion mode holds one settled full-canopy phase with no phase progression and no leaf drop
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/bonsai-seasonal-growth.vue
+        pull_request: silasfelinus/kind_robots#3153
+        released_at: '2026-10-01T12:30:00Z'
+        commit: 2d6ae584b54c6953d3cbd071aaf6198648c63584
+        verification:
+          - Contract verifiers
+          - TypeScript
+          - layout-contract
+          - facet-catalog
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
 
   - id: pendulum-wave-garden
     title: Pendulum Wave Garden
