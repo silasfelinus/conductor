@@ -2731,3 +2731,10 @@ Kind Robots PR #3103 (proceed vs accept-complete gate actions) merged 2026-09-30
 Filed by gate triage 2026-09-30 from t-167's note. ops/home-server/relay_agent.py never sends smartQueue, so claim.post.ts's model-affinity bypass (SMART_QUEUE_MAX_BYPASS = 24) is inert and the queue drains strictly oldest-first. Turning it on makes cold checkpoint loads rare, and those loads are the suspected trigger in t-165/t-167. Vendored relay code: follow ops/home-server provenance rules. Deploying to Silas-PC is still Silas's step.
 Reviewed and merged 2026-09-30; relay_agent sends smartQueue on claim. Deploying to Silas-PC is Silas's step.
 <!-- note:end t-201 -->
+
+## t-202 — Archive done-task notes for kind-robots roadmap (175KB, over the 150KB advisory threshold)
+
+<!-- note:begin t-202 -->
+Kaizen from conductor archive pass 2026-10-01: run scripts/archive_done_task_notes.py --project kind-robots, verify with --verify-only, confirm check_roadmap_note_size no longer flags it. Also filed so conductor always has an open task (validate_roadmaps requires one for active projects).
+Archived 26 done-task notes from kind-robots roadmap to HISTORY.md (175,436 -> 81,092 bytes), verified; merged in #5455.
+<!-- note:end t-202 -->
