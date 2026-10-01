@@ -799,3 +799,16 @@ def test_live_recovery_of_rejected_job_clears_stale_job_reference(monkeypatch, t
     assert entries[0].get("render_gate_error") is None
     assert entries[0].get("render_gate_error_at") is None
     assert mod.referenced_job_id(entries[0]) is None
+
+
+def test_queue_lock_refuses_concurrent_holder(tmp_path, monkeypatch):
+    """coloring-book/t-055: a second live writer must refuse, not clobber the queue."""
+    monkeypatch.setattr(mod, "QUEUE_LOCK_FILE", tmp_path / "color-art-jobs.yaml.lock")
+    with mod.queue_lock():
+        try:
+            with mod.queue_lock():
+                raise AssertionError("second lock acquired")
+        except RuntimeError as error:
+            assert "already held" in str(error)
+    with mod.queue_lock():  # released after the first holder exits
+        pass
