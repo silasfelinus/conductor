@@ -1580,56 +1580,17 @@ tasks:
 - id: t-078
   milestone: m3
   title: Real fish roster (animated cut-out sprites), Charlotte/Wilbur redesign + story scenes, real backgrounds
-  status: ready
+  status: claimed
   gate_human: false
   owner: worker
   stakes: reversible
   passes: 0
-  claimed_by: 20261001-routine
-  claimed_at: '2026-10-01T05:46:54Z'
+  claimed_by: 20261001T0615Z-t-078-gallant-clarke-tn8g6f
+  claimed_at: '2026-10-01T06:11:16+00:00'
   implementation_pr: 'silasfelinus/kind_robots#3112'
-  note: >-
-    Silas, 2026-09-30: "cthulhuquarium deserves a real roster of fish, with animation, and
-    invisible background... custom, bespoke listings, static image and then animated." Then:
-    "151 fish. real backgrounds. intro tutorial, with special text and images from the two main
-    characters during special moments including the intro. And much better character designs for
-    the two mains" (Charlotte: gothic mistress prima donna old woman; Wilbur: long-haired,
-    partially balding, bespectacled sad sack with a cast, bandaids and injuries).
-    CODE + CANON (session 2026-09-30): silasfelinus/cthulhuquarium#16 adds a bespoke `sprite:`
-    block (motion + prompt) to all 151 species, the redesigned characters (5 poses each + hero),
-    story/scenes.yaml (intro + every special moment + one Charlotte interstitial per milestone),
-    16 backgrounds, and render/cut-out/animate scripts. silasfelinus/kind_robots#3112 plays it:
-    animated cut-out sprites in the tank and listings, dialogue bottom sheet with portraits and
-    focus rings, seen-once scenes, background picker, the t-019 milestone ladder, first_evolution,
-    and two shop fixes (evolution-only species were listed free; starters now always stocked).
-    REMAINING: 180 renders (151 sprites, 12 character images, 16 backgrounds, 1 plate) via
-    `python3 scripts/render_art.py all --par 3` in the canon repo, then build_sprites.py,
-    build_story_art.py, and kind_robots `node scripts/sync_cthulhuquarium_canon.mjs` in a
-    follow-up PR. BLOCKED 07:03Z 2026-09-30 on the render box: Silas-PC claimed ArtJob 32074 and
-    stalled; check_render_box.py reports DOWN (stalled queue). Needs a ComfyUI restart at home.
-    PROGRESS 2026-09-30 08:40Z (Silas: "we have lots of tokens over the next 36 hours... it
-    should all be submitted"). All 190 renders + 7 WAN video clips are SUBMITTED (cthulhuquarium
-    art/jobs.yaml; render_art.py submit/harvest). Box still stalled (Silas gaming on the render
-    box). Merged: cthulhuquarium#16-#19 (sprites, voices for all 151, barks, videos),
-    kind_robots#3112. Open: kind_robots#3113 (living tank: per-behavior motion, ambience, sound,
-    hunts, eggs; voices/barks on screens; t-071 click-for-coins + upgrades; t-073 cards;
-    Ichthyonomicon scrapbook; live read-only canvas on public tanks; milestone reconcile for
-    veterans; restricted-user public-URL leak fixed), cthulhuquarium#20 (upgrade + peace ward
-    plates). NEXT: harvest -> build_sprites.py -> build_story_art.py -> sync -> art PR; submit
-    the 3 videos whose stills are pending.
-    PROGRESS 2026-09-30 11:40Z. Everything is submitted: 341 renders (151 sprites, a WAN swim
-    clip per fish that auto-submits when its sprite lands, 16 backgrounds, character stills and
-    hero videos); 9 done so far (the box is slow while Silas games). Charlotte's redesign
-    landed and reads right (old, beaming gothic prima donna; hero + 4 of 5 poses). Wilbur's first
-    hero ignored the brief; the prompt was rewritten (cthulhuquarium#26) and his second hero has
-    the balding crown, long hair, glasses and sad-sack face but still no visible cast or face
-    plasters -- his 5 portraits are queued and are the next check. First end-to-end playtest
-    (local MariaDB, 5 fresh accounts) found and fixed a tutorial soft-lock (0 starting coins;
-    now 25, economy.yaml currency.starting_coins), story beats talking over the site tour and
-    reveal dialogs, the sheet hiding the page end, and off-screen focus targets
-    (kind_robots#3120). Listings play each fish's real swim clip (kind_robots#3115).
+  note: |-
+    Silas, 2026-09-30: "cthulhuquarium deserves a real roster of fish, with animation, and invisible background... custom, bespoke listings, static image and then animated." Then: "151 fish. real backgrounds. intro tutorial, with special text and images from the two main characters during special moments including the intro. And much better character designs for the two mains" (Charlotte: gothic mistress prima donna old woman; Wilbur: long-haired, partially balding, bespectacled sad sack with a cast, bandaids and injuries). CODE + CANON (session 2026-09-30): silasfelinus/cthulhuquarium#16 adds a bespoke `sprite:` block (motion + prompt) to all 151 species, the redesigned characters (5 poses each + hero), story/scenes.yaml (intro + every special moment + one Charlotte interstitial per milestone), 16 backgrounds, and render/cut-out/animate scripts. silasfelinus/kind_robots#3112 plays it: animated cut-out sprites in the tank and listings, dialogue bottom sheet with portraits and focus rings, seen-once scenes, background picker, the t-019 milestone ladder, first_evolution, and two shop fixes (evolution-only species were listed free; starters now always stocked). REMAINING: 180 renders (151 sprites, 12 character images, 16 backgrounds, 1 plate) via `python3 scripts/render_art.py all --par 3` in the canon repo, then build_sprites.py, build_story_art.py, and kind_robots `node scripts/sync_cthulhuquarium_canon.mjs` in a follow-up PR. BLOCKED 07:03Z 2026-09-30 on the render box: Silas-PC claimed ArtJob 32074 and stalled; check_render_box.py reports DOWN (stalled queue). Needs a ComfyUI restart at home. PROGRESS 2026-09-30 08:40Z (Silas: "we have lots of tokens over the next 36 hours... it should all be submitted"). All 190 renders + 7 WAN video clips are SUBMITTED (cthulhuquarium art/jobs.yaml; render_art.py submit/harvest). Box still stalled (Silas gaming on the render box). Merged: cthulhuquarium#16-#19 (sprites, voices for all 151, barks, videos), kind_robots#3112. Open: kind_robots#3113 (living tank: per-behavior motion, ambience, sound, hunts, eggs; voices/barks on screens; t-071 click-for-coins + upgrades; t-073 cards; Ichthyonomicon scrapbook; live read-only canvas on public tanks; milestone reconcile for veterans; restricted-user public-URL leak fixed), cthulhuquarium#20 (upgrade + peace ward plates). NEXT: harvest -> build_sprites.py -> build_story_art.py -> sync -> art PR; submit the 3 videos whose stills are pending. PROGRESS 2026-09-30 11:40Z. Everything is submitted: 341 renders (151 sprites, a WAN swim clip per fish that auto-submits when its sprite lands, 16 backgrounds, character stills and hero videos); 9 done so far (the box is slow while Silas games). Charlotte's redesign landed and reads right (old, beaming gothic prima donna; hero + 4 of 5 poses). Wilbur's first hero ignored the brief; the prompt was rewritten (cthulhuquarium#26) and his second hero has the balding crown, long hair, glasses and sad-sack face but still no visible cast or face plasters -- his 5 portraits are queued and are the next check. First end-to-end playtest (local MariaDB, 5 fresh accounts) found and fixed a tutorial soft-lock (0 starting coins; now 25, economy.yaml currency.starting_coins), story beats talking over the site tour and reveal dialogs, the sheet hiding the page end, and off-screen focus targets (kind_robots#3120). Listings play each fish's real swim clip (kind_robots#3115).
+    2026-10-01 routine: harvested+cut out 6 more sprites, submitted their clips (cthulhuquarium#50). 94/341 renders done, box UP. Needs pip pillow numpy rembg[cpu] in sandbox. Next: harvest, build_sprites.py, check facing, submit clips.
 
-    2026-10-01 routine: harvested+cut out 6 more sprites, submitted their clips
-    (cthulhuquarium#50). 94/341 renders done, box UP. Needs pip pillow numpy rembg[cpu] in
-    sandbox. Next: harvest, build_sprites.py, check facing, submit clips.
-  updated: '2026-10-01T05:58:49Z'
+    Claim moves to session_01L9VUEkNppD54d5B9LiywHu, which has run the t-078 render loop every ~45 min since 2026-09-30 (harvest, review each sprite against its species' defining trait and facing, re-prompt misses, flip faces-left, sync to kind_robots; cthulhuquarium #38-#51). The 20261001-routine run (claimed 05:46Z) harvested the same six renders in parallel (cthulhuquarium #50), committing two rejected renders and an unflipped sprite and double-submitting six swim clips; #51 reconciled it and cancelled the duplicates (32419-32424). Routine runs: skip t-078 harvesting while this claim holds. Progress 06:15Z: 92/341 renders done, 154 queued, 95 clips waiting on their sprite; no swim clips rendered yet (the box works sprites first).
+  updated: '2026-10-01T06:11:16+00:00'
