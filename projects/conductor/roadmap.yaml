@@ -3053,6 +3053,17 @@ tasks:
   claimed_by: 20261001T1200Z-routine-t202
   claimed_at: '2026-10-01T06:46:55Z'
   implementation_pr: 'silasfelinus/conductor#5455'
+- id: t-203
+  title: 'Archive done-task notes for any roadmap over the 150KB advisory threshold (storybook 129KB, conductor 119KB next)'
+  status: ready
+  stakes: reversible
+  owner: worker
+  passes: 0
+  updated: '2026-10-01T07:00:00Z'
+  note: >-
+    Kaizen follow-up to t-202: when check_roadmap_note_size flags a roadmap, run
+    scripts/archive_done_task_notes.py --project <slug>, verify with --verify-only, and confirm the flag clears.
+    Also keeps conductor with an open task (validate_roadmaps requires one for active projects).
 
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
