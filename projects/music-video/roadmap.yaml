@@ -187,7 +187,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Lyrics: pitch and settings to structured, editable lyrics"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -200,9 +200,14 @@ tasks:
       per-section regenerate, inline line editing and a per-section lock so regenerate never
       overwrites locked text. Lyric text must never go into an ArtJob promptString. DB-free tests
       cover the section-count math and the response parser.
+
+      2026-10-02: kind_robots#3183 merged (00d8b0e) after 33/33 checks. First CI run caught an
+      unguarded capture-group index (verifyCaptureGroupGuards); fixed in bc8fc39. POST
+      /api/music-video/[id]/lyrics plus utils/musicVideoLyrics.ts (incl. toAceStepLyrics for
+      t-010).
     claimed_by: 20261002T-claude-mv-t005-01D4se
     claimed_at: '2026-10-02T10:54:28Z'
-    updated: '2026-10-02T18:07:11Z'
+    updated: '2026-10-02T18:07:15Z'
     implementation_pr: 'silasfelinus/kind_robots#3183'
 
   - id: t-006
