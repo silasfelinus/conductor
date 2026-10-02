@@ -1,7 +1,7 @@
 # Pitch: Robot Dress-Up Workshop
 date: 2026-10-02
 project-target: new
-status: approved
+status: rejected
 
 ## The idea
 A paper-doll workshop where you pick a robot body and layer on pre-generated hats, arms, antennae, paint jobs and accessories, save the result to your device and download it as a sticker. Pure client-side layering, with parts that snap to anchor points so nothing needs generation.

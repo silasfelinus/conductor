@@ -1,7 +1,7 @@
 # Pitch: Hidden Robots
 date: 2026-10-02
 project-target: new
-status: approved
+status: rejected
 
 ## The idea
 Twenty big, busy, hand-composed scenes (a night market, a robot orchestra, a flooded library) with a find-list of small characters and objects tucked inside, where sessions look at each finished image and annotate the hit boxes. Tap to find, count down the list, earn a stamp per scene.
