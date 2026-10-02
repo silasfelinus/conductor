@@ -227,6 +227,11 @@ def write_direct_media(job, media):
         raise ValueError(f"Media destination escaped root: {destination}")
     suffix = destination.suffix.lower()
     raw = base64.b64decode(media["data_b64"])
+    if media.get("is_audio"):
+        raise ValueError(
+            "Audio results are private ArtImages; they are never written to a "
+            "Kind Robots public/images target"
+        )
     if media.get("is_video"):
         if suffix not in VIDEO_EXTENSIONS:
             raise ValueError(
@@ -327,7 +332,7 @@ def run_comfy_with_recovery(payload):
     if unresolved:
         raise relay.unresolved_asset_error(unresolved)
 
-    want_video = str(payload.get("media") or "").strip().lower() == "video"
+    want_kind = relay.payload_media_kind(payload)
     client_id = str(
         payload.get("_relayClientId")
         or f"{relay.AGENT_ID}-prompt-{time.time_ns()}"
@@ -371,7 +376,7 @@ def run_comfy_with_recovery(payload):
     if submit_error:
         relay.log(f"recovered accepted Comfy prompt {prompt_id} for {client_id}")
 
-    kind = "video" if want_video else "image"
+    kind = want_kind
     soft_timeout = generation_timeout_seconds(payload)
     deadline = time.time() + soft_timeout
     absent_since = None
@@ -385,7 +390,7 @@ def run_comfy_with_recovery(payload):
             entry = history.get(prompt_id)
             if entry:
                 result = relay.extract_comfy_output(
-                    entry.get("outputs") or {}, want_video, prompt_id=prompt_id
+                    entry.get("outputs") or {}, want_kind, prompt_id=prompt_id
                 )
                 if result:
                     return result
@@ -481,7 +486,7 @@ def process_with_media(job):
             f"as canonical ArtImage {final_art_image_id}"
         )
 
-    kind = "video" if media.get("is_video") else "image"
+    kind = relay.media_kind_label(media)
     relay.log(
         f"job {job_id}: DONE ({kind} ArtImage {final_art_image_id}; "
         f"media {destination})"

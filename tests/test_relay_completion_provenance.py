@@ -65,6 +65,7 @@ def test_claim_advertises_strict_completion_proof(monkeypatch):
         "agentId": "relay:Silas-PC",
         "agentVersion": "relay-test-v1",
         "supportsInputImages": True,
+        "supportsAudio": True,
         "supportsCompletionProof": True,
         "smartQueue": True,
     }
