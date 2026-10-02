@@ -531,3 +531,8 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 **Direction:** A tiny virtual pet you adopt, name, feed, play with and put to bed, whose mood sprites and room scenes are all pre-generated and whose state lives in your own browser. It grows through three forms over a couple of weeks of casual visits and never needs a server or a token.
 **Notes:**
 - (your notes)
+
+### evolve-rebel-button  (software)
+**Direction:** After 100 clicks the Rebel Button becomes an art reviewer: random unseen, maturity-appropriate public or owned art, 1-5 star reviews (hate it/meh/neutral/like it/love it) with optional comment, each first review earning a click and karma.
+**Notes:**
+- (your notes)
