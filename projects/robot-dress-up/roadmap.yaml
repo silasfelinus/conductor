@@ -1,0 +1,109 @@
+# Robot Dress-Up Workshop — free-to-play, built in kind_robots. Architecture in DESIGN-BRIEF.md.
+project: robot-dress-up
+kind: software
+goal: A paper-doll workshop where you pick a robot body and layer on pre-generated hats, arms, antennae,
+  paint jobs and accessories, save the result to your device and download it as a sticker. Pure client-side
+  layering, with parts that snap to anchor points so nothing needs generation.
+notes_from_silas: '2026-10-02: approved from the daily pitch docket ("I like all proposals"). Free-to-play:
+  no LLM at runtime; sessions pre-author content and art.
+
+  '
+milestones:
+- id: m1
+  title: SHAPE — outline, brainstorm, design brief
+  weight: 25
+  status: in-progress
+- id: m2
+  title: BUILD — actualize, adjust, test
+  weight: 50
+  status: not-started
+- id: m3
+  title: POLISH & SHIP — aesthetics, performance, delivery
+  weight: 25
+  status: not-started
+tasks:
+- id: t-001
+  milestone: m1
+  title: Write the design brief and start building
+  status: done
+  owner: claude
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: DESIGN-BRIEF.md written from the approved 2026-10-02 pitch; build tasks created below.
+- id: t-002
+  milestone: m1
+  title: Confirm scope with Silas
+  status: done
+  owner: claude
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  approved_by_human: true
+  note: Silas approved this pitch in session on 2026-10-02 ("I like all proposals"). No further scope
+    gate.
+- id: t-003
+  milestone: m1
+  title: 'Survey and spec: anchor grid, layer order and part manifest'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: 'Write projects/robot-dress-up/docs/spec.md: the shared anchor grid so every part fits every body,
+    layer ordering, transparent-PNG requirements, and the manifest format.'
+- id: t-004
+  milestone: m2
+  title: Layering engine, manifest validator and canvas renderer
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: Pure layer model and a canvas renderer with PNG sticker export; DB-free tests; fixtures only.
+- id: t-005
+  milestone: m2
+  title: Workshop page /play/dress-up with one body and 10 parts
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-004
+  note: Pick, layer, reorder, undo, save to device storage (try/catch), download as PNG; usable at 375px.
+- id: t-006
+  milestone: m2
+  title: Generate 6 bodies and cut-out clean-up
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-005
+  note: ArtJobs for 6 bodies on the anchor grid, background removal, verified alignment; commit with manifest
+    and metadata.
+- id: t-007
+  milestone: m2
+  title: Generate and commit about 80 transparent parts
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-006
+  note: Hats, arms, antennae, paint jobs and accessories in batches under one style bible; reject any
+    that miss the anchors.
+- id: t-008
+  milestone: m3
+  title: Polish, accessibility and acceptance with Silas
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-007
+  note: Screenshots at 375, 768 and 1280; hand to Silas (needs-human).

@@ -505,3 +505,28 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 **Direction:** Pre-written choose-your-own-adventure books that start from existing Kind Robots scenarios, each with a preset hero, a fully authored branching story graph, and pre-generated art for every node. Static content, no LLM at read time.
 **Notes:**
 - (your notes)
+
+### kind-oracle  (software)
+**Direction:** A 22-card oracle deck of Kind Robots, each card a full piece of art with an upright and a reversed meaning, where you draw a one, three or five card spread and read a pre-written reading assembled from hand-authored pair and position texts. Every combination is written ahead of time, so it feels personal and costs nothing to run.
+**Notes:**
+- (your notes)
+
+### hidden-robots  (software)
+**Direction:** Twenty big, busy, hand-composed scenes (a night market, a robot orchestra, a flooded library) with a find-list of small characters and objects tucked inside, where sessions look at each finished image and annotate the hit boxes. Tap to find, count down the list, earn a stamp per scene.
+**Notes:**
+- (your notes)
+
+### robot-dress-up  (software)
+**Direction:** A paper-doll workshop where you pick a robot body and layer on pre-generated hats, arms, antennae, paint jobs and accessories, save the result to your device and download it as a sticker. Pure client-side layering, with parts that snap to anchor points so nothing needs generation.
+**Notes:**
+- (your notes)
+
+### kind-word-puzzles  (software)
+**Direction:** A year of pre-authored word searches and mini crosswords built from the Kind Robots lexicon of characters, rewards, places and scenarios, one per day with the date picking the puzzle. Sessions write and validate every grid ahead of time, so the daily puzzle is free for everyone.
+**Notes:**
+- (your notes)
+
+### pocket-pet-robot  (software)
+**Direction:** A tiny virtual pet you adopt, name, feed, play with and put to bed, whose mood sprites and room scenes are all pre-generated and whose state lives in your own browser. It grows through three forms over a couple of weeks of casual visits and never needs a server or a token.
+**Notes:**
+- (your notes)

@@ -89,7 +89,9 @@ def validate(date: str, docket: dict[str, Any]) -> list[str]:
     for other in all_docket_dates():
         if other != date:
             prior |= {p.get("slug", "") for p in (load_docket(other) or {}).get("pitches", []) if isinstance(p, dict)}
-    taken = existing_slugs()
+    # An approved pitch becomes a project (intake.py); its own docket entry must stay valid.
+    approved = {slug for slug, d in load_decisions().items() if d.get("decision") == "approved"}
+    taken = existing_slugs() - approved
     seen: set[str] = set()
     zero_llm = 0
     for i, pitch in enumerate(pitches, 1):
