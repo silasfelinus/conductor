@@ -1,84 +1,15 @@
-generated_by: scripts/queue_missing_project_art.py
-mode: dry-run
-description: Concrete project image requests ready for generation; active retries are preserved until
-  the consumer marks them complete.
 batch:
   entries:
-  - project: music-video
-    variant: icon
-    target_repo: silasfelinus/conductor
-    image_path: projects/images/music-video-icon.webp
-    size: 256x256
-    status: pending
-    prompt: A rounded-square badge in deep indigo holding one film strip that unspools into a waving ribbon
-      of music staff lines, three bright frames along the strip in magenta, teal and gold, thick clean
-      outlines, centered with wide margins, soft even studio light
-    engine: krea2
-  - project: music-video
-    variant: card
-    target_repo: silasfelinus/conductor
-    image_path: projects/images/music-video-card.webp
-    size: 512x768
-    status: pending
-    prompt: A cozy home music studio at night, a wide wooden desk with a laptop showing a long timeline
-      of colorful scene frames, a small glowing speaker, a handwritten lyric sheet pinned to the wall,
-      and a round window opening onto a painted dream landscape of floating lanterns, warm lamplight over
-      cool indigo shadows, tall portrait framing, an empty room where only the instruments and screens
-      occupy the frame
-    engine: krea2
-  - project: music-video
-    variant: hero
-    target_repo: silasfelinus/conductor
-    image_path: projects/images/music-video-hero.webp
-    size: 1280x720
-    status: pending
-    prompt: A long wooden workbench stretching across a sunlit loft, a stack of handwritten lyric pages
-      on the left, a glowing film strip arching like a rainbow bridge over a tiny sound-wave river in
-      the middle, a row of framed painted scenes on the right each holding a different color world, warm
-      morning light through tall windows, wide landscape framing, an empty loft where only the objects
-      occupy the frame
-    engine: krea2
-  - project: kr-adventures
-    variant: icon
-    target_repo: silasfelinus/conductor
-    image_path: projects/images/kr-adventures-icon.webp
-    size: 256x256
-    status: pending
-    prompt: flat minimal app icon, Pre-written choose-your-own-adventure books that start from existing
-      Kind Robots scenarios, each with a preset hero, a fully authored branching story graph, and pre-generated
-      art for every node. Static content, no LLM at read time., bold clean vector shapes, square composition,
-      no text
-    engine: krea2
   - project: kr-adventures
     variant: card
     target_repo: silasfelinus/conductor
     image_path: projects/images/kr-adventures-card.webp
     size: 512x768
     status: pending
-    prompt: flat minimal portrait illustration, Pre-written choose-your-own-adventure books that start
-      from existing Kind Robots scenarios, each with a preset hero, a fully authored branching story graph,
-      and pre-generated art for every node. Static content, no LLM at read time., centered subject on
-      soft gradient backdrop, no text, 2:3 portrait composition
-    engine: krea2
-  - project: kr-adventures
-    variant: hero
-    target_repo: silasfelinus/conductor
-    image_path: projects/images/kr-adventures-hero.webp
-    size: 1280x720
-    status: pending
-    prompt: flat minimal wide panoramic, Pre-written choose-your-own-adventure books that start from existing
-      Kind Robots scenarios, each with a preset hero, a fully authored branching story graph, and pre-generated
-      art for every node. Static content, no LLM at read time., cinematic scale, no text, 16:9 landscape
-    engine: krea2
-  - project: kr-solitaire
-    variant: icon
-    target_repo: silasfelinus/conductor
-    image_path: projects/images/kr-solitaire-icon.webp
-    size: 256x256
-    status: pending
-    prompt: flat minimal app icon, Klondike solitaire played with a hand-designed 52-card Kind Robots
-      deck (four suits of robots, illustrated court cards) and Kind Robots card backs. Pure client-side
-      game, no LLM., bold clean vector shapes, square composition, no text
+    prompt: flat minimal portrait illustration, Pre-written choose-your-own-adventure books
+      that start from existing Kind Robots scenarios, each with a preset hero, a fully authored
+      branching story graph, and pre-generated art for every node. Static content, no LLM
+      at read time., centered subject on soft gradient backdrop, no text, 2:3 portrait composition
     engine: krea2
   - project: kr-solitaire
     variant: card
@@ -86,95 +17,10 @@ batch:
     image_path: projects/images/kr-solitaire-card.webp
     size: 512x768
     status: pending
-    prompt: flat minimal portrait illustration, Klondike solitaire played with a hand-designed 52-card
-      Kind Robots deck (four suits of robots, illustrated court cards) and Kind Robots card backs. Pure
-      client-side game, no LLM., centered subject on soft gradient backdrop, no text, 2:3 portrait composition
-    engine: krea2
-  - project: kr-solitaire
-    variant: hero
-    target_repo: silasfelinus/conductor
-    image_path: projects/images/kr-solitaire-hero.webp
-    size: 1280x720
-    status: pending
-    prompt: flat minimal wide panoramic, Klondike solitaire played with a hand-designed 52-card Kind Robots
-      deck (four suits of robots, illustrated court cards) and Kind Robots card backs. Pure client-side
-      game, no LLM., cinematic scale, no text, 16:9 landscape
-    engine: krea2
-  - project: comic-creator
-    variant: icon
-    target_repo: silasfelinus/conductor
-    image_path: projects/images/comic-creator-icon.webp
-    size: 256x256
-    status: pending
-    prompt: 'flat minimal app icon, A browser comic book creator: pick or upload panels, lay out pages
-      from templates, drop in Kind Robots characters, speech bubbles and captions, export a PDF/PNG comic.
-      Zero LLM required., bold clean vector shapes, square composition, no text'
-    engine: krea2
-  - project: comic-creator
-    variant: card
-    target_repo: silasfelinus/conductor
-    image_path: projects/images/comic-creator-card.webp
-    size: 512x768
-    status: pending
-    prompt: 'flat minimal portrait illustration, A browser comic book creator: pick or upload panels,
-      lay out pages from templates, drop in Kind Robots characters, speech bubbles and captions, export
-      a PDF/PNG comic. Zero LLM required., centered subject on soft gradient backdrop, no text, 2:3 portrait
-      composition'
-    engine: krea2
-  - project: comic-creator
-    variant: hero
-    target_repo: silasfelinus/conductor
-    image_path: projects/images/comic-creator-hero.webp
-    size: 1280x720
-    status: pending
-    prompt: 'flat minimal wide panoramic, A browser comic book creator: pick or upload panels, lay out
-      pages from templates, drop in Kind Robots characters, speech bubbles and captions, export a PDF/PNG
-      comic. Zero LLM required., cinematic scale, no text, 16:9 landscape'
-    engine: krea2
-  - project: pocket-pet-robot
-    variant: icon
-    target_repo: silasfelinus/conductor
-    image_path: projects/images/pocket-pet-robot-icon.webp
-    size: 256x256
-    status: pending
-    prompt: flat minimal app icon, A tiny virtual pet you adopt, name, feed, play with and put to bed,
-      whose mood sprites and room scenes are all pre-generated and whose state lives in your own browser.
-      It grows through three forms over a couple of weeks of casual visits and never needs a server or
-      a token., bold clean vector shapes, square composition, no text
-    engine: krea2
-  - project: pocket-pet-robot
-    variant: card
-    target_repo: silasfelinus/conductor
-    image_path: projects/images/pocket-pet-robot-card.webp
-    size: 512x768
-    status: pending
-    prompt: flat minimal portrait illustration, A tiny virtual pet you adopt, name, feed, play with and
-      put to bed, whose mood sprites and room scenes are all pre-generated and whose state lives in your
-      own browser. It grows through three forms over a couple of weeks of casual visits and never needs
-      a server or a token., centered subject on soft gradient backdrop, no text, 2:3 portrait composition
-    engine: krea2
-  - project: pocket-pet-robot
-    variant: hero
-    target_repo: silasfelinus/conductor
-    image_path: projects/images/pocket-pet-robot-hero.webp
-    size: 1280x720
-    status: pending
-    prompt: flat minimal wide panoramic, A tiny virtual pet you adopt, name, feed, play with and put to
-      bed, whose mood sprites and room scenes are all pre-generated and whose state lives in your own
-      browser. It grows through three forms over a couple of weeks of casual visits and never needs a
-      server or a token., cinematic scale, no text, 16:9 landscape
-    engine: krea2
-  - project: kind-oracle
-    variant: icon
-    target_repo: silasfelinus/conductor
-    image_path: projects/images/kind-oracle-icon.webp
-    size: 256x256
-    status: pending
-    prompt: flat minimal app icon, A 22-card oracle deck of Kind Robots, each card a full piece of art
-      with an upright and a reversed meaning, where you draw a one, three or five card spread and read
-      a pre-written reading assembled from hand-authored pair and position texts. Every combination is
-      written ahead of time, so it feels personal and costs nothing to run., bold clean vector shapes,
-      square composition, no text
+    prompt: flat minimal portrait illustration, Klondike solitaire played with a hand-designed
+      52-card Kind Robots deck (four suits of robots, illustrated court cards) and Kind Robots
+      card backs. Pure client-side game, no LLM., centered subject on soft gradient backdrop,
+      no text, 2:3 portrait composition
     engine: krea2
   - project: kind-oracle
     variant: card
@@ -182,21 +28,29 @@ batch:
     image_path: projects/images/kind-oracle-card.webp
     size: 512x768
     status: pending
-    prompt: flat minimal portrait illustration, A 22-card oracle deck of Kind Robots, each card a full
-      piece of art with an upright and a reversed meaning, where you draw a one, three or five card spread
-      and read a pre-written reading assembled from hand-authored pair and position texts. Every combination
-      is written ahead of time, so it feels personal and costs nothing to run., centered subject on soft
-      gradient backdrop, no text, 2:3 portrait composition
+    prompt: flat minimal portrait illustration, A 22-card oracle deck of Kind Robots, each
+      card a full piece of art with an upright and a reversed meaning, where you draw a one,
+      three or five card spread and read a pre-written reading assembled from hand-authored
+      pair and position texts. Every combination is written ahead of time, so it feels personal
+      and costs nothing to run., centered subject on soft gradient backdrop, no text, 2:3
+      portrait composition
     engine: krea2
-  - project: kind-oracle
-    variant: hero
+  - project: evolve-rebel-button
+    variant: icon
     target_repo: silasfelinus/conductor
-    image_path: projects/images/kind-oracle-hero.webp
-    size: 1280x720
+    image_path: projects/images/evolve-rebel-button-icon.webp
+    size: 256x256
     status: pending
-    prompt: flat minimal wide panoramic, A 22-card oracle deck of Kind Robots, each card a full piece
-      of art with an upright and a reversed meaning, where you draw a one, three or five card spread and
-      read a pre-written reading assembled from hand-authored pair and position texts. Every combination
-      is written ahead of time, so it feels personal and costs nothing to run., cinematic scale, no text,
-      16:9 landscape
+    prompt: flat minimal app icon, Turns the early Rebel Button toy into an art reviewer once
+      someone hits 100 clicks., bold clean vector shapes, square composition, no text
+    engine: krea2
+  - project: evolve-rebel-button
+    variant: card
+    target_repo: silasfelinus/conductor
+    image_path: projects/images/evolve-rebel-button-card.webp
+    size: 512x768
+    status: pending
+    prompt: flat minimal portrait illustration, Turns the early Rebel Button toy into an art
+      reviewer once someone hits 100 clicks., centered subject on soft gradient backdrop,
+      no text, 2:3 portrait composition
     engine: krea2

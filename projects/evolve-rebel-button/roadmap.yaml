@@ -1,0 +1,75 @@
+# Copy this folder to projects/<your-project>/ to add a project.
+# Default scaffold per PROJECT-CREATION.md (approved by Silas 2026-07-04):
+# three milestones — SHAPE / BUILD / POLISH & SHIP — with a NON-BLOCKING scope
+# gate. Agents build the design brief and start working immediately; scope
+# confirmation runs in parallel as a soft needs-human. Two-word slugs preferred.
+project: evolve-rebel-button
+kind: software
+goal: "After 100 clicks the Rebel Button becomes an art reviewer: random unseen, maturity-appropriate public or owned art, 1-5 star reviews (hate it / meh / neutral / like it / love it) with optional comment, each first review earning a click and karma."
+
+notes_from_silas: |
+  2026-10-02: the Rebel Button was Silas's first interactable on Kind Robots. It feels odd
+  now, but the leaderboard and achievements are worth keeping. At 100 clicks it turns into
+  an art reviewer in the same easy interface. Reviews use the existing Reaction system,
+  remember each person's score, show only art the person has not reacted to yet (public
+  or their own, within their maturity settings), and every first review of an image earns
+  a click plus karma.
+
+milestones:
+  - id: m1
+    title: "SHAPE — outline, brainstorm, design brief"
+    weight: 25
+    status: done
+
+  - id: m2
+    title: "BUILD — actualize, adjust, test"
+    weight: 50
+    status: done
+
+  - id: m3
+    title: "POLISH & SHIP — aesthetics, performance, delivery"
+    weight: 25
+    status: in-progress
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write the design brief and start building"
+    status: done
+    owner: claude
+    passes: 1
+    stakes: reversible
+    note: >
+      DESIGN-BRIEF.md written from Silas's 2026-10-02 request; build started the same session.
+
+  - id: t-002
+    milestone: m2
+    title: "Ship the 100-click art reviewer (kind_robots)"
+    status: done
+    owner: claude
+    passes: 1
+    stakes: reversible
+    note: >
+      kind_robots: rebel-button.vue swaps to rebel-art-reviewer.vue at 100 clicks (logged-in).
+      GET /api/art/review/next serves a random unreacted public-or-own still image under the
+      shared maturity gate (buildArtImageWhere). POST /api/art/review writes one Reaction per
+      user per image (1-5 maps to HATED/BOOED/NEUTRAL/CLAPPED/LOVED, rating stored), awards the
+      existing REACTION_GIVEN karma, credits the owner REACTION_RECEIVED, and increments
+      clickRecord by 1 on the first review of an image only. No schema change.
+
+  - id: t-003
+    milestone: m3
+    title: "Silas visual and feel check of the reviewer on main"
+    status: needs-human
+    gate_reason: subjective-acceptance
+    gate_rechecked: 2026-10-02
+    soft_gate: true
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      FOR SILAS: open the Rebel Button on kindrobots.org after the next deploy, with an account
+      at 100+ clicks. Check phone, tablet and desktop widths and whether the stars, labels and
+      comment box feel right.
+      TO APPROVE: set approved_by_human: true and status: done here, or leave a note with
+      changes. Nothing is blocked on this.
