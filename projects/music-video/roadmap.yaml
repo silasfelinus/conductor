@@ -110,7 +110,7 @@ tasks:
   - id: t-004
     milestone: m2
     title: "MusicVideo model, admin API and timeline-document schema (kind_robots)"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -123,9 +123,18 @@ tasks:
       utils/ (timeline math stays pure and in utils/). Tests are tsx utils/scripts/verify*.test.ts
       with a package.json test script and a step in contract-tests.yml; kind_robots has no vitest.
       Never run prisma migrate reset. Use scripts/provision_kind_robots_deps.sh to verify.
+
+      2026-10-02: kind_robots#3179 opened (MusicVideo model + additive migration,
+      MusicVideoDoc normalizer, admin CRUD under /api/music-video, contract test). Local: vue-
+      tsc 0 errors, 404/404 contract scripts, generated-client parity OK.
+
+      2026-10-02: kind_robots#3179 merged (794397b) after 36/36 checks green incl. Replay
+      migrations on MariaDB. Schema-affecting: MusicVideo table applies on the next Alexandria
+      deploy-unraid.sh run.
     claimed_by: 20261002T-claude-mv-t004-01D4se
     claimed_at: '2026-10-02T08:59:18Z'
-    updated: '2026-10-02T08:59:18Z'
+    updated: '2026-10-02T10:27:01Z'
+    implementation_pr: 'silasfelinus/kind_robots#3179'
 
   - id: t-020
     milestone: m2
@@ -170,7 +179,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Lyrics: pitch and settings to structured, editable lyrics"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -187,7 +196,7 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Admin page, musicVideoStore and placement"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -223,7 +232,7 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Scene prompts, validator and per-scene image generation"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
