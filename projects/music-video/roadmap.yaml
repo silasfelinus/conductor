@@ -335,7 +335,7 @@ tasks:
   - id: t-011
     milestone: m2
     title: "Relay audio support (conductor ops/home-server)"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -351,9 +351,14 @@ tasks:
       tests/test_relay_agent_audio.py following tests/test_relay_agent_video.py. This is a
       conductor-side PR; the kind_robots t-020 PR merges first. Do not deploy anything (that is
       t-012).
+
+      Relay advertises supportsAudio; image/video/audio media kind through
+      find_output_file/extract_comfy_output in relay_agent and relay_media_agent; audio
+      uploads isPublic false, local copy stays .mp3, direct public/images targets refuse
+      audio. Live run is t-012.
     claimed_by: 20261002T2140-claude-mv-t011-01D4se
     claimed_at: '2026-10-02T22:09:48Z'
-    updated: '2026-10-02T22:45:57Z'
+    updated: '2026-10-02T22:46:01Z'
     implementation_pr: 'silasfelinus/conductor#5506'
 
   - id: t-012
