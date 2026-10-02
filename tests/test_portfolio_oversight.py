@@ -112,6 +112,19 @@ def test_classify_deterministic_drift_beats_semantic_due_and_unresolved():
     assert result["roadmap_errors"] == 2
 
 
+def test_classify_heartbeat_overdue_is_diagnostic_only():
+    result = oversight.classify_report(
+        roadmap_report={"summary": {"errors": 0, "warnings": 0}},
+        project_scan={"forward": [], "reverse": []},
+        project_unresolved=None,
+        heartbeat={"overdue": True},
+        intent={"due": False},
+    )
+    assert result["status"] == "clean"
+    assert result["openai_scheduled_agent_overdue"] is True
+    assert result["openai_scheduled_agent_authoritative"] is False
+
+
 def test_classify_reverse_orphan_is_actionable():
     result = oversight.classify_report(
         roadmap_report={"summary": {"errors": 0, "warnings": 0}},
@@ -199,7 +212,8 @@ def test_render_markdown_surfaces_role_signals():
 
     text = oversight.render_markdown(report)
 
-    assert "OpenAI scheduled-agent heartbeat" in text
+    assert "Legacy OpenAI scheduled-agent git diagnostic" in text
+    assert "Authoritative for ChatGPT scheduler health: **false**" in text
     assert "CONTROL_PRIORITY_DRIFT" in text
     assert "Forward drift" in text
     assert "INTENT-AUDIT" in text

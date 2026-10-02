@@ -14,20 +14,30 @@ def report_fixture():
             "marker": "openai-scheduled-",
         },
         "project_parity": {"forward": [], "reverse": [], "unresolved": None},
-        "roadmap_audit": {"summary": {"errors": 0, "warnings": 5}, "errors": []},
+        "roadmap_audit": {
+            "summary": {"errors": 1, "warnings": 5},
+            "errors": [
+                {
+                    "code": "CONTROL_PRIORITY_DRIFT",
+                    "project": "_global",
+                    "task": None,
+                    "message": "priority drift",
+                }
+            ],
+        },
         "intent_review": {"due": False, "last_report": "INTENT-AUDIT-2026-09-10.md"},
     }
 
 
-def test_heartbeat_alert_explains_exact_sensor_and_threshold():
+def test_legacy_heartbeat_does_not_override_real_alert_reason():
     report = report_fixture()
     subject = alert_subject(report)
     body = alert_body(report, run_url="https://github.com/example/actions/runs/123")
 
-    assert subject == "Conductor Oversight: scheduled agent heartbeat overdue"
+    assert subject == "Conductor Oversight: 1 roadmap error"
     assert "Why this email was sent:" in body
-    assert "last visible activity was 2026-09-10T09:34:43+00:00" in body
-    assert "59.08h ago; threshold 6.0h" in body
+    assert "CONTROL_PRIORITY_DRIFT at _global: priority drift" in body
+    assert "scheduled-agent heartbeat is overdue" not in body
     assert "5 roadmap warnings" in body
     assert "warnings alone do not trigger this alert" in body
     assert "https://github.com/example/actions/runs/123" in body
