@@ -139,6 +139,10 @@ def scan(
         if not conductor_slug:
             continue
         claimed_slugs.add(conductor_slug)
+        if not include_inactive and (
+            project.get("isActive") is False or project.get("status") == "ARCHIVED"
+        ):
+            continue
         lifecycle = project_statuses.get(conductor_slug, ACTIVE_STATUS)
         if not include_inactive and lifecycle != ACTIVE_STATUS and conductor_slug in project_statuses:
             continue
@@ -182,9 +186,9 @@ def render(result: dict[str, list[dict[str, Any]]]) -> str:
                 f"projects/{f['conductor_slug']}/roadmap.yaml is MISSING"
             )
         lines.append(
-            "    A closed scaffold Todo does not mean the scaffold landed. Run "
-            "intake.py for these slugs (or otherwise create the roadmap) before "
-            "trusting this project's Conductor state."
+            "    A closed scaffold Todo does not mean the scaffold landed. If the "
+            "project is real, create its Conductor roadmap; if it was deleted or "
+            "created accidentally, archive the Kind Robots Project instead."
         )
     if reverse:
         if lines:

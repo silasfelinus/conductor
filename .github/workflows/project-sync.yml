@@ -8,6 +8,8 @@ on:
       - "project-overrides.yaml"
       - "projects/**/roadmap.yaml"
       - "scripts/sync_projects.py"
+      - "scripts/reconcile_project_tombstones.py"
+      - "project-tombstones.yaml"
       - ".github/workflows/project-sync.yml"
   workflow_dispatch:
 
@@ -41,3 +43,8 @@ jobs:
           echo '```' >> "$GITHUB_STEP_SUMMARY"
           echo "$output"
           exit "$status"
+
+      - name: Reconcile explicit project tombstones
+        env:
+          KR_API_TOKEN: ${{ secrets.KR_API_TOKEN }}
+        run: python scripts/reconcile_project_tombstones.py
