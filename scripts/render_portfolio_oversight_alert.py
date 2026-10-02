@@ -20,13 +20,10 @@ def _plural(count: int, singular: str, plural: str | None = None) -> str:
 
 def alert_subject(report: dict[str, Any]) -> str:
     summary = report.get("summary") or {}
-    heartbeat = report.get("openai_scheduled_agent") or {}
     parity = report.get("project_parity") or {}
     roadmap = report.get("roadmap_audit") or {}
     intent = report.get("intent_review") or {}
 
-    if heartbeat.get("overdue"):
-        return "Conductor Oversight: scheduled agent heartbeat overdue"
     errors = int((roadmap.get("summary") or {}).get("errors", 0) or 0)
     if errors:
         return f"Conductor Oversight: {errors} roadmap {_plural(errors, 'error')}"
@@ -42,27 +39,11 @@ def alert_subject(report: dict[str, Any]) -> str:
 
 def alert_body(report: dict[str, Any], *, run_url: str = "") -> str:
     summary = report.get("summary") or {}
-    heartbeat = report.get("openai_scheduled_agent") or {}
     parity = report.get("project_parity") or {}
     roadmap = report.get("roadmap_audit") or {}
     intent = report.get("intent_review") or {}
 
     reasons: list[str] = []
-    if heartbeat.get("overdue"):
-        last = heartbeat.get("last_activity")
-        hours = heartbeat.get("hours_since")
-        threshold = heartbeat.get("stale_hours")
-        if last:
-            reasons.append(
-                "OpenAI scheduled-agent heartbeat is overdue: "
-                f"last visible activity was {last} ({hours}h ago; threshold {threshold}h)."
-            )
-        else:
-            reasons.append(
-                "OpenAI scheduled-agent heartbeat is overdue: no commit carrying the expected "
-                f"{heartbeat.get('marker') or 'openai-scheduled-'} session marker was found."
-            )
-
     errors = list(roadmap.get("errors") or [])
     for item in errors:
         location = str(item.get("project") or "unknown project")
