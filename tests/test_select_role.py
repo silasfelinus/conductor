@@ -615,6 +615,63 @@ def test_commit_combined_state_failure_on_bad_conclusion():
         assert select_role.commit_combined_state("silasfelinus/conductor", "sha4", "tok") == "failure"
 
 
+def test_commit_combined_state_ignores_superseded_failed_attempt():
+    routes = {
+        "/commits/sha-rerun/check-runs": {
+            "check_runs": [
+                {
+                    "id": 100,
+                    "name": "Worker PR handoff template",
+                    "app": {"slug": "github-actions"},
+                    "status": "completed",
+                    "conclusion": "failure",
+                },
+                {
+                    "id": 101,
+                    "name": "Worker PR handoff template",
+                    "app": {"slug": "github-actions"},
+                    "status": "completed",
+                    "conclusion": "success",
+                },
+                {
+                    "id": 200,
+                    "name": "Security Audit",
+                    "app": {"slug": "github-actions"},
+                    "status": "completed",
+                    "conclusion": "success",
+                },
+            ]
+        },
+    }
+    with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
+        assert select_role.commit_combined_state("silasfelinus/conductor", "sha-rerun", "tok") == "success"
+
+
+def test_commit_combined_state_latest_failed_attempt_still_fails():
+    routes = {
+        "/commits/sha-rerun-red/check-runs": {
+            "check_runs": [
+                {
+                    "id": 100,
+                    "name": "TypeScript Type Check",
+                    "app": {"slug": "github-actions"},
+                    "status": "completed",
+                    "conclusion": "success",
+                },
+                {
+                    "id": 101,
+                    "name": "TypeScript Type Check",
+                    "app": {"slug": "github-actions"},
+                    "status": "completed",
+                    "conclusion": "failure",
+                },
+            ]
+        },
+    }
+    with mock.patch.object(select_role, "_gh_request", side_effect=_fake_gh_request(routes)):
+        assert select_role.commit_combined_state("silasfelinus/conductor", "sha-rerun-red", "tok") == "failure"
+
+
 def test_commit_combined_state_returns_none_on_request_failure():
     with mock.patch.object(select_role, "_gh_request", return_value=None):
         assert select_role.commit_combined_state("silasfelinus/conductor", "sha5", "tok") is None
