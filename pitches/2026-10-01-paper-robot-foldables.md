@@ -1,7 +1,7 @@
 # Pitch: Paper Robot Foldables
 date: 2026-10-01
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 Printable papercraft nets of Kind Robots characters, from a flat cut-and-fold bookmark up to a standing tabletop robot, each with a numbered fold guide and a difficulty badge. Everything is a pre-rendered PDF or SVG sheet, so families can print and build offline.

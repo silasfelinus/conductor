@@ -1,20 +1,20 @@
 # Roadmap Audit
 
-Generated: `2026-10-01T17:03:23.278702+00:00`
+Generated: `2026-10-02T16:17:44.676810+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
-- **56** roadmaps, **20** active + **3** continuous projects, **1790** tasks
-- **33 ready**, **73 waiting**, **34 needs-human**, **4 claimed/review**, **1630 done**
-- Findings: **0 errors**, **8 warnings**, **34 informational**
+- **64** roadmaps, **27** active + **3** continuous projects, **1868** tasks
+- **62 ready**, **96 waiting**, **34 needs-human**, **4 claimed/review**, **1656 done**
+- Findings: **0 errors**, **8 warnings**, **40 informational**
 
 ## Project inventory
 
 | # | Project | State | Kind | Ready | Waiting | Human | In progress | Done / Total |
 |---:|---|---|---|---:|---:|---:|---:|---:|
-| 1 | `cthulhuquarium` | active | software | 0 | 1 | 1 | 1 | 75 / 78 |
+| 1 | `cthulhuquarium` | active | software | 0 | 1 | 1 | 0 | 76 / 78 |
 | 2 | `kind-economy` | active | software | 1 | 4 | 1 | 0 | 22 / 28 |
 | 3 | `butterfly-gallery` | active | software | 1 | 1 | 0 | 0 | 33 / 35 |
 | 4 | `art-archive` | active | software | 2 | 2 | 0 | 0 | 40 / 44 |
@@ -22,9 +22,9 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 6 | `interface-vision` | continuous | software | 3 | 1 | 0 | 0 | 137 / 141 |
 | 7 | `humboldt-scoop-cms` | active | software | 1 | 1 | 4 | 0 | 38 / 44 |
 | 8 | `digital-storefront` | active | software | 1 | 2 | 1 | 0 | 40 / 44 |
-| 9 | `kind-robots` | active | software | 3 | 0 | 0 | 0 | 121 / 124 |
+| 9 | `kind-robots` | active | software | 2 | 0 | 0 | 0 | 122 / 124 |
 | 10 | `rainbow-butterflies` | active | software | 0 | 1 | 2 | 0 | 50 / 53 |
-| 11 | `music-video` | active | software | 4 | 14 | 1 | 0 | 1 / 20 |
+| 11 | `music-video` | active | software | 7 | 9 | 1 | 1 | 4 / 22 |
 | 12 | `tzaddik-gallery` | active | software | 1 | 1 | 1 | 0 | 30 / 33 |
 | 13 | `scene-animator` | finished | software | 0 | 0 | 0 | 0 | 11 / 11 |
 | 14 | `text-generation` | finished | software | 0 | 0 | 0 | 0 | 9 / 9 |
@@ -35,10 +35,18 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 19 | `coat-dance` | active | content | 1 | 0 | 1 | 0 | 3 / 10 |
 | 20 | `conductor-app` | active | software | 0 | 0 | 1 | 0 | 14 / 15 |
 | 21 | `appmaker` | active | software | 0 | 0 | 1 | 0 | 15 / 16 |
-| 22 | `media-watchlist` | active | software | 0 | 0 | 1 | 0 | 19 / 20 |
+| 22 | `media-watchlist` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
 | 23 | `ruler-hooked` | active | software | 1 | 0 | 1 | 0 | 41 / 43 |
 | 24 | `animation-manager` | continuous | software | 2 | 0 | 0 | 1 | 22 / 26 |
-| 25 | `dream-cycle` | continuous | software | 2 | 0 | 0 | 0 | 32 / 34 |
+| 25 | `comic-creator` | active | software | 8 | 2 | 0 | 0 | 2 / 12 |
+| 26 | `kr-solitaire` | active | software | 5 | 2 | 0 | 0 | 4 / 11 |
+| 27 | `kr-adventures` | active | software | 5 | 4 | 0 | 0 | 2 / 11 |
+| 28 | `kind-oracle` | active | software | 2 | 4 | 0 | 0 | 2 / 8 |
+| 29 | `hidden-robots` | active | software | 2 | 4 | 0 | 0 | 2 / 8 |
+| 30 | `robot-dress-up` | active | software | 2 | 4 | 0 | 0 | 2 / 8 |
+| 31 | `kind-word-puzzles` | active | software | 2 | 4 | 0 | 0 | 2 / 8 |
+| 32 | `pocket-pet-robot` | active | software | 1 | 4 | 0 | 0 | 3 / 8 |
+| 33 | `dream-cycle` | continuous | software | 2 | 0 | 1 | 0 | 33 / 36 |
 | — | `ai-art-academy` | finished | software | 0 | 0 | 0 | 0 | 79 / 79 |
 | — | `alexa-integration` | paused | software | 0 | 0 | 1 | 0 | 21 / 22 |
 | — | `animation-studio` | retired | software | 0 | 3 | 0 | 0 | 4 / 8 |
@@ -79,8 +87,8 @@ _None._
 
 ### Warning (8)
 
-- **STALE_IN_PROGRESS** — `animation-manager` / `t-022`: Task has remained claimed for 7 days.
-- **STALE_IN_PROGRESS** — `coloring-book` / `t-058`: Task has remained claimed for 3 days.
+- **STALE_IN_PROGRESS** — `animation-manager` / `t-022`: Task has remained claimed for 8 days.
+- **STALE_IN_PROGRESS** — `coloring-book` / `t-058`: Task has remained claimed for 4 days.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kind-economy` / `t-017`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-014`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-015`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
@@ -88,7 +96,7 @@ _None._
 - **GATED_DONE_WITHOUT_APPROVAL** — `kindrobots-unraid` / `t-018`: Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect.
 - **POSSIBLY_UNNECESSARY_GATE** — `tzaddik-gallery` / `t-013`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 
-### Info (34)
+### Info (40)
 
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-064`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `ai-art-academy` / `t-079`: approved_by_human is set on a task that is not human-gated.
@@ -100,6 +108,7 @@ _None._
 - **APPROVAL_WITHOUT_GATE** — `conductor` / `t-183`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `conductor` / `t-189`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `dream-cycle` / `t-029`: approved_by_human is set on a task that is not human-gated.
+- **APPROVAL_WITHOUT_GATE** — `hidden-robots` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **NEEDS_HUMAN_NOTE_FORMAT** — `humboldt-scoop-cms` / `t-042`: needs-human note does not use the AGENTS.md FOR SILAS action format.
 - **APPROVAL_WITHOUT_GATE** — `interface-vision` / `t-105`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `interface-vision` / `t-123`: approved_by_human is set on a task that is not human-gated.
@@ -108,17 +117,22 @@ _None._
 - **APPROVAL_WITHOUT_GATE** — `kapowarr` / `t-058`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `kind-economy` / `t-011`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `kind-economy` / `t-021`: approved_by_human is set on a task that is not human-gated.
+- **APPROVAL_WITHOUT_GATE** — `kind-oracle` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `kind-robots` / `t-078`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `kind-robots` / `t-092`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `kind-robots` / `t-104`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `kind-robots` / `t-105`: approved_by_human is set on a task that is not human-gated.
+- **APPROVAL_WITHOUT_GATE** — `kind-word-puzzles` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `kindrobots-unraid` / `t-012`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `mandarin-tutor` / `t-021`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `mandarin-tutor` / `t-030`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `media-watchlist` / `t-017`: approved_by_human is set on a task that is not human-gated.
+- **APPROVAL_WITHOUT_GATE** — `media-watchlist` / `t-018`: approved_by_human is set on a task that is not human-gated.
 - **INACTIVE_PROJECT_HAS_READY_TASKS** — `mermaids-of-venice`: Inactive project retains 1 ready task(s); harmless but misleading in generated status.
 - **INACTIVE_PROJECT_HAS_READY_TASKS** — `mural-design`: Inactive project retains 1 ready task(s); harmless but misleading in generated status.
 - **APPROVAL_WITHOUT_GATE** — `mural-design` / `t-002`: approved_by_human is set on a task that is not human-gated.
+- **APPROVAL_WITHOUT_GATE** — `pocket-pet-robot` / `t-002`: approved_by_human is set on a task that is not human-gated.
+- **APPROVAL_WITHOUT_GATE** — `robot-dress-up` / `t-002`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `ruler-hooked` / `t-031`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `scene-animator` / `t-005`: approved_by_human is set on a task that is not human-gated.
 - **APPROVAL_WITHOUT_GATE** — `storybook` / `t-058`: approved_by_human is set on a task that is not human-gated.

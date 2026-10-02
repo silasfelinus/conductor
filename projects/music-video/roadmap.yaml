@@ -139,7 +139,7 @@ tasks:
   - id: t-020
     milestone: m2
     title: "ArtImage audio support in kind_robots (storage, serving, consumer audit, claim gate)"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -157,9 +157,17 @@ tasks:
       set because offload writes to the public media origin); and add a claim-side supportsAudio
       gate like supportsInputImages (claim.post.ts) so audio jobs stay PENDING until an
       audio-capable relay exists. Merge this before t-011 (companion PRs, kind_robots first).
+
+      2026-10-02: kind_robots#3181 opened (audio ArtImage support, supportsAudio claim gate,
+      private + no collection/offload for audio, audio media kind, admin queue views). Local:
+      vue-tsc 0 errors, 406/406 contract scripts, prettier/lint ratchets hold.
+
+      2026-10-02: kind_robots#3181 merged (2de2d0b) after 38/38 checks green. No schema
+      change. Audio jobs stay PENDING until a relay advertises supportsAudio (t-011).
     claimed_by: 20261002T-claude-mv-t020-01D4se
     claimed_at: '2026-10-02T10:27:47Z'
-    updated: '2026-10-02T10:27:47Z'
+    updated: '2026-10-02T10:54:02Z'
+    implementation_pr: 'silasfelinus/kind_robots#3181'
 
   - id: t-017
     milestone: m3
@@ -179,8 +187,8 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Lyrics: pitch and settings to structured, editable lyrics"
-    status: ready
-    owner: null
+    status: done
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-004]
@@ -192,6 +200,15 @@ tasks:
       per-section regenerate, inline line editing and a per-section lock so regenerate never
       overwrites locked text. Lyric text must never go into an ArtJob promptString. DB-free tests
       cover the section-count math and the response parser.
+
+      2026-10-02: kind_robots#3183 merged (00d8b0e) after 33/33 checks. First CI run caught an
+      unguarded capture-group index (verifyCaptureGroupGuards); fixed in bc8fc39. POST
+      /api/music-video/[id]/lyrics plus utils/musicVideoLyrics.ts (incl. toAceStepLyrics for
+      t-010).
+    claimed_by: 20261002T-claude-mv-t005-01D4se
+    claimed_at: '2026-10-02T10:54:28Z'
+    updated: '2026-10-02T18:07:15Z'
+    implementation_pr: 'silasfelinus/kind_robots#3183'
 
   - id: t-006
     milestone: m2
@@ -215,7 +232,7 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Timeline editor: waveform, beat grid and scene markers"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -232,8 +249,8 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Scene prompts, validator and per-scene image generation"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-004]
@@ -248,6 +265,9 @@ tasks:
       upload route is image-only and open to any signed-in user, so use or add an admin-gated
       path), or pick from the gallery. Enqueue at the default priority; scene jobs are about 400 s
       each on the single 12 GB card.
+    claimed_by: 20261002T-claude-mv-t008-01D4se
+    claimed_at: '2026-10-02T18:07:40Z'
+    updated: '2026-10-02T18:07:40Z'
 
   - id: t-009
     milestone: m2
@@ -267,7 +287,7 @@ tasks:
   - id: t-013
     milestone: m2
     title: "Audio upload fallback (admin-only route)"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -282,7 +302,7 @@ tasks:
   - id: t-010
     milestone: m2
     title: "acestep workflow builder, enqueue engine and song endpoint (kind_robots)"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -304,7 +324,7 @@ tasks:
   - id: t-011
     milestone: m2
     title: "Relay audio support (conductor ops/home-server)"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -362,20 +382,29 @@ tasks:
 
   - id: t-015
     milestone: m2
-    title: "End-to-end acceptance: a real video from a real pitch"
+    title: "First run: an agent-made Kind Robots cartoon theme-song trailer"
     status: waiting
     owner: null
     passes: 0
     stakes: reversible
     gate_human: true
     gate_reason: subjective-acceptance
-    depends_on: [t-005, t-006, t-008, t-012, t-014]
+    depends_on: [t-005, t-008, t-009, t-012, t-021]
     note: >-
-      Make a roughly 60 second video from a real pitch: lyrics, a Comfy song, scenes with generated
-      images, export. Silas decides whether to approve the result, since taste is subjective and
-      no agent can judge it for him. Park at needs-human with the exported file and a short FOR
-      SILAS note on what to look at (lyric fit, scene cuts landing on beats, image coherence,
-      audio quality); approval is approved_by_human: true plus status: done.
+      Silas, 2026-10-02: the sign that step one is fully complete is a Kind Robots splash
+      animation cartoon music video in a TMNT style, entirely generated by agents on our Comfy
+      backend, good enough to double as a trailer or buzz video for the site. Run the t-021
+      pipeline end to end with no human in the loop: pitch, LLM lyrics, an ACE-Step theme song,
+      Krea 2 scene stills, ltx or wan clips for motion, ffmpeg export. Style direction: an
+      original homage to 80s and early-90s Saturday-morning action cartoons (thick ink outlines,
+      flat cel colour, sewer-and-rooftop city at night, comic-book action poses, a shouted
+      gang-vocal chorus over synth rock) starring Kind Robots' own bots. Guardrail for a video
+      that will be promoted publicly: no Teenage Mutant Ninja Turtles characters, names, logos,
+      masks or theme melody, and never put the franchise name in any Krea or ACE-Step prompt,
+      because the model paints what it is told. Target 60 to 90 seconds. Park at needs-human
+      with the MP4, the MusicVideo id and a FOR SILAS note on what to look at (does it feel like
+      the cartoon, lyric fit, cuts on beats, art coherence, audio quality). Silas decides
+      whether to approve; approval is approved_by_human: true plus status: done.
 
   - id: t-016
     milestone: m3
@@ -420,3 +449,41 @@ tasks:
       starve the single 12 GB render card (last logged backlog about 1,464 jobs), and a decision on
       Safari and Firefox export, which WebCodecs only partly supports. Exposing it publicly is a
       release, so the finished work parks at needs-human.
+
+  - id: t-021
+    milestone: m2
+    title: "Agent-run pipeline: pitch to finished MP4 with no human in the loop"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-005, t-008, t-010]
+    note: >-
+      The browser exporter (t-014) needs someone at a screen, so the first-run trailer (t-015)
+      needs a headless path. Write scripts/build_music_video.py in conductor. It drives the Kind
+      Robots API with KR_API_TOKEN (presence checks only, never print it): create a MusicVideo,
+      write lyrics, enqueue the song, plan scenes on the beat grid, enqueue scene stills and
+      optional clips, and poll the ArtJobs. It then downloads the finished assets and assembles
+      the MP4 locally with ffmpeg (present in cloud sessions), following the same timeline
+      semantics as the browser compositor (scene start and end, Ken Burns or clip, cut or
+      crossfade, the song as the audio track), and attaches the result via PATCH
+      finalArtImageId once there is an upload path. It must resume a half-finished run from the
+      MusicVideo doc and its ArtJobs instead of re-enqueueing, since renders take hours on the
+      single 12 GB card. Unit-test the timeline-to-ffmpeg filter graph with fixtures, and add
+      a dry-run mode that prints the plan without enqueueing anything.
+
+  - id: t-022
+    milestone: m3
+    title: "Publish the first-run trailer on the site"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    gate_reason: publish
+    depends_on: [t-015]
+    note: >-
+      After Silas approves the t-015 trailer, place it as a buzz video on Kind Robots (the
+      landing page or the project page, wherever Silas picks). Placing it publicly is a
+      publish step, so the finished change parks at needs-human with the PR open, and only
+      Silas merges or approves it.
