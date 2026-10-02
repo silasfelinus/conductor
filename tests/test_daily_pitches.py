@@ -89,3 +89,10 @@ def test_decide_and_payload(repo, capsys):
     capsys.readouterr()
     assert dp.cmd_check("2026-10-02") == 0
     assert "4 undecided" in capsys.readouterr().out
+
+
+def test_approved_pitch_scaffolded_as_project_stays_valid(repo):
+    write(repo, "2026-10-02", GOOD)
+    dp.cmd_decide("idea-0", "approved", "")
+    (repo / "projects" / "idea-0").mkdir()
+    assert dp.cmd_check("2026-10-02") == 0
