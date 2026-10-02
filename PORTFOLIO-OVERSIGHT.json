@@ -1,22 +1,23 @@
 {
-  "generated_at": "2026-10-02T12:48:39.144272+00:00",
+  "generated_at": "2026-10-02T22:20:08.486774+00:00",
   "summary": {
     "status": "action-needed",
     "roadmap_errors": 0,
     "roadmap_warnings": 8,
-    "project_forward_drift": 0,
+    "project_forward_drift": 3,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
-    "openai_scheduled_agent_overdue": true,
+    "openai_scheduled_agent_overdue": false,
+    "openai_scheduled_agent_authoritative": false,
     "intent_review_due": true
   },
   "openai_scheduled_agent": {
-    "overdue": true,
-    "last_activity": "2026-10-01T12:52:28+00:00",
-    "hours_since": 23.94,
+    "overdue": false,
+    "last_activity": "2026-10-02T19:47:22+00:00",
+    "hours_since": 2.55,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
-    "note": "OpenAI scheduled cycles must refresh OPENAI-SCHEDULED-HEARTBEAT.json; coordination-marker history remains a compatibility fallback."
+    "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
   },
   "intent_review": {
     "due": true,
@@ -25,25 +26,44 @@
     "stale_days": 3.0
   },
   "project_parity": {
-    "forward": [],
+    "forward": [
+      {
+        "conductor_slug": "kind-word-puzzles",
+        "kr_project_id": 2127,
+        "kr_title": "kind-word-puzzles",
+        "kr_slug": "kind-word-puzzles"
+      },
+      {
+        "conductor_slug": "robot-dress-up",
+        "kr_project_id": 2126,
+        "kr_title": "robot-dress-up",
+        "kr_slug": "robot-dress-up"
+      },
+      {
+        "conductor_slug": "hidden-robots",
+        "kr_project_id": 2125,
+        "kr_title": "hidden-robots",
+        "kr_slug": "hidden-robots"
+      }
+    ],
     "reverse": [],
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-10-02T12:48:39.144277+00:00",
+    "generated_at": "2026-10-02T22:20:08.486781+00:00",
     "summary": {
-      "roadmaps": 64,
-      "active_projects": 27,
+      "roadmaps": 62,
+      "active_projects": 22,
       "continuous_projects": 3,
-      "tasks": 1868,
-      "ready": 62,
-      "waiting": 96,
-      "needs_human": 34,
+      "tasks": 1847,
+      "ready": 55,
+      "waiting": 82,
+      "needs_human": 35,
       "in_progress": 4,
-      "done": 1656,
+      "done": 1655,
       "errors": 0,
       "warnings": 8,
-      "info": 40
+      "info": 39
     },
     "errors": [],
     "warnings": [
@@ -52,14 +72,14 @@
         "code": "STALE_IN_PROGRESS",
         "project": "animation-manager",
         "task": "t-022",
-        "message": "Task has remained claimed for 8 days."
+        "message": "Task has remained claimed for 9 days."
       },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
         "project": "coloring-book",
         "task": "t-058",
-        "message": "Task has remained claimed for 4 days."
+        "message": "Task has remained claimed for 5 days."
       },
       {
         "severity": "warning",
