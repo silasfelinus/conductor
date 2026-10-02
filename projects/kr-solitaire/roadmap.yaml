@@ -66,16 +66,20 @@ tasks:
 - id: t-004
   milestone: m2
   title: Seedable Klondike engine with tests (kind_robots utils/)
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-10-02T07:02:33Z'
-  note: 'Pure TypeScript engine: seeded shuffle, deal, legal move generation, move application, undo log,
-    win and auto-complete detection, draw-1 and draw-3. DB-free tsx tests, a contract-tests step, and
-    a solvability sampler over 200 seeds. No UI.'
+  updated: '2026-10-02T07:02:49Z'
+  note: >-
+    Pure TypeScript engine: seeded shuffle, deal, legal move generation, move application, undo log, win and auto-complete detection, draw-1 and draw-3. DB-free tsx tests, a contract-tests step, and a solvability sampler over 200 seeds. No UI.
+
+    Landed kind_robots#3175: utils/solitaireEngine.ts (seeded shuffle, deal, legal moves,
+    undo, win/auto-complete, draw-1/3, bounded solver) + test:solitaire-engine (13 checks;
+    115/200 seeds solved within a 6000-node budget), wired into Contract Tests.
   claimed_by: 20261002-agent
   claimed_at: '2026-10-02T07:02:33Z'
+  implementation_pr: 'silasfelinus/kind_robots#3175'
 - id: t-005
   milestone: m2
   title: Game page /play/solitaire with fallback deck, drag and tap
