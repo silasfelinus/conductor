@@ -791,3 +791,45 @@ tasks:
   claimed_at: '2026-09-26T12:56:36Z'
   updated: '2026-09-26T13:11:17Z'
   implementation_pr: 'silasfelinus/conductor#5214'
+- id: t-035
+  milestone: m4
+  title: 'Daily pitches: author today''s five-pitch docket'
+  status: ready
+  owner: null
+  recurring: true
+  daily_commitment: true
+  daily_last_checked: '2026-10-02'
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: |-
+    STANDING DAILY CONTRACT (Silas, 2026-10-02): every day's digest carries FIVE new project
+    pitches, biased to free-to-play ideas that need no LLM at runtime (Kind Robots has a lot
+    locked behind LLM API access; authoring tokens and image generation are plentiful). Silas
+    decides each by clicking Approve or Pass in the email (signed confirm links), or on the
+    Kind Robots project page; sessions only AUTHOR the pitches and never decide them.
+    Recipe: `python scripts/daily_pitches.py --brief` (what to avoid and the rules), write
+    pitches/daily/<pacific-date>.yaml, `--check`, `--materialize`, PR, merge when green.
+    Then check `--approved`: any approved pitch with no project yet is scaffolded with
+    scripts/intake.py (brief, roadmap, ready build tasks) in the same session.
+    Every completed daily attempt updates daily_last_checked to that Pacific date; update
+    daily_last_completed only after the day's docket is merged. Undecided pitches stay in the
+    digest ("still waiting") until decided; never re-pitch a rejected one.
+- id: t-036
+  milestone: m4
+  title: 'Set PITCH_LINK_SECRET so digest pitch links work (Silas only)'
+  status: needs-human
+  owner: null
+  passes: 0
+  stakes: irreversible
+  updated: '2026-10-02T00:00:00Z'
+  note: |-
+    FOR SILAS: the digest's one-click pitch Approve/Pass links need ONE shared secret in two
+    places, which sessions cannot set. (1) Pick any long random string (for example
+    `openssl rand -hex 32`). (2) Add it as a GitHub Actions secret named PITCH_LINK_SECRET in
+    silasfelinus/conductor (Settings > Secrets and variables > Actions). (3) Add the SAME value
+    as PITCH_LINK_SECRET in the Kind Robots server runtime environment (the container's env_file,
+    next to GITHUB_TOKEN) and restart it. Until both are set the email shows a "Decide on the
+    project page" button per pitch instead of Approve/Pass, and the endpoint answers 503, so
+    nothing breaks. kind_robots PR #3176 carries the endpoint. TO APPROVE: reply "done" or set
+    the status to done once both secrets exist.
