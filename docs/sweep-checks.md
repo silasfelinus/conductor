@@ -145,6 +145,16 @@ flags something and you need to know why it exists or how to fix it.
      is over 20KB, because each claim re-reads the whole note (2026-09-30: six live notes held 259KB;
      archived to ~36KB with `archive_recurring_task_note.py --keep-head 3000 --keep-tail 3500`).
      Advisory; exit 1 when flagged, 2 when git history can't cover the window.
+   - `python scripts/sync_github_issues.py --check` (sweep name `issue_bridge`) — lists open GitHub
+     issues in every repos.yaml repo that no roadmap task mirrors yet (`IMPORT`), issues whose owning
+     project is paused/retired/finished (`INACTIVE`), issues from non-collaborators that are never
+     auto-imported (`TRIAGE`), and open issues whose mirrored task is already done (`CLOSE`)
+     (2026-10-01). Before it, nothing in Conductor read GitHub issues at all: kind_robots
+     #2663/#2664/#2667/#2668 sat open for three weeks because agents only pick roadmap tasks. The
+     hourly `issue-bridge.yml` workflow does the import and closing itself, so a flag here usually
+     just means the next run has not happened yet. Act on `INACTIVE` (add a `project:<slug>` label
+     or reactivate the project) and `TRIAGE` (Silas decides; label `conductor:skip` to silence).
+     Exit 1 when flagged, 2 when a repo could not be read (usually token scope).
 
 ## Step 7 — the dream docket (CLAUDE.md startup)
 

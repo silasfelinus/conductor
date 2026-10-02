@@ -1,0 +1,110 @@
+name: Issue bridge
+
+# Mirrors open GitHub issues from every repos.yaml repo into Conductor roadmaps
+# as `ready` tasks, and closes issues whose mirrored task is done. Why it exists
+# and how routing/trust work: the docstring of scripts/sync_github_issues.py.
+#
+# ISSUE_BRIDGE_TOKEN (repo secret): a fine-grained PAT with Issues read/write on
+# every repo in repos.yaml. Without it the bridge still imports issues from
+# public repos using the default token, but cannot comment on or close issues
+# outside this repo, and cannot see private repos.
+
+on:
+  schedule:
+    - cron: "41 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  # Shares the task-events group: both write roadmaps on main, and serializing
+  # them is cheaper than racing and replaying.
+  group: conductor-task-events
+  cancel-in-progress: false
+
+jobs:
+  bridge:
+    runs-on: ubuntu-latest
+    env:
+      # Secrets cannot appear in `if:` directly, and a step's own env is not
+      # visible to that step's condition -- so the presence flag lives here.
+      HAS_BRIDGE_TOKEN: ${{ secrets.ISSUE_BRIDGE_TOKEN != '' }}
+    steps:
+      - name: Check out current main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          git init --quiet .
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git sparse-checkout init --no-cone
+          git sparse-checkout set --no-cone \
+            '/projects/*/roadmap.yaml' \
+            '/scripts/*.py' \
+            '/repos.yaml' \
+            '/project-overrides.yaml'
+          git fetch --quiet --filter=blob:none --depth=2 origin main
+          git checkout --quiet -B main FETCH_HEAD
+
+      # Import, validate and commit in one step so a non-fast-forward push can
+      # replay the whole import against fresh main (same shape as
+      # process-task-events.yml). No force-push; one retry.
+      - name: Import unmirrored issues and commit
+        id: import
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_BRIDGE_TOKEN: ${{ secrets.ISSUE_BRIDGE_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          python3 -m pip install --disable-pip-version-check --quiet pyyaml
+          push_url="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git config user.name "conductor-issue-bridge[bot]"
+          git config user.email "conductor-issue-bridge[bot]@users.noreply.github.com"
+          echo "pushed=0" >> "$GITHUB_OUTPUT"
+
+          for attempt in 1 2; do
+            python3 scripts/sync_github_issues.py --apply --imported-json "$RUNNER_TEMP/imported.json"
+            python3 scripts/validate_roadmaps.py
+
+            if git diff --quiet; then
+              echo "No issues to import."
+              break
+            fi
+
+            git add projects
+            git commit -m "chore: import GitHub issues into roadmaps [skip ci]"
+            git fetch --quiet origin main
+            if git push --quiet "$push_url" HEAD:main; then
+              echo "pushed=1" >> "$GITHUB_OUTPUT"
+              gh workflow run sync-kind-robots-projection.yml --repo "$GITHUB_REPOSITORY" --ref main
+              break
+            fi
+            if [ "$attempt" -ge 2 ]; then
+              echo "::error::origin/main kept moving; the next scheduled run retries the import." >&2
+              exit 1
+            fi
+            echo "origin/main moved; replaying the import against the new main."
+            git reset --hard origin/main
+          done
+
+      # GitHub writes happen only after the roadmap commit has landed, so a
+      # replayed push above can never produce a second "mirrored" comment.
+      - name: Comment on imported issues and close finished ones
+        if: env.HAS_BRIDGE_TOKEN == 'true'
+        env:
+          ISSUE_BRIDGE_TOKEN: ${{ secrets.ISSUE_BRIDGE_TOKEN }}
+        run: |
+          set -e
+          args="--close-done"
+          if [ "${{ steps.import.outputs.pushed }}" = "1" ]; then
+            args="--comment-from $RUNNER_TEMP/imported.json $args"
+          fi
+          python3 scripts/sync_github_issues.py $args
+
+      - name: Note missing write token
+        if: env.HAS_BRIDGE_TOKEN != 'true'
+        run: |
+          echo "::warning::ISSUE_BRIDGE_TOKEN is not set: issues were imported, but the bridge cannot comment on or close issues in other repos."
