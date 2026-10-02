@@ -320,6 +320,7 @@ def _pitch_row(pitch: dict[str, Any], links_for, fallback_url: str) -> str:
             buttons = (
                 '<div style="margin:6px 0 2px">'
                 f'{legacy._button(links["approve"], "✅ Approve", color="#15803d")} '
+                f'{legacy._button(links["changes"], "✏️ Approve with changes", color="#0369a1")} '
                 f'{legacy._button(links["pass"], "🚫 Pass", color="#64748b")}</div>'
             )
         else:
@@ -335,14 +336,20 @@ def _pitch_row(pitch: dict[str, Any], links_for, fallback_url: str) -> str:
     )
 
 
-def daily_pitches_section(daily: dict[str, Any] | None, links_for=None, fallback_url: str = "") -> str:
-    """Today's five pitches with signed Approve / Pass links, then undecided ones from earlier days."""
+def daily_pitches_section(daily: dict[str, Any] | None, links_for=None, fallback_url: str = "", inbox: str | None = None) -> str:
+    """Today's five pitches with signed links into the one pitch inbox, then undecided ones from earlier days."""
     if not isinstance(daily, dict) or not daily.get("pitches"):
         return ""
     if links_for is None:
         import pitch_links
         links_for = pitch_links.links_for
         fallback_url = fallback_url or pitch_links.project_page_url()
+        inbox = pitch_links.inbox_link()
+    waiting = [p for p in [*daily["pitches"], *(daily.get("carried_over") or [])] if str(p.get("decision") or "pending") == "pending"]
+    inbox_button = (
+        f'<p style="margin:8px 0">{legacy._button(inbox, f"📥 Decide all {len(waiting)} on one page", color="#7e22ce")}</p>'
+        if inbox and waiting else ""
+    )
     today = "".join(_pitch_row(p, links_for, fallback_url) for p in daily["pitches"])
     carried = daily.get("carried_over") or []
     carried_html = (
@@ -354,8 +361,10 @@ def daily_pitches_section(daily: dict[str, Any] | None, links_for=None, fallback
         '<div style="background:#ecfeff;border:1px solid #a5f3fc;border-radius:10px;'
         'padding:12px 14px;margin:14px 0 18px;max-width:660px">'
         '<h2 style="margin:0 0 4px">💡 Today’s five pitches</h2>'
-        '<p style="color:#64748b;font-size:12px;margin:2px 0 8px">Click Approve or Pass, then confirm. '
-        'Approved ideas become projects. Ignore any you do not want; nothing is decided until you confirm.</p>'
+        '<p style="color:#64748b;font-size:12px;margin:2px 0 8px">Any button opens one page with every undecided '
+        'pitch: Approve, Approve with changes, Pass or Decide later, then save once. '
+        'Approved ideas become projects. Nothing is decided until you save.</p>'
+        f'{inbox_button}'
         f'<ol style="padding-left:20px;margin:0;line-height:1.5">{today}</ol>{carried_html}</div>'
     )
 

@@ -129,6 +129,18 @@ def test_approved_list_excludes_projects(repo, capsys):
     assert "idea-1" in out and "idea-0 " not in out.replace("2026-10-02-idea-0", "")
 
 
+def test_approved_list_shows_approve_with_changes_notes(repo, capsys):
+    ready(repo)
+    dp.cmd_decide("2026-10-02-idea-1", "approved")
+    path = dp.pitch_file("2026-10-02", "idea-1")
+    path.write_text(path.read_text() + "\n## Silas's modifications\nMake it smaller\nand free.\n")
+    capsys.readouterr()
+    dp.cmd_approved()
+    assert "APPROVED WITH CHANGES" in capsys.readouterr().out
+    assert dp.modifications(path) == "Make it smaller and free."
+    assert dp.modifications(dp.pitch_file("2026-10-02", "idea-2")) == ""
+
+
 def test_payload_carries_over_undecided_from_earlier_days(repo):
     ready(repo, "2026-10-01", [make_pitch(f"old-{n}") for n in range(5)])
     dp.cmd_decide("2026-10-01-old-0", "rejected")
@@ -151,7 +163,12 @@ def test_email_section_has_signed_buttons_and_hides_them_once_decided(repo, monk
     monkeypatch.setenv("PITCH_LINK_SECRET", "s3cret")
     html = email_v2.daily_pitches_section(dp.payload("2026-10-02"))
     assert html.count("Approve</a>") == 4 and html.count("Pass</a>") == 4  # the decided one has no buttons
-    assert "/api/conductor/pitch-decision?slug=2026-10-02-idea-1&amp;vote=approved" in html
+    assert html.count("Approve with changes</a>") == 4
+    # every button opens the single inbox page, preselecting that pitch's choice
+    assert "/api/conductor/pitch-inbox?" in html and "pitch-decision" not in html
+    assert "pick=2026-10-02-idea-1%3Aapprove&amp;" in html or "pick=2026-10-02-idea-1%3Aapprove\"" in html
+    assert "pick=2026-10-02-idea-1%3Aapprove-changes" in html
+    assert html.count("Decide all 4 on one page") == 1
     assert "[approved]" in html
 
 

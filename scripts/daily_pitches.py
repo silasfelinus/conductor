@@ -90,6 +90,18 @@ def read_status(path: Path) -> str:
     return (match.group(1).strip() if match else "") or PENDING_STATUS
 
 
+def modifications(path: Path) -> str:
+    """Silas's approve-with-changes notes (the pitch file's modifications section), or ''."""
+    notes: list[str] = []
+    inside = False
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.startswith("## "):
+            inside = line.strip() == "## Silas's modifications"
+        elif inside:
+            notes.append(line)
+    return " ".join(" ".join(notes).split())
+
+
 def decision_label(status: str) -> str:
     if status == PENDING_STATUS:
         return "pending"
@@ -285,6 +297,9 @@ def cmd_approved() -> int:
     for row in todo:
         print(f"{row['stem']}  {row['title']}  -> python scripts/intake.py {row['slug']} --kind software "
               f"--title \"{row['title']}\" --goal \"...\" --repo silasfelinus/kind_robots")
+        mods = modifications(pitch_file(row["date"], row["slug"]))
+        if mods:
+            print(f"    APPROVED WITH CHANGES (fold these into the project goal): {mods}")
     if not todo:
         print("daily_pitches: no approved pitch is waiting for a project")
     return 0
