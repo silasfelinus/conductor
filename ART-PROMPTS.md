@@ -272,6 +272,26 @@
 >    rows were newly reached; 726 genuinely authored prompts are still returned
 >    verbatim, because rebuilding one of those would be the worse bug.
 
+> 10. **A count of bad prompts is not a count of bad pictures, and a catalog
+>     of people is not a catalog of one person.** Added 2026-10-01. Silas was
+>     told 530 Facet prompts still embedded their description, and asked whether
+>     that was true of the *active* art. It was true of 397. The other 133 had
+>     been recreated from clean prompts; only the stored `artPrompt` field was
+>     stale. `check_facet_prompt_subjects.py` read only the field, so it could
+>     not tell a bad picture from a bad record, and now reads the primary
+>     ArtImage's own prompt and reports both. Same lesson as rule 7, one level
+>     up: the field is what some layer recorded, the image is what was drawn.
+>
+>     The 397 were rewritten by hand, and the first pass of the 199 human-subject
+>     ones (personality, quirk, backstory, archetype) came back as the same
+>     man or woman in an apron, 122 times in 397. Kind Robots characters span
+>     every age, gender, body shape, species and ability, so **assign the cast
+>     before authoring, not after**: draw each item's character from a seeded,
+>     balanced spread and hand it to the author as a fixed field. Never pair a
+>     negative trait with a disability, age or body type. The assignments and
+>     prompts are in `projects/kind-robots/repairs/2026-10-01-facet-card-copy-rewrite.json`
+>     and `scripts/facet_prompt_authoring_check.py` is the strict checker.
+
 > The daily-dream pipeline enforces the first two automatically in
 > `scripts/dream_art_prompts.py`. Hand-written prompts in this file should follow
 > the same shape. The inclusive-casting direction below still applies — but only

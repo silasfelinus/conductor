@@ -54,6 +54,16 @@ Three findings, in descending confidence:
   happening because the audit written to catch it had the same bug it was
   written to catch.
 
+  2026-10-01. Silas was told "530 facet prompts still have their description merged
+  with their art prompt" and asked whether that was true of the ACTIVE art. It
+  was not, for 133 of them: those Facets had been recreated, their primary image
+  came from a clean prompt, and only the stored `artPrompt` field was stale. The
+  other 397 really were painted from the merged text. This script read only the
+  field, so both groups looked identical. A card-copy finding now also reads the
+  prompt recorded on the primary ArtImage (`artImageId`) and reports which kind
+  it is: ACTIVE ART MERGED (needs a re-render) or FIELD STALE (the picture is
+  fine, only the prompt needs rewriting so a re-render does not repeat it).
+
 Needs KR_API_TOKEN; exits 2 (unresolved, not clean) without it, matching
 check_project_scaffold_drift.py and check_live_facet_coverage.py.
 
@@ -214,6 +224,27 @@ def carries_card_copy(prompt: str, description: str) -> bool:
     return copy[:CARD_COPY_MATCH_WINDOW] in normalize(prompt)
 
 
+def primary_art_state(image_prompt: str | None, description: str | None) -> str:
+    """
+    "merged" when the prompt the primary image was generated from carries the
+    Facet's description, "clean" when it does not, "unknown" when it is not
+    recorded. A property of the text, like carries_card_copy.
+    """
+    if not (image_prompt or "").strip():
+        return "unknown"
+    return "merged" if carries_card_copy(image_prompt, description or "") else "clean"
+
+
+def fetch_primary_prompt(art_image_id: int | None) -> str | None:
+    if not art_image_id:
+        return None
+    try:
+        data = http_get(f"/api/art/image/{art_image_id}").get("data") or {}
+    except (urllib.error.URLError, urllib.error.HTTPError, ValueError):
+        return None
+    return data.get("artPrompt") or data.get("promptString")
+
+
 def inspect(row: dict) -> dict | None:
     prompt = (row.get("artPrompt") or "").strip()
     if not prompt:
@@ -243,6 +274,8 @@ def inspect(row: dict) -> dict | None:
         "finding": finding,
         "prompt": prompt,
         "imagePath": row.get("imagePath"),
+        "artImageId": row.get("artImageId"),
+        "description": description,
     }
 
 
@@ -271,6 +304,11 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
     findings = [f for f in (inspect(row) for row in rows) if f]
+    for item in findings:
+        if item["finding"] == "card-copy":
+            item["primaryArt"] = primary_art_state(
+                fetch_primary_prompt(item["artImageId"]), item["description"]
+            )
     # card-copy used to be excluded here, on the grounds that a description at
     # the head of a prompt is only a smell. It is not: the description IS the
     # prompt for these rows, and carries_card_copy no longer fires on a prompt
@@ -300,6 +338,13 @@ def main(argv: list[str] | None = None) -> int:
         if not group:
             continue
         print(f"\n{label}: {len(group)}")
+        if kind == "card-copy":
+            states = {s: sum(1 for f in group if f.get("primaryArt") == s) for s in ("merged", "clean", "unknown")}
+            print(
+                f"  ACTIVE ART MERGED (re-render needed): {states['merged']}   "
+                f"FIELD STALE (picture is clean, rewrite the prompt): {states['clean']}   "
+                f"unknown: {states['unknown']}"
+            )
         for item in group[: args.limit]:
             print(f"  facet/{item['id']} {item['taxonomy']} {item['title']!r}")
             print(f"      {item['prompt'][:150]}")
