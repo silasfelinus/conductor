@@ -130,8 +130,8 @@ tasks:
   - id: t-020
     milestone: m2
     title: "ArtImage audio support in kind_robots (storage, serving, consumer audit, claim gate)"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     note: >-
@@ -148,6 +148,9 @@ tasks:
       set because offload writes to the public media origin); and add a claim-side supportsAudio
       gate like supportsInputImages (claim.post.ts) so audio jobs stay PENDING until an
       audio-capable relay exists. Merge this before t-011 (companion PRs, kind_robots first).
+    claimed_by: 20261002T-claude-mv-t020-01D4se
+    claimed_at: '2026-10-02T10:27:47Z'
+    updated: '2026-10-02T10:27:47Z'
 
   - id: t-017
     milestone: m3
