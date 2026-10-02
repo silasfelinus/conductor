@@ -1,7 +1,7 @@
 # Pitch: Robot Field Guide
 date: 2026-10-01
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 A pocket field guide to the wild robots of Kind Robots, with habitat maps, sighting checklists and a spot-three-today challenge, plus an optional ask-the-ranger box that answers freely from a pre-written pool and only uses a model when someone has credits. Built to be browsed offline.
