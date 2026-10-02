@@ -330,8 +330,8 @@ tasks:
   - id: t-011
     milestone: m2
     title: "Relay audio support (conductor ops/home-server)"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-003, t-020]
@@ -346,6 +346,9 @@ tasks:
       tests/test_relay_agent_audio.py following tests/test_relay_agent_video.py. This is a
       conductor-side PR; the kind_robots t-020 PR merges first. Do not deploy anything (that is
       t-012).
+    claimed_by: 20261002T2140-claude-mv-t011-01D4se
+    claimed_at: '2026-10-02T22:09:48Z'
+    updated: '2026-10-02T22:09:48Z'
 
   - id: t-012
     milestone: m2
