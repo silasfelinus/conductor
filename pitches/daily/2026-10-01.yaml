@@ -1,0 +1,55 @@
+# Daily project pitches, 2026-10-01. Authored by a session; decide with
+#   python scripts/daily_pitches.py --decide SLUG approved|rejected|deferred
+# Theme of the day: free-to-play, zero tokens at runtime, pre-written content and pre-generated art.
+date: 2026-10-01
+pitches:
+  - slug: kind-jigsaw
+    title: Kind Jigsaw
+    hook: >-
+      A daily jigsaw cut from a curated piece of Kind Robots art, with a choice of 12, 48 or 120 pieces,
+      edge-first hints and a finished-picture reveal that names the artist-robot and tells its pre-written
+      story. Cut shapes are computed in the browser from a seed, so there is nothing to generate or serve.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 60 existing gallery images chosen for clear focal areas, each with a short caption written ahead of time.
+    first_slice: A seeded piece-cutting engine with snap-and-drag, one picture, and the completion card.
+  - slug: paper-robot-foldables
+    title: Paper Robot Foldables
+    hook: >-
+      Printable papercraft nets of Kind Robots characters, from a flat cut-and-fold bookmark up to a
+      standing tabletop robot, each with a numbered fold guide and a difficulty badge. Everything is a
+      pre-rendered PDF or SVG sheet, so families can print and build offline.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: 12 characters unwrapped onto net templates in three difficulty tiers, with textures generated to tile cleanly.
+    first_slice: One net template, one character texture, and a print page with fold-line and tab conventions.
+  - slug: sticker-album
+    title: Robot Sticker Album
+    hook: >-
+      A collectible album where each day of visiting opens one pre-generated sticker pack that you peel
+      and place onto themed album pages, with shiny and rare variants decided by a seeded draw. Progress
+      and placements stay in your browser, and a completed page unlocks a pre-written page of lore.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: 8 album pages and about 160 die-cut stickers with a shiny variant for 40 of them, all generated ahead of time.
+    first_slice: The seeded pack-draw engine with tests, then one album page with drag-to-place and persistence.
+  - slug: lighthouse-logbook
+    title: Lighthouse Logbook
+    hook: >-
+      A cozy keeper's-log game in which each evening you tend a lighthouse, answer a pre-written ship
+      signal by choosing a lamp pattern, and read the next page of a branching season of letters. Every
+      branch and reply is authored in advance, so a full season plays free with no model call.
+    llm_at_runtime: none
+    effort: large
+    art_plan: 10 lighthouse weather and time-of-day scenes, 12 passing-ship sprites and 6 letter-writer portraits.
+    first_slice: The branching-letter data format with a validator, plus one week of authored evenings in a text-only reader.
+  - slug: robot-field-guide
+    title: Robot Field Guide
+    hook: >-
+      A pocket field guide to the wild robots of Kind Robots, with habitat maps, sighting checklists and
+      a spot-three-today challenge, plus an optional ask-the-ranger box that answers freely from a
+      pre-written pool and only uses a model when someone has credits. Built to be browsed offline.
+    llm_at_runtime: optional
+    effort: small
+    art_plan: 40 species plates in a consistent naturalist-sketch style and 6 habitat maps.
+    first_slice: The species data schema, 10 plates and a checklist page that saves sightings locally.
