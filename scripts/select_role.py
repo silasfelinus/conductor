@@ -364,9 +364,23 @@ def commit_combined_state(repo: str, sha: str, token: str) -> str | None:
 
     if not check_runs:
         return 'pending'
-    if any(run.get('status') != 'completed' for run in check_runs):
+
+    # GitHub can retain superseded check runs after a rerun on the same head.
+    # A stale failed attempt must not poison the current verdict when a newer
+    # run of that same check completed successfully. Collapse duplicate check
+    # names to their newest run before folding state.
+    latest_by_check: dict[tuple[str, str], dict] = {}
+    for run in check_runs:
+        app = run.get('app') or {}
+        key = (str(run.get('name') or ''), str(app.get('slug') or app.get('id') or ''))
+        previous = latest_by_check.get(key)
+        if previous is None or int(run.get('id') or 0) > int(previous.get('id') or 0):
+            latest_by_check[key] = run
+
+    current_runs = list(latest_by_check.values())
+    if any(run.get('status') != 'completed' for run in current_runs):
         return 'pending'
-    if any(run.get('conclusion') in _BAD_CHECK_CONCLUSIONS for run in check_runs):
+    if any(run.get('conclusion') in _BAD_CHECK_CONCLUSIONS for run in current_runs):
         return 'failure'
     return 'success'
 
