@@ -139,7 +139,7 @@ tasks:
   - id: t-020
     milestone: m2
     title: "ArtImage audio support in kind_robots (storage, serving, consumer audit, claim gate)"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -161,9 +161,12 @@ tasks:
       2026-10-02: kind_robots#3181 opened (audio ArtImage support, supportsAudio claim gate,
       private + no collection/offload for audio, audio media kind, admin queue views). Local:
       vue-tsc 0 errors, 406/406 contract scripts, prettier/lint ratchets hold.
+
+      2026-10-02: kind_robots#3181 merged (2de2d0b) after 38/38 checks green. No schema
+      change. Audio jobs stay PENDING until a relay advertises supportsAudio (t-011).
     claimed_by: 20261002T-claude-mv-t020-01D4se
     claimed_at: '2026-10-02T10:27:47Z'
-    updated: '2026-10-02T10:43:43Z'
+    updated: '2026-10-02T10:54:02Z'
     implementation_pr: 'silasfelinus/kind_robots#3181'
 
   - id: t-017
