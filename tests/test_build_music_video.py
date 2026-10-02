@@ -265,3 +265,78 @@ def test_resume_with_renders_in_flight_enqueues_nothing(monkeypatch, capsys):
     out = capsys.readouterr().out
     assert "next: wait" in out
     assert "test-token-value" not in out
+
+
+# ------------------------------------------------------- scene clips (t-009)
+
+
+def clip_scene(sid, start, end, art, clip_job=None, clip_art=None):
+    data = scene(sid, start, end, art=art)
+    data["motion"] = {"kind": "clip", "preset": "zoom-in"}
+    if clip_job:
+        data["motion"]["jobId"] = clip_job
+    if clip_art:
+        data["motion"]["clipArtImageId"] = clip_art
+    return data
+
+
+def finished_song():
+    return {"source": "comfy-acestep", "artImageId": 900}
+
+
+def test_a_rendering_clip_is_waited_for():
+    state = bmv.RunState(
+        doc(song=finished_song(), scenes=[clip_scene("s1", 0, 4, 101, clip_job=55)]),
+        clip_jobs={"s1": bmv.JobState("RUNNING")},
+    )
+    assert bmv.plan_actions(state) == ["wait"]
+
+
+def test_a_failed_clip_falls_back_to_ken_burns_instead_of_blocking():
+    state = bmv.RunState(
+        doc(song=finished_song(), scenes=[clip_scene("s1", 0, 4, 101, clip_job=55)]),
+        clip_jobs={"s1": bmv.JobState("FAILED", error="oom")},
+    )
+    assert bmv.plan_actions(state) == ["assemble"]
+    timeline = bmv.timeline_from_doc(state.doc, {"s1": Path("still.png")})
+    assert timeline[0].is_clip is False
+    assert timeline[0].preset == "zoom-in"
+
+
+def test_a_finished_clip_is_used_for_its_scene():
+    raw = doc(song=finished_song(), scenes=[clip_scene("s1", 0, 4, 101, clip_art=77)])
+    assert bmv.plan_actions(bmv.RunState(raw)) == ["assemble"]
+    timeline = bmv.timeline_from_doc(raw, {"s1": Path("still.png"), "s1:clip": Path("clip.mp4")})
+    assert timeline[0].is_clip is True
+    assert timeline[0].source == Path("clip.mp4")
+
+
+def test_read_state_picks_up_clip_rows():
+    class ClipClient(FakeClient):
+        def get_video(self, video_id):
+            return {"id": video_id, "doc": doc(song=finished_song(), scenes=[clip_scene("s1", 0, 4, 101, clip_job=55)])}
+
+        def scene_status(self, video_id):
+            return [
+                {
+                    "sceneId": "s1",
+                    "jobId": None,
+                    "status": "READY",
+                    "artImageId": 101,
+                    "error": None,
+                    "clipJobId": 55,
+                    "clipStatus": "PENDING",
+                    "clipArtImageId": None,
+                    "clipError": None,
+                }
+            ]
+
+    state = bmv.read_state(ClipClient(), 9)
+    assert state.clip_jobs["s1"].status == "PENDING"
+    assert "s1" not in state.scene_jobs
+    assert bmv.plan_actions(state) == ["wait"]
+
+
+def test_preset_names_match_kind_robots_motion_contract():
+    # kind_robots utils/musicVideoMotion.ts MUSIC_VIDEO_KEN_BURNS_PRESETS
+    assert bmv.KEN_BURNS_PRESETS == ("zoom-in", "pan-right", "zoom-out", "pan-left")
