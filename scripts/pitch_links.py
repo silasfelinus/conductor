@@ -59,24 +59,26 @@ def inbox_url(secret: str, exp: int, base_url: str = DEFAULT_BASE_URL, picks: di
     return f"{base_url.rstrip('/')}/api/conductor/pitch-inbox?{query}"
 
 
-def _secret_and_expiry(now: float | None) -> tuple[str, str, int] | None:
-    secret = (os.environ.get("PITCH_LINK_SECRET") or "").strip()
-    if not secret:
-        return None
+def _secret() -> str:
+    return (os.environ.get("PITCH_LINK_SECRET") or "").strip()
+
+
+def _base_and_expiry(now: float | None) -> tuple[str, int]:
     base = os.environ.get("KR_BASE_URL") or DEFAULT_BASE_URL
-    return secret, base, int((time.time() if now is None else now)) + TTL_SECONDS
+    return base, int((time.time() if now is None else now)) + TTL_SECONDS
 
 
 def inbox_link(now: float | None = None) -> str | None:
     """The unpreselected inbox link, or None when no secret is set."""
-    ctx = _secret_and_expiry(now)
-    return inbox_url(ctx[0], ctx[2], ctx[1]) if ctx else None
+    if not _secret():
+        return None
+    base, exp = _base_and_expiry(now)
+    return inbox_url(_secret(), exp, base)
 
 
 def links_for(stem: str, now: float | None = None) -> dict[str, str] | None:
     """{'approve', 'changes', 'pass'} inbox URLs preselecting that choice for a pitch stem."""
-    ctx = _secret_and_expiry(now)
-    if not ctx:
+    if not _secret():
         return None
-    secret, base, exp = ctx
-    return {label: inbox_url(secret, exp, base, {stem: choice}) for label, choice in CHOICES.items()}
+    base, exp = _base_and_expiry(now)
+    return {label: inbox_url(_secret(), exp, base, {stem: choice}) for label, choice in CHOICES.items()}
