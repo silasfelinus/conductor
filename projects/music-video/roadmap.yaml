@@ -110,7 +110,7 @@ tasks:
   - id: t-004
     milestone: m2
     title: "MusicVideo model, admin API and timeline-document schema (kind_robots)"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -123,9 +123,14 @@ tasks:
       utils/ (timeline math stays pure and in utils/). Tests are tsx utils/scripts/verify*.test.ts
       with a package.json test script and a step in contract-tests.yml; kind_robots has no vitest.
       Never run prisma migrate reset. Use scripts/provision_kind_robots_deps.sh to verify.
+
+      2026-10-02: kind_robots#3179 opened (MusicVideo model + additive migration,
+      MusicVideoDoc normalizer, admin CRUD under /api/music-video, contract test). Local: vue-
+      tsc 0 errors, 404/404 contract scripts, generated-client parity OK.
     claimed_by: 20261002T-claude-mv-t004-01D4se
     claimed_at: '2026-10-02T08:59:18Z'
-    updated: '2026-10-02T08:59:18Z'
+    updated: '2026-10-02T09:16:32Z'
+    implementation_pr: 'silasfelinus/kind_robots#3179'
 
   - id: t-020
     milestone: m2
