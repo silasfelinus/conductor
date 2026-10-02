@@ -1,12 +1,8 @@
 # Kind Oracle — free-to-play, built in kind_robots. Architecture in DESIGN-BRIEF.md.
 project: kind-oracle
 kind: software
-goal: A 22-card oracle deck of Kind Robots, each card a full piece of art with an upright and a reversed
-  meaning, where you draw a one, three or five card spread and read a pre-written reading assembled from
-  hand-authored pair and position texts. Every combination is written ahead of time, so it feels personal
-  and costs nothing to run.
-notes_from_silas: '2026-10-02: approved from the daily pitch docket ("I like all proposals"). Free-to-play:
-  no LLM at runtime; sessions pre-author content and art.
+goal: 'A full 78-card Kind Robots tarot deck (22 major arcana plus 56 minor arcana in four suits), each card a full piece of art with an upright and a reversed meaning, where you draw a one, three or five card spread and read a pre-written reading assembled from hand-authored card, pair and position texts. Every combination is written ahead of time, so it feels personal and costs nothing to run. The 22 major arcana ship first as a complete, playable oracle; the minor arcana follow in suit-sized slices.'
+notes_from_silas: '2026-10-02: approved by Silas (kind-oracle and pocket-pet-robot only; an earlier "I like all proposals" was a miscommunication and did not approve the other pitches). Scope widened the same day: a full 78-card Kind tarot deck plus readings. Free-to-play: no LLM at runtime; sessions pre-author content and art.
 
   '
 milestones:
@@ -41,7 +37,7 @@ tasks:
   stakes: reversible
   updated: '2026-10-02T00:00:00Z'
   approved_by_human: true
-  note: Silas approved this pitch in session on 2026-10-02 ("I like all proposals"). No further scope
+  note: Silas approved this pitch on 2026-10-02 and widened it to a full 78-card tarot deck plus readings. No further scope
     gate.
 - id: t-003
   milestone: m1
@@ -51,7 +47,7 @@ tasks:
   passes: 0
   stakes: reversible
   updated: '2026-10-02T00:00:00Z'
-  note: 'Write projects/kind-oracle/docs/spec.md: the 22 card concepts (each a Kind Robots character or
+  note: 'Write projects/kind-oracle/docs/spec.md: the full 78-card list (22 major arcana plus four 14-card minor suits, each card a Kind Robots character or
     idea), upright and reversed meaning style, the 1, 3 and 5 card spread positions, and how pair texts
     combine. Survey kind_robots /play pages and the static-asset pattern.'
 - id: t-004
@@ -66,7 +62,7 @@ tasks:
     tests proving every spread yields complete text.
 - id: t-005
   milestone: m2
-  title: 'Author the content: 22 meanings, position texts and pair texts'
+  title: 'Author the content: 78 card meanings, position texts and pair texts (majors first)'
   status: waiting
   owner: null
   passes: 0
@@ -78,7 +74,7 @@ tasks:
     through; warm, kind, never fatalistic. All-ages.
 - id: t-006
   milestone: m2
-  title: Generate and commit 22 card faces and a back
+  title: Generate and commit 78 card faces and a back (majors first)
   status: waiting
   owner: null
   passes: 0

@@ -1,7 +1,7 @@
 # Pocket Pet Robot — Design Brief
 
 date: 2026-10-02
-status: approved (Silas, 2026-10-02: "I like all proposals"); detailed spec is the first task
+status: approved by Silas 2026-10-02; detailed spec is the first task
 author: claude
 
 ## What it is
