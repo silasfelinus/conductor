@@ -212,6 +212,15 @@ RELAY_COMMIT = os.environ.get("KR_RELAY_COMMIT", "").strip() or RELAY_BUILD["com
 # ComfyUI succeeded.
 VIDEO_EXTENSIONS = (".mp4", ".webm", ".mov", ".mkv", ".gif", ".webp")
 
+# Song jobs (music-video/t-011): ACE-Step saves through SaveAudioAdvanced, and
+# ComfyUI reports the file under history outputs[node]["audio"]. Without these
+# an audio job's mp3 matched neither kind and the relay reported "no output",
+# or -- worse, before kind_robots' supportsAudio claim gate -- an image-wanting
+# search could pick it up and save-generated stored the song as a png.
+AUDIO_EXTENSIONS = (".mp3", ".wav", ".flac", ".ogg", ".opus", ".m4a")
+MEDIA_KINDS = ("image", "video", "audio")
+DEFAULT_FILE_TYPE = {"image": "png", "video": "mp4", "audio": "mp3"}
+
 # Named rather than inlined so the one place that has to survive a cp1252
 # stdout is obvious. emit() guarantees it cannot raise; see _use_utf8_stdout.
 WARN = "\N{WARNING SIGN}"
@@ -482,6 +491,9 @@ def claim_job():
             "agentId": AGENT_ID,
             "agentVersion": RELAY_VERSION,
             "supportsInputImages": True,
+            # kind_robots holds payload.media == "audio" jobs back from any
+            # relay that does not say this (music-video/t-020 claim gate).
+            "supportsAudio": True,
             "supportsCompletionProof": True,
             # claim.post.ts defaults this on (only an explicit false means FIFO);
             # sent anyway so model-affinity scheduling never depends on that default.
@@ -555,30 +567,61 @@ def is_video_filename(filename):
     return bool(filename) and filename.lower().endswith(VIDEO_EXTENSIONS)
 
 
+def is_audio_filename(filename):
+    return bool(filename) and filename.lower().endswith(AUDIO_EXTENSIONS)
+
+
+def filename_kind(filename):
+    if is_audio_filename(filename):
+        return "audio"
+    if is_video_filename(filename):
+        return "video"
+    return "image"
+
+
+def payload_media_kind(payload):
+    """The output kind a job wants, from payload.media (image when unset)."""
+    media = str((payload or {}).get("media") or "").strip().lower()
+    return media if media in MEDIA_KINDS else "image"
+
+
+def normalize_media_kind(want):
+    """Accept the historical want_video bool as well as a kind string."""
+    if isinstance(want, str) and want in MEDIA_KINDS:
+        return want
+    return "video" if want else "image"
+
+
 def file_extension(filename):
     return os.path.splitext(filename or "")[1].lstrip(".").lower()
 
 
 def find_output_file(value, want_video):
+    """Find the first ComfyUI output of the wanted kind.
+
+    `want_video` keeps its historical name and bool form; it also accepts a
+    kind string ("image", "video", "audio").
+    """
+    kind = normalize_media_kind(want_video)
     if not value:
         return None
     if isinstance(value, list):
         for item in value:
-            found = find_output_file(item, want_video)
+            found = find_output_file(item, kind)
             if found:
                 return found
         return None
     if isinstance(value, dict):
         filename = value.get("filename")
         if isinstance(filename, str) and filename:
-            if is_video_filename(filename) == bool(want_video):
+            if filename_kind(filename) == kind:
                 return {
                     "filename": filename,
                     "subfolder": value.get("subfolder", "") or "",
                     "type": value.get("type", "output") or "output",
                 }
         for child in value.values():
-            found = find_output_file(child, want_video)
+            found = find_output_file(child, kind)
             if found:
                 return found
     return None
@@ -600,15 +643,17 @@ def download_comfy_file(file_meta):
 
 
 def extract_comfy_output(outputs, want_video, prompt_id=None):
-    file_meta = find_output_file(outputs, want_video)
+    kind = normalize_media_kind(want_video)
+    file_meta = find_output_file(outputs, kind)
     if not file_meta:
         return None
     raw = download_comfy_file(file_meta)
     extension = file_extension(file_meta["filename"])
     return {
         "data_b64": base64.b64encode(raw).decode(),
-        "file_type": extension or ("mp4" if want_video else "png"),
-        "is_video": bool(want_video),
+        "file_type": extension or DEFAULT_FILE_TYPE[kind],
+        "is_video": kind == "video",
+        "is_audio": kind == "audio",
         "comfy": {
             "prompt_id": prompt_id,
             "output": file_meta,
@@ -1434,7 +1479,7 @@ def run_comfy(payload):
     if unresolved:
         raise unresolved_asset_error(unresolved)
 
-    want_video = str(payload.get("media") or "").strip().lower() == "video"
+    want_kind = payload_media_kind(payload)
 
     try:
         status, response = http_json(
@@ -1485,7 +1530,7 @@ def run_comfy(payload):
         if not entry:
             continue
         result = extract_comfy_output(
-            entry.get("outputs") or {}, want_video, prompt_id=prompt_id
+            entry.get("outputs") or {}, want_kind, prompt_id=prompt_id
         )
         if result:
             return result
@@ -1495,8 +1540,7 @@ def run_comfy(payload):
             message = "ComfyUI reported a workflow error"
             raise RuntimeError(f"{message}: {detail}" if detail else message)
 
-    kind = "video" if want_video else "image"
-    raise RuntimeError(f"ComfyUI {kind} job timed out after {GEN_TIMEOUT}s")
+    raise RuntimeError(f"ComfyUI {want_kind} job timed out after {GEN_TIMEOUT}s")
 
 
 def completion_provenance(payload, media):
@@ -1538,6 +1582,10 @@ def upload_result(job, media):
         "designer": f"relay:{AGENT_ID}",
         "userId": KR_RELAY_USER_ID,
     }
+    if media.get("is_audio"):
+        # Songs are private from the moment the row exists, not only after
+        # /complete applies the job's save block.
+        body["isPublic"] = False
     status, response = http_json(
         "POST",
         f"{KR_BASE_URL}/api/art/save-generated",
@@ -1578,7 +1626,9 @@ def write_local_copy(job, art_image_id, media):
         folder = f"{base}/{collection}"
         os.makedirs(folder, exist_ok=True)
         raw = base64.b64decode(media["data_b64"])
-        if media.get("is_video"):
+        if media.get("is_audio"):
+            data, extension = raw, media.get("file_type") or "mp3"
+        elif media.get("is_video"):
             data, extension = raw, media.get("file_type") or "mp4"
         else:
             data, extension = encode_webp(raw)
@@ -1610,6 +1660,12 @@ def complete_job(job_id, success, art_image_id=None, error=None, provenance=None
             f"{response and response.get('message')}"
         )
     return (response.get("data") or {}).get("job") or {}
+
+
+def media_kind_label(media):
+    if media.get("is_audio"):
+        return "audio"
+    return "video" if media.get("is_video") else "image"
 
 
 def resolve_job_engine(job):
@@ -1659,7 +1715,7 @@ def process(job):
         )
 
     write_local_copy(job, final_art_image_id, media)
-    kind = "video" if media.get("is_video") else "image"
+    kind = media_kind_label(media)
     log(f"job {job_id}: DONE ({kind} ArtImage {final_art_image_id})")
 
 
