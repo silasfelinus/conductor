@@ -62,10 +62,10 @@ FRAME_SIZES = {
 }
 DEFAULT_FPS = 30
 
-# Ken Burns presets. t-009 owns the canonical preset list for the browser
-# compositor; until then a scene without a preset gets one by position, so a
-# trailer never sits on a dead-still frame. Each value maps progress p (0..1)
-# to zoompan expressions.
+# Ken Burns presets. These names are a contract with kind_robots
+# utils/musicVideoMotion.ts (MUSIC_VIDEO_KEN_BURNS_PRESETS, music-video/t-009):
+# keep the tuple identical, in the same order, since both sides assign a scene
+# without a preset the one at its position.
 KEN_BURNS_PRESETS = ("zoom-in", "pan-right", "zoom-out", "pan-left")
 KEN_BURNS_ZOOM = 0.15
 
@@ -93,6 +93,7 @@ class RunState:
     doc: dict
     song_job: JobState | None = None
     scene_jobs: dict[str, JobState] = field(default_factory=dict)
+    clip_jobs: dict[str, JobState] = field(default_factory=dict)
 
 
 def _scene_image_id(scene: dict, scene_jobs: dict[str, JobState]) -> int | None:
@@ -161,7 +162,17 @@ def plan_actions(state: RunState) -> list[str]:
     if needs_enqueue or "scene_prompts" in actions:
         actions.append("render_scenes")
 
-    if missing or not song_ready:
+    # An opted-in clip still rendering is worth waiting for; a failed one is
+    # not -- the scene keeps its Ken Burns preset and assembles without it.
+    clips_pending = any(
+        state.clip_jobs[s["id"]].status in ACTIVE_JOB_STATUSES
+        for s in scenes
+        if (s.get("motion") or {}).get("kind") == "clip"
+        and not (s.get("motion") or {}).get("clipArtImageId")
+        and s["id"] in state.clip_jobs
+    )
+
+    if missing or not song_ready or clips_pending:
         actions.append("wait")
     else:
         actions.append("assemble")
@@ -439,6 +450,10 @@ def read_state(client: KrClient, video_id: int) -> RunState:
                 state.scene_jobs[row["sceneId"]] = JobState(
                     row["status"], row.get("artImageId"), row.get("error")
                 )
+            if row.get("clipJobId") and row.get("clipStatus"):
+                state.clip_jobs[row["sceneId"]] = JobState(
+                    row["clipStatus"], row.get("clipArtImageId"), row.get("clipError")
+                )
         # status.get syncs DONE ids into the doc; re-read so assembly sees them.
         doc = client.get_video(video_id)["doc"]
         state.doc = doc
@@ -493,7 +508,10 @@ def assemble(client: KrClient, state: RunState, out: Path, workdir: Path, fps: i
         if not image_id:
             raise PipelineError(f"scene {scene['id']} has no image yet")
         assets[scene["id"]] = client.download_art(image_id, workdir / f"{scene['id']}-{image_id}.img")
-        clip_id = (scene.get("motion") or {}).get("clipArtImageId")
+        clip_job = state.clip_jobs.get(scene["id"])
+        clip_id = (scene.get("motion") or {}).get("clipArtImageId") or (
+            clip_job.art_image_id if clip_job and clip_job.status == "DONE" else None
+        )
         if clip_id:
             assets[f"{scene['id']}:clip"] = client.download_art(int(clip_id), workdir / f"{scene['id']}-{clip_id}.clip")
     timeline = timeline_from_doc(doc, assets)
