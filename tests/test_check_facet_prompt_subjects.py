@@ -271,3 +271,16 @@ def test_an_authored_prompt_sharing_no_description_text_is_clean():
         )
         is None
     )
+
+
+def test_primary_art_state_separates_a_merged_picture_from_a_stale_field():
+    """
+    The 2026-10-01 530: 397 primary images were painted from the description, and
+    133 had been recreated cleanly with only the artPrompt field left behind.
+    """
+    description = "Gets along with genuinely everything. Birds perch on them, crocodiles decline to escalate."
+    merged = f"Capybara. {description} One full creature."
+    clean = "Capybara. A capybara standing in shallow river water with a bird on its back."
+    assert check.primary_art_state(merged, description) == "merged"
+    assert check.primary_art_state(clean, description) == "clean"
+    assert check.primary_art_state(None, description) == "unknown"
