@@ -275,7 +275,7 @@ tasks:
   - id: t-009
     milestone: m2
     title: "Per-scene motion: Ken Burns presets and optional ltx or wan clip"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -286,9 +286,16 @@ tasks:
       frame, showing the runtime hint from utils/videoPresets.ts (3 to 4 second clips, timeouts up
       to 5400 s). Clips are silent; the song is the only audio. The clip is an ArtImage referenced
       by scene.motion.clipArtImageId.
+
+      Canonical Ken Burns presets (utils/musicVideoMotion.ts, mirrored in conductor
+      scripts/build_music_video.py), presets on planned scenes, POST /api/music-
+      video/[id]/scenes/clips (ltx/wan via /api/video/generate, mp4, scene still as first
+      frame), clip status sync; headless pipeline waits for clips and falls back to Ken Burns
+      (conductor#5513).
     claimed_by: 20261002T2310-claude-mv-t009-01D4se
     claimed_at: '2026-10-02T23:00:00Z'
-    updated: '2026-10-02T23:00:00Z'
+    updated: '2026-10-02T23:40:42Z'
+    implementation_pr: 'silasfelinus/kind_robots#3197'
 
   - id: t-013
     milestone: m2
