@@ -474,7 +474,7 @@ tasks:
   - id: t-021
     milestone: m2
     title: "Agent-run pipeline: pitch to finished MP4 with no human in the loop"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -492,9 +492,14 @@ tasks:
       MusicVideo doc and its ArtJobs instead of re-enqueueing, since renders take hours on the
       single 12 GB card. Unit-test the timeline-to-ffmpeg filter graph with fixtures, and add
       a dry-run mode that prints the plan without enqueueing anything.
+
+      scripts/build_music_video.py: resumable pitch-to-MP4 pipeline over the music-video API
+      plus ffmpeg (Ken Burns zoompan, concat cuts, xfade crossfades, song audio); --dry-run
+      and --wait. MP4 is written locally until an upload route exists (needed before t-022).
     claimed_by: 20261002T2300-claude-mv-t021-01D4se
     claimed_at: '2026-10-02T22:46:37Z'
-    updated: '2026-10-02T22:46:37Z'
+    updated: '2026-10-02T22:58:33Z'
+    implementation_pr: 'silasfelinus/conductor#5511'
 
   - id: t-022
     milestone: m3
@@ -505,9 +510,25 @@ tasks:
     stakes: outward-facing
     gate_human: true
     gate_reason: publish
-    depends_on: [t-015]
+    depends_on: [t-015, t-023]
     note: >-
       After Silas approves the t-015 trailer, place it as a buzz video on Kind Robots (the
       landing page or the project page, wherever Silas picks). Placing it publicly is a
       publish step, so the finished change parks at needs-human with the PR open, and only
       Silas merges or approves it.
+
+  - id: t-023
+    milestone: m3
+    title: "Upload route for a finished music video MP4 (kind_robots)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-004]
+    note: >-
+      scripts/build_music_video.py (t-021) assembles the MP4 but can only write it to local disk:
+      nothing in kind_robots accepts a finished video file for a MusicVideo. Add an admin-only
+      upload (e.g. POST /api/music-video/[id]/final) that stores the MP4 as a private video
+      ArtImage (fileType mp4, never in a public collection, size-capped), sets the row's
+      finalArtImageId, and serves it through the existing ArtImage file route; then teach the
+      script to call it after assembly (with --no-upload to skip). Publishing stays t-022.
