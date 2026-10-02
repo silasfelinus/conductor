@@ -243,8 +243,8 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Scene prompts, validator and per-scene image generation"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-004]
@@ -259,6 +259,9 @@ tasks:
       upload route is image-only and open to any signed-in user, so use or add an admin-gated
       path), or pick from the gallery. Enqueue at the default priority; scene jobs are about 400 s
       each on the single 12 GB card.
+    claimed_by: 20261002T-claude-mv-t008-01D4se
+    claimed_at: '2026-10-02T18:07:40Z'
+    updated: '2026-10-02T18:07:40Z'
 
   - id: t-009
     milestone: m2
