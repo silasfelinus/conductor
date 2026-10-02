@@ -1,0 +1,149 @@
+# Kind Robots Solitaire — built in kind_robots, free-to-play (no LLM in the player path).
+# Cross-repo software project: this roadmap owns task state; implementation ships in silasfelinus/kind_robots.
+# Architecture and guardrails live in DESIGN-BRIEF.md. Read it before claiming anything.
+project: kr-solitaire
+kind: software
+goal: A visitor plays Klondike solitaire (draw 1 and draw 3) in the browser using a hand-designed 52-card
+  Kind Robots deck and Kind Robots card backs, with undo, hints, auto-complete, saved stats and a daily
+  deal, checked at phone, tablet and desktop widths and accepted by Silas. No LLM and no account required.
+notes_from_silas: "2026-10-02 pitch: \"a solitaire game using our cards for backing, plus specially designed\
+  \ kind robots\n  52 card deck.\" Free-to-play push: this is playable by anyone at zero token cost. Image\
+  \ generation is\n  plentiful, so the deck is real art: 52 faces plus backs, produced by sessions ahead\
+  \ of time.\n  Hard rules: no LLM in the player path; the game rules are pure code with tests; art is\n\
+  \  pre-generated and committed. Agent picks, each a one-line edit if Silas disagrees: Klondike first\n\
+  \  (Spider, FreeCell and Pyramid are later); four suits of robots rather than hearts and spades only;\n\
+  \  the \"cards for backing\" are the existing Kind Robots card art used as selectable card backs.\n"
+milestones:
+- id: m1
+  title: SHAPE — outline, brainstorm, design brief
+  weight: 25
+  status: in-progress
+- id: m2
+  title: BUILD — actualize, adjust, test
+  weight: 50
+  status: not-started
+- id: m3
+  title: POLISH & SHIP — aesthetics, performance, delivery
+  weight: 25
+  status: not-started
+tasks:
+- id: t-001
+  milestone: m1
+  title: Write the design brief and start building
+  status: done
+  owner: claude
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: DESIGN-BRIEF.md written from Silas's 2026-10-02 pitch and a read of the kind_robots schema and
+    pages; first build tasks created below.
+- id: t-002
+  milestone: m1
+  title: Confirm scope with Silas
+  status: needs-human
+  owner: null
+  passes: 0
+  stakes: reversible
+  soft_gate: true
+  updated: '2026-10-02T00:00:00Z'
+  note: 'FOR SILAS: soft checkpoint, nothing is blocked on it. Read projects/kr-solitaire/DESIGN-BRIEF.md
+    and confirm or redirect the agent picks listed in notes_from_silas. If there is no answer within 7
+    days the next gate-triage session adopts them as written under the 2026-09-30 default-recommendation
+    rule.'
+- id: t-003
+  milestone: m1
+  title: Survey existing card art and component patterns, pick the card-back set
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: 'Read-only survey, write projects/kr-solitaire/docs/survey.md: which existing card art (components/navigation/flip-card.vue,
+    card-picker.vue, character and reward cards) can serve as card backs, aspect ratios, where /play pages
+    live, and the pattern for lazy static assets. Recommend 3 to 6 backs. No code changes.'
+- id: t-004
+  milestone: m2
+  title: Seedable Klondike engine with tests (kind_robots utils/)
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: 'Pure TypeScript engine: seeded shuffle, deal, legal move generation, move application, undo log,
+    win and auto-complete detection, draw-1 and draw-3. DB-free tsx tests, a contract-tests step, and
+    a solvability sampler over 200 seeds. No UI.'
+- id: t-005
+  milestone: m2
+  title: Game page /play/solitaire with fallback deck, drag and tap
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: 'Nuxt page and solitaireStore: tableau, foundations, stock and waste, drag and tap-to-move, undo,
+    win state, using a CSS/SVG fallback deck so it is playable before art exists. Works at 375px; no network.'
+- id: t-006
+  milestone: m2
+  title: 'Deck design bible: suits, pips, court cards and the 52-card prompt table'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: 'Write projects/kr-solitaire/docs/deck-bible.md: the four suits (names, colours, pips, personality),
+    the 12 court characters mapped to existing characters, the style bible and seed policy, and a 52-row
+    prompt table following the Krea 2 contract in ART-PROMPTS.md. Silas may rename suits; keep them one-line
+    edits.'
+- id: t-007
+  milestone: m2
+  title: Generate and commit the 52 faces
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: Using the deck bible, queue 52 ArtJobs (5:7), review, regenerate weak ones, commit as public/
+    assets with a manifest and prompt/model metadata. Corner indices stay in code. Drain in batches; the
+    render box is shared.
+- id: t-008
+  milestone: m2
+  title: Card backs and the back-picker
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: Prepare 3 to 6 backs from the Kind Robots card art at the deck aspect and add a picker that persists
+    in localStorage.
+- id: t-009
+  milestone: m2
+  title: Daily deal, stats and hint/auto-complete
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: Date-seeded daily deal, saved win/streak stats (try/catch around storage), hint and auto-complete.
+- id: t-010
+  milestone: m3
+  title: Win animation, sound-off-by-default, accessibility and responsive polish
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-009
+  note: Cascade win animation honouring reduced motion, keyboard play, colour-blind pip shapes, screenshots
+    at 375, 768 and 1280.
+- id: t-011
+  milestone: m3
+  title: Acceptance with Silas
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-010
+  note: Hand over a complete game on main and a playtest note; resolves at needs-human.

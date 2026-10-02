@@ -56,6 +56,11 @@ def main() -> int:
             print(f"digest.json {key} must be an object or null", file=sys.stderr)
             return 1
 
+    daily = digest.get("daily_pitches")
+    if not (daily is None or (isinstance(daily, dict) and isinstance(daily.get("pitches"), list))):
+        print("digest.json daily_pitches must be null or an object with a pitches list", file=sys.stderr)
+        return 1
+
     for index, project in enumerate(digest["projects"]):
         if not isinstance(project, dict):
             print(f"digest.json projects[{index}] must be an object", file=sys.stderr)

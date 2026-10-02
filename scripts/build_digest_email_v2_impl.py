@@ -308,6 +308,33 @@ def next_pitch_section(proposal: dict[str, Any] | None) -> str:
     )
 
 
+def daily_pitches_section(daily: dict[str, Any] | None) -> str:
+    """Five new project pitches for the day; undecided ones first, decided ones dimmed."""
+    pitches = (daily or {}).get("pitches") if isinstance(daily, dict) else None
+    if not pitches:
+        return ""
+    rows = []
+    for pitch in pitches:
+        decision = str(pitch.get("decision") or "pending")
+        badge = "" if decision == "pending" else f' <span style="color:#64748b;font-size:12px">[{esc(decision)}]</span>'
+        free = ("no LLM needed" if pitch.get("llm_at_runtime") == "none"
+                else f"LLM: {esc(pitch.get('llm_at_runtime'))}")
+        rows.append(
+            '<li style="margin:0 0 10px">'
+            f'<strong style="color:#0f4c5c">{esc(pitch.get("title"))}</strong>{badge} '
+            f'<span style="color:#64748b;font-size:12px">({esc(pitch.get("effort"))} · {free})</span><br>'
+            f'<span style="color:#444">{esc(pitch.get("hook"))}</span></li>'
+        )
+    return (
+        '<div style="background:#ecfeff;border:1px solid #a5f3fc;border-radius:10px;'
+        'padding:12px 14px;margin:14px 0 18px;max-width:660px">'
+        '<h2 style="margin:0 0 4px">💡 Today’s five pitches</h2>'
+        '<p style="color:#64748b;font-size:12px;margin:2px 0 8px">Reply with approve, pass or later for each. '
+        'Approved ideas become projects.</p>'
+        f'<ol style="padding-left:20px;margin:0;line-height:1.5">{"".join(rows)}</ol></div>'
+    )
+
+
 def animation_release_section(digest: dict[str, Any]) -> str:
     """Show the newest Animation Manager release directly under the Daily Dream."""
 
@@ -485,7 +512,7 @@ def build_payload(digest: dict[str, Any]) -> dict[str, Any]:
     animation_html = animation_release_section(digest)
     operational_html = engine_banner(digest) + container_log_banner(digest) + review_html
     pitch_html = next_pitch_section(digest.get("next_dream_proposal"))
-    middle = animation_html + operational_html + pitch_html
+    middle = animation_html + operational_html + pitch_html + daily_pitches_section(digest.get("daily_pitches"))
 
     # Place health and the next text pitch directly after the previous pitch's generated output.
     # If a build failed so there is no fresh output, put them immediately after

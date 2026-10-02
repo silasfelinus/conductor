@@ -41,6 +41,14 @@ At the start of every session, before responding to any task, run a conductor sw
    per `scripts/dream_prose_quality.py`) and the history behind it are in `docs/sweep-checks.md` (Step 7)
    — read that section before authoring.
 
+8. Daily pitches: `session_sweep.py` runs `daily_pitches.py --check`. Silas (2026-10-02): every day's digest
+   carries **five new project pitches**, biased to free-to-play things (games, toys, pre-written content,
+   pre-generated art) that need no LLM at runtime. If it reports no docket for today, author
+   `pitches/daily/<pacific-date>.yaml` (exactly 5 pitches, at least 3 with `llm_at_runtime: none`, deduped
+   against every project, pitch and earlier docket; the script validates all of that) and open the PR. Silas
+   decides with `python scripts/daily_pitches.py --decide SLUG approved|rejected|deferred`; an approved pitch
+   is scaffolded with `scripts/intake.py`. Rejected and deferred slugs never boomerang back.
+
 Then report:
 - **Branch** and whether the working tree is clean
 - **Open PRs** (if any Worker PRs are waiting for review)
@@ -60,6 +68,7 @@ Then report:
 - **Daily dream**: whether today's dated proposal exists; its steering/build/retry,
   Facet, art, and digest state; legacy Dream outlines are idea inventory rather
   than queued object builds (warn when useful idea inventory falls below five)
+- **Daily pitches**: whether today's five-pitch docket exists, and the undecided count from `daily_pitches.py --pending`
 - **Daily Tzaddik**: from the sweep's `tzaddik_review` section (`python scripts/tzaddik_review.py --check`
   for the full list), report the
   approved/rejected/deferred/pending counts across every discovery docket. List

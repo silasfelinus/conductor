@@ -1,0 +1,162 @@
+# Comic Creator — built in kind_robots, free-to-play (no LLM in the player path).
+# Cross-repo software project: this roadmap owns task state; implementation ships in silasfelinus/kind_robots.
+# Architecture and guardrails live in DESIGN-BRIEF.md. Read it before claiming anything.
+project: comic-creator
+kind: software
+goal: A visitor opens Kind Robots, picks a page template, fills panels from the gallery or an upload,
+  places Kind Robots characters, speech bubbles and captions, and exports a finished comic as PNG pages
+  or a PDF, all in the browser with no LLM and no account required, checked at phone, tablet and desktop
+  widths and accepted by Silas.
+notes_from_silas: "2026-10-02 pitch: \"a comic book creator.\" Part of the free-to-play push: Kind Robots\
+  \ has a lot of\n  features locked behind LLM API access, and the interactives that work with zero tokens\
+  \ at runtime\n  are the ones every visitor can use. Image generation is plentiful and tokens at authoring\
+  \ time are\n  free, so anything that needs words or art is pre-made by sessions and shipped as static\
+  \ content.\n  Hard rules: no LLM call anywhere in the player path; the existing gallery images and characters\
+  \ are\n  the raw material; Comfy art is pre-generated into a shipped sticker/background pack, never\n\
+  \  requested live. Agent picks, each a one-line edit if Silas disagrees: client-only document saved\
+  \ to\n  browser storage first, optional signed-in cloud save later; PDF export in the browser.\n"
+milestones:
+- id: m1
+  title: SHAPE — outline, brainstorm, design brief
+  weight: 25
+  status: in-progress
+- id: m2
+  title: BUILD — actualize, adjust, test
+  weight: 50
+  status: not-started
+- id: m3
+  title: POLISH & SHIP — aesthetics, performance, delivery
+  weight: 25
+  status: not-started
+tasks:
+- id: t-001
+  milestone: m1
+  title: Write the design brief and start building
+  status: done
+  owner: claude
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: DESIGN-BRIEF.md written from Silas's 2026-10-02 pitch and a read of the kind_robots schema and
+    pages; first build tasks created below.
+- id: t-002
+  milestone: m1
+  title: Confirm scope with Silas
+  status: needs-human
+  owner: null
+  passes: 0
+  stakes: reversible
+  soft_gate: true
+  updated: '2026-10-02T00:00:00Z'
+  note: 'FOR SILAS: soft checkpoint, nothing is blocked on it. Read projects/comic-creator/DESIGN-BRIEF.md
+    and confirm or redirect the agent picks listed in notes_from_silas. If there is no answer within 7
+    days the next gate-triage session adopts them as written under the 2026-09-30 default-recommendation
+    rule.'
+- id: t-003
+  milestone: m1
+  title: Survey kind_robots for reusable parts and confirm the editor approach
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: 'Read-only survey, write projects/comic-creator/docs/survey.md: which existing gallery, character,
+    scenario and canvas utilities can be reused; whether any existing canvas, drag or PDF code exists;
+    where /play/* pages and the store pattern live; which public image APIs can fill a panel without auth.
+    Recommend PDF library (or hand-rolled) and the sticker file format. No code changes.'
+- id: t-004
+  milestone: m2
+  title: Comic document model, canvas renderer and layout templates (kind_robots)
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: In silasfelinus/kind_robots add types, a DB-free validator and a pure layout engine in utils/
+    for pages, panels and placements, plus a canvas renderer in stores/helpers/. Ship 6 layout templates
+    and DB-free tsx tests (kind_robots has no vitest). No API, no migration.
+- id: t-005
+  milestone: m2
+  title: Editor page /play/comics with panel fill, pan/zoom and IndexedDB save
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: 'Nuxt page and comicStore: page strip, panel selection, fill from gallery or upload, pan/zoom,
+    autosave to IndexedDB, JSON export/import. Art-first, usable at 375px. Components never call APIs.'
+- id: t-006
+  milestone: m2
+  title: Bubbles, captions and lettering
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: Speech, thought, shout, whisper, caption and SFX elements with draggable tails, text editing,
+    font choice from a licensed set recorded in a manifest. Rendered by the same canvas renderer.
+- id: t-007
+  milestone: m2
+  title: 'Character sticker pack: pick 20 characters and pre-generate 5 poses each'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: Pick the 20 characters with the strongest art. Generate five transparent-background poses each
+    through the existing ArtJob queue (pre-generated art is pre-approved; keep prompt and model metadata).
+    Commit the pack under public/ with a manifest. Krea 2 prompt contract in ART-PROMPTS.md applies.
+- id: t-008
+  milestone: m2
+  title: 'Comic backgrounds pack: 40 neutral scenic backgrounds'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: Generate 40 panel-ready backgrounds (interiors, streets, forests, skies, space, underwater) through
+    ArtJobs, commit as a pack with manifest. No characters in them.
+- id: t-009
+  milestone: m2
+  title: PNG and PDF export
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: Export every page as PNG at print and screen sizes, or one PDF, in the browser. Verify on Chromium,
+    Firefox and Safari where possible.
+- id: t-010
+  milestone: m2
+  title: 'Scenario starters: 10 statically authored 4-page outlines'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: Pick 10 scenarios from the shipped set and hand-author a 4-page outline (title, setup, twist,
+    ending) with suggested layouts and a bubble draft per panel. Static JSON; no runtime LLM.
+- id: t-011
+  milestone: m3
+  title: Phone, tablet and desktop polish plus accessibility pass
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-010
+  note: Touch-first tools, keyboard operation, contrast, reduced motion. Screenshot at 375, 768 and 1280.
+    Depends on the editor and bubble tasks.
+- id: t-012
+  milestone: m3
+  title: Project art and acceptance with Silas
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-011
+  note: Make a real 4-page comic end to end, attach screenshots, and hand to Silas. Resolves at needs-human
+    (acceptance is his).
