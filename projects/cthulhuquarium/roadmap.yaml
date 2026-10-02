@@ -1580,7 +1580,7 @@ tasks:
 - id: t-078
   milestone: m3
   title: Real fish roster (animated cut-out sprites), Charlotte/Wilbur redesign + story scenes, real backgrounds
-  status: claimed
+  status: done
   gate_human: false
   owner: worker
   stakes: reversible
@@ -1593,4 +1593,6 @@ tasks:
     2026-10-01 routine: harvested+cut out 6 more sprites, submitted their clips (cthulhuquarium#50). 94/341 renders done, box UP. Needs pip pillow numpy rembg[cpu] in sandbox. Next: harvest, build_sprites.py, check facing, submit clips.
 
     Claim moves to session_01L9VUEkNppD54d5B9LiywHu, which has run the t-078 render loop every ~45 min since 2026-09-30 (harvest, review each sprite against its species' defining trait and facing, re-prompt misses, flip faces-left, sync to kind_robots; cthulhuquarium #38-#51). The 20261001-routine run (claimed 05:46Z) harvested the same six renders in parallel (cthulhuquarium #50), committing two rejected renders and an unflipped sprite and double-submitting six swim clips; #51 reconciled it and cancelled the duplicates (32419-32424). Routine runs: skip t-078 harvesting while this claim holds. Progress 06:15Z: 92/341 renders done, 154 queued, 95 clips waiting on their sprite; no swim clips rendered yet (the box works sprites first).
-  updated: '2026-10-01T06:11:16+00:00'
+
+    Reconciled 2026-10-02: implementation PR kind_robots#3112 merged 2026-09-30.
+  updated: '2026-10-02T05:48:50Z'
