@@ -1,7 +1,7 @@
 # Pitch: Kind Word Puzzles
 date: 2026-10-02
 project-target: new
-status: approved
+status: rejected
 
 ## The idea
 A year of pre-authored word searches and mini crosswords built from the Kind Robots lexicon of characters, rewards, places and scenarios, one per day with the date picking the puzzle. Sessions write and validate every grid ahead of time, so the daily puzzle is free for everyone.
