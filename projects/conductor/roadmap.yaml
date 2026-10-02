@@ -3067,15 +3067,16 @@ tasks:
 
 - id: t-204
   title: 'Reconcile three accidentally-created Kind Robots projects after Conductor scaffold removal'
-  status: review
+  status: done
   stakes: reversible
-  owner: worker
   passes: 0
-  updated: '2026-10-02T22:36:00Z'
+  updated: '2026-10-02T22:41:30Z'
   note: |-
     Silas-directed 2026-10-02: hidden-robots, robot-dress-up, and kind-word-puzzles were created accidentally and should be deleted. Conductor PR #5504 already removed their scaffolds, but Kind Robots Project rows 2125, 2126, and 2127 still carry conductorSlug and trigger forward parity drift. Archive exactly those rows through the existing Project API and make the scaffold drift audit treat archived rows as deleted rather than live scaffold claims.
 
     Implementation branch archives only the three explicitly tombstoned Kind Robots Project rows by exact id+slug, then treats archived rows as deleted for live scaffold-parity checks. Added targeted tests and project-sync workflow wiring.
+
+    Merged silasfelinus/conductor#5507 as e08b9b89b1b74c51d62595969a2c613cc1ba9007. PR checks passed: Worker PR CI including full pytest, Security Audit, CodeQL, task-event validation, roadmap validation, Python syntax, and the corrected Worker PR handoff check. Project Sync run 37073719594 completed successfully; its exact-id+slug tombstone reconciler archived Project #2125 hidden-robots, #2126 robot-dress-up, and #2127 kind-word-puzzles (archiveCount=3) and re-fetched the API to verify all targets were archived. Live parity checks now ignore archived rows by default while --include-inactive retains archive-audit visibility.
   claimed_by: 20261002T222600Z-chatgpt-conductor-t204-parity
   claimed_at: '2026-10-02T22:26:00Z'
 

@@ -17160,3 +17160,15 @@ records:
   outcome: done
   failure_category: null
   lesson: "kind_robots typechecks with noUncheckedIndexedAccess, which a plain tsx run and a default tsc do not catch: the first PR passed its own tests and still failed the TypeScript check on every arr[i] access. Check new utils/ files with that flag (strict + noUncheckedIndexedAccess) before pushing."
+- date: '2026-10-02'
+  project: conductor
+  task: t-204
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Removing a Conductor scaffold is not deletion intent for the Kind Robots Project row: the one-way
+    projection cannot infer whether an absent roadmap is accidental deletion or a legitimate pre-scaffold
+    project. Keep deletions explicit with exact identity tombstones, and make parity sensors distinguish
+    archived rows from live scaffold claims.'
