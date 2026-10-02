@@ -275,7 +275,7 @@ tasks:
 
 - id: t-018
   title: "FOR SILAS: visually accept the Media Watchlist at phone/tablet/desktop widths to close the project out"
-  status: needs-human
+  status: done
   passes: 0
   stakes: reversible
   soft_gate: true
@@ -335,13 +335,24 @@ tasks:
     Back to Silas (session 20260930T0600Z-gate-triage, 2026-09-30): open Admin -> Watchlist
     (/plan/watchlist) at phone, tablet and desktop widths. t-020 turned out to be
     unnecessary, because it was in Admin all along.
+
+    DONE 2026-10-02 by Silas's decision in session
+    (claude.ai/code/session_015HXyjnTN41AEgjkmVNW1wN): "This project has reached its first
+    milestone. I want it marked finished. No more roadmap tasks open." Context: the live
+    page had shown no entries because the t-009 seed was only ever dry-run; it was applied
+    to production on 2026-10-02 (2,440 MediaEntry rows, after kind_robots#3172 fixed the
+    seed's non-TLS connection), Silas reviewed it on his phone, and kind_robots#3173 fixed
+    long-title truncation from that pass. Poster/cover artwork was scoped as
+    kind_robots#3174 and deliberately left out of this milestone (closed not-planned with
+    the project).
   depends_on: null
-  updated: '2026-09-30T10:00:00Z'
+  updated: '2026-10-02T03:06:11Z'
   owner: worker
   claimed_by: 20260922T-mw-t018-reconcile
   claimed_at: '2026-09-22T11:05:10Z'
   gate_reason: subjective-acceptance
   gate_rechecked: '2026-09-30'
+  approved_by_human: true
 - id: t-019
   milestone: m4
   title: Fix the Media Watchlist failing to load, and stop masking the real cause
