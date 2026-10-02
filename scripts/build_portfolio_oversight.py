@@ -6,13 +6,13 @@ surfaced to agent rotation at all:
 
 * Kind Robots <-> Conductor project scaffold parity.
 * Deterministic roadmap/CONTROL/priority findings from audit_roadmaps.py.
-* Freshness of the OpenAI scheduled-Agent heartbeat and the periodic semantic
+* A legacy repository-side OpenAI activity diagnostic plus the periodic semantic
   roadmap-intent review described in projects/conductor/OVERSIGHT-AGENT.md.
 
-The OpenAI heartbeat is deliberately provider-specific. Claude scheduled agents
-can continue working while the OpenAI automation is disabled, so generic
-"scheduled Agent" git activity is not sufficient evidence that the OpenAI side
-is healthy.
+The OpenAI git diagnostic is deliberately non-authoritative. ChatGPT scheduler
+liveness now belongs to a native ChatGPT watchdog because unattended scheduled
+runs may be prevented from mutating GitHub even when the scheduler itself is
+healthy. Claude activity still never substitutes for OpenAI activity.
 
 The script is intentionally read-only except for the two report files it writes.
 It never repairs roadmap state itself. GitHub Actions has KR_API_TOKEN and persists
@@ -154,7 +154,7 @@ def scheduled_agent_status(
             "hours_since": None,
             "stale_hours": stale_hours,
             "marker": OPENAI_SESSION_MARKER,
-            "note": "No OpenAI scheduled-Agent heartbeat activity was found in available git history. Claude activity does not satisfy this check.",
+            "note": "Legacy git diagnostic only: no OpenAI scheduled-Agent activity was found in available git history. ChatGPT scheduler liveness is monitored natively; Claude activity does not satisfy this diagnostic.",
         }
     hours_since = max(0.0, (now - last).total_seconds() / 3600.0)
     return {
@@ -163,7 +163,7 @@ def scheduled_agent_status(
         "hours_since": round(hours_since, 2),
         "stale_hours": stale_hours,
         "marker": OPENAI_SESSION_MARKER,
-        "note": f"OpenAI scheduled cycles must refresh {OPENAI_HEARTBEAT_FILE}; coordination-marker history remains a compatibility fallback.",
+        "note": f"Legacy git diagnostic only: {OPENAI_HEARTBEAT_FILE} and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness.",
     }
 
 
@@ -184,7 +184,6 @@ def classify_report(
         roadmap_errors
         or forward
         or reverse
-        or heartbeat.get("overdue")
     )
     if deterministic_action:
         status = "action-needed"
@@ -203,6 +202,7 @@ def classify_report(
         "project_reverse_orphans": len(reverse),
         "project_unresolved": project_unresolved,
         "openai_scheduled_agent_overdue": bool(heartbeat.get("overdue")),
+        "openai_scheduled_agent_authoritative": False,
         "intent_review_due": bool(intent.get("due")),
     }
 
@@ -277,7 +277,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         "",
         "This is a deterministic sensor. For semantic roadmap/progress intent review, follow `projects/conductor/OVERSIGHT-AGENT.md`.",
         "",
-        "## OpenAI scheduled-agent heartbeat",
+        "## Legacy OpenAI scheduled-agent git diagnostic",
         "",
     ]
     if heartbeat["last_activity"]:
@@ -289,7 +289,8 @@ def render_markdown(report: dict[str, Any]) -> str:
         lines.append(
             f"- No git activity carrying `{heartbeat['marker']}` was found in available history. Claude scheduled activity does not count."
         )
-    lines.append(f"- Overdue: **{str(bool(heartbeat['overdue'])).lower()}**")
+    lines.append(f"- Stale by legacy threshold: **{str(bool(heartbeat['overdue'])).lower()}**")
+    lines.append("- Authoritative for ChatGPT scheduler health: **false**")
     lines.append(f"- Note: {heartbeat['note']}")
 
     lines.extend(["", "## Kind Robots ↔ Conductor project parity", ""])
