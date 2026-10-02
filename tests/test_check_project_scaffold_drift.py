@@ -106,6 +106,53 @@ def test_inactive_projects_included_with_flag(tmp_path):
     assert len(result["reverse"]) == 1
 
 
+
+def test_archived_kr_project_is_not_live_forward_drift(tmp_path):
+    write_overrides(tmp_path, [])
+    kr_projects = [
+        {
+            "id": 2125,
+            "title": "hidden-robots",
+            "slug": "hidden-robots",
+            "conductorSlug": "hidden-robots",
+            "isActive": False,
+            "status": "ARCHIVED",
+        }
+    ]
+
+    result = drift.scan(
+        kr_projects,
+        projects_dir=tmp_path / "projects",
+        overrides_path=tmp_path / "project-overrides.yaml",
+    )
+
+    assert result["forward"] == []
+    assert result["reverse"] == []
+
+
+def test_archived_kr_project_can_be_included_in_archive_audit(tmp_path):
+    write_overrides(tmp_path, [])
+    kr_projects = [
+        {
+            "id": 2125,
+            "title": "hidden-robots",
+            "slug": "hidden-robots",
+            "conductorSlug": "hidden-robots",
+            "isActive": False,
+            "status": "ARCHIVED",
+        }
+    ]
+
+    result = drift.scan(
+        kr_projects,
+        projects_dir=tmp_path / "projects",
+        overrides_path=tmp_path / "project-overrides.yaml",
+        include_inactive=True,
+    )
+
+    assert len(result["forward"]) == 1
+    assert result["forward"][0]["conductor_slug"] == "hidden-robots"
+
 def test_blank_conductor_slug_is_ignored(tmp_path):
     write_overrides(tmp_path, [])
     kr_projects = [{"id": 5, "title": "No link yet", "slug": "unlinked", "conductorSlug": None}]
