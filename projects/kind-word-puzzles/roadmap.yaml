@@ -1,0 +1,111 @@
+# Kind Word Puzzles — free-to-play, built in kind_robots. Architecture in DESIGN-BRIEF.md.
+project: kind-word-puzzles
+kind: software
+goal: A year of pre-authored word searches and mini crosswords built from the Kind Robots lexicon of characters,
+  rewards, places and scenarios, one per day with the date picking the puzzle. Sessions write and validate
+  every grid ahead of time, so the daily puzzle is free for everyone.
+notes_from_silas: '2026-10-02: approved from the daily pitch docket ("I like all proposals"). Free-to-play:
+  no LLM at runtime; sessions pre-author content and art.
+
+  '
+milestones:
+- id: m1
+  title: SHAPE — outline, brainstorm, design brief
+  weight: 25
+  status: in-progress
+- id: m2
+  title: BUILD — actualize, adjust, test
+  weight: 50
+  status: not-started
+- id: m3
+  title: POLISH & SHIP — aesthetics, performance, delivery
+  weight: 25
+  status: not-started
+tasks:
+- id: t-001
+  milestone: m1
+  title: Write the design brief and start building
+  status: done
+  owner: claude
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: DESIGN-BRIEF.md written from the approved 2026-10-02 pitch; build tasks created below.
+- id: t-002
+  milestone: m1
+  title: Confirm scope with Silas
+  status: done
+  owner: claude
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  approved_by_human: true
+  note: Silas approved this pitch in session on 2026-10-02 ("I like all proposals"). No further scope
+    gate.
+- id: t-003
+  milestone: m1
+  title: 'Survey and spec: lexicon source, puzzle formats and daily selection'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: 'Write projects/kind-word-puzzles/docs/spec.md: build the lexicon from public characters, rewards,
+    places and scenarios; word search and mini-crossword formats; date-to-puzzle mapping.'
+- id: t-004
+  milestone: m2
+  title: Grid generator and solvability validator with tests (kind_robots utils/)
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: Pure word-search and mini-crossword generators with a validator (unique answers, every clue resolves,
+    no accidental offensive words) and DB-free tests.
+- id: t-005
+  milestone: m2
+  title: Author and validate the first 14 puzzles
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-004
+  note: Generate grids and write every clue by hand (kind, clear, all-ages); validate and commit as static
+    JSON.
+- id: t-006
+  milestone: m2
+  title: Daily puzzle page /play/word-puzzles
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-005
+  note: Date picks the puzzle; archive of past days; progress and streak in localStorage (try/catch);
+    keyboard and touch input at 375px.
+- id: t-007
+  milestone: m2
+  title: Author the remaining puzzles up to a year, in batches
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-006
+  note: Continue in batches of 30 with the validator; header art per theme (about 30 pieces) via ArtJobs
+    or reused gallery art.
+- id: t-008
+  milestone: m3
+  title: Polish, accessibility and acceptance with Silas
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-007
+  note: Screen-reader friendly grid, large-text option; hand to Silas (needs-human).

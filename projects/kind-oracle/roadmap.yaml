@@ -1,0 +1,112 @@
+# Kind Oracle — free-to-play, built in kind_robots. Architecture in DESIGN-BRIEF.md.
+project: kind-oracle
+kind: software
+goal: A 22-card oracle deck of Kind Robots, each card a full piece of art with an upright and a reversed
+  meaning, where you draw a one, three or five card spread and read a pre-written reading assembled from
+  hand-authored pair and position texts. Every combination is written ahead of time, so it feels personal
+  and costs nothing to run.
+notes_from_silas: '2026-10-02: approved from the daily pitch docket ("I like all proposals"). Free-to-play:
+  no LLM at runtime; sessions pre-author content and art.
+
+  '
+milestones:
+- id: m1
+  title: SHAPE — outline, brainstorm, design brief
+  weight: 25
+  status: in-progress
+- id: m2
+  title: BUILD — actualize, adjust, test
+  weight: 50
+  status: not-started
+- id: m3
+  title: POLISH & SHIP — aesthetics, performance, delivery
+  weight: 25
+  status: not-started
+tasks:
+- id: t-001
+  milestone: m1
+  title: Write the design brief and start building
+  status: done
+  owner: claude
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: DESIGN-BRIEF.md written from the approved 2026-10-02 pitch; build tasks created below.
+- id: t-002
+  milestone: m1
+  title: Confirm scope with Silas
+  status: done
+  owner: claude
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  approved_by_human: true
+  note: Silas approved this pitch in session on 2026-10-02 ("I like all proposals"). No further scope
+    gate.
+- id: t-003
+  milestone: m1
+  title: 'Survey and spec: card list, meanings grammar and spread layouts'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: 'Write projects/kind-oracle/docs/spec.md: the 22 card concepts (each a Kind Robots character or
+    idea), upright and reversed meaning style, the 1, 3 and 5 card spread positions, and how pair texts
+    combine. Survey kind_robots /play pages and the static-asset pattern.'
+- id: t-004
+  milestone: m2
+  title: Reading engine and tests (kind_robots utils/)
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: Pure seedable draw, orientation and reading assembly from a static content table; DB-free tsx
+    tests proving every spread yields complete text.
+- id: t-005
+  milestone: m2
+  title: 'Author the content: 22 meanings, position texts and pair texts'
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-004
+  note: Write every card meaning plus position and pair texts as static JSON. Read each reading style
+    through; warm, kind, never fatalistic. All-ages.
+- id: t-006
+  milestone: m2
+  title: Generate and commit 22 card faces and a back
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-005
+  note: ArtJobs under one style bible and the Krea 2 contract in ART-PROMPTS.md; keep prompt/model metadata;
+    names and numerals composed in code.
+- id: t-007
+  milestone: m2
+  title: Draw page /play/oracle with flip animation and spread picker
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-006
+  note: Nuxt page and store; reduced-motion safe; works at 375px; no network except static assets.
+- id: t-008
+  milestone: m3
+  title: Polish, accessibility and acceptance with Silas
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-007
+  note: Screenshots at 375, 768 and 1280, keyboard draw, then hand to Silas (needs-human).

@@ -1,0 +1,109 @@
+# Pocket Pet Robot — free-to-play, built in kind_robots. Architecture in DESIGN-BRIEF.md.
+project: pocket-pet-robot
+kind: software
+goal: A tiny virtual pet you adopt, name, feed, play with and put to bed, whose mood sprites and room
+  scenes are all pre-generated and whose state lives in your own browser. It grows through three forms
+  over a couple of weeks of casual visits and never needs a server or a token.
+notes_from_silas: '2026-10-02: approved from the daily pitch docket ("I like all proposals"). Free-to-play:
+  no LLM at runtime; sessions pre-author content and art.
+
+  '
+milestones:
+- id: m1
+  title: SHAPE — outline, brainstorm, design brief
+  weight: 25
+  status: in-progress
+- id: m2
+  title: BUILD — actualize, adjust, test
+  weight: 50
+  status: not-started
+- id: m3
+  title: POLISH & SHIP — aesthetics, performance, delivery
+  weight: 25
+  status: not-started
+tasks:
+- id: t-001
+  milestone: m1
+  title: Write the design brief and start building
+  status: done
+  owner: claude
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: DESIGN-BRIEF.md written from the approved 2026-10-02 pitch; build tasks created below.
+- id: t-002
+  milestone: m1
+  title: Confirm scope with Silas
+  status: done
+  owner: claude
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  approved_by_human: true
+  note: Silas approved this pitch in session on 2026-10-02 ("I like all proposals"). No further scope
+    gate.
+- id: t-003
+  milestone: m1
+  title: 'Survey and spec: needs model, growth stages and sprite sheet format'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: 'Write projects/pocket-pet-robot/docs/spec.md: hunger, fun, energy and mood decay, three forms
+    over about two weeks of casual visits, what happens when you are away (gentle, never punishing), and
+    the sprite manifest.'
+- id: t-004
+  milestone: m2
+  title: Needs and growth engine with tests (kind_robots utils/)
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: Pure time-based engine (clock passed in), offline catch-up, no guilt mechanics; DB-free tsx tests.
+- id: t-005
+  milestone: m2
+  title: One-room page /play/pocket-pet with placeholder sprites
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-004
+  note: Adopt, name, feed, play, sleep; state in localStorage (try/catch); reduced-motion safe; usable
+    at 375px.
+- id: t-006
+  milestone: m2
+  title: Generate 3 forms x 8 mood sprites
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-005
+  note: ArtJobs with a consistent sprite sheet per form; commit with manifest and metadata.
+- id: t-007
+  milestone: m2
+  title: Generate 6 room backdrops and wire them in
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-006
+  note: Day, night and care-state variants; commit and integrate.
+- id: t-008
+  milestone: m3
+  title: Polish, accessibility and acceptance with Silas
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-007
+  note: Screenshots at 375, 768 and 1280; hand to Silas (needs-human).
