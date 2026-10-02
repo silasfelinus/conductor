@@ -467,8 +467,8 @@ tasks:
   - id: t-021
     milestone: m2
     title: "Agent-run pipeline: pitch to finished MP4 with no human in the loop"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-005, t-008, t-010]
@@ -485,6 +485,9 @@ tasks:
       MusicVideo doc and its ArtJobs instead of re-enqueueing, since renders take hours on the
       single 12 GB card. Unit-test the timeline-to-ffmpeg filter graph with fixtures, and add
       a dry-run mode that prints the plan without enqueueing anything.
+    claimed_by: 20261002T2300-claude-mv-t021-01D4se
+    claimed_at: '2026-10-02T22:46:37Z'
+    updated: '2026-10-02T22:46:37Z'
 
   - id: t-022
     milestone: m3
