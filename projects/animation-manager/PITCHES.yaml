@@ -1570,7 +1570,7 @@ pitches:
 
   - id: crease-fold-atlas
     title: Crease Fold Atlas
-    status: pitched
+    status: candidate
     priority: 29
     surprise: >
       A flat grid of paper panels hinges itself along scored crease lines into a recognizable
@@ -1615,6 +1615,21 @@ pitches:
       drifting in a wind field rather than crease-hinge geometry. Kaleidoscope Bloom and Moire
       Weave Engine both reorganize an existing image via rotation/reflection or interference,
       never a mesh changing its own 3D folded topology over time.
+    builds:
+      - version: 1
+        status: candidate
+        component: components/screenfx/crease-fold-atlas.vue
+        pull_request: silasfelinus/kind_robots#3177
+        released_at: '2026-10-02T08:00:00Z'
+        commit: f85a146a275c754071f0d3e36693417c04faca04
+        verification:
+          - Contract verifiers
+          - TypeScript
+          - layout-contract
+          - facet-catalog
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
+          - panel interpenetration is not prevented between named shapes (no collision handling); check in browser smoke
     acceptance:
       - the panel mesh reaches each named fold target with no visible seam gap or panel interpenetration
       - hinge easing uses per-hinge phase offsets so the fold visibly ripples rather than moving as one rigid block
