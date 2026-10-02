@@ -507,9 +507,25 @@ tasks:
     stakes: outward-facing
     gate_human: true
     gate_reason: publish
-    depends_on: [t-015]
+    depends_on: [t-015, t-023]
     note: >-
       After Silas approves the t-015 trailer, place it as a buzz video on Kind Robots (the
       landing page or the project page, wherever Silas picks). Placing it publicly is a
       publish step, so the finished change parks at needs-human with the PR open, and only
       Silas merges or approves it.
+
+  - id: t-023
+    milestone: m3
+    title: "Upload route for a finished music video MP4 (kind_robots)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-004]
+    note: >-
+      scripts/build_music_video.py (t-021) assembles the MP4 but can only write it to local disk:
+      nothing in kind_robots accepts a finished video file for a MusicVideo. Add an admin-only
+      upload (e.g. POST /api/music-video/[id]/final) that stores the MP4 as a private video
+      ArtImage (fileType mp4, never in a public collection, size-capped), sets the row's
+      finalArtImageId, and serves it through the existing ArtImage file route; then teach the
+      script to call it after assembly (with --no-upload to skip). Publishing stays t-022.
