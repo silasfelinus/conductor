@@ -14,6 +14,10 @@ Read AGENTS.md (core) first; this playbook adds only what this role needs.
   already merged it — do not leave a safe PR open for Silas; merging safe work is the
   Reviewer's job too. Otherwise audit the result and append TALKBACK if useful. Either way the
   run ends with the work on `main` and no branch left behind.
+- **CI interpretation:** evaluate the current/latest attempt of each check or
+  workflow on the PR head. A superseded failed attempt followed by a successful
+  rerun of the same check is historical evidence, not a current red gate. A
+  currently failing latest attempt remains a real blocker and must be diagnosed.
 - **Needs changes:** triage the failure first (see "Failure triage" — only quality/scope
   consume a pass; transient/actionable failures route differently and never do). For a
   quality/scope rejection: comment specifically, write `retry_context:` on the task,
@@ -73,9 +77,17 @@ Before starting a review pass on an open PR (this repo or kind_robots):
    someone else is already reviewing it — and move on to the next reviewable item.
 3. Otherwise, post a marker comment (`scripts/review_claim.py format <session-id>`
    prints the exact text to post) *before* starting the substantive review.
-4. This is advisory/best-effort, not a hard lock: a missed check is wasted
-   duplicate work, not a safety violation. Never skip the normal git-conflict
-   safety net described above on the assumption a marker makes it unnecessary.
+4. This marker is advisory/best-effort, not a hard lock. If the comment write
+   is blocked by the platform but the comment fetch succeeded and showed no
+   active claim, **do not stop the review**. Continue with read-only diff/CI/
+   log diagnosis, and re-fetch comments immediately before any merge or other
+   consequential write. If another fresh claim appeared, back off. If no
+   claim appeared, proceed under the normal merge/conflict safeguards.
+5. A blocked marker comment is therefore never evidence that GitHub access as
+   a whole is unavailable. Test the exact operation you need; preserve useful
+   diagnosis even when one advisory mutation is denied.
+6. Never skip the normal git-conflict safety net described above on the
+   assumption a marker makes it unnecessary.
 
 The module is intentionally transport-agnostic — it defines the marker format,
 the freshness rule, and the pure decision logic, but never calls the GitHub API
