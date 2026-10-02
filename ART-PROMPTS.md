@@ -284,7 +284,8 @@
 >
 >     The 397 were rewritten by hand, and the first pass of the 199 human-subject
 >     ones (personality, quirk, backstory, archetype) came back as the same
->     man or woman in an apron, 122 times in 397. Kind Robots characters span
+>     man or woman, often in an apron ("man" or "woman" appeared 122 times
+>     across the 397 prompts). Kind Robots characters span
 >     every age, gender, body shape, species and ability, so **assign the cast
 >     before authoring, not after**: draw each item's character from a seeded,
 >     balanced spread and hand it to the author as a fixed field. Never pair a
