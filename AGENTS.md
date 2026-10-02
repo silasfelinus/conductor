@@ -94,6 +94,27 @@ take priority over roadmap tasks — if any are OPEN, handle the top one first.
 **Todos are one-offs:** do not create follow-on roadmap tasks from a todo unless the
 todo explicitly asks for it. Scope is exactly what the title/description says.
 
+## GitHub issues become roadmap tasks
+
+Silas also files work as GitHub issues. The hourly `issue-bridge.yml` workflow
+(`scripts/sync_github_issues.py`) mirrors each open collaborator-authored issue in a
+repos.yaml repo into its owning project's roadmap as an ordinary `ready` task carrying
+`source_issue: <owner/repo>#<n>`, so issues are picked up through the normal roadmap
+queue rather than a separate inbox. Before it existed nothing read issues at all, and
+kind_robots #2663–#2668 sat open for three weeks (2026-10-01).
+
+- Work a mirrored task like any other. Its note opens with the issue URL; the issue
+  thread is the spec, so read its comments too.
+- Put `Closes <owner/repo>#<n>` in the implementing PR so the issue closes on merge.
+  The bridge also closes an issue once its task is `done`, so a missed keyword is
+  backstopped, not lost.
+- Never hand-edit or remove `source_issue`: it is the idempotency key, and without it
+  the next run imports the issue again.
+- Routing: a `project:<slug>` label beats the default (the first repos.yaml entry for
+  the repo); `conductor:skip` keeps an issue out. Issues from non-collaborators and
+  issues whose project is paused/retired/finished are reported by the sweep
+  (`issue_bridge`), never auto-imported.
+
 ## Picking what to work on
 1. **Check Todos first** — run `scripts/fetch_todos.py` and handle the top OPEN todo
    before continuing to roadmap tasks (see "Todos" section above).

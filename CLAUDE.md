@@ -22,7 +22,7 @@ At the start of every session, before responding to any task, run a conductor sw
    `check_pr_merged_drift`, `audit_human_gates`, `check_gate_legitimacy --live`, `check_project_scaffold_drift`, `check_live_facet_coverage`,
    `check_milestone_status_drift`, `check_container_log_drift`, `check_roadmap_note_size --payload-only`,
    `check_facet_prompt_subjects`, `check_priority_queue_starvation`, `check_vendored_scanner_parity`,
-   `check_daily_commitment_staleness`, `check_recurring_claim_drift`, `check_recurring_churn`, plus `build_dream_proposal.py --check
+   `check_daily_commitment_staleness`, `check_recurring_claim_drift`, `check_recurring_churn`, `sync_github_issues --check`, plus `build_dream_proposal.py --check
    --fetch` (step 7) and `tzaddik_review.py --check`. Why each check exists, what its exit codes mean and
    how to fix what it flags: [`docs/sweep-checks.md`](docs/sweep-checks.md) — read the entry only for a
    check that flagged.
