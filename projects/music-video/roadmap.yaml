@@ -305,8 +305,8 @@ tasks:
   - id: t-010
     milestone: m2
     title: "acestep workflow builder, enqueue engine and song endpoint (kind_robots)"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-003, t-004, t-020]
@@ -323,6 +323,9 @@ tasks:
       the payload. Add POST /api/music-video/song (tags, lyrics, duration, BPM, seed). Mana gates an
       acestep job as comfy, which bills like a 1024 square still; fine while admin-only. Verify
       structurally with fixtures; Comfy is unreachable from cloud sessions.
+    claimed_by: 20261002T1955-claude-mv-t010-01D4se
+    claimed_at: '2026-10-02T20:37:12Z'
+    updated: '2026-10-02T20:37:12Z'
 
   - id: t-011
     milestone: m2
