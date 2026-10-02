@@ -490,6 +490,7 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 - Scene prompts follow the Krea 2 contract in `ART-PROMPTS.md`: concrete nouns first, no negations, no art-direction jargon.
 - Hard gates that stay gates: deploying the relay and staging ACE-Step models on the render box (t-012, physical access), and Silas's acceptance of a real video (t-015). Cloud sessions cannot reach Comfy, so the first real render happens at t-012.
 - coat-dance/t-008 (assemble a rough cut) can reuse this project's exporter later; nothing in coat-dance changes now.
+- Step one is complete when the first-run trailer exists (Silas, 2026-10-02): a Kind Robots splash animation cartoon music video in a TMNT style, entirely agent-generated on our Comfy, usable as a trailer or buzz video (t-015, built by the headless pipeline t-021, published by t-022). Because it will be promoted, the style is an original 80s/90s Saturday-morning action-cartoon homage starring Kind Robots' own bots: no Turtles characters, names, logos or theme melody, and the franchise name never goes into a prompt.
 
 ### comic-creator  (software)
 **Direction:** A browser comic book creator: pick or upload panels, lay out pages from templates, drop in Kind Robots characters, speech bubbles and captions, export a PDF/PNG comic. Zero LLM required.
