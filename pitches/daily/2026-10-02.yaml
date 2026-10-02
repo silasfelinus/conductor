@@ -1,0 +1,56 @@
+# Daily project pitches, 2026-10-02. Authored by a session; decide with
+#   python scripts/daily_pitches.py --decide SLUG approved|rejected|deferred
+# Theme of the day: free-to-play, zero tokens at runtime, art made ahead of time.
+date: 2026-10-02
+pitches:
+  - slug: kind-oracle
+    title: Kind Oracle
+    hook: >-
+      A 22-card oracle deck of Kind Robots, each card a full piece of art with an upright and a reversed
+      meaning, where you draw a one, three or five card spread and read a pre-written reading assembled
+      from hand-authored pair and position texts. Every combination is written ahead of time, so it feels
+      personal and costs nothing to run.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: 22 card faces plus a back through ArtJobs under one style bible; spread layouts composed in code.
+    first_slice: Write the 22 card meanings and the 3-card position grammar, then a draw page with flip animation.
+  - slug: hidden-robots
+    title: Hidden Robots
+    hook: >-
+      Twenty big, busy, hand-composed scenes (a night market, a robot orchestra, a flooded library) with
+      a find-list of small characters and objects tucked inside, where sessions look at each finished
+      image and annotate the hit boxes. Tap to find, count down the list, earn a stamp per scene.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: 20 wide scenes generated and curated; hit boxes annotated by a session that views each image.
+    first_slice: One scene end to end with a hit-box annotation tool and the tap-to-find reader.
+  - slug: robot-dress-up
+    title: Robot Dress-Up Workshop
+    hook: >-
+      A paper-doll workshop where you pick a robot body and layer on pre-generated hats, arms, antennae,
+      paint jobs and accessories, save the result to your device and download it as a sticker. Pure
+      client-side layering, with parts that snap to anchor points so nothing needs generation.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: 6 bodies and about 80 transparent parts on matching anchor grids, generated and cleaned in batches.
+    first_slice: Anchor-grid spec, 1 body with 10 parts, and the layering canvas with PNG export.
+  - slug: kind-word-puzzles
+    title: Kind Word Puzzles
+    hook: >-
+      A year of pre-authored word searches and mini crosswords built from the Kind Robots lexicon of
+      characters, rewards, places and scenarios, one per day with the date picking the puzzle. Sessions
+      write and validate every grid ahead of time, so the daily puzzle is free for everyone.
+    llm_at_runtime: none
+    effort: small
+    art_plan: A small header illustration per puzzle theme, about 30 in total, reusing existing gallery art where it fits.
+    first_slice: A grid generator with a solvability validator, 14 puzzles, and a daily puzzle page.
+  - slug: pocket-pet-robot
+    title: Pocket Pet Robot
+    hook: >-
+      A tiny virtual pet you adopt, name, feed, play with and put to bed, whose mood sprites and room
+      scenes are all pre-generated and whose state lives in your own browser. It grows through three
+      forms over a couple of weeks of casual visits and never needs a server or a token.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: 3 forms x 8 mood sprites and 6 room backdrops, generated for sprite-sheet consistency.
+    first_slice: The needs and decay model as a pure tested engine, then a one-room page with placeholder sprites.

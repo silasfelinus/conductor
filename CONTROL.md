@@ -490,3 +490,18 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 - Scene prompts follow the Krea 2 contract in `ART-PROMPTS.md`: concrete nouns first, no negations, no art-direction jargon.
 - Hard gates that stay gates: deploying the relay and staging ACE-Step models on the render box (t-012, physical access), and Silas's acceptance of a real video (t-015). Cloud sessions cannot reach Comfy, so the first real render happens at t-012.
 - coat-dance/t-008 (assemble a rough cut) can reuse this project's exporter later; nothing in coat-dance changes now.
+
+### comic-creator  (software)
+**Direction:** A browser comic book creator: pick or upload panels, lay out pages from templates, drop in Kind Robots characters, speech bubbles and captions, export a PDF/PNG comic. Zero LLM required.
+**Notes:**
+- (your notes)
+
+### kr-solitaire  (software)
+**Direction:** Klondike solitaire played with a hand-designed 52-card Kind Robots deck (four suits of robots, illustrated court cards) and Kind Robots card backs. Pure client-side game, no LLM.
+**Notes:**
+- (your notes)
+
+### kr-adventures  (software)
+**Direction:** Pre-written choose-your-own-adventure books that start from existing Kind Robots scenarios, each with a preset hero, a fully authored branching story graph, and pre-generated art for every node. Static content, no LLM at read time.
+**Notes:**
+- (your notes)

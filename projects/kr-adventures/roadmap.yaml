@@ -1,0 +1,156 @@
+# Kind Robots Adventures — built in kind_robots, free-to-play (no LLM in the player path).
+# Cross-repo software project: this roadmap owns task state; implementation ships in silasfelinus/kind_robots.
+# Architecture and guardrails live in DESIGN-BRIEF.md. Read it before claiming anything.
+project: kr-adventures
+kind: software
+goal: A visitor opens Kind Robots, picks a pre-written choose-your-own-adventure book that begins from
+  an existing Kind Robots scenario, plays as its preset hero through a fully authored branching story
+  with art on every page and several endings, with no LLM at read time and no account required, checked
+  at phone, tablet and desktop widths and accepted by Silas.
+notes_from_silas: "2026-10-02 pitch: \"pre-written choose your own adventure stories that start from our\
+  \ scenarios, with\n  a preset main character, but have fully complete pre-written branching storylines\
+  \ and art.\"\n  Free-to-play push: free tokens are spent at authoring time so the read-time cost is\
+  \ zero.\n  This is the opposite of Storymaker's live LLM narrator: every page is authored, reviewed\
+  \ and\n  committed. Hard rules: no LLM in the reader path; every node has art; every branch resolves\
+  \ to a\n  reachable ending (a validator proves it); adventures are authored by sessions as static JSON\n\
+  \  bundles. Agent picks, each a one-line edit if Silas disagrees: books of roughly 40 to 60 nodes with\n\
+  \  4 to 6 endings; one preset hero per book, borrowed from existing characters; first three books\n\
+  \  authored to prove the pipeline before scaling.\n"
+milestones:
+- id: m1
+  title: SHAPE — outline, brainstorm, design brief
+  weight: 25
+  status: in-progress
+- id: m2
+  title: BUILD — actualize, adjust, test
+  weight: 50
+  status: not-started
+- id: m3
+  title: POLISH & SHIP — aesthetics, performance, delivery
+  weight: 25
+  status: not-started
+tasks:
+- id: t-001
+  milestone: m1
+  title: Write the design brief and start building
+  status: done
+  owner: claude
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: DESIGN-BRIEF.md written from Silas's 2026-10-02 pitch and a read of the kind_robots schema and
+    pages; first build tasks created below.
+- id: t-002
+  milestone: m1
+  title: Confirm scope with Silas
+  status: needs-human
+  owner: null
+  passes: 0
+  stakes: reversible
+  soft_gate: true
+  updated: '2026-10-02T00:00:00Z'
+  note: 'FOR SILAS: soft checkpoint, nothing is blocked on it. Read projects/kr-adventures/DESIGN-BRIEF.md
+    and confirm or redirect the agent picks listed in notes_from_silas. If there is no answer within 7
+    days the next gate-triage session adopts them as written under the 2026-09-30 default-recommendation
+    rule.'
+- id: t-003
+  milestone: m1
+  title: Survey scenarios and characters; propose the first three books
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: 'Read-only survey, write projects/kr-adventures/docs/survey.md: list public, non-mature Scenarios
+    and Characters that make good adventures, propose three book concepts (scenario, hero, premise, tone,
+    5 ending sketches), and recommend the content location and how /play pages load static JSON. No code
+    changes.'
+- id: t-004
+  milestone: m2
+  title: Adventure schema, validator and tests (kind_robots utils/)
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: Types plus a DB-free validator for the bundle in the design brief (reachability, endings, flags,
+    art and alt coverage, word counts), with tsx tests and a contract-tests step. Include a tiny fixture
+    book.
+- id: t-005
+  milestone: m2
+  title: Reader page and library with a fixture book
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: '/play/adventures and /play/adventures/[slug], adventureStore: page text and art, choices, back
+    and restart, localStorage resume (try/catch), endings checklist. Art-first, usable at 375px. No network
+    except the static bundle.'
+- id: t-006
+  milestone: m2
+  title: 'Book 1: outline, full branching text and art prompts'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: Author book 1 end to end as static JSON (about 50 nodes, 4 to 6 endings), reading every branch
+    through, then validate. Write the per-book style bible and node art prompts under the Krea 2 contract.
+- id: t-007
+  milestone: m2
+  title: 'Book 1: generate and commit all art, then review'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  note: Queue the cover, ~50 node illustrations and ending plates through ArtJobs, keep prompt/model metadata,
+    regenerate weak ones, and commit with the bundle. Verify the hero looks consistent across pages.
+- id: t-008
+  milestone: m2
+  title: Books 2 and 3 (text, art prompts, validation)
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-007
+  note: Repeat the authoring pipeline for the other two concepts from the survey. Depends on book 1 setting
+    the bar.
+- id: t-009
+  milestone: m2
+  title: Books 2 and 3 art
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-008
+  note: Generate and commit art for both books.
+- id: t-010
+  milestone: m3
+  title: Path map, endings checklist and reader polish
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-009
+  note: Visited-branch map, unseen-ending hints, reading-size control, reduced motion, screenshots at
+    375, 768 and 1280.
+- id: t-011
+  milestone: m3
+  title: Acceptance with Silas
+  status: waiting
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-02T00:00:00Z'
+  depends_on:
+  - t-010
+  note: Hand over three complete books on main; resolves at needs-human. Scaling to ~10 books is a follow-up
+    he approves.

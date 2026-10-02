@@ -765,6 +765,8 @@ irreversible actions still stop at `needs-human`.
    rewards, scenarios, bots, art collections, coloring pages, screensavers.
 8. **Pitch new objects** — write one new concept/object pitch in `pitches/` using the pitch
    template, after deduping against every existing pitch, project, and shipped feature.
+   If today's `pitches/daily/<date>.yaml` docket is missing, author that first (five pitches; see
+   `scripts/daily_pitches.py`): it feeds the digest every day.
 
 Rung 8 always has work, so a session that reaches the bottom of the ladder still ships.
 Record which rung you took (and why the rungs above it were empty) in the task note so the

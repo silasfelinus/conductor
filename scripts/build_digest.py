@@ -142,6 +142,15 @@ def scan_pitches():
             out.append(title)
     return out
 
+def daily_pitches_payload():
+    """Today's five project pitches (pitches/daily/<date>.yaml), or None when not authored yet."""
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import daily_pitches
+        return daily_pitches.payload(daily_pitches.pacific_today())
+    except Exception:
+        return None
+
 REPO = "silasfelinus/conductor"
 DEFAULT_BRANCH = "main"
 BACKLOG_DIR = "projects/dream-cycle/backlog"
@@ -512,6 +521,7 @@ def main():
         "projects": projects,
         "all_needs_attention": [x for p in projects for x in p["needs_attention"]],
         "pitches_awaiting_vote": scan_pitches(),
+        "daily_pitches": daily_pitches_payload(),
         "open_branches": scan_branches(),
         "render_engine": render_engine_health(),
         "container_logs": container_log_health(),

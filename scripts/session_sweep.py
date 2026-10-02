@@ -52,6 +52,7 @@ CHECKS: list[tuple[str, list[str], bool, bool]] = [
     ("issue_bridge", ["scripts/sync_github_issues.py", "--check"], True, False),
     ("dream_docket", ["scripts/build_dream_proposal.py", "--check", "--fetch"], True, True),
     ("tzaddik_review", ["scripts/tzaddik_review.py", "--check"], False, True),
+    ("daily_pitches", ["scripts/daily_pitches.py", "--check"], False, True),
 ]
 
 # Always report the projection headroom line (CLAUDE.md: report it every session).
