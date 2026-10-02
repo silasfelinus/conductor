@@ -249,7 +249,7 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Scene prompts, validator and per-scene image generation"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -265,14 +265,17 @@ tasks:
       upload route is image-only and open to any signed-in user, so use or add an admin-gated
       path), or pick from the gallery. Enqueue at the default priority; scene jobs are about 400 s
       each on the single 12 GB card.
+
+      Reviewed and merged kind_robots#3188 (all checks green, reversible admin-gated routes).
     claimed_by: 20261002T-claude-mv-t008-01D4se
     claimed_at: '2026-10-02T18:07:40Z'
-    updated: '2026-10-02T18:07:40Z'
+    updated: '2026-10-02T19:47:46Z'
+    implementation_pr: 'silasfelinus/kind_robots#3188'
 
   - id: t-009
     milestone: m2
     title: "Per-scene motion: Ken Burns presets and optional ltx or wan clip"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
