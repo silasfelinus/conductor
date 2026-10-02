@@ -365,7 +365,7 @@ tasks:
   - id: t-012
     milestone: m2
     title: "Stage ACE-Step on the share, deploy the relay, run a 30 second song"
-    status: claimed
+    status: needs-human
     owner: worker
     passes: 0
     stakes: reversible
@@ -382,9 +382,21 @@ tasks:
       self-contained commands that start with cd and git pull, per kind_robots AGENTS.md. Park the
       task at needs-human with the commands and stop; this is the first real render of the audio
       lane.
+
+      Agent part done: audio tier in kind_robots sync-comfy-models (#3198) and projects/music-
+      video/docs/t-012-runbook.md. FOR SILAS: follow the runbook at Ferngrotto: (1) curl the
+      four ACE-Step files onto Z:\ai\models\{unet,clip,vae}; (2) cd D:\code\kind_robots; git
+      pull --ff-only; .\scripts\sync-comfy-models.ps1 -Tier audio -Yes; (3) cd D:\ComfyUI; git
+      pull; pm2 restart comfyui, then /object_info/TextEncodeAceStepAudio1.5 must be 200; (4)
+      cd D:\code\conductor; git pull --ff-only; pm2 restart kr-relay; (5) cd
+      D:\code\conductor; python scripts\build_music_video.py --duration 30 ... and confirm the
+      song ArtImage plays. Record peak VRAM, wall-clock, mp3 size and whether
+      SaveAudioAdvanced accepted the encoding, then set done + approved_by_human: true
+      (unblocks t-015).
     claimed_by: 20261002T2340-claude-mv-t012-01D4se
     claimed_at: '2026-10-02T23:41:12Z'
-    updated: '2026-10-02T23:41:12Z'
+    updated: '2026-10-02T23:43:28Z'
+    implementation_pr: 'silasfelinus/kind_robots#3198'
 
   - id: t-014
     milestone: m2
