@@ -218,6 +218,10 @@ jobs:
 
       - name: Build Brevo payload preview
         run: python scripts/build_digest_email_v2.py digest.json digest-email.json
+        env:
+          # Signs the digest's one-click pitch Approve/Pass links (scripts/pitch_links.py).
+          # Unset is safe: the email falls back to a link to the project page.
+          PITCH_LINK_SECRET: ${{ secrets.PITCH_LINK_SECRET }}
 
       # The digest above is intentionally frozen before today's proposal is built.
       # Now prepare that proposal for tomorrow: create its six records, attach Facets,

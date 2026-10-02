@@ -6,7 +6,9 @@ import pytest
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
+import build_digest_email_v2_impl as email_v2  # noqa: E402
 import daily_pitches as dp  # noqa: E402
+import pitch_links  # noqa: E402
 
 
 def make_pitch(slug, llm="none"):
@@ -24,7 +26,6 @@ def repo(tmp_path, monkeypatch):
     (tmp_path / "pitches" / "2026-01-01-old-pitch.md").write_text("# x\n")
     monkeypatch.setattr(dp, "ROOT", tmp_path)
     monkeypatch.setattr(dp, "DAILY_DIR", tmp_path / "pitches" / "daily")
-    monkeypatch.setattr(dp, "DECISIONS_PATH", tmp_path / "pitches" / "daily" / "decisions.yaml")
     return tmp_path
 
 
@@ -39,8 +40,15 @@ def errors_for(date="2026-10-02"):
     return dp.validate(date, dp.load_docket(date))
 
 
-def test_valid_docket_passes(repo):
+def ready(repo, date="2026-10-02", pitches=GOOD):
+    write(repo, date, pitches)
+    assert dp.cmd_materialize(date) == 0
+
+
+def test_valid_docket_must_be_materialized(repo):
     write(repo, "2026-10-02", GOOD)
+    assert dp.cmd_check("2026-10-02") == 1  # valid, but pitch files not written yet
+    assert dp.cmd_materialize("2026-10-02") == 0
     assert dp.cmd_check("2026-10-02") == 0
 
 
@@ -58,7 +66,7 @@ def test_needs_zero_llm_majority(repo):
     assert any("llm_at_runtime: none" in e for e in errors_for())
 
 
-def test_slug_collisions_rejected(repo):
+def test_slug_collisions_rejected_before_materializing(repo):
     pitches = copy.deepcopy(GOOD)
     pitches[0]["slug"] = "existing-project"
     pitches[1]["slug"] = "old-pitch"
@@ -79,20 +87,83 @@ def test_short_hook_rejected(repo):
     assert any("hook" in e for e in errors_for())
 
 
-def test_decide_and_payload(repo, capsys):
-    write(repo, "2026-10-02", GOOD)
-    assert dp.cmd_decide("idea-0", "approved", "yes") == 0
-    assert dp.cmd_decide("nope", "approved", "") == 2
-    assert dp.cmd_decide("idea-1", "maybe", "") == 2
+def test_materialized_pitch_uses_canonical_template_and_never_overwrites(repo):
+    ready(repo)
+    path = repo / "pitches" / "2026-10-02-idea-0.md"
+    text = path.read_text()
+    assert text.startswith("# Pitch: Idea-0\ndate: 2026-10-02\nproject-target: new\nstatus: awaiting-silas\n")
+    assert "## The idea" in text and "## Rough effort\nsmall" in text
+    path.write_text(text.replace("awaiting-silas", "approved"))
+    assert dp.materialize("2026-10-02") == []
+    assert dp.read_status(path) == "approved"
+
+
+def test_decide_updates_the_pitch_file_and_payload(repo, capsys):
+    ready(repo)
+    assert dp.cmd_decide("2026-10-02-idea-0", "approved") == 0
+    assert dp.cmd_decide("2026-10-02-idea-1", "rejected") == 0
+    assert dp.cmd_decide("nope", "approved") == 2
+    assert dp.cmd_decide("2026-10-02-idea-2", "maybe") == 2
     decisions = {p["slug"]: p["decision"] for p in dp.payload("2026-10-02")["pitches"]}
-    assert decisions["idea-0"] == "approved" and decisions["idea-1"] == "pending"
+    assert decisions["idea-0"] == "approved" and decisions["idea-1"] == "rejected" and decisions["idea-2"] == "pending"
     capsys.readouterr()
     assert dp.cmd_check("2026-10-02") == 0
-    assert "4 undecided" in capsys.readouterr().out
+    assert "3 undecided today" in capsys.readouterr().out
 
 
-def test_approved_pitch_scaffolded_as_project_stays_valid(repo):
-    write(repo, "2026-10-02", GOOD)
-    dp.cmd_decide("idea-0", "approved", "")
+def test_approved_pitch_that_became_a_project_stays_valid(repo):
+    ready(repo)
+    dp.cmd_decide("2026-10-02-idea-0", "approved")
     (repo / "projects" / "idea-0").mkdir()
     assert dp.cmd_check("2026-10-02") == 0
+
+
+def test_approved_list_excludes_projects(repo, capsys):
+    ready(repo)
+    dp.cmd_decide("2026-10-02-idea-0", "approved")
+    dp.cmd_decide("2026-10-02-idea-1", "approved")
+    (repo / "projects" / "idea-0").mkdir()
+    capsys.readouterr()
+    dp.cmd_approved()
+    out = capsys.readouterr().out
+    assert "idea-1" in out and "idea-0 " not in out.replace("2026-10-02-idea-0", "")
+
+
+def test_payload_carries_over_undecided_from_earlier_days(repo):
+    ready(repo, "2026-10-01", [make_pitch(f"old-{n}") for n in range(5)])
+    dp.cmd_decide("2026-10-01-old-0", "rejected")
+    ready(repo, "2026-10-02")
+    payload = dp.payload("2026-10-02")
+    assert [p["slug"] for p in payload["pitches"]] == [f"idea-{n}" for n in range(5)]
+    assert sorted(p["slug"] for p in payload["carried_over"]) == [f"old-{n}" for n in range(1, 5)]
+
+
+def test_brief_lists_taken_slugs(repo, capsys):
+    ready(repo)
+    dp.cmd_brief()
+    out = capsys.readouterr().out
+    assert "existing-project" in out and "idea-0" in out
+
+
+def test_email_section_has_signed_buttons_and_hides_them_once_decided(repo, monkeypatch):
+    ready(repo)
+    dp.cmd_decide("2026-10-02-idea-0", "approved")
+    monkeypatch.setenv("PITCH_LINK_SECRET", "s3cret")
+    html = email_v2.daily_pitches_section(dp.payload("2026-10-02"))
+    assert html.count("Approve</a>") == 4 and html.count("Pass</a>") == 4  # the decided one has no buttons
+    assert "/api/conductor/pitch-decision?slug=2026-10-02-idea-1&amp;vote=approved" in html
+    assert "[approved]" in html
+
+
+def test_email_section_falls_back_to_project_page_without_a_secret(repo, monkeypatch):
+    ready(repo)
+    monkeypatch.delenv("PITCH_LINK_SECRET", raising=False)
+    html = email_v2.daily_pitches_section(dp.payload("2026-10-02"))
+    assert "pitch-decision" not in html
+    assert html.count("Decide on the project page") == 5
+    assert "kindrobots.org/conductor" in html
+
+
+def test_email_section_empty_without_a_docket():
+    assert email_v2.daily_pitches_section(None) == ""
+    assert pitch_links  # imported for the shared fixture module path

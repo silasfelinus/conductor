@@ -308,30 +308,55 @@ def next_pitch_section(proposal: dict[str, Any] | None) -> str:
     )
 
 
-def daily_pitches_section(daily: dict[str, Any] | None) -> str:
-    """Five new project pitches for the day; undecided ones first, decided ones dimmed."""
-    pitches = (daily or {}).get("pitches") if isinstance(daily, dict) else None
-    if not pitches:
+def _pitch_row(pitch: dict[str, Any], links_for, fallback_url: str) -> str:
+    decision = str(pitch.get("decision") or "pending")
+    free = ("no LLM needed" if pitch.get("llm_at_runtime") == "none"
+            else f"LLM: {esc(pitch.get('llm_at_runtime'))}")
+    badge = "" if decision == "pending" else f' <span style="color:#64748b;font-size:12px">[{esc(decision)}]</span>'
+    buttons = ""
+    if decision == "pending":
+        links = links_for(str(pitch.get("stem") or ""))
+        if links:
+            buttons = (
+                '<div style="margin:6px 0 2px">'
+                f'{legacy._button(links["approve"], "✅ Approve", color="#15803d")} '
+                f'{legacy._button(links["pass"], "🚫 Pass", color="#64748b")}</div>'
+            )
+        else:
+            buttons = (
+                '<div style="margin:6px 0 2px">'
+                f'{legacy._button(fallback_url, "Decide on the project page", color="#7e22ce")}</div>'
+            )
+    return (
+        '<li style="margin:0 0 14px">'
+        f'<strong style="color:#0f4c5c">{esc(pitch.get("title"))}</strong>{badge} '
+        f'<span style="color:#64748b;font-size:12px">({esc(pitch.get("effort"))} · {free})</span><br>'
+        f'<span style="color:#444">{esc(pitch.get("hook"))}</span>{buttons}</li>'
+    )
+
+
+def daily_pitches_section(daily: dict[str, Any] | None, links_for=None, fallback_url: str = "") -> str:
+    """Today's five pitches with signed Approve / Pass links, then undecided ones from earlier days."""
+    if not isinstance(daily, dict) or not daily.get("pitches"):
         return ""
-    rows = []
-    for pitch in pitches:
-        decision = str(pitch.get("decision") or "pending")
-        badge = "" if decision == "pending" else f' <span style="color:#64748b;font-size:12px">[{esc(decision)}]</span>'
-        free = ("no LLM needed" if pitch.get("llm_at_runtime") == "none"
-                else f"LLM: {esc(pitch.get('llm_at_runtime'))}")
-        rows.append(
-            '<li style="margin:0 0 10px">'
-            f'<strong style="color:#0f4c5c">{esc(pitch.get("title"))}</strong>{badge} '
-            f'<span style="color:#64748b;font-size:12px">({esc(pitch.get("effort"))} · {free})</span><br>'
-            f'<span style="color:#444">{esc(pitch.get("hook"))}</span></li>'
-        )
+    if links_for is None:
+        import pitch_links
+        links_for = pitch_links.links_for
+        fallback_url = fallback_url or pitch_links.project_page_url()
+    today = "".join(_pitch_row(p, links_for, fallback_url) for p in daily["pitches"])
+    carried = daily.get("carried_over") or []
+    carried_html = (
+        '<h3 style="margin:14px 0 4px;font-size:1em">Still waiting from earlier days</h3>'
+        f'<ol style="padding-left:20px;margin:0;line-height:1.5">'
+        f'{"".join(_pitch_row(p, links_for, fallback_url) for p in carried)}</ol>'
+    ) if carried else ""
     return (
         '<div style="background:#ecfeff;border:1px solid #a5f3fc;border-radius:10px;'
         'padding:12px 14px;margin:14px 0 18px;max-width:660px">'
         '<h2 style="margin:0 0 4px">💡 Today’s five pitches</h2>'
-        '<p style="color:#64748b;font-size:12px;margin:2px 0 8px">Reply with approve, pass or later for each. '
-        'Approved ideas become projects.</p>'
-        f'<ol style="padding-left:20px;margin:0;line-height:1.5">{"".join(rows)}</ol></div>'
+        '<p style="color:#64748b;font-size:12px;margin:2px 0 8px">Click Approve or Pass, then confirm. '
+        'Approved ideas become projects. Ignore any you do not want; nothing is decided until you confirm.</p>'
+        f'<ol style="padding-left:20px;margin:0;line-height:1.5">{today}</ol>{carried_html}</div>'
     )
 
 
