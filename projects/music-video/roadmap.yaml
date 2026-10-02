@@ -365,8 +365,8 @@ tasks:
   - id: t-012
     milestone: m2
     title: "Stage ACE-Step on the share, deploy the relay, run a 30 second song"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     gate_human: true
@@ -382,6 +382,9 @@ tasks:
       self-contained commands that start with cd and git pull, per kind_robots AGENTS.md. Park the
       task at needs-human with the commands and stop; this is the first real render of the audio
       lane.
+    claimed_by: 20261002T2340-claude-mv-t012-01D4se
+    claimed_at: '2026-10-02T23:41:12Z'
+    updated: '2026-10-02T23:41:12Z'
 
   - id: t-014
     milestone: m2
