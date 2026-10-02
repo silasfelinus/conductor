@@ -92,8 +92,14 @@ def read_status(path: Path) -> str:
 
 def modifications(path: Path) -> str:
     """Silas's approve-with-changes notes (the pitch file's modifications section), or ''."""
-    match = re.search(r"^## Silas's modifications\s*\n(.*?)(?=^## |\Z)", path.read_text(encoding="utf-8"), re.MULTILINE | re.DOTALL)
-    return " ".join(match.group(1).split()) if match else ""
+    notes: list[str] = []
+    inside = False
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.startswith("## "):
+            inside = line.strip() == "## Silas's modifications"
+        elif inside:
+            notes.append(line)
+    return " ".join(" ".join(notes).split())
 
 
 def decision_label(status: str) -> str:
