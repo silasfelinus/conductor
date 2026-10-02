@@ -107,6 +107,15 @@ Four lanes, parallel across sessions (one claim per session at a time):
 
 Then m3: responsive and art-first polish (t-016), project art (t-017), docs (t-018), and opening it to users (t-019).
 
+## First run: the step-one finish line
+
+Silas, 2026-10-02: step one is complete when agents alone have made a **Kind Robots splash animation cartoon music video in a TMNT style**, entirely on our Comfy backend, good enough to double as a trailer or buzz video for the site (t-015).
+
+- **Fully automatic means a headless export.** The browser exporter (t-014) stays for interactive use. The trailer is produced by `scripts/build_music_video.py` (t-021): it drives the Kind Robots API, polls the ArtJobs, and assembles the MP4 with ffmpeg in a cloud session, following the same timeline semantics. It resumes from the MusicVideo doc rather than re-enqueueing.
+- **Style:** an original homage to 80s and early-90s Saturday-morning action cartoons (ink outlines, flat cel colour, a city of rooftops and sewers at night, comic-book action poses, a gang-vocal synth-rock theme) starring Kind Robots' own bots.
+- **IP guardrail (it will be promoted publicly):** no Turtles characters, names, logos, masks or theme melody, and the franchise name never goes into a Krea or ACE-Step prompt.
+- **Gates:** Silas approves the trailer (t-015, subjective acceptance). Publishing it on the site is t-022 (publish gate).
+
 ## Out of scope / guardrails
 
 - No second queue or renderer. ArtJob only.
