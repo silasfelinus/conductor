@@ -1720,7 +1720,7 @@ tasks:
 - id: t-109
   milestone: m6
   title: 'SECURITY: entity previews now serve from an unauthenticated static route, losing revocable access control for private/mature images'
-  status: ready
+  status: done
   gate_human: true
   stakes: outward-facing
   owner: null
@@ -1786,10 +1786,16 @@ tasks:
     static /images/... path only when isPublic && !isMature, and keep private or mature
     previews on /api/art/images/:id/file so mayView is re-checked on every request. The
     implementation is agent work.
-  updated: '2026-09-30T07:00:00Z'
+
+    Applied the approved narrow fix in kind_robots#3171 (squash 55ad8e0):
+    applyEntityArtImage prefers the static /images path only when public and non-mature;
+    private/mature previews stay on /api/art/images/:id/file so mayView is re-checked per
+    request.
+  updated: '2026-10-02T00:53:58Z'
   gate_reason: security
   gate_rechecked: '2026-09-30'
   approved_by_human: true
+  implementation_pr: 'silasfelinus/kind_robots#3171'
 
 - id: t-110
   milestone: m6
