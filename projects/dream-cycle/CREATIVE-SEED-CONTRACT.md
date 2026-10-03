@@ -128,10 +128,10 @@ Architecture and imagery should follow from the assigned Facets rather than serv
 ## Rut families are enforced, not just advised
 
 The variety guardrails above are checked, not left to good intentions.
-`scripts/dream_creative_ruts.py` holds the shared vocabulary for five historical grooves —
+`scripts/dream_creative_ruts.py` holds the shared vocabulary for six historical grooves —
 bureaucracy/record-keeping, archives and libraries, cozy markets and workshops, towers and
-lighthouses, and repeated occupational archetypes — plus the ornamental noun-surname
-detector.
+lighthouses, terrace/shelf/ledge stepped landforms, and repeated occupational archetypes —
+plus the ornamental noun-surname detector.
 
 `scripts/dream_theme_diversity.py` covers world-scale semantic families that cannot be caught reliably by asset-name vocabulary alone. Its aquatic-world detector requires several independent setting signals, so one aquarium, rainstorm, water bowl, or shoreline reference is not enough to fail a proposal.
 
@@ -140,6 +140,8 @@ The live guards preserve intentional Facet fusion:
 - a historical rut family is only a complaint when the day's **Facets did not ask for it**, so a Bureaucratic Fantasy Facet may still produce a permit office on purpose;
 - outside bureaucracy, the older lexical families only complain when the motif reaches an **asset name**. A lighthouse in passing is scenery; *The Lighthouse of Small Regrets* is the rut;
 - an aquatic-world proposal is rejected as a repetition only when its authored creative text contains several world-scale aquatic signals, one of the preceding five authored proposals was already aquatic-world shaped, **and** no assigned non-creature genre or setting explicitly requests an aquatic world. ANIMAL and SPECIES Facets never grant that exemption, even when a creature's own name contains words such as `ocean` or `marine`.
+- recurring *wording and scenery* lives in `RECENT_PHRASE_RUTS` (`scripts/dream_creative_entropy.py`), added 2026-10-03 when Silas wrote "terrace is turning into the next waterworld". The "<character> has to decide whether…" Scenario ending is spent for five worlds after it appears (it closed six of the fourteen Scenarios built 09-17..10-03); terraced-hillside scenery is spent for eight. A terrace/paddy/vineyard/ziggurat Facet grants the terrace exemption. The brief lists whichever of these are spent on the day being authored, as `SPENT PHRASING` instructions;
+- a character surname may not exactly repeat any surname in the 45-proposal name history. The six-letter shared-prefix rule had let short surnames through verbatim (six characters named Voss since 07-29, five of them 09-10..09-29).
 
 At catalog scale the audit is stricter than the live contract: a motif carried by ≥30% of
 the built catalog counts against a bundle even when its Facets did request it. See
