@@ -15,7 +15,7 @@ source: Silas, 2026-10-03 (verbatim brief below); canon pulled from kind_robots
 A small, grave, impeccably polite koala with a katana nearly as long as he is walks the frontier
 collecting on contracts. In Issue 1 he arrives to collect on one more name, finds the town already
 slaughtered and the contract already paid by someone else's hand, and, against the letter of his
-trade, can't quite leave two orphaned pandas behind. Lone Wolf and Cub, if the wolf were a koala
+trade, can't quite leave two orphaned children behind. Lone Wolf and Cub, if the wolf were a koala
 and the cub came *later and uninvited*.
 
 ## Tone and craft rules
@@ -64,17 +64,17 @@ A big, slow, sand-coloured desert lizard (monitor-like), saddle and bedroll, pat
 Zuzu leads it on foot through the town because he will not ride past the dead. (Canon: the scenario
 "Zuzu, Koala Assassin" arrives on a "dusty lizard mount.") Not the Old Komodo; do not confuse them.
 
-### LING — the panda girl (working name)
+### LING — the older sister (working name; species TBD)
 About ten or eleven. Taller and heavier than Zuzu, which is a quiet running visual joke and a
 quiet running worry. Soot on her fur, one torn sleeve, a school satchel she never lets go. Holds
 herself very still when scared. She is the one who *watches*. She does not ask for anything; she
 simply stays within sight. Smart, stubborn, cries without making a sound until she can't help it.
 
-### BAO — the baby brother (working name)
-A panda cub, barely walking, in a sling made of a tablecloth. Hungry, sleepy, curious about
+### BAO — the toddler brother (working name; same species as his sister)
+A toddler, old enough to walk, drink from a cup and babble, but not to speak in sentences (decision 2026-10-03: no infant, no milk). He wears a small checked cloth tunic. Hungry, sleepy, curious about
 everything shiny. He is the one who reaches for the apples.
 
-> **Names are placeholders.** The brief didn't name the pandas. *Ling* ("small bell") and *Bao*
+> **Names are placeholders.** The brief didn't name the children, and the panda species is dropped; see BRAINSTORM-ROUND-2.md for twenty species pitches. *Ling* ("small bell") and *Bao*
 > ("treasure" / "bun") echo the town's bell motif and are easy to swap. One-line edit if you'd like others.
 
 ### THE HOLLOW BELL — the town
@@ -88,7 +88,7 @@ on its own when Zuzu enters and once when he leaves. Don't explain the bell.
    cleaning up his list?
 2. **The cuts.** The wounds are skilled and clean, a swordsman's work. Zuzu reads them like handwriting
    and doesn't like what they say.
-3. **The pandas.** Where do you take two orphans on a road like this? (Old Shelba's ledger?
+3. **The children.** Where do you take two orphans on a road like this? (Old Shelba's ledger?
    Marrow's tea cart? A safe place that is not safe?)
 4. **Tomoe of the Long Road** (canon: *the young samurai hunting Zuzu a thousand miles to avenge a
    slaughtered family*): the massacre mirrors her own history. Held back for Issue 2; reader doesn't
