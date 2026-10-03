@@ -30,13 +30,16 @@ def configure_payload(payload: dict[str, Any]) -> dict[str, Any]:
         {
             "email": os.environ["DIGEST_TO"],
             "name": os.environ.get("DIGEST_TO_NAME") or "Silas",
-            # This is a private one-recipient operational digest. Keeping Brevo
-            # click/open tracking off preserves the original hrefs instead of
-            # rewriting them through a tracking redirect that can fail before
-            # the Kind Robots destination is reached.
+            # Keep the privacy preference too, but do not rely on it to preserve
+            # hrefs: Brevo only honors per-contact consent after the account-level
+            # consent feature is enabled. The explicit X-Mailin headers below are
+            # the sender-level contract that disables redirect/pixel injection.
             "contactPixelTrackingConsent": False,
         }
     ]
+    headers = payload.setdefault("headers", {})
+    headers["X-Mailin-Track-Click"] = "0"
+    headers["X-Mailin-Track-Open"] = "0"
     return payload
 
 
