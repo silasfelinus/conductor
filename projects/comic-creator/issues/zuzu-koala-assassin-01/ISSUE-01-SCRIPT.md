@@ -1,5 +1,7 @@
 # ZUZU: KOALA ASSASSIN #1 — "THE LETTER OF THE CONTRACT"
 
+> **v0 draft, superseded where [BRAINSTORM-ROUND-3.md](./BRAINSTORM-ROUND-3.md) disagrees** (2026-10-03: fennec siblings, a serious Zuzu, no Kind Robots-generated world material).
+
 status: draft script for Silas
 length: 20 story pages + cover (a standard indie first issue; every page below is one printed page)
 rating: teen and up: aftermath-only violence, implied, no on-panel killing

@@ -1,5 +1,7 @@
 # ZUZU: KOALA ASSASSIN — Series Bible (Issue 1 edition)
 
+> **v0 draft, superseded where [BRAINSTORM-ROUND-3.md](./BRAINSTORM-ROUND-3.md) disagrees** (2026-10-03: fennec siblings, a serious Zuzu, no Kind Robots-generated world material).
+
 status: draft for Silas
 date: 2026-10-03
 source: Silas, 2026-10-03 (verbatim brief below); canon pulled from kind_robots

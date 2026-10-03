@@ -5,3 +5,4 @@
 - 2026-10-03: added COMFY-PROMPTS.yaml (51 Krea 2 prompts for Zuzu #1, all passing artPromptContract).
 - 2026-10-03: brainstorm round 2 for Zuzu #1 (twenty kid-species pitches, ten Zuzu designs, ten covers, ten plot ideas; 50 Krea 2 prompts); baby revised to a toddler; panda species dropped pending a pick.
 - 2026-10-03: queued the 50 brainstorm prompts to the ArtJob queue (jobs 33263-33312); staged in projects/art-generate.yaml.
+- 2026-10-03: round 3: brainstorm notes (fennec siblings, serious Zuzu, factions, buried human twist), 48 non-Krea A/B jobs (ArtJobs 33315-33362) via new scripts/enqueue_art_requests.py, docs/survey.md (t-003), docs/inspiration.md (PortOS lessons), studio tasks t-013 to t-016.
