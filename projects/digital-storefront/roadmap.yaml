@@ -598,7 +598,6 @@ tasks:
   milestone: m6
   title: "Run and repair the Stripe checkout/webhook/fulfillment matrix end-to-end"
   status: ready
-  owner: worker
   passes: 0
   stakes: reversible
   depends_on: t-037
@@ -657,8 +656,6 @@ tasks:
     STRIPE_WEBHOOK_SECRET check passes. Both keys are configured on kindrobots.org. This
     work is adopted by kind-economy/t-011. Do not run the matrix twice. Claim kind-
     economy/t-011 instead, or close this by reference once t-011 lands.
-  claimed_by: claude-quirky-curie-20260808T153013Z-df-t039
-  claimed_at: '2026-08-08T15:30:14Z'
   implementation_pr: silasfelinus/kind_robots#1615
   soft_gate: false
   updated: '2026-09-30T08:00:00Z'
