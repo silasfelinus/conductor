@@ -54,15 +54,21 @@ tasks:
 - id: t-004
   milestone: m2
   title: Reading engine and tests (kind_robots utils/)
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-10-03T10:46:01Z'
-  note: Pure seedable draw, orientation and reading assembly from a static content table; DB-free tsx
-    tests proving every spread yields complete text.
+  updated: '2026-10-03T11:11:18Z'
+  note: >-
+    Pure seedable draw, orientation and reading assembly from a static content table; DB-free tsx tests proving every spread yields complete text.
+
+    Reading engine merged in kind_robots#3207:
+    utils/oracle/{types,rng,spreads,reading,validate}.ts plus npm run test:oracle-engine (8
+    DB-free tests, wired into contract-tests.yml). Repo gates hit on the way:
+    noUncheckedIndexedAccess and the Prettier ratchet (repo-pinned prettier 3.9.6).
   claimed_by: 20261003-agent-oracle
   claimed_at: '2026-10-03T10:46:01Z'
+  implementation_pr: 'silasfelinus/kind_robots#3207'
 - id: t-005
   milestone: m2
   title: 'Author the content: 78 card meanings, position texts and pair texts (majors first)'
