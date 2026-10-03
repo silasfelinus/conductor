@@ -1,0 +1,14 @@
+version: 1
+project: animation-manager
+task: t-026
+operation: review
+session: 20261003T204700Z-chatgpt-animation-manager-t026-directlinks-9a31
+implementation_pr: silasfelinus/conductor#5544
+updated: '2026-10-03T20:48:00Z'
+note: >-
+  Live Gmail regression confirmed PR #5411's per-contact consent flag did not
+  prevent Brevo link rewriting. PR #5544 adds explicit X-Mailin-Track-Click: 0
+  and X-Mailin-Track-Open: 0 headers at the sender boundary while preserving the
+  existing privacy preference. Exact-head workflows completed green before merge:
+  Worker PR CI 37152439542, Security Audit 37152439519, Worker PR handoff
+  37152439512, Process task events 37152439517, and CodeQL 37152438626.
