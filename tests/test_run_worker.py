@@ -20,6 +20,18 @@ def test_find_ready_task_picks_first_ready_in_priority_order():
     assert result["task_id"] == "t-002"
 
 
+def test_iter_ready_tasks_yields_ranked_fallbacks_and_matches_find_ready_task():
+    roadmaps = [
+        roadmap("alpha", [{"id": "t-001", "title": "Alpha task", "status": "ready"}]),
+        roadmap("beta", [{"id": "t-002", "title": "Beta task", "status": "ready"}]),
+    ]
+
+    ranked = list(run_worker.iter_ready_tasks(["beta", "alpha"], roadmaps))
+
+    assert [(t["project"], t["task_id"]) for t in ranked] == [("beta", "t-002"), ("alpha", "t-001")]
+    assert run_worker.find_ready_task(["beta", "alpha"], roadmaps) == ranked[0]
+
+
 def test_find_ready_task_skips_umbrella_with_open_delegate():
     roadmaps = [
         roadmap(

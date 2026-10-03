@@ -115,6 +115,18 @@ and is tryable. If no buildable pitch can safely ship, record the reason, advanc
 `daily_last_checked`, re-arm, and let the digest's release-age signal remain visibly stale.
 
 
+### A capability gate defers the gated part, not the session
+
+`select_role.py` returns `ready_task` (top pick) plus `ready_tasks` (ranked fallbacks). If you
+cannot do the top pick because of what *this session* lacks (no shell, no credentials, no DB),
+record a soft gate on that task **and move to the next entry in `ready_tasks`**, then the
+fallback ladder in AGENTS.md. Before gating a task, re-read its note for a part you *can* do
+(offline tests, docs, fixtures) and do that first. Ending a session with "no implementation PR
+was safe" while `ready_tasks` or the ladder has entries is a failed run (2026-10-02: a
+GitHub-only session soft-gated kind-economy/t-011 and stopped, with 19 projects holding ready
+work). Also act on the selector's other signals — stranded branches, red-stale PRs — even when
+`ready_task` is not actionable for you.
+
 ### Rotation collisions (moved from AGENTS.md "Picking what to work on")
 
 Picking a task from `priority.yaml`/`next_ready_task.py` only reads roadmap state — it

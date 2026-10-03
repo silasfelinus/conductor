@@ -1131,6 +1131,7 @@ def select_role(
         'due_daily_commitment_count': len(due_daily),
         'due_daily_commitments': due_daily,
         'ready_task': ready_task,
+        'ready_tasks': queue.get('ready_tasks', []),
         'idle_ladder': IDLE_LADDER if underlying_role == 'idle' else [],
         'projects_with_ready_tasks': queue.get('projects_with_ready_tasks', []),
         'projects_needing_human': queue.get('projects_needing_human', []),
