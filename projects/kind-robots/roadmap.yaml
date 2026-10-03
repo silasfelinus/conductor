@@ -1597,7 +1597,6 @@ tasks:
   claimed_by: claude-20260914T131700Z-kr-t101-conductor
   claimed_at: '2026-09-14T13:14:21Z'
   implementation_pr: https://github.com/silasfelinus/kind_robots/pull/2729
-
 - id: t-102
   milestone: m6
   title: "Decide and implement whether the home showcase should server-render"
@@ -2098,6 +2097,17 @@ tasks:
     Implementation is on worker/kind-robots-t-125-retired-channel. The twelve named surfaces now live under an admin-only Retired channel with existing routes preserved; navigation, placement, and Serendipity contracts were updated with the move.
 
     Merged silasfelinus/kind_robots#3212 at b6ccb3411c80017bf79279949af4efa2038db3d6 after 30/30 PR workflows completed successfully. Retired is now an ADMIN-only channel containing the twelve requested surfaces with their existing routes preserved.
+
+- id: t-126
+  milestone: m6
+  title: 'Add generic navigation subtabs and move Retired under Admin'
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  updated: '2026-10-03T22:15:00Z'
+  note: |-
+    Silas, 2026-10-03: support subtabs in the Kind Robots navigation. Retired should no longer be a top-level channel; make it a submenu inside Admin, keep the twelve retired surfaces reachable there, and preserve their existing routes. Implement this as reusable nested-tab support rather than a Retired-only special case.
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
