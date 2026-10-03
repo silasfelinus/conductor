@@ -58,6 +58,9 @@ def test_configure_payload_disables_brevo_click_and_open_tracking(monkeypatch):
             "contactPixelTrackingConsent": False,
         }
     ]
+    assert configured["headers"]["X-Mailin-Track-Click"] == "0"
+    assert configured["headers"]["X-Mailin-Track-Open"] == "0"
+    assert configured["htmlContent"] == '<a href="https://kindrobots.org">Kind Robots</a>'
 
 
 def test_transient_http_failure_retries_with_same_idempotency_key():
