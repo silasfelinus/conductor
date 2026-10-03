@@ -228,13 +228,17 @@ tasks:
 - id: t-017
   milestone: m2
   title: Adversarial editor in the Comic Studio (kind_robots, admin)
-  status: review
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-10-03T11:00:00Z'
+  updated: '2026-10-03T11:06:18Z'
   note: >-
     Silas, 2026-10-03: "I need an adversarial editor. If I am proposing an idea, they need to only accept something if it is GREAT... a challenging muse that will actually test the ideas we are presenting. that should be both front and center on the comic editing page, and have a voice with anything that develops that relates to plot, character, theme, etc." Built as the editor desk at the top of /play/comics/studio: Claude judges pitches, series notes, entities, subjects and issues against the series notes (great / close / not-yet / reject with problems, questions, the bar and strengths), threads replies, and speaks up automatically when notes change substantially (toggleable). Secret-until entities reach it marked as secrets. Needs ANTHROPIC_API_KEY on the Kind Robots server. Built in kind_robots PR #3208 (schema-affecting, additive: ComicCritique).
+
+    kind_robots#3208 merged (squash 3e8ce36). Schema-affecting: live only after the
+    Alexandria deploy runs migration 20261003120000_add_comic_studio; then seed with
+    scripts/import_comic_studio.py --live.
   claimed_by: 20261003T1030-zuzu-studio-t-017
   claimed_at: '2026-10-03T10:50:00Z'
   implementation_pr: 'silasfelinus/kind_robots#3208'
