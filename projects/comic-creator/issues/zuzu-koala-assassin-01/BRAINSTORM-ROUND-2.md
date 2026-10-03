@@ -1,7 +1,14 @@
 # Brainstorm Round 2: the kids, Zuzu, covers, plots
 
-status: brainstorm, nothing set in stone
+status: brainstorm, nothing set in stone (the series bible is NOT being solidified yet)
 date: 2026-10-03
+
+## Queued 2026-10-03
+
+All 50 prompts were submitted to the Kind Robots ArtJob queue (Krea 2, via `scripts/consume_art_queue.py --live`):
+**ArtJobs 33263 to 33312**, in the order of `COMFY-PROMPTS-BRAINSTORM.yaml` after the turnaround, which is
+job 33263. Each entry's `image_path` names where its image lands:
+`projects/comic-creator/issues/zuzu-koala-assassin-01/art/<id>.webp`. Look at them before choosing a species.
 
 ## Decisions from Silas (2026-10-03)
 
@@ -101,3 +108,12 @@ One line each. Each also has an art prompt.
 In Kind Robots, *The Old Komodo* (bot 427) is a Gallowsun Junction narrator who reads the lizard
 mount as "the interesting part." Making him the giant sand beast turns the narrator into the monster,
 and gives Zuzu's lizard a possible kinship plot. Worth deciding before the cover is final.
+
+## Old Komodo as a twist, not a villain (Silas, 2026-10-03)
+
+Idea: he is a shock appearance who turns out not to be an enemy, but that does not stop him
+trying to eat the siblings before Zuzu intercedes. The image: Old Komodo erupts from the sand,
+mouth wide open; the two children slip down toward his open jaw; Zuzu springs overhead and strikes
+at him with a staff (not the katana, which fits a mercy-over-letter Zuzu). Not yet queued as art.
+Open question for a later round: does the staff replace the sword for the whole fight, or is it the
+sheathed katana used as one?
