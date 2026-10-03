@@ -1024,7 +1024,7 @@ tasks:
   - id: t-033
     milestone: m4
     title: "Confirm archive-preset ArtJobs are safe to always tag engine: 'A1111'"
-    status: ready
+    status: claimed
     passes: 0
     stakes: reversible
     depends_on: t-016
@@ -1056,9 +1056,11 @@ tasks:
       The fix shape in this note (buildDefaultComfyWorkflow, the same family allowlist as
       generate-preview.post.ts, reject incompatible families, add this file to
       verifyComfyOnlyGeneration.ts) is the implementation. Build it. Do not re-ask.
-    updated: '2026-09-30T06:00:00Z'
-    soft_gate: false
+    updated: '2026-10-03T00:58:00Z'
     gate_rechecked: '2026-09-30'
+    owner: worker
+    claimed_by: 2026-10-03T005800Z-art-archive-t-033-g5k9
+    claimed_at: '2026-10-03T00:58:00Z'
 
   - id: t-034
     milestone: m4
