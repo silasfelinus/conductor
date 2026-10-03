@@ -2082,5 +2082,17 @@ tasks:
   updated: '2026-09-30T09:00:00Z'
   note: 'Filed 2026-09-30 from kind-robots/t-104''s final run. generate_facet_art.ts --write --repair-tainted held 65 Facets (61 repair targets) for catalog review. Almost all are sentence-title quirk and backstory Facets (ids 532-577, 1188-1297, e.g. ''Was once a duck. No one knows why, including them.''). The rest: setting-shaped (Circus 16), subject-shaped (Celtic Mythology 836, Eastern European Folklore 840, Oceanic Mythology 841), composite (One Thousand and One Nights Fantasy 843), parenthetical (Cli-Fi 780) and worldview-shaped personality Facets (Metaphysical 1035, Superstitious 1037). Decide per class: give sentence-titles a short visual title with the sentence kept as description, retype the genre-shaped ones, or mark them art-not-required. Then re-run the producer in dry-run and confirm blocked drops toward 0. Reversible catalog edits via the admin API.'
 
+- id: t-125
+  milestone: m6
+  title: 'Create an admin-only Retired channel and move retired navigation surfaces into it'
+  status: ready
+  gate_human: false
+  stakes: reversible
+  owner: null
+  passes: 0
+  updated: '2026-10-03T09:25:00Z'
+  note: >-
+    Silas, 2026-10-03: create a Retired channel that is visible in Kind Robots navigation only to admins. Move Serendipity, Shared With Me, Forum, Art Academy, Hair Studio, Voice Lab, Challenges, Watchlist, UI Gallery, Missing Image Test, Achievement Art, and Social Drafts into it while preserving their existing routes.
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
