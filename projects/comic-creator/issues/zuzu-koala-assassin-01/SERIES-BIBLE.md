@@ -114,6 +114,7 @@ on its own when Zuzu enters and once when he leaves. Don't explain the bell.
 - **Panel language:** widescreen horizontal strips for landscape and walking; tight square inserts for
   hands, eyes, objects. Gutters black. Lettering: hand-lettered feel; captions in aged parchment boxes
   for Zuzu's interior voice; speech balloons plain white. No SFX except the bell, wind and the *shk* of the sword.
-- **Reusable prompt stem:** `realistic painted comic-book art, anthropomorphic weird-west samurai,
-  Sergio Leone widescreen composition, dust and low gold sun, ochre and burnt umber palette,
-  inked linework with brush texture, cinematic, no text`
+- **Generation:** art is made with ComfyUI (Krea 2). The ready-to-queue prompt set is
+  [COMFY-PROMPTS.yaml](./COMFY-PROMPTS.yaml); it follows the Krea 2 contract in `ART-PROMPTS.md`
+  (positive nouns only: no negations, no art-direction jargon, no rendered lettering). Do not paste
+  the prose directions from this bible into a prompt; they are for people, not for the model.
