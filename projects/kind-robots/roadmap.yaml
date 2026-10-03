@@ -2101,13 +2101,16 @@ tasks:
 - id: t-126
   milestone: m6
   title: 'Add generic navigation subtabs and move Retired under Admin'
-  status: ready
+  status: claimed
   gate_human: false
   stakes: reversible
   passes: 0
   updated: '2026-10-03T22:15:00Z'
   note: |-
     Silas, 2026-10-03: support subtabs in the Kind Robots navigation. Retired should no longer be a top-level channel; make it a submenu inside Admin, keep the twelve retired surfaces reachable there, and preserve their existing routes. Implement this as reusable nested-tab support rather than a Retired-only special case.
+  owner: worker
+  claimed_by: 2026-10-03T221500Z-kind-robots-t126-subtabs-a91f
+  claimed_at: '2026-10-03T22:15:00Z'
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
