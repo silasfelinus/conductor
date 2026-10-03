@@ -546,44 +546,18 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Implement ambient peekaboo butterfly traffic"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-033]
-    note: >-
-      Implement the long upper runway scheduler from APPROVED-STAGE-SPEC.md
-      after t-014 is released from its production-geometry hold. Reuse/extract
-      the existing Butterfly Scouts DOM/CSS renderer rather than playing
-      AI-generated butterfly videos: varied butterfly+art passes should travel
-      across the real runtime width, be clipped by the runway surface, and be
-      occluded behind the central funnel. Carrying frames/strings may be DOM/SVG
-      companions to the canonical butterfly actor. This is the ONLY
-      background-area character animation. No static butterfly silhouettes or
-      robots appear in the warehouse backdrop. Pause when hidden and suppress
-      under reduced motion.
+    note: |-
+      Implement the long upper runway scheduler from APPROVED-STAGE-SPEC.md after t-014 is released from its production-geometry hold. Reuse/extract the existing Butterfly Scouts DOM/CSS renderer rather than playing AI-generated butterfly videos: varied butterfly+art passes should travel across the real runtime width, be clipped by the runway surface, and be occluded behind the central funnel. Carrying frames/strings may be DOM/SVG companions to the canonical butterfly actor. This is the ONLY background-area character animation. No static butterfly silhouettes or robots appear in the warehouse backdrop. Pause when hidden and suppress under reduced motion.
+      FOR SILAS: t-016 as written now conflicts with your own 2026-09-19 update to ANIMATION- SHOT-LIST.md. t-016's note says to build the upper-runway ambient traffic using the procedural Butterfly Scouts DOM/CSS renderer; the shot list you updated today says the opposite -- runway butterflies must be smaller versions of the illustrated Gallery butterfly (gallery-butterfly-start.png), animated via LTX/WAN/image-to-video, and explicitly 'do not substitute the procedural Butterfly Scouts DOM/CSS renderer' for this feature. t-033 already covers splicing the 7 rendered motion-actor clips (jobs 28739-28745, still PENDING as of this check) into the runway/left-loop/robot-loop slots, including reduced-motion/visibility gating. TO APPROVE: pick one -- (a) close t-016 as superseded by t-033 (and t-031's gating audit), or (b) narrow t-016 to just the randomized clip-selection/scheduling logic across the 5 runway clips once t-033 lands, and change depends_on from [t-010, t-014] to [t-033]. I did not implement or close it myself since this changes task structure across three related tasks (t-016/t-031/t-033) rather than being a single-task call. Did not consume a retry pass -- never claimed.
+      GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in session): NOT A HUMAN GATE, returned to agents. Silas's own 2026-09-19 ANIMATION-SHOT- LIST.md settles the conflict: no procedural DOM renderer for runway butterflies. t-033 is done. Taking option (b): narrow this task to randomized clip selection/scheduling across the rendered runway clips, with depends_on [t-033].
 
-      FOR SILAS: t-016 as written now conflicts with your own 2026-09-19 update to ANIMATION-
-      SHOT-LIST.md. t-016's note says to build the upper-runway ambient traffic using the
-      procedural Butterfly Scouts DOM/CSS renderer; the shot list you updated today says the
-      opposite -- runway butterflies must be smaller versions of the illustrated Gallery
-      butterfly (gallery-butterfly-start.png), animated via LTX/WAN/image-to-video, and
-      explicitly 'do not substitute the procedural Butterfly Scouts DOM/CSS renderer' for this
-      feature. t-033 already covers splicing the 7 rendered motion-actor clips (jobs
-      28739-28745, still PENDING as of this check) into the runway/left-loop/robot-loop slots,
-      including reduced-motion/visibility gating. TO APPROVE: pick one -- (a) close t-016 as
-      superseded by t-033 (and t-031's gating audit), or (b) narrow t-016 to just the
-      randomized clip-selection/scheduling logic across the 5 runway clips once t-033 lands,
-      and change depends_on from [t-010, t-014] to [t-033]. I did not implement or close it
-      myself since this changes task structure across three related tasks (t-016/t-031/t-033)
-      rather than being a single-task call. Did not consume a retry pass -- never claimed.
-
-      GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in
-      session): NOT A HUMAN GATE, returned to agents. Silas's own 2026-09-19 ANIMATION-SHOT-
-      LIST.md settles the conflict: no procedural DOM renderer for runway butterflies. t-033
-      is done. Taking option (b): narrow this task to randomized clip selection/scheduling
-      across the rendered runway clips, with depends_on [t-033].
-    updated: '2026-10-03T00:50:00Z'
+      Implemented randomized non-repeating runway clip selection with varied quiet gaps between passes, preserving reduced-motion, tab-hidden, and off-screen gating.
+    updated: '2026-10-03T01:05:00Z'
     gate_rechecked: '2026-09-30'
     claimed_by: 2026-10-02T175000-0700-butterfly-gallery-t-016-x7k2
     claimed_at: '2026-10-03T00:50:00Z'
