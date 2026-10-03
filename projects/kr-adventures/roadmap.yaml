@@ -66,16 +66,20 @@ tasks:
 - id: t-004
   milestone: m2
   title: Adventure schema, validator and tests (kind_robots utils/)
-  status: claimed
+  status: done
   owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-10-03T04:48:28Z'
-  note: Types plus a DB-free validator for the bundle in the design brief (reachability, endings, flags,
-    art and alt coverage, word counts), with tsx tests and a contract-tests step. Include a tiny fixture
-    book.
+  updated: '2026-10-03T05:07:18Z'
+  note: >-
+    Types plus a DB-free validator for the bundle in the design brief (reachability, endings, flags, art and alt coverage, word counts), with tsx tests and a contract-tests step. Include a tiny fixture book.
+
+    Landed in kind_robots#3202 (squash 1556659): types/adventure.ts,
+    utils/adventures/validateAdventure.ts, fixture book, test:adventure-validator wired into
+    contract-tests.yml.
   claimed_by: 20261003-agent-kra
   claimed_at: '2026-10-03T04:48:28Z'
+  implementation_pr: 'silasfelinus/kind_robots#3202'
 - id: t-005
   milestone: m2
   title: Reader page and library with a fixture book
