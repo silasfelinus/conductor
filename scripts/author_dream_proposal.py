@@ -496,6 +496,14 @@ def name_diversity_complaints(name: str, recent_names: list[str]) -> list[str]:
             if len(recent_words) < 2:
                 continue
             recent_last = recent_words[-1]
+            # The prefix rule below needs six letters, so a short surname could repeat
+            # verbatim: five characters named Voss between 09-10 and 09-29.
+            if last == recent_last:
+                complaints.append(
+                    f"character surname {last!r} exactly repeats recent name {recent!r}; "
+                    "choose a different family name"
+                )
+                break
             if min(len(last), len(recent_last)) >= 6 and _common_prefix_length(last, recent_last) >= 6:
                 complaints.append(
                     f"character surname {last!r} echoes the distinctive root of recent "

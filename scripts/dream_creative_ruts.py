@@ -4,7 +4,7 @@
 `author_dream_proposal.story_diversity_complaints` has guarded exactly one rut since
 August 2026: bureaucracy/record-keeping. The freshness remaster (conductor issue #3184)
 named the rest of the historical grooves out loud — archives, cozy markets and
-workshops, towers and lighthouses, repeated occupational archetypes, and whimsical
+workshops, towers and lighthouses, terraced landforms, repeated occupational archetypes, and whimsical
 noun-compound surname factories — so both the live contract and the catalog audit read
 them from one place instead of two drifting copies.
 
@@ -97,6 +97,21 @@ RUT_FAMILIES: dict[str, dict[str, object]] = {
         # "spire" earns its place here: Spire Crystal is a MATERIAL Facet, so a day that
         # draws it is *asking* for spires and should not then be scored for having them.
         "facet_markers": {"lighthouse", "tower", "beacon", "watchtower", "monk", "spire"},
+    },
+    # Silas, 2026-10-03: "terrace is turning into the next waterworld". The live catalog
+    # named The Puffin Terraces (09-02), Spore Shelf (09-29) and Landing Terrace (10-02),
+    # with terraced valleys and terrace steps in between: a stepped-landform habit that
+    # recurs too far apart for any five-day window to notice, so it is guarded at the name.
+    "terrace-landform": {
+        "label": "terrace / shelf / ledge stepped landform",
+        "scope": "name",
+        "markers": {
+            "terrace", "terraces", "terraced", "shelf", "ledge", "ledges", "tier",
+            "tiers", "tiered",
+        },
+        "facet_markers": {
+            "terrace", "terraced", "terraces", "paddy", "vineyard", "ziggurat",
+        },
     },
     "occupational-archetype": {
         "label": "repeated occupational archetype",

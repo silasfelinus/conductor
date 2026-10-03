@@ -106,6 +106,38 @@ DEADLINE_FACET_MARKERS = {
     "speedrun", "survival", "chase",
 }
 
+# Recurring wording and scenery, as opposed to recurring story engines. Each one counts as
+# spent for `lookback` worlds after it appears; `pattern` is matched against
+# story_core_text, so Reward copy ("You must choose where to set a foundation") never
+# trips it. Silas, 2026-10-03: "we're getting some repeated phrasing again in our daily
+# dreams. terrace is turning into the next waterworld."
+RECENT_PHRASE_RUTS: dict[str, dict[str, object]] = {
+    "decision-dilemma": {
+        "label": "'has to decide whether…' dilemma ending",
+        # Six of the fourteen Scenarios built 2026-09-17 .. 10-03 ended on some
+        # "<character> has to decide whether X or Y" (plus 10-01's "must choose:").
+        "pattern": re.compile(
+            r"\b(?:decide|decides|deciding|choose|chooses|choosing)\s+(?:whether|between|which)\b"
+            r"|\bmust\s+(?:decide|choose)\b"
+        ),
+        "lookback": 5,
+        "facet_markers": set(),
+        "advice": "end the Scenario on an action, discovery, arrival, or event already under "
+        "way instead of a character weighing two options",
+    },
+    "terraced-landform": {
+        "label": "terraced hillside / terrace steps scenery",
+        # 09-02 wheat terraces, 09-06 terraced highland valleys and terrace steps, 10-02
+        # Landing Terrace. Word-level only: "shelf" and "ledge" are too often furniture in
+        # prose, so dream_creative_ruts guards those in names instead.
+        "pattern": re.compile(r"\bterrac(?:e|es|ed|ing)\b"),
+        "lookback": RECENT_INVENTION_LOOKBACK,
+        "facet_markers": {"terrace", "terraced", "terraces", "paddy", "vineyard", "ziggurat"},
+        "advice": "give the place a different ground plan: flat, sunken, vertical, "
+        "floating, enclosed, or moving, rather than stepped shelves cut into a slope",
+    },
+}
+
 TITLE_DIRECTIONS = (
     "Do not lead with 'The'. Prefer a setting-native proper noun, coined place, or in-world term that could only belong to this premise.",
     "Use an active construction: a verb, action, or event rather than an adjective-plus-noun object label.",
@@ -365,6 +397,40 @@ def structural_repetition_complaints(
             "discovery, relationship, aftermath, play, transformation, or another non-clock engine"
         ]
     return []
+
+
+def phrase_ruts_in_text(text: object) -> set[str]:
+    folded = str(text or "").casefold()
+    return {
+        family
+        for family, spec in RECENT_PHRASE_RUTS.items()
+        if spec["pattern"].search(folded)  # type: ignore[union-attr]
+    }
+
+
+def recent_phrase_rut_complaints(
+    proposal: object,
+    recent_story_texts: list[str],
+    seed_facets: object,
+) -> list[str]:
+    """Reject wording or scenery that a recent world already used, oldest to newest."""
+    candidate = phrase_ruts_in_text(story_core_text(proposal))
+    if not candidate:
+        return []
+    drawn = set(_words(_drawn_facet_text(seed_facets)))
+    complaints: list[str] = []
+    for family in sorted(candidate):
+        spec = RECENT_PHRASE_RUTS[family]
+        window = recent_story_texts[-int(spec["lookback"]):]  # type: ignore[call-overload]
+        if not any(family in phrase_ruts_in_text(text) for text in window):
+            continue
+        if drawn & spec["facet_markers"]:  # type: ignore[operator]
+            continue
+        complaints.append(
+            f"story repeats the {spec['label']} that a world in the last {spec['lookback']} "
+            f"days already used; {spec['advice']}"
+        )
+    return complaints
 
 
 def _facet_text(facet: object) -> str:

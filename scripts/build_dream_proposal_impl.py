@@ -326,8 +326,20 @@ def build_brief(day: str | None = None, catalog=None) -> dict[str, Any]:
             f"STRUCTURAL CONTRAST FOR TODAY: {creative_entropy.structural_direction(proposal_day)}",
             f"TITLE CONSTRUCTION FOR TODAY: {creative_entropy.title_direction(proposal_day)}",
             f"VISUAL CONTRAST FOR TODAY: {creative_entropy.visual_direction(proposal_day)}",
+            "Never name a place for a terrace, shelf, ledge, or tier (The Puffin Terraces, "
+            "Spore Shelf, Landing Terrace): stepped landforms are a demonstrated rut and fail "
+            "validation in any asset name unless a drawn Facet asks for them.",
         ]
     )
+    recent = recent_story_texts(proposal_day)
+    for family in sorted(creative_entropy.RECENT_PHRASE_RUTS):
+        spec = creative_entropy.RECENT_PHRASE_RUTS[family]
+        window = recent[-int(spec["lookback"]):]
+        if any(family in creative_entropy.phrase_ruts_in_text(text) for text in window):
+            brief["instructions"].append(
+                f"SPENT PHRASING: a recent world already used the {spec['label']}; it will fail "
+                f"validation today, so {spec['advice']}."
+            )
     return brief
 
 
@@ -363,6 +375,7 @@ def validate_proposal(proposal: Any) -> list[str]:
     recent = recent_story_texts(day)
     bad.extend(creative_entropy.story_family_complaints(proposal, recent, seeds))
     bad.extend(creative_entropy.structural_repetition_complaints(proposal, recent, seeds))
+    bad.extend(creative_entropy.recent_phrase_rut_complaints(proposal, recent, seeds))
     bad.extend(creative_entropy.title_shape_complaints(proposal))
     return bad
 
