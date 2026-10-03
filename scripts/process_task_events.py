@@ -320,6 +320,13 @@ def verify_event_ownership(task: dict[str, Any], event: dict[str, Any], operatio
     """
     if event.get("force") or event.get("session") is None:
         return
+    # Only a task that is still claimed (or in review, which keeps its claimer) has a live
+    # claim. A `ready`/`needs-human` task with a leftover claimed_by (kind-economy/t-011,
+    # 2026-10-03: claimed_by from 2026-09-07 on a `ready` task) has no owner to protect; the
+    # old check consumed every new session's needs-human event as ALREADY_CLAIMED with no
+    # roadmap change, so a capability-gated task kept ranking first.
+    if task.get("status") not in {"claimed", "review"}:
+        return
     session = require_string(event, "session")
     claimed_by = task.get("claimed_by")
     if claimed_by is not None and claimed_by != session:
