@@ -1,20 +1,20 @@
 {
-  "generated_at": "2026-10-03T05:26:37.575204+00:00",
+  "generated_at": "2026-10-03T11:48:25.166239+00:00",
   "summary": {
     "status": "semantic-review-due",
     "roadmap_errors": 0,
-    "roadmap_warnings": 8,
+    "roadmap_warnings": 10,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
-    "openai_scheduled_agent_overdue": true,
+    "openai_scheduled_agent_overdue": false,
     "openai_scheduled_agent_authoritative": false,
     "intent_review_due": true
   },
   "openai_scheduled_agent": {
-    "overdue": true,
-    "last_activity": "2026-10-02T19:47:22+00:00",
-    "hours_since": 9.65,
+    "overdue": false,
+    "last_activity": "2026-10-03T09:23:59+00:00",
+    "hours_since": 2.41,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
@@ -31,23 +31,30 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-10-03T05:26:37.575211+00:00",
+    "generated_at": "2026-10-03T11:48:25.166243+00:00",
     "summary": {
       "roadmaps": 62,
       "active_projects": 22,
       "continuous_projects": 3,
-      "tasks": 1849,
-      "ready": 48,
+      "tasks": 1855,
+      "ready": 47,
       "waiting": 80,
-      "needs_human": 36,
-      "in_progress": 6,
-      "done": 1663,
+      "needs_human": 37,
+      "in_progress": 7,
+      "done": 1668,
       "errors": 0,
-      "warnings": 8,
+      "warnings": 10,
       "info": 39
     },
     "errors": [],
     "warnings": [
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "animation-manager",
+        "task": "t-007",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
+      },
       {
         "severity": "warning",
         "code": "STALE_IN_PROGRESS",
@@ -61,6 +68,13 @@
         "project": "coloring-book",
         "task": "t-058",
         "message": "Task has remained claimed for 5 days."
+      },
+      {
+        "severity": "warning",
+        "code": "SOFT_NEEDS_HUMAN",
+        "project": "comic-creator",
+        "task": "t-015",
+        "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
       },
       {
         "severity": "warning",
