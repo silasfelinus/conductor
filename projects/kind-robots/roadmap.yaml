@@ -2085,18 +2085,19 @@ tasks:
 - id: t-125
   milestone: m6
   title: 'Create an admin-only Retired channel and move retired navigation surfaces into it'
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
-  owner: worker
   passes: 0
-  updated: '2026-10-03T21:38:00Z'
+  updated: '2026-10-03T21:45:00Z'
   claimed_by: 2026-10-03T09:36:00Z-kind-robots-t125-retired-channel-c8f4
   claimed_at: '2026-10-03T09:36:00Z'
   note: |-
     Silas, 2026-10-03: create a Retired channel that is visible in Kind Robots navigation only to admins. Move Serendipity, Shared With Me, Forum, Art Academy, Hair Studio, Voice Lab, Challenges, Watchlist, UI Gallery, Missing Image Test, Achievement Art, and Social Drafts into it while preserving their existing routes.
 
     Implementation is on worker/kind-robots-t-125-retired-channel. The twelve named surfaces now live under an admin-only Retired channel with existing routes preserved; navigation, placement, and Serendipity contracts were updated with the move.
+
+    Merged silasfelinus/kind_robots#3212 at b6ccb3411c80017bf79279949af4efa2038db3d6 after 30/30 PR workflows completed successfully. Retired is now an ADMIN-only channel containing the twelve requested surfaces with their existing routes preserved.
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
