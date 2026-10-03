@@ -213,8 +213,8 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Admin page, musicVideoStore and placement"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-004]
@@ -228,6 +228,9 @@ tasks:
       verifyNoHiddenRoutes.ts reject an unplaced route. Do NOT add liveUrl, channelKey or tabKey to
       conductor's project-overrides.yaml (kind_robots AGENTS.md forbids it). Read
       docs/agents/frontend-verification.md before verifying.
+    claimed_by: 2026-10-03T13:00:00Z-mv-t006
+    claimed_at: '2026-10-03T13:47:26Z'
+    updated: '2026-10-03T13:47:26Z'
 
   - id: t-007
     milestone: m2
