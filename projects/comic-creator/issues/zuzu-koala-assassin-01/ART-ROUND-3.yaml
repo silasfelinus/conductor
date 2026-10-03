@@ -1,0 +1,275 @@
+# Zuzu round 3: non-Krea A/B art (Silas, 2026-10-03)
+# 12 subjects x 4 lanes = 48 ArtJobs via Kind Robots POST /api/art/enqueue.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status).
+# Prose lanes use prompt_prose (+ lane suffix); tag lanes use lane prefix + prompt_tags + lane suffix.
+# negative applies to comfy (SDXL/Illustrious) lanes only; Z-Image zeroes its negative.
+# steps/cfg are left unset so Kind Robots' checkpoint-family profiles apply.
+round: 3
+series: zuzu-koala-assassin
+project_slug: comic-creator
+designer: Comic Studio
+is_public: true
+is_mature: false
+lanes:
+- key: zimage-turbo
+  label: Z-Image Turbo
+  engine: zimage
+  prompt: prose
+- key: il-furrytoonmix
+  label: IL furrytoonmix
+  engine: comfy
+  checkpoint: Illustrious/furrytoonmix_xlV3.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic
+  suffix: western, dusty, painterly, dramatic lighting, gritty
+- key: il-realism
+  label: IL realismIllustriousBy
+  engine: comfy
+  checkpoint: Illustrious/realismIllustriousBy_v55FP16.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, realistic
+  suffix: western, dusty, painterly, dramatic lighting, gritty
+- key: sdxl-nihilmania
+  label: SDXL nihilmania
+  engine: comfy
+  checkpoint: SDXL/sdxlUnstableDiffusers_nihilmania.safetensors
+  prompt: prose
+  suffix: dark moody oil painting, heavy shadows
+subjects:
+- key: r3-zuzu-turnaround
+  entity: zuzu
+  title: Zuzu turnaround sheet
+  size: 1216x832
+  prompt_prose: 'character turnaround of a small grey koala ronin, compact and weathered, round ears with ragged
+    pale tufts, a notch and an old scar on the left ear, a broad black nose, hard narrowed eyes, a dusty threadbare
+    travel cloak, a battered wide straw hat, a long black lacquer katana slung across his back: four full-body views
+    side by side at the same scale on a plain pale parchment background, front view, three-quarter view, side view
+    and back view, standing still with his weight on one foot, a grim hard face, gritty painted comic illustration,
+    realistic anthropomorphic animals with true fur and weight, heavy ink shadows, dusty ochre and burnt umber palette,
+    harsh low sunlight'
+  prompt_tags: character sheet, turnaround, multiple views, front view, side view, back view, full body, standing,
+    simple background, anthro, koala, male, adult, grey fur, round ears, ear scar, black nose, serious, squinting,
+    frown, straw hat, tattered cloak, katana on back, ronin
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad hands,
+    extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    zimage-turbo: 33316
+    il-furrytoonmix: 33317
+    il-realism: 33318
+    sdxl-nihilmania: 33319
+- key: r3-zuzu-emotions
+  entity: zuzu
+  title: Zuzu emotion sheet
+  size: 1216x832
+  prompt_prose: 'six head-and-shoulders studies of a weathered grey koala ronin with ragged tufted ears, a scarred
+    left ear, a broad black nose and hard narrowed eyes under a battered straw hat, arranged in two rows on a plain
+    pale parchment background: a flat cold stare, a narrowed squint against the sun, quiet cold anger with bared
+    teeth, bone-deep exhaustion, buried pain with eyes half closed, grim resolve, gritty painted comic illustration,
+    realistic anthropomorphic animals with true fur and weight, heavy ink shadows, dusty ochre and burnt umber palette,
+    harsh low sunlight'
+  prompt_tags: expression sheet, multiple views, portrait, upper body, glaring, squinting, angry, clenched teeth,
+    tired, sad, determined, simple background, anthro, koala, male, adult, grey fur, round ears, ear scar, black
+    nose, serious, squinting, frown, straw hat, tattered cloak, katana on back, ronin
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad hands,
+    extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    zimage-turbo: 33320
+    il-furrytoonmix: 33321
+    il-realism: 33322
+    sdxl-nihilmania: 33323
+- key: r3-siblings-turnaround
+  entity: siblings
+  title: Fennec siblings turnaround sheet
+  size: 1216x832
+  prompt_prose: 'character turnaround of two orphaned siblings standing side by side: a gaunt fennec fox girl of
+    about ten with enormous ears, sand-colored fur matted with dust, thin arms, a bruised cheek, a torn and filthy
+    pale dress and rag-wrapped feet, holding the hand of her toddler brother, a tiny fennec fox with huge ears,
+    a dirty checked cloth tunic and a bandaged paw; front view, three-quarter view, side view and back view of the
+    pair at the same scale on a plain pale parchment background, both frightened and hungry, gritty painted comic
+    illustration, realistic anthropomorphic animals with true fur and weight, heavy ink shadows, dusty ochre and
+    burnt umber palette, harsh low sunlight'
+  prompt_tags: character sheet, turnaround, multiple views, front view, side view, back view, full body, duo, siblings,
+    holding hands, scared, simple background, anthro, fennec fox, female, young, big ears, tan fur, dirty, bruise,
+    torn dress, ragged clothes, thin, anthro, fennec fox, toddler, big ears, checked tunic, bandaged hand
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad hands,
+    extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    zimage-turbo: 33324
+    il-furrytoonmix: 33325
+    il-realism: 33326
+    sdxl-nihilmania: 33327
+- key: r3-siblings-emotions
+  entity: siblings
+  title: Fennec siblings emotion sheet
+  size: 1216x832
+  prompt_prose: 'six head-and-shoulders studies of a gaunt fennec fox girl of about ten with enormous ears, dust-matted
+    fur and a bruised cheek and her toddler brother, arranged in two rows on a plain pale parchment background:
+    wide-eyed terror, sobbing grief with tears cutting the dust on her face, hollow hunger, narrow-eyed distrust,
+    numb shock, and a small fragile hope as she shields her brother, gritty painted comic illustration, realistic
+    anthropomorphic animals with true fur and weight, heavy ink shadows, dusty ochre and burnt umber palette, harsh
+    low sunlight'
+  prompt_tags: expression sheet, multiple views, portrait, upper body, crying, tears, scared, wide-eyed, sad, glaring,
+    hugging, duo, simple background, anthro, fennec fox, female, young, big ears, tan fur, dirty, bruise, torn dress,
+    ragged clothes, thin, anthro, fennec fox, toddler, big ears, checked tunic, bandaged hand
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad hands,
+    extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    zimage-turbo: 33328
+    il-furrytoonmix: 33329
+    il-realism: 33330
+    sdxl-nihilmania: 33331
+- key: r3-komodo-maw
+  entity: old-komodo
+  title: Old Komodo open maw
+  size: 1344x768
+  prompt_prose: a colossal ancient komodo dragon erupting out of a desert dune, sand pouring off its ridged back,
+    its enormous jaws wide open toward the viewer, two small fennec fox children sliding down the collapsing sand
+    toward its open mouth, the girl clutching her toddler brother, and above them a small grey koala ronin in a
+    dusty cloak and battered straw hat leaping through the air with a long wooden staff raised to strike the beast's
+    snout, gritty painted comic illustration, realistic anthropomorphic animals with true fur and weight, heavy
+    ink shadows, dusty ochre and burnt umber palette, harsh low sunlight
+  prompt_tags: giant komodo dragon, kaiju, open mouth, sharp teeth, desert, sand dune, erupting from sand, sand
+    pouring, sliding, falling, peril, action, dynamic angle, jumping, holding staff, fennec fox, children, anthro,
+    koala, male, adult, grey fur, round ears, ear scar, black nose, serious, squinting, frown, straw hat, tattered
+    cloak, katana on back, ronin
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad hands,
+    extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    zimage-turbo: 33332
+    il-furrytoonmix: 33315
+    il-realism: 33333
+    sdxl-nihilmania: 33334
+- key: r3-storm-crows
+  entity: storm-crows
+  title: Storm Crows raid
+  size: 1344x768
+  prompt_prose: a band of anthropomorphic crow raiders in ragged dusters and rusted goggles swooping down out of
+    a black thunderstorm over a dry canyon, lightning behind them, rifles and hooked blades in their talons, a small
+    grey koala ronin in a dusty cloak and battered straw hat standing alone on the canyon rim with one hand on his
+    sword hilt, rain and dust whipping his cloak, gritty painted comic illustration, realistic anthropomorphic animals
+    with true fur and weight, heavy ink shadows, dusty ochre and burnt umber palette, harsh low sunlight
+  prompt_tags: anthro, crow, bird, group, raiders, duster, goggles, rifle, flying, storm, lightning, rain, canyon,
+    western, standing, hand on hilt, anthro, koala, male, adult, grey fur, round ears, ear scar, black nose, serious,
+    squinting, frown, straw hat, tattered cloak, katana on back, ronin
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad hands,
+    extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    zimage-turbo: 33335
+    il-furrytoonmix: 33336
+    il-realism: 33337
+    sdxl-nihilmania: 33338
+- key: r3-hyena-tribe
+  entity: hyena-tribe
+  title: Hyena tribe circles
+  size: 1344x768
+  prompt_prose: a pack of anthropomorphic hyena slavers in bone jewelry and patched leathers circling at dusk with
+    chains, spears and grinning teeth, a small grey koala ronin in a dusty cloak and battered straw hat standing
+    between them and two terrified fennec fox children who cower behind his cloak, campfire light and long shadows,
+    gritty painted comic illustration, realistic anthropomorphic animals with true fur and weight, heavy ink shadows,
+    dusty ochre and burnt umber palette, harsh low sunlight
+  prompt_tags: anthro, hyena, group, bandit, chains, spear, grin, surrounded, dusk, campfire, protecting, hiding
+    behind, fennec fox, children, scared, anthro, koala, male, adult, grey fur, round ears, ear scar, black nose,
+    serious, squinting, frown, straw hat, tattered cloak, katana on back, ronin
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad hands,
+    extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    zimage-turbo: 33339
+    il-furrytoonmix: 33340
+    il-realism: 33341
+    sdxl-nihilmania: 33342
+- key: r3-otter-house
+  entity: otter-house
+  title: The otter sisters' gate
+  size: 1344x768
+  prompt_prose: the lantern-lit gate of a walled convent tea house in the desert at night, stern anthropomorphic
+    otter sisters in dark habits and long kimono standing in the gateway with folded hands and cold smiles, two
+    small fennec fox children waiting at their feet with a dusty bundle, a small grey koala ronin in a dusty cloak
+    and battered straw hat turning away down the road, and in the dark courtyard behind the sisters a hyena watching,
+    gritty painted comic illustration, realistic anthropomorphic animals with true fur and weight, heavy ink shadows,
+    dusty ochre and burnt umber palette, harsh low sunlight
+  prompt_tags: anthro, otter, group, nun, habit, kimono, paper lantern, gate, courtyard, night, fennec fox, children,
+    hyena, sinister, from behind, anthro, koala, male, adult, grey fur, round ears, ear scar, black nose, serious,
+    squinting, frown, straw hat, tattered cloak, katana on back, ronin
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad hands,
+    extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    zimage-turbo: 33343
+    il-furrytoonmix: 33344
+    il-realism: 33345
+    sdxl-nihilmania: 33346
+- key: r3-reality-tear
+  entity: thin-reality
+  title: Beast through a tear in the air
+  size: 1344x768
+  prompt_prose: a towering feathered dinosaur predator stepping out of a rippling tear in the air above a cracked
+    desert floor, the land beyond the tear a green steaming prehistoric jungle, a small grey koala ronin in a dusty
+    cloak and battered straw hat braced low in front of it with his katana half drawn, dust and heat haze, gritty
+    painted comic illustration, realistic anthropomorphic animals with true fur and weight, heavy ink shadows, dusty
+    ochre and burnt umber palette, harsh low sunlight
+  prompt_tags: dinosaur, theropod, feathered dinosaur, portal, dimensional rift, jungle, desert, cracked earth,
+    battle stance, unsheathing, katana, anthro, koala, male, adult, grey fur, round ears, ear scar, black nose,
+    serious, squinting, frown, straw hat, tattered cloak, katana on back, ronin
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad hands,
+    extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    zimage-turbo: 33347
+    il-furrytoonmix: 33348
+    il-realism: 33349
+    sdxl-nihilmania: 33350
+- key: r3-siblings-huddled
+  entity: siblings
+  title: Sole survivors
+  size: 1344x768
+  prompt_prose: a gaunt fennec fox girl of about ten with enormous ears, sand-colored fur matted with dust, thin
+    arms, a bruised cheek, a torn and filthy pale dress and rag-wrapped feet huddled in the corner of a ruined adobe
+    room with her toddler brother, a tiny fennec fox with huge ears, a dirty checked cloth tunic and a bandaged
+    paw wrapped tight in her arms, both starving and bruised, an empty tin bowl on the dirt floor, a shaft of dusty
+    light through a broken shutter, her eyes red from crying, gritty painted comic illustration, realistic anthropomorphic
+    animals with true fur and weight, heavy ink shadows, dusty ochre and burnt umber palette, harsh low sunlight
+  prompt_tags: duo, sitting, hugging, in corner, ruins, abandoned building, dirt floor, empty bowl, light rays,
+    crying, tears, bruise, starving, sad, dark, anthro, fennec fox, female, young, big ears, tan fur, dirty, bruise,
+    torn dress, ragged clothes, thin, anthro, fennec fox, toddler, big ears, checked tunic, bandaged hand
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad hands,
+    extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    zimage-turbo: 33351
+    il-furrytoonmix: 33352
+    il-realism: 33353
+    sdxl-nihilmania: 33354
+- key: r3-twist-statue
+  entity: human-ruins
+  title: 'Twist A: the fallen statue'
+  size: 832x1216
+  prompt_prose: a toppled colossal stone statue of a human man lying half buried in red desert sand, its huge weathered
+    face staring at the sky, beside it the rusted metal sign of an old shop jutting out of a dune with the word
+    PHARMACY in faded red block letters, a small grey koala ronin in a dusty cloak and battered straw hat small
+    in the foreground looking up at it, gritty painted comic illustration, realistic anthropomorphic animals with
+    true fur and weight, heavy ink shadows, dusty ochre and burnt umber palette, harsh low sunlight
+  prompt_tags: ruins, statue, giant, fallen statue, stone face, desert, sand dune, rusted sign, post-apocalypse,
+    wasteland, scenery, wide shot, from behind, anthro, koala, male, adult, grey fur, round ears, ear scar, black
+    nose, serious, squinting, frown, straw hat, tattered cloak, katana on back, ronin
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad hands,
+    extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi
+  jobs:
+    zimage-turbo: 33355
+    il-furrytoonmix: 33356
+    il-realism: 33357
+    sdxl-nihilmania: 33358
+- key: r3-twist-wall
+  entity: human-ruins
+  title: 'Twist B: the Great Wall'
+  size: 832x1216
+  prompt_prose: a long crumbling stretch of the Great Wall of China rising out of endless desert dunes, its watchtowers
+    broken and choked with sand, a small grey koala ronin in a dusty cloak and battered straw hat riding a large
+    sand-colored monitor lizard along its foot at sunset, gritty painted comic illustration, realistic anthropomorphic
+    animals with true fur and weight, heavy ink shadows, dusty ochre and burnt umber palette, harsh low sunlight
+  prompt_tags: great wall of china, wall, watchtower, ruins, desert, sand dune, sunset, scenery, wide shot, riding,
+    giant lizard, anthro, koala, male, adult, grey fur, round ears, ear scar, black nose, serious, squinting, frown,
+    straw hat, tattered cloak, katana on back, ronin
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad hands,
+    extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    zimage-turbo: 33359
+    il-furrytoonmix: 33360
+    il-realism: 33361
+    sdxl-nihilmania: 33362
