@@ -1,0 +1,206 @@
+# Zuzu round 4: furrytoonmix bake-off (Silas, 2026-10-03)
+# "furrytoonmix is hands down the best model for this project" -- find its update and
+# lookalikes. 6 subjects x 7 Illustrious-family lanes = 42 ArtJobs, private.
+# Every lane gets the SAME tag prompt, prefix, suffix and negative, and the Illustrious
+# family profile (no steps/cfg/sampler), so only the checkpoint varies. Pass 2 adds
+# author settings (euler_ancestral, cfg 4-5; the scheduler stays karras) to the best two lanes.
+# NOT SUBMITTED: the five new files must exist under ComfyUI models/checkpoints/Illustrious/
+# first (comic-creator/t-018). Research and links: docs/checkpoints.md.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status).
+round: 4
+series: zuzu-koala-assassin
+project_slug: comic-creator
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: ftm-v3
+  label: furrytoonmix XL-V3 (house, control)
+  engine: comfy
+  checkpoint: Illustrious/furrytoonmix_xlV3.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic
+  suffix: western, dusty, painterly, dramatic lighting, gritty
+- key: ftm-v3b
+  label: furrytoonmix XL-V3B
+  engine: comfy
+  checkpoint: Illustrious/furrytoonmix_xlV3B.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic
+  suffix: western, dusty, painterly, dramatic lighting, gritty
+- key: nova-furry-b
+  label: Nova Furry XL v18 B
+  engine: comfy
+  checkpoint: Illustrious/novaFurryXL_v180B.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic
+  suffix: western, dusty, painterly, dramatic lighting, gritty
+- key: nova-comic
+  label: Nova Comic XL v2.0
+  engine: comfy
+  checkpoint: Illustrious/novaComicXL_v20.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic
+  suffix: western, dusty, painterly, dramatic lighting, gritty
+- key: arthemy-western
+  label: Arthemy Western Art v3.0
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic
+  suffix: western, dusty, painterly, dramatic lighting, gritty
+- key: anthroblend
+  label: AnthroBlend Indigo Genesis v3.0
+  engine: comfy
+  checkpoint: Illustrious/anthroBlendIndigoGenesis_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic
+  suffix: western, dusty, painterly, dramatic lighting, gritty
+- key: molkeun
+  label: Mol_Keun Mix DeepCobalt V2
+  engine: comfy
+  checkpoint: Illustrious/molKeunMix_deepCobaltV2.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic
+  suffix: western, dusty, painterly, dramatic lighting, gritty
+subjects:
+- key: r4-zuzu-turnaround
+  entity: zuzu
+  title: Zuzu turnaround sheet
+  size: 1216x832
+  prompt_prose: 'character turnaround of a small grey koala ronin, compact and weathered, round ears with ragged
+    pale tufts, a notch and an old scar on the left ear, a broad black nose, hard narrowed eyes, a dusty threadbare
+    travel cloak, a battered wide straw hat, a long black lacquer katana slung across his back: four full-body views
+    side by side at the same scale on a plain pale parchment background, front view, three-quarter view, side view
+    and back view, standing still with his weight on one foot, a grim hard face, gritty painted comic illustration,
+    realistic anthropomorphic animals with true fur and weight, heavy ink shadows, dusty ochre and burnt umber palette,
+    harsh low sunlight'
+  prompt_tags: character sheet, turnaround, multiple views, front view, side view, back view, full body, standing,
+    simple background, anthro, koala, male, adult, grey fur, round ears, ear scar, black nose, serious, squinting,
+    frown, straw hat, tattered cloak, katana on back, ronin
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad hands,
+    extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    ftm-v3: null
+    ftm-v3b: null
+    nova-furry-b: null
+    nova-comic: null
+    arthemy-western: null
+    anthroblend: null
+    molkeun: null
+- key: r4-zuzu-emotions
+  entity: zuzu
+  title: Zuzu emotion sheet
+  size: 1216x832
+  prompt_prose: 'six head-and-shoulders studies of a weathered grey koala ronin with ragged tufted ears, a scarred
+    left ear, a broad black nose and hard narrowed eyes under a battered straw hat, arranged in two rows on a plain
+    pale parchment background: a flat cold stare, a narrowed squint against the sun, quiet cold anger with bared
+    teeth, bone-deep exhaustion, buried pain with eyes half closed, grim resolve, gritty painted comic illustration,
+    realistic anthropomorphic animals with true fur and weight, heavy ink shadows, dusty ochre and burnt umber palette,
+    harsh low sunlight'
+  prompt_tags: expression sheet, multiple views, portrait, upper body, glaring, squinting, angry, clenched teeth,
+    tired, sad, determined, simple background, anthro, koala, male, adult, grey fur, round ears, ear scar, black
+    nose, serious, squinting, frown, straw hat, tattered cloak, katana on back, ronin
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad hands,
+    extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    ftm-v3: null
+    ftm-v3b: null
+    nova-furry-b: null
+    nova-comic: null
+    arthemy-western: null
+    anthroblend: null
+    molkeun: null
+- key: r4-siblings-emotions
+  entity: siblings
+  title: Fennec siblings emotion sheet
+  size: 1216x832
+  prompt_prose: 'six head-and-shoulders studies of a gaunt fennec fox girl of about ten with enormous ears, dust-matted
+    fur and a bruised cheek and her toddler brother, arranged in two rows on a plain pale parchment background:
+    wide-eyed terror, sobbing grief with tears cutting the dust on her face, hollow hunger, narrow-eyed distrust,
+    numb shock, and a small fragile hope as she shields her brother, gritty painted comic illustration, realistic
+    anthropomorphic animals with true fur and weight, heavy ink shadows, dusty ochre and burnt umber palette, harsh
+    low sunlight'
+  prompt_tags: expression sheet, multiple views, portrait, upper body, crying, tears, scared, wide-eyed, sad, glaring,
+    hugging, duo, simple background, anthro, fennec fox, female, young, big ears, tan fur, dirty, bruise, torn dress,
+    ragged clothes, thin, anthro, fennec fox, toddler, big ears, checked tunic, bandaged hand
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad hands,
+    extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    ftm-v3: null
+    ftm-v3b: null
+    nova-furry-b: null
+    nova-comic: null
+    arthemy-western: null
+    anthroblend: null
+    molkeun: null
+- key: r4-komodo-maw
+  entity: old-komodo
+  title: Old Komodo open maw
+  size: 1344x768
+  prompt_prose: a colossal ancient komodo dragon erupting out of a desert dune, sand pouring off its ridged back,
+    its enormous jaws wide open toward the viewer, two small fennec fox children sliding down the collapsing sand
+    toward its open mouth, the girl clutching her toddler brother, and above them a small grey koala ronin in a
+    dusty cloak and battered straw hat leaping through the air with a long wooden staff raised to strike the beast's
+    snout, gritty painted comic illustration, realistic anthropomorphic animals with true fur and weight, heavy
+    ink shadows, dusty ochre and burnt umber palette, harsh low sunlight
+  prompt_tags: giant komodo dragon, kaiju, open mouth, sharp teeth, desert, sand dune, erupting from sand, sand
+    pouring, sliding, falling, peril, action, dynamic angle, jumping, holding staff, fennec fox, children, anthro,
+    koala, male, adult, grey fur, round ears, ear scar, black nose, serious, squinting, frown, straw hat, tattered
+    cloak, katana on back, ronin
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad hands,
+    extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    ftm-v3: null
+    ftm-v3b: null
+    nova-furry-b: null
+    nova-comic: null
+    arthemy-western: null
+    anthroblend: null
+    molkeun: null
+- key: r4-otter-house
+  entity: otter-house
+  title: The otter sisters' gate
+  size: 1344x768
+  prompt_prose: the lantern-lit gate of a walled convent tea house in the desert at night, stern anthropomorphic
+    otter sisters in dark habits and long kimono standing in the gateway with folded hands and cold smiles, two
+    small fennec fox children waiting at their feet with a dusty bundle, a small grey koala ronin in a dusty cloak
+    and battered straw hat turning away down the road, and in the dark courtyard behind the sisters a hyena watching,
+    gritty painted comic illustration, realistic anthropomorphic animals with true fur and weight, heavy ink shadows,
+    dusty ochre and burnt umber palette, harsh low sunlight
+  prompt_tags: anthro, otter, group, nun, habit, kimono, paper lantern, gate, courtyard, night, fennec fox, children,
+    hyena, sinister, from behind, anthro, koala, male, adult, grey fur, round ears, ear scar, black nose, serious,
+    squinting, frown, straw hat, tattered cloak, katana on back, ronin
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad hands,
+    extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    ftm-v3: null
+    ftm-v3b: null
+    nova-furry-b: null
+    nova-comic: null
+    arthemy-western: null
+    anthroblend: null
+    molkeun: null
+- key: r4-siblings-huddled
+  entity: siblings
+  title: Sole survivors
+  size: 1344x768
+  prompt_prose: a gaunt fennec fox girl of about ten with enormous ears, sand-colored fur matted with dust, thin
+    arms, a bruised cheek, a torn and filthy pale dress and rag-wrapped feet huddled in the corner of a ruined adobe
+    room with her toddler brother, a tiny fennec fox with huge ears, a dirty checked cloth tunic and a bandaged
+    paw wrapped tight in her arms, both starving and bruised, an empty tin bowl on the dirt floor, a shaft of dusty
+    light through a broken shutter, her eyes red from crying, gritty painted comic illustration, realistic anthropomorphic
+    animals with true fur and weight, heavy ink shadows, dusty ochre and burnt umber palette, harsh low sunlight
+  prompt_tags: duo, sitting, hugging, in corner, ruins, abandoned building, dirt floor, empty bowl, light rays,
+    crying, tears, bruise, starving, sad, dark, anthro, fennec fox, female, young, big ears, tan fur, dirty, bruise,
+    torn dress, ragged clothes, thin, anthro, fennec fox, toddler, big ears, checked tunic, bandaged hand
+  negative: nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad hands,
+    extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    ftm-v3: null
+    ftm-v3b: null
+    nova-furry-b: null
+    nova-comic: null
+    arthemy-western: null
+    anthroblend: null
+    molkeun: null

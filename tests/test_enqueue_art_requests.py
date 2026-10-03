@@ -50,6 +50,30 @@ def test_tag_lane_request_wraps_tags_and_carries_negative():
     assert body["promptString"] == "masterpiece, anthro, koala, gritty"
     assert body["checkpoint"] == "Illustrious/x.safetensors"
     assert body["negativePrompt"] == "nsfw, lowres"
+    assert not {"steps", "cfg", "sampler", "scheduler"} & body.keys()
+
+
+def test_comfy_lane_carries_author_settings_only_when_set():
+    lane = dict(LEDGER["lanes"][1], sampler="euler_ancestral", scheduler="normal", cfg=5)
+    body = enq.build_request(LEDGER, lane, LEDGER["subjects"][0])
+    assert (body["sampler"], body["cfg"]) == ("euler_ancestral", 5)
+    assert "steps" not in body and "scheduler" not in body
+    prose = dict(LEDGER["lanes"][0], sampler="euler")
+    assert "sampler" not in enq.build_request(LEDGER, prose, LEDGER["subjects"][0])
+
+
+def test_round4_ledger_is_a_fair_bakeoff():
+    from pathlib import Path
+
+    ledger = yaml.safe_load(
+        Path("projects/comic-creator/issues/zuzu-koala-assassin-01/ART-ROUND-4.yaml").read_text()
+    )
+    cells = list(enq.iter_cells(ledger))
+    assert len(cells) == 42
+    assert ledger["is_public"] is False
+    assert all(lane["checkpoint"].startswith("Illustrious/") for lane in ledger["lanes"])
+    assert len({(lane["prefix"], lane["suffix"], lane["prompt"]) for lane in ledger["lanes"]}) == 1
+    assert not any(k in lane for lane in ledger["lanes"] for k in ("steps", "cfg", "sampler", "scheduler"))
 
 
 def test_submit_writes_job_ids_back_and_skips_existing(tmp_path):
