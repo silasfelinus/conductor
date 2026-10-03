@@ -623,8 +623,8 @@ tasks:
   - id: t-026
     milestone: m5
     title: "Keep Daily Dream digest links direct instead of Brevo-tracked redirects"
-    status: review
-    updated: '2026-10-03T20:48:00Z'
+    status: done
+    updated: '2026-10-03T20:49:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -637,6 +637,7 @@ tasks:
       Silas reported on 2026-10-03 that the delivered Conductor digest still rewrites the Animation Manager preview and Decide all pitches links through Brevo's sendibt2.com tracker. Reopen t-026: PR #5411's contactPixelTrackingConsent=false assumption did not prevent rewriting in the live account. Repair the sender-level no-tracking contract and verify the delivered-payload boundary more precisely.
 
       Live Gmail regression confirmed PR #5411's per-contact consent flag did not prevent Brevo link rewriting. PR #5544 adds explicit X-Mailin-Track-Click: 0 and X-Mailin-Track-Open: 0 headers at the sender boundary while preserving the existing privacy preference. Exact-head workflows completed green before merge: Worker PR CI 37152439542, Security Audit 37152439519, Worker PR handoff 37152439512, Process task events 37152439517, and CodeQL 37152438626.
-    owner: worker
+
+      Merged silasfelinus/conductor#5544 as b403aa64 after every exact-head workflow completed successfully: Worker PR CI 37152439542, Security Audit 37152439519, Worker PR handoff 37152439512, Process task events 37152439517, and CodeQL 37152438626. The private digest now sends Brevo's explicit no-click/no-open tracking headers in addition to the existing per-recipient privacy preference. No live test email was sent; the next normal digest is the delivered-email verification boundary.
     claimed_by: 20261003T204700Z-chatgpt-animation-manager-t026-directlinks-9a31
     claimed_at: '2026-10-03T20:47:00Z'
