@@ -632,7 +632,8 @@ def process(path: Path, dry_run: bool) -> str:
         # recently. Drop the event rather than patch over newer state -- replaying
         # it again next cycle can never become non-stale, since roadmap timestamps
         # only move forward.
-        if event.get("learning") or event.get("note"):
+        carries_payload = bool(event.get("learning") or event.get("note"))
+        if carries_payload:
             # conductor/t-086: a stale event can carry a learning/note payload that
             # would otherwise vanish with no trace beyond this terse skip line (the
             # near-miss that motivated this task -- see TALKBACK.md 2026-07-26). Make
@@ -644,7 +645,12 @@ def process(path: Path, dry_run: bool) -> str:
                 file=sys.stderr,
             )
         if not dry_run:
-            path.unlink()
+            if carries_payload:
+                # Preserve the payload (task-events/failed/ + .error.txt) instead of
+                # deleting it, so a stale note/learning can still be reapplied by hand.
+                quarantine_event(path, f"STALE (not applied): {reason}")
+            else:
+                path.unlink()
         return f"{project}/{task_id}: STALE skip ({operation}) -- {reason}"
 
     # conductor/t-112: a `done` event can name a PR it claims is merged when

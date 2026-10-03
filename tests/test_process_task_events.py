@@ -922,6 +922,34 @@ class TaskEventProcessorTests(unittest.TestCase):
         self.assertIn("STALE", result)
         self.assertEqual(before, after)
         self.assertFalse(stale_event.exists())
+        # The note payload is preserved for hand-reapplication, not deleted.
+        preserved = self.root / "task-events" / "failed" / "stale-review.yaml"
+        self.assertTrue(preserved.exists())
+        self.assertIn("STALE", (preserved.parent / "stale-review.yaml.error.txt").read_text(encoding="utf-8"))
+
+    def test_stale_event_without_payload_is_deleted(self):
+        roadmap = self.roadmap()
+        roadmap["tasks"][0]["status"] = "claimed"
+        roadmap["tasks"][0]["claimed_at"] = "2026-07-19T08:18:20Z"
+        roadmap["tasks"][0]["updated"] = "2026-07-19T08:18:20Z"
+        (self.root / "projects" / "demo" / "roadmap.yaml").write_text(
+            yaml.safe_dump(roadmap, sort_keys=False), encoding="utf-8"
+        )
+        stale_event = self.write_event(
+            "stale-plain.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "review",
+                "updated": "2026-07-19T07:20:00Z",
+            },
+        )
+
+        MODULE.process(stale_event, dry_run=False)
+
+        self.assertFalse(stale_event.exists())
+        self.assertFalse((self.root / "task-events" / "failed").exists())
 
     def test_stale_event_with_learning_payload_warns_on_stderr(self):
         # conductor/t-086: a stale event carrying a note/learning payload used to

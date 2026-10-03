@@ -321,6 +321,22 @@ def audit() -> dict[str, Any]:
                     )
                 )
 
+            if status == "ready" and (task.get("claimed_by") or task.get("claimed_at")):
+                # A leftover claim on a pickable task reads as a live claim to anything
+                # that checks claimed_by (kind-economy/t-011, 2026-10-03: a `ready` task kept
+                # claimed_by from 2026-09-07 and swallowed a new session's soft-gate event).
+                # Scoped to `ready`: done/needs-human tasks keep claimed_by as history.
+                findings.append(
+                    issue(
+                        "warning",
+                        "STALE_CLAIM_FIELDS",
+                        slug,
+                        f"status is {status!r} but claimed_by/claimed_at are still set. Unset them "
+                        "(a `ready` event does this) so the task does not look claimed.",
+                        task_id,
+                    )
+                )
+
             if status == "needs-human":
                 hard_reasons = []
                 if task.get("gate_human"):
