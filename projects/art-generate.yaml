@@ -1,7 +1,3 @@
-generated_by: scripts/queue_missing_project_art.py
-mode: dry-run
-description: Concrete project image requests ready for generation; active retries are preserved until
-  the consumer marks them complete.
 batch:
   entries:
   - project: kr-adventures
@@ -10,10 +6,10 @@ batch:
     image_path: projects/images/kr-adventures-card.webp
     size: 512x768
     status: pending
-    prompt: flat minimal portrait illustration, Pre-written choose-your-own-adventure books that start
-      from existing Kind Robots scenarios, each with a preset hero, a fully authored branching story graph,
-      and pre-generated art for every node. Static content, no LLM at read time., centered subject on
-      soft gradient backdrop, no text, 2:3 portrait composition
+    prompt: flat minimal portrait illustration, Pre-written choose-your-own-adventure books
+      that start from existing Kind Robots scenarios, each with a preset hero, a fully authored
+      branching story graph, and pre-generated art for every node. Static content, no LLM
+      at read time., centered subject on soft gradient backdrop, no text, 2:3 portrait composition
     engine: krea2
   - project: kr-solitaire
     variant: card
@@ -21,9 +17,10 @@ batch:
     image_path: projects/images/kr-solitaire-card.webp
     size: 512x768
     status: pending
-    prompt: flat minimal portrait illustration, Klondike solitaire played with a hand-designed 52-card
-      Kind Robots deck (four suits of robots, illustrated court cards) and Kind Robots card backs. Pure
-      client-side game, no LLM., centered subject on soft gradient backdrop, no text, 2:3 portrait composition
+    prompt: flat minimal portrait illustration, Klondike solitaire played with a hand-designed
+      52-card Kind Robots deck (four suits of robots, illustrated court cards) and Kind Robots
+      card backs. Pure client-side game, no LLM., centered subject on soft gradient backdrop,
+      no text, 2:3 portrait composition
     engine: krea2
   - project: kind-oracle
     variant: card
@@ -31,20 +28,12 @@ batch:
     image_path: projects/images/kind-oracle-card.webp
     size: 512x768
     status: pending
-    prompt: flat minimal portrait illustration, A 22-card oracle deck of Kind Robots, each card a full
-      piece of art with an upright and a reversed meaning, where you draw a one, three or five card spread
-      and read a pre-written reading assembled from hand-authored pair and position texts. Every combination
-      is written ahead of time, so it feels personal and costs nothing to run., centered subject on soft
-      gradient backdrop, no text, 2:3 portrait composition
-    engine: krea2
-  - project: evolve-rebel-button
-    variant: icon
-    target_repo: silasfelinus/conductor
-    image_path: projects/images/evolve-rebel-button-icon.webp
-    size: 256x256
-    status: pending
-    prompt: flat minimal app icon, Turns the early Rebel Button toy into an art reviewer once someone
-      hits 100 clicks., bold clean vector shapes, square composition, no text
+    prompt: flat minimal portrait illustration, A 22-card oracle deck of Kind Robots, each
+      card a full piece of art with an upright and a reversed meaning, where you draw a one,
+      three or five card spread and read a pre-written reading assembled from hand-authored
+      pair and position texts. Every combination is written ahead of time, so it feels personal
+      and costs nothing to run., centered subject on soft gradient backdrop, no text, 2:3
+      portrait composition
     engine: krea2
   - project: evolve-rebel-button
     variant: card
@@ -52,7 +41,7 @@ batch:
     image_path: projects/images/evolve-rebel-button-card.webp
     size: 512x768
     status: pending
-    prompt: flat minimal portrait illustration, Turns the early Rebel Button toy into an art reviewer
-      once someone hits 100 clicks., centered subject on soft gradient backdrop, no text, 2:3 portrait
-      composition
+    prompt: flat minimal portrait illustration, Turns the early Rebel Button toy into an art
+      reviewer once someone hits 100 clicks., centered subject on soft gradient backdrop,
+      no text, 2:3 portrait composition
     engine: krea2
