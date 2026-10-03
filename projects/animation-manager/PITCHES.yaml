@@ -1783,7 +1783,7 @@ pitches:
 
   - id: split-flap-departures
     title: Split-Flap Departure Board
-    status: pitched
+    status: candidate
     priority: 32
     surprise: >
       A wall of vintage split-flap tiles chatters through unrelated letters and glyphs, tile by
@@ -1833,6 +1833,19 @@ pitches:
       - hovering a single tile pauses only that tile's flap without affecting any neighboring tile's progress
       - clicking the row can skip an in-progress dwell early without breaking any tile's settle logic
       - reduced-motion mode always shows either a fully-settled phrase or an instant jump to the current target character, never mid-flap motion
+    build:
+      - status: candidate
+        component: components/screenfx/split-flap-departures.vue
+        pull_request: silasfelinus/kind_robots#3204
+        released_at: '2026-10-03T08:00:00Z'
+        commit: 909f548393360933dfc7494cfa6f6c5dbec762f4
+        verification:
+          - Contract verifiers
+          - TypeScript
+          - layout-contract
+          - facet-catalog
+        deferred:
+          - sandbox-access-gap (see SPEC.md "Sandbox verification gap")
 
   - id: firefly-phase-sync
     title: Firefly Phase Sync
