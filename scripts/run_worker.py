@@ -28,6 +28,8 @@ import os
 import subprocess
 import sys
 import tempfile
+from collections.abc import Iterator
+from itertools import islice
 from pathlib import Path
 from typing import Any
 
@@ -99,9 +101,10 @@ def load_roadmaps() -> list[dict[str, Any]]:
     return roadmaps
 
 
-def find_ready_task(
+def iter_ready_tasks(
     priority_order: list[str], roadmaps: list[dict[str, Any]], *, now: Any = None
-) -> dict[str, Any] | None:
+) -> Iterator[dict[str, Any]]:
+    """Yield every pickable ready task in priority order."""
     by_project = {roadmap.get('_project'): roadmap for roadmap in roadmaps}
     overrides = {str(slug): {'status': roadmap.get('_lifecycle', 'active')} for slug, roadmap in by_project.items()}
     for slug in ordered_workable_slugs(priority_order, overrides):
@@ -125,7 +128,7 @@ def find_ready_task(
                 # (conductor/t-123). Skip to the next candidate instead.
                 continue
             hint = zero_diff_close_hint(task, tasks_by_id)
-            return {
+            yield {
                 'project': roadmap.get('_project'),
                 'task_id': task.get('id'),
                 'title': task.get('title'),
@@ -134,17 +137,28 @@ def find_ready_task(
                 'audit_candidate_reason': hint.get('reason') if hint else None,
             }
 
-    return None
+
+def find_ready_task(
+    priority_order: list[str], roadmaps: list[dict[str, Any]], *, now: Any = None
+) -> dict[str, Any] | None:
+    return next(iter_ready_tasks(priority_order, roadmaps, now=now), None)
+
+
+READY_TASKS_LIMIT = 8
 
 
 def build_queue_summary() -> dict[str, Any]:
     roadmaps = load_roadmaps()
-    ready_task = find_ready_task(load_priority(), roadmaps)
+    ready_tasks = list(islice(iter_ready_tasks(load_priority(), roadmaps), READY_TASKS_LIMIT))
+    ready_task = ready_tasks[0] if ready_tasks else None
 
     return {
         'active_project_count': sum(1 for roadmap in roadmaps if roadmap.get('_lifecycle') == 'active'),
         'continuous_project_count': sum(1 for roadmap in roadmaps if roadmap.get('_lifecycle') == 'continuous'),
         'ready_task': ready_task,
+        # Ranked fallbacks: a session that cannot do ready_task (no shell, no credentials)
+        # walks this list instead of reporting "nothing to do".
+        'ready_tasks': ready_tasks,
         'projects_with_ready_tasks': [
             roadmap.get('_project')
             for roadmap in roadmaps
