@@ -546,8 +546,7 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Implement ambient peekaboo butterfly traffic"
-    status: review
-    owner: worker
+    status: done
     passes: 0
     stakes: reversible
     depends_on: [t-033]
@@ -557,7 +556,9 @@ tasks:
       GATE TRIAGE 2026-09-30 (session 20260930T0600Z-gate-triage, requested by Silas in session): NOT A HUMAN GATE, returned to agents. Silas's own 2026-09-19 ANIMATION-SHOT- LIST.md settles the conflict: no procedural DOM renderer for runway butterflies. t-033 is done. Taking option (b): narrow this task to randomized clip selection/scheduling across the rendered runway clips, with depends_on [t-033].
 
       Implemented randomized non-repeating runway clip selection with varied quiet gaps between passes, preserving reduced-motion, tab-hidden, and off-screen gating.
-    updated: '2026-10-03T01:05:00Z'
+
+      Merged silasfelinus/kind_robots#3201 (squash 4f740f00e37c678492923bb60f75dcb1464e6217). Runway traffic now chooses a different rendered pass randomly, leaves a varied 1.2–5.2s quiet gap between passes, and preserves reduced-motion, hidden-tab, and off-screen suppression. Final PR head de74ca72a667971efa3e40b2644c192b3a6f6ea3 had 31/31 GitHub check runs completed successfully; Contract verifiers completed 429/429 steps.
+    updated: '2026-10-03T01:06:00Z'
     gate_rechecked: '2026-09-30'
     claimed_by: 2026-10-02T175000-0700-butterfly-gallery-t-016-x7k2
     claimed_at: '2026-10-03T00:50:00Z'
@@ -875,7 +876,7 @@ tasks:
   - id: t-025
     milestone: m5
     title: "Cross-width visual and interaction acceptance"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
