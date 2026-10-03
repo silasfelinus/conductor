@@ -162,19 +162,19 @@ tasks:
 - id: t-013
   milestone: m2
   title: 'Comic Studio vetting loop at /play/comics/studio (kind_robots, admin)'
-  status: claimed
+  status: review
   owner: worker
   passes: 0
   stakes: reversible
-  updated: '2026-10-03T10:27:21Z'
-  note: 'Silas, 2026-10-03: the one thing he likes in the coloring studio is vetting, side-by-side variants,
-    an editable prompt and "New <variant>" resubmits with history and final/rejected badges, but not its
-    UI or its Conductor-YAML backend. Build it Kind Robots-native: additive Prisma models (series, entities,
-    slots, attempts, issues), lanes (engine + checkpoint) rendered through POST /api/art/enqueue, verdicts,
-    attempt history, series/entity notes with a secret-until marker, and an import endpoint seeded from
-    the round-2 and round-3 ledgers. Schema-affecting (additive). Design: docs/survey.md, docs/inspiration.md.'
+  updated: '2026-10-03T10:48:08Z'
+  note: >-
+    Silas, 2026-10-03: the one thing he likes in the coloring studio is vetting, side-by-side variants, an editable prompt and "New <variant>" resubmits with history and final/rejected badges, but not its UI or its Conductor-YAML backend. Build it Kind Robots-native: additive Prisma models (series, entities, slots, attempts, issues), lanes (engine + checkpoint) rendered through POST /api/art/enqueue, verdicts, attempt history, series/entity notes with a secret-until marker, and an import endpoint seeded from the round-2 and round-3 ledgers. Schema-affecting (additive). Design: docs/survey.md, docs/inspiration.md.
+
+    Built in kind_robots PR #3208 (schema-affecting, additive). Live only after the
+    Alexandria deploy runs migration 20261003120000_add_comic_studio.
   claimed_by: 20261003T1030-zuzu-studio-t-013
   claimed_at: '2026-10-03T10:27:21Z'
+  implementation_pr: 'silasfelinus/kind_robots#3208'
 - id: t-014
   milestone: m2
   title: Comic Studio page composer (kind_robots, admin)
