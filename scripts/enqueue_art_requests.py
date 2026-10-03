@@ -60,6 +60,13 @@ def build_request(ledger, lane, subject):
     }
     if lane.get("checkpoint"):
         body["checkpoint"] = lane["checkpoint"]
+    if lane["engine"] == "comfy":
+        # Optional per-lane overrides (a checkpoint author's recommended settings).
+        # Absent, Kind Robots applies the checkpoint family's sampler profile. The
+        # scheduler always stays the profile's: enqueue does not forward one for comfy.
+        for field in ("steps", "cfg", "sampler"):
+            if lane.get(field):
+                body[field] = lane[field]
     if lane["engine"] == "comfy" and subject.get("negative"):
         body["negativePrompt"] = " ".join(str(subject["negative"]).split())
     for field, key in (("projectSlug", "project_slug"), ("designer", "designer")):

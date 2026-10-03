@@ -247,3 +247,23 @@ tasks:
   claimed_by: 20261003T1030-zuzu-studio-t-017
   claimed_at: '2026-10-03T10:50:00Z'
   implementation_pr: 'silasfelinus/kind_robots#3208'
+- id: t-018
+  milestone: m2
+  title: 'Checkpoint bake-off: furrytoonmix vs its V3B update and five lookalikes'
+  status: needs-human
+  gate_reason: physical-access
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-03T12:00:00Z'
+  note: >-
+    FOR SILAS: download the six checkpoints listed in docs/checkpoints.md into ComfyUI
+    models/checkpoints/Illustrious/ under the file names in
+    issues/zuzu-koala-assassin-01/ART-ROUND-4.yaml, then say so (or flip this to ready).
+    Silas, 2026-10-03: furrytoonmix is "hands down the best model for this project"; find
+    updates and about five lookalikes, "work done finding the right checkpoint should pay
+    off dividends down the road". Agent work once the files exist: run
+    scripts/enqueue_art_requests.py on ART-ROUND-4.yaml (--live, then --status; 42 private
+    jobs, identical prompts, family profile), publish a contact sheet (rows = subjects,
+    columns = checkpoints), then a second pass with author settings (euler_ancestral,
+    cfg 4-5) on the best two, and add the winners as Comic Studio lanes.
