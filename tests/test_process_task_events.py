@@ -777,6 +777,34 @@ class TaskEventProcessorTests(unittest.TestCase):
         self.assertEqual(self.roadmap()["tasks"][0]["status"], "claimed")
         self.assertFalse(intruder_done.exists())
 
+    def test_needs_human_from_new_session_applies_when_task_is_ready_with_leftover_claimed_by(self):
+        # Regression: a `ready` task carrying a stale claimed_by must not swallow a new
+        # session's soft-gate event as ALREADY_CLAIMED.
+        roadmap_path = self.root / "projects" / "demo" / "roadmap.yaml"
+        text = roadmap_path.read_text(encoding="utf-8")
+        roadmap_path.write_text(
+            text.replace("  status: ready\n", "  status: ready\n  claimed_by: old-session\n", 1),
+            encoding="utf-8",
+        )
+        event = self.write_event(
+            "gate.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "needs-human",
+                "session": "sess-new",
+                "soft_gate": True,
+            },
+        )
+
+        result = MODULE.process(event, dry_run=False)
+
+        self.assertNotIn("ALREADY_CLAIMED", result)
+        task = self.roadmap()["tasks"][0]
+        self.assertEqual(task["status"], "needs-human")
+        self.assertIs(task["soft_gate"], True)
+
     def test_later_done_from_owning_session_applies(self):
         claim = self.write_event(
             "claim.yaml",
