@@ -180,3 +180,11 @@ def test_mixed_hard_and_soft_gate_markers_warn(tmp_path):
     )
     finding = next(item for item in result if item['code'] == 'MIXED_HARD_SOFT_GATE')
     assert finding['severity'] == 'warning'
+
+def test_ready_task_with_leftover_claim_fields_is_flagged(tmp_path):
+    result = findings_for(tmp_path, '  - id: t-001\n    milestone: m1\n    title: Leftover claim\n    status: ready\n    stakes: reversible\n    claimed_by: old-session\n    claimed_at: "2026-09-07T14:35:00Z"\n')
+    assert 'STALE_CLAIM_FIELDS' in codes(result)
+
+def test_claimed_task_with_claim_fields_is_not_flagged(tmp_path):
+    result = findings_for(tmp_path, '  - id: t-001\n    milestone: m1\n    title: Live claim\n    status: claimed\n    stakes: reversible\n    owner: worker\n    claimed_by: sess-a\n    claimed_at: "2026-10-03T01:00:00Z"\n')
+    assert 'STALE_CLAIM_FIELDS' not in codes(result)
