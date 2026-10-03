@@ -138,9 +138,9 @@ SFX (small, delicate): *hh— hh—*
 **PANEL 3 (wide, from inside, the reveal):** The back room of the tea house. A long tatami room, low
 tables, cushions. It was a gathering of the town, perhaps: a wake, a wedding, a meeting. Now rows
 of sheeted shapes and dark stains on the straw mats, the light striping through torn shoji screens.
-Tilted in the far corner, with her back to a wall, a **young panda girl**, soot on her fur, in a torn
-dress, holding a **baby panda** in a sling made from a tablecloth. She is sobbing without sound.
-The baby hiccups and whimpers, hungry and hot.
+Tilted in the far corner, with her back to a wall, a **young girl** ([species TBD, see BRAINSTORM-ROUND-2]), soot on her fur, in a torn
+dress, holding her **toddler brother** against her side, a checked tablecloth around his shoulders like a cape. She is sobbing without sound.
+The toddler hiccups and babbles a few wet half-words, thirsty and hot.
 **PANEL 4 (tight):** The girl's face, wet eyes, looking up at the open door. At the small silhouette.
 She sees a koala with a sword. Her sobbing stops. She doesn't breathe.
 
@@ -153,7 +153,7 @@ She sees a koala with a sword. Her sobbing stops. She doesn't breathe.
 
 **PANEL 1 (wide, low angle):** Zuzu in the doorway, small. The girl at the far end of the room, big in
 frame (she is half again his size, sitting). Neither moves.
-**PANEL 2 (insert):** The girl's arms tighten around the baby. She's trying to cover him with her whole body.
+**PANEL 2 (insert):** The girl's arms tighten around the baby. She's trying to cover him with her whole body. He peeks out under her arm, curious about the koala.
 **PANEL 3 (insert):** Zuzu's paw, resting on the hilt of the katana. (We read the paw as a threat; we will
 later read it as habit.) He takes it away. He puts both paws open at his sides.
 **PANEL 4 (wide):** He looks at her. A long beat. Then he turns around.
@@ -168,7 +168,7 @@ later read it as habit.) He takes it away. He puts both paws open at his sides.
 rectangle behind him.
 **PANEL 2 (insert):** He takes the lizard's lead rope. Checks the cinch. Steps into the stirrup (a small
 set of steps hanging from the saddle for a rider his size).
-**PANEL 3 (insert):** Behind him, from far down the street, the baby begins to cry. A real cry, high and
+**PANEL 3 (insert):** Behind him, from far down the street, the toddler begins to cry. A real cry, high and
 thin.
 **PANEL 4 (tight):** Zuzu in the saddle. He does not turn around. The cry goes on.
 
@@ -216,7 +216,7 @@ toward the tea house, small in the distance. He rides back.
 sword against the doorframe. (He disarms himself, and she should see it.)
 **PANEL 2 (insert):** Zuzu's empty paws, open. He steps through the door.
 **PANEL 3 (wide, interior):** The girl hasn't moved from the corner. She sees him come in, unarmed. The
-baby is quieter now, only whimpering. Zuzu walks slowly across the tatami, between the sheeted shapes,
+toddler is quieter now, babbling at the sword by the door. Zuzu walks slowly across the tatami, between the sheeted shapes,
 looking at none of them.
 **PANEL 4 (tight):** Zuzu stops two arm-lengths from her. He lowers himself to sit cross-legged on the floor, so
 that his eyes are now lower than hers.
@@ -233,8 +233,8 @@ her knee.
 **PANEL 3 (wide):** The girl looks at the gourd. At him. At the gourd. She is very thirsty. She does not
 want to be.
 **PANEL 4 (insert):** She takes it, drinks one swallow, then pours a few drops into her paw and lets the
-baby lick them.
-**PANEL 5 (tight):** The baby drinks, wide eyes. The girl, for the first time, cries out loud: a single
+toddler drink from the gourd's cup.
+**PANEL 5 (tight):** The toddler drinks, wide eyes, then burbles something that is almost a word. The girl, for the first time, cries out loud: a single
 breath of sound.
 
 **ZUZU** *(the first thing he says in the book; quiet)*: "Slowly."
@@ -261,7 +261,7 @@ sheeted shapes. The girl watches him do this.
 
 ## PAGE 16
 
-**PANEL 1 (wide):** Zuzu mounts the lizard outside the tea house. The girl is in the doorway with the baby, the
+**PANEL 1 (wide):** Zuzu mounts the lizard outside the tea house. The girl is in the doorway with the toddler, the
 gourd held against her chest. The street is empty and golden.
 **PANEL 2 (insert):** She watches him. He does not look back at her.
 **PANEL 3 (wide):** He rides out under the arch for the second time. The bell tower stands over
@@ -299,7 +299,7 @@ his side under the cloak, back to the fire, the sword within reach of his paw.
 absence of a sound.
 **PANEL 3 (insert):** The edge of the firelight. Two small round ears at the very edge of the frame.
 **PANEL 4 (wide, the reveal):** Across the dying fire, sitting very still on a log, **Ling**, with the
-baby asleep in the sling on her chest. She is **watching him**. She has been watching him for some time.
+toddler asleep against her chest, one paw wrapped in her dress. She is **watching him**. She has been watching him for some time.
 She does not look afraid any more. She looks like someone who is making up her mind.
 **PANEL 5 (tight):** Zuzu looks back at her, his paw still near the sword. A long beat.
 
@@ -316,7 +316,7 @@ She does not look afraid any more. She looks like someone who is making up her m
 gourd, refilled at the stream. She has been up first, and she is making herself useful.
 **PANEL 3 (wide):** Zuzu sees the gourd. He takes it. He hangs it on his belt. He says nothing at all.
 **PANEL 4 (wide, widescreen strip, the road):** Zuzu leading the lizard across red mesa country. Far
-behind him, small, a girl with a baby in a sling, following twenty paces back. When he stops, she stops.
+behind him, small, a girl with a toddler on her hip, following twenty paces back. When the toddler tires he toddles a few steps on his own and is scooped back up. When he stops, she stops.
 When he walks, she walks.
 **PANEL 5 (insert):** Their shadows on the red dirt: one large, one small, one very small. The large
 and the small stay the same distance apart.
@@ -335,7 +335,7 @@ and the small stay the same distance apart.
 **PANEL 1 (wide):** Late afternoon. A lone **apple tree**, absurdly alive, in the middle of a dead plain,
 heavy with fruit, shadows long, leaning toward the road like it has been waiting.
 **PANEL 2 (insert):** Zuzu stops under it. Looks up. Behind him, forty paces back, Ling and Bao stop
-too. The baby is reaching for the fruit. Ling's paw is over his hand. She's pulling it down.
+too. The toddler is reaching for the fruit and babbling at it. Ling's paw is over his hand. She's pulling it down.
 **PANEL 3 (insert, tight):** Zuzu's paw on the hilt. His thumb at the mouth of the black scabbard,
 worn pale there.
 **PANEL 4 (BIG, the one blade stroke in the issue; full-width widescreen strip):** The draw, almost not
@@ -384,4 +384,4 @@ road crossing his). If the book would rather end on the apples, drop it. The app
   leaning, laid across knees, or being cleaned.
 - **Red:** the only fully saturated red in the issue is the contract seal and the strike-through on
   page 6 (plus, optionally, one lantern on the cover). Blood is maroon-black and dry.
-- **Names** *Ling* and *Bao* are placeholders (see the Series Bible).
+- **Names** *Ling* and *Bao* are placeholders, and the kids' species is undecided (see BRAINSTORM-ROUND-2.md).
