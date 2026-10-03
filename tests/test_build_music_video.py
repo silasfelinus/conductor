@@ -340,3 +340,84 @@ def test_read_state_picks_up_clip_rows():
 def test_preset_names_match_kind_robots_motion_contract():
     # kind_robots utils/musicVideoMotion.ts MUSIC_VIDEO_KEN_BURNS_PRESETS
     assert bmv.KEN_BURNS_PRESETS == ("zoom-in", "pan-right", "zoom-out", "pan-left")
+
+
+# ------------------------------------------------------- final upload (t-023)
+
+
+def test_crf_is_part_of_the_ffmpeg_command():
+    scenes = [ts("s1", 0, 4)]
+    command = bmv.build_ffmpeg_command(scenes, Path("song.mp3"), Path("out.mp4"), 1280, 720, 30, 4.0, crf=28)
+    assert command[command.index("-crf") + 1] == "28"
+
+
+class _Run:
+    """Fake ffmpeg: writes a file whose size depends on the CRF it was given."""
+
+    def __init__(self, out, sizes):
+        self.out, self.sizes, self.crfs = out, sizes, []
+
+    def __call__(self, command, **_kwargs):
+        crf = int(command[command.index("-crf") + 1])
+        self.crfs.append(crf)
+        self.out.write_bytes(b"x" * self.sizes[crf])
+        return subprocess.CompletedProcess(command, 0, "", "")
+
+
+def test_encode_climbs_the_crf_ladder_until_the_file_fits(tmp_path):
+    out = tmp_path / "out.mp4"
+    run = _Run(out, {20: 3000, 24: 2000, 28: 900, 32: 500})
+    make = lambda crf: bmv.build_ffmpeg_command([ts("s1", 0, 4)], Path("s.mp3"), out, 64, 64, 12, 4.0, crf)
+    assert bmv.encode_within_limit(make, out, 1000, run=run) == 28
+    assert run.crfs == [20, 24, 28]
+
+
+def test_encode_gives_up_with_a_clear_message_when_nothing_fits(tmp_path):
+    out = tmp_path / "out.mp4"
+    run = _Run(out, {crf: 5000 for crf in bmv.CRF_LADDER})
+    make = lambda crf: bmv.build_ffmpeg_command([ts("s1", 0, 4)], Path("s.mp3"), out, 64, 64, 12, 4.0, crf)
+    with pytest.raises(bmv.PipelineError, match="MUSIC_VIDEO_MAX_UPLOAD_MB"):
+        bmv.encode_within_limit(make, out, 1000, run=run)
+
+
+def test_multipart_body_carries_the_file_once_with_its_type():
+    body = bmv.encode_multipart_file("file", 'tra"iler.mp4', "video/mp4", b"\x00ftypMP4", "BOUND")
+    assert body.startswith(b"--BOUND\r\n")
+    assert b'Content-Disposition: form-data; name="file"; filename="trailer.mp4"\r\n' in body
+    assert b"Content-Type: video/mp4\r\n\r\n\x00ftypMP4\r\n--BOUND--\r\n" in body
+
+
+def _finished_client(calls):
+    class Done(FakeClient):
+        def get_video(self, video_id):
+            scenes = [scene("s1", 0, 4, art=101)]
+            return {"id": video_id, "doc": doc(song={"source": "comfy-acestep", "artImageId": 900}, scenes=scenes)}
+
+        def scene_status(self, video_id):
+            return [{"sceneId": "s1", "jobId": None, "status": "READY", "artImageId": 101, "error": None}]
+
+        def upload_final(self, video_id, mp4):
+            calls.append(("upload", video_id, mp4.name))
+            return {"artImageId": 4242}
+
+    return Done
+
+
+def test_a_finished_run_uploads_the_mp4(monkeypatch, tmp_path, capsys):
+    calls = []
+    monkeypatch.setattr(bmv, "KR_API_TOKEN", "test-token-value")
+    monkeypatch.setattr(bmv, "KrClient", lambda *a, **k: _finished_client(calls)())
+    monkeypatch.setattr(bmv, "assemble", lambda client, state, out, workdir, fps, max_bytes: out)
+    out = tmp_path / "trailer.mp4"
+    assert bmv.main(["--video-id", "7", "--out", str(out)]) == bmv.EXIT_DONE
+    assert calls == [("upload", 7, "trailer.mp4")]
+    assert "final ArtImage 4242" in capsys.readouterr().out
+
+
+def test_no_upload_keeps_the_mp4_local(monkeypatch, tmp_path):
+    calls = []
+    monkeypatch.setattr(bmv, "KR_API_TOKEN", "test-token-value")
+    monkeypatch.setattr(bmv, "KrClient", lambda *a, **k: _finished_client(calls)())
+    monkeypatch.setattr(bmv, "assemble", lambda client, state, out, workdir, fps, max_bytes: out)
+    assert bmv.main(["--video-id", "7", "--out", str(tmp_path / "t.mp4"), "--no-upload"]) == bmv.EXIT_DONE
+    assert calls == []

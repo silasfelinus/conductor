@@ -62,6 +62,13 @@ FRAME_SIZES = {
 }
 DEFAULT_FPS = 30
 
+# The finished MP4 is uploaded to POST /api/music-video/<id>/final, which keeps
+# the bytes base64 in an ArtImage row and caps them (kind_robots
+# utils/musicVideoFinal.ts, MUSIC_VIDEO_MAX_UPLOAD_MB, default 24). Assembly
+# re-encodes at each CRF in turn until the file fits.
+DEFAULT_MAX_UPLOAD_MB = 24
+CRF_LADDER = (20, 24, 28, 32)
+
 # Ken Burns presets. These names are a contract with kind_robots
 # utils/musicVideoMotion.ts (MUSIC_VIDEO_KEN_BURNS_PRESETS, music-video/t-009):
 # keep the tuple identical, in the same order, since both sides assign a scene
@@ -294,6 +301,7 @@ def build_ffmpeg_command(
     height: int,
     fps: int = DEFAULT_FPS,
     total_sec: float | None = None,
+    crf: int = CRF_LADDER[0],
 ) -> list[str]:
     filter_complex, video_label = build_filter_graph(scenes, width, height, fps)
     total = total_sec if total_sec is not None else scenes[-1].end
@@ -318,7 +326,7 @@ def build_ffmpeg_command(
         "-preset",
         "medium",
         "-crf",
-        "20",
+        str(crf),
         "-pix_fmt",
         "yuv420p",
         "-c:a",
@@ -426,6 +434,30 @@ class KrClient:
     def scene_status(self, video_id: int) -> list[dict]:
         return self._request("GET", f"/api/music-video/{video_id}/scenes/status")["data"]["scenes"]
 
+    def upload_final(self, video_id: int, mp4: Path) -> dict:
+        boundary = f"----kr-music-video-{time.time_ns()}"
+        body = encode_multipart_file("file", mp4.name, "video/mp4", mp4.read_bytes(), boundary)
+        request = urllib.request.Request(
+            f"{self.base_url}/api/music-video/{video_id}/final", data=body, method="POST"
+        )
+        request.add_header("Content-Type", f"multipart/form-data; boundary={boundary}")
+        request.add_header("Authorization", f"Bearer {self._token}")
+        try:
+            with urllib.request.urlopen(request, timeout=max(self.timeout, 600)) as response:
+                payload = json.loads(response.read().decode() or "null")
+        except urllib.error.HTTPError as error:
+            try:
+                payload = json.loads(error.read().decode() or "null")
+            except (ValueError, OSError):
+                payload = None
+            message = (payload or {}).get("message") if isinstance(payload, dict) else None
+            raise PipelineError(f"final upload -> HTTP {error.code}: {message or 'no message'}") from error
+        except urllib.error.URLError as error:
+            raise PipelineError(f"could not reach {self.base_url}: {error.reason}") from error
+        if not isinstance(payload, dict) or not payload.get("success"):
+            raise PipelineError(f"final upload failed: {payload}")
+        return payload.get("data") or {}
+
     def download_art(self, art_image_id: int, destination: Path) -> Path:
         request = urllib.request.Request(f"{self.base_url}/api/art/images/{art_image_id}/file")
         request.add_header("Authorization", f"Bearer {self._token}")
@@ -435,6 +467,33 @@ class KrClient:
         except urllib.error.URLError as error:
             raise PipelineError(f"download of ArtImage {art_image_id} failed: {error}") from error
         return destination
+
+
+def encode_multipart_file(field: str, filename: str, content_type: str, data: bytes, boundary: str) -> bytes:
+    """One-file multipart/form-data body (stdlib has no encoder)."""
+    safe_name = filename.replace('"', "").replace("\r", "").replace("\n", "")
+    head = (
+        f"--{boundary}\r\n"
+        f'Content-Disposition: form-data; name="{field}"; filename="{safe_name}"\r\n'
+        f"Content-Type: {content_type}\r\n\r\n"
+    ).encode()
+    return head + data + f"\r\n--{boundary}--\r\n".encode()
+
+
+def encode_within_limit(make_command, out: Path, max_bytes: int, run=subprocess.run) -> int:
+    """Encode at each CRF on the ladder until the file fits; return the CRF used."""
+    for crf in CRF_LADDER:
+        result = run(make_command(crf), capture_output=True, text=True)
+        if result.returncode != 0:
+            raise PipelineError(f"ffmpeg failed: {result.stderr.strip()[-2000:]}")
+        size = out.stat().st_size
+        if size <= max_bytes:
+            return crf
+        print(f"  {out.name} is {size / 1048576:.1f} MB at CRF {crf}; over the {max_bytes / 1048576:.0f} MB cap")
+    raise PipelineError(
+        f"even CRF {CRF_LADDER[-1]} leaves {out.name} over the {max_bytes / 1048576:.0f} MB upload cap; "
+        "shorten the video or raise MUSIC_VIDEO_MAX_UPLOAD_MB on the server and --max-upload-mb here"
+    )
 
 
 def read_state(client: KrClient, video_id: int) -> RunState:
@@ -494,7 +553,14 @@ def run_actions(client: KrClient, video_id: int, actions: list[str]) -> None:
         print(f"  done: {action}")
 
 
-def assemble(client: KrClient, state: RunState, out: Path, workdir: Path, fps: int) -> Path:
+def assemble(
+    client: KrClient,
+    state: RunState,
+    out: Path,
+    workdir: Path,
+    fps: int,
+    max_bytes: int = DEFAULT_MAX_UPLOAD_MB * 1024 * 1024,
+) -> Path:
     if not shutil.which("ffmpeg"):
         raise PipelineError("ffmpeg is not installed")
     doc = state.doc
@@ -517,10 +583,12 @@ def assemble(client: KrClient, state: RunState, out: Path, workdir: Path, fps: i
     timeline = timeline_from_doc(doc, assets)
     width, height = FRAME_SIZES.get((doc.get("settings") or {}).get("aspect", "16:9"), FRAME_SIZES["16:9"])
     total = float((doc.get("settings") or {}).get("durationSec") or timeline[-1].end)
-    command = build_ffmpeg_command(timeline, song_path, out, width, height, fps, total)
-    result = subprocess.run(command, capture_output=True, text=True)
-    if result.returncode != 0:
-        raise PipelineError(f"ffmpeg failed: {result.stderr.strip()[-2000:]}")
+    crf = encode_within_limit(
+        lambda crf: build_ffmpeg_command(timeline, song_path, out, width, height, fps, total, crf),
+        out,
+        max_bytes,
+    )
+    print(f"  encoded {out} at CRF {crf} ({out.stat().st_size / 1048576:.1f} MB)")
     return out
 
 
@@ -561,6 +629,13 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--poll-seconds", type=int, default=60)
     parser.add_argument("--max-wait-minutes", type=int, default=360)
     parser.add_argument("--dry-run", action="store_true", help="print the plan; enqueue nothing")
+    parser.add_argument("--no-upload", action="store_true", help="keep the MP4 local; skip attaching it")
+    parser.add_argument(
+        "--max-upload-mb",
+        type=float,
+        default=DEFAULT_MAX_UPLOAD_MB,
+        help="re-encode until the MP4 fits; match the server's MUSIC_VIDEO_MAX_UPLOAD_MB",
+    )
     return parser.parse_args(argv)
 
 
@@ -620,8 +695,11 @@ def main(argv: list[str] | None = None) -> int:
 
         out = args.out or Path(f"music-video-{video_id}.mp4")
         with tempfile.TemporaryDirectory(prefix=f"music-video-{video_id}-") as workdir:
-            assemble(client, state, out, Path(workdir), args.fps)
+            assemble(client, state, out, Path(workdir), args.fps, int(args.max_upload_mb * 1024 * 1024))
         print(f"wrote {out}")
+        if not args.no_upload:
+            result = client.upload_final(video_id, out)
+            print(f"attached as final ArtImage {result.get('artImageId')} (private; publishing is t-022)")
         return EXIT_DONE
     except PipelineError as error:
         print(f"error: {error}", file=sys.stderr)
