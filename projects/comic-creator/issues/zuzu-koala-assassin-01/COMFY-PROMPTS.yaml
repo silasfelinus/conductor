@@ -1,0 +1,442 @@
+# Zuzu, Koala Assassin #1: ComfyUI / Krea 2 prompt set
+#
+# 51 prompts, one or more per script page, written to the Krea 2 contract in ART-PROMPTS.md
+# (positive concrete nouns only; no negations, conditionals, art-direction jargon or format nouns).
+# All 51 pass server/utils/artPromptContract.ts (checkArtPromptContract, engine krea2) as of 2026-10-03.
+#
+# - Every prompt repeats its character descriptors in full, because only the CLIP node text is
+#   rendered (ART-PROMPTS.md rule 7); nothing is inherited between prompts.
+# - Lettering (captions, balloons, sign text, the contract's names) is added in the Comic Creator
+#   layout step. Prompts describe such surfaces as worn to illegible loops so nothing is rendered.
+# - "an unpeopled scene" marks prompts with no figures; do not append a cast clause to those.
+# - aspect: 16:9 widescreen strips, 1:1 inserts, 2:3 full-page splash and cover.
+# - Names Ling and Bao are placeholders (see SERIES-BIBLE.md); the prompts do not use names.
+engine: krea2
+cfg: 1
+steps: 8-12
+note: 'Krea 2 prompt contract (ART-PROMPTS.md rules 1-8): positive concrete nouns only, no negations or
+  conditionals, no art-direction jargon, no format nouns. Lettering is added in the layout step, never
+  rendered.'
+prompts:
+- id: cover
+  page_panel: cover
+  aspect: '2:3'
+  prompt: a small grey koala a little under four feet tall, round ears fringed with pale tufts and an
+    old scar along the left ear, broad black nose, dust-coloured travel cloak, wide straw hat, long black
+    lacquer katana scabbard slung high across his back, gourd canteen at his belt seen from behind, standing
+    small in the middle of a wide dusty street leading him and a large sand-coloured monitor lizard with
+    a saddle and a rolled bedroll; a horizon of leaning false-front frontier buildings and a bell tower,
+    every window dark, a single red paper lantern lit far away; beside his small paw prints in the dust
+    a larger set of panda paw prints follow behind; realistic painted ink illustration, anthropomorphic
+    animals with true fur direction and weight, brush linework with visible paper grain, ochre, dust-rose,
+    bone-white and burnt-umber palette, low gold sunlight and long shadows
+- id: p01
+  page_panel: '1'
+  aspect: '2:3'
+  prompt: a weathered half-torii, half-frontier town arch over a dusty road at dawn, a wooden sign board
+    on it with its face worn to illegible loops of layered repainted ghost shapes, a bell tower rising
+    over leaning false-front rooftops in the distance, small koala paw prints and three-toed lizard tracks
+    in the dust beneath the arch, an unpeopled scene, realistic painted ink illustration, anthropomorphic
+    animals with true fur direction and weight, brush linework with visible paper grain, ochre, dust-rose,
+    bone-white and burnt-umber palette, low gold sunlight and long shadows
+- id: p02a
+  page_panel: '2.1'
+  aspect: '16:9'
+  prompt: a small grey koala a little under four feet tall, round ears fringed with pale tufts and an
+    old scar along the left ear, broad black nose, dust-coloured travel cloak, wide straw hat, long black
+    lacquer katana scabbard slung high across his back, gourd canteen at his belt leading a large sand-coloured
+    monitor lizard with a saddle and a rolled bedroll by a rope under a tall wooden town arch, tiny against
+    the gate, seen from behind in wide shot, morning dust in the air; realistic painted ink illustration,
+    anthropomorphic animals with true fur direction and weight, brush linework with visible paper grain,
+    ochre, dust-rose, bone-white and burnt-umber palette, low gold sunlight and long shadows
+- id: p02b
+  page_panel: '2.2'
+  aspect: '1:1'
+  prompt: close profile of a small grey koala with round tufted ears, an old scar along the left ear and
+    a broad black nose, in a dust-coloured travel cloak, calm grave face, nostrils flared reading the
+    air, warm gold side light; realistic painted ink illustration, anthropomorphic animals with true fur
+    direction and weight, brush linework with visible paper grain, ochre, dust-rose, bone-white and burnt-umber
+    palette, low gold sunlight and long shadows
+- id: p02c
+  page_panel: '2.4'
+  aspect: '16:9'
+  prompt: a small grey koala with round tufted ears, an old scar along the left ear and a broad black
+    nose, in a dust-coloured travel cloak walking down a dusty street with his straw hat held over his
+    chest in one paw, katana across his back, leading a sand-coloured monitor lizard; realistic painted
+    ink illustration, anthropomorphic animals with true fur direction and weight, brush linework with
+    visible paper grain, ochre, dust-rose, bone-white and burnt-umber palette, low gold sunlight and long
+    shadows
+- id: p03a
+  page_panel: '3.1'
+  aspect: '16:9'
+  prompt: a frontier main street at gold morning, a false-front saloon, a paper-screened tea house, a
+    barber's pole, a bank with a katana rack by its door, every door standing open, a shutter hanging
+    loose, flies in the light, an unpeopled scene; realistic painted ink illustration, anthropomorphic
+    animals with true fur direction and weight, brush linework with visible paper grain, ochre, dust-rose,
+    bone-white and burnt-umber palette, low gold sunlight and long shadows
+- id: p03b
+  page_panel: '3.2'
+  aspect: '1:1'
+  prompt: an overturned wooden chair in the middle of a dusty street, a spilled bowl beside it still holding
+    the shape of its food, long gold shadows, an unpeopled scene; realistic painted ink illustration,
+    anthropomorphic animals with true fur direction and weight, brush linework with visible paper grain,
+    ochre, dust-rose, bone-white and burnt-umber palette, low gold sunlight and long shadows
+- id: p03c
+  page_panel: '3.3'
+  aspect: '1:1'
+  prompt: a pair of small leather boots standing upright side by side on a wooden doorstep, long gold
+    morning shadows, an unpeopled scene; realistic painted ink illustration, anthropomorphic animals with
+    true fur direction and weight, brush linework with visible paper grain, ochre, dust-rose, bone-white
+    and burnt-umber palette, low gold sunlight and long shadows
+- id: p03d
+  page_panel: '3.4'
+  aspect: '16:9'
+  prompt: a wooden boardwalk with dark maroon-black dried stains leading in a line through the swinging
+    doors of a saloon, long shadows, an unpeopled scene; realistic painted ink illustration, anthropomorphic
+    animals with true fur direction and weight, brush linework with visible paper grain, ochre, dust-rose,
+    bone-white and burnt-umber palette, low gold sunlight and long shadows
+- id: p04a
+  page_panel: '4.2'
+  aspect: '16:9'
+  prompt: the interior of a ransacked frontier saloon after a massacre, overturned tables, a closed piano,
+    a hanging lantern swinging slightly, rows of bed sheets and blankets laid neatly over still shapes
+    on the floorboards, shafts of dust-filled gold light through the doors, an unpeopled scene; realistic
+    painted ink illustration, anthropomorphic animals with true fur direction and weight, brush linework
+    with visible paper grain, ochre, dust-rose, bone-white and burnt-umber palette, low gold sunlight
+    and long shadows
+- id: p04b
+  page_panel: '4.4'
+  aspect: '1:1'
+  prompt: extreme close-up of the eyes of a small grey koala with round tufted ears, an old scar along
+    the left ear and a broad black nose, in a dust-coloured travel cloak, still and unreadable, shadow
+    of a straw hat brim across the brow; realistic painted ink illustration, anthropomorphic animals with
+    true fur direction and weight, brush linework with visible paper grain, ochre, dust-rose, bone-white
+    and burnt-umber palette, low gold sunlight and long shadows
+- id: p05a
+  page_panel: '5.2'
+  aspect: '1:1'
+  prompt: extreme close-up of a clean diagonal sword cut through a wooden support post, the edges smooth
+    as water with no splinter, a thumb-sized groove, warm side light, an unpeopled scene; realistic painted
+    ink illustration, anthropomorphic animals with true fur direction and weight, brush linework with
+    visible paper grain, ochre, dust-rose, bone-white and burnt-umber palette, low gold sunlight and long
+    shadows
+- id: p05b
+  page_panel: '5.4'
+  aspect: '16:9'
+  prompt: a small grey koala with round tufted ears, an old scar along the left ear and a broad black
+    nose, in a dust-coloured travel cloak sitting back on his heels in a ransacked saloon and looking
+    up at the ceiling beams where three more clean sword cuts run along the same line at the same height,
+    dust motes in gold light; realistic painted ink illustration, anthropomorphic animals with true fur
+    direction and weight, brush linework with visible paper grain, ochre, dust-rose, bone-white and burnt-umber
+    palette, low gold sunlight and long shadows
+- id: p06a
+  page_panel: '6.2'
+  aspect: '1:1'
+  prompt: a hand-held sheet of heavy cream paper with a red wax seal and a column of black brush-script
+    lines worn to illegible loops, held in a small grey paw, the only bright red in the scene, realistic
+    painted ink illustration, anthropomorphic animals with true fur direction and weight, brush linework
+    with visible paper grain, ochre, dust-rose, bone-white and burnt-umber palette, low gold sunlight
+    and long shadows
+- id: p06b
+  page_panel: '6.3'
+  aspect: '1:1'
+  prompt: a close view of a name on heavy cream paper struck through with one long confident fresh red
+    brush line, the red still glossy, a few small notes beside it in another neat hand worn to illegible
+    loops, held in a small grey koala paw; realistic painted ink illustration, anthropomorphic animals
+    with true fur direction and weight, brush linework with visible paper grain, ochre, dust-rose, bone-white
+    and burnt-umber palette, low gold sunlight and long shadows
+- id: p06c
+  page_panel: '6.4'
+  aspect: '1:1'
+  prompt: tight portrait of a small grey koala with round tufted ears, an old scar along the left ear
+    and a broad black nose, in a dust-coloured travel cloak standing absolutely still holding a folded
+    contract paper, long shadows on a boardwalk behind him; realistic painted ink illustration, anthropomorphic
+    animals with true fur direction and weight, brush linework with visible paper grain, ochre, dust-rose,
+    bone-white and burnt-umber palette, low gold sunlight and long shadows
+- id: p07a
+  page_panel: '7.2'
+  aspect: '1:1'
+  prompt: a sand-coloured monitor lizard looking back over its shoulder with a slow blink, saddle and
+    bedroll on its back, dusty street behind, gold light; realistic painted ink illustration, anthropomorphic
+    animals with true fur direction and weight, brush linework with visible paper grain, ochre, dust-rose,
+    bone-white and burnt-umber palette, low gold sunlight and long shadows
+- id: p07b
+  page_panel: '7.3'
+  aspect: '1:1'
+  prompt: two round grey koala ears turning together in profile toward the left, warm dust light; realistic
+    painted ink illustration, anthropomorphic animals with true fur direction and weight, brush linework
+    with visible paper grain, ochre, dust-rose, bone-white and burnt-umber palette, low gold sunlight
+    and long shadows
+- id: p07c
+  page_panel: '7.4'
+  aspect: '16:9'
+  prompt: a long empty frontier street in morning shade seen toward a paper-screened tea house in the
+    far distance, an unpeopled scene, heat shimmer; realistic painted ink illustration, anthropomorphic
+    animals with true fur direction and weight, brush linework with visible paper grain, ochre, dust-rose,
+    bone-white and burnt-umber palette, low gold sunlight and long shadows
+- id: p08a
+  page_panel: '8.3'
+  aspect: '16:9'
+  prompt: the back room of a frontier tea house after a massacre, long tatami floor with low tables and
+    cushions, rows of sheeted shapes and dark stains on straw mats, light striping through torn paper
+    screens, and in the far corner a tall young panda girl of about ten, black-and-white fur streaked
+    with soot, torn pale dress, canvas school satchel strapped across her chest sitting against the wall
+    holding a panda cub asleep or awake in a sling made from a checked tablecloth, sobbing silently; realistic
+    painted ink illustration, anthropomorphic animals with true fur direction and weight, brush linework
+    with visible paper grain, ochre, dust-rose, bone-white and burnt-umber palette, low gold sunlight
+    and long shadows
+- id: p08b
+  page_panel: '8.4'
+  aspect: '1:1'
+  prompt: tight portrait of a tall young panda girl of about ten, black-and-white fur streaked with soot,
+    torn pale dress, canvas school satchel strapped across her chest, wet eyes wide, looking up toward
+    an open sliding door, soot on her fur; realistic painted ink illustration, anthropomorphic animals
+    with true fur direction and weight, brush linework with visible paper grain, ochre, dust-rose, bone-white
+    and burnt-umber palette, low gold sunlight and long shadows
+- id: p09a
+  page_panel: '9.1'
+  aspect: '16:9'
+  prompt: low-angle view from the floor of a tea house back room, a small doorway silhouette of a small
+    grey koala with round tufted ears, an old scar along the left ear and a broad black nose, in a dust-coloured
+    travel cloak at one end, and at the far end a tall young panda girl of about ten, black-and-white
+    fur streaked with soot, torn pale dress, canvas school satchel strapped across her chest sitting big
+    in frame holding a panda cub asleep or awake in a sling made from a checked tablecloth; realistic
+    painted ink illustration, anthropomorphic animals with true fur direction and weight, brush linework
+    with visible paper grain, ochre, dust-rose, bone-white and burnt-umber palette, low gold sunlight
+    and long shadows
+- id: p09b
+  page_panel: '9.3'
+  aspect: '1:1'
+  prompt: a small grey koala paw resting on the hilt of a katana, then drawn away, open paws at his sides,
+    warm gold light; realistic painted ink illustration, anthropomorphic animals with true fur direction
+    and weight, brush linework with visible paper grain, ochre, dust-rose, bone-white and burnt-umber
+    palette, low gold sunlight and long shadows
+- id: p10a
+  page_panel: '10.2'
+  aspect: '1:1'
+  prompt: a small grey koala with round tufted ears, an old scar along the left ear and a broad black
+    nose, in a dust-coloured travel cloak stepping into the stirrup of a saddled sand-coloured monitor
+    lizard, a small set of steps hanging from the saddle for a rider his size, long street shadows; realistic
+    painted ink illustration, anthropomorphic animals with true fur direction and weight, brush linework
+    with visible paper grain, ochre, dust-rose, bone-white and burnt-umber palette, low gold sunlight
+    and long shadows
+- id: p10b
+  page_panel: '10.4'
+  aspect: '1:1'
+  prompt: tight view of a small grey koala with round tufted ears, an old scar along the left ear and
+    a broad black nose, in a dust-coloured travel cloak in the saddle facing forward with his back to
+    the town, jaw set, one ear turned backward; realistic painted ink illustration, anthropomorphic animals
+    with true fur direction and weight, brush linework with visible paper grain, ochre, dust-rose, bone-white
+    and burnt-umber palette, low gold sunlight and long shadows
+- id: p11a
+  page_panel: '11.1'
+  aspect: '16:9'
+  prompt: a small grey koala with round tufted ears, an old scar along the left ear and a broad black
+    nose, in a dust-coloured travel cloak riding tall on a sand-coloured monitor lizard at a slow walk
+    down a long dusty street toward a wooden arch and an open road, heat shimmer; realistic painted ink
+    illustration, anthropomorphic animals with true fur direction and weight, brush linework with visible
+    paper grain, ochre, dust-rose, bone-white and burnt-umber palette, low gold sunlight and long shadows
+- id: p11b
+  page_panel: '11.4'
+  aspect: '1:1'
+  prompt: close view of a small grey koala with round tufted ears, an old scar along the left ear and
+    a broad black nose, in a dust-coloured travel cloak chewing a eucalyptus leaf slowly, eyes on the
+    road ahead, straw hat shading his brow; realistic painted ink illustration, anthropomorphic animals
+    with true fur direction and weight, brush linework with visible paper grain, ochre, dust-rose, bone-white
+    and burnt-umber palette, low gold sunlight and long shadows
+- id: p11c
+  page_panel: '11.5'
+  aspect: '1:1'
+  prompt: a bronze town bell hanging in the open arch of a wooden bell tower, swaying once in still air,
+    pale sky behind, an unpeopled scene; realistic painted ink illustration, anthropomorphic animals with
+    true fur direction and weight, brush linework with visible paper grain, ochre, dust-rose, bone-white
+    and burnt-umber palette, low gold sunlight and long shadows
+- id: p12a
+  page_panel: '12.1'
+  aspect: '16:9'
+  prompt: a small grey koala with round tufted ears, an old scar along the left ear and a broad black
+    nose, in a dust-coloured travel cloak on a sand-coloured monitor lizard stopped beneath a tall wooden
+    town arch, wind lifting dust, both standing still; realistic painted ink illustration, anthropomorphic
+    animals with true fur direction and weight, brush linework with visible paper grain, ochre, dust-rose,
+    bone-white and burnt-umber palette, low gold sunlight and long shadows
+- id: p12b
+  page_panel: '12.2'
+  aspect: '1:1'
+  prompt: a small grey paw closing around a gourd canteen at a belt, the gourd nearly full, warm light;
+    realistic painted ink illustration, anthropomorphic animals with true fur direction and weight, brush
+    linework with visible paper grain, ochre, dust-rose, bone-white and burnt-umber palette, low gold
+    sunlight and long shadows
+- id: p12c
+  page_panel: '12.4'
+  aspect: '16:9'
+  prompt: view from behind a small grey koala with round tufted ears, an old scar along the left ear and
+    a broad black nose, in a dust-coloured travel cloak on a lizard looking back down the long street
+    toward a tea house small in the distance, gold light, long shadows; realistic painted ink illustration,
+    anthropomorphic animals with true fur direction and weight, brush linework with visible paper grain,
+    ochre, dust-rose, bone-white and burnt-umber palette, low gold sunlight and long shadows
+- id: p13a
+  page_panel: '13.1'
+  aspect: '16:9'
+  prompt: a small grey koala with round tufted ears, an old scar along the left ear and a broad black
+    nose, in a dust-coloured travel cloak standing at the door of a frontier tea house with his straw
+    hat held in his paws, a katana leaning against the door frame beside him, torn paper screens; realistic
+    painted ink illustration, anthropomorphic animals with true fur direction and weight, brush linework
+    with visible paper grain, ochre, dust-rose, bone-white and burnt-umber palette, low gold sunlight
+    and long shadows
+- id: p13b
+  page_panel: '13.4'
+  aspect: '16:9'
+  prompt: a small grey koala with round tufted ears, an old scar along the left ear and a broad black
+    nose, in a dust-coloured travel cloak sitting cross-legged on a tatami floor lower than a tall young
+    panda girl of about ten, black-and-white fur streaked with soot, torn pale dress, canvas school satchel
+    strapped across her chest, two arm-lengths apart in a tea house room with sheeted shapes along the
+    walls; realistic painted ink illustration, anthropomorphic animals with true fur direction and weight,
+    brush linework with visible paper grain, ochre, dust-rose, bone-white and burnt-umber palette, low
+    gold sunlight and long shadows
+- id: p14a
+  page_panel: '14.2'
+  aspect: '1:1'
+  prompt: a gourd canteen sliding across a woven straw floor mat toward a young panda's knee, an uncorked
+    mouth, warm gold light; realistic painted ink illustration, anthropomorphic animals with true fur
+    direction and weight, brush linework with visible paper grain, ochre, dust-rose, bone-white and burnt-umber
+    palette, low gold sunlight and long shadows
+- id: p14b
+  page_panel: '14.4'
+  aspect: '1:1'
+  prompt: a tall young panda girl of about ten, black-and-white fur streaked with soot, torn pale dress,
+    canvas school satchel strapped across her chest pouring a few drops of water from a gourd into her
+    paw for a panda cub asleep or awake in a sling made from a checked tablecloth to lick, wide-eyed cub
+    drinking; realistic painted ink illustration, anthropomorphic animals with true fur direction and
+    weight, brush linework with visible paper grain, ochre, dust-rose, bone-white and burnt-umber palette,
+    low gold sunlight and long shadows
+- id: p15a
+  page_panel: '15.4'
+  aspect: '16:9'
+  prompt: a small grey koala with round tufted ears, an old scar along the left ear and a broad black
+    nose, in a dust-coloured travel cloak bowing very low in a tea house room toward rows of sheeted shapes,
+    hat in his paws, while a tall young panda girl of about ten, black-and-white fur streaked with soot,
+    torn pale dress, canvas school satchel strapped across her chest watches from the corner; realistic
+    painted ink illustration, anthropomorphic animals with true fur direction and weight, brush linework
+    with visible paper grain, ochre, dust-rose, bone-white and burnt-umber palette, low gold sunlight
+    and long shadows
+- id: p16a
+  page_panel: '16.3'
+  aspect: '16:9'
+  prompt: pulled-back view of a dusty frontier town under a bell tower seen from the open road, a small
+    grey koala with round tufted ears, an old scar along the left ear and a broad black nose, in a dust-coloured
+    travel cloak on a lizard riding away under a wooden arch, small in the distance, gold late-morning
+    light; realistic painted ink illustration, anthropomorphic animals with true fur direction and weight,
+    brush linework with visible paper grain, ochre, dust-rose, bone-white and burnt-umber palette, low
+    gold sunlight and long shadows
+- id: p17a
+  page_panel: '17.1'
+  aspect: '16:9'
+  prompt: a thin bright stream through a dry creek bed under a stand of cottonwoods at dusk, a sand-coloured
+    monitor lizard drinking at the water with its tail flicking, last gold light; realistic painted ink
+    illustration, anthropomorphic animals with true fur direction and weight, brush linework with visible
+    paper grain, ochre, dust-rose, bone-white and burnt-umber palette, low gold sunlight and long shadows
+- id: p17b
+  page_panel: '17.3'
+  aspect: '1:1'
+  prompt: a small campfire and a tin pot of steeping eucalyptus leaves, a small grey koala cross-legged
+    beside it cleaning a long katana laid across his knees with a cloth; realistic painted ink illustration,
+    brush linework with visible paper grain, moon-blue shadows and a small orange firelight, ochre and
+    burnt-umber earth tones
+- id: p17c
+  page_panel: '17.4'
+  aspect: '16:9'
+  prompt: a wide darkening valley with one star out and a small orange campfire far below, tiny against
+    the land, an unpeopled scene; realistic painted ink illustration, brush linework with visible paper
+    grain, moon-blue shadows and a small orange firelight, ochre and burnt-umber earth tones
+- id: p18a
+  page_panel: '18.1'
+  aspect: '16:9'
+  prompt: midnight at a dying campfire, a sand-coloured monitor lizard asleep like a dark hill, a small
+    grey koala asleep on his side under a cloak with his back to the fire and a paw near the hilt of a
+    katana; realistic painted ink illustration, brush linework with visible paper grain, moon-blue shadows
+    and a small orange firelight, ochre and burnt-umber earth tones
+- id: p18b
+  page_panel: '18.4'
+  aspect: '16:9'
+  prompt: across a dying campfire at midnight, a tall young panda girl of about ten, black-and-white fur
+    streaked with soot, torn pale dress, canvas school satchel strapped across her chest sitting still
+    on a log with a panda cub asleep or awake in a sling made from a checked tablecloth asleep on her
+    chest, watching a sleeping koala, her face thoughtful and no longer afraid; realistic painted ink
+    illustration, brush linework with visible paper grain, moon-blue shadows and a small orange firelight,
+    ochre and burnt-umber earth tones
+- id: p19a
+  page_panel: '19.2'
+  aspect: '1:1'
+  prompt: a cloth-wrapped canvas school satchel and a refilled gourd canteen resting side by side on a
+    fallen log at dawn, a buried fire pit beside it; realistic painted ink illustration, anthropomorphic
+    animals with true fur direction and weight, brush linework with visible paper grain, ochre, dust-rose,
+    bone-white and burnt-umber palette, low gold sunlight and long shadows
+- id: p19b
+  page_panel: '19.4'
+  aspect: '16:9'
+  prompt: widescreen red mesa country at late morning, a small grey koala with round tufted ears, an old
+    scar along the left ear and a broad black nose, in a dust-coloured travel cloak leading a lizard across
+    the dirt road, and far behind him small in the distance a tall young panda girl of about ten, black-and-white
+    fur streaked with soot, torn pale dress, canvas school satchel strapped across her chest carrying
+    a panda cub asleep or awake in a sling made from a checked tablecloth following twenty paces back;
+    realistic painted ink illustration, anthropomorphic animals with true fur direction and weight, brush
+    linework with visible paper grain, ochre, dust-rose, bone-white and burnt-umber palette, low gold
+    sunlight and long shadows
+- id: p19c
+  page_panel: '19.5'
+  aspect: '1:1'
+  prompt: three shadows on red dirt in low light, one large, one small, one very small, walking in a line
+    at steady distance; realistic painted ink illustration, anthropomorphic animals with true fur direction
+    and weight, brush linework with visible paper grain, ochre, dust-rose, bone-white and burnt-umber
+    palette, low gold sunlight and long shadows
+- id: p20a
+  page_panel: '20.1'
+  aspect: '16:9'
+  prompt: a single apple tree heavy with red fruit alone in the middle of a dead plain, its long shadow
+    leaning toward the road, late gold afternoon, an unpeopled scene; realistic painted ink illustration,
+    anthropomorphic animals with true fur direction and weight, brush linework with visible paper grain,
+    ochre, dust-rose, bone-white and burnt-umber palette, low gold sunlight and long shadows
+- id: p20b
+  page_panel: '20.3'
+  aspect: '1:1'
+  prompt: a small grey paw with the thumb at the pale worn mouth of a black lacquer katana scabbard, ready,
+    warm side light; realistic painted ink illustration, anthropomorphic animals with true fur direction
+    and weight, brush linework with visible paper grain, ochre, dust-rose, bone-white and burnt-umber
+    palette, low gold sunlight and long shadows
+- id: p20c
+  page_panel: '20.4'
+  aspect: '16:9'
+  prompt: a small grey koala with round tufted ears, an old scar along the left ear and a broad black
+    nose, in a dust-coloured travel cloak standing beneath an apple tree at the instant after a single
+    sword stroke, the katana already sheathed, a silver curve of light hanging in the air and a dozen
+    apples falling around him with their stems cleanly parted, slow rain of red fruit; realistic painted
+    ink illustration, anthropomorphic animals with true fur direction and weight, brush linework with
+    visible paper grain, ochre, dust-rose, bone-white and burnt-umber palette, low gold sunlight and long
+    shadows
+- id: p20d
+  page_panel: '20.6'
+  aspect: '16:9'
+  prompt: six red apples set in a neat ring in the grass at the base of an apple tree trunk, long gold
+    shadows, a small grey koala with round tufted ears, an old scar along the left ear and a broad black
+    nose, in a dust-coloured travel cloak walking away on the road behind them small and out of focus;
+    realistic painted ink illustration, anthropomorphic animals with true fur direction and weight, brush
+    linework with visible paper grain, ochre, dust-rose, bone-white and burnt-umber palette, low gold
+    sunlight and long shadows
+- id: p20e
+  page_panel: '20.7'
+  aspect: '16:9'
+  prompt: a tall young panda girl of about ten, black-and-white fur streaked with soot, torn pale dress,
+    canvas school satchel strapped across her chest holding a panda cub who bites a red apple and smiles
+    with pure happiness, a second apple in her other paw, she is looking up the road where a small dark
+    koala figure with a long thin sword line across his back shrinks into the gold light; realistic painted
+    ink illustration, anthropomorphic animals with true fur direction and weight, brush linework with
+    visible paper grain, ochre, dust-rose, bone-white and burnt-umber palette, low gold sunlight and long
+    shadows
+- id: p21
+  page_panel: 21 (optional stinger)
+  aspect: '16:9'
+  prompt: a wide empty dusty road under a wooden town arch, beside pale koala and lizard tracks a third
+    set of long-strided straw-sandal prints, and a single straight clean line drawn in the dust ending
+    in the shadow beneath the arch, an unpeopled scene, realistic painted ink illustration, anthropomorphic
+    animals with true fur direction and weight, brush linework with visible paper grain, ochre, dust-rose,
+    bone-white and burnt-umber palette, low gold sunlight and long shadows
