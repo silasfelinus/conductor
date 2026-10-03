@@ -1,0 +1,55 @@
+# Daily project pitches, 2026-10-03. Authored by a session; decide with
+#   python scripts/daily_pitches.py --decide SLUG approved|rejected|deferred
+# Theme of the day: free-to-play, zero tokens at runtime, art made ahead of time.
+date: 2026-10-03
+pitches:
+  - slug: kind-paint-by-number
+    title: Kind Paint-by-Number
+    hook: >-
+      Pre-generated Kind Robots illustrations are reduced in the browser to a numbered palette of flat
+      regions, and you tap a colour then tap regions to fill them in, watching the finished picture
+      appear. Progress saves on the device, and a completed canvas unlocks the full-colour original.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: 30 simple bold-outline illustrations generated through ArtJobs, region maps computed offline by a script.
+    first_slice: One image, a region-quantize script, and the tap-to-fill canvas with a palette bar and undo.
+  - slug: robot-mashup-flipbook
+    title: Robot Mash-Up Flipbook
+    hook: >-
+      A three-band flip toy where the head, torso and legs of twelve robots turn independently, so you
+      can spin up 1,728 silly combinations, each with a pre-written funny name built from hand-authored
+      name parts. Save a favourite as a card to download or share.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 12 robots generated on a shared three-band grid so any head lines up with any body; sliced by a script.
+    first_slice: 4 robots on the grid, the three swipe bands, and the name-part generator.
+  - slug: kind-daily-maze
+    title: Kind Daily Maze
+    hook: >-
+      One new seeded maze every day where a small robot collects stars on the way to a charging
+      station, generated deterministically in the browser from the date so everyone gets the same
+      puzzle. A streak calendar and ten themed tile sets give it a reason to return.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 10 themed tile sets (forest, ice, desert, space and more) of about 8 tiles each, plus a robot sprite sheet.
+    first_slice: Seeded maze generator, one tile set, swipe and arrow-key controls, and the streak counter.
+  - slug: robot-sound-garden
+    title: Robot Sound Garden
+    hook: >-
+      A calm music toy where tapping plants flowers that each play a note from a pentatonic scale, and
+      the garden loops into a gentle, never-wrong song built with Web Audio. Pick a mood and the scale,
+      tempo and flower art change, and nothing is generated at runtime.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: 5 mood backdrops and 8 flower sprites per mood, generated and cleaned in batches.
+    first_slice: One mood, 8 flowers, the Web Audio sequencer, and tap-to-plant with a looping playhead.
+  - slug: kind-trivia-trail
+    title: Kind Trivia Trail
+    hook: >-
+      A walking trail of 200 pre-written multiple-choice questions about robots, animals, space and
+      kindness, where each correct answer moves your robot along an illustrated map and wrong answers
+      show a friendly hand-written hint. Every question and hint is written ahead of time by sessions.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: 8 illustrated map regions and 20 landmark pictures, generated through ArtJobs under one style bible.
+    first_slice: 30 questions in one region, the trail map with a moving robot token, and local progress saving.
