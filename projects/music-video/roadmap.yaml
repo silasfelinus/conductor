@@ -542,7 +542,7 @@ tasks:
   - id: t-023
     milestone: m3
     title: "Upload route for a finished music video MP4 (kind_robots)"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -554,7 +554,12 @@ tasks:
       ArtImage (fileType mp4, never in a public collection, size-capped), sets the row's
       finalArtImageId, and serves it through the existing ArtImage file route; then teach the
       script to call it after assembly (with --no-upload to skip). Publishing stays t-022.
+
+      POST /api/music-video/[id]/final stores the MP4 as a private mp4 ArtImage
+      (MUSIC_VIDEO_MAX_UPLOAD_MB, default 24) and sets finalArtImageId/EXPORTED; art file
+      route now serves video/audio content types. Pipeline uploads after a CRF-ladder encode
+      (conductor#5516).
     claimed_by: 20261003T0000-claude-mv-t023-01D4se
     claimed_at: '2026-10-02T23:51:09Z'
-    updated: '2026-10-03T00:43:22Z'
+    updated: '2026-10-03T00:43:25Z'
     implementation_pr: 'silasfelinus/kind_robots#3200'
