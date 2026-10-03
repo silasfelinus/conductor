@@ -73,3 +73,5 @@ diffusion models, text encoders, VAEs, ControlNets, hypernetworks, embeddings,
 pixel upscalers, and latent upscalers.
 
 Re-synced 2026-09-25 (`scan_loras.py`) for conductor session sweep 2026-09-25: pick up ACTION/STYLE tag categories added ahead of CHARACTER so pose/style LoRAs stop disappearing from purpose-specific randomizer pools. Source: kind_robots@main.
+
+Re-synced 2026-10-03 (`scan_loras.py`) for conductor session sweep 2026-10-03: pick up the retired CONCEPT category (folded into ACTION/STYLE) and the extra STYLE tags (effect, lighting, abstract). Source: kind_robots@main.
