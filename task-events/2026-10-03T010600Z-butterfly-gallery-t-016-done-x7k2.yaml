@@ -1,0 +1,17 @@
+version: 1
+project: butterfly-gallery
+task: t-016
+operation: done
+owner: worker
+session: 2026-10-02T175000-0700-butterfly-gallery-t-016-x7k2
+updated: '2026-10-03T01:06:00Z'
+note: >-
+  Merged silasfelinus/kind_robots#3201 (squash 4f740f00e37c678492923bb60f75dcb1464e6217).
+  Runway traffic now chooses a different rendered pass randomly, leaves a varied 1.2–5.2s
+  quiet gap between passes, and preserves reduced-motion, hidden-tab, and off-screen
+  suppression. Final PR head de74ca72a667971efa3e40b2644c192b3a6f6ea3 had 31/31
+  GitHub check runs completed successfully; Contract verifiers completed 429/429 steps.
+learning: >-
+  Ambient runway motion reads more like background traffic when clips are separated by
+  randomized quiet gaps and immediate repeats are excluded; keep cadence bounds in the
+  stage contract when future tuning changes them.
