@@ -1,7 +1,7 @@
 # Pitch: Robot Sound Garden
 date: 2026-10-03
 project-target: new
-status: awaiting-silas
+status: approved
 
 ## The idea
 A calm music toy where tapping plants flowers that each play a note from a pentatonic scale, and the garden loops into a gentle, never-wrong song built with Web Audio. Pick a mood and the scale, tempo and flower art change, and nothing is generated at runtime.
