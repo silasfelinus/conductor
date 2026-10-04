@@ -6,50 +6,50 @@ pitches:
   - slug: robot-memory-match
     title: Robot Memory Match
     hook: >-
-      A card-flipping memory game where pairs of pre-generated robot portraits hide on a grid that grows
-      from four cards to thirty-six across forty hand-authored levels. Stars are earned for few moves, and
-      stars unlock new card-back designs to collect.
+      A card-flip matching game where pairs are pre-generated Kind Robots portraits, with boards that
+      grow from four pairs to twelve as you win. Best times save on the device, and each cleared level
+      unlocks a new card-back design to collect.
     llm_at_runtime: none
     effort: small
-    art_plan: 60 robot portraits on a consistent square frame plus 12 card backs, generated through ArtJobs and cropped by a script.
-    first_slice: A 4x4 board with 8 portraits, flip and match logic, a move counter and a win screen.
-  - slug: kind-bedtime-pages
-    title: Kind Bedtime Pages
+    art_plan: 36 robot portraits and 8 card-back designs generated through ArtJobs at one consistent size.
+    first_slice: One 4-pair board with flip animation, a move counter, and a local best-time record.
+  - slug: kind-word-ladder
+    title: Kind Word Ladder
     hook: >-
-      Thirty short pre-written bedtime stories, each a few illustrated pages with a gentle ending, that
-      read aloud with the browser's built-in voice and dim the screen as the story winds down. A
-      favourites shelf remembers which stories you loved on this device.
+      Change one letter at a time to climb from a start word to a kind end word, such as grump to happy,
+      using hand-checked ladders and a bundled dictionary. Each solved ladder reveals one panel of a
+      pre-made illustration, and a hint button reveals the next rung.
     llm_at_runtime: none
-    effort: medium
-    art_plan: 4 soft watercolour illustrations per story, 120 total, generated in batches by theme.
-    first_slice: Three stories with art, the page reader with read-aloud toggle, and the night-light dimmer.
+    effort: small
+    art_plan: 20 four-panel illustrations, one revealed per solved ladder, generated ahead of time.
+    first_slice: 10 verified ladders, the tap-letter editor with dictionary check, and one revealed panel.
   - slug: robot-weather-postcards
     title: Robot Weather Postcards
     hook: >-
-      Pick a season and a mood and a pre-made postcard of a robot visiting a cosy place appears, with a
-      hand-written greeting assembled from authored phrase parts. Download the card as an image to send to
-      a friend, no account required.
+      Pick a season, a place and a robot, and a postcard assembles itself from layered pre-made art with
+      a short hand-written message chosen from a pool of lines. Download it as an image to send to a
+      friend, with every combination being a unique, shareable card.
     llm_at_runtime: none
     effort: small
-    art_plan: 24 postcard scenes across four seasons and six moods, generated with a shared border and stamp area.
-    first_slice: Six scenes, the season and mood pickers, a phrase assembler and a canvas export to PNG.
-  - slug: kind-garden-idle
-    title: Kind Garden Idle
+    art_plan: 6 place backdrops, 4 season overlays and 10 robot stamps, generated and sliced ahead of time.
+    first_slice: Two backdrops, two seasons, three robots, the message pool, and a canvas download button.
+  - slug: kind-lantern-garden
+    title: Kind Lantern Garden
     hook: >-
-      A slow idle game where small acts of kindness grow a garden over real time, each seed type taking
-      minutes or hours to bloom into a collectible plant. Everything runs from local timers and a fixed
-      table of plants, so it costs nothing to run and nothing to keep.
+      An idle-style toy where each tap lights a lantern in a night garden and, as the count grows, new
+      creatures wander in with pre-written one-line stories. Nothing can be lost, it needs no accounts,
+      and progress is a quiet collection page of everyone you have met.
     llm_at_runtime: none
     effort: medium
-    art_plan: 20 plants with 4 growth stages each, plus a garden backdrop that changes by time of day.
-    first_slice: Five seeds, the growth timer logic with offline catch-up, and a tap-to-water plot grid.
-  - slug: robot-riddle-cards
-    title: Robot Riddle Cards
+    art_plan: 1 night backdrop, 6 lantern styles and 24 creature sprites with story lines written by a session.
+    first_slice: The backdrop, tap-to-light, three creatures arriving at set counts, and local save.
+  - slug: robot-species-sorting-quiz
+    title: Robot Species Sorting Quiz
     hook: >-
-      A deck of two hundred pre-written riddles and knock-knock jokes in the voices of Kind Robots
-      characters, with a flip card that reveals the answer and a groan-o-meter to rate it. A daily riddle
-      is chosen from the date so friends see the same one.
+      A short personality quiz of twelve whimsical questions that sorts you into one of sixteen robot
+      species, each with a pre-written profile card and a matching illustration. It reuses the Robot
+      Field Guide look and gives a result that is easy to screenshot and share.
     llm_at_runtime: none
     effort: small
-    art_plan: 20 character portraits used across the deck plus 6 card-frame styles by riddle type.
-    first_slice: Forty riddles, five characters, the flip-card view and the date-seeded daily pick.
+    art_plan: 16 species portrait cards generated in one style batch, plus a shared result-card frame.
+    first_slice: Six questions, four species results, and the scoring logic with a result card.

@@ -1,0 +1,266 @@
+# Zuzu round 5: Book One cast in Arthemy (Silas, 2026-10-04: "arthemy is the winner. ... I want
+# consistent images for the first chapter"). Design candidates for every Book One character so Silas
+# can lock designs (t-015), which feed the 8-angle renders and the character LoRAs (t-016).
+# Two lanes: the round-4 settings he picked from, and the checkpoint author's settings
+# (Euler a, 30 steps, CFG 5, style tags). Prompts carry the size canon (koala-sized, DeVito build),
+# the round-4b clothing fix for full-body shots, a plain hat and grey cloak, and emblem negatives.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+round: 5
+series: zuzu-koala-assassin
+project_slug: comic-creator
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy
+  label: Arthemy Western Art v3.0 (house, round-4 settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic
+  suffix: western, dusty, painterly, dramatic lighting, gritty
+- key: arthemy-author
+  label: Arthemy Western Art v3.0 (author's settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style)
+  suffix: western, dusty, painterly, dramatic lighting, gritty
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: r5-zuzu-turnaround-a
+  entity: zuzu
+  title: Zuzu turnaround A
+  size: 1216x832
+  prompt_prose: 'Zuzu turnaround: a koala-sized, stocky koala ronin, three views, fully clothed.'
+  prompt_tags: (fully clothed:1.3), dark tunic, trousers, cloth sash, wrapped shins, same outfit in every view,
+    character sheet, turnaround, multiple views, front view, side view, back view, full body, standing, simple background,
+    anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs, small stature, grey
+    fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting, frown, plain straw hat,
+    grey tattered cloak, katana on back
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, tall, lanky, long legs, slender, nsfw, nude, suggestive, cleavage,
+    revealing clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature,
+    blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    arthemy: 33507
+    arthemy-author: 33508
+- key: r5-zuzu-turnaround-b
+  entity: zuzu
+  title: Zuzu turnaround B
+  size: 1216x832
+  prompt_prose: 'Zuzu turnaround: a koala-sized, stocky koala ronin, three views, fully clothed.'
+  prompt_tags: (fully clothed:1.3), dark tunic, trousers, cloth sash, wrapped shins, same outfit in every view,
+    character sheet, turnaround, multiple views, front view, side view, back view, full body, standing, simple background,
+    anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs, small stature, grey
+    fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting, frown, plain straw hat,
+    grey tattered cloak, katana on back
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, tall, lanky, long legs, slender, nsfw, nude, suggestive, cleavage,
+    revealing clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature,
+    blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    arthemy: 33509
+    arthemy-author: 33510
+- key: r5-zuzu-emotions
+  entity: zuzu
+  title: Zuzu emotion sheet
+  size: 1216x832
+  prompt_prose: 'Six head-and-shoulders studies of Zuzu: cold stare, squint, quiet anger, exhaustion, buried pain,
+    resolve.'
+  prompt_tags: expression sheet, multiple views, portrait, upper body, glaring, squinting, angry, clenched teeth,
+    tired, sad, determined, simple background, anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel
+    chest, short legs, small stature, grey fur, round fluffy ears, notched ear, ear scar, broad black nose, serious,
+    squinting, frown, plain straw hat, grey tattered cloak, katana on back
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text
+  jobs:
+    arthemy: 33511
+    arthemy-author: 33512
+- key: r5-sister-turnaround-a
+  entity: siblings
+  title: The sister, turnaround A
+  size: 1216x832
+  prompt_prose: The fennec sister, about ten, three views, fully clothed in a long torn dress.
+  prompt_tags: (fully clothed:1.3), long torn pale dress, same outfit in every view, character sheet, turnaround,
+    multiple views, front view, side view, back view, full body, standing, simple background, anthro, fennec fox,
+    female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty fur, bruised cheek, bandaged
+    hand, torn pale dress, rag-wrapped feet, wary, serious
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text
+  jobs:
+    arthemy: 33513
+    arthemy-author: 33514
+- key: r5-sister-turnaround-b
+  entity: siblings
+  title: The sister, turnaround B
+  size: 1216x832
+  prompt_prose: The fennec sister, about ten, three views, fully clothed in a long torn dress.
+  prompt_tags: (fully clothed:1.3), long torn pale dress, same outfit in every view, character sheet, turnaround,
+    multiple views, front view, side view, back view, full body, standing, simple background, anthro, fennec fox,
+    female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty fur, bruised cheek, bandaged
+    hand, torn pale dress, rag-wrapped feet, wary, serious
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text
+  jobs:
+    arthemy: 33515
+    arthemy-author: 33516
+- key: r5-toddler-turnaround
+  entity: siblings
+  title: The toddler, turnaround
+  size: 1216x832
+  prompt_prose: The fennec toddler brother, three views, in a checked cloth tunic.
+  prompt_tags: (fully clothed:1.3), same outfit in every view, character sheet, turnaround, multiple views, front
+    view, side view, back view, full body, standing, simple background, anthro, fennec fox, toddler, tiny, enormous
+    ears, sand-colored fur, checked cloth tunic, bandaged paw, wide eyes
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text
+  jobs:
+    arthemy: 33517
+    arthemy-author: 33518
+- key: r5-siblings-emotions
+  entity: siblings
+  title: Siblings emotion sheet
+  size: 1216x832
+  prompt_prose: 'Six studies of the sister with her toddler brother: terror, grief, hunger, distrust, shock, fragile
+    hope.'
+  prompt_tags: expression sheet, multiple views, portrait, upper body, crying, tears, scared, wide-eyed, sad, glaring,
+    hugging, duo, simple background, anthro, fennec fox, female, young, about ten years old, thin, enormous ears,
+    sand-colored fur, dusty fur, bruised cheek, bandaged hand, torn pale dress, rag-wrapped feet, wary, serious,
+    anthro, fennec fox, toddler, tiny, enormous ears, sand-colored fur, checked cloth tunic, bandaged paw, wide
+    eyes
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text
+  jobs:
+    arthemy: 33519
+    arthemy-author: 33520
+- key: r5-size-lineup
+  entity: zuzu
+  title: 'Size lineup: Zuzu beside the sister'
+  size: 1216x832
+  prompt_prose: 'Size check: stocky Zuzu standing beside the taller fennec sister, who holds her toddler brother.'
+  prompt_tags: size difference, height difference, side by side, full body, standing, simple background, (fully
+    clothed:1.3), dark tunic, trousers, cloth sash, wrapped shins, anthro, koala, male, adult, (short:1.2), (stocky:1.2),
+    chubby, barrel chest, short legs, small stature, grey fur, round fluffy ears, notched ear, ear scar, broad black
+    nose, serious, squinting, frown, plain straw hat, grey tattered cloak, katana on back, the koala is shorter
+    than the fox girl, (fully clothed:1.3), long torn pale dress, anthro, fennec fox, female, young, about ten years
+    old, thin, enormous ears, sand-colored fur, dusty fur, bruised cheek, bandaged hand, torn pale dress, rag-wrapped
+    feet, wary, serious, holding a toddler, anthro, fennec fox, toddler, tiny, enormous ears, sand-colored fur,
+    checked cloth tunic, bandaged paw, wide eyes
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, tall, lanky, long legs, slender, nsfw, nude, suggestive, cleavage,
+    revealing clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature,
+    blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    arthemy: 33521
+    arthemy-author: 33522
+- key: r5-coyote-turnaround-a
+  entity: coyote
+  title: The one-eyed coyote, turnaround A
+  size: 1216x832
+  prompt_prose: The bedraggled one-eyed coyote vagrant from the oasis, three views.
+  prompt_tags: same outfit in every view, character sheet, turnaround, multiple views, front view, side view, back
+    view, full body, standing, simple background, anthro, coyote, male, adult, bedraggled, scruffy fur, one eye,
+    eyepatch, scarred face, long dusty duster coat, battered wide-brim hat, revolver in holster, gaunt, wary, (fully
+    clothed:1.3), shirt, trousers, boots
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text
+  jobs:
+    arthemy: 33523
+    arthemy-author: 33524
+- key: r5-coyote-turnaround-b
+  entity: coyote
+  title: The one-eyed coyote, turnaround B
+  size: 1216x832
+  prompt_prose: The bedraggled one-eyed coyote vagrant from the oasis, three views.
+  prompt_tags: same outfit in every view, character sheet, turnaround, multiple views, front view, side view, back
+    view, full body, standing, simple background, anthro, coyote, male, adult, bedraggled, scruffy fur, one eye,
+    eyepatch, scarred face, long dusty duster coat, battered wide-brim hat, revolver in holster, gaunt, wary, (fully
+    clothed:1.3), shirt, trousers, boots
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text
+  jobs:
+    arthemy: 33525
+    arthemy-author: 33526
+- key: r5-crocodile
+  entity: crocodile
+  title: The crocodile
+  size: 1344x768
+  prompt_prose: A giant crocodile erupting from a desert watering hole, jaws open. The creature alone, so nothing
+    bleeds into it.
+  prompt_tags: giant crocodile, bursting out of water, open jaws, sharp teeth, water spray, desert oasis, palm trees,
+    muddy watering hole, action, dynamic angle, feral
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text
+  jobs:
+    arthemy: 33527
+    arthemy-author: 33528
+- key: r5-otter-nuns-a
+  entity: otter-nuns
+  title: The otter nuns A
+  size: 1216x832
+  prompt_prose: Three otter nuns at the mission, kind smiles; the older mother superior hides a dagger behind her
+    back.
+  prompt_tags: group, three otters, standing, full body, mission courtyard, adobe wall, anthro, otter, female, nun,
+    black habit, white wimple, long dark robes, (fully clothed:1.3), folded hands, kind smile, wet-looking fur,
+    whiskers, one older otter mother superior in front, holding a dagger behind her back
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text
+  jobs:
+    arthemy: 33529
+    arthemy-author: 33530
+- key: r5-otter-nuns-b
+  entity: otter-nuns
+  title: The otter nuns B
+  size: 1216x832
+  prompt_prose: Three otter nuns at the mission, kind smiles; the older mother superior hides a dagger behind her
+    back.
+  prompt_tags: group, three otters, standing, full body, mission courtyard, adobe wall, anthro, otter, female, nun,
+    black habit, white wimple, long dark robes, (fully clothed:1.3), folded hands, kind smile, wet-looking fur,
+    whiskers, one older otter mother superior in front, holding a dagger behind her back
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text
+  jobs:
+    arthemy: 33531
+    arthemy-author: 33532
+- key: r5-the-road
+  entity: zuzu
+  title: 'Chapter 11 key image: the road together'
+  size: 1344x768
+  prompt_prose: 'Book One ending: Zuzu and the children walking a desert road side by side at sunset.'
+  prompt_tags: wide shot, desert road, sunset, walking together, from behind, three characters, anthro, koala, male,
+    adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs, small stature, grey fur, round fluffy ears,
+    notched ear, ear scar, broad black nose, serious, squinting, frown, plain straw hat, grey tattered cloak, katana
+    on back, (fully clothed:1.3), long torn pale dress, anthro, fennec fox, female, young, about ten years old,
+    thin, enormous ears, sand-colored fur, dusty fur, bruised cheek, bandaged hand, torn pale dress, rag-wrapped
+    feet, wary, serious, carrying a toddler, anthro, fennec fox, toddler, tiny, enormous ears, sand-colored fur,
+    checked cloth tunic, bandaged paw, wide eyes, the koala is shorter than the fox girl
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, tall, lanky, long legs, slender, nsfw, nude, suggestive, cleavage,
+    revealing clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature,
+    blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    arthemy: 33533
+    arthemy-author: 33534

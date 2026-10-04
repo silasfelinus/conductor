@@ -1,5 +1,8 @@
 # ZUZU: KOALA ASSASSIN #1 — "THE LETTER OF THE CONTRACT"
 
+> **Superseded by [BOOK-ONE.md](./BOOK-ONE.md)** (Silas, 2026-10-04): the first story is now one continuous arc from the
+> massacre to the three of them on the road together, with no Old Komodo and no dialogue. Kept for reference only.
+>
 > **v0 draft, superseded where [BRAINSTORM-ROUND-3.md](./BRAINSTORM-ROUND-3.md) disagrees** (2026-10-03: fennec siblings, a serious Zuzu, no Kind Robots-generated world material).
 
 status: draft script for Silas

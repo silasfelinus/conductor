@@ -5,20 +5,27 @@ Two Kind Robots video projects consume this issue (Silas, 2026-10-04):
 | Video | Project | Tasks |
 |---|---|---|
 | Intro / title music video | `music-video` | t-024 brief → t-029 render and verdict |
-| Issue 1 as an animated short | `comic-film` | t-003 shot list → t-009 render and verdict |
+| An animated experience of Book One | `comic-film` | t-003 shot list → t-009 render and verdict |
+
+The film does not have to tell the whole story. Silas, 2026-10-04: *"an animation doesn't need to tell this full story, but just needs to give an experience"* The story of
+record is BOOK-ONE.md (which replaced the v0 issue 1 script); Old Komodo is not in it.
 
 Both inherit the comic's look and canon from here. BRAINSTORM-ROUND-3.md is the source of truth
 wherever it disagrees with the v0 SERIES-BIBLE.md or ISSUE-01-SCRIPT.md.
 
 ## Look
 
-- **Stills and keyframes:** render through the Comic Studio series `zuzu-koala-assassin` house lane, currently `Illustrious/furrytoonmix_xlV3.safetensors` (t-018 may replace it). Use the lane's prefix and suffix, plus the series negatives.
+- **Stills and keyframes:** render through the Comic Studio series `zuzu-koala-assassin` house lane, `Illustrious/arthemyWesternArt_v30.safetensors` (Silas, 2026-10-04, after the round-4 bake-off: "arthemy is the winner."). Use the lane's prefix and suffix, plus the series negatives.
 - **Character shots:** start from vetted comic attempts (verdict selected or liked) rather than fresh renders, until the design pick (t-015) and the character LoRAs (t-016) land.
 - **Clip motion prompts:** write them in prose: camera movement plus one action. No art-direction jargon.
 
 ## Canon in every prompt
 
 - **Zuzu is always serious:** Clint Eastwood stillness, never a smiling sensei.
+- **Zuzu is koala-sized, or a little bigger:** Silas, 2026-10-04: *"zuzu should be koala sized, or a little bigger. if he was an actor doing mocap, it would be danny devito."*
+  Short, stocky, barrel-chested, short legs. In shared frames he is the shortest adult, and the sister is taller
+  than him. Tags that carry it: `short, stocky, chubby, small stature, short legs`. Round 4b's walking shots drew
+  him tall and lanky, which is the failure to watch for.
 - **The siblings are fennec foxes:** a gaunt sister of about ten and a toddler brother who only babbles. Both are starving, beaten and frightened.
 - **No dialogue, no narration.** Silas, 2026-10-04: *"no dialogue or narration, just the occasional sign or poster."*
   The only words on screen are diegetic signs and posters, plus a title card. The v0 script's lines become wordless beats.

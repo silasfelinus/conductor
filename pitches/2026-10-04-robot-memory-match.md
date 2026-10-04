@@ -4,13 +4,13 @@ project-target: new
 status: awaiting-silas
 
 ## The idea
-A card-flipping memory game where pairs of pre-generated robot portraits hide on a grid that grows from four cards to thirty-six across forty hand-authored levels. Stars are earned for few moves, and stars unlock new card-back designs to collect.
+A card-flip matching game where pairs are pre-generated Kind Robots portraits, with boards that grow from four pairs to twelve as you win. Best times save on the device, and each cleared level unlocks a new card-back design to collect.
 
 ## Why it's worth doing
-It needs no LLM at runtime, so it is free for every visitor. Art plan: 60 robot portraits on a consistent square frame plus 12 card backs, generated through ArtJobs and cropped by a script.
+It needs no LLM at runtime, so it is free for every visitor. Art plan: 36 robot portraits and 8 card-back designs generated through ArtJobs at one consistent size.
 
 ## Rough effort
 small
 
 ## Suggested first task
-A 4x4 board with 8 portraits, flip and match logic, a move counter and a win screen.
+One 4-pair board with flip animation, a move counter, and a local best-time record.

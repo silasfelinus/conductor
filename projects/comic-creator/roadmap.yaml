@@ -206,7 +206,7 @@ tasks:
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-10-03T11:12:12Z'
+  updated: '2026-10-04T11:01:27Z'
   depends_on:
   - t-013
   note: >-
@@ -216,6 +216,11 @@ tasks:
     deployed), mark one Zuzu design and one fennec-siblings design as final, and an agent
     renders the 8 Kontext angles from them. Until then, round 3's Z-Image Turbo sheets are
     the strongest candidates (see the round-3 contact sheet).
+
+    2026-10-04: with Arthemy chosen as the house checkpoint, the design candidates now come
+    from round 5 (ART-ROUND-5.yaml, t-021): every Book One character in Arthemy. Silas picks
+    one design per character from those sheets; the 8-angle renders and the LoRAs (t-016)
+    follow.
   gate_reason: creative-approval
 - id: t-016
   milestone: m3
@@ -250,12 +255,12 @@ tasks:
 - id: t-018
   milestone: m2
   title: 'Checkpoint bake-off: furrytoonmix vs its V3B update and five lookalikes'
-  status: needs-human
+  status: done
   gate_reason: physical-access
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-10-04T07:47:53Z'
+  updated: '2026-10-04T11:01:16Z'
   note: >-
     FOR SILAS: download the six checkpoints listed in docs/checkpoints.md into ComfyUI
     models/checkpoints/Illustrious/ under the file names in
@@ -292,7 +297,46 @@ tasks:
     2026-10-04 (agent sweep 2): status was still claimed with null claim fields after the
     #5555 results note; set to needs-human (soft gate, physical-access): waiting on Silas to
     land the V3B and Mol_Keun checkpoint files.
+
+    2026-10-04 round 4 extended with furrytoonmix V3B and Mol_Keun DeepCobalt V2 (ArtJobs
+    33488-33499, ArtImages 241853-241864, all private). Sheet republished at the same URL.
+    V3B: strongest acting of the round and the only checkpoint to draw Zuzu's canon ear
+    notch and scar, but it dropped his clothes on two of three turnaround views (ArtImage
+    241853, private, withheld from the sheet). Real house contender pending a clothing-
+    weighted retest (clothed in the prompt, nude in the negative). Mol_Keun: best huddled-
+    siblings mood and fullest costume, but Zuzu reads as a bear and its Komodo became an
+    upright lizard swordsman. House stays V3 until Silas decides; next pass is a V3B
+    clothing retest plus author settings on V3B and Nova Comic.
+
+    2026-10-04 round 4b, V3B clothing retest (ART-ROUND-4B.yaml, ArtJobs 33500-33506,
+    ArtImages 241865-241871, all private, nothing withheld). Weighted clothing tags up front
+    plus a hardened negative: 6 of 6 full-body frames dressed (4 turnarounds = 12 views, 2
+    walks), so the round-4 nudity failure is fixed by prompt. Side effects: a skull-and-
+    crossbones crest on two cloak backs (straw hat + red band pulls in One Piece; negate
+    skull/jolly roger/emblem/logo, describe the hat as plain); back-angle walks drifted to a
+    dog snout and invented koala children; the emotion sheet lost range (two similar sneers)
+    when the outfit was enumerated. Recommendation: V3B is viable as the house checkpoint if
+    full-body prompts carry the clothing block and headshots carry only the hardened
+    negative. House switch is Silas's call; sheet section:
+    https://claude.ai/artifact/QRRDHtVxaCWYEmN69sU8iE#round-4b.
+
+    2026-10-04 Silas: Arthemy Western Art v3.0 stands out as the strongest checkpoint for
+    him (house switch not yet decided). All 97 bake-off renders (rounds 3, 4, 4b) are in one
+    viewer with a sheet per checkpoint: https://claude.ai/artifact/5noUSSzS6Avkxe3mAESuA9.
+    Building it surfaced three more undressed round-3 frames from furrytoonmix V3 (241681
+    Zuzu in underwear, 241683 the sister unclothed in one view, 241725 Zuzu unclothed);
+    round 3 was submitted is_public: true, so all three were set private on Kind Robots and
+    are withheld from the viewer. Clothing drift is not unique to V3B. The rest of round 3
+    is still public, including the twist subjects. New canon from Silas the same day: Zuzu
+    is koala-sized or a little bigger, Danny DeVito build (SERIES-BIBLE, BRAINSTORM-ROUND-3
+    decisions, VIDEO-GUARDRAILS).
+
+    2026-10-04 DECIDED by Silas: "arthemy is the winner." Arthemy Western Art v3.0 becomes
+    the Zuzu house checkpoint (docs/checkpoints.md; Kind Robots lane change is t-022). The
+    tier list put Arthemy first for tone, a naturally stocky Zuzu and no withheld frames;
+    V3B, V3, Nova Comic and Z-Image (for sets) were next.
   soft_gate: true
+  approved_by_human: true
 - id: t-019
   milestone: m2
   title: 'Video guardrails: Zuzu intro (music-video t-024) and Issue 1 film (comic-film)'
@@ -307,3 +351,46 @@ tasks:
     records what both inherit: the house lane for stills, vetted attempts as character keyframes,
     canon rules, the mature rating (Silas, 2026-10-04, correcting a v0 'teen' assumption), and the bannedTerms list that keeps the human-ruins twist out of
     every prompt. Downstream video tasks copy that list into settings.bannedTerms.
+- id: t-020
+  milestone: m2
+  title: 'Book One page plan: chapters to pages and panels (no dialogue)'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-04T10:30:00Z'
+  note: >-
+    Silas, 2026-10-04: the first story is one continuous arc, not a periodical; "the story will tell us
+    how long it is", possibly a graphic novel. Turn issues/zuzu-koala-assassin-01/BOOK-ONE.md's 11 chapters
+    into a page and panel plan with page counts per chapter, wordless storytelling, and key images.
+    The Comic Studio issue may need more pages than a standard 20-page issue; check its page cap and
+    raise it in Kind Robots if needed.
+- id: t-021
+  milestone: m2
+  title: 'Round 5: Book One cast design candidates in Arthemy'
+  status: ready
+  owner: worker
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-04T11:46:50Z'
+  note: >-
+    ART-ROUND-5.yaml, ArtJobs 33507-33534, private. Every Book One character (Zuzu, the sister, the
+    toddler, the one-eyed coyote, the crocodile, the otter nuns) plus a size lineup and the chapter 11
+    road image, in two Arthemy lanes: round-4 settings and the author's (Euler a, 30 steps, CFG 5). Next:
+    per-character sheets for Silas, who picks final designs for t-015.
+
+    Re-armed to ready: status was stuck at claimed with null claim fields after PR #5564
+    merged (claim-drift sweep, 2026-10-04). Remaining: per-character sheets for Silas.
+- id: t-022
+  milestone: m2
+  title: 'Kind Robots: Arthemy as the Zuzu house lane, and import the Zuzu series'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-04T10:30:00Z'
+  note: >-
+    Silas chose Arthemy Western Art v3.0 (t-018). Production has no comic series yet: the Zuzu import
+    (scripts/import_comic_studio.py) has never run. Add an Arthemy lane to utils/comicLanes.ts as the
+    default primary (FurryToonMix stays as a lane), then run the import so the series exists with
+    Arthemy as its house lane and BOOK-ONE.md as the issue notes.
