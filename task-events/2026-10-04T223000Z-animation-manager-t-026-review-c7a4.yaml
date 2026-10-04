@@ -1,0 +1,8 @@
+version: 1
+project: animation-manager
+task: t-026
+operation: review
+session: 2026-10-04T222000Z-animation-manager-t-026-c7a4
+updated: '2026-10-04T22:30:00Z'
+note: >-
+  Replaced the disproven X-Mailin tracking-header assumption with a provider-independent backup: every digest now carries a base64 HTML attachment containing the original direct HTTP destinations plus an in-message notice explaining the fallback. Added regression coverage proving signed pitch-inbox and Animation Manager URLs survive unchanged in the attachment and that the ineffective X-Mailin headers are gone.
