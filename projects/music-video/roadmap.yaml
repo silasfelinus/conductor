@@ -624,12 +624,12 @@ tasks:
   - id: t-026
     milestone: m2
     title: "Aspect-correct clips: crop instead of stretch, aspect-sized frames, optional last frame (kind_robots)"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     depends_on: [t-009]
-    updated: '2026-10-04T00:00:00Z'
+    updated: '2026-10-04T02:29:21Z'
     note: >-
       Clips take their size from the preset, so a 9:16 or 1:1 video still gets 1280x720 clips, and
       LTX resizes with crop disabled, stretching 2:3 comic art. Add an opt-in imageFit crop on
@@ -637,6 +637,10 @@ tasks:
       ImageScale). Default stays stretch, so Scene Animator and the Video Generator are unchanged.
       clipFrameSize(preset, aspect) in multiples of 32; scene.motionPrompt (falls back to prompt)
       and motion.lastFrame next-scene. Verify WAN on the box when t-012 runs.
+
+      Merged (kind_robots#3217): opt-in imageFit crop on video jobs (default stretch
+      unchanged), clipFrameSize per aspect, motionPrompt, motion.lastFrame next-scene.
+    implementation_pr: 'silasfelinus/kind_robots#3217'
 
   - id: t-027
     milestone: m2
