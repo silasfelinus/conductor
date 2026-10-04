@@ -13,10 +13,11 @@ needed so this can be manifested."*
 Comic Film turns a comic issue from the Kind Robots Comic Studio into a short animated film on our
 own ComfyUI backend:
 
-1. **Shot list:** beats become shots, each with a duration, a camera move and an optional caption.
+1. **Shot list:** beats become shots, each with a duration, a camera move and, rarely, on-screen text.
 2. **Keyframes:** one still per shot, rendered in the comic's house checkpoint or picked from comic attempts Silas already vetted.
 3. **Clips:** LTX/WAN image-to-video clips on the shots that earn motion; everything else gets Ken Burns.
-4. **Score:** ACE-Step instrumental or an uploaded track. Burned-in captions carry the sparse dialogue.
+4. **Score:** ACE-Step instrumental or an uploaded track. The comic has **no dialogue or narration** (Silas,
+   2026-10-04). The only words are diegetic signs and posters, plus a title card.
 5. **Delivery:** one MP4 stored as a private ArtImage.
 
 The first film is **Zuzu: Koala Assassin #1**. The tooling is generic, so later issues and other comics reuse it.
@@ -69,7 +70,9 @@ written into notes, and each music-video task says what to release here when it 
 - **Zuzu #1 shot list, written by an agent:** 2.5 to 4 minutes, about 30 to 45 shots.
 - **Clip budget:** at most 12 real LTX clips. They run 30 to 90 minutes each on the single 12 GB card, so they go overnight. The rest use Ken Burns.
 - **Keyframes:** character shots come from vetted comic attempts. Other shots are rendered in the house lane, currently furrytoonmix, which the bake-off in comic-creator t-018 may replace.
-- **Captions:** at most about 60 words of dialogue for the whole issue (it is that sparse by design), plus a title card.
+- **Text:** none spoken or narrated. On-screen text is limited to the title card and inserts of diegetic signs or
+  posters (for example the Hollow Bell arch, or a later chapter's missing-child posters). Burned in with the same
+  caption machinery, using `kind: title | sign`.
 - **Delivery:** a 720p MP4 under the 24 MB upload cap, then parked for Silas's verdict.
 
 ## Guardrails

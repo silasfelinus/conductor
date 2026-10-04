@@ -20,7 +20,9 @@ wherever it disagrees with the v0 SERIES-BIBLE.md or ISSUE-01-SCRIPT.md.
 
 - **Zuzu is always serious:** Clint Eastwood stillness, never a smiling sensei.
 - **The siblings are fennec foxes:** a gaunt sister of about ten and a toddler brother who only babbles. Both are starving, beaten and frightened.
-- **Action over exposition:** issue 1 has about 60 words of dialogue. Backstory comes through movement.
+- **No dialogue, no narration.** Silas, 2026-10-04: *"no dialogue or narration, just the occasional sign or poster."*
+  The only words on screen are diegetic signs and posters, plus a title card. The v0 script's lines become wordless beats.
+  Backstory comes through movement.
 - **Rated teen:** show violence only as aftermath, with no gore on screen.
 - **Placeholders, not canon:** the v0 Kind Robots world (Gallowsun Junction, the Stationmaster, Tomoe, Old Shelba, contract-language captions). Use none of it.
 
