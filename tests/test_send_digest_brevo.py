@@ -1,3 +1,4 @@
+import base64
 import io
 import json
 import urllib.error
@@ -38,15 +39,23 @@ def base_payload():
     }
 
 
-def test_configure_payload_disables_brevo_click_and_open_tracking(monkeypatch):
+def test_configure_payload_adds_provider_independent_direct_links_backup(monkeypatch):
     monkeypatch.setenv("DIGEST_FROM", "conductor@example.com")
     monkeypatch.setenv("DIGEST_FROM_NAME", "Conductor")
     monkeypatch.setenv("DIGEST_TO", "silas@example.com")
     monkeypatch.setenv("DIGEST_TO_NAME", "Silas")
 
+    direct = (
+        "https://kindrobots.org/api/conductor/pitch-inbox?"
+        "exp=1792348892&sig=deadbeef"
+    )
     payload = {
         "subject": "Daily Dream",
-        "htmlContent": '<a href="https://kindrobots.org">Kind Robots</a>',
+        "htmlContent": (
+            f'<a href="{direct.replace("&", "&amp;")}">Decide all 5</a>'
+            '<a href="https://kindrobots.org/build/animation-manager?effect=test&preview=1">'
+            "Try animation</a>"
+        ),
     }
 
     configured = digest_sender.configure_payload(payload)
@@ -58,9 +67,40 @@ def test_configure_payload_disables_brevo_click_and_open_tracking(monkeypatch):
             "contactPixelTrackingConsent": False,
         }
     ]
-    assert configured["headers"]["X-Mailin-Track-Click"] == "0"
-    assert configured["headers"]["X-Mailin-Track-Open"] == "0"
-    assert configured["htmlContent"] == '<a href="https://kindrobots.org">Kind Robots</a>'
+    assert "X-Mailin-Track-Click" not in configured.get("headers", {})
+    assert "X-Mailin-Track-Open" not in configured.get("headers", {})
+    assert digest_sender.DIRECT_LINKS_NOTICE_MARKER in configured["htmlContent"]
+
+    attachment = next(
+        item
+        for item in configured["attachment"]
+        if item["name"] == digest_sender.DIRECT_LINKS_ATTACHMENT
+    )
+    backup_html = base64.b64decode(attachment["content"]).decode("utf-8")
+    assert direct.replace("&", "&amp;") in backup_html
+    assert "https://kindrobots.org/build/animation-manager?effect=test&amp;preview=1" in backup_html
+    assert "sendibt2.com" not in backup_html
+
+
+def test_direct_links_backup_is_idempotent(monkeypatch):
+    monkeypatch.setenv("DIGEST_FROM", "conductor@example.com")
+    monkeypatch.setenv("DIGEST_TO", "silas@example.com")
+
+    payload = {
+        "subject": "Daily Dream",
+        "htmlContent": '<a href="https://kindrobots.org">Kind Robots</a>',
+    }
+
+    digest_sender.configure_payload(payload)
+    digest_sender.configure_payload(payload)
+
+    backups = [
+        item
+        for item in payload["attachment"]
+        if item["name"] == digest_sender.DIRECT_LINKS_ATTACHMENT
+    ]
+    assert len(backups) == 1
+    assert payload["htmlContent"].count(digest_sender.DIRECT_LINKS_NOTICE_MARKER) == 1
 
 
 def test_transient_http_failure_retries_with_same_idempotency_key():
