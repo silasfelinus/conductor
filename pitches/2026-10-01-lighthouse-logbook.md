@@ -1,7 +1,7 @@
 # Pitch: Lighthouse Logbook
 date: 2026-10-01
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 A cozy keeper's-log game in which each evening you tend a lighthouse, answer a pre-written ship signal by choosing a lamp pattern, and read the next page of a branching season of letters. Every branch and reply is authored in advance, so a full season plays free with no model call.
