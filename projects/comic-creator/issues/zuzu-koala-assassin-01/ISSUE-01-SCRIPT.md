@@ -4,7 +4,8 @@
 
 status: draft script for Silas
 length: 20 story pages + cover (a standard indie first issue; every page below is one printed page)
-rating: teen and up: aftermath-only violence, implied, no on-panel killing
+rating: mature (Silas, 2026-10-04: "This is a mature comic with mature themes." The v0 draft's
+  "teen and up, aftermath-only" line was an assumption he never made)
 read first: [SERIES-BIBLE.md](./SERIES-BIBLE.md)
 
 Format key: **PANEL** = art description; *CAPTION* = narration box (Zuzu's interior, in parchment boxes);

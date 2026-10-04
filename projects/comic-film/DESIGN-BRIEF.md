@@ -81,7 +81,9 @@ written into notes, and each music-video task says what to release here when it 
   - The buried human-ruins twist never appears in any prompt, caption or title.
   - `settings.bannedTerms` enforces this on the server.
   - The shot list is written by an agent that leaves the secret out on purpose.
-- **Rated teen:** violence is shown only as aftermath.
+- **Mature:** Silas, 2026-10-04: *"I never explicitly said zuzu was teen rated. This is a mature comic with mature themes."* Violence can be on screen. The children are never
+  sexualised, and their injuries stay implied (VIDEO-GUARDRAILS.md). Mature renders need the
+  Kind Robots maturity flag so galleries filter them.
 - **Generation:** ArtJob is the only generation queue. Renders are private. Prompts follow the contract of the engine that renders them.
 - **Publishing is a gate:** placing a film anywhere public parks at needs-human (`gate_reason: publish`).
 
