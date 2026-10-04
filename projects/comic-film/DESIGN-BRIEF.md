@@ -22,6 +22,11 @@ own ComfyUI backend:
 
 The first film is **Zuzu: Koala Assassin #1**. The tooling is generic, so later issues and other comics reuse it.
 
+**Update, 2026-10-04: an experience, not the whole story.** Silas: *"an animation doesn't need to tell this full story, but just needs to give an experience"* The source
+is now Book One (`projects/comic-creator/issues/zuzu-koala-assassin-01/BOOK-ONE.md`), one continuous
+arc from the massacre to the three of them on the road. The film picks the moments that carry its
+feeling; it does not adapt every chapter. Old Komodo is not in Book One.
+
 ## Who it serves
 
 Silas, as director and editor, at an admin page `/admin/comic-film`. Agents also run it headless.
@@ -90,5 +95,5 @@ written into notes, and each music-video task says what to release here when it 
 ## Open questions (for Silas, non-blocking)
 
 - **Score:** an ACE-Step instrumental (needs music-video t-012 staged on the box) or a track he supplies?
-- **Old Komodo:** does his eruption from the sand belong in issue 1's film as the action set piece, or wait for a later issue? The default is to leave him out, because the issue 1 script doesn't have him.
+- **Old Komodo:** settled 2026-10-04. He is out of Book One, so he is out of the film.
 - **Title card wording,** and whether to end on the optional stinger (a third set of sandal prints at the arch).
