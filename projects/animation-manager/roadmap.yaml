@@ -629,8 +629,8 @@ tasks:
   - id: t-026
     milestone: m5
     title: "Keep Daily Dream digest links direct instead of Brevo-tracked redirects"
-    status: claimed
-    updated: '2026-10-04T22:21:00Z'
+    status: review
+    updated: '2026-10-04T22:30:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -647,6 +647,8 @@ tasks:
       Merged silasfelinus/conductor#5544 as b403aa64 after every exact-head workflow completed successfully: Worker PR CI 37152439542, Security Audit 37152439519, Worker PR handoff 37152439512, Process task events 37152439517, and CodeQL 37152438626. The private digest now sends Brevo's explicit no-click/no-open tracking headers in addition to the existing per-recipient privacy preference. No live test email was sent; the next normal digest is the delivered-email verification boundary.
 
       Silas reported on 2026-10-04 that the second consecutive delivered Dream Digest still rewrote the Decide all pitches link through Brevo. Live Gmail MIME proves X-Mailin-Track-Click: 0 and X-Mailin-Track-Open: 0 were present while sendibt2.com click redirects were still injected, so PR #5544's API-header approach is ineffective. Reopen for a provider-independent fallback and delivered-message regression guard.
+
+      Replaced the disproven X-Mailin tracking-header assumption with a provider-independent backup: every digest now carries a base64 HTML attachment containing the original direct HTTP destinations plus an in-message notice explaining the fallback. Added regression coverage proving signed pitch-inbox and Animation Manager URLs survive unchanged in the attachment and that the ineffective X-Mailin headers are gone.
     owner: worker
     claimed_by: 2026-10-04T222000Z-animation-manager-t-026-c7a4
     claimed_at: '2026-10-04T22:21:00Z'
