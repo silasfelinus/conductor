@@ -11,7 +11,15 @@ search does not have to be repeated. The Kind Robots Comic Studio's **house chec
 (Notes tab → House checkpoint) is where the winner goes. Round 4 (`issues/zuzu-koala-assassin-01/ART-ROUND-4.yaml`,
 task t-018) is the bake-off.
 
-## The house checkpoint: FurryToonMix
+## Decision: Arthemy Western Art v3.0 is the house checkpoint
+
+Silas, 2026-10-04, after the round-4 bake-off: "arthemy is the winner." Round 4 compared seven Illustrious checkpoints on the same six
+prompts (tier list and sheets in t-018's notes). Arthemy had the best tone, a naturally stocky Zuzu and
+no frames withheld. Its author's settings are Euler a, 25 to 50 steps, CFG 3.5 to 7, and the tags
+`toon (style)` and `western comics (style)`; round 4 used the Illustrious family profile instead.
+FurryToonMix V3 stays available as a lane.
+
+## The previous house checkpoint: FurryToonMix
 
 - Page: https://civitai.com/models/97479 by Epitaph. Illustrious (SDXL), eps prediction. The license
   is permissive: selling images and merges is allowed.

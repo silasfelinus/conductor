@@ -5,14 +5,17 @@ Two Kind Robots video projects consume this issue (Silas, 2026-10-04):
 | Video | Project | Tasks |
 |---|---|---|
 | Intro / title music video | `music-video` | t-024 brief → t-029 render and verdict |
-| Issue 1 as an animated short | `comic-film` | t-003 shot list → t-009 render and verdict |
+| An animated experience of Book One | `comic-film` | t-003 shot list → t-009 render and verdict |
+
+The film does not have to tell the whole story. Silas, 2026-10-04: *"an animation doesn't need to tell this full story, but just needs to give an experience"* The story of
+record is BOOK-ONE.md (which replaced the v0 issue 1 script); Old Komodo is not in it.
 
 Both inherit the comic's look and canon from here. BRAINSTORM-ROUND-3.md is the source of truth
 wherever it disagrees with the v0 SERIES-BIBLE.md or ISSUE-01-SCRIPT.md.
 
 ## Look
 
-- **Stills and keyframes:** render through the Comic Studio series `zuzu-koala-assassin` house lane, currently `Illustrious/furrytoonmix_xlV3.safetensors` (t-018 may replace it). Use the lane's prefix and suffix, plus the series negatives.
+- **Stills and keyframes:** render through the Comic Studio series `zuzu-koala-assassin` house lane, `Illustrious/arthemyWesternArt_v30.safetensors` (Silas, 2026-10-04, after the round-4 bake-off: "arthemy is the winner."). Use the lane's prefix and suffix, plus the series negatives.
 - **Character shots:** start from vetted comic attempts (verdict selected or liked) rather than fresh renders, until the design pick (t-015) and the character LoRAs (t-016) land.
 - **Clip motion prompts:** write them in prose: camera movement plus one action. No art-direction jargon.
 

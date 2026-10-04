@@ -340,3 +340,43 @@ tasks:
     records what both inherit: the house lane for stills, vetted attempts as character keyframes,
     canon rules, the mature rating (Silas, 2026-10-04, correcting a v0 'teen' assumption), and the bannedTerms list that keeps the human-ruins twist out of
     every prompt. Downstream video tasks copy that list into settings.bannedTerms.
+- id: t-020
+  milestone: m2
+  title: 'Book One page plan: chapters to pages and panels (no dialogue)'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-04T10:30:00Z'
+  note: >-
+    Silas, 2026-10-04: the first story is one continuous arc, not a periodical; "the story will tell us
+    how long it is", possibly a graphic novel. Turn issues/zuzu-koala-assassin-01/BOOK-ONE.md's 11 chapters
+    into a page and panel plan with page counts per chapter, wordless storytelling, and key images.
+    The Comic Studio issue may need more pages than a standard 20-page issue; check its page cap and
+    raise it in Kind Robots if needed.
+- id: t-021
+  milestone: m2
+  title: 'Round 5: Book One cast design candidates in Arthemy'
+  status: claimed
+  owner: worker
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-04T10:30:00Z'
+  note: >-
+    ART-ROUND-5.yaml, ArtJobs 33507-33534, private. Every Book One character (Zuzu, the sister, the
+    toddler, the one-eyed coyote, the crocodile, the otter nuns) plus a size lineup and the chapter 11
+    road image, in two Arthemy lanes: round-4 settings and the author's (Euler a, 30 steps, CFG 5). Next:
+    per-character sheets for Silas, who picks final designs for t-015.
+- id: t-022
+  milestone: m2
+  title: 'Kind Robots: Arthemy as the Zuzu house lane, and import the Zuzu series'
+  status: ready
+  owner: null
+  passes: 0
+  stakes: reversible
+  updated: '2026-10-04T10:30:00Z'
+  note: >-
+    Silas chose Arthemy Western Art v3.0 (t-018). Production has no comic series yet: the Zuzu import
+    (scripts/import_comic_studio.py) has never run. Add an Arthemy lane to utils/comicLanes.ts as the
+    default primary (FurryToonMix stays as a lane), then run the import so the series exists with
+    Arthemy as its house lane and BOOK-ONE.md as the issue notes.
