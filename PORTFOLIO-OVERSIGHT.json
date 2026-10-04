@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-10-03T21:25:40.045637+00:00",
+  "generated_at": "2026-10-04T06:02:13.190086+00:00",
   "summary": {
     "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 10,
+    "roadmap_warnings": 11,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -14,7 +14,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-03T09:23:59+00:00",
-    "hours_since": 12.03,
+    "hours_since": 20.64,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
@@ -22,7 +22,7 @@
   "intent_review": {
     "due": false,
     "last_report": "INTENT-AUDIT-2026-10-03.md",
-    "days_since": 0,
+    "days_since": 1,
     "stale_days": 3.0
   },
   "project_parity": {
@@ -31,19 +31,19 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-10-03T21:25:40.045644+00:00",
+    "generated_at": "2026-10-04T06:02:13.190090+00:00",
     "summary": {
-      "roadmaps": 62,
-      "active_projects": 23,
+      "roadmaps": 63,
+      "active_projects": 24,
       "continuous_projects": 3,
-      "tasks": 1855,
-      "ready": 45,
-      "waiting": 80,
-      "needs_human": 37,
-      "in_progress": 8,
-      "done": 1669,
+      "tasks": 1875,
+      "ready": 50,
+      "waiting": 87,
+      "needs_human": 39,
+      "in_progress": 7,
+      "done": 1676,
       "errors": 0,
-      "warnings": 10,
+      "warnings": 11,
       "info": 38
     },
     "errors": [],
@@ -75,6 +75,13 @@
         "project": "comic-creator",
         "task": "t-015",
         "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
+      },
+      {
+        "severity": "warning",
+        "code": "POSSIBLY_UNNECESSARY_GATE",
+        "project": "comic-film",
+        "task": "t-009",
+        "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
       },
       {
         "severity": "warning",
