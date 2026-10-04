@@ -313,7 +313,7 @@ tasks:
   - id: t-013
     milestone: m2
     title: "Audio upload fallback (admin-only route)"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -324,6 +324,11 @@ tasks:
       cap, stored as a private audio ArtImage through the t-020 path, returning the artImageId for
       MusicVideoDoc.song with source upload. This is for Suno exports and Silas's own medleys, and
       it lets lyrics, timeline, images and compile be built and tested before t-012.
+
+      Song upload merged (kind_robots#3216): POST /api/music-video/[id]/song-upload, MP3/WAV,
+      private audio ArtImage, video length follows the song.
+    updated: '2026-10-04T02:29:18Z'
+    implementation_pr: 'silasfelinus/kind_robots#3216'
 
   - id: t-010
     milestone: m2
@@ -601,12 +606,12 @@ tasks:
   - id: t-025
     milestone: m2
     title: "Comic-lane scene stills, comic keyframe picker and banned terms (kind_robots)"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     depends_on: [t-008]
-    updated: '2026-10-04T00:00:00Z'
+    updated: '2026-10-04T02:29:24Z'
     note: >-
       settings.comicSeriesId / comicLaneKey route scene stills through the series' house lane
       (buildComicLaneEnqueueBody) instead of the krea2 constant in server/utils/musicVideoScenes.ts;
@@ -616,15 +621,20 @@ tasks:
       engine (also usable for t-015's franchise guardrail). No schema change. On merge, check
       comic-film t-004/t-005 notes for anything waiting on this.
 
+      Merged (kind_robots#3218): settings.comicSeriesId/comicLaneKey route stills through the
+      comic house lane; bannedTerms enforced on stills, LLM prompts and clip prompts; POST
+      scenes/keyframes assigns vetted comic attempts. Picker UI rides t-027.
+    implementation_pr: 'silasfelinus/kind_robots#3218'
+
   - id: t-026
     milestone: m2
     title: "Aspect-correct clips: crop instead of stretch, aspect-sized frames, optional last frame (kind_robots)"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     depends_on: [t-009]
-    updated: '2026-10-04T00:00:00Z'
+    updated: '2026-10-04T02:29:21Z'
     note: >-
       Clips take their size from the preset, so a 9:16 or 1:1 video still gets 1280x720 clips, and
       LTX resizes with crop disabled, stretching 2:3 comic art. Add an opt-in imageFit crop on
@@ -633,35 +643,43 @@ tasks:
       clipFrameSize(preset, aspect) in multiples of 32; scene.motionPrompt (falls back to prompt)
       and motion.lastFrame next-scene. Verify WAN on the box when t-012 runs.
 
+      Merged (kind_robots#3217): opt-in imageFit crop on video jobs (default stretch
+      unchanged), clipFrameSize per aspect, motionPrompt, motion.lastFrame next-scene.
+    implementation_pr: 'silasfelinus/kind_robots#3217'
+
   - id: t-027
     milestone: m2
     title: "Admin page controls: settings, song (generate or upload) and pipeline steps (kind_robots)"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
     depends_on: [t-013, t-025]
-    updated: '2026-10-04T00:00:00Z'
+    updated: '2026-10-04T02:29:27Z'
     note: >-
       /admin/music-video is a shell: every pipeline step is API-only and a new video gets the
       defaults (120 s, 16:9). Extract components/music-video/* (settings panel, song panel, pipeline
       bar, scene grid with keyframe picker) so comic-film's admin page can reuse them. The store
       owns every call; auto-fit grids, no viewport breakpoints in shared components.
 
+      t-013 and t-025 merged; ready.
+
   - id: t-028
     milestone: m2
     title: "Headless pipeline: song file, comic lane, clip requests, banned terms (conductor)"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
     depends_on: [t-013, t-025, t-026]
-    updated: '2026-10-04T00:00:00Z'
+    updated: '2026-10-04T02:29:30Z'
     note: >-
       scripts/build_music_video.py gains --song-file (upload through t-013's route, ffprobe for
       duration), --comic-series / --comic-lane / --banned-terms carried into settings, and a
       request_clips action (--clips, --clip-preset, at most 8 per call). Extend
       tests/test_build_music_video.py. comic-film's builder imports this plumbing.
+
+      t-013, t-025 and t-026 merged; ready.
 
   - id: t-029
     milestone: m2
