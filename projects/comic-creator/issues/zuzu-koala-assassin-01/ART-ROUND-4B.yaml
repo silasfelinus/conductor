@@ -1,0 +1,153 @@
+# Zuzu round 4b: furrytoonmix V3B clothing retest (Silas, 2026-10-04: "run the V3B clothing retest")
+# Round 4 found V3B the strongest actor of seven checkpoints, but it drew Zuzu unclothed in two of
+# three turnaround views (ArtImage 241853, private). Same lane, prefix, suffix and family profile as
+# round 4; only the prompt changes: weighted clothing tags up front and a hardened negative.
+# 4 turnaround samples + 2 full-body walks + 1 emotion sheet = 7 private ArtJobs.
+# Pass bar: every full-body frame dressed, and the emotion sheet keeps round 4's range.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status).
+round: 4b
+series: zuzu-koala-assassin
+project_slug: comic-creator
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: v3b-clothed
+  label: furrytoonmix XL-V3B, clothing-weighted
+  engine: comfy
+  checkpoint: Illustrious/furrytoonmix_xlV3B.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic
+  suffix: western, dusty, painterly, dramatic lighting, gritty
+subjects:
+- key: r4b-zuzu-turnaround-a
+  entity: zuzu
+  title: Zuzu turnaround, clothed retest a
+  size: 1216x832
+  prompt_prose: 'character turnaround of a small grey koala ronin, compact and weathered, round ears with ragged
+    pale tufts, a notch and an old scar on the left ear, a broad black nose, hard narrowed eyes, a dusty threadbare
+    travel cloak, a battered wide straw hat, a long black lacquer katana slung across his back: four full-body views
+    side by side at the same scale on a plain pale parchment background, front view, three-quarter view, side view
+    and back view, standing still with his weight on one foot, a grim hard face, gritty painted comic illustration,
+    realistic anthropomorphic animals with true fur and weight, heavy ink shadows, dusty ochre and burnt umber palette,
+    harsh low sunlight'
+  prompt_tags: (fully clothed:1.3), (clothed:1.2), same outfit in every view, dark tunic, trousers, cloth sash,
+    wrapped shins, character sheet, turnaround, multiple views, front view, side view, back view, full body, standing,
+    simple background, anthro, koala, male, adult, grey fur, round ears, ear scar, black nose, serious, squinting,
+    frown, straw hat, tattered cloak, katana on back, ronin
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad
+    hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    v3b-clothed: 33500
+- key: r4b-zuzu-turnaround-b
+  entity: zuzu
+  title: Zuzu turnaround, clothed retest b
+  size: 1216x832
+  prompt_prose: 'character turnaround of a small grey koala ronin, compact and weathered, round ears with ragged
+    pale tufts, a notch and an old scar on the left ear, a broad black nose, hard narrowed eyes, a dusty threadbare
+    travel cloak, a battered wide straw hat, a long black lacquer katana slung across his back: four full-body views
+    side by side at the same scale on a plain pale parchment background, front view, three-quarter view, side view
+    and back view, standing still with his weight on one foot, a grim hard face, gritty painted comic illustration,
+    realistic anthropomorphic animals with true fur and weight, heavy ink shadows, dusty ochre and burnt umber palette,
+    harsh low sunlight'
+  prompt_tags: (fully clothed:1.3), (clothed:1.2), same outfit in every view, dark tunic, trousers, cloth sash,
+    wrapped shins, character sheet, turnaround, multiple views, front view, side view, back view, full body, standing,
+    simple background, anthro, koala, male, adult, grey fur, round ears, ear scar, black nose, serious, squinting,
+    frown, straw hat, tattered cloak, katana on back, ronin
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad
+    hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    v3b-clothed: 33501
+- key: r4b-zuzu-turnaround-c
+  entity: zuzu
+  title: Zuzu turnaround, clothed retest c
+  size: 1216x832
+  prompt_prose: 'character turnaround of a small grey koala ronin, compact and weathered, round ears with ragged
+    pale tufts, a notch and an old scar on the left ear, a broad black nose, hard narrowed eyes, a dusty threadbare
+    travel cloak, a battered wide straw hat, a long black lacquer katana slung across his back: four full-body views
+    side by side at the same scale on a plain pale parchment background, front view, three-quarter view, side view
+    and back view, standing still with his weight on one foot, a grim hard face, gritty painted comic illustration,
+    realistic anthropomorphic animals with true fur and weight, heavy ink shadows, dusty ochre and burnt umber palette,
+    harsh low sunlight'
+  prompt_tags: (fully clothed:1.3), (clothed:1.2), same outfit in every view, dark tunic, trousers, cloth sash,
+    wrapped shins, character sheet, turnaround, multiple views, front view, side view, back view, full body, standing,
+    simple background, anthro, koala, male, adult, grey fur, round ears, ear scar, black nose, serious, squinting,
+    frown, straw hat, tattered cloak, katana on back, ronin
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad
+    hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    v3b-clothed: 33502
+- key: r4b-zuzu-turnaround-d
+  entity: zuzu
+  title: Zuzu turnaround, clothed retest d
+  size: 1216x832
+  prompt_prose: 'character turnaround of a small grey koala ronin, compact and weathered, round ears with ragged
+    pale tufts, a notch and an old scar on the left ear, a broad black nose, hard narrowed eyes, a dusty threadbare
+    travel cloak, a battered wide straw hat, a long black lacquer katana slung across his back: four full-body views
+    side by side at the same scale on a plain pale parchment background, front view, three-quarter view, side view
+    and back view, standing still with his weight on one foot, a grim hard face, gritty painted comic illustration,
+    realistic anthropomorphic animals with true fur and weight, heavy ink shadows, dusty ochre and burnt umber palette,
+    harsh low sunlight'
+  prompt_tags: (fully clothed:1.3), (clothed:1.2), same outfit in every view, dark tunic, trousers, cloth sash,
+    wrapped shins, character sheet, turnaround, multiple views, front view, side view, back view, full body, standing,
+    simple background, anthro, koala, male, adult, grey fur, round ears, ear scar, black nose, serious, squinting,
+    frown, straw hat, tattered cloak, katana on back, ronin
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad
+    hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    v3b-clothed: 33503
+- key: r4b-zuzu-walk-a
+  entity: zuzu
+  title: Zuzu walking away, clothed retest a
+  size: 832x1216
+  prompt_prose: a small grey koala ronin in a dusty threadbare travel cloak and battered wide straw hat walking
+    away down an empty desert road at dusk, glancing back over his shoulder, a long black lacquer katana across
+    his back, full body, gritty painted comic illustration
+  prompt_tags: (fully clothed:1.3), (clothed:1.2), same outfit in every view, dark tunic, trousers, cloth sash,
+    wrapped shins, full body, standing, walking away, looking back, dusty road, desert town, wide shot, anthro,
+    koala, male, adult, grey fur, round ears, ear scar, black nose, serious, squinting, frown, straw hat, tattered
+    cloak, katana on back, ronin
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad
+    hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    v3b-clothed: 33504
+- key: r4b-zuzu-walk-b
+  entity: zuzu
+  title: Zuzu walking away, clothed retest b
+  size: 832x1216
+  prompt_prose: a small grey koala ronin in a dusty threadbare travel cloak and battered wide straw hat walking
+    away down an empty desert road at dusk, glancing back over his shoulder, a long black lacquer katana across
+    his back, full body, gritty painted comic illustration
+  prompt_tags: (fully clothed:1.3), (clothed:1.2), same outfit in every view, dark tunic, trousers, cloth sash,
+    wrapped shins, full body, standing, walking away, looking back, dusty road, desert town, wide shot, anthro,
+    koala, male, adult, grey fur, round ears, ear scar, black nose, serious, squinting, frown, straw hat, tattered
+    cloak, katana on back, ronin
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad
+    hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    v3b-clothed: 33505
+- key: r4b-zuzu-emotions
+  entity: zuzu
+  title: Zuzu emotion sheet, clothed retest
+  size: 1216x832
+  prompt_prose: 'six head-and-shoulders studies of a weathered grey koala ronin with ragged tufted ears, a scarred
+    left ear, a broad black nose and hard narrowed eyes under a battered straw hat, arranged in two rows on a plain
+    pale parchment background: a flat cold stare, a narrowed squint against the sun, quiet cold anger with bared
+    teeth, bone-deep exhaustion, buried pain with eyes half closed, grim resolve, gritty painted comic illustration,
+    realistic anthropomorphic animals with true fur and weight, heavy ink shadows, dusty ochre and burnt umber palette,
+    harsh low sunlight'
+  prompt_tags: (fully clothed:1.3), (clothed:1.2), same outfit in every view, dark tunic, trousers, cloth sash,
+    wrapped shins, expression sheet, multiple views, portrait, upper body, glaring, squinting, angry, clenched teeth,
+    tired, sad, determined, simple background, anthro, koala, male, adult, grey fur, round ears, ear scar, black
+    nose, serious, squinting, frown, straw hat, tattered cloak, katana on back, ronin
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad
+    hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  jobs:
+    v3b-clothed: 33506
