@@ -1,0 +1,15 @@
+version: 1
+project: kind-robots
+task: t-127
+operation: review
+owner: worker
+session: 20261004T091600Z-kind-robots-t127-lora-triage-7f3a
+updated: '2026-10-04T09:34:00Z'
+note: >-
+  Implementation is complete on worker/kind-robots-t-127-lora-triage-20261004T091600Z.
+  CREATURE is retired in the shared LoRA taxonomy with legacy CREATURE values normalizing
+  to CHARACTER; LoRA triage reuses resourceGalleryStore.deleteResource without image
+  cascade; and each triage card opens the canonical Resource card in-place. Source-level
+  diff inspection is clean and the branch is 4 commits ahead / 0 behind main. Pre-PR
+  executable CI is unavailable for this connector branch, and the local sandbox cannot
+  resolve github.com, so pull-request CI is the next executable verification boundary.
