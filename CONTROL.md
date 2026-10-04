@@ -529,3 +529,18 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
   reusable for later issues. A film is a MusicVideo with kind film; it rides on music-video's
   pipeline (music-video t-013, t-025..t-028). Comic canon and the bannedTerms secret list live in
   comic-creator issues/zuzu-koala-assassin-01/VIDEO-GUARDRAILS.md.
+
+### robot-mashup-flipbook  (software)
+**Direction:** A free three-band flip toy mixing heads, torsos and legs of twelve robots into 1,728 combinations with pre-written names; no LLM at runtime.
+**Notes:**
+- (your notes)
+
+### robot-sound-garden  (software)
+**Direction:** A calm Web Audio music toy where tapping plants flowers that play pentatonic notes into a looping song; no LLM at runtime.
+**Notes:**
+- (your notes)
+
+### kind-trivia-trail  (software)
+**Direction:** A walking trail of 200 pre-written multiple-choice questions on an illustrated map with hand-written hints; no LLM at runtime.
+**Notes:**
+- (your notes)

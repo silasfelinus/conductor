@@ -1,0 +1,59 @@
+# Copy this folder to projects/<your-project>/ to add a project.
+# Default scaffold per PROJECT-CREATION.md (approved by Silas 2026-07-04):
+# three milestones — SHAPE / BUILD / POLISH & SHIP — with a NON-BLOCKING scope
+# gate. Agents build the design brief and start working immediately; scope
+# confirmation runs in parallel as a soft needs-human. Two-word slugs preferred.
+project: robot-sound-garden
+kind: software
+goal: "See DESIGN-BRIEF.md; free-to-play, no LLM at runtime."
+
+notes_from_silas: |
+  Steering notes. Agents read this first.
+
+milestones:
+  - id: m1
+    title: "SHAPE — outline, brainstorm, design brief"
+    weight: 25
+    status: not-started
+
+  - id: m2
+    title: "BUILD — actualize, adjust, test"
+    weight: 50
+    status: not-started
+
+  - id: m3
+    title: "POLISH & SHIP — aesthetics, performance, delivery"
+    weight: 25
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write the design brief and start building"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      Take the idea and run: write DESIGN-BRIEF.md (what it is, who it serves,
+      the creative direction, MVP shape), then immediately create and claim the
+      first BUILD tasks. Do NOT wait for scope approval — that's t-002, and it
+      runs in parallel.
+
+  - id: t-002
+    milestone: m1
+    title: "Confirm scope with Silas"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    # AGENTS.md, "Hard vs soft needs-human": scope gates on NEW projects are soft
+    # (Silas, 2026-07-04) -- the whole point of this task is that it runs in
+    # parallel and blocks nothing. Without soft_gate, audit_human_gates.py
+    # classifies it `[hard]` and it reports to Silas as a blocker every session.
+    soft_gate: true
+    note: >
+      FOR SILAS: soft checkpoint, nothing is blocked on it. Read DESIGN-BRIEF.md
+      and confirm or redirect the scope. Development is already underway; if you
+      redirect, agents fold your correction into the roadmap and keep moving.
+      (Outward-facing/irreversible steps still hard-gate as always.)

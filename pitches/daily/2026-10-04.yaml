@@ -1,0 +1,55 @@
+# Daily project pitches, 2026-10-04. Authored by a session; decide with
+#   python scripts/daily_pitches.py --decide SLUG approved|rejected|deferred
+# Theme of the day: free-to-play, zero tokens at runtime, art made ahead of time.
+date: 2026-10-04
+pitches:
+  - slug: kind-memory-match
+    title: Kind Memory Match
+    hook: >-
+      A card-flip matching game using pre-generated Kind Robots portraits, with three board sizes and a
+      daily seeded layout so everyone plays the same board. Matching a pair reveals a short hand-written
+      line about that robot, and fastest times save on the device.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 24 square robot portraits plus three card-back designs, generated through ArtJobs in one style.
+    first_slice: 8 portraits, the flip and match logic on a 4x4 board, and a move counter.
+  - slug: robot-weather-postcards
+    title: Robot Weather Postcards
+    hook: >-
+      A small page that reads the visitor's local weather from a free public forecast API and shows a
+      matching pre-made robot postcard, such as a robot in a raincoat or one asleep under snow. Each
+      postcard carries a pre-written caption, and a collection page tracks which weathers you have seen.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 16 postcards covering weather type and day or night, generated ahead of time and captioned by hand.
+    first_slice: 4 postcards, the weather lookup, the weather-to-postcard mapping, and the caption.
+  - slug: kind-spot-the-difference
+    title: Kind Spot the Difference
+    hook: >-
+      Pairs of pre-generated Kind Robots scenes that differ in five small details, found by tapping the
+      changed spots. Hints cost nothing, and a finished set unlocks a new scene pair with a short
+      hand-written caption about the scene.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: 12 scenes, each with an edited twin made by inpainting in ComfyUI, with difference coordinates recorded in a JSON file.
+    first_slice: 2 scene pairs, the tap-hit test against recorded regions, and a found counter.
+  - slug: robot-tarot-of-kindness
+    title: Robot Tarot of Kindness
+    hook: >-
+      A twenty-two card deck of robot archetypes, each with a pre-written upright and reversed meaning
+      about kindness, drawn as a one, three or daily card spread with a card-flip animation. It is a
+      reflective toy that needs no model and no accounts.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: 22 portrait card illustrations in one consistent frame, plus a card back, generated through ArtJobs.
+    first_slice: 6 cards, the daily draw seeded by date, and the flip animation with meaning text.
+  - slug: robot-name-badge-maker
+    title: Robot Name Badge Maker
+    hook: >-
+      Pick a robot face, a colour and a role, type your name, and get a printable name badge as a PNG
+      or PDF sized for standard badge sleeves. It runs fully in the browser, and a sheet mode lays out
+      six badges per page for classrooms and parties.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 20 robot faces and 8 border frames, generated ahead of time as transparent PNGs.
+    first_slice: 4 faces, live badge preview, and PNG export.
