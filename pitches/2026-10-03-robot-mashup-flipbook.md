@@ -1,7 +1,7 @@
 # Pitch: Robot Mash-Up Flipbook
 date: 2026-10-03
 project-target: new
-status: awaiting-silas
+status: approved
 
 ## The idea
 A three-band flip toy where the head, torso and legs of twelve robots turn independently, so you can spin up 1,728 silly combinations, each with a pre-written funny name built from hand-authored name parts. Save a favourite as a card to download or share.
