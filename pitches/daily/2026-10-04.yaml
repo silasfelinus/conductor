@@ -1,0 +1,55 @@
+# Daily project pitches, 2026-10-04. Authored by a session; decide with
+#   python scripts/daily_pitches.py --decide SLUG approved|rejected|deferred
+# Theme of the day: free-to-play, zero tokens at runtime, art made ahead of time.
+date: 2026-10-04
+pitches:
+  - slug: robot-memory-match
+    title: Robot Memory Match
+    hook: >-
+      A card-flipping memory game where pairs of pre-generated robot portraits hide on a grid that grows
+      from four cards to thirty-six across forty hand-authored levels. Stars are earned for few moves, and
+      stars unlock new card-back designs to collect.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 60 robot portraits on a consistent square frame plus 12 card backs, generated through ArtJobs and cropped by a script.
+    first_slice: A 4x4 board with 8 portraits, flip and match logic, a move counter and a win screen.
+  - slug: kind-bedtime-pages
+    title: Kind Bedtime Pages
+    hook: >-
+      Thirty short pre-written bedtime stories, each a few illustrated pages with a gentle ending, that
+      read aloud with the browser's built-in voice and dim the screen as the story winds down. A
+      favourites shelf remembers which stories you loved on this device.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: 4 soft watercolour illustrations per story, 120 total, generated in batches by theme.
+    first_slice: Three stories with art, the page reader with read-aloud toggle, and the night-light dimmer.
+  - slug: robot-weather-postcards
+    title: Robot Weather Postcards
+    hook: >-
+      Pick a season and a mood and a pre-made postcard of a robot visiting a cosy place appears, with a
+      hand-written greeting assembled from authored phrase parts. Download the card as an image to send to
+      a friend, no account required.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 24 postcard scenes across four seasons and six moods, generated with a shared border and stamp area.
+    first_slice: Six scenes, the season and mood pickers, a phrase assembler and a canvas export to PNG.
+  - slug: kind-garden-idle
+    title: Kind Garden Idle
+    hook: >-
+      A slow idle game where small acts of kindness grow a garden over real time, each seed type taking
+      minutes or hours to bloom into a collectible plant. Everything runs from local timers and a fixed
+      table of plants, so it costs nothing to run and nothing to keep.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: 20 plants with 4 growth stages each, plus a garden backdrop that changes by time of day.
+    first_slice: Five seeds, the growth timer logic with offline catch-up, and a tap-to-water plot grid.
+  - slug: robot-riddle-cards
+    title: Robot Riddle Cards
+    hook: >-
+      A deck of two hundred pre-written riddles and knock-knock jokes in the voices of Kind Robots
+      characters, with a flip card that reveals the answer and a groan-o-meter to rate it. A daily riddle
+      is chosen from the date so friends see the same one.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 20 character portraits used across the deck plus 6 card-frame styles by riddle type.
+    first_slice: Forty riddles, five characters, the flip-card view and the date-seeded daily pick.
