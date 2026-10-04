@@ -42,20 +42,30 @@ Expected sizes:
 ```powershell
 cd D:\code\kind_robots
 git pull --ff-only
-.\scripts\sync-comfy-models.ps1 -Tier audio -DryRun   # expect 4 COPY rows, ~9.5 GiB
-.\scripts\sync-comfy-models.ps1 -Tier audio -Yes
+.\scripts\sync-comfy-models.ps1 -Local D:\comfy\comfy-fast\models -Tier audio -DryRun   # expect 4 COPY rows, ~9.5 GiB
+.\scripts\sync-comfy-models.ps1 -Local D:\comfy\comfy-fast\models -Tier audio -Yes
 ```
 
 ## 3. Make sure ComfyUI has the ACE-Step 1.5 nodes
 
 The nodes are `TextEncodeAceStepAudio1.5`, `EmptyAceStep1.5LatentAudio` and `SaveAudioAdvanced`. They live in current ComfyUI master; older stable builds lag behind.
 
+ComfyUI lives at `D:\comfy\comfy-fast` (a venv install; `COMFY_DIR` in
+`ops/home-server/ecosystem.config.js`), not `D:\ComfyUI`. Update it while the queue is quiet, and
+write down the current commit first so a broken custom node can be rolled back with
+`git checkout <sha>`:
+
 ```powershell
-cd D:\ComfyUI
-git pull
-pm2 restart comfyui
-curl.exe -s -o NUL -w "%{http_code}`n" http://127.0.0.1:8188/object_info/TextEncodeAceStepAudio1.5   # expect 200
-curl.exe -s -o NUL -w "%{http_code}`n" http://127.0.0.1:8188/object_info/SaveAudioAdvanced           # expect 200
+cd D:\comfy\comfy-fast
+git rev-parse --short HEAD
+git pull --ff-only
+.\venv\Scripts\python.exe -m pip install -r requirements.txt
+cd D:\code\conductor
+git pull --ff-only
+cd ops\home-server
+pm2 restart ecosystem.config.js --only comfyui --update-env
+Start-Sleep -Seconds 90
+foreach ($n in 'TextEncodeAceStepAudio1.5','EmptyAceStep1.5LatentAudio','SaveAudioAdvanced') { curl.exe -s -o NUL -w "$n %{http_code}`n" "http://127.0.0.1:8188/object_info/$n" }   # expect 200 three times
 ```
 
 A 404 means ComfyUI is still too old. Update ComfyUI again (or switch to nightly) before going on.

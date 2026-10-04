@@ -521,3 +521,11 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 **Direction:** After 100 clicks the Rebel Button becomes an art reviewer: random unseen, maturity-appropriate public or owned art, 1-5 star reviews (hate it/meh/neutral/like it/love it) with optional comment, each first review earning a click and karma.
 **Notes:**
 - (your notes)
+
+### comic-film  (software)
+**Direction:** Turn a comic issue's story beats into a short animated film on our Comfy backend: a shot list, house-lane keyframes, LTX clips, a score and captions, assembled to MP4, starting with Zuzu: Koala Assassin #1 and reusable for later issues, accepted by Silas.
+**Notes:**
+- Silas, 2026-10-04: Zuzu: Koala Assassin issue 1 as an animated film, a project page of its own,
+  reusable for later issues. A film is a MusicVideo with kind film; it rides on music-video's
+  pipeline (music-video t-013, t-025..t-028). Comic canon and the bannedTerms secret list live in
+  comic-creator issues/zuzu-koala-assassin-01/VIDEO-GUARDRAILS.md.

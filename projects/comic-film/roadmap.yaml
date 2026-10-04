@@ -1,0 +1,210 @@
+# Copy this folder to projects/<your-project>/ to add a project.
+# Default scaffold per PROJECT-CREATION.md (approved by Silas 2026-07-04):
+# three milestones — SHAPE / BUILD / POLISH & SHIP — with a NON-BLOCKING scope
+# gate. Agents build the design brief and start working immediately; scope
+# confirmation runs in parallel as a soft needs-human. Two-word slugs preferred.
+project: comic-film
+kind: software
+goal: "Turn a comic issue's story beats into a short animated film on our Comfy backend (shot list, house-lane keyframes, LTX clips, score, captions, MP4), starting with Zuzu: Koala Assassin #1 and reusable for later issues, accepted by Silas."
+
+notes_from_silas: |
+  Silas, 2026-10-04: "a regular video project where the story beats for issue 1 are turned into an
+  animated movie ... this might highlight some gaps in their capabilities, so please upgrade as
+  needed so this can be manifested." He chose a new project with its own Kind Robots admin page,
+  reusable for later issues; a soundtrack from both ACE-Step and an upload; and the core upgrades
+  built rather than only filed.
+
+  Hard rules: a film is a MusicVideo row with kind film (see DESIGN-BRIEF.md), so build on the
+  music-video pipeline instead of beside it. ArtJob is the only generation queue. Never put
+  comic-creator's bannedTerms (issues/zuzu-koala-assassin-01/VIDEO-GUARDRAILS.md) into any prompt,
+  caption or title. Renders are private; publishing is publish-gated. kind_robots PR titles start
+  comic-film/t-0NN:, and the kind_robots side merges before the conductor side.
+
+milestones:
+  - id: m1
+    title: "SHAPE — outline, brainstorm, design brief"
+    weight: 25
+    status: in-progress
+
+  - id: m2
+    title: "BUILD — actualize, adjust, test"
+    weight: 50
+    status: not-started
+
+  - id: m3
+    title: "POLISH & SHIP — aesthetics, performance, delivery"
+    weight: 25
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write the design brief and start building"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-04T00:00:00Z'
+    note: >-
+      DESIGN-BRIEF.md written 2026-10-04: a film is a MusicVideo with kind film, built on the
+      music-video pipeline (music-video t-013, t-025..t-028 carry the shared upgrades), with
+      scripts/build_comic_film.py importing build_music_video.py's plumbing.
+
+  - id: t-002
+    milestone: m1
+    title: "Confirm scope with Silas"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    soft_gate: true
+    updated: '2026-10-04T00:00:00Z'
+    note: >-
+      FOR SILAS: soft checkpoint, nothing is blocked on it. Read DESIGN-BRIEF.md (a film is a
+      MusicVideo with kind film; 2.5-4 minutes; at most 12 real clips, Ken Burns elsewhere;
+      captions for the ~60 words of dialogue) and its three open questions: score source, whether
+      Old Komodo belongs in issue 1, and title card / stinger.
+
+  - id: t-003
+    milestone: m1
+    title: "Zuzu: Koala Assassin #1 shot list (films/zuzu-koala-assassin-01/SHOT-LIST.yaml)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-04T00:00:00Z'
+    note: >-
+      Write the shot list from comic-creator's ISSUE-01-SCRIPT.md beats with
+      BRAINSTORM-ROUND-3.md overrides (fennec siblings, Zuzu always serious, no v0 Kind Robots
+      world, no contract captions; show "the job is already done" through action). 2.5-4
+      minutes, about 30-45 shots; each shot: beat, durationSec, camera (static, push-in,
+      pull-out, pan-left, pan-right, tilt-up, tilt-down), a prose still prompt and a tag prompt,
+      optional caption (dialogue, caption, sfx or title), and which shots spend one of at most 12
+      real clips. Mark character shots that should use a vetted comic attempt as their keyframe.
+      Check every prompt against VIDEO-GUARDRAILS.md bannedTerms. Rated teen: aftermath only.
+
+  - id: t-004
+    milestone: m2
+    title: "kind_robots: MusicVideo.kind film, shot fields, /shots import (schema-affecting)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-04T00:00:00Z'
+    note: >-
+      Additive migration: MusicVideo.kind VarChar(16) default music plus an index on (userId,
+      kind, updatedAt); regenerate the committed Prisma client. Doc additions scene.shot {beat,
+      camera, caption}, scene.comicSlotId, settings.comicIssueId (add them to
+      normalizeMusicVideoDoc, which drops unknown keys). Pure utils/comicFilmShots.ts
+      (normalizeShotList with cumulative times, camera to Ken Burns preset and motion phrase);
+      POST /api/music-video/[id]/shots (kind film only) and a later shots/generate from
+      ComicIssue.notes via /api/generate/text with the bannedTerms check; projectSlugFor(kind)
+      wherever MUSIC_VIDEO_PROJECT_SLUG is used. Build after music-video t-025 and t-026 merge
+      (all three touch utils/musicVideoDoc.ts). Call it schema-affecting in the PR.
+
+  - id: t-005
+    milestone: m2
+    title: "kind_robots: /admin/comic-film page"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-004]
+    updated: '2026-10-04T00:00:00Z'
+    note: >-
+      Reuse music-video t-027's components (settings, song, pipeline bar, scene grid) plus a
+      shot-list editor (beat, camera, caption, duration, keyframe, clip budget counter).
+      musicVideoStore takes a kind; /admin/music-video lists kind music only. Register
+      utils/projectPlacements.ts comic-film, content/channels/admin/comic-film.md (ADMIN) and a
+      utils/dataSurfaceManifest.ts entry. Also waits on music-video t-027 (cross-project, so
+      noted here rather than in depends_on).
+
+  - id: t-006
+    milestone: m2
+    title: "kind_robots: film shots as Comic Studio shot slots, keyframes from verdicts"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-004]
+    updated: '2026-10-04T00:00:00Z'
+    note: >-
+      Add 'shot' to COMIC_SLOT_KINDS and audit its readers (slots index.post, the store's panel
+      filter, the import normaliser, the editor). POST /api/music-video/[id]/scenes/comic-slots
+      creates one slot per shot so the existing multi-lane vetting loop picks keyframes, which
+      music-video t-025's keyframes route then pulls by slotId.
+
+  - id: t-007
+    milestone: m2
+    title: "conductor: scripts/build_comic_film.py (shot import, captions, score or silence)"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-003, t-004]
+    updated: '2026-10-04T00:00:00Z'
+    note: >-
+      Import build_music_video.py's plumbing (KrClient, filter graph, encode_within_limit).
+      Read SHOT-LIST.yaml, create the kind film row, POST /shots, render stills, request the
+      budgeted clips, wait, assemble. The song is optional (anullsrc silence if there is none);
+      captions become an .ass file burned in with subtitles=, falling back to a soft mov_text
+      track without libass. 1280x720 so the MP4 fits the 24 MB upload cap. Tests in
+      tests/test_build_comic_film.py. Also waits on music-video t-028.
+
+  - id: t-008
+    milestone: m3
+    title: "Project art: confirm icon, card and hero landed"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-04T00:00:00Z'
+    note: >-
+      projects/art-prompts.yaml queued comic-film icon, card and hero at intake; confirm they
+      rendered and are attached to the Kind Robots Project record.
+
+  - id: t-009
+    milestone: m3
+    title: "Render Zuzu: Koala Assassin #1 as a film and get Silas's verdict"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    gate_reason: subjective-acceptance
+    depends_on: [t-003, t-005, t-007]
+    updated: '2026-10-04T00:00:00Z'
+    note: >-
+      Run t-007 on the t-003 shot list. Score: ACE-Step instrumental if music-video t-012 is
+      done, otherwise an MP3 Silas supplies through music-video t-013's upload. Queue the clips
+      overnight. Park at needs-human with the MP4, the MusicVideo id and a FOR SILAS note:
+      story clarity without exposition, character fidelity to the comic, pacing, caption
+      legibility, and confirmation that no banned term appears anywhere.
+
+  - id: t-010
+    milestone: m3
+    title: "Place the approved film publicly"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    gate_human: true
+    gate_reason: publish
+    depends_on: [t-009]
+    updated: '2026-10-04T00:00:00Z'
+    note: >-
+      After Silas approves t-009, place the film where he picks (the comic's project page, the
+      Kind Robots landing page). Publishing parks at needs-human with the PR open.
+
+  - id: t-011
+    milestone: m3
+    title: "Runbook for the next issue (kind_robots docs/comic-film.md)"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-009]
+    updated: '2026-10-04T00:00:00Z'
+    note: >-
+      Write down what the first film taught: shot-list format, clip budget versus wall-clock,
+      keyframe sourcing, caption timing, and the exact commands, so issue 2 is one run.
