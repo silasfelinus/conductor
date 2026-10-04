@@ -77,7 +77,7 @@ def test_configure_payload_adds_provider_independent_direct_links_backup(monkeyp
         if item["name"] == digest_sender.DIRECT_LINKS_ATTACHMENT
     )
     backup_html = base64.b64decode(attachment["content"]).decode("utf-8")
-    assert direct in backup_html
+    assert direct.replace("&", "&amp;") in backup_html
     assert "https://kindrobots.org/build/animation-manager?effect=test&amp;preview=1" in backup_html
     assert "sendibt2.com" not in backup_html
 
