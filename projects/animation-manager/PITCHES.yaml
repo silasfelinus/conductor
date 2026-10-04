@@ -1920,3 +1920,43 @@ pitches:
           - TypeScript
           - layout-contract
           - facet-catalog
+
+  - id: sundial-stone-garden
+    title: Sundial Stone Garden
+    status: candidate
+    priority: 34
+    surprise: >
+      Standing stones in a quiet field cast long shadows at dawn, shrink them toward noon and
+      stretch them the other way at dusk before night turns the cycle over.
+    passive_loop: >
+      A 70-second day clock drives sky colour, sun position and every stone's shadow as a pure
+      function of the clock, so the loop is exactly periodic with no accumulated drift.
+    optional_interaction: >
+      Hovering lifts nearby stones with eased motion; a rate-limited click skips ahead in the day.
+    technique: >
+      One canvas, nine stones on a fixed ground grid, shadows drawn as quadrilaterals whose length
+      scales with 1 / sun elevation (clamped), colours interpolated between fixed sky stops.
+    reduced_motion: >
+      Holds a single static afternoon frame with no lift or clock advance.
+    performance_risk: >
+      Low: nine polygons and a gradient per frame, capped DPR, ResizeObserver sizing.
+    novelty: >
+      No existing effect tells time through shadow geometry; Celestial Mobile and Hourglass
+      Cascade use motion, not cast shadows.
+    acceptance:
+      - shadows visibly lengthen and flip side between dawn and dusk and shorten near noon
+      - sky and ground colours move through dawn, day, dusk and night without a hard cut at the loop point
+      - hovering lifts only nearby stones and they ease back when the pointer leaves
+      - clicking skips ahead at most once per cooldown
+      - reduced-motion mode shows one static afternoon frame
+    builds:
+      - status: candidate
+        component: components/screenfx/sundial-stone-garden.vue
+        pull_request: silasfelinus/kind_robots#3221
+        released_at: '2026-10-04T08:00:00Z'
+        commit: 79353789f77260627529c43b05df4fc6aa5092f7
+        verification:
+          - Contract verifiers
+          - TypeScript
+          - layout-contract
+          - facet-catalog
