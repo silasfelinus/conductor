@@ -1,7 +1,7 @@
 # Pitch: Kind Daily Maze
 date: 2026-10-03
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 One new seeded maze every day where a small robot collects stars on the way to a charging station, generated deterministically in the browser from the date so everyone gets the same puzzle. A streak calendar and ten themed tile sets give it a reason to return.
