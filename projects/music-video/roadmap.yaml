@@ -606,12 +606,12 @@ tasks:
   - id: t-025
     milestone: m2
     title: "Comic-lane scene stills, comic keyframe picker and banned terms (kind_robots)"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     depends_on: [t-008]
-    updated: '2026-10-04T00:00:00Z'
+    updated: '2026-10-04T02:29:24Z'
     note: >-
       settings.comicSeriesId / comicLaneKey route scene stills through the series' house lane
       (buildComicLaneEnqueueBody) instead of the krea2 constant in server/utils/musicVideoScenes.ts;
@@ -620,6 +620,11 @@ tasks:
       image.source gallery, checked against the series. settings.bannedTerms is enforced for every
       engine (also usable for t-015's franchise guardrail). No schema change. On merge, check
       comic-film t-004/t-005 notes for anything waiting on this.
+
+      Merged (kind_robots#3218): settings.comicSeriesId/comicLaneKey route stills through the
+      comic house lane; bannedTerms enforced on stills, LLM prompts and clip prompts; POST
+      scenes/keyframes assigns vetted comic attempts. Picker UI rides t-027.
+    implementation_pr: 'silasfelinus/kind_robots#3218'
 
   - id: t-026
     milestone: m2
