@@ -52,7 +52,11 @@ rail line passes through but the train never stops twice. Issue 1's town sits a 
   like coin he can't replace. Speaks in the clean terms of a contract: "the letter," "the spirit,"
   "paid." Never raises his voice, never two clauses where one will do. Weighs everything against the
   unseen tally and the mercy he owes it, and against whether he has eaten.
-- **Look:** small (a little under four feet standing), compact, broad ears with grey tufts, heavy
+- **Size (Silas, 2026-10-04):** *"zuzu should be koala sized, or a little bigger. if he was an actor doing mocap, it would be danny devito."* Koala-sized or a little bigger, about two and a half to three
+  feet standing. The build of Danny DeVito playing him in mocap: short, stocky, barrel-chested, short
+  legs, heavy shoulders, a low centre of gravity. Never tall or lanky. In a group he is the shortest adult
+  in the frame, and the ten-year-old sister stands taller than him.
+- **Look:** small, compact, broad ears with grey tufts, heavy
   black nose, old scar along the left ear. A weathered road-cloak the colour of dust. Wide straw
   travel hat on his back. Katana worn *high* across the back because the blade is nearly his own
   height; the scabbard is plain black lacquer, worn pale at the mouth where his thumb rests.

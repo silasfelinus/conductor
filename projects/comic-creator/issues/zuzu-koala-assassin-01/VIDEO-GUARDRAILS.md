@@ -19,6 +19,10 @@ wherever it disagrees with the v0 SERIES-BIBLE.md or ISSUE-01-SCRIPT.md.
 ## Canon in every prompt
 
 - **Zuzu is always serious:** Clint Eastwood stillness, never a smiling sensei.
+- **Zuzu is koala-sized, or a little bigger:** Silas, 2026-10-04: *"zuzu should be koala sized, or a little bigger. if he was an actor doing mocap, it would be danny devito."*
+  Short, stocky, barrel-chested, short legs. In shared frames he is the shortest adult, and the sister is taller
+  than him. Tags that carry it: `short, stocky, chubby, small stature, short legs`. Round 4b's walking shots drew
+  him tall and lanky, which is the failure to watch for.
 - **The siblings are fennec foxes:** a gaunt sister of about ten and a toddler brother who only babbles. Both are starving, beaten and frightened.
 - **No dialogue, no narration.** Silas, 2026-10-04: *"no dialogue or narration, just the occasional sign or poster."*
   The only words on screen are diegetic signs and posters, plus a title card. The v0 script's lines become wordless beats.
