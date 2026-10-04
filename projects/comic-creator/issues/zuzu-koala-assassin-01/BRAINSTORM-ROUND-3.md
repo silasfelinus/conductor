@@ -76,3 +76,9 @@ of human hints until the reveal issue is picked; the studio notes carry a "secre
 Lanes: Z-Image Turbo (prose), Illustrious furrytoonmix (anthro tags), Illustrious realismIllustriousBy
 (tags), SDXL nihilmania (prose plus a dark oil-painting suffix). Same subject in every lane, so the
 comparison is the checkpoint, not the idea.
+
+## Update, 2026-10-04
+
+- **No dialogue or narration anywhere in the comic.** Only the occasional sign or poster carries words (Silas).
+- The convent seed above is superseded by Seed A, The Convent, in `../ZUZU-STORY-SEEDS.md`.
+- The same file holds Seed B, The Watering Hole.

@@ -24,8 +24,10 @@ notes_from_silas: |
   output.
 
   Hard rules for this project: ArtJob is the only generation queue (no second queue or renderer);
-  scene prompts follow the Krea 2 contract in ART-PROMPTS.md (concrete nouns first, no negations,
-  no art-direction jargon); cloud sessions cannot reach Comfy, so audio work is verified
+  scene prompts follow the contract of the engine that renders them: the Krea 2 contract in
+  ART-PROMPTS.md by default (concrete nouns first, no negations, no art-direction jargon), or the
+  comic house lane's tag contract when a video borrows a Comic Studio series' style (t-025, for
+  Zuzu: Koala Assassin); cloud sessions cannot reach Comfy, so audio work is verified
   structurally until t-012 puts a real render on the box. kind_robots PRs use branch
   worker/music-video-t-0NN and a title starting music-video/t-0NN:, and merge the kind_robots side
   before the conductor side when a task has companion PRs (AGENTS.md, Cross-repo tasks).
@@ -404,7 +406,7 @@ tasks:
       Agent part done: audio tier in kind_robots sync-comfy-models (#3198) and projects/music-
       video/docs/t-012-runbook.md. FOR SILAS: follow the runbook at Ferngrotto: (1) curl the
       four ACE-Step files onto Z:\ai\models\{unet,clip,vae}; (2) cd D:\code\kind_robots; git
-      pull --ff-only; .\scripts\sync-comfy-models.ps1 -Tier audio -Yes; (3) cd D:\ComfyUI; git
+      pull --ff-only; .\scripts\sync-comfy-models.ps1 -Tier audio -Yes; (3) cd D:\comfy\comfy-fast; git
       pull; pm2 restart comfyui, then /object_info/TextEncodeAceStepAudio1.5 must be 200; (4)
       cd D:\code\conductor; git pull --ff-only; pm2 restart kr-relay; (5) cd
       D:\code\conductor; python scripts\build_music_video.py --duration 30 ... and confirm the
@@ -574,3 +576,107 @@ tasks:
     claimed_at: '2026-10-02T23:51:09Z'
     updated: '2026-10-03T00:43:25Z'
     implementation_pr: 'silasfelinus/kind_robots#3200'
+
+  - id: t-024
+    milestone: m2
+    title: "Zuzu: Koala Assassin intro: creative brief and settings (comic-creator request)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    updated: '2026-10-04T00:00:00Z'
+    note: >-
+      Silas, 2026-10-04: "submit requests that Zuzu Koala Assassin get an intro video as a music
+      video project". Write projects/music-video/docs/zuzu-intro.md: pitch, 45-60 s at 16:9, genre
+      and mood (a samurai-western title theme; instrumental or sparse chant), ACE-Step tags, style
+      bible, the Kind Robots ComicSeries slug (zuzu-koala-assassin) and lane. STYLE: the comic's
+      house lane wins over Krea 2 for this video (Illustrious furrytoonmix plus lane prefix/suffix
+      and series negatives, tag prompts; t-025). Source of truth is comic-creator's
+      BRAINSTORM-ROUND-3.md (Zuzu always serious, fennec siblings, action over exposition,
+      violence only as aftermath). settings.bannedTerms must cover comic-creator's secret list
+      (comic-creator t-019); never write the secret itself in any prompt or doc. Name the vetted
+      comic attempts to use as keyframes for character shots; cap real clips at 6 (Ken Burns
+      elsewhere).
+
+  - id: t-025
+    milestone: m2
+    title: "Comic-lane scene stills, comic keyframe picker and banned terms (kind_robots)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-008]
+    updated: '2026-10-04T00:00:00Z'
+    note: >-
+      settings.comicSeriesId / comicLaneKey route scene stills through the series' house lane
+      (buildComicLaneEnqueueBody) instead of the krea2 constant in server/utils/musicVideoScenes.ts;
+      prompt checks and the dedupe key become engine-aware. POST
+      /api/music-video/[id]/scenes/keyframes maps ComicAttempt picks (selected, then liked) to
+      image.source gallery, checked against the series. settings.bannedTerms is enforced for every
+      engine (also usable for t-015's franchise guardrail). No schema change. On merge, check
+      comic-film t-004/t-005 notes for anything waiting on this.
+
+  - id: t-026
+    milestone: m2
+    title: "Aspect-correct clips: crop instead of stretch, aspect-sized frames, optional last frame (kind_robots)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-009]
+    updated: '2026-10-04T00:00:00Z'
+    note: >-
+      Clips take their size from the preset, so a 9:16 or 1:1 video still gets 1280x720 clips, and
+      LTX resizes with crop disabled, stretching 2:3 comic art. Add an opt-in imageFit crop on
+      /api/art/enqueue video jobs (LTX ImageScale crop center; WAN an explicit centre-crop
+      ImageScale). Default stays stretch, so Scene Animator and the Video Generator are unchanged.
+      clipFrameSize(preset, aspect) in multiples of 32; scene.motionPrompt (falls back to prompt)
+      and motion.lastFrame next-scene. Verify WAN on the box when t-012 runs.
+
+  - id: t-027
+    milestone: m2
+    title: "Admin page controls: settings, song (generate or upload) and pipeline steps (kind_robots)"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-013, t-025]
+    updated: '2026-10-04T00:00:00Z'
+    note: >-
+      /admin/music-video is a shell: every pipeline step is API-only and a new video gets the
+      defaults (120 s, 16:9). Extract components/music-video/* (settings panel, song panel, pipeline
+      bar, scene grid with keyframe picker) so comic-film's admin page can reuse them. The store
+      owns every call; auto-fit grids, no viewport breakpoints in shared components.
+
+  - id: t-028
+    milestone: m2
+    title: "Headless pipeline: song file, comic lane, clip requests, banned terms (conductor)"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-013, t-025, t-026]
+    updated: '2026-10-04T00:00:00Z'
+    note: >-
+      scripts/build_music_video.py gains --song-file (upload through t-013's route, ffprobe for
+      duration), --comic-series / --comic-lane / --banned-terms carried into settings, and a
+      request_clips action (--clips, --clip-preset, at most 8 per call). Extend
+      tests/test_build_music_video.py. comic-film's builder imports this plumbing.
+
+  - id: t-029
+    milestone: m2
+    title: "Render the Zuzu: Koala Assassin intro and get Silas's verdict"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    gate_human: true
+    gate_reason: subjective-acceptance
+    depends_on: [t-024, t-027, t-028]
+    updated: '2026-10-04T00:00:00Z'
+    note: >-
+      Run t-028 with the t-024 brief. Song from ACE-Step if t-012 is done, otherwise ask Silas for
+      an MP3 for the t-013 upload. Clips run 30-90 minutes each on the single 12 GB card, so queue
+      them overnight. Park at needs-human with the MP4, the MusicVideo id and a FOR SILAS note:
+      character fidelity to the comic, cuts on beats, the title card, and confirmation that no
+      banned term appears anywhere. Publishing is a separate publish-gated step.
