@@ -222,11 +222,17 @@ tasks:
       clock; hover holds a tile (capped), click skips dwell (rate-limited), reduced motion holds
       a settled phrase. kind_robots PR #3204 merged (squash 909f548), all 29 checks green.
       Browser smoke deferred per sandbox-access-gap. Re-armed to ready.
+
+      Cycle (2026-10-04, am-t007): pitch queue empty, so authored and built sundial-stone-
+      garden (nine stones, 70s day cycle of sliding shadows; hover lifts, rate-limited click
+      skips ahead, reduced motion holds an afternoon frame). kind_robots PR #3221 merged
+      (squash 7935378), all 29 checks green. Local checks blocked (no node_modules); browser
+      smoke deferred per sandbox-access-gap. Re-armed to ready.
     status: ready
-    updated: '2026-10-03T08:57:07Z'
-    implementation_pr: 'silasfelinus/kind_robots#3204'
-    daily_last_checked: '2026-10-03'
-    daily_last_completed: '2026-10-03'
+    updated: '2026-10-04T20:54:38Z'
+    implementation_pr: 'silasfelinus/kind_robots#3221'
+    daily_last_checked: '2026-10-04'
+    daily_last_completed: '2026-10-04'
     owner: worker
     claimed_by: 20260930-am-t007
     claimed_at: '2026-09-30T09:44:27Z'
@@ -624,7 +630,7 @@ tasks:
     milestone: m5
     title: "Keep Daily Dream digest links direct instead of Brevo-tracked redirects"
     status: done
-    updated: '2026-10-03T20:49:00Z'
+    updated: '2026-10-04T22:30:01Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -639,5 +645,11 @@ tasks:
       Live Gmail regression confirmed PR #5411's per-contact consent flag did not prevent Brevo link rewriting. PR #5544 adds explicit X-Mailin-Track-Click: 0 and X-Mailin-Track-Open: 0 headers at the sender boundary while preserving the existing privacy preference. Exact-head workflows completed green before merge: Worker PR CI 37152439542, Security Audit 37152439519, Worker PR handoff 37152439512, Process task events 37152439517, and CodeQL 37152438626.
 
       Merged silasfelinus/conductor#5544 as b403aa64 after every exact-head workflow completed successfully: Worker PR CI 37152439542, Security Audit 37152439519, Worker PR handoff 37152439512, Process task events 37152439517, and CodeQL 37152438626. The private digest now sends Brevo's explicit no-click/no-open tracking headers in addition to the existing per-recipient privacy preference. No live test email was sent; the next normal digest is the delivered-email verification boundary.
-    claimed_by: 20261003T204700Z-chatgpt-animation-manager-t026-directlinks-9a31
-    claimed_at: '2026-10-03T20:47:00Z'
+
+      Silas reported on 2026-10-04 that the second consecutive delivered Dream Digest still rewrote the Decide all pitches link through Brevo. Live Gmail MIME proves X-Mailin-Track-Click: 0 and X-Mailin-Track-Open: 0 were present while sendibt2.com click redirects were still injected, so PR #5544's API-header approach is ineffective. Reopen for a provider-independent fallback and delivered-message regression guard.
+
+      Replaced the disproven X-Mailin tracking-header assumption with a provider-independent backup: every digest now carries a base64 HTML attachment containing the original direct HTTP destinations plus an in-message notice explaining the fallback. Added regression coverage proving signed pitch-inbox and Animation Manager URLs survive unchanged in the attachment and that the ineffective X-Mailin headers are gone.
+
+      Merged silasfelinus/conductor#5567 as 81eb4ba2 after exact-head Worker PR CI 37239804413, Security Audit 37239804439, Worker PR handoff 37239804420, Process task events 37239804411, and CodeQL 37239803211 all completed successfully. The sender no longer claims Brevo X-Mailin tracking headers protect hrefs; every digest now includes a provider-independent conductor-direct-links.html attachment containing the original pre-Brevo destinations plus an in-message fallback notice. The 2026-10-04 digest was separately resent through Gmail as message 1a108fba6ceb5c68 and its delivered MIME contains the direct Kind Robots pitch-inbox URL with no sendibt2.com redirect.
+    claimed_by: 2026-10-04T222000Z-animation-manager-t-026-c7a4
+    claimed_at: '2026-10-04T22:21:00Z'
