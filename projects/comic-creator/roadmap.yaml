@@ -250,12 +250,12 @@ tasks:
 - id: t-018
   milestone: m2
   title: 'Checkpoint bake-off: furrytoonmix vs its V3B update and five lookalikes'
-  status: needs-human
+  status: claimed
   gate_reason: physical-access
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-10-04T05:46:28Z'
+  updated: '2026-10-04T06:43:07Z'
   note: >-
     FOR SILAS: download the six checkpoints listed in docs/checkpoints.md into ComfyUI
     models/checkpoints/Illustrious/ under the file names in
@@ -277,6 +277,17 @@ tasks:
     null while status stayed claimed. Parked as soft needs-human (gate_reason physical-
     access): waiting on Silas to land the V3B and Mol_Keun checkpoint files; the 30
     submitted jobs need no further action.
+
+    2026-10-04 round 4 done (30/30, ArtImages 241823-241852, all private, nothing withheld).
+    Contact sheet: https://claude.ai/artifact/QRRDHtVxaCWYEmN69sU8iE. Read: furrytoonmix V3
+    stays the house (widest expression range, only true turnaround). Best challengers Nova
+    Comic XL v2.0 (grittiest, closest to mature Leone) and Arthemy Western v3.0 (best light,
+    sister attitude); AnthroBlend v3.0 has the best koala anatomy but narrow range; Nova
+    Furry B weakest (near-identical faces). Shared misses across all five are prompt
+    problems, not checkpoint ones: koala/komodo bleed (no komodo dragon anywhere; render the
+    dragon solo) and no otters at the gate (needs a reference sheet then LoRA/IP-Adapter).
+    Next: V3B + Mol_Keun lanes once Silas's downloads verify, then an author-settings pass
+    (euler_ancestral, cfg 4-5) on Nova Comic and Arthemy Western.
   soft_gate: true
 - id: t-019
   milestone: m2
