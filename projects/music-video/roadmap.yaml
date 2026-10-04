@@ -313,7 +313,7 @@ tasks:
   - id: t-013
     milestone: m2
     title: "Audio upload fallback (admin-only route)"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -324,6 +324,11 @@ tasks:
       cap, stored as a private audio ArtImage through the t-020 path, returning the artImageId for
       MusicVideoDoc.song with source upload. This is for Suno exports and Silas's own medleys, and
       it lets lyrics, timeline, images and compile be built and tested before t-012.
+
+      Song upload merged (kind_robots#3216): POST /api/music-video/[id]/song-upload, MP3/WAV,
+      private audio ArtImage, video length follows the song.
+    updated: '2026-10-04T02:29:18Z'
+    implementation_pr: 'silasfelinus/kind_robots#3216'
 
   - id: t-010
     milestone: m2
