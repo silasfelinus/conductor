@@ -23,18 +23,24 @@ wherever it disagrees with the v0 SERIES-BIBLE.md or ISSUE-01-SCRIPT.md.
 - **No dialogue, no narration.** Silas, 2026-10-04: *"no dialogue or narration, just the occasional sign or poster."*
   The only words on screen are diegetic signs and posters, plus a title card. The v0 script's lines become wordless beats.
   Backstory comes through movement.
-- **Rated teen:** show violence only as aftermath, with no gore on screen.
+- **A mature comic with mature themes.** Silas, 2026-10-04: *"I never explicitly said zuzu was teen rated. This is a mature comic with mature themes."*
+  Violence can be on the page and on screen. An earlier "rated teen, aftermath only" note came from the
+  LLM-written v0 script, not from Silas, and is withdrawn.
+- **Children (absolute, independent of the rating).** The siblings can be endangered, hurt, starving
+  and terrified, because that is the story. But no image or prompt ever sexualises them or shows them
+  undressed, and their injuries stay implied rather than detailed. The art pipeline's own content rules
+  apply on top of the comic's rating.
 - **Placeholders, not canon:** the v0 Kind Robots world (Gallowsun Junction, the Stationmaster, Tomoe, Old Shelba, contract-language captions). Use none of it.
 
 ## bannedTerms (never in any positive prompt, lyric, caption or title)
 
-The buried twist stays secret until Silas picks the issue that reveals it. Copy this list into
+This list guards one thing: the buried twist stays secret until Silas picks the issue that reveals it. Copy this list into
 `settings.bannedTerms` on every Zuzu video. The server refuses any scene prompt containing a term,
 on every engine (music-video t-025).
 
 ```
 human, humans, humanity, mankind, people, pharmacy, great wall, skyscraper, highway,
-billboard, road sign, english lettering, gore, dismembered, decapitated
+billboard, road sign, english lettering
 ```
 
 `people` is on the list because every character is an animal. In a prompt, say "townsfolk" or name

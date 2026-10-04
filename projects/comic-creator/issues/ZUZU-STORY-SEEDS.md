@@ -53,6 +53,7 @@ monster from Round 3 in a story.
 - **Printed missing posters** also imply the old world's print technology. They are the series' first real use of the "signs only" rule. Each poster could show a different young animal: a fennec-adjacent face, a rabbit, a pup.
 - **Repeated monster-from-below.** Old Komodo erupts from the sand, and the crocodile erupts from the water. Both are giant reptiles bursting up under the heroes. If both run, give them different grammar: Komodo is a shock that turns out not to be a villain, the croc is a straight brawl. Or merge them, so Old Komodo is the thing in the watering hole.
 - **The sister acting.** In the convent she stops being only protected: she kills the mother superior and hands Zuzu the dagger. Her hesitation in the handoff is the emotional peak of the chapter, and it works without words.
-- **Rating.** Children bound on an altar and nuns killed on the page sit at the edge of the teen rating Round 3 set.
-  - Keep wounds off-panel and show the cult's violence as threat rather than harm.
-  - Art prompts must describe the bound children non-graphically. The art guardrails (non-sexual, fully clothed, no injury detail on children) stay absolute.
+- **Rating: mature.** Silas, 2026-10-04: "This is a mature comic with mature themes." Zuzu killing
+  the nuns can be shown on the page. One line holds whatever the rating: the bound children are drawn
+  frightened and in danger, never sexualised or undressed, and any harm to them stays implied rather
+  than shown in detail. The art pipeline's own content rules apply on top of the comic's rating.
