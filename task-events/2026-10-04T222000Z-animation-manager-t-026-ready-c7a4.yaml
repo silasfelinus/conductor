@@ -1,0 +1,8 @@
+version: 1
+project: animation-manager
+task: t-026
+operation: ready
+session: 2026-10-04T222000Z-animation-manager-t-026-c7a4
+updated: '2026-10-04T22:20:00Z'
+note: >-
+  Silas reported on 2026-10-04 that the second consecutive delivered Dream Digest still rewrote the Decide all pitches link through Brevo. Live Gmail MIME proves X-Mailin-Track-Click: 0 and X-Mailin-Track-Open: 0 were present while sendibt2.com click redirects were still injected, so PR #5544's API-header approach is ineffective. Reopen for a provider-independent fallback and delivered-message regression guard.
