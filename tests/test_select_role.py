@@ -385,6 +385,8 @@ def test_remote_refresh_failure_does_not_crash_selection():
         select_role, "find_due_daily_commitments", return_value=[]
     ), mock.patch.object(
         select_role, "find_stale_recurring_tasks", return_value=[]
+    ), mock.patch.object(
+        select_role, "find_gate_triage_findings", return_value=[]
     ):
         result = select_role.select_role(github_token="fake-token")
 
@@ -465,6 +467,8 @@ def test_github_api_unreachable_surfaced_when_real_requests_fail():
         select_role, "find_due_daily_commitments", return_value=[]
     ), mock.patch.object(
         select_role, "find_stale_recurring_tasks", return_value=[]
+    ), mock.patch.object(
+        select_role, "find_gate_triage_findings", return_value=[]
     ), mock.patch(
         "urllib.request.urlopen",
         side_effect=urllib.error.HTTPError("url", 403, "Forbidden", {}, None),
