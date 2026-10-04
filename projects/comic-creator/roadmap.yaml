@@ -250,12 +250,12 @@ tasks:
 - id: t-018
   milestone: m2
   title: 'Checkpoint bake-off: furrytoonmix vs its V3B update and five lookalikes'
-  status: claimed
+  status: needs-human
   gate_reason: physical-access
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-10-04T04:44:40Z'
+  updated: '2026-10-04T05:46:28Z'
   note: >-
     FOR SILAS: download the six checkpoints listed in docs/checkpoints.md into ComfyUI
     models/checkpoints/Illustrious/ under the file names in
@@ -272,6 +272,12 @@ tasks:
     (33458-33487: furrytoonmix V3 control plus Nova Furry B, Nova Comic, Arthemy Western,
     AnthroBlend). V3B and Mol_Keun downloads came back empty; Silas is re-downloading with
     curl and an API key. Their lanes run when the files land.
+
+    2026-10-04 (agent sweep): recurring-claim drift repaired — claim fields were already
+    null while status stayed claimed. Parked as soft needs-human (gate_reason physical-
+    access): waiting on Silas to land the V3B and Mol_Keun checkpoint files; the 30
+    submitted jobs need no further action.
+  soft_gate: true
 - id: t-019
   milestone: m2
   title: 'Video guardrails: Zuzu intro (music-video t-024) and Issue 1 film (comic-film)'
