@@ -1,7 +1,7 @@
 # Pitch: Kind Paint-by-Number
 date: 2026-10-03
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 Pre-generated Kind Robots illustrations are reduced in the browser to a numbered palette of flat regions, and you tap a colour then tap regions to fill them in, watching the finished picture appear. Progress saves on the device, and a completed canvas unlocks the full-colour original.
