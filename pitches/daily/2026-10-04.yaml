@@ -1,0 +1,55 @@
+# Daily project pitches, 2026-10-04. Authored by a session; decide with
+#   python scripts/daily_pitches.py --decide SLUG approved|rejected|deferred
+# Theme of the day: free-to-play, zero tokens at runtime, art made ahead of time.
+date: 2026-10-04
+pitches:
+  - slug: robot-memory-match
+    title: Robot Memory Match
+    hook: >-
+      A card-flip matching game where pairs are pre-generated Kind Robots portraits, with boards that
+      grow from four pairs to twelve as you win. Best times save on the device, and each cleared level
+      unlocks a new card-back design to collect.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 36 robot portraits and 8 card-back designs generated through ArtJobs at one consistent size.
+    first_slice: One 4-pair board with flip animation, a move counter, and a local best-time record.
+  - slug: kind-word-ladder
+    title: Kind Word Ladder
+    hook: >-
+      Change one letter at a time to climb from a start word to a kind end word, such as grump to happy,
+      using hand-checked ladders and a bundled dictionary. Each solved ladder reveals one panel of a
+      pre-made illustration, and a hint button reveals the next rung.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 20 four-panel illustrations, one revealed per solved ladder, generated ahead of time.
+    first_slice: 10 verified ladders, the tap-letter editor with dictionary check, and one revealed panel.
+  - slug: robot-weather-postcards
+    title: Robot Weather Postcards
+    hook: >-
+      Pick a season, a place and a robot, and a postcard assembles itself from layered pre-made art with
+      a short hand-written message chosen from a pool of lines. Download it as an image to send to a
+      friend, with every combination being a unique, shareable card.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 6 place backdrops, 4 season overlays and 10 robot stamps, generated and sliced ahead of time.
+    first_slice: Two backdrops, two seasons, three robots, the message pool, and a canvas download button.
+  - slug: kind-lantern-garden
+    title: Kind Lantern Garden
+    hook: >-
+      An idle-style toy where each tap lights a lantern in a night garden and, as the count grows, new
+      creatures wander in with pre-written one-line stories. Nothing can be lost, it needs no accounts,
+      and progress is a quiet collection page of everyone you have met.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: 1 night backdrop, 6 lantern styles and 24 creature sprites with story lines written by a session.
+    first_slice: The backdrop, tap-to-light, three creatures arriving at set counts, and local save.
+  - slug: robot-species-sorting-quiz
+    title: Robot Species Sorting Quiz
+    hook: >-
+      A short personality quiz of twelve whimsical questions that sorts you into one of sixteen robot
+      species, each with a pre-written profile card and a matching illustration. It reuses the Robot
+      Field Guide look and gives a result that is easy to screenshot and share.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 16 species portrait cards generated in one style batch, plus a shared result-card frame.
+    first_slice: Six questions, four species results, and the scoring logic with a result card.
