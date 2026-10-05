@@ -332,3 +332,31 @@ not dead"*
   rule out weasel, ferret, mink and stoat.
 - **Tooling:** kind_robots#3235 made private image files require an authorized viewer, so
   `enqueue_art_requests.py` now sends the token when it fetches a Kontext source.
+
+## Sheets 17–19 (2026-10-05)
+
+**Zuzu, subtle** (sheet 17). The picks are:
+- front 242395 and 3/4 front left 242397, subtle edits;
+- profile left 242193 (A7 itself) and profile right 242193 mirrored;
+- the round-10 backs 242113, 242117 and 242120;
+- 3/4 front right 242399.
+
+Row B holds the unedited round-10 originals (242192, 242108, 242125), in case even the subtle edit is too much.
+The other subtle tries were 242396, 242398 and 242400, all heavier.
+
+**The coyote, row A with his ribs covered** (sheet 19). The picks are:
+- front 242401;
+- 3/4 front left 242209;
+- profile left 242404 mirrored;
+- 3/4 back left 242216 mirrored;
+- back 242214;
+- 3/4 back right 242212 mirrored;
+- profile right 242404;
+- 3/4 front right 242220.
+
+The other rib tries were 242402 and 242403. Masked stump edits on 242401 follow (r14-coyote-stump-*). Two tries
+replace the hand only. Two also move the holster from his left hip to his right.
+
+**The abbess, flatter face** (sheet 18). Variant B, (flat face:1.4) + (round face:1.3), is much flatter: 242389,
+242390, 242393 and 242394. Its fur drifted mauve. Variant A still reads snouty in profile. 34051 (A, front, seed 1)
+failed on the server. Waiting on Silas's pick.
