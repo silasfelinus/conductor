@@ -18,7 +18,8 @@ A subject may carry ``source_image_id`` (an ArtImage id). Kontext lanes need one
 the image is fetched and sent as ``sourceImageBase64``, so an approved design can be
 re-posed (the 8-angle renders, comic-creator t-015). Kontext lanes may set ``steps``
 and ``guidance``. ``source_crop: [l, t, r, b]`` (fractions) cuts one figure out of a
-turnaround sheet, and ``reference_image_id`` (with optional ``reference_crop``) is
+turnaround sheet, ``source_flip: true`` mirrors it (a back view with the sword on the wrong
+shoulder), and ``reference_image_id`` (with optional ``reference_crop``) is
 stitched to the LEFT of the source at the same height, so Kontext can dress the right
 figure like the left one (the ImageStitch trick of Kind Robots' kontext/kombine route).
 
@@ -191,12 +192,17 @@ def compose_source(subject, fetch):
     """
     source = fetch(subject["source_image_id"])
     crop, reference_id = subject.get("source_crop"), subject.get("reference_image_id")
-    if not crop and not reference_id:
+    flip = bool(subject.get("source_flip"))
+    if not crop and not reference_id and not flip:
         return source
     import base64
     import io
 
     image = _crop(_decode_data_url(source), crop)
+    if flip:
+        from PIL import ImageOps
+
+        image = ImageOps.mirror(image)
     if reference_id:
         reference = _crop(_decode_data_url(fetch(reference_id)), subject.get("reference_crop"))
         image = stitch_images(reference, image)

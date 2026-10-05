@@ -205,3 +205,20 @@ def test_bad_crop_is_refused():
     subject = {"source_image_id": 1, "source_crop": [0.6, 0, 0.4, 1]}
     with pytest.raises(ValueError):
         enq.compose_source(subject, lambda image_id: _png("red", (10, 10)))
+
+
+def test_source_flip_mirrors_the_source_only():
+    pytest = __import__("pytest")
+    pytest.importorskip("PIL")
+    import base64
+    import io
+
+    from PIL import Image
+
+    image = Image.new("RGB", (20, 10), "red")
+    image.paste(Image.new("RGB", (10, 10), "blue"), (0, 0))  # blue on the left half
+    buffer = io.BytesIO()
+    image.save(buffer, "PNG")
+    source = "data:image/png;base64," + base64.b64encode(buffer.getvalue()).decode()
+    out = enq._decode_data_url(enq.compose_source({"source_image_id": 1, "source_flip": True}, lambda _: source))
+    assert out.getpixel((2, 5)) == (255, 0, 0) and out.getpixel((17, 5)) == (0, 0, 255)
