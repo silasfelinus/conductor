@@ -287,3 +287,10 @@ round-10 face. Two new tries ask for a sea otter, whose face is naturally short 
 
 - ART-ROUND-13.yaml: an Arthemy look test, front and profile, 3 seeds each (ArtJobs 33997–34002).
 - r15-abbess-sea-otter-*: Kontext species-change edits on three key angles (ArtJobs 34003–34005).
+
+## The abbess's sea-otter face (2026-10-05)
+
+Asking Arthemy for a sea otter worked. The front tries (242334–242336) and profile tries (242337–242339) came out with
+a short, rounded otter face that is still clearly a snout, not flat. The Kontext species edits (242340–242342) barely
+moved, as before. The face test went to Silas (cast sheet 15), and the other six angles are rendering with the same
+tags (ART-ROUND-13.yaml, ArtJobs 34006–34017).
