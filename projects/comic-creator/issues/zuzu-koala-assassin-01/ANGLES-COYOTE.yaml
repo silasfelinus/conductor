@@ -4,6 +4,7 @@
 # Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
 # r8-coyote-stump: Silas, 2026-10-05: the croc takes his RIGHT (gun) hand in chapter 1.
 # r10-coyote-stump-b/c: the first stump edit (242194) bandaged both wrists and kept both hands.
+# r10-coyote-stump-c (242196) gave the right-wrist stump but bloodied his other hand; stump-d cleans it.
 series: zuzu-koala-assassin
 project_slug: comic-creator
 designer: Comic Studio
@@ -221,6 +222,10 @@ subjects:
     comic style, plain white background.'
   jobs:
     kontext-angles: 33840
+  art:
+    kontext-angles:
+      status: DONE
+      art_image_id: 242195
 - key: r10-coyote-stump-c
   entity: coyote
   title: 'The coyote, round 10: right-hand stump (stump-c)'
@@ -231,3 +236,17 @@ subjects:
     Keep everything else exactly the same, plain white background.
   jobs:
     kontext-angles: 33841
+  art:
+    kontext-angles:
+      status: DONE
+      art_image_id: 242196
+- key: r10-coyote-stump-d
+  entity: coyote
+  title: 'The coyote, round 10: stump cleanup'
+  size: 832x1216
+  source_image_id: 242196
+  prompt_prose: 'Fix only his left hand, on the right side of the image: make it a normal, clean furred hand, relaxed
+    at his side, with no blood and no bandage. Keep the bandaged stump on the left side of the image exactly as
+    it is. Keep everything else exactly the same, plain white background.'
+  jobs:
+    kontext-angles: 33842
