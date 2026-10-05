@@ -17236,3 +17236,14 @@ records:
   failure_category: quality
   lesson: Responsive navigation compaction must preserve explanatory copy; verification should pin content
     visibility as well as geometry.
+- date: '2026-10-05'
+  project: kind-robots
+  task: t-130
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: Multi-LoRA generation support has to extend through ArtJob retry and Resource-refresh helpers
+    as well as initial workflow construction; stale scalar assumptions in shared retry plumbing can reject
+    otherwise-valid stacked jobs before they ever re-enter the queue.
