@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-10-04T15:24:50.804545+00:00",
+  "generated_at": "2026-10-05T19:20:17.010881+00:00",
   "summary": {
     "roadmaps": 66,
     "active_projects": 27,
     "continuous_projects": 3,
-    "tasks": 1885,
-    "ready": 56,
+    "tasks": 1888,
+    "ready": 57,
     "waiting": 87,
-    "needs_human": 41,
-    "in_progress": 8,
-    "done": 1677,
+    "needs_human": 40,
+    "in_progress": 7,
+    "done": 1681,
     "errors": 0,
     "warnings": 12,
-    "info": 39
+    "info": 40
   },
   "projects": [
     {
@@ -43,16 +43,16 @@
       "autonomous": false,
       "task_count": 28,
       "counts": {
-        "claimed": 1,
         "done": 22,
         "needs-human": 1,
+        "ready": 1,
         "waiting": 4
       },
       "open_count": 6,
       "human_attention": 1,
-      "ready": 0,
+      "ready": 1,
       "waiting": 4,
-      "claimed": 1,
+      "claimed": 0,
       "review": 0,
       "done": 22
     },
@@ -182,9 +182,9 @@
       "override_status": "active",
       "priority_index": 9,
       "autonomous": false,
-      "task_count": 127,
+      "task_count": 130,
       "counts": {
-        "done": 124,
+        "done": 127,
         "ready": 2,
         "review": 1
       },
@@ -194,7 +194,7 @@
       "waiting": 0,
       "claimed": 0,
       "review": 1,
-      "done": 124
+      "done": 127
     },
     {
       "slug": "rainbow-butterflies",
@@ -519,18 +519,17 @@
       "autonomous": false,
       "task_count": 22,
       "counts": {
-        "done": 8,
-        "needs-human": 1,
+        "done": 9,
         "ready": 10,
         "waiting": 3
       },
-      "open_count": 14,
-      "human_attention": 1,
+      "open_count": 13,
+      "human_attention": 0,
       "ready": 10,
       "waiting": 3,
       "claimed": 0,
       "review": 0,
-      "done": 8
+      "done": 9
     },
     {
       "slug": "kr-solitaire",
@@ -1305,21 +1304,14 @@
       "code": "STALE_IN_PROGRESS",
       "project": "animation-manager",
       "task": "t-022",
-      "message": "Task has remained claimed for 10 days."
+      "message": "Task has remained claimed for 11 days."
     },
     {
       "severity": "warning",
       "code": "STALE_IN_PROGRESS",
       "project": "coloring-book",
       "task": "t-058",
-      "message": "Task has remained claimed for 6 days."
-    },
-    {
-      "severity": "warning",
-      "code": "SOFT_NEEDS_HUMAN",
-      "project": "comic-creator",
-      "task": "t-015",
-      "message": "needs-human has no obvious hard-gate marker; consider returning it to ready, setting soft_gate: true, or documenting the actual gate."
+      "message": "Task has remained claimed for 8 days."
     },
     {
       "severity": "warning",
@@ -1333,7 +1325,14 @@
       "code": "STALE_IN_PROGRESS",
       "project": "conductor",
       "task": "t-203",
-      "message": "Task has remained claimed for 3 days."
+      "message": "Task has remained claimed for 4 days."
+    },
+    {
+      "severity": "warning",
+      "code": "STALE_CLAIM_FIELDS",
+      "project": "kind-economy",
+      "task": "t-011",
+      "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
     },
     {
       "severity": "warning",
@@ -1431,6 +1430,13 @@
       "code": "APPROVAL_WITHOUT_GATE",
       "project": "comic-creator",
       "task": "t-018",
+      "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
+      "code": "APPROVAL_WITHOUT_GATE",
+      "project": "comic-creator",
+      "task": "t-021",
       "message": "approved_by_human is set on a task that is not human-gated."
     },
     {
