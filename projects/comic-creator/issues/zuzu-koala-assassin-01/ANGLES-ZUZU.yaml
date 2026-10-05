@@ -10,6 +10,8 @@
 # second sword or faced the wrong way.
 # r8c-*: the stitched "match the left figure" pass (r8-*) kept the sword but barely moved the colours, so each
 # Stage-A pick also gets a plain single-image recolour: terracotta poncho, brown trousers.
+# r9k-*: Kontext single-image sword edits on the round-9 look test. Arthemy keeps putting the katana at
+# his waist in back views; Kontext moves it across his back (adding/moving an object, not turning him round).
 series: zuzu-koala-assassin
 project_slug: comic-creator
 designer: Comic Studio
@@ -451,3 +453,35 @@ subjects:
     kontext-angles:
       status: CANCELLED
       art_image_id: null
+- key: r9k-zuzu-back-a
+  entity: zuzu
+  title: 'Zuzu round 9 sword edit: back-a'
+  size: 832x1216
+  source_image_id: 242087
+  prompt_prose: 'Move his sword. Remove the katana from his waist. Instead, strap the same sheathed katana diagonally
+    across his back, on top of the poncho, with the hilt rising above his right shoulder (the right side of the
+    image) and the scabbard tip at his left hip. Keep everything else exactly the same: the koala, his pose, the
+    poncho, the brown trousers, the straw hat, the colours and the inked comic style, plain white background.'
+  jobs:
+    kontext-angles: 33746
+- key: r9k-zuzu-back-b
+  entity: zuzu
+  title: 'Zuzu round 9 sword edit: back-b'
+  size: 832x1216
+  source_image_id: 242088
+  prompt_prose: 'Move his sword. Remove the katana from his waist. Instead, strap the same sheathed katana diagonally
+    across his back, on top of the poncho, with the hilt rising above his right shoulder (the right side of the
+    image) and the scabbard tip at his left hip. Keep everything else exactly the same: the koala, his pose, the
+    poncho, the brown trousers, the straw hat, the colours and the inked comic style, plain white background.'
+  jobs:
+    kontext-angles: 33747
+- key: r9k-zuzu-profile-left
+  entity: zuzu
+  title: 'Zuzu round 9 sword edit: profile-left'
+  size: 832x1216
+  source_image_id: 242086
+  prompt_prose: 'Remove the second katana held at his waist. Keep only the sheathed katana strapped on his back
+    with its hilt above his shoulder. Keep everything else exactly the same: the koala, his pose, the poncho, the
+    brown trousers, the straw hat, the colours and the inked comic style, plain white background.'
+  jobs:
+    kontext-angles: 33748
