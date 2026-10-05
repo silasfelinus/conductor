@@ -168,7 +168,7 @@ renders every character at eight angles in it. Picks, in turn order:
 *"Masked edit. Yes fix the holster. Zulu's angles have him differently weighted, portly is the best, a7 profile
 right is where we want him"*
 
-- **Zuzu's build is portly.** A7 (profile right, 242193 mirrored) is the reference: a big round pot belly pushing
+- **Zuzu's build is portly (superseded below: a bit of a beer belly, not fat all over).** A7 (profile right, 242193 mirrored) is the reference: a big round pot belly pushing
   the poncho out, wide hips, thick short limbs. Kontext re-weights the other seven picks toward it
   (ANGLES-ZUZU.yaml, r11-zuzu-portly-*).
 - **The coyote's sides:** eyepatch on his right eye, revolver on his right hip; right is his gun hand, the one
@@ -236,3 +236,17 @@ The masked stump goes on the front after the rags pass.
 drifted to purple and green. The round-10 set stays. A masked Kontext edit (ANGLES-ABBESS.yaml, ArtJobs 33912–33918)
 redraws only the head box on seven angles as a short, round otter face. The back view (242185) shows no face and
 stands as it is. VIDEO-GUARDRAILS.md now lists the words the models draw literally.
+
+## Silas's notes on round 12 and the portly edits (2026-10-05)
+
+*"Much better overall look on the vagrant. Otter has a weird face mask on some of the gens, and still has too long of
+a snout. She should have a flatter, but not totally flat face. Zuzu should have a bit of a beer belly, but not
+overall fat like the latest looks."*
+
+- **The coyote's round-12 look is approved in direction.** The destitute pass (33904–33911) still runs; it will be
+  shown beside the plain picks so Silas can choose.
+- **The abbess:** a snout about half as long, a little flatter, never completely flat. The r12 face edits were
+  cancelled before they ran. The r13 masked edits (ArtJobs 33927–33935) ask for exactly that.
+- **Zuzu has a bit of a beer belly**, not a fat body. The r11 portly edits (242199–242205) are dropped, and the r12
+  retries were cancelled. Masked waist edits on the round-10 picks (r13-zuzu-belly-*, ArtJobs 33919–33926) add a
+  paunch and leave his limbs, shoulders and hips alone. The back views keep their round-10 build.
