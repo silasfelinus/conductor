@@ -31,7 +31,7 @@ Silas's beats, in order:
 3. **The meal.** The nuns feed the children. The toddler eats voraciously.
 4. **The town.** Zuzu reaches a town at dusk and finds missing posters of children. First one, then several, then posters plastered everywhere. His eyes spark with fear and realization.
 5. **The drugging.** Back at the convent, the toddler stops eating and falls unconscious into his food. His sister tries to wake him as a dark shadow appears behind her.
-6. **The return.** Zuzu rides back. The mission seems empty. He runs upstairs and finds the children tied on a sacrificial altar. He cuts one of the sister's bonds free.
+6. **The return.** Zuzu runs back on foot (no mount in Book One). The mission seems empty. He runs upstairs and finds the children tied on a sacrificial altar. He cuts one of the sister's bonds free.
 7. **The attack.** The nuns attack and Zuzu kills several. One nun sits chanting while a dark, cosmic, tentacled thing comes through.
 8. **The trap.** The mother superior stabs Zuzu in the shoulder from behind, and the tentacled horror seizes him. She approaches, dagger in hand. He looks trapped.
 9. **The save.** The mother superior collapses forward. Behind her stands the sister, holding one of the daggers. Zuzu reaches for it, and she shakily gives it to him.

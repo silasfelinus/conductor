@@ -87,7 +87,7 @@ Each chapter lists its beats in order. "Key image" is the panel the chapter is b
 ### 8. The nuns
 1. At the mission, the toddler falls unconscious into his food. His sister tries to wake him as a dark
    shadow rises behind her.
-2. Zuzu rides back. The mission seems empty. He runs upstairs and finds the children tied on an altar.
+2. Zuzu runs back on foot. The mission seems empty. He runs upstairs and finds the children tied on an altar.
    He cuts one of the sister's bonds.
 3. The nuns attack and Zuzu kills several. One nun sits chanting while a dark, cosmic, tentacled thing
    comes through.
@@ -143,8 +143,16 @@ to shoot with his non-dominant hand and failing. Later we can give him a knife t
 - **The coyote loses his right hand**, his gun hand.
 - **For later books:** he tries to shoot left-handed and misses; later still he gets a knife lashed to the
   stump.
+- **No mount in Book One.** Zuzu walks everywhere, including the run back to the mission in chapter 8.
+
+### The lizard: a later-book arc
+
+Silas, 2026-10-05: *"No on lizard mount. If there is a lizard mount, it can be a youngling after the mother attacks the group, but not this issue. Zuzu walks in issue one. Maybe the lizard can be an evolving plot point, it starts as a child, eventually the kids ride it, then it gets large enough to carry them all"*
+
+- It enters in a later book as a youngling, after its mother attacks the group.
+- It grows across the series: first a child, then big enough for the kids to ride, and finally large
+  enough to carry all of them.
 
 ## Open questions (Silas)
 
-- Whether the mount (the dusty lizard in the bible) appears in Book One. Zuzu "rides back" in chapter 8,
-  so something carries him.
+None open. The page plan (t-020) is next.
