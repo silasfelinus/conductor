@@ -192,3 +192,20 @@ No notes"*
   side fixes and two stump seeds on the clean round-10 outfit were cancelled; the masked stump and side fixes
   rerun on the new coyote.
 
+
+## Zuzu portly edits, round 11 screen (2026-10-05)
+
+A7 (242193 mirrored) is the reference build and stays as it is. Kontext re-weighted the other seven picks:
+
+| Angle | Source | Edit | Verdict |
+| --- | --- | --- | --- |
+| Front | 242192 | 242199 | Keep: heavier, close to A7 |
+| 3/4 front left | 242108 | 242200 | Only slightly heavier; chained retry (33903) |
+| Profile left | 242110 | 242201 | Keep: round belly matches A7 |
+| 3/4 back left | 242113 | 242202 | Reject: turned to face front, lost the katana |
+| Back | 242117 | 242203 | Reject: belly drawn on his back |
+| 3/4 back right | 242120 | 242204 | Keep: wider, katana still across his back |
+| 3/4 front right | 242125 | 242205 | Keep: heavier, sword unchanged |
+
+"Pot belly" on a back view makes Kontext either turn him round or put the belly on his back, so the back retries
+(r12-zuzu-portly-*, ArtJobs 33899–33902) ask for a broad, rounded back and a wide seat and never say "belly".
