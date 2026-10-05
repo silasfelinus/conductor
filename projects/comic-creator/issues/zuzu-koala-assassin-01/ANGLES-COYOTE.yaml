@@ -3,6 +3,7 @@
 # Kontext redresses the right figure. Crop the right half for use.
 # Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
 # r8-coyote-stump: Silas, 2026-10-05: the croc takes his RIGHT (gun) hand in chapter 1.
+# r10-coyote-stump-b/c: the first stump edit (242194) bandaged both wrists and kept both hands.
 series: zuzu-koala-assassin
 project_slug: comic-creator
 designer: Comic Studio
@@ -193,3 +194,40 @@ subjects:
     kontext-angles:
       status: DONE
       art_image_id: 242051
+- key: r10-coyote-stump
+  entity: coyote
+  title: 'The one-eyed coyote, round 10: right-hand stump variant'
+  size: 832x1216
+  source_image_id: 242160
+  prompt_prose: 'Replace the coyote''s right hand (the hand on the left side of the image) with a stump: his right
+    forearm ends at the wrist, wrapped in a dirty cloth bandage with dried blood. Keep everything else exactly the
+    same: his face, the eyepatch, the hat, the olive green long coat, the shirt, the jeans, the boots, the holstered
+    revolver, the pose, the colours and the inked comic style, plain white background.'
+  jobs:
+    kontext-angles: 33839
+  art:
+    kontext-angles:
+      status: DONE
+      art_image_id: 242194
+- key: r10-coyote-stump-b
+  entity: coyote
+  title: 'The coyote, round 10: right-hand stump (stump-b)'
+  size: 832x1216
+  source_image_id: 242160
+  prompt_prose: 'Amputate the coyote''s right hand. On the left side of the image, his sleeve ends in a stump at
+    the wrist: no hand, no fingers, just a rounded stump wrapped in a dirty, blood-stained cloth bandage. His other
+    hand, on the right side of the image, stays a normal hand with no bandage. Keep everything else exactly the
+    same: face, eyepatch, hat, olive green coat, shirt, jeans, boots, holstered revolver, pose, colours and inked
+    comic style, plain white background.'
+  jobs:
+    kontext-angles: 33840
+- key: r10-coyote-stump-c
+  entity: coyote
+  title: 'The coyote, round 10: right-hand stump (stump-c)'
+  size: 832x1216
+  source_image_id: 242160
+  prompt_prose: The coyote is missing his right hand. Remove the hand on the left side of the image entirely, leaving
+    a short bandaged stump where the wrist ends, the bandage stained with old blood. Do not change his left hand.
+    Keep everything else exactly the same, plain white background.
+  jobs:
+    kontext-angles: 33841
