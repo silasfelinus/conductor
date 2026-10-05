@@ -84,3 +84,20 @@ character sheets"*.
   stitched to its left as the reference. This replaces round 7's Kontext rotations, which could not turn a
   figure around.
 
+### Round 8 screen (2026-10-05)
+
+Every Stage-A render was read for orientation, the sword rig and clothing; nothing was undressed.
+
+- **Zuzu** (24 renders + 12 retries): the back views are real backs with the katana across the back.
+  Most failures were a second sword or a sword in hand. Stage B sources: front 241930, 3/4 front left
+  242019, profile left 241936, 3/4 back left 241941, back 241942 (mirrored), 3/4 back right 241946,
+  profile right = 241936 mirrored (all seven right-profile seeds failed), 3/4 front right 242023.
+- **The sister:** all 16 clean. Stage B, with the S2 front figure as the reference (ANGLES-SISTER.yaml).
+- **The toddler:** all 16 already match T2, so no Stage B. Angles: 241970, 241972, 241975, 241976, 241978,
+  241980, 241982, 241984 (front, 3/4 front L, profile L, 3/4 back L, back, 3/4 back R, profile R,
+  3/4 front R).
+- **The coyote:** the checkpoint keeps drawing a feather duster into his hand (C1 has one too); Stage B
+  removes it (ANGLES-COYOTE.yaml), plus a right-hand stump variant of C1.
+- **The mother superior:** already matches N2, so no Stage B. Several back views drew a second small otter.
+  Angles: 242002, 242004, 242007, 242013 (mirrored), 242011, 242013, 242014, 242016 (same order).
+

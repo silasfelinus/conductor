@@ -6,6 +6,8 @@
 # *-fix subjects restyle round 7's true Arthemy back views (A4, A5) into R6's costume instead.
 # Round 8 Stage B (r8-* subjects): each source is the screened Stage-A render (ART-ROUND-8.yaml) with R6
 # stitched to its left as the reference; Kontext redresses the right figure. Crop the right half for use.
+# r8-zuzu-profile-right is the left profile (241936) mirrored: all seven right-profile seeds held a
+# second sword or faced the wrong way.
 series: zuzu-koala-assassin
 project_slug: comic-creator
 designer: Comic Studio
@@ -250,3 +252,46 @@ subjects:
     Western comic art style, plain white background.'
   jobs:
     kontext-angles: 33669
+- key: r8-zuzu-front-three-quarter-left
+  entity: zuzu
+  title: 'Zuzu round 8: front three quarter left'
+  size: 1408x1024
+  source_image_id: 242019
+  reference_image_id: 241913
+  prompt_prose: 'The image shows two figures side by side. The left figure is the reference design; leave it unchanged.
+    Change only the right figure''s clothes and hat to match the left figure exactly: a terracotta-brown poncho
+    with the bright orange zigzag and diamond trim at the neck and hem, an orange scarf, an orange sash knotted
+    at the waist, a dark tunic, brown trousers and the wide woven straw hat. Keep the right figure''s pose, the
+    direction he faces, his build, and his single sheathed katana strapped across his back exactly where it is.
+    Western comic art style, plain white background.'
+  jobs:
+    kontext-angles: 33687
+- key: r8-zuzu-front-three-quarter-right
+  entity: zuzu
+  title: 'Zuzu round 8: front three quarter right'
+  size: 1408x1024
+  source_image_id: 242023
+  reference_image_id: 241913
+  prompt_prose: 'The image shows two figures side by side. The left figure is the reference design; leave it unchanged.
+    Change only the right figure''s clothes and hat to match the left figure exactly: a terracotta-brown poncho
+    with the bright orange zigzag and diamond trim at the neck and hem, an orange scarf, an orange sash knotted
+    at the waist, a dark tunic, brown trousers and the wide woven straw hat. Keep the right figure''s pose, the
+    direction he faces, his build, and his single sheathed katana strapped across his back exactly where it is.
+    Western comic art style, plain white background.'
+  jobs:
+    kontext-angles: 33688
+- key: r8-zuzu-profile-right
+  entity: zuzu
+  title: 'Zuzu round 8: profile right'
+  size: 1408x1024
+  source_image_id: 241936
+  reference_image_id: 241913
+  prompt_prose: 'The image shows two figures side by side. The left figure is the reference design; leave it unchanged.
+    Change only the right figure''s clothes and hat to match the left figure exactly: a terracotta-brown poncho
+    with the bright orange zigzag and diamond trim at the neck and hem, an orange scarf, an orange sash knotted
+    at the waist, a dark tunic, brown trousers and the wide woven straw hat. Keep the right figure''s pose, the
+    direction he faces, his build, and his single sheathed katana strapped across his back exactly where it is.
+    Western comic art style, plain white background.'
+  jobs:
+    kontext-angles: 33689
+  source_flip: true
