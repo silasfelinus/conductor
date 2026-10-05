@@ -22,6 +22,8 @@ turnaround sheet, ``source_flip: true`` mirrors it (a back view with the sword o
 shoulder), and ``reference_image_id`` (with optional ``reference_crop``) is
 stitched to the LEFT of the source at the same height, so Kontext can dress the right
 figure like the left one (the ImageStitch trick of Kind Robots' kontext/kombine route).
+``mask_box: [l, t, r, b]`` (fractions of the composed source) makes the edit masked: only that box may
+change, and the job goes to ``/api/comfy/kontext/enqueue`` with a generated mask (white = change).
 
 Usage:
     python scripts/enqueue_art_requests.py LEDGER            # dry run, print requests
@@ -211,9 +213,62 @@ def compose_source(subject, fetch):
     return "data:image/png;base64," + base64.b64encode(buffer.getvalue()).decode()
 
 
+def make_mask(source, box):
+    """A PNG data URL the size of ``source``: white inside ``box`` (fractions), black elsewhere.
+
+    ``box`` may also be a list of boxes, for an edit that touches two places (moving a holster).
+    """
+    import base64
+    import io
+
+    from PIL import Image, ImageDraw
+
+    width, height = _decode_data_url(source).size
+    boxes = box if box and isinstance(box[0], (list, tuple)) else [box]
+    mask = Image.new("RGB", (width, height), "black")
+    draw = ImageDraw.Draw(mask)
+    for one in boxes:
+        left, top, right, bottom = (float(v) for v in one)
+        if not (0 <= left < right <= 1 and 0 <= top < bottom <= 1):
+            raise ValueError(f"mask_box {one} must be fractions with left < right and top < bottom")
+        draw.rectangle(
+            (round(left * width), round(top * height), round(right * width) - 1, round(bottom * height) - 1),
+            fill="white",
+        )
+    buffer = io.BytesIO()
+    mask.save(buffer, "PNG")
+    return "data:image/png;base64," + base64.b64encode(buffer.getvalue()).decode()
+
+
+def build_masked_request(ledger, lane, subject, source_image, mask):
+    """The /api/comfy/kontext/enqueue body for a masked Kontext edit."""
+    width, height = core.parse_size(subject.get("size"))
+    body = {
+        "prompt": compose_prompt(lane, subject),
+        "imageData": source_image,
+        "maskData": mask,
+        "width": width,
+        "height": height,
+        "isPublic": bool(ledger.get("is_public", False)),
+        "isMature": bool(ledger.get("is_mature", False)),
+    }
+    for field in ("steps", "guidance"):
+        if lane.get(field):
+            body[field] = lane[field]
+    if ledger.get("designer"):
+        body["designer"] = ledger["designer"]
+    return body
+
+
+def request_url(body):
+    """Masked Kontext edits use the Kontext queue route; everything else the art enqueue route."""
+    route = "/api/comfy/kontext/enqueue" if "maskData" in body else "/api/art/enqueue"
+    return f"{core.KR_BASE_URL}{route}"
+
+
 def submit(path, header, ledger, cells, post=None, fetch_source=None):
     """POST every cell that has no job id yet; write the id back after each one."""
-    post = post or (lambda body: core.http_json("POST", f"{core.KR_BASE_URL}/api/art/enqueue", body))
+    post = post or (lambda body: core.http_json("POST", request_url(body), body))
     fetch_source = fetch_source or fetch_source_image
     fetched = {}
 
@@ -229,7 +284,11 @@ def submit(path, header, ledger, cells, post=None, fetch_source=None):
         source = None
         if lane["engine"] == "kontext" and subject.get("source_image_id"):
             source = compose_source(subject, fetch)
-        status, resp = post(build_request(ledger, lane, subject, source))
+        if source and subject.get("mask_box"):
+            body = build_masked_request(ledger, lane, subject, source, make_mask(source, subject["mask_box"]))
+        else:
+            body = build_request(ledger, lane, subject, source)
+        status, resp = post(body)
         job_id = ((resp or {}).get("data") or {}).get("jobId") if isinstance(resp, dict) else None
         if status in (200, 201) and job_id:
             subject.setdefault("jobs", {})[lane["key"]] = int(job_id)
@@ -291,6 +350,7 @@ def main(argv=None):
             if source:
                 extra = f", reference ArtImage {subject['reference_image_id']}" if subject.get("reference_image_id") else ""
                 crop = f", crop {subject['source_crop']}" if subject.get("source_crop") else ""
+                crop += f", masked {subject['mask_box']} via /api/comfy/kontext/enqueue" if subject.get("mask_box") else ""
                 print(f"    source: ArtImage {subject.get('source_image_id')}{crop}{extra}")
             print(f"  {subject['key']} [{lane['key']}] {body['width']}x{body['height']} \"{body['promptString'][:70]}\"")
         return 0
