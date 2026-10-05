@@ -1,7 +1,7 @@
 # Pitch: Robot Weather Postcards
 date: 2026-10-04
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 Pick a season, a place and a robot, and a postcard assembles itself from layered pre-made art with a short hand-written message chosen from a pool of lines. Download it as an image to send to a friend, with every combination being a unique, shareable card.
