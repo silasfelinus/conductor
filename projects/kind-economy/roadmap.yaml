@@ -283,8 +283,8 @@ tasks:
 - id: t-011
   milestone: m3
   title: "Run the Stripe checkout/webhook/fulfillment matrix end-to-end in TEST mode"
-  status: claimed
-  updated: '2026-10-03T02:51:45Z'
+  status: ready
+  updated: '2026-10-05T10:47:47Z'
   passes: 0
   stakes: outward-facing
   gate_human: false
@@ -330,6 +330,11 @@ tasks:
     If any id starts cs_live_, stop at once, create nothing more, and set this task back to
     needs-human with gate_reason: money. Also close digital-storefront/t-039 by reference
     when this lands.
+
+    RECONCILED 2026-10-05: claim from 2026-10-03 expired with no follow-up. kind_robots#2492
+    was only the offline webhook fixture, so the merged-PR drift flag is a false positive;
+    the live TEST-mode matrix (see GATE CLEARED 2026-09-30, cs_test_ safety rule) is still
+    unrun. Re-armed to ready for an equipped session.
   owner: worker
   claimed_by: 2026-10-03T025145Z-kind-economy-t-011-g5s6
   claimed_at: '2026-10-03T02:51:45Z'
