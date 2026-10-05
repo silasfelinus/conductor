@@ -2132,5 +2132,20 @@ tasks:
   claimed_by: 20261004T091600Z-kind-robots-t127-lora-triage-7f3a
   claimed_at: '2026-10-04T09:25:00Z'
 
+
+- id: t-128
+  milestone: m6
+  title: 'Restore dashboard tab descriptions at tablet widths'
+  status: ready
+  gate_human: false
+  stakes: reversible
+  owner:
+  passes: 0
+  updated: '2026-10-05T09:46:00Z'
+  note: |-
+    Silas, 2026-10-05: the dashboard navigation tab descriptions have disappeared. The supplied iPad screenshot shows the Home > Dashboard tab flyout rendering labels such as Achievements, Themes, Account, Servers, and Support without their secondary descriptions.
+
+    Regression traced to kind_robots PR #3073 / commit 69224c46, which added `sm:hidden xl:block` to shared ChannelTabList summary rows and then pinned that tablet-only hiding in verifyNavigationConsolidation.ts. Restore the summary/description line at tablet widths for normal tabs and nested subtabs while preserving the compact menu geometry.
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
