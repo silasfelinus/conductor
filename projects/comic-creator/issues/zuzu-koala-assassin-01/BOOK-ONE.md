@@ -41,8 +41,8 @@ Each chapter lists its beats in order. "Key image" is the panel the chapter is b
 3. The standoff builds. **[SF1]** Zuzu's narrowed eyes; the coyote's one eye; their mouths, set hard. The
    coyote reaches for his gun; Zuzu reaches for his sword.
 4. A giant crocodile erupts from the water before either draws.
-5. They kill it together. The croc takes the coyote's hand.
-6. Afterwards Zuzu binds the stump. The coyote flinches from him at first, then lets him.
+5. They kill it together. The croc takes the coyote's right hand, his gun hand.
+6. Afterwards Zuzu binds the right wrist's stump. The coyote flinches from him at first, then lets him.
 7. They part. **[SF2]** Far apart, walking opposite ways, their backs to each other: trust.
 8. **Key image:** Zuzu kneeling to bandage the coyote's wrist, the dead croc in the water behind them.
 
@@ -67,7 +67,7 @@ Each chapter lists its beats in order. "Key image" is the panel the chapter is b
    figures far off on the other.
 
 ### 5. Apples
-1. Zuzu finds apples: a wild tree, an abandoned orchard, or a trade. (Open question: which.)
+1. Crossing the wasteland, mostly desert, Zuzu finds a single apple tree, alive where nothing else is.
 2. He eats one. He leaves the rest on a rock in the road and walks on without looking back.
 3. The sister finds them. She feeds her brother first.
 4. **Key image:** the apples on the rock in the road, and the sister's hand reaching for them.
@@ -125,16 +125,26 @@ Locked designs and picks live in CAST-PICKS.md.
 | Zuzu | koala-sized, stocky (the DeVito build), poncho and kasa over the Z2 tunic, katana high on the back |
 | The sister | fennec, about ten, taller than Zuzu, long torn pale dress, bandaged wrists (S2); trauma is her weight |
 | The toddler | fennec, babbles only, checked tunic, bandaged paw (T2) |
-| The one-eyed coyote vagrant | bedraggled, one eye, a revolver (C1). Loses a hand to the croc in chapter 1. A returning ally |
+| The one-eyed coyote vagrant | bedraggled, one eye, a revolver (C1). Loses his right (gun) hand to the croc in chapter 1. A returning ally |
 | The crocodile | giant, erupts from the water; an animal, not a monster from the thin places (K2) |
 | The otter nuns | kind faces at first; habits; the mother superior with a dagger (N2) |
 | The tentacled horror | dark and cosmic, half through a portal; never fully seen |
 
+## Settled, 2026-10-05
+
+Silas: *"just cut anything to do with the siblings at the watering hole. Single tree, they are walking through
+a wasteland, mostly desert. Dont worry about their thirst, not a pertinent factor, they can get water at the
+convent. Coyote will lose his right hand, that's more interesting, in a future issue we can have him trying
+to shoot with his non-dominant hand and failing. Later we can give him a knife that he ties to the arm stump."*
+
+- **No siblings at the water.** The watering hole is Zuzu's chapter alone. Thirst is not a beat; the children
+  drink at the convent.
+- **The apples come from a single tree** in a wasteland that is mostly desert.
+- **The coyote loses his right hand**, his gun hand.
+- **For later books:** he tries to shoot left-handed and misses; later still he gets a knife lashed to the
+  stump.
+
 ## Open questions (Silas)
 
-- Where the apples come from: a wild tree, an abandoned orchard, or a trade.
 - Whether the mount (the dusty lizard in the bible) appears in Book One. Zuzu "rides back" in chapter 8,
   so something carries him.
-- With the watering hole now in chapter 1, the siblings no longer have the thirst beat or the "three at the
-  water's edge" image. Is a second water stop wanted, or do the apples carry their hunger?
-- Which hand the coyote loses, and whether the stump becomes a hook or a gun-hand when he returns.
