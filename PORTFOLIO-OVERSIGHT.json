@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-10-05T05:51:43.070571+00:00",
+  "generated_at": "2026-10-05T14:54:47.928590+00:00",
   "summary": {
     "status": "clean",
     "roadmap_errors": 0,
-    "roadmap_warnings": 11,
+    "roadmap_warnings": 12,
     "project_forward_drift": 0,
     "project_reverse_orphans": 0,
     "project_unresolved": null,
@@ -14,7 +14,7 @@
   "openai_scheduled_agent": {
     "overdue": true,
     "last_activity": "2026-10-03T09:23:59+00:00",
-    "hours_since": 44.46,
+    "hours_since": 53.51,
     "stale_hours": 6.0,
     "marker": "openai-scheduled-",
     "note": "Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness."
@@ -31,19 +31,19 @@
     "unresolved": null
   },
   "roadmap_audit": {
-    "generated_at": "2026-10-05T05:51:43.070580+00:00",
+    "generated_at": "2026-10-05T14:54:47.928596+00:00",
     "summary": {
       "roadmaps": 66,
       "active_projects": 27,
       "continuous_projects": 3,
-      "tasks": 1885,
-      "ready": 56,
+      "tasks": 1888,
+      "ready": 57,
       "waiting": 87,
       "needs_human": 40,
-      "in_progress": 8,
-      "done": 1678,
+      "in_progress": 7,
+      "done": 1681,
       "errors": 0,
-      "warnings": 11,
+      "warnings": 12,
       "info": 40
     },
     "errors": [],
@@ -81,7 +81,14 @@
         "code": "STALE_IN_PROGRESS",
         "project": "conductor",
         "task": "t-203",
-        "message": "Task has remained claimed for 3 days."
+        "message": "Task has remained claimed for 4 days."
+      },
+      {
+        "severity": "warning",
+        "code": "STALE_CLAIM_FIELDS",
+        "project": "kind-economy",
+        "task": "t-011",
+        "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
       },
       {
         "severity": "warning",
