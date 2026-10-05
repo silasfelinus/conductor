@@ -1,7 +1,7 @@
 # Pitch: Robot Species Sorting Quiz
 date: 2026-10-04
 project-target: new
-status: awaiting-silas
+status: approved
 
 ## The idea
 A short personality quiz of twelve whimsical questions that sorts you into one of sixteen robot species, each with a pre-written profile card and a matching illustration. It reuses the Robot Field Guide look and gives a result that is easy to screenshot and share.
