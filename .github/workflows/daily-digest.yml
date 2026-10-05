@@ -339,6 +339,14 @@ jobs:
           DIGEST_FROM: ${{ secrets.DIGEST_FROM || vars.DIGEST_FROM }}
           DIGEST_FROM_NAME: ${{ secrets.DIGEST_FROM_NAME || vars.DIGEST_FROM_NAME }}
 
+      - name: Upload direct-send digest for ChatGPT delivery guard
+        if: ${{ env.SHOULD_SEND_EMAIL == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-digest-direct-send
+          path: digest-email.json
+          if-no-files-found: error
+
       - name: Email via Brevo
         if: ${{ env.SHOULD_SEND_EMAIL == 'true' }}
         run: python scripts/send_digest_brevo.py digest-email.json
