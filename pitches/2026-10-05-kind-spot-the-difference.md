@@ -1,7 +1,7 @@
 # Pitch: Kind Spot the Difference
 date: 2026-10-05
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 Two near-identical pre-made scenes sit side by side and you tap the five things that changed, with a friendly hint that circles one difference after a pause. Scenes are paired renders with known difference coordinates, so checking a tap needs no server and no model.
