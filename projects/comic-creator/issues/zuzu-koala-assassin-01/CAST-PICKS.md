@@ -209,3 +209,23 @@ A7 (242193 mirrored) is the reference build and stays as it is. Kontext re-weigh
 
 "Pot belly" on a back view makes Kontext either turn him round or put the belly on his back, so the back retries
 (r12-zuzu-portly-*, ArtJobs 33899–33902) ask for a broad, rounded back and a wide seat and never say "belly".
+
+## Round 12 coyote screen (2026-10-05)
+
+The destitute prompt helped the fronts: torn hems, ripped trousers, and 242207 shows his ribs. From behind, though,
+the coat stayed whole and the boots sound, and two seeds came out grey-faced. The sides were still mixed. Picks are
+chosen for pose and sides, then a Kontext destitute pass (ANGLES-COYOTE.yaml, r12-coyote-rags-*, ArtJobs
+33904–33911) pushes each one further into rags:
+
+| Angle | Pick | Sides |
+| --- | --- | --- |
+| Front | 242207 | Eyepatch right; holster on his left, needs a masked fix |
+| 3/4 front left | 242209 | Both right |
+| Profile left | 242218 mirrored | Patch and holster land on the near (left) side; needs a masked fix |
+| 3/4 back left | 242216 mirrored | Holster right |
+| Back | 242214 | Holster right |
+| 3/4 back right | 242212 mirrored | Holster right |
+| Profile right | 242218 | Both right |
+| 3/4 front right | 242220 | Both right |
+
+The masked stump goes on the front after the rags pass.
