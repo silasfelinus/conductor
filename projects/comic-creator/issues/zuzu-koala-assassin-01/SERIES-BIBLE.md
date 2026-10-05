@@ -66,10 +66,14 @@ rail line passes through but the train never stops twice. Issue 1's town sits a 
 - **Rule he keeps, the *letter of the contract*:** he kills the name on the paper, only the name, and
   is paid. Issue 1 plants the question of what he does when the letter and the spirit part ways.
 
-### THE MOUNT — a dusty lizard
-A big, slow, sand-coloured desert lizard (monitor-like), saddle and bedroll, patient as a mule.
-Zuzu leads it on foot through the town because he will not ride past the dead. (Canon: the scenario
-"Zuzu, Koala Assassin" arrives on a "dusty lizard mount.") Not the Old Komodo; do not confuse them.
+### THE LIZARD — a later-book arc (not in Book One)
+Silas, 2026-10-05: *"No on lizard mount. If there is a lizard mount, it can be a youngling after the mother attacks the group, but not this issue. Zuzu walks in issue one. Maybe the lizard can be an evolving plot point, it starts as a child, eventually the kids ride it, then it gets large enough to carry them all"*
+
+Zuzu walks in Book One. The lizard arrives in a later book as a youngling, orphaned when its mother
+attacks the group, and grows across the series: a child at first, then big enough for the kids to ride,
+then large enough to carry them all. When grown it is the big, slow, sand-coloured desert lizard
+(monitor-like) of the original scenario, which had Zuzu arrive on a "dusty lizard mount". Not the Old
+Komodo; do not confuse them. (Superseded v0: Zuzu led an adult lizard through Hollow Bell in Issue 1.)
 
 ### LING — the older sister (working name; species TBD)
 About ten or eleven. Taller and heavier than Zuzu, which is a quiet running visual joke and a

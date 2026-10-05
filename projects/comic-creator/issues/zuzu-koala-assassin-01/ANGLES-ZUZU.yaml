@@ -1,0 +1,145 @@
+# Zuzu 8-angle set (comic-creator t-015): Flux Kontext re-poses the locked design R6 (ArtImage 241913,
+# Silas, 2026-10-05) into eight angles for the 360 spinner and the LoRA dataset (t-016).
+# Every prompt pins the costume and keeps the katana visible (Silas: some back views lost the sword).
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+series: zuzu-koala-assassin
+project_slug: comic-creator
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: kontext-angles
+  label: Flux Kontext dev (fp8), re-posed from R6
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: zuzu-angle-front
+  entity: zuzu
+  title: 'Zuzu angle: front'
+  size: 832x1216
+  source_image_id: 241913
+  prompt_prose: Show him from the front, facing the viewer. Keep the same koala character, the same face, build
+    and proportions, the same rust-brown poncho with the orange zigzag trim, the conical straw kasa, the dark tunic,
+    orange sash and brown trousers, and the same western comic art style. The sheathed katana stays strapped across
+    his back over the poncho, its hilt above his right shoulder, and it stays visible. Full body, standing, on a
+    plain off-white background.
+  jobs:
+    kontext-angles: 33554
+  art:
+    kontext-angles:
+      status: RUNNING
+      art_image_id: null
+- key: zuzu-angle-front-three-quarter-left
+  entity: zuzu
+  title: 'Zuzu angle: front three quarter left'
+  size: 832x1216
+  source_image_id: 241913
+  prompt_prose: Turn him to a three-quarter view facing the left side of the image. Keep the same koala character,
+    the same face, build and proportions, the same rust-brown poncho with the orange zigzag trim, the conical straw
+    kasa, the dark tunic, orange sash and brown trousers, and the same western comic art style. The sheathed katana
+    stays strapped across his back over the poncho, its hilt above his right shoulder, and it stays visible. Full
+    body, standing, on a plain off-white background.
+  jobs:
+    kontext-angles: 33555
+  art:
+    kontext-angles:
+      status: PENDING
+      art_image_id: null
+- key: zuzu-angle-profile-left
+  entity: zuzu
+  title: 'Zuzu angle: profile left'
+  size: 832x1216
+  source_image_id: 241913
+  prompt_prose: Turn him to a full side profile facing left. Keep the same koala character, the same face, build
+    and proportions, the same rust-brown poncho with the orange zigzag trim, the conical straw kasa, the dark tunic,
+    orange sash and brown trousers, and the same western comic art style. The sheathed katana stays strapped across
+    his back over the poncho, its hilt above his right shoulder, and it stays visible. Full body, standing, on a
+    plain off-white background.
+  jobs:
+    kontext-angles: 33556
+  art:
+    kontext-angles:
+      status: PENDING
+      art_image_id: null
+- key: zuzu-angle-back-three-quarter-left
+  entity: zuzu
+  title: 'Zuzu angle: back three quarter left'
+  size: 832x1216
+  source_image_id: 241913
+  prompt_prose: Turn him away to a three-quarter rear view, his back to the viewer, angled left. Keep the same koala
+    character, the same face, build and proportions, the same rust-brown poncho with the orange zigzag trim, the
+    conical straw kasa, the dark tunic, orange sash and brown trousers, and the same western comic art style. The
+    sheathed katana stays strapped across his back over the poncho, its hilt above his right shoulder, and it stays
+    visible. Full body, standing, on a plain off-white background.
+  jobs:
+    kontext-angles: 33557
+  art:
+    kontext-angles:
+      status: PENDING
+      art_image_id: null
+- key: zuzu-angle-back
+  entity: zuzu
+  title: 'Zuzu angle: back'
+  size: 832x1216
+  source_image_id: 241913
+  prompt_prose: Turn him completely around so his back faces the viewer. The katana across his back is clearly visible.
+    Keep the same koala character, the same face, build and proportions, the same rust-brown poncho with the orange
+    zigzag trim, the conical straw kasa, the dark tunic, orange sash and brown trousers, and the same western comic
+    art style. The sheathed katana stays strapped across his back over the poncho, its hilt above his right shoulder,
+    and it stays visible. Full body, standing, on a plain off-white background.
+  jobs:
+    kontext-angles: 33558
+  art:
+    kontext-angles:
+      status: PENDING
+      art_image_id: null
+- key: zuzu-angle-back-three-quarter-right
+  entity: zuzu
+  title: 'Zuzu angle: back three quarter right'
+  size: 832x1216
+  source_image_id: 241913
+  prompt_prose: Turn him away to a three-quarter rear view, his back to the viewer, angled right. Keep the same
+    koala character, the same face, build and proportions, the same rust-brown poncho with the orange zigzag trim,
+    the conical straw kasa, the dark tunic, orange sash and brown trousers, and the same western comic art style.
+    The sheathed katana stays strapped across his back over the poncho, its hilt above his right shoulder, and it
+    stays visible. Full body, standing, on a plain off-white background.
+  jobs:
+    kontext-angles: 33559
+  art:
+    kontext-angles:
+      status: PENDING
+      art_image_id: null
+- key: zuzu-angle-profile-right
+  entity: zuzu
+  title: 'Zuzu angle: profile right'
+  size: 832x1216
+  source_image_id: 241913
+  prompt_prose: Turn him to a full side profile facing right. Keep the same koala character, the same face, build
+    and proportions, the same rust-brown poncho with the orange zigzag trim, the conical straw kasa, the dark tunic,
+    orange sash and brown trousers, and the same western comic art style. The sheathed katana stays strapped across
+    his back over the poncho, its hilt above his right shoulder, and it stays visible. Full body, standing, on a
+    plain off-white background.
+  jobs:
+    kontext-angles: 33560
+  art:
+    kontext-angles:
+      status: PENDING
+      art_image_id: null
+- key: zuzu-angle-front-three-quarter-right
+  entity: zuzu
+  title: 'Zuzu angle: front three quarter right'
+  size: 832x1216
+  source_image_id: 241913
+  prompt_prose: Turn him to a three-quarter view facing the right side of the image. Keep the same koala character,
+    the same face, build and proportions, the same rust-brown poncho with the orange zigzag trim, the conical straw
+    kasa, the dark tunic, orange sash and brown trousers, and the same western comic art style. The sheathed katana
+    stays strapped across his back over the poncho, its hilt above his right shoulder, and it stays visible. Full
+    body, standing, on a plain off-white background.
+  jobs:
+    kontext-angles: 33561
+  art:
+    kontext-angles:
+      status: PENDING
+      art_image_id: null
