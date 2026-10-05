@@ -163,3 +163,32 @@ renders every character at eight angles in it. Picks, in turn order:
   "healing" the amputation when asked to change anything else; the next try should be a masked edit limited to
   the one hand.
 
+## Silas's notes on the round-10 sets (2026-10-05)
+
+*"Masked edit. Yes fix the holster. Zulu's angles have him differently weighted, portly is the best, a7 profile
+right is where we want him"*
+
+- **Zuzu's build is portly.** A7 (profile right, 242193 mirrored) is the reference: a big round pot belly pushing
+  the poncho out, wide hips, thick short limbs. Kontext re-weights the other seven picks toward it
+  (ANGLES-ZUZU.yaml, r11-zuzu-portly-*).
+- **The coyote's sides:** eyepatch on his right eye, revolver on his right hip; right is his gun hand, the one
+  the croc takes. Round 10 mixed the sides from angle to angle, so 242160 is mirrored, 242165, 242166 and
+  242171 stand, and masked Kontext edits move the eyepatch or holster on 242162, 242168, 242173 and 242174.
+- **The coyote's stump** is now a masked edit: only his right hand can change (r11-coyote-stump-masked-*).
+  `scripts/enqueue_art_requests.py` gained `mask_box` for this: one or more boxes, sent with a generated mask
+  to Kind Robots' `/api/comfy/kontext/enqueue`.
+
+## Silas's notes on the round-10 coyote and abbess (2026-10-05)
+
+*"There are some issues with mother superior. Her snout is too long. Coyote vagrant is too clean cut. He's had a
+harder life. Outfit should reflect that. He's very very poor. Every day is a fight to survive. Love the siblings.
+No notes"*
+
+- **The siblings are approved as they are** (round-10 sets).
+- **The coyote is destitute:** a tattered, patched coat with a shredded hem, rags under it, ripped trousers,
+  falling-apart boots, a crushed hat, mangy fur, starving and gaunt. Every day is a fight to survive.
+- **The abbess has a short, blunt otter muzzle:** a round, flat face, never a long or pointed snout.
+- **Round 12** (ART-ROUND-12.yaml, ArtJobs 33857–33888) re-renders both at eight angles. The coyote's pending
+  side fixes and two stump seeds on the clean round-10 outfit were cancelled; the masked stump and side fixes
+  rerun on the new coyote.
+

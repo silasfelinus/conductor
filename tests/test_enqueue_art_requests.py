@@ -222,3 +222,51 @@ def test_source_flip_mirrors_the_source_only():
     source = "data:image/png;base64," + base64.b64encode(buffer.getvalue()).decode()
     out = enq._decode_data_url(enq.compose_source({"source_image_id": 1, "source_flip": True}, lambda _: source))
     assert out.getpixel((2, 5)) == (255, 0, 0) and out.getpixel((17, 5)) == (0, 0, 255)
+
+
+def test_masked_subject_goes_to_the_kontext_route_with_a_mask(tmp_path):
+    pytest = __import__("pytest")
+    pytest.importorskip("PIL")
+    ledger = {
+        "designer": "Comic Studio",
+        "lanes": [{"key": "angles", "engine": "kontext", "prompt": "prose", "steps": 20, "guidance": 2.5}],
+        "subjects": [
+            {"key": "stump", "size": "40x20", "prompt_prose": "a stump", "source_image_id": 7,
+             "mask_box": [0, 0, 0.5, 1], "jobs": {}},
+            {"key": "plain", "size": "40x20", "prompt_prose": "turn", "source_image_id": 7, "jobs": {}},
+        ],
+    }
+    path = tmp_path / "masked.yaml"
+    path.write_text(yaml.safe_dump(ledger, sort_keys=False))
+    header, loaded = enq.load_ledger(path)
+    sent = []
+
+    def post(body):
+        sent.append(body)
+        return 200, {"data": {"jobId": len(sent)}}
+
+    cells = list(enq.iter_cells(loaded))
+    assert enq.submit(path, header, loaded, cells, post=post, fetch_source=lambda _: _png("red", (40, 20))) == (2, 0)
+    masked, plain = sent
+    assert set(masked) >= {"prompt", "imageData", "maskData", "width", "height", "steps", "guidance", "designer"}
+    assert "promptString" not in masked and enq.request_url(masked).endswith("/api/comfy/kontext/enqueue")
+    assert enq.request_url(plain).endswith("/api/art/enqueue") and "maskData" not in plain
+    mask = enq._decode_data_url(masked["maskData"])
+    assert mask.size == (40, 20)
+    assert mask.getpixel((5, 10)) == (255, 255, 255) and mask.getpixel((35, 10)) == (0, 0, 0)
+
+
+def test_bad_mask_box_is_refused():
+    pytest = __import__("pytest")
+    pytest.importorskip("PIL")
+    with pytest.raises(ValueError):
+        enq.make_mask(_png("red", (10, 10)), [0.8, 0, 0.2, 1])
+
+
+def test_mask_box_accepts_several_boxes():
+    pytest = __import__("pytest")
+    pytest.importorskip("PIL")
+    mask = enq._decode_data_url(enq.make_mask(_png("red", (40, 20)), [[0, 0, 0.25, 1], [0.75, 0, 1, 1]]))
+    assert mask.getpixel((2, 10)) == (255, 255, 255)
+    assert mask.getpixel((20, 10)) == (0, 0, 0)
+    assert mask.getpixel((38, 10)) == (255, 255, 255)

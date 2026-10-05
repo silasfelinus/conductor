@@ -27,6 +27,8 @@ wherever it disagrees with the v0 SERIES-BIBLE.md or ISSUE-01-SCRIPT.md.
 - **Zuzu's sword rig (2026-10-05, after round 7):** the sheathed katana is strapped diagonally across his back, over the poncho, with the hilt above his RIGHT shoulder and the scabbard tip at his LEFT hip. From the front, only the hilt (over the right shoulder) and the scabbard tip (below the poncho at the left hip) show. From behind, the whole scabbard runs from upper right to lower left across the poncho.
   Negate `straw boater, cowboy hat, cloak, cape`.
 - **Look (2026-10-05, after round 8):** Zuzu is squat with koala proportions (stubby legs, round belly, big head) and dark brown cloth trousers, never denim. The siblings wear claw-torn rags. The coyote's hands are empty. Overall tone: darker and grittier, less Disney, more Tarantino.
+- **Builds and sides (2026-10-05, after round 10):** Zuzu is portly (big round belly, wide hips; the round-10 A7 profile is the reference). The coyote's eyepatch is on his right eye and his revolver on his right hip; the croc takes that right hand in chapter 1.
+- **Poverty and faces (2026-10-05):** the coyote is destitute (tattered, patched, filthy, starving); the abbess has a short, blunt otter muzzle.
 - **Zuzu is koala-sized, or a little bigger:** Silas, 2026-10-04: *"zuzu should be koala sized, or a little bigger. if he was an actor doing mocap, it would be danny devito."*
   Short, stocky, barrel-chested, short legs. In shared frames he is the shortest adult, and the sister is taller
   than him. Tags that carry it: `short, stocky, chubby, small stature, short legs`. Round 4b's walking shots drew

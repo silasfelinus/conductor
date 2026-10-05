@@ -5,6 +5,11 @@
 # r8-coyote-stump: Silas, 2026-10-05: the croc takes his RIGHT (gun) hand in chapter 1.
 # r10-coyote-stump-b/c: the first stump edit (242194) bandaged both wrists and kept both hands.
 # r10-coyote-stump-c (242196) gave the right-wrist stump but bloodied his other hand; stump-d cleans it.
+# r11-coyote-stump-masked-*: Silas: "Masked edit." Source is the round-10 front mirrored (eyepatch and holster on
+# his right, per canon); the mask covers only his right hand, so Kontext cannot regrow it or touch anything else.
+# r11-coyote-fix-*: Silas: "Yes fix the holster." Canon is eyepatch on his right eye, revolver on his right hip.
+# 242160 is mirrored on the sheet; 242165, 242166 and 242171 are already right; these masked edits move the
+# eyepatch (242162, 242174, 242173) or the holster (242173, 242168) on the rest.
 series: zuzu-koala-assassin
 project_slug: comic-creator
 designer: Comic Studio
@@ -254,3 +259,119 @@ subjects:
     kontext-angles:
       status: DONE
       art_image_id: 242197
+- key: r11-coyote-stump-masked-1
+  entity: coyote
+  title: 'The coyote: right-hand stump, masked edit (seed 1)'
+  size: 832x1216
+  source_image_id: 242160
+  source_flip: true
+  mask_box:
+  - 0.27
+  - 0.545
+  - 0.41
+  - 0.64
+  prompt_prose: 'His right forearm ends at the wrist in a stump: no hand, no fingers, just a rounded stump wrapped
+    in a dirty, blood-stained cloth bandage, coming out of the green coat sleeve. Same inked western comic style,
+    plain white background.'
+  jobs:
+    kontext-angles: 33843
+- key: r11-coyote-stump-masked-2
+  entity: coyote
+  title: 'The coyote: right-hand stump, masked edit (seed 2)'
+  size: 832x1216
+  source_image_id: 242160
+  source_flip: true
+  mask_box:
+  - 0.27
+  - 0.545
+  - 0.41
+  - 0.64
+  prompt_prose: 'His right forearm ends at the wrist in a stump: no hand, no fingers, just a rounded stump wrapped
+    in a dirty, blood-stained cloth bandage, coming out of the green coat sleeve. Same inked western comic style,
+    plain white background.'
+  jobs:
+    kontext-angles: 33844
+- key: r11-coyote-stump-masked-3
+  entity: coyote
+  title: 'The coyote: right-hand stump, masked edit (seed 3)'
+  size: 832x1216
+  source_image_id: 242160
+  source_flip: true
+  mask_box:
+  - 0.27
+  - 0.545
+  - 0.41
+  - 0.64
+  prompt_prose: 'His right forearm ends at the wrist in a stump: no hand, no fingers, just a rounded stump wrapped
+    in a dirty, blood-stained cloth bandage, coming out of the green coat sleeve. Same inked western comic style,
+    plain white background.'
+  jobs:
+    kontext-angles: 33845
+- key: r11-coyote-fix-3qf-a
+  entity: coyote
+  title: 'The coyote: side fix fix-3qf-a'
+  size: 832x1216
+  source_image_id: 242162
+  mask_box:
+  - 0.42
+  - 0.15
+  - 0.6
+  - 0.25
+  prompt_prose: The black eyepatch covers his right eye, which is the eye on the LEFT side of the image. His other
+    eye, on the right side of the image, is open, green and uncovered. Keep everything else exactly the same, in
+    the same inked western comic style.
+  jobs:
+    kontext-angles: 33853
+- key: r11-coyote-fix-3qf-b
+  entity: coyote
+  title: 'The coyote: side fix fix-3qf-b'
+  size: 832x1216
+  source_image_id: 242174
+  mask_box:
+  - 0.4
+  - 0.13
+  - 0.6
+  - 0.24
+  prompt_prose: The black eyepatch covers his right eye, which is the eye on the LEFT side of the image. His other
+    eye, on the right side of the image, is open, green and uncovered. Keep everything else exactly the same, in
+    the same inked western comic style.
+  jobs:
+    kontext-angles: 33854
+- key: r11-coyote-fix-profile
+  entity: coyote
+  title: 'The coyote: side fix fix-profile'
+  size: 832x1216
+  source_image_id: 242173
+  mask_box:
+  - - 0.28
+    - 0.12
+    - 0.46
+    - 0.22
+  - - 0.36
+    - 0.42
+    - 0.56
+    - 0.62
+  prompt_prose: 'We see his left side. His visible eye is open, green and uncovered; only the eyepatch strap shows
+    across his head. There is no holster and no revolver on this hip: just the coat. Keep everything else exactly
+    the same, in the same inked western comic style.'
+  jobs:
+    kontext-angles: 33855
+- key: r11-coyote-fix-back
+  entity: coyote
+  title: 'The coyote: side fix fix-back'
+  size: 832x1216
+  source_image_id: 242168
+  mask_box:
+  - - 0.32
+    - 0.44
+    - 0.56
+    - 0.62
+  - - 0.62
+    - 0.42
+    - 0.84
+    - 0.62
+  prompt_prose: Move the holstered revolver to his right hip, which is the RIGHT side of the image, hanging from
+    his belt. The left side of the image shows only his coat and hand, with no holster. Keep everything else exactly
+    the same, in the same inked western comic style.
+  jobs:
+    kontext-angles: 33856

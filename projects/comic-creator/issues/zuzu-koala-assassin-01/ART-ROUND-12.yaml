@@ -1,0 +1,656 @@
+# Zuzu round 12 (comic-creator t-015). Silas, 2026-10-05, on the round-10 sheets: "There are some issues with mother
+# superior. Her snout is too long. Coyote vagrant is too clean cut. He's had a harder life. Outfit should reflect that.
+# He's very very poor. Every day is a fight to survive. Love the siblings. No notes"
+# Re-renders the coyote (destitute: tattered coat, rags, mangy, starving, falling-apart boots) and the abbess (short
+# blunt otter muzzle) at eight angles, 2 seeds each. The siblings stand as approved; Zuzu's portly edits continue.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+round: 12
+series: zuzu-koala-assassin
+project_slug: comic-creator
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author's settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    gritty, dark atmosphere, grindhouse, high contrast, heavy shadows, muted earthy palette, desaturated, weathered,
+    grimy
+  suffix: western, dusty, dramatic lighting, gritty
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: r12-coyote-front-1
+  entity: coyote
+  title: coyote front (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (feather duster:1.5), (plant:1.3), leaves, frond, foliage, bouquet,
+    broom, brush, plume, holding object, two eyes visible, tan coat, beige coat, trench coat, clean clothes, new
+    clothes, neat, tidy, well-fed, healthy, pristine, crisp, ironed, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons,
+    disney, pixar, cute, kawaii, glossy, bright saturated colors
+  prompt_prose: coyote alone, front.
+  prompt_tags: (fully clothed:1.3), front view, facing viewer, looking at viewer, anthro coyote, male, adult, destitute,
+    starving, gaunt, ribs showing, mangy patchy fur, scarred face, hungry desperate eyes, empty hands, (eyepatch
+    over his right eye:1.2), one eye, (tattered olive green long riding coat:1.3), (rags:1.3), shredded coat hem,
+    patched elbows, torn pockets, filthy stained undershirt full of holes, (ripped patched trousers:1.2), frayed
+    cuffs, (battered falling-apart boots:1.2), sole coming loose, twine laces, crushed holed cowboy hat, worn cracked
+    gun belt, old revolver holstered on his right hip, grime, dust, sweat stains, weathered, hard life, vagrant,
+    drifter, (solo:1.5), only one character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33857
+- key: r12-coyote-front-2
+  entity: coyote
+  title: coyote front (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (feather duster:1.5), (plant:1.3), leaves, frond, foliage, bouquet,
+    broom, brush, plume, holding object, two eyes visible, tan coat, beige coat, trench coat, clean clothes, new
+    clothes, neat, tidy, well-fed, healthy, pristine, crisp, ironed, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons,
+    disney, pixar, cute, kawaii, glossy, bright saturated colors
+  prompt_prose: coyote alone, front.
+  prompt_tags: (fully clothed:1.3), front view, facing viewer, looking at viewer, anthro coyote, male, adult, destitute,
+    starving, gaunt, ribs showing, mangy patchy fur, scarred face, hungry desperate eyes, empty hands, (eyepatch
+    over his right eye:1.2), one eye, (tattered olive green long riding coat:1.3), (rags:1.3), shredded coat hem,
+    patched elbows, torn pockets, filthy stained undershirt full of holes, (ripped patched trousers:1.2), frayed
+    cuffs, (battered falling-apart boots:1.2), sole coming loose, twine laces, crushed holed cowboy hat, worn cracked
+    gun belt, old revolver holstered on his right hip, grime, dust, sweat stains, weathered, hard life, vagrant,
+    drifter, (solo:1.5), only one character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33858
+- key: r12-coyote-front-three-quarter-left-1
+  entity: coyote
+  title: coyote front three quarter left (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (feather duster:1.5), (plant:1.3), leaves, frond, foliage, bouquet,
+    broom, brush, plume, holding object, two eyes visible, tan coat, beige coat, trench coat, clean clothes, new
+    clothes, neat, tidy, well-fed, healthy, pristine, crisp, ironed, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons,
+    disney, pixar, cute, kawaii, glossy, bright saturated colors
+  prompt_prose: coyote alone, front three quarter left.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the left, facing left, anthro coyote, male,
+    adult, destitute, starving, gaunt, ribs showing, mangy patchy fur, scarred face, hungry desperate eyes, empty
+    hands, (eyepatch over his right eye:1.2), one eye, (tattered olive green long riding coat:1.3), (rags:1.3),
+    shredded coat hem, patched elbows, torn pockets, filthy stained undershirt full of holes, (ripped patched trousers:1.2),
+    frayed cuffs, (battered falling-apart boots:1.2), sole coming loose, twine laces, crushed holed cowboy hat,
+    worn cracked gun belt, old revolver holstered on his right hip, grime, dust, sweat stains, weathered, hard life,
+    vagrant, drifter, (solo:1.5), only one character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33859
+- key: r12-coyote-front-three-quarter-left-2
+  entity: coyote
+  title: coyote front three quarter left (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (feather duster:1.5), (plant:1.3), leaves, frond, foliage, bouquet,
+    broom, brush, plume, holding object, two eyes visible, tan coat, beige coat, trench coat, clean clothes, new
+    clothes, neat, tidy, well-fed, healthy, pristine, crisp, ironed, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons,
+    disney, pixar, cute, kawaii, glossy, bright saturated colors
+  prompt_prose: coyote alone, front three quarter left.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the left, facing left, anthro coyote, male,
+    adult, destitute, starving, gaunt, ribs showing, mangy patchy fur, scarred face, hungry desperate eyes, empty
+    hands, (eyepatch over his right eye:1.2), one eye, (tattered olive green long riding coat:1.3), (rags:1.3),
+    shredded coat hem, patched elbows, torn pockets, filthy stained undershirt full of holes, (ripped patched trousers:1.2),
+    frayed cuffs, (battered falling-apart boots:1.2), sole coming loose, twine laces, crushed holed cowboy hat,
+    worn cracked gun belt, old revolver holstered on his right hip, grime, dust, sweat stains, weathered, hard life,
+    vagrant, drifter, (solo:1.5), only one character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33860
+- key: r12-coyote-profile-left-1
+  entity: coyote
+  title: coyote profile left (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (feather duster:1.5), (plant:1.3), leaves, frond, foliage, bouquet,
+    broom, brush, plume, holding object, two eyes visible, tan coat, beige coat, trench coat, clean clothes, new
+    clothes, neat, tidy, well-fed, healthy, pristine, crisp, ironed, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons,
+    disney, pixar, cute, kawaii, glossy, bright saturated colors
+  prompt_prose: coyote alone, profile left.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing left, anthro coyote, male, adult, destitute, starving,
+    gaunt, ribs showing, mangy patchy fur, scarred face, hungry desperate eyes, empty hands, (eyepatch over his
+    right eye:1.2), one eye, (tattered olive green long riding coat:1.3), (rags:1.3), shredded coat hem, patched
+    elbows, torn pockets, filthy stained undershirt full of holes, (ripped patched trousers:1.2), frayed cuffs,
+    (battered falling-apart boots:1.2), sole coming loose, twine laces, crushed holed cowboy hat, worn cracked gun
+    belt, old revolver holstered on his right hip, grime, dust, sweat stains, weathered, hard life, vagrant, drifter,
+    (solo:1.5), only one character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33861
+- key: r12-coyote-profile-left-2
+  entity: coyote
+  title: coyote profile left (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (feather duster:1.5), (plant:1.3), leaves, frond, foliage, bouquet,
+    broom, brush, plume, holding object, two eyes visible, tan coat, beige coat, trench coat, clean clothes, new
+    clothes, neat, tidy, well-fed, healthy, pristine, crisp, ironed, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons,
+    disney, pixar, cute, kawaii, glossy, bright saturated colors
+  prompt_prose: coyote alone, profile left.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing left, anthro coyote, male, adult, destitute, starving,
+    gaunt, ribs showing, mangy patchy fur, scarred face, hungry desperate eyes, empty hands, (eyepatch over his
+    right eye:1.2), one eye, (tattered olive green long riding coat:1.3), (rags:1.3), shredded coat hem, patched
+    elbows, torn pockets, filthy stained undershirt full of holes, (ripped patched trousers:1.2), frayed cuffs,
+    (battered falling-apart boots:1.2), sole coming loose, twine laces, crushed holed cowboy hat, worn cracked gun
+    belt, old revolver holstered on his right hip, grime, dust, sweat stains, weathered, hard life, vagrant, drifter,
+    (solo:1.5), only one character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33862
+- key: r12-coyote-back-three-quarter-left-1
+  entity: coyote
+  title: coyote back three quarter left (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (feather duster:1.5), (plant:1.3), leaves, frond, foliage, bouquet,
+    broom, brush, plume, holding object, two eyes visible, tan coat, beige coat, trench coat, clean clothes, new
+    clothes, neat, tidy, well-fed, healthy, pristine, crisp, ironed, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons,
+    disney, pixar, cute, kawaii, glossy, bright saturated colors
+  prompt_prose: coyote alone, back three quarter left.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the left,
+    anthro coyote, male, adult, destitute, starving, gaunt, ribs showing, mangy patchy fur, scarred face, hungry
+    desperate eyes, empty hands, (eyepatch over his right eye:1.2), one eye, (tattered olive green long riding coat:1.3),
+    (rags:1.3), shredded coat hem, patched elbows, torn pockets, filthy stained undershirt full of holes, (ripped
+    patched trousers:1.2), frayed cuffs, (battered falling-apart boots:1.2), sole coming loose, twine laces, crushed
+    holed cowboy hat, worn cracked gun belt, old revolver holstered on his right hip, grime, dust, sweat stains,
+    weathered, hard life, vagrant, drifter, (solo:1.5), only one character, full body, standing, simple background,
+    white background
+  jobs:
+    arthemy-house: 33863
+- key: r12-coyote-back-three-quarter-left-2
+  entity: coyote
+  title: coyote back three quarter left (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (feather duster:1.5), (plant:1.3), leaves, frond, foliage, bouquet,
+    broom, brush, plume, holding object, two eyes visible, tan coat, beige coat, trench coat, clean clothes, new
+    clothes, neat, tidy, well-fed, healthy, pristine, crisp, ironed, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons,
+    disney, pixar, cute, kawaii, glossy, bright saturated colors
+  prompt_prose: coyote alone, back three quarter left.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the left,
+    anthro coyote, male, adult, destitute, starving, gaunt, ribs showing, mangy patchy fur, scarred face, hungry
+    desperate eyes, empty hands, (eyepatch over his right eye:1.2), one eye, (tattered olive green long riding coat:1.3),
+    (rags:1.3), shredded coat hem, patched elbows, torn pockets, filthy stained undershirt full of holes, (ripped
+    patched trousers:1.2), frayed cuffs, (battered falling-apart boots:1.2), sole coming loose, twine laces, crushed
+    holed cowboy hat, worn cracked gun belt, old revolver holstered on his right hip, grime, dust, sweat stains,
+    weathered, hard life, vagrant, drifter, (solo:1.5), only one character, full body, standing, simple background,
+    white background
+  jobs:
+    arthemy-house: 33864
+- key: r12-coyote-back-1
+  entity: coyote
+  title: coyote back (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (feather duster:1.5), (plant:1.3), leaves, frond, foliage, bouquet,
+    broom, brush, plume, holding object, two eyes visible, tan coat, beige coat, trench coat, clean clothes, new
+    clothes, neat, tidy, well-fed, healthy, pristine, crisp, ironed, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons,
+    disney, pixar, cute, kawaii, glossy, bright saturated colors
+  prompt_prose: coyote alone, back.
+  prompt_tags: (fully clothed:1.3), (from behind:1.4), (back view:1.3), facing away, back turned to viewer, anthro
+    coyote, male, adult, destitute, starving, gaunt, ribs showing, mangy patchy fur, scarred face, hungry desperate
+    eyes, empty hands, (eyepatch over his right eye:1.2), one eye, (tattered olive green long riding coat:1.3),
+    (rags:1.3), shredded coat hem, patched elbows, torn pockets, filthy stained undershirt full of holes, (ripped
+    patched trousers:1.2), frayed cuffs, (battered falling-apart boots:1.2), sole coming loose, twine laces, crushed
+    holed cowboy hat, worn cracked gun belt, old revolver holstered on his right hip, grime, dust, sweat stains,
+    weathered, hard life, vagrant, drifter, (solo:1.5), only one character, full body, standing, simple background,
+    white background
+  jobs:
+    arthemy-house: 33865
+- key: r12-coyote-back-2
+  entity: coyote
+  title: coyote back (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (feather duster:1.5), (plant:1.3), leaves, frond, foliage, bouquet,
+    broom, brush, plume, holding object, two eyes visible, tan coat, beige coat, trench coat, clean clothes, new
+    clothes, neat, tidy, well-fed, healthy, pristine, crisp, ironed, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons,
+    disney, pixar, cute, kawaii, glossy, bright saturated colors
+  prompt_prose: coyote alone, back.
+  prompt_tags: (fully clothed:1.3), (from behind:1.4), (back view:1.3), facing away, back turned to viewer, anthro
+    coyote, male, adult, destitute, starving, gaunt, ribs showing, mangy patchy fur, scarred face, hungry desperate
+    eyes, empty hands, (eyepatch over his right eye:1.2), one eye, (tattered olive green long riding coat:1.3),
+    (rags:1.3), shredded coat hem, patched elbows, torn pockets, filthy stained undershirt full of holes, (ripped
+    patched trousers:1.2), frayed cuffs, (battered falling-apart boots:1.2), sole coming loose, twine laces, crushed
+    holed cowboy hat, worn cracked gun belt, old revolver holstered on his right hip, grime, dust, sweat stains,
+    weathered, hard life, vagrant, drifter, (solo:1.5), only one character, full body, standing, simple background,
+    white background
+  jobs:
+    arthemy-house: 33866
+- key: r12-coyote-back-three-quarter-right-1
+  entity: coyote
+  title: coyote back three quarter right (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (feather duster:1.5), (plant:1.3), leaves, frond, foliage, bouquet,
+    broom, brush, plume, holding object, two eyes visible, tan coat, beige coat, trench coat, clean clothes, new
+    clothes, neat, tidy, well-fed, healthy, pristine, crisp, ironed, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons,
+    disney, pixar, cute, kawaii, glossy, bright saturated colors
+  prompt_prose: coyote alone, back three quarter right.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the right,
+    anthro coyote, male, adult, destitute, starving, gaunt, ribs showing, mangy patchy fur, scarred face, hungry
+    desperate eyes, empty hands, (eyepatch over his right eye:1.2), one eye, (tattered olive green long riding coat:1.3),
+    (rags:1.3), shredded coat hem, patched elbows, torn pockets, filthy stained undershirt full of holes, (ripped
+    patched trousers:1.2), frayed cuffs, (battered falling-apart boots:1.2), sole coming loose, twine laces, crushed
+    holed cowboy hat, worn cracked gun belt, old revolver holstered on his right hip, grime, dust, sweat stains,
+    weathered, hard life, vagrant, drifter, (solo:1.5), only one character, full body, standing, simple background,
+    white background
+  jobs:
+    arthemy-house: 33867
+- key: r12-coyote-back-three-quarter-right-2
+  entity: coyote
+  title: coyote back three quarter right (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (feather duster:1.5), (plant:1.3), leaves, frond, foliage, bouquet,
+    broom, brush, plume, holding object, two eyes visible, tan coat, beige coat, trench coat, clean clothes, new
+    clothes, neat, tidy, well-fed, healthy, pristine, crisp, ironed, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons,
+    disney, pixar, cute, kawaii, glossy, bright saturated colors
+  prompt_prose: coyote alone, back three quarter right.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the right,
+    anthro coyote, male, adult, destitute, starving, gaunt, ribs showing, mangy patchy fur, scarred face, hungry
+    desperate eyes, empty hands, (eyepatch over his right eye:1.2), one eye, (tattered olive green long riding coat:1.3),
+    (rags:1.3), shredded coat hem, patched elbows, torn pockets, filthy stained undershirt full of holes, (ripped
+    patched trousers:1.2), frayed cuffs, (battered falling-apart boots:1.2), sole coming loose, twine laces, crushed
+    holed cowboy hat, worn cracked gun belt, old revolver holstered on his right hip, grime, dust, sweat stains,
+    weathered, hard life, vagrant, drifter, (solo:1.5), only one character, full body, standing, simple background,
+    white background
+  jobs:
+    arthemy-house: 33868
+- key: r12-coyote-profile-right-1
+  entity: coyote
+  title: coyote profile right (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (feather duster:1.5), (plant:1.3), leaves, frond, foliage, bouquet,
+    broom, brush, plume, holding object, two eyes visible, tan coat, beige coat, trench coat, clean clothes, new
+    clothes, neat, tidy, well-fed, healthy, pristine, crisp, ironed, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons,
+    disney, pixar, cute, kawaii, glossy, bright saturated colors
+  prompt_prose: coyote alone, profile right.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing right, anthro coyote, male, adult, destitute, starving,
+    gaunt, ribs showing, mangy patchy fur, scarred face, hungry desperate eyes, empty hands, (eyepatch over his
+    right eye:1.2), one eye, (tattered olive green long riding coat:1.3), (rags:1.3), shredded coat hem, patched
+    elbows, torn pockets, filthy stained undershirt full of holes, (ripped patched trousers:1.2), frayed cuffs,
+    (battered falling-apart boots:1.2), sole coming loose, twine laces, crushed holed cowboy hat, worn cracked gun
+    belt, old revolver holstered on his right hip, grime, dust, sweat stains, weathered, hard life, vagrant, drifter,
+    (solo:1.5), only one character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33869
+- key: r12-coyote-profile-right-2
+  entity: coyote
+  title: coyote profile right (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (feather duster:1.5), (plant:1.3), leaves, frond, foliage, bouquet,
+    broom, brush, plume, holding object, two eyes visible, tan coat, beige coat, trench coat, clean clothes, new
+    clothes, neat, tidy, well-fed, healthy, pristine, crisp, ironed, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons,
+    disney, pixar, cute, kawaii, glossy, bright saturated colors
+  prompt_prose: coyote alone, profile right.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing right, anthro coyote, male, adult, destitute, starving,
+    gaunt, ribs showing, mangy patchy fur, scarred face, hungry desperate eyes, empty hands, (eyepatch over his
+    right eye:1.2), one eye, (tattered olive green long riding coat:1.3), (rags:1.3), shredded coat hem, patched
+    elbows, torn pockets, filthy stained undershirt full of holes, (ripped patched trousers:1.2), frayed cuffs,
+    (battered falling-apart boots:1.2), sole coming loose, twine laces, crushed holed cowboy hat, worn cracked gun
+    belt, old revolver holstered on his right hip, grime, dust, sweat stains, weathered, hard life, vagrant, drifter,
+    (solo:1.5), only one character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33870
+- key: r12-coyote-front-three-quarter-right-1
+  entity: coyote
+  title: coyote front three quarter right (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (feather duster:1.5), (plant:1.3), leaves, frond, foliage, bouquet,
+    broom, brush, plume, holding object, two eyes visible, tan coat, beige coat, trench coat, clean clothes, new
+    clothes, neat, tidy, well-fed, healthy, pristine, crisp, ironed, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons,
+    disney, pixar, cute, kawaii, glossy, bright saturated colors
+  prompt_prose: coyote alone, front three quarter right.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the right, facing right, anthro coyote, male,
+    adult, destitute, starving, gaunt, ribs showing, mangy patchy fur, scarred face, hungry desperate eyes, empty
+    hands, (eyepatch over his right eye:1.2), one eye, (tattered olive green long riding coat:1.3), (rags:1.3),
+    shredded coat hem, patched elbows, torn pockets, filthy stained undershirt full of holes, (ripped patched trousers:1.2),
+    frayed cuffs, (battered falling-apart boots:1.2), sole coming loose, twine laces, crushed holed cowboy hat,
+    worn cracked gun belt, old revolver holstered on his right hip, grime, dust, sweat stains, weathered, hard life,
+    vagrant, drifter, (solo:1.5), only one character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33871
+- key: r12-coyote-front-three-quarter-right-2
+  entity: coyote
+  title: coyote front three quarter right (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (feather duster:1.5), (plant:1.3), leaves, frond, foliage, bouquet,
+    broom, brush, plume, holding object, two eyes visible, tan coat, beige coat, trench coat, clean clothes, new
+    clothes, neat, tidy, well-fed, healthy, pristine, crisp, ironed, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons,
+    disney, pixar, cute, kawaii, glossy, bright saturated colors
+  prompt_prose: coyote alone, front three quarter right.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the right, facing right, anthro coyote, male,
+    adult, destitute, starving, gaunt, ribs showing, mangy patchy fur, scarred face, hungry desperate eyes, empty
+    hands, (eyepatch over his right eye:1.2), one eye, (tattered olive green long riding coat:1.3), (rags:1.3),
+    shredded coat hem, patched elbows, torn pockets, filthy stained undershirt full of holes, (ripped patched trousers:1.2),
+    frayed cuffs, (battered falling-apart boots:1.2), sole coming loose, twine laces, crushed holed cowboy hat,
+    worn cracked gun belt, old revolver holstered on his right hip, grime, dust, sweat stains, weathered, hard life,
+    vagrant, drifter, (solo:1.5), only one character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33872
+- key: r12-mother-superior-front-1
+  entity: otter-nuns
+  title: mother-superior front (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (small otter:1.4), feral otter, animal at her feet, pet, second
+    character, child, dagger, (feral:1.4), baby, offspring, mother and child, (long snout:1.4), (long muzzle:1.3),
+    pointed snout, weasel, ferret, fox face, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors
+  prompt_prose: mother-superior alone, front.
+  prompt_tags: (fully clothed:1.3), front view, facing viewer, looking at viewer, anthro otter, female, mature female,
+    abbess, elderly head nun, black habit, white wimple, long black robes, folded hands, thin smile, cold eyes,
+    whiskers, brown fur, (short blunt muzzle:1.4), (round flat otter face:1.3), small nose, broad head, (solo:1.5),
+    only one character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33873
+- key: r12-mother-superior-front-2
+  entity: otter-nuns
+  title: mother-superior front (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (small otter:1.4), feral otter, animal at her feet, pet, second
+    character, child, dagger, (feral:1.4), baby, offspring, mother and child, (long snout:1.4), (long muzzle:1.3),
+    pointed snout, weasel, ferret, fox face, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors
+  prompt_prose: mother-superior alone, front.
+  prompt_tags: (fully clothed:1.3), front view, facing viewer, looking at viewer, anthro otter, female, mature female,
+    abbess, elderly head nun, black habit, white wimple, long black robes, folded hands, thin smile, cold eyes,
+    whiskers, brown fur, (short blunt muzzle:1.4), (round flat otter face:1.3), small nose, broad head, (solo:1.5),
+    only one character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33874
+- key: r12-mother-superior-front-three-quarter-left-1
+  entity: otter-nuns
+  title: mother-superior front three quarter left (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (small otter:1.4), feral otter, animal at her feet, pet, second
+    character, child, dagger, (feral:1.4), baby, offspring, mother and child, (long snout:1.4), (long muzzle:1.3),
+    pointed snout, weasel, ferret, fox face, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors
+  prompt_prose: mother-superior alone, front three quarter left.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the left, facing left, anthro otter, female,
+    mature female, abbess, elderly head nun, black habit, white wimple, long black robes, folded hands, thin smile,
+    cold eyes, whiskers, brown fur, (short blunt muzzle:1.4), (round flat otter face:1.3), small nose, broad head,
+    (solo:1.5), only one character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33875
+- key: r12-mother-superior-front-three-quarter-left-2
+  entity: otter-nuns
+  title: mother-superior front three quarter left (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (small otter:1.4), feral otter, animal at her feet, pet, second
+    character, child, dagger, (feral:1.4), baby, offspring, mother and child, (long snout:1.4), (long muzzle:1.3),
+    pointed snout, weasel, ferret, fox face, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors
+  prompt_prose: mother-superior alone, front three quarter left.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the left, facing left, anthro otter, female,
+    mature female, abbess, elderly head nun, black habit, white wimple, long black robes, folded hands, thin smile,
+    cold eyes, whiskers, brown fur, (short blunt muzzle:1.4), (round flat otter face:1.3), small nose, broad head,
+    (solo:1.5), only one character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33876
+- key: r12-mother-superior-profile-left-1
+  entity: otter-nuns
+  title: mother-superior profile left (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (small otter:1.4), feral otter, animal at her feet, pet, second
+    character, child, dagger, (feral:1.4), baby, offspring, mother and child, (long snout:1.4), (long muzzle:1.3),
+    pointed snout, weasel, ferret, fox face, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors
+  prompt_prose: mother-superior alone, profile left.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing left, anthro otter, female, mature female, abbess,
+    elderly head nun, black habit, white wimple, long black robes, folded hands, thin smile, cold eyes, whiskers,
+    brown fur, (short blunt muzzle:1.4), (round flat otter face:1.3), small nose, broad head, (solo:1.5), only one
+    character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33877
+- key: r12-mother-superior-profile-left-2
+  entity: otter-nuns
+  title: mother-superior profile left (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (small otter:1.4), feral otter, animal at her feet, pet, second
+    character, child, dagger, (feral:1.4), baby, offspring, mother and child, (long snout:1.4), (long muzzle:1.3),
+    pointed snout, weasel, ferret, fox face, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors
+  prompt_prose: mother-superior alone, profile left.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing left, anthro otter, female, mature female, abbess,
+    elderly head nun, black habit, white wimple, long black robes, folded hands, thin smile, cold eyes, whiskers,
+    brown fur, (short blunt muzzle:1.4), (round flat otter face:1.3), small nose, broad head, (solo:1.5), only one
+    character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33878
+- key: r12-mother-superior-back-three-quarter-left-1
+  entity: otter-nuns
+  title: mother-superior back three quarter left (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (small otter:1.4), feral otter, animal at her feet, pet, second
+    character, child, dagger, (feral:1.4), baby, offspring, mother and child, (long snout:1.4), (long muzzle:1.3),
+    pointed snout, weasel, ferret, fox face, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors
+  prompt_prose: mother-superior alone, back three quarter left.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the left,
+    anthro otter, female, mature female, abbess, elderly head nun, black habit, white wimple, long black robes,
+    folded hands, thin smile, cold eyes, whiskers, brown fur, (short blunt muzzle:1.4), (round flat otter face:1.3),
+    small nose, broad head, (solo:1.5), only one character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33879
+- key: r12-mother-superior-back-three-quarter-left-2
+  entity: otter-nuns
+  title: mother-superior back three quarter left (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (small otter:1.4), feral otter, animal at her feet, pet, second
+    character, child, dagger, (feral:1.4), baby, offspring, mother and child, (long snout:1.4), (long muzzle:1.3),
+    pointed snout, weasel, ferret, fox face, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors
+  prompt_prose: mother-superior alone, back three quarter left.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the left,
+    anthro otter, female, mature female, abbess, elderly head nun, black habit, white wimple, long black robes,
+    folded hands, thin smile, cold eyes, whiskers, brown fur, (short blunt muzzle:1.4), (round flat otter face:1.3),
+    small nose, broad head, (solo:1.5), only one character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33880
+- key: r12-mother-superior-back-1
+  entity: otter-nuns
+  title: mother-superior back (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (small otter:1.4), feral otter, animal at her feet, pet, second
+    character, child, dagger, (feral:1.4), baby, offspring, mother and child, (long snout:1.4), (long muzzle:1.3),
+    pointed snout, weasel, ferret, fox face, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors
+  prompt_prose: mother-superior alone, back.
+  prompt_tags: (fully clothed:1.3), (from behind:1.4), (back view:1.3), facing away, back turned to viewer, anthro
+    otter, female, mature female, abbess, elderly head nun, black habit, white wimple, long black robes, folded
+    hands, thin smile, cold eyes, whiskers, brown fur, (short blunt muzzle:1.4), (round flat otter face:1.3), small
+    nose, broad head, (solo:1.5), only one character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33881
+- key: r12-mother-superior-back-2
+  entity: otter-nuns
+  title: mother-superior back (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (small otter:1.4), feral otter, animal at her feet, pet, second
+    character, child, dagger, (feral:1.4), baby, offspring, mother and child, (long snout:1.4), (long muzzle:1.3),
+    pointed snout, weasel, ferret, fox face, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors
+  prompt_prose: mother-superior alone, back.
+  prompt_tags: (fully clothed:1.3), (from behind:1.4), (back view:1.3), facing away, back turned to viewer, anthro
+    otter, female, mature female, abbess, elderly head nun, black habit, white wimple, long black robes, folded
+    hands, thin smile, cold eyes, whiskers, brown fur, (short blunt muzzle:1.4), (round flat otter face:1.3), small
+    nose, broad head, (solo:1.5), only one character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33882
+- key: r12-mother-superior-back-three-quarter-right-1
+  entity: otter-nuns
+  title: mother-superior back three quarter right (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (small otter:1.4), feral otter, animal at her feet, pet, second
+    character, child, dagger, (feral:1.4), baby, offspring, mother and child, (long snout:1.4), (long muzzle:1.3),
+    pointed snout, weasel, ferret, fox face, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors
+  prompt_prose: mother-superior alone, back three quarter right.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the right,
+    anthro otter, female, mature female, abbess, elderly head nun, black habit, white wimple, long black robes,
+    folded hands, thin smile, cold eyes, whiskers, brown fur, (short blunt muzzle:1.4), (round flat otter face:1.3),
+    small nose, broad head, (solo:1.5), only one character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33883
+- key: r12-mother-superior-back-three-quarter-right-2
+  entity: otter-nuns
+  title: mother-superior back three quarter right (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (small otter:1.4), feral otter, animal at her feet, pet, second
+    character, child, dagger, (feral:1.4), baby, offspring, mother and child, (long snout:1.4), (long muzzle:1.3),
+    pointed snout, weasel, ferret, fox face, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors
+  prompt_prose: mother-superior alone, back three quarter right.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the right,
+    anthro otter, female, mature female, abbess, elderly head nun, black habit, white wimple, long black robes,
+    folded hands, thin smile, cold eyes, whiskers, brown fur, (short blunt muzzle:1.4), (round flat otter face:1.3),
+    small nose, broad head, (solo:1.5), only one character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33884
+- key: r12-mother-superior-profile-right-1
+  entity: otter-nuns
+  title: mother-superior profile right (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (small otter:1.4), feral otter, animal at her feet, pet, second
+    character, child, dagger, (feral:1.4), baby, offspring, mother and child, (long snout:1.4), (long muzzle:1.3),
+    pointed snout, weasel, ferret, fox face, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors
+  prompt_prose: mother-superior alone, profile right.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing right, anthro otter, female, mature female, abbess,
+    elderly head nun, black habit, white wimple, long black robes, folded hands, thin smile, cold eyes, whiskers,
+    brown fur, (short blunt muzzle:1.4), (round flat otter face:1.3), small nose, broad head, (solo:1.5), only one
+    character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33885
+- key: r12-mother-superior-profile-right-2
+  entity: otter-nuns
+  title: mother-superior profile right (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (small otter:1.4), feral otter, animal at her feet, pet, second
+    character, child, dagger, (feral:1.4), baby, offspring, mother and child, (long snout:1.4), (long muzzle:1.3),
+    pointed snout, weasel, ferret, fox face, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors
+  prompt_prose: mother-superior alone, profile right.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing right, anthro otter, female, mature female, abbess,
+    elderly head nun, black habit, white wimple, long black robes, folded hands, thin smile, cold eyes, whiskers,
+    brown fur, (short blunt muzzle:1.4), (round flat otter face:1.3), small nose, broad head, (solo:1.5), only one
+    character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33886
+- key: r12-mother-superior-front-three-quarter-right-1
+  entity: otter-nuns
+  title: mother-superior front three quarter right (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (small otter:1.4), feral otter, animal at her feet, pet, second
+    character, child, dagger, (feral:1.4), baby, offspring, mother and child, (long snout:1.4), (long muzzle:1.3),
+    pointed snout, weasel, ferret, fox face, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors
+  prompt_prose: mother-superior alone, front three quarter right.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the right, facing right, anthro otter, female,
+    mature female, abbess, elderly head nun, black habit, white wimple, long black robes, folded hands, thin smile,
+    cold eyes, whiskers, brown fur, (short blunt muzzle:1.4), (round flat otter face:1.3), small nose, broad head,
+    (solo:1.5), only one character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33887
+- key: r12-mother-superior-front-three-quarter-right-2
+  entity: otter-nuns
+  title: mother-superior front three quarter right (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, (small otter:1.4), feral otter, animal at her feet, pet, second
+    character, child, dagger, (feral:1.4), baby, offspring, mother and child, (long snout:1.4), (long muzzle:1.3),
+    pointed snout, weasel, ferret, fox face, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons, disney, pixar,
+    cute, kawaii, glossy, bright saturated colors
+  prompt_prose: mother-superior alone, front three quarter right.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the right, facing right, anthro otter, female,
+    mature female, abbess, elderly head nun, black habit, white wimple, long black robes, folded hands, thin smile,
+    cold eyes, whiskers, brown fur, (short blunt muzzle:1.4), (round flat otter face:1.3), small nose, broad head,
+    (solo:1.5), only one character, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33888
