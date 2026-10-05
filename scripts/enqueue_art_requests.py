@@ -146,7 +146,11 @@ def fetch_source_image(image_id):
     if status != 200 or not path:
         raise RuntimeError(f"ArtImage {image_id}: HTTP {status}, no imagePath")
     url = path if path.startswith("http") else core.KR_BASE_URL.rstrip("/") + path
-    with urllib.request.urlopen(url, timeout=60) as response:
+    # Private and mature files need an authorized viewer (kind_robots#3235); without the token they 404.
+    request = urllib.request.Request(url)
+    if core.KR_API_TOKEN:
+        request.add_header("Authorization", f"Bearer {core.KR_API_TOKEN}")
+    with urllib.request.urlopen(request, timeout=60) as response:
         raw = response.read()
         mime = response.headers.get_content_type() or "image/png"
     return f"data:{mime};base64," + base64.b64encode(raw).decode()

@@ -270,3 +270,34 @@ def test_mask_box_accepts_several_boxes():
     assert mask.getpixel((2, 10)) == (255, 255, 255)
     assert mask.getpixel((20, 10)) == (0, 0, 0)
     assert mask.getpixel((38, 10)) == (255, 255, 255)
+
+
+def test_source_image_fetch_sends_the_token(monkeypatch):
+    # Private files need an authorized viewer (kind_robots#3235); an anonymous fetch 404s.
+    monkeypatch.setattr(enq.core, "KR_API_TOKEN", "tok")
+    monkeypatch.setattr(
+        enq.core, "http_json", lambda *a, **k: (200, {"data": {"imagePath": "/images/generated/a.webp"}})
+    )
+    seen = {}
+
+    class Response:
+        headers = type("H", (), {"get_content_type": staticmethod(lambda: "image/webp")})()
+
+        def read(self):
+            return b"img"
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+    def fake_urlopen(request, timeout=None):
+        seen["url"] = request.full_url
+        seen["auth"] = request.get_header("Authorization")
+        return Response()
+
+    monkeypatch.setattr("urllib.request.urlopen", fake_urlopen)
+    assert enq.fetch_source_image(1) == "data:image/webp;base64,aW1n"
+    assert seen["url"].endswith("/images/generated/a.webp")
+    assert seen["auth"] == "Bearer tok"

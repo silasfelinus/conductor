@@ -310,3 +310,25 @@ tags (ART-ROUND-13.yaml, ArtJobs 34006–34017).
 
 "(sea otter:1.3)" also drew real sea otters and water on 242345, 242348, 242350 and 242351. VIDEO-GUARDRAILS.md now
 warns about it.
+
+## Silas's notes on sheets 13–15 (2026-10-05)
+
+*"a is preferred, but the right profile pic is better than the left. he also looks less wide from the rear. i think
+subtle is better. We've gone a bit too far in the portly territory. And the abbess still looks too weaselly. she
+should have a much flatter face"*
+
+*"vagrant a looks great, but there are weird skeleton rib appearances that need to be removed. he's sick and poor,
+not dead"*
+
+- **Zuzu:** a subtle belly. A7 (242193) is the build.
+  - Profile left is A7 unmirrored.
+  - The back views keep round 10.
+  - Front, 3/4 front left and 3/4 front right get a subtle Kontext edit from the round-10 originals
+    (r17-zuzu-subtle-*, ArtJobs 34059–34064). The originals also stay as candidates.
+- **The coyote: row A** (the round-12 picks). Kontext covers the skeletal ribs on 242207 and 242218
+  (r13-coyote-ribs-*, ArtJobs 34065–34068). The masked stump and the side fixes come after.
+- **The abbess: a much flatter face.** ART-ROUND-14.yaml (ArtJobs 34051–34058) runs two tag variants, front and
+  profile: (flat face:1.2) with (very short snout:1.3), and (flat face:1.4) with (round face:1.3). The negatives
+  rule out weasel, ferret, mink and stoat.
+- **Tooling:** kind_robots#3235 made private image files require an authorized viewer, so
+  `enqueue_art_requests.py` now sends the token when it fetches a Kontext source.
