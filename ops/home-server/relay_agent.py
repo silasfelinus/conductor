@@ -1582,6 +1582,12 @@ def upload_result(job, media):
         "designer": f"relay:{AGENT_ID}",
         "userId": KR_RELAY_USER_ID,
     }
+    # Stage the row with the job's own visibility. /complete re-applies the
+    # save block, but a staged row whose /complete never lands (cancel, stale
+    # reclaim, 409) used to stay public and non-mature in the gallery.
+    save = payload.get("save") or {}
+    body["isMature"] = save.get("isMature") is True
+    body["isPublic"] = save.get("isPublic") is True
     if media.get("is_audio"):
         # Songs are private from the moment the row exists, not only after
         # /complete applies the job's save block.
