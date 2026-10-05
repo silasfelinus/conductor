@@ -116,3 +116,25 @@ Every Stage-A render was read for orientation, the sword rig and clothing; nothi
   per character, before full angle sets. Zuzu's pending round-8 Kontext jobs (33688–33697) were cancelled,
   since his proportions change.
 
+### Round 9 look test results (2026-10-05)
+
+The best of each character, front / profile / back, sent to Silas for a yes on the look:
+
+| Character | Front | Profile | Back |
+|---|---|---|---|
+| Zuzu | 242083 | 242103 (Kontext: extra sword removed) | 242102 mirrored (Kontext: katana moved across the back) |
+| The sister | 242060 | 242061 | 242064 |
+| The toddler | 242065 | 242068 | 242069 |
+| The coyote | 242090 | 242092 | 242093 |
+| The mother superior | 242096 | 242098 | 242100 |
+
+What fixed the stubborn problems:
+- **Prompt words leak as objects.** "Duster coat" put a duster (or a frond) in the coyote's hand; it is a
+  "trench coat / long riding coat" now. "Mother superior" added a small otter beside her; she is an "abbess,
+  elderly head nun" now. Both had resisted heavy negatives.
+- **"Squat" made Zuzu crouch.** "Chubby, standing upright" with stubby legs gives the short koala build.
+- **Arthemy will not strap the katana across his back in back views.** A Kontext single-image edit
+  ("move the sword across his back") does it in one pass; Kontext is reliable at moving objects, not at
+  turning figures around.
+- **Still open:** the coyote's coat drifted tan; the full set pins olive green.
+
