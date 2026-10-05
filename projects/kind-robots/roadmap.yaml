@@ -2136,34 +2136,38 @@ tasks:
 - id: t-128
   milestone: m6
   title: 'Restore dashboard tab descriptions at tablet widths'
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
-  owner: worker
   passes: 0
-  updated: '2026-10-05T09:58:00Z'
+  updated: '2026-10-05T10:04:00Z'
   note: |-
     Silas, 2026-10-05: the dashboard navigation tab descriptions have disappeared. The supplied iPad screenshot shows the Home > Dashboard tab flyout rendering labels such as Achievements, Themes, Account, Servers, and Support without their secondary descriptions.
 
     Regression traced to kind_robots PR #3073 / commit 69224c46, which added `sm:hidden xl:block` to shared ChannelTabList summary rows and then pinned that tablet-only hiding in verifyNavigationConsolidation.ts. Restore the summary/description line at tablet widths for normal tabs and nested subtabs while preserving the compact menu geometry.
 
     Restored ChannelTabList secondary descriptions at tablet widths for top-level tabs and nested subtabs while preserving the compact tablet dropdown geometry from PR #3073. Updated the navigation consolidation verifier to require both description rows to stay visible. Implementation branch worker/kind-robots-t-128-tab-descriptions-v2 is ready for PR CI.
+
+    Merged silasfelinus/kind_robots#3224 after all 30 PR workflows completed successfully. Dashboard tab summaries are visible again at tablet widths for both top-level tabs and nested subtabs, while the compact tablet dropdown geometry remains unchanged.
   claimed_by: 20261005T095500Z-kind-robots-t128-tab-descriptions-c7f2
   claimed_at: '2026-10-05T09:55:00Z'
+
 
 - id: t-129
   milestone: m6
   title: 'Add adjustable ArtJob queue priority controls'
-  status: claimed
+  status: review
   gate_human: false
   stakes: reversible
   owner: worker
   passes: 0
-  updated: '2026-10-05T10:00:00Z'
+  updated: '2026-10-05T10:10:00Z'
   claimed_by: 2026-10-05T100000Z-kind-robots-t129-priority-7f3c
   claimed_at: '2026-10-05T10:00:00Z'
-  note: >-
+  note: |-
     Silas-directed 2026-10-05: ArtJob queue cards should allow actual priority adjustment. The current single toggle labels priority 100 as "Normal priority" and does not provide direct control over the queue value.
+
+    Replaced the ArtJob queue card's binary priority toggle with a bounded numeric priority editor using the existing -1000..1000 queue contract and store action. Added a source-level regression contract. Implementation branch: worker/kind-robots-t129-artjob-priority-20261005T100000Z.
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
