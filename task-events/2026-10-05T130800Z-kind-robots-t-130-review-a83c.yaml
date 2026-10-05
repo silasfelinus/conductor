@@ -1,9 +1,0 @@
-version: 1
-project: kind-robots
-task: t-130
-operation: review
-owner: worker
-session: 20261005T130300Z-kind-robots-t130-artjob-multilora-a83c
-updated: '2026-10-05T13:08:00Z'
-note: >-
-  Root cause confirmed in server/utils/artJobResourceRefresh.ts: the shared edit/re-enqueue Resource refresh path still rejected any ArtJob with more than one LoRA Resource even though Comfy workflow chaining supports stacks. The implementation branch worker/kind-robots-t130-artjob-multilora-20261005T130300Z refreshes every stacked LoRA path in preserved Resource order using krLoraIndex, keeps strengths/base LoRAs intact, and adds a three-LoRA regression contract.

@@ -2174,16 +2174,18 @@ tasks:
 - id: t-130
   milestone: m6
   title: 'Fix ArtJob edit/re-enqueue submission for jobs with multiple LoRAs'
-  status: claimed
+  status: review
   gate_human: false
   stakes: reversible
   owner: worker
   passes: 0
-  updated: '2026-10-05T13:03:00Z'
+  updated: '2026-10-05T13:08:00Z'
   claimed_by: 20261005T130300Z-kind-robots-t130-artjob-multilora-a83c
   claimed_at: '2026-10-05T13:03:00Z'
   note: |-
     Silas-directed 2026-10-05: editing and re-enqueueing ArtJobs fails to submit when the job has multiple LoRAs, even though multi-LoRA generation is supported. Trace the editor/store/server retry contract, preserve all selected LoRAs, and add regression coverage for the multi-LoRA case.
+
+    Root cause confirmed in server/utils/artJobResourceRefresh.ts: the shared edit/re-enqueue Resource refresh path still rejected any ArtJob with more than one LoRA Resource even though Comfy workflow chaining supports stacks. The implementation branch worker/kind-robots-t130-artjob-multilora-20261005T130300Z refreshes every stacked LoRA path in preserved Resource order using krLoraIndex, keeps strengths/base LoRAs intact, and adds a three-LoRA regression contract.
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
