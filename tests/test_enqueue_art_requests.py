@@ -162,3 +162,46 @@ def test_submit_fetches_each_source_image_once(tmp_path):
     assert fetched == [7]
     assert all(b["sourceImageBase64"] == "data:image/webp;base64,BBBB" for b in sent)
     assert yaml.safe_load(path.read_text())["subjects"][1]["jobs"]["angles"] == 102
+
+
+def test_plain_source_passes_through_without_pil():
+    subject = {"source_image_id": 7}
+    assert enq.compose_source(subject, lambda image_id: f"data:image/png;base64,{image_id}") == "data:image/png;base64,7"
+
+
+def _png(color, size):
+    import base64
+    import io
+
+    from PIL import Image
+
+    buffer = io.BytesIO()
+    Image.new("RGB", size, color).save(buffer, "PNG")
+    return "data:image/png;base64," + base64.b64encode(buffer.getvalue()).decode()
+
+
+def test_source_crop_and_reference_stitch_geometry():
+    pytest = __import__("pytest")
+    pytest.importorskip("PIL")
+    images = {1: _png("red", (300, 200)), 2: _png("blue", (100, 400))}
+    fetched = []
+
+    def fetch(image_id):
+        fetched.append(image_id)
+        return images[image_id]
+
+    subject = {"source_image_id": 1, "source_crop": [0, 0, 1 / 3, 1], "reference_image_id": 2}
+    out = enq._decode_data_url(enq.compose_source(subject, fetch))
+    # Source cropped to its left third (100x200); reference 100x400 scaled to height 200 (50 wide), on the left.
+    assert out.size == (150, 200)
+    assert out.getpixel((10, 100)) == (0, 0, 255)
+    assert out.getpixel((140, 100)) == (255, 0, 0)
+    assert sorted(fetched) == [1, 2]
+
+
+def test_bad_crop_is_refused():
+    pytest = __import__("pytest")
+    pytest.importorskip("PIL")
+    subject = {"source_image_id": 1, "source_crop": [0.6, 0, 0.4, 1]}
+    with pytest.raises(ValueError):
+        enq.compose_source(subject, lambda image_id: _png("red", (10, 10)))

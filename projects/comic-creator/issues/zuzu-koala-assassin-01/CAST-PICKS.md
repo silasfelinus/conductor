@@ -68,3 +68,19 @@ in the tests fail to show the sword."*
 - **Next:** the front-half keepers plus the two restyled backs are the starting set for Zuzu's character
   LoRA (t-016), which is what fixes costume drift in the back views. The same recipe (Kontext front half,
   Arthemy back plus restyle) applies to the sister, toddler, coyote and nuns.
+
+## The sword rig, and round 8
+
+Silas, 2026-10-05, on the round-7 sheet: *"i'm not happy with them, given the sword problem, the angle is often
+wrong and almost always consistently on his front when we have back views. Do again"*, and *"yes on the other
+character sheets"*.
+
+- **Canon:** the sheathed katana is strapped diagonally across his back, over the poncho, with the hilt above his RIGHT shoulder and the scabbard tip at his LEFT hip. From the front, only the hilt (over the right shoulder) and the scabbard tip (below the poncho at the left hip) show. From behind, the whole scabbard runs from upper right to lower left across the poncho.
+- **Silas, clarifying:** *"when we have a back views, we should see the katana, but on many of those, the katana is still hidden, as if it's draped on his front"*. So the screen is strict: any back or 3/4-back view where the katana is not plainly visible across his back is rejected, however good the rest of it is.
+- **Round 8, Stage A** (ART-ROUND-8.yaml): Arthemy renders, one figure per image, eight angles each (front,
+  3/4 front left/right, profile left/right, 3/4 back left/right, back). Zuzu gets 3 seeds per angle; the
+  sister, toddler, coyote and mother superior get 2 each. 88 private jobs.
+- **Round 8, Stage B** (ANGLES-*.yaml): Kontext restyles the best Stage-A render per angle, with the pick
+  stitched to its left as the reference. This replaces round 7's Kontext rotations, which could not turn a
+  figure around.
+

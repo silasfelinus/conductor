@@ -17,7 +17,10 @@ projects/comic-creator/issues/zuzu-koala-assassin-01/ART-ROUND-3.yaml.
 A subject may carry ``source_image_id`` (an ArtImage id). Kontext lanes need one:
 the image is fetched and sent as ``sourceImageBase64``, so an approved design can be
 re-posed (the 8-angle renders, comic-creator t-015). Kontext lanes may set ``steps``
-and ``guidance``.
+and ``guidance``. ``source_crop: [l, t, r, b]`` (fractions) cuts one figure out of a
+turnaround sheet, and ``reference_image_id`` (with optional ``reference_crop``) is
+stitched to the LEFT of the source at the same height, so Kontext can dress the right
+figure like the left one (the ImageStitch trick of Kind Robots' kontext/kombine route).
 
 Usage:
     python scripts/enqueue_art_requests.py LEDGER            # dry run, print requests
@@ -146,21 +149,80 @@ def fetch_source_image(image_id):
     return f"data:{mime};base64," + base64.b64encode(raw).decode()
 
 
+def _decode_data_url(data_url):
+    import base64
+    import io
+
+    from PIL import Image
+
+    raw = base64.b64decode(data_url.split(",", 1)[1])
+    return Image.open(io.BytesIO(raw)).convert("RGB")
+
+
+def _crop(image, box):
+    """Crop by fractions [left, top, right, bottom] of the image size."""
+    if not box:
+        return image
+    left, top, right, bottom = (float(v) for v in box)
+    if not (0 <= left < right <= 1 and 0 <= top < bottom <= 1):
+        raise ValueError(f"crop {box} must be fractions with left < right and top < bottom")
+    w, h = image.size
+    return image.crop((round(left * w), round(top * h), round(right * w), round(bottom * h)))
+
+
+def stitch_images(reference, source):
+    """Reference on the left, source on the right, both scaled to the source's height."""
+    from PIL import Image
+
+    height = source.height
+    width = round(reference.width * height / reference.height)
+    reference = reference.resize((width, height), Image.LANCZOS)
+    canvas = Image.new("RGB", (width + source.width, height), "white")
+    canvas.paste(reference, (0, 0))
+    canvas.paste(source, (width, 0))
+    return canvas
+
+
+def compose_source(subject, fetch):
+    """The sourceImageBase64 for one subject: its source image, cropped and stitched as asked.
+
+    ``fetch(image_id)`` returns a data URL. A plain source passes through untouched, so
+    PIL is only needed when a subject crops or stitches.
+    """
+    source = fetch(subject["source_image_id"])
+    crop, reference_id = subject.get("source_crop"), subject.get("reference_image_id")
+    if not crop and not reference_id:
+        return source
+    import base64
+    import io
+
+    image = _crop(_decode_data_url(source), crop)
+    if reference_id:
+        reference = _crop(_decode_data_url(fetch(reference_id)), subject.get("reference_crop"))
+        image = stitch_images(reference, image)
+    buffer = io.BytesIO()
+    image.save(buffer, "PNG")
+    return "data:image/png;base64," + base64.b64encode(buffer.getvalue()).decode()
+
+
 def submit(path, header, ledger, cells, post=None, fetch_source=None):
     """POST every cell that has no job id yet; write the id back after each one."""
     post = post or (lambda body: core.http_json("POST", f"{core.KR_BASE_URL}/api/art/enqueue", body))
     fetch_source = fetch_source or fetch_source_image
-    sources = {}
+    fetched = {}
+
+    def fetch(image_id):
+        if image_id not in fetched:
+            fetched[image_id] = fetch_source(image_id)
+        return fetched[image_id]
+
     submitted, failures = 0, 0
     for subject, lane in cells:
         if job_id_of(subject, lane["key"]):
             continue
         source = None
         if lane["engine"] == "kontext" and subject.get("source_image_id"):
-            image_id = subject["source_image_id"]
-            if image_id not in sources:
-                sources[image_id] = fetch_source(image_id)
-            source = sources[image_id]
+            source = compose_source(subject, fetch)
         status, resp = post(build_request(ledger, lane, subject, source))
         job_id = ((resp or {}).get("data") or {}).get("jobId") if isinstance(resp, dict) else None
         if status in (200, 201) and job_id:
@@ -221,7 +283,9 @@ def main(argv=None):
             source = "data:image/png;base64," if lane["engine"] == "kontext" else None
             body = build_request(ledger, lane, subject, source)
             if source:
-                print(f"    source: ArtImage {subject.get('source_image_id')}")
+                extra = f", reference ArtImage {subject['reference_image_id']}" if subject.get("reference_image_id") else ""
+                crop = f", crop {subject['source_crop']}" if subject.get("source_crop") else ""
+                print(f"    source: ArtImage {subject.get('source_image_id')}{crop}{extra}")
             print(f"  {subject['key']} [{lane['key']}] {body['width']}x{body['height']} \"{body['promptString'][:70]}\"")
         return 0
 

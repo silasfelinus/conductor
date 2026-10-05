@@ -24,6 +24,7 @@ wherever it disagrees with the v0 SERIES-BIBLE.md or ISSUE-01-SCRIPT.md.
 - **Zuzu is always serious:** Clint Eastwood stillness, never a smiling sensei.
 - **Zuzu's costume (2026-10-05):** a dusty poncho, the Eastwood callback, and a kasa whose wide brim shades his
   eyes, over a dark tunic, brown trousers and an orange sash. Tags: `poncho, kasa, sandogasa, brim shading the eyes`.
+- **Zuzu's sword rig (2026-10-05, after round 7):** the sheathed katana is strapped diagonally across his back, over the poncho, with the hilt above his RIGHT shoulder and the scabbard tip at his LEFT hip. From the front, only the hilt (over the right shoulder) and the scabbard tip (below the poncho at the left hip) show. From behind, the whole scabbard runs from upper right to lower left across the poncho.
   Negate `straw boater, cowboy hat, cloak, cape`.
 - **Zuzu is koala-sized, or a little bigger:** Silas, 2026-10-04: *"zuzu should be koala sized, or a little bigger. if he was an actor doing mocap, it would be danny devito."*
   Short, stocky, barrel-chested, short legs. In shared frames he is the shortest adult, and the sister is taller

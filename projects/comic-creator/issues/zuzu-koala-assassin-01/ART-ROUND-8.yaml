@@ -1,0 +1,1398 @@
+# Zuzu round 8, Stage A (comic-creator t-015). Silas, 2026-10-05, on round 7: "i'm not happy with them,
+# given the sword problem, the angle is often wrong and almost always consistently on his front when we have
+# back views. Do again" and "yes on the other character sheets".
+# Stage A gets the geometry right: one figure per image, eight angles, true back views, rendered in Arthemy.
+# Zuzu carries the canonical sword rig (CAST-PICKS.md): katana diagonally across the back, hilt above the
+# right shoulder, scabbard tip at the left hip. Stage B (ANGLES-*.yaml) restyles the best render per angle
+# with Kontext, the pick stitched beside it as the reference.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+round: 8
+series: zuzu-koala-assassin
+project_slug: comic-creator
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author's settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style)
+  suffix: western, dusty, painterly, dramatic lighting, gritty
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: r8-zuzu-front-1
+  entity: zuzu
+  title: zuzu front (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, front.
+  prompt_tags: (fully clothed:1.3), front view, facing viewer, looking at viewer, (sheathed katana on back:1.3),
+    katana hilt above his right shoulder, scabbard tip showing at his left hip, (terracotta brown poncho:1.3), (orange
+    zigzag pattern:1.2), patterned trim on the poncho hem, orange scarf, orange sash, dark blue tunic, baggy brown
+    trousers, wrapped shins, (wide-brimmed woven straw hat:1.2), anthro, koala, male, adult, (short:1.2), (stocky:1.2),
+    chubby, barrel chest, short legs, small stature, grey fur, round fluffy ears, notched ear, ear scar, broad black
+    nose, serious, squinting, frown, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33565
+- key: r8-zuzu-front-2
+  entity: zuzu
+  title: zuzu front (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, front.
+  prompt_tags: (fully clothed:1.3), front view, facing viewer, looking at viewer, (sheathed katana on back:1.3),
+    katana hilt above his right shoulder, scabbard tip showing at his left hip, (terracotta brown poncho:1.3), (orange
+    zigzag pattern:1.2), patterned trim on the poncho hem, orange scarf, orange sash, dark blue tunic, baggy brown
+    trousers, wrapped shins, (wide-brimmed woven straw hat:1.2), anthro, koala, male, adult, (short:1.2), (stocky:1.2),
+    chubby, barrel chest, short legs, small stature, grey fur, round fluffy ears, notched ear, ear scar, broad black
+    nose, serious, squinting, frown, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33566
+- key: r8-zuzu-front-3
+  entity: zuzu
+  title: zuzu front (seed 3)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, front.
+  prompt_tags: (fully clothed:1.3), front view, facing viewer, looking at viewer, (sheathed katana on back:1.3),
+    katana hilt above his right shoulder, scabbard tip showing at his left hip, (terracotta brown poncho:1.3), (orange
+    zigzag pattern:1.2), patterned trim on the poncho hem, orange scarf, orange sash, dark blue tunic, baggy brown
+    trousers, wrapped shins, (wide-brimmed woven straw hat:1.2), anthro, koala, male, adult, (short:1.2), (stocky:1.2),
+    chubby, barrel chest, short legs, small stature, grey fur, round fluffy ears, notched ear, ear scar, broad black
+    nose, serious, squinting, frown, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33567
+- key: r8-zuzu-front-three-quarter-left-1
+  entity: zuzu
+  title: zuzu front three quarter left (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, front three quarter left.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the left, facing left, (sheathed katana on
+    back:1.3), katana hilt above his right shoulder, scabbard tip showing at his left hip, (terracotta brown poncho:1.3),
+    (orange zigzag pattern:1.2), patterned trim on the poncho hem, orange scarf, orange sash, dark blue tunic, baggy
+    brown trousers, wrapped shins, (wide-brimmed woven straw hat:1.2), anthro, koala, male, adult, (short:1.2),
+    (stocky:1.2), chubby, barrel chest, short legs, small stature, grey fur, round fluffy ears, notched ear, ear
+    scar, broad black nose, serious, squinting, frown, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33568
+- key: r8-zuzu-front-three-quarter-left-2
+  entity: zuzu
+  title: zuzu front three quarter left (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, front three quarter left.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the left, facing left, (sheathed katana on
+    back:1.3), katana hilt above his right shoulder, scabbard tip showing at his left hip, (terracotta brown poncho:1.3),
+    (orange zigzag pattern:1.2), patterned trim on the poncho hem, orange scarf, orange sash, dark blue tunic, baggy
+    brown trousers, wrapped shins, (wide-brimmed woven straw hat:1.2), anthro, koala, male, adult, (short:1.2),
+    (stocky:1.2), chubby, barrel chest, short legs, small stature, grey fur, round fluffy ears, notched ear, ear
+    scar, broad black nose, serious, squinting, frown, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33569
+- key: r8-zuzu-front-three-quarter-left-3
+  entity: zuzu
+  title: zuzu front three quarter left (seed 3)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, front three quarter left.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the left, facing left, (sheathed katana on
+    back:1.3), katana hilt above his right shoulder, scabbard tip showing at his left hip, (terracotta brown poncho:1.3),
+    (orange zigzag pattern:1.2), patterned trim on the poncho hem, orange scarf, orange sash, dark blue tunic, baggy
+    brown trousers, wrapped shins, (wide-brimmed woven straw hat:1.2), anthro, koala, male, adult, (short:1.2),
+    (stocky:1.2), chubby, barrel chest, short legs, small stature, grey fur, round fluffy ears, notched ear, ear
+    scar, broad black nose, serious, squinting, frown, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33570
+- key: r8-zuzu-profile-left-1
+  entity: zuzu
+  title: zuzu profile left (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, profile left.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing left, (sheathed katana strapped on his back:1.3),
+    hilt above the shoulder, (terracotta brown poncho:1.3), (orange zigzag pattern:1.2), patterned trim on the poncho
+    hem, orange scarf, orange sash, dark blue tunic, baggy brown trousers, wrapped shins, (wide-brimmed woven straw
+    hat:1.2), anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs, small stature,
+    grey fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting, frown, solo, full
+    body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33571
+- key: r8-zuzu-profile-left-2
+  entity: zuzu
+  title: zuzu profile left (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, profile left.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing left, (sheathed katana strapped on his back:1.3),
+    hilt above the shoulder, (terracotta brown poncho:1.3), (orange zigzag pattern:1.2), patterned trim on the poncho
+    hem, orange scarf, orange sash, dark blue tunic, baggy brown trousers, wrapped shins, (wide-brimmed woven straw
+    hat:1.2), anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs, small stature,
+    grey fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting, frown, solo, full
+    body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33572
+- key: r8-zuzu-profile-left-3
+  entity: zuzu
+  title: zuzu profile left (seed 3)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, profile left.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing left, (sheathed katana strapped on his back:1.3),
+    hilt above the shoulder, (terracotta brown poncho:1.3), (orange zigzag pattern:1.2), patterned trim on the poncho
+    hem, orange scarf, orange sash, dark blue tunic, baggy brown trousers, wrapped shins, (wide-brimmed woven straw
+    hat:1.2), anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs, small stature,
+    grey fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting, frown, solo, full
+    body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33573
+- key: r8-zuzu-back-three-quarter-left-1
+  entity: zuzu
+  title: zuzu back three quarter left (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, back three quarter left.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the left,
+    (sheathed katana strapped diagonally across his back:1.4), (scabbard over the poncho:1.2), hilt above the right
+    shoulder, scabbard tip at the left hip, (terracotta brown poncho:1.3), (orange zigzag pattern:1.2), patterned
+    trim on the poncho hem, orange scarf, orange sash, dark blue tunic, baggy brown trousers, wrapped shins, (wide-brimmed
+    woven straw hat:1.2), anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs,
+    small stature, grey fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting, frown,
+    solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33574
+- key: r8-zuzu-back-three-quarter-left-2
+  entity: zuzu
+  title: zuzu back three quarter left (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, back three quarter left.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the left,
+    (sheathed katana strapped diagonally across his back:1.4), (scabbard over the poncho:1.2), hilt above the right
+    shoulder, scabbard tip at the left hip, (terracotta brown poncho:1.3), (orange zigzag pattern:1.2), patterned
+    trim on the poncho hem, orange scarf, orange sash, dark blue tunic, baggy brown trousers, wrapped shins, (wide-brimmed
+    woven straw hat:1.2), anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs,
+    small stature, grey fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting, frown,
+    solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33575
+- key: r8-zuzu-back-three-quarter-left-3
+  entity: zuzu
+  title: zuzu back three quarter left (seed 3)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, back three quarter left.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the left,
+    (sheathed katana strapped diagonally across his back:1.4), (scabbard over the poncho:1.2), hilt above the right
+    shoulder, scabbard tip at the left hip, (terracotta brown poncho:1.3), (orange zigzag pattern:1.2), patterned
+    trim on the poncho hem, orange scarf, orange sash, dark blue tunic, baggy brown trousers, wrapped shins, (wide-brimmed
+    woven straw hat:1.2), anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs,
+    small stature, grey fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting, frown,
+    solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33576
+- key: r8-zuzu-back-1
+  entity: zuzu
+  title: zuzu back (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, back.
+  prompt_tags: (fully clothed:1.3), (from behind:1.4), (back view:1.3), facing away, back turned to viewer, (sheathed
+    katana strapped diagonally across his back:1.4), (scabbard over the poncho:1.2), hilt above the right shoulder,
+    scabbard tip at the left hip, (terracotta brown poncho:1.3), (orange zigzag pattern:1.2), patterned trim on
+    the poncho hem, orange scarf, orange sash, dark blue tunic, baggy brown trousers, wrapped shins, (wide-brimmed
+    woven straw hat:1.2), anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs,
+    small stature, grey fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting, frown,
+    solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33577
+- key: r8-zuzu-back-2
+  entity: zuzu
+  title: zuzu back (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, back.
+  prompt_tags: (fully clothed:1.3), (from behind:1.4), (back view:1.3), facing away, back turned to viewer, (sheathed
+    katana strapped diagonally across his back:1.4), (scabbard over the poncho:1.2), hilt above the right shoulder,
+    scabbard tip at the left hip, (terracotta brown poncho:1.3), (orange zigzag pattern:1.2), patterned trim on
+    the poncho hem, orange scarf, orange sash, dark blue tunic, baggy brown trousers, wrapped shins, (wide-brimmed
+    woven straw hat:1.2), anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs,
+    small stature, grey fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting, frown,
+    solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33578
+- key: r8-zuzu-back-3
+  entity: zuzu
+  title: zuzu back (seed 3)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, back.
+  prompt_tags: (fully clothed:1.3), (from behind:1.4), (back view:1.3), facing away, back turned to viewer, (sheathed
+    katana strapped diagonally across his back:1.4), (scabbard over the poncho:1.2), hilt above the right shoulder,
+    scabbard tip at the left hip, (terracotta brown poncho:1.3), (orange zigzag pattern:1.2), patterned trim on
+    the poncho hem, orange scarf, orange sash, dark blue tunic, baggy brown trousers, wrapped shins, (wide-brimmed
+    woven straw hat:1.2), anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs,
+    small stature, grey fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting, frown,
+    solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33579
+- key: r8-zuzu-back-three-quarter-right-1
+  entity: zuzu
+  title: zuzu back three quarter right (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, back three quarter right.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the right,
+    (sheathed katana strapped diagonally across his back:1.4), (scabbard over the poncho:1.2), hilt above the right
+    shoulder, scabbard tip at the left hip, (terracotta brown poncho:1.3), (orange zigzag pattern:1.2), patterned
+    trim on the poncho hem, orange scarf, orange sash, dark blue tunic, baggy brown trousers, wrapped shins, (wide-brimmed
+    woven straw hat:1.2), anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs,
+    small stature, grey fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting, frown,
+    solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33580
+- key: r8-zuzu-back-three-quarter-right-2
+  entity: zuzu
+  title: zuzu back three quarter right (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, back three quarter right.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the right,
+    (sheathed katana strapped diagonally across his back:1.4), (scabbard over the poncho:1.2), hilt above the right
+    shoulder, scabbard tip at the left hip, (terracotta brown poncho:1.3), (orange zigzag pattern:1.2), patterned
+    trim on the poncho hem, orange scarf, orange sash, dark blue tunic, baggy brown trousers, wrapped shins, (wide-brimmed
+    woven straw hat:1.2), anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs,
+    small stature, grey fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting, frown,
+    solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33581
+- key: r8-zuzu-back-three-quarter-right-3
+  entity: zuzu
+  title: zuzu back three quarter right (seed 3)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, back three quarter right.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the right,
+    (sheathed katana strapped diagonally across his back:1.4), (scabbard over the poncho:1.2), hilt above the right
+    shoulder, scabbard tip at the left hip, (terracotta brown poncho:1.3), (orange zigzag pattern:1.2), patterned
+    trim on the poncho hem, orange scarf, orange sash, dark blue tunic, baggy brown trousers, wrapped shins, (wide-brimmed
+    woven straw hat:1.2), anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs,
+    small stature, grey fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting, frown,
+    solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33582
+- key: r8-zuzu-profile-right-1
+  entity: zuzu
+  title: zuzu profile right (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, profile right.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing right, (sheathed katana strapped on his back:1.3),
+    hilt above the shoulder, (terracotta brown poncho:1.3), (orange zigzag pattern:1.2), patterned trim on the poncho
+    hem, orange scarf, orange sash, dark blue tunic, baggy brown trousers, wrapped shins, (wide-brimmed woven straw
+    hat:1.2), anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs, small stature,
+    grey fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting, frown, solo, full
+    body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33583
+- key: r8-zuzu-profile-right-2
+  entity: zuzu
+  title: zuzu profile right (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, profile right.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing right, (sheathed katana strapped on his back:1.3),
+    hilt above the shoulder, (terracotta brown poncho:1.3), (orange zigzag pattern:1.2), patterned trim on the poncho
+    hem, orange scarf, orange sash, dark blue tunic, baggy brown trousers, wrapped shins, (wide-brimmed woven straw
+    hat:1.2), anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs, small stature,
+    grey fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting, frown, solo, full
+    body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33584
+- key: r8-zuzu-profile-right-3
+  entity: zuzu
+  title: zuzu profile right (seed 3)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, profile right.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing right, (sheathed katana strapped on his back:1.3),
+    hilt above the shoulder, (terracotta brown poncho:1.3), (orange zigzag pattern:1.2), patterned trim on the poncho
+    hem, orange scarf, orange sash, dark blue tunic, baggy brown trousers, wrapped shins, (wide-brimmed woven straw
+    hat:1.2), anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs, small stature,
+    grey fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting, frown, solo, full
+    body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33585
+- key: r8-zuzu-front-three-quarter-right-1
+  entity: zuzu
+  title: zuzu front three quarter right (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, front three quarter right.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the right, facing right, (sheathed katana
+    on back:1.3), katana hilt above his right shoulder, scabbard tip showing at his left hip, (terracotta brown
+    poncho:1.3), (orange zigzag pattern:1.2), patterned trim on the poncho hem, orange scarf, orange sash, dark
+    blue tunic, baggy brown trousers, wrapped shins, (wide-brimmed woven straw hat:1.2), anthro, koala, male, adult,
+    (short:1.2), (stocky:1.2), chubby, barrel chest, short legs, small stature, grey fur, round fluffy ears, notched
+    ear, ear scar, broad black nose, serious, squinting, frown, solo, full body, standing, simple background, white
+    background
+  jobs:
+    arthemy-house: 33586
+- key: r8-zuzu-front-three-quarter-right-2
+  entity: zuzu
+  title: zuzu front three quarter right (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, front three quarter right.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the right, facing right, (sheathed katana
+    on back:1.3), katana hilt above his right shoulder, scabbard tip showing at his left hip, (terracotta brown
+    poncho:1.3), (orange zigzag pattern:1.2), patterned trim on the poncho hem, orange scarf, orange sash, dark
+    blue tunic, baggy brown trousers, wrapped shins, (wide-brimmed woven straw hat:1.2), anthro, koala, male, adult,
+    (short:1.2), (stocky:1.2), chubby, barrel chest, short legs, small stature, grey fur, round fluffy ears, notched
+    ear, ear scar, broad black nose, serious, squinting, frown, solo, full body, standing, simple background, white
+    background
+  jobs:
+    arthemy-house: 33587
+- key: r8-zuzu-front-three-quarter-right-3
+  entity: zuzu
+  title: zuzu front three quarter right (seed 3)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, hood, hoodie, red poncho, hat band, cowboy hat, straw boater,
+    cloak, cape, tall, lanky, long legs, slender, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes,
+    gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg
+    artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: zuzu alone, front three quarter right.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the right, facing right, (sheathed katana
+    on back:1.3), katana hilt above his right shoulder, scabbard tip showing at his left hip, (terracotta brown
+    poncho:1.3), (orange zigzag pattern:1.2), patterned trim on the poncho hem, orange scarf, orange sash, dark
+    blue tunic, baggy brown trousers, wrapped shins, (wide-brimmed woven straw hat:1.2), anthro, koala, male, adult,
+    (short:1.2), (stocky:1.2), chubby, barrel chest, short legs, small stature, grey fur, round fluffy ears, notched
+    ear, ear scar, broad black nose, serious, squinting, frown, solo, full body, standing, simple background, white
+    background
+  jobs:
+    arthemy-house: 33588
+- key: r8-sister-front-1
+  entity: siblings
+  title: sister front (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, short dress, bare arms, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: sister alone, front.
+  prompt_tags: (fully clothed:1.3), front view, facing viewer, looking at viewer, anthro, fennec fox, female, young,
+    about ten years old, thin, enormous ears, sand-colored fur, dusty fur, bruised cheek, wary, serious, (long torn
+    pale dress:1.2), sleeveless dress, white cloth sash, bandaged forearms, bandaged shins, rag-wrapped feet, solo,
+    full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33589
+- key: r8-sister-front-2
+  entity: siblings
+  title: sister front (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, short dress, bare arms, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: sister alone, front.
+  prompt_tags: (fully clothed:1.3), front view, facing viewer, looking at viewer, anthro, fennec fox, female, young,
+    about ten years old, thin, enormous ears, sand-colored fur, dusty fur, bruised cheek, wary, serious, (long torn
+    pale dress:1.2), sleeveless dress, white cloth sash, bandaged forearms, bandaged shins, rag-wrapped feet, solo,
+    full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33590
+- key: r8-sister-front-three-quarter-left-1
+  entity: siblings
+  title: sister front three quarter left (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, short dress, bare arms, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: sister alone, front three quarter left.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the left, facing left, anthro, fennec fox,
+    female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty fur, bruised cheek, wary, serious,
+    (long torn pale dress:1.2), sleeveless dress, white cloth sash, bandaged forearms, bandaged shins, rag-wrapped
+    feet, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33591
+- key: r8-sister-front-three-quarter-left-2
+  entity: siblings
+  title: sister front three quarter left (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, short dress, bare arms, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: sister alone, front three quarter left.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the left, facing left, anthro, fennec fox,
+    female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty fur, bruised cheek, wary, serious,
+    (long torn pale dress:1.2), sleeveless dress, white cloth sash, bandaged forearms, bandaged shins, rag-wrapped
+    feet, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33592
+- key: r8-sister-profile-left-1
+  entity: siblings
+  title: sister profile left (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, short dress, bare arms, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: sister alone, profile left.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing left, anthro, fennec fox, female, young, about ten
+    years old, thin, enormous ears, sand-colored fur, dusty fur, bruised cheek, wary, serious, (long torn pale dress:1.2),
+    sleeveless dress, white cloth sash, bandaged forearms, bandaged shins, rag-wrapped feet, solo, full body, standing,
+    simple background, white background
+  jobs:
+    arthemy-house: 33593
+- key: r8-sister-profile-left-2
+  entity: siblings
+  title: sister profile left (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, short dress, bare arms, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: sister alone, profile left.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing left, anthro, fennec fox, female, young, about ten
+    years old, thin, enormous ears, sand-colored fur, dusty fur, bruised cheek, wary, serious, (long torn pale dress:1.2),
+    sleeveless dress, white cloth sash, bandaged forearms, bandaged shins, rag-wrapped feet, solo, full body, standing,
+    simple background, white background
+  jobs:
+    arthemy-house: 33594
+- key: r8-sister-back-three-quarter-left-1
+  entity: siblings
+  title: sister back three quarter left (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, short dress, bare arms, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: sister alone, back three quarter left.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the left,
+    anthro, fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty fur, bruised
+    cheek, wary, serious, (long torn pale dress:1.2), sleeveless dress, white cloth sash, bandaged forearms, bandaged
+    shins, rag-wrapped feet, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33595
+- key: r8-sister-back-three-quarter-left-2
+  entity: siblings
+  title: sister back three quarter left (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, short dress, bare arms, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: sister alone, back three quarter left.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the left,
+    anthro, fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty fur, bruised
+    cheek, wary, serious, (long torn pale dress:1.2), sleeveless dress, white cloth sash, bandaged forearms, bandaged
+    shins, rag-wrapped feet, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33596
+- key: r8-sister-back-1
+  entity: siblings
+  title: sister back (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, short dress, bare arms, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: sister alone, back.
+  prompt_tags: (fully clothed:1.3), (from behind:1.4), (back view:1.3), facing away, back turned to viewer, anthro,
+    fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty fur, bruised cheek,
+    wary, serious, (long torn pale dress:1.2), sleeveless dress, white cloth sash, bandaged forearms, bandaged shins,
+    rag-wrapped feet, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33597
+- key: r8-sister-back-2
+  entity: siblings
+  title: sister back (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, short dress, bare arms, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: sister alone, back.
+  prompt_tags: (fully clothed:1.3), (from behind:1.4), (back view:1.3), facing away, back turned to viewer, anthro,
+    fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty fur, bruised cheek,
+    wary, serious, (long torn pale dress:1.2), sleeveless dress, white cloth sash, bandaged forearms, bandaged shins,
+    rag-wrapped feet, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33598
+- key: r8-sister-back-three-quarter-right-1
+  entity: siblings
+  title: sister back three quarter right (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, short dress, bare arms, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: sister alone, back three quarter right.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the right,
+    anthro, fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty fur, bruised
+    cheek, wary, serious, (long torn pale dress:1.2), sleeveless dress, white cloth sash, bandaged forearms, bandaged
+    shins, rag-wrapped feet, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33599
+- key: r8-sister-back-three-quarter-right-2
+  entity: siblings
+  title: sister back three quarter right (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, short dress, bare arms, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: sister alone, back three quarter right.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the right,
+    anthro, fennec fox, female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty fur, bruised
+    cheek, wary, serious, (long torn pale dress:1.2), sleeveless dress, white cloth sash, bandaged forearms, bandaged
+    shins, rag-wrapped feet, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33600
+- key: r8-sister-profile-right-1
+  entity: siblings
+  title: sister profile right (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, short dress, bare arms, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: sister alone, profile right.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing right, anthro, fennec fox, female, young, about ten
+    years old, thin, enormous ears, sand-colored fur, dusty fur, bruised cheek, wary, serious, (long torn pale dress:1.2),
+    sleeveless dress, white cloth sash, bandaged forearms, bandaged shins, rag-wrapped feet, solo, full body, standing,
+    simple background, white background
+  jobs:
+    arthemy-house: 33601
+- key: r8-sister-profile-right-2
+  entity: siblings
+  title: sister profile right (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, short dress, bare arms, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: sister alone, profile right.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing right, anthro, fennec fox, female, young, about ten
+    years old, thin, enormous ears, sand-colored fur, dusty fur, bruised cheek, wary, serious, (long torn pale dress:1.2),
+    sleeveless dress, white cloth sash, bandaged forearms, bandaged shins, rag-wrapped feet, solo, full body, standing,
+    simple background, white background
+  jobs:
+    arthemy-house: 33602
+- key: r8-sister-front-three-quarter-right-1
+  entity: siblings
+  title: sister front three quarter right (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, short dress, bare arms, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: sister alone, front three quarter right.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the right, facing right, anthro, fennec fox,
+    female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty fur, bruised cheek, wary, serious,
+    (long torn pale dress:1.2), sleeveless dress, white cloth sash, bandaged forearms, bandaged shins, rag-wrapped
+    feet, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33603
+- key: r8-sister-front-three-quarter-right-2
+  entity: siblings
+  title: sister front three quarter right (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, short dress, bare arms, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: sister alone, front three quarter right.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the right, facing right, anthro, fennec fox,
+    female, young, about ten years old, thin, enormous ears, sand-colored fur, dusty fur, bruised cheek, wary, serious,
+    (long torn pale dress:1.2), sleeveless dress, white cloth sash, bandaged forearms, bandaged shins, rag-wrapped
+    feet, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33604
+- key: r8-toddler-front-1
+  entity: siblings
+  title: toddler front (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: toddler alone, front.
+  prompt_tags: (fully clothed:1.3), front view, facing viewer, looking at viewer, anthro, fennec fox, male, toddler,
+    tiny, enormous ears, sand-colored fur, wide eyes, (blue plaid tunic:1.2), brown belt, green trousers, bandaged
+    paw, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33605
+- key: r8-toddler-front-2
+  entity: siblings
+  title: toddler front (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: toddler alone, front.
+  prompt_tags: (fully clothed:1.3), front view, facing viewer, looking at viewer, anthro, fennec fox, male, toddler,
+    tiny, enormous ears, sand-colored fur, wide eyes, (blue plaid tunic:1.2), brown belt, green trousers, bandaged
+    paw, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33606
+- key: r8-toddler-front-three-quarter-left-1
+  entity: siblings
+  title: toddler front three quarter left (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: toddler alone, front three quarter left.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the left, facing left, anthro, fennec fox,
+    male, toddler, tiny, enormous ears, sand-colored fur, wide eyes, (blue plaid tunic:1.2), brown belt, green trousers,
+    bandaged paw, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33607
+- key: r8-toddler-front-three-quarter-left-2
+  entity: siblings
+  title: toddler front three quarter left (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: toddler alone, front three quarter left.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the left, facing left, anthro, fennec fox,
+    male, toddler, tiny, enormous ears, sand-colored fur, wide eyes, (blue plaid tunic:1.2), brown belt, green trousers,
+    bandaged paw, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33608
+- key: r8-toddler-profile-left-1
+  entity: siblings
+  title: toddler profile left (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: toddler alone, profile left.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing left, anthro, fennec fox, male, toddler, tiny, enormous
+    ears, sand-colored fur, wide eyes, (blue plaid tunic:1.2), brown belt, green trousers, bandaged paw, solo, full
+    body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33609
+- key: r8-toddler-profile-left-2
+  entity: siblings
+  title: toddler profile left (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: toddler alone, profile left.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing left, anthro, fennec fox, male, toddler, tiny, enormous
+    ears, sand-colored fur, wide eyes, (blue plaid tunic:1.2), brown belt, green trousers, bandaged paw, solo, full
+    body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33610
+- key: r8-toddler-back-three-quarter-left-1
+  entity: siblings
+  title: toddler back three quarter left (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: toddler alone, back three quarter left.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the left,
+    anthro, fennec fox, male, toddler, tiny, enormous ears, sand-colored fur, wide eyes, (blue plaid tunic:1.2),
+    brown belt, green trousers, bandaged paw, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33611
+- key: r8-toddler-back-three-quarter-left-2
+  entity: siblings
+  title: toddler back three quarter left (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: toddler alone, back three quarter left.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the left,
+    anthro, fennec fox, male, toddler, tiny, enormous ears, sand-colored fur, wide eyes, (blue plaid tunic:1.2),
+    brown belt, green trousers, bandaged paw, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33612
+- key: r8-toddler-back-1
+  entity: siblings
+  title: toddler back (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: toddler alone, back.
+  prompt_tags: (fully clothed:1.3), (from behind:1.4), (back view:1.3), facing away, back turned to viewer, anthro,
+    fennec fox, male, toddler, tiny, enormous ears, sand-colored fur, wide eyes, (blue plaid tunic:1.2), brown belt,
+    green trousers, bandaged paw, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33613
+- key: r8-toddler-back-2
+  entity: siblings
+  title: toddler back (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: toddler alone, back.
+  prompt_tags: (fully clothed:1.3), (from behind:1.4), (back view:1.3), facing away, back turned to viewer, anthro,
+    fennec fox, male, toddler, tiny, enormous ears, sand-colored fur, wide eyes, (blue plaid tunic:1.2), brown belt,
+    green trousers, bandaged paw, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33614
+- key: r8-toddler-back-three-quarter-right-1
+  entity: siblings
+  title: toddler back three quarter right (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: toddler alone, back three quarter right.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the right,
+    anthro, fennec fox, male, toddler, tiny, enormous ears, sand-colored fur, wide eyes, (blue plaid tunic:1.2),
+    brown belt, green trousers, bandaged paw, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33615
+- key: r8-toddler-back-three-quarter-right-2
+  entity: siblings
+  title: toddler back three quarter right (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: toddler alone, back three quarter right.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the right,
+    anthro, fennec fox, male, toddler, tiny, enormous ears, sand-colored fur, wide eyes, (blue plaid tunic:1.2),
+    brown belt, green trousers, bandaged paw, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33616
+- key: r8-toddler-profile-right-1
+  entity: siblings
+  title: toddler profile right (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: toddler alone, profile right.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing right, anthro, fennec fox, male, toddler, tiny, enormous
+    ears, sand-colored fur, wide eyes, (blue plaid tunic:1.2), brown belt, green trousers, bandaged paw, solo, full
+    body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33617
+- key: r8-toddler-profile-right-2
+  entity: siblings
+  title: toddler profile right (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: toddler alone, profile right.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing right, anthro, fennec fox, male, toddler, tiny, enormous
+    ears, sand-colored fur, wide eyes, (blue plaid tunic:1.2), brown belt, green trousers, bandaged paw, solo, full
+    body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33618
+- key: r8-toddler-front-three-quarter-right-1
+  entity: siblings
+  title: toddler front three quarter right (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: toddler alone, front three quarter right.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the right, facing right, anthro, fennec fox,
+    male, toddler, tiny, enormous ears, sand-colored fur, wide eyes, (blue plaid tunic:1.2), brown belt, green trousers,
+    bandaged paw, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33619
+- key: r8-toddler-front-three-quarter-right-2
+  entity: siblings
+  title: toddler front three quarter right (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: toddler alone, front three quarter right.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the right, facing right, anthro, fennec fox,
+    male, toddler, tiny, enormous ears, sand-colored fur, wide eyes, (blue plaid tunic:1.2), brown belt, green trousers,
+    bandaged paw, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33620
+- key: r8-coyote-front-1
+  entity: coyote
+  title: coyote front (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, two eyes visible, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: coyote alone, front.
+  prompt_tags: (fully clothed:1.3), front view, facing viewer, looking at viewer, anthro, coyote, male, adult, bedraggled,
+    scruffy fur, scarred face, gaunt, wary, (eyepatch over his right eye:1.2), one eye, (long olive duster coat:1.2),
+    white shirt, blue jeans, brown leather boots, battered brown cowboy hat, revolver holster on his right hip,
+    solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33621
+- key: r8-coyote-front-2
+  entity: coyote
+  title: coyote front (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, two eyes visible, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: coyote alone, front.
+  prompt_tags: (fully clothed:1.3), front view, facing viewer, looking at viewer, anthro, coyote, male, adult, bedraggled,
+    scruffy fur, scarred face, gaunt, wary, (eyepatch over his right eye:1.2), one eye, (long olive duster coat:1.2),
+    white shirt, blue jeans, brown leather boots, battered brown cowboy hat, revolver holster on his right hip,
+    solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33622
+- key: r8-coyote-front-three-quarter-left-1
+  entity: coyote
+  title: coyote front three quarter left (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, two eyes visible, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: coyote alone, front three quarter left.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the left, facing left, anthro, coyote, male,
+    adult, bedraggled, scruffy fur, scarred face, gaunt, wary, (eyepatch over his right eye:1.2), one eye, (long
+    olive duster coat:1.2), white shirt, blue jeans, brown leather boots, battered brown cowboy hat, revolver holster
+    on his right hip, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33623
+- key: r8-coyote-front-three-quarter-left-2
+  entity: coyote
+  title: coyote front three quarter left (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, two eyes visible, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: coyote alone, front three quarter left.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the left, facing left, anthro, coyote, male,
+    adult, bedraggled, scruffy fur, scarred face, gaunt, wary, (eyepatch over his right eye:1.2), one eye, (long
+    olive duster coat:1.2), white shirt, blue jeans, brown leather boots, battered brown cowboy hat, revolver holster
+    on his right hip, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33624
+- key: r8-coyote-profile-left-1
+  entity: coyote
+  title: coyote profile left (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, two eyes visible, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: coyote alone, profile left.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing left, anthro, coyote, male, adult, bedraggled, scruffy
+    fur, scarred face, gaunt, wary, (eyepatch over his right eye:1.2), one eye, (long olive duster coat:1.2), white
+    shirt, blue jeans, brown leather boots, battered brown cowboy hat, revolver holster on his right hip, solo,
+    full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33625
+- key: r8-coyote-profile-left-2
+  entity: coyote
+  title: coyote profile left (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, two eyes visible, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: coyote alone, profile left.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing left, anthro, coyote, male, adult, bedraggled, scruffy
+    fur, scarred face, gaunt, wary, (eyepatch over his right eye:1.2), one eye, (long olive duster coat:1.2), white
+    shirt, blue jeans, brown leather boots, battered brown cowboy hat, revolver holster on his right hip, solo,
+    full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33626
+- key: r8-coyote-back-three-quarter-left-1
+  entity: coyote
+  title: coyote back three quarter left (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, two eyes visible, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: coyote alone, back three quarter left.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the left,
+    anthro, coyote, male, adult, bedraggled, scruffy fur, scarred face, gaunt, wary, (eyepatch over his right eye:1.2),
+    one eye, (long olive duster coat:1.2), white shirt, blue jeans, brown leather boots, battered brown cowboy hat,
+    revolver holster on his right hip, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33627
+- key: r8-coyote-back-three-quarter-left-2
+  entity: coyote
+  title: coyote back three quarter left (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, two eyes visible, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: coyote alone, back three quarter left.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the left,
+    anthro, coyote, male, adult, bedraggled, scruffy fur, scarred face, gaunt, wary, (eyepatch over his right eye:1.2),
+    one eye, (long olive duster coat:1.2), white shirt, blue jeans, brown leather boots, battered brown cowboy hat,
+    revolver holster on his right hip, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33628
+- key: r8-coyote-back-1
+  entity: coyote
+  title: coyote back (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, two eyes visible, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: coyote alone, back.
+  prompt_tags: (fully clothed:1.3), (from behind:1.4), (back view:1.3), facing away, back turned to viewer, anthro,
+    coyote, male, adult, bedraggled, scruffy fur, scarred face, gaunt, wary, (eyepatch over his right eye:1.2),
+    one eye, (long olive duster coat:1.2), white shirt, blue jeans, brown leather boots, battered brown cowboy hat,
+    revolver holster on his right hip, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33629
+- key: r8-coyote-back-2
+  entity: coyote
+  title: coyote back (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, two eyes visible, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: coyote alone, back.
+  prompt_tags: (fully clothed:1.3), (from behind:1.4), (back view:1.3), facing away, back turned to viewer, anthro,
+    coyote, male, adult, bedraggled, scruffy fur, scarred face, gaunt, wary, (eyepatch over his right eye:1.2),
+    one eye, (long olive duster coat:1.2), white shirt, blue jeans, brown leather boots, battered brown cowboy hat,
+    revolver holster on his right hip, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33630
+- key: r8-coyote-back-three-quarter-right-1
+  entity: coyote
+  title: coyote back three quarter right (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, two eyes visible, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: coyote alone, back three quarter right.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the right,
+    anthro, coyote, male, adult, bedraggled, scruffy fur, scarred face, gaunt, wary, (eyepatch over his right eye:1.2),
+    one eye, (long olive duster coat:1.2), white shirt, blue jeans, brown leather boots, battered brown cowboy hat,
+    revolver holster on his right hip, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33631
+- key: r8-coyote-back-three-quarter-right-2
+  entity: coyote
+  title: coyote back three quarter right (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, two eyes visible, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: coyote alone, back three quarter right.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the right,
+    anthro, coyote, male, adult, bedraggled, scruffy fur, scarred face, gaunt, wary, (eyepatch over his right eye:1.2),
+    one eye, (long olive duster coat:1.2), white shirt, blue jeans, brown leather boots, battered brown cowboy hat,
+    revolver holster on his right hip, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33632
+- key: r8-coyote-profile-right-1
+  entity: coyote
+  title: coyote profile right (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, two eyes visible, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: coyote alone, profile right.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing right, anthro, coyote, male, adult, bedraggled, scruffy
+    fur, scarred face, gaunt, wary, (eyepatch over his right eye:1.2), one eye, (long olive duster coat:1.2), white
+    shirt, blue jeans, brown leather boots, battered brown cowboy hat, revolver holster on his right hip, solo,
+    full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33633
+- key: r8-coyote-profile-right-2
+  entity: coyote
+  title: coyote profile right (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, two eyes visible, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: coyote alone, profile right.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing right, anthro, coyote, male, adult, bedraggled, scruffy
+    fur, scarred face, gaunt, wary, (eyepatch over his right eye:1.2), one eye, (long olive duster coat:1.2), white
+    shirt, blue jeans, brown leather boots, battered brown cowboy hat, revolver holster on his right hip, solo,
+    full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33634
+- key: r8-coyote-front-three-quarter-right-1
+  entity: coyote
+  title: coyote front three quarter right (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, two eyes visible, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: coyote alone, front three quarter right.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the right, facing right, anthro, coyote,
+    male, adult, bedraggled, scruffy fur, scarred face, gaunt, wary, (eyepatch over his right eye:1.2), one eye,
+    (long olive duster coat:1.2), white shirt, blue jeans, brown leather boots, battered brown cowboy hat, revolver
+    holster on his right hip, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33635
+- key: r8-coyote-front-three-quarter-right-2
+  entity: coyote
+  title: coyote front three quarter right (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, two eyes visible, nsfw, nude, suggestive, cleavage, revealing
+    clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry,
+    jpeg artifacts, chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: coyote alone, front three quarter right.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the right, facing right, anthro, coyote,
+    male, adult, bedraggled, scruffy fur, scarred face, gaunt, wary, (eyepatch over his right eye:1.2), one eye,
+    (long olive duster coat:1.2), white shirt, blue jeans, brown leather boots, battered brown cowboy hat, revolver
+    holster on his right hip, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33636
+- key: r8-mother-superior-front-1
+  entity: otter-nuns
+  title: mother-superior front (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, dagger, nsfw, nude, suggestive, cleavage, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: mother-superior alone, front.
+  prompt_tags: (fully clothed:1.3), front view, facing viewer, looking at viewer, anthro, otter, female, mature
+    female, nun, mother superior, black habit, white wimple, long black robes, folded hands, kind smile, whiskers,
+    brown fur, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33637
+- key: r8-mother-superior-front-2
+  entity: otter-nuns
+  title: mother-superior front (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, dagger, nsfw, nude, suggestive, cleavage, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: mother-superior alone, front.
+  prompt_tags: (fully clothed:1.3), front view, facing viewer, looking at viewer, anthro, otter, female, mature
+    female, nun, mother superior, black habit, white wimple, long black robes, folded hands, kind smile, whiskers,
+    brown fur, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33638
+- key: r8-mother-superior-front-three-quarter-left-1
+  entity: otter-nuns
+  title: mother-superior front three quarter left (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, dagger, nsfw, nude, suggestive, cleavage, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: mother-superior alone, front three quarter left.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the left, facing left, anthro, otter, female,
+    mature female, nun, mother superior, black habit, white wimple, long black robes, folded hands, kind smile,
+    whiskers, brown fur, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33639
+- key: r8-mother-superior-front-three-quarter-left-2
+  entity: otter-nuns
+  title: mother-superior front three quarter left (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, dagger, nsfw, nude, suggestive, cleavage, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: mother-superior alone, front three quarter left.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the left, facing left, anthro, otter, female,
+    mature female, nun, mother superior, black habit, white wimple, long black robes, folded hands, kind smile,
+    whiskers, brown fur, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33640
+- key: r8-mother-superior-profile-left-1
+  entity: otter-nuns
+  title: mother-superior profile left (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, dagger, nsfw, nude, suggestive, cleavage, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: mother-superior alone, profile left.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing left, anthro, otter, female, mature female, nun,
+    mother superior, black habit, white wimple, long black robes, folded hands, kind smile, whiskers, brown fur,
+    solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33641
+- key: r8-mother-superior-profile-left-2
+  entity: otter-nuns
+  title: mother-superior profile left (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, dagger, nsfw, nude, suggestive, cleavage, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: mother-superior alone, profile left.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing left, anthro, otter, female, mature female, nun,
+    mother superior, black habit, white wimple, long black robes, folded hands, kind smile, whiskers, brown fur,
+    solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33642
+- key: r8-mother-superior-back-three-quarter-left-1
+  entity: otter-nuns
+  title: mother-superior back three quarter left (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, dagger, nsfw, nude, suggestive, cleavage, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: mother-superior alone, back three quarter left.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the left,
+    anthro, otter, female, mature female, nun, mother superior, black habit, white wimple, long black robes, folded
+    hands, kind smile, whiskers, brown fur, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33643
+- key: r8-mother-superior-back-three-quarter-left-2
+  entity: otter-nuns
+  title: mother-superior back three quarter left (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, dagger, nsfw, nude, suggestive, cleavage, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: mother-superior alone, back three quarter left.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the left,
+    anthro, otter, female, mature female, nun, mother superior, black habit, white wimple, long black robes, folded
+    hands, kind smile, whiskers, brown fur, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33644
+- key: r8-mother-superior-back-1
+  entity: otter-nuns
+  title: mother-superior back (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, dagger, nsfw, nude, suggestive, cleavage, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: mother-superior alone, back.
+  prompt_tags: (fully clothed:1.3), (from behind:1.4), (back view:1.3), facing away, back turned to viewer, anthro,
+    otter, female, mature female, nun, mother superior, black habit, white wimple, long black robes, folded hands,
+    kind smile, whiskers, brown fur, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33645
+- key: r8-mother-superior-back-2
+  entity: otter-nuns
+  title: mother-superior back (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, dagger, nsfw, nude, suggestive, cleavage, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: mother-superior alone, back.
+  prompt_tags: (fully clothed:1.3), (from behind:1.4), (back view:1.3), facing away, back turned to viewer, anthro,
+    otter, female, mature female, nun, mother superior, black habit, white wimple, long black robes, folded hands,
+    kind smile, whiskers, brown fur, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33646
+- key: r8-mother-superior-back-three-quarter-right-1
+  entity: otter-nuns
+  title: mother-superior back three quarter right (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, dagger, nsfw, nude, suggestive, cleavage, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: mother-superior alone, back three quarter right.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the right,
+    anthro, otter, female, mature female, nun, mother superior, black habit, white wimple, long black robes, folded
+    hands, kind smile, whiskers, brown fur, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33647
+- key: r8-mother-superior-back-three-quarter-right-2
+  entity: otter-nuns
+  title: mother-superior back three quarter right (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, dagger, nsfw, nude, suggestive, cleavage, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: mother-superior alone, back three quarter right.
+  prompt_tags: (fully clothed:1.3), (from behind:1.3), three-quarter back view, facing away, turned to the right,
+    anthro, otter, female, mature female, nun, mother superior, black habit, white wimple, long black robes, folded
+    hands, kind smile, whiskers, brown fur, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33648
+- key: r8-mother-superior-profile-right-1
+  entity: otter-nuns
+  title: mother-superior profile right (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, dagger, nsfw, nude, suggestive, cleavage, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: mother-superior alone, profile right.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing right, anthro, otter, female, mature female, nun,
+    mother superior, black habit, white wimple, long black robes, folded hands, kind smile, whiskers, brown fur,
+    solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33649
+- key: r8-mother-superior-profile-right-2
+  entity: otter-nuns
+  title: mother-superior profile right (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, dagger, nsfw, nude, suggestive, cleavage, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: mother-superior alone, profile right.
+  prompt_tags: (fully clothed:1.3), from side, profile, facing right, anthro, otter, female, mature female, nun,
+    mother superior, black habit, white wimple, long black robes, folded hands, kind smile, whiskers, brown fur,
+    solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33650
+- key: r8-mother-superior-front-three-quarter-right-1
+  entity: otter-nuns
+  title: mother-superior front three quarter right (seed 1)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, dagger, nsfw, nude, suggestive, cleavage, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: mother-superior alone, front three quarter right.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the right, facing right, anthro, otter, female,
+    mature female, nun, mother superior, black habit, white wimple, long black robes, folded hands, kind smile,
+    whiskers, brown fur, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33651
+- key: r8-mother-superior-front-three-quarter-right-2
+  entity: otter-nuns
+  title: mother-superior front three quarter right (seed 2)
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, dagger, nsfw, nude, suggestive, cleavage, revealing clothes, gore,
+    lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text, multiple views, character sheet, turnaround, 2girls, 2boys, multiple persons
+  prompt_prose: mother-superior alone, front three quarter right.
+  prompt_tags: (fully clothed:1.3), three-quarter view, body turned to the right, facing right, anthro, otter, female,
+    mature female, nun, mother superior, black habit, white wimple, long black robes, folded hands, kind smile,
+    whiskers, brown fur, solo, full body, standing, simple background, white background
+  jobs:
+    arthemy-house: 33652
