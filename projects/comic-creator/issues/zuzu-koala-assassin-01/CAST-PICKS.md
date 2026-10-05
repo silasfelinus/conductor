@@ -101,3 +101,18 @@ Every Stage-A render was read for orientation, the sword rig and clothing; nothi
 - **The mother superior:** already matches N2, so no Stage B. Several back views drew a second small otter.
   Angles: 242002, 242004, 242007, 242013 (mirrored), 242011, 242013, 242014, 242016 (same order).
 
+## Silas's notes on the round-8 angle sheets (2026-10-05)
+
+*"Def shouldn't have the tiny real otter hanging out with mother superior. Not sure why coyote has a feather duster. Zuzu is still too tall, he looks more like a koala, less like a human, much squatter. The siblings are dressed too cleanly and seem too 'rich'. They should be in rags, as if animals literally tore at them. Zuzu needs consistently colored pants, not blue, those look too much like denim. Overall the characters can have a little darker tone, less Disney, more Tarantino."*
+
+- **Zuzu:** squatter and more koala than human: stubby legs, a round belly, a big round head, animal
+  proportions. His trousers are always dark brown cloth, never blue or denim-looking.
+- **The siblings:** in rags, as if animals tore at their clothes. Shredded, claw-torn, frayed, filthy. Never
+  clean or well-off.
+- **The coyote:** empty hands. The feather duster (it came from C1) is not part of him.
+- **The mother superior:** alone. No small otter at her feet.
+- **Tone:** darker, grittier and less Disney: more Tarantino, grindhouse contrast, muted and grimy.
+- **Round 9** (ART-ROUND-9.yaml, ArtJobs 33698–33727) is a 30-render look test of these notes: three views
+  per character, before full angle sets. Zuzu's pending round-8 Kontext jobs (33688–33697) were cancelled,
+  since his proportions change.
+
