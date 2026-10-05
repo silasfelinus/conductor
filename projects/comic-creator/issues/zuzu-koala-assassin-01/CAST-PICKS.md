@@ -294,3 +294,19 @@ Asking Arthemy for a sea otter worked. The front tries (242334–242336) and pro
 a short, rounded otter face that is still clearly a snout, not flat. The Kontext species edits (242340–242342) barely
 moved, as before. The face test went to Silas (cast sheet 15), and the other six angles are rendering with the same
 tags (ART-ROUND-13.yaml, ArtJobs 34006–34017).
+
+## The abbess, round 13 full set (2026-10-05)
+
+| Angle | Pick | Note |
+| --- | --- | --- |
+| Front | 242336 | |
+| 3/4 front left | 242344 | |
+| Profile left | 242338 | |
+| 3/4 back left | 242345 | A sea otter lies behind her; Kontext removes it (34018) |
+| Back | 242347 | Water at her feet; Kontext removes it (34019) |
+| 3/4 back right | 242350 | A small otter peeks out; Kontext removes it (34020) |
+| Profile right | 242352 | |
+| 3/4 front right | 242354 | |
+
+"(sea otter:1.3)" also drew real sea otters and water on 242345, 242348, 242350 and 242351. VIDEO-GUARDRAILS.md now
+warns about it.

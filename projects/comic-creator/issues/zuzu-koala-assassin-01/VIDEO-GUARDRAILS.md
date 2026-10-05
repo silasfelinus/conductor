@@ -70,3 +70,5 @@ The house checkpoint draws some words as objects, even when they appear only in 
 - **"muzzle"** (the snout) draws a muzzle restraint over the face, as in round 12. Describe the face instead,
   for example "an otter face with a short snout and a small rounded nose pad".
 - **"squat"** makes Zuzu crouch. Say "chubby, standing upright".
+- **"sea otter"** gives the abbess the short face Silas wants, but it also adds real sea otters at her feet and
+  water around her. Negate `feral, animal, water` and check every render.
