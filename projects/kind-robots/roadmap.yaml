@@ -2170,5 +2170,20 @@ tasks:
 
     Merged silasfelinus/kind_robots#3225 at 9e4e44a1154926b14518e84daff065af229d178b after all 30 PR workflows completed successfully. PENDING ArtJob cards now expose a bounded numeric priority editor backed by the shared queue parser and existing priority API/store path.
 
+
+- id: t-130
+  milestone: m6
+  title: 'Fix ArtJob edit/re-enqueue submission for jobs with multiple LoRAs'
+  status: claimed
+  gate_human: false
+  stakes: reversible
+  owner: worker
+  passes: 0
+  updated: '2026-10-05T13:03:00Z'
+  claimed_by: 20261005T130300Z-kind-robots-t130-artjob-multilora-a83c
+  claimed_at: '2026-10-05T13:03:00Z'
+  note: |-
+    Silas-directed 2026-10-05: editing and re-enqueueing ArtJobs fails to submit when the job has multiple LoRAs, even though multi-LoRA generation is supported. Trace the editor/store/server retry contract, preserve all selected LoRAs, and add regression coverage for the multi-LoRA case.
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
