@@ -14,6 +14,11 @@ the returned ArtJob id is written back under ``subjects[].jobs[<lane>]`` so a
 re-run never submits the same cell twice. See
 projects/comic-creator/issues/zuzu-koala-assassin-01/ART-ROUND-3.yaml.
 
+A subject may carry ``source_image_id`` (an ArtImage id). Kontext lanes need one:
+the image is fetched and sent as ``sourceImageBase64``, so an approved design can be
+re-posed (the 8-angle renders, comic-creator t-015). Kontext lanes may set ``steps``
+and ``guidance``.
+
 Usage:
     python scripts/enqueue_art_requests.py LEDGER            # dry run, print requests
     python scripts/enqueue_art_requests.py LEDGER --live     # submit missing cells
@@ -47,8 +52,12 @@ def compose_prompt(lane, subject):
     return ", ".join(" ".join(str(p).split()) for p in parts if p and str(p).strip())
 
 
-def build_request(ledger, lane, subject):
-    """The /api/art/enqueue body for one (subject, lane) cell."""
+def build_request(ledger, lane, subject, source_image=None):
+    """The /api/art/enqueue body for one (subject, lane) cell.
+
+    ``source_image`` is the data URL of the subject's ``source_image_id``; only a
+    Kontext lane sends it.
+    """
     width, height = core.parse_size(subject.get("size"))
     body = {
         "engine": lane["engine"],
@@ -65,6 +74,13 @@ def build_request(ledger, lane, subject):
         # Absent, Kind Robots applies the checkpoint family's sampler profile. The
         # scheduler always stays the profile's: enqueue does not forward one for comfy.
         for field in ("steps", "cfg", "sampler"):
+            if lane.get(field):
+                body[field] = lane[field]
+    if lane["engine"] == "kontext":
+        if not source_image:
+            raise ValueError(f"{subject.get('key')}: a kontext lane needs the subject's source_image_id")
+        body["sourceImageBase64"] = source_image
+        for field in ("steps", "guidance"):
             if lane.get(field):
                 body[field] = lane[field]
     if lane["engine"] == "comfy" and subject.get("negative"):
@@ -113,14 +129,39 @@ def job_id_of(subject, lane_key):
     return (subject.get("jobs") or {}).get(lane_key)
 
 
-def submit(path, header, ledger, cells, post=None):
+def fetch_source_image(image_id):
+    """An ArtImage as a data URL, for a Kontext lane's sourceImageBase64."""
+    import base64
+    import urllib.request
+
+    status, resp = core.http_json("GET", f"{core.KR_BASE_URL}/api/art/image/{image_id}", None, timeout=60)
+    data = resp.get("data", resp) if isinstance(resp, dict) else {}
+    path = data.get("imagePath") if isinstance(data, dict) else None
+    if status != 200 or not path:
+        raise RuntimeError(f"ArtImage {image_id}: HTTP {status}, no imagePath")
+    url = path if path.startswith("http") else core.KR_BASE_URL.rstrip("/") + path
+    with urllib.request.urlopen(url, timeout=60) as response:
+        raw = response.read()
+        mime = response.headers.get_content_type() or "image/png"
+    return f"data:{mime};base64," + base64.b64encode(raw).decode()
+
+
+def submit(path, header, ledger, cells, post=None, fetch_source=None):
     """POST every cell that has no job id yet; write the id back after each one."""
     post = post or (lambda body: core.http_json("POST", f"{core.KR_BASE_URL}/api/art/enqueue", body))
+    fetch_source = fetch_source or fetch_source_image
+    sources = {}
     submitted, failures = 0, 0
     for subject, lane in cells:
         if job_id_of(subject, lane["key"]):
             continue
-        status, resp = post(build_request(ledger, lane, subject))
+        source = None
+        if lane["engine"] == "kontext" and subject.get("source_image_id"):
+            image_id = subject["source_image_id"]
+            if image_id not in sources:
+                sources[image_id] = fetch_source(image_id)
+            source = sources[image_id]
+        status, resp = post(build_request(ledger, lane, subject, source))
         job_id = ((resp or {}).get("data") or {}).get("jobId") if isinstance(resp, dict) else None
         if status in (200, 201) and job_id:
             subject.setdefault("jobs", {})[lane["key"]] = int(job_id)
@@ -177,7 +218,10 @@ def main(argv=None):
         pending = [(s, lane) for s, lane in cells if not job_id_of(s, lane["key"])]
         print(f"DRY RUN: {len(pending)} of {len(cells)} cells would be submitted via {core.KR_BASE_URL}")
         for subject, lane in pending:
-            body = build_request(ledger, lane, subject)
+            source = "data:image/png;base64," if lane["engine"] == "kontext" else None
+            body = build_request(ledger, lane, subject, source)
+            if source:
+                print(f"    source: ArtImage {subject.get('source_image_id')}")
             print(f"  {subject['key']} [{lane['key']}] {body['width']}x{body['height']} \"{body['promptString'][:70]}\"")
         return 0
 

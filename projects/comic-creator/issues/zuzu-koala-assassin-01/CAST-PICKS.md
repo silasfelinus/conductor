@@ -8,7 +8,8 @@ character LoRA datasets (t-016). All are private on Kind Robots.
 
 | Character | Pick | ArtImage | Render | Settings |
 |---|---|---|---|---|
-| Zuzu | Z2 | 241873 | Turnaround, three views | author's |
+| **Zuzu (final)** | **R6** | **241913** | Round 6 hero shot: rust-brown poncho, kasa, katana on the back | house |
+| Zuzu | Z2 | 241873 | Turnaround, three views (superseded by R6) | author's |
 | Zuzu | Z6 | 241877 | Emotion sheet | author's |
 | The toddler | T2 | 241883 | Turnaround, checked tunic | author's |
 | The sister | S2 | 241879 | Turnaround A, long torn pale dress | author's |
@@ -41,3 +42,15 @@ Silas, 2026-10-05: *"Sister s2. Yes on house settings. I actually like Zuzu with
 - **Scale in the scene picks.** In both X2 and X4 the fox beside Zuzu is small enough to read as the
   toddler. The canon says the sister stands taller than Zuzu; these picks are scale references for
   Zuzu with the toddler, not for the sister.
+
+## Zuzu final: R6
+
+Silas, 2026-10-05: *"I like the poncho design in r6 best for zuzu. But noticed that some of the back images
+in the tests fail to show the sword."*
+
+- **Zuzu is R6** (ArtImage 241913): a rust-brown poncho with an orange zigzag trim, a conical straw kasa, a
+  dark tunic, an orange sash, brown trousers, and the sheathed katana slung across his back.
+- **The katana is always on his back**, in every view. Round 6's turnaround B lost it in the back view.
+  Prompts now weight `(katana on back:1.4)` and say the hilt rises above his right shoulder.
+- **Follow-ups:** ART-ROUND-7.yaml (Arthemy turnarounds of R6 that keep the sword) and ANGLES-ZUZU.yaml
+  (the 8 Kontext angles re-posed from R6 itself, t-015).

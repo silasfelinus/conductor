@@ -1,0 +1,114 @@
+# Zuzu round 7 (Silas, 2026-10-05: "I like the poncho design in r6 best for zuzu. But noticed that
+# some of the back images in the tests fail to show the sword.")
+# Zuzu is locked to R6 (ArtImage 241913). These Arthemy renders carry the R6 costume and weighted katana
+# tags so the back views keep the sword. The 8 Kontext angles from R6 itself are ANGLES-ZUZU.yaml.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+round: 7
+series: zuzu-koala-assassin
+project_slug: comic-creator
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author's settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style)
+  suffix: western, dusty, painterly, dramatic lighting, gritty
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: r7-zuzu-turnaround-a
+  entity: zuzu
+  title: Zuzu (R6), turnaround A
+  size: 1216x832
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, tall, lanky, long legs, slender, straw boater, hat band, cowboy
+    hat, cloak, cape, hood, orange poncho, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text
+  prompt_prose: Zuzu turnaround on the R6 design, the katana on his back in every view.
+  prompt_tags: (fully clothed:1.3), same outfit in every view, (rust brown poncho:1.3), orange zigzag trim, (kasa:1.2),
+    conical straw hat, dark tunic, orange sash, brown trousers, (katana on back:1.4), (sheathed katana:1.2), scabbard
+    strapped across the back over the poncho, sword hilt above the right shoulder, sword visible in every view,
+    character sheet, turnaround, multiple views, front view, side view, back view, full body, standing, simple background,
+    anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs, small stature, grey
+    fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting, frown
+  jobs:
+    arthemy-house: 33549
+- key: r7-zuzu-turnaround-b
+  entity: zuzu
+  title: Zuzu (R6), turnaround B
+  size: 1216x832
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, tall, lanky, long legs, slender, straw boater, hat band, cowboy
+    hat, cloak, cape, hood, orange poncho, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text
+  prompt_prose: Zuzu turnaround on the R6 design, the katana on his back in every view.
+  prompt_tags: (fully clothed:1.3), same outfit in every view, (rust brown poncho:1.3), orange zigzag trim, (kasa:1.2),
+    conical straw hat, dark tunic, orange sash, brown trousers, (katana on back:1.4), (sheathed katana:1.2), scabbard
+    strapped across the back over the poncho, sword hilt above the right shoulder, sword visible in every view,
+    character sheet, turnaround, multiple views, front view, side view, back view, full body, standing, simple background,
+    anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs, small stature, grey
+    fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting, frown
+  jobs:
+    arthemy-house: 33550
+- key: r7-zuzu-turnaround-c
+  entity: zuzu
+  title: Zuzu (R6), turnaround C
+  size: 1216x832
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, tall, lanky, long legs, slender, straw boater, hat band, cowboy
+    hat, cloak, cape, hood, orange poncho, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text
+  prompt_prose: Zuzu turnaround on the R6 design, the katana on his back in every view.
+  prompt_tags: (fully clothed:1.3), same outfit in every view, (rust brown poncho:1.3), orange zigzag trim, (kasa:1.2),
+    conical straw hat, dark tunic, orange sash, brown trousers, (katana on back:1.4), (sheathed katana:1.2), scabbard
+    strapped across the back over the poncho, sword hilt above the right shoulder, sword visible in every view,
+    character sheet, turnaround, multiple views, front view, side view, back view, full body, standing, simple background,
+    anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs, small stature, grey
+    fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting, frown
+  jobs:
+    arthemy-house: 33551
+- key: r7-zuzu-back
+  entity: zuzu
+  title: Zuzu (R6), back view
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, tall, lanky, long legs, slender, straw boater, hat band, cowboy
+    hat, cloak, cape, hood, orange poncho, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text
+  prompt_prose: Zuzu seen from behind, back view, the katana slung across his back over the poncho.
+  prompt_tags: (fully clothed:1.3), same outfit in every view, (rust brown poncho:1.3), orange zigzag trim, (kasa:1.2),
+    conical straw hat, dark tunic, orange sash, brown trousers, (katana on back:1.4), (sheathed katana:1.2), scabbard
+    strapped across the back over the poncho, sword hilt above the right shoulder, sword visible in every view,
+    solo, full body, standing, from behind, back view, simple background, anthro, koala, male, adult, (short:1.2),
+    (stocky:1.2), chubby, barrel chest, short legs, small stature, grey fur, round fluffy ears, notched ear, ear
+    scar, broad black nose, serious, squinting, frown
+  jobs:
+    arthemy-house: 33552
+- key: r7-zuzu-three-quarter-back
+  entity: zuzu
+  title: Zuzu (R6), three-quarter back view
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, tall, lanky, long legs, slender, straw boater, hat band, cowboy
+    hat, cloak, cape, hood, orange poncho, unarmed, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres,
+    worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts,
+    chibi, human, text
+  prompt_prose: Zuzu seen from behind, three-quarter view, looking back over shoulder, the katana slung across his
+    back over the poncho.
+  prompt_tags: (fully clothed:1.3), same outfit in every view, (rust brown poncho:1.3), orange zigzag trim, (kasa:1.2),
+    conical straw hat, dark tunic, orange sash, brown trousers, (katana on back:1.4), (sheathed katana:1.2), scabbard
+    strapped across the back over the poncho, sword hilt above the right shoulder, sword visible in every view,
+    solo, full body, standing, from behind, three-quarter view, looking back over shoulder, simple background, anthro,
+    koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs, small stature, grey fur, round
+    fluffy ears, notched ear, ear scar, broad black nose, serious, squinting, frown
+  jobs:
+    arthemy-house: 33553

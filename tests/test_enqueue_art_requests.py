@@ -113,3 +113,52 @@ def test_refresh_status_records_art_image(tmp_path):
     assert counts == {"DONE": 1}
     saved = yaml.safe_load(path.read_text())
     assert saved["subjects"][0]["art"] == {"zimage-turbo": {"status": "DONE", "art_image_id": 9}}
+
+
+KONTEXT_LEDGER = {
+    "lanes": [{"key": "angles", "engine": "kontext", "prompt": "prose", "steps": 20, "guidance": 2.5}],
+    "subjects": [
+        {"key": "front", "size": "832x1216", "prompt_prose": "turn him around", "source_image_id": 7, "jobs": {}},
+        {"key": "back", "size": "832x1216", "prompt_prose": "show his back", "source_image_id": 7, "jobs": {}},
+    ],
+}
+
+
+def test_kontext_lane_sends_source_image_and_settings():
+    lane, subject = KONTEXT_LEDGER["lanes"][0], KONTEXT_LEDGER["subjects"][0]
+    body = enq.build_request(KONTEXT_LEDGER, lane, subject, "data:image/png;base64,AAAA")
+    assert body["engine"] == "kontext"
+    assert body["sourceImageBase64"] == "data:image/png;base64,AAAA"
+    assert body["steps"] == 20 and body["guidance"] == 2.5
+    assert "negativePrompt" not in body and "checkpoint" not in body
+
+
+def test_kontext_lane_without_source_image_is_refused():
+    lane, subject = KONTEXT_LEDGER["lanes"][0], KONTEXT_LEDGER["subjects"][0]
+    try:
+        enq.build_request(KONTEXT_LEDGER, lane, subject)
+    except ValueError as exc:
+        assert "source_image_id" in str(exc)
+    else:  # pragma: no cover
+        raise AssertionError("expected ValueError")
+
+
+def test_submit_fetches_each_source_image_once(tmp_path):
+    path = tmp_path / "kontext.yaml"
+    path.write_text(yaml.safe_dump(KONTEXT_LEDGER, sort_keys=False))
+    header, ledger = enq.load_ledger(path)
+    fetched, sent = [], []
+
+    def fetch(image_id):
+        fetched.append(image_id)
+        return "data:image/webp;base64,BBBB"
+
+    def post(body):
+        sent.append(body)
+        return 200, {"data": {"jobId": 100 + len(sent)}}
+
+    cells = list(enq.iter_cells(ledger))
+    assert enq.submit(path, header, ledger, cells, post=post, fetch_source=fetch) == (2, 0)
+    assert fetched == [7]
+    assert all(b["sourceImageBase64"] == "data:image/webp;base64,BBBB" for b in sent)
+    assert yaml.safe_load(path.read_text())["subjects"][1]["jobs"]["angles"] == 102
