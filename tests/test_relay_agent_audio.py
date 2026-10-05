@@ -129,7 +129,7 @@ def test_upload_result_sends_audio_private_with_its_file_type(monkeypatch):
     assert captured["body"]["promptString"] == "synth rock, male lead vocals"
 
 
-def test_upload_result_leaves_image_visibility_to_complete(monkeypatch):
+def capture_image_upload(monkeypatch, payload):
     captured = {}
 
     def fake_http_json(method, url, body=None, bearer=None, timeout=60):
@@ -138,8 +138,30 @@ def test_upload_result_leaves_image_visibility_to_complete(monkeypatch):
 
     monkeypatch.setattr(relay, "http_json", fake_http_json)
     media = {"data_b64": MP3_B64, "file_type": "png", "is_video": False}
-    relay.upload_result({"id": 10, "payload": {"promptString": "a robot"}}, media)
-    assert "isPublic" not in captured["body"]
+    relay.upload_result({"id": 10, "payload": payload}, media)
+    return captured["body"]
+
+
+def test_upload_result_stages_image_with_the_jobs_visibility(monkeypatch):
+    body = capture_image_upload(
+        monkeypatch,
+        {"promptString": "a robot", "save": {"isMature": True, "isPublic": False}},
+    )
+    assert body["isMature"] is True
+    assert body["isPublic"] is False
+
+    body = capture_image_upload(
+        monkeypatch,
+        {"promptString": "a robot", "save": {"isMature": False, "isPublic": True}},
+    )
+    assert body["isMature"] is False
+    assert body["isPublic"] is True
+
+
+def test_upload_result_stages_image_private_without_a_save_block(monkeypatch):
+    body = capture_image_upload(monkeypatch, {"promptString": "a robot"})
+    assert body["isPublic"] is False
+    assert body["isMature"] is False
 
 
 def test_local_copy_keeps_audio_bytes_as_mp3(monkeypatch, tmp_path):
