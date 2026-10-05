@@ -57,10 +57,11 @@ rail line passes through but the train never stops twice. Issue 1's town sits a 
   legs, heavy shoulders, a low centre of gravity. Never tall or lanky. In a group he is the shortest adult
   in the frame, and the ten-year-old sister stands taller than him.
 - **Look:** small, compact, broad ears with grey tufts, heavy
-  black nose, old scar along the left ear. A weathered road-cloak the colour of dust. Wide straw
-  travel hat on his back. Katana worn *high* across the back because the blade is nearly his own
+  black nose, old scar along the left ear. A dusty, earth-toned poncho over a dark tunic, brown trousers and an
+  orange sash: the Man with No Name callback (Silas, 2026-10-05). A kasa, the wide straw travel hat
+  (sandogasa style) whose brim shades his eyes. Katana worn *high* across the back because the blade is nearly his own
   height; the scabbard is plain black lacquer, worn pale at the mouth where his thumb rests.
-  A gourd canteen at the hip. A thin oilcloth wallet inside the cloak: the contract papers.
+  A gourd canteen at the hip. A thin oilcloth wallet inside the poncho: the contract papers.
 - **Habits:** chews eucalyptus when he thinks. Takes off his hat to the dead. Eats before work, always.
 - **Rule he keeps, the *letter of the contract*:** he kills the name on the paper, only the name, and
   is paid. Issue 1 plants the question of what he does when the letter and the spirit part ways.
