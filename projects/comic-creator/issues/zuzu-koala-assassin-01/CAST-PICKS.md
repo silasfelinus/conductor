@@ -178,3 +178,17 @@ right is where we want him"*
   `scripts/enqueue_art_requests.py` gained `mask_box` for this: one or more boxes, sent with a generated mask
   to Kind Robots' `/api/comfy/kontext/enqueue`.
 
+## Silas's notes on the round-10 coyote and abbess (2026-10-05)
+
+*"There are some issues with mother superior. Her snout is too long. Coyote vagrant is too clean cut. He's had a
+harder life. Outfit should reflect that. He's very very poor. Every day is a fight to survive. Love the siblings.
+No notes"*
+
+- **The siblings are approved as they are** (round-10 sets).
+- **The coyote is destitute:** a tattered, patched coat with a shredded hem, rags under it, ripped trousers,
+  falling-apart boots, a crushed hat, mangy fur, starving and gaunt. Every day is a fight to survive.
+- **The abbess has a short, blunt otter muzzle:** a round, flat face, never a long or pointed snout.
+- **Round 12** (ART-ROUND-12.yaml, ArtJobs 33857–33888) re-renders both at eight angles. The coyote's pending
+  side fixes and two stump seeds on the clean round-10 outfit were cancelled; the masked stump and side fixes
+  rerun on the new coyote.
+
