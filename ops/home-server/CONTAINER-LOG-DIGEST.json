@@ -1,74 +1,164 @@
 {
-  "generated_at": "2026-10-04T14:00:01.878367+00:00",
+  "generated_at": "2026-10-05T14:00:02.259331+00:00",
   "host": "alexandria",
   "new": [
     {
       "baseline": null,
-      "container": "sab",
-      "count": 3,
-      "fingerprint": "718ac132a97c",
-      "sample": "2026-10-04 00:27:56,797::WARNING::[downloader:907] Server news.newsgroup.ninja reported: 502 Access Denied (Maximum Connections Reached)",
+      "container": "auth",
+      "count": 8,
+      "fingerprint": "c0197fc71f93",
+      "sample": "time=\"2026-10-05T00:34:57-07:00\" level=error msg=\"Target URL '/blog/' has an insecure scheme '', only the 'https' and 'wss' schemes are supported so session cookies can be transmitted securely\" method",
+      "severity": "error",
+      "skeleton": "time=<str> level=error msg=\"target url '<path>"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "346b6208f1d7",
+      "sample": "[2026-10-04 07:17:01.039] INFO: [SocketAuthority] Socket 10BBYeCfcxIGEdnyAACw disconnected from client \"superkate\" after 195939ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket 10bbyecfcxigednyaacw disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "d996f59c993e",
+      "sample": "[2026-10-04 07:19:54.024] INFO: [SocketAuthority] Socket SSP0Osw0tBohLa8nAACy disconnected from client \"superkate\" after 95099ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket ssp0osw0tbohla8naacy disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "b068f95c6c5b",
+      "sample": "[2026-10-04 09:47:45.131] INFO: [SocketAuthority] Socket KyC-eXWy-471WAiUAAC0 disconnected from client \"superkate\" after 220880ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket kyc-exwy-471waiuaac0 disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "1837f55a031a",
+      "sample": "[2026-10-04 09:51:35.385] INFO: [SocketAuthority] Socket JCP5UHDi2PPakYUqAAC2 disconnected from client \"superkate\" after 95173ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket jcp5uhdi2ppakyuqaac2 disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "audiobookshelf",
+      "count": 1,
+      "fingerprint": "73f5bee18a26",
+      "sample": "[2026-10-04 16:50:53.598] INFO: [SocketAuthority] Socket S3Jm7U9et6iLUxVTAAC4 disconnected from client \"superkate\" after 146084ms (Reason: ping timeout)",
+      "severity": "other",
+      "skeleton": "[<ts>] info: [socketauthority] socket s3jm7u9et6iluxvtaac4 disconnected from client <str> after <num> (reason: ping timeout)"
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
+      "count": 1,
+      "fingerprint": "47de6250f462",
+      "sample": "[v2.6.5.5623] System.Net.Http.HttpRequestException: One or more errors occurred. (Network unreachable) (Network unreachable) (Connection refused) (www.limetorrents.fun:443)",
+      "severity": "error",
+      "skeleton": "[v2.<num>.<num>] system.net.http.httprequestexception: one or more errors occurred. (network unreachable) (network unreachable) (connection refused) (www.limetorrents.fun:<num>)"
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
+      "count": 1,
+      "fingerprint": "0a52ddf98478",
+      "sample": "---> System.AggregateException: One or more errors occurred. (Network unreachable) (Network unreachable) (Connection refused)",
+      "severity": "error",
+      "skeleton": "---> system.aggregateexception: one or more errors occurred. (network unreachable) (network unreachable) (connection refused)"
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
+      "count": 1,
+      "fingerprint": "e7eff59a6953",
+      "sample": "---> (Inner Exception #1) System.Net.Sockets.SocketException (101): Network unreachable",
+      "severity": "error",
+      "skeleton": "---> (inner exception #<num>) system.net.sockets.socketexception (<num>): network unreachable"
+    },
+    {
+      "baseline": null,
+      "container": "prowlarr",
+      "count": 1,
+      "fingerprint": "81dc9012321f",
+      "sample": "---> (Inner Exception #2) System.Net.Sockets.SocketException (111): Connection refused",
+      "severity": "error",
+      "skeleton": "---> (inner exception #<num>) system.net.sockets.socketexception (<num>): connection refused"
+    },
+    {
+      "baseline": null,
+      "container": "jellyfin",
+      "count": 1,
+      "fingerprint": "d7236acde478",
+      "sample": "[05:39:32] [WRN] [95] Emby.Server.Implementations.Library.LibraryManager: Primary image for Shujuu Kankei Master and Servant Relation (COMIC Himezakura 2005-04 Vol. 4) [English] [Base\u2026] (<REDACTED-BLO",
       "severity": "warn",
-      "skeleton": "<ts>::warning::[downloader:<num>] server news.newsgroup.ninja reported: <num> access denied (maximum connections reached)"
+      "skeleton": "[<ts>] [wrn] [<num>] emby.server.implementations.library.librarymanager: primary image for shujuu kankei master and servant relation (comic himezakura <num>-<num> vol. <num>) [english] [base\u2026] (<redacted-blob>) not found at <str>, source was <redacted-blob>.png"
     },
     {
       "baseline": null,
-      "container": "audiobookshelf",
+      "container": "jellyfin",
       "count": 1,
-      "fingerprint": "7bfac7414f71",
-      "sample": "[2026-10-03 08:00:00.167] INFO: [SocketAuthority] Socket Sbq8I8t8AXvDXMEsAACa disconnected from client \"superkate\" after 95106ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket sbq8i8t8axvdxmesaaca disconnected from client <str> after <num> (reason: ping timeout)"
+      "fingerprint": "318e18d393ad",
+      "sample": "[05:39:44] [WRN] [95] Emby.Server.Implementations.Library.LibraryManager: Primary image for Shujuu no Kankei! - The Relation of Master to Servant (Bakemonogatari)\u2026] (<REDACTED-BLOB>) not found at \"<RE",
+      "severity": "warn",
+      "skeleton": "[<ts>] [wrn] [<num>] emby.server.implementations.library.librarymanager: primary image for shujuu no kankei! - the relation of master to servant (bakemonogatari)\u2026] (<redacted-blob>) not found at <str>, source was <redacted-blob>.jpg"
     },
     {
       "baseline": null,
-      "container": "audiobookshelf",
+      "container": "jellyfin",
       "count": 1,
-      "fingerprint": "e89d3fbc707f",
-      "sample": "[2026-10-03 08:02:15.988] INFO: [SocketAuthority] Socket b2Zp-9_-N8IxKYmaAACc disconnected from client \"superkate\" after 120147ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket b2zp-9_-n8ixkymaaacc disconnected from client <str> after <num> (reason: ping timeout)"
+      "fingerprint": "adc8ccbe651a",
+      "sample": "[05:39:59] [WRN] [95] Emby.Server.Implementations.Library.LibraryManager: Primary image for Shukushou Byoutou 24-ji Shrinking Disease (Microne Magazine Vol. 60) [English] \u2026] (<REDACTED-BLOB>) not foun",
+      "severity": "warn",
+      "skeleton": "[<ts>] [wrn] [<num>] emby.server.implementations.library.librarymanager: primary image for shukushou byoutou <num>-ji shrinking disease (microne magazine vol. <num>) [english] \u2026] (<redacted-blob>) not found at <str>, source was <redacted-blob>.jpg"
     },
     {
       "baseline": null,
-      "container": "audiobookshelf",
+      "container": "jellyfin",
       "count": 1,
-      "fingerprint": "de9f0b530c65",
-      "sample": "[2026-10-03 13:31:12.079] INFO: [SocketAuthority] Socket E65Ol4Oaam13vBBAAACo disconnected from client \"superkate\" after 148797ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket e65ol4oaam13vbbaaaco disconnected from client <str> after <num> (reason: ping timeout)"
+      "fingerprint": "c36f4c7c1731",
+      "sample": "[05:40:13] [WRN] [95] Emby.Server.Implementations.Library.LibraryManager: Primary image for Shukushou Byoutou 24-ji Shrinking Disease Ward 24-hours (Microne Magazine Vol. \u2026] (<REDACTED-BLOB>) not foun",
+      "severity": "warn",
+      "skeleton": "[<ts>] [wrn] [<num>] emby.server.implementations.library.librarymanager: primary image for shukushou byoutou <num>-ji shrinking disease ward <num>-hours (microne magazine vol. \u2026] (<redacted-blob>) not found at <str>, source was <redacted-blob>.jpg"
     },
     {
       "baseline": null,
-      "container": "audiobookshelf",
+      "container": "jellyfin",
       "count": 1,
-      "fingerprint": "93271fad4d08",
-      "sample": "[2026-10-03 17:34:50.299] INFO: [SocketAuthority] Socket UjSlpmZBFnZLXwLRAACq disconnected from client \"superkate\" after 297319ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket ujslpmzbfnzlxwlraacq disconnected from client <str> after <num> (reason: ping timeout)"
+      "fingerprint": "ec2a748536e4",
+      "sample": "[05:40:26] [WRN] [95] Emby.Server.Implementations.Library.LibraryManager: Primary image for Shutter B&W (Blue Archive) [English] [Decensored]] (<REDACTED-BLOB>) not found at \"<REDACTED-BLOB>.jpg\", sou",
+      "severity": "warn",
+      "skeleton": "[<ts>] [wrn] [<num>] emby.server.implementations.library.librarymanager: primary image for shutter b&w (blue archive) [english] [decensored]] (<redacted-blob>) not found at <str>, source was <redacted-blob>.jpg"
     },
     {
       "baseline": null,
-      "container": "audiobookshelf",
+      "container": "jellyfin",
       "count": 1,
-      "fingerprint": "227169900e62",
-      "sample": "[2026-10-03 17:38:47.097] INFO: [SocketAuthority] Socket _l5z7d-IqAhF5b9tAACs disconnected from client \"superkate\" after 95169ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket _l5z7d-iqahf5b9taacs disconnected from client <str> after <num> (reason: ping timeout)"
+      "fingerprint": "c03dc36bf8a6",
+      "sample": "[05:40:41] [WRN] [95] Emby.Server.Implementations.Library.LibraryManager: Primary image for Sis Ero [English] {Tadanohito} [Decensored]] (<REDACTED-BLOB>) not found at \"<REDACTED-BLOB>.jpg\", source wa",
+      "severity": "warn",
+      "skeleton": "[<ts>] [wrn] [<num>] emby.server.implementations.library.librarymanager: primary image for sis ero [english] {tadanohito} [decensored]] (<redacted-blob>) not found at <str>, source was <redacted-blob>.jpg"
     },
     {
       "baseline": null,
-      "container": "audiobookshelf",
+      "container": "auth",
       "count": 1,
-      "fingerprint": "1cb72fd4df56",
-      "sample": "[2026-10-03 19:12:38.210] INFO: [SocketAuthority] Socket y6U3QYqj8TGA9WMGAACu disconnected from client \"superkate\" after 296193ms (Reason: ping timeout)",
-      "severity": "other",
-      "skeleton": "[<ts>] info: [socketauthority] socket y6u3qyqj8tga9wmgaacu disconnected from client <str> after <num> (reason: ping timeout)"
+      "fingerprint": "87c210481895",
+      "sample": "time=\"2026-10-05T00:34:57-07:00\" level=error msg=\"Target URL '/' has an insecure scheme '', only the 'https' and 'wss' schemes are supported so session cookies can be transmitted securely\" method=GET ",
+      "severity": "error",
+      "skeleton": "time=<str> level=error msg=<str> method=get path=<path>"
     }
   ],
   "quiet": [
     {
-      "baseline": 17.0,
+      "baseline": 15.0,
       "container": "scoopspress",
       "count": 0,
       "fingerprint": "c0da6bb0877b",
@@ -82,135 +172,99 @@
     "containers_scanned": 44,
     "containers_total": 44,
     "high_cardinality": [],
-    "lines_matched": 2475,
-    "lines_read": 131824,
-    "signatures_total": 109,
+    "lines_matched": 2779,
+    "lines_read": 134765,
+    "signatures_total": 135,
     "truncated": []
   },
   "spiking": [
     {
       "baseline": 24.0,
       "container": "proxysql",
-      "count": 271,
+      "count": 698,
       "fingerprint": "8da141147da1",
-      "sample": "2026-10-03 07:12:29 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.234.231.111:54288 , user 'unknown' , hostgroup -1 , connection 0",
+      "sample": "2026-10-04 07:48:23 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 100.117.55.74:40322 , user 'unknown' , hostgroup -1 , connection 0",
       "severity": "warn",
       "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup -<num> , connection <num>"
     },
     {
-      "baseline": 0.0,
-      "container": "sonarr",
-      "count": 224,
-      "fingerprint": "85e74f9dd654",
-      "sample": "[Error] VideoFileInfoReader: Unable to parse media info from file: /pc/miss_kitty/sonarr/Welcome.to.Demon.School.Iruma-kun.S04E17.1080p.CR.WEB-DL.AAC2.0.H.264.DUAL-BiOMA/Welcome.to.Demon.School.Iruma-",
-      "severity": "error",
-      "skeleton": "[error] videofileinforeader: unable to parse media info from file: <path>"
-    },
-    {
-      "baseline": 0.0,
-      "container": "sonarr",
-      "count": 224,
-      "fingerprint": "effbc70f4438",
-      "sample": "[matroska,webm @ 0x19cd180] EBML header parsing failed",
-      "severity": "error",
-      "skeleton": "[matroska,webm @ <hex>] ebml header parsing failed"
-    },
-    {
-      "baseline": 0.0,
-      "container": "sonarr",
-      "count": 224,
-      "fingerprint": "52feaf1413eb",
-      "sample": "[Error] DetectSample: Failed to get runtime from the file, make sure ffprobe is available",
-      "severity": "error",
-      "skeleton": "[error] detectsample: failed to get runtime from the file, make sure ffprobe is available"
-    },
-    {
       "baseline": 9.0,
       "container": "proxysql",
-      "count": 224,
+      "count": 671,
       "fingerprint": "9f8480a922a5",
-      "sample": "2026-10-03 07:12:29 mysql_data_stream.cpp:720:read_from_net(): [ERROR] Oversized first packet from client: pkt_length=854541 exceeds queue capacity (32764). Closing fd=123",
+      "sample": "2026-10-04 09:42:48 mysql_data_stream.cpp:720:read_from_net(): [ERROR] Oversized first packet from client: pkt_length=66326 exceeds queue capacity (32764). Closing fd=157",
       "severity": "error",
       "skeleton": "<ts> mysql_data_stream.cpp<ip>read_from_net(): [error] oversized first packet from client: pkt_length=<num> exceeds queue capacity (<num>). closing fd=<num>"
     },
     {
-      "baseline": 0.0,
-      "container": "KindRobots",
-      "count": 29,
-      "fingerprint": "392876f720a1",
-      "sample": "message: 'Art prompt rejected by the prompt contract (1 violation):\\n' +",
-      "severity": "other",
-      "skeleton": "message: <str> +"
+      "baseline": 5.0,
+      "container": "scoopspress",
+      "count": 88,
+      "fingerprint": "4798ff1f70e0",
+      "sample": "[Sun Oct 04 09:19:56.869710 2026] [php:warn] [pid 1282:tid 1282] [client 71.6.134.234:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90, refe",
+      "severity": "warn",
+      "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>, referer: <url>"
+    },
+    {
+      "baseline": 3.0,
+      "container": "yac",
+      "count": 23,
+      "fingerprint": "5016575f62a0",
+      "sample": "WARN  2026-10-04T07:47:04.201 HttpRequest: received broken HTTP request, invalid first line",
+      "severity": "warn",
+      "skeleton": "warn <ts> httprequest: received broken http request, invalid first line"
     }
   ],
   "top": [
     {
       "baseline": null,
-      "container": "yac",
-      "count": 409,
-      "fingerprint": "22365e849ef3",
-      "sample": "WARN  2026-10-03T07:08:54.797 QObject: Cannot create children for a parent that is in a different thread.",
-      "severity": "warn",
-      "skeleton": "warn <ts> qobject: cannot create children for a parent that is in a different thread."
-    },
-    {
-      "baseline": null,
       "container": "proxysql",
-      "count": 271,
+      "count": 698,
       "fingerprint": "8da141147da1",
-      "sample": "2026-10-03 07:12:29 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 172.234.231.111:54288 , user 'unknown' , hostgroup -1 , connection 0",
+      "sample": "2026-10-04 07:48:23 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 100.117.55.74:40322 , user 'unknown' , hostgroup -1 , connection 0",
       "severity": "warn",
       "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup -<num> , connection <num>"
     },
     {
       "baseline": null,
-      "container": "sonarr",
-      "count": 224,
-      "fingerprint": "85e74f9dd654",
-      "sample": "[Error] VideoFileInfoReader: Unable to parse media info from file: /pc/miss_kitty/sonarr/Welcome.to.Demon.School.Iruma-kun.S04E17.1080p.CR.WEB-DL.AAC2.0.H.264.DUAL-BiOMA/Welcome.to.Demon.School.Iruma-",
-      "severity": "error",
-      "skeleton": "[error] videofileinforeader: unable to parse media info from file: <path>"
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 224,
-      "fingerprint": "effbc70f4438",
-      "sample": "[matroska,webm @ 0x19cd180] EBML header parsing failed",
-      "severity": "error",
-      "skeleton": "[matroska,webm @ <hex>] ebml header parsing failed"
-    },
-    {
-      "baseline": null,
-      "container": "sonarr",
-      "count": 224,
-      "fingerprint": "52feaf1413eb",
-      "sample": "[Error] DetectSample: Failed to get runtime from the file, make sure ffprobe is available",
-      "severity": "error",
-      "skeleton": "[error] detectsample: failed to get runtime from the file, make sure ffprobe is available"
-    },
-    {
-      "baseline": null,
       "container": "proxysql",
-      "count": 224,
+      "count": 671,
       "fingerprint": "9f8480a922a5",
-      "sample": "2026-10-03 07:12:29 mysql_data_stream.cpp:720:read_from_net(): [ERROR] Oversized first packet from client: pkt_length=854541 exceeds queue capacity (32764). Closing fd=123",
+      "sample": "2026-10-04 09:42:48 mysql_data_stream.cpp:720:read_from_net(): [ERROR] Oversized first packet from client: pkt_length=66326 exceeds queue capacity (32764). Closing fd=157",
       "severity": "error",
       "skeleton": "<ts> mysql_data_stream.cpp<ip>read_from_net(): [error] oversized first packet from client: pkt_length=<num> exceeds queue capacity (<num>). closing fd=<num>"
     },
     {
       "baseline": null,
-      "container": "requests",
-      "count": 121,
-      "fingerprint": "b0b22d3dd961",
-      "sample": "2026-10-04T11:34:09.389Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 268894\",\"title\"",
-      "severity": "error",
-      "skeleton": "<ts> [error][sonarr scan]: failed to process sonarr media {<str>:<str>,<str>:<str>}"
+      "container": "yac",
+      "count": 197,
+      "fingerprint": "22365e849ef3",
+      "sample": "WARN  2026-10-04T07:06:06.028 QObject: Cannot create children for a parent that is in a different thread.",
+      "severity": "warn",
+      "skeleton": "warn <ts> qobject: cannot create children for a parent that is in a different thread."
+    },
+    {
+      "baseline": null,
+      "container": "scoopspress",
+      "count": 194,
+      "fingerprint": "6497ddc377f6",
+      "sample": "[Sun Oct 04 07:51:42.249144 2026] [php:warn] [pid 1740:tid 1740] [client 157.245.143.165:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
+      "severity": "warn",
+      "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>"
+    },
+    {
+      "baseline": null,
+      "container": "proxysql",
+      "count": 181,
+      "fingerprint": "a9cfc33818b3",
+      "sample": "2026-10-04 14:05:40 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 75.111.66.70:33996 , user 'kindrobot_migrate' , hostgroup 30 , connection 250353",
+      "severity": "warn",
+      "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup <num> , connection <num>"
     },
     {
       "baseline": null,
       "container": "radarr",
-      "count": 118,
+      "count": 123,
       "fingerprint": "53883f24d246",
       "sample": "[Error] DownloadMonitoringService: Couldn't process tracked download The Home 2025 1080p AMZN WEB-DL DDP5.1 Atmos x265-TBMovies",
       "severity": "error",
@@ -218,156 +272,174 @@
     },
     {
       "baseline": null,
-      "container": "proxysql",
-      "count": 111,
-      "fingerprint": "a9cfc33818b3",
-      "sample": "2026-10-03 07:10:41 MySQL_Thread.cpp:4786:ProcessAllSessions_Healthy0(): [WARNING] Closing unhealthy client connection 75.111.66.70:57452 , user 'kindrobot_migrate' , hostgroup 30 , connection 186237",
+      "container": "requests",
+      "count": 121,
+      "fingerprint": "b0b22d3dd961",
+      "sample": "2026-10-05T11:34:17.871Z [error][Sonarr Scan]: Failed to process Sonarr media {\"errorMessage\":\"[TMDB] Failed to get TV show using the external TVDB ID: No show returned from API for ID 271317\",\"title\"",
+      "severity": "error",
+      "skeleton": "<ts> [error][sonarr scan]: failed to process sonarr media {<str>:<str>,<str>:<str>}"
+    },
+    {
+      "baseline": null,
+      "container": "scoopspress",
+      "count": 88,
+      "fingerprint": "4798ff1f70e0",
+      "sample": "[Sun Oct 04 09:19:56.869710 2026] [php:warn] [pid 1282:tid 1282] [client 71.6.134.234:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90, refe",
       "severity": "warn",
-      "skeleton": "<ts> mysql_thread.cpp<ip>processallsessions_healthy0(): [warning] closing unhealthy client connection <ip> , user <str> , hostgroup <num> , connection <num>"
+      "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>, referer: <url>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 63,
+      "count": 69,
+      "fingerprint": "24756dae8afd",
+      "sample": "time=2026-10-04T18:51:17.418-07:00 comm=spawn-unnamed source=collector level=warning tid=2084781  msg=\"SPAWN SERVER: child with pid 2084783 (request 1) exited with exit code 1: /usr/libexec/netdata/pl",
+      "severity": "warn",
+      "skeleton": "time=<ts> comm=spawn-unnamed source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 64,
       "fingerprint": "2107195e439a",
-      "sample": "2026-10-04T02:10:59.957408Z  WARN ThreadId(08) journal_registry::registry::monitor: 23: Failed to send file system event: receiver dropped (channel closed)",
+      "sample": "2026-10-05T01:51:07.950136Z  WARN ThreadId(08) journal_registry::registry::monitor: 23: Failed to send file system event: receiver dropped (channel closed)",
       "severity": "error",
       "skeleton": "<ts> warn threadid(<num>) journal_registry<ip>registry<ip>monitor: <num>: failed to send file system event: receiver dropped (channel closed)"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 52,
-      "fingerprint": "24756dae8afd",
-      "sample": "time=2026-10-03T19:11:10.372-07:00 comm=spawn-unnamed source=collector level=warning tid=4117641  msg=\"SPAWN SERVER: child with pid 4117642 (request 1) exited with exit code 1: /usr/libexec/netdata/pl",
-      "severity": "warn",
-      "skeleton": "time=<ts> comm=spawn-unnamed source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
-    },
-    {
-      "baseline": null,
-      "container": "KindRobots",
-      "count": 38,
-      "fingerprint": "3d84f1a8fd12",
-      "sample": "Operation rejected: {",
-      "severity": "other",
-      "skeleton": "operation rejected: {"
-    },
-    {
-      "baseline": null,
-      "container": "KindRobots",
-      "count": 38,
-      "fingerprint": "bb9501289941",
-      "sample": "name: 'Error',",
-      "severity": "error",
-      "skeleton": "name: <str>,"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 37,
-      "fingerprint": "8ef3774a1987",
-      "sample": "time=2026-10-03T19:14:17.390-07:00 comm=apps.plugin source=collector level=error errno=\"3, No such process\" tid=4114578  msg=\"Cannot process /host/proc/4161226/io (command 'mariadbd-safe')\"",
-      "severity": "error",
-      "skeleton": "time=<ts> comm=apps.plugin source=collector level=error errno=<str> tid=<num> msg=\"cannot process <path>"
-    },
-    {
-      "baseline": null,
-      "container": "netdata",
-      "count": 36,
+      "count": 39,
       "fingerprint": "29a758d0ae5d",
-      "sample": "time=2026-10-03T19:10:58.469-07:00 comm=tc-qos-helper.sh source=collector level=warning tid=4114639 thread=tc-qos-helper request=\"'/usr/libexec/netdata/plugins.d/tc-qos-helper.sh' '1' \" msg=\"FireQOS i",
+      "sample": "time=2026-10-04T18:51:06.278-07:00 comm=tc-qos-helper.sh source=collector level=warning tid=2081973 thread=tc-qos-helper request=\"'/usr/libexec/netdata/plugins.d/tc-qos-helper.sh' '1' \" msg=\"FireQOS i",
       "severity": "warn",
       "skeleton": "time=<ts> comm=tc-qos-helper.sh source=collector level=warning tid=<num> thread=tc-qos-helper request=\"'<path>"
     },
     {
       "baseline": null,
-      "container": "KindRobots",
-      "count": 29,
-      "fingerprint": "392876f720a1",
-      "sample": "message: 'Art prompt rejected by the prompt contract (1 violation):\\n' +",
-      "severity": "other",
-      "skeleton": "message: <str> +"
-    },
-    {
-      "baseline": null,
-      "container": "scoopspress",
-      "count": 22,
-      "fingerprint": "6497ddc377f6",
-      "sample": "[Sat Oct 03 08:26:17.761086 2026] [php:warn] [pid 1645:tid 1645] [client 198.235.24.201:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90",
-      "severity": "warn",
-      "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>"
-    },
-    {
-      "baseline": null,
       "container": "netdata",
-      "count": 18,
-      "fingerprint": "b4a4f3c0319b",
-      "sample": "time=2026-10-03T19:10:58.432-07:00 comm=spawn-plugins source=collector level=warning tid=4113242  msg=\"SPAWN SERVER: child with pid 4114615 (request 8) exited with exit code 1: /bin/sh -c \\\"exec /usr/",
-      "severity": "warn",
-      "skeleton": "time=<ts> comm=spawn-plugins source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
+      "count": 32,
+      "fingerprint": "8ef3774a1987",
+      "sample": "time=2026-10-04T18:53:48.220-07:00 comm=apps.plugin source=collector level=error errno=\"3, No such process\" tid=2081914  msg=\"Cannot process /host/proc/2120235/limits (command 'cat')\"",
+      "severity": "error",
+      "skeleton": "time=<ts> comm=apps.plugin source=collector level=error errno=<str> tid=<num> msg=\"cannot process <path>"
     },
     {
       "baseline": null,
       "container": "yac",
-      "count": 17,
+      "count": 23,
       "fingerprint": "5016575f62a0",
-      "sample": "WARN  2026-10-03T07:38:07.941 HttpRequest: received broken HTTP request, invalid first line",
+      "sample": "WARN  2026-10-04T07:47:04.201 HttpRequest: received broken HTTP request, invalid first line",
       "severity": "warn",
       "skeleton": "warn <ts> httprequest: received broken http request, invalid first line"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 13,
-      "fingerprint": "435f030e9489",
-      "sample": "time=2026-10-03T19:11:43.415-07:00 comm=netdata source=health level=warning tid=4114568 thread=HEALTH <REDACTED-BLOB> node=3210142d6f03 instance=net_drops.br0 context=net.drops code=0 alert_id=1787278",
+      "count": 22,
+      "fingerprint": "b4a4f3c0319b",
+      "sample": "time=2026-10-04T18:51:06.243-07:00 comm=spawn-plugins source=collector level=warning tid=2080587  msg=\"SPAWN SERVER: child with pid 2081955 (request 9) exited with exit code 1: /bin/sh -c \\\"exec /usr/",
       "severity": "warn",
-      "skeleton": "time=<ts> comm=netdata source=health level=warning tid=<num> thread=health <redacted-blob> node=<hex> instance=net_drops.br0 context=net.drops code=<num> alert_id=<hex> alert_unique_id=<hex> alert_event_id=<num> <redacted-blob> <redacted-blob> alert=inbound_packets_dropped_ratio alert_class=errors a"
+      "skeleton": "time=<ts> comm=spawn-plugins source=collector level=warning tid=<num> msg=\"spawn server: child with pid <num> (request <num>) exited with exit code <num>: <path>"
     },
     {
       "baseline": null,
       "container": "netdata",
-      "count": 13,
-      "fingerprint": "28346e8a5fd3",
-      "sample": "time=2026-10-03T19:11:43.531-07:00 comm=netdata source=health level=warning tid=4114568 thread=HEALTH <REDACTED-BLOB> node=3210142d6f03 instance=net_drops.shim-br0 context=net.drops code=0 alert_id=17",
+      "count": 20,
+      "fingerprint": "6dcd09e267ea",
+      "sample": "time=2026-10-05T03:06:08.000-07:00 level=warn msg=\"skipping data collection: previous run is still in progress for 2.000153512s (skipped 2 times in a row, interval 1s)\" plugin=go.d collector=docker jo",
       "severity": "warn",
-      "skeleton": "time=<ts> comm=netdata source=health level=warning tid=<num> thread=health <redacted-blob> node=<hex> instance=net_drops.shim-br0 context=net.drops code=<num> alert_id=<hex> alert_unique_id=<hex> alert_event_id=<num> <redacted-blob> <redacted-blob> alert=inbound_packets_dropped_ratio alert_class=err"
+      "skeleton": "time=<ts> level=warn msg=<str> plugin=go.d collector=docker job=local config_source=<str>"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 20,
+      "fingerprint": "381cf7bc9913",
+      "sample": "time=2026-10-05T03:06:08.029-07:00 level=error msg=\"Get \\\"http://%2Fvar%2Frun%2Fdocker.sock/v1.47/info\\\": context deadline exceeded\" plugin=go.d collector=docker job=local config_source=\"stock/file re",
+      "severity": "error",
+      "skeleton": "time=<ts> level=error msg=<str><url> context deadline exceeded<str>stock/file reader\""
     },
     {
       "baseline": null,
       "container": "ownfoil",
       "count": 12,
       "fingerprint": "01b110cb7702",
-      "sample": "[2026-10-03 12:43:13.459] ERROR (library) worker-1 An unexpected error occurred while organizing file None [0100CE800B94A000][v0].nsp: 'NoneType' object is not iterable",
+      "sample": "[2026-10-04 12:43:33.144] ERROR (library) worker-2 An unexpected error occurred while organizing file None [0100CE800B94A000][v0].nsp: 'NoneType' object is not iterable",
       "severity": "error",
       "skeleton": "[<ts>] error (library) worker-<num> an unexpected error occurred while organizing file none [<hex>][v0].nsp: <str> object is not iterable"
     },
     {
       "baseline": null,
-      "container": "books",
-      "count": 10,
-      "fingerprint": "e46d2fea9b5a",
-      "sample": "update-alternatives: warning: skip creation of /usr/share/man/man1/lzma.1.gz because associated file /usr/share/man/man1/xz.1.gz (of link group lzma) doesn't exist",
-      "severity": "warn",
-      "skeleton": "update-alternatives: warning: skip creation of <path>"
-    },
-    {
-      "baseline": null,
-      "container": "scoopspress",
-      "count": 6,
-      "fingerprint": "4798ff1f70e0",
-      "sample": "[Sat Oct 03 07:35:51.642799 2026] [php:warn] [pid 1642:tid 1642] [client 102.220.161.89:0] PHP Warning:  Undefined variable $enable_postal_code in <REDACTED-BLOB>.cf7sa.front.action.php on line 90, re",
-      "severity": "warn",
-      "skeleton": "[<ts>] [php:warn] [pid <num>:tid <num>] [client <ip>] php warning: undefined variable $enable_postal_code in <redacted-blob>.cf7sa.front.action.php on line <num>, referer: <url>"
+      "container": "auth",
+      "count": 8,
+      "fingerprint": "c0197fc71f93",
+      "sample": "time=\"2026-10-05T00:34:57-07:00\" level=error msg=\"Target URL '/blog/' has an insecure scheme '', only the 'https' and 'wss' schemes are supported so session cookies can be transmitted securely\" method",
+      "severity": "error",
+      "skeleton": "time=<str> level=error msg=\"target url '<path>"
     },
     {
       "baseline": null,
       "container": "hairpress",
-      "count": 6,
+      "count": 7,
       "fingerprint": "b32e674d9dd1",
-      "sample": "[Sat Oct 03 17:53:37.506124 2026] [autoindex:error] [pid 1996:tid 1996] [client 20.210.186.186:0] AH01276: Cannot serve directory /var/www/html/wp-includes/blocks/group/: No matching DirectoryIndex (i",
+      "sample": "[Mon Oct 05 00:51:27.353607 2026] [autoindex:error] [pid 3056:tid 3056] [client 195.3.220.7:0] AH01276: Cannot serve directory /var/www/html/wp-content/upgrade/: No matching DirectoryIndex (index.php,",
       "severity": "error",
       "skeleton": "[<ts>] [autoindex:error] [pid <num>:tid <num>] [client <ip>] ah01276: cannot serve directory <path>"
+    },
+    {
+      "baseline": null,
+      "container": "jellyfin",
+      "count": 6,
+      "fingerprint": "140f403e0c24",
+      "sample": "[06:10:43] [ERR] [92] Jellyfin.Api.Middleware.ExceptionMiddleware: Error processing request: Token is required. URL GET /socket.",
+      "severity": "error",
+      "skeleton": "[<ts>] [err] [<num>] jellyfin.api.middleware.exceptionmiddleware: error processing request: token is required. url get /socket."
+    },
+    {
+      "baseline": null,
+      "container": "proxysql",
+      "count": 6,
+      "fingerprint": "9caf510b320a",
+      "sample": "2026-10-04 11:41:37 MySQL_Session.cpp:5667:<REDACTED-BLOB>(): [WARNING] Error during query on (10,mariadb-kindrobots2,3306,233083): 1062, Duplicate entry 'compartmented-mourner' for key 'Facet_slug_ke",
+      "severity": "warn",
+      "skeleton": "<ts> mysql_session.cpp:<num>:<redacted-blob>(): [warning] error during query on (<num>,mariadb-kindrobots2,<num>,<num>): <num>, duplicate entry <str> for key <str>"
+    },
+    {
+      "baseline": null,
+      "container": "podgrab",
+      "count": 6,
+      "fingerprint": "99ac8664accb",
+      "sample": "Response status: 403 Forbidden",
+      "severity": "other",
+      "skeleton": "response status: <num> forbidden"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 5,
+      "fingerprint": "bacfa044aae5",
+      "sample": "time=2026-10-04T18:51:17.419-07:00 comm=cgroup-network source=collector level=error tid=2084774  msg=\"Cannot find a cgroup PID from cgroup '/host/sys/fs/cgroup/17'\"",
+      "severity": "error",
+      "skeleton": "time=<ts> comm=cgroup-network source=collector level=error tid=<num> msg=\"cannot find a cgroup pid from cgroup '<path>"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 5,
+      "fingerprint": "435f030e9489",
+      "sample": "time=2026-10-04T19:02:51.462-07:00 comm=netdata source=health level=warning tid=2081903 thread=HEALTH <REDACTED-BLOB> node=c1ee2bcbac24 instance=net_drops.br0 context=net.drops code=0 alert_id=1787278",
+      "severity": "warn",
+      "skeleton": "time=<ts> comm=netdata source=health level=warning tid=<num> thread=health <redacted-blob> node=<hex> instance=net_drops.br0 context=net.drops code=<num> alert_id=<hex> alert_unique_id=<hex> alert_event_id=<num> <redacted-blob> <redacted-blob> alert=inbound_packets_dropped_ratio alert_class=errors a"
+    },
+    {
+      "baseline": null,
+      "container": "netdata",
+      "count": 5,
+      "fingerprint": "28346e8a5fd3",
+      "sample": "time=2026-10-04T19:02:51.464-07:00 comm=netdata source=health level=warning tid=2081903 thread=HEALTH <REDACTED-BLOB> node=c1ee2bcbac24 instance=net_drops.shim-br0 context=net.drops code=0 alert_id=17",
+      "severity": "warn",
+      "skeleton": "time=<ts> comm=netdata source=health level=warning tid=<num> thread=health <redacted-blob> node=<hex> instance=net_drops.shim-br0 context=net.drops code=<num> alert_id=<hex> alert_unique_id=<hex> alert_event_id=<num> <redacted-blob> <redacted-blob> alert=inbound_packets_dropped_ratio alert_class=err"
     }
   ],
   "version": 1,
