@@ -1,0 +1,133 @@
+# the sister (S2): 8-angle set (comic-creator t-015), round 8 Stage B. Each source is the screened Stage-A
+# render (ART-ROUND-8.yaml) with the pick (ArtImage 241879, front figure cropped) stitched to its left;
+# Kontext redresses the right figure. Crop the right half for use.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+series: zuzu-koala-assassin
+project_slug: comic-creator
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: kontext-angles
+  label: Flux Kontext dev (fp8), redressed beside the pick
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: r8-sister-front
+  entity: sister
+  title: 'the sister (S2), round 8: front'
+  size: 1408x1024
+  source_image_id: 241955
+  reference_image_id: 241879
+  reference_crop: &id001
+  - 0.02
+  - 0.0
+  - 0.33
+  - 1.0
+  prompt_prose: 'The image shows two figures side by side. The left figure is the reference design for the sister
+    (S2); leave it unchanged. Change only the right figure''s clothes and colours to match the left figure exactly:
+    the long torn pale dress with its white cloth sash, the bandaged forearms and shins, the rag-wrapped feet, the
+    bruised cheek and the sand-coloured fur. Keep the right figure''s pose, the direction it faces, its proportions
+    and its size. Western comic art style, plain white background.'
+  jobs:
+    kontext-angles: 33670
+- key: r8-sister-front-three-quarter-left
+  entity: sister
+  title: 'the sister (S2), round 8: front three quarter left'
+  size: 1408x1024
+  source_image_id: 241956
+  reference_image_id: 241879
+  reference_crop: *id001
+  prompt_prose: 'The image shows two figures side by side. The left figure is the reference design for the sister
+    (S2); leave it unchanged. Change only the right figure''s clothes and colours to match the left figure exactly:
+    the long torn pale dress with its white cloth sash, the bandaged forearms and shins, the rag-wrapped feet, the
+    bruised cheek and the sand-coloured fur. Keep the right figure''s pose, the direction it faces, its proportions
+    and its size. Western comic art style, plain white background.'
+  jobs:
+    kontext-angles: 33671
+- key: r8-sister-profile-left
+  entity: sister
+  title: 'the sister (S2), round 8: profile left'
+  size: 1408x1024
+  source_image_id: 241959
+  reference_image_id: 241879
+  reference_crop: *id001
+  prompt_prose: 'The image shows two figures side by side. The left figure is the reference design for the sister
+    (S2); leave it unchanged. Change only the right figure''s clothes and colours to match the left figure exactly:
+    the long torn pale dress with its white cloth sash, the bandaged forearms and shins, the rag-wrapped feet, the
+    bruised cheek and the sand-coloured fur. Keep the right figure''s pose, the direction it faces, its proportions
+    and its size. Western comic art style, plain white background.'
+  jobs:
+    kontext-angles: 33672
+- key: r8-sister-back-three-quarter-left
+  entity: sister
+  title: 'the sister (S2), round 8: back three quarter left'
+  size: 1408x1024
+  source_image_id: 241960
+  reference_image_id: 241879
+  reference_crop: *id001
+  prompt_prose: 'The image shows two figures side by side. The left figure is the reference design for the sister
+    (S2); leave it unchanged. Change only the right figure''s clothes and colours to match the left figure exactly:
+    the long torn pale dress with its white cloth sash, the bandaged forearms and shins, the rag-wrapped feet, the
+    bruised cheek and the sand-coloured fur. Keep the right figure''s pose, the direction it faces, its proportions
+    and its size. Western comic art style, plain white background.'
+  jobs:
+    kontext-angles: 33673
+- key: r8-sister-back
+  entity: sister
+  title: 'the sister (S2), round 8: back'
+  size: 1408x1024
+  source_image_id: 241962
+  reference_image_id: 241879
+  reference_crop: *id001
+  prompt_prose: 'The image shows two figures side by side. The left figure is the reference design for the sister
+    (S2); leave it unchanged. Change only the right figure''s clothes and colours to match the left figure exactly:
+    the long torn pale dress with its white cloth sash, the bandaged forearms and shins, the rag-wrapped feet, the
+    bruised cheek and the sand-coloured fur. Keep the right figure''s pose, the direction it faces, its proportions
+    and its size. Western comic art style, plain white background.'
+  jobs:
+    kontext-angles: 33674
+- key: r8-sister-back-three-quarter-right
+  entity: sister
+  title: 'the sister (S2), round 8: back three quarter right'
+  size: 1408x1024
+  source_image_id: 241964
+  reference_image_id: 241879
+  reference_crop: *id001
+  prompt_prose: 'The image shows two figures side by side. The left figure is the reference design for the sister
+    (S2); leave it unchanged. Change only the right figure''s clothes and colours to match the left figure exactly:
+    the long torn pale dress with its white cloth sash, the bandaged forearms and shins, the rag-wrapped feet, the
+    bruised cheek and the sand-coloured fur. Keep the right figure''s pose, the direction it faces, its proportions
+    and its size. Western comic art style, plain white background.'
+  jobs:
+    kontext-angles: 33675
+- key: r8-sister-profile-right
+  entity: sister
+  title: 'the sister (S2), round 8: profile right'
+  size: 1408x1024
+  source_image_id: 241966
+  reference_image_id: 241879
+  reference_crop: *id001
+  prompt_prose: 'The image shows two figures side by side. The left figure is the reference design for the sister
+    (S2); leave it unchanged. Change only the right figure''s clothes and colours to match the left figure exactly:
+    the long torn pale dress with its white cloth sash, the bandaged forearms and shins, the rag-wrapped feet, the
+    bruised cheek and the sand-coloured fur. Keep the right figure''s pose, the direction it faces, its proportions
+    and its size. Western comic art style, plain white background.'
+  jobs:
+    kontext-angles: 33676
+- key: r8-sister-front-three-quarter-right
+  entity: sister
+  title: 'the sister (S2), round 8: front three quarter right'
+  size: 1408x1024
+  source_image_id: 241968
+  reference_image_id: 241879
+  reference_crop: *id001
+  prompt_prose: 'The image shows two figures side by side. The left figure is the reference design for the sister
+    (S2); leave it unchanged. Change only the right figure''s clothes and colours to match the left figure exactly:
+    the long torn pale dress with its white cloth sash, the bandaged forearms and shins, the rag-wrapped feet, the
+    bruised cheek and the sand-coloured fur. Keep the right figure''s pose, the direction it faces, its proportions
+    and its size. Western comic art style, plain white background.'
+  jobs:
+    kontext-angles: 33677
