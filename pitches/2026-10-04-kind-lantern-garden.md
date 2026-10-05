@@ -1,7 +1,7 @@
 # Pitch: Kind Lantern Garden
 date: 2026-10-04
 project-target: new
-status: awaiting-silas
+status: approved
 
 ## The idea
 An idle-style toy where each tap lights a lantern in a night garden and, as the count grows, new creatures wander in with pre-written one-line stories. Nothing can be lost, it needs no accounts, and progress is a quiet collection page of everyone you have met.
