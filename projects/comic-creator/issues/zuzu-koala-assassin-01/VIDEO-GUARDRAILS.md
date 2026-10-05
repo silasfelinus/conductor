@@ -28,8 +28,7 @@ wherever it disagrees with the v0 SERIES-BIBLE.md or ISSUE-01-SCRIPT.md.
   Negate `straw boater, cowboy hat, cloak, cape`.
 - **Look (2026-10-05, after round 8):** Zuzu is squat with koala proportions (stubby legs, round belly, big head) and dark brown cloth trousers, never denim. The siblings wear claw-torn rags. The coyote's hands are empty. Overall tone: darker and grittier, less Disney, more Tarantino.
 - **Builds and sides (2026-10-05, after round 10):** Zuzu has a bit of a beer belly: a round paunch at the waist, but he is not fat all over (Silas, revising "portly" the same day). The coyote's eyepatch is on his right eye and his revolver on his right hip; the croc takes that right hand in chapter 1.
-- **The abbess's face:** a short otter snout, a little flatter than a real otter's, never completely flat.
-- **Poverty and faces (2026-10-05):** the coyote is destitute (tattered, patched, filthy, starving); the abbess has a short, blunt otter muzzle.
+- **Poverty and faces (2026-10-05):** the coyote is destitute (tattered, patched, filthy, starving); the abbess has a short otter snout, a little flatter than a real otter's face but never completely flat (Silas, revised the same day).
 - **Zuzu is koala-sized, or a little bigger:** Silas, 2026-10-04: *"zuzu should be koala sized, or a little bigger. if he was an actor doing mocap, it would be danny devito."*
   Short, stocky, barrel-chested, short legs. In shared frames he is the shortest adult, and the sister is taller
   than him. Tags that carry it: `short, stocky, chubby, small stature, short legs`. Round 4b's walking shots drew
@@ -69,5 +68,5 @@ The house checkpoint draws some words as objects, even when they appear only in 
 - **"duster"** (the coat) draws a feather duster. Say "long riding coat".
 - **"mother"** (as in "mother superior") adds a small otter child. Say "abbess" or "elderly head nun".
 - **"muzzle"** (the snout) draws a muzzle restraint over the face, as in round 12. Describe the face instead,
-  for example "a round, flat otter face with a small nose pad".
+  for example "an otter face with a short snout and a small rounded nose pad".
 - **"squat"** makes Zuzu crouch. Say "chubby, standing upright".
