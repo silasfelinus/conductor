@@ -1,0 +1,159 @@
+# the one-eyed coyote (C1): 8-angle set (comic-creator t-015), round 8 Stage B. Each source is the screened Stage-A
+# render (ART-ROUND-8.yaml) with the pick (ArtImage 241888, front figure cropped) stitched to its left;
+# Kontext redresses the right figure. Crop the right half for use.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+# r8-coyote-stump: Silas, 2026-10-05: the croc takes his RIGHT (gun) hand in chapter 1.
+series: zuzu-koala-assassin
+project_slug: comic-creator
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: kontext-angles
+  label: Flux Kontext dev (fp8), redressed beside the pick
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: r8-coyote-front
+  entity: coyote
+  title: 'the one-eyed coyote (C1), round 8: front'
+  size: 1408x1024
+  source_image_id: 241986
+  reference_image_id: 241888
+  reference_crop: &id001
+  - 0.02
+  - 0.0
+  - 0.34
+  - 1.0
+  prompt_prose: 'The image shows two figures side by side. The left figure is the reference design for the one-eyed
+    coyote (C1); leave it unchanged. Change only the right figure''s clothes and colours to match the left figure
+    exactly: the long olive duster coat, the white shirt, the blue jeans, the brown boots, the battered brown hat,
+    the eyepatch and the holstered revolver. Keep the right figure''s pose, the direction it faces, its proportions
+    and its size. Western comic art style, plain white background. Remove the feather duster or brush from his hand:
+    both hands are empty.'
+  jobs:
+    kontext-angles: 33678
+- key: r8-coyote-front-three-quarter-left
+  entity: coyote
+  title: 'the one-eyed coyote (C1), round 8: front three quarter left'
+  size: 1408x1024
+  source_image_id: 241989
+  reference_image_id: 241888
+  reference_crop: *id001
+  prompt_prose: 'The image shows two figures side by side. The left figure is the reference design for the one-eyed
+    coyote (C1); leave it unchanged. Change only the right figure''s clothes and colours to match the left figure
+    exactly: the long olive duster coat, the white shirt, the blue jeans, the brown boots, the battered brown hat,
+    the eyepatch and the holstered revolver. Keep the right figure''s pose, the direction it faces, its proportions
+    and its size. Western comic art style, plain white background. Remove the feather duster or brush from his hand:
+    both hands are empty.'
+  jobs:
+    kontext-angles: 33679
+- key: r8-coyote-profile-left
+  entity: coyote
+  title: 'the one-eyed coyote (C1), round 8: profile left'
+  size: 1408x1024
+  source_image_id: 241990
+  reference_image_id: 241888
+  reference_crop: *id001
+  prompt_prose: 'The image shows two figures side by side. The left figure is the reference design for the one-eyed
+    coyote (C1); leave it unchanged. Change only the right figure''s clothes and colours to match the left figure
+    exactly: the long olive duster coat, the white shirt, the blue jeans, the brown boots, the battered brown hat,
+    the eyepatch and the holstered revolver. Keep the right figure''s pose, the direction it faces, its proportions
+    and its size. Western comic art style, plain white background. Remove the feather duster or brush from his hand:
+    both hands are empty.'
+  jobs:
+    kontext-angles: 33680
+- key: r8-coyote-back-three-quarter-left
+  entity: coyote
+  title: 'the one-eyed coyote (C1), round 8: back three quarter left'
+  size: 1408x1024
+  source_image_id: 241992
+  reference_image_id: 241888
+  reference_crop: *id001
+  prompt_prose: 'The image shows two figures side by side. The left figure is the reference design for the one-eyed
+    coyote (C1); leave it unchanged. Change only the right figure''s clothes and colours to match the left figure
+    exactly: the long olive duster coat, the white shirt, the blue jeans, the brown boots, the battered brown hat,
+    the eyepatch and the holstered revolver. Keep the right figure''s pose, the direction it faces, its proportions
+    and its size. Western comic art style, plain white background. Remove the feather duster or brush from his hand:
+    both hands are empty.'
+  jobs:
+    kontext-angles: 33681
+- key: r8-coyote-back
+  entity: coyote
+  title: 'the one-eyed coyote (C1), round 8: back'
+  size: 1408x1024
+  source_image_id: 241994
+  reference_image_id: 241888
+  reference_crop: *id001
+  prompt_prose: 'The image shows two figures side by side. The left figure is the reference design for the one-eyed
+    coyote (C1); leave it unchanged. Change only the right figure''s clothes and colours to match the left figure
+    exactly: the long olive duster coat, the white shirt, the blue jeans, the brown boots, the battered brown hat,
+    the eyepatch and the holstered revolver. Keep the right figure''s pose, the direction it faces, its proportions
+    and its size. Western comic art style, plain white background. Remove the feather duster or brush from his hand:
+    both hands are empty.'
+  jobs:
+    kontext-angles: 33682
+- key: r8-coyote-back-three-quarter-right
+  entity: coyote
+  title: 'the one-eyed coyote (C1), round 8: back three quarter right'
+  size: 1408x1024
+  source_image_id: 241996
+  reference_image_id: 241888
+  reference_crop: *id001
+  prompt_prose: 'The image shows two figures side by side. The left figure is the reference design for the one-eyed
+    coyote (C1); leave it unchanged. Change only the right figure''s clothes and colours to match the left figure
+    exactly: the long olive duster coat, the white shirt, the blue jeans, the brown boots, the battered brown hat,
+    the eyepatch and the holstered revolver. Keep the right figure''s pose, the direction it faces, its proportions
+    and its size. Western comic art style, plain white background. Remove the feather duster or brush from his hand:
+    both hands are empty.'
+  jobs:
+    kontext-angles: 33683
+- key: r8-coyote-profile-right
+  entity: coyote
+  title: 'the one-eyed coyote (C1), round 8: profile right'
+  size: 1408x1024
+  source_image_id: 241998
+  reference_image_id: 241888
+  reference_crop: *id001
+  prompt_prose: 'The image shows two figures side by side. The left figure is the reference design for the one-eyed
+    coyote (C1); leave it unchanged. Change only the right figure''s clothes and colours to match the left figure
+    exactly: the long olive duster coat, the white shirt, the blue jeans, the brown boots, the battered brown hat,
+    the eyepatch and the holstered revolver. Keep the right figure''s pose, the direction it faces, its proportions
+    and its size. Western comic art style, plain white background. Remove the feather duster or brush from his hand:
+    both hands are empty.'
+  jobs:
+    kontext-angles: 33684
+- key: r8-coyote-front-three-quarter-right
+  entity: coyote
+  title: 'the one-eyed coyote (C1), round 8: front three quarter right'
+  size: 1408x1024
+  source_image_id: 242000
+  reference_image_id: 241888
+  reference_crop: *id001
+  prompt_prose: 'The image shows two figures side by side. The left figure is the reference design for the one-eyed
+    coyote (C1); leave it unchanged. Change only the right figure''s clothes and colours to match the left figure
+    exactly: the long olive duster coat, the white shirt, the blue jeans, the brown boots, the battered brown hat,
+    the eyepatch and the holstered revolver. Keep the right figure''s pose, the direction it faces, its proportions
+    and its size. Western comic art style, plain white background. Remove the feather duster or brush from his hand:
+    both hands are empty.'
+  jobs:
+    kontext-angles: 33685
+- key: r8-coyote-stump
+  entity: coyote
+  title: 'The one-eyed coyote: right-hand stump variant (C1)'
+  size: 832x1216
+  source_image_id: 241888
+  source_crop:
+  - 0.02
+  - 0.0
+  - 0.34
+  - 1.0
+  prompt_prose: 'Replace the coyote''s right hand (the hand on the left side of the image, holding the feather duster)
+    with a stump: his right forearm ends at the wrist, wrapped in a dirty cloth bandage with a little dried blood.
+    Remove the feather duster. Keep everything else exactly the same: his face, the eyepatch, the hat, the olive
+    duster coat, the white shirt, the jeans, the boots, the holstered revolver, the pose and the western comic art
+    style, plain off-white background.'
+  jobs:
+    kontext-angles: 33686
