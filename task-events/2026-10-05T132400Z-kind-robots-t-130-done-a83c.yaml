@@ -1,0 +1,11 @@
+version: 1
+project: kind-robots
+task: t-130
+operation: done
+owner: worker
+session: 20261005T130300Z-kind-robots-t130-artjob-multilora-a83c
+updated: '2026-10-05T13:24:00Z'
+note: >-
+  Fixed and merged in silasfelinus/kind_robots PR #3234 at f64f0ce2c2a88c4f99a2f9b476ea6d3f41292538. Multi-LoRA ArtJobs no longer hit the stale single-LoRA Resource-refresh 409 during edit or re-enqueue; stacked Resource paths refresh positionally by krLoraIndex without changing strengths or required/base LoRAs. Final tested head 83e7d0c595f31c2cfad28ff1384c417d3fbbd70e passed 29/29 PR workflows, including the LoRA retry-resource verifier, LoRA chain contract, TypeScript, ESLint ratchet, Prettier ratchet, and full Contract Tests.
+learning: >-
+  Multi-LoRA generation support has to extend through ArtJob retry and Resource-refresh helpers as well as initial workflow construction; stale scalar assumptions in shared retry plumbing can reject otherwise-valid stacked jobs before they ever re-enter the queue.
