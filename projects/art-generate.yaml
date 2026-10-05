@@ -1,3 +1,7 @@
+generated_by: scripts/queue_missing_project_art.py
+mode: dry-run
+description: Concrete project image requests ready for generation; active retries are preserved until
+  the consumer marks them complete.
 batch:
   entries:
   - project: kr-adventures
@@ -6,10 +10,10 @@ batch:
     image_path: projects/images/kr-adventures-card.webp
     size: 512x768
     status: pending
-    prompt: flat minimal portrait illustration, Pre-written choose-your-own-adventure books
-      that start from existing Kind Robots scenarios, each with a preset hero, a fully authored
-      branching story graph, and pre-generated art for every node. Static content, no LLM
-      at read time., centered subject on soft gradient backdrop, no text, 2:3 portrait composition
+    prompt: flat minimal portrait illustration, Pre-written choose-your-own-adventure books that start
+      from existing Kind Robots scenarios, each with a preset hero, a fully authored branching story graph,
+      and pre-generated art for every node. Static content, no LLM at read time., centered subject on
+      soft gradient backdrop, no text, 2:3 portrait composition
     engine: krea2
   - project: kr-solitaire
     variant: card
@@ -17,10 +21,9 @@ batch:
     image_path: projects/images/kr-solitaire-card.webp
     size: 512x768
     status: pending
-    prompt: flat minimal portrait illustration, Klondike solitaire played with a hand-designed
-      52-card Kind Robots deck (four suits of robots, illustrated court cards) and Kind Robots
-      card backs. Pure client-side game, no LLM., centered subject on soft gradient backdrop,
-      no text, 2:3 portrait composition
+    prompt: flat minimal portrait illustration, Klondike solitaire played with a hand-designed 52-card
+      Kind Robots deck (four suits of robots, illustrated court cards) and Kind Robots card backs. Pure
+      client-side game, no LLM., centered subject on soft gradient backdrop, no text, 2:3 portrait composition
     engine: krea2
   - project: kind-oracle
     variant: card
@@ -28,12 +31,11 @@ batch:
     image_path: projects/images/kind-oracle-card.webp
     size: 512x768
     status: pending
-    prompt: flat minimal portrait illustration, A 22-card oracle deck of Kind Robots, each
-      card a full piece of art with an upright and a reversed meaning, where you draw a one,
-      three or five card spread and read a pre-written reading assembled from hand-authored
-      pair and position texts. Every combination is written ahead of time, so it feels personal
-      and costs nothing to run., centered subject on soft gradient backdrop, no text, 2:3
-      portrait composition
+    prompt: flat minimal portrait illustration, A 22-card oracle deck of Kind Robots, each card a full
+      piece of art with an upright and a reversed meaning, where you draw a one, three or five card spread
+      and read a pre-written reading assembled from hand-authored pair and position texts. Every combination
+      is written ahead of time, so it feels personal and costs nothing to run., centered subject on soft
+      gradient backdrop, no text, 2:3 portrait composition
     engine: krea2
   - project: evolve-rebel-button
     variant: card
@@ -41,9 +43,9 @@ batch:
     image_path: projects/images/evolve-rebel-button-card.webp
     size: 512x768
     status: pending
-    prompt: flat minimal portrait illustration, Turns the early Rebel Button toy into an art
-      reviewer once someone hits 100 clicks., centered subject on soft gradient backdrop,
-      no text, 2:3 portrait composition
+    prompt: flat minimal portrait illustration, Turns the early Rebel Button toy into an art reviewer
+      once someone hits 100 clicks., centered subject on soft gradient backdrop, no text, 2:3 portrait
+      composition
     engine: krea2
   - project: comic-film
     variant: card
@@ -51,9 +53,8 @@ batch:
     image_path: projects/images/comic-film-card.webp
     size: 512x768
     status: pending
-    prompt: a comic page whose panels peel away into a strip of motion picture film, an old
-      movie projector beam lighting the page, bold ink outlines, flat warm ochre and teal
-      colors, tall portrait layout
+    prompt: a comic page whose panels peel away into a strip of motion picture film, an old movie projector
+      beam lighting the page, bold ink outlines, flat warm ochre and teal colors, tall portrait layout
     engine: krea2
   - project: comic-film
     variant: hero
@@ -61,9 +62,9 @@ batch:
     image_path: projects/images/comic-film-hero.webp
     size: 1280x720
     status: pending
-    prompt: a long strip of motion picture film unrolling across a desert at dusk, each frame
-      a painted comic panel of a lone wanderer walking toward the horizon, bold ink outlines,
-      warm ochre sky, wide landscape
+    prompt: a long strip of motion picture film unrolling across a desert at dusk, each frame a painted
+      comic panel of a lone wanderer walking toward the horizon, bold ink outlines, warm ochre sky, wide
+      landscape
     engine: krea2
   - project: music-video
     variant: icon
@@ -71,10 +72,9 @@ batch:
     image_path: projects/images/music-video-icon.webp
     size: 256x256
     status: pending
-    prompt: A rounded-square app-icon badge in deep indigo holding one film strip that unspools
-      into a waving ribbon of music staff lines, three bright squares along the strip in magenta,
-      teal and gold, thick clean outlines, centered with wide margins, soft even studio light,
-      premium polish, no text
+    prompt: A rounded-square app-icon badge in deep indigo holding one film strip that unspools into a
+      waving ribbon of music staff lines, three bright squares along the strip in magenta, teal and gold,
+      thick clean outlines, centered with wide margins, soft even studio light, premium polish, no text
     engine: krea2
   - project: kind-trivia-trail
     variant: card
@@ -82,9 +82,9 @@ batch:
     image_path: projects/images/kind-trivia-trail-card.webp
     size: 512x768
     status: pending
-    prompt: flat minimal portrait illustration, Build the approved free-to-play, no-LLM-at-runtime
-      pitch; see pitches/2026-10-03-kind-trivia-trail.md for hook, art plan and first slice.,
-      centered subject on soft gradient backdrop, no text, 2:3 portrait composition
+    prompt: flat minimal portrait illustration, Build the approved free-to-play, no-LLM-at-runtime pitch;
+      see pitches/2026-10-03-kind-trivia-trail.md for hook, art plan and first slice., centered subject
+      on soft gradient backdrop, no text, 2:3 portrait composition
     engine: krea2
   - project: kind-trivia-trail
     variant: hero
@@ -92,9 +92,9 @@ batch:
     image_path: projects/images/kind-trivia-trail-hero.webp
     size: 1280x720
     status: pending
-    prompt: flat minimal wide panoramic, Build the approved free-to-play, no-LLM-at-runtime
-      pitch; see pitches/2026-10-03-kind-trivia-trail.md for hook, art plan and first slice.,
-      cinematic scale, no text, 16:9 landscape
+    prompt: flat minimal wide panoramic, Build the approved free-to-play, no-LLM-at-runtime pitch; see
+      pitches/2026-10-03-kind-trivia-trail.md for hook, art plan and first slice., cinematic scale, no
+      text, 16:9 landscape
     engine: krea2
   - project: robot-sound-garden
     variant: icon
@@ -102,9 +102,8 @@ batch:
     image_path: projects/images/robot-sound-garden-icon.webp
     size: 256x256
     status: pending
-    prompt: flat minimal app icon, Build the approved free-to-play, no-LLM-at-runtime pitch;
-      see pitches/2026-10-03-robot-sound-garden.md for hook, art plan and first slice., bold
-      clean vector shapes, square composition, no text
+    prompt: flat minimal app icon, Build the approved free-to-play, no-LLM-at-runtime pitch; see pitches/2026-10-03-robot-sound-garden.md
+      for hook, art plan and first slice., bold clean vector shapes, square composition, no text
     engine: krea2
   - project: robot-sound-garden
     variant: card
@@ -112,9 +111,9 @@ batch:
     image_path: projects/images/robot-sound-garden-card.webp
     size: 512x768
     status: pending
-    prompt: flat minimal portrait illustration, Build the approved free-to-play, no-LLM-at-runtime
-      pitch; see pitches/2026-10-03-robot-sound-garden.md for hook, art plan and first slice.,
-      centered subject on soft gradient backdrop, no text, 2:3 portrait composition
+    prompt: flat minimal portrait illustration, Build the approved free-to-play, no-LLM-at-runtime pitch;
+      see pitches/2026-10-03-robot-sound-garden.md for hook, art plan and first slice., centered subject
+      on soft gradient backdrop, no text, 2:3 portrait composition
     engine: krea2
   - project: robot-sound-garden
     variant: hero
@@ -122,9 +121,9 @@ batch:
     image_path: projects/images/robot-sound-garden-hero.webp
     size: 1280x720
     status: pending
-    prompt: flat minimal wide panoramic, Build the approved free-to-play, no-LLM-at-runtime
-      pitch; see pitches/2026-10-03-robot-sound-garden.md for hook, art plan and first slice.,
-      cinematic scale, no text, 16:9 landscape
+    prompt: flat minimal wide panoramic, Build the approved free-to-play, no-LLM-at-runtime pitch; see
+      pitches/2026-10-03-robot-sound-garden.md for hook, art plan and first slice., cinematic scale, no
+      text, 16:9 landscape
     engine: krea2
   - project: robot-mashup-flipbook
     variant: icon
@@ -132,9 +131,8 @@ batch:
     image_path: projects/images/robot-mashup-flipbook-icon.webp
     size: 256x256
     status: pending
-    prompt: flat minimal app icon, Build the approved free-to-play, no-LLM-at-runtime pitch;
-      see pitches/2026-10-03-robot-mashup-flipbook.md for hook, art plan and first slice.,
-      bold clean vector shapes, square composition, no text
+    prompt: flat minimal app icon, Build the approved free-to-play, no-LLM-at-runtime pitch; see pitches/2026-10-03-robot-mashup-flipbook.md
+      for hook, art plan and first slice., bold clean vector shapes, square composition, no text
     engine: krea2
   - project: robot-mashup-flipbook
     variant: card
@@ -142,9 +140,9 @@ batch:
     image_path: projects/images/robot-mashup-flipbook-card.webp
     size: 512x768
     status: pending
-    prompt: flat minimal portrait illustration, Build the approved free-to-play, no-LLM-at-runtime
-      pitch; see pitches/2026-10-03-robot-mashup-flipbook.md for hook, art plan and first
-      slice., centered subject on soft gradient backdrop, no text, 2:3 portrait composition
+    prompt: flat minimal portrait illustration, Build the approved free-to-play, no-LLM-at-runtime pitch;
+      see pitches/2026-10-03-robot-mashup-flipbook.md for hook, art plan and first slice., centered subject
+      on soft gradient backdrop, no text, 2:3 portrait composition
     engine: krea2
   - project: robot-mashup-flipbook
     variant: hero
@@ -152,7 +150,7 @@ batch:
     image_path: projects/images/robot-mashup-flipbook-hero.webp
     size: 1280x720
     status: pending
-    prompt: flat minimal wide panoramic, Build the approved free-to-play, no-LLM-at-runtime
-      pitch; see pitches/2026-10-03-robot-mashup-flipbook.md for hook, art plan and first
-      slice., cinematic scale, no text, 16:9 landscape
+    prompt: flat minimal wide panoramic, Build the approved free-to-play, no-LLM-at-runtime pitch; see
+      pitches/2026-10-03-robot-mashup-flipbook.md for hook, art plan and first slice., cinematic scale,
+      no text, 16:9 landscape
     engine: krea2
