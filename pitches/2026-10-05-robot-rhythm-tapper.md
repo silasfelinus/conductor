@@ -1,7 +1,7 @@
 # Pitch: Robot Rhythm Tapper
 date: 2026-10-05
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 A simple tap-along rhythm game where a robot drummer plays pre-composed patterns and you echo them on four big pads, with patterns lengthening as you succeed. Everything is bundled loops and sprites, so it plays offline and never touches a language model.
