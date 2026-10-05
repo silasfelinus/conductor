@@ -2,6 +2,8 @@
 # Silas, 2026-10-05) into eight angles for the 360 spinner and the LoRA dataset (t-016).
 # Every prompt pins the costume and keeps the katana visible (Silas: some back views lost the sword).
 # Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+# The Kontext rear views from R6 turned only the head (the body kept the poncho's front), so the two
+# *-fix subjects restyle round 7's true Arthemy back views (A4, A5) into R6's costume instead.
 series: zuzu-koala-assassin
 project_slug: comic-creator
 designer: Comic Studio
@@ -29,8 +31,8 @@ subjects:
     kontext-angles: 33554
   art:
     kontext-angles:
-      status: RUNNING
-      art_image_id: null
+      status: DONE
+      art_image_id: 241919
 - key: zuzu-angle-front-three-quarter-left
   entity: zuzu
   title: 'Zuzu angle: front three quarter left'
@@ -45,8 +47,8 @@ subjects:
     kontext-angles: 33555
   art:
     kontext-angles:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 241920
 - key: zuzu-angle-profile-left
   entity: zuzu
   title: 'Zuzu angle: profile left'
@@ -61,8 +63,8 @@ subjects:
     kontext-angles: 33556
   art:
     kontext-angles:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 241921
 - key: zuzu-angle-back-three-quarter-left
   entity: zuzu
   title: 'Zuzu angle: back three quarter left'
@@ -77,8 +79,8 @@ subjects:
     kontext-angles: 33557
   art:
     kontext-angles:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 241922
 - key: zuzu-angle-back
   entity: zuzu
   title: 'Zuzu angle: back'
@@ -93,8 +95,8 @@ subjects:
     kontext-angles: 33558
   art:
     kontext-angles:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 241923
 - key: zuzu-angle-back-three-quarter-right
   entity: zuzu
   title: 'Zuzu angle: back three quarter right'
@@ -109,8 +111,8 @@ subjects:
     kontext-angles: 33559
   art:
     kontext-angles:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 241924
 - key: zuzu-angle-profile-right
   entity: zuzu
   title: 'Zuzu angle: profile right'
@@ -125,8 +127,8 @@ subjects:
     kontext-angles: 33560
   art:
     kontext-angles:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 241925
 - key: zuzu-angle-front-three-quarter-right
   entity: zuzu
   title: 'Zuzu angle: front three quarter right'
@@ -141,5 +143,37 @@ subjects:
     kontext-angles: 33561
   art:
     kontext-angles:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 241926
+- key: zuzu-angle-back-fix
+  entity: zuzu
+  title: 'Zuzu angle: back view (restyled from round-7 A4)'
+  size: 832x1216
+  source_image_id: 241917
+  prompt_prose: 'Restyle his clothes to match the reference design: a rust-brown poncho with a bright orange zigzag
+    and diamond trim along the neck and hem, an orange cloth sash knotted at the waist, a dark tunic and brown trousers,
+    and a wide flat-brimmed woven straw hat with a crown. Keep his pose, his back to the viewer, and keep the sheathed
+    katana strapped diagonally across his back over the poncho, exactly where it is. Keep the same koala, the same
+    western comic art style, full body, plain off-white background.'
+  jobs:
+    kontext-angles: 33563
+  art:
+    kontext-angles:
+      status: DONE
+      art_image_id: 241927
+- key: zuzu-angle-back-three-quarter-fix
+  entity: zuzu
+  title: 'Zuzu angle: three-quarter back view (restyled from round-7 A5)'
+  size: 832x1216
+  source_image_id: 241918
+  prompt_prose: 'Restyle his clothes to match the reference design: a rust-brown poncho with a bright orange zigzag
+    and diamond trim along the neck and hem, an orange cloth sash knotted at the waist, a dark tunic and brown trousers,
+    and a wide flat-brimmed woven straw hat with a crown. Keep his pose, his back to the viewer, and keep the sheathed
+    katana strapped diagonally across his back over the poncho, exactly where it is. Keep the same koala, the same
+    western comic art style, full body, plain off-white background.'
+  jobs:
+    kontext-angles: 33564
+  art:
+    kontext-angles:
+      status: DONE
+      art_image_id: 241928

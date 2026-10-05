@@ -54,3 +54,17 @@ in the tests fail to show the sword."*
   Prompts now weight `(katana on back:1.4)` and say the hilt rises above his right shoulder.
 - **Follow-ups:** ART-ROUND-7.yaml (Arthemy turnarounds of R6 that keep the sword) and ANGLES-ZUZU.yaml
   (the 8 Kontext angles re-posed from R6 itself, t-015).
+
+### Round 7 results (2026-10-05)
+
+- **The sword fix works.** All five Arthemy renders (ART-ROUND-7.yaml, ArtImages 241914–241918) keep the
+  katana on his back in every view. The hat drifts to a flat straw brim and is lost in two views.
+- **Kontext angles from R6** (ANGLES-ZUZU.yaml) give five keepers for the front half: front 241919, 3/4 front
+  left 241920, profile left 241921, profile right 241925 and 3/4 front right 241926. They match R6 closely,
+  katana included.
+- **Kontext cannot turn him around.** The three rear views (241922–241924) turn only the head; the body keeps
+  the poncho's front. Restyling the Arthemy back views into R6's costume (back 241927 from A4, 3/4 back
+  241928 from A5) gives true backs with the sword across them, but the poncho drifts red.
+- **Next:** the front-half keepers plus the two restyled backs are the starting set for Zuzu's character
+  LoRA (t-016), which is what fixes costume drift in the back views. The same recipe (Kontext front half,
+  Arthemy back plus restyle) applies to the sister, toddler, coyote and nuns.
