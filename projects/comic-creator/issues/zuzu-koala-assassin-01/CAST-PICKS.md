@@ -250,3 +250,17 @@ overall fat like the latest looks."*
 - **Zuzu has a bit of a beer belly**, not a fat body. The r11 portly edits (242199–242205) are dropped, and the r12
   retries were cancelled. Masked waist edits on the round-10 picks (r13-zuzu-belly-*, ArtJobs 33919–33926) add a
   paunch and leave his limbs, shoulders and hips alone. The back views keep their round-10 build.
+
+## Masked edits cannot reshape (2026-10-05)
+
+The r13 masked edits on Zuzu's waist and the abbess's face hardly changed anything. The abbess's snouts came back
+the same length. Two of Zuzu's came back with a flat, unshaded blob on the belly (242269, 242271). Masked Kontext
+suits adding or removing a small thing, such as the coyote's hand. It does not suit changing a shape. The r14 jobs
+are plain, unmasked Kontext edits on the round-10 picks, with modest prompts:
+
+- Zuzu: a beer belly only (ArtJobs 33967–33974).
+- The abbess: a snout half as long (ArtJobs 33975–33983).
+
+The coyote's extra rags pass (242247–242254) went to Silas beside the round-12 picks (cast sheet 13). Row B is
+grittier, but on the front angles his face drifted toward a bear and two lost the eyepatch. The recommendation is row
+A, the round-12 picks.
