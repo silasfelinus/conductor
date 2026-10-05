@@ -25,7 +25,8 @@ The first film is **Zuzu: Koala Assassin #1**. The tooling is generic, so later 
 **Update, 2026-10-04: an experience, not the whole story.** Silas: *"an animation doesn't need to tell this full story, but just needs to give an experience"* The source
 is now Book One (`projects/comic-creator/issues/zuzu-koala-assassin-01/BOOK-ONE.md`), one continuous
 arc from the massacre to the three of them on the road. The film picks the moments that carry its
-feeling; it does not adapt every chapter. Old Komodo is not in Book One.
+feeling; it does not adapt every chapter. Old Komodo is not in Book One. Book One's signature frames
+(the eye strip, silhouettes on the road, the lone survivor) are the natural anchors for those moments.
 
 ## Who it serves
 

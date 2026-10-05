@@ -1,7 +1,8 @@
 # Zuzu: Koala Assassin — story seeds for later chapters
 
 **Both seeds are now in Book One** (`zuzu-koala-assassin-01/BOOK-ONE.md`, Silas, 2026-10-04): the
-Watering Hole is chapters 5 to 7 and the Convent is chapters 8 to 10. BOOK-ONE.md is the story of
+Watering Hole opens the book as chapter 1 (2026-10-05: the coyote loses a hand to the croc and Zuzu bandages
+him), and the Convent is chapters 6 to 8. BOOK-ONE.md is the story of
 record; this file keeps the original beats and development notes.
 
 Brainstorm, not canon. Silas, 2026-10-04: "More story ideas, probably for chapters 2 and 3." The
