@@ -314,8 +314,17 @@ def cmd_decide(pitch_stem: str, decision: str) -> int:
         print(f"unknown pitch: {pitch_stem}", file=sys.stderr)
         return 2
     text = path.read_text(encoding="utf-8")
-    path.write_text(re.sub(r"^status:.*$", f"status: {decision}", text, count=1, flags=re.MULTILINE), encoding="utf-8")
-    print(f"recorded {pitch_stem}: {decision}")
+    line = f"status: {decision}"
+    if re.search(r"^status:", text, re.MULTILINE):
+        text = re.sub(r"^status:.*$", line, text, count=1, flags=re.MULTILINE)
+    else:
+        # A hand-written record with no `status:` line (2026-08-11-retire-wonderlab.md) used to make
+        # this a silent no-op, so the pitch stayed awaiting-silas however often it was approved.
+        anchor = (re.search(r"^project-target:.*$", text, re.MULTILINE)
+                  or re.search(r"^# .*$", text, re.MULTILINE))
+        text = text[:anchor.end()] + "\n" + line + text[anchor.end():] if anchor else f"{line}\n{text}"
+    path.write_text(text, encoding="utf-8")
+    print(f"recorded {pitch_stem}: {read_status(path)}")
     return 0
 
 

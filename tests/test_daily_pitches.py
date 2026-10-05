@@ -184,3 +184,14 @@ def test_email_section_falls_back_to_project_page_without_a_secret(repo, monkeyp
 def test_email_section_empty_without_a_docket():
     assert email_v2.daily_pitches_section(None) == ""
     assert pitch_links  # imported for the shared fixture module path
+
+
+def test_decide_records_a_pitch_with_no_status_line(repo):
+    # 2026-08-11-retire-wonderlab.md had a bold "**Status:**" line, so approving it never stuck.
+    (repo / "pitches" / "2026-08-11-hand-written.md").write_text("# Hand written\n**Status:** approved\n\nBody.\n")
+    (repo / "pitches" / "2026-08-12-targeted.md").write_text("# T\nproject-target: kind-robots\n\nBody.\n")
+    assert dp.cmd_decide("2026-08-11-hand-written", "approved") == 0
+    assert dp.cmd_decide("2026-08-12-targeted", "rejected") == 0
+    assert dp.read_status(repo / "pitches" / "2026-08-11-hand-written.md") == "approved"
+    targeted = (repo / "pitches" / "2026-08-12-targeted.md").read_text()
+    assert targeted.startswith("# T\nproject-target: kind-robots\nstatus: rejected\n")
