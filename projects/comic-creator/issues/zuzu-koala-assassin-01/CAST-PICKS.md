@@ -138,3 +138,24 @@ What fixed the stubborn problems:
   turning figures around.
 - **Still open:** the coyote's coat drifted tan; the full set pins olive green.
 
+## Round 10: the eight-angle sets (2026-10-05)
+
+Silas approved the round-9 look ("Much better designs!"); round 10 (ART-ROUND-10.yaml, ArtJobs 33749–33836)
+renders every character at eight angles in it. Picks, in turn order:
+
+| Character | Front | 3/4 front L | Profile L | 3/4 back L | Back | 3/4 back R | Profile R | 3/4 front R |
+|---|---|---|---|---|---|---|---|---|
+| Zuzu | 242192 (Kontext: extra sword removed) | 242108 | 242110 | 242113 | 242117 | 242120 | 242193 mirrored (Kontext) | 242125 |
+| The sister | 242128 | 242130 | 242132 | 242135 | 242137 | 242138 | 242140 | 242143 |
+| The toddler | 242144 | 242146 | 242148 | 242150 | 242153 | 242154 | 242156 | 242158 |
+| The coyote | 242160 | 242162 | 242165 | 242166 | 242168 | 242171 | 242173 | 242174 |
+| The abbess | 242177 | 242179 | 242181 | 242182 | 242185 | 242186 | 242188 | 242191 |
+
+- **Zuzu's back views now work as rendered:** one katana diagonally across his back over the poncho, hilt over
+  his right shoulder. Only the front and right profile needed a Kontext edit (a second sword at the waist).
+- **The coyote's holster** sits on his left hip in the front views; canon puts his gun hand on the right. Fix in
+  the LoRA captions or a later pass.
+- **The coyote's stump:** the first Kontext edit (242194) bandaged both wrists and kept both hands; two
+  stronger retries are queued (ANGLES-COYOTE.yaml, r10-coyote-stump-b/c).
+- **Next:** these 40 angles are the training sets for the character LoRAs (t-016).
+
