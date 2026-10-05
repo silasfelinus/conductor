@@ -12,6 +12,8 @@
 # Stage-A pick also gets a plain single-image recolour: terracotta poncho, brown trousers.
 # r9k-*: Kontext single-image sword edits on the round-9 look test. Arthemy keeps putting the katana at
 # his waist in back views; Kontext moves it across his back (adding/moving an object, not turning him round).
+# r10k-*: round 10's back views came out right on their own; the front and right profile picks carry a
+# second sword at the waist, which Kontext removes.
 series: zuzu-koala-assassin
 project_slug: comic-creator
 designer: Comic Studio
@@ -497,3 +499,25 @@ subjects:
     kontext-angles:
       status: DONE
       art_image_id: 242103
+- key: r10k-zuzu-front
+  entity: zuzu
+  title: 'Zuzu round 10 sword edit: front'
+  size: 832x1216
+  source_image_id: 242104
+  prompt_prose: 'Remove the second katana at his waist and hip, and anything in his hands: his hands are empty.
+    Keep only the single sheathed katana strapped across his back, with its hilt above his shoulder. Keep everything
+    else exactly the same: the koala, his pose, the poncho, the scarf, the brown trousers, the straw hat, the colours
+    and the inked comic style, plain white background.'
+  jobs:
+    kontext-angles: 33837
+- key: r10k-zuzu-profile-right
+  entity: zuzu
+  title: 'Zuzu round 10 sword edit: profile-right'
+  size: 832x1216
+  source_image_id: 242122
+  prompt_prose: 'Remove the second katana at his waist and hip, and anything in his hands: his hands are empty.
+    Keep only the single sheathed katana strapped across his back, with its hilt above his shoulder. Keep everything
+    else exactly the same: the koala, his pose, the poncho, the scarf, the brown trousers, the straw hat, the colours
+    and the inked comic style, plain white background.'
+  jobs:
+    kontext-angles: 33838
