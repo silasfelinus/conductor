@@ -636,8 +636,8 @@ tasks:
   - id: t-026
     milestone: m5
     title: "Keep Daily Dream digest links direct instead of Brevo-tracked redirects"
-    status: ready
-    updated: '2026-10-05T20:32:00Z'
+    status: review
+    updated: '2026-10-05T20:36:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -658,5 +658,8 @@ tasks:
       Replaced the disproven X-Mailin tracking-header assumption with a provider-independent backup: every digest now carries a base64 HTML attachment containing the original direct HTTP destinations plus an in-message notice explaining the fallback. Added regression coverage proving signed pitch-inbox and Animation Manager URLs survive unchanged in the attachment and that the ineffective X-Mailin headers are gone.
 
       Merged silasfelinus/conductor#5567 as 81eb4ba2 after exact-head Worker PR CI 37239804413, Security Audit 37239804439, Worker PR handoff 37239804420, Process task events 37239804411, and CodeQL 37239803211 all completed successfully. The sender no longer claims Brevo X-Mailin tracking headers protect hrefs; every digest now includes a provider-independent conductor-direct-links.html attachment containing the original pre-Brevo destinations plus an in-message fallback notice. The 2026-10-04 digest was separately resent through Gmail as message 1a108fba6ceb5c68 and its delivered MIME contains the direct Kind Robots pitch-inbox URL with no sendibt2.com redirect.
-    claimed_by: 2026-10-04T222000Z-animation-manager-t-026-c7a4
-    claimed_at: '2026-10-04T22:21:00Z'
+
+      Third live failure investigated. Today's delivered digest still has Brevo tracking redirects in primary actions even though the attachment contains the correct originals. The external guard ran once, sent no resend, then became disabled. This branch makes the workflow publish a dedicated direct-send artifact before the Brevo step so the repaired guard can consume the rendered payload deterministically. Today's digest was resent through Gmail and verified to contain the direct pitch-inbox URL with no tracking redirect.
+    claimed_by: 2026-10-05T203300Z-animation-manager-t026-direct-delivery-6f31
+    claimed_at: '2026-10-05T20:33:00Z'
+    owner: worker
