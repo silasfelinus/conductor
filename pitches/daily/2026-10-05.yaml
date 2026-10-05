@@ -1,0 +1,55 @@
+# Daily project pitches, 2026-10-05. Authored by a session; decide with
+#   python scripts/daily_pitches.py --decide SLUG approved|rejected|deferred
+# Theme of the day: free-to-play, zero tokens at runtime, art made ahead of time.
+date: 2026-10-05
+pitches:
+  - slug: robot-bedtime-stories
+    title: Robot Bedtime Stories
+    hook: >-
+      A calm picture-book reader with ten short, pre-written bedtime stories starring Kind Robots, each
+      with five illustrated pages, a gentle page-turn sound and an auto-dimming night mode. Finishing
+      a story tucks a small sleeping-robot sticker into a collection shelf.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 50 page illustrations and 10 sleeping-robot stickers generated through ArtJobs ahead of time.
+    first_slice: One three-page story with page turns, night mode, and the first sticker on the shelf.
+  - slug: kind-spot-the-difference
+    title: Kind Spot the Difference
+    hook: >-
+      Two near-identical pre-made scenes sit side by side and you tap the five things that changed,
+      with a friendly hint that circles one difference after a pause. Scenes are paired renders with
+      known difference coordinates, so checking a tap needs no server and no model.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 12 scene pairs, each an original plus an edited variant with five logged differences.
+    first_slice: One scene pair with tap detection, a found-counter, and a one-time hint button.
+  - slug: robot-garden-sticker-scenes
+    title: Robot Garden Sticker Scenes
+    hook: >-
+      A drag-and-drop sticker toy where you decorate a garden backdrop with pre-made robots, flowers
+      and bugs that wiggle when dropped. Scenes save on the device and export as a picture to share,
+      and there is no way to fail, only to arrange.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: 6 backdrops and 40 transparent stickers generated and cut out ahead of time.
+    first_slice: One backdrop, eight stickers, drag and drop with wiggle, and a local save.
+  - slug: kind-daily-riddle
+    title: Kind Daily Riddle
+    hook: >-
+      One hand-written riddle every day, chosen from a bundled calendar of 365, with three gentle hints
+      that unlock over time and a pre-made illustration revealed on the right answer. Streaks count
+      quietly and a missed day never erases anything you have earned.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 60 riddle answer illustrations to start, with the remaining riddles reusing a shared frame.
+    first_slice: Thirty riddles, the date-based picker, the hint ladder, and one answer reveal.
+  - slug: robot-rhythm-tapper
+    title: Robot Rhythm Tapper
+    hook: >-
+      A simple tap-along rhythm game where a robot drummer plays pre-composed patterns and you echo them
+      on four big pads, with patterns lengthening as you succeed. Everything is bundled loops and
+      sprites, so it plays offline and never touches a language model.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: 1 drummer robot sprite sheet and 4 pad skins generated ahead of time; loops authored by a session.
+    first_slice: Four pads, ten echo patterns, the Web Audio scheduler, and a best-streak record.
