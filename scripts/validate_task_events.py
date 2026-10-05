@@ -17,6 +17,8 @@ from pathlib import Path
 
 import yaml
 
+VALID_FAILURE_CATEGORIES = {"transient", "actionable", "quality", "scope"}
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from process_task_events import (  # noqa: E402
     ALLOWED_OPERATIONS,
@@ -122,6 +124,15 @@ def validate(path: Path) -> str | None:
             missing = sorted(required - learning.keys())
             if missing:
                 return f"learning is missing required fields: {', '.join(missing)}"
+            # LEARNING.yaml's schema (tests/test_backfill_learning.py) allows only these
+            # categories; an unknown one (kind-robots/t-128 wrote "regression") lands on
+            # main through the [skip ci] processor and turns every open PR red.
+            category = learning.get("failure_category")
+            if category is not None and category not in VALID_FAILURE_CATEGORIES:
+                return (
+                    f"learning failure_category {category!r} is not one of "
+                    f"{', '.join(sorted(VALID_FAILURE_CATEGORIES))} (or omit it)"
+                )
         else:
             return "learning must be a mapping or a plain string lesson"
 
