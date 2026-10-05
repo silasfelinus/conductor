@@ -15,7 +15,7 @@ script) and folds in both seeds from `../ZUZU-STORY-SEEDS.md`.
 - **One continuous story, not a periodical.** The length is whatever the story needs. If it outgrows one
   issue it becomes a graphic novel; chapters are natural breaks, not issue cliffhangers.
 - **It ends with all three travelling together.** The arc is Zuzu going from a man who will not take on
-  the children to one who walks beside them by choice.
+  the children to one who leads a pack of three by choice.
 - **Old Komodo is out of Book One.** Silas, 2026-10-04: no render has ever expressed him accurately ("most
   of the time, it looks like a giant enraged koala"). He stays in the bible for a later book.
 - **Unchanged rules.** No dialogue or narration, only diegetic signs and posters. A mature comic with
@@ -23,96 +23,118 @@ script) and folds in both seeds from `../ZUZU-STORY-SEEDS.md`.
   shown undressed. All of these are in VIDEO-GUARDRAILS.md.
 - **House look:** Arthemy Western Art v3.0 (Silas, 2026-10-04, after the round-4 bake-off).
 
+## Revision, 2026-10-05: open at the watering hole
+
+Silas: *"start the story with the watering hole meeting. The siblings haven't been met yet. This establishes
+Zuzu independently. The coyote loses a hand in the fight. Zuzu helps him afterwards bandaging him, though the
+coyote initially fears him. Then we give a reason for their trust. the coyote vandal may come back in future
+stories as well as an ally."* The "vandal" in his first list is this coyote.
+
 ## The story, in chapters
 
-Each chapter lists its beats in order. "Key image" is the panel the chapter is built around.
+Each chapter lists its beats in order. "Key image" is the panel the chapter is built around; signature frames
+(below) are marked **[SF1]**, **[SF2]** and **[SF3]**.
 
-### 1. Hollow Bell
+### 1. The watering hole
+1. Zuzu alone, crossing the waste. He reaches a watering hole and drinks.
+2. On the far side of the water sits a bedraggled one-eyed coyote vagrant.
+3. The standoff builds. **[SF1]** Zuzu's narrowed eyes; the coyote's one eye; their mouths, set hard. The
+   coyote reaches for his gun; Zuzu reaches for his sword.
+4. A giant crocodile erupts from the water before either draws.
+5. They kill it together. The croc takes the coyote's hand.
+6. Afterwards Zuzu binds the stump. The coyote flinches from him at first, then lets him.
+7. They part. **[SF2]** Far apart, walking opposite ways, their backs to each other: trust.
+8. **Key image:** Zuzu kneeling to bandage the coyote's wrist, the dead croc in the water behind them.
+
+### 2. Hollow Bell
 1. Zuzu walks into Hollow Bell at the end of a massacre: the bell tower, the arch sign, smoke, the dead.
 2. He takes his hat off to the dead.
 3. **Key image:** the small koala in the wide, ruined street, hat in hand.
 
-### 2. The survivors
+### 3. The survivors
 1. A sound under the boardwalk, or in a ruined room. Zuzu finds the fennec siblings hiding: the gaunt
-   sister and the toddler in her arms.
+   sister and the toddler in her arms, among the carnage.
 2. She bares her teeth and shields her brother. He does not come closer.
 3. He leaves food or water within her reach and walks away.
-4. **Key image:** the sister, taller than Zuzu, holding her brother and staring him down.
+4. **Key image [SF3, first use]:** the sister, taller than Zuzu, standing among the dead with her brother,
+   staring him down.
 
-### 3. They follow
+### 4. They follow
 1. Zuzu leaves town. Two small figures follow at a distance.
 2. He stops; they stop. He walks; they walk. He tries to lose them and fails.
 3. Night: his fire, and theirs, smaller, some way off.
-4. **Key image:** a long desert road, Zuzu small in the foreground, two tiny silhouettes far behind.
+4. **Key image [SF2]:** a long desert road in silhouette, Zuzu on one side of the page, the two small
+   figures far off on the other.
 
-### 4. Apples
+### 5. Apples
 1. Zuzu finds apples: a wild tree, an abandoned orchard, or a trade. (Open question: which.)
 2. He eats one. He leaves the rest on a rock in the road and walks on without looking back.
 3. The sister finds them. She feeds her brother first.
 4. **Key image:** the apples on the rock in the road, and the sister's hand reaching for them.
 
-### 5. The oasis
-1. Thirst. The children are failing; the brother stops walking and she carries him.
-2. A watering hole. They run to drink.
-3. **Key image:** the three of them at the water's edge, the first time they are close together.
-
-### 6. The vandal
-1. On the far side of the water sits a bedraggled one-eyed coyote vagrant.
-2. The standoff builds. He reaches for his gun; Zuzu reaches for his sword.
-3. **Key image:** the two of them across the water, hands on their weapons, the children between.
-
-### 7. The croc
-1. A giant crocodile erupts from the water before either one draws.
-2. Zuzu and the coyote kill it together.
-3. They part in different directions, reluctant allies.
-4. **Key image:** the croc's open jaws coming up out of the water.
-
-### 8. The orphanage
+### 6. The orphanage
 1. Zuzu delivers the children to a mission of otter nuns who take in orphans. The nuns seem kind.
 2. As he leaves, he notices the playground: a rusted metal merry-go-round wrapped in cobwebs.
 3. Inside, the nuns feed the children. The toddler eats voraciously.
 4. **Key image:** Zuzu at the mission gate, looking back at the merry-go-round.
 
-### 9. The posters
+### 7. The posters
 1. Zuzu reaches a town at dusk and sees a missing-child poster. Then several. Then posters everywhere.
-2. His eyes spark with fear and realisation. He turns back.
-3. **Key image:** a wall papered with missing posters, Zuzu small in front of it.
+2. **[SF1]** Zuzu's eyes in the same thin strip as the standoff: surprise, then realisation.
+3. He turns back.
+4. **Key image:** a wall papered with missing posters, Zuzu small in front of it.
 
-### 10. The nuns
+### 8. The nuns
 1. At the mission, the toddler falls unconscious into his food. His sister tries to wake him as a dark
    shadow rises behind her.
 2. Zuzu rides back. The mission seems empty. He runs upstairs and finds the children tied on an altar.
    He cuts one of the sister's bonds.
 3. The nuns attack and Zuzu kills several. One nun sits chanting while a dark, cosmic, tentacled thing
    comes through.
-4. The mother superior stabs Zuzu in the shoulder from behind, and the horror seizes him. She approaches
-   with the dagger. He is trapped.
+4. The mother superior stabs Zuzu in the shoulder from behind. **[SF1, possible]** her eyes in the thin
+   strip as the kindness drops away. The horror seizes him; she approaches with the dagger.
 5. The mother superior collapses forward. Behind her stands the sister, holding a dagger. Zuzu reaches
    for it and she shakily hands it to him.
 6. He cuts himself free, then throws the dagger into the chanting nun. Her death breaks the spell and the
    thing is severed from the portal that released it.
-7. **Key image:** the sister holding out the dagger, shaking.
+7. **Key image [SF3, mirror]:** the sister standing alone among the dead with the sacrificial knife, the
+   same framing as chapter 3.
 
-### 11. The road
+### 9. The road
 1. Zuzu and the children leave the mission behind.
-2. This time they walk beside him.
-3. **Key image:** the three of them on the road together, the same framing as chapter 3 but with no gap.
+2. **Key image [SF2, final]:** the same wide silhouette as chapter 4, but the children follow directly
+   behind him now. A pack.
 
-## Cast for Book One (designs to lock before page art)
+## Signature frames
 
-| Character | Status | Notes |
+Images repeated with variation through the book (Silas, 2026-10-05). The page plan (t-020) reserves their
+panel shapes, and the film (comic-film) can use them as anchors.
+
+| Frame | Shape | Uses |
 |---|---|---|
-| Zuzu | design pick pending (t-015) | koala-sized, stocky, grey road-cloak, straw hat, katana high on the back |
-| The sister | design pick pending (t-015) | fennec, about ten, taller than Zuzu, torn dress, soot, bandaged hand |
-| The toddler | design pick pending (t-015) | fennec, babbles only, checked tunic, bandaged paw |
-| The one-eyed coyote vagrant | new | bedraggled, one eye, a gun; a reluctant ally |
-| The crocodile | new | giant, erupts from the water; an animal, not a monster from the thin places |
-| The otter nuns | new | kind faces at first; habits; the mother superior with a dagger |
-| The tentacled horror | new | dark and cosmic, half through a portal; never fully seen |
+| **SF1 — the eye strip** | A long, thin, full-width strip (about 4:1) tight on eyes or mouths | Ch1 the standoff: Zuzu's eyes, the coyote's eye, then their mouths, tension. Ch7 Zuzu's eyes at the posters: surprise, then realisation. Ch8, possibly: the mother superior's turn to villain. |
+| **SF2 — silhouettes on the road** | A wide panel, deep low horizon, figures in silhouette, the gap between them telling the story | Ch1 Zuzu and the coyote part, far apart, opposite ways, backs turned: trust. Ch4 the siblings follow from the far side of the page. Ch9 the same frame, the siblings directly behind him: a pack. |
+| **SF3 — the lone survivor** | A full figure, centred, standing amid the dead | Ch3 the sister revealed among the carnage. Ch8 the mirror: the sister alone with the sacrificial knife after killing the mother superior. Her trauma is her weight, and it carries into later books. |
+
+## Cast for Book One
+
+Locked designs and picks live in CAST-PICKS.md.
+
+| Character | Notes |
+|---|---|
+| Zuzu | koala-sized, stocky (the DeVito build), poncho and kasa over the Z2 tunic, katana high on the back |
+| The sister | fennec, about ten, taller than Zuzu, long torn pale dress, bandaged wrists (S2); trauma is her weight |
+| The toddler | fennec, babbles only, checked tunic, bandaged paw (T2) |
+| The one-eyed coyote vagrant | bedraggled, one eye, a revolver (C1). Loses a hand to the croc in chapter 1. A returning ally |
+| The crocodile | giant, erupts from the water; an animal, not a monster from the thin places (K2) |
+| The otter nuns | kind faces at first; habits; the mother superior with a dagger (N2) |
+| The tentacled horror | dark and cosmic, half through a portal; never fully seen |
 
 ## Open questions (Silas)
 
 - Where the apples come from: a wild tree, an abandoned orchard, or a trade.
-- "Vandal" in Silas's list is assumed to be the one-eyed coyote vagrant from Seed B.
-- Whether the mount (the dusty lizard in the bible) appears in Book One. Zuzu "rides back" in chapter 10,
+- Whether the mount (the dusty lizard in the bible) appears in Book One. Zuzu "rides back" in chapter 8,
   so something carries him.
+- With the watering hole now in chapter 1, the siblings no longer have the thirst beat or the "three at the
+  water's edge" image. Is a second water stop wanted, or do the apples carry their hunger?
+- Which hand the coyote loses, and whether the stump becomes a hook or a gun-hand when he returns.

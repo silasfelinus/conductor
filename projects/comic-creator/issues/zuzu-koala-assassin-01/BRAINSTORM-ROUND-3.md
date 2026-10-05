@@ -11,9 +11,10 @@ art: [ART-ROUND-3.yaml](./ART-ROUND-3.yaml), ArtJobs 33315 to 33362 (12 subjects
 - **They need more emotion.** *"The siblings are poor, starving, beaten, they are the sole survivors of
   a massacre. They are scared and have no one."*
 - **Zuzu is always serious.** *"More Clint Eastwood than unflappable sensei (or unflappable koala)."*
-- **Book One is one continuous story.** (2026-10-04) Massacre, siblings, apples, oasis, the coyote, the
-  croc, the orphanage, the nuns, and the three of them on the road together. Old Komodo is out of it.
-  See BOOK-ONE.md.
+- **Book One is one continuous story.** (2026-10-04; reordered 2026-10-05) The watering hole with the coyote
+  and the croc opens it, before the siblings; then the massacre, the siblings, apples, the orphanage, the
+  nuns, and the three of them on the road together. Old Komodo is out of it. Signature frames repeat
+  through it. See BOOK-ONE.md.
 - **Zuzu is koala-sized.** (2026-10-04) *"zuzu should be koala sized, or a little bigger. if he was an actor doing mocap, it would be danny devito."*
   About two and a half to three feet: short, stocky and barrel-chested, never tall or lanky. This
   replaces the v0 bible's "a little under four feet".
