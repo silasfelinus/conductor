@@ -264,3 +264,26 @@ are plain, unmasked Kontext edits on the round-10 picks, with modest prompts:
 The coyote's extra rags pass (242247–242254) went to Silas beside the round-12 picks (cast sheet 13). Row B is
 grittier, but on the front angles his face drifted toward a bear and two lost the eyepatch. The recommendation is row
 A, the round-12 picks.
+
+## r14 results (2026-10-05)
+
+**Zuzu's beer belly** (cast sheet 14). The picks:
+
+| Angle | Pick | Note |
+| --- | --- | --- |
+| Front | 242316 | Both front tries widened him all over; this is the milder one |
+| 3/4 front left | 242317 | |
+| Profile left | 242320 | |
+| 3/4 back left | 242113 | Round 10; back views hide the belly |
+| Back | 242117 | Round 10 |
+| 3/4 back right | 242120 | Round 10 |
+| Profile right | 242193 mirrored | A7 |
+| 3/4 front right | 242321 | |
+
+The alternates are 242315, 242318, 242319 (a balloon belly) and 242322.
+
+**The abbess:** the unmasked edits (242323–242331) also left her snout as it was; Kontext keeps redrawing the
+round-10 face. Two new tries ask for a sea otter, whose face is naturally short and round:
+
+- ART-ROUND-13.yaml: an Arthemy look test, front and profile, 3 seeds each (ArtJobs 33997–34002).
+- r15-abbess-sea-otter-*: Kontext species-change edits on three key angles (ArtJobs 34003–34005).
