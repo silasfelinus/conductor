@@ -198,6 +198,20 @@ class ValidateTaskEventsTests(unittest.TestCase):
         error = MODULE.validate(event)
         self.assertIn("learning is missing required fields", error)
 
+    def test_unknown_learning_failure_category_is_rejected(self):
+        event = self.write_event(
+            "bad-learning-category.yaml",
+            {
+                "version": 1,
+                "project": "demo",
+                "task": "t-001",
+                "operation": "done",
+                "learning": {"kind": "software", "stakes": "reversible", "lesson": "x", "failure_category": "regression"},
+            },
+        )
+        error = MODULE.validate(event)
+        self.assertIn("failure_category 'regression'", error)
+
     def test_bare_string_learning_is_accepted(self):
         # conductor/t-097: matches process_task_events.py's prepare_learning()
         # coercion for the same shape -- the PR-time gate must not reject what the
