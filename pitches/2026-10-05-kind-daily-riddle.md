@@ -1,7 +1,7 @@
 # Pitch: Kind Daily Riddle
 date: 2026-10-05
 project-target: new
-status: awaiting-silas
+status: approved
 
 ## The idea
 One hand-written riddle every day, chosen from a bundled calendar of 365, with three gentle hints that unlock over time and a pre-made illustration revealed on the right answer. Streaks count quietly and a missed day never erases anything you have earned.
