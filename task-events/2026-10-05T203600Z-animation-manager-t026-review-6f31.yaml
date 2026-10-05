@@ -1,0 +1,8 @@
+version: 1
+project: animation-manager
+task: t-026
+operation: review
+session: 2026-10-05T203300Z-animation-manager-t026-direct-delivery-6f31
+updated: '2026-10-05T20:36:00Z'
+note: >-
+  Third live failure investigated. Today's delivered digest still has Brevo tracking redirects in primary actions even though the attachment contains the correct originals. The external guard ran once, sent no resend, then became disabled. This branch makes the workflow publish a dedicated direct-send artifact before the Brevo step so the repaired guard can consume the rendered payload deterministically. Today's digest was resent through Gmail and verified to contain the direct pitch-inbox URL with no tracking redirect.
