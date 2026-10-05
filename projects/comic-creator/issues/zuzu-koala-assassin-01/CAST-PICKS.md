@@ -158,4 +158,8 @@ renders every character at eight angles in it. Picks, in turn order:
 - **The coyote's stump:** the first Kontext edit (242194) bandaged both wrists and kept both hands; two
   stronger retries are queued (ANGLES-COYOTE.yaml, r10-coyote-stump-b/c).
 - **Next:** these 40 angles are the training sets for the character LoRAs (t-016).
+- **Coyote stump, outcome:** stump-c (242196) is the only render with the right wrist ending in a bandaged
+  stump, but it bloodied his other hand. The cleanup (stump-d, 242197) restored both hands. Kontext keeps
+  "healing" the amputation when asked to change anything else; the next try should be a masked edit limited to
+  the one hand.
 
