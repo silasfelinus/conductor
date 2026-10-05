@@ -1,0 +1,151 @@
+# Zuzu round 6: Zuzu redesign (Silas, 2026-10-05: "I actually like Zuzu with two modification. The
+# "cloak" should be a poncho, a callback to Eastwood. And he need a real samurai hat ... those long wide
+# brims that partially hide the head." That hat is a kasa; the travel style is a sandogasa.)
+# Base: round-5 pick Z2 (ArtImage 241873). House lane with the author's settings (Silas: "Yes on house
+# settings"). 4 turnarounds + emotion sheet + hero shot = 6 private ArtJobs.
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status).
+round: 6
+series: zuzu-koala-assassin
+project_slug: comic-creator
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author's settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style)
+  suffix: western, dusty, painterly, dramatic lighting, gritty
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: r6-zuzu-turnaround-a
+  entity: zuzu
+  title: Zuzu in poncho and kasa, turnaround A
+  size: 1216x832
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, tall, lanky, long legs, slender, straw boater, hat band, cowboy
+    hat, cloak, cape, hood, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad
+    anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  prompt_prose: 'Zuzu turnaround on the Z2 design: koala-sized, stocky, an Eastwood poncho and a kasa that shades
+    his eyes.'
+  prompt_tags: (fully clothed:1.3), same outfit in every view, (poncho:1.3), (kasa:1.2), sandogasa, wide conical
+    straw hat, brim shading the eyes, dusty earth-toned poncho over one shoulder, dark tunic, brown trousers, orange
+    sash, wrapped shins, character sheet, turnaround, multiple views, front view, side view, back view, full body,
+    standing, simple background, anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short
+    legs, small stature, grey fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting,
+    frown, katana on back
+  jobs:
+    arthemy-house: 33543
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 241908
+- key: r6-zuzu-turnaround-b
+  entity: zuzu
+  title: Zuzu in poncho and kasa, turnaround B
+  size: 1216x832
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, tall, lanky, long legs, slender, straw boater, hat band, cowboy
+    hat, cloak, cape, hood, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad
+    anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  prompt_prose: 'Zuzu turnaround on the Z2 design: koala-sized, stocky, an Eastwood poncho and a kasa that shades
+    his eyes.'
+  prompt_tags: (fully clothed:1.3), same outfit in every view, (poncho:1.3), (kasa:1.2), sandogasa, wide conical
+    straw hat, brim shading the eyes, dusty earth-toned poncho over one shoulder, dark tunic, brown trousers, orange
+    sash, wrapped shins, character sheet, turnaround, multiple views, front view, side view, back view, full body,
+    standing, simple background, anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short
+    legs, small stature, grey fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting,
+    frown, katana on back
+  jobs:
+    arthemy-house: 33544
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 241909
+- key: r6-zuzu-turnaround-c
+  entity: zuzu
+  title: Zuzu in poncho and kasa, turnaround C
+  size: 1216x832
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, tall, lanky, long legs, slender, straw boater, hat band, cowboy
+    hat, cloak, cape, hood, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad
+    anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  prompt_prose: 'Zuzu turnaround on the Z2 design: koala-sized, stocky, an Eastwood poncho and a kasa that shades
+    his eyes.'
+  prompt_tags: (fully clothed:1.3), same outfit in every view, (poncho:1.3), (kasa:1.2), sandogasa, wide conical
+    straw hat, brim shading the eyes, dusty earth-toned poncho over one shoulder, dark tunic, brown trousers, orange
+    sash, wrapped shins, character sheet, turnaround, multiple views, front view, side view, back view, full body,
+    standing, simple background, anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short
+    legs, small stature, grey fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting,
+    frown, katana on back
+  jobs:
+    arthemy-house: 33545
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 241910
+- key: r6-zuzu-turnaround-d
+  entity: zuzu
+  title: Zuzu in poncho and kasa, turnaround D
+  size: 1216x832
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, tall, lanky, long legs, slender, straw boater, hat band, cowboy
+    hat, cloak, cape, hood, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad
+    anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  prompt_prose: 'Zuzu turnaround on the Z2 design: koala-sized, stocky, an Eastwood poncho and a kasa that shades
+    his eyes.'
+  prompt_tags: (fully clothed:1.3), same outfit in every view, (poncho:1.3), (kasa:1.2), sandogasa, wide conical
+    straw hat, brim shading the eyes, dusty earth-toned poncho over one shoulder, dark tunic, brown trousers, orange
+    sash, wrapped shins, character sheet, turnaround, multiple views, front view, side view, back view, full body,
+    standing, simple background, anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short
+    legs, small stature, grey fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting,
+    frown, katana on back
+  jobs:
+    arthemy-house: 33546
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 241911
+- key: r6-zuzu-emotions
+  entity: zuzu
+  title: Zuzu in poncho and kasa, emotion sheet
+  size: 1216x832
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, tall, lanky, long legs, slender, straw boater, hat band, cowboy
+    hat, cloak, cape, hood, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad
+    anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  prompt_prose: Six head-and-shoulders studies of Zuzu under the kasa brim, in the poncho.
+  prompt_tags: expression sheet, multiple views, portrait, upper body, glaring, squinting, angry, clenched teeth,
+    tired, sad, determined, simple background, (poncho:1.2), (kasa:1.2), sandogasa, brim shading the eyes, anthro,
+    koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs, small stature, grey fur, round
+    fluffy ears, notched ear, ear scar, broad black nose, serious, squinting, frown, katana on back
+  jobs:
+    arthemy-house: 33547
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 241912
+- key: r6-zuzu-hero
+  entity: zuzu
+  title: 'Zuzu hero shot: poncho in the wind'
+  size: 832x1216
+  negative: (nude:1.4), (naked:1.3), topless, bare chest, bare back, bare butt, featureless crotch, undressing,
+    no clothes, skull, jolly roger, emblem, logo, tall, lanky, long legs, slender, straw boater, hat band, cowboy
+    hat, cloak, cape, hood, nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad
+    anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text
+  prompt_prose: Zuzu alone on a desert road, poncho stirring in the wind, the kasa brim hiding his eyes.
+  prompt_tags: (fully clothed:1.3), same outfit in every view, (poncho:1.3), (kasa:1.2), sandogasa, wide conical
+    straw hat, brim shading the eyes, dusty earth-toned poncho over one shoulder, dark tunic, brown trousers, orange
+    sash, wrapped shins, full body, standing, from below, desert road, wind, poncho blowing in the wind, heat haze,
+    low sun, anthro, koala, male, adult, (short:1.2), (stocky:1.2), chubby, barrel chest, short legs, small stature,
+    grey fur, round fluffy ears, notched ear, ear scar, broad black nose, serious, squinting, frown, katana on back
+  jobs:
+    arthemy-house: 33548
+  art:
+    arthemy-house:
+      status: DONE
+      art_image_id: 241913

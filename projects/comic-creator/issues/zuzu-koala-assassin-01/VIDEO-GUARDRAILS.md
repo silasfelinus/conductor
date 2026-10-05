@@ -22,6 +22,9 @@ wherever it disagrees with the v0 SERIES-BIBLE.md or ISSUE-01-SCRIPT.md.
 ## Canon in every prompt
 
 - **Zuzu is always serious:** Clint Eastwood stillness, never a smiling sensei.
+- **Zuzu's costume (2026-10-05):** a dusty poncho, the Eastwood callback, and a kasa whose wide brim shades his
+  eyes, over a dark tunic, brown trousers and an orange sash. Tags: `poncho, kasa, sandogasa, brim shading the eyes`.
+  Negate `straw boater, cowboy hat, cloak, cape`.
 - **Zuzu is koala-sized, or a little bigger:** Silas, 2026-10-04: *"zuzu should be koala sized, or a little bigger. if he was an actor doing mocap, it would be danny devito."*
   Short, stocky, barrel-chested, short legs. In shared frames he is the shortest adult, and the sister is taller
   than him. Tags that carry it: `short, stocky, chubby, small stature, short legs`. Round 4b's walking shots drew

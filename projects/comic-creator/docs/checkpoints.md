@@ -19,6 +19,9 @@ no frames withheld. Its author's settings are Euler a, 25 to 50 steps, CFG 3.5 t
 `toon (style)` and `western comics (style)`; round 4 used the Illustrious family profile instead.
 FurryToonMix V3 stays available as a lane.
 
+Silas, 2026-10-05: "Yes on house settings." The house lane now runs the author's settings (Euler a,
+30 steps, CFG 5, plus the two style tags). Seven of his nine round-5 design picks came from them.
+
 ## The previous house checkpoint: FurryToonMix
 
 - Page: https://civitai.com/models/97479 by Epitaph. Illustrious (SDXL), eps prediction. The license
