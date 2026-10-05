@@ -2156,18 +2156,19 @@ tasks:
 - id: t-129
   milestone: m6
   title: 'Add adjustable ArtJob queue priority controls'
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
-  owner: worker
   passes: 0
-  updated: '2026-10-05T10:10:00Z'
+  updated: '2026-10-05T10:18:00Z'
   claimed_by: 2026-10-05T100000Z-kind-robots-t129-priority-7f3c
   claimed_at: '2026-10-05T10:00:00Z'
   note: |-
     Silas-directed 2026-10-05: ArtJob queue cards should allow actual priority adjustment. The current single toggle labels priority 100 as "Normal priority" and does not provide direct control over the queue value.
 
     Replaced the ArtJob queue card's binary priority toggle with a bounded numeric priority editor using the existing -1000..1000 queue contract and store action. Added a source-level regression contract. Implementation branch: worker/kind-robots-t129-artjob-priority-20261005T100000Z.
+
+    Merged silasfelinus/kind_robots#3225 at 9e4e44a1154926b14518e84daff065af229d178b after all 30 PR workflows completed successfully. PENDING ArtJob cards now expose a bounded numeric priority editor backed by the shared queue parser and existing priority API/store path.
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
