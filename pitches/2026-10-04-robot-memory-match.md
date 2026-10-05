@@ -1,7 +1,7 @@
 # Pitch: Robot Memory Match
 date: 2026-10-04
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 A card-flip matching game where pairs are pre-generated Kind Robots portraits, with boards that grow from four pairs to twelve as you win. Best times save on the device, and each cleared level unlocks a new card-back design to collect.
