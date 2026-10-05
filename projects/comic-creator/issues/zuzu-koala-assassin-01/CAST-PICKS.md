@@ -229,3 +229,10 @@ chosen for pose and sides, then a Kontext destitute pass (ANGLES-COYOTE.yaml, r1
 | 3/4 front right | 242220 | Both right |
 
 The masked stump goes on the front after the rags pass.
+
+## Round 12 abbess: discarded, masked face edits instead (2026-10-05)
+
+"(short blunt muzzle:1.4)" made Arthemy draw a literal muzzle, a dog-style restraint, on all 16 seeds, and the fur
+drifted to purple and green. The round-10 set stays. A masked Kontext edit (ANGLES-ABBESS.yaml, ArtJobs 33912–33918)
+redraws only the head box on seven angles as a short, round otter face. The back view (242185) shows no face and
+stands as it is. VIDEO-GUARDRAILS.md now lists the words the models draw literally.

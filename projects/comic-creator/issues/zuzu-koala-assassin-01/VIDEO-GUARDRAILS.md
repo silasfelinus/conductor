@@ -60,3 +60,13 @@ billboard, road sign, english lettering
 `people` is on the list because every character is an animal. In a prompt, say "townsfolk" or name
 the species instead. The words "statue" and "ruins" are allowed for ordinary weird-west sets. Never
 pair them with a giant figure or with lettering.
+
+## Words the image models draw literally (keep them out of positive AND negative prompts)
+
+The house checkpoint draws some words as objects, even when they appear only in the negative prompt:
+
+- **"duster"** (the coat) draws a feather duster. Say "long riding coat".
+- **"mother"** (as in "mother superior") adds a small otter child. Say "abbess" or "elderly head nun".
+- **"muzzle"** (the snout) draws a muzzle restraint over the face, as in round 12. Describe the face instead,
+  for example "a round, flat otter face with a small nose pad".
+- **"squat"** makes Zuzu crouch. Say "chubby, standing upright".

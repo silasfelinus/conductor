@@ -1,0 +1,132 @@
+# The abbess (otter nun head of the convent): masked face edits on the approved round-10 set (comic-creator t-015).
+# Silas, 2026-10-05: "Her snout is too long." Round 12 re-rendered her with "(short blunt muzzle:1.4)" and Arthemy drew
+# a literal muzzle (a dog-style restraint) on every seed, with purple and green fur drift, so round 12 is discarded
+# for her. Instead the round-10 picks keep their pose, habit and colours, and a masked Kontext edit changes only the
+# head box: the word "muzzle" appears nowhere. The back view (242185) shows no face and stands as it is.
+# Never use the word "mother" in a prompt (it adds a small otter child).
+# Submit/refresh with scripts/enqueue_art_requests.py (dry run by default; --live; --status). Private.
+series: zuzu-koala-assassin
+project_slug: comic-creator
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: kontext-angles
+  label: Flux Kontext dev (fp8), masked face edit
+  engine: kontext
+  prompt: prose
+  steps: 20
+  guidance: 2.5
+subjects:
+- key: r12-abbess-face-front
+  entity: otter-nuns
+  title: 'The abbess, short face: front'
+  size: 832x1216
+  source_image_id: 242177
+  mask_box:
+  - 0.38
+  - 0.05
+  - 0.63
+  - 0.2
+  prompt_prose: 'Redraw only her face as a short, round otter face: a small flat nose pad sitting just below her
+    eyes, round cheeks with whiskers, a small mouth, no long snout. Keep her elderly, cold expression, the direction
+    she faces, her brown fur, the black habit and white wimple around her face, the inked western comic style and
+    the plain white background.'
+  jobs:
+    kontext-angles: 33912
+- key: r12-abbess-face-front-three-quarter-left
+  entity: otter-nuns
+  title: 'The abbess, short face: front three quarter left'
+  size: 832x1216
+  source_image_id: 242179
+  mask_box:
+  - 0.4
+  - 0.08
+  - 0.7
+  - 0.22
+  prompt_prose: 'Redraw only her face as a short, round otter face: a small flat nose pad sitting just below her
+    eyes, round cheeks with whiskers, a small mouth, no long snout. Keep her elderly, cold expression, the direction
+    she faces, her brown fur, the black habit and white wimple around her face, the inked western comic style and
+    the plain white background.'
+  jobs:
+    kontext-angles: 33913
+- key: r12-abbess-face-profile-left
+  entity: otter-nuns
+  title: 'The abbess, short face: profile left'
+  size: 832x1216
+  source_image_id: 242181
+  mask_box:
+  - 0.37
+  - 0.1
+  - 0.53
+  - 0.23
+  prompt_prose: 'Redraw only her face as a short, round otter face: a small flat nose pad sitting just below her
+    eyes, round cheeks with whiskers, a small mouth, no long snout. Keep her elderly, cold expression, the direction
+    she faces, her brown fur, the black habit and white wimple around her face, the inked western comic style and
+    the plain white background.'
+  jobs:
+    kontext-angles: 33914
+- key: r12-abbess-face-back-three-quarter-left
+  entity: otter-nuns
+  title: 'The abbess, short face: back three quarter left'
+  size: 832x1216
+  source_image_id: 242182
+  mask_box:
+  - 0.32
+  - 0.07
+  - 0.48
+  - 0.19
+  prompt_prose: 'Redraw only her face as a short, round otter face: a small flat nose pad sitting just below her
+    eyes, round cheeks with whiskers, a small mouth, no long snout. Keep her elderly, cold expression, the direction
+    she faces, her brown fur, the black habit and white wimple around her face, the inked western comic style and
+    the plain white background.'
+  jobs:
+    kontext-angles: 33915
+- key: r12-abbess-face-back-three-quarter-right
+  entity: otter-nuns
+  title: 'The abbess, short face: back three quarter right'
+  size: 832x1216
+  source_image_id: 242186
+  mask_box:
+  - 0.47
+  - 0.06
+  - 0.65
+  - 0.2
+  prompt_prose: 'Redraw only her face as a short, round otter face: a small flat nose pad sitting just below her
+    eyes, round cheeks with whiskers, a small mouth, no long snout. Keep her elderly, cold expression, the direction
+    she faces, her brown fur, the black habit and white wimple around her face, the inked western comic style and
+    the plain white background.'
+  jobs:
+    kontext-angles: 33916
+- key: r12-abbess-face-profile-right
+  entity: otter-nuns
+  title: 'The abbess, short face: profile right'
+  size: 832x1216
+  source_image_id: 242188
+  mask_box:
+  - 0.46
+  - 0.09
+  - 0.67
+  - 0.22
+  prompt_prose: 'Redraw only her face as a short, round otter face: a small flat nose pad sitting just below her
+    eyes, round cheeks with whiskers, a small mouth, no long snout. Keep her elderly, cold expression, the direction
+    she faces, her brown fur, the black habit and white wimple around her face, the inked western comic style and
+    the plain white background.'
+  jobs:
+    kontext-angles: 33917
+- key: r12-abbess-face-front-three-quarter-right
+  entity: otter-nuns
+  title: 'The abbess, short face: front three quarter right'
+  size: 832x1216
+  source_image_id: 242191
+  mask_box:
+  - 0.43
+  - 0.05
+  - 0.64
+  - 0.21
+  prompt_prose: 'Redraw only her face as a short, round otter face: a small flat nose pad sitting just below her
+    eyes, round cheeks with whiskers, a small mouth, no long snout. Keep her elderly, cold expression, the direction
+    she faces, her brown fur, the black habit and white wimple around her face, the inked western comic style and
+    the plain white background.'
+  jobs:
+    kontext-angles: 33918
