@@ -1,8 +1,10 @@
 # Retire WonderLab; keep the voices
+date: 2026-08-11
+project-target: kind-robots
+status: approved
 
-**Status:** approved by Silas in-session 2026-08-11
-**Project:** kind-robots
-**Kind:** software/content migration
+**Kind:** software/content migration. Approved by Silas in-session 2026-08-11; this file is the
+decision record (it predates the `status:` header, which is why it sat in the vote queue).
 
 Silas directed Kind Robots to retire WonderLab entirely as a product and developer subsystem. Remove the museum routes, component catalog/store/API/build metadata generation, WonderLab-specific CI/contracts/admin review surfaces, and the requirement that orphaned components remain compilable for museum previews. `components/abandonware` may remain in-repo temporarily as excluded source, but the end state is to archive it outside Kind Robots so it cannot affect built chunks.
 
