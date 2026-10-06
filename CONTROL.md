@@ -575,6 +575,11 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
   projects/comic-creator/issues/zuzu-koala-assassin-01/). First and last animations, with success and
   death branches between. Needs sound, optional on-screen buttons and flash assist.
 
+### kind-nonogram-gallery  (software)
+**Direction:** Picture-cross puzzles where row/column clues reveal pixel portraits of Kind Robot species, with a mistake-forgiving mode and a gallery of solved grids that colour in with species palettes; no LLM at runtime.
+**Notes:**
+- (your notes)
+
 ### zuzu-showdown  (software)
 **Direction:** A free browser 2D pixel-art fighting game (Street Fighter / Skullgirls / MvC style) in the world of Zuzu: Koala Assassin: eight fighters with special moves, chain combos, a strike/grab/guard triangle, a super meter and unique supers, animated stages and matchup-specific pre- and post-fight lines, playable on Kind Robots.
 **Notes:**
