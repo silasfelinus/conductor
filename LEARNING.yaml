@@ -17351,3 +17351,14 @@ records:
   lesson: 'The Worker PR handoff check requires the AGENTS.md headings (Task, What changed, How I verified, Stakes,
     Kaizen suggestion, Notes for reviewer) in the PR body from the first push; a free-form body fails CI. Read
     server route sources in the sibling kind_robots checkout for API contracts when no live token is available.'
+- date: '2026-10-06'
+  project: kr-arcade
+  task: t-009
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Arcade game factory cycle: write the game against the engine kit, then probe balance with a
+    scratch tsx script that drives the game''s own demoInput() pilot for a few thousand ticks; a pilot
+    that never climbs or dies in the first wave flags a physics or curve bug before any browser test.'
