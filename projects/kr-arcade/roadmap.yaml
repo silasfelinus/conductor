@@ -250,7 +250,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Build the next arcade cabinet (recurring game factory)"
-    status: claimed
+    status: ready
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -287,10 +287,19 @@ tasks:
       scoring) shipped in silasfelinus/kind_robots#3275; title art requested. kind-pinball
       stays building: the next cycle builds its slice 3 (ramp + modes) before taking a queued
       entry, then slice 4 (AMI multiball).
+
+      RAN 2026-10-06: Kind Pinball slice 3 (ramp + modes) in silasfelinus/kind_robots#3280 --
+      raised ramp from an upper-right mouth into the left inlane, streak scoring, four 30 s
+      modes (Net Rush, Ramp Frenzy, Lane Lights, Saucer Rescue) started by every third ramp
+      shot, and a 250,000 x level super jackpot once all four are played. Verified:
+      test:arcade-engine, eslint/prettier, vue-tsc, balance probe seeds 1-8 (1-5 rides per
+      game, no stalls), ramp exit reaches the left flipper on every seed, Playwright
+      phone/desktop. kind-pinball stays building; next cycle builds slice 4 (AMI multiball),
+      then the queue resumes at gloom-invaders.
     claimed_by: 2026-10-06T1930Z-kr-arcade-t009-pinball-slice3
     claimed_at: '2026-10-06T22:38:03Z'
-    updated: '2026-10-06T22:38:03Z'
-    implementation_pr: 'silasfelinus/kind_robots#3275'
+    updated: '2026-10-06T22:51:17Z'
+    implementation_pr: 'silasfelinus/kind_robots#3280'
 
   - id: t-010
     milestone: m2
