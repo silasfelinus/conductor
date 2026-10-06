@@ -17340,3 +17340,14 @@ records:
   lesson: 'Claim a conductor task on main before cutting the close-out branch; a claim pushed after the
     branch was cut conflicts with its own close-out and blocks pull_request CI until merged in. With no
     database, the arcade per-browser fallback board makes the full play/initials/save loop testable.'
+- date: '2026-10-06'
+  project: kr-arcade
+  task: t-009
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Arcade game factory cycle: write the game against the engine kit, then probe balance with a
+    scratch tsx script that drives the game''s own demoInput() pilot for a few thousand ticks; a pilot
+    that never climbs or dies in the first wave flags a physics or curve bug before any browser test.'
