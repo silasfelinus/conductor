@@ -58,11 +58,11 @@ tasks:
   - id: t-002
     milestone: m1
     title: "Curate the cabinet and launch art once it renders"
-    status: claimed
-    owner: reviewer
+    status: done
+    owner: null
     passes: 0
     stakes: reversible
-    note: >
+    note: >-
       The scaffolding session queued the launch art as `requests:` in projects/art-prompts.yaml
       (ids prefixed `kr-arcade-`), targeting kind_robots public/images/arcade/. auto-art-generate.yml
       drains them on push and every 6 hours. This task: confirm each request reached status done
@@ -71,9 +71,13 @@ tasks:
       collage. If a request is still pending, close as a no-op re-arm rather than waiting.
       Generated art is pre-approved (AGENTS.md "Project art"). Also check the project
       icon/card/hero in projects/images/.
-    claimed_by: 2026-10-06T1215Z-kr-arcade-t002
-    claimed_at: '2026-10-06T12:12:42Z'
-    updated: '2026-10-06T12:12:42Z'
+
+      DONE 2026-10-06: reviewed all launch art on kindrobots.org (hall backdrop, marquee,
+      bezel, control panel, side art, attract splash, three game title pieces) -- on-palette,
+      lettering-free, logo androids recognisable. Re-staged two: butterfly-blaster-title (AMI
+      rendered as the Android mascot lookalike) and cabinet-hero (garbled marquee lettering;
+      image not yet used by the UI). Future cabinets' art is curated inside t-009 cycles.
+    updated: '2026-10-06T12:14:00Z'
 
   - id: t-003
     milestone: m2
@@ -184,27 +188,32 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Launch game 2: Rescue Rally (twin-stick arena, riff on Robotron)"
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
     depends_on:
       - t-004
-    note: >
+    note: >-
       See games.yaml rescue-rally. Move with one stick and fire a kindness beam with the other.
       The beam reboots glitched drones into friendly ones. Rescue wandering humans, pets and
       little bots for a rising multiplier. Waves add spawners, seekers and slow tanks on the
       difficulty curve. Touch gets dual virtual sticks. Keyboard is WASD to move and arrows to
       fire. Must meet the per-game checklist in DESIGN-BRIEF.md. Title-card art:
       /images/arcade/games/rescue-rally-title.webp.
+
+      DONE 2026-10-06: kind_robots#3269 merged (all checks green). Rescue Rally live at
+      /play/arcade?game=rescue-rally after the next deploy. One-stick adaptation: move aims, A
+      fires, hold B strafes; curves tuned so a perfect-aim pilot dies on wave 4-5.
     claimed_by: 2026-10-06T1205Z-kr-arcade-t007
     claimed_at: '2026-10-06T12:02:11Z'
-    updated: '2026-10-06T12:02:11Z'
+    updated: '2026-10-06T12:12:39Z'
+    implementation_pr: 'silasfelinus/kind_robots#3269'
 
   - id: t-008
     milestone: m2
     title: "Launch check, then hand the arcade to the continuous game factory"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
