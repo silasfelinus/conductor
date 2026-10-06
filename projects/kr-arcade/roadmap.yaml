@@ -1,0 +1,206 @@
+# Kind Robots Arcade -- scaffolded 2026-10-06 via intake.py from Silas's in-session brief.
+# Scope came straight from Silas, so there is no separate "confirm scope" gate: the
+# design brief records his direction verbatim. Two phases: a finite launch (m1+m2,
+# project status `active`), then a continuous game factory (m3) once launch ships.
+project: kr-arcade
+kind: software
+goal: "A free in-browser Kind Robots arcade on its own Arcade tab in the Projects channel: classic-cabinet front end, attract-mode intro splashes, three-initial leaderboards, and original Kind Robots games riffing on golden-age classics with rising difficulty, then a standing game factory that keeps adding cabinets."
+
+notes_from_silas: |
+  Silas, 2026-10-06 (verbatim): "new project for conductor, that will fit into our daily
+  pitches. Some daily pitches can be kind robots themed arcade games. playable on a special
+  arcade tab in our Projects section, and needing an independent front end that evokes a
+  classic arcade setup, users can play kind robots themed arcade games reminiscent of old
+  games. favorites personally were: joust, guantlet 2, mario bros, pinball. robotron, the
+  logging game, that bubble in the sink game, pacman. I want achievable games, with
+  leaderboards, incremental challenge, intro splash, classic retro looking style, stylish
+  arcade cabinet frames, and playable in browser, for free. in general, once the main page
+  is created (an arcade cabinet front end, leaderboard, at least two games), then this will
+  become a regular "make this when you don't have another task duty, like our screensaver
+  project). create the project, submit initial art job requests to make it (our cabinet
+  should evoke classic cabinets, but also reminiscent of our logo style)."
+
+  Agents: DESIGN-BRIEF.md is the spec (cabinet look, engine-kit contract, leaderboard,
+  per-game checklist). games.yaml is the build queue. Riff on mechanics only -- never the
+  original games' names, sprites, sounds or level layouts.
+
+milestones:
+  - id: m1
+    title: "SHAPE — design brief, game catalog, cabinet art"
+    weight: 15
+    status: in-progress
+
+  - id: m2
+    title: "LAUNCH — Arcade tab, cabinet front end, leaderboard, two games"
+    weight: 55
+    status: not-started
+
+  - id: m3
+    title: "GAME FACTORY — one new cabinet per fallback cycle"
+    weight: 30
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write the design brief and game catalog"
+    status: done
+    owner: reviewer
+    passes: 0
+    stakes: reversible
+    updated: 2026-10-06
+    note: >
+      Done in the scaffolding session (2026-10-06): DESIGN-BRIEF.md (cabinet look in the
+      logo palette, engine-kit contract, leaderboard design, per-game checklist, guardrails)
+      and games.yaml (eight catalog games mapped from Silas's favourites; Battery Maze and
+      Rescue Rally chosen as the launch pair because both are fixed-screen and well-understood).
+
+  - id: t-002
+    milestone: m1
+    title: "Curate the cabinet and launch art once it renders"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      The scaffolding session queued the launch art as `requests:` in projects/art-prompts.yaml
+      (ids prefixed `kr-arcade-`), targeting kind_robots public/images/arcade/. auto-art-generate.yml
+      drains them on push and every 6 hours. This task: confirm each request reached status done
+      and its file landed in kind_robots; view every image; re-stage (status: pending, force: true,
+      corrected prompt) any that carry lettering, a garbled cabinet, the wrong palette, or a
+      collage. If a request is still pending, close as a no-op re-arm rather than waiting.
+      Generated art is pre-approved (AGENTS.md "Project art"). Also check the project
+      icon/card/hero in projects/images/.
+
+  - id: t-003
+    milestone: m2
+    title: "Arcade tab + cabinet front end (hall, cabinet select, cabinet chrome, attract shell)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      kind_robots. Add the Arcade tab to the Projects channel: a content/channels/projects tab
+      document, a PROJECT_PLACEMENTS entry 'kr-arcade' -> { channelKey: 'projects', tabKey:
+      'arcade', route: '/play/arcade' }, and the page. The page is the arcade hall (art:
+      /images/arcade/arcade-hall-backdrop.webp) with a row of cabinets; picking one opens it in a
+      shared <arcade-cabinet> frame (marquee, bezel around the canvas, control panel, FREE PLAY
+      coin door) built from /images/arcade/cabinet-*.webp with a CSS fallback when art is missing.
+      All text rendered in a pixel font over the art. Show "coming soon" cabinets for queued
+      games. Optional CRT scanline overlay (off under prefers-reduced-motion). Then set liveUrl /
+      channelKey / tabKey on kr-arcade in project-overrides.yaml to match. Read
+      docs/agents/frontend-verification.md: verify phone (portrait, touch), tablet and desktop
+      before merging. Can land before any game exists.
+
+  - id: t-004
+    milestone: m2
+    title: "Shared arcade engine kit (loop, input, attract/initials state machine, HUD, sound, registry)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      kind_robots utils/arcade/ per DESIGN-BRIEF.md "Engine kit contract": fixed-timestep loop,
+      integer canvas scaling, unified keyboard/gamepad/touch input, BOOT->TITLE->ATTRACT->PLAYING->
+      GAME_OVER->INITIALS->SCORES state machine, pixel font + sprite helpers, difficulty-curve
+      helper, WebAudio chiptune helper (muted until first interaction, persisted mute), and the
+      games.ts registry. Unit-test the pure parts (curve, state machine, input mapping). Pure
+      client-side; no LLM. Independent of t-003 -- either can land first.
+
+  - id: t-005
+    milestone: m2
+    title: "Leaderboard: additive ArcadeScore model + scores API + initials entry"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >
+      kind_robots. Additive Prisma model ArcadeScore (id, gameSlug, initials char(3), score,
+      level, userId optional FK, createdAt; index gameSlug+score desc). GET
+      /api/arcade/scores/[game]?range=all|today (top 10) and POST /api/arcade/scores with
+      validation: initials A-Z0-9 x3 plus a small blocklist, gameSlug in the registry, score <=
+      maxPlausibleScore, per-IP rate limit, userId attached when signed in. Local-storage
+      fallback board when the API fails. The migration must be CREATE TABLE / CREATE INDEX only
+      -- Reviewer audits migration.sql line by line before merge (AGENTS.md Reviewer CAN). If
+      the registry from t-004 has not landed yet, stub the slug list for the two launch games.
+
+  - id: t-006
+    milestone: m2
+    title: "Launch game 1: Battery Maze (maze chase, riff on Pac-Man)"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-004
+    note: >
+      See games.yaml battery-maze. A small kind robot gathers energy sparks through a maze while
+      four glitch gremlins with distinct personalities (chaser, ambusher, patroller, wanderer)
+      hunt it; a power cell turns them sleepy-blue and bumping one "reboots" it back to the
+      charging dock. Levels raise speed and shorten power time, with a bonus item per level and an
+      intermission every few levels. Original maze layouts. Must meet the per-game checklist in
+      DESIGN-BRIEF.md (splash, attract, ramp, leaderboard, touch/gamepad/keyboard, sound,
+      cabinet frame). Title-card art: /images/arcade/games/battery-maze-title.webp.
+
+  - id: t-007
+    milestone: m2
+    title: "Launch game 2: Rescue Rally (twin-stick arena, riff on Robotron)"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-004
+    note: >
+      See games.yaml rescue-rally. Move with one stick and fire a kindness beam with the other.
+      The beam reboots glitched drones into friendly ones. Rescue wandering humans, pets and
+      little bots for a rising multiplier. Waves add spawners, seekers and slow tanks on the
+      difficulty curve. Touch gets dual virtual sticks. Keyboard is WASD to move and arrows to
+      fire. Must meet the per-game checklist in DESIGN-BRIEF.md. Title-card art:
+      /images/arcade/games/rescue-rally-title.webp.
+
+  - id: t-008
+    milestone: m2
+    title: "Launch check, then hand the arcade to the continuous game factory"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-003
+      - t-005
+      - t-006
+      - t-007
+    note: >
+      Verify the whole launch on main at phone, tablet and desktop widths. Check: the hall, both
+      cabinets, attract loops, a full game to the initials screen, the score appearing on the
+      board, gamepad, and mute. Fix what breaks. Then carry out Silas's 2026-10-06 instruction:
+      once the front end, leaderboard and two games exist, the arcade becomes standing "make this
+      when you have no other task" work. Flip kr-arcade to `status: continuous` in
+      project-overrides.yaml and add it to CONTROL.md's continuous fallback order
+      (animation-manager, then kr-arcade, then dream-cycle). Set milestone m2 done; t-009 then
+      unblocks through resolve_deps.py.
+
+  - id: t-009
+    milestone: m3
+    title: "Build the next arcade cabinet (recurring game factory)"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    recurring: true
+    depends_on:
+      - t-008
+    note: >
+      STANDING CONTRACT (Silas, 2026-10-06): this is fallback work, picked when no finite task
+      is claimable, the same lane as animation-manager's screensavers. Each cycle ships one new
+      cabinet, or one slice of a `large` one. Take the first games.yaml entry with status
+      `queued`; approved arcade pitches (source: pitches/...) sit ahead of the catalog. Set it to
+      `building`, then build it in kind_robots on the engine kit, meeting every point of the
+      per-game checklist in DESIGN-BRIEF.md. Queue its title-card art as a kr-arcade- request in
+      projects/art-prompts.yaml, register it, verify at phone/tablet/desktop, and merge. Then set
+      it to `shipped` with the PR number. For a `large` game, ship playable slices (pinball: the
+      table and flippers first, then modes; gauntlet: one floor and one class first) and keep it
+      `building` between cycles. If the queue is empty, write one new arcade pitch with `target:
+      kr-arcade` into the next daily docket instead. Re-arm to ready with a RAN <date> line
+      after each cycle.

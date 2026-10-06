@@ -559,3 +559,8 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 **Direction:** One hand-written riddle per day from a bundled 365 calendar, three unlocking hints, illustration reveal, gentle streaks that never erase progress. No LLM at runtime.
 **Notes:**
 - (your notes)
+
+### kr-arcade  (software)
+**Direction:** A free, in-browser Kind Robots arcade on its own Arcade tab in the Projects channel: a classic-cabinet front end with attract-mode splash screens, three-initial leaderboards, and original Kind Robots games that riff on golden-age classics (maze chase, twin-stick rescue, single-screen platformer, sink-bubble, lumberjack, flap-and-joust, pinball, co-op dungeon), each with rising difficulty. No LLM at runtime; all art pre-generated.
+**Notes:**
+- (your notes)

@@ -46,9 +46,11 @@ At the start of every session, before responding to any task, run a conductor sw
    pre-generated art) that need no LLM at runtime. **Sessions author; Silas decides** by clicking Approve or
    Pass in the digest email (signed confirm links), or on the Kind Robots project page. Never decide a pitch
    for him. If the check says today's docket is missing: `python scripts/daily_pitches.py --brief`, write
-   `pitches/daily/<pacific-date>.yaml` (exactly 5, at least 3 `llm_at_runtime: none`), `--check`, `--materialize`
-   (writes the `pitches/<date>-<slug>.md` files the project page votes on), open the PR. Then
-   `daily_pitches.py --approved`: scaffold any approved pitch with `scripts/intake.py` in the same session.
+   `pitches/daily/<pacific-date>.yaml` (exactly 5, at least 3 `llm_at_runtime: none`; up to 2 may be Kind
+   Robots Arcade cabinets with `target: kr-arcade`), `--check`, `--materialize` (writes the
+   `pitches/<date>-<slug>.md` files the project page votes on), open the PR. Then `daily_pitches.py
+   --approved`: scaffold any approved pitch with `scripts/intake.py` in the same session (an approved arcade
+   cabinet goes into `projects/kr-arcade/games.yaml` instead, as `--approved` says).
    The recurring task dream-cycle/t-035 makes this a daily commitment, so `select_role.py` surfaces it.
 
 Then report:

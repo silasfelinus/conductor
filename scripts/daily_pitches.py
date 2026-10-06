@@ -17,6 +17,11 @@ Flow (sessions author, Silas decides):
   4. An approved pitch is scaffolded into a project with scripts/intake.py by the next
      session (`--approved` lists approved pitches that have no project yet).
 
+Arcade games (Silas, 2026-10-06): a pitch may carry `target: kr-arcade` (any existing project
+slug works the same way). It is then a new cabinet for the Kind Robots Arcade, not a new project:
+it materializes with `project-target: kr-arcade`, and once approved `--approved` says to add it to
+projects/kr-arcade/games.yaml rather than scaffold it with intake.py.
+
 Usage:
     python scripts/daily_pitches.py --brief                       # what to avoid + the rules
     python scripts/daily_pitches.py --check [--date YYYY-MM-DD]   # docket exists, valid, materialized
@@ -50,6 +55,8 @@ VALID_DECISIONS = ("approved", "rejected")
 LLM_AT_RUNTIME = ("none", "optional", "required")
 EFFORTS = ("small", "medium", "large")
 REQUIRED = ("slug", "title", "hook", "llm_at_runtime", "effort", "art_plan", "first_slice")
+ARCADE_PROJECT = "kr-arcade"
+MAX_TARGETED = 2  # pitches aimed at an existing project (arcade cabinets) per day; the rest stay new projects
 SLUG_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 MIN_HOOK_WORDS = 15
 PENDING_STATUS = "awaiting-silas"
@@ -121,7 +128,20 @@ def existing_slugs(exclude_materialized: bool = True) -> set[str]:
         if exclude_materialized and path.stem in docket_stems:
             continue
         slugs.add(re.sub(r"^\d{4}-\d{2}-\d{2}-", "", path.stem))
-    return slugs
+    return slugs | arcade_game_slugs()
+
+
+def arcade_game_slugs() -> set[str]:
+    """Games already in the Arcade's queue (projects/kr-arcade/games.yaml), so a pitch never repeats one."""
+    path = ROOT / "projects" / ARCADE_PROJECT / "games.yaml"
+    if not path.exists():
+        return set()
+    games = (yaml.safe_load(path.read_text(encoding="utf-8")) or {}).get("games") or []
+    return {str(g.get("slug")) for g in games if isinstance(g, dict) and g.get("slug")}
+
+
+def target_of(pitch: dict[str, Any]) -> str:
+    return str(pitch.get("target") or "").strip()
 
 
 def validate(date: str, docket: dict[str, Any]) -> list[str]:
@@ -137,6 +157,7 @@ def validate(date: str, docket: dict[str, Any]) -> list[str]:
     taken = existing_slugs()
     seen: set[str] = set()
     zero_llm = 0
+    targeted = 0
     for i, pitch in enumerate(pitches, 1):
         where = f"{date} pitch {i}"
         if not isinstance(pitch, dict):
@@ -161,10 +182,18 @@ def validate(date: str, docket: dict[str, Any]) -> list[str]:
             errors.append(f"{where}: llm_at_runtime must be one of {LLM_AT_RUNTIME}")
         if pitch.get("llm_at_runtime") == "none":
             zero_llm += 1
+        target = target_of(pitch)
+        if target:
+            targeted += 1
+            if not (ROOT / "projects" / target).is_dir():
+                errors.append(f"{where}: target '{target}' is not an existing project")
         if str(pitch.get("effort")) not in EFFORTS:
             errors.append(f"{where}: effort must be one of {EFFORTS}")
         if len(str(pitch.get("hook") or "").split()) < MIN_HOOK_WORDS:
             errors.append(f"{where}: hook needs at least {MIN_HOOK_WORDS} words (a complete idea, not a label)")
+    if targeted > MAX_TARGETED:
+        errors.append(f"{date}: at most {MAX_TARGETED} of {PITCHES_PER_DAY} pitches may carry a target "
+                      f"(found {targeted}); the rest pitch new projects")
     if zero_llm < MIN_ZERO_LLM:
         errors.append(f"{date}: at least {MIN_ZERO_LLM} of {PITCHES_PER_DAY} pitches must be llm_at_runtime: none "
                       f"(found {zero_llm})")
@@ -183,7 +212,7 @@ def pitch_markdown(date: str, pitch: dict[str, Any]) -> str:
     return (
         f"# Pitch: {pitch['title']}\n"
         f"date: {date}\n"
-        f"project-target: new\n"
+        f"project-target: {target_of(pitch) or 'new'}\n"
         f"status: {PENDING_STATUS}\n\n"
         f"## The idea\n{hook}\n\n"
         f"## Why it's worth doing\n{why}\n\n"
@@ -234,7 +263,12 @@ def cmd_brief() -> int:
     print("Theme: free-to-play, no LLM at runtime; sessions pre-author words and pre-generate art. Mix kinds "
           "(games, toys, tools, story/content, art collections). Extend what ships; no SaaS filler, nothing "
           "needing licensing review.")
-    print("Fields per pitch: slug (lowercase-hyphenated), title, hook, llm_at_runtime, effort, art_plan, first_slice")
+    print(f"Arcade: up to {MAX_TARGETED} of the five may be Kind Robots arcade cabinets for the Arcade tab -- set "
+          f"`target: {ARCADE_PROJECT}`. Riff on a golden-age classic's mechanics (never its name, sprites or "
+          f"levels), name the classic in the hook, and keep it achievable: intro splash, rising difficulty, a "
+          f"leaderboard score. Already queued: projects/{ARCADE_PROJECT}/games.yaml (listed below).")
+    print("Fields per pitch: slug (lowercase-hyphenated), title, hook, llm_at_runtime, effort, art_plan, first_slice"
+          f"; optional target ({ARCADE_PROJECT} for an arcade cabinet)")
     print("\nDo NOT repeat any of these (projects, pitches, earlier daily slugs):")
     taken = sorted(existing_slugs(exclude_materialized=False))
     print("  " + ", ".join(taken))
@@ -293,10 +327,20 @@ def cmd_pending() -> int:
 def cmd_approved() -> int:
     """Approved pitches that have not become a project yet (the next session scaffolds them)."""
     projects = {p.name for p in (ROOT / "projects").iterdir() if p.is_dir()}
-    todo = [r for d in all_docket_dates() for r in _rows(d) if r["decision"] == "approved" and r["slug"] not in projects]
+    games = arcade_game_slugs()
+    todo = [r for d in all_docket_dates() for r in _rows(d) if r["decision"] == "approved"
+            and r["slug"] not in projects and not (target_of(r) and r["slug"] in games)]
     for row in todo:
-        print(f"{row['stem']}  {row['title']}  -> python scripts/intake.py {row['slug']} --kind software "
-              f"--title \"{row['title']}\" --goal \"...\" --repo silasfelinus/kind_robots")
+        target = target_of(row)
+        if target == ARCADE_PROJECT:
+            print(f"{row['stem']}  {row['title']}  -> add to projects/{ARCADE_PROJECT}/games.yaml as status: queued, "
+                  f"source: pitches/{row['stem']}.md, ahead of the first queued catalog game (no intake.py)")
+        elif target:
+            print(f"{row['stem']}  {row['title']}  -> add as a ready task in projects/{target}/roadmap.yaml "
+                  f"(no intake.py)")
+        else:
+            print(f"{row['stem']}  {row['title']}  -> python scripts/intake.py {row['slug']} --kind software "
+                  f"--title \"{row['title']}\" --goal \"...\" --repo silasfelinus/kind_robots")
         mods = modifications(pitch_file(row["date"], row["slug"]))
         if mods:
             print(f"    APPROVED WITH CHANGES (fold these into the project goal): {mods}")
