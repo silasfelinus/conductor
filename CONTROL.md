@@ -544,3 +544,18 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 **Direction:** Build the approved free-to-play, no-LLM-at-runtime pitch; see pitches/2026-10-03-kind-trivia-trail.md for hook, art plan and first slice.
 **Notes:**
 - (your notes)
+
+### kind-lantern-garden  (software)
+**Direction:** Idle-style night-garden toy: tap to light lanterns, creatures arrive at set counts with pre-written one-line stories, local save, collection page. No LLM at runtime.
+**Notes:**
+- (your notes)
+
+### robot-species-sorting-quiz  (software)
+**Direction:** Twelve-question personality quiz sorting players into one of sixteen robot species with pre-written profile cards and shareable result card. No LLM at runtime.
+**Notes:**
+- (your notes)
+
+### kind-daily-riddle  (software)
+**Direction:** One hand-written riddle per day from a bundled 365 calendar, three unlocking hints, illustration reveal, gentle streaks that never erase progress. No LLM at runtime.
+**Notes:**
+- (your notes)
