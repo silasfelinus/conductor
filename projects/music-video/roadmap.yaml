@@ -508,6 +508,10 @@ tasks:
       the cartoon, lyric fit, cuts on beats, art coherence, audio quality). Silas decides
       whether to approve; approval is approved_by_human: true plus status: done.
 
+      2026-10-06: run it from /admin/music-video with Produce (t-031) rather than the headless
+      script. Title, pitch, settings, style bible and banned terms are ready to paste in
+      projects/music-video/docs/production-sheets.md (section A).
+
   - id: t-016
     milestone: m3
     title: "Phone, tablet and desktop pass and art-first polish"
@@ -747,17 +751,67 @@ tasks:
   - id: t-029
     milestone: m2
     title: "Render the Zuzu: Koala Assassin intro and get Silas's verdict"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
     gate_human: true
     gate_reason: subjective-acceptance
-    depends_on: [t-024, t-027, t-028]
-    updated: '2026-10-04T00:00:00Z'
+    depends_on: [t-024, t-027, t-031]
+    updated: '2026-10-06T06:30:00Z'
     note: >-
       Run t-028 with the t-024 brief. Song from ACE-Step if t-012 is done, otherwise ask Silas for
       an MP3 for the t-013 upload. Clips run 30-90 minutes each on the single 12 GB card, so queue
       them overnight. Park at needs-human with the MP4, the MusicVideo id and a FOR SILAS note:
       character fidelity to the comic, cuts on beats, the title card, and confirmation that no
       banned term appears anywhere. Publishing is a separate publish-gated step.
+
+      2026-10-06: Silas wants this run from the front end, not a script ("I should ideally not
+      need to run a script to stitch together things"), so it now depends on t-031 (Produce on
+      /admin/music-video) instead of t-028 (the headless builder). The page fields, keyframe ids
+      and verdict checklist are in projects/music-video/docs/production-sheets.md (section B).
+
+  - id: t-030
+    milestone: m2
+    title: "Scene cards, lyrics editor, animation presets and clips in the browser export (kind_robots)"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    depends_on: [t-027]
+    updated: '2026-10-06T06:30:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3249'
+    note: >-
+      Silas, 2026-10-06, after trying t-027: the animate control belongs on each scene, with
+      changing or uploading the image, animated or pan-and-zoom, the pan direction, and "a preset
+      section to create/edit an animation prompt"; also "create and edit the song lyrics and then
+      get it to generate from that same interface". Shipped in kind_robots#3249: a card per scene
+      (image prompt, render, upload, Use art by ArtImage id, pan and zoom with direction or animated
+      clip with its own prompt, preset picker, end on the next scene, Animate now, transition in,
+      clip preview), a lyrics editor (sections, lock, reorder, rewrite one section or all unlocked,
+      generate the song from them), named animation presets in settings.motionPresets, and clip
+      playback in the browser exporter (it drew stills only, so hero shots never reached a
+      front-end export).
+
+  - id: t-031
+    milestone: m2
+    title: "Produce: pitch to attached final cut from the admin page (kind_robots)"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    depends_on: [t-030]
+    updated: '2026-10-06T06:30:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3250'
+    note: >-
+      Silas, 2026-10-06: "a perfect setup would take a pitch, length, style suggestions, etc, and
+      then an llm could fill in those elements and submit the art prompts immediately ... it should
+      happen automatically when directed from the front end when all the images are created."
+      kind_robots#3250: a Produce button drives brief, lyrics, song, scenes, prompts, stills, hero
+      clips, then exports in the browser and attaches the final cut, resuming after a reload. Adds
+      POST /brief (the LLM fills only blank settings and never replaces a full style bible),
+      settings.heroShots, and the comic series and lane in the settings panel. It runs while the
+      page is open; a server-side runner for a closed tab is the follow-up.
+
+      2026-10-06: kind_robots#3250 merged (with the settings panel's comic series and lane). Done;
+      a live Produce run is Silas's to try.
