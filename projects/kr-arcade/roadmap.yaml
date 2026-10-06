@@ -75,11 +75,11 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Arcade tab + cabinet front end (hall, cabinet select, cabinet chrome, attract shell)"
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
-    note: >
+    note: >-
       kind_robots. Add the Arcade tab to the Projects channel: a content/channels/projects tab
       document, a PROJECT_PLACEMENTS entry 'kr-arcade' -> { channelKey: 'projects', tabKey:
       'arcade', route: '/play/arcade' }, and the page. The page is the arcade hall (art:
@@ -91,9 +91,19 @@ tasks:
       channelKey / tabKey on kr-arcade in project-overrides.yaml to match. Read
       docs/agents/frontend-verification.md: verify phone (portrait, touch), tablet and desktop
       before merging. Can land before any game exists.
+
+      DONE 2026-10-06 (kind_robots#3265, merged, all 40 checks green incl. Replay migrations
+      on MariaDB): Arcade tab (content/channels/projects/arcade.md, route /play/arcade, sort
+      115), cabinet + hall components, kr-arcade placement in kind_robots
+      utils/projectPlacements.ts. Cabinets open at /play/arcade?game=<slug> because the shell
+      header matches tabs by exact route. Correction to the original note: per kind_robots
+      AGENTS.md, presentation fields (liveUrl/channelKey/tabKey) live in kind_robots, NOT in
+      conductor project-overrides.yaml -- none were added there. Verified with nuxi dev +
+      Playwright at 390/820/1440 widths.
     claimed_by: 2026-10-06T1040Z-kr-arcade-launch
     claimed_at: '2026-10-06T10:47:55Z'
-    updated: '2026-10-06T10:47:55Z'
+    updated: '2026-10-06T11:50:37Z'
+    implementation_pr: 'silasfelinus/kind_robots#3265'
 
   - id: t-004
     milestone: m2
