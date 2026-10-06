@@ -1,7 +1,7 @@
 # Pitch: Kind Garden Walk Companion
 date: 2026-10-06
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 A small walking-pace game that offers a daily set of five things to notice outdoors, such as a red leaf or a round stone, with tick-off checkboxes and a badge when all are found. Prompts come from a pre-authored deck and a calendar, with no location or camera needed.
