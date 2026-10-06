@@ -174,6 +174,7 @@ tasks:
       - t-005
       - t-006
       - t-007
+      - t-010
     note: >
       Verify the whole launch on main at phone, tablet and desktop widths. Check: the hall, both
       cabinets, attract loops, a full game to the initials screen, the score appearing on the
@@ -207,3 +208,21 @@ tasks:
       `building` between cycles. If the queue is empty, write one new arcade pitch with `target:
       kr-arcade` into the next daily docket instead. Re-arm to ready with a RAN <date> line
       after each cycle.
+
+  - id: t-010
+    milestone: m2
+    title: "Launch game 0: Butterfly Blaster (Asteroids riff, rainbow butterflies vs mosquitoes)"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on:
+      - t-004
+    note: >
+      Silas, 2026-10-06 (verbatim): "add one more: an Asteroids riff, but using rainbow butterflies
+      to kill mosquitoes, a la our malaria project". See games.yaml butterfly-blaster. A rainbow
+      butterfly rotates, flutters (thrust), drifts and wraps the screen and fires sparkles; mosquito
+      swarms split large -> small -> single. AMI drops a bed net that works as a shield. A malaria
+      cloud hunts the player from wave 3. Each cleared wave counts as a village protected, and game
+      over links to https://againstmalaria.com/amibot. Must meet the per-game checklist in
+      DESIGN-BRIEF.md. Art: /images/arcade/games/butterfly-blaster-title.webp.

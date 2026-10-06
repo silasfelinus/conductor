@@ -89,6 +89,7 @@ riffs borrow *mechanics* from the classics, never names, sprites, sounds or leve
 
 | # | Game | Riffs on | Effort | Phase |
 |---|------|----------|--------|-------|
+| 0 | Butterfly Blaster | Asteroids (Silas's addition, 2026-10-06: rainbow butterflies vs mosquitoes, AMI tie-in) | small | launch |
 | 1 | Battery Maze | Pac-Man | medium | launch |
 | 2 | Rescue Rally | Robotron: 2084 | medium | launch |
 | 3 | Sink Suds | Bubbles (Williams, 1982) | small | factory |
@@ -98,7 +99,7 @@ riffs borrow *mechanics* from the classics, never names, sprites, sounds or leve
 | 7 | Kind Pinball | pinball | large (sliced) | factory |
 | 8 | Kindness Gauntlet | Gauntlet II | large (sliced) | factory |
 
-The launch pair is the most achievable of the eight: both use a fixed screen, simple collision and
+The launch games are the most achievable of the set (Butterfly Blaster, Silas's own addition, builds first): both use a fixed screen, simple collision and
 well-understood enemy AI. Together they prove the engine kit for both maze/tile games and free-movement
 arena games. Pinball and Gauntlet are deliberately last and get built in slices across several factory
 cycles.
