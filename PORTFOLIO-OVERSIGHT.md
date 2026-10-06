@@ -1,14 +1,14 @@
 # Conductor Portfolio Oversight
 
-Generated: `2026-10-05T14:54:47.928590+00:00`
+Generated: `2026-10-06T00:08:23.194664+00:00`
 
-Overall status: **clean**
+Overall status: **semantic-review-due**
 
 This is a deterministic sensor. For semantic roadmap/progress intent review, follow `projects/conductor/OVERSIGHT-AGENT.md`.
 
 ## Legacy OpenAI scheduled-agent git diagnostic
 
-- Latest visible OpenAI scheduled-Agent activity: `2026-10-03T09:23:59+00:00` (53.51h ago; overdue at 6.0h).
+- Latest visible OpenAI scheduled-Agent activity: `2026-10-03T09:23:59+00:00` (62.74h ago; overdue at 6.0h).
 - Stale by legacy threshold: **true**
 - Authoritative for ChatGPT scheduler health: **false**
 - Note: Legacy git diagnostic only: OPENAI-SCHEDULED-HEARTBEAT.json and coordination markers do not determine ChatGPT scheduler health. Native ChatGPT task metadata is authoritative for scheduler liveness.
@@ -26,8 +26,8 @@ This is a deterministic sensor. For semantic roadmap/progress intent review, fol
 
 ## Semantic intent review
 
-- Latest: `INTENT-AUDIT-2026-10-03.md` (2 day(s) ago; due at 3.0 days).
-- Due: **false**
+- Latest: `INTENT-AUDIT-2026-10-03.md` (3 day(s) ago; due at 3.0 days).
+- Due: **true**
 
 ## Agent routing
 
