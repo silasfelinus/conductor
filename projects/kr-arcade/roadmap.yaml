@@ -108,17 +108,24 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Shared arcade engine kit (loop, input, attract/initials state machine, HUD, sound, registry)"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    note: >
+    note: >-
       kind_robots utils/arcade/ per DESIGN-BRIEF.md "Engine kit contract": fixed-timestep loop,
       integer canvas scaling, unified keyboard/gamepad/touch input, BOOT->TITLE->ATTRACT->PLAYING->
       GAME_OVER->INITIALS->SCORES state machine, pixel font + sprite helpers, difficulty-curve
       helper, WebAudio chiptune helper (muted until first interaction, persisted mute), and the
       games.ts registry. Unit-test the pure parts (curve, state machine, input mapping). Pure
       client-side; no LLM. Independent of t-003 -- either can land first.
+
+      DONE 2026-10-06 in kind_robots#3265 alongside t-003: utils/arcade/ engine kit (fixed-
+      timestep loop, keyboard/gamepad/touch input, flow reducer, curves, 5x7 bitmap font,
+      WebAudio sound, initials filter, registry) + utils/scripts/verifyArcadeEngine.test.ts
+      wired into Contract verifiers.
+    updated: '2026-10-06T11:50:58Z'
+    implementation_pr: 'silasfelinus/kind_robots#3265'
 
   - id: t-005
     milestone: m2
