@@ -421,3 +421,102 @@ def test_no_upload_keeps_the_mp4_local(monkeypatch, tmp_path):
     monkeypatch.setattr(bmv, "assemble", lambda client, state, out, workdir, fps, max_bytes: out)
     assert bmv.main(["--video-id", "7", "--out", str(tmp_path / "t.mp4"), "--no-upload"]) == bmv.EXIT_DONE
     assert calls == []
+
+
+# ------------------------------------- song file, comic lane, clips (t-028)
+
+
+def test_banned_terms_are_split_deduplicated_and_ordered():
+    assert bmv.parse_banned_terms("TMNT, shredder\nKrang,tmnt, ") == ["TMNT", "shredder", "Krang"]
+    assert bmv.parse_banned_terms(None) == []
+
+
+def test_settings_carry_banned_terms_and_comic_lane():
+    args = bmv.parse_args(
+        ["--pitch", "p", "--banned-terms", "a, b", "--comic-series", "7", "--comic-lane", "zuzu"]
+    )
+    settings = bmv.settings_from_args(args)
+    assert settings["bannedTerms"] == ["a", "b"]
+    assert settings["comicSeriesId"] == 7
+    assert settings["comicLaneKey"] == "zuzu"
+
+
+def test_comic_lane_without_a_series_is_not_sent():
+    settings = bmv.settings_from_args(bmv.parse_args(["--pitch", "p", "--comic-lane", "zuzu"]))
+    assert "comicLaneKey" not in settings and "comicSeriesId" not in settings
+
+
+def test_multipart_text_fields_precede_the_file():
+    body = bmv.encode_multipart_file("file", "s.mp3", "audio/mpeg", b"ID3", "BND", {"durationSec": "61.5"}).decode()
+    assert body.index('name="durationSec"') < body.index('name="file"')
+    assert "61.5" in body and body.endswith("--BND--\r\n")
+
+
+def test_probe_duration_parses_ffprobe_and_tolerates_junk(monkeypatch, tmp_path):
+    monkeypatch.setattr(bmv.shutil, "which", lambda name: "/usr/bin/ffprobe")
+
+    def run_ok(*a, **k):
+        return subprocess.CompletedProcess(a, 0, stdout="61.25\n", stderr="")
+
+    def run_bad(*a, **k):
+        return subprocess.CompletedProcess(a, 1, stdout="", stderr="boom")
+
+    assert bmv.probe_duration(tmp_path / "x.mp3", run=run_ok) == 61.25
+    assert bmv.probe_duration(tmp_path / "x.mp3", run=run_bad) is None
+    monkeypatch.setattr(bmv.shutil, "which", lambda name: None)
+    assert bmv.probe_duration(tmp_path / "x.mp3", run=run_ok) is None
+
+
+def test_clips_wait_for_the_still_and_skip_scenes_already_animated():
+    scenes = [
+        scene("s1", 0, 2, art=101),
+        scene("s2", 2, 4, job=12),  # still not rendered
+        scene("s3", 4, 6, art=103),
+        clip_scene("s4", 6, 8, 104, clip_art=500),
+        scene("s5", 8, 10, art=105),
+    ]
+    state = bmv.RunState(
+        doc(song=finished_song(), scenes=scenes),
+        clip_jobs={"s3": bmv.JobState("RUNNING"), "s5": bmv.JobState("FAILED")},
+    )
+    assert bmv.clips_to_request(state, ["s1", "s2", "s3", "s4", "s5", "nope"]) == ["s1", "s5"]
+
+
+def test_clip_requests_are_capped_per_call():
+    client = bmv.KrClient("http://x", "t")
+    with pytest.raises(bmv.PipelineError):
+        client.request_clips(1, [f"s{i}" for i in range(bmv.MAX_CLIPS_PER_CALL + 1)])
+
+
+def test_song_file_and_clips_flow(monkeypatch, tmp_path, capsys):
+    song = tmp_path / "song.mp3"
+    song.write_bytes(b"ID3")
+    calls = []
+
+    class Client(FakeClient):
+        def get_video(self, video_id):
+            data = super().get_video(video_id)
+            data["doc"]["song"] = None
+            data["doc"]["scenes"][0]["image"]["artImageId"] = 101
+            return data
+
+        def upload_song(self, video_id, path, duration, bpm):
+            calls.append(("upload", path.name, duration, bpm))
+            return {"artImageId": 77}
+
+        def request_clips(self, video_id, ids, preset):
+            calls.append(("clips", ids, preset))
+            return {}
+
+    monkeypatch.setattr(bmv, "KR_API_TOKEN", "tok")
+    monkeypatch.setattr(bmv, "KrClient", lambda *a, **k: Client())
+    monkeypatch.setattr(bmv, "probe_duration", lambda path: 42.0)
+    code = bmv.main(["--video-id", "5", "--song-file", str(song), "--clips", "s1,s2", "--clip-preset", "ltx"])
+    assert code == bmv.EXIT_IN_PROGRESS
+    assert ("upload", "song.mp3", 42.0, None) in calls
+    assert ("clips", ["s1"], "ltx") in calls
+    assert "tok" not in capsys.readouterr().out
+
+
+def test_missing_song_file_is_a_config_error(tmp_path, capsys):
+    assert bmv.main(["--pitch", "p", "--song-file", str(tmp_path / "gone.mp3")]) == bmv.EXIT_CONFIG
