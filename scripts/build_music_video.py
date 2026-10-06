@@ -21,6 +21,11 @@ Usage:
     python scripts/build_music_video.py --pitch "..." --title "..." --duration 60
     # Resume and wait for renders, then assemble.
     python scripts/build_music_video.py --video-id 12 --wait --out trailer.mp4
+    # Bring your own song (MP3/WAV via the t-013 route), route stills through a
+    # comic series' house lane, refuse franchise names, and animate hero shots.
+    python scripts/build_music_video.py --pitch "..." --song-file song.mp3 \\
+        --comic-series 7 --comic-lane zuzu --banned-terms "tmnt, shredder" \\
+        --clips scene-3,scene-9 --clip-preset ltx --wait
 
 KR_API_TOKEN must belong to an admin. Only its presence is ever checked or
 reported; it is never printed. Exit codes: 0 finished (MP4 written, or the
@@ -61,6 +66,9 @@ FRAME_SIZES = {
     "1:1": (1080, 1080),
 }
 DEFAULT_FPS = 30
+
+# Mirrors MAX_CLIPS_PER_CALL in kind_robots server/api/music-video/[id]/scenes/clips.post.ts.
+MAX_CLIPS_PER_CALL = 8
 
 # The finished MP4 is uploaded to POST /api/music-video/<id>/final, which keeps
 # the bytes base64 in an ArtImage row and caps them (kind_robots
@@ -422,6 +430,26 @@ class KrClient:
     def song_status(self, video_id: int) -> dict:
         return self._request("GET", f"/api/music-video/{video_id}/song")["data"]
 
+    def upload_song(self, video_id: int, song: Path, duration_sec: float | None, bpm: float | None) -> dict:
+        """POST the MP3/WAV to the admin-only song-upload route (music-video/t-013)."""
+        content_type = "audio/wav" if song.suffix.lower() == ".wav" else "audio/mpeg"
+        fields = {}
+        if duration_sec:
+            fields["durationSec"] = f"{duration_sec:.3f}"
+        if bpm:
+            fields["bpm"] = f"{bpm:g}"
+        boundary = f"----kr-music-video-{time.time_ns()}"
+        body = encode_multipart_file("file", song.name, content_type, song.read_bytes(), boundary, fields)
+        return self._post_multipart(f"/api/music-video/{video_id}/song-upload", body, boundary, "song upload")
+
+    def request_clips(self, video_id: int, scene_ids: list[str], preset_id: str | None = None) -> dict:
+        if len(scene_ids) > MAX_CLIPS_PER_CALL:
+            raise PipelineError(f"at most {MAX_CLIPS_PER_CALL} clips per request")
+        body: dict[str, Any] = {"sceneIds": scene_ids}
+        if preset_id:
+            body["presetId"] = preset_id
+        return self._request("POST", f"/api/music-video/{video_id}/scenes/clips", body)["data"]
+
     def plan_scenes(self, video_id: int) -> None:
         self._request("POST", f"/api/music-video/{video_id}/scenes/plan", {})
 
@@ -437,9 +465,10 @@ class KrClient:
     def upload_final(self, video_id: int, mp4: Path) -> dict:
         boundary = f"----kr-music-video-{time.time_ns()}"
         body = encode_multipart_file("file", mp4.name, "video/mp4", mp4.read_bytes(), boundary)
-        request = urllib.request.Request(
-            f"{self.base_url}/api/music-video/{video_id}/final", data=body, method="POST"
-        )
+        return self._post_multipart(f"/api/music-video/{video_id}/final", body, boundary, "final upload")
+
+    def _post_multipart(self, path: str, body: bytes, boundary: str, label: str) -> dict:
+        request = urllib.request.Request(f"{self.base_url}{path}", data=body, method="POST")
         request.add_header("Content-Type", f"multipart/form-data; boundary={boundary}")
         request.add_header("Authorization", f"Bearer {self._token}")
         try:
@@ -451,11 +480,11 @@ class KrClient:
             except (ValueError, OSError):
                 payload = None
             message = (payload or {}).get("message") if isinstance(payload, dict) else None
-            raise PipelineError(f"final upload -> HTTP {error.code}: {message or 'no message'}") from error
+            raise PipelineError(f"{label} -> HTTP {error.code}: {message or 'no message'}") from error
         except urllib.error.URLError as error:
             raise PipelineError(f"could not reach {self.base_url}: {error.reason}") from error
         if not isinstance(payload, dict) or not payload.get("success"):
-            raise PipelineError(f"final upload failed: {payload}")
+            raise PipelineError(f"{label} failed: {payload}")
         return payload.get("data") or {}
 
     def download_art(self, art_image_id: int, destination: Path) -> Path:
@@ -469,10 +498,24 @@ class KrClient:
         return destination
 
 
-def encode_multipart_file(field: str, filename: str, content_type: str, data: bytes, boundary: str) -> bytes:
+def encode_multipart_file(
+    field: str,
+    filename: str,
+    content_type: str,
+    data: bytes,
+    boundary: str,
+    text_fields: dict[str, str] | None = None,
+) -> bytes:
     """One-file multipart/form-data body (stdlib has no encoder)."""
     safe_name = filename.replace('"', "").replace("\r", "").replace("\n", "")
-    head = (
+    texts = b"".join(
+        (
+            f"--{boundary}\r\n"
+            f'Content-Disposition: form-data; name="{name}"\r\n\r\n{value}\r\n'
+        ).encode()
+        for name, value in (text_fields or {}).items()
+    )
+    head = texts + (
         f"--{boundary}\r\n"
         f'Content-Disposition: form-data; name="{field}"; filename="{safe_name}"\r\n'
         f"Content-Type: {content_type}\r\n\r\n"
@@ -494,6 +537,48 @@ def encode_within_limit(make_command, out: Path, max_bytes: int, run=subprocess.
         f"even CRF {CRF_LADDER[-1]} leaves {out.name} over the {max_bytes / 1048576:.0f} MB upload cap; "
         "shorten the video or raise MUSIC_VIDEO_MAX_UPLOAD_MB on the server and --max-upload-mb here"
     )
+
+
+def probe_duration(song: Path, run=subprocess.run) -> float | None:
+    """Song length in seconds from ffprobe, or None when ffprobe is unavailable."""
+    if not shutil.which("ffprobe"):
+        return None
+    result = run(
+        ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "default=nw=1:nk=1", str(song)],
+        capture_output=True,
+        text=True,
+    )
+    try:
+        value = float(result.stdout.strip())
+    except ValueError:
+        return None
+    return value if value > 0 else None
+
+
+def parse_banned_terms(raw: str | None) -> list[str]:
+    """Comma- or newline-separated terms, deduplicated case-insensitively, order kept."""
+    seen: dict[str, str] = {}
+    for part in (raw or "").replace("\n", ",").split(","):
+        term = part.strip()
+        if term:
+            seen.setdefault(term.lower(), term)
+    return list(seen.values())
+
+
+def clips_to_request(state: RunState, wanted: list[str]) -> list[str]:
+    """Wanted scenes whose still is done and that have no clip, or a failed one, yet."""
+    scenes = {s["id"]: s for s in state.doc.get("scenes") or []}
+    ready = []
+    for scene_id in wanted:
+        scene = scenes.get(scene_id)
+        if not scene or (scene.get("motion") or {}).get("clipArtImageId"):
+            continue
+        if _scene_image_id(scene, state.scene_jobs) is None:
+            continue
+        job = state.clip_jobs.get(scene_id)
+        if job is None or job.status in FAILED_JOB_STATUSES:
+            ready.append(scene_id)
+    return ready
 
 
 def read_state(client: KrClient, video_id: int) -> RunState:
@@ -599,6 +684,13 @@ def assemble(
 
 def settings_from_args(args: argparse.Namespace) -> dict:
     settings: dict[str, Any] = {"durationSec": args.duration, "aspect": args.aspect}
+    banned = parse_banned_terms(args.banned_terms)
+    if banned:
+        settings["bannedTerms"] = banned
+    if args.comic_series:
+        settings["comicSeriesId"] = args.comic_series
+        if args.comic_lane:
+            settings["comicLaneKey"] = args.comic_lane
     for key, value in (
         ("bpm", args.bpm),
         ("genre", args.genre),
@@ -622,6 +714,12 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--mood")
     parser.add_argument("--vocal", choices=["female", "male", "duet", "instrumental"])
     parser.add_argument("--style-bible", help="look shared by every frame")
+    parser.add_argument("--song-file", type=Path, help="MP3/WAV to upload instead of generating the song")
+    parser.add_argument("--comic-series", type=int, help="route stills through this comic series' house lane")
+    parser.add_argument("--comic-lane", help="lane key within --comic-series (default: its house lane)")
+    parser.add_argument("--banned-terms", help="comma-separated terms no prompt may contain")
+    parser.add_argument("--clips", help="comma-separated scene ids to animate once their stills finish")
+    parser.add_argument("--clip-preset", help="clip preset id (server default when omitted)")
     parser.add_argument("--aspect", choices=sorted(FRAME_SIZES), default="16:9")
     parser.add_argument("--fps", type=int, default=DEFAULT_FPS)
     parser.add_argument("--out", type=Path, help="MP4 path (default music-video-<id>.mp4)")
@@ -645,9 +743,18 @@ def main(argv: list[str] | None = None) -> int:
         print("Pass --pitch to start a run, or --video-id to resume one.", file=sys.stderr)
         return EXIT_CONFIG
 
+    if args.song_file and not args.song_file.is_file():
+        print(f"--song-file {args.song_file} does not exist.", file=sys.stderr)
+        return EXIT_CONFIG
+    clip_ids = [c.strip() for c in (args.clips or "").split(",") if c.strip()]
+
     if args.dry_run and args.video_id is None:
         print("DRY RUN: would create a MusicVideo with:")
         print(json.dumps({"title": args.title, "pitch": args.pitch, "settings": settings_from_args(args)}, indent=2))
+        if args.song_file:
+            print(f"song: upload {args.song_file} (skips lyrics-to-song generation)")
+        if clip_ids:
+            print(f"clips: {', '.join(clip_ids)} (once their stills finish)")
         print("then: lyrics -> song -> plan_scenes -> scene_prompts -> render_scenes -> wait -> assemble")
         return EXIT_DONE
 
@@ -663,11 +770,28 @@ def main(argv: list[str] | None = None) -> int:
             video_id = int(video["id"])
             print(f"created MusicVideo {video_id}; resume with --video-id {video_id}")
 
+        if args.song_file and not args.dry_run:
+            existing = client.get_video(video_id)["doc"].get("song") or {}
+            if not existing.get("artImageId"):
+                duration = probe_duration(args.song_file)
+                if duration is None:
+                    print("  ffprobe unavailable; the server will use the requested duration")
+                uploaded = client.upload_song(video_id, args.song_file, duration, args.bpm)
+                print(f"  uploaded song as ArtImage {uploaded.get('artImageId')}")
+
         deadline = time.time() + args.max_wait_minutes * 60
         previous: list[str] = []
         repeats = 0
         while True:
             state = read_state(client, video_id)
+            if clip_ids and not args.dry_run:
+                ready = clips_to_request(state, clip_ids)
+                for start in range(0, len(ready), MAX_CLIPS_PER_CALL):
+                    chunk = ready[start : start + MAX_CLIPS_PER_CALL]
+                    client.request_clips(video_id, chunk, args.clip_preset)
+                    print(f"  requested clips: {', '.join(chunk)}")
+                if ready:
+                    state = read_state(client, video_id)
             actions = plan_actions(state)
             print(f"MusicVideo {video_id}: {describe_state(state)}; next: {', '.join(actions)}")
             if args.dry_run:
