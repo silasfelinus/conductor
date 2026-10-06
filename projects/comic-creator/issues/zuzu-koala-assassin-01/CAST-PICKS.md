@@ -375,3 +375,7 @@ holster is still on his left hip, while the other angles have it on his right. S
 - **Update:** the masked left-hand cleanup (242415, 242417) changed nothing, and up close 242411's stump reads as a
   bandaged fist. An unmasked Kontext edit on 242411 removes the left bandage and asks for a clear handless stump (r16,
   ArtJobs 34084–34086). Masked edits here have now failed four ways. They only worked once, on the round-10 stump.
+- **Update 2:** the unmasked fix regrew his right hand on all three tries (242418–242420). Kontext will not keep the
+  amputation. Round 15 (ART-ROUND-15.yaml, ArtJobs 34093–34096) renders the row-A front natively with the stump in
+  the prompt. The skeletal ribs came from round 12's own prompt ("starving, gaunt, ribs showing"), so that phrase is now
+  "thin, sickly, underfed" and ribs are negated. VIDEO-GUARDRAILS.md records it.
