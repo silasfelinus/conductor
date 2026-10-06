@@ -397,8 +397,7 @@ tasks:
   claimed_at: '2026-07-16T08:49:30Z'
 
 - id: t-024
-  milestone: m3
-  title: Add a lint/convention guard against casting objects to Prisma.InputJsonValue for String/LongText columns
+  milestone: m3  title: Add a lint/convention guard against casting objects to Prisma.InputJsonValue for String/LongText columns
   status: done
   owner: reviewer
   passes: 0
@@ -798,7 +797,6 @@ tasks:
   stakes: reversible
   note: >-
     Kaizen from kind-robots/t-047 (kind_robots PR #994, 2026-07-26): that PR's `facet-catalog` check hung `in_progress` on the "Install dependencies" step for 10+ minutes with zero progress (comparable runs on the same workflow, `.github/workflows/facet-catalog-contract.yml`, normall
-
     Full history: projects/kind-robots/HISTORY.md#t-049
   claimed_by: claude-conductor-scheduled-20260726T070632Z-kr-t049
   claimed_at: '2026-07-26T07:06:32Z'
@@ -1197,8 +1195,7 @@ tasks:
   updated: '2026-08-28T01:08:00Z'
   claimed_by: 2026-08-27T231300Z-kind-robots-t-075-gpt56sol-a7c9
   claimed_at: '2026-08-27T23:13:00Z'
-  implementation_pr: 'silasfelinus/kind_robots#2164'
-- id: t-076
+  implementation_pr: 'silasfelinus/kind_robots#2164'- id: t-076
   milestone: m6
   title: "Full-screen slideshow off the ArtJob queue"
   status: done
@@ -1597,8 +1594,7 @@ tasks:
   claimed_by: claude-20260914T131700Z-kr-t101-conductor
   claimed_at: '2026-09-14T13:14:21Z'
   implementation_pr: https://github.com/silasfelinus/kind_robots/pull/2729
-- id: t-102
-  milestone: m6
+- id: t-102  milestone: m6
   title: "Decide and implement whether the home showcase should server-render"
   status: done
   passes: 0
@@ -1997,8 +1993,7 @@ tasks:
   status: done
   passes: 0
   stakes: reversible
-  gate_human: false
-  note: >-
+  gate_human: false  note: >-
     Silas, 2026-09-23/24: finish the Art surface follow-up as one coherent UX/behavior pass.
 
     Full history: projects/kind-robots/HISTORY.md#t-119
@@ -2187,6 +2182,22 @@ tasks:
     Root cause confirmed in server/utils/artJobResourceRefresh.ts: the shared edit/re-enqueue Resource refresh path still rejected any ArtJob with more than one LoRA Resource even though Comfy workflow chaining supports stacks. The implementation branch worker/kind-robots-t130-artjob-multilora-20261005T130300Z refreshes every stacked LoRA path in preserved Resource order using krLoraIndex, keeps strengths/base LoRAs intact, and adds a three-LoRA regression contract.
 
     Fixed and merged in silasfelinus/kind_robots PR #3234 at f64f0ce2c2a88c4f99a2f9b476ea6d3f41292538. Multi-LoRA ArtJobs no longer hit the stale single-LoRA Resource-refresh 409 during edit or re-enqueue; stacked Resource paths refresh positionally by krLoraIndex without changing strengths or required/base LoRAs. Final tested head 83e7d0c595f31c2cfad28ff1384c417d3fbbd70e passed 29/29 PR workflows, including the LoRA retry-resource verifier, LoRA chain contract, TypeScript, ESLint ratchet, Prettier ratchet, and full Contract Tests.
+
+- id: t-131
+  milestone: m6
+  title: 'Rehome navigation tools and retire legacy surfaces'
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  updated: '2026-10-06T10:27:00Z'
+  note: |-
+    Silas-directed 2026-10-06 navigation cleanup:
+    - Move Admin Users and Moderation out of the Admin navigation and expose them as admin-only buttons on Home > Account.
+    - Move Animation Manager to Home > Account as a button visible to everyone, and remove the never-working Coverage Zone section rather than debugging it.
+    - Remove LoRA Triage as an independent navigation route and expose it from Admin > Resources.
+    - Move Appmaker, Conductor App, Mermaids, and Scene Animator into the existing Retired submenu under Admin.
+    Preserve existing destination routes unless the implementation can safely remove a redundant navigation-only route without breaking direct links.
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
