@@ -751,7 +751,7 @@ tasks:
   - id: t-029
     milestone: m2
     title: "Render the Zuzu: Koala Assassin intro and get Silas's verdict"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -796,7 +796,7 @@ tasks:
   - id: t-031
     milestone: m2
     title: "Produce: pitch to attached final cut from the admin page (kind_robots)"
-    status: review
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -812,3 +812,6 @@ tasks:
       POST /brief (the LLM fills only blank settings and never replaces a full style bible),
       settings.heroShots, and the comic series and lane in the settings panel. It runs while the
       page is open; a server-side runner for a closed tab is the follow-up.
+
+      2026-10-06: kind_robots#3250 merged (with the settings panel's comic series and lane). Done;
+      a live Produce run is Silas's to try.
