@@ -250,7 +250,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Build the next arcade cabinet (recurring game factory)"
-    status: claimed
+    status: ready
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -282,10 +282,15 @@ tasks:
 
       RAN 2026-10-06: Butterfly Joust (Joust riff) shipped in silasfelinus/kind_robots#3274;
       title art requested. Next in games.yaml: kind-pinball.
+
+      RAN 2026-10-06: Kind Pinball slices 1-2 (table, flippers, physics, bumpers, targets,
+      scoring) shipped in silasfelinus/kind_robots#3275; title art requested. kind-pinball
+      stays building: the next cycle builds its slice 3 (ramp + modes) before taking a queued
+      entry, then slice 4 (AMI multiball).
     claimed_by: 2026-10-06T1430Z-kr-arcade-t009-kind-pinball
     claimed_at: '2026-10-06T14:12:54Z'
-    updated: '2026-10-06T14:12:54Z'
-    implementation_pr: 'silasfelinus/kind_robots#3274'
+    updated: '2026-10-06T14:24:28Z'
+    implementation_pr: 'silasfelinus/kind_robots#3275'
 
   - id: t-010
     milestone: m2
