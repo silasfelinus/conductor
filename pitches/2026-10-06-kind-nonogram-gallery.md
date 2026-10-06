@@ -1,7 +1,7 @@
 # Pitch: Kind Nonogram Gallery
 date: 2026-10-06
 project-target: new
-status: awaiting-silas
+status: approved
 
 ## The idea
 Picture-cross puzzles where numeric row and column clues reveal a pixel portrait of a Kind Robot species, with a gentle mistake-forgiving mode. Each solved grid is stored in a gallery and colours in using the species palette.
