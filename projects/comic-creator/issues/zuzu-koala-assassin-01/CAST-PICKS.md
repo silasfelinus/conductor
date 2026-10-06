@@ -443,4 +443,4 @@ tests no longer match. They are re-rendered in brown (ArtJobs 34227–34230).
   - Three queued clips were built on off-canon keyframes, so they were cancelled (34242–34244): the round-5 croc,
     the round-5 road with the old Zuzu, and R6.
   - Replacement keyframes are rendering. MV-KEYFRAMES.yaml has the croc and the road silhouettes (ArtJobs
-    34245–34248). ANGLES-ZUZU.yaml r mv-zuzu-hero-* places 242395 on the road (34249–34250).
+    34245–34248). ANGLES-ZUZU.yaml mv-zuzu-hero-* places 242395 on the road (34249–34250).
