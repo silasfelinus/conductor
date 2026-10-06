@@ -2212,16 +2212,17 @@ tasks:
 - id: t-132
   milestone: m6
   title: 'Fix intermittent ArtJob queue controls rendering beside cards'
-  status: review
+  status: done
   gate_human: false
   stakes: reversible
-  owner: worker
   passes: 0
-  updated: '2026-10-06T11:35:00Z'
+  updated: '2026-10-06T11:42:00Z'
   note: |-
     Silas-directed 2026-10-06 from kind_robots issue #3264: the ArtJob queue intermittently renders its status/health/paging controls as a narrow left column beside the cards instead of stacking those controls above the card grid. The screenshot geometry matches the queue browser's direct children laying out horizontally even though the current source declares a column flex direction. Trace the runtime/layout cause, make the vertical structure deterministic, and add regression coverage that exercises the actual layout contract.
 
     Implementation branch worker/kind-robots-t132-artqueue-layout-20261006T113100Z removes the queue scroll owner's fragile flex-row fallback by using grid/block stacking, adds an ArtJob queue layout contract, and wires that contract into Entity Art Manager CI. Source diff is scoped to the queue browser, its contract, and the contract workflow.
+
+    Merged silasfelinus/kind_robots#3266 at 995190fbaa03f68902b7711f4062cf8622d14727 after all 30 PR workflows completed successfully. The ArtJob queue scroll owner now uses fail-safe grid/block stacking instead of flex plus a separate direction utility, and its layout contract runs in Entity Art Manager CI. Production is self-hosted and this merge is not deployed until the next Unraid Force Update.
   claimed_by: 2026-10-06T113100Z-kind-robots-t-132-artqueue-layout-9c4e
   claimed_at: '2026-10-06T11:31:00Z'
 
