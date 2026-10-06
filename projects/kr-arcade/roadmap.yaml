@@ -33,7 +33,7 @@ milestones:
   - id: m2
     title: "LAUNCH — Arcade tab, cabinet front end, leaderboard, two games"
     weight: 55
-    status: not-started
+    status: in-progress
 
   - id: m3
     title: "GAME FACTORY — one new cabinet per fallback cycle"
@@ -75,11 +75,11 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Arcade tab + cabinet front end (hall, cabinet select, cabinet chrome, attract shell)"
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
-    note: >
+    note: >-
       kind_robots. Add the Arcade tab to the Projects channel: a content/channels/projects tab
       document, a PROJECT_PLACEMENTS entry 'kr-arcade' -> { channelKey: 'projects', tabKey:
       'arcade', route: '/play/arcade' }, and the page. The page is the arcade hall (art:
@@ -91,18 +91,28 @@ tasks:
       channelKey / tabKey on kr-arcade in project-overrides.yaml to match. Read
       docs/agents/frontend-verification.md: verify phone (portrait, touch), tablet and desktop
       before merging. Can land before any game exists.
+
+      DONE 2026-10-06 (kind_robots#3265, merged, all 40 checks green incl. Replay migrations
+      on MariaDB): Arcade tab (content/channels/projects/arcade.md, route /play/arcade, sort
+      115), cabinet + hall components, kr-arcade placement in kind_robots
+      utils/projectPlacements.ts. Cabinets open at /play/arcade?game=<slug> because the shell
+      header matches tabs by exact route. Correction to the original note: per kind_robots
+      AGENTS.md, presentation fields (liveUrl/channelKey/tabKey) live in kind_robots, NOT in
+      conductor project-overrides.yaml -- none were added there. Verified with nuxi dev +
+      Playwright at 390/820/1440 widths.
     claimed_by: 2026-10-06T1040Z-kr-arcade-launch
     claimed_at: '2026-10-06T10:47:55Z'
-    updated: '2026-10-06T10:47:55Z'
+    updated: '2026-10-06T11:50:37Z'
+    implementation_pr: 'silasfelinus/kind_robots#3265'
 
   - id: t-004
     milestone: m2
     title: "Shared arcade engine kit (loop, input, attract/initials state machine, HUD, sound, registry)"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    note: >
+    note: >-
       kind_robots utils/arcade/ per DESIGN-BRIEF.md "Engine kit contract": fixed-timestep loop,
       integer canvas scaling, unified keyboard/gamepad/touch input, BOOT->TITLE->ATTRACT->PLAYING->
       GAME_OVER->INITIALS->SCORES state machine, pixel font + sprite helpers, difficulty-curve
@@ -110,14 +120,21 @@ tasks:
       games.ts registry. Unit-test the pure parts (curve, state machine, input mapping). Pure
       client-side; no LLM. Independent of t-003 -- either can land first.
 
+      DONE 2026-10-06 in kind_robots#3265 alongside t-003: utils/arcade/ engine kit (fixed-
+      timestep loop, keyboard/gamepad/touch input, flow reducer, curves, 5x7 bitmap font,
+      WebAudio sound, initials filter, registry) + utils/scripts/verifyArcadeEngine.test.ts
+      wired into Contract verifiers.
+    updated: '2026-10-06T11:50:58Z'
+    implementation_pr: 'silasfelinus/kind_robots#3265'
+
   - id: t-005
     milestone: m2
     title: "Leaderboard: additive ArcadeScore model + scores API + initials entry"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    note: >
+    note: >-
       kind_robots. Additive Prisma model ArcadeScore (id, gameSlug, initials char(3), score,
       level, userId optional FK, createdAt; index gameSlug+score desc). GET
       /api/arcade/scores/[game]?range=all|today (top 10) and POST /api/arcade/scores with
@@ -127,16 +144,23 @@ tasks:
       -- Reviewer audits migration.sql line by line before merge (AGENTS.md Reviewer CAN). If
       the registry from t-004 has not landed yet, stub the slug list for the two launch games.
 
+      DONE 2026-10-06 in kind_robots#3265: ArcadeScore model + additive migration
+      20261006120000_add_arcade_scores (schema-affecting; live after the normal Alexandria
+      deploy), GET /api/arcade/scores/:game, POST /api/arcade/scores, store-owned per-browser
+      fallback board.
+    updated: '2026-10-06T11:51:02Z'
+    implementation_pr: 'silasfelinus/kind_robots#3265'
+
   - id: t-006
     milestone: m2
     title: "Launch game 1: Battery Maze (maze chase, riff on Pac-Man)"
-    status: waiting
-    owner: null
+    status: done
+    owner: reviewer
     passes: 0
     stakes: reversible
     depends_on:
       - t-004
-    note: >
+    note: >-
       See games.yaml battery-maze. A small kind robot gathers energy sparks through a maze while
       four glitch gremlins with distinct personalities (chaser, ambusher, patroller, wanderer)
       hunt it; a power cell turns them sleepy-blue and bumping one "reboots" it back to the
@@ -145,10 +169,19 @@ tasks:
       DESIGN-BRIEF.md (splash, attract, ramp, leaderboard, touch/gamepad/keyboard, sound,
       cabinet frame). Title-card art: /images/arcade/games/battery-maze-title.webp.
 
+      REVIEW 2026-10-06: Battery Maze built in kind_robots#3268 (maze chase, four gremlin
+      personalities, power cells, bonus items, coffee-break intermission, maze-integrity
+      test).
+
+      DONE 2026-10-06: kind_robots#3268 merged (all 28 checks green). Battery Maze is live at
+      /play/arcade?game=battery-maze after the next deploy.
+    updated: '2026-10-06T11:55:32Z'
+    implementation_pr: 'silasfelinus/kind_robots#3268'
+
   - id: t-007
     milestone: m2
     title: "Launch game 2: Rescue Rally (twin-stick arena, riff on Robotron)"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -212,13 +245,13 @@ tasks:
   - id: t-010
     milestone: m2
     title: "Launch game 0: Butterfly Blaster (Asteroids riff, rainbow butterflies vs mosquitoes)"
-    status: waiting
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     depends_on:
       - t-004
-    note: >
+    note: >-
       Silas, 2026-10-06 (verbatim): "add one more: an Asteroids riff, but using rainbow butterflies
       to kill mosquitoes, a la our malaria project". See games.yaml butterfly-blaster. A rainbow
       butterfly rotates, flutters (thrust), drifts and wraps the screen and fires sparkles; mosquito
@@ -226,3 +259,8 @@ tasks:
       cloud hunts the player from wave 3. Each cleared wave counts as a village protected, and game
       over links to https://againstmalaria.com/amibot. Must meet the per-game checklist in
       DESIGN-BRIEF.md. Art: /images/arcade/games/butterfly-blaster-title.webp.
+
+      DONE 2026-10-06 in kind_robots#3265: Butterfly Blaster shipped as the first live cabinet
+      (/play/arcade?game=butterfly-blaster). Title art request queued via conductor#5638.
+    updated: '2026-10-06T11:51:05Z'
+    implementation_pr: 'silasfelinus/kind_robots#3265'
