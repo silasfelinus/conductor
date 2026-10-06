@@ -1960,3 +1960,37 @@ pitches:
           - TypeScript
           - layout-contract
           - facet-catalog
+
+  - id: night-train-window
+    title: Night Train Window
+    status: candidate
+    priority: 35
+    surprise: >
+      A night train window slides past parallax hills, lit village windows and telegraph poles
+      while a moon keeps pace outside the glass.
+    passive_loop: >
+      Layered hills, village windows and poles scroll at different speeds in a seamless loop.
+    optional_interaction: >
+      Hovering fogs the glass; a rate-limited click boosts the train speed briefly.
+    technique: >
+      One canvas, parallax layers wrapped by modulo, window glow and moon position as pure
+      functions of the loop clock.
+    reduced_motion: >
+      Holds a single static frame with no scroll or fog.
+    performance_risk: >
+      Low: a handful of layered shapes per frame, capped DPR, ResizeObserver sizing.
+    novelty: >
+      First side-on moving-vehicle parallax scene in the catalog.
+    acceptance:
+      - layers scroll at distinct speeds and loop without a visible seam
+      - hovering fogs the glass and it clears when the pointer leaves
+      - clicking boosts speed at most once per cooldown
+      - reduced-motion mode shows one static frame
+    builds:
+      - status: candidate
+        component: components/screenfx/night-train-window.vue
+        pull_request: silasfelinus/kind_robots#3258
+        released_at: '2026-10-06T09:10:00Z'
+        commit: 8c3098a
+        verification:
+          - 29 checks green on merge
