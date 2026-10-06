@@ -236,13 +236,13 @@ tasks:
   - id: t-010
     milestone: m2
     title: "Launch game 0: Butterfly Blaster (Asteroids riff, rainbow butterflies vs mosquitoes)"
-    status: waiting
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     depends_on:
       - t-004
-    note: >
+    note: >-
       Silas, 2026-10-06 (verbatim): "add one more: an Asteroids riff, but using rainbow butterflies
       to kill mosquitoes, a la our malaria project". See games.yaml butterfly-blaster. A rainbow
       butterfly rotates, flutters (thrust), drifts and wraps the screen and fires sparkles; mosquito
@@ -250,3 +250,8 @@ tasks:
       cloud hunts the player from wave 3. Each cleared wave counts as a village protected, and game
       over links to https://againstmalaria.com/amibot. Must meet the per-game checklist in
       DESIGN-BRIEF.md. Art: /images/arcade/games/butterfly-blaster-title.webp.
+
+      DONE 2026-10-06 in kind_robots#3265: Butterfly Blaster shipped as the first live cabinet
+      (/play/arcade?game=butterfly-blaster). Title art request queued via conductor#5638.
+    updated: '2026-10-06T11:51:05Z'
+    implementation_pr: 'silasfelinus/kind_robots#3265'
