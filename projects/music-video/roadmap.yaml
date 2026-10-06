@@ -739,12 +739,12 @@ tasks:
   - id: t-028
     milestone: m2
     title: "Headless pipeline: song file, comic lane, clip requests, banned terms (conductor)"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-013, t-025, t-026]
-    updated: '2026-10-06T11:45:46Z'
+    updated: '2026-10-06T12:46:52Z'
     note: >-
       scripts/build_music_video.py gains --song-file (upload through t-013's route, ffprobe for
       duration), --comic-series / --comic-lane / --banned-terms carried into settings, and a
@@ -752,9 +752,27 @@ tasks:
       tests/test_build_music_video.py. comic-film's builder imports this plumbing.
 
       t-013, t-025 and t-026 merged; ready.
+
+      Reviewed and squash-merged PR #5643 (CI green on latest attempt; 38 tests). Live-API
+      path unverified (needs admin KR_API_TOKEN).
     claimed_by: agent-20261006
     claimed_at: '2026-10-06T11:45:46Z'
+    implementation_pr: 'silasfelinus/conductor#5643'
 
+  - id: t-035
+    milestone: m2
+    title: "Contract test pinning build_music_video.MAX_CLIPS_PER_CALL to the kind_robots clips route"
+    status: ready
+    owner: worker
+    passes: 0
+    stakes: reversible
+    depends_on: [t-028]
+    updated: '2026-10-06T12:50:00Z'
+    note: >-
+      Kaizen from t-028 review: the constant mirrors kind_robots
+      server/api/music-video/[id]/scenes/clips.post.ts MAX_CLIPS_PER_CALL by comment only.
+      Add a test (skipped when no kind_robots checkout is present) that reads the route
+      source and asserts the values match.
   - id: t-029
     milestone: m2
     title: "Render the Zuzu: Koala Assassin intro and get Silas's verdict"

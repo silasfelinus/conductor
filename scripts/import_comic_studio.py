@@ -59,6 +59,97 @@ ENTITIES = [
 
 ROUND2_ENTITY = {"zuzu": "zuzu", "covers": "covers", "plots": "plot-seeds", "kids": "species-tests"}
 
+# The locked eight-angle cast (comic-creator t-015, CAST-PICKS.md): entity, slot prefix, and per angle the picked
+# ArtImage id (negative = shown mirrored). Each pick becomes a `selected` attempt on a `cast-*` slot, so the
+# studio's Cast board opens on the approved designs instead of the round-2/3 brainstorm. The ArtJob behind each
+# image is looked up in the issue ledgers, so a pick never needs a hand-copied job id.
+ANGLES = [
+    "front",
+    "front-three-quarter-left",
+    "profile-left",
+    "back-three-quarter-left",
+    "back",
+    "back-three-quarter-right",
+    "profile-right",
+    "front-three-quarter-right",
+]
+CAST = [
+    ("zuzu", "zuzu", "Zuzu", [242395, 242397, 242193, 242113, 242117, 242120, -242193, 242399]),
+    ("siblings", "sister", "The sister", [242128, 242130, 242132, 242135, 242137, 242138, 242140, 242143]),
+    ("siblings", "toddler", "The toddler", [242144, 242146, 242148, 242150, 242153, 242154, 242156, 242158]),
+    ("coyote", "coyote", "The coyote", [242531, 242209, -242404, -242216, 242214, -242537, 242404, 242220]),
+    ("otter-house", "abbess", "The abbess", [None, 242513, None, 242515, 242356, 242520, 242521, 242524]),
+]
+CAST_EXTRA = [
+    ("coyote", "coyote-stump-fresh", "The coyote: fresh stump (chapter 1, after the croc)", 242428),
+    ("coyote", "coyote-stump-bandaged", "The coyote: stump bandaged by Zuzu", 242435),
+]
+CAST_ENTITIES = [
+    ("coyote", "character", "The one-eyed coyote", "Destitute drifter, sick and underfed, never skeletal. Eyepatch on his RIGHT eye, revolver on his RIGHT hip. The croc takes his right (gun) hand in chapter 1; Zuzu bandages the stump and they part with their backs turned. Returns later as an ally.", None),
+    ("croc", "creature", "The crocodile", "Erupts from the watering hole in chapter 1. Shadow, swell and teeth; never lingers.", None),
+]
+
+
+def image_index() -> dict:
+    """ArtImage id -> (ArtJob id, ledger subject) across every ledger in the issue folder."""
+    index = {}
+    for path in sorted(ISSUE_DIR.glob("*.yaml")):
+        try:
+            ledger = yaml.safe_load(path.read_text())
+        except yaml.YAMLError:
+            continue
+        if not isinstance(ledger, dict):
+            continue
+        for subject in ledger.get("subjects") or []:
+            for lane_key, art in (subject.get("art") or {}).items():
+                job_id = (subject.get("jobs") or {}).get(lane_key)
+                if isinstance(art, dict) and art.get("art_image_id") and job_id:
+                    index[int(art["art_image_id"])] = (int(job_id), subject)
+    return index
+
+
+def cast(index: dict):
+    slots, attempts, missing = [], [], []
+    used = {}
+
+    def add(entity, key, title, image, notes, order):
+        found = index.get(abs(image)) if image else None
+        if found and found[0] in used:
+            # An attempt row is unique per ArtJob, so a mirrored reuse points at the slot that holds it.
+            notes = f"{notes} Same render as {used[found[0]]}."
+            found = (None, found[1])
+        tags = (found[1].get("prompt_tags") if found else None) or None
+        slots.append(
+            {
+                "key": key,
+                "entityKey": entity,
+                "kind": "subject",
+                "title": title,
+                "notes": notes,
+                "aspect": "2:3",
+                "promptTags": tags,
+                "promptProse": None if tags else (found[1].get("prompt_prose") if found else None),
+                "useSeriesStyle": True,
+                "sortOrder": order,
+            }
+        )
+        if found and found[0]:
+            used[found[0]] = key
+            attempts.append({"slotKey": key, "artJobId": found[0], "verdict": "selected"})
+        elif image and not found:
+            missing.append(f"{key}: ArtImage {abs(image)} not in any ledger")
+
+    order = -100
+    for entity, prefix, name, picks in CAST:
+        for angle, image in zip(ANGLES, picks):
+            note = f"Locked pick ArtImage {abs(image)}" + (", shown mirrored." if image < 0 else ".") if image else "Pick pending."
+            add(entity, f"cast-{prefix}-{angle}", f"{name}: {angle.replace('-', ' ')}", image, note, order)
+            order += 1
+    for entity, key, title, image in CAST_EXTRA:
+        add(entity, f"cast-{key}", title, image, f"Locked pick ArtImage {image}.", order)
+        order += 1
+    return slots, attempts, missing
+
 
 def read_text(path: Path) -> str:
     return path.read_text() if path.exists() else ""
@@ -129,21 +220,26 @@ def build_payload() -> dict:
     jobs2 = (yaml.safe_load((ISSUE_DIR / "ART-ROUND-2-JOBS.yaml").read_text()) or {}).get("jobs") or {}
     slots3, attempts3 = round3(ledger3)
     slots2, attempts2 = round2(prompts2, jobs2)
+    slots_c, attempts_c, missing = cast(image_index())
+    for line in missing:
+        print(f"  cast: {line}", file=sys.stderr)
     script = read_text(ISSUE_DIR / "ISSUE-01-SCRIPT.md")
+    entities = ENTITIES + CAST_ENTITIES
     return {
         "series": {
             "slug": "zuzu-koala-assassin",
             "title": "Zuzu, Koala Assassin",
-            "notes": read_text(ISSUE_DIR / "BRAINSTORM-ROUND-3.md"),
-            "styleProse": "gritty painted comic illustration, realistic anthropomorphic animals with true fur and weight, heavy ink shadows, dusty ochre and burnt umber palette, harsh low sunlight",
+            "notes": read_text(ISSUE_DIR / "BOOK-ONE.md") or read_text(ISSUE_DIR / "BRAINSTORM-ROUND-3.md"),
+            "styleProse": "gritty inked western comic, anthropomorphic animals, dark atmosphere, high contrast, heavy shadows, muted earthy palette, desaturated, weathered, harsh low sunlight",
+            "styleTags": "gritty, dark atmosphere, grindhouse, high contrast, heavy shadows, muted earthy palette, desaturated, weathered, grimy",
             "negativeTags": "nsfw, nude, suggestive, cleavage, revealing clothes, gore, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed, watermark, signature, blurry, jpeg artifacts, chibi, human, text",
         },
         "entities": [
             {"key": key, "kind": kind, "name": name, "notes": notes, "secretUntil": secret, "sortOrder": index}
-            for index, (key, kind, name, notes, secret) in enumerate(ENTITIES)
+            for index, (key, kind, name, notes, secret) in enumerate(entities)
         ],
-        "slots": slots3 + slots2,
-        "attempts": attempts3 + attempts2,
+        "slots": slots_c + slots3 + slots2,
+        "attempts": attempts_c + attempts3 + attempts2,
         "issueNotes": script,
     }
 

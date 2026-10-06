@@ -434,3 +434,13 @@ tests no longer match. They are re-rendered in brown (ArtJobs 34227–34230).
 - None of the six stump seeds did. 242525 and 242526 put the stump on his left arm, 242530 drew a hook, and the rest
   kept both hands.
 - Twelve more stump seeds follow (ArtJobs 34215–34226).
+
+## Coyote recolour and music-video keyframes (2026-10-06)
+
+- **The coyote's 3/4 back right is 242537 mirrored.** It is a tan face with the brown glove kept. 242536 also
+  recoloured the hat and glove.
+- **The Zuzu intro music video is now this session's** (Silas: "all in your court ... you have authority to fix").
+  - Three queued clips were built on off-canon keyframes, so they were cancelled (34242–34244): the round-5 croc,
+    the round-5 road with the old Zuzu, and R6.
+  - Replacement keyframes are rendering. MV-KEYFRAMES.yaml has the croc and the road silhouettes (ArtJobs
+    34245–34248). ANGLES-ZUZU.yaml mv-zuzu-hero-* places 242395 on the road (34249–34250).

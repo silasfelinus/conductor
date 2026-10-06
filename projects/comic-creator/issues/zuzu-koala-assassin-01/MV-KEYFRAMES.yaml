@@ -1,0 +1,94 @@
+# Keyframes for the Zuzu intro music video (KR music video 12), house lane. Silas, 2026-10-06: "the zuzu music video
+# is all in your court ... if something isn't up to snuff, you have authority to fix." These replace off-canon
+# gallery keyframes: s05 used the round-5 cartoon croc (241893), s14 the round-5 road scene (241899) with the old
+# Zuzu design and the sister in a clean dress. The road shot is Book One's closing signature frame: a pack, in silhouette.
+round: mv
+series: zuzu-koala-assassin
+project_slug: comic-creator
+designer: Comic Studio
+is_public: false
+is_mature: false
+lanes:
+- key: arthemy-house
+  label: Arthemy Western Art v3.0 (house, author's settings)
+  engine: comfy
+  checkpoint: Illustrious/arthemyWesternArt_v30.safetensors
+  prompt: tags
+  prefix: masterpiece, best quality, amazing quality, absurdres, very aesthetic, toon (style), western comics (style),
+    gritty, dark atmosphere, grindhouse, high contrast, heavy shadows, muted earthy palette, desaturated, weathered,
+    grimy
+  suffix: western, dusty, dramatic lighting, gritty
+  steps: 30
+  cfg: 5
+  sampler: euler_ancestral
+subjects:
+- key: mv-croc-1
+  entity: croc
+  title: 'MV s05: the croc bursts from the waterhole (seed 1)'
+  size: 1344x768
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, logo, disney, pixar, cute, kawaii, glossy,
+    bright saturated colors, palm trees, cartoon, smiling, tongue out
+  prompt_prose: a giant crocodile bursts from a dark waterhole.
+  prompt_tags: giant crocodile, feral, bursting out of dark muddy water, huge open jaws, jagged yellow teeth, scarred
+    armored hide, water spray and mud, desert watering hole at dusk, dead reeds, low angle, menacing, motion blur,
+    wide shot, (no characters:1.2)
+  jobs:
+    arthemy-house: 34245
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: mv-croc-2
+  entity: croc
+  title: 'MV s05: the croc bursts from the waterhole (seed 2)'
+  size: 1344x768
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, logo, disney, pixar, cute, kawaii, glossy,
+    bright saturated colors, palm trees, cartoon, smiling, tongue out
+  prompt_prose: a giant crocodile bursts from a dark waterhole.
+  prompt_tags: giant crocodile, feral, bursting out of dark muddy water, huge open jaws, jagged yellow teeth, scarred
+    armored hide, water spray and mud, desert watering hole at dusk, dead reeds, low angle, menacing, motion blur,
+    wide shot, (no characters:1.2)
+  jobs:
+    arthemy-house: 34246
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: mv-road-1
+  entity: zuzu
+  title: 'MV s14: three silhouettes on the road (seed 1)'
+  size: 1344x768
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, logo, disney, pixar, cute, kawaii, glossy,
+    bright saturated colors, faces visible, holding hands, 4 characters, crowd
+  prompt_prose: three silhouettes walk away down a long desert road at sunset.
+  prompt_tags: (silhouette:1.3), from behind, three small figures walking away down a long straight desert road
+    at sunset, a short stocky koala in a poncho and a wide flat straw hat with a katana diagonally across his back,
+    a thin fennec fox girl with huge ears following close behind him, a tiny fennec fox toddler beside her, long
+    shadows, huge orange setting sun, dust in the air, vast empty wasteland, wide shot, small figures, (3others:1.1)
+  jobs:
+    arthemy-house: 34247
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
+- key: mv-road-2
+  entity: zuzu
+  title: 'MV s14: three silhouettes on the road (seed 2)'
+  size: 1344x768
+  negative: (nude:1.4), (naked:1.3), nsfw, lowres, worst quality, bad anatomy, bad hands, extra limbs, deformed,
+    watermark, signature, blurry, jpeg artifacts, chibi, human, text, logo, disney, pixar, cute, kawaii, glossy,
+    bright saturated colors, faces visible, holding hands, 4 characters, crowd
+  prompt_prose: three silhouettes walk away down a long desert road at sunset.
+  prompt_tags: (silhouette:1.3), from behind, three small figures walking away down a long straight desert road
+    at sunset, a short stocky koala in a poncho and a wide flat straw hat with a katana diagonally across his back,
+    a thin fennec fox girl with huge ears following close behind him, a tiny fennec fox toddler beside her, long
+    shadows, huge orange setting sun, dust in the air, vast empty wasteland, wide shot, small figures, (3others:1.1)
+  jobs:
+    arthemy-house: 34248
+  art:
+    arthemy-house:
+      status: PENDING
+      art_image_id: null
