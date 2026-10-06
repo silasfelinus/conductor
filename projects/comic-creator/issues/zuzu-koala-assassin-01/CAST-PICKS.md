@@ -386,3 +386,7 @@ holster is still on his left hip, while the other angles have it on his right. S
 - **Bandage:** the unmasked bandage edits on 242428 regrew a gloved hand under the wrap (242431, 242432). Tight masked
   edits around the sleeve end follow (r18-coyote-bandage-masked-*). If they fail too, the open stump (242428) carries
   the croc scene and the bandaged look gets a native render with "bandaged stump" in the prompt.
+- **Bandaged stump, picked:** 242435 (r18 -d1). The bandage wraps the forearm and the arm ends in a raw stump, with
+  no hand. The tight mask on the stump end alone (-t: 242433, 242434) changed nothing. 242436 grew a furry mitt.
+  The coyote's two stump states are 242428 (fresh, the croc scene) and 242435 (bandaged by Zuzu). Sent as cast
+  sheet 21.
