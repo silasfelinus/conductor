@@ -1,13 +1,13 @@
 # LEARNING-REPORT.md — task-outcome summary
 
-Generated: 2026-10-06T11:46:23Z
+Generated: 2026-10-06T12:02:34Z
 
 Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults this before creating kaizen tasks — systematic weaknesses beat generic improvements (AGENTS.md § "Learning ledger").
 
 ## Overall
 
-- Closed tasks recorded: **1221**
-- Outcomes: blocked: 19, cancelled: 2, done: 1200
+- Closed tasks recorded: **1226**
+- Outcomes: blocked: 19, cancelled: 2, done: 1205
 - Success rate: **98%**
 - Average passes on successful tasks: **0.3**
 
@@ -45,6 +45,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | kind-oracle | 1 | 100% |
 | kind-robots | 79 | 99% |
 | kindrobots-unraid | 9 | 100% |
+| kr-arcade | 5 | 100% |
 | kr-solitaire | 1 | 100% |
 | lora-ingestion | 11 | 100% |
 | mandarin-tutor | 16 | 94% |
@@ -75,7 +76,7 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 | Kind | Closed | Success rate |
 |---|---|---|
 | content | 17 | 47% |
-| software | 1204 | 99% |
+| software | 1209 | 99% |
 
 ## Failure categories
 
@@ -97,16 +98,16 @@ Aggregated from the append-only `LEARNING.yaml` ledger. The Reviewer consults th
 
 ## Recent lessons
 
+- 2026-10-06 `kr-arcade/t-006` — Author arcade mazes as string rows and test them (symmetry, every pellet reachable, no dead ends) before writing ghost AI; a BFS demo pilot that avoids danger tiles doubles as a balance probe.
+- 2026-10-06 `kr-arcade/t-010` — Krea 2 cabinet/marquee art came back lettering-free when prompts filled every surface with concrete painted imagery (rainbows, faces, starfields) instead of naming or banning text.
+- 2026-10-06 `kr-arcade/t-005` — With no local MariaDB (and prisma migrate diff blocked by the secret-guard hook), kind_robots CI "Replay migrations on MariaDB" is what proves a hand-written additive migration applies.
+- 2026-10-06 `kr-arcade/t-004` — Keep arcade game metadata free of canvas code and lazy-load the game modules, so the scores API can import the same registry to validate submissions and headless tests can run every game.
+- 2026-10-06 `kr-arcade/t-003` — The kind_robots shell header matches tabs by exact route, so a real sub-page of a tab (e.g. /play/arcade/<game>) falls back to the Dashboard header; serve tab sub-views via a query parameter on the tab route, and keep presentation fields in kind_robots, not project-overrides.yaml.
 - 2026-10-06 `kind-robots/t-132` — For vertically stacked scroll shells that do not require flex behavior, native block/grid flow is a safer fallback than flex plus a separate direction utility: losing the direction utility turns flex into a horizontal row, while losing grid leaves block flow vertical.
 - 2026-10-05 `kind-robots/t-130` — Multi-LoRA generation support has to extend through ArtJob retry and Resource-refresh helpers as well as initial workflow construction; stale scalar assumptions in shared retry plumbing can reject otherwise-valid stacked jobs before they ever re-enter the queue.
 - 2026-10-05 `kind-robots/t-128` — Responsive navigation compaction must preserve explanatory copy; verification should pin content visibility as well as geometry.
 - 2026-10-04 `animation-manager/t-026` — A provider header appearing in delivered MIME is not proof the provider honored it: verify the delivered content boundary, and keep critical action URLs recoverable outside provider-controlled tracking rewrites.
 - 2026-10-03 `kind-robots/t-126` — Nested navigation needs one explicit hierarchy field shared by schema, resolver, menu rendering, route validation, destination flattening, and fallback cards; treating a submenu as a fake route leaks it back into navigation and cards.
-- 2026-10-03 `kind-robots/t-125` — Navigation retirement needs one contract pass across channel metadata, page channelKey values, project placements, and route-specific verifiers; moving Markdown files alone leaves stale assertions and placement pointers.
-- 2026-10-03 `kind-oracle/t-004` — New kind_robots TS files must pass noUncheckedIndexedAccess (Nuxt tsconfig) and the Prettier ratchet before the first push; check with the lockfile-pinned prettier (3.9.6), not a floating npx version.
-- 2026-10-03 `butterfly-gallery/t-016` — Ambient runway motion reads more like background traffic when clips are separated by randomized quiet gaps and immediate repeats are excluded; keep cadence bounds in the stage contract when future tuning changes them.
-- 2026-10-02 `conductor/t-204` — Removing a Conductor scaffold is not deletion intent for the Kind Robots Project row: the one-way projection cannot infer whether an absent roadmap is accidental deletion or a legitimate pre-scaffold project. Keep deletions explicit with exact identity tombstones, and make parity sensors distinguish archived rows from live scaffold claims.
-- 2026-10-02 `kr-solitaire/t-004` — kind_robots typechecks with noUncheckedIndexedAccess, which a plain tsx run and a default tsc do not catch: the first PR passed its own tests and still failed the TypeScript check on every arr[i] access. Check new utils/ files with that flag (strict + noUncheckedIndexedAccess) before pushing.
 
 ---
-_Auto-generated by `scripts/build_learning_summary.py` at 2026-10-06T11:46:23Z_
+_Auto-generated by `scripts/build_learning_summary.py` at 2026-10-06T12:02:34Z_
