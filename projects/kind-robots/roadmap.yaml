@@ -2191,11 +2191,11 @@ tasks:
 - id: t-131
   milestone: m6
   title: 'Rehome navigation tools and retire legacy surfaces'
-  status: ready
+  status: claimed
   gate_human: false
   stakes: reversible
   passes: 0
-  updated: '2026-10-06T10:27:00Z'
+  updated: '2026-10-06T10:34:00Z'
   note: |-
     Silas-directed 2026-10-06 navigation cleanup:
     - Move Admin Users and Moderation out of the Admin navigation and expose them as admin-only buttons on Home > Account.
@@ -2203,6 +2203,9 @@ tasks:
     - Remove LoRA Triage as an independent navigation route and expose it from Admin > Resources.
     - Move Appmaker, Conductor App, Mermaids, and Scene Animator into the existing Retired submenu under Admin.
     Preserve existing destination routes unless the implementation can safely remove a redundant navigation-only route without breaking direct links.
+  owner: worker
+  claimed_by: 20261006T103400Z-kind-robots-t131-nav-a4d9
+  claimed_at: '2026-10-06T10:34:00Z'
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
