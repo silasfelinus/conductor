@@ -98,6 +98,19 @@ riffs borrow *mechanics* from the classics, never names, sprites, sounds or leve
 | 6 | Butterfly Joust | Joust | medium | factory |
 | 7 | Kind Pinball | pinball | large (sliced) | factory |
 | 8 | Kindness Gauntlet | Gauntlet II | large (sliced) | factory |
+| 9 | Gloom Invaders | Space Invaders | small | factory |
+| 10 | Hedgehog Crossing | Frogger | small | factory |
+| 11 | Ribbon Riders | Tron light cycles | small | factory |
+| 12 | Burrow Buddy | Dig Dug | medium | factory |
+| 13 | Repair Rampage | Rampage | medium | factory |
+| 14 | Prize Show Panic | Smash TV | medium | factory |
+| 15 | Bolt Knight | Ghosts 'n Goblins | large (sliced) | factory |
+| 16 | Station Sweep | Xenophobe | large (sliced) | factory |
+
+Rows 9-16 are Silas's second batch (2026-10-06). The table numbers them in the order he asked; the
+build order is `games.yaml`, where the quick builds (Gloom Invaders, Hedgehog Crossing, Ribbon Riders,
+Burrow Buddy, Repair Rampage) queue ahead of Kindness Gauntlet, and Prize Show Panic follows it because
+it reuses Gauntlet's twin-stick input. Dragon's Lair is its own project (`zuzu-lair`), not a cabinet.
 
 The launch games are the most achievable of the set (Butterfly Blaster, Silas's own addition, builds first): both use a fixed screen, simple collision and
 well-understood enemy AI. Together they prove the engine kit for both maze/tile games and free-movement

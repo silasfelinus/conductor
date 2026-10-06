@@ -125,6 +125,69 @@ games:
     challenge: Mode ladder and jackpots that escalate; ball save shrinks; extra ball at a score threshold.
     slices: [table + flippers + physics, bumpers/targets/scoring, ramp + modes, multiball]
 
+  # Silas, 2026-10-06 (second batch): "More games to riff on: frogger, dig dug, tron, space
+  # invaders, xenophobe, smash tv, ghosts and goblins, rampage." The quick builds go ahead of
+  # Kindness Gauntlet; Prize Show Panic follows it because it reuses Gauntlet's twin-stick input.
+  - slug: gloom-invaders
+    title: Gloom Invaders
+    riffs_on: Space Invaders (1978)
+    status: queued
+    phase: factory
+    effort: small
+    source: catalog
+    hook: >-
+      Rows of grumpy gloom clouds march down the sky. Shine sunbeams up at them to turn each one into a
+      smiling rain-bringing cloud, hiding behind umbrella shields that wear away.
+    challenge: Each wave starts lower and marches faster; the last clouds of a wave hurry; a rainbow bonus ship crosses the top.
+
+  - slug: hedgehog-crossing
+    title: Hedgehog Crossing
+    riffs_on: Frogger (1981)
+    status: queued
+    phase: factory
+    effort: small
+    source: catalog
+    hook: >-
+      Walk a family of hedgehogs home across a busy robot-traffic road and a creek of drifting lily pads
+      and logs, one hedgehog at a time, to the five burrows at the top.
+    challenge: Faster lanes and longer gaps each level, diving turtles, a snoozing fox at the burrows, a ladybug bonus.
+
+  - slug: ribbon-riders
+    title: Ribbon Riders
+    riffs_on: Tron light cycles (1982)
+    status: queued
+    phase: factory
+    effort: small
+    source: catalog
+    hook: >-
+      Ride a light-bike that leaves a glowing rainbow ribbon. Box in the rival riders so they bump into a
+      ribbon before you do, in an arena that keeps shrinking.
+    challenge: More and smarter rivals each round, faster bikes, a shrinking arena, a short turbo you have to ration.
+
+  - slug: burrow-buddy
+    title: Burrow Buddy
+    riffs_on: Dig Dug (1982)
+    status: queued
+    phase: factory
+    effort: medium
+    source: catalog
+    hook: >-
+      Tunnel through a garden's layers of soil, puff bubbles at grumpy grubs until they float gently up and
+      away, and drop turnips to bonk whole groups for a bonus.
+    challenge: Deeper gardens bring more grubs, grubs that ghost through soil, fire-breathing beetles, a veggie bonus after two turnips.
+
+  - slug: repair-rampage
+    title: Repair Rampage
+    riffs_on: Rampage (1986)
+    status: queued
+    phase: factory
+    effort: medium
+    source: catalog
+    hook: >-
+      Giant friendly robots climb the storm-wrecked towers of a city and fix them window by window,
+      rescuing kittens from ledges and dodging news drones' flashbulbs, up to two players on one device.
+    challenge: Taller, more broken towers per city; faster drones; a wobbling tower that falls if you dawdle; a rescue bonus.
+
   - slug: kindness-gauntlet
     title: Kindness Gauntlet
     riffs_on: Gauntlet II (1986)
@@ -137,3 +200,41 @@ games:
       healer, runner, maker), shutting down glitch generators and rescuing trapped bots floor by floor.
     challenge: Deeper floors bring more generators, locked doors, and an ever-draining battery you refill with snacks.
     slices: [one floor + one class, all four classes, generators + keys, floor progression]
+
+  - slug: prize-show-panic
+    title: Prize Show Panic
+    riffs_on: Smash TV (1990)
+    status: queued
+    phase: factory
+    effort: medium
+    source: catalog
+    hook: >-
+      A robot game show where the studio floods with party crashers. Twin-stick spray confetti cannons,
+      grab the prizes that drop, and reach the exit before the host's countdown ends.
+    challenge: Bigger crowds and new crasher types each studio, a boss float every few rooms; needs the twin-stick input Kindness Gauntlet adds.
+
+  - slug: bolt-knight
+    title: Bolt Knight
+    riffs_on: Ghosts 'n Goblins (1985)
+    status: queued
+    phase: factory
+    effort: large
+    source: catalog
+    hook: >-
+      A small armoured robot knight runs and jumps through a spooky garden tossing wrenches at mischief
+      sprites. The first hit knocks the armour off; a second sends you back to the last checkpoint.
+    challenge: Each stage adds tougher sprites, collapsing bridges and a boss; armour pickups and new throwables along the way.
+    slices: [one stage + armour rule, throwables + pickups, bosses, stage progression]
+
+  - slug: station-sweep
+    title: Station Sweep
+    riffs_on: Xenophobe (1987)
+    status: queued
+    phase: factory
+    effort: large
+    source: catalog
+    hook: >-
+      Split-screen co-op aboard a space station overrun by glitch critters. Ride the elevators between
+      decks, sweep each room clean, grab tools, and get everyone to the shuttle before the timer runs out.
+    challenge: Bigger stations, faster critter growth, a station-wide timer; one to three players on one device.
+    slices: [one deck + one player, elevators + multi-deck, split-screen co-op, critter growth + timer]

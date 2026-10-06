@@ -1,0 +1,238 @@
+# Zuzu's Lair -- a quick-time animated adventure starring Zuzu (Silas, 2026-10-06).
+# Scaffolded via intake.py; brief in DESIGN-BRIEF.md; chapter graphs in chapters/<nn-slug>/SCENES.yaml.
+project: zuzu-lair
+kind: software
+goal: >-
+  A free browser quick-time adventure on Kind Robots starring Zuzu the koala ronin: an opening
+  animation, timed moments that branch into success or death animations, and a closing animation, with
+  sound, flash assist, optional on-screen buttons, difficulty and a leaderboard -- chapter 1 accepted by
+  Silas and playable publicly.
+
+notes_from_silas: |
+  2026-10-06, verbatim: "And finally this one will need its own independent project: dragons lair. This
+  will use a quick time system, with our animation creator making multiple paths depending on buttons
+  pressed in time or not. This can use our character zuzu as we already have some work done with the
+  characters, create first and last animations that then branch into success and death animations. Will
+  need sound, optional on screen button and flash assist, etc."
+
+milestones:
+  - id: m1
+    title: "SHAPE -- design brief and chapter 1 scene graph"
+    weight: 20
+    status: in-progress
+
+  - id: m2
+    title: "BUILD -- QTE engine, player, keyframes, clips, sound"
+    weight: 55
+    status: not-started
+
+  - id: m3
+    title: "POLISH & SHIP -- Silas's verdict, publish, next chapter"
+    weight: 25
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write the design brief"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >-
+      DESIGN-BRIEF.md v1 (2026-10-06): format riff only, Zuzu canon from the comic folder, how it plays
+      (opening, moments with input windows, success/death branches, closing), assists (flash assist,
+      on-screen buttons, difficulty, sound), content pipeline (comic-film / music-video), MVP = chapter 1,
+      guardrails, open questions for Silas.
+
+  - id: t-002
+    milestone: m1
+    title: "Confirm scope with Silas"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    soft_gate: true
+    note: >-
+      FOR SILAS: soft checkpoint, nothing is blocked on it. Read DESIGN-BRIEF.md "Open questions": the
+      chapter 1 story (draft "The Dry Gulch": rope bridge, scorpion, rockslide, gila-monster bandit), the
+      tone of the death animations (draft: quick, stylized cut-aways), where it lives (its own Projects
+      tab, plus an Arcade hall tile?), and whether it grows chapter by chapter. Agents keep building
+      meanwhile and fold any redirect into the roadmap.
+
+  - id: t-003
+    milestone: m1
+    title: "Chapter 1 scene graph (chapters/01-dry-gulch/SCENES.yaml)"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >-
+      Draft v1, 2026-10-06: 13 nodes -- opening, four moments (bridge: up, scorpion: right, rockslide:
+      left, bandit: sword), a success and a death clip for each, closing. Each node has a house-lane
+      keyframe prompt ({ZUZU} = the canonical string), a prose motion prompt, clip length, and for moments
+      the Classic input window. Success and death clips start from their moment's last frame. Revise it
+      in place if Silas redirects at t-002.
+
+  - id: t-004
+    milestone: m2
+    title: "kind_robots: pure QTE engine + contract test (utils/zuzuLair/)"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-003]
+    note: >-
+      Framework-free TypeScript, no DOM: scene-graph types mirroring SCENES.yaml (ported as a typed TS
+      module), a pure reducer for the run (node, clip time, window open/closed, lives, score, deaths,
+      continues), input judging (right button inside the window -> success; wrong button or timeout ->
+      death; early presses before the window are ignored on Assist, count as wrong on Classic), scoring
+      (earlier in the window = more points, no-death and time bonuses), and difficulty (Classic window vs
+      Classic + assist_extra). Contract test under utils/scripts/ run by tsx in contract-tests.yml, like
+      verifyArcadeEngine.test.ts: walks a full perfect run, a run with every death, timeout and wrong
+      button, continue after game over, and validates the graph (every target id exists, no orphan nodes,
+      windows inside clip length).
+
+  - id: t-005
+    milestone: m2
+    title: "kind_robots: the player page (video branches, input, flash assist, on-screen buttons, sound)"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-004]
+    note: >-
+      Page /play/zuzu-lair on the Projects tab (content/channels/projects/zuzu-lair.md +
+      utils/projectPlacements.ts). Two stacked <video> elements: the current clip plays while the next
+      possible branches preload, so success/death cuts are instant. Until real clips exist each node
+      shows a placeholder still with Ken Burns motion, so the whole loop is playable on day one.
+      - Input: utils/arcade/input.ts (keyboard, gamepad, touch).
+      - Mobile: reuse the arcade's touch-play lock (silasfelinus/kind_robots#3276).
+      - Flash assist: the needed direction glows during the window. It is steady under
+        prefers-reduced-motion and never strobes faster than 3 Hz.
+      - Options: on-screen d-pad + SWORD toggle, Assist/Classic, sound on/off. Remembered via a Pinia
+        store, never localStorage from the component.
+      - Sound: clip audio plus WebAudio stingers (utils/arcade/sound.ts presets).
+      - Flow: title card, then the opening animation; at the end, score, initials and the leaderboard.
+      Verify at phone, tablet and desktop with Playwright, and screenshot every state.
+
+  - id: t-006
+    milestone: m2
+    title: "Chapter 1 keyframes in the Zuzu house lane"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-003]
+    note: >-
+      One keyframe per SCENES.yaml node.
+      - Lane: the comic house lane (il-arthemy, Illustrious arthemyWesternArt v30), with its prefix,
+        suffix and the series negatives. Use the locked 8-angle Zuzu references (CAST-PICKS.md) for
+        likeness.
+      - Prompts: copy the comic's bannedTerms onto every prompt, and avoid the literal-word traps in
+        VIDEO-GUARDRAILS.md.
+      - Branch starts: success and death keyframes start from their moment's frame (from_last_frame_of)
+        so the cut is seamless.
+      - Mechanism: add a kind_robots spec (utils/musicVideoSpecs.ts, kind film, key zuzu-lair-ch1) and
+        produce through the music-video / comic-film pipeline (Silas prefers the front end for runs,
+        music-video t-029). If the session has no admin path to enqueue, leave the spec merged and
+        ask Silas to press Produce.
+      Check every keyframe against the canon (short, stocky, kasa shading the eyes, katana hilt over the
+      right shoulder, never denim) before it goes on to t-007.
+
+  - id: t-007
+    milestone: m2
+    title: "Chapter 1 clips (LTX image-to-video, about 13 clips)"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-006]
+    note: >-
+      One clip per node from its approved keyframe and its motion prompt, using preset
+      ltx-12gb-balanced (about 4 s, 1280x720). A death or success clip pins its first frame to its
+      moment's last frame (music-video t-026 lastFrame pinning). That is about one overnight queue on
+      the 12 GB card; queue in batches of at most 8 (clips.post.ts). After the clips land, re-time each
+      moment's input window to the real clip (the danger beat) and update SCENES.yaml and the engine's
+      graph module to match.
+
+  - id: t-008
+    milestone: m2
+    title: "Chapter 1 sound: score and stingers"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-003]
+    note: >-
+      A short instrumental weird-west score via ACE-Step (the music-video song route: vocal
+      instrumental, genre spaghetti-western, mood tense, about 60-90 s, looping). The player ducks it
+      under clip audio. Success and death stingers are procedural WebAudio presets added beside the
+      arcade's (utils/arcade/sound.ts), so they need no rendering. Sound is muted until the first tap
+      or keypress (browser autoplay rules).
+
+  - id: t-009
+    milestone: m2
+    title: "Leaderboard and arcade hall tile"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-005]
+    note: >-
+      Reuse the arcade ArcadeScore board under game slug zuzu-lair. Add it to the server plausibility
+      check (a maxPlausibleScore entry the API reads) and keep the per-browser fallback board. Add a
+      special tile in the Arcade hall linking to /play/zuzu-lair, unless Silas says otherwise at t-002.
+
+  - id: t-010
+    milestone: m3
+    title: "Silas plays chapter 1 and gives a verdict"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-005, t-007, t-008]
+    gate_human: true
+    gate_reason: subjective-acceptance
+    note: >-
+      FOR SILAS (once the clips are in the player): play chapter 1 on phone and desktop and judge the
+      feel, timing windows, death tone and look. Agents fold the notes into SCENES.yaml and re-render
+      only the clips that changed.
+
+  - id: t-011
+    milestone: m3
+    title: "Publish chapter 1's clips so the public page can play them"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: outward-facing
+    depends_on: [t-010]
+    gate_human: true
+    gate_reason: publish
+    note: >-
+      Renders are private ArtImages. Making the approved clips publicly playable (public flag or an
+      exported public/ asset set) is outward-facing, so Silas approves it.
+
+  - id: t-012
+    milestone: m3
+    title: "Project art: confirm icon, card and hero landed"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      intake.py queued the icon, card and hero in projects/art-prompts.yaml (prompts rewritten to the Krea
+      rules: physical subject first, no negations). Confirm they landed on kindrobots.org and look right
+      (Zuzu short and stocky in the kasa and poncho); re-stage any that miss.
+
+  - id: t-013
+    milestone: m3
+    title: "Chapter 2 outline"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-010]
+    note: >-
+      Only if Silas wants the game to grow chapter by chapter (t-002 open question 4): write
+      chapters/02-<slug>/SCENES.yaml the same way, reusing the player and pipeline unchanged.
