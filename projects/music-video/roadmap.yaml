@@ -442,8 +442,8 @@ tasks:
   - id: t-014
     milestone: m2
     title: "Browser compositor and MP4 exporter"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-004, t-007]
@@ -456,6 +456,9 @@ tasks:
       composables/ directory. Chromium-first is acceptable while admin-only. Tests: pure frame
       and timing math as tsx verify tests, plus a Cypress or Playwright smoke for the WebCodecs
       path. Save-to-server and a relay ffmpeg job are later upgrades, not this task.
+    claimed_by: 2026-10-06T0830Z-music-video-t014-q7c
+    claimed_at: '2026-10-06T01:47:27Z'
+    updated: '2026-10-06T01:47:27Z'
 
   - id: t-015
     milestone: m2
