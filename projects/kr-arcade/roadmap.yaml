@@ -287,10 +287,54 @@ tasks:
       scoring) shipped in silasfelinus/kind_robots#3275; title art requested. kind-pinball
       stays building: the next cycle builds its slice 3 (ramp + modes) before taking a queued
       entry, then slice 4 (AMI multiball).
-    claimed_by: 2026-10-06T1930Z-kr-arcade-t009-pinball-slice3
-    claimed_at: '2026-10-06T22:38:03Z'
-    updated: '2026-10-06T22:38:03Z'
-    implementation_pr: 'silasfelinus/kind_robots#3275'
+
+      RAN 2026-10-06: Kind Pinball slice 3 (ramp + modes) in silasfelinus/kind_robots#3280 --
+      raised ramp from an upper-right mouth into the left inlane, streak scoring, four 30 s
+      modes (Net Rush, Ramp Frenzy, Lane Lights, Saucer Rescue) started by every third ramp
+      shot, and a 250,000 x level super jackpot once all four are played. Verified:
+      test:arcade-engine, eslint/prettier, vue-tsc, balance probe seeds 1-8 (1-5 rides per
+      game, no stalls), ramp exit reaches the left flipper on every seed, Playwright
+      phone/desktop. kind-pinball stays building; next cycle builds slice 4 (AMI multiball),
+      then the queue resumes at gloom-invaders.
+
+      RAN 2026-10-06: Kind Pinball slice 4 (AMI multiball) in silasfelinus/kind_robots#3282 --
+      the third village lights multiball at the saucer; three balls with a 10 s multiball
+      save; ramp/saucer shots fly mosquito nets to the villages (20,000 x level), five nets
+      pay the AMI JACKPOT (150,000 x level). Table refactored to a ball list (flippers swing
+      once per substep). Also wrapped the cabinet's empty-board message for narrow screens.
+      Verified: test:arcade-engine, eslint/prettier, vue-tsc, pilot probe seeds 1-8, forced-
+      multiball probe seeds 1-5 (always reaches 3 balls, always settles back to one),
+      Playwright renders. kind-pinball is now shipped (all four slices). Next cycle takes the
+      first queued games.yaml entry: gloom-invaders (Space Invaders riff).
+
+      RAN 2026-10-06: Gloom Invaders (Space Invaders riff) shipped in
+      silasfelinus/kind_robots#3283 -- 5x9 gloom-cloud formation with a speeding march, one-
+      beam-at-a-time sunbeams, four erodible rainbow umbrellas, a mystery-bonus rainbow kite,
+      waves that start lower and march faster, and a garden that grows a flower per wave.
+      Title art requested as kr-arcade-games-gloom-invaders-title. Verified: test:arcade-
+      engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6, Playwright phone/desktop. Next
+      cycle takes the next queued games.yaml entry: hedgehog-crossing (Frogger riff).
+
+      RAN 2026-10-06: Hedgehog Crossing (Frogger riff) shipped in
+      silasfelinus/kind_robots#3284 -- robot-traffic road, creek of logs and diving turtles,
+      five hedge burrows, snoozing fox from level 2, ladybug bonus, 30 s time bar, faster
+      lanes/shorter logs/more divers per level. Title art requested as kr-arcade-games-
+      hedgehog-crossing-title. Verified: test:arcade-engine, eslint/prettier, vue-tsc, pilot
+      probe seeds 1-6 (3-4 homes per game after fixing hop drift), Playwright phone/desktop.
+      Next cycle takes the next queued games.yaml entry: ribbon-riders (Tron light-cycles
+      riff).
+
+      RAN 2026-10-06: Ribbon Riders (Tron light-cycles riff) shipped in
+      silasfelinus/kind_robots#3285 -- rainbow-ribbon light-bike, 1-4 rivals with room-seeking
+      and cut-off steering, closing arena wall with a warning flash, rationed turbo, fading
+      ribbons on crash. Title art requested as kr-arcade-games-ribbon-riders-title. Verified:
+      test:arcade-engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6 (rounds 3-5 after
+      teaching AI riders to dodge the closing wall), Playwright phone/desktop. Next cycle
+      takes the next queued games.yaml entry: burrow-buddy (Dig Dug riff).
+    claimed_by: 2026-10-06T2350Z-kr-arcade-t009-burrow-buddy
+    claimed_at: '2026-10-06T23:42:57Z'
+    updated: '2026-10-06T23:42:57Z'
+    implementation_pr: 'silasfelinus/kind_robots#3285'
 
   - id: t-010
     milestone: m2

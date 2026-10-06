@@ -1,0 +1,647 @@
+# Zuzu Showdown -- roster data (v1, 2026-10-06)
+#
+# The source of truth for every fighter's kit. The kind_robots engine ports this into typed
+# fighter modules (utils/zuzuShowdown/fighters/<slug>.ts) and refines the frame data there;
+# when a number changes in the engine, update it here in the same PR so the two never drift.
+#
+# Canon and look: projects/comic-creator/issues/zuzu-koala-assassin-01/ (CAST-PICKS.md,
+# VIDEO-GUARDRAILS.md). bannedTerms apply to every name, line and prompt in this file.
+#
+# Notation (Street Fighter numpad-free shorthand):
+#   QCF  down, down-forward, forward      QCB  down, down-back, back
+#   DP   forward, down, down-forward      HCB  forward ... back (half circle)
+#   360  full circle                      [b]f charge back 45f, then forward
+#   [d]u charge down 45f, then up         dd   down, down
+#   P / K any punch / kick, LP HP LK HK specific button, D dodge
+# triangle: which side of the Strike / Grab / Guard triangle the move is on.
+# speed: fast <= 5f startup, medium 6-12f, slow >= 13f (starting values; the engine tunes).
+# Damage is out of the default 1000 health, before scaling.
+
+defaults:
+  health: 1000
+  meter_bars: 3
+  normals:
+    # Starting frame-data template; each fighter scales it with walk_speed/reach notes below.
+    stand_LP: {startup: 4, damage: 30, chain: [LK, HP, HK]}
+    stand_LK: {startup: 5, damage: 35, chain: [HP, HK]}
+    stand_HP: {startup: 8, damage: 70, chain: [HK], cancel: special}
+    stand_HK: {startup: 10, damage: 80, cancel: special}
+    crouch_LP: {startup: 4, damage: 25, hits: low-or-mid}
+    crouch_LK: {startup: 5, damage: 30, hits: low}
+    crouch_HP: {startup: 7, damage: 70, note: anti-air}
+    crouch_HK: {startup: 9, damage: 80, hits: low, note: "launcher (jump-cancel into an air chain)"}
+    jump_LP: {startup: 4, damage: 35, note: "flying punch, light"}
+    jump_HP: {startup: 7, damage: 75, note: "flying punch, heavy; air-combo finisher knocks down"}
+    jump_LK: {startup: 4, damage: 35, note: "flying kick, light; cross-up on most fighters"}
+    jump_HK: {startup: 7, damage: 80, note: "flying kick, heavy"}
+    throw: {input: "LP+LK close", damage: 120, triangle: grab}
+  dodge:
+    forward: "roll through, strike/projectile-invulnerable frames 3-14, grabbable recovery 15-22"
+    back: "sidestep back, invulnerable 2-10, grabbable recovery 11-18"
+  combo_breaker: {cost: 2, note: "knocks the attacker back; not during a super"}
+
+# Rule for every fighter: against the Siblings, any move flagged `fling_vs_siblings: true`
+# swaps its bite/stab/swallow/roll animation for the sister being thrown clear (same damage).
+
+fighters:
+  - slug: zuzu
+    name: Zuzu
+    species: koala
+    title: The Koala Ronin
+    archetype: all-rounder -- quick-draw iai, a parry stance, a boomerang hat
+    health: 1000
+    height_px: 72
+    walk_speed: medium
+    home_stage: hollow-bell
+    rival: coyote-vagrant
+    look: >-
+      Locked canon (CAST-PICKS.md): short, stocky, koala-sized, subtle beer belly; rust-brown poncho
+      with orange zigzag trim, conical straw kasa shading the eyes, dark tunic, orange sash, dark brown
+      cloth trousers; katana strapped diagonally across his back, hilt over his RIGHT shoulder. Always
+      serious. Reference angles: 242395, 242397, 242193, 242113, 242117, 242120, 242399.
+    voice: "Almost wordless. Silence ('...') or two or three words. Never jokes, never gloats."
+    punch_buttons: "LP = pommel/fist strike with the sword sheathed; HP = a drawn cut that re-sheathes"
+    specials:
+      - name: Iai Flash
+        input: QCF+P
+        triangle: strike
+        speed: "LP fast, HP medium"
+        damage: 90-120
+        description: Quick-draw dash cut. LP is short and safe on block; HP crosses half the screen and is punishable.
+      - name: Falling Leaf
+        input: DP+P
+        triangle: strike
+        speed: fast
+        damage: 110
+        description: Rising cut, invulnerable on startup with HP. The anti-air reversal.
+      - name: Kasa Toss
+        input: QCB+P
+        triangle: strike
+        speed: medium
+        damage: "50 out, 40 back"
+        description: Throws his straw kasa as a boomerang; it hits going out and coming back. Bareheaded until it returns (and he can't toss again).
+      - name: Poncho Veil
+        input: QCB+K
+        triangle: guard
+        speed: fast
+        damage: 100
+        description: Parry stance behind the poncho. Catches a strike and answers with one cut; whiffs and is wide open against a grab.
+      - name: Descending Cut
+        input: "QCF+P in the air"
+        triangle: strike
+        speed: medium
+        damage: 80
+        description: Drops diagonally with a downward slash; an overhead on landing.
+    supers:
+      - level: 1
+        name: Thousand-Mile Step
+        input: QCF QCF+P
+        damage: 280
+        description: Dashes through the opponent, freezes with his back to them, sheathes; they fall on the click.
+      - level: 3
+        name: Hat to the Dead
+        input: QCB QCB+HP
+        damage: 420
+        description: >-
+          Eye-strip cutaway (SF1) of Zuzu's narrowed eyes under the brim, then black. One white slash
+          line crosses the screen. Lights up: he is already sheathing, and lifts the kasa off his head.
+    intro: Steps out of heat shimmer, thumb resting on the scabbard mouth.
+    taunt: Slowly sets his kasa straight with one finger. Doesn't look at you.
+    victory_poses:
+      - Sheathes the katana with a click and takes the kasa off to the fallen.
+      - Turns his back and walks off-screen without looking back.
+    perfect_pose: Never drew. Brushes dust off the poncho and walks away.
+    ko_pose: Drops to one knee, then forward; the kasa rolls away on its brim and spins down.
+    vs_siblings_win: Leaves a strip of dried food within the sister's reach and walks away (Book One ch. 3).
+
+  - slug: coyote-vagrant
+    name: Coyote Vagrant
+    species: coyote
+    title: The One-Eyed Vagrant
+    archetype: scrappy trickster -- unreliable gun, knife-stump rushdown, dirty tricks, steals meter
+    health: 950
+    height_px: 104
+    walk_speed: fast
+    home_stage: watering-hole
+    rival: river-croc
+    look: >-
+      Canon (CAST-PICKS.md): one-eyed coyote, eyepatch on his RIGHT eye, destitute -- tattered, patched
+      long riding coat (never "duster"), rags under it, ripped trousers, falling-apart boots, crushed
+      hat, mangy fur, sick and underfed but never skeletal. Post-croc: his RIGHT hand is gone; a knife
+      is lashed to the bandaged stump (Silas's later-book idea), and he shoots left-handed, badly.
+      Revolver on his right hip. References: 242401, 242209, 242404, 242216, 242214, 242537, 242435.
+    voice: Rasping, bitter gallows humor; talks too much because nobody listens.
+    punch_buttons: "LP = left jab; HP = knife-stump stab"
+    specials:
+      - name: Wild Shot
+        input: QCF+P
+        triangle: strike
+        speed: medium
+        damage: 70
+        description: >-
+          A left-handed revolver shot. LP aims high, HP aims low, and every shot has a small seeded
+          random spread (deterministic per round seed). Sometimes it just misses. Six shots per round,
+          then he has to reload (dd+P).
+      - name: Pocket Sand
+        input: QCB+K
+        triangle: strike
+        speed: fast
+        damage: 20
+        description: A fistful of grit to the eyes. Short range; on hit the opponent staggers and can't block for 20 frames.
+      - name: Stump Shiv
+        input: "[b]f+P"
+        triangle: strike
+        speed: medium
+        damage: 3 x 35
+        description: A lunging three-stab flurry with the knife lashed to his stump.
+      - name: Pick Pocket
+        input: HCB+K
+        triangle: grab
+        speed: medium
+        damage: 60
+        description: A command grab that steals half a bar of the opponent's meter.
+      - name: Play Dead
+        input: dd+D
+        triangle: guard
+        speed: fast
+        damage: 90
+        description: Flops down "dead". Any strike that touches him triggers a kick-up counter; a grab or a low sweep just hits him.
+    supers:
+      - level: 1
+        name: Last Meal
+        input: QCF QCF+K
+        damage: 260
+        description: A desperate rush of kicks, a bite, and a headbutt, then he collapses coughing (short recovery).
+      - level: 3
+        name: Six Bad Shots
+        input: QCB QCB+HP
+        damage: 400
+        description: >-
+          Eye-strip cutaway of his one eye. He empties the revolver left-handed: five shots miss in
+          comic ways (a hat, a bell, a vulture, a cactus, his own boot). The sixth ricochets three times
+          around the stage and doesn't.
+    intro: Crawls out from under a bedroll, coughs, spits, and squints with his one eye.
+    taunt: Blows into his empty revolver chamber, frowns, and pats his coat for bullets he doesn't have.
+    victory_poses:
+      - Rifles through the loser's pockets and holds up a single button, disgusted.
+      - Tries a left-handed gun spin, drops it, and pretends that was the plan.
+    perfect_pose: Tips his crushed hat with the knife-stump and limps off whistling.
+    ko_pose: Falls flat on his back; the crushed hat lands over his face; one boot sole flaps.
+
+  - slug: the-abbess
+    name: The Abbess
+    species: otter
+    title: The Abbess of the Mission
+    archetype: zoner and summoner -- thrown daggers, tentacles from the thin places, portal teleport
+    health: 950
+    height_px: 96
+    walk_speed: slow
+    home_stage: the-mission
+    rival: the-siblings
+    look: >-
+      Canon (CAST-PICKS.md, variant B): an elderly head nun, sea otter with a flat, round face and a
+      button nose, warm brown fur (never mauve), habit and wimple, a ritual dagger at her belt. In
+      prompts say "abbess" or "elderly head nun", never "mother"; negate water and feral otters.
+      References: 242513, 242515, 242356, 242520, 242521, 242524.
+    voice: Sweet and kindly, every line a little wrong; blessings that are threats.
+    punch_buttons: "LP = rosary-wrapped knuckle; HP = dagger slash"
+    specials:
+      - name: Benediction
+        input: QCF+P
+        triangle: strike
+        speed: medium
+        damage: 60
+        description: A thrown ritual dagger. LP flies straight; HP arcs down at an angle.
+      - name: Reaching Tentacle
+        input: DP+P
+        triangle: strike
+        speed: "slow (it's a trap, not a reversal)"
+        damage: 90
+        description: A tentacle bursts from a crack in the floor at short (LP), mid or far (HP) range and lifts the victim for a juggle.
+      - name: The Thin Place
+        input: QCB+K
+        triangle: guard
+        speed: medium
+        damage: 0
+        description: She steps into a portal and out behind the opponent (LK) or at the far wall (HK). She can be grabbed on exit.
+      - name: Last Rites
+        input: 360+P
+        triangle: grab
+        speed: fast
+        damage: 160
+        fling_vs_siblings: true
+        description: A command grab. She folds the victim onto an altar slab that rises from the floor and blesses them with the dagger.
+      - name: Vespers
+        input: dd+P
+        triangle: strike
+        speed: slow
+        damage: 0
+        description: The mission bell tolls. For 3 seconds the opponent's projectiles fly at half speed.
+    supers:
+      - level: 1
+        name: The Choir
+        input: QCF QCF+P
+        damage: 250
+        description: A row of chanting nuns flickers in behind her and a giant tentacle sweeps the floor of the full screen (jump it).
+      - level: 3
+        name: Open the Door
+        input: QCB QCB+HP
+        damage: 430
+        description: >-
+          Eye-strip cutaway of her kind face slowly turning cold (SF1, Book One ch. 8). A portal tears
+          open behind her; one vast eye and a mass of tentacles reach through, never the whole Thing,
+          and drag the victim halfway in before spitting them out.
+    intro: Walks in with her hands folded, smiling, and the merry-go-round creaks somewhere behind her.
+    taunt: Holds out a bowl of stew to the opponent, still smiling.
+    victory_poses:
+      - Folds her hands in prayer; her eyes stay open and cold.
+      - Wipes her dagger on her sleeve and tucks it away, humming.
+    perfect_pose: Lights a single candle and blows it out.
+    ko_pose: Collapses forward onto her face (Book One ch. 8), the dagger skittering away.
+    vs_siblings_win: She lays a hand on the sister's head and smiles. The screen fades before anything else happens.
+
+  - slug: the-siblings
+    name: The Siblings
+    species: fennec fox
+    title: The Survivors of Hollow Bell
+    archetype: small fast rushdown plus a puppet toddler who throws apples
+    health: 900
+    height_px: 84
+    walk_speed: fast
+    home_stage: lone-apple-tree
+    rival: the-abbess
+    look: >-
+      Canon (CAST-PICKS.md, round-10 sets approved): fennec foxes. The sister, about ten, taller than
+      Zuzu, gaunt, in a long torn pale dress of claw-torn rags, bandaged wrists, a hard stare. The
+      toddler brother, babbling only, in a small checked cloth tunic of rags, a bandaged paw.
+      References: sister 242128-242143, toddler 242144-242158.
+    voice: >-
+      The sister says almost nothing (she watches). The toddler babbles ("ba!", "app!"). Their lines are
+      short, fierce and scared, and never self-pitying.
+    children_rules: >-
+      The toddler is never a hurtbox: he rides her back or toddles a step behind and ducks behind her
+      legs. KO is never death: she scoops him up and flees off-screen. Opponents' wins against them are
+      never gloating harm; `fling_vs_siblings` moves swap to a thrown-clear animation. Never
+      sexualised, never undressed (VIDEO-GUARDRAILS.md, absolute).
+    punch_buttons: "LP = claw swipe; HP = two-handed shove; kicks are fast and scrappy"
+    specials:
+      - name: Apple Toss
+        input: QCF+P
+        triangle: strike
+        speed: medium
+        damage: 45
+        description: The toddler lobs an apple from behind her. LP is a short lob, HP a long one. He can carry three; the Lone Apple Tree stage refills them.
+      - name: Bared Teeth
+        input: DP+K
+        triangle: strike
+        speed: fast
+        damage: 90
+        description: A leaping snap upward. Invulnerable on startup with HK; the anti-air.
+      - name: Big Ears
+        input: QCB+K
+        triangle: guard
+        speed: fast
+        damage: 70
+        description: Her huge ears twitch. She hears the attack coming, slips under any strike, and answers with a low scratch. A grab catches her.
+      - name: Shield Him
+        input: "[d]u+P"
+        triangle: guard
+        speed: fast
+        damage: 0
+        description: She turns her back and wraps around her brother. It absorbs one hit with armor, takes half damage and builds meter.
+      - name: Scramble
+        input: QCF+K
+        triangle: strike
+        speed: fast
+        damage: 2 x 30
+        description: A low skidding slide that ends in a scrappy two-hit claw. Goes under projectiles.
+    supers:
+      - level: 1
+        name: Rain of Apples
+        input: QCF QCF+P
+        damage: 240
+        description: The toddler climbs on her shoulders and hurls apples in a rapid arc across half the screen, giggling.
+      - level: 3
+        name: Lone Survivor
+        input: QCB QCB+HP
+        damage: 400
+        description: >-
+          Eye-strip cutaway of her eyes, wide and wet. She lifts a dagger in both shaking hands, then a
+          blur of a lunge. The hit lands off-screen. Lights up on the SF3 frame: the sister standing
+          alone and centred, dagger held low, her brother clinging to her leg.
+    intro: The toddler peeks out from behind her; she pushes him back and bares her teeth.
+    taunt: The toddler blows a raspberry at the opponent; she quickly covers his mouth.
+    victory_poses:
+      - She sinks to her knees and hugs her brother hard, staring past the camera.
+      - The toddler holds up an apple to her proudly. She takes it, almost smiles.
+    perfect_pose: She stands still and watches, and the toddler waves bye-bye.
+    ko_pose: She scoops up her brother and runs off-screen, a dust trail behind. Never a death pose.
+
+  - slug: storm-crow
+    name: Storm Crow
+    species: crow
+    title: Captain of the Storm Crows
+    archetype: air rushdown with a flight mode; talon dives, hooked blade, rifle, lightning
+    health: 950
+    height_px: 100
+    walk_speed: medium
+    home_stage: storm-canyon
+    rival: hyena-matriarch
+    look: >-
+      From the Storm Crows faction (BRAINSTORM-ROUND-3.md, ART-ROUND-3.yaml r3-storm-crows): an
+      anthropomorphic crow raider in a ragged long riding coat (never "duster") and rusted goggles, a
+      hooked blade and a rifle, black feathers slick with rain. A captain's torn sash as the one
+      bright note.
+    voice: Swaggering, theatrical, sky-proud; talks about the storm as if it answers to him.
+    punch_buttons: "LP = wing buffet; HP = hooked-blade slash"
+    specials:
+      - name: Murder Dive
+        input: "QCF+K in the air"
+        triangle: strike
+        speed: medium
+        damage: 90
+        description: A steep talon dive kick. LK dives shallow, HK steep; it bounces him back up on hit.
+      - name: Hook and Reel
+        input: QCB+P
+        triangle: grab
+        speed: medium
+        damage: 80
+        description: He casts the hooked blade on a chain; it catches and reels the opponent in close. A ranged grab that ignores guard but loses to any strike.
+      - name: Take Wing
+        input: QCB+K
+        triangle: guard
+        speed: medium
+        damage: 0
+        description: Flight mode for 3 seconds. He flies freely and can attack from any height. It ends early if he's hit.
+      - name: Thunderhead
+        input: DP+P
+        triangle: strike
+        speed: "slow on the ground, fast in flight"
+        damage: 100
+        description: Raises the blade to the sky and calls down a lightning bolt at the opponent's last position (the anti-air version strikes above him).
+      - name: Rifle Crack
+        input: dd+P
+        triangle: strike
+        speed: slow
+        damage: 70
+        description: A long rifle shot straight across the screen. Slow to start, fast to land.
+    supers:
+      - level: 1
+        name: Wheel of Wings
+        input: QCF QCF+K
+        damage: 260
+        description: A spinning aerial drill of talons and blade that carries the opponent up into the storm.
+      - level: 3
+        name: The Murder
+        input: QCB QCB+HP
+        damage: 420
+        description: >-
+          Eye-strip cutaway of his goggled eyes, lightning reflected in the lenses. He screams; the
+          whole flock pours across the screen like black rain. Lightning flashes the scene into
+          silhouette three times.
+    intro: Drops out of the storm clouds, folds his wings, and shakes rain off the coat.
+    taunt: Spreads his wings wide and caws at the sky; thunder answers.
+    victory_poses:
+      - Perches on a rock with the rifle across his knees, preening.
+      - Bows with a theatrical wing sweep as lightning cracks behind him.
+    perfect_pose: Doesn't land. Hovers, laughs, and flies off into the storm.
+    ko_pose: Spins down in a burst of loose feathers and lands in a heap, goggles cracked.
+
+  - slug: river-croc
+    name: River Croc
+    species: crocodile
+    title: The Thing in the Water
+    archetype: giant grappler -- command grabs, submerge and erupt, heavy armor
+    health: 1100
+    height_px: 140
+    walk_speed: very slow
+    home_stage: watering-hole
+    rival: coyote-vagrant
+    look: >-
+      Canon (Book One ch. 1; K2, ArtImage 241893 is round-5, so take the shape not the style): a giant
+      crocodile, an animal rather than a monster from the thin places. It fights on all fours and rears
+      up on its hind legs for big moves. Scarred hide, algae, a broken old harpoon stuck in its back.
+    voice: "No words. Hisses, growls and a deep bellow, written as sound ('HSSSSS', 'grrrRRR')."
+    punch_buttons: "LP = snap; HP = big jaw lunge; kicks are tail and claw swipes"
+    passives:
+      - Super armor on heavy normals (absorbs one light hit).
+      - Can't be thrown out of a jump (too heavy to lift); normal throws work on the ground.
+    specials:
+      - name: Death Roll
+        input: 360+P
+        triangle: grab
+        speed: fast
+        damage: 200
+        fling_vs_siblings: true
+        description: The command grab. Jaws clamp, then he rolls three times and hurls the victim away.
+      - name: Submerge
+        input: dd+K
+        triangle: guard
+        speed: medium
+        damage: 0
+        description: Sinks into a puddle of shadow-water that slides along the floor (LK slow, HK fast). Only his eyes and ridge show; strike-invulnerable, but a low hits him.
+      - name: Erupt
+        input: "any P while submerged"
+        triangle: strike
+        speed: fast
+        damage: 140
+        description: He bursts straight up out of the water, jaws first. A launcher.
+      - name: Tail Sweep
+        input: QCB+K
+        triangle: strike
+        speed: medium
+        damage: 100
+        description: A full-length tail sweep that hits low; HK version is slower but knocks down.
+      - name: Bellow
+        input: "[b]f+P"
+        triangle: strike
+        speed: slow
+        damage: 0
+        description: A roar that pushes the opponent back half a screen and freezes their red health (it stops regenerating for 5 s).
+    supers:
+      - level: 1
+        name: Swallow
+        input: 720+P (or QCF QCF+P with Easy Specials)
+        damage: 300
+        fling_vs_siblings: true
+        description: A huge lunging bite. He gulps, makes a face, and spits the victim back out.
+      - level: 3
+        name: The Watering Hole
+        input: QCB QCB+HP
+        damage: 450
+        fling_vs_siblings: true
+        description: >-
+          Eye-strip cutaway of a reptile eye opening under the water. The stage floods to knee height;
+          he vanishes, erupts beneath the opponent, and Death Rolls them in a tower of spray.
+    intro: The water's surface goes still. Two eyes surface, then the whole length rises.
+    taunt: Opens the jaws wide and holds them open, motionless, like a trap.
+    victory_poses:
+      - Sinks back into the water until only the eyes remain, watching.
+      - Basks on a rock, jaws open in the sun, a bird picking his teeth.
+    perfect_pose: Doesn't move at all, for an uncomfortably long time.
+    ko_pose: Rolls belly-up and floats, legs in the air; a vulture lands on him.
+
+  - slug: hyena-matriarch
+    name: The Hyena Matriarch
+    species: spotted hyena
+    title: Queen of the Bone Yard
+    archetype: mid-range footsies with a chain and hook; her cackles build meter fast
+    new_character: true
+    health: 1000
+    height_px: 112
+    walk_speed: medium
+    home_stage: bone-yard
+    rival: storm-crow
+    look: >-
+      New for the game, from the hyena tribe faction (slavers, BRAINSTORM-ROUND-3.md). A big, broad
+      spotted hyena chief in scavenged leather armor stitched from many hides, a heavy iron chain with a
+      meat hook wound around one arm, bone trophies, a ragged mane, and a grin too wide for her face.
+    voice: Laughing, mocking, a little unhinged; everything is a joke until she stops laughing.
+    punch_buttons: "LP = backhand; HP = chain-wrapped fist"
+    specials:
+      - name: Hook Lash
+        input: QCF+P
+        triangle: strike
+        speed: medium
+        damage: 80
+        description: The chain and hook lash out straight (LP) or rising at an angle (HP). Long reach; the hook can be chained into Drag.
+      - name: Drag
+        input: "QCF+P during Hook Lash hit"
+        triangle: grab
+        speed: fast
+        damage: 70
+        description: She yanks the hooked opponent to her feet for a follow-up.
+      - name: Cackle
+        input: dd+K
+        triangle: guard
+        speed: slow
+        damage: 0
+        description: She throws her head back and laughs, building a full third of a bar. She's open the whole time.
+      - name: Scavenger's Rush
+        input: QCB+K
+        triangle: strike
+        speed: fast
+        damage: 2 x 45
+        description: A low, loping charge that ends in a snapping bite. Goes under high strikes.
+      - name: Bone Crusher
+        input: HCB+P
+        triangle: grab
+        speed: fast
+        damage: 150
+        description: A command grab. She bites the shoulder and shakes like a hyena on a carcass.
+    supers:
+      - level: 1
+        name: Chain Gang
+        input: QCF QCF+P
+        damage: 270
+        description: She whirls the chain overhead in a wide circle that hits on both sides, then smashes it down.
+      - level: 3
+        name: Last Laugh
+        input: QCB QCB+HP
+        damage: 420
+        description: >-
+          Eye-strip cutaway of her grin. The pack's cackling swells from every side; silhouettes of
+          hyenas pour across the screen and chains snap tight around the victim. She steps in with the
+          hook, and the laughing stops at once.
+    intro: Drags a chain across the ground in a long, slow scrape, then grins.
+    taunt: Cackles uncontrollably and slaps her knee (the Cackle animation, without the meter).
+    victory_poses:
+      - Hangs the loser's hat on her bone trophy rack.
+      - Laughs so hard she has to sit down, wiping tears.
+    perfect_pose: Doesn't laugh. Just stares, and that's worse.
+    ko_pose: Topples backward with one last hiccuping giggle; the chain clatters over her.
+    vs_siblings_win: She reaches, and the sister bolts with her brother. The Matriarch laughs and lets them run, "for now".
+
+  - slug: old-komodo
+    name: Old Komodo
+    species: komodo dragon
+    title: The Thing Under the Sand
+    archetype: slow armored tank -- venom over time, sand burrow, huge reach
+    new_character: true
+    health: 1150
+    height_px: 150
+    walk_speed: very slow
+    home_stage: the-dunes
+    rival: river-croc
+    look: >-
+      Silas's character (BRAINSTORM-ROUND-3.md, held for a later book): an ancient, enormous komodo
+      dragon, part-anthropomorphic. He rears up to fight with a gnarled walking staff. Grey-brown
+      scaled hide like cracked desert stone, a dewlap, a long forked tongue, cloudy old eyes, sand
+      pouring off him. Not a villain, but hungry. Never a koala: the image models kept drawing "a giant
+      enraged koala", so prompts lead with "komodo dragon, giant monitor lizard, scaled reptile".
+    voice: Old, slow, and sleepily menacing; he speaks of everyone as food without malice.
+    punch_buttons: "LP = staff jab; HP = staff overhead smash"
+    passives:
+      - Super armor on every heavy attack.
+      - Venom. His bite moves poison; poison drains 3 health a second for 6 seconds, and its damage is
+        always red (recoverable) health.
+    specials:
+      - name: Venom Bite
+        input: QCF+P
+        triangle: strike
+        speed: medium
+        damage: 60
+        fling_vs_siblings: true
+        description: A lunging bite that poisons.
+      - name: Sand Burrow
+        input: dd+K
+        triangle: guard
+        speed: slow
+        damage: 0
+        description: He sinks into the sand. With LK he resurfaces where he went down, with HK under the opponent. Strike-invulnerable underground.
+      - name: Rise from the Dune
+        input: "any P while burrowed"
+        triangle: strike
+        speed: fast
+        damage: 130
+        description: He erupts from below, mouth open, and launches (Silas's key image of him).
+      - name: Tongue Taste
+        input: QCB+P
+        triangle: grab
+        speed: medium
+        damage: 40
+        description: A long forked-tongue lash that grabs at range and pulls the opponent into a staff smash.
+      - name: Old Staff
+        input: DP+P
+        triangle: strike
+        speed: medium
+        damage: 110
+        description: "A rising staff swing. Slow, but armored: the anti-air."
+    supers:
+      - level: 1
+        name: Slow Hunger
+        input: QCF QCF+P
+        damage: 260
+        description: A walking chain of three armored bites that each poison. He can't be stopped by a light hit.
+      - level: 3
+        name: Feeding Time
+        input: QCB QCB+HP
+        damage: 450
+        fling_vs_siblings: true
+        description: >-
+          Eye-strip cutaway of one cloudy old eye blinking sideways. The dune swallows the opponent; he
+          rises beneath them with his mouth open, bites, and chews slowly while staring at the camera,
+          then spits them out covered in sand.
+    intro: The dune shifts. A long tongue tastes the air, then the whole bulk shoulders up out of the sand.
+    taunt: Flicks his tongue toward the opponent, tasting them.
+    victory_poses:
+      - Settles down and closes his eyes in the sun, licking his lips.
+      - Leans on his staff and yawns, enormously.
+    perfect_pose: Falls asleep standing up.
+    ko_pose: Slumps down into the sand with a long, rumbling sigh; the dune half buries him.
+
+boss:
+  slug: thing-behind-the-door
+  name: The Thing Behind the Door
+  playable: false
+  stage: the-thin-place
+  look: >-
+    The convent's tentacled horror (BOOK-ONE.md cast): dark and cosmic, half through a portal, never
+    fully seen. A torn door of starry dark hangs over the stage; one vast eye, tentacles and teeth come
+    through it.
+  phases:
+    - "Phase 1: tentacles slam and sweep from the portal; the eye fires a beam you dodge through."
+    - "Phase 2 (below 50%): the door widens; grasping tentacles try command grabs; minor portals open at the floor."
+    - "Phase 3 (below 20%): the eye comes close enough to hit directly; hits to the eye do double."
+  defeat: The door slams shut, and the stage drops back to an ordinary moonlit desert.
+  lines: "No words. The tentacles leave diegetic marks only; the screen shows the challenger's line alone."
