@@ -57,18 +57,37 @@ The nodes are `TextEncodeAceStepAudio1.5`, `EmptyAceStep1.5LatentAudio` and `Sav
 ComfyUI lives at `D:\comfy\comfy-fast` (a venv install; `COMFY_DIR` in
 `ops/home-server/ecosystem.config.js`), not `D:\ComfyUI`. Update it while the queue is quiet, and
 write down the current commit first so a broken custom node can be rolled back with
-`git checkout <sha>`:
+`git checkout <sha>`.
+
+This checkout follows release **tags**, not a branch. `git pull` therefore fails with
+"You are not currently on a branch". Fetch the tags and check out the newest release
+instead (ComfyUI v0.39.0 has the ACE-Step 1.5 nodes; 2026-10-06 run):
 
 ```powershell
 cd D:\comfy\comfy-fast
-git rev-parse --short HEAD
-git pull --ff-only
+git rev-parse --short HEAD          # rollback point
+git describe --tags                 # the release you are on
+git fetch --tags
+git checkout v0.39.0                # or a newer release tag
 .\venv\Scripts\python.exe -m pip install -r requirements.txt
 cd D:\code\conductor
 git pull --ff-only
 cd ops\home-server
-pm2 restart ecosystem.config.js --only comfyui --update-env
+```
+
+Then restart ComfyUI with **stop, clear the port, start**, not `pm2 restart`. On 2026-10-06
+a plain restart left the old ComfyUI process holding port 8188 outside pm2's tracking.
+`pm2 pid comfyui` read `0`, and the new copy crash-looped on "Port 8188 is already in use":
+
+```powershell
+pm2 stop comfyui
+Get-NetTCPConnection -LocalPort 8188 -State Listen -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force }
+Start-Sleep -Seconds 3
+pm2 start ecosystem.config.js --only comfyui --update-env
 Start-Sleep -Seconds 90
+pm2 pid comfyui                                                                    # a real PID, not 0
+Get-NetTCPConnection -LocalPort 8188 -State Listen | Select-Object OwningProcess   # the same PID
+(curl.exe -s http://127.0.0.1:8188/system_stats | ConvertFrom-Json).system.comfyui_version
 foreach ($n in 'TextEncodeAceStepAudio1.5','EmptyAceStep1.5LatentAudio','SaveAudioAdvanced') { curl.exe -s -o NUL -w "$n %{http_code}`n" "http://127.0.0.1:8188/object_info/$n" }   # expect 200 three times
 ```
 
@@ -89,11 +108,13 @@ Until this restart, song jobs sit in PENDING. The kind_robots claim gate holds t
 
 ## 5. Run one 30-second song
 
-From any shell with an admin `KR_API_TOKEN` set:
+From any shell with an admin `KR_API_TOKEN` set. On Ferngrotto, `python` on the PATH is the
+Microsoft Store stub ("not a valid application for this OS platform"), so call the real
+interpreter, the same one the relay uses. The script needs only the standard library:
 
 ```powershell
 cd D:\code\conductor
-python scripts\build_music_video.py --title "t-012 smoke test" --pitch "A small brass robot hums to the tomatoes on a rooftop garden at dusk" --duration 30 --bpm 110 --genre "lofi synth pop" --mood "warm" --vocal female
+C:\Python312\python.exe scripts\build_music_video.py --title "t-012 smoke test" --pitch "A small brass robot hums to the tomatoes on a rooftop garden at dusk" --duration 30 --bpm 110 --genre "lofi synth pop" --mood "warm" --vocal female
 ```
 
 - It creates the video, writes lyrics, queues the song, and plans and queues the scene stills. It then exits with code 3 while the renders run. Note the `--video-id` it prints.
