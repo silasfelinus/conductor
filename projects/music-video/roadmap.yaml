@@ -245,8 +245,8 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Timeline editor: waveform, beat grid and scene markers"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-004, t-020]
@@ -258,6 +258,9 @@ tasks:
       by section length and are user-adjustable; forced alignment is out of scope. Timeline math is
       pure code in utils/ with tsx verify tests; the audio is fetched as a blob because private
       rows need a Bearer header.
+    claimed_by: 2026-10-06T0750Z-music-video-t007-k3x
+    claimed_at: '2026-10-06T00:48:52Z'
+    updated: '2026-10-06T00:48:52Z'
 
   - id: t-008
     milestone: m2
