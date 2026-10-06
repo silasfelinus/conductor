@@ -335,10 +335,16 @@ tasks:
     was only the offline webhook fixture, so the merged-PR drift flag is a false positive;
     the live TEST-mode matrix (see GATE CLEARED 2026-09-30, cs_test_ safety rule) is still
     unrun. Re-armed to ready for an equipped session.
+
+    DRIFT FIX 2026-10-06 (session 013tS8vg): renamed implementation_pr -> partial_pr.
+    kind_robots#2492 was the offline fixture half only, and as implementation_pr it made
+    check_pr_merged_drift re-flag this task every sweep (false positive reconciled
+    2026-10-05, again 2026-10-06). Set implementation_pr to the PR that runs the live TEST-
+    mode matrix when it lands. The 2026-10-06T04:45Z claim is live and was left untouched.
   owner: worker
   claimed_by: 20261006T-kind-economy-t011-a1
   claimed_at: '2026-10-06T04:45:47Z'
-  implementation_pr: 'silasfelinus/kind_robots#2492'
+  partial_pr: 'silasfelinus/kind_robots#2492'
   gate_reason: secrets
   gate_rechecked: '2026-09-30'
 
