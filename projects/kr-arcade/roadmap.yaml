@@ -250,14 +250,14 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Build the next arcade cabinet (recurring game factory)"
-    status: claimed
+    status: ready
     owner: reviewer
     passes: 0
     stakes: reversible
     recurring: true
     depends_on:
       - t-008
-    note: >
+    note: >-
       STANDING CONTRACT (Silas, 2026-10-06): this is fallback work, picked when no finite task
       is claimable, the same lane as animation-manager's screensavers. Each cycle ships one new
       cabinet, or one slice of a `large` one. Take the first games.yaml entry with status
@@ -270,9 +270,13 @@ tasks:
       `building` between cycles. If the queue is empty, write one new arcade pitch with `target:
       kr-arcade` into the next daily docket instead. Re-arm to ready with a RAN <date> line
       after each cycle.
+
+      RAN 2026-10-06: Sink Suds (Bubbles riff) shipped in silasfelinus/kind_robots#3270; title
+      art requested. Next in games.yaml: pipe-pals.
     claimed_by: 2026-10-06T1240Z-kr-arcade-t009-sink-suds
     claimed_at: '2026-10-06T12:37:03Z'
-    updated: '2026-10-06T12:37:03Z'
+    updated: '2026-10-06T12:50:09Z'
+    implementation_pr: 'silasfelinus/kind_robots#3270'
 
   - id: t-010
     milestone: m2
