@@ -565,7 +565,8 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 ### kr-arcade  (software)
 **Direction:** A free, in-browser Kind Robots arcade on its own Arcade tab in the Projects channel: a classic-cabinet front end with attract-mode splash screens, three-initial leaderboards, and original Kind Robots games that riff on golden-age classics (maze chase, twin-stick rescue, single-screen platformer, sink-bubble, lumberjack, flap-and-joust, pinball, co-op dungeon), each with rising difficulty. No LLM at runtime; all art pre-generated.
 **Notes:**
-- (your notes)
+- Silas, 2026-10-06: "our ghosts and goblin game should also be zuzu themed" -- the Ghosts 'n Goblins
+  riff is Zuzu: Ghost Trail (games.yaml `zuzu-ghost-trail`), in Zuzu's comic canon, not the logo style.
 
 ### zuzu-lair  (software)
 **Direction:** A Dragon's Lair-style quick-time adventure starring Zuzu the koala ronin, built from branching animations: press the right button in time to reach the next scene, miss and watch a death scene, playable free in the browser on Kind Robots.

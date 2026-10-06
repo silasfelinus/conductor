@@ -1,6 +1,8 @@
 # kr-arcade CHANGELOG
 
 ## 2026-10-06
+- Bolt Knight (the Ghosts 'n Goblins riff) re-themed as **Zuzu: Ghost Trail**, slug `zuzu-ghost-trail` (Silas:
+  "our ghosts and goblin game should also be zuzu themed"): Zuzu in his comic canon on a haunted weird-west trail.
 - Project scaffolded via intake.py
 - Design brief, game catalog (games.yaml, 8 games from Silas's favourites) and roadmap written from
   Silas's in-session brief. Launch = Arcade tab + cabinet front end + leaderboard + Battery Maze and
