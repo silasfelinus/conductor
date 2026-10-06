@@ -1,7 +1,0 @@
-version: 1
-project: animation-manager
-task: t-026
-operation: review
-updated: '2026-10-06T16:52:00Z'
-note: >-
-  Day-four live verification failed again: scheduled daily-digest run 37492604886 succeeded and produced direct-send artifact 11425494450, but the delivered 2026-10-06 Gmail message still contains sendibt2.com redirects and no direct pitch-inbox href. The external condition-watch guard ran at 2026-10-06T16:47:57Z but sent no corrected message. Recovered today's exact htmlContent from artifact 11425494450, resent through Gmail as message 1a1121f369bfb7ac, and read back its MIME: direct kindrobots.org/api/conductor/pitch-inbox present, sendibt2.com absent. Reconfigured the guard from conditional hourly detection to an exact daily 09:10 America/Los_Angeles proactive Gmail delivery using the canonical direct-send artifact, with delivered-MIME verification required.

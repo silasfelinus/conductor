@@ -641,7 +641,7 @@ tasks:
     milestone: m5
     title: "Keep Daily Dream digest links direct instead of Brevo-tracked redirects"
     status: review
-    updated: '2026-10-05T20:36:00Z'
+    updated: '2026-10-06T16:52:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -664,6 +664,8 @@ tasks:
       Merged silasfelinus/conductor#5567 as 81eb4ba2 after exact-head Worker PR CI 37239804413, Security Audit 37239804439, Worker PR handoff 37239804420, Process task events 37239804411, and CodeQL 37239803211 all completed successfully. The sender no longer claims Brevo X-Mailin tracking headers protect hrefs; every digest now includes a provider-independent conductor-direct-links.html attachment containing the original pre-Brevo destinations plus an in-message fallback notice. The 2026-10-04 digest was separately resent through Gmail as message 1a108fba6ceb5c68 and its delivered MIME contains the direct Kind Robots pitch-inbox URL with no sendibt2.com redirect.
 
       Third live failure investigated. Today's delivered digest still has Brevo tracking redirects in primary actions even though the attachment contains the correct originals. The external guard ran once, sent no resend, then became disabled. This branch makes the workflow publish a dedicated direct-send artifact before the Brevo step so the repaired guard can consume the rendered payload deterministically. Today's digest was resent through Gmail and verified to contain the direct pitch-inbox URL with no tracking redirect.
+
+      Day-four live verification failed again: scheduled daily-digest run 37492604886 succeeded and produced direct-send artifact 11425494450, but the delivered 2026-10-06 Gmail message still contains sendibt2.com redirects and no direct pitch-inbox href. The external condition-watch guard ran at 2026-10-06T16:47:57Z but sent no corrected message. Recovered today's exact htmlContent from artifact 11425494450, resent through Gmail as message 1a1121f369bfb7ac, and read back its MIME: direct kindrobots.org/api/conductor/pitch-inbox present, sendibt2.com absent. Reconfigured the guard from conditional hourly detection to an exact daily 09:10 America/Los_Angeles proactive Gmail delivery using the canonical direct-send artifact, with delivered-MIME verification required.
     claimed_by: 2026-10-05T203300Z-animation-manager-t026-direct-delivery-6f31
     claimed_at: '2026-10-05T20:33:00Z'
     owner: worker
