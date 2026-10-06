@@ -18,6 +18,14 @@ Path: `hollywood-recast-2/`
 
 Classic movie-scene grammar remixed through gender, body, age, presentation, and cultural casting. First seed: **Highland Heatwave**, a large bearded jolly Scotsman in formal Highland dress receiving a glamorous windblown city-grate reveal. Parked means no roadmap claim, generation queue, modeler request, publishing, or POD work until Silas activates it.
 
+## Independent
+
+### Fractured Fairy Tales
+
+Path: `fairy-tales/`
+
+Public-domain fairy tales with the power, glamour, or menace flipped: the Hansel and Gretel witch as an adored candy-factory showwoman, the bears as a police procedural. Silas works this set by hand while the coloring-book project stays paused. It has no roadmap task, art-job queue, or catalog entry, and agents preserve it without scheduling it. Seeds and file slots are in `fairy-tales/concept-seeds.yaml`.
+
 ## Set rule
 
 A set may have its own briefs, manifests, approved masters, and concept seeds, but it remains part of the existing coloring-book project rather than becoming a second app or independent source of task truth.
