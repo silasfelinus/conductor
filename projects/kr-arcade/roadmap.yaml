@@ -314,3 +314,23 @@ tasks:
       (/play/arcade?game=butterfly-blaster). Title art request queued via conductor#5638.
     updated: '2026-10-06T11:51:05Z'
     implementation_pr: 'silasfelinus/kind_robots#3265'
+
+  - id: t-011
+    milestone: m3
+    title: "Global leaderboard for every game: hall of fame + guaranteed uploads"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    approved_by_human: true
+    note: >-
+      Silas, 2026-10-06 (verbatim): "global leaderboard is a high priority for all games". The
+      per-game boards were already global and live (ArcadeScore + /api/arcade/scores, checked in
+      production). DONE in kind_robots#3277: GET /api/arcade/leaderboard (hall of fame for every
+      registered cabinet: top 3, today's best, scores on the board; new cabinets join automatically),
+      a Hall of Fame section in the hall, and a pending-upload queue so a score that fails to post
+      retries until it reaches the global board instead of staying in one browser. The per-game
+      checklist in DESIGN-BRIEF.md now requires every cabinet to post through the arcade store.
+      zuzu-lair/t-009 reuses the same board.
+    updated: '2026-10-06T19:00:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#3277'

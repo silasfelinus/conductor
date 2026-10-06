@@ -52,8 +52,11 @@ works on a phone in portrait with touch controls, on a tablet, and on a desktop 
 2. **Attract mode** loop: title, a short scripted demo, how-to-play card, high scores, back to title.
 3. **Incremental challenge**: waves or levels that ramp speed, enemy count and enemy types on a curve
    declared in the game module, plus a bonus round or intermission every few levels where it fits.
-4. **Leaderboard**: top-10 all-time and today, with three-initial entry on game over. Signed-in players
-   are linked automatically.
+4. **Global leaderboard** (Silas, 2026-10-06: "global leaderboard is a high priority for all games"):
+   top-10 all-time and today, worldwide, with three-initial entry on game over. Scores go through the
+   arcade store (`submitScore`), never a board of the game's own, so they land in the shared
+   `ArcadeScore` table and the hall of fame picks the cabinet up automatically from `ARCADE_GAMES`.
+   Signed-in players are linked automatically.
 5. **Controls** for keyboard, gamepad (Gamepad API) and touch (on-screen stick and buttons sized for
    thumbs). Pause on blur.
 6. **Sound**: WebAudio chiptune bleeps and a jingle, muted by default until the first interaction, with a
@@ -81,6 +84,10 @@ Built once in t-004 so each later game is one module plus one registry row:
   `maxPlausibleScore`, with a per-IP rate limit.
 - It is a hobby leaderboard: the checks are plausibility checks, not anti-cheat. If the API is down, the
   board falls back to the browser's own local scores.
+- **Global by default (t-011, kind_robots#3277):** `GET /api/arcade/leaderboard` is the hall of fame for
+  every registered cabinet in one call (top 3, today's best, scores on the board), shown in the hall. A
+  score that cannot reach the server waits in a per-browser pending queue and uploads on the next visit,
+  on reconnect, or after the next successful submit; scores the server rejects are never retried.
 
 ## Game catalog
 
