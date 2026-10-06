@@ -16,3 +16,5 @@
   (Smash TV), Bolt Knight (Ghosts 'n Goblins), Station Sweep (Xenophobe). Dragon's Lair became its own
   project, zuzu-lair.
 - Touch play locks the cabinet to the viewport (silasfelinus/kind_robots#3276).
+- Global leaderboard for every game (t-011, silasfelinus/kind_robots#3277): hall of fame API and hall
+  section, pending-upload queue so no score stays stuck in one browser; per-game checklist updated.
