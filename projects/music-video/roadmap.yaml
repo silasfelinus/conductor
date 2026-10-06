@@ -868,3 +868,18 @@ tasks:
       t-015, Zuzu intro for t-029) that a contract test checks against the doc normalizer, the
       banned terms and the prompt rules the render route enforces. A session holding an admin
       KR_API_TOKEN can POST the same body; without one, the page button is the one-click path.
+
+  - id: t-034
+    milestone: m2
+    title: "Add a text-overlay step to the music-video exporter so the Zuzu title card can show its title"
+    status: ready
+    owner: worker
+    passes: 0
+    stakes: reversible
+    depends_on: [t-033]
+    updated: '2026-10-06T08:00:00Z'
+    note: >-
+      Kaizen from the t-033 review (2026-10-06). The Zuzu intro spec ends on a dust-and-kasa still
+      because Krea and Arthemy stills trip the lettering rules and the exporter has no text overlay.
+      Draw the title in the exporter (canvas text over the end still) so no model has to render
+      lettering. Implementation in kind_robots.
