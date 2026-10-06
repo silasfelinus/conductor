@@ -250,7 +250,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Build the next arcade cabinet (recurring game factory)"
-    status: claimed
+    status: ready
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -306,10 +306,18 @@ tasks:
       multiball probe seeds 1-5 (always reaches 3 balls, always settles back to one),
       Playwright renders. kind-pinball is now shipped (all four slices). Next cycle takes the
       first queued games.yaml entry: gloom-invaders (Space Invaders riff).
+
+      RAN 2026-10-06: Gloom Invaders (Space Invaders riff) shipped in
+      silasfelinus/kind_robots#3283 -- 5x9 gloom-cloud formation with a speeding march, one-
+      beam-at-a-time sunbeams, four erodible rainbow umbrellas, a mystery-bonus rainbow kite,
+      waves that start lower and march faster, and a garden that grows a flower per wave.
+      Title art requested as kr-arcade-games-gloom-invaders-title. Verified: test:arcade-
+      engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6, Playwright phone/desktop. Next
+      cycle takes the next queued games.yaml entry: hedgehog-crossing (Frogger riff).
     claimed_by: 2026-10-06T2315Z-kr-arcade-t009-gloom-invaders
     claimed_at: '2026-10-06T23:13:59Z'
-    updated: '2026-10-06T23:13:59Z'
-    implementation_pr: 'silasfelinus/kind_robots#3282'
+    updated: '2026-10-06T23:16:59Z'
+    implementation_pr: 'silasfelinus/kind_robots#3283'
 
   - id: t-010
     milestone: m2
