@@ -250,7 +250,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Build the next arcade cabinet (recurring game factory)"
-    status: claimed
+    status: ready
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -331,10 +331,18 @@ tasks:
       test:arcade-engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6 (rounds 3-5 after
       teaching AI riders to dodge the closing wall), Playwright phone/desktop. Next cycle
       takes the next queued games.yaml entry: burrow-buddy (Dig Dug riff).
+
+      RAN 2026-10-06: Burrow Buddy (Dig Dug riff) shipped in silasfelinus/kind_robots#3287 --
+      tile tunnels with break-through digging, four-puff bubble pump with aim-in-place,
+      ghosting grubs, fire-breathing beetles from garden 2, falling turnips with group bonus,
+      veggie bonus after two turnips, last grub flees. Title art requested as kr-arcade-games-
+      burrow-buddy-title. Verified: test:arcade-engine, eslint/prettier, vue-tsc, pilot probe
+      seeds 1-6 (gardens 3-5), forced turnip-crush test, Playwright phone/desktop. Next cycle
+      takes the next queued games.yaml entry: repair-rampage (Rampage riff).
     claimed_by: 2026-10-06T2350Z-kr-arcade-t009-burrow-buddy
     claimed_at: '2026-10-06T23:42:57Z'
-    updated: '2026-10-06T23:42:57Z'
-    implementation_pr: 'silasfelinus/kind_robots#3285'
+    updated: '2026-10-06T23:48:20Z'
+    implementation_pr: 'silasfelinus/kind_robots#3287'
 
   - id: t-010
     milestone: m2
