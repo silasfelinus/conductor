@@ -697,12 +697,12 @@ tasks:
   - id: t-027
     milestone: m2
     title: "Admin page controls: settings, song (generate or upload) and pipeline steps (kind_robots)"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-013, t-025]
-    updated: '2026-10-04T02:29:27Z'
+    updated: '2026-10-06T05:15:49Z'
     note: >-
       /admin/music-video is a shell: every pipeline step is API-only and a new video gets the
       defaults (120 s, 16:9). Extract components/music-video/* (settings panel, song panel, pipeline
@@ -710,6 +710,8 @@ tasks:
       owns every call; auto-fit grids, no viewport breakpoints in shared components.
 
       t-013 and t-025 merged; ready.
+    claimed_by: 20261006T0515-claude-mv-t027-0h0c4r
+    claimed_at: '2026-10-06T05:15:49Z'
 
   - id: t-028
     milestone: m2
