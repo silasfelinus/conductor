@@ -5,21 +5,22 @@
 
 - the ACE-Step song workflow and the `acestep` enqueue engine (kind_robots t-010, #3193);
 - relay audio support (conductor t-011, #5506);
-- the `audio` tier in `sync-comfy-models` (kind_robots t-012, #3198).
+- the `audio` tier in `sync-comfy-models` (kind_robots t-012, #3198). This is only for restocking a box from the share; see step 2.
 
 **Time:**
 - About 10 minutes of hands-on work.
-- The ~9.5 GiB model download on top of that.
+- The ~9.5 GiB model download, straight to Ferngrotto's local disk, on top of that.
 - The first song takes a cold model load (30-90 s) plus generation.
 
 The model choice, node names and file list come from [`ace-step-spike.md`](ace-step-spike.md). Anything that file marks **UNVERIFIED** gets confirmed in step 5 below.
 
-## 1. Stage the four ACE-Step files on the share
+## 1. Download the four ACE-Step files onto Ferngrotto's local disk
 
-The sync script only copies from the share to local disk, so the files have to land on Alexandria first. They come from `Comfy-Org/ace_step_1.5_ComfyUI_files` on Hugging Face (MIT licence) and go into the same category folders the other models use:
+ComfyUI loads models from local disk, so download them straight to where it reads them. Don't go through the Alexandria share first. The files come from `Comfy-Org/ace_step_1.5_ComfyUI_files` on Hugging Face (MIT licence). They go into `unet`, `clip` and `vae`. Those are the folders that the workflow's `UNETLoader`, `DualCLIPLoader` and `VAELoader` nodes read from, and the same layout `sync-comfy-models` uses:
 
 ```powershell
-cd Z:\ai\models
+cd D:\comfy\comfy-fast\models
+New-Item -ItemType Directory -Force unet, clip, vae | Out-Null
 $base = "https://huggingface.co/Comfy-Org/ace_step_1.5_ComfyUI_files/resolve/main/split_files"
 curl.exe -L -o unet\acestep_v1.5_turbo.safetensors "$base/diffusion_models/acestep_v1.5_turbo.safetensors"
 curl.exe -L -o clip\qwen_0.6b_ace15.safetensors  "$base/text_encoders/qwen_0.6b_ace15.safetensors"
@@ -37,13 +38,16 @@ Expected sizes:
 | `qwen_1.7b_ace15.safetensors` | 3,708,523,360 |
 | `ace_1.5_vae.safetensors` | 337,431,732 |
 
-## 2. Copy them to local disk
+A file that is much smaller than its expected size is usually a saved Hugging Face error page. Delete it and run that `curl.exe` line again.
+
+## 2. (Optional) Archive a copy on Alexandria
+
+You can skip this step for t-012. Do it only if you want the share to keep its full set of models, so that a rebuilt or second render box can restock with `sync-comfy-models -Tier audio`. That script only copies share to local, so the upload has to be done by hand:
 
 ```powershell
-cd D:\code\kind_robots
-git pull --ff-only
-.\scripts\sync-comfy-models.ps1 -Local D:\comfy\comfy-fast\models -Tier audio -DryRun   # expect 4 COPY rows, ~9.5 GiB
-.\scripts\sync-comfy-models.ps1 -Local D:\comfy\comfy-fast\models -Tier audio -Yes
+robocopy D:\comfy\comfy-fast\models\unet Z:\ai\models\unet acestep_v1.5_turbo.safetensors
+robocopy D:\comfy\comfy-fast\models\clip Z:\ai\models\clip qwen_0.6b_ace15.safetensors qwen_1.7b_ace15.safetensors
+robocopy D:\comfy\comfy-fast\models\vae  Z:\ai\models\vae  ace_1.5_vae.safetensors
 ```
 
 ## 3. Make sure ComfyUI has the ACE-Step 1.5 nodes

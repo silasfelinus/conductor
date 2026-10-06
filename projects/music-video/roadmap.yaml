@@ -418,6 +418,11 @@ tasks:
       song ArtImage plays. Record peak VRAM, wall-clock, mp3 size and whether
       SaveAudioAdvanced accepted the encoding, then set done + approved_by_human: true
       (unblocks t-015).
+
+      2026-10-06: Silas asked why the models go through Alexandria when ComfyUI runs from
+      local disk anyway. The runbook now has steps (1) and (2) curl the four files straight
+      into D:\comfy\comfy-fast\models\{unet,clip,vae}. Archiving them on the share is now
+      an optional robocopy step. Steps (3)-(5) are unchanged.
     claimed_by: 20261002T2340-claude-mv-t012-01D4se
     claimed_at: '2026-10-02T23:41:12Z'
     updated: '2026-10-02T23:43:28Z'
