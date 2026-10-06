@@ -42,7 +42,9 @@ creative commitment. Immediately below it, animation-manager/t-007 gets one Paci
 attempt to ship a genuinely new screensaver before ordinary backlog pickup. Review and broken-work
 recovery still outrank it. Its other research/maintenance tasks remain continuous fallback work.
 
-**Continuous fallback order:** animation-manager, then dream-cycle. Outside the explicit
+**Continuous fallback order:** animation-manager, then kr-arcade (the arcade game factory,
+kr-arcade/t-009 -- Silas 2026-10-06: "make this when you don't have another task"), then
+dream-cycle. Outside the explicit
 animation-manager/t-007 daily-commitment exception above, finite `active` work always outranks
 `continuous` programs; dream-cycle remains the final idle fallback.
 **Never idle (2026-09-29):** a run never ends on "nothing to do". When queues are empty, walk
