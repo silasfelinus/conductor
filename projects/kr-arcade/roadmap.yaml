@@ -130,11 +130,11 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Leaderboard: additive ArcadeScore model + scores API + initials entry"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    note: >
+    note: >-
       kind_robots. Additive Prisma model ArcadeScore (id, gameSlug, initials char(3), score,
       level, userId optional FK, createdAt; index gameSlug+score desc). GET
       /api/arcade/scores/[game]?range=all|today (top 10) and POST /api/arcade/scores with
@@ -143,6 +143,13 @@ tasks:
       fallback board when the API fails. The migration must be CREATE TABLE / CREATE INDEX only
       -- Reviewer audits migration.sql line by line before merge (AGENTS.md Reviewer CAN). If
       the registry from t-004 has not landed yet, stub the slug list for the two launch games.
+
+      DONE 2026-10-06 in kind_robots#3265: ArcadeScore model + additive migration
+      20261006120000_add_arcade_scores (schema-affecting; live after the normal Alexandria
+      deploy), GET /api/arcade/scores/:game, POST /api/arcade/scores, store-owned per-browser
+      fallback board.
+    updated: '2026-10-06T11:51:02Z'
+    implementation_pr: 'silasfelinus/kind_robots#3265'
 
   - id: t-006
     milestone: m2
