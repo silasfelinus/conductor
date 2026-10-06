@@ -111,13 +111,17 @@ riffs borrow *mechanics* from the classics, never names, sprites, sounds or leve
 | 12 | Burrow Buddy | Dig Dug | medium | factory |
 | 13 | Repair Rampage | Rampage | medium | factory |
 | 14 | Prize Show Panic | Smash TV | medium | factory |
-| 15 | Bolt Knight | Ghosts 'n Goblins | large (sliced) | factory |
+| 15 | Zuzu: Ghost Trail (was Bolt Knight) | Ghosts 'n Goblins | large (sliced) | factory |
 | 16 | Station Sweep | Xenophobe | large (sliced) | factory |
 
 Rows 9-16 are Silas's second batch (2026-10-06). The table numbers them in the order he asked; the
 build order is `games.yaml`, where the quick builds (Gloom Invaders, Hedgehog Crossing, Ribbon Riders,
 Burrow Buddy, Repair Rampage) queue ahead of Kindness Gauntlet, and Prize Show Panic follows it because
 it reuses Gauntlet's twin-stick input. Dragon's Lair is its own project (`zuzu-lair`), not a cabinet.
+
+**Zuzu: Ghost Trail** (Silas, 2026-10-06: *"our ghosts and goblin game should also be zuzu themed"*) is the
+one cabinet that leaves the Kind Robots logo style. It stars Zuzu in his comic canon look and tone, on a haunted
+weird-west trail. The fighting game is `zuzu-showdown`, a separate project.
 
 The launch games are the most achievable of the set (Butterfly Blaster, Silas's own addition, builds first): both use a fixed screen, simple collision and
 well-understood enemy AI. Together they prove the engine kit for both maze/tile games and free-movement

@@ -1,7 +1,7 @@
 # Zuzu Showdown — Design Brief
 
 date: 2026-10-06
-status: v1 — building; scope confirmation (t-002) runs in parallel as a soft gate
+status: v1.1 — building; roster and Siblings rules confirmed by Silas (2026-10-06), four questions open (t-002, soft)
 author: Claude (from Silas's request, 2026-10-06)
 working title: **Zuzu Showdown** (rename freely; the slug stays `zuzu-showdown`)
 
@@ -340,16 +340,23 @@ Monitor, an Otter Nun, the Storm Crow faction's grunts), and tag or assist mecha
 - Every bannedTerm applies to every prompt and every line.
 - Making the game publicly listed waits for Silas's verdict (t-025). The art itself is pre-approved.
 
+## Decisions (Silas, 2026-10-06, answering t-002)
+
+> Love the two additions, tentacle monster is the perfect boss. Sibling rules are great.
+
+1. **The roster is locked at eight:** the six he named plus the Hyena Matriarch and Old Komodo.
+2. **The boss is The Thing Behind the Door**, the convent's tentacled horror.
+3. **The Siblings rules stand:** the toddler is never hit, they flee on a KO instead of dying, and the
+   grabs that bite, stab or roll play a fling variant against them.
+
 ## Open questions for Silas (t-002, soft — building continues meanwhile)
 
-1. **The other two fighters:** the Hyena Matriarch and Old Komodo? Alternates: the Great Monitor, an Otter
-   Nun, or the Thing as a playable fighter.
-2. **The Siblings rules:** the toddler is never hit, and the siblings KO by fleeing, never dying. Right
-   call?
-3. **The Coyote's stump:** he fights post-croc (knife lashed to the stump, left-hand shooting that misses,
+The drafts stand if there is no answer by 2026-10-13 (the default-recommendation rule).
+
+1. **The Coyote's stump:** he fights post-croc (knife lashed to the stump, left-hand shooting that misses,
    the later-book gags), which shows chapter 1's outcome. Fine, or should he have both hands?
-4. **KO tone:** cartoonish slapstick KOs with no fatalities, matching zuzu-lair's level. More, less, or
+2. **KO tone:** cartoonish slapstick KOs with no fatalities, matching zuzu-lair's level. More, less, or
    Mortal Kombat-style finishers?
-5. **The name:** "Zuzu Showdown" is a working title. Alternatives: *Hollow Bell Brawl*, *Dust & Steel*,
+3. **The name:** "Zuzu Showdown" is a working title. Alternatives: *Hollow Bell Brawl*, *Dust & Steel*,
    *Wasteland Kumite*.
-6. **Online play** stays a later phase (the engine is built deterministic so it can be added). Agreed?
+4. **Online play** stays a later phase (the engine is built deterministic so it can be added). Agreed?

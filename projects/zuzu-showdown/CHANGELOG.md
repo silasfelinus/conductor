@@ -1,6 +1,8 @@
 # zuzu-showdown CHANGELOG
 
 ## 2026-10-06
+- Silas confirmed the roster (the Hyena Matriarch and Old Komodo), the tentacle boss and the Siblings
+  rules (t-002, in session). Four questions stay open (Coyote's stump, KO tone, name, online play).
 - Project scaffolded via intake.py (Silas: a Street Fighter / Skullgirls / MvC-style fighting game in the
   world of Zuzu: Koala Assassin, "possibly our largest yet").
 - DESIGN-BRIEF.md v1: controls (LP/HP/LK/HK + Dodge, Easy Specials), motion inputs, the strike/grab/guard
