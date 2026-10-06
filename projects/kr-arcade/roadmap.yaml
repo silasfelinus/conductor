@@ -250,7 +250,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Build the next arcade cabinet (recurring game factory)"
-    status: claimed
+    status: ready
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -339,10 +339,20 @@ tasks:
       burrow-buddy-title. Verified: test:arcade-engine, eslint/prettier, vue-tsc, pilot probe
       seeds 1-6 (gardens 3-5), forced turnip-crush test, Playwright phone/desktop. Next cycle
       takes the next queued games.yaml entry: repair-rampage (Rampage riff).
+
+      RAN 2026-10-07: Repair Rampage (Rampage riff, turned around) shipped in
+      silasfelinus/kind_robots#3288 -- climb-and-fix towers, kitten rescues, flashbulb drones
+      that dazzle Bolt off the wall, towers whose hold time scales with broken windows and
+      that wobble then fall, a charge meter that drains (game over at zero). Shipped single-
+      player; the hook's two-players-on-one-device needs a second cabinet input stream
+      (follow-up). Title art requested as kr-arcade-games-repair-rampage-title. Verified:
+      test:arcade-engine, eslint/prettier, vue-tsc, pilot probe seeds 1-6 (city 6-12 after
+      rebalancing an initially endless game), Playwright phone/desktop. Next cycle takes the
+      next queued games.yaml entry: kindness-gauntlet (Gauntlet riff).
     claimed_by: 2026-10-07T0000Z-kr-arcade-t009-repair-rampage
     claimed_at: '2026-10-06T23:56:10Z'
-    updated: '2026-10-06T23:56:10Z'
-    implementation_pr: 'silasfelinus/kind_robots#3287'
+    updated: '2026-10-06T23:58:39Z'
+    implementation_pr: 'silasfelinus/kind_robots#3288'
 
   - id: t-010
     milestone: m2
