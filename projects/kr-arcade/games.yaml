@@ -1,0 +1,108 @@
+# Kind Robots Arcade -- game queue. The build order is the list order.
+#
+# status: queued | building | shipped
+# source: catalog (Silas's 2026-10-06 favourites) or pitches/<stem>.md (an approved
+#         daily pitch with `target: kr-arcade` -- insert those ahead of the first
+#         queued catalog game).
+# Riff on MECHANICS only: never the original's name, characters, sprites, sounds or
+# level layouts. Generated art carries no lettering; titles are drawn in the pixel font.
+games:
+  - slug: battery-maze
+    title: Battery Maze
+    riffs_on: Pac-Man (1980)
+    status: queued
+    phase: launch
+    task: t-006
+    effort: medium
+    source: catalog
+    hook: >-
+      A small kind robot gathers energy sparks through a maze while four glitch gremlins with their own
+      personalities hunt it, and a power cell turns them sleepy-blue so a bump reboots them home.
+    challenge: Faster gremlins and shorter power time each level; bonus item per level; intermission every 3 levels.
+
+  - slug: rescue-rally
+    title: Rescue Rally
+    riffs_on: "Robotron: 2084 (1982)"
+    status: queued
+    phase: launch
+    task: t-007
+    effort: medium
+    source: catalog
+    hook: >-
+      A twin-stick arena where a kind robot fires a rebooting beam at glitched drones and rescues
+      wandering humans, pets and little bots for a growing multiplier.
+    challenge: Each wave adds count and new types (spawners, seekers, slow tanks); rescue streak multiplier.
+
+  - slug: sink-suds
+    title: Sink Suds
+    riffs_on: Bubbles (Williams, 1982) -- "that bubble in the sink game"
+    status: queued
+    phase: factory
+    effort: small
+    source: catalog
+    hook: >-
+      You are a soap bubble in a robot kitchen sink, growing by scrubbing up crumbs and grease while
+      dodging rust mites and scouring pads, until you are big enough to sail down the drain.
+    challenge: More and faster pests per sink; a bigger bubble is a bigger target; bonus for a spotless sink.
+
+  - slug: pipe-pals
+    title: Pipe Pals
+    riffs_on: Mario Bros. (1983)
+    status: queued
+    phase: factory
+    effort: medium
+    source: catalog
+    hook: >-
+      The two androids from the Kind Robots logo fix a plumbing system by bumping platforms from below
+      to flip grumpy critters out of the pipes, solo or same-device co-op.
+    challenge: New critter types per phase, icy platforms, a bonus coin round every 4 phases.
+
+  - slug: timber-bot
+    title: Timber Bot
+    riffs_on: Timber (Bally Midway, 1984) -- "the logging game"
+    status: queued
+    phase: factory
+    effort: small
+    source: catalog
+    hook: >-
+      A lumberjack robot clears storm-fallen deadwood against the clock, dodging dropping branches and
+      grumpy bees, and earns a bonus for planting a sapling in every stump.
+    challenge: Shorter clock and faster hazards each level; replanting bonus; a cleanup bonus stage.
+
+  - slug: butterfly-joust
+    title: Butterfly Joust
+    riffs_on: Joust (1982)
+    status: queued
+    phase: factory
+    effort: medium
+    source: catalog
+    hook: >-
+      Riders on rainbow butterflies flap to climb and bonk rival riders from above, who curl into cocoons
+      you scoop up before they hatch, while a storm cloud hunts anyone who dawdles.
+    challenge: Rival tiers get smarter each wave; platforms crumble; a storm-cloud wave on a timer.
+
+  - slug: kind-pinball
+    title: Kind Pinball
+    riffs_on: classic electromechanical / solid-state pinball
+    status: queued
+    phase: factory
+    effort: large
+    source: catalog
+    hook: >-
+      A single Kind Robots pinball table with flippers, pop bumpers, a ramp and an AMI multiball mode where
+      mosquito nets fly to the villages lit around the playfield.
+    challenge: Mode ladder and jackpots that escalate; ball save shrinks; extra ball at a score threshold.
+    slices: [table + flippers + physics, bumpers/targets/scoring, ramp + modes, multiball]
+
+  - slug: kindness-gauntlet
+    title: Kindness Gauntlet
+    riffs_on: Gauntlet II (1986)
+    status: queued
+    phase: factory
+    effort: large
+    source: catalog
+    hook: >-
+      A top-down co-op dungeon crawl for up to four same-device players, each a different android (fixer,
+      healer, runner, maker), shutting down glitch generators and rescuing trapped bots floor by floor.
+    challenge: Deeper floors bring more generators, locked doors, and an ever-draining battery you refill with snacks.
+    slices: [one floor + one class, all four classes, generators + keys, floor progression]

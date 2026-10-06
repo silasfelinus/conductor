@@ -219,3 +219,13 @@ def test_existing_project_dir_aborts(tmp_path, monkeypatch):
         assert False, "expected SystemExit"
     except SystemExit as e:
         assert e.code == 1
+
+
+def test_repos_description_with_colon_stays_valid_yaml(tmp_path, monkeypatch):
+    # kind-lantern-garden's "Idle-style night-garden toy: tap to ..." made repos.yaml unparseable
+    # (2026-10-06), which broke the issue bridge.
+    root, _ = _fixture_repo(tmp_path, monkeypatch)
+    desc = 'Night toy: tap "lanterns", #1 pick'
+    intake.main(["lantern-toy", "--kind", "software", "--desc", desc])
+    entries = yaml.safe_load((root / "repos.yaml").read_text())["repos"]
+    assert next(e for e in entries if e["slug"] == "lantern-toy")["description"] == desc

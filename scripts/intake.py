@@ -24,6 +24,7 @@ Updates when present:
 """
 
 import argparse
+import json
 import re
 import sys
 import yaml
@@ -171,7 +172,9 @@ def register_repo(slug: str, repo: str | None, kind: str, description: str) -> N
         f"  - slug: {slug}\n"
         f"    repo: {repo if repo else 'null'}\n"
         f"    kind: {kind}\n"
-        f"    description: {description}\n"
+        # JSON string syntax is valid YAML: a raw description with ": " in it (kind-lantern-garden's
+        # "Idle-style night-garden toy: tap to ...") made repos.yaml unparseable and broke the issue bridge.
+        f"    description: {json.dumps(description, ensure_ascii=False)}\n"
     )
 
     # `repos: []` is an empty FLOW sequence — appending a block item under it is

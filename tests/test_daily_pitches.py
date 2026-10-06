@@ -195,3 +195,54 @@ def test_decide_records_a_pitch_with_no_status_line(repo):
     assert dp.read_status(repo / "pitches" / "2026-08-11-hand-written.md") == "approved"
     targeted = (repo / "pitches" / "2026-08-12-targeted.md").read_text()
     assert targeted.startswith("# T\nproject-target: kind-robots\nstatus: rejected\n")
+
+
+def arcade_repo(repo):
+    arcade = repo / "projects" / "kr-arcade"
+    arcade.mkdir(parents=True)
+    (arcade / "games.yaml").write_text(yaml.safe_dump({"games": [{"slug": "battery-maze", "status": "queued"}]}))
+    return arcade
+
+
+def test_arcade_pitch_targets_the_arcade_and_skips_intake(repo, capsys):
+    arcade_repo(repo)
+    pitches = copy.deepcopy(GOOD)
+    pitches[0]["target"] = "kr-arcade"
+    ready(repo, pitches=pitches)
+    assert "project-target: kr-arcade" in (repo / "pitches" / "2026-10-02-idea-0.md").read_text()
+    dp.cmd_decide("2026-10-02-idea-0", "approved")
+    capsys.readouterr()
+    dp.cmd_approved()
+    out = capsys.readouterr().out
+    assert "projects/kr-arcade/games.yaml" in out and "intake.py idea-0" not in out
+
+
+def test_arcade_pitch_drops_off_approved_once_queued(repo, capsys):
+    arcade = arcade_repo(repo)
+    pitches = copy.deepcopy(GOOD)
+    pitches[0]["target"] = "kr-arcade"
+    ready(repo, pitches=pitches)
+    dp.cmd_decide("2026-10-02-idea-0", "approved")
+    (arcade / "games.yaml").write_text(yaml.safe_dump({"games": [{"slug": "idea-0", "status": "queued"}]}))
+    capsys.readouterr()
+    dp.cmd_approved()
+    assert "idea-0" not in capsys.readouterr().out
+
+
+def test_unknown_target_and_too_many_targets_rejected(repo):
+    arcade_repo(repo)
+    pitches = copy.deepcopy(GOOD)
+    pitches[0]["target"] = "no-such-project"
+    for p in pitches[1:4]:
+        p["target"] = "kr-arcade"
+    write(repo, "2026-10-02", pitches)
+    errs = " ".join(errors_for())
+    assert "not an existing project" in errs and "at most 2" in errs
+
+
+def test_queued_arcade_game_slug_cannot_be_pitched_again(repo):
+    arcade_repo(repo)
+    pitches = copy.deepcopy(GOOD)
+    pitches[0]["slug"] = "battery-maze"
+    write(repo, "2026-10-02", pitches)
+    assert any("already exists" in e for e in errors_for())

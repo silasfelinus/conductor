@@ -313,6 +313,8 @@ def _pitch_row(pitch: dict[str, Any], links_for, fallback_url: str) -> str:
     free = ("no LLM needed" if pitch.get("llm_at_runtime") == "none"
             else f"LLM: {esc(pitch.get('llm_at_runtime'))}")
     badge = "" if decision == "pending" else f' <span style="color:#64748b;font-size:12px">[{esc(decision)}]</span>'
+    if pitch.get("target") == "kr-arcade":  # a cabinet for the Kind Robots Arcade, not a new project
+        badge = ' <span style="color:#7e22ce;font-size:12px">🕹️ Arcade cabinet</span>' + badge
     buttons = ""
     if decision == "pending":
         links = links_for(str(pitch.get("stem") or ""))
