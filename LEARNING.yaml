@@ -17258,3 +17258,44 @@ records:
   lesson: 'For vertically stacked scroll shells that do not require flex behavior, native block/grid flow
     is a safer fallback than flex plus a separate direction utility: losing the direction utility turns
     flex into a horizontal row, while losing grid leaves block flow vertical.'
+- date: '2026-10-06'
+  project: kr-arcade
+  task: t-003
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'The kind_robots shell header matches tabs by exact route, so a real sub-page of a tab
+    (e.g. /play/arcade/<game>) falls back to the Dashboard header; serve tab sub-views via a query
+    parameter on the tab route, and keep presentation fields in kind_robots, not project-overrides.yaml.'
+- date: '2026-10-06'
+  project: kr-arcade
+  task: t-004
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Keep arcade game metadata free of canvas code and lazy-load the game modules, so the scores
+    API can import the same registry to validate submissions and headless tests can run every game.'
+- date: '2026-10-06'
+  project: kr-arcade
+  task: t-005
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'With no local MariaDB (and prisma migrate diff blocked by the secret-guard hook), kind_robots
+    CI "Replay migrations on MariaDB" is what proves a hand-written additive migration applies.'
+- date: '2026-10-06'
+  project: kr-arcade
+  task: t-010
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'Krea 2 cabinet/marquee art came back lettering-free when prompts filled every surface with
+    concrete painted imagery (rainbows, faces, starfields) instead of naming or banning text.'
