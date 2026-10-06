@@ -697,12 +697,12 @@ tasks:
   - id: t-027
     milestone: m2
     title: "Admin page controls: settings, song (generate or upload) and pipeline steps (kind_robots)"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-013, t-025]
-    updated: '2026-10-06T05:15:49Z'
+    updated: '2026-10-06T05:43:21Z'
     note: >-
       /admin/music-video is a shell: every pipeline step is API-only and a new video gets the
       defaults (120 s, 16:9). Extract components/music-video/* (settings panel, song panel, pipeline
@@ -710,8 +710,22 @@ tasks:
       owns every call; auto-fit grids, no viewport breakpoints in shared components.
 
       t-013 and t-025 merged; ready.
+
+      2026-10-06 DONE: kind_robots#3247. /admin/music-video now drives the pipeline:
+      musicVideoStore gained writeLyrics/generateSong/planScenes/writeScenePrompts/renderScene
+      s/animateScenes/setSceneImage/uploadSceneImage/syncStatus (opening a video syncs
+      finished renders into the doc; polls every 20 s while a render is queued). Extracted
+      components/music-video/* pipeline bar, song panel (player + upload), scene grid (status,
+      re-render, Replace image, hero-shot ticks, Animate N hero shots with preset picker) and
+      settings panel; auto-fit grids, no viewport breakpoints. New POST /api/music-
+      video/[id]/scenes/image. server/utils/artImageBytes reads offloaded stills, fixing
+      clips.post.ts which read imageData only and failed every offloaded still with 'The scene
+      still has no image data'. Same session: kind_robots#3245 (admin tab dropped by a YAML
+      colon), #3246 (exporter/waveform song via the file route; the browser export had been
+      silent). Not yet exercised live from the page; Silas to try it on MusicVideo 1.
     claimed_by: 20261006T0515-claude-mv-t027-0h0c4r
     claimed_at: '2026-10-06T05:15:49Z'
+    implementation_pr: 'silasfelinus/kind_robots#3247'
 
   - id: t-028
     milestone: m2
