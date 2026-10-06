@@ -401,11 +401,11 @@ tasks:
   - id: t-012
     milestone: m2
     title: "Stage ACE-Step on the share, deploy the relay, run a 30 second song"
-    status: needs-human
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    gate_human: true
+    gate_human: false
     gate_reason: physical-access
     depends_on: [t-010, t-011]
     note: >-
@@ -434,10 +434,24 @@ tasks:
       local disk anyway. The runbook now has steps (1) and (2) curl the four files straight
       into D:\comfy\comfy-fast\models\{unet,clip,vae}. Archiving them on the share is now
       an optional robocopy step. Steps (3)-(5) are unchanged.
+
+      2026-10-06 DONE (Silas confirmed the song plays). First real render of the audio lane:
+      ArtJob 34086, ACE-Step 1.5 turbo, 30 s song generated in 0:40 on Ferngrotto (warm-ish;
+      first job after the ComfyUI restart), mp3 930 KB. SaveAudioAdvanced accepted the
+      format/quality encoding as sent, so the SaveAudioMP3 fallback is not needed. Peak VRAM
+      not measured (nvidia-smi -l does not keep a peak). Models were downloaded straight to
+      D:\comfy\comfy-fast\models, not via Alexandria. Setup snags, now in the runbook: ComfyUI
+      was a detached checkout at v0.35.1 so git pull failed (moved to tag v0.39.0); a plain
+      pm2 restart orphaned the old ComfyUI on 8188 and the new one crash-looped (fixed with
+      pm2 stop, kill the port owner, pm2 start); 'python' on PATH is the Store stub (use
+      C:\Python312\python.exe). UI follow-ups shipped: song playback on the ArtJob card
+      (kind_robots#3242) and the art card, which also now loads private renders through the
+      queue's loader (kind_robots#3243).
     claimed_by: 20261002T2340-claude-mv-t012-01D4se
     claimed_at: '2026-10-02T23:41:12Z'
-    updated: '2026-10-02T23:43:28Z'
+    updated: '2026-10-06T02:53:24Z'
     implementation_pr: 'silasfelinus/kind_robots#3198'
+    approved_by_human: true
 
   - id: t-014
     milestone: m2
