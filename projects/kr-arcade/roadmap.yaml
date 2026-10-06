@@ -58,11 +58,11 @@ tasks:
   - id: t-002
     milestone: m1
     title: "Curate the cabinet and launch art once it renders"
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    note: >
+    note: >-
       The scaffolding session queued the launch art as `requests:` in projects/art-prompts.yaml
       (ids prefixed `kr-arcade-`), targeting kind_robots public/images/arcade/. auto-art-generate.yml
       drains them on push and every 6 hours. This task: confirm each request reached status done
@@ -71,6 +71,13 @@ tasks:
       collage. If a request is still pending, close as a no-op re-arm rather than waiting.
       Generated art is pre-approved (AGENTS.md "Project art"). Also check the project
       icon/card/hero in projects/images/.
+
+      DONE 2026-10-06: reviewed all launch art on kindrobots.org (hall backdrop, marquee,
+      bezel, control panel, side art, attract splash, three game title pieces) -- on-palette,
+      lettering-free, logo androids recognisable. Re-staged two: butterfly-blaster-title (AMI
+      rendered as the Android mascot lookalike) and cabinet-hero (garbled marquee lettering;
+      image not yet used by the UI). Future cabinets' art is curated inside t-009 cycles.
+    updated: '2026-10-06T12:14:00Z'
 
   - id: t-003
     milestone: m2
