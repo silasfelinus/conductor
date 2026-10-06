@@ -15,6 +15,11 @@ notes_from_silas: |
   characters, create first and last animations that then branch into success and death animations. Will
   need sound, optional on screen button and flash assist, etc."
 
+  2026-10-06, answering t-002, verbatim: "Yes on dry gulch. Dragons lair had pretty cartoonishly
+  violent deaths, I'd aim for that level. We have 2-5 second clips that we can generate, so that should
+  be the sweet spot for what a death animation runs to. Yes on arcade cabinet, yes on growing each
+  chapter."
+
 milestones:
   - id: m1
     title: "SHAPE -- design brief and chapter 1 scene graph"
@@ -68,11 +73,12 @@ tasks:
     passes: 0
     stakes: reversible
     note: >-
-      Draft v1, 2026-10-06: 13 nodes -- opening, four moments (bridge: up, scorpion: right, rockslide:
+      Draft v1, 2026-10-06: 14 nodes -- opening, four moments (bridge: up, scorpion: right, rockslide:
       left, bandit: sword), a success and a death clip for each, closing. Each node has a house-lane
       keyframe prompt ({ZUZU} = the canonical string), a prose motion prompt, clip length, and for moments
-      the Classic input window. Success and death clips start from their moment's last frame. Revise it
-      in place if Silas redirects at t-002.
+      the Classic input window. Success and death clips start from their moment's last frame. Silas
+      confirmed the story (t-002, 2026-10-06); v2 rewrote the four deaths to his "cartoonishly violent"
+      level and holds every clip to 2-5 s.
 
   - id: t-004
     milestone: m2
@@ -142,7 +148,7 @@ tasks:
 
   - id: t-007
     milestone: m2
-    title: "Chapter 1 clips (LTX image-to-video, about 13 clips)"
+    title: "Chapter 1 clips (LTX image-to-video, 14 clips of 2-5 s)"
     status: waiting
     owner: null
     passes: 0
@@ -182,7 +188,8 @@ tasks:
     note: >-
       Reuse the arcade ArcadeScore board under game slug zuzu-lair. Add it to the server plausibility
       check (a maxPlausibleScore entry the API reads) and keep the per-browser fallback board. Add a
-      special tile in the Arcade hall linking to /play/zuzu-lair, unless Silas says otherwise at t-002.
+      special cabinet tile in the Arcade hall linking to /play/zuzu-lair (Silas: "yes on arcade
+      cabinet", t-002).
 
   - id: t-010
     milestone: m3
@@ -227,12 +234,18 @@ tasks:
 
   - id: t-013
     milestone: m3
-    title: "Chapter 2 outline"
+    title: "Build the next chapter (recurring chapter factory)"
     status: waiting
     owner: null
     passes: 0
     stakes: reversible
+    recurring: true
     depends_on: [t-010]
     note: >-
-      Only if Silas wants the game to grow chapter by chapter (t-002 open question 4): write
-      chapters/02-<slug>/SCENES.yaml the same way, reusing the player and pipeline unchanged.
+      STANDING CONTRACT (Silas, 2026-10-06: "yes on growing each chapter"): once chapter 1 is accepted,
+      each cycle grows the game by one chapter. Write chapters/<nn>-<slug>/SCENES.yaml the same way:
+      an opening, four or five moments with success and cartoon-violent death branches, a closing,
+      every clip 2-5 s, Zuzu canon and bannedTerms. Then render its keyframes and clips through the
+      same pipeline, wire it into the player's chapter select, and put it in front of Silas for a
+      verdict before it goes public (same gates as t-010/t-011). Re-arm to ready with a RAN <date>
+      line after each cycle.
