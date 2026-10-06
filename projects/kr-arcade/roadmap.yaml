@@ -250,7 +250,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Build the next arcade cabinet (recurring game factory)"
-    status: claimed
+    status: ready
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -296,10 +296,20 @@ tasks:
       game, no stalls), ramp exit reaches the left flipper on every seed, Playwright
       phone/desktop. kind-pinball stays building; next cycle builds slice 4 (AMI multiball),
       then the queue resumes at gloom-invaders.
+
+      RAN 2026-10-06: Kind Pinball slice 4 (AMI multiball) in silasfelinus/kind_robots#3282 --
+      the third village lights multiball at the saucer; three balls with a 10 s multiball
+      save; ramp/saucer shots fly mosquito nets to the villages (20,000 x level), five nets
+      pay the AMI JACKPOT (150,000 x level). Table refactored to a ball list (flippers swing
+      once per substep). Also wrapped the cabinet's empty-board message for narrow screens.
+      Verified: test:arcade-engine, eslint/prettier, vue-tsc, pilot probe seeds 1-8, forced-
+      multiball probe seeds 1-5 (always reaches 3 balls, always settles back to one),
+      Playwright renders. kind-pinball is now shipped (all four slices). Next cycle takes the
+      first queued games.yaml entry: gloom-invaders (Space Invaders riff).
     claimed_by: 2026-10-06T2300Z-kr-arcade-t009-pinball-slice4
     claimed_at: '2026-10-06T22:57:32Z'
-    updated: '2026-10-06T22:57:32Z'
-    implementation_pr: 'silasfelinus/kind_robots#3280'
+    updated: '2026-10-06T23:05:28Z'
+    implementation_pr: 'silasfelinus/kind_robots#3282'
 
   - id: t-010
     milestone: m2
