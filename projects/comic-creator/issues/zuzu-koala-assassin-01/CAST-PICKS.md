@@ -383,3 +383,6 @@ holster is still on his left hip, while the other angles have it on his right. S
   dripping blood, and his gloved left hand is whole. It is fresh, before Zuzu bandages it, so it suits the croc scene.
   242427 has the stump on his left, so it works mirrored. 242429 and 242430 kept both hands. Kontext wraps 242428's stump
   for the bandaged look (r17-coyote-bandage-*, ArtJobs 34097–34098). Sent to Silas as cast sheet 20.
+- **Bandage:** the unmasked bandage edits on 242428 regrew a gloved hand under the wrap (242431, 242432). Tight masked
+  edits around the sleeve end follow (r18-coyote-bandage-masked-*). If they fail too, the open stump (242428) carries
+  the croc scene and the bandaged look gets a native render with "bandaged stump" in the prompt.
