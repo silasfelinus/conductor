@@ -1,0 +1,11 @@
+version: 1
+project: kind-robots
+task: t-132
+operation: done
+owner: worker
+session: 2026-10-06T113100Z-kind-robots-t-132-artqueue-layout-9c4e
+updated: '2026-10-06T11:42:00Z'
+note: >-
+  Merged silasfelinus/kind_robots#3266 at 995190fbaa03f68902b7711f4062cf8622d14727 after all 30 PR workflows completed successfully. The ArtJob queue scroll owner now uses fail-safe grid/block stacking instead of flex plus a separate direction utility, and its layout contract runs in Entity Art Manager CI. Production is self-hosted and this merge is not deployed until the next Unraid Force Update.
+learning: >-
+  For vertically stacked scroll shells that do not require flex behavior, native block/grid flow is a safer fallback than flex plus a separate direction utility: losing the direction utility turns flex into a horizontal row, while losing grid leaves block flow vertical.
