@@ -2209,5 +2209,18 @@ tasks:
   claimed_by: 20261006T103400Z-kind-robots-t131-nav-a4d9
   claimed_at: '2026-10-06T10:34:00Z'
 
+- id: t-132
+  milestone: m6
+  title: 'Fix intermittent ArtJob queue controls rendering beside cards'
+  status: ready
+  gate_human: false
+  stakes: reversible
+  owner: worker
+  passes: 0
+  updated: '2026-10-06T11:29:00Z'
+  note: |-
+    Silas-directed 2026-10-06 from kind_robots issue #3264: the ArtJob queue intermittently renders its status/health/paging controls as a narrow left column beside the cards instead of stacking those controls above the card grid. The screenshot geometry matches the queue browser's direct children laying out horizontally even though the current source declares a column flex direction. Trace the runtime/layout cause, make the vertical structure deterministic, and add regression coverage that exercises the actual layout contract.
+
+
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
