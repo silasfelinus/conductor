@@ -181,22 +181,27 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Launch game 2: Rescue Rally (twin-stick arena, riff on Robotron)"
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
     depends_on:
       - t-004
-    note: >
+    note: >-
       See games.yaml rescue-rally. Move with one stick and fire a kindness beam with the other.
       The beam reboots glitched drones into friendly ones. Rescue wandering humans, pets and
       little bots for a rising multiplier. Waves add spawners, seekers and slow tanks on the
       difficulty curve. Touch gets dual virtual sticks. Keyboard is WASD to move and arrows to
       fire. Must meet the per-game checklist in DESIGN-BRIEF.md. Title-card art:
       /images/arcade/games/rescue-rally-title.webp.
+
+      DONE 2026-10-06: kind_robots#3269 merged (all checks green). Rescue Rally live at
+      /play/arcade?game=rescue-rally after the next deploy. One-stick adaptation: move aims, A
+      fires, hold B strafes; curves tuned so a perfect-aim pilot dies on wave 4-5.
     claimed_by: 2026-10-06T1205Z-kr-arcade-t007
     claimed_at: '2026-10-06T12:02:11Z'
-    updated: '2026-10-06T12:02:11Z'
+    updated: '2026-10-06T12:12:39Z'
+    implementation_pr: 'silasfelinus/kind_robots#3269'
 
   - id: t-008
     milestone: m2
