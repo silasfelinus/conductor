@@ -6,20 +6,23 @@ Zuzu intro (t-029) and a Kind Robots theme song (t-015). Both run from `/admin/m
 
 ## How to start one
 
-1. **Create music video** with the title and pitch below.
-2. In **Settings**, enter every field below and press **Save settings**. Leave a field blank to let
-   **Fill in from pitch** (or Produce itself) propose it. The full style bibles here are kept as
-   written.
-3. Optional: in **Animation presets**, press **Add starter presets** and save. Scenes set to
-   *Animated clip* can then apply them.
-4. Press **Produce** and keep the tab open. It fills the brief, writes lyrics (skipped when
-   instrumental), makes the song, plans the scenes, writes their prompts, renders the stills,
-   marks and animates the hero shots, then exports and attaches the final cut. Each clip can take
-   30 to 90 minutes on the 12 GB card, so a run with five hero shots is an overnight job. The page
-   resumes after a reload.
-5. You can change anything on a scene card while it runs: the image (re-render, upload, or **Use
-   art** with an ArtImage id), pan direction, animated or not, or the animation prompt. Press
+1. On `/admin/music-video`, press **New video**, choose the video under **Create from spec**, and
+   press **Create from spec** (kind_robots t-033). That creates it fully set up: pitch, settings,
+   style bible, banned terms, lyrics, scenes on the beat grid with prompts, and the hero shots
+   with their animation prompts. Nothing needs pasting. The specs live in kind_robots
+   `utils/musicVideoSpecs.ts`. A session with an admin `KR_API_TOKEN` can do the same with
+   `POST /api/music-video/import` and `{"specKey": "kind-robots-theme"}` or
+   `{"specKey": "zuzu-intro"}`.
+2. Press **Produce** and keep the tab open. Because the brief, lyrics, scenes and prompts are
+   already there, it goes straight to the song, then the stills, then the hero clips, then the
+   export and attach. Each clip can take 30 to 90 minutes on the 12 GB card, so a run with five
+   hero shots is an overnight job. The page resumes after a reload.
+3. While it runs, you can change anything on a scene card: edit the lyric lines under the image,
+   replace the image (upload, a recent art job, or an ArtImage id), toggle **Hero** and edit its
+   animation prompt, or set a different checkpoint and LoRAs for that one still. Press
    **Re-export final cut** when you are done.
+
+The tables below are the reference for what each spec contains.
 
 ---
 
@@ -50,7 +53,9 @@ assembled from scraps, and a final heroic group pose under a rainbow-lit sky. Ki
 superpower. The chorus is a shouted gang-vocal hook about being kind robots.
 ```
 
-**Style bible** (long on purpose, so the brief keeps it as written)
+**Style bible** (the spec uses a reworded version: the Krea scene-prompt rules refuse negations
+and lettering words, so "No text, logos or lettering" and "silhouette" would have blocked every
+still)
 
 ```
 An original homage to 80s and early-90s Saturday-morning action cartoons. Thick black ink
@@ -112,6 +117,7 @@ mood stays serious.
 
 ## Running these from a session instead
 
-A cloud session can drive the same API with `scripts/build_music_video.py` if the environment has
-an admin `KR_API_TOKEN` set as an environment variable. Add it in the environment's settings, then
-start a new session, which picks it up. The front-end flow above needs none of that.
+A cloud session can create either video with `POST /api/music-video/import` (step 1 above) if the
+environment has an admin `KR_API_TOKEN` set as an environment variable. Add it in the
+environment's settings, then start a new session, which picks it up. The front-end flow above
+needs none of that.
