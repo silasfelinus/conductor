@@ -154,13 +154,13 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Launch game 1: Battery Maze (maze chase, riff on Pac-Man)"
-    status: waiting
-    owner: null
+    status: review
+    owner: reviewer
     passes: 0
     stakes: reversible
     depends_on:
       - t-004
-    note: >
+    note: >-
       See games.yaml battery-maze. A small kind robot gathers energy sparks through a maze while
       four glitch gremlins with distinct personalities (chaser, ambusher, patroller, wanderer)
       hunt it; a power cell turns them sleepy-blue and bumping one "reboots" it back to the
@@ -168,6 +168,12 @@ tasks:
       intermission every few levels. Original maze layouts. Must meet the per-game checklist in
       DESIGN-BRIEF.md (splash, attract, ramp, leaderboard, touch/gamepad/keyboard, sound,
       cabinet frame). Title-card art: /images/arcade/games/battery-maze-title.webp.
+
+      REVIEW 2026-10-06: Battery Maze built in kind_robots#3268 (maze chase, four gremlin
+      personalities, power cells, bonus items, coffee-break intermission, maze-integrity
+      test).
+    updated: '2026-10-06T11:51:09Z'
+    implementation_pr: 'silasfelinus/kind_robots#3268'
 
   - id: t-007
     milestone: m2
