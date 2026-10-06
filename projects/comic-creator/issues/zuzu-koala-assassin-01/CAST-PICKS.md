@@ -379,3 +379,7 @@ holster is still on his left hip, while the other angles have it on his right. S
   amputation. Round 15 (ART-ROUND-15.yaml, ArtJobs 34093–34096) renders the row-A front natively with the stump in
   the prompt. The skeletal ribs came from round 12's own prompt ("starving, gaunt, ribs showing"), so that phrase is now
   "thin, sickly, underfed" and ribs are negated. VIDEO-GUARDRAILS.md records it.
+- **Round 15 results:** 242428 is the first clean stump. His right arm, on the eyepatch side, ends at the sleeve,
+  dripping blood, and his gloved left hand is whole. It is fresh, before Zuzu bandages it, so it suits the croc scene.
+  242427 has the stump on his left, so it works mirrored. 242429 and 242430 kept both hands. Kontext wraps 242428's stump
+  for the bandaged look (r17-coyote-bandage-*, ArtJobs 34097–34098). Sent to Silas as cast sheet 20.
