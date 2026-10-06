@@ -43,7 +43,7 @@ tasks:
   - id: t-002
     milestone: m1
     title: "Confirm scope with Silas"
-    status: needs-human
+    status: done
     owner: null
     passes: 0
     stakes: reversible
@@ -52,11 +52,16 @@ tasks:
     # parallel and blocks nothing. Without soft_gate, audit_human_gates.py
     # classifies it `[hard]` and it reports to Silas as a blocker every session.
     soft_gate: true
-    note: >
+    note: >-
       FOR SILAS: soft checkpoint, nothing is blocked on it. Read DESIGN-BRIEF.md
       and confirm or redirect the scope. Development is already underway; if you
       redirect, agents fold your correction into the roadmap and keep moving.
       (Outward-facing/irreversible steps still hard-gate as always.)
+
+      Scope confirmed: Silas said these are approved (2026-10-06 session). Closed by gate-
+      triage.
+    updated: '2026-10-06T10:49:28Z'
+    approved_by_human: true
 
   - id: t-003
     milestone: m2

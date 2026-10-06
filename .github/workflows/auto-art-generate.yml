@@ -54,9 +54,16 @@ jobs:
       KR_BASE_URL: https://kindrobots.org
 
     steps:
+      # ref: main, not the triggering commit. Runs are serialized by the
+      # concurrency group, but a push-triggered run otherwise checks out the
+      # commit that queued it -- a snapshot missing the last_art_job_id the
+      # previous run just committed -- and re-submits the same request.
+      # 2026-10-06: two art requests a minute apart rendered kind-trivia-trail's
+      # hero and card twice each (ArtJobs 34105/34106, 34107/34108).
       - uses: actions/checkout@v4
         with:
           path: conductor
+          ref: main
           fetch-depth: 0
 
       - uses: actions/setup-python@v5

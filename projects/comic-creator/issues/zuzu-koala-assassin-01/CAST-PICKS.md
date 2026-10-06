@@ -390,3 +390,25 @@ holster is still on his left hip, while the other angles have it on his right. S
   no hand. The tight mask on the stump end alone (-t: 242433, 242434) changed nothing. 242436 grew a furry mitt.
   The coyote's two stump states are 242428 (fresh, the croc scene) and 242435 (bandaged by Zuzu). Sent as cast
   sheet 21.
+
+## Silas's picks (2026-10-06): *"b for abbess (much better), 242399. yes recolor."* Holster: right hip.
+
+**Zuzu is locked:**
+
+| Angle | Pick |
+| --- | --- |
+| Front | 242395 |
+| 3/4 front left | 242397 |
+| Profile left | 242193 |
+| 3/4 back left | 242113 |
+| Back | 242117 |
+| 3/4 back right | 242120 |
+| Profile right | 242193 mirrored |
+| 3/4 front right | 242399 |
+
+- **The abbess, variant B.** The other six angles render with B's tags plus `(warm brown fur:1.2)`, and mauve is
+  negated (ART-ROUND-14.yaml, ArtJobs 34185–34196).
+- **The coyote:**
+  - Kontext recolours 242212's grey face to tan (r19, ArtJobs 34183–34184).
+  - The fronts are re-rendered with the holster on his right hip (ART-ROUND-16.yaml, ArtJobs 34197–34206): 6 seeds with
+    the stump, 4 with both hands.
