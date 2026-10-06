@@ -1,7 +1,7 @@
 # Pitch: Robot Weather Forecast Dice
 date: 2026-10-06
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 A tabletop-style toy where rolling three illustrated dice builds a silly robot weather report, such as a drizzle of spare screws over a windy robot parade, using stitched pre-written phrases and a matching pre-made scene card. Rolls can be saved or shared as a card.
