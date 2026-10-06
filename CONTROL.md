@@ -566,3 +566,11 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
 **Direction:** A free, in-browser Kind Robots arcade on its own Arcade tab in the Projects channel: a classic-cabinet front end with attract-mode splash screens, three-initial leaderboards, and original Kind Robots games that riff on golden-age classics (maze chase, twin-stick rescue, single-screen platformer, sink-bubble, lumberjack, flap-and-joust, pinball, co-op dungeon), each with rising difficulty. No LLM at runtime; all art pre-generated.
 **Notes:**
 - (your notes)
+
+### zuzu-lair  (software)
+**Direction:** A Dragon's Lair-style quick-time adventure starring Zuzu the koala ronin, built from branching animations: press the right button in time to reach the next scene, miss and watch a death scene, playable free in the browser on Kind Robots.
+**Notes:**
+- Silas, 2026-10-06: its own project (not an arcade cabinet). Quick-time system; the animation creator
+  (comic-film / music-video pipeline) makes the branches. Stars Zuzu (canon and guardrails:
+  projects/comic-creator/issues/zuzu-koala-assassin-01/). First and last animations, with success and
+  death branches between. Needs sound, optional on-screen buttons and flash assist.
