@@ -8,3 +8,6 @@
   branches, closing) with house-lane keyframe prompts, motion prompts and input windows.
 - Roadmap: QTE engine, player, keyframes, clips, sound, leaderboard; Silas's verdict and publish gates.
 - Project icon/card/hero prompts rewritten to the Krea rules.
+- Silas answered t-002: keep "The Dry Gulch"; deaths cartoonishly violent at the original's level;
+  every clip 2-5 s; yes to an Arcade hall cabinet tile; grow it chapter by chapter (t-013 is now a
+  recurring chapter factory). SCENES.yaml v2 rewrites the four deaths (the graph has 14 nodes).

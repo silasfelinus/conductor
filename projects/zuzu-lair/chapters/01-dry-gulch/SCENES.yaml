@@ -8,7 +8,7 @@
 #   - closing: the end (score, initials)
 #
 # Times are seconds into the node's own clip. `window` is the Classic window; Assist adds
-# `assist_extra` seconds to its end. `expect` is one of up, down, left, right, sword (the A button).
+# `assist_extra` seconds to its end. `seconds` is always 2-5 (the clip generator's sweet spot). `expect` is one of up, down, left, right, sword (the A button).
 #
 # Prompts follow projects/comic-creator/issues/zuzu-koala-assassin-01/VIDEO-GUARDRAILS.md:
 #   - keyframe: house lane (il-arthemy) tags; `{ZUZU}` expands to the canonical Zuzu string in
@@ -17,7 +17,9 @@
 #   - `from_last_frame_of`: start the keyframe from that clip's last frame (music-video t-026 pinning),
 #     so success and death branches cut seamlessly off their moment.
 #
-# Deaths are quick, stylized cut-aways (DESIGN-BRIEF.md guardrails): no gore, injuries implied.
+# Deaths (Silas, 2026-10-06): "cartoonishly violent" at the level of the laserdisc original -- big,
+# exaggerated slapstick deaths played for dark comedy, Zuzu on screen when it happens; no realistic
+# gore. Every clip runs 2-5 s (what our generator makes well); deaths sit in that range too.
 
 chapter: 01-dry-gulch
 title: The Dry Gulch
@@ -65,15 +67,15 @@ nodes:
 
   - id: m1-bridge-death
     kind: death
-    seconds: 3
+    seconds: 4
     from_last_frame_of: m1-bridge
     keyframe: >-
-      an empty broken rope bridge dangling over a deep canyon gorge, a conical straw kasa spinning slowly
-      down into the shadows below
+      {ZUZU}, falling backward off a snapped rope bridge into a deep canyon gorge, arms and short legs
+      flailing, eyes wide, his kasa flying off above him, broken planks tumbling around him
     motion: >-
-      The camera tilts down to follow the straw hat as it spins away into the dark gorge.
+      Zuzu plummets away from the camera into the gorge, shrinking to a speck, and a tiny puff of dust
+      rises from far below.
     retry: m1-bridge
-
   - id: m2-scorpion
     kind: moment
     seconds: 4
@@ -104,12 +106,11 @@ nodes:
     seconds: 3
     from_last_frame_of: m2-scorpion
     keyframe: >-
-      a giant scorpion silhouetted against a blazing sun on a canyon ledge, a rust-brown poncho lying still
-      in the dust beside a straw kasa
+      {ZUZU}, just stung by a giant scorpion's stinger, his grey fur turned sickly green, cheeks puffed
+      out, eyes crossed, body stiff as a plank, tipping over backward on a canyon ledge
     motion: >-
-      The scorpion lowers its tail as the camera drifts up into the glare of the sun.
+      Zuzu swells up green, goes stiff as a plank and topples over backward onto the rock with a thud.
     retry: m2-scorpion
-
   - id: m3-rockslide
     kind: moment
     seconds: 4
@@ -140,12 +141,11 @@ nodes:
     seconds: 3
     from_last_frame_of: m3-rockslide
     keyframe: >-
-      a canyon trail buried under a fresh pile of boulders, dust hanging in the air, a straw kasa resting
-      on top of the rocks
+      a huge round boulder sitting on a canyon trail with a pair of small grey koala feet sticking out
+      from under it, a flattened straw kasa beside them, dust hanging in the air
     motion: >-
-      The dust slowly drifts away to reveal the lone straw hat resting on the rocks.
+      The boulder slams down flat onto the trail and the little feet twitch once as the dust settles.
     retry: m3-rockslide
-
   - id: m4-bandit
     kind: moment
     seconds: 4
@@ -176,12 +176,13 @@ nodes:
     seconds: 3
     from_last_frame_of: m4-bandit
     keyframe: >-
-      a gila monster bandit in a tattered long riding coat holstering a smoking revolver on a dusty canyon
-      floor, a straw kasa rolling past his boots
+      {ZUZU}, blown backward off his feet by a revolver shot, his kasa spinning off his head with a
+      smoking hole through the brim, the gila monster bandit grinning behind a smoking revolver, dusty
+      canyon floor
     motion: >-
-      The straw hat rolls past the bandit's boots and the screen fades to black.
+      Zuzu flies backward through the air and lands flat on his back in the dust as his hat spins down
+      onto his face.
     retry: m4-bandit
-
   - id: closing
     kind: closing
     seconds: 5

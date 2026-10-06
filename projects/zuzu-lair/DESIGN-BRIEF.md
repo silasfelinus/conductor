@@ -1,7 +1,7 @@
 # Zuzu's Lair — Design Brief
 
 date: 2026-10-06
-status: draft v1 (agents build from this; Silas confirms or redirects at t-002)
+status: v2 -- scope confirmed by Silas, 2026-10-06 (see "Decisions")
 author: Claude (from Silas's request, 2026-10-06)
 
 ## Silas's ask (verbatim)
@@ -92,7 +92,8 @@ clip with:
 The clips are produced by the comic-film / music-video pipeline:
 - a kind_robots spec (`utils/musicVideoSpecs.ts` style, `kind: film`);
 - keyframes in the house lane;
-- LTX image-to-video clips (`ltx-12gb-balanced`, about 4 s at 1280×720).
+- LTX image-to-video clips (`ltx-12gb-balanced`, 1280×720). Every clip runs **2–5 seconds**, the
+  length our generator does well (Silas, 2026-10-06); a death animation is one such clip.
 
 Death and success clips start from the moment's last frame, using music-video t-026's last-frame
 pinning, so the branch cuts are seamless.
@@ -116,19 +117,24 @@ Renders are private ArtImages. Making them playable publicly is the `publish` ga
 - Never the original's name, characters, art, music or scene designs; the riff is the format only.
 - No dialogue or narration, per the comic's rules.
 - Nothing from the Book One twist; bannedTerms on every clip.
-- **Deaths are quick, stylized and cut away**, in the spirit of the format's slapstick deaths but in
-  Zuzu's grittier tone. Examples: the kasa spinning down into the gorge, dust settling over a still
-  poncho, a cut to black on the strike. Never gore; injuries stay implied.
+- **Deaths are cartoonishly violent**, at the laserdisc original's level (Silas, 2026-10-06): big,
+  exaggerated slapstick deaths played for dark comedy, with Zuzu on screen when it happens. Examples:
+  flailing into the gorge until he's a speck and a puff of dust, swelling up green and toppling over
+  stiff as a plank, two little feet sticking out from under a boulder, blown backward with a smoking
+  hole through the kasa. No realistic gore. The comic's absolute rule on children still applies
+  (chapter 1 has none).
 - No money. Renders run on our own Comfy backend.
 - Publishing the clips publicly is a human gate.
 
-## Open questions for Silas (t-002, soft; nothing waits on these)
+## Decisions (Silas, 2026-10-06, answering t-002)
 
-1. **Chapter story.** The draft is "The Dry Gulch": rope bridge, scorpion, rockslide, gila-monster
-   bandit. Keep it, or tie it to a Book One location?
-2. **Tone of the death animations.** The draft is quick and stylized, cut away before anything
-   graphic. Do you want more slapstick or more grit?
-3. **Home.** Its own tab under Projects (the draft), or also a cabinet tile in the Arcade hall that
-   links to it?
-4. **Length.** Grow it chapter by chapter as a recurring task, the way the arcade factory does, or
-   finish after chapter 1?
+> Yes on dry gulch. Dragons lair had pretty cartoonishly violent deaths, I'd aim for that level. We
+> have 2-5 second clips that we can generate, so that should be the sweet spot for what a death
+> animation runs to. Yes on arcade cabinet, yes on growing each chapter.
+
+1. **Story:** chapter 1 is "The Dry Gulch" as drafted.
+2. **Deaths:** cartoonishly violent, at the original's level (see guardrails). Each death is one
+   2–5 s clip.
+3. **Home:** its own Projects tab *and* a cabinet tile in the Arcade hall that links to it (t-009).
+4. **Length:** it grows chapter by chapter. t-013 is a recurring chapter factory once chapter 1 is
+   accepted.
