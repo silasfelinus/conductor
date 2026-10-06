@@ -1,14 +1,14 @@
 # Roadmap Audit
 
-Generated: `2026-10-05T19:20:17.010881+00:00`
+Generated: `2026-10-06T01:18:18.763874+00:00`
 
 This is a conservative structural audit. It reports suspicious state; it does not automatically change task status or remove human gates.
 
 ## Portfolio snapshot
 
 - **66** roadmaps, **27** active + **3** continuous projects, **1888** tasks
-- **57 ready**, **87 waiting**, **40 needs-human**, **7 claimed/review**, **1681 done**
-- Findings: **0 errors**, **12 warnings**, **40 informational**
+- **57 ready**, **86 waiting**, **40 needs-human**, **8 claimed/review**, **1681 done**
+- Findings: **0 errors**, **13 warnings**, **40 informational**
 
 ## Project inventory
 
@@ -24,7 +24,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 8 | `digital-storefront` | active | software | 1 | 2 | 1 | 0 | 40 / 44 |
 | 9 | `kind-robots` | active | software | 2 | 0 | 0 | 1 | 127 / 130 |
 | 10 | `rainbow-butterflies` | active | software | 0 | 1 | 2 | 0 | 50 / 53 |
-| 11 | `music-video` | active | software | 5 | 7 | 2 | 0 | 15 / 29 |
+| 11 | `music-video` | active | software | 5 | 6 | 2 | 0 | 16 / 29 |
 | 12 | `comic-film` | active | software | 3 | 6 | 1 | 0 | 1 / 11 |
 | 13 | `tzaddik-gallery` | active | software | 1 | 1 | 1 | 0 | 30 / 33 |
 | 14 | `scene-animator` | finished | software | 0 | 0 | 0 | 0 | 11 / 11 |
@@ -38,7 +38,7 @@ This is a conservative structural audit. It reports suspicious state; it does no
 | 22 | `appmaker` | active | software | 0 | 0 | 1 | 0 | 15 / 16 |
 | 23 | `media-watchlist` | finished | software | 0 | 0 | 0 | 0 | 20 / 20 |
 | 24 | `ruler-hooked` | active | software | 1 | 0 | 1 | 0 | 41 / 43 |
-| 25 | `animation-manager` | continuous | software | 2 | 0 | 0 | 1 | 22 / 26 |
+| 25 | `animation-manager` | continuous | software | 2 | 0 | 0 | 2 | 21 / 26 |
 | 26 | `comic-creator` | active | software | 10 | 3 | 0 | 0 | 9 / 22 |
 | 27 | `kr-solitaire` | active | software | 5 | 2 | 0 | 0 | 4 / 11 |
 | 28 | `kr-adventures` | active | software | 4 | 4 | 0 | 0 | 3 / 11 |
@@ -87,10 +87,11 @@ This is a conservative structural audit. It reports suspicious state; it does no
 
 _None._
 
-### Warning (12)
+### Warning (13)
 
 - **STALE_CLAIM_FIELDS** — `animation-manager` / `t-007`: status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed.
-- **STALE_IN_PROGRESS** — `animation-manager` / `t-022`: Task has remained claimed for 11 days.
+- **STALE_IN_PROGRESS** — `animation-manager` / `t-022`: Task has remained claimed for 12 days.
+- **STALE_IN_PROGRESS** — `art-archive` / `t-033`: Task has remained claimed for 3 days.
 - **STALE_IN_PROGRESS** — `coloring-book` / `t-058`: Task has remained claimed for 8 days.
 - **POSSIBLY_UNNECESSARY_GATE** — `comic-film` / `t-009`: Reversible software task is human-gated without an obvious hard-gate reason in its note.
 - **STALE_IN_PROGRESS** — `conductor` / `t-203`: Task has remained claimed for 4 days.

@@ -245,7 +245,7 @@ tasks:
   - id: t-007
     milestone: m2
     title: "Timeline editor: waveform, beat grid and scene markers"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -258,9 +258,17 @@ tasks:
       by section length and are user-adjustable; forced alignment is out of scope. Timeline math is
       pure code in utils/ with tsx verify tests; the audio is fetched as a blob because private
       rows need a Bearer header.
+
+      2026-10-06: merged kind_robots#3240. utils/musicVideoTimeline.ts (beat grid, snap,
+      waveform peaks, section bands, markers, scene split/merge, lyric assignment) with
+      test:music-video-timeline in CI, plus components/music-video/music-video-timeline-
+      editor.vue wired into the admin page. Note: Nuxt pathPrefix is off, so component file
+      names must be globally unique. Phone/tablet/desktop visual check is not done here; it
+      belongs to t-016.
     claimed_by: 2026-10-06T0750Z-music-video-t007-k3x
     claimed_at: '2026-10-06T00:48:52Z'
-    updated: '2026-10-06T00:48:52Z'
+    updated: '2026-10-06T01:17:02Z'
+    implementation_pr: 'silasfelinus/kind_robots#3240'
 
   - id: t-008
     milestone: m2
@@ -434,7 +442,7 @@ tasks:
   - id: t-014
     milestone: m2
     title: "Browser compositor and MP4 exporter"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
