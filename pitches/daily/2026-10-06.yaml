@@ -1,0 +1,55 @@
+# Daily project pitches, 2026-10-06. Authored by a session; decide with
+#   python scripts/daily_pitches.py --decide SLUG approved|rejected|deferred
+# Theme of the day: free-to-play, zero tokens at runtime, art made ahead of time.
+date: 2026-10-06
+pitches:
+  - slug: robot-tide-pool-hunt
+    title: Robot Tide Pool Hunt
+    hook: >-
+      A cozy seek-and-find toy where a pre-painted tide pool hides twelve tiny robot sea creatures
+      among shells and kelp, and tapping a find makes it wave and join a collection tray. Locations
+      are fixed coordinates, so checking a tap needs no server and no model.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 6 tide-pool scenes and 72 tiny creature sprites generated through ArtJobs ahead of time.
+    first_slice: One scene with twelve hidden creatures, tap detection, a found-tray, and a hint pulse.
+  - slug: kind-nonogram-gallery
+    title: Kind Nonogram Gallery
+    hook: >-
+      Picture-cross puzzles where numeric row and column clues reveal a pixel portrait of a Kind Robot
+      species, with a gentle mistake-forgiving mode. Each solved grid is stored in a gallery and
+      colours in using the species palette.
+    llm_at_runtime: none
+    effort: medium
+    art_plan: 30 hand-authored grids plus 30 colour reveal illustrations generated ahead of time.
+    first_slice: One 8x8 puzzle with clue generation from a stored bitmap, tap-to-fill, and a colour reveal.
+  - slug: robot-postcard-pen-pals
+    title: Robot Postcard Pen Pals
+    hook: >-
+      Every day one pre-written postcard arrives from a different robot traveller, with a stamp,
+      a short note about where they are, and a pre-made picture. Collected postcards fill a
+      wall map, and a rolling calendar means the whole year is authored in advance.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 60 postcard illustrations and 12 stamp designs generated ahead of time; 365 notes pre-written in batches.
+    first_slice: Seven postcards with a daily-unlock rule by date and a wall where they stick.
+  - slug: robot-weather-forecast-dice
+    title: Robot Weather Forecast Dice
+    hook: >-
+      A tabletop-style toy where rolling three illustrated dice builds a silly robot weather report,
+      such as a drizzle of spare screws over a windy robot parade, using stitched pre-written phrases
+      and a matching pre-made scene card. Rolls can be saved or shared as a card.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 18 dice faces and 24 weather scene cards generated through ArtJobs ahead of time.
+    first_slice: Three dice with a roll animation, a phrase builder, and one scene card per combination.
+  - slug: kind-garden-walk-companion
+    title: Kind Garden Walk Companion
+    hook: >-
+      A small walking-pace game that offers a daily set of five things to notice outdoors, such as
+      a red leaf or a round stone, with tick-off checkboxes and a badge when all are found. Prompts
+      come from a pre-authored deck and a calendar, with no location or camera needed.
+    llm_at_runtime: none
+    effort: small
+    art_plan: 40 prompt illustrations and 12 badge designs generated through ArtJobs ahead of time.
+    first_slice: Seven days of prompts with checkboxes, a progress ring, and the first badge.
