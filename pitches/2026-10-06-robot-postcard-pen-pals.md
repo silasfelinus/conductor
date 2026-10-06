@@ -1,7 +1,7 @@
 # Pitch: Robot Postcard Pen Pals
 date: 2026-10-06
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 Every day one pre-written postcard arrives from a different robot traveller, with a stamp, a short note about where they are, and a pre-made picture. Collected postcards fill a wall map, and a rolling calendar means the whole year is authored in advance.
