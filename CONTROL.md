@@ -574,3 +574,8 @@ with persistent aquariums, a collectible monster-fish bestiary, and browsable pu
   (comic-film / music-video pipeline) makes the branches. Stars Zuzu (canon and guardrails:
   projects/comic-creator/issues/zuzu-koala-assassin-01/). First and last animations, with success and
   death branches between. Needs sound, optional on-screen buttons and flash assist.
+
+### kind-nonogram-gallery  (software)
+**Direction:** Picture-cross puzzles where row/column clues reveal pixel portraits of Kind Robot species, with a mistake-forgiving mode and a gallery of solved grids that colour in with species palettes; no LLM at runtime.
+**Notes:**
+- (your notes)
