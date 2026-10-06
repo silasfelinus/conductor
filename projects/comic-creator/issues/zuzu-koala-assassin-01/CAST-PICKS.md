@@ -372,3 +372,6 @@ failed on the server. Waiting on Silas's pick.
 
 A masked edit restores the bare left hand on 242411 (r15-coyote-lefthand-*, ArtJobs 34082–34083). On the front, the
 holster is still on his left hip, while the other angles have it on his right. Silas decides which side it goes on.
+- **Update:** the masked left-hand cleanup (242415, 242417) changed nothing, and up close 242411's stump reads as a
+  bandaged fist. An unmasked Kontext edit on 242411 removes the left bandage and asks for a clear handless stump (r16,
+  ArtJobs 34084–34086). Masked edits here have now failed four ways. They only worked once, on the round-10 stump.
