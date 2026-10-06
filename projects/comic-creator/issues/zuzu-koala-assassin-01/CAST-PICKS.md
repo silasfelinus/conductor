@@ -360,3 +360,15 @@ replace the hand only. Two also move the holster from his left hip to his right.
 **The abbess, flatter face** (sheet 18). Variant B, (flat face:1.4) + (round face:1.3), is much flatter: 242389,
 242390, 242393 and 242394. Its fur drifted mauve. Variant A still reads snouty in profile. 34051 (A, front, seed 1)
 failed on the server. Waiting on Silas's pick.
+
+## The coyote's masked stump on 242401 (2026-10-06)
+
+| Try | ArtImage | Result |
+| --- | --- | --- |
+| Hand only, seed 1 | 242408 | Wrist bandaged, but a bloody fist is still there |
+| Hand only, seed 2 | 242409 | Wrist bandaged, but the fist is still there |
+| With holster, seed 1 | 242410 | The hand is still there and the other wrist got wrapped; the holster did not move |
+| With holster, seed 2 | 242411 | A bloody bandaged stump with no fingers, the best; it also wrapped the left wrist, and the holster did not move |
+
+A masked edit restores the bare left hand on 242411 (r15-coyote-lefthand-*, ArtJobs 34082–34083). On the front, the
+holster is still on his left hip, while the other angles have it on his right. Silas decides which side it goes on.
