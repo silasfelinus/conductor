@@ -444,3 +444,5 @@ tests no longer match. They are re-rendered in brown (ArtJobs 34227–34230).
     the round-5 road with the old Zuzu, and R6.
   - Replacement keyframes are rendering. MV-KEYFRAMES.yaml has the croc and the road silhouettes (ArtJobs
     34245–34248). ANGLES-ZUZU.yaml mv-zuzu-hero-* places 242395 on the road (34249–34250).
+    Both failed the prompt contract before claim (frame-noun: "in the frame"); reworded and resubmitted as
+    34272–34273, and the failed rows were cancelled.
