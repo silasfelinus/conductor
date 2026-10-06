@@ -28,17 +28,17 @@ milestones:
   - id: m1
     title: "SHAPE — design brief, game catalog, cabinet art"
     weight: 15
-    status: in-progress
+    status: done
 
   - id: m2
     title: "LAUNCH — Arcade tab, cabinet front end, leaderboard, two games"
     weight: 55
-    status: in-progress
+    status: done
 
   - id: m3
     title: "GAME FACTORY — one new cabinet per fallback cycle"
     weight: 30
-    status: not-started
+    status: in-progress
 
 tasks:
   - id: t-001
@@ -213,7 +213,7 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Launch check, then hand the arcade to the continuous game factory"
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -223,7 +223,7 @@ tasks:
       - t-006
       - t-007
       - t-010
-    note: >
+    note: >-
       Verify the whole launch on main at phone, tablet and desktop widths. Check: the hall, both
       cabinets, attract loops, a full game to the initials screen, the score appearing on the
       board, gamepad, and mute. Fix what breaks. Then carry out Silas's 2026-10-06 instruction:
@@ -232,14 +232,25 @@ tasks:
       project-overrides.yaml and add it to CONTROL.md's continuous fallback order
       (animation-manager, then kr-arcade, then dream-cycle). Set milestone m2 done; t-009 then
       unblocks through resolve_deps.py.
+
+      DONE 2026-10-06. Launch check on kind_robots main (local nuxi dev + Playwright;
+      production deploy is still pending, so the live-site check rides the first t-009 cycle):
+      hall shows 3 live cabinets at 390/820/1440 widths; Butterfly Blaster, Battery Maze and
+      Rescue Rally each start and play by keyboard and by the on-screen touch controls; full
+      loop played Butterfly Blaster to game over with 1680 points, entered initials,
+      submitted, and (no DB in the sandbox) the score landed on the per-browser fallback board
+      with initials remembered; the initials filter rejected XXX; no page errors, no
+      horizontal overflow. Gamepad not exercised (no device). Flipped kr-arcade to continuous
+      and added it to CONTROL.md's fallback order after animation-manager, per Silas's
+      2026-10-06 instruction.
     claimed_by: 2026-10-06T1232Z-kr-arcade-t008
     claimed_at: '2026-10-06T12:31:00Z'
-    updated: '2026-10-06T12:31:00Z'
+    updated: '2026-10-06T12:31:45Z'
 
   - id: t-009
     milestone: m3
     title: "Build the next arcade cabinet (recurring game factory)"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
