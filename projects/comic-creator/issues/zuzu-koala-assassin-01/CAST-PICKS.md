@@ -412,3 +412,25 @@ holster is still on his left hip, while the other angles have it on his right. S
   - Kontext recolours 242212's grey face to tan (r19, ArtJobs 34183–34184).
   - The fronts are re-rendered with the holster on his right hip (ART-ROUND-16.yaml, ArtJobs 34197–34206): 6 seeds with
     the stump, 4 with both hands.
+
+## Variant-B abbess and right-hip coyote fronts (2026-10-06)
+
+**The abbess, variant B with brown fur.** The picks:
+
+| Angle | Pick | Note |
+| --- | --- | --- |
+| 3/4 front left | 242513 | |
+| 3/4 back left | 242515 | |
+| Back | 242356 | No face shows; the round-13 cleanup stands, since no B seed gave a true back view |
+| 3/4 back right | 242520 | |
+| Profile right | 242521 | |
+| 3/4 front right | 242524 | |
+
+242514 has a real otter beside her and is rejected. The brown-fur fix worked, so the earlier mauve front and profile
+tests no longer match. They are re-rendered in brown (ArtJobs 34227–34230).
+
+**The coyote, holster on his right hip.**
+- 242531 (both hands) has every side right: the eyepatch and holster sit on the left of the picture.
+- None of the six stump seeds did. 242525 and 242526 put the stump on his left arm, 242530 drew a hook, and the rest
+  kept both hands.
+- Twelve more stump seeds follow (ArtJobs 34215–34226).
