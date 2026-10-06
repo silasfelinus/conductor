@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-10-06T16:50:53.374960+00:00",
+  "generated_at": "2026-10-06T22:38:32.640071+00:00",
   "summary": {
-    "roadmaps": 70,
-    "active_projects": 30,
+    "roadmaps": 72,
+    "active_projects": 32,
     "continuous_projects": 4,
-    "tasks": 1915,
-    "ready": 64,
-    "waiting": 83,
-    "needs_human": 39,
+    "tasks": 1955,
+    "ready": 73,
+    "waiting": 107,
+    "needs_human": 40,
     "in_progress": 10,
-    "done": 1703,
+    "done": 1709,
     "errors": 0,
-    "warnings": 15,
-    "info": 44
+    "warnings": 17,
+    "info": 46
   },
   "projects": [
     {
@@ -540,17 +540,17 @@
       "autonomous": false,
       "task_count": 11,
       "counts": {
-        "done": 4,
-        "ready": 5,
+        "done": 5,
+        "ready": 4,
         "waiting": 2
       },
-      "open_count": 7,
+      "open_count": 6,
       "human_attention": 0,
-      "ready": 5,
+      "ready": 4,
       "waiting": 2,
       "claimed": 0,
       "review": 0,
-      "done": 4
+      "done": 5
     },
     {
       "slug": "kr-adventures",
@@ -751,9 +751,9 @@
       "override_status": "continuous",
       "priority_index": 38,
       "autonomous": false,
-      "task_count": 10,
+      "task_count": 11,
       "counts": {
-        "done": 9,
+        "done": 10,
         "ready": 1
       },
       "open_count": 1,
@@ -762,13 +762,54 @@
       "waiting": 0,
       "claimed": 0,
       "review": 0,
-      "done": 9
+      "done": 10
+    },
+    {
+      "slug": "zuzu-lair",
+      "kind": "software",
+      "override_status": "active",
+      "priority_index": 39,
+      "autonomous": false,
+      "task_count": 13,
+      "counts": {
+        "done": 3,
+        "ready": 4,
+        "waiting": 6
+      },
+      "open_count": 10,
+      "human_attention": 0,
+      "ready": 4,
+      "waiting": 6,
+      "claimed": 0,
+      "review": 0,
+      "done": 3
+    },
+    {
+      "slug": "zuzu-showdown",
+      "kind": "software",
+      "override_status": "active",
+      "priority_index": 40,
+      "autonomous": false,
+      "task_count": 26,
+      "counts": {
+        "done": 1,
+        "needs-human": 1,
+        "ready": 6,
+        "waiting": 18
+      },
+      "open_count": 25,
+      "human_attention": 1,
+      "ready": 6,
+      "waiting": 18,
+      "claimed": 0,
+      "review": 0,
+      "done": 1
     },
     {
       "slug": "dream-cycle",
       "kind": "software",
       "override_status": "continuous",
-      "priority_index": 39,
+      "priority_index": 41,
       "autonomous": true,
       "task_count": 36,
       "counts": {
@@ -1381,7 +1422,7 @@
       "code": "STALE_IN_PROGRESS",
       "project": "animation-manager",
       "task": "t-022",
-      "message": "Task has remained claimed for 12 days."
+      "message": "Task has remained claimed for 13 days."
     },
     {
       "severity": "warning",
@@ -1402,7 +1443,7 @@
       "code": "STALE_IN_PROGRESS",
       "project": "coloring-book",
       "task": "t-058",
-      "message": "Task has remained claimed for 8 days."
+      "message": "Task has remained claimed for 9 days."
     },
     {
       "severity": "warning",
@@ -1472,6 +1513,20 @@
       "code": "POSSIBLY_UNNECESSARY_GATE",
       "project": "tzaddik-gallery",
       "task": "t-013",
+      "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
+    },
+    {
+      "severity": "warning",
+      "code": "POSSIBLY_UNNECESSARY_GATE",
+      "project": "zuzu-lair",
+      "task": "t-010",
+      "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
+    },
+    {
+      "severity": "warning",
+      "code": "POSSIBLY_UNNECESSARY_GATE",
+      "project": "zuzu-showdown",
+      "task": "t-025",
       "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
     },
     {
@@ -1672,6 +1727,13 @@
     },
     {
       "severity": "info",
+      "code": "APPROVAL_WITHOUT_GATE",
+      "project": "kr-arcade",
+      "task": "t-011",
+      "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
       "code": "INACTIVE_PROJECT_HAS_READY_TASKS",
       "project": "lora-ingestion",
       "task": null,
@@ -1781,6 +1843,13 @@
       "project": "text-generation",
       "task": null,
       "message": "Roadmap has no friendly goal/definition of done."
+    },
+    {
+      "severity": "info",
+      "code": "APPROVAL_WITHOUT_GATE",
+      "project": "zuzu-lair",
+      "task": "t-002",
+      "message": "approved_by_human is set on a task that is not human-gated."
     }
   ]
 }
