@@ -213,8 +213,8 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Launch check, then hand the arcade to the continuous game factory"
-    status: ready
-    owner: null
+    status: claimed
+    owner: reviewer
     passes: 0
     stakes: reversible
     depends_on:
@@ -232,6 +232,9 @@ tasks:
       project-overrides.yaml and add it to CONTROL.md's continuous fallback order
       (animation-manager, then kr-arcade, then dream-cycle). Set milestone m2 done; t-009 then
       unblocks through resolve_deps.py.
+    claimed_by: 2026-10-06T1232Z-kr-arcade-t008
+    claimed_at: '2026-10-06T12:31:00Z'
+    updated: '2026-10-06T12:31:00Z'
 
   - id: t-009
     milestone: m3
