@@ -739,12 +739,12 @@ tasks:
   - id: t-028
     milestone: m2
     title: "Headless pipeline: song file, comic lane, clip requests, banned terms (conductor)"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-013, t-025, t-026]
-    updated: '2026-10-06T11:45:46Z'
+    updated: '2026-10-06T12:46:52Z'
     note: >-
       scripts/build_music_video.py gains --song-file (upload through t-013's route, ffprobe for
       duration), --comic-series / --comic-lane / --banned-terms carried into settings, and a
