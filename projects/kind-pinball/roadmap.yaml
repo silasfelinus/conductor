@@ -73,7 +73,7 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Style pass 1 + shot map: DMD, lit inserts, rails, second ramp, orbits"
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -84,10 +84,16 @@ tasks:
       shadows, a shaded ball with a reflection and shadow, and solid flippers with rubbers. Shot map: keep
       the right ramp, add a LEFT ramp and LEFT/RIGHT orbits (loops) whose arrows light when they pay.
       Verify: npm run test:arcade-engine, typecheck, Playwright screenshots at phone/tablet/desktop.
+
+      Shipped 2026-10-07 in silasfelinus/kind_robots#3311: 128x32 DMD
+      (utils/arcade/pinball/dmd.ts), printed and lit playfield with arrow inserts for five
+      shots, GI and lamp shows, chrome rails, wireform ramps, second (left) ramp crossing the
+      right, orbits, combos, skill shot, one-way shooter-lane gate, cached render layers (~2.5
+      ms/frame). Contract tests cover DMD, both ramps, gate, orbit, skill shot.
     claimed_by: 2026-10-07T04:45:00Z-kp-t003
     claimed_at: '2026-10-07T04:39:47Z'
-    updated: '2026-10-07T04:39:47Z'
-
+    updated: '2026-10-07T05:08:43Z'
+    implementation_pr: 'silasfelinus/kind_robots#3311'
   - id: t-004
     milestone: m2
     title: "3D foundation: dual-canvas Arcade lane + Three.js/Rapier pinball runtime"
@@ -275,21 +281,17 @@ tasks:
   - id: t-017
     milestone: m1
     title: "FX3 quality reset: visual mockups + 3D architecture blueprint"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Silas-directed 2026-10-06. Diagnose the visual/technical gap between the current flat Canvas
-      table and a Pinball FX3-quality target. Produce concrete visual mockups plus implementation-ready
-      specs for camera, materials, lighting, geometry, physics, rules, DMD, audio, effects, responsive
-      controls and asset production. Be willing to replace the renderer/physics architecture if the
-      existing 2D approach cannot reach the target. Update the roadmap implementation path from the
-      resulting blueprint without duplicating t-003's already-claimed first style pass.
+    note: |-
+      Silas-directed 2026-10-06. Diagnose the visual/technical gap between the current flat Canvas table and a Pinball FX3-quality target. Produce concrete visual mockups plus implementation-ready specs for camera, materials, lighting, geometry, physics, rules, DMD, audio, effects, responsive controls and asset production. Be willing to replace the renderer/physics architecture if the existing 2D approach cannot reach the target. Update the roadmap implementation path from the resulting blueprint without duplicating t-003's already-claimed first style pass.
+
+      Produced the FX3 quality blueprint, implementation system spec, three visual mockups, and reset the Table 1 roadmap around a lazy Three.js/Rapier 3D vertical slice while preserving t-003's completed shot-map/style prototype.
     claimed_by: 2026-10-07T050600Z-kind-pinball-t017-gpt56sol
     claimed_at: '2026-10-07T05:06:00Z'
-    updated: '2026-10-07T05:06:00Z'
-
+    updated: '2026-10-07T05:20:00Z'
   - id: t-018
     milestone: m2
     title: "3D greybox vertical slice: full Table 1 shot map in playable geometry"
