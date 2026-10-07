@@ -1,0 +1,265 @@
+# Kind Pinball -- Williams-quality pinball in the Kind Robots Arcade (Silas, 2026-10-07).
+# Split out of kr-arcade (games.yaml `kind-pinball`, shipped there 2026-10-06 in four factory slices).
+# Brief: DESIGN-BRIEF.md. Code: kind_robots utils/arcade/games/kindPinball.ts (and the shared pinball
+# engine t-003 splits out of it). Riff rule: mechanics and polish from the reference machines only.
+project: kind-pinball
+kind: software
+goal: >-
+  A pinball game in the Kind Robots Arcade that plays and looks like a real Williams DMD-era machine:
+  weighty physics with cradles and post passes, a shot map with at least two ramps and two orbits and lit
+  arrow inserts, an amber dot-matrix display with animations, lamp shows, deep rules (skill shot, combos,
+  lock and multiball with jackpots, a mode ladder, a wizard mode, tilt and match), sound and music, an upper
+  playfield, and several tables -- modelled on The Addams Family, Terminator 2, Stern's Godzilla and the
+  Pinball FX3 tables, checked at phone/tablet/desktop and accepted by Silas.
+
+notes_from_silas: |
+  2026-10-07, verbatim: "Make kind pinball in arcade its own project. I want it, zuzu-lair, arcade, and the
+  zuzu fighting game to be our high priority projects.
+
+  Pinball needs a signifant style and quality improvement. As good as a rom for a Williams machine. Lots of
+  improvements, but a few style passes would do w9nders. Different levels, multiple ramps, a REAL quality
+  game. Addams family, terminator, Godzilla, and anything from pinball fx3 should be the models"
+
+milestones:
+  - id: m1
+    title: "SHAPE -- design brief, reference teardown, scope"
+    weight: 10
+    status: in-progress
+
+  - id: m2
+    title: "TABLE 1 REBUILD -- engine split, style passes, shot map, physics, rules, DMD, sound"
+    weight: 50
+    status: in-progress
+
+  - id: m3
+    title: "LEVELS -- upper playfield, Tables 2 and 3, table select"
+    weight: 30
+    status: not-started
+
+  - id: m4
+    title: "SHIP -- device check, table guide, Silas's verdict"
+    weight: 10
+    status: not-started
+
+tasks:
+  - id: t-001
+    milestone: m1
+    title: "Write the design brief"
+    status: done
+    owner: worker
+    passes: 0
+    stakes: reversible
+    note: >-
+      DESIGN-BRIEF.md v1 (2026-10-07): the reference teardown (Addams Family, Terminator 2, Godzilla,
+      Pinball FX3), seven concrete quality pillars (feel, shot map, DMD, lights, rules, sound, levels),
+      three original table themes, the MVP order, guardrails (no reference IP, no runtime LLM), and open
+      questions for Silas.
+
+  - id: t-002
+    milestone: m1
+    title: "Confirm scope with Silas"
+    status: needs-human
+    owner: null
+    passes: 0
+    stakes: reversible
+    soft_gate: true
+    note: >-
+      FOR SILAS: a soft check. Nothing waits on it. Read DESIGN-BRIEF.md and answer its three open
+      questions. (1) "Different levels": several tables, an upper playfield, or both? The plan assumes
+      both. (2) Are the Table 2 and 3 themes right? Proposed: Zuzu's Dojo, and Robot Factory or the
+      Cthulhuquarium deep sea. (3) One pinball leaderboard, or one per table? Work continues on Table 1
+      either way.
+
+  - id: t-003
+    milestone: m2
+    title: "Style pass 1 + shot map: DMD, lit inserts, rails, second ramp, orbits"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      The first big visible jump, done on the existing file so it ships fast. Add an amber dot-matrix
+      display band (score, ball, mode, banners), a lit, art-directed playfield (wood/dark base, lane guides,
+      GI lamps along the rails, blinking arrow inserts for each shot), chrome rails and wireform ramps with
+      shadows, a shaded ball with a reflection and shadow, and solid flippers with rubbers. Shot map: keep
+      the right ramp, add a LEFT ramp and LEFT/RIGHT orbits (loops) whose arrows light when they pay.
+      Verify: npm run test:arcade-engine, typecheck, Playwright screenshots at phone/tablet/desktop.
+
+  - id: t-004
+    milestone: m2
+    title: "Engine split: shared pinball engine + table definitions"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Move kindPinball.ts into utils/arcade/pinball/: physics.ts (ball, segments, circles, flippers,
+      substeps), table.ts (a TableDef: walls, ramps as paths, orbits, bumpers, targets, scoops, inserts,
+      lamps, theme colours), rules.ts (a per-table rules object driven by shot events), dmd.ts and
+      render.ts. kindPinball.ts becomes Table 1's definition plus its rules. Contract-test the physics
+      (no tunnelling at MAX_SPEED, a flipper cradle holds, a post pass works) and every shot's entry
+      condition. Do this before the second table, not before t-003.
+
+  - id: t-005
+    milestone: m2
+    title: "Physics feel: cradle, post pass, flipper power curve, tilt bob, kickback, spinner, drops"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Make the ball feel heavy and true. Use a flipper strength curve: a full-power stroke vs a tap, more
+      power near the base. Allow a live catch and a cradle (holding a flipper up stops the ball), and a post
+      pass. Rolling friction and spin approximation. A tilt bob: the nudge adds sway, two warnings, then
+      TILT (flippers die, no bonus). Add a left outlane kickback lit by a target bank, a 3-bank of drop
+      targets, and a spinner on an orbit. Check: tests for cradle/post-pass/tilt, plus a 10-minute
+      demo-pilot soak with no stuck balls.
+
+  - id: t-006
+    milestone: m2
+    title: "DMD animation system + score display"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      A real DMD layer: a 128x32-style dot grid drawn in amber with dot bloom. A big score font, and a
+      scene queue that plays short frame animations: skill shot, lock, multiball, jackpot, super jackpot,
+      mode intro and total, wizard mode, extra ball, tilt, bonus count, and a match animation at game end.
+      The animations are drawn procedurally from shapes and pixel text, not bitmaps.
+
+  - id: t-007
+    milestone: m2
+    title: "Table 1 rules depth: skill shot, combos, lock + multiball jackpots, village map, wizard mode, match"
+    status: waiting
+    depends_on: [t-003]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Rebuild AMI Village Rescue's rules to reference depth. Skill shot: the plunger lets you hit a lit top
+      lane. Combos: ramp to orbit to ramp, with a growing value. Ball lock: three locks start AMI multiball;
+      the ramps light JACKPOT and a super jackpot follows. Village map (the mansion-grid idea): the scoop
+      awards one of 12 lit villages, and modes light different shot arrows, Godzilla-style. Lighting all 12
+      starts the "Malaria-Free" wizard mode (all shots lit, a big total). Also an extra ball, a bonus count
+      with a multiplier, and a match at game end. Every rule gets a DMD scene (t-006) and arrow inserts
+      (t-003). Contract-test the rules as a pure state machine driven by shot events.
+
+  - id: t-008
+    milestone: m2
+    title: "Sound and music: punchy toy SFX, mode music beds, synthesized callouts"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Extend utils/arcade/sound.ts (WebAudio synth), or add a pinball-only sound bank. Distinct sounds for
+      slings, pops, the ramp entry and exit, the orbit, the spinner, drops, the scoop, the kickback, the
+      flippers, the plunger and the drain. A music bed that changes in modes and multiball, and stings for
+      jackpots. Simple synthesized or pre-generated callouts ("JACKPOT!", "SHOOT AGAIN"). Everything mutes
+      with the cabinet mute, and nothing autoplays before the first input.
+
+  - id: t-009
+    milestone: m2
+    title: "Style pass 2: lamp shows, GI, pre-generated playfield art"
+    status: waiting
+    depends_on: [t-003]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Lamp shows (sweeps, chases, flashes) for every big moment, and an attract-mode light show. GI that
+      dims and flashes. Flasher domes on the ramps. A pre-generated playfield backdrop through ArtJobs (top
+      down, no lettering, art-first standard) under the vector toys. Ball reflections of the lamps.
+      Screenshot before and after.
+
+  - id: t-010
+    milestone: m2
+    title: "Style pass 3: toys, motion and phone fit"
+    status: waiting
+    depends_on: [t-009]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Animated playfield toys: a village hut that lights up, a net-delivery biplane, a spinning AMI robot
+      head on the scoop. Screen shake on big hits, ball trails at speed, sling flex. Touch controls tuned
+      for phones (left/right half-screen flippers, swipe up to nudge, drag the plunger). Check
+      phone/tablet/desktop in Playwright.
+
+  - id: t-011
+    milestone: m3
+    title: "Upper playfield (a 'level' up): mini-table with its own flipper, reached by a ramp"
+    status: waiting
+    depends_on: [t-004]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      A second level, as the Addams Family third flipper and Godzilla upper-flipper shots do it: a ramp
+      feeds a mini-playfield with its own flipper and targets, and it drains back down through a habitrail.
+      In the 2D canvas it can render as a raised inset with a drop shadow, or as a camera pan. Its own mode
+      or hurry-up.
+
+  - id: t-012
+    milestone: m3
+    title: "Table 2: Zuzu's Dojo (pending t-002 theme confirm)"
+    status: waiting
+    depends_on: [t-004, t-007]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      A second table on the shared engine. Zuzu canon and guardrails: projects/comic-creator/issues/
+      zuzu-koala-assassin-01/ (lighter tone, no blood). Godzilla-style battle modes against the cast, each
+      lighting a different set of shots, plus its own multiball and wizard mode. Its own layout: a
+      different ramp and orbit geometry, not a reskin. If t-002 redirects the theme, follow it.
+
+  - id: t-013
+    milestone: m3
+    title: "Table 3: Robot Factory or Cthulhuquarium (pending t-002 theme confirm)"
+    status: waiting
+    depends_on: [t-012]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      A third table built like Terminator 2: a lock-and-jackpot machine, a toy that builds as you play,
+      fast ramp combos. Its own layout and rules.
+
+  - id: t-014
+    milestone: m3
+    title: "Table select + per-table scores"
+    status: waiting
+    depends_on: [t-012]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      A table-select screen inside the pinball cabinet, in the FX3 style: table art, a rules blurb and the
+      top score for each. Leaderboards follow t-002's answer, either one board per table (a game slug per
+      table) or one board. Any ArcadeScore schema change must be additive.
+
+  - id: t-015
+    milestone: m4
+    title: "Table guide (FX3-style rules card) for each table"
+    status: waiting
+    depends_on: [t-007]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      An in-cabinet guide that teaches each table: a shot map diagram with arrows, then each mode, the
+      multiball and the wizard mode in a few lines. Reachable from attract mode and the pause menu.
+
+  - id: t-016
+    milestone: m4
+    title: "Silas plays Table 1 and gives a verdict"
+    status: waiting
+    depends_on: [t-007, t-009]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      FOR SILAS (gated when it unblocks): play the rebuilt Table 1 in the Arcade tab on phone and desktop
+      and say whether it hits the Williams bar. Fold his notes into new tasks.
