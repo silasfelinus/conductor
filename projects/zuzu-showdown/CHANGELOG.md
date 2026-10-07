@@ -1,6 +1,11 @@
 # zuzu-showdown CHANGELOG
 
 ## 2026-10-07
+- t-019 (in progress): the VS screen and the win screen (kind_robots#3341). Before each fight the fighters
+  slam in and trade their matchup's intro lines, each on the speaker's side; after it the winner stands in
+  the victory (or Perfect) pose and says their win quote to the loser. tools/matchups_to_ts.py ports
+  matchups.yaml to the game as matchups.json (`--check` compares them as data). Character select, stage
+  entrances and the slow-mo KO are still to come.
 - t-018: every matchup line is written (matchups.yaml): 36 intros (28 pairs and 8 mirrors), 64 win quotes and
   the boss lines, in each fighter's voice (Zuzu in three words or fewer, the croc in sounds, nobody gloating
   over the Siblings). tools/check_matchups.py and tests/test_zuzu_showdown_matchups.py keep the set complete,
