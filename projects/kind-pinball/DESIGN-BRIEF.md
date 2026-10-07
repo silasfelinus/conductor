@@ -1,7 +1,7 @@
 # Kind Pinball — Design Brief
 
 date: 2026-10-07
-status: v1 (written the day the project was split out of kr-arcade)
+status: v2 (FX3 architecture reset)
 author: Claude session (Silas-directed)
 
 ## What it is
@@ -71,6 +71,39 @@ too.
 3. **Style passes 2 and 3.** Lamp shows, GI, DMD animations, sound and music, a pre-generated
    playfield backdrop.
 4. **Upper playfield, then Tables 2 and 3** with a table select.
+
+## 2026-10-07 quality reset: the 2D table is the prototype, not the destination
+
+The first brief correctly set the **rules** bar, but it undercalled the rendering problem. The current
+implementation is a fixed 288×416 Canvas 2D game, and the shared Arcade cabinet acquires a 2D rendering
+context directly. That contract is ideal for the retro cabinets around it; it is a ceiling for a table
+that is supposed to look like Pinball FX3.
+
+The final Table 1 therefore moves to a dedicated, lazy-loaded 3D lane:
+
+- **Three.js** for the table, camera, PBR materials, lighting and post effects;
+- **Rapier 3D** for a real rigid-body ball, flippers, ramps, rails, toys and CCD;
+- the existing Arcade shell for attract mode, pause, scores and leaderboards;
+- a pure shot-event/rules state machine so future tables share an engine rather than a god-class;
+- a physical 128×32 amber DMD rendered as a texture in the backbox;
+- pinball-specific mechanical/spatial audio instead of extending the generic chiptune palette;
+- responsive camera framing and invisible edge-zone touch flippers instead of the generic giant D-pad.
+
+The already-claimed t-003 style/shot-map pass still lands. It is useful as a fast visual/layout prototype
+and gives the 3D build a tested shot vocabulary. After that pass, do not deepen the Canvas renderer as
+the final table.
+
+Implementation details and acceptance criteria live in:
+
+- [FX3-QUALITY-BLUEPRINT.md](FX3-QUALITY-BLUEPRINT.md)
+- [SYSTEM-DESIGN-SPEC.md](SYSTEM-DESIGN-SPEC.md)
+- [mockups/01-fx3-table-hero.svg](mockups/01-fx3-table-hero.svg)
+- [mockups/02-shot-map.svg](mockups/02-shot-map.svg)
+- [mockups/03-responsive-shell.svg](mockups/03-responsive-shell.svg)
+
+The sequencing rule is now: **make one Table 1 vertical slice genuinely premium before multiplying it
+into Tables 2 and 3.** A screenshot should read as a physical pinball machine before the viewer reads
+any label.
 
 ## Out of scope / guardrails
 
