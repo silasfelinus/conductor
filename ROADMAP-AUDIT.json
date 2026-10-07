@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-10-07T04:35:27.832834+00:00",
+  "generated_at": "2026-10-07T17:27:18.971362+00:00",
   "summary": {
     "roadmaps": 74,
     "active_projects": 35,
     "continuous_projects": 3,
-    "tasks": 1974,
-    "ready": 80,
-    "waiting": 110,
+    "tasks": 1982,
+    "ready": 78,
+    "waiting": 100,
     "needs_human": 42,
-    "in_progress": 11,
-    "done": 1715,
+    "in_progress": 15,
+    "done": 1731,
     "errors": 0,
-    "warnings": 17,
-    "info": 48
+    "warnings": 18,
+    "info": 52
   },
   "projects": [
     {
@@ -21,20 +21,21 @@
       "override_status": "active",
       "priority_index": 1,
       "autonomous": false,
-      "task_count": 16,
+      "task_count": 19,
       "counts": {
-        "done": 1,
-        "needs-human": 1,
-        "ready": 5,
+        "claimed": 1,
+        "done": 7,
+        "ready": 1,
+        "review": 1,
         "waiting": 9
       },
-      "open_count": 15,
-      "human_attention": 1,
-      "ready": 5,
+      "open_count": 12,
+      "human_attention": 0,
+      "ready": 1,
       "waiting": 9,
-      "claimed": 0,
-      "review": 0,
-      "done": 1
+      "claimed": 1,
+      "review": 1,
+      "done": 7
     },
     {
       "slug": "zuzu-lair",
@@ -44,15 +45,16 @@
       "autonomous": false,
       "task_count": 13,
       "counts": {
+        "claimed": 1,
         "done": 3,
-        "ready": 4,
+        "ready": 3,
         "waiting": 6
       },
       "open_count": 10,
       "human_attention": 0,
-      "ready": 4,
+      "ready": 3,
       "waiting": 6,
-      "claimed": 0,
+      "claimed": 1,
       "review": 0,
       "done": 3
     },
@@ -62,14 +64,14 @@
       "override_status": "active",
       "priority_index": 3,
       "autonomous": false,
-      "task_count": 11,
+      "task_count": 12,
       "counts": {
         "done": 10,
-        "ready": 1
+        "ready": 2
       },
-      "open_count": 1,
+      "open_count": 2,
       "human_attention": 0,
-      "ready": 1,
+      "ready": 2,
       "waiting": 0,
       "claimed": 0,
       "review": 0,
@@ -81,20 +83,20 @@
       "override_status": "active",
       "priority_index": 4,
       "autonomous": false,
-      "task_count": 26,
+      "task_count": 27,
       "counts": {
         "claimed": 1,
-        "done": 6,
-        "ready": 7,
-        "waiting": 12
+        "done": 15,
+        "ready": 8,
+        "waiting": 3
       },
-      "open_count": 20,
+      "open_count": 12,
       "human_attention": 0,
-      "ready": 7,
-      "waiting": 12,
+      "ready": 8,
+      "waiting": 3,
       "claimed": 1,
       "review": 0,
-      "done": 6
+      "done": 15
     },
     {
       "slug": "cthulhuquarium",
@@ -263,18 +265,18 @@
       "override_status": "active",
       "priority_index": 13,
       "autonomous": false,
-      "task_count": 132,
+      "task_count": 135,
       "counts": {
         "done": 128,
-        "ready": 2,
-        "review": 2
+        "ready": 4,
+        "review": 3
       },
-      "open_count": 4,
+      "open_count": 7,
       "human_attention": 0,
-      "ready": 2,
+      "ready": 4,
       "waiting": 0,
       "claimed": 0,
-      "review": 2,
+      "review": 3,
       "done": 128
     },
     {
@@ -601,17 +603,18 @@
       "autonomous": false,
       "task_count": 22,
       "counts": {
-        "done": 9,
-        "ready": 10,
-        "waiting": 3
+        "done": 10,
+        "needs-human": 1,
+        "ready": 9,
+        "waiting": 2
       },
-      "open_count": 13,
-      "human_attention": 0,
-      "ready": 10,
-      "waiting": 3,
+      "open_count": 12,
+      "human_attention": 1,
+      "ready": 9,
+      "waiting": 2,
       "claimed": 0,
       "review": 0,
-      "done": 9
+      "done": 10
     },
     {
       "slug": "kr-solitaire",
@@ -1476,14 +1479,14 @@
       "code": "STALE_IN_PROGRESS",
       "project": "art-archive",
       "task": "t-044",
-      "message": "Task has remained claimed for 3 days."
+      "message": "Task has remained claimed for 4 days."
     },
     {
       "severity": "warning",
       "code": "STALE_IN_PROGRESS",
       "project": "coloring-book",
       "task": "t-058",
-      "message": "Task has remained claimed for 9 days."
+      "message": "Task has remained claimed for 10 days."
     },
     {
       "severity": "warning",
@@ -1497,7 +1500,7 @@
       "code": "STALE_IN_PROGRESS",
       "project": "conductor",
       "task": "t-203",
-      "message": "Task has remained claimed for 5 days."
+      "message": "Task has remained claimed for 6 days."
     },
     {
       "severity": "warning",
@@ -1505,6 +1508,20 @@
       "project": "kind-economy",
       "task": "t-017",
       "message": "Human-gated task is done without approved_by_human: true. This may be intentional when objective incident-recovery/reconciliation criteria closed the task without a human policy decision; review the task note/provenance rather than treating this bookkeeping state as a framework defect."
+    },
+    {
+      "severity": "warning",
+      "code": "POSSIBLY_UNNECESSARY_GATE",
+      "project": "kind-pinball",
+      "task": "t-016",
+      "message": "Reversible software task is human-gated without an obvious hard-gate reason in its note."
+    },
+    {
+      "severity": "warning",
+      "code": "STALE_IN_PROGRESS",
+      "project": "kind-robots",
+      "task": "t-127",
+      "message": "Task has remained review for 3 days."
     },
     {
       "severity": "warning",
@@ -1536,17 +1553,10 @@
     },
     {
       "severity": "warning",
-      "code": "STALE_CLAIM_FIELDS",
-      "project": "kr-arcade",
-      "task": "t-009",
-      "message": "status is 'ready' but claimed_by/claimed_at are still set. Unset them (a `ready` event does this) so the task does not look claimed."
-    },
-    {
-      "severity": "warning",
       "code": "STALE_IN_PROGRESS",
       "project": "mandarin-tutor",
       "task": "t-030",
-      "message": "Task has remained claimed for 3 days."
+      "message": "Task has remained claimed for 4 days."
     },
     {
       "severity": "warning",
@@ -1617,6 +1627,27 @@
       "project": "coloring-book",
       "task": "t-034",
       "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
+      "code": "APPROVAL_WITHOUT_GATE",
+      "project": "comic-creator",
+      "task": "t-015",
+      "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
+      "code": "APPROVAL_WITHOUT_GATE",
+      "project": "comic-creator",
+      "task": "t-016",
+      "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
+      "code": "NEEDS_HUMAN_NOTE_FORMAT",
+      "project": "comic-creator",
+      "task": "t-016",
+      "message": "needs-human note does not use the AGENTS.md FOR SILAS action format."
     },
     {
       "severity": "info",
@@ -1770,6 +1801,13 @@
       "code": "APPROVAL_WITHOUT_GATE",
       "project": "kr-arcade",
       "task": "t-011",
+      "message": "approved_by_human is set on a task that is not human-gated."
+    },
+    {
+      "severity": "info",
+      "code": "APPROVAL_WITHOUT_GATE",
+      "project": "kr-arcade",
+      "task": "t-012",
       "message": "approved_by_human is set on a task that is not human-gated."
     },
     {
