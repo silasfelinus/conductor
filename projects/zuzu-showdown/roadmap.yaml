@@ -261,7 +261,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Eight animated stages (parallax layers, animated elements, stage events)"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -307,9 +307,16 @@ tasks:
       sound. Every stage has its parallax layers, moving parts, stage event and loop. Left for other tasks: the
       Siblings' toddler grabbing the apples (needs t-011's sprites), and the boss's phases driving the door
       (t-021).
+
+      All eight stages are on main (kind_robots#3349 adds the Dunes, the Thin Place and the
+      Bone Yard). Each stage has art layers built by tools/stage.py, its moving parts, a stage
+      event and a music loop, with reduced-motion fallbacks. Two pieces belong to other tasks:
+      the toddler grabbing apples on the Lone Apple Tree waits on t-011's sprites, and the
+      boss phases driving the Thin Place door wait on t-021.
     claimed_by: 2026-10-07T11:00:00Z-zs-t009
     claimed_at: '2026-10-07T10:57:19Z'
-    updated: '2026-10-07T10:57:19Z'
+    updated: '2026-10-07T14:38:25Z'
+    implementation_pr: 'silasfelinus/kind_robots#3349'
 
   - id: t-010
     milestone: m3
