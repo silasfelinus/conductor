@@ -1,6 +1,17 @@
 # zuzu-showdown CHANGELOG
 
 ## 2026-10-07
+- t-009 (in progress): the Mission and Storm Canyon (kind_robots#3348). The Mission is a moonlit church
+  with a flickering candle, chimney smoke, and a portal in the bell arch between rounds. Storm Canyon has
+  rain, crows, and lightning that silhouettes the canyon walls; it is rate-limited and off under reduced
+  motion. tools/stage.py learned `mirror: "before"` (a ridge rising right, set after its mirror image,
+  becomes a canyon). The Lone Apple Tree waits on a noon backdrop (art/T009C-DAY.yaml): the house lane's
+  dark prefix turned "harsh noon" into a burning dusk.
+- t-022: Training mode (kind_robots#3345) has dummy settings, frame advantage, an input display with the
+  motion parser's read, refills and position resets.
+- t-023: sound (kind_robots#3347). Hits sound by strength, with block, whiff, parry, throw, the KO sting,
+  the Showdown stinger and the Hollow Bell bell. Each stage has a minor-key loop. Keyboard and gamepad
+  players now hear it too.
 - t-009 (in progress): the first two stages, Hollow Bell and the Watering Hole (kind_robots#3344).
   tools/stage.py builds each stage's parallax layers, cutouts (the bell, the pennant) and anchors (the arch
   beam, the lantern's smoke, the water) from house-lane art and a config in tools/stages/, with a palette per
