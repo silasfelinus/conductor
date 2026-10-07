@@ -12,6 +12,8 @@ import math
 
 from PIL import ImageDraw
 
+import sprite_common as sc
+
 HEIGHT = 72
 PALETTE_COLOURS = 16
 REFERENCE = {"art": 242193, "mirror": True}  # scale only
@@ -53,11 +55,18 @@ INK = (24, 20, 26)
 WRAP = (60, 44, 36)
 
 
-def sword_arm(canvas, offset, hand, sword=None, dy=0):
-    """The drawing arm (and, once drawn, the katana): the reference has no free arm, so it is drawn."""
+BLADE = 540
+MEASURING = False  # set by rig.py while it measures reach: smears are drawn, not struck with
+
+
+def sword_arm(canvas, offset, hand, sword=None, dy=0, smear=None):
+    """The drawing arm (and, once drawn, the katana): the reference has no free arm, so it is drawn.
+    `smear` is the angle the blade swung from this frame: a pale trail is swept behind it."""
     d = ImageDraw.Draw(canvas)
     s = (SHOULDER[0] + offset[0], SHOULDER[1] + offset[1] + dy)
     h = (hand[0] + offset[0], hand[1] + offset[1])
+    if sword is not None and smear is not None and not MEASURING:
+        sc.smear(canvas, h, BLADE * 0.35, BLADE, smear, sword)
     d.line([s, h], fill=INK, width=74)
     d.line([s, h], fill=FUR, width=58)
     d.ellipse([h[0] - 40, h[1] - 40, h[0] + 40, h[1] + 40], fill=INK)
@@ -71,14 +80,14 @@ def sword_arm(canvas, offset, hand, sword=None, dy=0):
     d.line(grip, fill=WRAP, width=30)
     gx, gy = h[0] + ux * 50, h[1] + uy * 50
     d.line([(gx - uy * 46, gy + ux * 46), (gx + uy * 46, gy - ux * 46)], fill=INK, width=26)
-    tip = (h[0] + ux * 540, h[1] + uy * 540)
+    tip = (h[0] + ux * BLADE, h[1] + uy * BLADE)
     d.line([(gx, gy), tip], fill=INK, width=30)
     d.line([(gx, gy), tip], fill=STEEL, width=18)
     d.line([(gx - uy * 5, gy + ux * 5), (tip[0] - uy * 5, tip[1] + ux * 5)], fill=STEEL_EDGE, width=6)
 
 
-def arm(hand, sword=None, dy=0):
-    return {"fn": "sword_arm", "args": {"hand": hand, "sword": sword, "dy": dy}}
+def arm(hand, sword=None, dy=0, smear=None):
+    return {"fn": "sword_arm", "args": {"hand": hand, "sword": sword, "dy": dy, "smear": smear}}
 
 
 BACK_FOOT = (120, 1168)
@@ -148,7 +157,7 @@ ANIMATIONS = {
     "stand_hp": {"fps": 15, "loop": False, "strike": ["draw"], "frames": [
         {**stance(16), "hide": ["lead_arm"], "draw": [arm((600, 330), dy=16)]},
         {**stance(10), "hide": ["lead_arm", "hilt"], "draw": [arm((700, 270), 70, 10)]},
-        {**stance(4), "body": {"dy": 4, "angle": 6}, "hide": ["lead_arm", "hilt"], "draw": [arm((830, 500), 0, 4)]},
+        {**stance(4), "body": {"dy": 4, "angle": 6}, "hide": ["lead_arm", "hilt"], "draw": [arm((830, 500), 0, 4, smear=70)]},
         {**stance(8), "body": {"dy": 8, "angle": 4}, "hide": ["lead_arm", "hilt"], "draw": [arm((760, 620), -40, 8)]},
         {**stance(4), "hide": ["lead_arm"], "draw": [arm((610, 340), dy=4)]},
     ]},
@@ -209,7 +218,7 @@ ANIMATIONS = {
     "iai_flash": {"fps": 18, "loop": False, "strike": ["draw"], "frames": [
         {**stance(20), "hide": ["lead_arm"], "draw": [arm((600, 330), dy=20)]},
         {**stance(10), "body": {"dy": 10, "angle": 10}, "front_leg": {"angle": 14}, "hide": ["lead_arm", "hilt"],
-         "draw": [arm((880, 500), -2, 10)]},
+         "draw": [arm((880, 500), -2, 10, smear=50)]},
         {**stance(10), "body": {"dy": 10, "angle": 12}, "front_leg": {"angle": 16}, "hide": ["lead_arm", "hilt"],
          "draw": [arm((900, 520), -6, 10)]},
         {**stance(6), "hide": ["lead_arm"], "draw": [arm((610, 340), dy=6)]},
@@ -220,14 +229,14 @@ ANIMATIONS = {
         {"body": {"angle": -6}, "front_leg": {"sy": -0.3, "angle": 14}, "back_leg": {"sy": -0.3},
          "hide": ["lead_arm", "hilt"], "draw": [arm((720, 300), 60)]},
         {"body": {"angle": -10}, "front_leg": {"sy": -0.45, "angle": 22}, "back_leg": {"sy": -0.42},
-         "hide": ["lead_arm", "hilt"], "draw": [arm((680, 160), 96)]},
+         "hide": ["lead_arm", "hilt"], "draw": [arm((680, 160), 96, smear=50)]},
     ]},
     # Descending Cut: in the air, the blade swung down and forward.
     "descending_cut": {"fps": 16, "loop": False, "strike": ["draw"], "frames": [
         {"body": {"angle": -6}, "front_leg": {"sy": -0.4, "angle": 20}, "back_leg": {"sy": -0.36},
          "hide": ["lead_arm", "hilt"], "draw": [arm((700, 260), 70)]},
         {"body": {"angle": 8}, "front_leg": {"sy": -0.4, "angle": 24}, "back_leg": {"sy": -0.36},
-         "hide": ["lead_arm", "hilt"], "draw": [arm((820, 620), -40)]},
+         "hide": ["lead_arm", "hilt"], "draw": [arm((820, 620), -40, smear=70)]},
     ]},
     # Poncho Veil: the parry stance, crouched behind the poncho, the lead arm tucked away.
     "poncho_veil": {"fps": 10, "loop": False, "frames": [
@@ -282,7 +291,7 @@ ANIMATIONS = {
     # active frames, then follows through forward).
     "crouch_hp": {"fps": 13, "loop": False, "strike": ["draw"], "frames": [
         crouched(hide=["lead_arm"], draw=[arm((600, 330 + CROUCH_DY), dy=CROUCH_DY)]),
-        crouched(hide=["lead_arm", "hilt"], draw=[arm((740, 420), 80, CROUCH_DY)]),
+        crouched(hide=["lead_arm", "hilt"], draw=[arm((740, 420), 80, CROUCH_DY, smear=20)]),
         crouched(hide=["lead_arm", "hilt"], draw=[arm((720, 400), 96, CROUCH_DY)]),
         crouched(hide=["lead_arm", "hilt"], draw=[arm((780, 560), 40, CROUCH_DY)]),
         crouched(hide=["lead_arm", "hilt"], draw=[arm((800, 600), 20, CROUCH_DY)]),
@@ -309,8 +318,8 @@ ANIMATIONS = {
     # Jumping HP: a downward slash in the air.
     "jump_hp": {"fps": 12, "loop": False, "strike": ["draw"], "frames": [
         tucked(hide=["lead_arm", "hilt"], draw=[arm((700, 260), 70)]),
-        tucked(body={"angle": 4}, hide=["lead_arm", "hilt"], draw=[arm((860, 520), -10)]),
-        tucked(body={"angle": 8}, hide=["lead_arm", "hilt"], draw=[arm((800, 640), -46)]),
+        tucked(body={"angle": 4}, hide=["lead_arm", "hilt"], draw=[arm((860, 520), -10, smear=70)]),
+        tucked(body={"angle": 8}, hide=["lead_arm", "hilt"], draw=[arm((800, 640), -46, smear=-10)]),
         tucked(hide=["lead_arm"], draw=[arm((610, 340))]),
     ]},
     # Jumping LK: the flying kick, the front leg shot out diagonally down at a standing opponent.
@@ -386,7 +395,7 @@ ANIMATIONS = {
     "thousand_mile_step": {"fps": 10, "loop": False, "frames": [
         {**stance(20), "hide": ["lead_arm"], "draw": [arm((600, 330), dy=20)]},
         {**stance(30), "body": {"dy": 30, "angle": 14}, "front_leg": {"angle": 20}, "back_leg": {"angle": -14},
-         "hide": ["lead_arm", "hilt"], "draw": [arm((900, 560), -8, 30)]},
+         "hide": ["lead_arm", "hilt"], "draw": [arm((900, 560), -8, 30, smear=60)]},
         {**stance(30), "body": {"dy": 30, "angle": 14}, "front_leg": {"angle": 22}, "back_leg": {"angle": -16},
          "hide": ["lead_arm", "hilt"], "draw": [arm((920, 580), -10, 30)]},
         {**stance(24), "body": {"dy": 24, "angle": 10}, "front_leg": {"angle": 14}, "back_leg": {"angle": -10},

@@ -8,10 +8,12 @@ with nearest-neighbour so the pixels stay square).
 
 from __future__ import annotations
 
+import math
+
 from collections import deque
 from pathlib import Path
 
-from PIL import Image, ImageFilter
+from PIL import Image, ImageDraw, ImageFilter
 
 GAME_HEIGHT = 72  # Zuzu's standing height in game pixels.
 PREVIEW_SCALE = 4
@@ -107,6 +109,24 @@ def to_game_size(image: Image.Image, figure_height: int, target: int = GAME_HEIG
     colour = colour.convert("RGBA")
     colour.putalpha(alpha)
     return colour
+
+
+def smear(canvas: Image.Image, centre, inner: float, outer: float, start: float, end: float,
+          colour=(226, 238, 255, 255)) -> None:
+    """A swing's smear: a pale crescent swept around `centre` from angle `start` to `end` (degrees,
+    0 = straight ahead, positive = up) between radii `inner` and `outer`, widest at the leading edge
+    and tapering back to nothing, the classic fighting-game blade trail."""
+    d = ImageDraw.Draw(canvas)
+    steps = max(4, int(abs(end - start) / 4))
+    outer_edge, inner_edge = [], []
+    for k in range(steps + 1):
+        t = k / steps
+        a = math.radians(start + (end - start) * t)
+        ux, uy = math.cos(a), -math.sin(a)
+        r_in = outer - (outer - inner) * t  # tapers: zero width at the trailing end
+        outer_edge.append((centre[0] + ux * outer, centre[1] + uy * outer))
+        inner_edge.append((centre[0] + ux * r_in, centre[1] + uy * r_in))
+    d.polygon(outer_edge + inner_edge[::-1], fill=colour)
 
 
 def outer_outline(frame: Image.Image, colour=(28, 22, 30, 255)) -> Image.Image:

@@ -235,11 +235,14 @@ def main(slug: str, source_dir: str, out_dir: str) -> None:
     # An attack names its striking layers (`strike`: the blade arm, the kicking leg); each frame's reach
     # is measured from those alone, so the game can check its hitboxes against the art.
     anchor_canvas = (OFFSET[0] + rig.ANCHOR[0], OFFSET[1] + rig.ANCHOR[1])
+    # A smear shows where the blade was between frames, not where it is: not measured as reach.
+    rig.MEASURING = True
     reach = {
         name: [reach_box(pose_frame(rig, parts, f, set(anim["strike"])), anchor_canvas, game_scale)
                for f in anim["frames"]]
         for name, anim in rig.ANIMATIONS.items() if anim.get("strike")
     }
+    rig.MEASURING = False
     hd, game, anchors = {}, {}, {}
     for name, fs in raw.items():
         # Each animation is cropped on its own (a knockdown lies far wider than a stance), but its
