@@ -439,7 +439,7 @@ tasks:
   - id: t-018
     milestone: m4
     title: "Write every matchup line (matchups.yaml: 36 intros, 64 win quotes, boss lines)"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -451,9 +451,15 @@ tasks:
       the Siblings, bannedTerms everywhere. Keep each line under 60 characters so it fits two pixel-font
       lines at 480 px. Add a tiny check script or test that every pair is present and every line passes
       the bannedTerms list and the length cap.
+
+      DONE 2026-10-07 (PT): matchups.yaml holds all 36 intros (28 pairs, 8 mirrors), 64 win
+      quotes and the boss lines in each fighter's voice; tools/check_matchups.py and
+      tests/test_zuzu_showdown_matchups.py keep it complete, under 60 characters a line and
+      clear of banned terms (conductor#5740).
     claimed_by: 2026-10-07T11:30:00Z-zs-t018
     claimed_at: '2026-10-07T11:23:44Z'
-    updated: '2026-10-07T11:23:44Z'
+    updated: '2026-10-07T11:31:36Z'
+    implementation_pr: 'silasfelinus/conductor#5740'
 
   - id: t-019
     milestone: m4
