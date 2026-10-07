@@ -280,7 +280,7 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Sprite sets: Zuzu and Coyote Vagrant (the first art slice)"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -315,14 +315,23 @@ tasks:
       them; they are not measured as reach), and the game throws hand-pixel hit sparks at the contact
       point (kind_robots utils/zuzuShowdown/effects.ts: hit, counter, block, parry, clash). The
       sparks' HD counterpart rides on t-027's HD style.
+
+      DONE 2026-10-07 (PT): both fighters' sprite sets cover their whole kit (Zuzu 42
+      animations, the Coyote 43) in HD and pixel with P2 colours; frame maps carry ground
+      anchors, art-derived hurtboxes and per-frame strike reach (hit), and kind_robots' sprite
+      test holds every kit hitbox to the art on its active frames; effects: rig-drawn smears
+      in both styles and hand-pixel hit sparks in the game. Shipped across
+      conductor#5712-#5736 and kind_robots#3321, #3325, #3329, #3335, #3338. The sparks' HD
+      counterpart rides on t-027.
     claimed_by: 2026-10-07T06:10:00Z-zs-t010
     claimed_at: '2026-10-07T06:09:23Z'
-    updated: '2026-10-07T06:09:23Z'
+    updated: '2026-10-07T10:55:38Z'
+    implementation_pr: 'silasfelinus/kind_robots#3338'
 
   - id: t-011
     milestone: m3
     title: "Sprite sets: the Abbess and the Siblings"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -336,7 +345,7 @@ tasks:
   - id: t-012
     milestone: m3
     title: "Sprite sets: Storm Crow and River Croc"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
@@ -348,7 +357,7 @@ tasks:
   - id: t-013
     milestone: m3
     title: "Sprite sets: the Hyena Matriarch, Old Komodo, and the boss"
-    status: waiting
+    status: ready
     owner: null
     passes: 0
     stakes: reversible
