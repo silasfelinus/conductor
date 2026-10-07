@@ -533,7 +533,7 @@ tasks:
   - id: t-022
     milestone: m4
     title: "kind_robots: Training mode"
-    status: claimed
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
@@ -542,9 +542,19 @@ tasks:
       A dummy with stand/crouch/jump/block all/block after first hit/random block, a hitbox/hurtbox/pushbox
       overlay, frame advantage on every hit and block, an input display (with the motion parser's
       reading), infinite meter and health toggles, and a position reset (center, P1 corner, P2 corner).
+
+      DONE 2026-10-07 (PT): Training mode shipped in kind_robots#3345. The dummy stands,
+      crouches, jumps, blocks all (lows crouching), blocks after the first hit, or blocks at
+      random (decided once per attack). The readouts are frame advantage under the clock and
+      P1's input display with the motion parser's read named on the input that fired it. There
+      are infinite meter and health-refill toggles, a frozen clock, and resets to the centre
+      or either corner (R repeats). The existing Hitboxes toggle covers the hitbox, hurtbox
+      and pushbox overlay. utils/zuzuShowdown/training.ts is pure, tested by test:zuzu-
+      showdown-training.
     claimed_by: 2026-10-07T13:00:00Z-zs-t022
     claimed_at: '2026-10-07T12:56:26Z'
-    updated: '2026-10-07T12:56:26Z'
+    updated: '2026-10-07T13:19:47Z'
+    implementation_pr: 'silasfelinus/kind_robots#3345'
 
   - id: t-023
     milestone: m4
