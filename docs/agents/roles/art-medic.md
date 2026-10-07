@@ -29,6 +29,10 @@ has a `source` (`project-art` = `images:` in `projects/art-prompts.yaml`,
      page", "poster", "trading card") needs a hand rewrite that describes the
      subject and the aspect ratio. Change only the `prompt` field. Edit the text in
      place, because a `yaml.safe_dump` round trip reformats the whole file.
+     A project image that is already pending also has a copy in
+     `projects/art-generate.yaml`, which the consumer actually submits and the queue
+     refresh preserves verbatim: change that copy too, or the old prompt keeps 422ing
+     (`tests/test_project_art_prompts_contract.py` fails until they match).
   2. **Fix the producer, not just the row.** Find what wrote the prompt
      (`git log -S` on a distinctive phrase; `source:` on a request) and fix it so
      the next one is clean. On 2026-10-07 every project from
