@@ -1,13 +1,13 @@
 """The Coyote Vagrant's rig (zuzu-showdown t-010).
 
-Parts are cut from his profile-right reference (ArtImage 242404, already facing right) until the t-010
-parts sheet (art/T010-RIG-PARTS.yaml) lands; then each part's `art`, `polygon` and `pivot` move to the
-cleaner sheet without touching the animations. Coordinates are the source image's pixels (832 x 1216);
-about 11 of them make one game pixel at his 104 px height.
+His body is cut from the t-010 parts sheet's fighting stance (ArtImage 242880: a crouched, wide stance
+facing right, boots planted, coat hanging open). Coordinates are that image's pixels (832 x 1216); about
+11 of them make one game pixel at his 104 px height, with scale from his standing reference (242404).
 
-Post-croc (Silas, 2026-10-07): his right hand is gone and a knife is lashed to the bandaged stump. He
-faces right, so that near arm is the stump arm, drawn in front of the coat; his left arm, with the
-revolver he fires left-handed and badly, is on the far side and drawn behind it.
+Post-croc (Silas, 2026-10-07): his right hand is gone and a knife is lashed to the bandaged stump.
+Kontext drew the stance with a whole hand gripping the knife, so both arms are cut away and drawn in
+code instead: the stump arm (near side, in front of the coat) and his left arm with the revolver he
+fires left-handed and badly (far side, behind it).
 """
 
 from __future__ import annotations
@@ -18,29 +18,31 @@ from PIL import ImageDraw
 
 HEIGHT = 104
 PALETTE_COLOURS = 16
-REFERENCE = {"art": 242404}
+REFERENCE = {"art": 242404}  # scale only
+STANCE = 242880
 
-NECK = (430, 300)
-HIP_BACK = (300, 880)
-HIP_FRONT = (460, 620)
-SHOULDER_NEAR = (300, 340)
-SHOULDER_FAR = (440, 340)
-
+NECK = (420, 280)
+HIP_BACK = (220, 830)
+HIP_FRONT = (460, 690)
+SHOULDER_NEAR = (480, 340)
+SHOULDER_FAR = (420, 330)
 # The fighter's spot on the ground in the source art: midway between his boots.
-ANCHOR = (420, 1190)
+ANCHOR = (400, 1170)
 
 PARTS = {
-    "back_leg": {"art": 242404, "z": 1, "pivot": HIP_BACK, "follows": [],
-                 "polygon": [(226, 860), (372, 860), (352, 1000), (346, 1196), (210, 1196), (228, 1000)]},
-    "front_leg": {"art": 242404, "z": 2, "pivot": HIP_FRONT, "follows": [],
-                  "polygon": [(376, 560), (560, 600), (566, 800), (546, 900), (566, 960), (704, 1096), (694, 1166),
-                              (496, 1166), (476, 1000), (436, 900), (376, 820)]},
-    "torso": {"art": 242404, "z": 3, "pivot": HIP_FRONT, "follows": ["body"],
-              "polygon": [(176, 256), (426, 250), (520, 316), (532, 560), (500, 560), (430, 600), (400, 820),
-                          (382, 906), (196, 906), (168, 700), (186, 500)]},
-    "head": {"art": 242404, "z": 4, "pivot": NECK, "follows": ["body"],
-             "polygon": [(278, 56), (600, 36), (606, 214), (572, 252), (520, 284), (430, 304), (330, 326),
-                         (288, 250)]},
+    "back_leg": {"art": STANCE, "z": 1, "pivot": HIP_BACK, "follows": [],
+                 "polygon": [(140, 816), (304, 816), (284, 940), (254, 1060), (236, 1172), (96, 1172), (116, 1060),
+                             (148, 940)]},
+    "front_leg": {"art": STANCE, "z": 2, "pivot": HIP_FRONT, "follows": [],
+                  "polygon": [(380, 640), (560, 620), (604, 760), (594, 880), (644, 980), (784, 1080), (774, 1134),
+                              (540, 1134), (526, 1000), (468, 920), (398, 840)]},
+    "torso": {"art": STANCE, "z": 3, "pivot": HIP_FRONT, "follows": ["body"],
+              "polygon": [(182, 280), (300, 248), (432, 256), (520, 326), (530, 420), (580, 520), (580, 700),
+                          (560, 800), (470, 822), (420, 862), (150, 862), (128, 760), (140, 600), (160, 420),
+                          (150, 330)]},
+    "head": {"art": STANCE, "z": 4, "pivot": NECK, "follows": ["body"],
+             "polygon": [(256, 90), (400, 42), (562, 78), (604, 200), (562, 242), (500, 262), (432, 302), (330, 302),
+                         (280, 242), (256, 160)]},
 }
 
 INK = (20, 16, 14)
@@ -134,12 +136,21 @@ def gun(hand, aim=0, flash=False, dy=0, holding="gun"):
     return {"fn": "gun_arm", "args": {"hand": hand, "aim": aim, "flash": flash, "dy": dy, "holding": holding}}
 
 
-BACK_BOOT = (270, 1190)
+BACK_BOOT = (170, 1172)
 
 
 def fall(angle):
     """Toppling backwards about his back boot: positive angles tip the head to the left (behind him)."""
     return {"whole": {"angle": angle, "pivot": BACK_BOOT}}
+
+
+def rest_arms(dy=0):
+    """Both arms at rest, following the body down: the stump hanging at his side with the knife
+    pointing at the ground, and his empty left hand behind him near the holster."""
+    return {
+        "draw": [stump((540, 600 + dy), knife=-75, dy=dy)],
+        "draw_behind": [gun((390, 610 + dy), aim=-80, dy=dy, holding="open")],
+    }
 
 
 def slouch(dy=0, head=0, sway=0):
@@ -157,12 +168,12 @@ ANIMATIONS = {
         {"front_leg": {"angle": -18}, "back_leg": {"angle": 16}, "body": {"dy": 6, "angle": 1}},
         {"front_leg": {"angle": -6, "dy": -20}, "back_leg": {"angle": 6}, "body": {"dy": 0, "angle": 2}},
     ]},
-    # Each leg squashes about its hip by its own amount so both feet rise the same 160 px, then the
-    # legs and body drop 160 px to put the feet back on the floor.
+    # Each leg squashes about its hip by its own amount (back 340 px of leg, front 490) so both feet
+    # rise the same 160 px, then the legs and body drop 160 px to put the feet back on the floor.
     "crouch": {"fps": 12, "loop": False, "frames": [
-        {"body": {"dy": 80, "angle": 6}, "front_leg": {"sy": -0.15, "dy": 80}, "back_leg": {"sy": -0.25, "dy": 80}},
-        {"body": {"dy": 160, "angle": 12}, "front_leg": {"sy": -0.29, "sx": 0.1, "dy": 160, "angle": 4},
-         "back_leg": {"sy": -0.5, "sx": 0.1, "dy": 160, "angle": -4}},
+        {"body": {"dy": 80, "angle": 6}, "front_leg": {"sy": -0.16, "dy": 80}, "back_leg": {"sy": -0.24, "dy": 80}},
+        {"body": {"dy": 160, "angle": 12}, "front_leg": {"sy": -0.33, "sx": 0.1, "dy": 160, "angle": 4},
+         "back_leg": {"sy": -0.47, "sx": 0.1, "dy": 160, "angle": -4}},
     ]},
     "jump_up": {"fps": 12, "loop": False, "frames": [
         {"body": {"dy": 60}, "front_leg": {"sy": -0.11, "dy": 60}, "back_leg": {"sy": -0.19, "dy": 60}},
@@ -196,8 +207,8 @@ ANIMATIONS = {
         {**slouch(12, 4, -8), "draw": [stump((450, 290), knife=84, dy=12)]},
     ]},
     "block_low": {"fps": 12, "loop": False, "frames": [
-        {"body": {"dy": 160, "angle": 10}, "front_leg": {"sy": -0.29, "sx": 0.1, "dy": 160},
-         "back_leg": {"sy": -0.5, "sx": 0.1, "dy": 160}, "draw": [stump((560, 700), knife=-24, dy=160)]},
+        {"body": {"dy": 160, "angle": 10}, "front_leg": {"sy": -0.33, "sx": 0.1, "dy": 160},
+         "back_leg": {"sy": -0.47, "sx": 0.1, "dy": 160}, "draw": [stump((560, 700), knife=-24, dy=160)]},
     ]},
     # Hits: the head snaps back (high) or he folds over the blow (low).
     "hit_high": {"fps": 14, "loop": False, "frames": [

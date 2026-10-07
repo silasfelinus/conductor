@@ -70,8 +70,11 @@ def pose_frame(rig, parts: dict[str, Image.Image], frame: dict) -> Image.Image:
     its group's, e.g. the head follows `body` unless the frame poses `head` itself)."""
     canvas = Image.new("RGBA", CANVAS, (0, 0, 0, 0))
     hidden = set(frame.get("hide", []))
+    # A rig with code-drawn arms gives resting arms (rest_arms(body_dy)) to any frame that doesn't
+    # pose that layer itself, so idles, walks, hits and falls aren't armless.
+    rest = rig.rest_arms(frame.get("body", {}).get("dy", 0)) if hasattr(rig, "rest_arms") else {}
     # Code-drawn pieces on the far side of the body (the Coyote's gun arm) go down first.
-    for draw in frame.get("draw_behind", []):
+    for draw in frame.get("draw_behind", rest.get("draw_behind", [])):
         getattr(rig, draw["fn"])(canvas, OFFSET, **draw.get("args", {}))
     for name in sorted(rig.PARTS, key=lambda n: rig.PARTS[n]["z"]):
         if name in hidden:
@@ -86,7 +89,7 @@ def pose_frame(rig, parts: dict[str, Image.Image], frame: dict) -> Image.Image:
         for key, value in frame.get(name, {}).items():
             pose[key] = pose.get(key, 0) + value
         place(canvas, parts[name], pose, spec["pivot"])
-    for draw in frame.get("draw", []):
+    for draw in frame.get("draw", rest.get("draw", [])):
         getattr(rig, draw["fn"])(canvas, OFFSET, **draw.get("args", {}))
     # The whole figure at once (falls, knockdowns): rotate about a pivot in source pixels, then shift.
     whole = frame.get("whole")
