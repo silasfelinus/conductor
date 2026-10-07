@@ -40,6 +40,11 @@ milestones:
     weight: 30
     status: in-progress
 
+  - id: m4
+    title: "DISPLAY — resolution system and player-selectable render styles (pixel, HD, more)"
+    weight: 10
+    status: not-started
+
 tasks:
   - id: t-001
     milestone: m1
@@ -471,3 +476,31 @@ tasks:
       zuzu-lair/t-009 reuses the same board.
     updated: '2026-10-06T19:00:00Z'
     implementation_pr: 'silasfelinus/kind_robots#3277'
+
+  - id: t-012
+    milestone: m4
+    title: "Resolution system + render styles for every cabinet (pixel / HD / fun extras), pinball first"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    approved_by_human: true
+    note: >-
+      Silas, 2026-10-06 PT (verbatim): "as a note: our original arcade uses a very slimmed down resolution...we should both be able to upgrade that anyway (pixel is a style choice, users should be able to select pixel or hd or others if they are fun), but after working with pinball, it's clear we also need a much better resolution system for the higher quality games".
+      Today: each game declares a small logical size (320x240 is the most common; the largest are
+      480x360 and 288x488), arcade-cabinet.vue sizes the canvas to its box at up to 2x DPR and scales
+      the logical drawing up. Vector drawing is sharp, but art, pixel fonts and pre-rendered layers
+      are authored at the logical size, so nothing can gain detail, and a game cannot be "HD".
+      Build one display layer the cabinet (and the stand-alone games: Zuzu Showdown, pinball) share:
+      (1) logical world size stays per game, separate from the render target; (2) render styles
+      chosen by the player -- Pixel (logical size x the largest integer scale that fits, nearest
+      filtering, pixel font), HD (device resolution, smooth filtering, HD art, a vector font), and
+      room for fun extras (CRT scanlines, the pinball DMD look); (3) assets keyed by style, so a
+      game ships HD masters and a derived pixel set (zuzu-showdown t-007's pipeline does the
+      derivation); (4) one arcade display preference in a Pinia store (the store owns
+      localStorage), with a per-game override; (5) DPR cap raised or made per-style so HD is crisp
+      on 3x phones without melting low-end ones. Pinball is the motivating case and the first heavy
+      consumer; port two existing cabinets as proof. Done when the cabinet shows the style picker,
+      two cabinets plus pinball render in Pixel and HD, a contract test covers the transform math
+      (logical to canvas at DPR 1/2/3, integer pixel scale, letterboxing), and DESIGN-BRIEF.md's
+      engine-kit contract documents it.

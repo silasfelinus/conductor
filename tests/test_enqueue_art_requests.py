@@ -132,6 +132,17 @@ def test_kontext_lane_sends_source_image_and_settings():
     assert body["steps"] == 20 and body["guidance"] == 2.5
     assert "negativePrompt" not in body and "checkpoint" not in body
 
+    assert "seed" not in body
+
+
+def test_seed_comes_from_the_subject_then_the_lane():
+    lane = {**KONTEXT_LEDGER["lanes"][0], "seed": 11}
+    subject = KONTEXT_LEDGER["subjects"][0]
+    body = enq.build_request(KONTEXT_LEDGER, lane, subject, "data:image/png;base64,AAAA")
+    assert body["seed"] == 11
+    body = enq.build_request(KONTEXT_LEDGER, lane, {**subject, "seed": 0}, "data:image/png;base64,AAAA")
+    assert body["seed"] == 0
+
 
 def test_kontext_lane_without_source_image_is_refused():
     lane, subject = KONTEXT_LEDGER["lanes"][0], KONTEXT_LEDGER["subjects"][0]

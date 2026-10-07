@@ -17,7 +17,8 @@ projects/comic-creator/issues/zuzu-koala-assassin-01/ART-ROUND-3.yaml.
 A subject may carry ``source_image_id`` (an ArtImage id). Kontext lanes need one:
 the image is fetched and sent as ``sourceImageBase64``, so an approved design can be
 re-posed (the 8-angle renders, comic-creator t-015). Kontext lanes may set ``steps``
-and ``guidance``. ``source_crop: [l, t, r, b]`` (fractions) cuts one figure out of a
+and ``guidance``. Any lane or subject may set ``seed`` (the subject's wins).
+``source_crop: [l, t, r, b]`` (fractions) cuts one figure out of a
 turnaround sheet, ``source_flip: true`` mirrors it (a back view with the sword on the wrong
 shoulder), ``source_pad: "16:9"`` pads it with white, centred, to that aspect (a portrait
 cast pick placed into a widescreen scene; Kontext fills the margins), and
@@ -96,6 +97,11 @@ def build_request(ledger, lane, subject, source_image=None):
     for field, key in (("projectSlug", "project_slug"), ("designer", "designer")):
         if ledger.get(key):
             body[field] = ledger[key]
+    # A fixed seed (subject first, then lane) makes a cell reproducible: the
+    # sprite bake-off (zuzu-showdown t-007) holds one seed across every frame.
+    seed = subject.get("seed", lane.get("seed"))
+    if seed is not None:
+        body["seed"] = int(seed)
     return body
 
 
