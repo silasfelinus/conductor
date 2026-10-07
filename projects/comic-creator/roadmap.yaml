@@ -250,11 +250,11 @@ tasks:
 - id: t-016
   milestone: m3
   title: Character LoRA datasets for Zuzu and the fennec siblings
-  status: claimed
+  status: ready
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-10-07T07:09:47Z'
+  updated: '2026-10-07T08:46:52Z'
   depends_on:
   - t-015
   note: >-
@@ -265,6 +265,9 @@ tasks:
     (scripts/build_lora_dataset.py + LORA-SETS.yaml) and Silas runs train.ps1 on the box;
     finished LoRAs land in Lora/import for lora_import_agent. Setup and testing:
     projects/comic-creator/docs/lora-training.md.
+
+    Reset stale claimed (null claimed_by/at) back to ready: lost close-out write, per
+    check_recurring_claim_drift.
   approved_by_human: true
 - id: t-017
   milestone: m2
