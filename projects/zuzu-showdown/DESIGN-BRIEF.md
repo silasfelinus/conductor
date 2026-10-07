@@ -1,9 +1,9 @@
 # Zuzu Showdown — Design Brief
 
 date: 2026-10-06
-status: v1.1 — building; roster and Siblings rules confirmed by Silas (2026-10-06), four questions open (t-002, soft)
+status: v1.2 — building; scope confirmed by Silas (2026-10-06/07, see "Decisions")
 author: Claude (from Silas's request, 2026-10-06)
-working title: **Zuzu Showdown** (rename freely; the slug stays `zuzu-showdown`)
+title: **Zuzu Showdown** (confirmed by Silas, 2026-10-07)
 
 ## Silas's ask (verbatim)
 
@@ -50,9 +50,10 @@ nothing here is canon about who beats whom.
   Always serious, with Eastwood stillness.
 - **Scale is part of the look.** Zuzu is the shortest adult on the roster. The sister is taller than he
   is. The croc and the komodo dwarf everyone. Skullgirls-style size variety is a feature here.
-- **Tone:** darker and grittier, "less Disney, more Tarantino". The violence is cartoonish, at the level
-  `zuzu-lair` set ("cartoonishly violent", Silas 2026-10-06): exaggerated slapstick KOs, with no
-  realistic gore at pixel scale.
+- **Tone: lighter than the comic.** Silas, 2026-10-07: *"this is a lighter game than the mature comic. More
+  street fighter than mortal kombat."* The designs keep the comic's grit (rags, dust, the dusty palette),
+  but the violence is Street Fighter level: impact sparks and dust, never blood or gore, no fatalities,
+  and every KO is a fighter knocked out, dazed or sent flying, never killed.
 - **bannedTerms apply everywhere:** every art prompt, line, stage name and ending. Never `human`,
   `humans`, `humanity`, `mankind`, `people`, `pharmacy`, `great wall`, `skyscraper`, `highway`,
   `billboard`, `road sign` or `english lettering`. Say "townsfolk" or name the species. The buried twist
@@ -80,7 +81,7 @@ The full data (stats, normals, specials with inputs, supers, intro, taunt, victo
 | 5 | **Storm Crow**, raider captain | air rushdown with a flight mode; talon dives, hooked blade, lightning | Storm Canyon | *The Murder*: the whole flock sweeps the screen under lightning |
 | 6 | **River Croc**, giant crocodile | giant grappler; command grabs, submerge and erupt | The Watering Hole | *Death Roll*: the stage floods and the croc erupts and rolls |
 | 7 | **The Hyena Matriarch** *(new)*, slaver chief | mid-range chain-and-hook footsies; her cackles build meter | The Bone Yard | *Last Laugh*: the whole pack cackles in and the chains close |
-| 8 | **Old Komodo** *(new to the game)*, ancient desert lizard | slow armored tank; venom bite damages over time | The Dunes | *Feeding Time*: erupts from the sand, then a venom bite and a slow, dreadful chew |
+| 8 | **Old Komodo** *(new to the game)*, ancient desert lizard | slow armored tank; venom bite damages over time | The Dunes | *Feeding Time*: erupts from the sand, gulps, chews, and spits the victim out |
 | boss | **The Thing Behind the Door** | unplayable arcade final boss; tentacles and an eye through a portal | The Thin Place | — |
 
 ### Choosing "a couple others"
@@ -333,8 +334,8 @@ Monitor, an Otter Nun, the Storm Crow faction's grunts), and tag or assist mecha
 
 - Riff on the *genre* only: no Street Fighter, Skullgirls, MvC or Mortal Kombat names, sprites, sounds,
   move names or characters.
-- No fatality-style finishing moves. KO poses are cartoonish and slapstick, never gore, and never on the
-  Siblings.
+- No fatality-style finishing moves, no blood and no gore. KO poses are Street Fighter-style knockouts
+  (dazed, slumped, sent flying), and the Siblings always flee.
 - No money, no ads and no paywall. Renders run on our own Comfy backend.
 - No LLM at runtime.
 - Every bannedTerm applies to every prompt and every line.
@@ -349,14 +350,15 @@ Monitor, an Otter Nun, the Storm Crow faction's grunts), and tag or assist mecha
 3. **The Siblings rules stand:** the toddler is never hit, they flee on a KO instead of dying, and the
    grabs that bite, stab or roll play a fling variant against them.
 
-## Open questions for Silas (t-002, soft — building continues meanwhile)
+### Second round (Silas, 2026-10-07)
 
-The drafts stand if there is no answer by 2026-10-13 (the default-recommendation rule).
+> He should be without his hand. Yes on knockout tone, this is a lighter game than the mature comic. More
+> street fighter than mortal kombat. Zuzu Showdown works for me. Sounds good on defraying online for later
 
-1. **The Coyote's stump:** he fights post-croc (knife lashed to the stump, left-hand shooting that misses,
-   the later-book gags), which shows chapter 1's outcome. Fine, or should he have both hands?
-2. **KO tone:** cartoonish slapstick KOs with no fatalities, matching zuzu-lair's level. More, less, or
-   Mortal Kombat-style finishers?
-3. **The name:** "Zuzu Showdown" is a working title. Alternatives: *Hollow Bell Brawl*, *Dust & Steel*,
-   *Wasteland Kumite*.
-4. **Online play** stays a later phase (the engine is built deterministic so it can be added). Agreed?
+4. **The Coyote fights without his right hand:** the knife lashed to the stump and left-handed shooting.
+5. **The tone is lighter than the comic:** Street Fighter, not Mortal Kombat. No blood, no gore, no
+   fatalities; KOs are knockouts.
+6. **The name is Zuzu Showdown.**
+7. **Online play is a later phase.** The engine stays deterministic so rollback netplay can be added.
+
+Every scope question is answered; t-002 is done.
