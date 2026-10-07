@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08111d"/><stop offset="1" stop-color="#1b1029"/></linearGradient>
+    <linearGradient id="table" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#182550"/><stop offset="1" stop-color="#361737"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="16" stdDeviation="14" flood-color="#000" flood-opacity=".55"/></filter>
+    <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <symbol id="miniTable" viewBox="0 0 300 500">
+      <path d="M42 12 H258 L292 488 H8 Z" fill="#090c14" stroke="#52617a" stroke-width="6"/>
+      <path d="M58 32 H242 L272 465 H28 Z" fill="url(#table)"/>
+      <path d="M52 388 C30 280 35 125 80 68" fill="none" stroke="#dcefff" stroke-width="6"/>
+      <path d="M248 388 C270 280 265 125 220 68" fill="none" stroke="#dcefff" stroke-width="6"/>
+      <path d="M75 370 C82 290 112 245 145 210 C168 185 170 140 156 98" fill="none" stroke="#ff5ba6" stroke-opacity=".65" stroke-width="18"/>
+      <path d="M225 370 C218 292 192 250 160 223 C138 205 140 176 172 150 C205 124 230 135 244 165" fill="none" stroke="#43dcff" stroke-opacity=".65" stroke-width="18"/>
+      <g><circle cx="105" cy="165" r="18" fill="#161927" stroke="#ff5ba6" stroke-width="5"/><circle cx="150" cy="152" r="18" fill="#161927" stroke="#42dfff" stroke-width="5"/><circle cx="196" cy="170" r="18" fill="#161927" stroke="#ffd24f" stroke-width="5"/></g>
+      <rect x="92" y="65" width="116" height="68" rx="12" fill="#102641" stroke="#74c6e8" stroke-width="4"/>
+      <g filter="url(#glow)" fill="#ffd34f"><circle cx="85" cy="320" r="7"/><circle cx="150" cy="300" r="7"/><circle cx="216" cy="320" r="7"/></g>
+      <path d="M96 417 L138 442" stroke="#fff5e3" stroke-width="16" stroke-linecap="round"/><path d="M204 417 L162 442" stroke="#fff5e3" stroke-width="16" stroke-linecap="round"/>
+      <circle cx="200" cy="285" r="8" fill="#dcecff" stroke="#4c5868" stroke-width="2"/>
+    </symbol>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <text x="75" y="80" fill="#f4f8ff" font-family="Inter,Arial" font-size="36" font-weight="800">RESPONSIVE PINBALL SHELL</text>
+  <text x="78" y="120" fill="#8fa4bf" font-family="Inter,Arial" font-size="19">Same 3D table. Different camera and input presentation. No giant generic D-pad.</text>
+  <g transform="translate(60 190)" font-family="Inter,Arial" filter="url(#shadow)">
+    <rect x="0" y="0" width="680" height="470" rx="22" fill="#121824" stroke="#53637a" stroke-width="5"/>
+    <rect x="22" y="22" width="636" height="370" rx="10" fill="#060912"/>
+    <rect x="90" y="35" width="500" height="44" rx="8" fill="#170d05" stroke="#b7732e" stroke-width="2"/>
+    <text x="110" y="64" fill="#ffb134" font-family="monospace" font-size="17">AMI MULTIBALL</text><text x="570" y="64" fill="#ffb134" font-family="monospace" font-size="17" text-anchor="end">2,485,760</text>
+    <g transform="translate(195 75) scale(.72)"><use href="#miniTable" width="300" height="500"/></g>
+    <text x="340" y="425" fill="#dce6f3" text-anchor="middle" font-size="16" font-weight="700">DESKTOP / LANDSCAPE</text>
+    <text x="340" y="451" fill="#8fa4b8" text-anchor="middle" font-size="14">Table gets the room. Keyboard/gamepad. UI becomes secondary.</text>
+  </g>
+  <g transform="translate(790 190)" font-family="Inter,Arial" filter="url(#shadow)">
+    <rect x="0" y="0" width="455" height="570" rx="28" fill="#121824" stroke="#53637a" stroke-width="5"/>
+    <rect x="20" y="22" width="415" height="475" rx="12" fill="#060912"/>
+    <rect x="70" y="36" width="315" height="37" rx="7" fill="#170d05" stroke="#b7732e" stroke-width="2"/>
+    <text x="85" y="61" fill="#ffb134" font-family="monospace" font-size="14">JACKPOT LIT</text><text x="370" y="61" fill="#ffb134" font-family="monospace" font-size="14" text-anchor="end">985,300</text>
+    <g transform="translate(100 70) scale(.82)"><use href="#miniTable" width="300" height="500"/></g>
+    <text x="228" y="526" fill="#dce6f3" text-anchor="middle" font-size="16" font-weight="700">TABLET</text>
+    <text x="228" y="551" fill="#8fa4b8" text-anchor="middle" font-size="13">Touch edge zones. Camera slightly more top-down.</text>
+  </g>
+  <g transform="translate(1300 190)" font-family="Inter,Arial" filter="url(#shadow)">
+    <rect x="0" y="0" width="235" height="640" rx="42" fill="#0f141f" stroke="#5a687d" stroke-width="5"/>
+    <rect x="13" y="20" width="209" height="590" rx="31" fill="#040710"/>
+    <rect x="44" y="37" width="147" height="29" rx="6" fill="#170d05" stroke="#b7732e" stroke-width="2"/>
+    <text x="118" y="57" fill="#ffb134" font-family="monospace" font-size="10" text-anchor="middle">RAMP FRENZY  0:18</text>
+    <g transform="translate(32 75) scale(.57 .86)"><use href="#miniTable" width="300" height="500"/></g>
+    <rect x="20" y="385" width="92" height="200" rx="24" fill="#ff5aa8" opacity=".08" stroke="#ff5aa8" stroke-opacity=".18"/>
+    <rect x="123" y="385" width="92" height="200" rx="24" fill="#40dfff" opacity=".08" stroke="#40dfff" stroke-opacity=".18"/>
+    <text x="66" y="565" fill="#ff9bc8" font-size="10" text-anchor="middle">LEFT FLIPPER</text><text x="169" y="565" fill="#8defff" font-size="10" text-anchor="middle">RIGHT FLIPPER</text>
+    <path d="M180 320 C205 300 205 270 190 252" fill="none" stroke="#ffd04c" stroke-width="3"/>
+    <text x="118" y="626" fill="#dce6f3" text-anchor="middle" font-size="14" font-weight="700">PHONE</text>
+  </g>
+  <g transform="translate(75 720)" font-family="Inter,Arial">
+    <text x="0" y="0" fill="#f4f8ff" font-size="22" font-weight="800">INTERACTION PRINCIPLES</text>
+    <g transform="translate(0 35)">
+      <rect width="510" height="165" rx="18" fill="#0d1726" stroke="#2a425c"/>
+      <text x="24" y="37" fill="#66dfff" font-size="17" font-weight="800">1 • THE TABLE IS THE UI</text>
+      <text x="24" y="68" fill="#a9b8ca" font-size="15">The player should see ramps, inserts, ball and DMD first.</text>
+      <text x="24" y="94" fill="#a9b8ca" font-size="15">Start / pause / sound remain available without owning the frame.</text>
+      <text x="24" y="126" fill="#a9b8ca" font-size="15">The arcade cabinet becomes a frame around a machine, not a controller shrine.</text>
+    </g>
+    <g transform="translate(535 35)">
+      <rect width="470" height="165" rx="18" fill="#151124" stroke="#563451"/>
+      <text x="24" y="37" fill="#ff72b6" font-size="17" font-weight="800">2 • TOUCH IS INVISIBLE AFTER LEARNING</text>
+      <text x="24" y="68" fill="#bcaabd" font-size="15">Bottom-left and bottom-right are the flippers.</text>
+      <text x="24" y="94" fill="#bcaabd" font-size="15">Drag the plunger itself. Swipe to nudge.</text>
+      <text x="24" y="126" fill="#bcaabd" font-size="15">Hints fade after the first ball.</text>
+    </g>
+    <g transform="translate(1030 35)">
+      <rect width="430" height="165" rx="18" fill="#17150c" stroke="#65572b"/>
+      <text x="24" y="37" fill="#ffd45a" font-size="17" font-weight="800">3 • CAMERA ADAPTS, RULES DO NOT</text>
+      <text x="24" y="68" fill="#c9c0a3" font-size="15">Phone gets closer and more top-down.</text>
+      <text x="24" y="94" fill="#c9c0a3" font-size="15">Desktop shows more depth and cabinet.</text>
+      <text x="24" y="126" fill="#c9c0a3" font-size="15">All devices play identical physics and scoring.</text>
+    </g>
+  </g>
+</svg>
