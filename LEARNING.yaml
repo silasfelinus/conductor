@@ -17394,3 +17394,14 @@ records:
   lesson: kind_robots' contract job runs an ESLint ratchet that fails on any new finding, including in
     test files; run `npm run test:lint-ratchet` locally (after provision_kind_robots_deps.sh) before pushing,
     not just tsx and tsc.
+- date: 2026-10-07
+  project: zuzu-showdown
+  task: t-006
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'kind_robots forbids URL-only pages (verifyNoHiddenRoutes): a not-yet-public page is an Admin
+    tab, not ''unlisted''; and run prettier last, after every edit, because the prettier ratchet fails
+    on any newly unformatted file.'
