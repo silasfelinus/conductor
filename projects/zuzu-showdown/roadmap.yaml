@@ -181,7 +181,7 @@ tasks:
   - id: t-006
     milestone: m2
     title: "kind_robots: renderer, HUD and playable page on placeholders (unlisted)"
-    status: claimed
+    status: review
     owner: worker
     passes: 0
     stakes: reversible
@@ -198,10 +198,15 @@ tasks:
       store. Verify a full local versus match with Playwright at phone, tablet and desktop widths
       (keyboard and touch), and screenshot every state.
 
+      2026-10-07: implemented in silasfelinus/kind_robots#3304 (render.ts, stage component,
+      options store, Admin tab /play/zuzu-showdown). Admin tab instead of an unlisted URL, per
+      Silas's no-hidden-routes rule. Screenshots: projects/zuzu-showdown/docs/t-006-screens/.
+
   # ---------------------------------------------------------------- m3 ART
     claimed_by: 2026-10-07T03:40:00Z-zs-t006
     claimed_at: '2026-10-07T03:01:16Z'
-    updated: '2026-10-07T03:01:16Z'
+    updated: '2026-10-07T03:26:51Z'
+    implementation_pr: 'silasfelinus/kind_robots#3304'
   - id: t-007
     milestone: m3
     title: "Sprite pipeline bake-off on Zuzu (pose-locked generation vs cutout rig vs hand pixel)"
