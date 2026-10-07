@@ -658,8 +658,8 @@ tasks:
   - id: t-027
     milestone: m3
     title: "kind_robots: render styles -- pixel and HD (stage renders at device resolution, art per style)"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-007]
@@ -676,3 +676,6 @@ tasks:
       HD (from t-010): the rig's smears are already in the HD atlases; the hit sparks
       (utils/zuzuShowdown/effects.ts, drawn by render.ts drawSparks) are hand pixel and need their
       HD counterpart here, e.g. the same 13x13 shapes drawn smooth at device resolution.
+    claimed_by: 2026-10-07T14:45:00Z-zs-t027
+    claimed_at: '2026-10-07T14:45:35Z'
+    updated: '2026-10-07T14:45:35Z'
