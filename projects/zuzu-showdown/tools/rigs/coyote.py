@@ -199,6 +199,27 @@ def sand(canvas, offset, origin, reach=1.0):
         d.ellipse([x - r, y - r, x + r, y + r], fill=SAND, outline=INK, width=3)
 
 
+BEDROLL = (122, 98, 70)
+BEDROLL_STRIPE = (164, 60, 48)
+
+
+def bedroll(canvas, offset, box=None, heap=None):
+    """His bedroll: a blanket over him from the shoulders down (`box`, in standing source pixels, so a
+    whole-figure fall lays it over him lying down), or a kicked-off heap on the floor (`heap`: x0, x1)."""
+    d = ImageDraw.Draw(canvas)
+    if box:
+        x0, y0, x1, y1 = (box[0] + offset[0], box[1] + offset[1], box[2] + offset[0], box[3] + offset[1])
+        d.rounded_rectangle([x0, y0, x1, y1], radius=60, fill=BEDROLL, outline=INK, width=14)
+        for k in (0.3, 0.38, 0.7, 0.78):
+            y = y0 + (y1 - y0) * k
+            d.line([(x0 + 10, y), (x1 - 10, y)], fill=BEDROLL_STRIPE, width=20)
+    if heap:
+        x0, x1 = heap[0] + offset[0], heap[1] + offset[0]
+        floor = 1172 + offset[1]
+        d.chord([x0, floor - 160, x1, floor + 160], 180, 360, fill=BEDROLL, outline=INK, width=14)
+        d.line([(x0 + 60, floor - 60), (x1 - 60, floor - 80)], fill=BEDROLL_STRIPE, width=18)
+
+
 def stump(hand, knife=0, dy=0):
     return {"fn": "stump_arm", "args": {"hand": hand, "knife": knife, "dy": dy}}
 
@@ -494,6 +515,77 @@ ANIMATIONS = {
          "front_leg": {"angle": 10}, "back_leg": {"angle": -10}},
         {"body": {"dy": -30, "dx": 30, "angle": 16}, "head": {"angle": 18, "dx": 40},
          "front_leg": {"angle": 16, "dy": -20}, "back_leg": {"angle": -14, "dy": -20}},
+    ]},
+    # Stump Shiv (charge b,f+P, 38 frames, 3 hits): a lunging flurry of stabs with the knife-stump.
+    "stump_shiv": {"fps": 12, "loop": False, "frames": [
+        {**slouch(10, 0, -6), "draw": [stump((300, 520), knife=10, dy=10)]},
+        {**slouch(4, 0, 10), "front_leg": {"angle": 14}, "draw": [stump((720, 440), knife=0, dy=4)]},
+        {**slouch(6, 0, 6), "front_leg": {"angle": 12}, "draw": [stump((520, 480), knife=6, dy=6)]},
+        {**slouch(4, 0, 12), "front_leg": {"angle": 16}, "draw": [stump((740, 480), knife=-6, dy=4)]},
+        {**slouch(6, 0, 6), "front_leg": {"angle": 12}, "draw": [stump((520, 460), knife=10, dy=6)]},
+        {**slouch(2, 0, 14), "front_leg": {"angle": 18}, "draw": [stump((750, 420), knife=4, dy=2)]},
+        {**slouch(8, 0, 4), "draw": [stump((560, 520), knife=-30, dy=8)]},
+        slouch(6),
+    ]},
+    # Pick Pocket (HCB+K, 35 frames): the good hand darts into the opponent's coat and comes back with
+    # some of their meter (the button is the joke; the meter is the theft).
+    "pick_pocket": {"fps": 10, "loop": False, "frames": [
+        {**slouch(8, 0, 8), "draw_behind": [gun((640, 470), dy=8, holding="open")]},
+        {**slouch(6, 0, 14), "body": {"dy": 6, "angle": 14, "dx": 20}, "draw_behind": [gun((780, 480), dy=6, holding="open")]},
+        {**slouch(6, 0, 10), "draw": [gun((560, 330), dy=6, holding="button")]},
+        {**slouch(4, -4, 2), "draw": [gun((540, 300), dy=4, holding="button")]},
+    ]},
+    # Last Meal (Lv1, 55 frames, 4 hits): a desperate rush of kicks, a bite and a headbutt, then he
+    # collapses coughing.
+    "last_meal": {"fps": 12, "loop": False, "frames": [
+        {**slouch(10, 0, 6)},
+        {**slouch(0, 0, -8), "front_leg": {"angle": 40, "dy": -50}},
+        {**slouch(4, 0, 2), "front_leg": {"angle": 10}},
+        {**slouch(-4, 0, -12), "front_leg": {"angle": 56, "dy": -66, "sy": 0.04}, "back_leg": {"angle": -4}},
+        {**slouch(6, 0, 4), "front_leg": {"angle": 14}},
+        # the bite: lunging in with the muzzle
+        {**slouch(10, 0, 16), "head": {"dx": 70, "dy": 20, "angle": -10}, "front_leg": {"angle": 16}},
+        {**slouch(10, 0, 16), "head": {"dx": 80, "dy": 24, "angle": -14}, "front_leg": {"angle": 16}},
+        # the headbutt
+        {**slouch(0, -10, -10), "head": {"dx": -20, "dy": -10, "angle": 12}},
+        {**slouch(16, 0, 22), "head": {"dx": 90, "dy": 40, "angle": -20}, "front_leg": {"angle": 18}},
+        # the collapse: down on his heels, coughing
+        crouched(head={"dy": 30, "angle": -16}),
+        crouched(head={"dy": 40, "angle": -22}),
+    ]},
+    # Six Bad Shots (Lv3 Showdown, 55 frames): he empties the revolver left-handed, wildly: high, low, his
+    # own boot, and the sixth (which the game ricochets round the stage).
+    "six_bad_shots": {"fps": 11, "loop": False, "frames": [
+        {**slouch(2, 0, -2), "draw_behind": [gun((640, 430), aim=4, dy=2)]},
+        {**slouch(2, 0, -4), "draw_behind": [gun((650, 380), aim=30, flash=True, dy=2)]},
+        {**slouch(0, -4, -8), "draw_behind": [gun((620, 300), aim=56, dy=0)]},
+        {**slouch(4, 0, 2), "draw_behind": [gun((660, 520), aim=-24, flash=True, dy=4)]},
+        {**slouch(6, 0, 6), "draw_behind": [gun((600, 640), aim=-70, flash=True, dy=6)], "front_leg": {"angle": 6}},
+        {**slouch(-6, -6, -10), "draw_behind": [gun((640, 300), aim=70, flash=True, dy=-6)]},
+        {**slouch(2, 0, -2), "draw_behind": [gun((660, 430), aim=10, flash=True, dy=2)]},
+        {**slouch(2, 0, -2), "draw_behind": [gun((660, 430), aim=2, flash=True, dy=2)]},
+        {**slouch(4, 0, 0), "draw_behind": [gun((620, 470), aim=-10, dy=4)]},
+        {**slouch(6, 2, 2), "draw_behind": [gun((560, 540), aim=-30, dy=6)]},
+    ]},
+    # Intro (the 90-frame round intro, fighters.yaml): crawls out from under his bedroll, coughs, spits,
+    # and squints with his one eye.
+    "intro": {"fps": 4, "loop": False, "frames": [
+        {**fall(90), "draw": [{"fn": "bedroll", "args": {"box": (90, 300, 640, 1180)}}]},
+        crouched(head={"dy": 30, "angle": -14}, draw_behind=[{"fn": "bedroll", "args": {"heap": (-160, 300)}}]),
+        crouched(head={"dy": 40, "angle": -24}, draw_behind=[{"fn": "bedroll", "args": {"heap": (-160, 300)}}]),
+        {**slouch(10, 10, 4), "head": {"dy": 10, "dx": 40, "angle": -10},
+         "draw_behind": [{"fn": "bedroll", "args": {"heap": (-160, 300)}}]},
+        {**slouch(0, 0, 0), "head": {"angle": 6}, "draw_behind": [{"fn": "bedroll", "args": {"heap": (-160, 300)}}]},
+        {**slouch(0, 0, 0), "head": {"angle": 6}, "draw_behind": [{"fn": "bedroll", "args": {"heap": (-160, 300)}}]},
+    ]},
+    # Perfect (fighters.yaml): tips his crushed hat with the knife-stump and limps off whistling.
+    "perfect": {"fps": 6, "loop": False, "frames": [
+        {**slouch(0, 0, -2), "draw": [stump((520, 220), knife=70)]},
+        {**slouch(0, 4, -4), "head": {"angle": 6, "dy": 4}, "draw": [stump((540, 160), knife=84)]},
+        {**slouch(0, 4, -4), "head": {"angle": 6, "dy": 4}, "draw": [stump((540, 170), knife=80)]},
+        {"front_leg": {"angle": 10}, "back_leg": {"angle": -8}, "body": {"dy": 14, "angle": 4}},
+        {"front_leg": {"angle": -6}, "back_leg": {"angle": 8, "dy": -14}, "body": {"dy": 0, "angle": 1}},
+        {"front_leg": {"angle": 10}, "back_leg": {"angle": -8}, "body": {"dy": 14, "angle": 4}},
     ]},
 }
 

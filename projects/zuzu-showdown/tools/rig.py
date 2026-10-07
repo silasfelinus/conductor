@@ -157,6 +157,23 @@ def pack(frames: dict[str, list[Image.Image]]):
     return atlas, rects
 
 
+def save_atlas(atlas: Image.Image, path: Path, indexed: bool) -> None:
+    """Save an atlas; the pixel style (at most a couple of dozen colours, alpha all-or-nothing) goes out as
+    an exact indexed PNG, a third the size of RGBA with every pixel unchanged."""
+    if not indexed:
+        atlas.save(path)
+        return
+    rgba = np.asarray(atlas.convert("RGBA")).copy()
+    rgba[rgba[..., 3] == 0] = 0
+    colours, index = np.unique(rgba.reshape(-1, 4), axis=0, return_inverse=True)
+    if len(colours) > 256:
+        atlas.save(path)
+        return
+    out = Image.fromarray(index.reshape(rgba.shape[:2]).astype(np.uint8), "P")
+    out.putpalette(colours[:, :3].astype(np.uint8).flatten().tolist())
+    out.save(path, optimize=True, transparency=bytes(int(a) for a in colours[:, 3]))
+
+
 def hurtbox(frame: Image.Image, anchor: tuple[int, int], scale: float) -> dict:
     """The silhouette's bounding box in game units relative to the anchor, y up from the ground: a
     starting hurtbox drawn from the art itself, for t-024's balance pass to tune per move."""
@@ -207,9 +224,9 @@ def main(slug: str, source_dir: str, out_dir: str) -> None:
     out.mkdir(parents=True, exist_ok=True)
     for style, frames, scale in (("hd", hd, sc.HD_SCALE), ("pixel", pixel, 1)):
         atlas, rects = pack(frames)
-        atlas.save(out / f"{slug}-{style}.png")
+        save_atlas(atlas, out / f"{slug}-{style}.png", style == "pixel")
         p2 = {n: [p2_recolour(f, rig.P2_RULES) for f in fs] for n, fs in frames.items()}
-        pack(p2)[0].save(out / f"{slug}-p2-{style}.png")
+        save_atlas(pack(p2)[0], out / f"{slug}-p2-{style}.png", style == "pixel")
         frame_map = {
             "fighter": slug,
             "style": style,
