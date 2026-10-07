@@ -470,8 +470,8 @@ tasks:
   - id: t-020
     milestone: m4
     title: "kind_robots: CPU opponent (difficulty ladder, plays the triangle, reads habits)"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-005]
@@ -481,6 +481,9 @@ tasks:
       Showdown) set reaction time, block rate, combo length and super use. From Normal up it tracks the
       player's strike/grab/guard ratio at close range and leans to the counter. It must be deterministic
       given the seed (contract test: a CPU-vs-CPU match replays to the same hash).
+    claimed_by: 2026-10-07T11:10:00Z-zs-t020
+    claimed_at: '2026-10-07T11:09:25Z'
+    updated: '2026-10-07T11:09:25Z'
 
   - id: t-021
     milestone: m4
