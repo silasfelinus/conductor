@@ -230,7 +230,7 @@ tasks:
   - id: t-011
     milestone: m3
     title: "Hidden sub-table: a discoverable secret playfield that returns the ball to the main table"
-    status: claimed
+    status: done
     depends_on: [t-018]
     owner: reviewer
     passes: 0
@@ -243,9 +243,18 @@ tasks:
       ramp that is always open. The camera eases to the sub-table only while every live ball is there.
       The ball returns to the main table through a visible habitrail or kickout that feeds a flipper, and
       whatever the player earned there carries back (lit shots, a multiplier, a mode). Its rules are t-012.
+
+      Merged as kind_robots#3346: a secret room behind the backbox, reached through a door in
+      the top arch that opens for 25 s after a lock (DMD tease only); a left orbit is diverted
+      into a hidden hole and subwayed up. The room has its own flippers, N-E-T standups, a
+      windmill toy and a HOME scoop; HOME or its drain returns the ball via the award kickout
+      to the left flipper, carrying a bonus multiplier back. Camera eases to the room only
+      while every ball is there; the backbox occludes it and fades. Also fixed scoops never
+      capturing a ball that settled in them during a kickout cooldown.
     claimed_by: 2026-10-07T1000-kp-t011-subtable
     claimed_at: '2026-10-07T12:43:45Z'
-    updated: '2026-10-07T12:43:45Z'
+    updated: '2026-10-07T13:25:44Z'
+    implementation_pr: 'silasfelinus/kind_robots#3346'
 
   - id: t-012
     milestone: m3
