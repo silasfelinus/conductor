@@ -5,12 +5,12 @@
 project: kind-pinball
 kind: software
 goal: >-
-  A pinball game in the Kind Robots Arcade that plays and looks like a real Williams DMD-era machine:
-  weighty physics with cradles and post passes, a shot map with at least two ramps and two orbits and lit
-  arrow inserts, an amber dot-matrix display with animations, lamp shows, deep rules (skill shot, combos,
-  lock and multiball with jackpots, a mode ladder, a wizard mode, tilt and match), sound and music, an upper
-  playfield, and several tables -- modelled on The Addams Family, Terminator 2, Stern's Godzilla and the
-  Pinball FX3 tables, checked at phone/tablet/desktop and accepted by Silas.
+  ONE pinball table in the Kind Robots Arcade -- AMI Village Rescue -- that is as good as any Pinball FX3
+  table: truly fun, complex and high quality. A real 3D table (perspective camera, physical ball, PBR
+  chrome, plastics, ramps and lit inserts) with weighty FX3-class ball feel, a deep shot map, an animated
+  dot-matrix display, signature toys, a mode ladder, multiball and a wizard mode, sound and music, and a
+  hidden sub-table the player discovers through play that leads back to the main table. One leaderboard.
+  Done only when Silas plays it on desktop and touch and judges it as good as any FX3 table.
 
 notes_from_silas: |
   2026-10-07, verbatim: "Make kind pinball in arcade its own project. I want it, zuzu-lair, arcade, and the
@@ -20,11 +20,22 @@ notes_from_silas: |
   improvements, but a few style passes would do w9nders. Different levels, multiple ramps, a REAL quality
   game. Addams family, terminator, Godzilla, and anything from pinball fx3 should be the models"
 
+  2026-10-07, answering t-002, verbatim: "one leaderboard, a sub-table to be discovered, leading back to
+  the original. the fx3 quality reset is important and should be followed, it was a new agent with a
+  better eye on quality. we want quality. this project finishes when it's a truly fun, complex, and
+  quality table . if there are adjustments to that roadmap, aim for that. it should be as good as any
+  pinball fx3 table, that's our standard."
+
+  What that means for agents: ONE table (no Tables 2/3, no table select). "Levels" = a hidden sub-table
+  discovered through play that returns the ball to the main table. One leaderboard (the existing
+  kind-pinball board). FX3-QUALITY-BLUEPRINT.md is the governing plan. The bar is "as good as any Pinball
+  FX3 table": fun, complex, quality -- never "it has 3D meshes" or "the tasks are done".
+
 milestones:
   - id: m1
     title: "SHAPE -- design brief, reference teardown, scope"
     weight: 10
-    status: in-progress
+    status: done
 
   - id: m2
     title: "TABLE 1 REBUILD -- engine split, style passes, shot map, physics, rules, DMD, sound"
@@ -32,7 +43,7 @@ milestones:
     status: in-progress
 
   - id: m3
-    title: "LEVELS -- upper playfield, Tables 2 and 3, table select"
+    title: "DEPTH -- hidden sub-table, rules depth, fun tuning and mastery goals"
     weight: 30
     status: not-started
 
@@ -58,17 +69,17 @@ tasks:
   - id: t-002
     milestone: m1
     title: "Confirm scope with Silas"
-    status: needs-human
+    status: done
     owner: null
     passes: 0
     stakes: reversible
     soft_gate: true
     note: >-
-      FOR SILAS: a soft check. Nothing waits on it. Read DESIGN-BRIEF.md and answer its three open
-      questions. (1) "Different levels": several tables, an upper playfield, or both? The plan assumes
-      both. (2) Are the Table 2 and 3 themes right? Proposed: Zuzu's Dojo, and Robot Factory or the
-      Cthulhuquarium deep sea. (3) One pinball leaderboard, or one per table? Work continues on Table 1
-      either way.
+      Silas answered in session 2026-10-07 (verbatim in notes_from_silas): one leaderboard; "levels" means a
+      sub-table discovered through play that leads back to the original table; follow the FX3 quality reset
+      (t-017); the project finishes only when it is a truly fun, complex, quality table as good as any
+      Pinball FX3 table. Tables 2 and 3 and the table select are dropped: t-011..t-014 were reshaped around
+      the single table.
 
   - id: t-003
     milestone: m2
@@ -200,84 +211,103 @@ tasks:
       phone, tablet and desktop plus performance traces.
   - id: t-011
     milestone: m3
-    title: "Upper playfield: a real raised mini-table with its own flipper and return"
+    title: "Hidden sub-table: a discoverable secret playfield that returns the ball to the main table"
     status: waiting
     depends_on: [t-018]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Build the second physical level shown in the shot-map mockup: a ramp feeds a visibly raised
-      mini-playfield with its own flipper, targets and hurry-up/mode, then drains through a habitrail back
-      to the main field. It must be actual 3D geometry/collision with occlusion and shadows, not a raised
-      2D inset. Camera may ease toward the upper preset only while every live ball is safely up there.
+      Silas 2026-10-07: "a sub-table to be discovered, leading back to the original." Build it as real 3D
+      geometry/collision on the shared runtime (occlusion, shadows, its own flipper(s), targets and a
+      toy), reached only by a hidden path the player finds through play -- e.g. a secret entrance that opens
+      after a feat (a lit scoop at the right moment, a full village map, a hurry-up) -- not a labelled
+      ramp that is always open. The camera eases to the sub-table only while every live ball is there.
+      The ball returns to the main table through a visible habitrail or kickout that feeds a flipper, and
+      whatever the player earned there carries back (lit shots, a multiplier, a mode). Its rules are t-012.
+
   - id: t-012
     milestone: m3
-    title: "Table 2: Zuzu's Dojo (pending t-002 theme confirm)"
+    title: "Sub-table rules: discovery path, its own mode, rewards carried back to the main table"
     status: waiting
-    depends_on: [t-016]
+    depends_on: [t-011, t-007]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Build no second table until Table 1 clears Silas's quality verdict: one great table is the engine
-      specification. Then create a genuinely different layout on the shared 3D engine. Zuzu canon and
-      guardrails: projects/comic-creator/issues/zuzu-koala-assassin-01/ (lighter tone, no blood).
-      Godzilla-style battle modes against the cast, each lighting different shots, plus its own multiball
-      and wizard mode. If t-002 redirects the theme, follow it.
+      Repurposed 2026-10-07 (was "Table 2: Zuzu's Dojo"; Silas chose one table with a discovered sub-table
+      instead -- see t-002). Design and build the sub-table's rules on the pure shot-event state machine:
+      how it is discovered (and rediscovered on later balls: harder each time), the hint language that
+      teaches a new player it exists (DMD teases, a flickering insert, a callout) without giving it away,
+      its own short mode or hurry-up with a DMD scene and music state, and the rewards that carry back
+      (e.g. a lit add-a-ball, a village lit, a jackpot multiplier). It must feed the wizard mode, so a
+      skilled player plans around it. Contract-test discovery, the return path and every carried reward.
+
   - id: t-013
     milestone: m3
-    title: "Table 3: Robot Factory or Cthulhuquarium (pending t-002 theme confirm)"
+    title: "Fun and balance pass: ball times, shot difficulty, mode lengths, scoring curve"
     status: waiting
-    depends_on: [t-012]
+    depends_on: [t-007, t-005]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      A third table built like Terminator 2: a lock-and-jackpot machine, a toy that builds as you play,
-      fast ramp combos. Its own layout and rules.
+      Repurposed 2026-10-07 (was "Table 3"). Silas's finish line is "truly fun, complex, and quality", so
+      tune for fun with evidence, not feel alone. Run headless bot sessions at several skill levels and
+      record: average ball time (aim for FX3-like 60-120 s for a decent player), drain causes (outlane vs
+      SDTM vs center), each shot's make rate, how often modes, multiball, the sub-table and the wizard mode
+      are reached, and the score spread. Tune ball save, outlane posts/kickback, shot geometry, mode timers
+      and award values until a new player reaches multiball in a few games and a good player can reach the
+      wizard mode. Check the numbers into a TUNING.md here and repeat after every rules change.
 
   - id: t-014
     milestone: m3
-    title: "Table select + per-table scores"
-    status: waiting
-    depends_on: [t-012]
-    owner: null
-    passes: 0
-    stakes: reversible
-    note: >-
-      A table-select screen inside the pinball cabinet, in the FX3 style: table art, a rules blurb and the
-      top score for each. Leaderboards follow t-002's answer, either one board per table (a game slug per
-      table) or one board. Any ArcadeScore schema change must be additive.
-
-  - id: t-015
-    milestone: m4
-    title: "Table guide (FX3-style rules card) for each table"
+    title: "Mastery goals and the one leaderboard (FX3-style table challenges)"
     status: waiting
     depends_on: [t-007]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      An in-cabinet guide that teaches each table: a shot map diagram with arrows, then each mode, the
-      multiball and the wizard mode in a few lines. Reachable from attract mode and the pause menu.
+      Repurposed 2026-10-07 (was "Table select + per-table scores"; Silas chose one leaderboard). Keep the
+      single existing kind-pinball Arcade board. Add FX3-style mastery goals for replay value: a ladder of
+      table challenges (find the sub-table, play every mode, light all villages, reach the wizard mode,
+      super jackpot in multiball, a combo chain of N), shown on the attract/rules screen and on the DMD when
+      earned. Progress lives in the arcade store per player (per Kind Robots AGENTS.md: stores own
+      persistence). Any ArcadeScore or schema change must be additive and called out as schema-affecting.
+
+  - id: t-015
+    milestone: m4
+    title: "Table guide (FX3-style rules card) for the table"
+    status: waiting
+    depends_on: [t-007]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      An in-cabinet guide that teaches the table: a shot map diagram with arrows, then each mode, the
+      multiball, the mastery goals and the wizard mode in a few lines. The hidden sub-table stays a secret
+      (at most a teasing silhouette until the player has found it once). Reachable from attract mode and the pause menu.
 
   - id: t-016
     milestone: m4
-    title: "Silas plays Table 1 and gives the FX3/Williams verdict"
+    title: "The finish line: Silas plays it and judges it as good as any Pinball FX3 table"
     status: waiting
-    depends_on: [t-010, t-011]
+    depends_on: [t-010, t-012, t-013, t-014, t-015, t-019]
     owner: null
     passes: 0
     stakes: reversible
     gate_human: true
     gate_reason: subjective-acceptance
     note: >-
-      FOR SILAS (gated only when it unblocks): play the rebuilt 3D Table 1 on desktop and touch and judge
-      the requested bar. At a glance it should read as a physical machine before any labels are read:
-      dimensional ramps/rails/plastics, reflective ball, real DMD, lit shot language, deep rules,
-      multiball spectacle, signature toys and strong ball feel. Fold concrete notes into follow-up tasks.
-      Tables 2 and 3 stay waiting until this verdict so we do not multiply a mediocre foundation.
+      FOR SILAS (gated only when it unblocks): play the table on desktop and touch and judge it against your
+      standard (2026-10-07): "as good as any pinball fx3 table" -- "a truly fun, complex, and quality table".
+      Before asking, agents must have met every line of FX3-QUALITY-BLUEPRINT.md "Acceptance bar", have
+      TUNING.md numbers showing new players reach multiball and good players reach the wizard mode, and
+      have found the hidden sub-table and returned from it in play. A screenshot must read as a physical
+      pinball machine before any label is read. If the verdict is "not yet", fold each note into new
+      tasks and keep the project active -- this project is never finished by task count.
+
   - id: t-017
     milestone: m1
     title: "FX3 quality reset: visual mockups + 3D architecture blueprint"

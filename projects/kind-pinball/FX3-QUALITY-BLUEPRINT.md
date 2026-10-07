@@ -383,7 +383,7 @@ Recommended sequence:
 5. **Rules + DMD + audio**: Table 1 reaches full feature depth.
 6. **Signature toys + upper playfield**.
 7. **Table 1 acceptance**: Silas plays it on desktop and touch.
-8. **Only then** build Tables 2 and 3 on the proven engine.
+8. ~~Only then build Tables 2 and 3 on the proven engine.~~ Superseded 2026-10-07: Silas chose **one table** with a hidden sub-table that returns to it, and one leaderboard. Depth goes into that table instead (t-011..t-014).
 
 Building three tables before Table 1 feels premium would multiply mediocre work. One great table is the engine specification.
 
