@@ -380,6 +380,45 @@ ANIMATIONS = {
         {"body": {"dy": -30, "dx": 30, "angle": 16}, "head": {"angle": 18, "dx": 40}, "lead_arm": {"angle": 60},
          "front_leg": {"angle": 16, "dy": -20}, "back_leg": {"angle": -14, "dy": -20}},
     ]},
+    # Thousand-Mile Step (Lv1, 42 frames): a hand to the hilt, the low dash straight through them with the
+    # blade out (the sim carries him past, so he ends with his back to them), then the slow sheathe.
+    "thousand_mile_step": {"fps": 10, "loop": False, "frames": [
+        {**stance(20), "hide": ["lead_arm"], "draw": [arm((600, 330), dy=20)]},
+        {**stance(30), "body": {"dy": 30, "angle": 14}, "front_leg": {"angle": 20}, "back_leg": {"angle": -14},
+         "hide": ["lead_arm", "hilt"], "draw": [arm((900, 560), -8, 30)]},
+        {**stance(30), "body": {"dy": 30, "angle": 14}, "front_leg": {"angle": 22}, "back_leg": {"angle": -16},
+         "hide": ["lead_arm", "hilt"], "draw": [arm((920, 580), -10, 30)]},
+        {**stance(24), "body": {"dy": 24, "angle": 10}, "front_leg": {"angle": 14}, "back_leg": {"angle": -10},
+         "hide": ["lead_arm", "hilt"], "draw": [arm((900, 560), -10, 24)]},
+        {**stance(12), "hide": ["lead_arm", "hilt"], "draw": [arm((720, 300), 72, 12)]},
+        {**stance(6), "hide": ["lead_arm"], "draw": [arm((610, 340), dy=6)]},
+        stance(0),
+    ]},
+    # Hat to the Dead (Lv3 Showdown, 55 frames): the cut happens in the black; when the lights come up he
+    # is already sheathing, and lifts the kasa off his head to the fallen.
+    "hat_to_the_dead": {"fps": 6, "loop": False, "frames": [
+        {**stance(6), "hide": ["lead_arm"], "draw": [arm((610, 340), dy=6)]},
+        {**stance(0, 0, 60)},
+        {**stance(0, 0, 84), "head": {"angle": -4}},
+        {**stance(10, 12, 84), "head": {"angle": 12, "dy": 12}},
+        {**stance(16, 18, 90), "head": {"angle": 16, "dy": 18}},
+    ]},
+    # Intro (the 90-frame round intro, fighters.yaml): steps up out of the heat shimmer, thumb resting
+    # on the scabbard mouth over his shoulder, and settles into the stance.
+    "intro": {"fps": 4, "loop": False, "frames": [
+        {**stance(-14, -4), "body": {"dy": -14, "angle": -3}, "hide": ["lead_arm"], "draw": [arm((600, 330), dy=-14)]},
+        {**stance(-6, -2), "hide": ["lead_arm"], "draw": [arm((600, 330), dy=-6)]},
+        {**stance(0), "hide": ["lead_arm"], "draw": [arm((600, 330))]},
+        stance(0),
+    ]},
+    # Perfect (fighters.yaml): never drew. Brushes the dust off his poncho and is done.
+    "perfect": {"fps": 6, "loop": False, "frames": [
+        {**stance(0, 0, -40)},
+        {**stance(4, 4, -64), "head": {"angle": 6, "dy": 4}},
+        {**stance(4, 4, -40), "head": {"angle": 6, "dy": 4}},
+        {**stance(4, 4, -66), "head": {"angle": 6, "dy": 4}},
+        {**stance(0, -2, 10), "head": {"angle": -4}},
+    ]},
 }
 
 # P2's alternate colours (Street Fighter style): the rust poncho and the orange trim turn slate blue.

@@ -1,6 +1,10 @@
 # zuzu-showdown CHANGELOG
 
 ## 2026-10-07
+- t-010 (in progress): both fighters' sprite sets cover their whole kit: every normal, the dodges, landing,
+  wake-up, throws, every special and super, the round intro and the Perfect pose (conductor#5726 and this
+  change; kind_robots#3325 and its follow-up). The game plays the intro over the round intro and the
+  Perfect pose on a flawless win. Pixel atlases are saved as exact indexed PNGs.
 - t-010 (in progress): Zuzu and the Coyote Vagrant now fight as their art. The fighter rig (tools/rig.py,
   configs in tools/rigs/) poses HD parts cut from the Kontext parts sheets and derives the pixel style,
   with P2 colours and frame maps. Zuzu has 19 animations, the Coyote 18 (conductor#5712-#5721), and the
