@@ -17405,3 +17405,15 @@ records:
   lesson: 'kind_robots forbids URL-only pages (verifyNoHiddenRoutes): a not-yet-public page is an Admin
     tab, not ''unlisted''; and run prettier last, after every edit, because the prettier ratchet fails
     on any newly unformatted file.'
+- date: 2026-10-07
+  project: zuzu-showdown
+  task: t-014
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: 'A status effect that starts on hit must be timed against the hitstun it rides on: Pocket Sand''s
+    20-frame can''t-block window, counted from the hit, expired exactly as the 18-frame stagger ended
+    and did nothing. Count such windows from the end of hitstun, and write a test that tries the follow-up
+    the effect is meant to open.'
