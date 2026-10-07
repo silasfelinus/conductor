@@ -125,6 +125,7 @@ fighters:
     archetype: scrappy trickster -- unreliable gun, knife-stump rushdown, dirty tricks, steals meter
     health: 950
     height_px: 104
+    ammo: 6
     walk_speed: fast
     home_stage: watering-hole
     rival: river-croc
@@ -144,14 +145,15 @@ fighters:
         damage: 70
         description: >-
           A left-handed revolver shot. LP aims high, HP aims low, and every shot has a small seeded
-          random spread (deterministic per round seed). Sometimes it just misses. Six shots per round,
-          then he has to reload (dd+P).
+          random spread of up to 10px either way (deterministic per match seed), so a high shot can sail
+          over a short fighter like Zuzu. Six shots per round (bullet pips under his name), then he has
+          to reload (dd+P, a slow 20-frame reload; ammo also refills each round).
       - name: Pocket Sand
         input: QCB+K
         triangle: strike
         speed: fast
         damage: 20
-        description: A fistful of grit to the eyes. Short range; on hit the opponent staggers and can't block for 20 frames.
+        description: A fistful of grit to the eyes. Short range; on hit the opponent staggers, then can't block for 20 frames after the stagger ends.
       - name: Stump Shiv
         input: "[b]f+P"
         triangle: strike
@@ -174,7 +176,7 @@ fighters:
       - level: 1
         name: Last Meal
         input: QCF QCF+K
-        damage: 260
+        damage: 4 x 65 (260)
         description: A desperate rush of kicks, a bite, and a headbutt, then he collapses coughing (short recovery).
       - level: 3
         name: Six Bad Shots
