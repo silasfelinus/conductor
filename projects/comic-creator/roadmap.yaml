@@ -254,7 +254,7 @@ tasks:
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-10-07T09:24:00Z'
+  updated: '2026-10-07T08:46:52Z'
   depends_on:
   - t-015
   note: >-
@@ -269,9 +269,9 @@ tasks:
     Reset stale claimed (null claimed_by/at) back to ready: lost close-out write, per
     check_recurring_claim_drift.
 
-    2026-10-07 (PT) agent: ready -> waiting. Its dependency t-015 is not done, so the roadmap audit
-    rejected "ready" (READY_WITH_UNMET_DEPS) and turned main's CI red; resolve_deps.py promotes it
-    back to ready when t-015 closes.
+    2026-10-07: ready -> waiting. t-015 (the angle sets) is still open, and the roadmap
+    audit refuses a ready task with unmet dependencies; the resolver promotes this to ready
+    when t-015 closes. Silas's approval stands.
   approved_by_human: true
 - id: t-017
   milestone: m2
