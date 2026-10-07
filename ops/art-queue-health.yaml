@@ -4,40 +4,11 @@
 failures:
 - source: project-art
   target: projects/images/comic-film-card.webp
-  kind: contract-rejected
-  rules:
-  - format-vocabulary
-  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [format-vocabulary]
-    "comic page" asks for a physical format, so the model renders the format — frame, title bar, and invented
-    text included. Describe the su…'
+  kind: timeout
+  detail: job 34775 timed out after 300s (still queued/running)
   first_seen: '2026-10-07'
 - source: project-art
   target: projects/images/comic-film-hero.webp
-  kind: contract-rejected
-  rules:
-  - format-vocabulary
-  - frame-noun
-  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (2 violations): [format-vocabulary]
-    "comic panel" asks for a physical format, so the model renders the format — frame, title bar, and
-    invented text included. Describe the …'
-  first_seen: '2026-10-07'
-- source: requests
-  target: public/images/arcade/games/brick-bloom-title.webp
   kind: timeout
-  detail: job 34770 timed out after 300s (still queued/running)
-  first_seen: '2026-10-07'
-- source: requests
-  target: public/images/arcade/games/pixel-hop-title.webp
-  kind: timeout
-  detail: job 34772 timed out after 300s (still queued/running)
-  first_seen: '2026-10-07'
-- source: requests
-  target: public/images/arcade/games/quilt-quest-title.webp
-  kind: timeout
-  detail: job 34774 timed out after 300s (still queued/running)
-  first_seen: '2026-10-07'
-- source: requests
-  target: public/images/arcade/games/seed-lander-title.webp
-  kind: timeout
-  detail: job 34771 timed out after 300s (still queued/running)
+  detail: job 34776 timed out after 300s (still queued/running)
   first_seen: '2026-10-07'
