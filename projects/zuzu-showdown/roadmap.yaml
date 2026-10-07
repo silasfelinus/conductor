@@ -276,7 +276,12 @@ tasks:
       pipeline, as atlases plus JSON frame maps with per-frame box overlays authored against the art. Two
       palettes each (P1 and P2 alternates). The Coyote is post-croc (right-hand stump with a lashed
       knife, eyepatch on the right eye), confirmed by Silas 2026-10-07. Together with t-009's first two
-      stages and t-014, this is the first build Silas plays.
+      stages and t-014, this is the first build Silas plays. Pipeline per the t-007 bake-off (docs/t-007-sprite-bakeoff.md):
+      HD masters are the source of truth and pixel is derived. Generate each fighter's HD parts sheet
+      in the house lane (Kontext from the locked angle sets: limbs, torso, head and weapon drawn
+      separately), animate them with a per-fighter rig (tools/method_b_rig.py is the prototype), and
+      export pixel and HD atlases from the same rig with boxes authored once. Effects (smears, sparks)
+      are hand pixel plus an HD counterpart.
 
   - id: t-011
     milestone: m3
@@ -518,3 +523,22 @@ tasks:
       intake.py queued the icon, card and hero in projects/art-prompts.yaml (rewritten to the Krea rules:
       physical subject first, no negations, no frame nouns). Confirm they landed and look right (Zuzu
       short and stocky in the kasa and poncho, facing a rival); re-stage any that miss.
+
+  - id: t-027
+    milestone: m3
+    title: "kind_robots: render styles -- pixel and HD (stage renders at device resolution, art per style)"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-007]
+    note: >-
+      Silas, 2026-10-06 PT (verbatim): "as a note: our original arcade uses a very slimmed down resolution...we should both be able to upgrade that anyway (pixel is a style choice, users should be able to select pixel or hd or others if they are fun), but after working with pinball, it's clear we also need a much better resolution system for the higher quality games". Today the stage is a fixed 480x270 canvas stretched
+      with image-rendering: pixelated, so it can only ever be pixel. Move it onto kr-arcade t-012's
+      resolution system: the sim keeps its 480x270 logical units, the canvas renders at device
+      resolution (DPR-aware), and a style picked in zuzuShowdownStore (pixel / HD, room for more)
+      selects the atlas set, the filtering (nearest at an integer scale for pixel, smooth for HD),
+      the HUD font and the stage layers. Boxes stay in logical units, so the sim and its contract
+      tests don't change. Done when both styles play on phone, tablet and desktop with no
+      blurring in pixel and no stair-stepping in HD, the choice persists through the store, and a
+      render contract test covers the logical-to-canvas transform at DPR 1, 2 and 3.

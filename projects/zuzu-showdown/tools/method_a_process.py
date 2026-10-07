@@ -66,6 +66,7 @@ def main(ledger_path: str, reference_path: str, cache_dir: str, out_dir: str) ->
     figure_height = reference.height
     cache, out = Path(cache_dir), Path(out_dir)
     frames: dict[str, list[Image.Image]] = {}
+    hd: dict[str, list[Image.Image]] = {}
     meta = {"method": "A pose-locked generation (Flux Kontext re-pose)", "lane": lane, "frames": {}}
     heights = []
     for subject in ledger["subjects"]:
@@ -83,6 +84,7 @@ def main(ledger_path: str, reference_path: str, cache_dir: str, out_dir: str) ->
         keyed = sc.crop_to_content(sc.key_background(raw))
         heights.append(keyed.height)
         frames.setdefault(name, []).append(sc.to_game_size(keyed, figure_height))
+        hd.setdefault(name, []).append(sc.to_hd(keyed, figure_height))
         meta["frames"].setdefault(name, []).append({
             "frame": int(index),
             "art_image_id": image_id,
@@ -107,6 +109,7 @@ def main(ledger_path: str, reference_path: str, cache_dir: str, out_dir: str) ->
         final = sc.anchor_frames([sc.outer_outline(sc.quantize(f, palette)) for f in fs], width, height)
         final_all.extend(final)
         sc.write_previews(final, out, f"a-{name}", sc.FPS[name])
+        sc.write_hd_gif(hd[name], out, f"a-{name}", sc.FPS[name])
     meta["palette_colours"] = sc.palette_size(final_all)
     meta["frame_size"] = [width, height]
     # Size drift: how much the figure's height wanders between frames, in game pixels.

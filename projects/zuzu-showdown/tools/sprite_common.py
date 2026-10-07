@@ -186,3 +186,32 @@ def write_previews(frames: list[Image.Image], out_dir: Path, name: str, fps: int
     gif_frames[0].save(gif_path, save_all=True, append_images=gif_frames[1:], duration=round(1000 / fps),
                        loop=0, disposal=2)
     return strip_path, gif_path
+
+
+HD_SCALE = 4  # the HD style draws at 4x the game resolution: 288 px for Zuzu's 72
+
+
+def to_hd(image: Image.Image, figure_height: int, target: int = GAME_HEIGHT * HD_SCALE) -> Image.Image:
+    """The same frame for the HD style: smooth Lanczos down to `target`, no palette, no outline.
+
+    Pixel is a style choice (Silas, 2026-10-07), so every method that has a high-resolution source
+    keeps it; the pixel frame is derived from this one, not the other way round.
+    """
+    scale = target / figure_height
+    size = (max(1, round(image.width * scale)), max(1, round(image.height * scale)))
+    return image.resize(size, Image.Resampling.LANCZOS)
+
+
+def write_hd_gif(frames: list[Image.Image], out_dir: Path, name: str, fps: int, backdrop=(36, 30, 46)) -> Path:
+    """<name>-hd.gif: HD frames anchored on one canvas, shown at the same size as the pixel previews."""
+    out_dir.mkdir(parents=True, exist_ok=True)
+    anchored = anchor_frames(frames)
+    shown = []
+    for frame in anchored:
+        canvas = Image.new("RGBA", frame.size, backdrop + (255,))
+        canvas.alpha_composite(frame)
+        shown.append(canvas.convert("RGB"))
+    path = out_dir / f"{name}-hd.gif"
+    shown[0].save(path, save_all=True, append_images=shown[1:], duration=round(1000 / fps), loop=0, disposal=2)
+    shown[0].save(out_dir / f"{name}-hd.png")
+    return path

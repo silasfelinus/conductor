@@ -146,6 +146,8 @@ def main(reference_path: str, out_dir: str) -> None:
             b = f.getchannel("A").getbbox()
             box = b if box is None else (min(box[0], b[0]), min(box[1], b[1]), max(box[2], b[2]), max(box[3], b[3]))
     game = {name: [sc.to_game_size(f.crop(box), figure_height) for f in frames] for name, frames in raw.items()}
+    for name, frames in raw.items():
+        sc.write_hd_gif([sc.to_hd(f.crop(box), figure_height) for f in frames], Path(out_dir), f"b-{name}", sc.FPS[name])
     palette = sc.shared_palette([f for frames in game.values() for f in frames], 16)
     out = Path(out_dir)
     meta = {"method": "B cutout rig", "reference": 242193, "palette_colours": 0, "frames": {}}
