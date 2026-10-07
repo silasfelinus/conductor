@@ -1,7 +1,7 @@
 # Pitch: Robot Star Map Puzzles
 date: 2026-10-07
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 Connect-the-dots constellation puzzles where each finished picture is a robot silhouette in the night sky, with a short pre-written legend about the figure. A gentle hint mode highlights the next star, and all puzzles are fixed coordinate lists.
