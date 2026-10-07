@@ -90,134 +90,135 @@ tasks:
 
   - id: t-004
     milestone: m2
-    title: "Engine split: shared pinball engine + table definitions"
+    title: "3D foundation: dual-canvas Arcade lane + Three.js/Rapier pinball runtime"
     status: ready
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Move kindPinball.ts into utils/arcade/pinball/: physics.ts (ball, segments, circles, flippers,
-      substeps), table.ts (a TableDef: walls, ramps as paths, orbits, bumpers, targets, scoops, inserts,
-      lamps, theme colours), rules.ts (a per-table rules object driven by shot events), dmd.ts and
-      render.ts. kindPinball.ts becomes Table 1's definition plus its rules. Contract-test the physics
-      (no tunnelling at MAX_SPEED, a flipper cradle holds, a post pass works) and every shot's entry
-      condition. Do this before the second table, not before t-003.
-
+      Implement the architecture in SYSTEM-DESIGN-SPEC.md without changing the rendering path for any
+      existing Arcade game. Add a render-mode discriminator, stack a WebGL stage canvas behind the
+      existing 2D UI canvas, and lazy-load Three.js plus Rapier only for Kind Pinball. Create
+      utils/arcade/pinball/ boundaries for runtime, physics, rendering, rules, DMD and audio, with a
+      disposable empty/grey table scene proving mount, resize, update, render and dispose. Keep the old
+      Canvas Kind Pinball playable as the rollback path. Verify existing arcade tests/typecheck plus a
+      focused lifecycle test that repeatedly enters and exits the WebGL cabinet without leaking resources.
   - id: t-005
     milestone: m2
-    title: "Physics feel: cradle, post pass, flipper power curve, tilt bob, kickback, spinner, drops"
-    status: ready
+    title: "Physics feel: cradle, post pass, flipper motors, tilt bob, kickback, spinner, drops"
+    status: waiting
+    depends_on: [t-018]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Make the ball feel heavy and true. Use a flipper strength curve: a full-power stroke vs a tap, more
-      power near the base. Allow a live catch and a cradle (holding a flipper up stops the ball), and a post
-      pass. Rolling friction and spin approximation. A tilt bob: the nudge adds sway, two warnings, then
-      TILT (flippers die, no bonus). Add a left outlane kickback lit by a target bank, a 3-bank of drop
-      targets, and a spinner on an orbit. Check: tests for cradle/post-pass/tilt, plus a 10-minute
-      demo-pilot soak with no stuck balls.
-
+      Tune the Rapier table until the ball feels heavy and controllable rather than arcade-floaty.
+      Servo/motor flippers must support a full-power stroke, tap, live catch, cradle and post pass without
+      coordinate-triggered velocity cheats. Add sling/pop impulses, rolling/spin tuning, left outlane
+      kickback, spinner, three drop targets and a tilt bob with two warnings then TILT. Acceptance:
+      500 max-speed post impacts with zero tunnelling; reproducible cradle and post-pass tests; ramp
+      threshold tests; and a ten-minute three-ball demo-pilot soak with no permanent stuck ball.
   - id: t-006
     milestone: m2
-    title: "DMD animation system + score display"
-    status: ready
-    owner: null
-    passes: 0
-    stakes: reversible
-    note: >-
-      A real DMD layer: a 128x32-style dot grid drawn in amber with dot bloom. A big score font, and a
-      scene queue that plays short frame animations: skill shot, lock, multiball, jackpot, super jackpot,
-      mode intro and total, wizard mode, extra ball, tilt, bonus count, and a match animation at game end.
-      The animations are drawn procedurally from shapes and pixel text, not bitmaps.
-
-  - id: t-007
-    milestone: m2
-    title: "Table 1 rules depth: skill shot, combos, lock + multiball jackpots, village map, wizard mode, match"
-    status: waiting
-    depends_on: [t-003]
-    owner: null
-    passes: 0
-    stakes: reversible
-    note: >-
-      Rebuild AMI Village Rescue's rules to reference depth. Skill shot: the plunger lets you hit a lit top
-      lane. Combos: ramp to orbit to ramp, with a growing value. Ball lock: three locks start AMI multiball;
-      the ramps light JACKPOT and a super jackpot follows. Village map (the mansion-grid idea): the scoop
-      awards one of 12 lit villages, and modes light different shot arrows, Godzilla-style. Lighting all 12
-      starts the "Malaria-Free" wizard mode (all shots lit, a big total). Also an extra ball, a bonus count
-      with a multiplier, and a match at game end. Every rule gets a DMD scene (t-006) and arrow inserts
-      (t-003). Contract-test the rules as a pure state machine driven by shot events.
-
-  - id: t-008
-    milestone: m2
-    title: "Sound and music: punchy toy SFX, mode music beds, synthesized callouts"
-    status: ready
-    owner: null
-    passes: 0
-    stakes: reversible
-    note: >-
-      Extend utils/arcade/sound.ts (WebAudio synth), or add a pinball-only sound bank. Distinct sounds for
-      slings, pops, the ramp entry and exit, the orbit, the spinner, drops, the scoop, the kickback, the
-      flippers, the plunger and the drain. A music bed that changes in modes and multiball, and stings for
-      jackpots. Simple synthesized or pre-generated callouts ("JACKPOT!", "SHOOT AGAIN"). Everything mutes
-      with the cabinet mute, and nothing autoplays before the first input.
-
-  - id: t-009
-    milestone: m2
-    title: "Style pass 2: lamp shows, GI, pre-generated playfield art"
-    status: waiting
-    depends_on: [t-003]
-    owner: null
-    passes: 0
-    stakes: reversible
-    note: >-
-      Lamp shows (sweeps, chases, flashes) for every big moment, and an attract-mode light show. GI that
-      dims and flashes. Flasher domes on the ramps. A pre-generated playfield backdrop through ArtJobs (top
-      down, no lettering, art-first standard) under the vector toys. Ball reflections of the lamps.
-      Screenshot before and after.
-
-  - id: t-010
-    milestone: m2
-    title: "Style pass 3: toys, motion and phone fit"
-    status: waiting
-    depends_on: [t-009]
-    owner: null
-    passes: 0
-    stakes: reversible
-    note: >-
-      Animated playfield toys: a village hut that lights up, a net-delivery biplane, a spinning AMI robot
-      head on the scoop. Screen shake on big hits, ball trails at speed, sling flex. Touch controls tuned
-      for phones (left/right half-screen flippers, swipe up to nudge, drag the plunger). Check
-      phone/tablet/desktop in Playwright.
-
-  - id: t-011
-    milestone: m3
-    title: "Upper playfield (a 'level' up): mini-table with its own flipper, reached by a ramp"
+    title: "Physical DMD: 128x32 scene queue + backbox texture"
     status: waiting
     depends_on: [t-004]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      A second level, as the Addams Family third flipper and Godzilla upper-flipper shots do it: a ramp
-      feeds a mini-playfield with its own flipper and targets, and it drains back down through a habitrail.
-      In the 2D canvas it can render as a raised inset with a drop shadow, or as a camera pan. Its own mode
-      or hurry-up.
-
-  - id: t-012
-    milestone: m3
-    title: "Table 2: Zuzu's Dojo (pending t-002 theme confirm)"
+      Build a logical 128x32 amber dot display with bloom, a big score font and a prioritized scene queue,
+      then expose that canvas as an emissive Three.js texture in the physical backbox. Scenes: skill shot,
+      lock, multiball, jackpot, super jackpot, mode intro/total/timer, wizard mode, extra ball, tilt,
+      bonus count and match. Gameplay timers outrank celebration scenes. The DMD module must be testable
+      without WebGL.
+  - id: t-007
+    milestone: m2
+    title: "Table 1 rules depth: skill shot, combos, lock + multiball jackpots, village map, wizard mode, match"
     status: waiting
-    depends_on: [t-004, t-007]
+    depends_on: [t-006, t-018]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      A second table on the shared engine. Zuzu canon and guardrails: projects/comic-creator/issues/
-      zuzu-koala-assassin-01/ (lighter tone, no blood). Godzilla-style battle modes against the cast, each
-      lighting a different set of shots, plus its own multiball and wizard mode. Its own layout: a
-      different ramp and orbit geometry, not a reskin. If t-002 redirects the theme, follow it.
-
+      Rebuild AMI Village Rescue as a pure serializable rules state machine driven by semantic shot
+      events from the 3D sensor/shot recognizer. Skill shot: lit top lane. Combos: ramp to orbit to ramp,
+      growing value. Three locks start AMI multiball; ramps light JACKPOT and then SUPER JACKPOT. The
+      scoop awards one of 12 villages; modes light different shot arrows; all 12 start the Malaria-Free
+      wizard mode. Include extra ball, bonus/multiplier, ball save and match. Effects request score,
+      lights, DMD scenes, audio and mechanisms rather than mutating renderer objects. Contract-test rule
+      sequences without loading Three.js or Rapier.
+  - id: t-008
+    milestone: m2
+    title: "Pinball audio mixer: mechanics, ball materials, callouts and mode music"
+    status: waiting
+    depends_on: [t-004]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Add a pinball-specific WebAudio mixer instead of stretching the generic arcade beep presets.
+      Buses: mechanical, ball, callout, music and ambience under the existing master mute. Distinct
+      cues for flippers, slings, pops, ramp entry/exit, metal rail, plastic, spinner, drops, scoop,
+      kickback, plunger and drain; positional audio where useful; original short callouts and loopable
+      mode/multiball music beds. Nothing autoplays before the first user gesture.
+  - id: t-009
+    milestone: m2
+    title: "FX3 material + light show pass: GI, inserts, flashers, generated playfield art"
+    status: waiting
+    depends_on: [t-019]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Turn the proven 3D hero scene into an art-directed machine. Use clearcoat playfield PBR, chrome,
+      rubber, transparent/printed plastics, reflective steel ball, baked AO/environment reflection,
+      emissive inserts and pooled flashers with restrained bloom. Add rule-driven sweeps/chases and an
+      attract-mode light show. Generate a top-down AMI Village playfield albedo through durable ArtJobs
+      using the geometry UV/template, with no baked lettering or fake lighting; engine assets supply crisp
+      inserts and labels. Capture fixed-seed before/after screenshots at phone/tablet/desktop quality tiers.
+  - id: t-010
+    milestone: m2
+    title: "Signature mechanisms + responsive polish: toys, motion, touch and camera"
+    status: waiting
+    depends_on: [t-007, t-008, t-009]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Replace hero placeholder meshes with at least three gameplay-connected mechanisms: a village hut
+      bank, net-delivery plane/drone, and AMI robot-head/beacon lock toy. Add restrained camera presets,
+      sling/toy motion, jackpot particles and speed-only ball trail. On touch devices remove the generic
+      pinball D-pad: lower-left/right edge zones fire flippers, the launch lane supports plunger drag,
+      and a short upward swipe nudges. Hints fade after the first ball. Verify identical physics/rules on
+      phone, tablet and desktop plus performance traces.
+  - id: t-011
+    milestone: m3
+    title: "Upper playfield: a real raised mini-table with its own flipper and return"
+    status: waiting
+    depends_on: [t-018]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Build the second physical level shown in the shot-map mockup: a ramp feeds a visibly raised
+      mini-playfield with its own flipper, targets and hurry-up/mode, then drains through a habitrail back
+      to the main field. It must be actual 3D geometry/collision with occlusion and shadows, not a raised
+      2D inset. Camera may ease toward the upper preset only while every live ball is safely up there.
+  - id: t-012
+    milestone: m3
+    title: "Table 2: Zuzu's Dojo (pending t-002 theme confirm)"
+    status: waiting
+    depends_on: [t-016]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Build no second table until Table 1 clears Silas's quality verdict: one great table is the engine
+      specification. Then create a genuinely different layout on the shared 3D engine. Zuzu canon and
+      guardrails: projects/comic-creator/issues/zuzu-koala-assassin-01/ (lighter tone, no blood).
+      Godzilla-style battle modes against the cast, each lighting different shots, plus its own multiball
+      and wizard mode. If t-002 redirects the theme, follow it.
   - id: t-013
     milestone: m3
     title: "Table 3: Robot Factory or Cthulhuquarium (pending t-002 theme confirm)"
@@ -257,17 +258,20 @@ tasks:
 
   - id: t-016
     milestone: m4
-    title: "Silas plays Table 1 and gives a verdict"
+    title: "Silas plays Table 1 and gives the FX3/Williams verdict"
     status: waiting
-    depends_on: [t-007, t-009]
+    depends_on: [t-010, t-011]
     owner: null
     passes: 0
     stakes: reversible
+    gate_human: true
+    gate_reason: subjective-acceptance
     note: >-
-      FOR SILAS (gated when it unblocks): play the rebuilt Table 1 in the Arcade tab on phone and desktop
-      and say whether it hits the Williams bar. Fold his notes into new tasks.
-
-
+      FOR SILAS (gated only when it unblocks): play the rebuilt 3D Table 1 on desktop and touch and judge
+      the requested bar. At a glance it should read as a physical machine before any labels are read:
+      dimensional ramps/rails/plastics, reflective ball, real DMD, lit shot language, deep rules,
+      multiball spectacle, signature toys and strong ball feel. Fold concrete notes into follow-up tasks.
+      Tables 2 and 3 stay waiting until this verdict so we do not multiply a mediocre foundation.
   - id: t-017
     milestone: m1
     title: "FX3 quality reset: visual mockups + 3D architecture blueprint"
@@ -285,3 +289,35 @@ tasks:
     claimed_by: 2026-10-07T050600Z-kind-pinball-t017-gpt56sol
     claimed_at: '2026-10-07T05:06:00Z'
     updated: '2026-10-07T05:06:00Z'
+
+  - id: t-018
+    milestone: m2
+    title: "3D greybox vertical slice: full Table 1 shot map in playable geometry"
+    status: waiting
+    depends_on: [t-003, t-004]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Translate the t-003 expanded shot map and mockups/02-shot-map.svg into a playable 3D blockout:
+      one steel ball, two motor flippers, slings, three pops, left/right orbits, left/right ramps, upper
+      feed, lock scoop, spinner lane, award scoop, return lanes, drain and plunger lane. Geometry first:
+      primitive materials are fine, but ramps have real height and balls travel under/over mechanisms.
+      Add directional sensor volumes that emit semantic shot events. This is the first vertical slice that
+      must already feel unmistakably like physical pinball.
+
+  - id: t-019
+    milestone: m2
+    title: "3D hero render pass: PBR materials, camera, GI, inserts, flashers and quality tiers"
+    status: waiting
+    depends_on: [t-005]
+    owner: null
+    passes: 0
+    stakes: reversible
+    note: >-
+      Make the greybox look premium before adding more tables: perspective camera, clearcoat playfield,
+      chrome rails/posts, rubber, plastics, reflective steel ball, contact/baked shadows, environment
+      reflections, ACES tone mapping, emissive shot inserts and restrained bloom. Implement measured
+      high/medium/low quality tiers rather than UA sniffing. Fixed-seed screenshots at desktop, landscape
+      tablet and portrait phone must read as a physical pinball machine at a glance and preserve shot
+      readability. Use mockups/01-fx3-table-hero.svg and 03-responsive-shell.svg as the target composition.
