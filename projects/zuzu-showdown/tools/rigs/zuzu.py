@@ -1,9 +1,9 @@
 """Zuzu's rig (zuzu-showdown t-010).
 
-Parts are cut from the reference build A7 (ArtImage 242193, mirrored to face right) until the t-010
-parts sheet (art/T010-RIG-PARTS.yaml) lands; then each part's `art`, `polygon` and `pivot` move to the
-cleaner sheet without touching the animations below. Coordinates are the source image's pixels
-(832 x 1216); about 16 of them make one game pixel.
+Parts are cut from the t-010 parts sheet's fighting stance (ArtImage 242762: a wide, low stance facing
+right, lead arm out, the off hand on his hip), so every pose starts from a real stance instead of the
+standing reference. Scale still comes from the standing build A7 (242193), so the crouched stance keeps
+his true size. Coordinates are the source image's pixels (832 x 1216); about 16 make one game pixel.
 """
 
 from __future__ import annotations
@@ -14,27 +14,32 @@ from PIL import ImageDraw
 
 HEIGHT = 72
 PALETTE_COLOURS = 16
-REFERENCE = {"art": 242193, "mirror": True}
+REFERENCE = {"art": 242193, "mirror": True}  # scale only
 
-HIP_BACK = (350, 830)
-HIP_FRONT = (480, 830)
-NECK = (440, 390)
-SHOULDER = (470, 560)
+HIP_BACK = (260, 790)
+HIP_FRONT = (470, 790)
+NECK = (420, 380)
+SHOULDER = (610, 530)
+STANCE = 242762
 
 PARTS = {
-    "hilt": {"art": 242193, "mirror": True, "z": 0, "pivot": NECK, "follows": ["body", "head"],
-             "polygon": [(186, 38), (246, 34), (342, 352), (338, 384), (232, 388), (226, 352), (262, 346)]},
-    "back_leg": {"art": 242193, "mirror": True, "z": 1, "pivot": HIP_BACK, "follows": [],
-                 "polygon": [(286, 790), (430, 800), (440, 1060), (420, 1210), (260, 1210), (276, 1000)]},
-    "front_leg": {"art": 242193, "mirror": True, "z": 2, "pivot": HIP_FRONT, "follows": [],
-                  "polygon": [(400, 800), (570, 800), (600, 900), (568, 1050), (600, 1210), (380, 1210),
-                              (410, 1060)]},
-    "torso": {"art": 242193, "mirror": True, "z": 3, "pivot": HIP_FRONT, "follows": ["body"],
-              "polygon": [(186, 352), (560, 360), (676, 560), (700, 800), (620, 920), (560, 930), (420, 840),
-                          (290, 810), (186, 760), (150, 620)]},
-    "head": {"art": 242193, "mirror": True, "z": 4, "pivot": NECK, "follows": ["body"],
-             "polygon": [(286, 150), (600, 112), (790, 236), (780, 290), (590, 300), (560, 400), (300, 400),
-                         (282, 300)]},
+    "hilt": {"art": STANCE, "z": 0, "pivot": NECK, "follows": ["body", "head"],
+             "polygon": [(648, 44), (714, 60), (604, 336), (612, 362), (520, 374), (528, 330), (570, 318)]},
+    "back_leg": {"art": STANCE, "z": 1, "pivot": HIP_BACK, "follows": [],
+                 "polygon": [(160, 756), (334, 756), (304, 900), (244, 1020), (196, 1100), (184, 1168),
+                             (56, 1168), (68, 1100), (128, 1000), (138, 880)]},
+    "front_leg": {"art": STANCE, "z": 2, "pivot": HIP_FRONT, "follows": [],
+                  "polygon": [(396, 756), (564, 756), (684, 880), (684, 1000), (644, 1100), (764, 1146),
+                              (744, 1168), (576, 1168), (588, 1060), (556, 980), (466, 900)]},
+    "torso": {"art": STANCE, "z": 3, "pivot": HIP_FRONT, "follows": ["body"],
+              "polygon": [(36, 460), (160, 366), (500, 356), (626, 482), (654, 622), (566, 700), (544, 802),
+                          (430, 862), (250, 802), (200, 722), (140, 642), (48, 562)]},
+    "lead_arm": {"art": STANCE, "z": 4, "pivot": SHOULDER, "follows": ["body"],
+                 "polygon": [(616, 516), (700, 466), (770, 436), (816, 456), (804, 524), (744, 564), (694, 624),
+                             (628, 626)]},
+    "head": {"art": STANCE, "z": 5, "pivot": NECK, "follows": ["body"],
+             "polygon": [(228, 168), (500, 156), (722, 248), (704, 282), (562, 292), (560, 402), (480, 422),
+                         (258, 382), (228, 300)]},
 }
 
 FUR = (138, 150, 163)
@@ -73,41 +78,45 @@ def arm(hand, sword=None, dy=0):
     return {"fn": "sword_arm", "args": {"hand": hand, "sword": sword, "dy": dy}}
 
 
-def stance(dy=0, head=0, front=14, back=-12, lean=4):
-    """The fighting stance every grounded move starts from: legs apart, weight low."""
-    return {"body": {"dy": 24 + dy, "angle": lean}, "head": {"dy": head}, "front_leg": {"angle": front},
-            "back_leg": {"angle": back}}
+def stance(dy=0, head=0, arm=0):
+    """The fighting stance is the source art itself, so a stance frame is just small offsets."""
+    return {"body": {"dy": dy}, "head": {"dy": head}, "lead_arm": {"angle": arm}}
 
 
 ANIMATIONS = {
-    "idle": {"fps": 8, "loop": True, "frames": [stance(0), stance(-8, -2), stance(-14, -4), stance(-6, -4)]},
+    "idle": {"fps": 8, "loop": True, "frames": [stance(0), stance(-8, -2, 2), stance(-12, -4, 4), stance(-6, -4, 2)]},
+    # A low shuffle: the stance is already wide, so the legs swing a little and the body bobs.
     "walk_forward": {"fps": 10, "loop": True, "frames": [
-        {"front_leg": {"angle": 20}, "back_leg": {"angle": -18}, "body": {"dy": 6}},
-        {"front_leg": {"angle": 10}, "back_leg": {"angle": -8, "dy": -12}, "body": {"dy": 16}},
-        {"front_leg": {"angle": -4}, "back_leg": {"angle": 6, "dy": -24}, "body": {"dy": 0}},
-        {"front_leg": {"angle": -16}, "back_leg": {"angle": 16}, "body": {"dy": -12}},
-        {"front_leg": {"angle": -20}, "back_leg": {"angle": 20}, "body": {"dy": 6}},
-        {"front_leg": {"angle": -6, "dy": -24}, "back_leg": {"angle": 6}, "body": {"dy": 0}},
+        {"front_leg": {"angle": 8}, "back_leg": {"angle": -6}, "body": {"dy": 6}},
+        {"front_leg": {"angle": 4}, "back_leg": {"angle": -2, "dy": -10}, "body": {"dy": 14}, "lead_arm": {"angle": 3}},
+        {"front_leg": {"angle": -2}, "back_leg": {"angle": 4, "dy": -18}, "body": {"dy": 4}, "lead_arm": {"angle": 5}},
+        {"front_leg": {"angle": -8}, "back_leg": {"angle": 8}, "body": {"dy": -8}, "lead_arm": {"angle": 3}},
+        {"front_leg": {"angle": -10, "dy": -12}, "back_leg": {"angle": 6}, "body": {"dy": 4}},
+        {"front_leg": {"angle": -4, "dy": -18}, "back_leg": {"angle": 2}, "body": {"dy": 8}, "lead_arm": {"angle": -2}},
     ]},
-    # Legs squash about the hips and drop by the same amount (380 px of leg), so the feet stay planted.
+    # Legs squash about the hips and drop by the same amount (375 px of leg), so the feet stay planted.
     "crouch": {"fps": 12, "loop": False, "frames": [
-        {"body": {"dy": 76, "angle": 4}, "front_leg": {"sy": -0.2, "sx": 0.08, "dy": 76},
-         "back_leg": {"sy": -0.2, "sx": 0.08, "dy": 76}},
-        {"body": {"dy": 152, "angle": 8}, "front_leg": {"sy": -0.4, "sx": 0.15, "dy": 152, "angle": 6},
-         "back_leg": {"sy": -0.4, "sx": 0.15, "dy": 152, "angle": -6}},
+        {"body": {"dy": 66, "angle": 3}, "front_leg": {"sy": -0.18, "sx": 0.06, "dy": 66},
+         "back_leg": {"sy": -0.18, "sx": 0.06, "dy": 66}, "lead_arm": {"angle": -8}},
+        {"body": {"dy": 131, "angle": 6}, "front_leg": {"sy": -0.35, "sx": 0.12, "dy": 131},
+         "back_leg": {"sy": -0.35, "sx": 0.12, "dy": 131}, "lead_arm": {"angle": -16}},
     ]},
-    # In the air the engine moves him; the sprite only tucks the legs up under the poncho.
+    # In the air the engine moves him; the sprite tucks the legs up under the poncho.
     "jump_up": {"fps": 12, "loop": False, "frames": [
-        {"body": {"dy": 60}, "front_leg": {"sy": -0.16, "dy": 60}, "back_leg": {"sy": -0.16, "dy": 60}},
-        {"body": {"angle": -4}, "front_leg": {"sy": -0.4, "angle": 24}, "back_leg": {"sy": -0.35, "angle": 10}},
-        {"body": {"angle": -8}, "front_leg": {"sy": -0.5, "angle": 34}, "back_leg": {"sy": -0.45, "angle": 18}},
+        {"body": {"dy": 50}, "front_leg": {"sy": -0.13, "dy": 50}, "back_leg": {"sy": -0.13, "dy": 50}},
+        {"body": {"angle": -4}, "front_leg": {"sy": -0.4, "angle": 16}, "back_leg": {"sy": -0.4, "angle": -6},
+         "lead_arm": {"angle": 20}},
+        {"body": {"angle": -8}, "front_leg": {"sy": -0.5, "angle": 24}, "back_leg": {"sy": -0.48, "angle": -2},
+         "lead_arm": {"angle": 30}},
     ]},
+    # Standing HP, the draw-cut: the lead arm reaches back to the hilt over his shoulder, draws, cuts
+    # straight out at chest height, follows through, and re-sheathes.
     "stand_hp": {"fps": 15, "loop": False, "frames": [
-        {**stance(24), "body": {"dy": 48, "angle": -4}, "draw": [arm((330, 330), dy=48)]},
-        {**stance(16), "body": {"dy": 40, "angle": 4}, "hide": ["hilt"], "draw": [arm((520, 300), 70, 40)]},
-        {**stance(8), "body": {"dy": 32, "angle": 10}, "hide": ["hilt"], "draw": [arm((760, 520), 0, 32)]},
-        {**stance(12), "body": {"dy": 36, "angle": 8}, "hide": ["hilt"], "draw": [arm((640, 640), -40, 36)]},
-        {**stance(4), "body": {"dy": 28}, "draw": [arm((360, 360), dy=28)]},
+        {**stance(16), "hide": ["lead_arm"], "draw": [arm((600, 330), dy=16)]},
+        {**stance(10), "hide": ["lead_arm", "hilt"], "draw": [arm((700, 270), 70, 10)]},
+        {**stance(4), "body": {"dy": 4, "angle": 6}, "hide": ["lead_arm", "hilt"], "draw": [arm((830, 500), 0, 4)]},
+        {**stance(8), "body": {"dy": 8, "angle": 4}, "hide": ["lead_arm", "hilt"], "draw": [arm((760, 620), -40, 8)]},
+        {**stance(4), "hide": ["lead_arm"], "draw": [arm((610, 340), dy=4)]},
     ]},
 }
 

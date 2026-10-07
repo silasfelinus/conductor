@@ -32,7 +32,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import sprite_common as sc
 
-CANVAS = (1600, 1500)
+CANVAS = (2000, 1500)
 OFFSET = (300, 200)  # where a source image's (0, 0) lands on the posing canvas
 
 
@@ -164,7 +164,10 @@ def main(slug: str, source_dir: str, out_dir: str) -> None:
         if key not in sources:
             sources[key] = load_source(src, *key)
         parts[name] = cut(sources[key], spec["polygon"])
-    ref = sources[(rig.REFERENCE["art"], rig.REFERENCE.get("mirror", False))]
+    # The scale reference need not be a part source (Zuzu's parts come from the stance render, his
+    # scale from the standing build), so load it on its own when it isn't.
+    ref_key = (rig.REFERENCE["art"], rig.REFERENCE.get("mirror", False))
+    ref = sources.get(ref_key) or load_source(src, *ref_key)
     figure_height = sc.crop_to_content(ref).height
 
     raw = {name: [pose_frame(rig, parts, f) for f in anim["frames"]] for name, anim in rig.ANIMATIONS.items()}
