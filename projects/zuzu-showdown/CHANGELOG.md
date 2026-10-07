@@ -1,6 +1,10 @@
 # zuzu-showdown CHANGELOG
 
 ## 2026-10-07
+- t-018: every matchup line is written (matchups.yaml): 36 intros (28 pairs and 8 mirrors), 64 win quotes and
+  the boss lines, in each fighter's voice (Zuzu in three words or fewer, the croc in sounds, nobody gloating
+  over the Siblings). tools/check_matchups.py and tests/test_zuzu_showdown_matchups.py keep the set complete,
+  under 60 characters a line and clear of banned terms.
 - t-010: effects. The rig draws a pale crescent smear behind Zuzu's katana cuts and the Coyote's
   stabs (in both styles, never counted as reach), and the game throws hand-pixel hit sparks where
   the hitbox meets the hurtbox: yellow hits, pink counters, blue blocks, green parries, double size
