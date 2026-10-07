@@ -273,6 +273,14 @@ tasks:
       scroll), animated element loops (sprite strips or palette cycling), and its stage event wired to sim
       events (round start, KO, Showdown super). No lettering except canon diegetic signs. Ship two stages
       first (Hollow Bell, the Watering Hole) for the t-010 art slice.
+      PROGRESS 2026-10-07 (PT): the first two stages are built. tools/stage.py turns house-lane art
+      (art/T009-STAGES.yaml) into parallax layers, cutouts and anchors from one config per stage in
+      tools/stages/, and the game draws them with their moving parts (kind_robots#3344): the Hollow Bell
+      bell swings and rings at round start and KO, the pennant flaps, lantern smoke, tumbleweeds, the
+      lettered arch beam; the Watering Hole's shimmer, vultures, water glints and the croc's eyes. Every
+      pond render added a longhorn despite the negative prompt, so that midground is the pond cut short of
+      it and mirrored. Six stages remain (the Mission, the Lone Apple Tree, Storm Canyon, the Bone Yard,
+      the Dunes, the Thin Place) and the Showdown-super stage reaction.
     claimed_by: 2026-10-07T11:00:00Z-zs-t009
     claimed_at: '2026-10-07T10:57:19Z'
     updated: '2026-10-07T10:57:19Z'
