@@ -1,7 +1,7 @@
 # Pitch: Robot Dodger
 date: 2026-10-07
 project-target: kr-arcade
-status: awaiting-silas
+status: rejected
 
 ## The idea
 An arcade cabinet riffing on the Frogger lane-crossing mechanic, where a small robot hops across belts of conveyor traffic to reach a charging dock. Speed rises each crossing and the score goes to the cabinet leaderboard.
