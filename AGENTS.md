@@ -643,6 +643,12 @@ role from live state on arrival:**
    - **`role: pr-medic`** — no branch to review, but an open PR (`run_reviewer.py`'s
      scope) has red CI that's gone stale (no push in `--pr-stale-hours`, default 3h)
      — a real error nobody is actively iterating on, not a PR mid-fix. See `docs/agents/roles/pr-medic.md`.
+   - **`role: art-medic`** — `ops/art-queue-health.yaml` (written by every Auto Art
+     Generate run) lists art queue failures an agent can fix: prompt-contract
+     rejections, adoptions that 404, FAILED Kind Robots ArtJobs with no known repair,
+     or a timeout/error persisting 2+ days. That workflow is green even when nothing
+     renders (2026-10-07: 0/28 behind a green check), so this file is the signal.
+     Fix the rows and the producer that wrote them. See `docs/agents/roles/art-medic.md`.
    - **`role: branch-medic`** — nothing to review or fix, but `branch_janitor.py`'s
      STRANDED tier is non-empty: a `claude/*`/`worker/*` branch with unique unmerged
      commits, old enough (`--branch-stale-hours`, default 12h) that nobody's actively
@@ -684,7 +690,7 @@ role from live state on arrival:**
      JSON) and ship at least one unit of work before the session ends.
 2. Follow the matching playbook (table below). A session isn't locked to one role for its
    whole run: if you finish reviewing everything open, re-run `select_role.py` — it
-   may now recommend `workflow-medic`, `pr-medic`, `branch-medic`, `site-auditor`,
+   may now recommend `workflow-medic`, `pr-medic`, `art-medic`, `branch-medic`, `site-auditor`,
    `worker`, or `stale-recurring` — and keep going in the same session rather than
    stopping. This is what "agents disperse and work as needed" means in practice: the
    role is a live recommendation you re-check, not a label stamped on you before you
@@ -785,6 +791,7 @@ you re-run `select_role.py` and the role changes.
 | Reviewer (`role: reviewer`, `reviewer-uncertain`) | [`docs/agents/roles/reviewer.md`](docs/agents/roles/reviewer.md) |
 | `role: workflow-medic` | [`docs/agents/roles/workflow-medic.md`](docs/agents/roles/workflow-medic.md) |
 | `role: pr-medic` | [`docs/agents/roles/pr-medic.md`](docs/agents/roles/pr-medic.md) |
+| `role: art-medic` | [`docs/agents/roles/art-medic.md`](docs/agents/roles/art-medic.md) |
 | `role: branch-medic` | [`docs/agents/roles/branch-medic.md`](docs/agents/roles/branch-medic.md) |
 | `role: site-auditor` | [`docs/agents/roles/site-auditor.md`](docs/agents/roles/site-auditor.md) |
 | `idle` | "Never idle: the fallback ladder" above (no separate file) |

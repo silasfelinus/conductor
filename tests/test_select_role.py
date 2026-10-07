@@ -31,7 +31,11 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 from unittest import mock
 
+import pytest
+
 import scripts.select_role as select_role
+
+REAL_FIND_ART_QUEUE_FAILURES = select_role.find_art_queue_failures
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -59,6 +63,7 @@ def _patched(
     daily_commitments=(),
     stale_recurring_tasks=(),
     gate_triage_findings=(),
+    art_queue_failures=(),
 ):
     """One combined patch context covering all eight signals, each defaulted
     to "nothing found"/"not overdue" and overridden per-test — keeps each
@@ -90,7 +95,18 @@ def _patched(
         mock.patch.object(
             select_role, "find_gate_triage_findings", return_value=list(gate_triage_findings)
         ),
+        mock.patch.object(
+            select_role, "find_art_queue_failures", return_value=list(art_queue_failures)
+        ),
     )
+
+
+@pytest.fixture(autouse=True)
+def _no_live_art_queue_health():
+    # ops/art-queue-health.yaml is rewritten by every art run; never let its live
+    # contents decide a role in a test that is about some other signal.
+    with mock.patch.object(select_role, "find_art_queue_failures", return_value=[]):
+        yield
 
 
 @contextlib.contextmanager
@@ -1478,3 +1494,69 @@ def test_gate_triage_downgrades_when_github_unreachable():
 
     assert result["role"] == "reviewer-uncertain"
     assert result["underlying_role"] == "gate-triage"
+
+
+ART_FAILURE = {
+    "source": "project-art",
+    "target": "projects/images/x-icon.webp",
+    "kind": "contract-rejected",
+    "rules": ["text-exclusion-pile"],
+    "first_seen": "2026-10-07",
+}
+
+
+def test_art_medic_outranks_branch_medic_daily_audit_and_worker():
+    with _apply(_patched(
+        art_queue_failures=[ART_FAILURE],
+        stranded_branches=[{"repo": "silasfelinus/conductor", "branch": "claude/some-stale"}],
+        daily_commitments=[{"project": "animation-manager", "task_id": "t-007"}],
+        audit_status=AUDIT_OVERDUE,
+        queue_summary=SOME_READY_TASK,
+    )):
+        result = select_role.select_role(github_token="fake-token")
+
+    assert result["role"] == "art-medic"
+    assert result["playbook"] == "docs/agents/roles/art-medic.md"
+    assert "1 contract-rejected" in result["reason"]
+    assert result["art_queue_failure_count"] == 1
+    assert result["stranded_branch_count"] == 1
+
+
+def test_pr_medic_outranks_art_medic():
+    with _apply(_patched(
+        art_queue_failures=[ART_FAILURE],
+        red_stale_prs=[{"repo": "silasfelinus/kind_robots", "number": 42, "ci_state": "failure"}],
+    )):
+        result = select_role.select_role(github_token="fake-token")
+
+    assert result["role"] == "pr-medic"
+    assert result["art_queue_failure_count"] == 1
+
+
+def test_art_medic_downgrades_when_github_signals_are_unverified():
+    with _apply(_patched(art_queue_failures=[ART_FAILURE])):
+        result = select_role.select_role()
+
+    assert result["role"] == "reviewer-uncertain"
+    assert result["underlying_role"] == "art-medic"
+
+
+def test_find_art_queue_failures_reads_the_health_file(tmp_path, monkeypatch):
+    health = tmp_path / "health.yaml"
+    health.write_text(select_role.art_queue_health.dump([ART_FAILURE, {
+        "source": "requests", "target": "a.webp", "kind": "timeout", "first_seen": "2999-01-01",
+    }]))
+    monkeypatch.setattr(select_role.art_queue_health, "HEALTH_FILE", health)
+
+    found = REAL_FIND_ART_QUEUE_FAILURES()
+
+    # The rejection is always work; a fresh timeout is not yet.
+    assert [f["target"] for f in found] == ["projects/images/x-icon.webp"]
+
+
+def test_unreadable_art_queue_health_does_not_break_selection(tmp_path, monkeypatch):
+    health = tmp_path / "health.yaml"
+    health.write_text("failures: [unclosed\n")
+    monkeypatch.setattr(select_role.art_queue_health, "HEALTH_FILE", health)
+
+    assert REAL_FIND_ART_QUEUE_FAILURES() == []

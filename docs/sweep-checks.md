@@ -145,6 +145,16 @@ flags something and you need to know why it exists or how to fix it.
      is over 20KB, because each claim re-reads the whole note (2026-09-30: six live notes held 259KB;
      archived to ~36KB with `archive_recurring_task_note.py --keep-head 3000 --keep-tail 3500`).
      Advisory; exit 1 when flagged, 2 when git history can't cover the window.
+   - `python scripts/art_queue_health.py check` (sweep name `art_queue_health`) — reads
+     `ops/art-queue-health.yaml`, which every Auto Art Generate run writes from its own step logs,
+     and lists art queue failures an agent can fix (2026-10-07). The workflow's consume steps are
+     `continue-on-error`, so it was green while all 28 submissions were prompt-contract 422s and
+     twelve projects' art sat `pending` for days. `select_role.py` can't watch the workflow either:
+     its conclusions are mostly benign `cancelled`. Contract rejections, adoptions that 404 and
+     FAILED Kind Robots ArtJobs with no known repair count at once, because none of them heals by
+     waiting. A timeout or other error counts after it persists 2 days (`--persist-days`). A flag
+     is `art-medic` work (`docs/agents/roles/art-medic.md`): fix the rows and the producer that
+     wrote them. Exit 1 when flagged.
    - `python scripts/sync_github_issues.py --check` (sweep name `issue_bridge`) — lists open GitHub
      issues in every repos.yaml repo that no roadmap task mirrors yet (`IMPORT`), issues whose owning
      project is paused/retired/finished (`INACTIVE`), issues from non-collaborators that are never

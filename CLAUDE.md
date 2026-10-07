@@ -22,7 +22,7 @@ At the start of every session, before responding to any task, run a conductor sw
    `check_pr_merged_drift`, `audit_human_gates`, `check_gate_legitimacy --live`, `check_project_scaffold_drift`, `check_live_facet_coverage`,
    `check_milestone_status_drift`, `check_container_log_drift`, `check_roadmap_note_size --payload-only`,
    `check_facet_prompt_subjects`, `check_priority_queue_starvation`, `check_vendored_scanner_parity`,
-   `check_daily_commitment_staleness`, `check_recurring_claim_drift`, `check_recurring_churn`, `sync_github_issues --check`, plus `build_dream_proposal.py --check
+   `check_daily_commitment_staleness`, `check_recurring_claim_drift`, `check_recurring_churn`, `art_queue_health.py check`, `sync_github_issues --check`, plus `build_dream_proposal.py --check
    --fetch` (step 7) and `tzaddik_review.py --check`. Why each check exists, what its exit codes mean and
    how to fix what it flags: [`docs/sweep-checks.md`](docs/sweep-checks.md) — read the entry only for a
    check that flagged.
@@ -64,6 +64,8 @@ Then report:
 - **Projection headroom**: the `check_roadmap_note_size.py` payload line (bytes used against the
   4,000,000 limit, and headroom). Report it every session — it is the repo's only hard ceiling, and
   when it broke on 2026-09-11 nothing had warned that it was close
+- **Art queue health**: the `art_queue_health` sweep line — failed art the last Auto Art Generate run
+  could not render (its green check hides them). Non-zero means `art-medic` work; name the counts by kind
 - **Container log triage** (Alexandria): new/spiking/newly-quiet log signatures, or a stale
   digest meaning the daily User Script stopped running — omit entirely when not configured yet
 - **Any unresolved escalations** from TALKBACK
