@@ -1,6 +1,12 @@
 # zuzu-showdown CHANGELOG
 
 ## 2026-10-07
+- t-010 (in progress): hitboxes authored against the art. rig.py measures each attack's striking layer
+  (`hit` per frame), and the game's sprite test holds every kit hitbox to it on the active frames. Fixed
+  in the art: both crouching anti-airs and Pocket Sand now strike on their active frames, the crouching
+  light kicks and sweeps reach the floor, Zuzu's heavy kicks reach out, the jump kicks angle down. The
+  katana and the Coyote's stump knife are drawn shorter. The kits follow the art for the rest
+  (for example Iai Flash reaches 56 instead of 44, and Zuzu's sweep 36 instead of 48).
 - t-010 (in progress): both fighters' sprite sets cover their whole kit: every normal, the dodges, landing,
   wake-up, throws, every special and super, the round intro and the Perfect pose (conductor#5726 and this
   change; kind_robots#3325 and its follow-up). The game plays the intro over the round intro and the

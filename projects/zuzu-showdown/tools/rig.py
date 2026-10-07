@@ -11,7 +11,10 @@ rules. This script poses every frame at HD, then writes, per style:
 
 Pixel is derived from HD (Silas, 2026-10-06 PT: "pixel is a style choice"), so both styles always share
 poses, timing and boxes. Frame maps are in game units (Zuzu is 72 tall) with the anchor at the feet, so
-the renderer and the sim's boxes agree whatever the style.
+the renderer and the sim's boxes agree whatever the style. Each frame carries `hurt` (the silhouette's
+box) and, for an attack that names its striking layers (`strike`), `hit`: where the blade, fist or foot
+reaches that frame. The game's sprite test holds every kit hitbox to that reach on the move's active
+frames.
 
     python projects/zuzu-showdown/tools/rig.py SLUG SOURCE_DIR OUT_DIR
 
@@ -65,19 +68,25 @@ def place(canvas: Image.Image, part: Image.Image, pose: dict, pivot) -> None:
     canvas.alpha_composite(moved, (OFFSET[0] + pose.get("dx", 0), OFFSET[1] + pose.get("dy", 0)))
 
 
-def pose_frame(rig, parts: dict[str, Image.Image], frame: dict) -> Image.Image:
+def pose_frame(rig, parts: dict[str, Image.Image], frame: dict, only: set[str] | None = None) -> Image.Image:
     """Compose one frame: every part in draw order, posed by the frame (a part's pose falls back to
-    its group's, e.g. the head follows `body` unless the frame poses `head` itself)."""
+    its group's, e.g. the head follows `body` unless the frame poses `head` itself).
+
+    `only` composes just the named layers (part names, and "draw" / "draw_behind" for the frame's own
+    code-drawn pieces): the striking layer an attack's hit box is measured from."""
     canvas = Image.new("RGBA", CANVAS, (0, 0, 0, 0))
     hidden = set(frame.get("hide", []))
     # A rig with code-drawn arms gives resting arms (rest_arms(body_dy)) to any frame that doesn't
-    # pose that layer itself, so idles, walks, hits and falls aren't armless.
-    rest = rig.rest_arms(frame.get("body", {}).get("dy", 0)) if hasattr(rig, "rest_arms") else {}
+    # pose that layer itself, so idles, walks, hits and falls aren't armless. Resting arms never strike.
+    rest = {}
+    if only is None and hasattr(rig, "rest_arms"):
+        rest = rig.rest_arms(frame.get("body", {}).get("dy", 0))
     # Code-drawn pieces on the far side of the body (the Coyote's gun arm) go down first.
-    for draw in frame.get("draw_behind", rest.get("draw_behind", [])):
-        getattr(rig, draw["fn"])(canvas, OFFSET, **draw.get("args", {}))
+    if only is None or "draw_behind" in only:
+        for draw in frame.get("draw_behind", rest.get("draw_behind", [])):
+            getattr(rig, draw["fn"])(canvas, OFFSET, **draw.get("args", {}))
     for name in sorted(rig.PARTS, key=lambda n: rig.PARTS[n]["z"]):
-        if name in hidden:
+        if name in hidden or (only is not None and name not in only):
             continue
         spec = rig.PARTS[name]
         # A part's resting transform (`base`): how a separately rendered limb, drawn at its own scale,
@@ -89,8 +98,9 @@ def pose_frame(rig, parts: dict[str, Image.Image], frame: dict) -> Image.Image:
         for key, value in frame.get(name, {}).items():
             pose[key] = pose.get(key, 0) + value
         place(canvas, parts[name], pose, spec["pivot"])
-    for draw in frame.get("draw", rest.get("draw", [])):
-        getattr(rig, draw["fn"])(canvas, OFFSET, **draw.get("args", {}))
+    if only is None or "draw" in only:
+        for draw in frame.get("draw", rest.get("draw", [])):
+            getattr(rig, draw["fn"])(canvas, OFFSET, **draw.get("args", {}))
     # The whole figure at once (falls, knockdowns): rotate about a pivot in source pixels, then shift.
     whole = frame.get("whole")
     if whole:
@@ -174,6 +184,21 @@ def save_atlas(atlas: Image.Image, path: Path, indexed: bool) -> None:
     out.save(path, optimize=True, transparency=bytes(int(a) for a in colours[:, 3]))
 
 
+def reach_box(layer: Image.Image, anchor_canvas: tuple[int, int], game_scale: float) -> dict | None:
+    """Where an attack's striking layer reaches, in game units from the fighter's spot (x forward, y up
+    from the ground), the same space as the kits' hitboxes; None when the layer is empty this frame."""
+    b = layer.getchannel("A").point(lambda a: 255 if a > 96 else 0).getbbox()
+    if not b:
+        return None
+    ax, ay = anchor_canvas
+    return {
+        "x": round((b[0] - ax) * game_scale),
+        "y": round((ay - b[3]) * game_scale),
+        "w": round((b[2] - b[0]) * game_scale),
+        "h": round((b[3] - b[1]) * game_scale),
+    }
+
+
 def hurtbox(frame: Image.Image, anchor: tuple[int, int], scale: float) -> dict:
     """The silhouette's bounding box in game units relative to the anchor, y up from the ground: a
     starting hurtbox drawn from the art itself, for t-024's balance pass to tune per move."""
@@ -207,6 +232,14 @@ def main(slug: str, source_dir: str, out_dir: str) -> None:
     raw = {name: [pose_frame(rig, parts, f) for f in anim["frames"]] for name, anim in rig.ANIMATIONS.items()}
     hd_scale = rig.HEIGHT * sc.HD_SCALE / figure_height
     game_scale = rig.HEIGHT / figure_height
+    # An attack names its striking layers (`strike`: the blade arm, the kicking leg); each frame's reach
+    # is measured from those alone, so the game can check its hitboxes against the art.
+    anchor_canvas = (OFFSET[0] + rig.ANCHOR[0], OFFSET[1] + rig.ANCHOR[1])
+    reach = {
+        name: [reach_box(pose_frame(rig, parts, f, set(anim["strike"])), anchor_canvas, game_scale)
+               for f in anim["frames"]]
+        for name, anim in rig.ANIMATIONS.items() if anim.get("strike")
+    }
     hd, game, anchors = {}, {}, {}
     for name, fs in raw.items():
         # Each animation is cropped on its own (a knockdown lies far wider than a stance), but its
@@ -240,7 +273,8 @@ def main(slug: str, source_dir: str, out_dir: str) -> None:
                     "loop": rig.ANIMATIONS[name].get("loop", False),
                     "frames": [
                         {**rect, "anchor": {"x": anchors[name][style][0], "y": anchors[name][style][1]},
-                         "hurt": hurtbox(frames[name][i], anchors[name][style], scale)}
+                         "hurt": hurtbox(frames[name][i], anchors[name][style], scale),
+                         **({"hit": reach[name][i]} if name in reach and reach[name][i] else {})}
                         for i, rect in enumerate(rects[name])
                     ],
                 }

@@ -302,7 +302,13 @@ tasks:
       normal, dodges, landing, wake-up, throws (conductor#5726, kind_robots#3325), then every special and
       super, the round intro and the Perfect pose, so each fighter's full kit list has art (Zuzu 42
       animations, the Coyote 43; pixel atlases now saved as exact indexed PNGs, a third the size).
-      Remaining: boxes authored per move against the art, and effects (smears, sparks).
+      Then boxes: each attack names its striking layer, the rig writes that layer's reach per frame
+      (`hit` in the frame maps), and kind_robots' sprite test holds every kit hitbox to the art on the
+      move's active frames (at most 4 px past the drawn tip, at most 12 short; lows drawn reaching the
+      floor). That caught both crouching anti-airs and Pocket Sand striking after their active frames,
+      lows drawn off the floor, and Zuzu's kicks drawn shorter than their boxes: the art was fixed
+      where it was wrong, and the kits now follow the art everywhere else.
+      Remaining: effects (smears, sparks).
     claimed_by: 2026-10-07T06:10:00Z-zs-t010
     claimed_at: '2026-10-07T06:09:23Z'
     updated: '2026-10-07T06:09:23Z'
