@@ -1,6 +1,14 @@
 # zuzu-showdown CHANGELOG
 
 ## 2026-10-07
+- t-009 (in progress): the first two stages, Hollow Bell and the Watering Hole (kind_robots#3344).
+  tools/stage.py builds each stage's parallax layers, cutouts (the bell, the pennant) and anchors (the arch
+  beam, the lantern's smoke, the water) from house-lane art and a config in tools/stages/, with a palette per
+  layer so the sun and the pond's water keep their colours. The game sways and rings the bell, flaps the
+  pennant, drifts the smoke, rolls tumbleweeds, letters the arch, and gives the Watering Hole its shimmer,
+  vultures, glints and the croc's eyes. Six stages to go.
+- t-019 (in progress): a KO now slows the match to a third of its speed for a moment, with a white flash on
+  the finishing blow (kind_robots#3342; reduced motion keeps the slow-down, drops the flash).
 - t-019 (in progress): the VS screen and the win screen (kind_robots#3341). Before each fight the fighters
   slam in and trade their matchup's intro lines, each on the speaker's side; after it the winner stands in
   the victory (or Perfect) pose and says their win quote to the loser. tools/matchups_to_ts.py ports
