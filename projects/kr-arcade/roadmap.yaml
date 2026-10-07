@@ -250,7 +250,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Build the next arcade cabinet (recurring game factory)"
-    status: claimed
+    status: ready
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -363,10 +363,20 @@ tasks:
       Kindness Gauntlet slice OR the next queued quick cabinet if one is waiting; the queue
       continues with prize-show-panic (Smash TV riff, uses Gauntlet's twin-stick-style aim)
       and bolt-knight / station-sweep.
+
+      RAN 2026-10-07: Prize Show Panic (Smash TV riff) shipped in
+      silasfelinus/kind_robots#3292 -- studio rooms flooding with party crashers (grabbers,
+      bouncers, conga lines, streamer throwers) through four doors, confetti cannon, prize
+      drops and power-ups, exit before the host countdown, parade float boss every fourth
+      studio; hold B to lock aim (twin-stick stand-in). Title art requested as kr-arcade-
+      games-prize-show-panic-title. Verified: test:arcade-engine, eslint/prettier, vue-tsc,
+      pilot probe seeds 1-6 (studio 6-7 after escalating extra-life thresholds), Playwright.
+      Next cycle: zuzu-ghost-trail slice 1 (one stage + poncho/armor rule; Zuzu canon and
+      VIDEO-GUARDRAILS apply), then station-sweep, plus remaining kindness-gauntlet slices.
     claimed_by: 2026-10-07T0040Z-kr-arcade-t009-prize-show-panic
     claimed_at: '2026-10-07T01:38:16Z'
-    updated: '2026-10-07T01:38:16Z'
-    implementation_pr: 'silasfelinus/kind_robots#3289'
+    updated: '2026-10-07T01:46:49Z'
+    implementation_pr: 'silasfelinus/kind_robots#3292'
 
   - id: t-010
     milestone: m2
