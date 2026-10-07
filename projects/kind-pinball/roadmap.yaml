@@ -108,7 +108,7 @@ tasks:
   - id: t-004
     milestone: m2
     title: "3D foundation: dual-canvas Arcade lane + Three.js/Rapier pinball runtime"
-    status: claimed
+    status: done
     owner: reviewer
     passes: 0
     stakes: reversible
@@ -120,9 +120,18 @@ tasks:
       disposable empty/grey table scene proving mount, resize, update, render and dispose. Keep the old
       Canvas Kind Pinball playable as the rollback path. Verify existing arcade tests/typecheck plus a
       focused lifecycle test that repeatedly enters and exits the WebGL cabinet without leaking resources.
+
+      Shipped 2026-10-07 in silasfelinus/kind_robots#3320 (all 32 checks green): WebGL arcade
+      lane (renderMode, ArcadeWebGLGameInstance, stage canvas under the 2D UI canvas, dispose
+      on every exit), unlisted kind-pinball-3d preview (maxPlausibleScore 0),
+      utils/arcade/pinball/ engine boundaries (types, Rapier physics at 1/120 s, Three.js
+      scene, rules reducer, audio boundary, runtime), real-scale greybox table. Tests: 25
+      mount/dispose cycles with zero live physics worlds and GPU resources; verified in real
+      WebGL and in the nuxi dev cabinet at desktop and phone.
     claimed_by: 2026-10-07T06:20:00Z-kp-t004
     claimed_at: '2026-10-07T06:20:51Z'
-    updated: '2026-10-07T06:20:51Z'
+    updated: '2026-10-07T08:03:55Z'
+    implementation_pr: 'silasfelinus/kind_robots#3320'
   - id: t-005
     milestone: m2
     title: "Physics feel: cradle, post pass, flipper motors, tilt bob, kickback, spinner, drops"
@@ -141,7 +150,7 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Physical DMD: 128x32 scene queue + backbox texture"
-    status: waiting
+    status: ready
     depends_on: [t-004]
     owner: null
     passes: 0
@@ -171,7 +180,7 @@ tasks:
   - id: t-008
     milestone: m2
     title: "Pinball audio mixer: mechanics, ball materials, callouts and mode music"
-    status: waiting
+    status: ready
     depends_on: [t-004]
     owner: null
     passes: 0
@@ -329,7 +338,7 @@ tasks:
   - id: t-018
     milestone: m2
     title: "3D greybox vertical slice: full Table 1 shot map in playable geometry"
-    status: waiting
+    status: ready
     depends_on: [t-003, t-004]
     owner: null
     passes: 0
