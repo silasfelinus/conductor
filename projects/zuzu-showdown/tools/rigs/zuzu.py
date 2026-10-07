@@ -89,14 +89,18 @@ ANIMATIONS = {
         {"front_leg": {"angle": -20}, "back_leg": {"angle": 20}, "body": {"dy": 6}},
         {"front_leg": {"angle": -6, "dy": -24}, "back_leg": {"angle": 6}, "body": {"dy": 0}},
     ]},
+    # Legs squash about the hips and drop by the same amount (380 px of leg), so the feet stay planted.
     "crouch": {"fps": 12, "loop": False, "frames": [
-        {"body": {"dy": 70, "angle": 6}, "front_leg": {"angle": 38, "dy": 30}, "back_leg": {"angle": -34, "dy": 30}},
-        {"body": {"dy": 130, "angle": 8}, "front_leg": {"angle": 62, "dy": 60}, "back_leg": {"angle": -58, "dy": 60}},
+        {"body": {"dy": 76, "angle": 4}, "front_leg": {"sy": -0.2, "sx": 0.08, "dy": 76},
+         "back_leg": {"sy": -0.2, "sx": 0.08, "dy": 76}},
+        {"body": {"dy": 152, "angle": 8}, "front_leg": {"sy": -0.4, "sx": 0.15, "dy": 152, "angle": 6},
+         "back_leg": {"sy": -0.4, "sx": 0.15, "dy": 152, "angle": -6}},
     ]},
+    # In the air the engine moves him; the sprite only tucks the legs up under the poncho.
     "jump_up": {"fps": 12, "loop": False, "frames": [
-        {"body": {"dy": 40}, "front_leg": {"angle": 30, "dy": 20}, "back_leg": {"angle": -30, "dy": 20}},
-        {"body": {"dy": -10}, "front_leg": {"angle": 70, "dy": -60}, "back_leg": {"angle": 50, "dy": -50}},
-        {"body": {"dy": -10, "angle": -6}, "front_leg": {"angle": 80, "dy": -80}, "back_leg": {"angle": 60, "dy": -70}},
+        {"body": {"dy": 60}, "front_leg": {"sy": -0.16, "dy": 60}, "back_leg": {"sy": -0.16, "dy": 60}},
+        {"body": {"angle": -4}, "front_leg": {"sy": -0.4, "angle": 24}, "back_leg": {"sy": -0.35, "angle": 10}},
+        {"body": {"angle": -8}, "front_leg": {"sy": -0.5, "angle": 34}, "back_leg": {"sy": -0.45, "angle": 18}},
     ]},
     "stand_hp": {"fps": 15, "loop": False, "frames": [
         {**stance(24), "body": {"dy": 48, "angle": -4}, "draw": [arm((330, 330), dy=48)]},
@@ -107,11 +111,8 @@ ANIMATIONS = {
     ]},
 }
 
-# P2's alternate colours (Street Fighter style): the rust poncho goes slate blue, the orange trim and
-# neckerchief go teal, the straw kasa goes dark. Pairs of (P1 colour as drawn, P2 colour).
-P2_SWAPS = [
-    ((176, 128, 84), (92, 112, 148)),
-    ((140, 98, 64), (64, 80, 112)),
-    ((226, 128, 52), (52, 168, 160)),
-    ((222, 196, 150), (150, 140, 120)),
+# P2's alternate colours (Street Fighter style): the rust poncho and the orange trim turn slate blue.
+# The trousers share the poncho's hue but are darker, so the value floor keeps them brown.
+P2_RULES = [
+    {"hue": (15, 40), "sat_min": 0.3, "val_min": 0.45, "shift": 190, "sat": 0.85},
 ]

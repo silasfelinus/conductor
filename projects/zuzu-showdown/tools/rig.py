@@ -2,7 +2,7 @@
 
 A fighter is a config module in tools/rigs/<slug>.py: where each body part is cut from its HD source art
 (polygon, pivot, draw order), how each animation poses those parts frame by frame, and the P2 colour
-swaps. This script poses every frame at HD, then writes, per style:
+rules. This script poses every frame at HD, then writes, per style:
 
     OUT/<slug>-hd.png + <slug>-hd.json         HD atlas (4x game resolution) and frame map
     OUT/<slug>-pixel.png + <slug>-pixel.json   pixel atlas (game resolution, indexed palette, outline)
@@ -25,6 +25,7 @@ import json
 import sys
 from pathlib import Path
 
+import numpy as np
 from PIL import Image, ImageDraw, ImageOps
 
 HERE = Path(__file__).resolve().parent
@@ -49,8 +50,17 @@ def cut(source: Image.Image, polygon) -> Image.Image:
 
 
 def place(canvas: Image.Image, part: Image.Image, pose: dict, pivot) -> None:
+    """Scale (`sx`, `sy`, compounding from 1), then rotate (`angle`), both about the part's pivot, then
+    shift (`dx`, `dy`). Squashing the legs about the hip is what makes a crouch read as a crouch."""
+    sx, sy = 1 + pose.get("sx", 0), 1 + pose.get("sy", 0)
+    moved = part
+    if sx != 1 or sy != 1:
+        px, py = pivot
+        moved = moved.transform(moved.size, Image.Transform.AFFINE,
+                                (1 / sx, 0, px - px / sx, 0, 1 / sy, py - py / sy),
+                                resample=Image.Resampling.BICUBIC)
     angle = pose.get("angle", 0)
-    moved = part.rotate(angle, resample=Image.Resampling.BICUBIC, center=tuple(pivot)) if angle else part
+    moved = moved.rotate(angle, resample=Image.Resampling.BICUBIC, center=tuple(pivot)) if angle else moved
     canvas.alpha_composite(moved, (OFFSET[0] + pose.get("dx", 0), OFFSET[1] + pose.get("dy", 0)))
 
 
@@ -59,6 +69,9 @@ def pose_frame(rig, parts: dict[str, Image.Image], frame: dict) -> Image.Image:
     its group's, e.g. the head follows `body` unless the frame poses `head` itself)."""
     canvas = Image.new("RGBA", CANVAS, (0, 0, 0, 0))
     hidden = set(frame.get("hide", []))
+    # Code-drawn pieces on the far side of the body (the Coyote's gun arm) go down first.
+    for draw in frame.get("draw_behind", []):
+        getattr(rig, draw["fn"])(canvas, OFFSET, **draw.get("args", {}))
     for name in sorted(rig.PARTS, key=lambda n: rig.PARTS[n]["z"]):
         if name in hidden:
             continue
@@ -84,29 +97,32 @@ def shared_box(frames: list[Image.Image]):
     return box
 
 
-def p2_recolour(frame: Image.Image, palette: Image.Image, swaps: dict[int, tuple[int, int, int]]) -> Image.Image:
-    """Shift every pixel whose nearest palette entry is swapped by that entry's colour delta, so HD
-    shading survives the swap (pixel frames, already palette colours, map exactly)."""
-    if not swaps:
+def p2_recolour(frame: Image.Image, rules: list[dict]) -> Image.Image:
+    """P2's alternate colours: every pixel whose hue, saturation and value fall inside a rule is
+    hue-rotated (and optionally re-saturated). Working in HSV keeps HD shading and pixel art alike,
+    and needs no exact palette colours, so it survives a re-cut of the parts.
+
+    A rule: {"hue": (lo, hi) degrees, "sat_min", "val_min", "val_max", "shift" degrees, "sat" multiplier}.
+    """
+    if not rules:
         return frame
-    entries = palette.getpalette()[: 3 * 256]
-    index = frame.convert("RGB").quantize(palette=palette, dither=Image.Dither.NONE)
-    src, idx = frame.load(), index.load()
-    out = frame.copy()
-    dst = out.load()
-    deltas = {i: tuple(c - entries[3 * i + k] for k, c in enumerate(rgb)) for i, rgb in swaps.items()}
-    for y in range(frame.height):
-        for x in range(frame.width):
-            r, g, b, a = src[x, y]
-            d = deltas.get(idx[x, y]) if a else None
-            if d:
-                dst[x, y] = (max(0, min(255, r + d[0])), max(0, min(255, g + d[1])), max(0, min(255, b + d[2])), a)
+    alpha = np.asarray(frame.convert("RGBA"))[..., 3]
+    hsv = np.asarray(frame.convert("RGB").convert("HSV")).astype(np.float32)
+    hue = hsv[..., 0] * 360.0 / 255.0
+    sat = hsv[..., 1] / 255.0
+    val = hsv[..., 2] / 255.0
+    out_h, out_s = hue.copy(), sat.copy()
+    for rule in rules:
+        lo, hi = rule["hue"]
+        mask = (alpha > 0) & (hue >= lo) & (hue <= hi) & (sat >= rule.get("sat_min", 0.0))
+        mask &= (val >= rule.get("val_min", 0.0)) & (val <= rule.get("val_max", 1.0))
+        out_h[mask] = (hue[mask] + rule.get("shift", 0.0)) % 360.0
+        out_s[mask] = np.clip(sat[mask] * rule.get("sat", 1.0), 0.0, 1.0)
+    hsv_out = np.stack([out_h * 255.0 / 360.0, out_s * 255.0, val * 255.0], axis=-1)
+    recoloured = Image.fromarray(np.round(hsv_out).astype(np.uint8), "HSV").convert("RGB")
+    out = recoloured.convert("RGBA")
+    out.putalpha(frame.getchannel("A"))
     return out
-
-
-def nearest_index(palette: Image.Image, rgb) -> int:
-    probe = Image.new("RGB", (1, 1), tuple(rgb)).quantize(palette=palette, dither=Image.Dither.NONE)
-    return probe.getpixel((0, 0))
 
 
 def pack(frames: dict[str, list[Image.Image]], scale: int):
@@ -157,13 +173,12 @@ def main(slug: str, source_dir: str, out_dir: str) -> None:
     game = {n: [sc.to_game_size(f.crop(box), figure_height, rig.HEIGHT) for f in fs] for n, fs in raw.items()}
     palette = sc.shared_palette([f for fs in game.values() for f in fs], rig.PALETTE_COLOURS)
     pixel = {n: [sc.outer_outline(sc.quantize(f, palette)) for f in fs] for n, fs in game.items()}
-    swaps = {nearest_index(palette, base): alt for base, alt in rig.P2_SWAPS}
 
     out.mkdir(parents=True, exist_ok=True)
     for style, frames, scale in (("hd", hd, sc.HD_SCALE), ("pixel", pixel, 1)):
         atlas, rects = pack(frames, scale)
         atlas.save(out / f"{slug}-{style}.png")
-        p2 = {n: [p2_recolour(f, palette, swaps) for f in fs] for n, fs in frames.items()}
+        p2 = {n: [p2_recolour(f, rig.P2_RULES) for f in fs] for n, fs in frames.items()}
         pack(p2, scale)[0].save(out / f"{slug}-p2-{style}.png")
         frame_map = {
             "fighter": slug,
@@ -195,7 +210,7 @@ def main(slug: str, source_dir: str, out_dir: str) -> None:
         "fighter": slug,
         "animations": {n: len(fs) for n, fs in hd.items()},
         "pixel_colours": sc.palette_size([f for fs in pixel.values() for f in fs]),
-        "p2_swaps": len(swaps),
+        "p2_rules": len(rig.P2_RULES),
     }))
 
 
