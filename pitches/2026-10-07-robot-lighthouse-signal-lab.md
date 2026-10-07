@@ -1,7 +1,7 @@
 # Pitch: Robot Lighthouse Signal Lab
 date: 2026-10-07
 project-target: new
-status: awaiting-silas
+status: rejected
 
 ## The idea
 A tinkering toy where players flip switches and rotate lenses to send light patterns across a painted harbour, and each correct flash sequence guides a tiny paper boat home. Every pattern and boat route is authored in advance, so there is no server logic and no model at runtime.
