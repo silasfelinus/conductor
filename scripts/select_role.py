@@ -183,6 +183,7 @@ _REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
+import scripts.art_queue_health as art_queue_health
 import scripts.branch_janitor as branch_janitor
 import scripts.check_gate_legitimacy as check_gate_legitimacy
 import scripts.run_reviewer as run_reviewer
@@ -925,6 +926,23 @@ def find_stale_recurring_tasks(
 # real unit of work. Kept in lockstep with AGENTS.md "Never idle: the
 # fallback ladder" -- the prose there is authoritative, this is the
 # machine-readable pointer so a caller reading only JSON still sees it.
+def find_art_queue_failures(*, persist_days: int = art_queue_health.DEFAULT_PERSIST_DAYS) -> list[dict]:
+    """Art queue failures an agent can fix, from ops/art-queue-health.yaml.
+
+    Local file, no API: Auto Art Generate records it at the end of every run.
+    The workflow's own conclusion cannot be the signal -- its consume steps are
+    continue-on-error, and it went green on 2026-10-07 while every one of 28
+    submissions was a prompt-contract 422 (and DEFAULT_WATCHED_WORKFLOWS
+    deliberately leaves it out for its `cancelled` noise).
+    """
+    try:
+        failures = art_queue_health.load()
+    except Exception as error:  # noqa: BLE001 - a bad file must not break role selection
+        print(f'[select-role] art queue health unreadable: {error}', file=sys.stderr)
+        return []
+    return art_queue_health.actionable(failures, datetime.now(timezone.utc).date(), persist_days)
+
+
 def find_gate_triage_findings() -> list[dict]:
     """needs-human gates that are really agent work (check_gate_legitimacy.py).
 
@@ -993,6 +1011,7 @@ def select_role(
     due_daily = find_due_daily_commitments(roadmaps)
     stale_recurring = find_stale_recurring_tasks(roadmaps, stale_days=recurring_stale_days)
     gate_findings = find_gate_triage_findings()
+    art_failures = find_art_queue_failures()
 
     if review_branches or reviewable_prs:
         role = 'reviewer'
@@ -1018,6 +1037,17 @@ def select_role(
         role = 'pr-medic'
         by_repo = ', '.join(sorted({pr['repo'] for pr in red_prs}))
         reason = f'{len(red_prs)} open PR(s) with red, stale CI nobody is actively fixing ({by_repo})'
+    elif art_failures:
+        # Silas, 2026-10-07: Conductor agents should work on fixing failed
+        # ArtJob queues. Below CI/PR repair (those block every merge), above
+        # everything else: each art run re-fails the same rows, and a rejected
+        # prompt never heals by waiting.
+        role = 'art-medic'
+        kinds: dict[str, int] = {}
+        for failure in art_failures:
+            kinds[failure.get('kind', '?')] = kinds.get(failure.get('kind', '?'), 0) + 1
+        summary = ', '.join(f'{count} {kind}' for kind, count in sorted(kinds.items()))
+        reason = f'{len(art_failures)} failed art queue item(s) need fixing ({summary}); see ops/art-queue-health.yaml'
     elif stranded:
         role = 'branch-medic'
         by_repo = ', '.join(sorted({b['repo'] for b in stranded}))
@@ -1097,7 +1127,7 @@ def select_role(
     # worker/idle -- it needs the same downgrade for the same reason.
     underlying_role = role
     underlying_reason = reason
-    if role in ('daily-creative', 'gate-triage', 'worker', 'idle', 'stale-recurring') and github_api_unreachable:
+    if role in ('art-medic', 'daily-creative', 'gate-triage', 'worker', 'idle', 'stale-recurring') and github_api_unreachable:
         role = 'reviewer-uncertain'
         reason = (
             f'GitHub API was unreachable ({github_api_unreachable_detail}) — the '
@@ -1123,6 +1153,8 @@ def select_role(
         'failing_scheduled_workflows': failing_workflows,
         'red_stale_pr_count': len(red_prs),
         'red_stale_prs': red_prs,
+        'art_queue_failure_count': len(art_failures),
+        'art_queue_failures': art_failures,
         'stranded_branch_count': len(stranded),
         'stranded_branches': stranded,
         'site_audit_overdue': audit['overdue'],
@@ -1155,6 +1187,7 @@ ROLE_PLAYBOOKS = {
     'reviewer-uncertain': 'docs/agents/roles/reviewer.md',
     'workflow-medic': 'docs/agents/roles/workflow-medic.md',
     'pr-medic': 'docs/agents/roles/pr-medic.md',
+    'art-medic': 'docs/agents/roles/art-medic.md',
     'branch-medic': 'docs/agents/roles/branch-medic.md',
     'site-auditor': 'docs/agents/roles/site-auditor.md',
     'gate-triage': 'docs/agents/roles/gate-triage.md',
