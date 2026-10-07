@@ -77,7 +77,9 @@ def pose_frame(rig, parts: dict[str, Image.Image], frame: dict) -> Image.Image:
         if name in hidden:
             continue
         spec = rig.PARTS[name]
-        pose = {}
+        # A part's resting transform (`base`): how a separately rendered limb, drawn at its own scale,
+        # is sized and placed onto the body before any animation moves it.
+        pose = dict(spec.get("base", {}))
         for group in spec.get("follows", []):
             for key, value in frame.get(group, {}).items():
                 pose[key] = pose.get(key, 0) + value

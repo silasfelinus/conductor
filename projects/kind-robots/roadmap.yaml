@@ -2263,6 +2263,23 @@ tasks:
   claimed_by: 20261007T055600Z-kind-robots-t133-default-filter-a91c
   claimed_at: '2026-10-07T05:56:00Z'
 
+- id: t-135
+  milestone: m6
+  title: 'ArtJob queue: model affinity starves older jobs of another model indefinitely (maxBypass bounds position, not waits)'
+  status: ready
+  gate_human: false
+  stakes: reversible
+  passes: 0
+  updated: '2026-10-07T07:20:00Z'
+  note: |-
+    Found 2026-10-07 12:15 AM PT by zuzu-showdown t-010: 12 Kontext jobs (34438-34449, priority 100) sat PENDING and unclaimed for over an hour at the very front of the queue while the relay ran job after job of an Arthemy batch (priority 100, created after them) every ~25 s.
+
+    Cause, server/utils/artJobQueueAffinity.ts selectSmartQueueCandidate: maxBypass (24) caps the INDEX of the preferred-model candidate in the same-priority list, not how many times the oldest job has been passed over. With N < 24 older jobs of another model at the head of the queue, the busy family's next job always sits at index N <= 24, so the head is bypassed on every claim until that family's whole backlog drains (here a few hundred jobs, hours). The comment's promise ("maxBypass bounds each tier so a busy model family cannot starve older work indefinitely") does not hold.
+
+    Worked around for t-010 by raising the 8 Coyote jobs to priority 101 through /api/art/queue/[id]/priority.
+
+    Fix: bound the wait, not the position. Either count consecutive bypasses of the current oldest job (persist on the job or in queue control state) and take the oldest once it reaches maxBypass, or take the oldest when it has waited longer than a limit (createdAt; e.g. 15 minutes) regardless of affinity. Add a verify script that simulates a head of 12 jobs of model A behind a deep backlog of model B and asserts A is claimed within maxBypass picks.
+
 
 goal: Keep Kind Robots cohesive and delightful as its many tools, games, galleries, generators, and coordination
   surfaces grow into one dependable application.
